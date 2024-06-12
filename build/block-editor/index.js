@@ -41131,6 +41131,7 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
     clientId,
     context
   } = props;
+  const hasPatternOverridesDefaultBinding = props.attributes.metadata?.bindings?.[DEFAULT_ATTRIBUTE]?.source === 'core/pattern-overrides';
   const bindings = (0,external_wp_element_namespaceObject.useMemo)(() => replacePatternOverrideDefaultBindings(name, props.attributes.metadata?.bindings), [props.attributes.metadata?.bindings, name]);
   const boundAttributes = (0,external_wp_data_namespaceObject.useSelect)(() => {
     if (!bindings) {
@@ -41214,11 +41215,15 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
           }
         }
       }
-      if (Object.keys(keptAttributes).length) {
+
+      // Only apply normal attribute updates to blocks
+      // that have partial bindings. Currently this is
+      // only skipped for pattern overrides sources.
+      if (!hasPatternOverridesDefaultBinding && Object.keys(keptAttributes).length) {
         setAttributes(keptAttributes);
       }
     });
-  }, [registry, bindings, name, clientId, context, setAttributes, sources]);
+  }, [registry, bindings, name, clientId, context, setAttributes, sources, hasPatternOverridesDefaultBinding]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockEdit, {
       ...props,
