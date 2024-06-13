@@ -21302,7 +21302,7 @@ const useGlobalStylesReset = () => {
     setUserConfig
   } = (0,external_wp_element_namespaceObject.useContext)(GlobalStylesContext);
   const canReset = !!config && !es6_default()(config, EMPTY_CONFIG);
-  return [canReset, (0,external_wp_element_namespaceObject.useCallback)(() => setUserConfig(() => EMPTY_CONFIG), [setUserConfig])];
+  return [canReset, (0,external_wp_element_namespaceObject.useCallback)(() => setUserConfig(EMPTY_CONFIG), [setUserConfig])];
 };
 function useGlobalSetting(propertyPath, blockName, source = 'all') {
   const {

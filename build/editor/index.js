@@ -19431,7 +19431,14 @@ function useGlobalStylesUserConfig() {
       _links: _links !== null && _links !== void 0 ? _links : {}
     };
   }, [settings, styles, _links]);
-  const setConfig = (0,external_wp_element_namespaceObject.useCallback)((callback, options = {}) => {
+  const setConfig = (0,external_wp_element_namespaceObject.useCallback)(
+  /**
+   * Set the global styles config.
+   * @param {Function|Object} callbackOrObject If the callbackOrObject is a function, pass the current config to the callback so the consumer can merge values.
+   *                                           Otherwise, overwrite the current config with the incoming object.
+   * @param {Object}          options          Options for editEntityRecord Core selector.
+   */
+  (callbackOrObject, options = {}) => {
     var _record$styles, _record$settings, _record$_links;
     const record = getEditedEntityRecord('root', 'globalStyles', globalStylesId);
     const currentConfig = {
@@ -19439,7 +19446,7 @@ function useGlobalStylesUserConfig() {
       settings: (_record$settings = record?.settings) !== null && _record$settings !== void 0 ? _record$settings : {},
       _links: (_record$_links = record?._links) !== null && _record$_links !== void 0 ? _record$_links : {}
     };
-    const updatedConfig = callback(currentConfig);
+    const updatedConfig = typeof callbackOrObject === 'function' ? callbackOrObject(currentConfig) : callbackOrObject;
     editEntityRecord('root', 'globalStyles', globalStylesId, {
       styles: cleanEmptyObject(updatedConfig.styles) || {},
       settings: cleanEmptyObject(updatedConfig.settings) || {},

@@ -8151,7 +8151,7 @@ function PushChangesToGlobalStylesControl({
       // notification.
       __unstableMarkNextChangeAsNotPersistent();
       setAttributes(newBlockAttributes);
-      setUserConfig(() => newUserConfig, {
+      setUserConfig(newUserConfig, {
         undoIgnore: true
       });
       createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
@@ -8163,7 +8163,7 @@ function PushChangesToGlobalStylesControl({
           onClick() {
             __unstableMarkNextChangeAsNotPersistent();
             setAttributes(attributes);
-            setUserConfig(() => userConfig, {
+            setUserConfig(userConfig, {
               undoIgnore: true
             });
           }
@@ -18402,26 +18402,13 @@ function Variation({
     user,
     setUserConfig
   } = (0,external_wp_element_namespaceObject.useContext)(variation_GlobalStylesContext);
-  const context = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    var _variation$settings, _variation$styles, _variation$_links;
-    return {
-      user: {
-        settings: (_variation$settings = variation.settings) !== null && _variation$settings !== void 0 ? _variation$settings : {},
-        styles: (_variation$styles = variation.styles) !== null && _variation$styles !== void 0 ? _variation$styles : {},
-        _links: (_variation$_links = variation._links) !== null && _variation$_links !== void 0 ? _variation$_links : {}
-      },
-      base,
-      merged: variation_mergeBaseAndUserConfigs(base, variation),
-      setUserConfig: () => {}
-    };
-  }, [variation, base]);
-  const selectVariation = () => {
-    setUserConfig(() => ({
-      settings: variation.settings,
-      styles: variation.styles,
-      _links: variation._links
-    }));
-  };
+  const context = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    user: variation,
+    base,
+    merged: variation_mergeBaseAndUserConfigs(base, variation),
+    setUserConfig: () => {}
+  }), [variation, base]);
+  const selectVariation = () => setUserConfig(variation);
   const selectOnEnter = event => {
     if (event.keyCode === external_wp_keycodes_namespaceObject.ENTER) {
       event.preventDefault();
@@ -27848,25 +27835,9 @@ function ScreenRevisions() {
     setEditorCanvasContainerView(canvasContainerView);
   };
   const restoreRevision = revision => {
-    setUserConfig(() => ({
-      styles: revision?.styles,
-      settings: revision?.settings,
-      _links: revision?._links
-    }));
+    setUserConfig(() => revision);
     setIsLoadingRevisionWithUnsavedChanges(false);
     onCloseRevisions();
-  };
-  const selectRevision = revision => {
-    setCurrentlySelectedRevision({
-      /*
-       * The default must be an empty object so that
-       * `mergeBaseAndUserConfigs()` can merge them correctly.
-       */
-      styles: revision?.styles || {},
-      settings: revision?.settings || {},
-      _links: revision?._links || {},
-      id: revision?.id
-    });
   };
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (!editorCanvasContainerView || !editorCanvasContainerView.startsWith('global-styles-revisions')) {
@@ -27890,11 +27861,7 @@ function ScreenRevisions() {
      * See: https://github.com/WordPress/gutenberg/issues/55866
      */
     if (shouldSelectFirstItem) {
-      setCurrentlySelectedRevision({
-        styles: firstRevision?.styles || {},
-        settings: firstRevision?.settings || {},
-        id: firstRevision?.id
-      });
+      setCurrentlySelectedRevision(firstRevision);
     }
   }, [shouldSelectFirstItem, firstRevision]);
 
@@ -27922,7 +27889,7 @@ function ScreenRevisions() {
       userConfig: currentlySelectedRevision,
       closeButtonLabel: (0,external_wp_i18n_namespaceObject.__)('Close revisions')
     })), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(revisions_buttons, {
-      onChange: selectRevision,
+      onChange: setCurrentlySelectedRevision,
       selectedRevisionId: currentlySelectedRevisionId,
       userRevisions: currentRevisions,
       canApplyRevision: isLoadButtonEnabled,
