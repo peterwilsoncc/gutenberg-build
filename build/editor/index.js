@@ -6403,6 +6403,7 @@ const external_wp_patterns_namespaceObject = window["wp"]["patterns"];
 const {
   PatternOverridesControls,
   ResetOverridesControl,
+  PatternOverridesBlockControls,
   PATTERN_TYPES,
   PARTIAL_SYNCING_SUPPORTED_BLOCKS,
   PATTERN_SYNC_TYPES
@@ -6424,7 +6425,7 @@ const withPatternOverrideControls = (0,external_wp_compose_namespaceObject.creat
       ...props
     }), props.isSelected && isSupportedBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ControlsWithStoreSubscription, {
       ...props
-    })]
+    }), isSupportedBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternOverridesBlockControls, {})]
   });
 });
 

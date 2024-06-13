@@ -63057,107 +63057,6 @@ function Shuffle({
   });
 }
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/pattern-overrides-toolbar-indicator/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-/**
- * This component is currently only for pattern overrides, which is a WP-only feature.
- * Ideally, this should be moved to the `patterns` package once ready.
- * @param {Object} props           The component props.
- * @param {Array}  props.clientIds The client IDs of the selected blocks.
- */
-
-
-function PatternOverridesToolbarIndicator({
-  clientIds
-}) {
-  const isSingleBlockSelected = clientIds.length === 1;
-  const {
-    icon,
-    firstBlockName
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getBlockAttributes,
-      getBlockNamesByClientId
-    } = select(store);
-    const {
-      getBlockType,
-      getActiveBlockVariation
-    } = select(external_wp_blocks_namespaceObject.store);
-    const blockTypeNames = getBlockNamesByClientId(clientIds);
-    const _firstBlockTypeName = blockTypeNames[0];
-    const firstBlockType = getBlockType(_firstBlockTypeName);
-    let _icon;
-    if (isSingleBlockSelected) {
-      const match = getActiveBlockVariation(_firstBlockTypeName, getBlockAttributes(clientIds[0]));
-      // Take into account active block variations.
-      _icon = match?.icon || firstBlockType.icon;
-    } else {
-      const isSelectionOfSameType = new Set(blockTypeNames).size === 1;
-      // When selection consists of blocks of multiple types, display an
-      // appropriate icon to communicate the non-uniformity.
-      _icon = isSelectionOfSameType ? firstBlockType.icon : library_copy;
-    }
-    return {
-      icon: _icon,
-      firstBlockName: getBlockAttributes(clientIds[0]).metadata.name
-    };
-  }, [clientIds, isSingleBlockSelected]);
-  const firstBlockTitle = useBlockDisplayTitle({
-    clientId: clientIds[0],
-    maximumLength: 35
-  });
-  const blockDescription = isSingleBlockSelected ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %1s: The block type's name; %2s: The block's user-provided name (the same as the override name). */
-  (0,external_wp_i18n_namespaceObject.__)('This %1$s is editable using the "%2$s" override.'), firstBlockTitle.toLowerCase(), firstBlockName) : (0,external_wp_i18n_namespaceObject.__)('These blocks are editable using overrides.');
-  const descriptionId = (0,external_wp_element_namespaceObject.useId)();
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
-      children: toggleProps => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
-        className: "block-editor-pattern-overrides-toolbar-indicator",
-        label: firstBlockTitle,
-        popoverProps: {
-          placement: 'bottom-start',
-          className: 'block-editor-pattern-overrides-toolbar-indicator__popover'
-        },
-        icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
-            icon: icon,
-            className: "block-editor-pattern-overrides-toolbar-indicator-icon",
-            showColors: true
-          })
-        }),
-        toggleProps: {
-          describedBy: blockDescription,
-          ...toggleProps
-        },
-        menuProps: {
-          orientation: 'both',
-          'aria-describedby': descriptionId
-        },
-        children: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-          id: descriptionId,
-          children: blockDescription
-        })
-      })
-    })
-  });
-}
-
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-controls/use-has-block-controls.js
 /**
  * WordPress dependencies
@@ -63273,7 +63172,6 @@ function useHasBlockToolbar() {
 
 
 
-
 /**
  * Renders the block toolbar.
  *
@@ -63301,18 +63199,15 @@ function PrivateBlockToolbar({
     blockClientIds,
     isDefaultEditingMode,
     blockType,
-    blockName,
     toolbarKey,
     shouldShowVisualToolbar,
     showParentSelector,
-    isUsingBindings,
-    hasParentPattern
+    isUsingBindings
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockName,
       getBlockMode,
       getBlockParents,
-      getBlockParentsByBlockName,
       getSelectedBlockClientIds,
       isBlockValid,
       getBlockRootClientId,
@@ -63330,20 +63225,17 @@ function PrivateBlockToolbar({
     const _blockName = getBlockName(selectedBlockClientId);
     const isValid = selectedBlockClientIds.every(id => isBlockValid(id));
     const isVisual = selectedBlockClientIds.every(id => getBlockMode(id) === 'visual');
-    const bindings = getBlockAttributes(selectedBlockClientId)?.metadata?.bindings;
-    const parentPatternClientId = getBlockParentsByBlockName(selectedBlockClientId, 'core/block', true)[0];
+    const _isUsingBindings = selectedBlockClientIds.every(clientId => !!getBlockAttributes(clientId)?.metadata?.bindings);
     return {
       blockClientId: selectedBlockClientId,
       blockClientIds: selectedBlockClientIds,
       isDefaultEditingMode: _isDefaultEditingMode,
-      blockName: _blockName,
       blockType: selectedBlockClientId && (0,external_wp_blocks_namespaceObject.getBlockType)(_blockName),
       shouldShowVisualToolbar: isValid && isVisual,
       rootClientId: blockRootClientId,
       toolbarKey: `${selectedBlockClientId}${firstParentClientId}`,
       showParentSelector: parentBlockType && getBlockEditingMode(firstParentClientId) === 'default' && (0,external_wp_blocks_namespaceObject.hasBlockSupport)(parentBlockType, '__experimentalParentSelector', true) && selectedBlockClientIds.length === 1 && _isDefaultEditingMode,
-      isUsingBindings: !!bindings,
-      hasParentPattern: !!parentPatternClientId
+      isUsingBindings: _isUsingBindings
     };
   }, []);
   const toolbarWrapperRef = (0,external_wp_element_namespaceObject.useRef)(null);
@@ -63387,9 +63279,7 @@ function PrivateBlockToolbar({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       ref: toolbarWrapperRef,
       className: innerClasses,
-      children: [!isMultiToolbar && isLargeViewport && isDefaultEditingMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockParentSelector, {}), isUsingBindings && hasParentPattern && canBindBlock(blockName) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternOverridesToolbarIndicator, {
-        clientIds: blockClientIds
-      }), (shouldShowVisualToolbar || isMultiToolbar) && (isDefaultEditingMode || isSynced) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      children: [!isMultiToolbar && isLargeViewport && isDefaultEditingMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockParentSelector, {}), (shouldShowVisualToolbar || isMultiToolbar) && (isDefaultEditingMode || isSynced) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         ref: nodeRef,
         ...showHoveredOrFocusedGestures,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
@@ -79486,6 +79376,7 @@ function ResolutionTool({
 
 
 
+
 /**
  * Private @wordpress/block-editor APIs.
  */
@@ -79527,7 +79418,8 @@ lock(privateApis, {
   reusableBlocksSelectKey: reusableBlocksSelectKey,
   PrivateBlockPopover: PrivateBlockPopover,
   PrivatePublishDateTimePicker: PrivatePublishDateTimePicker,
-  useSpacingSizes: useSpacingSizes
+  useSpacingSizes: useSpacingSizes,
+  useBlockDisplayTitle: useBlockDisplayTitle
 });
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/index.js
