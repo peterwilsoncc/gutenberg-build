@@ -5927,12 +5927,17 @@ const memoizedGetFilteredTemplatePartBlocks = memize(getFilteredTemplatePartBloc
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/store/private-selectors.js
 /**
+ * WordPress dependencies
+ */
+
+/**
  * Internal dependencies
  */
 
+const private_selectors_EMPTY_ARRAY = [];
 function getEntityActions(state, kind, name) {
   var _state$actions$kind$n;
-  return (_state$actions$kind$n = state.actions[kind]?.[name]) !== null && _state$actions$kind$n !== void 0 ? _state$actions$kind$n : [];
+  return (_state$actions$kind$n = state.actions[kind]?.[name]) !== null && _state$actions$kind$n !== void 0 ? _state$actions$kind$n : private_selectors_EMPTY_ARRAY;
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/store/private-selectors.js
