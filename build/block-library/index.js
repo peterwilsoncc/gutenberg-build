@@ -42178,11 +42178,23 @@ const post_content_metadata = {
     align: ["wide", "full"],
     html: false,
     layout: true,
+    background: {
+      backgroundImage: true,
+      backgroundSize: true,
+      __experimentalDefaultControls: {
+        backgroundImage: true
+      }
+    },
     dimensions: {
       minHeight: true
     },
     spacing: {
-      blockGap: true
+      blockGap: true,
+      padding: true,
+      __experimentalDefaultControls: {
+        margin: false,
+        padding: false
+      }
     },
     color: {
       gradients: true,
