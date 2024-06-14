@@ -17253,6 +17253,15 @@ function PostSlug() {
  * Internal dependencies
  */
 
+
+/**
+ * Wrapper component that renders its children only if post has a sticky action.
+ *
+ * @param {Object}  props          Props.
+ * @param {Element} props.children Children to be rendered.
+ *
+ * @return {Component} The component to be rendered or null if post type is not 'post' or hasStickyAction is false.
+ */
 function PostStickyCheck({
   children
 }) {
@@ -17287,6 +17296,12 @@ function PostStickyCheck({
 
 
 
+
+/**
+ * Renders the PostSticky component. It provide toggle control for the sticky post feature.
+ *
+ * @return {Component} The component to be rendered.
+ */
 
 function PostSticky() {
   const postSticky = (0,external_wp_data_namespaceObject.useSelect)(select => {
