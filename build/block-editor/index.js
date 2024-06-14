@@ -38440,6 +38440,9 @@ const getNodesWithStyles = (tree, blockSelectors) => {
       Object.entries(node.variations).forEach(([variationName, variation]) => {
         var _variation$elements, _variation$blocks;
         variations[variationName] = pickStyleKeys(variation);
+        if (variation?.css) {
+          variations[variationName].css = variation.css;
+        }
         const variationSelector = blockSelectors[blockName].styleVariationSelectors?.[variationName];
 
         // Process the variation's inner element styles.
@@ -38461,13 +38464,17 @@ const getNodesWithStyles = (tree, blockSelectors) => {
           const variationBlockSelector = scopeSelector(variationSelector, blockSelectors[variationBlockName].selector);
           const variationDuotoneSelector = scopeSelector(variationSelector, blockSelectors[variationBlockName].duotoneSelector);
           const variationFeatureSelectors = scopeFeatureSelectors(variationSelector, blockSelectors[variationBlockName].featureSelectors);
+          const variationBlockStyleNodes = pickStyleKeys(variationBlockStyles);
+          if (variationBlockStyles?.css) {
+            variationBlockStyleNodes.css = variationBlockStyles.css;
+          }
           nodes.push({
             selector: variationBlockSelector,
             duotoneSelector: variationDuotoneSelector,
             featureSelectors: variationFeatureSelectors,
             fallbackGapValue: blockSelectors[variationBlockName].fallbackGapValue,
             hasLayoutSupport: blockSelectors[variationBlockName].hasLayoutSupport,
-            styles: pickStyleKeys(variationBlockStyles)
+            styles: variationBlockStyleNodes
           });
 
           // Process element styles for the inner blocks
@@ -38675,6 +38682,9 @@ const toStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSuppor
       if (styleDeclarations?.length) {
         ruleset += `:root :where(${selector}){${styleDeclarations.join(';')};}`;
       }
+      if (styles?.css) {
+        ruleset += processCSSNesting(styles.css, `:root :where(${selector})`);
+      }
       if (styleVariationSelectors) {
         Object.entries(styleVariationSelectors).forEach(([styleVariationName, styleVariationSelector]) => {
           const styleVariations = styles?.variations?.[styleVariationName];
@@ -38695,6 +38705,9 @@ const toStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSuppor
             const styleVariationDeclarations = getStylesDeclarations(styleVariations, styleVariationSelector, useRootPaddingAlign, tree);
             if (styleVariationDeclarations.length) {
               ruleset += `:root :where(${styleVariationSelector}){${styleVariationDeclarations.join(';')};}`;
+            }
+            if (styleVariations?.css) {
+              ruleset += processCSSNesting(styleVariations.css, `:root :where(${styleVariationSelector})`);
             }
           }
         });
