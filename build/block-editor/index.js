@@ -62001,18 +62001,16 @@ function BlockActions({
       getBlocksByClientId,
       getDirectInsertBlock,
       canMoveBlocks,
-      canRemoveBlocks,
-      getBlockEditingMode
+      canRemoveBlocks
     } = select(store);
     const blocks = getBlocksByClientId(clientIds);
     const rootClientId = getBlockRootClientId(clientIds[0]);
-    const rootBlockEditingMode = getBlockEditingMode(rootClientId);
     const canInsertDefaultBlock = canInsertBlockType(getDefaultBlockName(), rootClientId);
     const directInsertBlock = rootClientId ? getDirectInsertBlock(rootClientId) : null;
     return {
       canMove: canMoveBlocks(clientIds, rootClientId),
       canRemove: canRemoveBlocks(clientIds, rootClientId),
-      canInsertBlock: (canInsertDefaultBlock || !!directInsertBlock) && rootBlockEditingMode === 'default',
+      canInsertBlock: canInsertDefaultBlock || !!directInsertBlock,
       canCopyStyles: blocks.every(block => {
         return !!block && ((0,external_wp_blocks_namespaceObject.hasBlockSupport)(block.name, 'color') || (0,external_wp_blocks_namespaceObject.hasBlockSupport)(block.name, 'typography'));
       }),
@@ -62398,7 +62396,7 @@ function BlockSettingsDropdown({
             onClick: (0,external_wp_compose_namespaceObject.pipe)(onClose, onDuplicate, updateSelectionAfterDuplicate),
             shortcut: shortcuts.duplicate,
             children: (0,external_wp_i18n_namespaceObject.__)('Duplicate')
-          }), canInsertBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+          }), canInsertBlock && !isContentOnly && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
               onClick: (0,external_wp_compose_namespaceObject.pipe)(onClose, onInsertBefore),
               shortcut: shortcuts.insertBefore,
