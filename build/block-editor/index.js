@@ -17016,13 +17016,12 @@ function canInsertBlocks(state, clientIds, rootClientId = null) {
 /**
  * Determines if the given block is allowed to be deleted.
  *
- * @param {Object}  state        Editor state.
- * @param {string}  clientId     The block client Id.
- * @param {?string} rootClientId Optional root client ID of block list.
+ * @param {Object} state    Editor state.
+ * @param {string} clientId The block client Id.
  *
  * @return {boolean} Whether the given block is allowed to be removed.
  */
-function canRemoveBlock(state, clientId, rootClientId = null) {
+function canRemoveBlock(state, clientId) {
   const attributes = getBlockAttributes(state, clientId);
   if (attributes === null) {
     return true;
@@ -17030,6 +17029,7 @@ function canRemoveBlock(state, clientId, rootClientId = null) {
   if (attributes.lock?.remove !== undefined) {
     return !attributes.lock.remove;
   }
+  const rootClientId = getBlockRootClientId(state, clientId);
   if (getTemplateLock(state, rootClientId)) {
     return false;
   }
@@ -17039,26 +17039,24 @@ function canRemoveBlock(state, clientId, rootClientId = null) {
 /**
  * Determines if the given blocks are allowed to be removed.
  *
- * @param {Object}  state        Editor state.
- * @param {string}  clientIds    The block client IDs to be removed.
- * @param {?string} rootClientId Optional root client ID of block list.
+ * @param {Object} state     Editor state.
+ * @param {string} clientIds The block client IDs to be removed.
  *
  * @return {boolean} Whether the given blocks are allowed to be removed.
  */
-function canRemoveBlocks(state, clientIds, rootClientId = null) {
-  return clientIds.every(clientId => canRemoveBlock(state, clientId, rootClientId));
+function canRemoveBlocks(state, clientIds) {
+  return clientIds.every(clientId => canRemoveBlock(state, clientId));
 }
 
 /**
  * Determines if the given block is allowed to be moved.
  *
- * @param {Object}  state        Editor state.
- * @param {string}  clientId     The block client Id.
- * @param {?string} rootClientId Optional root client ID of block list.
+ * @param {Object} state    Editor state.
+ * @param {string} clientId The block client Id.
  *
  * @return {boolean | undefined} Whether the given block is allowed to be moved.
  */
-function canMoveBlock(state, clientId, rootClientId = null) {
+function canMoveBlock(state, clientId) {
   const attributes = getBlockAttributes(state, clientId);
   if (attributes === null) {
     return true;
@@ -17066,6 +17064,7 @@ function canMoveBlock(state, clientId, rootClientId = null) {
   if (attributes.lock?.move !== undefined) {
     return !attributes.lock.move;
   }
+  const rootClientId = getBlockRootClientId(state, clientId);
   if (getTemplateLock(state, rootClientId) === 'all') {
     return false;
   }
@@ -17075,14 +17074,13 @@ function canMoveBlock(state, clientId, rootClientId = null) {
 /**
  * Determines if the given blocks are allowed to be moved.
  *
- * @param {Object}  state        Editor state.
- * @param {string}  clientIds    The block client IDs to be moved.
- * @param {?string} rootClientId Optional root client ID of block list.
+ * @param {Object} state     Editor state.
+ * @param {string} clientIds The block client IDs to be moved.
  *
  * @return {boolean} Whether the given blocks are allowed to be moved.
  */
-function canMoveBlocks(state, clientIds, rootClientId = null) {
-  return clientIds.every(clientId => canMoveBlock(state, clientId, rootClientId));
+function canMoveBlocks(state, clientIds) {
+  return clientIds.every(clientId => canMoveBlock(state, clientId));
 }
 
 /**
@@ -18079,7 +18077,7 @@ const isGroupable = (0,external_wp_data_namespaceObject.createRegistrySelector)(
   const rootClientId = _clientIds?.length ? getBlockRootClientId(state, _clientIds[0]) : undefined;
   const groupingBlockAvailable = canInsertBlockType(state, groupingBlockName, rootClientId);
   const _isGroupable = groupingBlockAvailable && _clientIds.length;
-  return _isGroupable && canRemoveBlocks(state, _clientIds, rootClientId);
+  return _isGroupable && canRemoveBlocks(state, _clientIds);
 });
 
 /**
@@ -18239,8 +18237,7 @@ const privateRemoveBlocks = (clientIds, selectPrevious = true, forceRemove = fal
     return;
   }
   clientIds = castArray(clientIds);
-  const rootClientId = select.getBlockRootClientId(clientIds[0]);
-  const canRemoveBlocks = select.canRemoveBlocks(clientIds, rootClientId);
+  const canRemoveBlocks = select.canRemoveBlocks(clientIds);
   if (!canRemoveBlocks) {
     return;
   }
@@ -18936,7 +18933,7 @@ const createOnMove = type => (clientIds, rootClientId) => ({
   dispatch
 }) => {
   // If one of the blocks is locked or the parent is locked, we cannot move any block.
-  const canMoveBlocks = select.canMoveBlocks(clientIds, rootClientId);
+  const canMoveBlocks = select.canMoveBlocks(clientIds);
   if (!canMoveBlocks) {
     return;
   }
@@ -18961,7 +18958,7 @@ const moveBlocksToPosition = (clientIds, fromRootClientId = '', toRootClientId =
   select,
   dispatch
 }) => {
-  const canMoveBlocks = select.canMoveBlocks(clientIds, fromRootClientId);
+  const canMoveBlocks = select.canMoveBlocks(clientIds);
 
   // If one of the blocks is locked or the parent is locked, we cannot move any block.
   if (!canMoveBlocks) {
@@ -18970,7 +18967,7 @@ const moveBlocksToPosition = (clientIds, fromRootClientId = '', toRootClientId =
 
   // If moving inside the same root block the move is always possible.
   if (fromRootClientId !== toRootClientId) {
-    const canRemoveBlocks = select.canRemoveBlocks(clientIds, fromRootClientId);
+    const canRemoveBlocks = select.canRemoveBlocks(clientIds);
 
     // If we're moving to another block, it means we're deleting blocks from
     // the original block, so we need to check if removing is possible.
@@ -40023,13 +40020,11 @@ function useBlockLock(clientId) {
       canRemoveBlock,
       canLockBlockType,
       getBlockName,
-      getBlockRootClientId,
       getTemplateLock
     } = select(store);
-    const rootClientId = getBlockRootClientId(clientId);
     const canEdit = canEditBlock(clientId);
-    const canMove = canMoveBlock(clientId, rootClientId);
-    const canRemove = canRemoveBlock(clientId, rootClientId);
+    const canMove = canMoveBlock(clientId);
+    const canRemove = canRemoveBlock(clientId);
     return {
       canEdit,
       canMove,
@@ -49286,8 +49281,8 @@ function BlockListBlockProvider(props) {
       return previewContext;
     }
     const _isSelected = isBlockSelected(clientId);
-    const canRemove = canRemoveBlock(clientId, rootClientId);
-    const canMove = canMoveBlock(clientId, rootClientId);
+    const canRemove = canRemoveBlock(clientId);
+    const canMove = canMoveBlock(clientId);
     const match = getActiveBlockVariation(blockName, attributes);
     const isMultiSelected = isBlockMultiSelected(clientId);
     const checkDeep = true;
@@ -59539,7 +59534,7 @@ const BlockDraggable = ({
     const variation = getActiveBlockVariation(blockName, getBlockAttributes(clientIds[0]));
     return {
       srcRootClientId: rootClientId,
-      isDraggable: canMoveBlocks(clientIds, rootClientId),
+      isDraggable: canMoveBlocks(clientIds),
       icon: variation?.icon || _getBlockType(blockName)?.icon,
       visibleInserter: isBlockInsertionPointVisible(),
       getBlockType: _getBlockType
@@ -60115,7 +60110,7 @@ function BlockMover({
     const lastIndex = getBlockIndex(normalizedClientIds[normalizedClientIds.length - 1]);
     const blockOrder = getBlockOrder(_rootClientId);
     return {
-      canMove: canMoveBlocks(clientIds, _rootClientId),
+      canMove: canMoveBlocks(clientIds),
       rootClientId: _rootClientId,
       isFirst: firstIndex === 0,
       isLast: lastIndex === blockOrder.length - 1,
@@ -60493,7 +60488,6 @@ function useBlockVariationTransforms({
     blockVariationTransformations
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getBlockRootClientId,
       getBlockAttributes,
       canRemoveBlocks
     } = select(store);
@@ -60501,8 +60495,7 @@ function useBlockVariationTransforms({
       getActiveBlockVariation,
       getBlockVariations
     } = select(external_wp_blocks_namespaceObject.store);
-    const rootClientId = getBlockRootClientId(Array.isArray(clientIds) ? clientIds[0] : clientIds);
-    const canRemove = canRemoveBlocks(clientIds, rootClientId);
+    const canRemove = canRemoveBlocks(clientIds);
     // Only handle single selected blocks for now.
     if (blocks.length !== 1 || !canRemove) {
       return block_variation_transformations_EMPTY_OBJECT;
@@ -61404,7 +61397,6 @@ const BlockSwitcher = ({
     isTemplate
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getBlockRootClientId,
       getBlocksByClientId,
       getBlockAttributes,
       canRemoveBlocks
@@ -61420,7 +61412,6 @@ const BlockSwitcher = ({
         invalidBlocks: true
       };
     }
-    const rootClientId = getBlockRootClientId(Array.isArray(clientIds) ? clientIds[0] : clientIds);
     const [{
       name: firstBlockName
     }] = _blocks;
@@ -61440,7 +61431,7 @@ const BlockSwitcher = ({
       _icon = isSelectionOfSameType ? blockType.icon : library_copy;
     }
     return {
-      canRemove: canRemoveBlocks(clientIds, rootClientId),
+      canRemove: canRemoveBlocks(clientIds),
       hasBlockStyles: _isSingleBlockSelected && !!getBlockStyles(firstBlockName)?.length,
       icon: _icon,
       isReusable: _isSingleBlockSelected && (0,external_wp_blocks_namespaceObject.isReusableBlock)(_blocks[0]),
@@ -62008,8 +61999,8 @@ function BlockActions({
     const canInsertDefaultBlock = canInsertBlockType(getDefaultBlockName(), rootClientId);
     const directInsertBlock = rootClientId ? getDirectInsertBlock(rootClientId) : null;
     return {
-      canMove: canMoveBlocks(clientIds, rootClientId),
-      canRemove: canRemoveBlocks(clientIds, rootClientId),
+      canMove: canMoveBlocks(clientIds),
+      canRemove: canRemoveBlocks(clientIds),
       canInsertBlock: canInsertDefaultBlock || !!directInsertBlock,
       canCopyStyles: blocks.every(block => {
         return !!block && ((0,external_wp_blocks_namespaceObject.hasBlockSupport)(block.name, 'color') || (0,external_wp_blocks_namespaceObject.hasBlockSupport)(block.name, 'typography'));
@@ -63550,8 +63541,8 @@ function BlockSelectionButton({
       isBlockTemplatePart,
       isNextBlockTemplatePart,
       isPrevBlockTemplatePart,
-      canRemove: canRemoveBlock(clientId, rootClientId),
-      canMove: canMoveBlock(clientId, rootClientId)
+      canRemove: canRemoveBlock(clientId),
+      canMove: canMoveBlock(clientId)
     };
   }, [clientId, rootClientId]);
   const {
@@ -64238,7 +64229,7 @@ const useTransformCommands = () => {
       blocks: selectedBlocks,
       clientIds: selectedBlockClientIds,
       possibleBlockTransformations: getBlockTransformItems(selectedBlocks, rootClientId),
-      canRemove: canRemoveBlocks(selectedBlockClientIds, rootClientId),
+      canRemove: canRemoveBlocks(selectedBlockClientIds),
       invalidSelection: false
     };
   }, []);
@@ -64329,7 +64320,7 @@ const useActionsCommands = () => {
     };
   }
   const rootClientId = getBlockRootClientId(clientIds[0]);
-  const canMove = canMoveBlocks(clientIds, rootClientId) && getBlockCount(rootClientId) !== 1;
+  const canMove = canMoveBlocks(clientIds) && getBlockCount(rootClientId) !== 1;
   const commands = [];
   if (canMove) {
     commands.push({
@@ -64427,7 +64418,7 @@ const useQuickActionsCommands = () => {
   const canDuplicate = blocks.every(block => {
     return !!block && (0,external_wp_blocks_namespaceObject.hasBlockSupport)(block.name, 'multiple', true) && canInsertBlockType(block.name, rootClientId);
   });
-  const canRemove = canRemoveBlocks(clientIds, rootClientId);
+  const canRemove = canRemoveBlocks(clientIds);
   const commands = [];
   if (canDuplicate) {
     commands.push({
@@ -65711,7 +65702,7 @@ function ListViewBlock({
       } = getBlocksToUpdate();
 
       // Don't update the selection if the blocks cannot be deleted.
-      if (!canRemoveBlocks(blocksToDelete, firstBlockRootClientId)) {
+      if (!canRemoveBlocks(blocksToDelete)) {
         return;
       }
       let blockToFocus = (_getPreviousBlockClie = getPreviousBlockClientId(firstBlockClientId)) !== null && _getPreviousBlockClie !== void 0 ? _getPreviousBlockClie :
@@ -67332,7 +67323,7 @@ function use_clipboard_handler_useClipboardHandler({
       if (event.type === 'cut') {
         var _getPreviousBlockClie;
         // Don't update the selection if the blocks cannot be deleted.
-        if (!canRemoveBlocks(selectedBlockClientIds, firstBlockRootClientId)) {
+        if (!canRemoveBlocks(selectedBlockClientIds)) {
           return;
         }
         let blockToFocus = (_getPreviousBlockClie = getPreviousBlockClientId(firstBlockClientId)) !== null && _getPreviousBlockClie !== void 0 ? _getPreviousBlockClie :
