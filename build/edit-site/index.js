@@ -18317,6 +18317,7 @@ function TypographyElements() {
  */
 
 
+
 const {
   mergeBaseAndUserConfigs: variation_mergeBaseAndUserConfigs
 } = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
@@ -18327,7 +18328,8 @@ const {
 function Variation({
   variation,
   children,
-  isPill
+  isPill,
+  property
 }) {
   const [isFocused, setIsFocused] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
@@ -18335,12 +18337,18 @@ function Variation({
     user,
     setUserConfig
   } = (0,external_wp_element_namespaceObject.useContext)(variation_GlobalStylesContext);
-  const context = (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    user: variation,
-    base,
-    merged: variation_mergeBaseAndUserConfigs(base, variation),
-    setUserConfig: () => {}
-  }), [variation, base]);
+  const context = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    let merged = variation_mergeBaseAndUserConfigs(base, variation);
+    if (property) {
+      merged = filterObjectByProperty(merged, property);
+    }
+    return {
+      user: variation,
+      base,
+      merged,
+      setUserConfig: () => {}
+    };
+  }, [variation, base, property]);
   const selectVariation = () => setUserConfig(variation);
   const selectOnEnter = event => {
     if (event.keyCode === external_wp_keycodes_namespaceObject.ENTER) {
@@ -18415,6 +18423,7 @@ function TypographyVariations({
       className: "edit-site-global-styles-style-variations-container",
       children: typographyVariations && typographyVariations.length && typographyVariations.map((variation, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Variation, {
         variation: variation,
+        property: "typography",
         children: isFocused => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreviewIframe, {
           label: variation?.title,
           isFocused: isFocused,
@@ -25238,6 +25247,7 @@ function ColorVariations({
       children: colorVariations.map((variation, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Variation, {
         variation: variation,
         isPill: true,
+        property: "color",
         children: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(preview_colors, {})
       }, index))
     })]
