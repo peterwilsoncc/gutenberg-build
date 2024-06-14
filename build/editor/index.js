@@ -18141,6 +18141,12 @@ function PostTitleRaw(_, forwardedRef) {
  */
 
 
+/**
+ * Displays the Post Trash Button and Confirm Dialog in the Editor.
+ *
+ * @return {JSX.Element|null} The rendered PostTrash component.
+ */
+
 
 
 function PostTrash() {
@@ -18199,6 +18205,15 @@ function PostTrash() {
  * Internal dependencies
  */
 
+
+/**
+ * Wrapper component that renders its children only if the post can trashed.
+ *
+ * @param {Object}  props          - The component props.
+ * @param {Element} props.children - The child components to render.
+ *
+ * @return {Component|null} The rendered child components or null if the post can not trashed.
+ */
 function PostTrashCheck({
   children
 }) {
@@ -18689,6 +18704,12 @@ function WordCount() {
  */
 
 const AVERAGE_READING_RATE = 189;
+
+/**
+ * Component for showing Time To Read in Content.
+ *
+ * @return {JSX.Element} The rendered TimeToRead component.
+ */
 function TimeToRead() {
   const content = (0,external_wp_data_namespaceObject.useSelect)(select => select(store_store).getEditedPostAttribute('content'), []);
 
@@ -22808,6 +22829,13 @@ const withFontSizes = deprecateFunction('withFontSizes', external_wp_blockEditor
 
 
 const VisualEditorGlobalKeyboardShortcuts = EditorKeyboardShortcuts;
+
+/**
+ * Component handles the global keyboard shortcuts for the Text editor.
+ *
+ * It provides functionality for various keyboard shortcuts such as toggling editor mode,
+ * toggling distraction-free mode, undo/redo.
+ */
 const TextEditorGlobalKeyboardShortcuts = EditorKeyboardShortcuts;
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/utils/url.js
