@@ -8838,6 +8838,7 @@ function TemplateValidationNotice() {
         synchronizeTemplate();
       },
       onCancel: () => setShowConfirmDialog(false),
+      size: "medium",
       children: (0,external_wp_i18n_namespaceObject.__)('Resetting the template may result in loss of content, do you want to continue?')
     })]
   });
@@ -14443,6 +14444,7 @@ function PostVisibility({
       onConfirm: confirmPrivate,
       onCancel: handleDialogCancel,
       confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Publish'),
+      size: "medium",
       children: (0,external_wp_i18n_namespaceObject.__)('Would you like to privately publish this post now?')
     })]
   });
@@ -18180,6 +18182,7 @@ function PostTrash() {
       onConfirm: handleConfirm,
       onCancel: () => setShowConfirmDialog(false),
       confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Move to trash'),
+      size: "medium",
       children: (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to move this post to the trash?')
     })]
   });
@@ -24546,6 +24549,7 @@ function EditTemplateBlocksNotification({
       });
     },
     onCancel: () => setIsDialogOpen(false),
+    size: "medium",
     children: (0,external_wp_i18n_namespaceObject.__)('You’ve tried to select a block that is part of a template, which may be used on other posts and pages. Would you like to edit the template?')
   });
 }

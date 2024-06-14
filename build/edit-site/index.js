@@ -19903,6 +19903,7 @@ function ConfirmDeleteDialog({
     confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Delete'),
     onCancel: handleCancelUninstall,
     onConfirm: handleConfirmUninstall,
+    size: "medium",
     children: font && (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Name of the font. */
     (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to delete "%s" font and all its variants and assets?'), font.name)
   });
@@ -26034,6 +26035,7 @@ function ShadowsEditPanel() {
         setIsConfirmDialogVisible(false);
       },
       confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Delete'),
+      size: "medium",
       children: (0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: %s: name of the shadow
       'Are you sure you want to delete "%s"?', selectedShadow.name)
@@ -27910,6 +27912,7 @@ function ScreenRevisions() {
       confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Apply'),
       onConfirm: () => restoreRevision(currentlySelectedRevision),
       onCancel: () => setIsLoadingRevisionWithUnsavedChanges(false),
+      size: "medium",
       children: (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to apply this revision? Any unsaved changes will be lost.')
     })]
   });
@@ -42471,6 +42474,7 @@ function DeleteConfirmDialog({
     },
     onCancel: onClose,
     confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Delete'),
+    size: "medium",
     children: (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to delete this Navigation Menu?')
   });
 }
