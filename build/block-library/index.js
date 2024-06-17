@@ -3145,6 +3145,7 @@ function Caption({
   placeholder = (0,external_wp_i18n_namespaceObject.__)('Add caption'),
   label = (0,external_wp_i18n_namespaceObject.__)('Caption text'),
   showToolbarButton = true,
+  excludeElementClassName,
   className,
   readOnly,
   tagName = 'figcaption',
@@ -3200,7 +3201,7 @@ function Caption({
     }), showCaption && (!RichText.isEmpty(caption) || isSelected) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RichText, {
       identifier: attributeKey,
       tagName: tagName,
-      className: dist_clsx(className, (0,external_wp_blockEditor_namespaceObject.__experimentalGetElementClassName)('caption')),
+      className: dist_clsx(className, excludeElementClassName ? '' : (0,external_wp_blockEditor_namespaceObject.__experimentalGetElementClassName)('caption')),
       ref: ref,
       "aria-label": label,
       placeholder: placeholder,
@@ -50458,6 +50459,7 @@ function QuoteEdit({
         (0,external_wp_i18n_namespaceObject.__)('Add citation'),
         addLabel: (0,external_wp_i18n_namespaceObject.__)('Add citation'),
         removeLabel: (0,external_wp_i18n_namespaceObject.__)('Remove citation'),
+        excludeElementClassName: true,
         className: "wp-block-quote__citation",
         insertBlocksAfter: insertBlocksAfter,
         ...(!edit_isWebPlatform ? {
