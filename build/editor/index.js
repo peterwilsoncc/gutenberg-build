@@ -25513,7 +25513,6 @@ const deletePostAction = {
   RenderModal: ({
     items,
     closeModal,
-    onActionStart,
     onActionPerformed
   }) => {
     const [isBusy, setIsBusy] = (0,external_wp_element_namespaceObject.useState)(false);
@@ -25540,9 +25539,6 @@ const deletePostAction = {
           variant: "primary",
           onClick: async () => {
             setIsBusy(true);
-            if (onActionStart) {
-              onActionStart(items);
-            }
             await removeTemplates(items, {
               allowUndo: false
             });
@@ -25572,7 +25568,6 @@ const trashPostAction = {
   RenderModal: ({
     items,
     closeModal,
-    onActionStart,
     onActionPerformed
   }) => {
     const [isBusy, setIsBusy] = (0,external_wp_element_namespaceObject.useState)(false);
@@ -25603,9 +25598,6 @@ const trashPostAction = {
           variant: "primary",
           onClick: async () => {
             setIsBusy(true);
-            if (onActionStart) {
-              onActionStart(items);
-            }
             const promiseResult = await Promise.allSettled(items.map(item => deleteEntityRecord('postType', item.type, item.id, {}, {
               throwOnError: true
             })));
@@ -25678,177 +25670,175 @@ const trashPostAction = {
     });
   }
 };
-function usePermanentlyDeletePostAction() {
-  const {
-    createSuccessNotice,
-    createErrorNotice
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
-  const {
-    deleteEntityRecord
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  return (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    id: 'permanently-delete',
-    label: (0,external_wp_i18n_namespaceObject.__)('Permanently delete'),
-    supportsBulk: true,
-    isEligible({
+const permanentlyDeletePostAction = {
+  id: 'permanently-delete',
+  label: (0,external_wp_i18n_namespaceObject.__)('Permanently delete'),
+  supportsBulk: true,
+  isEligible({
+    status
+  }) {
+    return status === 'trash';
+  },
+  async callback(posts, {
+    registry
+  }) {
+    const {
+      createSuccessNotice,
+      createErrorNotice
+    } = registry.dispatch(external_wp_notices_namespaceObject.store);
+    const {
+      deleteEntityRecord
+    } = registry.dispatch(external_wp_coreData_namespaceObject.store);
+    const promiseResult = await Promise.allSettled(posts.map(post => {
+      return deleteEntityRecord('postType', post.type, post.id, {
+        force: true
+      }, {
+        throwOnError: true
+      });
+    }));
+    // If all the promises were fulfilled with success.
+    if (promiseResult.every(({
       status
-    }) {
-      return status === 'trash';
-    },
-    async callback(posts, onActionPerformed) {
-      const promiseResult = await Promise.allSettled(posts.map(post => {
-        return deleteEntityRecord('postType', post.type, post.id, {
-          force: true
-        }, {
-          throwOnError: true
-        });
-      }));
-      // If all the promises were fulfilled with success.
-      if (promiseResult.every(({
-        status
-      }) => status === 'fulfilled')) {
-        let successMessage;
-        if (promiseResult.length === 1) {
-          successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The posts's title. */
-          (0,external_wp_i18n_namespaceObject.__)('"%s" permanently deleted.'), getItemTitle(posts[0]));
-        } else {
-          successMessage = (0,external_wp_i18n_namespaceObject.__)('The posts were permanently deleted.');
-        }
-        createSuccessNotice(successMessage, {
-          type: 'snackbar',
-          id: 'permanently-delete-post-action'
-        });
-        if (onActionPerformed) {
-          onActionPerformed(posts);
-        }
+    }) => status === 'fulfilled')) {
+      let successMessage;
+      if (promiseResult.length === 1) {
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The posts's title. */
+        (0,external_wp_i18n_namespaceObject.__)('"%s" permanently deleted.'), getItemTitle(posts[0]));
       } else {
-        // If there was at lease one failure.
-        let errorMessage;
-        // If we were trying to permanently delete a single post.
-        if (promiseResult.length === 1) {
-          if (promiseResult[0].reason?.message) {
-            errorMessage = promiseResult[0].reason.message;
-          } else {
-            errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the post.');
-          }
-          // If we were trying to permanently delete multiple posts
+        successMessage = (0,external_wp_i18n_namespaceObject.__)('The posts were permanently deleted.');
+      }
+      createSuccessNotice(successMessage, {
+        type: 'snackbar',
+        id: 'permanently-delete-post-action'
+      });
+    } else {
+      // If there was at lease one failure.
+      let errorMessage;
+      // If we were trying to permanently delete a single post.
+      if (promiseResult.length === 1) {
+        if (promiseResult[0].reason?.message) {
+          errorMessage = promiseResult[0].reason.message;
         } else {
-          const errorMessages = new Set();
-          const failedPromises = promiseResult.filter(({
-            status
-          }) => status === 'rejected');
-          for (const failedPromise of failedPromises) {
-            if (failedPromise.reason?.message) {
-              errorMessages.add(failedPromise.reason.message);
-            }
-          }
-          if (errorMessages.size === 0) {
-            errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the posts.');
-          } else if (errorMessages.size === 1) {
-            errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
-            (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the posts: %s'), [...errorMessages][0]);
-          } else {
-            errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
-            (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while permanently deleting the posts: %s'), [...errorMessages].join(','));
+          errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the post.');
+        }
+        // If we were trying to permanently delete multiple posts
+      } else {
+        const errorMessages = new Set();
+        const failedPromises = promiseResult.filter(({
+          status
+        }) => status === 'rejected');
+        for (const failedPromise of failedPromises) {
+          if (failedPromise.reason?.message) {
+            errorMessages.add(failedPromise.reason.message);
           }
         }
-        createErrorNotice(errorMessage, {
-          type: 'snackbar'
-        });
+        if (errorMessages.size === 0) {
+          errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the posts.');
+        } else if (errorMessages.size === 1) {
+          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
+          (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the posts: %s'), [...errorMessages][0]);
+        } else {
+          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
+          (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while permanently deleting the posts: %s'), [...errorMessages].join(','));
+        }
       }
+      createErrorNotice(errorMessage, {
+        type: 'snackbar'
+      });
     }
-  }), [createSuccessNotice, createErrorNotice, deleteEntityRecord]);
-}
-function useRestorePostAction() {
-  const {
-    createSuccessNotice,
-    createErrorNotice
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
-  const {
-    editEntityRecord,
-    saveEditedEntityRecord
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  return (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    id: 'restore',
-    label: (0,external_wp_i18n_namespaceObject.__)('Restore'),
-    isPrimary: true,
-    icon: library_backup,
-    supportsBulk: true,
-    isEligible({
+  }
+};
+const restorePostAction = {
+  id: 'restore',
+  label: (0,external_wp_i18n_namespaceObject.__)('Restore'),
+  isPrimary: true,
+  icon: library_backup,
+  supportsBulk: true,
+  isEligible({
+    status
+  }) {
+    return status === 'trash';
+  },
+  async callback(posts, {
+    registry,
+    onActionPerformed
+  }) {
+    const {
+      createSuccessNotice,
+      createErrorNotice
+    } = registry.dispatch(external_wp_notices_namespaceObject.store);
+    const {
+      editEntityRecord,
+      saveEditedEntityRecord
+    } = registry.dispatch(external_wp_coreData_namespaceObject.store);
+    await Promise.allSettled(posts.map(post => {
+      return editEntityRecord('postType', post.type, post.id, {
+        status: 'draft'
+      });
+    }));
+    const promiseResult = await Promise.allSettled(posts.map(post => {
+      return saveEditedEntityRecord('postType', post.type, post.id, {
+        throwOnError: true
+      });
+    }));
+    if (promiseResult.every(({
       status
-    }) {
-      return status === 'trash';
-    },
-    async callback(posts, onActionPerformed) {
-      await Promise.allSettled(posts.map(post => {
-        return editEntityRecord('postType', post.type, post.id, {
-          status: 'draft'
-        });
-      }));
-      const promiseResult = await Promise.allSettled(posts.map(post => {
-        return saveEditedEntityRecord('postType', post.type, post.id, {
-          throwOnError: true
-        });
-      }));
-      if (promiseResult.every(({
-        status
-      }) => status === 'fulfilled')) {
-        let successMessage;
-        if (posts.length === 1) {
-          successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of posts. */
-          (0,external_wp_i18n_namespaceObject.__)('"%s" has been restored.'), getItemTitle(posts[0]));
-        } else if (posts[0].type === 'page') {
-          successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of posts. */
-          (0,external_wp_i18n_namespaceObject.__)('%d pages have been restored.'), posts.length);
-        } else {
-          successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of posts. */
-          (0,external_wp_i18n_namespaceObject.__)('%d posts have been restored.'), posts.length);
-        }
-        createSuccessNotice(successMessage, {
-          type: 'snackbar',
-          id: 'restore-post-action'
-        });
-        if (onActionPerformed) {
-          onActionPerformed(posts);
-        }
+    }) => status === 'fulfilled')) {
+      let successMessage;
+      if (posts.length === 1) {
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of posts. */
+        (0,external_wp_i18n_namespaceObject.__)('"%s" has been restored.'), getItemTitle(posts[0]));
+      } else if (posts[0].type === 'page') {
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of posts. */
+        (0,external_wp_i18n_namespaceObject.__)('%d pages have been restored.'), posts.length);
       } else {
-        // If there was at lease one failure.
-        let errorMessage;
-        // If we were trying to move a single post to the trash.
-        if (promiseResult.length === 1) {
-          if (promiseResult[0].reason?.message) {
-            errorMessage = promiseResult[0].reason.message;
-          } else {
-            errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while restoring the post.');
-          }
-          // If we were trying to move multiple posts to the trash
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of posts. */
+        (0,external_wp_i18n_namespaceObject.__)('%d posts have been restored.'), posts.length);
+      }
+      createSuccessNotice(successMessage, {
+        type: 'snackbar',
+        id: 'restore-post-action'
+      });
+      if (onActionPerformed) {
+        onActionPerformed(posts);
+      }
+    } else {
+      // If there was at lease one failure.
+      let errorMessage;
+      // If we were trying to move a single post to the trash.
+      if (promiseResult.length === 1) {
+        if (promiseResult[0].reason?.message) {
+          errorMessage = promiseResult[0].reason.message;
         } else {
-          const errorMessages = new Set();
-          const failedPromises = promiseResult.filter(({
-            status
-          }) => status === 'rejected');
-          for (const failedPromise of failedPromises) {
-            if (failedPromise.reason?.message) {
-              errorMessages.add(failedPromise.reason.message);
-            }
-          }
-          if (errorMessages.size === 0) {
-            errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while restoring the posts.');
-          } else if (errorMessages.size === 1) {
-            errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
-            (0,external_wp_i18n_namespaceObject.__)('An error occurred while restoring the posts: %s'), [...errorMessages][0]);
-          } else {
-            errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
-            (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while restoring the posts: %s'), [...errorMessages].join(','));
+          errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while restoring the post.');
+        }
+        // If we were trying to move multiple posts to the trash
+      } else {
+        const errorMessages = new Set();
+        const failedPromises = promiseResult.filter(({
+          status
+        }) => status === 'rejected');
+        for (const failedPromise of failedPromises) {
+          if (failedPromise.reason?.message) {
+            errorMessages.add(failedPromise.reason.message);
           }
         }
-        createErrorNotice(errorMessage, {
-          type: 'snackbar'
-        });
+        if (errorMessages.size === 0) {
+          errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while restoring the posts.');
+        } else if (errorMessages.size === 1) {
+          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
+          (0,external_wp_i18n_namespaceObject.__)('An error occurred while restoring the posts: %s'), [...errorMessages][0]);
+        } else {
+          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
+          (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while restoring the posts: %s'), [...errorMessages].join(','));
+        }
       }
+      createErrorNotice(errorMessage, {
+        type: 'snackbar'
+      });
     }
-  }), [createSuccessNotice, createErrorNotice, editEntityRecord, saveEditedEntityRecord]);
-}
+  }
+};
 const viewPostAction = {
   id: 'view-post',
   label: (0,external_wp_i18n_namespaceObject.__)('View'),
@@ -25857,7 +25847,9 @@ const viewPostAction = {
   isEligible(post) {
     return post.status !== 'trash';
   },
-  callback(posts, onActionPerformed) {
+  callback(posts, {
+    onActionPerformed
+  }) {
     const post = posts[0];
     window.open(post.link, '_blank');
     if (onActionPerformed) {
@@ -25883,7 +25875,9 @@ const postRevisionsAction = {
     const revisionsCount = (_post$_links$version = post?._links?.['version-history']?.[0]?.count) !== null && _post$_links$version !== void 0 ? _post$_links$version : 0;
     return lastRevisionId && revisionsCount > 1;
   },
-  callback(posts, onActionPerformed) {
+  callback(posts, {
+    onActionPerformed
+  }) {
     const post = posts[0];
     const href = (0,external_wp_url_namespaceObject.addQueryArgs)('revision.php', {
       revision: post?._links?.['predecessor-version']?.[0]?.id
@@ -26129,7 +26123,6 @@ const resetTemplateAction = {
   RenderModal: ({
     items,
     closeModal,
-    onActionStart,
     onActionPerformed
   }) => {
     const [isBusy, setIsBusy] = (0,external_wp_element_namespaceObject.useState)(false);
@@ -26193,9 +26186,6 @@ const resetTemplateAction = {
           variant: "primary",
           onClick: async () => {
             setIsBusy(true);
-            if (onActionStart) {
-              onActionStart(items);
-            }
             await onConfirm(items);
             onActionPerformed?.(items);
             setIsBusy(false);
@@ -26285,8 +26275,6 @@ function usePostActions({
       defaultActions: getEntityActions('postType', postType)
     };
   }, [postType]);
-  const permanentlyDeletePostAction = usePermanentlyDeletePostAction();
-  const restorePostAction = useRestorePostAction();
   const duplicatePostAction = useDuplicatePostAction(postType);
   const isTemplateOrTemplatePart = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE].includes(postType);
   const isPattern = postType === PATTERN_POST_TYPE;
@@ -26316,7 +26304,9 @@ function usePostActions({
           const existingCallback = actions[i].callback;
           actions[i] = {
             ...actions[i],
-            callback: (items, _onActionPerformed) => {
+            callback: (items, {
+              _onActionPerformed
+            }) => {
               existingCallback(items, _items => {
                 if (_onActionPerformed) {
                   _onActionPerformed(_items);
@@ -26346,7 +26336,7 @@ function usePostActions({
       }
     }
     return actions;
-  }, [defaultActions, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, permanentlyDeletePostAction, restorePostAction, duplicatePostAction, onActionPerformed, isLoaded, supportsRevisions, supportsTitle, context]);
+  }, [defaultActions, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, duplicatePostAction, onActionPerformed, isLoaded, supportsRevisions, supportsTitle, context]);
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-actions/index.js

@@ -29188,6 +29188,7 @@ function SingleSelectionCheckbox({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -29243,9 +29244,7 @@ function ActionModal({
     overlayClassName: `dataviews-action-modal dataviews-action-modal__${item_actions_kebabCase(action.id)}`,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(action.RenderModal, {
       items: items,
-      closeModal: closeModal,
-      onActionStart: action.onActionStart,
-      onActionPerformed: action.onActionPerformed
+      closeModal: closeModal
     })
   });
 }
@@ -29278,6 +29277,7 @@ function ActionsDropdownMenuGroup({
   actions,
   item
 }) {
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuGroup, {
     children: actions.map(action => {
       if ('RenderModal' in action) {
@@ -29289,7 +29289,11 @@ function ActionsDropdownMenuGroup({
       }
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItemTrigger, {
         action: action,
-        onClick: () => action.callback([item]),
+        onClick: () => {
+          action.callback([item], {
+            registry
+          });
+        },
         items: [item]
       }, action.id);
     })
@@ -29300,6 +29304,7 @@ function ItemActions({
   actions,
   isCompact
 }) {
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const {
     primaryActions,
     eligibleActions
@@ -29337,7 +29342,11 @@ function ItemActions({
       }
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ButtonTrigger, {
         action: action,
-        onClick: () => action.callback([item]),
+        onClick: () => {
+          action.callback([item], {
+            registry
+          });
+        },
         items: [item]
       }, action.id);
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CompactItemActions, {
@@ -29395,6 +29404,7 @@ function sanitizeOperators(field) {
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -29462,6 +29472,7 @@ function BulkActionItem({
   selectedItems,
   setActionWithModal
 }) {
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const eligibleItems = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return selectedItems.filter(item => !action.isEligible || action.isEligible(item));
   }, [action, selectedItems]);
@@ -29473,7 +29484,9 @@ function BulkActionItem({
       if (shouldShowModal) {
         setActionWithModal(action);
       } else {
-        await action.callback(eligibleItems);
+        action.callback(eligibleItems, {
+          registry
+        });
       }
     },
     suffix: eligibleItems.length > 0 ? eligibleItems.length : undefined,
@@ -30198,6 +30211,7 @@ function ViewGrid({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -30223,6 +30237,7 @@ function ListItem({
   store,
   visibleFields
 }) {
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const itemRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const labelId = `${id}-label`;
   const descriptionId = `${id}-description`;
@@ -30356,7 +30371,11 @@ function ListItem({
               icon: primaryAction.icon,
               isDestructive: primaryAction.isDestructive,
               size: "compact",
-              onClick: () => primaryAction.callback([item])
+              onClick: () => {
+                primaryAction.callback([item], {
+                  registry
+                });
+              }
             })
           })
         }, primaryAction.id), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -36552,6 +36571,7 @@ function normalizeFields(fields) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -36611,6 +36631,7 @@ function ActionButton({
   actionInProgress,
   setActionInProgress
 }) {
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const selectedEligibleItems = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return selectedItems.filter(item => {
       return !action.isEligible || action.isEligible(item);
@@ -36627,7 +36648,9 @@ function ActionButton({
     action: action,
     onClick: () => {
       setActionInProgress(action.id);
-      action.callback(selectedItems);
+      action.callback(selectedItems, {
+        registry
+      });
     },
     items: selectedEligibleItems,
     isBusy: actionInProgress === action.id
