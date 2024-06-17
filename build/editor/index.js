@@ -25989,111 +25989,125 @@ const renamePostAction = {
     });
   }
 };
-const duplicatePostAction = {
-  id: 'duplicate-post',
-  label: (0,external_wp_i18n_namespaceObject._x)('Duplicate', 'action label'),
-  isEligible({
-    status
-  }) {
-    return status !== 'trash';
-  },
-  RenderModal: ({
-    items,
-    closeModal,
-    onActionPerformed
-  }) => {
-    const [item] = items;
-    const [isCreatingPage, setIsCreatingPage] = (0,external_wp_element_namespaceObject.useState)(false);
-    const [title, setTitle] = (0,external_wp_element_namespaceObject.useState)((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Existing item title */
-    (0,external_wp_i18n_namespaceObject.__)('%s (Copy)'), getItemTitle(item)));
+const useDuplicatePostAction = postType => {
+  const {
+    userCanCreatePost
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      saveEntityRecord
-    } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-    const {
-      createSuccessNotice,
-      createErrorNotice
-    } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
-    async function createPage(event) {
-      event.preventDefault();
-      if (isCreatingPage) {
-        return;
-      }
-      const newItemOject = {
-        status: 'draft',
-        title,
-        slug: title || (0,external_wp_i18n_namespaceObject.__)('No title'),
-        comment_status: item.comment_status,
-        content: typeof item.content === 'string' ? item.content : item.content.raw,
-        excerpt: item.excerpt.raw,
-        meta: item.meta,
-        parent: item.parent,
-        password: item.password,
-        template: item.template,
-        format: item.format,
-        featured_media: item.featured_media,
-        menu_order: item.menu_order,
-        ping_status: item.ping_status
-      };
-      const assignablePropertiesPrefix = 'wp:action-assign-';
-      // Get all the properties that the current user is able to assign normally author, categories, tags,
-      // and custom taxonomies.
-      const assignableProperties = Object.keys(item?._links || {}).filter(property => property.startsWith(assignablePropertiesPrefix)).map(property => property.slice(assignablePropertiesPrefix.length));
-      assignableProperties.forEach(property => {
-        if (item[property]) {
-          newItemOject[property] = item[property];
+      getPostType,
+      canUser
+    } = select(external_wp_coreData_namespaceObject.store);
+    const resource = getPostType(postType)?.rest_base || '';
+    return {
+      userCanCreatePost: canUser('create', resource)
+    };
+  }, [postType]);
+  return (0,external_wp_element_namespaceObject.useMemo)(() => userCanCreatePost && {
+    id: 'duplicate-post',
+    label: (0,external_wp_i18n_namespaceObject._x)('Duplicate', 'action label'),
+    isEligible({
+      status
+    }) {
+      return status !== 'trash';
+    },
+    RenderModal: ({
+      items,
+      closeModal,
+      onActionPerformed
+    }) => {
+      const [item] = items;
+      const [isCreatingPage, setIsCreatingPage] = (0,external_wp_element_namespaceObject.useState)(false);
+      const [title, setTitle] = (0,external_wp_element_namespaceObject.useState)((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Existing item title */
+      (0,external_wp_i18n_namespaceObject.__)('%s (Copy)'), getItemTitle(item)));
+      const {
+        saveEntityRecord
+      } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
+      const {
+        createSuccessNotice,
+        createErrorNotice
+      } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
+      async function createPage(event) {
+        event.preventDefault();
+        if (isCreatingPage) {
+          return;
         }
-      });
-      setIsCreatingPage(true);
-      try {
-        const newItem = await saveEntityRecord('postType', item.type, newItemOject, {
-          throwOnError: true
+        const newItemOject = {
+          status: 'draft',
+          title,
+          slug: title || (0,external_wp_i18n_namespaceObject.__)('No title'),
+          comment_status: item.comment_status,
+          content: typeof item.content === 'string' ? item.content : item.content.raw,
+          excerpt: item.excerpt.raw,
+          meta: item.meta,
+          parent: item.parent,
+          password: item.password,
+          template: item.template,
+          format: item.format,
+          featured_media: item.featured_media,
+          menu_order: item.menu_order,
+          ping_status: item.ping_status
+        };
+        const assignablePropertiesPrefix = 'wp:action-assign-';
+        // Get all the properties that the current user is able to assign normally author, categories, tags,
+        // and custom taxonomies.
+        const assignableProperties = Object.keys(item?._links || {}).filter(property => property.startsWith(assignablePropertiesPrefix)).map(property => property.slice(assignablePropertiesPrefix.length));
+        assignableProperties.forEach(property => {
+          if (item[property]) {
+            newItemOject[property] = item[property];
+          }
         });
-        createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
-        // translators: %s: Title of the created template e.g: "Category".
-        (0,external_wp_i18n_namespaceObject.__)('"%s" successfully created.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(newItem.title?.rendered || title)), {
-          id: 'duplicate-post-action',
-          type: 'snackbar'
-        });
-        if (onActionPerformed) {
-          onActionPerformed([newItem]);
+        setIsCreatingPage(true);
+        try {
+          const newItem = await saveEntityRecord('postType', item.type, newItemOject, {
+            throwOnError: true
+          });
+          createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
+          // translators: %s: Title of the created template e.g: "Category".
+          (0,external_wp_i18n_namespaceObject.__)('"%s" successfully created.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(newItem.title?.rendered || title)), {
+            id: 'duplicate-post-action',
+            type: 'snackbar'
+          });
+          if (onActionPerformed) {
+            onActionPerformed([newItem]);
+          }
+        } catch (error) {
+          const errorMessage = error.message && error.code !== 'unknown_error' ? error.message : (0,external_wp_i18n_namespaceObject.__)('An error occurred while duplicating the page.');
+          createErrorNotice(errorMessage, {
+            type: 'snackbar'
+          });
+        } finally {
+          setIsCreatingPage(false);
+          closeModal();
         }
-      } catch (error) {
-        const errorMessage = error.message && error.code !== 'unknown_error' ? error.message : (0,external_wp_i18n_namespaceObject.__)('An error occurred while duplicating the page.');
-        createErrorNotice(errorMessage, {
-          type: 'snackbar'
-        });
-      } finally {
-        setIsCreatingPage(false);
-        closeModal();
       }
-    }
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
-      onSubmit: createPage,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-        spacing: 3,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Title'),
-          onChange: setTitle,
-          placeholder: (0,external_wp_i18n_namespaceObject.__)('No title'),
-          value: title
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-          spacing: 2,
-          justify: "end",
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            variant: "tertiary",
-            onClick: closeModal,
-            children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            variant: "primary",
-            type: "submit",
-            isBusy: isCreatingPage,
-            "aria-disabled": isCreatingPage,
-            children: (0,external_wp_i18n_namespaceObject._x)('Duplicate', 'action label')
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
+        onSubmit: createPage,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+          spacing: 3,
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+            label: (0,external_wp_i18n_namespaceObject.__)('Title'),
+            onChange: setTitle,
+            placeholder: (0,external_wp_i18n_namespaceObject.__)('No title'),
+            value: title
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+            spacing: 2,
+            justify: "end",
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              variant: "tertiary",
+              onClick: closeModal,
+              children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              variant: "primary",
+              type: "submit",
+              isBusy: isCreatingPage,
+              "aria-disabled": isCreatingPage,
+              children: (0,external_wp_i18n_namespaceObject._x)('Duplicate', 'action label')
+            })]
           })]
-        })]
-      })
-    });
-  }
+        })
+      });
+    }
+  }, [userCanCreatePost]);
 };
 const isTemplatePartRevertable = item => {
   if (!item) {
@@ -26268,6 +26282,7 @@ function usePostActions(postType, onActionPerformed) {
   }, [postType]);
   const permanentlyDeletePostAction = usePermanentlyDeletePostAction();
   const restorePostAction = useRestorePostAction();
+  const duplicatePostAction = useDuplicatePostAction(postType);
   const isTemplateOrTemplatePart = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE].includes(postType);
   const isPattern = postType === PATTERN_POST_TYPE;
   const isLoaded = !!postTypeObject;
@@ -26314,7 +26329,7 @@ function usePostActions(postType, onActionPerformed) {
       }
     }
     return actions;
-  }, [defaultActions, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, permanentlyDeletePostAction, restorePostAction, onActionPerformed, isLoaded, supportsRevisions, supportsTitle]);
+  }, [defaultActions, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, permanentlyDeletePostAction, restorePostAction, duplicatePostAction, onActionPerformed, isLoaded, supportsRevisions, supportsTitle]);
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-actions/index.js
