@@ -19381,7 +19381,7 @@ const __unstableSplitSelection = (blocks = []) => ({
       })
     }
   };
-  const tail = {
+  let tail = {
     ...blockB,
     // Only preserve the original client ID if the end is different.
     clientId: blockA.clientId === blockB.clientId ? (0,external_wp_blocks_namespaceObject.createBlock)(blockB.name).clientId : blockB.clientId,
@@ -19392,6 +19392,22 @@ const __unstableSplitSelection = (blocks = []) => ({
       })
     }
   };
+
+  // When splitting a block, attempt to convert the tail block to the
+  // default block type. For example, when splitting a heading block, the
+  // tail block will be converted to a paragraph block. Note that for
+  // blocks such as a list item and button, this will be skipped because
+  // the default block type cannot be inserted.
+  const defaultBlockName = (0,external_wp_blocks_namespaceObject.getDefaultBlockName)();
+  if (
+  // A block is only split when the selection is within the same
+  // block.
+  blockA.clientId === blockB.clientId && defaultBlockName && tail.name !== defaultBlockName && select.canInsertBlockType(defaultBlockName, anchorRootClientId)) {
+    const switched = (0,external_wp_blocks_namespaceObject.switchToBlockType)(tail, defaultBlockName);
+    if (switched?.length === 1) {
+      tail = switched[0];
+    }
+  }
   if (!blocks.length) {
     dispatch.replaceBlocks(select.getSelectedBlockClientIds(), [head, tail]);
     return;
