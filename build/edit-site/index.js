@@ -19259,9 +19259,9 @@ function FontLibraryProvider({
     });
     const isFaceActivated = isFontActivated(font.slug, face?.fontStyle, face?.fontWeight, font.source);
     if (isFaceActivated) {
-      loadFontFaceInBrowser(face, getDisplaySrcFromFontFace(face?.src), 'all');
-    } else {
       unloadFontFaceInBrowser(face, 'all');
+    } else {
+      loadFontFaceInBrowser(face, getDisplaySrcFromFontFace(face?.src), 'all');
     }
   };
   const loadFontFaceAsset = async fontFace => {
