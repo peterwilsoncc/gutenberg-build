@@ -3091,6 +3091,7 @@ function Layout({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -3099,6 +3100,7 @@ function Layout({
 const {
   PluginPostExcerpt
 } = unlock(external_wp_editor_namespaceObject.privateApis);
+const isSiteEditor = (0,external_wp_url_namespaceObject.getPath)(window.location.href)?.includes('site-editor.php');
 const deprecateSlot = name => {
   external_wp_deprecated_default()(`wp.editPost.${name}`, {
     since: '6.6',
@@ -3111,6 +3113,9 @@ const deprecateSlot = name => {
  * @see PluginBlockSettingsMenuItem in @wordpress/editor package.
  */
 function PluginBlockSettingsMenuItem(props) {
+  if (isSiteEditor) {
+    return null;
+  }
   deprecateSlot('PluginBlockSettingsMenuItem');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.PluginBlockSettingsMenuItem, {
     ...props
@@ -3121,6 +3126,9 @@ function PluginBlockSettingsMenuItem(props) {
  * @see PluginDocumentSettingPanel in @wordpress/editor package.
  */
 function PluginDocumentSettingPanel(props) {
+  if (isSiteEditor) {
+    return null;
+  }
   deprecateSlot('PluginDocumentSettingPanel');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.PluginDocumentSettingPanel, {
     ...props
@@ -3131,6 +3139,9 @@ function PluginDocumentSettingPanel(props) {
  * @see PluginMoreMenuItem in @wordpress/editor package.
  */
 function PluginMoreMenuItem(props) {
+  if (isSiteEditor) {
+    return null;
+  }
   deprecateSlot('PluginMoreMenuItem');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.PluginMoreMenuItem, {
     ...props
@@ -3141,6 +3152,9 @@ function PluginMoreMenuItem(props) {
  * @see PluginPrePublishPanel in @wordpress/editor package.
  */
 function PluginPrePublishPanel(props) {
+  if (isSiteEditor) {
+    return null;
+  }
   deprecateSlot('PluginPrePublishPanel');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.PluginPrePublishPanel, {
     ...props
@@ -3151,6 +3165,9 @@ function PluginPrePublishPanel(props) {
  * @see PluginPostPublishPanel in @wordpress/editor package.
  */
 function PluginPostPublishPanel(props) {
+  if (isSiteEditor) {
+    return null;
+  }
   deprecateSlot('PluginPostPublishPanel');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.PluginPostPublishPanel, {
     ...props
@@ -3161,6 +3178,9 @@ function PluginPostPublishPanel(props) {
  * @see PluginPostStatusInfo in @wordpress/editor package.
  */
 function PluginPostStatusInfo(props) {
+  if (isSiteEditor) {
+    return null;
+  }
   deprecateSlot('PluginPostStatusInfo');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.PluginPostStatusInfo, {
     ...props
@@ -3171,6 +3191,9 @@ function PluginPostStatusInfo(props) {
  * @see PluginSidebar in @wordpress/editor package.
  */
 function PluginSidebar(props) {
+  if (isSiteEditor) {
+    return null;
+  }
   deprecateSlot('PluginSidebar');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.PluginSidebar, {
     ...props
@@ -3181,6 +3204,9 @@ function PluginSidebar(props) {
  * @see PluginSidebarMoreMenuItem in @wordpress/editor package.
  */
 function PluginSidebarMoreMenuItem(props) {
+  if (isSiteEditor) {
+    return null;
+  }
   deprecateSlot('PluginSidebarMoreMenuItem');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.PluginSidebarMoreMenuItem, {
     ...props
@@ -3191,6 +3217,9 @@ function PluginSidebarMoreMenuItem(props) {
  * @see PluginPostExcerpt in @wordpress/editor package.
  */
 function __experimentalPluginPostExcerpt() {
+  if (isSiteEditor) {
+    return null;
+  }
   external_wp_deprecated_default()('wp.editPost.__experimentalPluginPostExcerpt', {
     since: '6.6',
     hint: 'Core and custom panels can be access programmatically using their panel name.',
