@@ -38585,6 +38585,7 @@ const toStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSuppor
     marginReset: true,
     presets: true,
     rootPadding: true,
+    variationStyles: false,
     ...styleOptions
   };
   const nodesWithStyles = getNodesWithStyles(tree, blockSelectors);
@@ -38682,7 +38683,7 @@ const toStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSuppor
       if (styles?.css) {
         ruleset += processCSSNesting(styles.css, `:root :where(${selector})`);
       }
-      if (styleVariationSelectors) {
+      if (options.variationStyles && styleVariationSelectors) {
         Object.entries(styleVariationSelectors).forEach(([styleVariationName, styleVariationSelector]) => {
           const styleVariations = styles?.variations?.[styleVariationName];
           if (styleVariations) {
@@ -39069,14 +39070,15 @@ function block_style_variation_useBlockProps({
     const hasBlockGapSupport = false;
     const hasFallbackGapSupport = true;
     const disableLayoutStyles = true;
-    const isTemplate = true;
-    return toStyles(variationConfig, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles, isTemplate, {
+    const disableRootPadding = true;
+    return toStyles(variationConfig, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles, disableRootPadding, {
       blockGap: false,
       blockStyles: true,
       layoutStyles: false,
       marginReset: false,
       presets: false,
-      rootPadding: false
+      rootPadding: false,
+      variationStyles: true
     });
   }, [variation, settings, styles, getBlockStyles, clientId]);
   useStyleOverride({
