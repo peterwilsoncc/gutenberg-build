@@ -22417,12 +22417,12 @@ async function fetchLinkSuggestions(search, searchOptions = {}, editorSettings =
  * @param search
  */
 function sortResults(results, search) {
-  const searchTokens = new Set(tokenize(search));
+  const searchTokens = tokenize(search);
   const scores = {};
   for (const result of results) {
     if (result.title) {
       const titleTokens = tokenize(result.title);
-      const matchingTokens = titleTokens.filter(token => searchTokens.has(token));
+      const matchingTokens = titleTokens.filter(titleToken => searchTokens.some(searchToken => titleToken.includes(searchToken)));
       scores[result.id] = matchingTokens.length / titleTokens.length;
     } else {
       scores[result.id] = 0;
