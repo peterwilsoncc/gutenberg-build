@@ -21914,7 +21914,8 @@ function createBlockListBlockFilter(features) {
       const {
         hasSupport,
         attributeKeys = [],
-        useBlockProps
+        useBlockProps,
+        isMatch
       } = feature;
       const neededProps = {};
       for (const key of attributeKeys) {
@@ -21925,7 +21926,7 @@ function createBlockListBlockFilter(features) {
       if (
       // Skip rendering if none of the needed attributes are
       // set.
-      !Object.keys(neededProps).length || !hasSupport(props.name)) {
+      !Object.keys(neededProps).length || !hasSupport(props.name) || isMatch && !isMatch(neededProps)) {
         return null;
       }
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockPropsPure
@@ -38993,6 +38994,21 @@ function useGlobalStylesOutput(disableRootPadding = false) {
 
 
 
+const VARIATION_PREFIX = 'is-style-';
+function getVariationMatches(className) {
+  if (!className) {
+    return [];
+  }
+  return className.split(/\s+/).reduce((matches, name) => {
+    if (name.startsWith(VARIATION_PREFIX)) {
+      const match = name.slice(VARIATION_PREFIX.length);
+      if (match !== 'default') {
+        matches.push(match);
+      }
+    }
+    return matches;
+  }, []);
+}
 
 /**
  * Get the first block style variation that has been registered from the class string.
@@ -39005,12 +39021,11 @@ function useGlobalStylesOutput(disableRootPadding = false) {
 function getVariationNameFromClass(className, registeredStyles = []) {
   // The global flag affects how capturing groups work in JS. So the regex
   // below will only return full CSS classes not just the variation name.
-  const matches = className?.match(/\bis-style-(?!default)(\S+)\b/g);
+  const matches = getVariationMatches(className);
   if (!matches) {
     return null;
   }
-  for (const variationClass of matches) {
-    const variation = variationClass.substring(9); // Remove 'is-style-' prefix.
+  for (const variation of matches) {
     if (registeredStyles.some(style => style.name === variation)) {
       return variation;
     }
@@ -39069,7 +39084,7 @@ function block_style_variation_useBlockProps({
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blocks_namespaceObject.store);
   const registeredStyles = getBlockStyles(name);
   const variation = getVariationNameFromClass(className, registeredStyles);
-  const variationClass = `is-style-${variation}-${clientId}`;
+  const variationClass = `${VARIATION_PREFIX}${variation}-${clientId}`;
   const {
     settings,
     styles
@@ -39113,6 +39128,9 @@ function block_style_variation_useBlockProps({
 /* harmony default export */ const block_style_variation = ({
   hasSupport: () => true,
   attributeKeys: ['className'],
+  isMatch: ({
+    className
+  }) => getVariationMatches(className).length > 0,
   useBlockProps: block_style_variation_useBlockProps
 });
 
