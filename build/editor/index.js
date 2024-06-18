@@ -27823,6 +27823,70 @@ function TemplateContentPanel() {
   });
 }
 
+;// CONCATENATED MODULE: ./packages/editor/build-module/components/template-part-content-panel/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+const {
+  BlockQuickNavigation: template_part_content_panel_BlockQuickNavigation
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
+function TemplatePartContentPanelInner() {
+  const blockTypes = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockTypes
+    } = select(external_wp_blocks_namespaceObject.store);
+    return getBlockTypes();
+  }, []);
+  const themeBlockNames = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return blockTypes.filter(blockType => {
+      return blockType.category === 'theme';
+    }).map(({
+      name
+    }) => name);
+  }, [blockTypes]);
+  const themeBlocks = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlocksByName
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    return getBlocksByName(themeBlockNames);
+  }, [themeBlockNames]);
+  if (themeBlocks.length === 0) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
+    title: (0,external_wp_i18n_namespaceObject.__)('Content'),
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(template_part_content_panel_BlockQuickNavigation, {
+      clientIds: themeBlocks
+    })
+  });
+}
+function TemplatePartContentPanel() {
+  const postType = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getCurrentPostType
+    } = select(store_store);
+    return getCurrentPostType();
+  }, []);
+  if (postType !== TEMPLATE_PART_POST_TYPE) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplatePartContentPanelInner, {});
+}
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/provider/use-auto-switch-editor-sidebars.js
 /**
  * WordPress dependencies
@@ -27886,6 +27950,7 @@ function useAutoSwitchEditorSidebars() {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -27967,7 +28032,7 @@ const SidebarContent = ({
         focusable: false,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSummary, {
           onActionPerformed: onActionPerformed
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(plugin_document_setting_panel.Slot, {}), renderingMode !== 'post-only' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplateContentPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTransformPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_taxonomies_panel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternOverridesPanel, {}), extraPanels]
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(plugin_document_setting_panel.Slot, {}), renderingMode !== 'post-only' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplateContentPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplatePartContentPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTransformPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_taxonomies_panel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternOverridesPanel, {}), extraPanels]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(sidebar_Tabs.TabPanel, {
         tabId: sidebars.block,
         focusable: false,
