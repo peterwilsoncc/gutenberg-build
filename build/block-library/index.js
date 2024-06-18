@@ -55268,8 +55268,6 @@ const getNameBySite = name => {
 
 
 
-
-
 /**
  * Internal dependencies
  */
@@ -55281,12 +55279,8 @@ const SocialLinkURLPopover = ({
   url,
   setAttributes,
   setPopover,
-  popoverAnchor,
-  clientId
+  popoverAnchor
 }) => {
-  const {
-    removeBlock
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.URLPopover, {
     anchor: popoverAnchor,
     onClose: () => setPopover(false),
@@ -55307,13 +55301,7 @@ const SocialLinkURLPopover = ({
           placeholder: (0,external_wp_i18n_namespaceObject.__)('Enter social link'),
           label: (0,external_wp_i18n_namespaceObject.__)('Enter social link'),
           hideLabelFromVision: true,
-          disableSuggestions: true,
-          onKeyDown: event => {
-            if (!!url || event.defaultPrevented || ![external_wp_keycodes_namespaceObject.BACKSPACE, external_wp_keycodes_namespaceObject.DELETE].includes(event.keyCode)) {
-              return;
-            }
-            removeBlock(clientId);
-          }
+          disableSuggestions: true
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         icon: keyboard_return,
@@ -55327,8 +55315,7 @@ const SocialLinkEdit = ({
   attributes,
   context,
   isSelected,
-  setAttributes,
-  clientId
+  setAttributes
 }) => {
   const {
     url,
@@ -55410,8 +55397,7 @@ const SocialLinkEdit = ({
         url: url,
         setAttributes: setAttributes,
         setPopover: setPopover,
-        popoverAnchor: popoverAnchor,
-        clientId: clientId
+        popoverAnchor: popoverAnchor
       })]
     })]
   });
