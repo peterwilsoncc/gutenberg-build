@@ -37551,17 +37551,20 @@ function PagePages() {
   const {
     frontPageId,
     postsPageId,
-    addNewLabel
+    addNewLabel,
+    canCreatePage
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEntityRecord,
-      getPostType
+      getPostType,
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
     const siteSettings = getEntityRecord('root', 'site');
     return {
       frontPageId: siteSettings?.page_on_front,
       postsPageId: siteSettings?.page_for_posts,
-      addNewLabel: getPostType('page')?.labels?.add_new_item
+      addNewLabel: getPostType('page')?.labels?.add_new_item,
+      canCreatePage: canUser('create', 'pages')
     };
   });
   const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [{
@@ -37729,7 +37732,7 @@ function PagePages() {
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Page, {
     title: (0,external_wp_i18n_namespaceObject.__)('Pages'),
-    actions: addNewLabel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    actions: addNewLabel && canCreatePage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         variant: "primary",
         onClick: openModal,
