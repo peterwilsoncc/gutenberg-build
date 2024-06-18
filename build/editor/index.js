@@ -25867,6 +25867,7 @@ const viewPostAction = {
 };
 const postRevisionsAction = {
   id: 'view-post-revisions',
+  context: 'list',
   label(items) {
     var _items$0$_links$versi;
     const revisionsCount = (_items$0$_links$versi = items[0]._links?.['version-history']?.[0]?.count) !== null && _items$0$_links$versi !== void 0 ? _items$0$_links$versi : 0;
@@ -26264,7 +26265,11 @@ const duplicateTemplatePartAction = {
     });
   }
 };
-function usePostActions(postType, onActionPerformed) {
+function usePostActions({
+  postType,
+  onActionPerformed,
+  context
+}) {
   const {
     defaultActions,
     postTypeObject
@@ -26292,7 +26297,19 @@ function usePostActions(postType, onActionPerformed) {
     if (!isLoaded) {
       return [];
     }
-    const actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && duplicateTemplatePartAction, isPattern && duplicatePatternAction, supportsTitle && renamePostAction, isPattern && exportPatternAsJSONAction, isTemplateOrTemplatePart ? resetTemplateAction : restorePostAction, isTemplateOrTemplatePart || isPattern ? deletePostAction : trashPostAction, !isTemplateOrTemplatePart && permanentlyDeletePostAction, ...defaultActions].filter(Boolean);
+    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && duplicateTemplatePartAction, isPattern && duplicatePatternAction, supportsTitle && renamePostAction, isPattern && exportPatternAsJSONAction, isTemplateOrTemplatePart ? resetTemplateAction : restorePostAction, isTemplateOrTemplatePart || isPattern ? deletePostAction : trashPostAction, !isTemplateOrTemplatePart && permanentlyDeletePostAction, ...defaultActions].filter(Boolean);
+    // Filter actions based on provided context. If not provided
+    // all actions are returned. We'll have a single entry for getting the actions
+    // and the consumer should provide the context to filter the actions, if needed.
+    // Actions should also provide the `context` they support, if it's specific, to
+    // compare with the provided context to get all the actions.
+    // Right now the only supported context is `list`.
+    actions = actions.filter(action => {
+      if (!action.context) {
+        return true;
+      }
+      return action.context === context;
+    });
     if (onActionPerformed) {
       for (let i = 0; i < actions.length; ++i) {
         if (actions[i].callback) {
@@ -26329,7 +26346,7 @@ function usePostActions(postType, onActionPerformed) {
       }
     }
     return actions;
-  }, [defaultActions, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, permanentlyDeletePostAction, restorePostAction, duplicatePostAction, onActionPerformed, isLoaded, supportsRevisions, supportsTitle]);
+  }, [defaultActions, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, permanentlyDeletePostAction, restorePostAction, duplicatePostAction, onActionPerformed, isLoaded, supportsRevisions, supportsTitle, context]);
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-actions/index.js
@@ -26381,7 +26398,10 @@ function PostActions({
       postType: _postType
     };
   }, []);
-  const allActions = usePostActions(postType, onActionPerformed);
+  const allActions = usePostActions({
+    postType,
+    onActionPerformed
+  });
   const actions = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return allActions.filter(action => {
       return !action.isEligible || action.isEligible(item);

@@ -37673,7 +37673,10 @@ function PagePages() {
       });
     }
   }], [authors, view.type, frontPageId, postsPageId]);
-  const postTypeActions = usePostActions('page');
+  const postTypeActions = usePostActions({
+    postType: 'page',
+    context: 'list'
+  });
   const editAction = useEditPostAction();
   const actions = (0,external_wp_element_namespaceObject.useMemo)(() => [editAction, ...postTypeActions], [postTypeActions, editAction]);
   const onChangeView = (0,external_wp_element_namespaceObject.useCallback)(newView => {
@@ -39410,8 +39413,14 @@ function DataviewsPatterns() {
     }
     return filterSortAndPaginate(patterns, viewWithoutFilters, fields);
   }, [patterns, view, fields, type]);
-  const templatePartActions = page_patterns_usePostActions(TEMPLATE_PART_POST_TYPE);
-  const patternActions = page_patterns_usePostActions(PATTERN_TYPES.user);
+  const templatePartActions = page_patterns_usePostActions({
+    postType: TEMPLATE_PART_POST_TYPE,
+    context: 'list'
+  });
+  const patternActions = page_patterns_usePostActions({
+    postType: PATTERN_TYPES.user,
+    context: 'list'
+  });
   const editAction = useEditPostAction();
   const actions = (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (type === TEMPLATE_PART_POST_TYPE) {
@@ -41592,7 +41601,10 @@ function PageTemplates() {
   } = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return filterSortAndPaginate(records, view, fields);
   }, [records, view, fields]);
-  const postTypeActions = page_templates_usePostActions(TEMPLATE_POST_TYPE);
+  const postTypeActions = page_templates_usePostActions({
+    postType: TEMPLATE_POST_TYPE,
+    context: 'list'
+  });
   const editAction = useEditPostAction();
   const actions = (0,external_wp_element_namespaceObject.useMemo)(() => [editAction, ...postTypeActions], [postTypeActions, editAction]);
   const onChangeView = (0,external_wp_element_namespaceObject.useCallback)(newView => {
