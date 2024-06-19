@@ -12390,6 +12390,7 @@ function PostDiscussionPanel() {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -12433,7 +12434,7 @@ function PostExcerpt({
   const {
     editPost
   } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
-  const [localExcerpt, setLocalExcerpt] = (0,external_wp_element_namespaceObject.useState)(excerpt);
+  const [localExcerpt, setLocalExcerpt] = (0,external_wp_element_namespaceObject.useState)((0,external_wp_htmlEntities_namespaceObject.decodeEntities)(excerpt));
   const updatePost = value => {
     editPost({
       [usedAttribute]: value
@@ -12555,6 +12556,7 @@ PluginPostExcerpt.Slot = plugin_Slot;
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -12686,7 +12688,7 @@ function PrivateExcerpt() {
     align: "left",
     numberOfLines: 4,
     truncate: true,
-    children: excerpt
+    children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(excerpt)
   });
   if (!allowEditing) {
     return excerptText;
