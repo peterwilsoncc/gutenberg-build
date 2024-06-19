@@ -14800,7 +14800,7 @@ const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
 const {
   lock,
   unlock
-} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/block-editor');
+} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I know using unstable features means my theme or plugin will inevitably break in the next version of WordPress.', '@wordpress/block-editor');
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/store/constants.js
 const STORE_NAME = 'core/block-editor';
@@ -19381,7 +19381,7 @@ const __unstableSplitSelection = (blocks = []) => ({
       })
     }
   };
-  let tail = {
+  const tail = {
     ...blockB,
     // Only preserve the original client ID if the end is different.
     clientId: blockA.clientId === blockB.clientId ? (0,external_wp_blocks_namespaceObject.createBlock)(blockB.name).clientId : blockB.clientId,
@@ -19392,22 +19392,6 @@ const __unstableSplitSelection = (blocks = []) => ({
       })
     }
   };
-
-  // When splitting a block, attempt to convert the tail block to the
-  // default block type. For example, when splitting a heading block, the
-  // tail block will be converted to a paragraph block. Note that for
-  // blocks such as a list item and button, this will be skipped because
-  // the default block type cannot be inserted.
-  const defaultBlockName = (0,external_wp_blocks_namespaceObject.getDefaultBlockName)();
-  if (
-  // A block is only split when the selection is within the same
-  // block.
-  blockA.clientId === blockB.clientId && defaultBlockName && tail.name !== defaultBlockName && select.canInsertBlockType(defaultBlockName, anchorRootClientId)) {
-    const switched = (0,external_wp_blocks_namespaceObject.switchToBlockType)(tail, defaultBlockName);
-    if (switched?.length === 1) {
-      tail = switched[0];
-    }
-  }
   if (!blocks.length) {
     dispatch.replaceBlocks(select.getSelectedBlockClientIds(), [head, tail]);
     return;
@@ -21914,8 +21898,7 @@ function createBlockListBlockFilter(features) {
       const {
         hasSupport,
         attributeKeys = [],
-        useBlockProps,
-        isMatch
+        useBlockProps
       } = feature;
       const neededProps = {};
       for (const key of attributeKeys) {
@@ -21926,7 +21909,7 @@ function createBlockListBlockFilter(features) {
       if (
       // Skip rendering if none of the needed attributes are
       // set.
-      !Object.keys(neededProps).length || !hasSupport(props.name) || isMatch && !isMatch(neededProps)) {
+      !Object.keys(neededProps).length || !hasSupport(props.name)) {
         return null;
       }
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockPropsPure
@@ -38602,7 +38585,6 @@ const toStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSuppor
     marginReset: true,
     presets: true,
     rootPadding: true,
-    variationStyles: false,
     ...styleOptions
   };
   const nodesWithStyles = getNodesWithStyles(tree, blockSelectors);
@@ -38700,7 +38682,7 @@ const toStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSuppor
       if (styles?.css) {
         ruleset += processCSSNesting(styles.css, `:root :where(${selector})`);
       }
-      if (options.variationStyles && styleVariationSelectors) {
+      if (styleVariationSelectors) {
         Object.entries(styleVariationSelectors).forEach(([styleVariationName, styleVariationSelector]) => {
           const styleVariations = styles?.variations?.[styleVariationName];
           if (styleVariations) {
@@ -38994,21 +38976,6 @@ function useGlobalStylesOutput(disableRootPadding = false) {
 
 
 
-const VARIATION_PREFIX = 'is-style-';
-function getVariationMatches(className) {
-  if (!className) {
-    return [];
-  }
-  return className.split(/\s+/).reduce((matches, name) => {
-    if (name.startsWith(VARIATION_PREFIX)) {
-      const match = name.slice(VARIATION_PREFIX.length);
-      if (match !== 'default') {
-        matches.push(match);
-      }
-    }
-    return matches;
-  }, []);
-}
 
 /**
  * Get the first block style variation that has been registered from the class string.
@@ -39021,11 +38988,12 @@ function getVariationMatches(className) {
 function getVariationNameFromClass(className, registeredStyles = []) {
   // The global flag affects how capturing groups work in JS. So the regex
   // below will only return full CSS classes not just the variation name.
-  const matches = getVariationMatches(className);
+  const matches = className?.match(/\bis-style-(?!default)(\S+)\b/g);
   if (!matches) {
     return null;
   }
-  for (const variation of matches) {
+  for (const variationClass of matches) {
+    const variation = variationClass.substring(9); // Remove 'is-style-' prefix.
     if (registeredStyles.some(style => style.name === variation)) {
       return variation;
     }
@@ -39084,7 +39052,7 @@ function block_style_variation_useBlockProps({
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blocks_namespaceObject.store);
   const registeredStyles = getBlockStyles(name);
   const variation = getVariationNameFromClass(className, registeredStyles);
-  const variationClass = `${VARIATION_PREFIX}${variation}-${clientId}`;
+  const variationClass = `is-style-${variation}-${clientId}`;
   const {
     settings,
     styles
@@ -39101,15 +39069,14 @@ function block_style_variation_useBlockProps({
     const hasBlockGapSupport = false;
     const hasFallbackGapSupport = true;
     const disableLayoutStyles = true;
-    const disableRootPadding = true;
-    return toStyles(variationConfig, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles, disableRootPadding, {
+    const isTemplate = true;
+    return toStyles(variationConfig, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles, isTemplate, {
       blockGap: false,
       blockStyles: true,
       layoutStyles: false,
       marginReset: false,
       presets: false,
-      rootPadding: false,
-      variationStyles: true
+      rootPadding: false
     });
   }, [variation, settings, styles, getBlockStyles, clientId]);
   useStyleOverride({
@@ -39128,9 +39095,6 @@ function block_style_variation_useBlockProps({
 /* harmony default export */ const block_style_variation = ({
   hasSupport: () => true,
   attributeKeys: ['className'],
-  isMatch: ({
-    className
-  }) => getVariationMatches(className).length > 0,
   useBlockProps: block_style_variation_useBlockProps
 });
 
@@ -63062,9 +63026,7 @@ function Shuffle({
         // otherwise we may shuffle to pattern that will not allow to continue shuffling.
         pattern.blocks.length === 1 && pattern.categories?.some(category => {
           return categories.includes(category);
-        }) && (
-        // Check if the pattern is not a synced pattern.
-        pattern.syncStatus === 'unsynced' || !pattern.id)
+        })
       );
     });
   }, [categories, patterns]);
