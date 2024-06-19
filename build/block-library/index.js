@@ -59238,7 +59238,7 @@ const table_of_contents_metadata = {
   __experimental: true,
   name: "core/table-of-contents",
   title: "Table of Contents",
-  category: "layout",
+  category: "design",
   description: "Summarize your post with a list of headings. Add HTML anchors to Heading blocks to link them here.",
   keywords: ["document outline", "summary"],
   textdomain: "default",
