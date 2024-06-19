@@ -29095,7 +29095,7 @@ function ViewList(props) {
     view
   } = props;
   const baseId = (0,external_wp_compose_namespaceObject.useInstanceId)(ViewList, 'view-list');
-  const selectedItem = data?.findLast(item => selection.includes(item.id));
+  const selectedItem = data?.findLast(item => selection.includes(getItemId(item)));
   const mediaField = fields.find(field => field.id === view.layout.mediaField);
   const primaryField = fields.find(field => field.id === view.layout.primaryField);
   const visibleFields = fields.filter(field => !view.hiddenFields.includes(field.id) && ![view.layout.primaryField, view.layout.mediaField].includes(field.id));
@@ -35465,9 +35465,19 @@ function DataViews({
   isLoading = false,
   paginationInfo,
   supportedLayouts,
+  selection: selectionProperty,
+  setSelection: setSelectionProperty,
   onSelectionChange = defaultOnSelectionChange
 }) {
-  const [selection, setSelection] = (0,external_wp_element_namespaceObject.useState)([]);
+  const [selectionState, setSelectionState] = (0,external_wp_element_namespaceObject.useState)([]);
+  let selection, setSelection;
+  if (selectionProperty !== undefined && setSelectionProperty !== undefined) {
+    selection = selectionProperty;
+    setSelection = setSelectionProperty;
+  } else {
+    selection = selectionState;
+    setSelection = setSelectionState;
+  }
   const [openedFilter, setOpenedFilter] = (0,external_wp_element_namespaceObject.useState)(null);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (selection.length > 0 && selection.some(id => !data.some(item => getItemId(item) === id))) {
@@ -36209,10 +36219,37 @@ function FeaturedImage({
     }) : media
   });
 }
+function usePostIdLinkInSelection(selection, setSelection, isLoadingItems, items) {
+  const {
+    params: {
+      postId
+    }
+  } = page_pages_useLocation();
+  const [postIdToSelect, setPostIdToSelect] = (0,external_wp_element_namespaceObject.useState)(postId);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (postId) {
+      setPostIdToSelect(postId);
+    }
+  }, [postId]);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (!postIdToSelect) {
+      return;
+    }
+    // Only try to select an item if the loading is complete and we have items.
+    if (!isLoadingItems && items && items.length) {
+      // If the item is not in the current selection, select it.
+      if (selection.length !== 1 || selection[0] !== postIdToSelect) {
+        setSelection([postIdToSelect]);
+      }
+      setPostIdToSelect(undefined);
+    }
+  }, [postIdToSelect, selection, setSelection, isLoadingItems, items]);
+}
 function PagePages() {
   const postType = 'page';
   const [view, setView] = useView(postType);
   const history = page_pages_useHistory();
+  const [selection, setSelection] = (0,external_wp_element_namespaceObject.useState)([]);
   const onSelectionChange = (0,external_wp_element_namespaceObject.useCallback)(items => {
     var _params$isCustom;
     const {
@@ -36258,6 +36295,7 @@ function PagePages() {
     totalItems,
     totalPages
   } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('postType', postType, queryArgs);
+  usePostIdLinkInSelection(selection, setSelection, isLoadingPages, pages);
   const {
     records: authors,
     isResolving: isLoadingAuthors
@@ -36471,7 +36509,10 @@ function PagePages() {
       isLoading: isLoadingPages || isLoadingAuthors,
       view: view,
       onChangeView: onChangeView,
-      onSelectionChange: onSelectionChange
+      selection: selection,
+      setSelection: setSelection,
+      onSelectionChange: onSelectionChange,
+      getItemId: item => item.id.toString()
     })
   });
 }
