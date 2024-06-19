@@ -17149,6 +17149,15 @@ function PostSchedulePanel() {
  */
 
 
+/**
+ * Wrapper component that renders its children only if the post type supports the slug.
+ *
+ * @param {Object}  props          Props.
+ * @param {Element} props.children Children to be rendered.
+ *
+ * @return {Component} The component to be rendered.
+ */
+
 function PostSlugCheck({
   children
 }) {
@@ -17217,6 +17226,12 @@ function PostSlugControl() {
     className: "editor-post-slug"
   });
 }
+
+/**
+ * Renders the PostSlug component. It provide a control for editing the post slug.
+ *
+ * @return {Component} The component to be rendered.
+ */
 function PostSlug() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSlugCheck, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSlugControl, {})
