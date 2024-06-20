@@ -37191,6 +37191,7 @@ function AddNewPattern() {
   const history = add_new_pattern_useHistory();
   const [showPatternModal, setShowPatternModal] = (0,external_wp_element_namespaceObject.useState)(false);
   const [showTemplatePartModal, setShowTemplatePartModal] = (0,external_wp_element_namespaceObject.useState)(false);
+  // eslint-disable-next-line @wordpress/no-unused-vars-before-return
   const {
     createPatternFromFile
   } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_patterns_namespaceObject.store));
@@ -37202,16 +37203,21 @@ function AddNewPattern() {
   const {
     isBlockBasedTheme,
     addNewPatternLabel,
-    addNewTemplatePartLabel
+    addNewTemplatePartLabel,
+    canCreatePattern,
+    canCreateTemplatePart
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getCurrentTheme,
-      getPostType
+      getPostType,
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
     return {
       isBlockBasedTheme: getCurrentTheme()?.is_block_theme,
       addNewPatternLabel: getPostType(PATTERN_TYPES.user)?.labels?.add_new_item,
-      addNewTemplatePartLabel: getPostType(TEMPLATE_PART_POST_TYPE)?.labels?.add_new_item
+      addNewTemplatePartLabel: getPostType(TEMPLATE_PART_POST_TYPE)?.labels?.add_new_item,
+      canCreatePattern: canUser('create', 'blocks'),
+      canCreateTemplatePart: canUser('create', 'template-parts')
     };
   }, []);
   function handleCreatePattern({
@@ -37238,29 +37244,37 @@ function AddNewPattern() {
     setShowPatternModal(false);
     setShowTemplatePartModal(false);
   }
-  const controls = [{
-    icon: library_symbol,
-    onClick: () => setShowPatternModal(true),
-    title: addNewPatternLabel
-  }];
-  if (isBlockBasedTheme) {
+  const controls = [];
+  if (canCreatePattern) {
+    controls.push({
+      icon: library_symbol,
+      onClick: () => setShowPatternModal(true),
+      title: addNewPatternLabel
+    });
+  }
+  if (isBlockBasedTheme && canCreateTemplatePart) {
     controls.push({
       icon: symbol_filled,
       onClick: () => setShowTemplatePartModal(true),
       title: addNewTemplatePartLabel
     });
   }
-  controls.push({
-    icon: library_upload,
-    onClick: () => {
-      patternUploadInputRef.current.click();
-    },
-    title: (0,external_wp_i18n_namespaceObject.__)('Import pattern from JSON')
-  });
+  if (canCreatePattern) {
+    controls.push({
+      icon: library_upload,
+      onClick: () => {
+        patternUploadInputRef.current.click();
+      },
+      title: (0,external_wp_i18n_namespaceObject.__)('Import pattern from JSON')
+    });
+  }
   const {
     categoryMap,
     findOrCreateTerm
   } = useAddPatternCategory();
+  if (controls.length === 0) {
+    return null;
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [addNewPatternLabel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
       controls: controls,
