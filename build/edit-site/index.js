@@ -35877,6 +35877,7 @@ const DEFAULT_VIEWS = {
 
 
 
+
 function AddNewPageModal({
   onSave,
   onClose
@@ -35890,6 +35891,9 @@ function AddNewPageModal({
     createErrorNotice,
     createSuccessNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
+  const {
+    resolveSelect
+  } = (0,external_wp_data_namespaceObject.useRegistry)();
   async function createPage(event) {
     event.preventDefault();
     if (isCreatingPage) {
@@ -35897,10 +35901,12 @@ function AddNewPageModal({
     }
     setIsCreatingPage(true);
     try {
+      const pagePostType = await resolveSelect(external_wp_coreData_namespaceObject.store).getPostType('page');
       const newPage = await saveEntityRecord('postType', 'page', {
         status: 'draft',
         title,
-        slug: title || (0,external_wp_i18n_namespaceObject.__)('No title')
+        slug: title || (0,external_wp_i18n_namespaceObject.__)('No title'),
+        content: !!pagePostType.template ? (0,external_wp_blocks_namespaceObject.serialize)((0,external_wp_blocks_namespaceObject.synchronizeBlocksWithTemplate)([], pagePostType.template)) : undefined
       }, {
         throwOnError: true
       });
