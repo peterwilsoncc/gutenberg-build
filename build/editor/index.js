@@ -7803,7 +7803,7 @@ function InterfaceSkeleton({
 
 
 /**
- * Component handles the keyboard shortcuts for the editor.
+ * Handles the keyboard shortcuts for the editor.
  *
  * It provides functionality for various keyboard shortcuts such as toggling editor mode,
  * toggling distraction-free mode, undo/redo, saving the post, toggling list view,
@@ -22840,13 +22840,22 @@ const withFontSizes = deprecateFunction('withFontSizes', external_wp_blockEditor
 // State Related Components.
 
 
+
+/**
+ * Handles the keyboard shortcuts for the editor.
+ *
+ * It provides functionality for various keyboard shortcuts such as toggling editor mode,
+ * toggling distraction-free mode, undo/redo, saving the post, toggling list view,
+ * and toggling the sidebar.
+ */
 const VisualEditorGlobalKeyboardShortcuts = EditorKeyboardShortcuts;
 
 /**
- * Component handles the global keyboard shortcuts for the Text editor.
+ * Handles the keyboard shortcuts for the editor.
  *
  * It provides functionality for various keyboard shortcuts such as toggling editor mode,
- * toggling distraction-free mode, undo/redo.
+ * toggling distraction-free mode, undo/redo, saving the post, toggling list view,
+ * and toggling the sidebar.
  */
 const TextEditorGlobalKeyboardShortcuts = EditorKeyboardShortcuts;
 
