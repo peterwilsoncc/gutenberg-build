@@ -25700,6 +25700,32 @@ const trashPostAction = {
     });
   }
 };
+function useTrashPostAction(postType) {
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
+  const {
+    resource,
+    cachedCanUserResolvers
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getPostType,
+      getCachedResolvers
+    } = select(external_wp_coreData_namespaceObject.store);
+    return {
+      resource: getPostType(postType)?.rest_base || '',
+      cachedCanUserResolvers: getCachedResolvers().canUser
+    };
+  }, [postType]);
+  return (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    ...trashPostAction,
+    isEligible(item) {
+      return trashPostAction.isEligible(item) && registry.select(external_wp_coreData_namespaceObject.store).canUser('delete', resource, item.id);
+    }
+  }),
+  // We are making this use memo depend on cachedCanUserResolvers as a way to make the component using this hook re-render
+  // when user capabilities are resolved. This makes sure the isEligible function is re-evaluated.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [registry, resource, cachedCanUserResolvers]);
+}
 const permanentlyDeletePostAction = {
   id: 'permanently-delete',
   label: (0,external_wp_i18n_namespaceObject.__)('Permanently delete'),
@@ -26306,6 +26332,7 @@ function usePostActions({
     };
   }, [postType]);
   const duplicatePostAction = useDuplicatePostAction(postType);
+  const trashPostActionForPostType = useTrashPostAction(postType);
   const isTemplateOrTemplatePart = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE].includes(postType);
   const isPattern = postType === PATTERN_POST_TYPE;
   const isLoaded = !!postTypeObject;
@@ -26315,7 +26342,7 @@ function usePostActions({
     if (!isLoaded) {
       return [];
     }
-    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && duplicateTemplatePartAction, isPattern && duplicatePatternAction, supportsTitle && renamePostAction, isPattern && exportPatternAsJSONAction, isTemplateOrTemplatePart ? resetTemplateAction : restorePostAction, isTemplateOrTemplatePart || isPattern ? deletePostAction : trashPostAction, !isTemplateOrTemplatePart && permanentlyDeletePostAction, ...defaultActions].filter(Boolean);
+    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && duplicateTemplatePartAction, isPattern && duplicatePatternAction, supportsTitle && renamePostAction, isPattern && exportPatternAsJSONAction, isTemplateOrTemplatePart ? resetTemplateAction : restorePostAction, isTemplateOrTemplatePart || isPattern ? deletePostAction : trashPostActionForPostType, !isTemplateOrTemplatePart && permanentlyDeletePostAction, ...defaultActions].filter(Boolean);
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
     // and the consumer should provide the context to filter the actions, if needed.
@@ -26366,7 +26393,7 @@ function usePostActions({
       }
     }
     return actions;
-  }, [defaultActions, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, duplicatePostAction, onActionPerformed, isLoaded, supportsRevisions, supportsTitle, context]);
+  }, [defaultActions, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, duplicatePostAction, trashPostActionForPostType, onActionPerformed, isLoaded, supportsRevisions, supportsTitle, context]);
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-actions/index.js
