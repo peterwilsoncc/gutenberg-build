@@ -35906,7 +35906,7 @@ function AddNewPageModal({
         status: 'draft',
         title,
         slug: title || (0,external_wp_i18n_namespaceObject.__)('No title'),
-        content: !!pagePostType.template ? (0,external_wp_blocks_namespaceObject.serialize)((0,external_wp_blocks_namespaceObject.synchronizeBlocksWithTemplate)([], pagePostType.template)) : undefined
+        content: !!pagePostType.template && pagePostType.template.length ? (0,external_wp_blocks_namespaceObject.serialize)((0,external_wp_blocks_namespaceObject.synchronizeBlocksWithTemplate)([], pagePostType.template)) : undefined
       }, {
         throwOnError: true
       });
