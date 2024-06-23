@@ -17087,24 +17087,6 @@ function TypographyVariations({
   });
 }
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/settings.js
-/**
- * WordPress dependencies
- */
-
-
-
-const settings_settings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m19 7.5h-7.628c-.3089-.87389-1.1423-1.5-2.122-1.5-.97966 0-1.81309.62611-2.12197 1.5h-2.12803v1.5h2.12803c.30888.87389 1.14231 1.5 2.12197 1.5.9797 0 1.8131-.62611 2.122-1.5h7.628z"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m19 15h-2.128c-.3089-.8739-1.1423-1.5-2.122-1.5s-1.8131.6261-2.122 1.5h-7.628v1.5h7.628c.3089.8739 1.1423 1.5 2.122 1.5s1.8131-.6261 2.122-1.5h2.128z"
-  })]
-});
-/* harmony default export */ const library_settings = (settings_settings);
-
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/font-library-modal/resolvers.js
 /**
  * WordPress dependencies
@@ -23305,7 +23287,6 @@ function FontFamilyItem({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -23340,29 +23321,30 @@ function FontFamilies() {
       defaultTabId: modalTabOpen
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       spacing: 2,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        justify: "space-between",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(subtitle, {
-          level: 3,
-          children: (0,external_wp_i18n_namespaceObject.__)('Fonts')
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(subtitle, {
+        level: 3,
+        children: (0,external_wp_i18n_namespaceObject.__)('Fonts')
+      }), hasFonts ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+          isBordered: true,
+          isSeparated: true,
+          children: [customFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_family_item, {
+            font: font
+          }, font.slug)), themeFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_family_item, {
+            font: font
+          }, font.slug))]
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          className: "edit-site-global-styles-font-families__manage-fonts",
+          variant: "secondary",
+          __next40pxDefaultSize: true,
           onClick: () => setModalTabOpen('installed-fonts'),
-          label: (0,external_wp_i18n_namespaceObject.__)('Manage fonts'),
-          icon: library_settings,
-          size: "small"
+          children: (0,external_wp_i18n_namespaceObject.__)('Manage fonts')
         })]
-      }), hasFonts ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalItemGroup, {
-        isBordered: true,
-        isSeparated: true,
-        children: [customFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_family_item, {
-          font: font
-        }, font.slug)), themeFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_family_item, {
-          font: font
-        }, font.slug))]
       }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [(0,external_wp_i18n_namespaceObject.__)('No fonts installed.'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           className: "edit-site-global-styles-font-families__add-fonts",
           variant: "secondary",
+          __next40pxDefaultSize: true,
           onClick: () => setModalTabOpen('upload-fonts'),
           children: (0,external_wp_i18n_namespaceObject.__)('Add fonts')
         })]
@@ -24277,6 +24259,24 @@ const reset_reset = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
   })
 });
 /* harmony default export */ const library_reset = (reset_reset);
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/settings.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+const settings_settings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "m19 7.5h-7.628c-.3089-.87389-1.1423-1.5-2.122-1.5-.97966 0-1.81309.62611-2.12197 1.5h-2.12803v1.5h2.12803c.30888.87389 1.14231 1.5 2.12197 1.5.9797 0 1.8131-.62611 2.122-1.5h7.628z"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "m19 15h-2.128c-.3089-.8739-1.1423-1.5-2.122-1.5s-1.8131.6261-2.122 1.5h-7.628v1.5h7.628c.3089.8739 1.1423 1.5 2.122 1.5s1.8131-.6261 2.122-1.5h2.128z"
+  })]
+});
+/* harmony default export */ const library_settings = (settings_settings);
 
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/shadow-utils.js
 const CUSTOM_VALUE_SETTINGS = {
