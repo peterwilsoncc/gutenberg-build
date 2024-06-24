@@ -25700,31 +25700,17 @@ const trashPostAction = {
     });
   }
 };
-function useTrashPostAction(postType) {
+function useCanUserEligibilityCheckPostType(capability, resource, action) {
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
-  const {
-    resource,
-    cachedCanUserResolvers
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getPostType,
-      getCachedResolvers
-    } = select(external_wp_coreData_namespaceObject.store);
-    return {
-      resource: getPostType(postType)?.rest_base || '',
-      cachedCanUserResolvers: getCachedResolvers().canUser
-    };
-  }, [postType]);
   return (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    ...trashPostAction,
+    ...action,
     isEligible(item) {
-      return trashPostAction.isEligible(item) && registry.select(external_wp_coreData_namespaceObject.store).canUser('delete', resource, item.id);
+      return action.isEligible(item) && registry.select(external_wp_coreData_namespaceObject.store).canUser(capability, resource, item.id);
     }
-  }),
-  // We are making this use memo depend on cachedCanUserResolvers as a way to make the component using this hook re-render
-  // when user capabilities are resolved. This makes sure the isEligible function is re-evaluated.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  [registry, resource, cachedCanUserResolvers]);
+  }), [action, registry, capability, resource]);
+}
+function useTrashPostAction(resource) {
+  return useCanUserEligibilityCheckPostType('delete', resource, trashPostAction);
 }
 const permanentlyDeletePostAction = {
   id: 'permanently-delete',
@@ -25804,6 +25790,9 @@ const permanentlyDeletePostAction = {
     }
   }
 };
+function usePermanentlyDeletePostAction(resource) {
+  return useCanUserEligibilityCheckPostType('delete', resource, permanentlyDeletePostAction);
+}
 const restorePostAction = {
   id: 'restore',
   label: (0,external_wp_i18n_namespaceObject.__)('Restore'),
@@ -25895,6 +25884,9 @@ const restorePostAction = {
     }
   }
 };
+function useRestorePostAction(resource) {
+  return useCanUserEligibilityCheckPostType('update', resource, restorePostAction);
+}
 const viewPostAction = {
   id: 'view-post',
   label: (0,external_wp_i18n_namespaceObject.__)('View'),
@@ -26040,6 +26032,9 @@ const renamePostAction = {
     });
   }
 };
+function useRenamePostAction(resource) {
+  return useCanUserEligibilityCheckPostType('update', resource, renamePostAction);
+}
 const useDuplicatePostAction = postType => {
   const {
     userCanCreatePost
@@ -26319,25 +26314,33 @@ function usePostActions({
   const {
     defaultActions,
     postTypeObject,
-    userCanCreatePostType
+    userCanCreatePostType,
+    resource,
+    cachedCanUserResolvers
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getPostType,
-      canUser
+      canUser,
+      getCachedResolvers
     } = select(external_wp_coreData_namespaceObject.store);
     const {
       getEntityActions
     } = unlock(select(store_store));
     const _postTypeObject = getPostType(postType);
-    const resource = _postTypeObject?.rest_base || '';
+    const _resource = _postTypeObject?.rest_base || '';
     return {
       postTypeObject: _postTypeObject,
       defaultActions: getEntityActions('postType', postType),
-      userCanCreatePostType: canUser('create', resource)
+      userCanCreatePostType: canUser('create', _resource),
+      resource: _resource,
+      cachedCanUserResolvers: getCachedResolvers()?.canUser
     };
   }, [postType]);
   const duplicatePostAction = useDuplicatePostAction(postType);
-  const trashPostActionForPostType = useTrashPostAction(postType);
+  const trashPostActionForPostType = useTrashPostAction(resource);
+  const permanentlyDeletePostActionForPostType = usePermanentlyDeletePostAction(resource);
+  const renamePostActionForPostType = useRenamePostAction(resource);
+  const restorePostActionForPostType = useRestorePostAction(resource);
   const isTemplateOrTemplatePart = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE].includes(postType);
   const isPattern = postType === PATTERN_POST_TYPE;
   const isLoaded = !!postTypeObject;
@@ -26347,7 +26350,7 @@ function usePostActions({
     if (!isLoaded) {
       return [];
     }
-    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && duplicateTemplatePartAction, isPattern && userCanCreatePostType && duplicatePatternAction, supportsTitle && renamePostAction, isPattern && exportPatternAsJSONAction, isTemplateOrTemplatePart ? resetTemplateAction : restorePostAction, isTemplateOrTemplatePart || isPattern ? deletePostAction : trashPostActionForPostType, !isTemplateOrTemplatePart && permanentlyDeletePostAction, ...defaultActions].filter(Boolean);
+    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && duplicateTemplatePartAction, isPattern && userCanCreatePostType && duplicatePatternAction, supportsTitle && renamePostActionForPostType, isPattern && exportPatternAsJSONAction, isTemplateOrTemplatePart ? resetTemplateAction : restorePostActionForPostType, isTemplateOrTemplatePart || isPattern ? deletePostAction : trashPostActionForPostType, !isTemplateOrTemplatePart && permanentlyDeletePostActionForPostType, ...defaultActions].filter(Boolean);
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
     // and the consumer should provide the context to filter the actions, if needed.
@@ -26398,7 +26401,10 @@ function usePostActions({
       }
     }
     return actions;
-  }, [defaultActions, userCanCreatePostType, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, duplicatePostAction, trashPostActionForPostType, onActionPerformed, isLoaded, supportsRevisions, supportsTitle, context]);
+    // We are making this use memo depend on cachedCanUserResolvers as a way to make the component using this hook re-render
+    // when user capabilities are resolved. This makes sure the isEligible functions of actions dependent on capabilities are re-evaluated.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultActions, userCanCreatePostType, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, duplicatePostAction, trashPostActionForPostType, restorePostActionForPostType, renamePostActionForPostType, permanentlyDeletePostActionForPostType, onActionPerformed, isLoaded, supportsRevisions, supportsTitle, context, cachedCanUserResolvers]);
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-actions/index.js
