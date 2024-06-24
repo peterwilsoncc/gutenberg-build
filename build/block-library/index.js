@@ -5347,6 +5347,7 @@ const button_metadata = {
       __experimentalTextTransform: true,
       __experimentalTextDecoration: true,
       __experimentalLetterSpacing: true,
+      __experimentalWritingMode: true,
       __experimentalDefaultControls: {
         fontSize: true
       }
@@ -53728,6 +53729,7 @@ const site_tagline_metadata = {
       __experimentalFontStyle: true,
       __experimentalFontWeight: true,
       __experimentalLetterSpacing: true,
+      __experimentalWritingMode: true,
       __experimentalDefaultControls: {
         fontSize: true
       }
@@ -54051,6 +54053,7 @@ const site_title_metadata = {
       __experimentalFontStyle: true,
       __experimentalFontWeight: true,
       __experimentalLetterSpacing: true,
+      __experimentalWritingMode: true,
       __experimentalDefaultControls: {
         fontSize: true
       }
@@ -61990,6 +61993,7 @@ const verse_metadata = {
       __experimentalLetterSpacing: true,
       __experimentalTextTransform: true,
       __experimentalTextDecoration: true,
+      __experimentalWritingMode: true,
       __experimentalDefaultControls: {
         fontSize: true
       }
