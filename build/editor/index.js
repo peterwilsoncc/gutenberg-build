@@ -26318,17 +26318,22 @@ function usePostActions({
 }) {
   const {
     defaultActions,
-    postTypeObject
+    postTypeObject,
+    userCanCreatePostType
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getPostType
+      getPostType,
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
     const {
       getEntityActions
     } = unlock(select(store_store));
+    const _postTypeObject = getPostType(postType);
+    const resource = _postTypeObject?.rest_base || '';
     return {
-      postTypeObject: getPostType(postType),
-      defaultActions: getEntityActions('postType', postType)
+      postTypeObject: _postTypeObject,
+      defaultActions: getEntityActions('postType', postType),
+      userCanCreatePostType: canUser('create', resource)
     };
   }, [postType]);
   const duplicatePostAction = useDuplicatePostAction(postType);
@@ -26342,7 +26347,7 @@ function usePostActions({
     if (!isLoaded) {
       return [];
     }
-    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && duplicateTemplatePartAction, isPattern && duplicatePatternAction, supportsTitle && renamePostAction, isPattern && exportPatternAsJSONAction, isTemplateOrTemplatePart ? resetTemplateAction : restorePostAction, isTemplateOrTemplatePart || isPattern ? deletePostAction : trashPostActionForPostType, !isTemplateOrTemplatePart && permanentlyDeletePostAction, ...defaultActions].filter(Boolean);
+    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && duplicateTemplatePartAction, isPattern && userCanCreatePostType && duplicatePatternAction, supportsTitle && renamePostAction, isPattern && exportPatternAsJSONAction, isTemplateOrTemplatePart ? resetTemplateAction : restorePostAction, isTemplateOrTemplatePart || isPattern ? deletePostAction : trashPostActionForPostType, !isTemplateOrTemplatePart && permanentlyDeletePostAction, ...defaultActions].filter(Boolean);
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
     // and the consumer should provide the context to filter the actions, if needed.
@@ -26393,7 +26398,7 @@ function usePostActions({
       }
     }
     return actions;
-  }, [defaultActions, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, duplicatePostAction, trashPostActionForPostType, onActionPerformed, isLoaded, supportsRevisions, supportsTitle, context]);
+  }, [defaultActions, userCanCreatePostType, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, duplicatePostAction, trashPostActionForPostType, onActionPerformed, isLoaded, supportsRevisions, supportsTitle, context]);
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-actions/index.js
