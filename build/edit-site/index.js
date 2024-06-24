@@ -25330,17 +25330,26 @@ const {
  *
  * @param {string} view Editor canvas container view.
  *
- * @return {string} Translated string corresponding to value of view. Default is ''.
+ * @return {Object} Translated string for the view title and associated icon, both defaulting to ''.
  */
-function getEditorCanvasContainerTitle(view) {
+function getEditorCanvasContainerTitleAndIcon(view) {
   switch (view) {
     case 'style-book':
-      return (0,external_wp_i18n_namespaceObject.__)('Style Book');
+      return {
+        title: (0,external_wp_i18n_namespaceObject.__)('Style Book'),
+        icon: library_seen
+      };
     case 'global-styles-revisions':
     case 'global-styles-revisions:style-book':
-      return (0,external_wp_i18n_namespaceObject.__)('Style Revisions');
+      return {
+        title: (0,external_wp_i18n_namespaceObject.__)('Style Revisions'),
+        icon: library_backup
+      };
     default:
-      return '';
+      return {
+        title: '',
+        icon: ''
+      };
   }
 }
 function EditorCanvasContainer({
@@ -25391,7 +25400,9 @@ function EditorCanvasContainer({
   if (isClosed) {
     return null;
   }
-  const title = getEditorCanvasContainerTitle(editorCanvasContainerView);
+  const {
+    title
+  } = getEditorCanvasContainerTitleAndIcon(editorCanvasContainerView);
   const shouldShowCloseButton = onClose || closeButtonLabel;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditorContentSlotFill.Fill, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -27407,6 +27418,7 @@ function EditSiteEditor({
     currentPostIsTrashed
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
+      getEditorCanvasContainerView,
       getEditedPostContext,
       getCanvasMode,
       isPage,
@@ -27432,7 +27444,7 @@ function EditSiteEditor({
       isEditingPage: isPage(),
       supportsGlobalStyles: getCurrentTheme()?.is_block_theme,
       showIconLabels: get('core', 'showIconLabels'),
-      editorCanvasView: lock_unlock_unlock(select(store)).getEditorCanvasContainerView(),
+      editorCanvasView: getEditorCanvasContainerView(),
       currentPostIsTrashed: select(external_wp_editor_namespaceObject.store).getCurrentPostAttribute('status') === 'trash'
     };
   }, []);
@@ -27490,6 +27502,12 @@ function EditSiteEditor({
         break;
     }
   }, [history, createSuccessNotice]);
+
+  // Replace the title and icon displayed in the DocumentBar when there's an overlay visible.
+  const {
+    title,
+    icon
+  } = getEditorCanvasContainerTitleAndIcon(editorCanvasView);
   const isReady = !isLoading;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesRenderer, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EditorKeyboardShortcutsRegister, {}), isEditMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockKeyboardShortcuts, {}), !isReady ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CanvasLoader, {
@@ -27508,7 +27526,8 @@ function EditSiteEditor({
         size: "compact"
       }),
       forceDisableBlockTools: !hasDefaultEditorCanvasView,
-      title: !hasDefaultEditorCanvasView ? getEditorCanvasContainerTitle(editorCanvasView) : undefined,
+      title: title,
+      icon: icon,
       iframeProps: iframeProps,
       onActionPerformed: onActionPerformed,
       extraSidebarPanels: !isEditingPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(plugin_template_setting_panel.Slot, {}),
@@ -43086,6 +43105,7 @@ function useLayoutAreas() {
  */
 
 
+
 const {
   useCommandContext
 } = lock_unlock_unlock(external_wp_commands_namespaceObject.privateApis);
@@ -43109,6 +43129,8 @@ function useSetCommandContext() {
       hasBlockSelected: getBlockSelectionStart()
     };
   }, []);
+  const hasEditorCanvasContainer = useHasEditorCanvasContainer();
+
   // Sets the right context for the command palette
   let commandContext = 'site-editor';
   if (canvasMode === 'edit') {
@@ -43116,6 +43138,14 @@ function useSetCommandContext() {
   }
   if (hasBlockSelected) {
     commandContext = 'block-selection-edit';
+  }
+  if (hasEditorCanvasContainer) {
+    /*
+     * The editor canvas overlay will likely be deprecated in the future, so for now we clear the command context
+     * to remove the suggested commands that may not make sense with Style Book or Style Revisions open.
+     * See https://github.com/WordPress/gutenberg/issues/62216.
+     */
+    commandContext = '';
   }
   useCommandContext(commandContext);
 }

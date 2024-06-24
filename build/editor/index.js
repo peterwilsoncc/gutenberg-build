@@ -8109,10 +8109,15 @@ const MotionButton = (0,external_wp_components_namespaceObject.__unstableMotion)
  * ```jsx
  * <DocumentBar />
  * ```
+ * @param {Object}                                   props       The component props.
+ * @param {string}                                   props.title A title for the document, defaulting to the document or
+ *                                                               template title currently being edited.
+ * @param {import("@wordpress/components").IconType} props.icon  An icon for the document, defaulting to an icon for document
+ *                                                               or template currently being edited.
  *
  * @return {JSX.Element} The rendered DocumentBar component.
  */
-function DocumentBar() {
+function DocumentBar(props) {
   const {
     postType,
     documentTitle,
@@ -8155,7 +8160,9 @@ function DocumentBar() {
   const isTemplate = TEMPLATE_POST_TYPES.includes(postType);
   const isGlobalEntity = GLOBAL_POST_TYPES.includes(postType);
   const hasBackButton = !!onNavigateToPreviousEntityRecord;
-  const title = isTemplate ? templateTitle : documentTitle;
+  const entityTitle = isTemplate ? templateTitle : documentTitle;
+  const title = props.title || entityTitle;
+  const icon = props.icon || templateIcon;
   const mounted = (0,external_wp_element_namespaceObject.useRef)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     mounted.current = true;
@@ -8216,11 +8223,11 @@ function DocumentBar() {
           duration: 0
         } : undefined,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-          icon: templateIcon
+          icon: icon
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
           size: "body",
           as: "h1",
-          "aria-label": TYPE_LABELS[postType] ?
+          "aria-label": !props.title && TYPE_LABELS[postType] ?
           // eslint-disable-next-line @wordpress/valid-sprintf
           (0,external_wp_i18n_namespaceObject.sprintf)(TYPE_LABELS[postType], title) : undefined,
           children: title ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title) : (0,external_wp_i18n_namespaceObject.__)('No Title')
@@ -23839,7 +23846,8 @@ function Header({
   forceIsDirty,
   forceDisableBlockTools,
   setEntitiesSavedStatesCallback,
-  title
+  title,
+  icon
 }) {
   const isWideViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('large');
   const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
@@ -23899,7 +23907,10 @@ function Header({
         className: dist_clsx('editor-header__center', {
           'is-collapsed': !isBlockToolsCollapsed && hasTopToolbar
         }),
-        children: !title ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DocumentBar, {}) : title
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DocumentBar, {
+          title: title,
+          icon: icon
+        })
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__unstableMotion.div, {
       variants: toolbarVariations,
@@ -25148,6 +25159,7 @@ function EditorInterface({
   customSaveButton,
   forceDisableBlockTools,
   title,
+  icon,
   iframeProps
 }) {
   const {
@@ -25216,7 +25228,8 @@ function EditorInterface({
       setEntitiesSavedStatesCallback: setEntitiesSavedStatesCallback,
       customSaveButton: customSaveButton,
       forceDisableBlockTools: forceDisableBlockTools,
-      title: title
+      title: title,
+      icon: icon
     }),
     editorNotices: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(editor_notices, {}),
     secondarySidebar: !isPreviewMode && mode === 'visual' && (isInserterOpened && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InserterSidebar, {}) || isListViewOpened && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ListViewSidebar, {})),
