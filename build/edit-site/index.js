@@ -27807,7 +27807,7 @@ function SingleSelectionCheckbox({
   disabled
 }) {
   const id = getItemId(item);
-  const isSelected = selection.includes(id);
+  const isSelected = !disabled && selection.includes(id);
   let selectionLabel;
   if (primaryField?.getValue && item) {
     // eslint-disable-next-line @wordpress/valid-sprintf
@@ -28192,24 +28192,10 @@ function BulkActions({
     });
   }, [data, bulkActions]);
   const numberSelectableItems = selectableItems.length;
-  const areAllSelected = selection && selection.length === numberSelectableItems;
   const selectedItems = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return data.filter(item => selection.includes(getItemId(item)));
-  }, [selection, data, getItemId]);
-  const hasNonSelectableItemSelected = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return selectedItems.some(item => {
-      return !selectableItems.includes(item);
-    });
-  }, [selectedItems, selectableItems]);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (hasNonSelectableItemSelected) {
-      onSelectionChange(selectedItems.filter(selectedItem => {
-        return selectableItems.some(item => {
-          return getItemId(selectedItem) === getItemId(item);
-        });
-      }));
-    }
-  }, [hasNonSelectableItemSelected, selectedItems, selectableItems, getItemId, onSelectionChange]);
+    return data.filter(item => selection.includes(getItemId(item)) && selectableItems.includes(item));
+  }, [selection, data, getItemId, selectableItems]);
+  const areAllSelected = selectedItems.length === numberSelectableItems;
   if (bulkActions.length === 0) {
     return null;
   }
@@ -28226,8 +28212,8 @@ function BulkActions({
         __next40pxDefaultSize: true,
         variant: "tertiary",
         size: "compact",
-        children: selection.length ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %d: Number of items. */
-        (0,external_wp_i18n_namespaceObject._n)('Edit %d item', 'Edit %d items', selection.length), selection.length) : (0,external_wp_i18n_namespaceObject.__)('Bulk edit')
+        children: selectedItems.length ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %d: Number of items. */
+        (0,external_wp_i18n_namespaceObject._n)('Edit %d item', 'Edit %d items', selectedItems.length), selectedItems.length) : (0,external_wp_i18n_namespaceObject.__)('Bulk edit')
       }),
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsMenuGroup, {
         actions: bulkActions,
@@ -28408,19 +28394,21 @@ function BulkSelectionCheckbox({
   selection,
   onSelectionChange,
   data,
-  actions
+  actions,
+  getItemId
 }) {
   const selectableItems = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return data.filter(item => {
       return actions.some(action => action.supportsBulk && (!action.isEligible || action.isEligible(item)));
     });
   }, [data, actions]);
-  const areAllSelected = selection.length === selectableItems.length;
+  const selectedItems = data.filter(item => selection.includes(getItemId(item)) && selectableItems.includes(item));
+  const areAllSelected = selectedItems.length === selectableItems.length;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
     className: "dataviews-view-table-selection-checkbox",
     __nextHasNoMarginBottom: true,
     checked: areAllSelected,
-    indeterminate: !areAllSelected && !!selection.length,
+    indeterminate: !areAllSelected && !!selectedItems.length,
     onChange: () => {
       if (areAllSelected) {
         onSelectionChange([]);
@@ -28444,7 +28432,7 @@ function TableRow({
   data
 }) {
   const hasPossibleBulkAction = useHasAPossibleBulkAction(actions, item);
-  const isSelected = selection.includes(id);
+  const isSelected = hasPossibleBulkAction && selection.includes(id);
   const [isHovered, setIsHovered] = (0,external_wp_element_namespaceObject.useState)(false);
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -28469,6 +28457,9 @@ function TableRow({
       isTouchDevice.current = true;
     },
     onClick: () => {
+      if (!hasPossibleBulkAction) {
+        return;
+      }
       if (!isTouchDevice.current && document.getSelection()?.type !== 'Range') {
         if (!isSelected) {
           onSelectionChange(data.filter(_item => {
@@ -28592,7 +28583,8 @@ function ViewTable({
               selection: selection,
               onSelectionChange: onSelectionChange,
               data: data,
-              actions: actions
+              actions: actions,
+              getItemId: getItemId
             })
           }), visibleFields.map((field, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("th", {
             style: {
@@ -35478,13 +35470,6 @@ function DataViews({
     setSelection = setSelectionState;
   }
   const [openedFilter, setOpenedFilter] = (0,external_wp_element_namespaceObject.useState)(null);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (selection.length > 0 && selection.some(id => !data.some(item => getItemId(item) === id))) {
-      const newSelection = selection.filter(id => data.some(item => getItemId(item) === id));
-      setSelection(newSelection);
-      onSelectionChange(data.filter(item => newSelection.includes(getItemId(item))));
-    }
-  }, [selection, data, getItemId, onSelectionChange]);
   const onSetSelection = (0,external_wp_element_namespaceObject.useCallback)(items => {
     setSelection(items.map(item => getItemId(item)));
     onSelectionChange(items);
@@ -35492,6 +35477,9 @@ function DataViews({
   const ViewComponent = VIEW_LAYOUTS.find(v => v.type === view.type)?.component;
   const _fields = (0,external_wp_element_namespaceObject.useMemo)(() => normalizeFields(fields), [fields]);
   const hasPossibleBulkAction = dataviews_useSomeItemHasAPossibleBulkAction(actions, data);
+  const _selection = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return selection.filter(id => data.some(item => getItemId(item) === id));
+  }, [selection, data, getItemId]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "dataviews-wrapper",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -35517,7 +35505,7 @@ function DataViews({
         actions: actions,
         data: data,
         onSelectionChange: onSetSelection,
-        selection: selection,
+        selection: _selection,
         getItemId: getItemId
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_actions, {
         fields: _fields,
@@ -35533,7 +35521,7 @@ function DataViews({
       isLoading: isLoading,
       onChangeView: onChangeView,
       onSelectionChange: onSetSelection,
-      selection: selection,
+      selection: _selection,
       setOpenedFilter: setOpenedFilter,
       view: view
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pagination, {
@@ -35543,7 +35531,7 @@ function DataViews({
     }), [constants_LAYOUT_TABLE, constants_LAYOUT_GRID].includes(view.type) && hasPossibleBulkAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BulkActionsToolbar, {
       data: data,
       actions: actions,
-      selection: selection,
+      selection: _selection,
       onSelectionChange: onSetSelection,
       getItemId: getItemId
     })]
@@ -36080,6 +36068,7 @@ const useEditPostAction = () => {
 
 
 
+
 const {
   usePostActions
 } = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
@@ -36224,37 +36213,20 @@ function FeaturedImage({
     }) : media
   });
 }
-function usePostIdLinkInSelection(selection, setSelection, isLoadingItems, items) {
+function getItemId(item) {
+  return item.id.toString();
+}
+function PagePages() {
+  var _pages$map, _usePrevious;
+  const postType = 'page';
+  const [view, setView] = useView(postType);
+  const history = page_pages_useHistory();
   const {
     params: {
       postId
     }
   } = page_pages_useLocation();
-  const [postIdToSelect, setPostIdToSelect] = (0,external_wp_element_namespaceObject.useState)(postId);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (postId) {
-      setPostIdToSelect(postId);
-    }
-  }, [postId]);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!postIdToSelect) {
-      return;
-    }
-    // Only try to select an item if the loading is complete and we have items.
-    if (!isLoadingItems && items && items.length) {
-      // If the item is not in the current selection, select it.
-      if (selection.length !== 1 || selection[0] !== postIdToSelect) {
-        setSelection([postIdToSelect]);
-      }
-      setPostIdToSelect(undefined);
-    }
-  }, [postIdToSelect, selection, setSelection, isLoadingItems, items]);
-}
-function PagePages() {
-  const postType = 'page';
-  const [view, setView] = useView(postType);
-  const history = page_pages_useHistory();
-  const [selection, setSelection] = (0,external_wp_element_namespaceObject.useState)([]);
+  const [selection, setSelection] = (0,external_wp_element_namespaceObject.useState)([postId]);
   const onSelectionChange = (0,external_wp_element_namespaceObject.useCallback)(items => {
     var _params$isCustom;
     const {
@@ -36300,7 +36272,18 @@ function PagePages() {
     totalItems,
     totalPages
   } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('postType', postType, queryArgs);
-  usePostIdLinkInSelection(selection, setSelection, isLoadingPages, pages);
+  const ids = (_pages$map = pages?.map(page => getItemId(page))) !== null && _pages$map !== void 0 ? _pages$map : [];
+  const prevIds = (_usePrevious = (0,external_wp_compose_namespaceObject.usePrevious)(ids)) !== null && _usePrevious !== void 0 ? _usePrevious : [];
+  const deletedIds = prevIds.filter(id => !ids.includes(id));
+  const postIdWasDeleted = deletedIds.includes(postId);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (postIdWasDeleted) {
+      history.push({
+        ...history.getLocationWithParams().params,
+        postId: undefined
+      });
+    }
+  }, [postIdWasDeleted, history]);
   const {
     records: authors,
     isResolving: isLoadingAuthors
@@ -36517,7 +36500,7 @@ function PagePages() {
       selection: selection,
       setSelection: setSelection,
       onSelectionChange: onSelectionChange,
-      getItemId: item => item.id.toString()
+      getItemId: getItemId
     })
   });
 }
