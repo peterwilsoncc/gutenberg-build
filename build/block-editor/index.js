@@ -24405,7 +24405,7 @@ function CoverContainer({
 }
 /* harmony default export */ const cover = ((0,external_wp_element_namespaceObject.forwardRef)(BlockPopoverCover));
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/grid-visualizer/utils.js
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/grid/utils.js
 function range(start, length) {
   return Array.from({
     length
@@ -24537,7 +24537,7 @@ function getGridInfo(gridElement) {
   };
 }
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/grid-visualizer/use-get-number-of-blocks-before-cell.js
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/grid/use-get-number-of-blocks-before-cell.js
 /**
  * WordPress dependencies
  */
@@ -24571,7 +24571,7 @@ function useGetNumberOfBlocksBeforeCell(gridClientId, numColumns) {
   return getNumberOfBlocksBeforeCell;
 }
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/grid-visualizer/grid-visualizer.js
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/grid/grid-visualizer.js
 /**
  * External dependencies
  */
@@ -24789,7 +24789,7 @@ function useDropZoneWithValidation({
   });
 }
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/grid-visualizer/use-grid-layout-sync.js
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/grid/use-grid-layout-sync.js
 /**
  * WordPress dependencies
  */
@@ -40010,7 +40010,7 @@ const withLayoutStyles = (0,external_wp_compose_namespaceObject.createHigherOrde
 (0,external_wp_hooks_namespaceObject.addFilter)('blocks.registerBlockType', 'core/layout/addAttribute', layout_addAttribute);
 (0,external_wp_hooks_namespaceObject.addFilter)('editor.BlockListBlock', 'core/editor/layout/with-layout-styles', withLayoutStyles);
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/grid-visualizer/grid-item-resizer.js
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/grid/grid-item-resizer.js
 /**
  * WordPress dependencies
  */
@@ -40190,7 +40190,7 @@ const arrowLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 });
 /* harmony default export */ const arrow_left = (arrowLeft);
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/grid-visualizer/grid-item-movers.js
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/grid/grid-item-movers.js
 /**
  * WordPress dependencies
  */
