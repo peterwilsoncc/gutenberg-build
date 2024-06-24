@@ -27447,8 +27447,7 @@ function EditSiteEditor({
   const styles = (0,external_wp_element_namespaceObject.useMemo)(() => [...settings.styles, {
     // Forming a "block formatting context" to prevent margin collapsing.
     // @see https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context
-
-    css: `body{${canvasMode === 'view' ? `min-height: 100vh; ${currentPostIsTrashed ? '' : 'cursor: pointer;'}` : ''}}}`
+    css: canvasMode === 'view' ? `body{min-height: 100vh; ${currentPostIsTrashed ? '' : 'cursor: pointer;'}}` : undefined
   }], [settings.styles, canvasMode, currentPostIsTrashed]);
   const {
     setCanvasMode
