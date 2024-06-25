@@ -16951,6 +16951,7 @@ function TypographyElements() {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -16968,7 +16969,8 @@ function Variation({
   variation,
   children,
   isPill,
-  property
+  property,
+  showTooltip
 }) {
   const [isFocused, setIsFocused] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
@@ -17001,27 +17003,31 @@ function Variation({
     label = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %1$s: variation title. %2$s variation description. */
     (0,external_wp_i18n_namespaceObject.__)('%1$s (%2$s)'), variation?.title, variation?.description);
   }
+  const content = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    className: dist_clsx('edit-site-global-styles-variations_item', {
+      'is-active': isActive
+    }),
+    role: "button",
+    onClick: selectVariation,
+    onKeyDown: selectOnEnter,
+    tabIndex: "0",
+    "aria-label": label,
+    "aria-current": isActive,
+    onFocus: () => setIsFocused(true),
+    onBlur: () => setIsFocused(false),
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: dist_clsx('edit-site-global-styles-variations_item-preview', {
+        'is-pill': isPill
+      }),
+      children: children(isFocused)
+    })
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(variation_GlobalStylesContext.Provider, {
     value: context,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: dist_clsx('edit-site-global-styles-variations_item', {
-        'is-active': isActive
-      }),
-      role: "button",
-      onClick: selectVariation,
-      onKeyDown: selectOnEnter,
-      tabIndex: "0",
-      "aria-label": label,
-      "aria-current": isActive,
-      onFocus: () => setIsFocused(true),
-      onBlur: () => setIsFocused(false),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: dist_clsx('edit-site-global-styles-variations_item-preview', {
-          'is-pill': isPill
-        }),
-        children: children(isFocused)
-      })
-    })
+    children: showTooltip ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
+      text: variation?.title,
+      children: content
+    }) : content
   });
 }
 
@@ -17063,6 +17069,7 @@ function TypographyVariations({
       children: typographyVariations && typographyVariations.length && typographyVariations.map((variation, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Variation, {
         variation: variation,
         property: "typography",
+        showTooltip: true,
         children: isFocused => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreviewIframe, {
           label: variation?.title,
           isFocused: isFocused,
@@ -23899,6 +23906,7 @@ function ColorVariations({
         variation: variation,
         isPill: true,
         property: "color",
+        showTooltip: true,
         children: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(preview_colors, {})
       }, index))
     })]
