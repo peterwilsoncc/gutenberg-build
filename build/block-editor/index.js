@@ -40704,7 +40704,6 @@ const lock_lock = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -40763,7 +40762,6 @@ function BlockLockModal({
     updateBlockAttributes
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const blockInformation = useBlockDisplayInformation(clientId);
-  const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(BlockLockModal, 'block-editor-block-lock-modal__options-title');
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     setLock({
       move: !canMove,
@@ -40775,14 +40773,12 @@ function BlockLockModal({
   }, [canEdit, canMove, canRemove, allowsEditLocking]);
   const isAllChecked = Object.values(lock).every(Boolean);
   const isMixed = Object.values(lock).some(Boolean) && !isAllChecked;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Modal, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
     title: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Name of the block. */
     (0,external_wp_i18n_namespaceObject.__)('Lock %s'), blockInformation.title),
     overlayClassName: "block-editor-block-lock-modal",
     onRequestClose: onClose,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-      children: (0,external_wp_i18n_namespaceObject.__)('Choose specific attributes to restrict or lock all available options.')
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("form", {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("form", {
       onSubmit: event => {
         event.preventDefault();
         updateBlockAttributes([clientId], {
@@ -40791,71 +40787,75 @@ function BlockLockModal({
         });
         onClose();
       },
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-        role: "group",
-        "aria-labelledby": instanceId,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
         className: "block-editor-block-lock-modal__options",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-          __nextHasNoMarginBottom: true,
-          className: "block-editor-block-lock-modal__options-title",
-          label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-            id: instanceId,
-            children: (0,external_wp_i18n_namespaceObject.__)('Lock all')
-          }),
-          checked: isAllChecked,
-          indeterminate: isMixed,
-          onChange: newValue => setLock({
-            move: newValue,
-            remove: newValue,
-            ...(allowsEditLocking ? {
-              edit: newValue
-            } : {})
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("ul", {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("legend", {
+          children: (0,external_wp_i18n_namespaceObject.__)('Choose specific attributes to restrict or lock all available options.')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
+          role: "list",
           className: "block-editor-block-lock-modal__checklist",
-          children: [allowsEditLocking && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
-            className: "block-editor-block-lock-modal__checklist-item",
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
               __nextHasNoMarginBottom: true,
-              label: (0,external_wp_i18n_namespaceObject.__)('Restrict editing'),
-              checked: !!lock.edit,
-              onChange: edit => setLock(prevLock => ({
-                ...prevLock,
-                edit
-              }))
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-              className: "block-editor-block-lock-modal__lock-icon",
-              icon: lock.edit ? library_lock : library_unlock
+              className: "block-editor-block-lock-modal__options-all",
+              label: (0,external_wp_i18n_namespaceObject.__)('Lock all'),
+              checked: isAllChecked,
+              indeterminate: isMixed,
+              onChange: newValue => setLock({
+                move: newValue,
+                remove: newValue,
+                ...(allowsEditLocking ? {
+                  edit: newValue
+                } : {})
+              })
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("ul", {
+              role: "list",
+              className: "block-editor-block-lock-modal__checklist",
+              children: [allowsEditLocking && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
+                className: "block-editor-block-lock-modal__checklist-item",
+                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+                  __nextHasNoMarginBottom: true,
+                  label: (0,external_wp_i18n_namespaceObject.__)('Restrict editing'),
+                  checked: !!lock.edit,
+                  onChange: edit => setLock(prevLock => ({
+                    ...prevLock,
+                    edit
+                  }))
+                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+                  className: "block-editor-block-lock-modal__lock-icon",
+                  icon: lock.edit ? library_lock : library_unlock
+                })]
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
+                className: "block-editor-block-lock-modal__checklist-item",
+                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+                  __nextHasNoMarginBottom: true,
+                  label: (0,external_wp_i18n_namespaceObject.__)('Disable movement'),
+                  checked: lock.move,
+                  onChange: move => setLock(prevLock => ({
+                    ...prevLock,
+                    move
+                  }))
+                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+                  className: "block-editor-block-lock-modal__lock-icon",
+                  icon: lock.move ? library_lock : library_unlock
+                })]
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
+                className: "block-editor-block-lock-modal__checklist-item",
+                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+                  __nextHasNoMarginBottom: true,
+                  label: (0,external_wp_i18n_namespaceObject.__)('Prevent removal'),
+                  checked: lock.remove,
+                  onChange: remove => setLock(prevLock => ({
+                    ...prevLock,
+                    remove
+                  }))
+                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+                  className: "block-editor-block-lock-modal__lock-icon",
+                  icon: lock.remove ? library_lock : library_unlock
+                })]
+              })]
             })]
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
-            className: "block-editor-block-lock-modal__checklist-item",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-              __nextHasNoMarginBottom: true,
-              label: (0,external_wp_i18n_namespaceObject.__)('Disable movement'),
-              checked: lock.move,
-              onChange: move => setLock(prevLock => ({
-                ...prevLock,
-                move
-              }))
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-              className: "block-editor-block-lock-modal__lock-icon",
-              icon: lock.move ? library_lock : library_unlock
-            })]
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
-            className: "block-editor-block-lock-modal__checklist-item",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-              __nextHasNoMarginBottom: true,
-              label: (0,external_wp_i18n_namespaceObject.__)('Prevent removal'),
-              checked: lock.remove,
-              onChange: remove => setLock(prevLock => ({
-                ...prevLock,
-                remove
-              }))
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-              className: "block-editor-block-lock-modal__lock-icon",
-              icon: lock.remove ? library_lock : library_unlock
-            })]
-          })]
+          })
         }), hasTemplateLock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
           __nextHasNoMarginBottom: true,
           className: "block-editor-block-lock-modal__template-lock",
@@ -40882,7 +40882,7 @@ function BlockLockModal({
           })
         })]
       })]
-    })]
+    })
   });
 }
 
