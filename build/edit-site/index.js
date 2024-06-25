@@ -40262,8 +40262,10 @@ function PageTemplates() {
   } = page_templates_useLocation();
   const {
     activeView = 'all',
-    layout
+    layout,
+    postId
   } = params;
+  const [selection, setSelection] = (0,external_wp_element_namespaceObject.useState)([postId]);
   const defaultView = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const usedType = layout !== null && layout !== void 0 ? layout : page_templates_DEFAULT_VIEW.type;
     return {
@@ -40424,7 +40426,9 @@ function PageTemplates() {
       isLoading: isLoadingData,
       view: view,
       onChangeView: onChangeView,
-      onSelectionChange: onSelectionChange
+      onSelectionChange: onSelectionChange,
+      selection: selection,
+      setSelection: setSelection
     })
   });
 }
