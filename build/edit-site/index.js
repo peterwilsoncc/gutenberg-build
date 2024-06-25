@@ -27909,6 +27909,8 @@ function ActionModal({
     title: action.modalHeader || label,
     __experimentalHideHeader: !!action.hideModalHeader,
     onRequestClose: closeModal !== null && closeModal !== void 0 ? closeModal : () => {},
+    focusOnMount: "firstContentElement",
+    size: "small",
     overlayClassName: `dataviews-action-modal dataviews-action-modal__${item_actions_kebabCase(action.id)}`,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(action.RenderModal, {
       items: items,
@@ -35915,6 +35917,8 @@ function AddNewPageModal({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
     title: (0,external_wp_i18n_namespaceObject.__)('Draft a new page'),
     onRequestClose: onClose,
+    focusOnMount: "firstContentElement",
+    size: "small",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
       onSubmit: createPage,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
@@ -37546,7 +37550,9 @@ function RenameModal({
     category: normalizedCategory,
     existingCategories: existingCategories,
     onClose: onClose,
-    overlayClassName: "edit-site-list__rename-modal"
+    overlayClassName: "edit-site-list__rename-modal",
+    focusOnMount: "firstContentElement",
+    size: "small"
   });
 }
 
@@ -41159,6 +41165,8 @@ function rename_modal_RenameModal({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
     title: (0,external_wp_i18n_namespaceObject.__)('Rename'),
     onRequestClose: onClose,
+    focusOnMount: "firstContentElement",
+    size: "small",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
       className: "sidebar-navigation__rename-modal-form",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {

@@ -10350,6 +10350,8 @@ function CreateNewTemplateModal({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
     title: (0,external_wp_i18n_namespaceObject.__)('Create custom template'),
     onRequestClose: cancel,
+    focusOnMount: "firstContentElement",
+    size: "small",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
       className: "editor-post-template__create-form",
       onSubmit: submit,
@@ -21818,6 +21820,8 @@ function CreateTemplatePartModal({
     title: modalTitle || defaultModalTitle,
     onRequestClose: restProps.closeModal,
     overlayClassName: "editor-create-template-part-modal",
+    focusOnMount: "firstContentElement",
+    size: "medium",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CreateTemplatePartModalContents, {
       ...restProps
     })
@@ -26436,6 +26440,8 @@ function ActionWithModal({
         setIsModalOpen(false);
       },
       overlayClassName: `editor-action-modal editor-action-modal__${kebabCase(action.id)}`,
+      focusOnMount: "firstContentElement",
+      size: "small",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RenderModal, {
         items: [item],
         closeModal: () => {

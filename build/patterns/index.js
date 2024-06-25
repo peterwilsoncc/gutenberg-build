@@ -560,6 +560,8 @@ function CreatePatternModal({
     title: modalTitle || defaultModalTitle,
     onRequestClose: restProps.onClose,
     overlayClassName: className,
+    focusOnMount: "firstContentElement",
+    size: "small",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CreatePatternModalContents, {
       ...restProps
     })
@@ -818,6 +820,8 @@ function RenamePatternModal({
     title: (0,external_wp_i18n_namespaceObject.__)('Rename'),
     ...props,
     onRequestClose: onClose,
+    focusOnMount: "firstContentElement",
+    size: "small",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
       onSubmit: onRename,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
