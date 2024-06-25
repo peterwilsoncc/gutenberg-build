@@ -19305,45 +19305,6 @@ function isPlainObject(o) {
 
 
 
-;// CONCATENATED MODULE: ./packages/editor/build-module/utils/set-nested-value.js
-/**
- * Sets the value at path of object.
- * If a portion of path doesn’t exist, it’s created.
- * Arrays are created for missing index properties while objects are created
- * for all other missing properties.
- *
- * This function intentionally mutates the input object.
- *
- * Inspired by _.set().
- *
- * @see https://lodash.com/docs/4.17.15#set
- *
- * @todo Needs to be deduplicated with its copy in `@wordpress/core-data`.
- *
- * @param {Object} object Object to modify
- * @param {Array}  path   Path of the property to set.
- * @param {*}      value  Value to set.
- */
-function setNestedValue(object, path, value) {
-  if (!object || typeof object !== 'object') {
-    return object;
-  }
-  path.reduce((acc, key, idx) => {
-    if (acc[key] === undefined) {
-      if (Number.isInteger(path[idx + 1])) {
-        acc[key] = [];
-      } else {
-        acc[key] = {};
-      }
-    }
-    if (idx === path.length - 1) {
-      acc[key] = value;
-    }
-    return acc[key];
-  }, object);
-  return object;
-}
-
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/global-styles-provider/index.js
 /**
  * External dependencies
@@ -19359,11 +19320,9 @@ function setNestedValue(object, path, value) {
 
 
 
-
 /**
  * Internal dependencies
  */
-
 
 
 const {
@@ -19377,62 +19336,6 @@ function mergeBaseAndUserConfigs(base, user) {
     // to override the old array (no merging).
     isMergeableObject: isPlainObject
   });
-}
-
-/**
- * Resolves shared block style variation definitions from the user origin
- * under their respective block types and registers the block style if required.
- *
- * @param {Object} userConfig Current user origin global styles data.
- * @return {Object} Updated global styles data.
- */
-function useResolvedBlockStyleVariationsConfig(userConfig) {
-  const {
-    getBlockStyles
-  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blocks_namespaceObject.store);
-  const sharedVariations = userConfig?.styles?.blocks?.variations;
-
-  // Collect block style variation definitions to merge and unregistered
-  // block styles for automatic registration.
-  const [userConfigToMerge, unregisteredStyles] = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (!sharedVariations) {
-      return [];
-    }
-    const variationsConfigToMerge = {};
-    const unregisteredBlockStyles = [];
-    Object.entries(sharedVariations).forEach(([variationName, variation]) => {
-      if (!variation?.blockTypes?.length) {
-        return;
-      }
-      variation.blockTypes.forEach(blockName => {
-        const blockStyles = getBlockStyles(blockName);
-        const registeredBlockStyle = blockStyles.find(({
-          name
-        }) => name === variationName);
-        if (!registeredBlockStyle) {
-          unregisteredBlockStyles.push([blockName, {
-            name: variationName,
-            label: variationName
-          }]);
-        }
-        const path = ['styles', 'blocks', blockName, 'variations', variationName];
-        setNestedValue(variationsConfigToMerge, path, variation);
-      });
-    });
-    return [variationsConfigToMerge, unregisteredBlockStyles];
-  }, [sharedVariations, getBlockStyles]);
-
-  // Automatically register missing block styles from variations.
-  (0,external_wp_element_namespaceObject.useEffect)(() => unregisteredStyles?.forEach(unregisteredStyle => (0,external_wp_blocks_namespaceObject.registerBlockStyle)(...unregisteredStyle)), [unregisteredStyles]);
-
-  // Merge shared block style variation definitions into overall user config.
-  const updatedConfig = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (!userConfigToMerge) {
-      return userConfig;
-    }
-    return cjs_default()(userConfigToMerge, userConfig);
-  }, [userConfigToMerge, userConfig]);
-  return updatedConfig;
 }
 function useGlobalStylesUserConfig() {
   const {
@@ -19494,7 +19397,7 @@ function useGlobalStylesUserConfig() {
       settings: cleanEmptyObject(updatedConfig.settings) || {},
       _links: cleanEmptyObject(updatedConfig._links) || {}
     }, options);
-  }, [globalStylesId]);
+  }, [globalStylesId, editEntityRecord, getEditedEntityRecord]);
   return [isReady, config, setConfig];
 }
 function useGlobalStylesBaseConfig() {
@@ -19506,22 +19409,21 @@ function useGlobalStylesBaseConfig() {
 function useGlobalStylesContext() {
   const [isUserConfigReady, userConfig, setUserConfig] = useGlobalStylesUserConfig();
   const [isBaseConfigReady, baseConfig] = useGlobalStylesBaseConfig();
-  const userConfigWithVariations = useResolvedBlockStyleVariationsConfig(userConfig);
   const mergedConfig = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (!baseConfig || !userConfigWithVariations) {
+    if (!baseConfig || !userConfig) {
       return {};
     }
-    return mergeBaseAndUserConfigs(baseConfig, userConfigWithVariations);
-  }, [userConfigWithVariations, baseConfig]);
+    return mergeBaseAndUserConfigs(baseConfig, userConfig);
+  }, [userConfig, baseConfig]);
   const context = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return {
       isReady: isUserConfigReady && isBaseConfigReady,
-      user: userConfigWithVariations,
+      user: userConfig,
       base: baseConfig,
       merged: mergedConfig,
       setUserConfig
     };
-  }, [mergedConfig, userConfigWithVariations, baseConfig, setUserConfig, isUserConfigReady, isBaseConfigReady]);
+  }, [mergedConfig, userConfig, baseConfig, setUserConfig, isUserConfigReady, isBaseConfigReady]);
   return context;
 }
 function GlobalStylesProvider({
