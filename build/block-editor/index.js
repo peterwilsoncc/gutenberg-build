@@ -64099,6 +64099,7 @@ const trash = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
  *
  * @param {string} props          Component props.
  * @param {string} props.clientId Client ID of block.
+ * @param {Object} ref            Reference to the component.
  *
  * @return {Component} The component to be rendered.
  */
@@ -64107,7 +64108,7 @@ const trash = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 function BlockSelectionButton({
   clientId,
   rootClientId
-}) {
+}, ref) {
   const selected = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlock,
@@ -64178,7 +64179,6 @@ function BlockSelectionButton({
     setNavigationMode,
     removeBlock
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const ref = (0,external_wp_element_namespaceObject.useRef)();
 
   // Focus the breadcrumb in navigation mode.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -64217,11 +64217,6 @@ function BlockSelectionButton({
     const isEnter = keyCode === external_wp_keycodes_namespaceObject.ENTER;
     const isSpace = keyCode === external_wp_keycodes_namespaceObject.SPACE;
     const isShift = event.shiftKey;
-    if (isEscape && editorMode === 'navigation') {
-      setNavigationMode(false);
-      event.preventDefault();
-      return;
-    }
     if (keyCode === external_wp_keycodes_namespaceObject.BACKSPACE || keyCode === external_wp_keycodes_namespaceObject.DELETE) {
       removeBlock(clientId);
       event.preventDefault();
@@ -64361,11 +64356,16 @@ function BlockSelectionButton({
     })
   });
 }
-/* harmony default export */ const block_selection_button = (BlockSelectionButton);
+/* harmony default export */ const block_selection_button = ((0,external_wp_element_namespaceObject.forwardRef)(BlockSelectionButton));
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-tools/block-toolbar-breadcrumb.js
 /**
  * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
  */
 
 
@@ -64380,7 +64380,7 @@ function BlockSelectionButton({
 function BlockToolbarBreadcrumb({
   clientId,
   __unstableContentRef
-}) {
+}, ref) {
   const {
     capturingClientId,
     isInsertionPointVisible,
@@ -64400,11 +64400,13 @@ function BlockToolbarBreadcrumb({
     resize: false,
     ...popoverProps,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_selection_button, {
+      ref: ref,
       clientId: clientId,
       rootClientId: rootClientId
     })
   });
 }
+/* harmony default export */ const block_toolbar_breadcrumb = ((0,external_wp_element_namespaceObject.forwardRef)(BlockToolbarBreadcrumb));
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-tools/zoom-out-mode-inserters.js
 /**
@@ -64637,6 +64639,7 @@ function BlockTools({
     showBlockToolbarPopover
   } = useShowBlockTools();
   const {
+    clearSelectedBlock,
     duplicateBlocks,
     removeBlocks,
     replaceBlocks,
@@ -64647,6 +64650,7 @@ function BlockTools({
     moveBlocksDown,
     expandBlock
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  const blockSelectionButtonRef = (0,external_wp_element_namespaceObject.useRef)();
   function onKeyDown(event) {
     if (event.defaultPrevented) {
       return;
@@ -64705,6 +64709,24 @@ function BlockTools({
         // block so that focus is directed back to the beginning of the selection.
         // In effect, to the user this feels like deselecting the multi-selection.
         selectBlock(clientIds[0]);
+      } else if (clientIds.length === 1 && event.target === blockSelectionButtonRef?.current) {
+        var _Array$from$find, _editorCanvas$closest;
+        event.preventDefault();
+        clearSelectedBlock();
+        // If there are multiple editors, we need to find the iframe that contains our contentRef to make sure
+        // we're focusing the region that contains this editor.
+        const editorCanvas = (_Array$from$find = Array.from(document.querySelectorAll('iframe[name="editor-canvas"]').values()).find(iframe => {
+          // Find the iframe that contains our contentRef
+          const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+          return iframeDocument === __unstableContentRef.current.ownerDocument;
+        })) !== null && _Array$from$find !== void 0 ? _Array$from$find : __unstableContentRef.current;
+
+        // The region is provivided by the editor, not the block-editor.
+        // We should send focus to the region if one is available to reuse the
+        // same interface for navigating landmarks. If no region is available,
+        // use the canvas instead.
+        const focusableWrapper = (_editorCanvas$closest = editorCanvas?.closest('[role="region"]')) !== null && _editorCanvas$closest !== void 0 ? _editorCanvas$closest : editorCanvas;
+        focusableWrapper.focus();
       }
     } else if (isMatch('core/block-editor/collapse-list-view', event)) {
       // If focus is currently within a text field, such as a rich text block or other editable field,
@@ -64746,7 +64768,8 @@ function BlockTools({
           __unstableContentRef: __unstableContentRef,
           clientId: clientId,
           isTyping: isTyping
-        }), showBreadcrumb && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockToolbarBreadcrumb, {
+        }), showBreadcrumb && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_toolbar_breadcrumb, {
+          ref: blockSelectionButtonRef,
           __unstableContentRef: __unstableContentRef,
           clientId: clientId
         }), !isZoomOutMode && !hasFixedToolbar && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Popover.Slot, {
