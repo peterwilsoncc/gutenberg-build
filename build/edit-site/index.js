@@ -28403,10 +28403,11 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
           icon: library_unseen
         }),
         onClick: () => {
+          var _view$hiddenFields;
           onHide(field);
           onChangeView({
             ...view,
-            hiddenFields: view.hiddenFields.concat(field.id)
+            hiddenFields: ((_view$hiddenFields = view.hiddenFields) !== null && _view$hiddenFields !== void 0 ? _view$hiddenFields : []).concat(field.id)
           });
         },
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_table_DropdownMenuItemLabel, {
@@ -28590,7 +28591,7 @@ function ViewTable({
     const fallback = hidden ? headerMenuRefs.current.get(hidden.fallback) : undefined;
     setNextHeaderMenuToFocus(fallback?.node);
   };
-  const visibleFields = fields.filter(field => !view.hiddenFields.includes(field.id) && ![view.layout.mediaField].includes(field.id));
+  const visibleFields = fields.filter(field => !view.hiddenFields?.includes(field.id) && ![view.layout.mediaField].includes(field.id));
   const hasData = !!data?.length;
   const primaryField = fields.find(field => field.id === view.layout.primaryField);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -28836,7 +28837,7 @@ function ViewGrid({
     visibleFields,
     badgeFields
   } = fields.reduce((accumulator, field) => {
-    if (view.hiddenFields.includes(field.id) || [view.layout.mediaField, view.layout.primaryField].includes(field.id)) {
+    if (view.hiddenFields?.includes(field.id) || [view.layout.mediaField, view.layout.primaryField].includes(field.id)) {
       return accumulator;
     }
     // If the field is a badge field, add it to the badgeFields array
@@ -29118,7 +29119,7 @@ function ViewList(props) {
   const selectedItem = data?.findLast(item => selection.includes(getItemId(item)));
   const mediaField = fields.find(field => field.id === view.layout.mediaField);
   const primaryField = fields.find(field => field.id === view.layout.primaryField);
-  const visibleFields = fields.filter(field => !view.hiddenFields.includes(field.id) && ![view.layout.primaryField, view.layout.mediaField].includes(field.id));
+  const visibleFields = fields.filter(field => !view.hiddenFields?.includes(field.id) && ![view.layout.primaryField, view.layout.mediaField].includes(field.id));
   const onSelect = (0,external_wp_element_namespaceObject.useCallback)(item => onSelectionChange([item]), [onSelectionChange]);
   const getItemDomId = (0,external_wp_element_namespaceObject.useCallback)(item => item ? `${baseId}-${getItemId(item)}` : undefined, [baseId, getItemId]);
   const store = view_list_useCompositeStore({
@@ -37960,7 +37961,6 @@ const DEFAULT_VIEW = {
   search: '',
   page: 1,
   perPage: 20,
-  hiddenFields: [],
   layout: {
     ...defaultConfigPerViewType[LAYOUT_GRID]
   },
