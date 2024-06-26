@@ -54261,9 +54261,7 @@ function Pagination({
     className: "block-editor-patterns__grid-pagination-wrapper",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
       variant: "muted",
-      children:
-      // translators: %s: Total number of patterns.
-      (0,external_wp_i18n_namespaceObject.sprintf)(
+      children: (0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: %s: Total number of patterns.
       (0,external_wp_i18n_namespaceObject._n)('%s item', '%s items', totalItems), totalItems)
     }), numPages > 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
