@@ -23416,6 +23416,11 @@ function GroupPlaceHolder({
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: 'wp-block-group__placeholder'
   });
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (variations && variations.length === 1) {
+      onSelect(variations[0]);
+    }
+  }, [onSelect, variations]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ...blockProps,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
