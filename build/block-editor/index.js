@@ -43566,6 +43566,35 @@ function BlockTitle({
   });
 }
 
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/utils/get-editor-region.js
+/**
+ * Gets the editor region for a given editor canvas element or
+ * returns the passed element if no region is found
+ *
+ * @param { Object } editor The editor canvas element.
+ * @return { Object } The editor region or given editor element
+ */
+function getEditorRegion(editor) {
+  var _Array$from$find, _editorCanvas$closest;
+  if (!editor) {
+    return null;
+  }
+
+  // If there are multiple editors, we need to find the iframe that contains our contentRef to make sure
+  // we're focusing the region that contains this editor.
+  const editorCanvas = (_Array$from$find = Array.from(document.querySelectorAll('iframe[name="editor-canvas"]').values()).find(iframe => {
+    // Find the iframe that contains our contentRef
+    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+    return iframeDocument === editor.ownerDocument;
+  })) !== null && _Array$from$find !== void 0 ? _Array$from$find : editor;
+
+  // The region is provivided by the editor, not the block-editor.
+  // We should send focus to the region if one is available to reuse the
+  // same interface for navigating landmarks. If no region is available,
+  // use the canvas instead.
+  return (_editorCanvas$closest = editorCanvas?.closest('[role="region"]')) !== null && _editorCanvas$closest !== void 0 ? _editorCanvas$closest : editorCanvas;
+}
+
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-breadcrumb/index.js
 /**
  * WordPress dependencies
@@ -43578,6 +43607,8 @@ function BlockTitle({
 /**
  * Internal dependencies
  */
+
+
 
 
 
@@ -43617,6 +43648,10 @@ function BlockBreadcrumb({
   }, []);
   const rootLabel = rootLabelText || (0,external_wp_i18n_namespaceObject.__)('Document');
 
+  // We don't care about this specific ref, but this is a way
+  // to get a ref within the editor canvas so we can focus it later.
+  const blockRef = useBlockRef(clientId);
+
   /*
    * Disable reason: The `list` ARIA role is redundant but
    * Safari+VoiceOver won't announce the list otherwise.
@@ -43632,7 +43667,12 @@ function BlockBreadcrumb({
       children: [hasSelection && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         className: "block-editor-block-breadcrumb__button",
         variant: "tertiary",
-        onClick: clearSelectedBlock,
+        onClick: () => {
+          // Find the block editor wrapper for the selected block
+          const blockEditor = blockRef.current?.closest('.editor-styles-wrapper');
+          clearSelectedBlock();
+          getEditorRegion(blockEditor).focus();
+        },
         children: rootLabel
       }), !hasSelection && rootLabel, !!clientId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
         icon: chevron_right_small,
@@ -64585,6 +64625,7 @@ function useShowBlockTools() {
 
 
 
+
 function block_tools_selector(select) {
   const {
     getSelectedBlockClientId,
@@ -64710,23 +64751,9 @@ function BlockTools({
         // In effect, to the user this feels like deselecting the multi-selection.
         selectBlock(clientIds[0]);
       } else if (clientIds.length === 1 && event.target === blockSelectionButtonRef?.current) {
-        var _Array$from$find, _editorCanvas$closest;
         event.preventDefault();
         clearSelectedBlock();
-        // If there are multiple editors, we need to find the iframe that contains our contentRef to make sure
-        // we're focusing the region that contains this editor.
-        const editorCanvas = (_Array$from$find = Array.from(document.querySelectorAll('iframe[name="editor-canvas"]').values()).find(iframe => {
-          // Find the iframe that contains our contentRef
-          const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-          return iframeDocument === __unstableContentRef.current.ownerDocument;
-        })) !== null && _Array$from$find !== void 0 ? _Array$from$find : __unstableContentRef.current;
-
-        // The region is provivided by the editor, not the block-editor.
-        // We should send focus to the region if one is available to reuse the
-        // same interface for navigating landmarks. If no region is available,
-        // use the canvas instead.
-        const focusableWrapper = (_editorCanvas$closest = editorCanvas?.closest('[role="region"]')) !== null && _editorCanvas$closest !== void 0 ? _editorCanvas$closest : editorCanvas;
-        focusableWrapper.focus();
+        getEditorRegion(__unstableContentRef.current).focus();
       }
     } else if (isMatch('core/block-editor/collapse-list-view', event)) {
       // If focus is currently within a text field, such as a rich text block or other editable field,
