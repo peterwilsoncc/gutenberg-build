@@ -25905,7 +25905,8 @@ function ScreenCSS() {
 const {
   ExperimentalBlockEditorProvider: revisions_ExperimentalBlockEditorProvider,
   GlobalStylesContext: revisions_GlobalStylesContext,
-  useGlobalStylesOutputWithConfig: revisions_useGlobalStylesOutputWithConfig
+  useGlobalStylesOutputWithConfig: revisions_useGlobalStylesOutputWithConfig,
+  __unstableBlockStyleVariationOverridesWithConfig
 } = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
   mergeBaseAndUserConfigs: revisions_mergeBaseAndUserConfigs
@@ -25942,21 +25943,23 @@ function Revisions({
       className: "edit-site-revisions__iframe",
       name: "revisions",
       tabIndex: 0,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__unstableEditorStyles, {
-        styles: editorStyles
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("style", {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("style", {
         children:
         // Forming a "block formatting context" to prevent margin collapsing.
         // @see https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context
         `.is-root-container { display: flow-root; }`
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Disabled, {
         className: "edit-site-revisions__example-preview__content",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(revisions_ExperimentalBlockEditorProvider, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(revisions_ExperimentalBlockEditorProvider, {
           value: renderedBlocksArray,
           settings: settings,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockList, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockList, {
             renderAppender: false
-          })
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__unstableEditorStyles, {
+            styles: editorStyles
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(__unstableBlockStyleVariationOverridesWithConfig, {
+            config: mergedConfig
+          })]
         })
       })]
     })

@@ -21691,6 +21691,7 @@ function useStyleOverride({
   css,
   assets,
   __unstableType,
+  variation,
   clientId
 } = {}) {
   const {
@@ -21710,6 +21711,7 @@ function useStyleOverride({
       css,
       assets,
       __unstableType,
+      variation,
       clientId
     };
     // Batch updates to style overrides to avoid triggering cascading renders
@@ -39495,6 +39497,9 @@ function useGlobalStylesOutput(disableRootPadding = false) {
 
 
 
+
+
+
 const VARIATION_PREFIX = 'is-style-';
 function getVariationMatches(className) {
   if (!className) {
@@ -39532,6 +39537,108 @@ function getVariationNameFromClass(className, registeredStyles = []) {
     }
   }
   return null;
+}
+
+// A helper component to apply a style override using the useStyleOverride hook.
+function OverrideStyles({
+  override
+}) {
+  useStyleOverride(override);
+}
+
+/**
+ * This component is used to generate new block style variation overrides
+ * based on an incoming theme config. If a matching style is found in the config,
+ * a new override is created and returned. The overrides can be used in conjunction with
+ * useStyleOverride to apply the new styles to the editor. Its use is
+ * subject to change.
+ *
+ * @param {Object} props        Props.
+ * @param {Object} props.config A global styles object, containing settings and styles.
+ * @return {JSX.Element|undefined} An array of new block variation overrides.
+ */
+function __unstableBlockStyleVariationOverridesWithConfig({
+  config
+}) {
+  const {
+    getBlockStyles,
+    overrides
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => ({
+    getBlockStyles: select(external_wp_blocks_namespaceObject.store).getBlockStyles,
+    overrides: unlock(select(store)).getStyleOverrides()
+  }), []);
+  const {
+    getBlockName
+  } = (0,external_wp_data_namespaceObject.useSelect)(store);
+  const overridesWithConfig = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (!overrides?.length) {
+      return;
+    }
+    const newOverrides = [];
+    const overriddenClientIds = [];
+    for (const [, override] of overrides) {
+      if (override?.variation && override?.clientId &&
+      /*
+       * Because this component overwrites existing style overrides,
+       * filter out any overrides that are already present in the store.
+       */
+      !overriddenClientIds.includes(override.clientId)) {
+        const blockName = getBlockName(override.clientId);
+        const configStyles = config?.styles?.blocks?.[blockName]?.variations?.[override.variation];
+        if (configStyles) {
+          const variationConfig = {
+            settings: config?.settings,
+            // The variation style data is all that is needed to generate
+            // the styles for the current application to a block. The variation
+            // name is updated to match the instance specific class name.
+            styles: {
+              blocks: {
+                [blockName]: {
+                  variations: {
+                    [`${override.variation}-${override.clientId}`]: configStyles
+                  }
+                }
+              }
+            }
+          };
+          const blockSelectors = getBlockSelectors((0,external_wp_blocks_namespaceObject.getBlockTypes)(), getBlockStyles, override.clientId);
+          const hasBlockGapSupport = false;
+          const hasFallbackGapSupport = true;
+          const disableLayoutStyles = true;
+          const disableRootPadding = true;
+          const variationStyles = toStyles(variationConfig, blockSelectors, hasBlockGapSupport, hasFallbackGapSupport, disableLayoutStyles, disableRootPadding, {
+            blockGap: false,
+            blockStyles: true,
+            layoutStyles: false,
+            marginReset: false,
+            presets: false,
+            rootPadding: false,
+            variationStyles: true
+          });
+          newOverrides.push({
+            id: `${override.variation}-${override.clientId}`,
+            css: variationStyles,
+            __unstableType: 'variation',
+            variation: override.variation,
+            // The clientId will be stored with the override and used to ensure
+            // the order of overrides matches the order of blocks so that the
+            // correct CSS cascade is maintained.
+            clientId: override.clientId
+          });
+          overriddenClientIds.push(override.clientId);
+        }
+      }
+    }
+    return newOverrides;
+  }, [config, overrides, getBlockStyles, getBlockName]);
+  if (!overridesWithConfig || !overridesWithConfig.length) {
+    return;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: overridesWithConfig.map(override => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OverrideStyles, {
+      override: override
+    }, override.id))
+  });
 }
 function useBlockStyleVariation(name, variation, clientId) {
   // Prefer global styles data in GlobalStylesContext, which are available
@@ -39617,6 +39724,7 @@ function block_style_variation_useBlockProps({
     id: `variation-${clientId}`,
     css: variationStyles,
     __unstableType: 'variation',
+    variation,
     // The clientId will be stored with the override and used to ensure
     // the order of overrides matches the order of blocks so that the
     // correct CSS cascade is maintained.
@@ -42406,6 +42514,7 @@ function useZoomOut(zoomOut = true) {
 createBlockEditFilter([block_bindings, align, text_align, hooks_anchor, custom_class_name, style, duotone, position, layout, content_lock_ui, block_hooks, layout_child].filter(Boolean));
 createBlockListBlockFilter([align, text_align, background, style, color, dimensions, duotone, font_family, font_size, border, position, block_style_variation, layout_child]);
 createBlockSaveFilter([align, text_align, hooks_anchor, aria_label, custom_class_name, border, color, style, font_family, font_size]);
+
 
 
 
@@ -80090,7 +80199,8 @@ lock(privateApis, {
   PrivateBlockPopover: PrivateBlockPopover,
   PrivatePublishDateTimePicker: PrivatePublishDateTimePicker,
   useSpacingSizes: useSpacingSizes,
-  useBlockDisplayTitle: useBlockDisplayTitle
+  useBlockDisplayTitle: useBlockDisplayTitle,
+  __unstableBlockStyleVariationOverridesWithConfig: __unstableBlockStyleVariationOverridesWithConfig
 });
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/index.js
