@@ -41875,6 +41875,7 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
     clientId,
     context
   } = props;
+  const hasParentPattern = !!props.context['pattern/overrides'];
   const hasPatternOverridesDefaultBinding = props.attributes.metadata?.bindings?.[DEFAULT_ATTRIBUTE]?.source === 'core/pattern-overrides';
   const bindings = (0,external_wp_element_namespaceObject.useMemo)(() => replacePatternOverrideDefaultBindings(name, props.attributes.metadata?.bindings), [props.attributes.metadata?.bindings, name]);
   const boundAttributes = (0,external_wp_data_namespaceObject.useSelect)(() => {
@@ -41959,15 +41960,19 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
           }
         }
       }
-
-      // Only apply normal attribute updates to blocks
-      // that have partial bindings. Currently this is
-      // only skipped for pattern overrides sources.
-      if (!hasPatternOverridesDefaultBinding && Object.keys(keptAttributes).length) {
+      if (
+      // Don't update non-connected attributes if the block is using pattern overrides
+      // and the editing is happening while overriding the pattern (not editing the original).
+      !(hasPatternOverridesDefaultBinding && hasParentPattern) && Object.keys(keptAttributes).length) {
+        // Don't update caption and href until they are supported.
+        if (hasPatternOverridesDefaultBinding) {
+          delete keptAttributes?.caption;
+          delete keptAttributes?.href;
+        }
         setAttributes(keptAttributes);
       }
     });
-  }, [registry, bindings, name, clientId, context, setAttributes, sources, hasPatternOverridesDefaultBinding]);
+  }, [registry, bindings, name, clientId, context, setAttributes, sources, hasPatternOverridesDefaultBinding, hasParentPattern]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockEdit, {
       ...props,

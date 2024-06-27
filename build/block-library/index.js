@@ -26757,14 +26757,11 @@ function image_Image({
       getBlockBindingsSource
     } = unlock(select(external_wp_blocks_namespaceObject.store));
     const {
-      getBlockParentsByBlockName
-    } = unlock(select(external_wp_blockEditor_namespaceObject.store));
-    const {
       url: urlBinding,
       alt: altBinding,
       title: titleBinding
     } = metadata?.bindings || {};
-    const hasParentPattern = getBlockParentsByBlockName(clientId, 'core/block').length > 0;
+    const hasParentPattern = !!context['pattern/overrides'];
     const urlBindingSource = getBlockBindingsSource(urlBinding?.source);
     const altBindingSource = getBlockBindingsSource(altBinding?.source);
     const titleBindingSource = getBlockBindingsSource(titleBinding?.source);
@@ -26797,7 +26794,7 @@ function image_Image({
       lockTitleControlsMessage: titleBindingSource?.label ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Label of the bindings source. */
       (0,external_wp_i18n_namespaceObject.__)('Connected to %s'), titleBindingSource.label) : (0,external_wp_i18n_namespaceObject.__)('Connected to dynamic data')
     };
-  }, [clientId, isSingleSelected, metadata?.bindings]);
+  }, [arePatternOverridesEnabled, context, isSingleSelected, metadata?.bindings]);
   const showUrlInput = isSingleSelected && !isEditingImage && !lockHrefControls && !lockUrlControls;
   const showCoverControls = isSingleSelected && canInsertCover;
   const showBlockControls = showUrlInput || allowCrop || showCoverControls;
@@ -51161,8 +51158,12 @@ const block_metadata = {
       type: "number"
     },
     content: {
-      type: "object"
+      type: "object",
+      "default": {}
     }
+  },
+  providesContext: {
+    "pattern/overrides": "content"
   },
   supports: {
     customClassName: false,

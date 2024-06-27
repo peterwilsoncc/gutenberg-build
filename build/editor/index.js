@@ -1917,18 +1917,21 @@ const CONTENT = 'content';
   getValue({
     registry,
     clientId,
+    context,
     attributeName
   }) {
+    const patternOverridesContent = context['pattern/overrides'];
     const {
-      getBlockAttributes,
-      getBlockParentsByBlockName
+      getBlockAttributes
     } = registry.select(external_wp_blockEditor_namespaceObject.store);
     const currentBlockAttributes = getBlockAttributes(clientId);
-    const [patternClientId] = getBlockParentsByBlockName(clientId, 'core/block', true);
-    const overridableValue = getBlockAttributes(patternClientId)?.[CONTENT]?.[currentBlockAttributes?.metadata?.name]?.[attributeName];
+    if (!patternOverridesContent) {
+      return currentBlockAttributes[attributeName];
+    }
+    const overridableValue = patternOverridesContent?.[currentBlockAttributes?.metadata?.name]?.[attributeName];
 
     // If there is no pattern client ID, or it is not overwritten, return the default value.
-    if (!patternClientId || overridableValue === undefined) {
+    if (overridableValue === undefined) {
       return currentBlockAttributes[attributeName];
     }
     return overridableValue === '' ? undefined : overridableValue;
@@ -6407,6 +6410,8 @@ const external_wp_patterns_namespaceObject = window["wp"]["patterns"];
 
 
 
+/** @typedef {import('@wordpress/blocks').WPBlockSettings} WPBlockSettings */
+
 
 
 const {
@@ -6436,7 +6441,7 @@ const withPatternOverrideControls = (0,external_wp_compose_namespaceObject.creat
       ...props
     }), isSupportedBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternOverridesBlockControls, {})]
   });
-});
+}, 'withPatternOverrideControls');
 
 // Split into a separate component to avoid a store subscription
 // on every block.
