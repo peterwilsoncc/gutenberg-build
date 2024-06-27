@@ -79940,7 +79940,9 @@ function DimensionsTool({
   // Default options handled by ScaleTool.
   defaultScale = 'fill',
   // Match CSS default value for object-fit.
-  unitsOptions // Default options handled by UnitControl.
+  unitsOptions,
+  // Default options handled by UnitControl.
+  tools = ['aspectRatio', 'widthHeight', 'scale']
 }) {
   // Coerce undefined and CSS default values to be null.
   const width = value.width === undefined || value.width === 'auto' ? null : value.width;
@@ -79960,7 +79962,7 @@ function DimensionsTool({
   const aspectRatioValue = width && height ? 'custom' : lastAspectRatio;
   const showScaleControl = aspectRatio || width && height;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AspectRatioTool, {
+    children: [tools.includes('aspectRatio') && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AspectRatioTool, {
       panelId: panelId,
       options: aspectRatioOptions,
       defaultValue: defaultAspectRatio,
@@ -79997,7 +79999,7 @@ function DimensionsTool({
         }
         onChange(nextValue);
       }
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WidthHeightTool, {
+    }), tools.includes('widthHeight') && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WidthHeightTool, {
       panelId: panelId,
       units: unitsOptions,
       value: {
@@ -80052,7 +80054,7 @@ function DimensionsTool({
         }
         onChange(nextValue);
       }
-    }), showScaleControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ScaleTool, {
+    }), tools.includes('scale') && showScaleControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ScaleTool, {
       panelId: panelId,
       options: scaleOptions,
       defaultValue: defaultScale,
