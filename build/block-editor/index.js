@@ -20873,6 +20873,11 @@ function getFluidTypographyOptionsFromSettings(settings) {
 
 
 /**
+ * WordPress dependencies
+ */
+
+
+/**
  * Internal dependencies
  */
 
@@ -20998,12 +21003,16 @@ const STYLE_PATH_TO_PRESET_BLOCK_ATTRIBUTE = {
   'typography.fontSize': 'fontSize',
   'typography.fontFamily': 'fontFamily'
 };
-const TOOLSPANEL_DROPDOWNMENU_PROPS = {
-  popoverProps: {
-    placement: 'left-start',
-    offset: 259 // Inner sidebar width (248px) - button width (24px) - border (1px) + padding (16px) + spacing (20px)
-  }
-};
+function useToolsPanelDropdownMenuProps() {
+  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
+  return !isMobile ? {
+    popoverProps: {
+      placement: 'left-start',
+      // For non-mobile, inner sidebar width (248px) - button width (24px) - border (1px) + padding (16px) + spacing (20px)
+      offset: 259
+    }
+  } : {};
+}
 function findInPresetsBy(features, blockName, presetPath, presetProperty, presetValueValue) {
   // Block presets take priority above root level presets.
   const orderedPresetsByOrigin = [getValueFromObjectPath(features, ['blocks', blockName, ...presetPath]), getValueFromObjectPath(features, presetPath)];
@@ -26066,6 +26075,7 @@ function BlockSupportToolsPanel({
     getSelectedBlockClientId,
     hasMultiSelection
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const panelId = getSelectedBlockClientId();
   const resetAll = (0,external_wp_element_namespaceObject.useCallback)((resetFilters = []) => {
     const newAttributes = {};
@@ -26103,7 +26113,7 @@ function BlockSupportToolsPanel({
     ,
     __experimentalFirstVisibleItemClass: "first",
     __experimentalLastVisibleItemClass: "last",
-    dropdownMenuProps: TOOLSPANEL_DROPDOWNMENU_PROPS,
+    dropdownMenuProps: dropdownMenuProps,
     children: children
   }, panelId);
 }
@@ -29295,6 +29305,7 @@ function BackgroundToolsPanel({
   children,
   headerLabel
 }) {
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const resetAll = () => {
     const updatedValue = resetAllFilter(value);
     onChange(updatedValue);
@@ -29305,7 +29316,7 @@ function BackgroundToolsPanel({
     label: headerLabel,
     resetAll: resetAll,
     panelId: panelId,
-    dropdownMenuProps: TOOLSPANEL_DROPDOWNMENU_PROPS,
+    dropdownMenuProps: dropdownMenuProps,
     children: children
   });
 }
@@ -30724,6 +30735,7 @@ function BorderToolsPanel({
   children,
   label
 }) {
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const resetAll = () => {
     const updatedValue = resetAllFilter(value);
     onChange(updatedValue);
@@ -30732,7 +30744,7 @@ function BorderToolsPanel({
     label: label,
     resetAll: resetAll,
     panelId: panelId,
-    dropdownMenuProps: TOOLSPANEL_DROPDOWNMENU_PROPS,
+    dropdownMenuProps: dropdownMenuProps,
     children: children
   });
 }
@@ -31617,6 +31629,7 @@ function ColorToolsPanel({
   panelId,
   children
 }) {
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const resetAll = () => {
     const updatedValue = resetAllFilter(value);
     onChange(updatedValue);
@@ -31630,7 +31643,7 @@ function ColorToolsPanel({
     className: "color-block-support-panel",
     __experimentalFirstVisibleItemClass: "first",
     __experimentalLastVisibleItemClass: "last",
-    dropdownMenuProps: TOOLSPANEL_DROPDOWNMENU_PROPS,
+    dropdownMenuProps: dropdownMenuProps,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "color-block-support-panel__inner-wrapper",
       children: children
@@ -33568,6 +33581,7 @@ function TypographyToolsPanel({
   panelId,
   children
 }) {
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const resetAll = () => {
     const updatedValue = resetAllFilter(value);
     onChange(updatedValue);
@@ -33576,7 +33590,7 @@ function TypographyToolsPanel({
     label: (0,external_wp_i18n_namespaceObject.__)('Typography'),
     resetAll: resetAll,
     panelId: panelId,
-    dropdownMenuProps: TOOLSPANEL_DROPDOWNMENU_PROPS,
+    dropdownMenuProps: dropdownMenuProps,
     children: children
   });
 }
@@ -36129,6 +36143,7 @@ function DimensionsToolsPanel({
   panelId,
   children
 }) {
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const resetAll = () => {
     const updatedValue = resetAllFilter(value);
     onChange(updatedValue);
@@ -36137,7 +36152,7 @@ function DimensionsToolsPanel({
     label: (0,external_wp_i18n_namespaceObject.__)('Dimensions'),
     resetAll: resetAll,
     panelId: panelId,
-    dropdownMenuProps: TOOLSPANEL_DROPDOWNMENU_PROPS,
+    dropdownMenuProps: dropdownMenuProps,
     children: children
   });
 }
@@ -37577,6 +37592,7 @@ function FiltersToolsPanel({
   panelId,
   children
 }) {
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const resetAll = () => {
     const updatedValue = resetAllFilter(value);
     onChange(updatedValue);
@@ -37585,7 +37601,7 @@ function FiltersToolsPanel({
     label: (0,external_wp_i18n_namespaceObject._x)('Filters', 'Name for applying graphical effects'),
     resetAll: resetAll,
     panelId: panelId,
-    dropdownMenuProps: TOOLSPANEL_DROPDOWNMENU_PROPS,
+    dropdownMenuProps: dropdownMenuProps,
     children: children
   });
 }
@@ -76715,6 +76731,7 @@ function ImageSettingsPanel({
   inheritedValue,
   panelId
 }) {
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const resetLightbox = () => {
     onChange(undefined);
   };
@@ -76732,7 +76749,7 @@ function ImageSettingsPanel({
       label: (0,external_wp_i18n_namespaceObject._x)('Settings', 'Image settings'),
       resetAll: resetLightbox,
       panelId: panelId,
-      dropdownMenuProps: TOOLSPANEL_DROPDOWNMENU_PROPS,
+      dropdownMenuProps: dropdownMenuProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem
       // We use the `userSettings` prop instead of `settings`, because `settings`
       // contains the core/theme values for the lightbox and we want to show the

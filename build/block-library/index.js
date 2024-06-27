@@ -3011,10 +3011,13 @@ const getMergedAttributesWithPreview = (currentAttributes, preview, title, isRes
   };
 };
 
+;// CONCATENATED MODULE: external ["wp","compose"]
+const external_wp_compose_namespaceObject = window["wp"]["compose"];
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/utils/hooks.js
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -3092,9 +3095,17 @@ function useUploadMediaFromBlobURL(args = {}) {
     });
   }, [getSettings]);
 }
+function useToolsPanelDropdownMenuProps() {
+  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
+  return !isMobile ? {
+    popoverProps: {
+      placement: 'left-start',
+      // For non-mobile, inner sidebar width (248px) - button width (24px) - border (1px) + padding (16px) + spacing (20px)
+      offset: 259
+    }
+  } : {};
+}
 
-;// CONCATENATED MODULE: external ["wp","compose"]
-const external_wp_compose_namespaceObject = window["wp"]["compose"];
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/caption.js
 /**
  * WordPress dependencies
@@ -26343,16 +26354,6 @@ const upload = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 });
 /* harmony default export */ const library_upload = (upload);
 
-;// CONCATENATED MODULE: ./packages/block-library/build-module/utils/constants.js
-// The following dropdown menu props aim to provide a consistent offset and
-// placement for ToolsPanel menus for block controls to match color popovers.
-const TOOLSPANEL_DROPDOWNMENU_PROPS = {
-  popoverProps: {
-    placement: 'left-start',
-    offset: 259 // Inner sidebar width (248px) - button width (24px) - border (1px) + padding (16px) + spacing (20px)
-  }
-};
-
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/image/image.js
 /**
  * WordPress dependencies
@@ -26683,6 +26684,7 @@ function image_Image({
   // remove that override, even if the lightbox UI is disabled in the settings.
   !!lightbox && lightbox?.enabled !== lightboxSetting?.enabled || lightboxSetting?.allowEditing;
   const lightboxChecked = !!lightbox?.enabled || !lightbox && !!lightboxSetting?.enabled;
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const dimensionsControl = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DimensionsTool, {
     value: {
       width,
@@ -26729,7 +26731,7 @@ function image_Image({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
       label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
       resetAll: resetAll,
-      dropdownMenuProps: TOOLSPANEL_DROPDOWNMENU_PROPS,
+      dropdownMenuProps: dropdownMenuProps,
       children: isResizable && dimensionsControl
     })
   });
@@ -26922,7 +26924,7 @@ function image_Image({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
         label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
         resetAll: resetAll,
-        dropdownMenuProps: TOOLSPANEL_DROPDOWNMENU_PROPS,
+        dropdownMenuProps: dropdownMenuProps,
         children: [isSingleSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Alternative text'),
           isShownByDefault: true,
@@ -32131,6 +32133,7 @@ function MediaTextEdit({
       mediaSizeSlug: newMediaSizeSlug
     });
   };
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const mediaTextGeneralSettings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
     label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
     resetAll: () => {
@@ -32143,7 +32146,7 @@ function MediaTextEdit({
         mediaSizeSlug: undefined
       });
     },
-    dropdownMenuProps: TOOLSPANEL_DROPDOWNMENU_PROPS,
+    dropdownMenuProps: dropdownMenuProps,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Media width'),
       isShownByDefault: true,
@@ -47523,6 +47526,7 @@ function QueryInspectorControls(props) {
   const showSearchControl = isControlAllowed(allowedControls, 'search');
   const showParentControl = isControlAllowed(allowedControls, 'parents') && isPostTypeHierarchical;
   const showFiltersPanel = showTaxControl || showAuthorControl || showSearchControl || showParentControl;
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [!!postType && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockInfo, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(create_new_post_link, {
@@ -47586,7 +47590,7 @@ function QueryInspectorControls(props) {
         });
         setQuerySearch('');
       },
-      dropdownMenuProps: TOOLSPANEL_DROPDOWNMENU_PROPS,
+      dropdownMenuProps: dropdownMenuProps,
       children: [showTaxControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         label: (0,external_wp_i18n_namespaceObject.__)('Taxonomies'),
         hasValue: () => Object.values(taxQuery || {}).some(terms => !!terms.length),
