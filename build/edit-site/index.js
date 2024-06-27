@@ -27831,44 +27831,33 @@ function SingleSelectionCheckbox({
   selection,
   onSelectionChange,
   item,
-  data,
   getItemId,
   primaryField,
   disabled
 }) {
   const id = getItemId(item);
-  const isSelected = !disabled && selection.includes(id);
+  const checked = !disabled && selection.includes(id);
   let selectionLabel;
   if (primaryField?.getValue && item) {
     // eslint-disable-next-line @wordpress/valid-sprintf
     selectionLabel = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: item title. */
-    isSelected ? (0,external_wp_i18n_namespaceObject.__)('Deselect item: %s') : (0,external_wp_i18n_namespaceObject.__)('Select item: %s'), primaryField.getValue({
+    checked ? (0,external_wp_i18n_namespaceObject.__)('Deselect item: %s') : (0,external_wp_i18n_namespaceObject.__)('Select item: %s'), primaryField.getValue({
       item
     }));
   } else {
-    selectionLabel = isSelected ? (0,external_wp_i18n_namespaceObject.__)('Select a new item') : (0,external_wp_i18n_namespaceObject.__)('Deselect item');
+    selectionLabel = checked ? (0,external_wp_i18n_namespaceObject.__)('Select a new item') : (0,external_wp_i18n_namespaceObject.__)('Deselect item');
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
     className: "dataviews-view-table-selection-checkbox",
     __nextHasNoMarginBottom: true,
     "aria-label": selectionLabel,
     "aria-disabled": disabled,
-    checked: isSelected,
+    checked: checked,
     onChange: () => {
       if (disabled) {
         return;
       }
-      if (!isSelected) {
-        onSelectionChange(data.filter(_item => {
-          const itemId = getItemId?.(_item);
-          return itemId === id || selection.includes(itemId);
-        }));
-      } else {
-        onSelectionChange(data.filter(_item => {
-          const itemId = getItemId?.(_item);
-          return itemId !== id && selection.includes(itemId);
-        }));
-      }
+      onSelectionChange(selection.includes(id) ? selection.filter(itemId => id !== itemId) : [...selection, id]);
     }
   });
 }
@@ -28256,7 +28245,7 @@ function BulkActions({
           disabled: areAllSelected,
           hideOnClick: false,
           onClick: () => {
-            onSelectionChange(selectableItems);
+            onSelectionChange(selectableItems.map(item => getItemId(item)));
           },
           suffix: numberSelectableItems,
           children: (0,external_wp_i18n_namespaceObject.__)('Select all')
@@ -28446,7 +28435,7 @@ function BulkSelectionCheckbox({
       if (areAllSelected) {
         onSelectionChange([]);
       } else {
-        onSelectionChange(selectableItems);
+        onSelectionChange(selectableItems.map(item => getItemId(item)));
       }
     },
     "aria-label": areAllSelected ? (0,external_wp_i18n_namespaceObject.__)('Deselect all') : (0,external_wp_i18n_namespaceObject.__)('Select all')
@@ -28461,8 +28450,7 @@ function TableRow({
   primaryField,
   selection,
   getItemId,
-  onSelectionChange,
-  data
+  onSelectionChange
 }) {
   const hasPossibleBulkAction = useHasAPossibleBulkAction(actions, item);
   const isSelected = hasPossibleBulkAction && selection.includes(id);
@@ -28494,17 +28482,7 @@ function TableRow({
         return;
       }
       if (!isTouchDevice.current && document.getSelection()?.type !== 'Range') {
-        if (!isSelected) {
-          onSelectionChange(data.filter(_item => {
-            const itemId = getItemId?.(_item);
-            return itemId === id || selection.includes(itemId);
-          }));
-        } else {
-          onSelectionChange(data.filter(_item => {
-            const itemId = getItemId?.(_item);
-            return itemId !== id && selection.includes(itemId);
-          }));
-        }
+        onSelectionChange(selection.includes(id) ? selection.filter(itemId => id !== itemId) : [...selection, id]);
       }
     },
     children: [hasBulkActions && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("td", {
@@ -28519,7 +28497,6 @@ function TableRow({
           selection: selection,
           onSelectionChange: onSelectionChange,
           getItemId: getItemId,
-          data: data,
           primaryField: primaryField,
           disabled: !hasPossibleBulkAction
         })
@@ -28664,8 +28641,7 @@ function ViewTable({
           primaryField: primaryField,
           selection: selection,
           getItemId: getItemId,
-          onSelectionChange: onSelectionChange,
-          data: data
+          onSelectionChange: onSelectionChange
         }, getItemId(item)))
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -28705,7 +28681,6 @@ function ViewTable({
 
 function GridItem({
   selection,
-  data,
   onSelectionChange,
   getItemId,
   item,
@@ -28731,17 +28706,7 @@ function GridItem({
         if (!hasBulkAction) {
           return;
         }
-        if (!isSelected) {
-          onSelectionChange(data.filter(_item => {
-            const itemId = getItemId?.(_item);
-            return itemId === id || selection.includes(itemId);
-          }));
-        } else {
-          onSelectionChange(data.filter(_item => {
-            const itemId = getItemId?.(_item);
-            return itemId !== id && selection.includes(itemId);
-          }));
-        }
+        onSelectionChange(selection.includes(id) ? selection.filter(itemId => id !== itemId) : [...selection, id]);
       }
     },
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -28757,7 +28722,6 @@ function GridItem({
         selection: selection,
         onSelectionChange: onSelectionChange,
         getItemId: getItemId,
-        data: data,
         primaryField: primaryField,
         disabled: !hasBulkAction
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -28863,7 +28827,6 @@ function ViewGrid({
       children: data.map(item => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItem, {
           selection: selection,
-          data: data,
           onSelectionChange: onSelectionChange,
           getItemId: getItemId,
           item: item,
@@ -29123,7 +29086,7 @@ function ViewList(props) {
   const mediaField = fields.find(field => field.id === view.layout.mediaField);
   const primaryField = fields.find(field => field.id === view.layout.primaryField);
   const visibleFields = fields.filter(field => !view.hiddenFields?.includes(field.id) && ![view.layout.primaryField, view.layout.mediaField].includes(field.id));
-  const onSelect = (0,external_wp_element_namespaceObject.useCallback)(item => onSelectionChange([item]), [onSelectionChange]);
+  const onSelect = item => onSelectionChange([getItemId(item)]);
   const getItemDomId = (0,external_wp_element_namespaceObject.useCallback)(item => item ? `${baseId}-${getItemId(item)}` : undefined, [baseId, getItemId]);
   const store = view_list_useCompositeStore({
     defaultActiveId: getItemDomId(selectedItem)
@@ -35494,19 +35457,15 @@ function DataViews({
   onSelectionChange = defaultOnSelectionChange
 }) {
   const [selectionState, setSelectionState] = (0,external_wp_element_namespaceObject.useState)([]);
-  let selection, setSelection;
-  if (selectionProperty !== undefined && setSelectionProperty !== undefined) {
-    selection = selectionProperty;
-    setSelection = setSelectionProperty;
-  } else {
-    selection = selectionState;
-    setSelection = setSelectionState;
-  }
+  const isUncontrolled = selectionProperty === undefined || setSelectionProperty === undefined;
+  const selection = isUncontrolled ? selectionState : selectionProperty;
+  const setSelection = isUncontrolled ? setSelectionState : setSelectionProperty;
   const [openedFilter, setOpenedFilter] = (0,external_wp_element_namespaceObject.useState)(null);
-  const onSetSelection = (0,external_wp_element_namespaceObject.useCallback)(items => {
-    setSelection(items.map(item => getItemId(item)));
-    onSelectionChange(items);
-  }, [setSelection, getItemId, onSelectionChange]);
+  function setSelectionWithChange(value) {
+    const newValue = typeof value === 'function' ? value(selection) : value;
+    onSelectionChange(data.filter(item => newValue.includes(getItemId(item))));
+    return setSelection(value);
+  }
   const ViewComponent = VIEW_LAYOUTS.find(v => v.type === view.type)?.component;
   const _fields = (0,external_wp_element_namespaceObject.useMemo)(() => normalizeFields(fields), [fields]);
   const hasPossibleBulkAction = dataviews_useSomeItemHasAPossibleBulkAction(actions, data);
@@ -35537,7 +35496,7 @@ function DataViews({
       }), [constants_LAYOUT_TABLE, constants_LAYOUT_GRID].includes(view.type) && hasPossibleBulkAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BulkActions, {
         actions: actions,
         data: data,
-        onSelectionChange: onSetSelection,
+        onSelectionChange: setSelectionWithChange,
         selection: _selection,
         getItemId: getItemId
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_actions, {
@@ -35553,7 +35512,7 @@ function DataViews({
       getItemId: getItemId,
       isLoading: isLoading,
       onChangeView: onChangeView,
-      onSelectionChange: onSetSelection,
+      onSelectionChange: setSelectionWithChange,
       selection: _selection,
       setOpenedFilter: setOpenedFilter,
       view: view
@@ -35565,7 +35524,7 @@ function DataViews({
       data: data,
       actions: actions,
       selection: _selection,
-      onSelectionChange: onSetSelection,
+      onSelectionChange: setSelectionWithChange,
       getItemId: getItemId
     })]
   });
