@@ -73342,43 +73342,94 @@ const tab_Tab = (0,external_wp_element_namespaceObject.forwardRef)(function Tab(
 
 
 
-function useTrackElementOffset(targetElement, onUpdate) {
-  const [indicatorPosition, setIndicatorPosition] = (0,external_wp_element_namespaceObject.useState)({
-    left: 0,
-    top: 0,
-    width: 0,
-    height: 0
-  });
+// TODO: move these into a separate utility file, for use in other components
+// such as ToggleGroupControl.
 
-  // TODO: replace with useEventCallback or similar when officially available.
-  const updateCallbackRef = (0,external_wp_element_namespaceObject.useRef)(onUpdate);
-  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    updateCallbackRef.current = onUpdate;
+/**
+ * Any function.
+ */
+
+/**
+ * Creates a stable callback function that has access to the latest state and
+ * can be used within event handlers and effect callbacks. Throws when used in
+ * the render phase.
+ *
+ * @example
+ *
+ * ```tsx
+ * function Component(props) {
+ *   const onClick = useEvent(props.onClick);
+ *   React.useEffect(() => {}, [onClick]);
+ * }
+ * ```
+ */
+function tablist_useEvent(callback) {
+  const ref = (0,external_wp_element_namespaceObject.useRef)(() => {
+    throw new Error('Cannot call an event handler while rendering.');
   });
+  (0,external_wp_element_namespaceObject.useInsertionEffect)(() => {
+    ref.current = callback;
+  });
+  return (0,external_wp_element_namespaceObject.useCallback)((...args) => ref.current?.(...args), []);
+}
+
+/**
+ * `useResizeObserver` options.
+ */
+
+/**
+ * Fires `onResize` when the target element is resized.
+ *
+ * **The element must not be stored in a ref**, else it won't be observed
+ * or updated. Instead, it should be stored in a React state or equivalent.
+ *
+ * It sets up a `ResizeObserver` that tracks the element under the hood. The
+ * target element can be changed dynamically, and the observer will be
+ * updated accordingly.
+ *
+ * By default, `onResize` is called when the observer is set up, in addition
+ * to when the element is resized. This behavior can be disabled with the
+ * `fireOnObserve` option.
+ *
+ * @example
+ *
+ * ```tsx
+ * const [ targetElement, setTargetElement ] = useState< HTMLElement | null >();
+ *
+ * useResizeObserver( targetElement, ( element ) => {
+ *   console.log( 'Element resized:', element );
+ * } );
+ *
+ * <div ref={ setTargetElement } />;
+ * ```
+ */
+function useResizeObserver(
+/**
+ * The target element to observe. It can be changed dynamically.
+ */
+targetElement,
+/**
+ * Callback to fire when the element is resized. It will also be
+ * called when the observer is set up, unless `fireOnObserve` is
+ * set to `false`.
+ */
+onResize, {
+  fireOnObserve = true
+} = {}) {
+  const onResizeEvent = tablist_useEvent(onResize);
   const observedElementRef = (0,external_wp_element_namespaceObject.useRef)();
   const resizeObserverRef = (0,external_wp_element_namespaceObject.useRef)();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (targetElement === observedElementRef.current) {
       return;
     }
-    observedElementRef.current = targetElement !== null && targetElement !== void 0 ? targetElement : undefined;
-    function updateIndicator(element) {
-      setIndicatorPosition({
-        // Workaround to prevent unwanted scrollbars, see:
-        // https://github.com/WordPress/gutenberg/pull/61979
-        left: Math.max(element.offsetLeft - 1, 0),
-        top: Math.max(element.offsetTop - 1, 0),
-        width: parseFloat(getComputedStyle(element).width),
-        height: parseFloat(getComputedStyle(element).height)
-      });
-      updateCallbackRef.current?.();
-    }
+    observedElementRef.current = targetElement;
 
     // Set up a ResizeObserver.
     if (!resizeObserverRef.current) {
       resizeObserverRef.current = new ResizeObserver(() => {
         if (observedElementRef.current) {
-          updateIndicator(observedElementRef.current);
+          onResizeEvent(observedElementRef.current);
         }
       });
     }
@@ -73388,7 +73439,9 @@ function useTrackElementOffset(targetElement, onUpdate) {
 
     // Observe new element.
     if (targetElement) {
-      updateIndicator(targetElement);
+      if (fireOnObserve) {
+        onResizeEvent(targetElement);
+      }
       resizeObserver.observe(targetElement);
     }
     return () => {
@@ -73397,25 +73450,84 @@ function useTrackElementOffset(targetElement, onUpdate) {
         resizeObserver.unobserve(observedElementRef.current);
       }
     };
-  }, [targetElement]);
+  }, [fireOnObserve, onResizeEvent, targetElement]);
+}
+
+/**
+ * The position and dimensions of an element, relative to its offset parent.
+ */
+
+/**
+ * An `ElementOffsetRect` object with all values set to zero.
+ */
+const NULL_ELEMENT_OFFSET_RECT = {
+  left: 0,
+  top: 0,
+  width: 0,
+  height: 0
+};
+
+/**
+ * Returns the position and dimensions of an element, relative to its offset
+ * parent. This is useful in contexts where `getBoundingClientRect` is not
+ * suitable, such as when the element is transformed.
+ *
+ * **Note:** the `left` and `right` values are adjusted due to a limitation
+ * in the way the browser calculates the offset position of the element,
+ * which can cause unwanted scrollbars to appear. This adjustment makes the
+ * values potentially inaccurate within a range of 1 pixel.
+ */
+function getElementOffsetRect(element) {
+  return {
+    // The adjustments mentioned in the documentation above are necessary
+    // because `offsetLeft` and `offsetTop` are rounded to the nearest pixel,
+    // which can result in a position mismatch that causes unwanted overflow.
+    // For context, see: https://github.com/WordPress/gutenberg/pull/61979
+    left: Math.max(element.offsetLeft - 1, 0),
+    top: Math.max(element.offsetTop - 1, 0),
+    // This is a workaround to obtain these values with a sub-pixel precision,
+    // since `offsetWidth` and `offsetHeight` are rounded to the nearest pixel.
+    width: parseFloat(getComputedStyle(element).width),
+    height: parseFloat(getComputedStyle(element).height)
+  };
+}
+
+/**
+ * Tracks the position and dimensions of an element, relative to its offset
+ * parent. The element can be changed dynamically.
+ */
+function useTrackElementOffsetRect(targetElement) {
+  const [indicatorPosition, setIndicatorPosition] = (0,external_wp_element_namespaceObject.useState)(NULL_ELEMENT_OFFSET_RECT);
+  useResizeObserver(targetElement, element => setIndicatorPosition(getElementOffsetRect(element)));
   return indicatorPosition;
 }
-function useOnValueUpdate(value, onUpdate) {
-  const previousValueRef = (0,external_wp_element_namespaceObject.useRef)(value);
 
-  // TODO: replace with useEventCallback or similar when officially available.
-  const updateCallbackRef = (0,external_wp_element_namespaceObject.useRef)(onUpdate);
-  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    updateCallbackRef.current = onUpdate;
-  });
+/**
+ * Context object for the `onUpdate` callback of `useOnValueUpdate`.
+ */
+
+/**
+ * Calls the `onUpdate` callback when the `value` changes.
+ */
+function useOnValueUpdate(
+/**
+ * The value to watch for changes.
+ */
+value,
+/**
+ * Callback to fire when the value changes.
+ */
+onUpdate) {
+  const previousValueRef = (0,external_wp_element_namespaceObject.useRef)(value);
+  const updateCallbackEvent = tablist_useEvent(onUpdate);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (previousValueRef.current !== value) {
-      updateCallbackRef.current({
+      updateCallbackEvent({
         previousValue: previousValueRef.current
       });
       previousValueRef.current = value;
     }
-  }, [value]);
+  }, [updateCallbackEvent, value]);
 }
 const TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabList({
   children,
@@ -73423,7 +73535,7 @@ const TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabL
 }, ref) {
   const context = useTabsContext();
   const selectedId = context?.store.useState('selectedId');
-  const indicatorPosition = useTrackElementOffset(context?.store.item(selectedId)?.element);
+  const indicatorPosition = useTrackElementOffsetRect(context?.store.item(selectedId)?.element);
   const [animationEnabled, setAnimationEnabled] = (0,external_wp_element_namespaceObject.useState)(false);
   useOnValueUpdate(selectedId, ({
     previousValue
