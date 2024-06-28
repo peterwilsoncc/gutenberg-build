@@ -61970,8 +61970,7 @@ const search = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 /** @typedef {import('react').ComponentType} ComponentType */
 
 /**
- * A Higher Order Component used to be provide speak and debounced speak
- * functions.
+ * A Higher Order Component used to provide speak and debounced speak functions.
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-a11y/#speak
  *
