@@ -39452,7 +39452,7 @@ function BlockBreadcrumb({
           // Find the block editor wrapper for the selected block
           const blockEditor = blockRef.current?.closest('.editor-styles-wrapper');
           clearSelectedBlock();
-          getEditorRegion(blockEditor).focus();
+          getEditorRegion(blockEditor)?.focus();
         },
         children: rootLabel
       }), !hasSelection && rootLabel, !!clientId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
@@ -60534,7 +60534,7 @@ function BlockTools({
       } else if (clientIds.length === 1 && event.target === blockSelectionButtonRef?.current) {
         event.preventDefault();
         clearSelectedBlock();
-        getEditorRegion(__unstableContentRef.current).focus();
+        getEditorRegion(__unstableContentRef.current)?.focus();
       }
     } else if (isMatch('core/block-editor/collapse-list-view', event)) {
       // If focus is currently within a text field, such as a rich text block or other editable field,
