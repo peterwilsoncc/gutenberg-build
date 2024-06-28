@@ -36777,8 +36777,8 @@ const {
 
 
 // Default search helpers.
-const defaultGetName = item => item.name || '';
-const defaultGetTitle = item => item.title;
+const defaultGetName = item => item.type !== TEMPLATE_PART_POST_TYPE ? item.name || '' : '';
+const defaultGetTitle = item => typeof item.title === 'string' ? item.title : item.title.rendered;
 const defaultGetDescription = item => item.description || '';
 const defaultGetKeywords = item => item.keywords || [];
 const defaultHasCategory = () => false;
@@ -36882,7 +36882,6 @@ function getItemSearchRank(item, searchTerm, config) {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -36892,23 +36891,7 @@ function getItemSearchRank(item, searchTerm, config) {
 
 
 const EMPTY_PATTERN_LIST = [];
-const createTemplatePartId = (theme, slug) => theme && slug ? theme + '//' + slug : null;
-const templatePartToPattern = templatePart => ({
-  blocks: (0,external_wp_blocks_namespaceObject.parse)(templatePart.content.raw, {
-    __unstableSkipMigrationLogs: true
-  }),
-  categories: [templatePart.area],
-  description: templatePart.description || '',
-  isCustom: templatePart.source === TEMPLATE_ORIGINS.custom,
-  keywords: templatePart.keywords || [],
-  id: createTemplatePartId(templatePart.theme, templatePart.slug),
-  name: createTemplatePartId(templatePart.theme, templatePart.slug),
-  title: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(templatePart.title.rendered),
-  type: templatePart.type,
-  _links: templatePart._links,
-  templatePart
-});
-const selectTemplatePartsAsPatterns = (0,external_wp_data_namespaceObject.createSelector)((select, categoryId, search = '') => {
+const selectTemplateParts = (0,external_wp_data_namespaceObject.createSelector)((select, categoryId, search = '') => {
   var _getEntityRecords;
   const {
     getEntityRecords,
@@ -36920,8 +36903,7 @@ const selectTemplatePartsAsPatterns = (0,external_wp_data_namespaceObject.create
   const query = {
     per_page: -1
   };
-  const rawTemplateParts = (_getEntityRecords = getEntityRecords('postType', TEMPLATE_PART_POST_TYPE, query)) !== null && _getEntityRecords !== void 0 ? _getEntityRecords : EMPTY_PATTERN_LIST;
-  const templateParts = rawTemplateParts.map(templatePart => templatePartToPattern(templatePart));
+  const templateParts = (_getEntityRecords = getEntityRecords('postType', TEMPLATE_PART_POST_TYPE, query)) !== null && _getEntityRecords !== void 0 ? _getEntityRecords : EMPTY_PATTERN_LIST;
 
   // In the case where a custom template part area has been removed we need
   // the current list of areas to cross check against so orphaned template
@@ -36930,9 +36912,9 @@ const selectTemplatePartsAsPatterns = (0,external_wp_data_namespaceObject.create
   const templatePartAreas = knownAreas.map(area => area.area);
   const templatePartHasCategory = (item, category) => {
     if (category !== TEMPLATE_PART_AREA_DEFAULT_CATEGORY) {
-      return item.templatePart.area === category;
+      return item.area === category;
     }
-    return item.templatePart.area === category || !templatePartAreas.includes(item.templatePart.area);
+    return item.area === category || !templatePartAreas.includes(item.area);
   };
   const isResolving = isResolvingSelector('getEntityRecords', ['postType', TEMPLATE_PART_POST_TYPE, query]);
   const patterns = searchItems(templateParts, search, {
@@ -37070,7 +37052,7 @@ const usePatterns = (postType, categoryId, {
 } = {}) => {
   return (0,external_wp_data_namespaceObject.useSelect)(select => {
     if (postType === TEMPLATE_PART_POST_TYPE) {
-      return selectTemplatePartsAsPatterns(select, categoryId, search);
+      return selectTemplateParts(select, categoryId, search);
     } else if (postType === PATTERN_TYPES.user && !!categoryId) {
       const appliedCategory = categoryId === 'uncategorized' ? '' : categoryId;
       return selectPatterns(select, appliedCategory, syncStatus, search);
@@ -37882,9 +37864,12 @@ function useAddedBy(postType, postId) {
 
 
 
+
+
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -37960,15 +37945,21 @@ function Preview({
   const descriptionId = (0,external_wp_element_namespaceObject.useId)();
   const isUserPattern = item.type === PATTERN_TYPES.user;
   const isTemplatePart = item.type === TEMPLATE_PART_POST_TYPE;
-  const isEmpty = !item.blocks?.length;
   const [backgroundColor] = page_patterns_useGlobalStyle('color.background');
   const {
     onClick
   } = useLink({
     postType: item.type,
-    postId: isUserPattern ? item.id : item.name,
+    postId: isUserPattern || isTemplatePart ? item.id : item.name,
     canvas: 'edit'
   });
+  const blocks = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    var _item$blocks;
+    return (_item$blocks = item.blocks) !== null && _item$blocks !== void 0 ? _item$blocks : (0,external_wp_blocks_namespaceObject.parse)(item.content.raw, {
+      __unstableSkipMigrationLogs: true
+    });
+  }, [item?.content?.raw, item.blocks]);
+  const isEmpty = !blocks?.length;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: `page-patterns-preview-field is-viewtype-${viewType}`,
     style: {
@@ -37980,7 +37971,7 @@ function Preview({
       ariaDescribedBy: item.description ? descriptionId : undefined,
       children: [isEmpty && isTemplatePart && (0,external_wp_i18n_namespaceObject.__)('Empty template part'), isEmpty && !isTemplatePart && (0,external_wp_i18n_namespaceObject.__)('Empty pattern'), !isEmpty && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Async, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview, {
-          blocks: item.blocks,
+          blocks: blocks,
           viewportWidth: item.viewportWidth
         })
       })]
@@ -38029,13 +38020,15 @@ function Title({
   item
 }) {
   const isUserPattern = item.type === PATTERN_TYPES.user;
+  const isTemplatePart = item.type === TEMPLATE_PART_POST_TYPE;
   const {
     onClick
   } = useLink({
     postType: item.type,
-    postId: isUserPattern ? item.id : item.name,
+    postId: isUserPattern || isTemplatePart ? item.id : item.name,
     canvas: 'edit'
   });
+  const title = (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(defaultGetTitle(item));
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
     alignment: "center",
     justify: "flex-start",
@@ -38045,14 +38038,14 @@ function Title({
       gap: 0,
       justify: "left",
       className: "edit-site-patterns__pattern-title",
-      children: item.type === PATTERN_TYPES.theme ? item.title : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      children: item.type === PATTERN_TYPES.theme ? title : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         variant: "link",
         onClick: onClick
         // Required for the grid's roving tab index system.
         // See https://github.com/WordPress/gutenberg/pull/51898#discussion_r1243399243.
         ,
         tabIndex: "-1",
-        children: item.title || item.name
+        children: title || item.name
       })
     }), item.type === PATTERN_TYPES.theme && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
       placement: "top",
@@ -38158,7 +38151,7 @@ function DataviewsPatterns() {
         id: 'author',
         getValue: ({
           item
-        }) => item.templatePart.author_text,
+        }) => item.author_text,
         render: ({
           item
         }) => {
@@ -38245,7 +38238,10 @@ function DataviewsPatterns() {
         fields: fields,
         actions: actions,
         data: data || page_patterns_EMPTY_ARRAY,
-        getItemId: item => item.name,
+        getItemId: item => {
+          var _item$name;
+          return (_item$name = item.name) !== null && _item$name !== void 0 ? _item$name : item.id;
+        },
         isLoading: isResolving,
         view: view,
         onChangeView: onChangeView,

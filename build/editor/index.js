@@ -5572,7 +5572,7 @@ const revertTemplate = (template, {
 const removeTemplates = items => async ({
   registry
 }) => {
-  const isResetting = items.every(item => !!item && (item.has_theme_file || item.templatePart && item.templatePart.has_theme_file));
+  const isResetting = items.every(item => item?.has_theme_file);
   const promiseResult = await Promise.allSettled(items.map(item => {
     return registry.dispatch(external_wp_coreData_namespaceObject.store).deleteEntityRecord('postType', item.type, item.id, {
       force: true
@@ -25400,6 +25400,7 @@ const exportPatternAsJSONAction = {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -25432,12 +25433,12 @@ function isTemplateRemovable(template) {
   // In patterns list page we map the templates parts to a different object
   // than the one returned from the endpoint. This is why we need to check for
   // two props whether is custom or has a theme file.
-  return [template.source, template.templatePart?.source].includes(TEMPLATE_ORIGINS.custom) && !template.has_theme_file && !template.templatePart?.has_theme_file;
+  return template?.source === TEMPLATE_ORIGINS.custom && !template?.has_theme_file;
 }
 const canDeleteOrReset = item => {
   const isTemplatePart = item.type === TEMPLATE_PART_POST_TYPE;
   const isUserPattern = item.type === actions_PATTERN_TYPES.user;
-  return isUserPattern || isTemplatePart && item.isCustom;
+  return isUserPattern || isTemplatePart && item.source === TEMPLATE_ORIGINS.custom;
 };
 function getItemTitle(item) {
   if (typeof item.title === 'string') {
@@ -25880,8 +25881,8 @@ const renamePostAction = {
     // In patterns list page we map the templates parts to a different object
     // than the one returned from the endpoint. This is why we need to check for
     // two props whether is custom or has a theme file.
-    const isCustomPattern = isUserPattern || isTemplatePart && (post.isCustom || post.source === TEMPLATE_ORIGINS.custom);
-    const hasThemeFile = isTemplatePart && (post.templatePart?.has_theme_file || post.has_theme_file);
+    const isCustomPattern = isUserPattern || isTemplatePart && post.source === TEMPLATE_ORIGINS.custom;
+    const hasThemeFile = post?.has_theme_file;
     return isCustomPattern && !hasThemeFile;
   },
   RenderModal: ({
@@ -25890,8 +25891,7 @@ const renamePostAction = {
     onActionPerformed
   }) => {
     const [item] = items;
-    const originalTitle = (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(typeof item.title === 'string' ? item.title : item.title.rendered);
-    const [title, setTitle] = (0,external_wp_element_namespaceObject.useState)(() => originalTitle);
+    const [title, setTitle] = (0,external_wp_element_namespaceObject.useState)(() => getItemTitle(item));
     const {
       editEntityRecord,
       saveEditedEntityRecord
@@ -26082,7 +26082,7 @@ const isTemplatePartRevertable = item => {
   if (!item) {
     return false;
   }
-  const hasThemeFile = item.templatePart?.has_theme_file;
+  const hasThemeFile = item?.has_theme_file;
   return canDeleteOrReset(item) && hasThemeFile;
 };
 const resetTemplateAction = {
@@ -26206,23 +26206,29 @@ const duplicateTemplatePartAction = {
     closeModal
   }) => {
     const [item] = items;
+    const blocks = (0,external_wp_element_namespaceObject.useMemo)(() => {
+      var _item$blocks;
+      return (_item$blocks = item.blocks) !== null && _item$blocks !== void 0 ? _item$blocks : (0,external_wp_blocks_namespaceObject.parse)(item.content.raw, {
+        __unstableSkipMigrationLogs: true
+      });
+    }, [item?.content?.raw, item.blocks]);
     const {
       createSuccessNotice
     } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
     function onTemplatePartSuccess() {
       createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: %s: The new template part's title e.g. 'Call to action (copy)'.
-      (0,external_wp_i18n_namespaceObject.__)('"%s" duplicated.'), item.title), {
+      (0,external_wp_i18n_namespaceObject.__)('"%s" duplicated.'), getItemTitle(item)), {
         type: 'snackbar',
         id: 'edit-site-patterns-success'
       });
       closeModal();
     }
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CreateTemplatePartModalContents, {
-      blocks: item.blocks,
-      defaultArea: item.templatePart?.area || item.area,
+      blocks: blocks,
+      defaultArea: item.area,
       defaultTitle: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Existing template part title */
-      (0,external_wp_i18n_namespaceObject.__)('%s (Copy)'), item.title),
+      (0,external_wp_i18n_namespaceObject.__)('%s (Copy)'), getItemTitle(item)),
       onCreate: onTemplatePartSuccess,
       onError: closeModal,
       confirmLabel: (0,external_wp_i18n_namespaceObject._x)('Duplicate', 'action label')
