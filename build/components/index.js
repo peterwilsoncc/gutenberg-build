@@ -10478,7 +10478,7 @@ function isPlainObject(o) {
 /**
  * A `React.useEffect` that will not run on the first render.
  * Source:
- * https://github.com/ariakit/ariakit/blob/reakit/packages/reakit-utils/src/useUpdateEffect.ts
+ * https://github.com/ariakit/ariakit/blob/main/packages/ariakit-react-core/src/utils/hooks.ts
  *
  * @param {import('react').EffectCallback} effect
  * @param {import('react').DependencyList} deps
@@ -10497,6 +10497,9 @@ function use_update_effect_useUpdateEffect(effect, deps) {
     // see https://github.com/WordPress/gutenberg/pull/41166
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
+  (0,external_wp_element_namespaceObject.useEffect)(() => () => {
+    mounted.current = false;
+  }, []);
 }
 /* harmony default export */ const use_update_effect = (use_update_effect_useUpdateEffect);
 
