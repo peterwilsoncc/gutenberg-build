@@ -56236,6 +56236,12 @@ const DayButton = /*#__PURE__*/emotion_styled_base_browser_esm(build_module_butt
 
 
 /**
+ * Internal dependencies
+ */
+
+
+
+/**
  * Like date-fn's toDate, but tries to guess the format when a string is
  * given.
  *
@@ -56246,6 +56252,61 @@ function inputToDate(input) {
     return new Date(input);
   }
   return toDate_toDate(input);
+}
+
+/**
+ * Converts a 12-hour time to a 24-hour time.
+ * @param hours
+ * @param isPm
+ */
+function from12hTo24h(hours, isPm) {
+  return isPm ? (hours % 12 + 12) % 24 : hours % 12;
+}
+
+/**
+ * Converts a 24-hour time to a 12-hour time.
+ * @param hours
+ */
+function from24hTo12h(hours) {
+  return hours % 12 || 12;
+}
+
+/**
+ * Creates an InputControl reducer used to pad an input so that it is always a
+ * given width. For example, the hours and minutes inputs are padded to 2 so
+ * that '4' appears as '04'.
+ *
+ * @param pad How many digits the value should be.
+ */
+function buildPadInputStateReducer(pad) {
+  return (state, action) => {
+    const nextState = {
+      ...state
+    };
+    if (action.type === COMMIT || action.type === PRESS_UP || action.type === PRESS_DOWN) {
+      if (nextState.value !== undefined) {
+        nextState.value = nextState.value.toString().padStart(pad, '0');
+      }
+    }
+    return nextState;
+  };
+}
+
+/**
+ * Validates the target of a React event to ensure it is an input element and
+ * that the input is valid.
+ * @param event
+ */
+function validateInputElementTarget(event) {
+  var _ownerDocument$defaul;
+  // `instanceof` checks need to get the instance definition from the
+  // corresponding window object — therefore, the following logic makes
+  // the component work correctly even when rendered inside an iframe.
+  const HTMLInputElementInstance = (_ownerDocument$defaul = event.target?.ownerDocument.defaultView?.HTMLInputElement) !== null && _ownerDocument$defaul !== void 0 ? _ownerDocument$defaul : HTMLInputElement;
+  if (!(event.target instanceof HTMLInputElementInstance)) {
+    return false;
+  }
+  return event.target.validity.valid;
 }
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/date-time/constants.js
@@ -56683,38 +56744,6 @@ function set_set(date, values) {
 // Fallback for modularized imports:
 /* harmony default export */ const date_fns_set = ((/* unused pure expression or super */ null && (set_set)));
 
-;// CONCATENATED MODULE: ./node_modules/date-fns/setHours.mjs
-
-
-/**
- * @name setHours
- * @category Hour Helpers
- * @summary Set the hours to the given date.
- *
- * @description
- * Set the hours to the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The date to be changed
- * @param hours - The hours of the new date
- *
- * @returns The new date with the hours set
- *
- * @example
- * // Set 4 hours to 1 September 2014 11:30:00:
- * const result = setHours(new Date(2014, 8, 1, 11, 30), 4)
- * //=> Mon Sep 01 2014 04:30:00
- */
-function setHours(date, hours) {
-  const _date = toDate_toDate(date);
-  _date.setHours(hours);
-  return _date;
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_setHours = ((/* unused pure expression or super */ null && (setHours)));
-
 ;// CONCATENATED MODULE: ./packages/components/build-module/date-time/time/styles.js
 
 function time_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
@@ -56830,6 +56859,148 @@ const timezone_TimeZone = () => {
 };
 /* harmony default export */ const timezone = (timezone_TimeZone);
 
+;// CONCATENATED MODULE: ./packages/components/build-module/date-time/time-input/index.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+
+function TimeInput({
+  value: valueProp,
+  defaultValue,
+  is12Hour,
+  minutesProps,
+  onChange
+}) {
+  const [value = {
+    hours: new Date().getHours(),
+    minutes: new Date().getMinutes()
+  }, setValue] = useControlledValue({
+    value: valueProp,
+    onChange,
+    defaultValue
+  });
+  const dayPeriod = parseDayPeriod(value.hours);
+  const hours12Format = from24hTo12h(value.hours);
+  const buildNumberControlChangeCallback = method => {
+    return (_value, {
+      event
+    }) => {
+      if (!validateInputElementTarget(event)) {
+        return;
+      }
+
+      // We can safely assume value is a number if target is valid.
+      const numberValue = Number(_value);
+      setValue({
+        ...value,
+        [method]: method === 'hours' && is12Hour ? from12hTo24h(numberValue, dayPeriod === 'PM') : numberValue
+      });
+    };
+  };
+  const buildAmPmChangeCallback = _value => {
+    return () => {
+      if (dayPeriod === _value) {
+        return;
+      }
+      setValue({
+        ...value,
+        hours: from12hTo24h(hours12Format, _value === 'PM')
+      });
+    };
+  };
+  function parseDayPeriod(_hours) {
+    return _hours < 12 ? 'AM' : 'PM';
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(h_stack_component, {
+    alignment: "left",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(TimeWrapper, {
+      className: "components-datetime__time-field components-datetime__time-field-time" // Unused, for backwards compatibility.
+      ,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HoursInput, {
+        className: "components-datetime__time-field-hours-input" // Unused, for backwards compatibility.
+        ,
+        label: (0,external_wp_i18n_namespaceObject.__)('Hours'),
+        hideLabelFromVision: true,
+        __next40pxDefaultSize: true,
+        value: String(is12Hour ? hours12Format : value.hours).padStart(2, '0'),
+        step: 1,
+        min: is12Hour ? 1 : 0,
+        max: is12Hour ? 12 : 23,
+        required: true,
+        spinControls: "none",
+        isPressEnterToChange: true,
+        isDragEnabled: false,
+        isShiftStepEnabled: false,
+        onChange: buildNumberControlChangeCallback('hours'),
+        __unstableStateReducer: buildPadInputStateReducer(2)
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TimeSeparator, {
+        className: "components-datetime__time-separator" // Unused, for backwards compatibility.
+        ,
+        "aria-hidden": "true",
+        children: ":"
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MinutesInput, {
+        className: dist_clsx('components-datetime__time-field-minutes-input',
+        // Unused, for backwards compatibility.
+        minutesProps?.className),
+        label: (0,external_wp_i18n_namespaceObject.__)('Minutes'),
+        hideLabelFromVision: true,
+        __next40pxDefaultSize: true,
+        value: String(value.minutes).padStart(2, '0'),
+        step: 1,
+        min: 0,
+        max: 59,
+        required: true,
+        spinControls: "none",
+        isPressEnterToChange: true,
+        isDragEnabled: false,
+        isShiftStepEnabled: false,
+        onChange: (...args) => {
+          buildNumberControlChangeCallback('minutes')(...args);
+          minutesProps?.onChange?.(...args);
+        },
+        __unstableStateReducer: buildPadInputStateReducer(2),
+        ...minutesProps
+      })]
+    }), is12Hour && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(button_group, {
+      className: "components-datetime__time-field components-datetime__time-field-am-pm" // Unused, for backwards compatibility.
+      ,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+        className: "components-datetime__time-am-button" // Unused, for backwards compatibility.
+        ,
+        variant: dayPeriod === 'AM' ? 'primary' : 'secondary',
+        __next40pxDefaultSize: true,
+        onClick: buildAmPmChangeCallback('AM'),
+        children: (0,external_wp_i18n_namespaceObject.__)('AM')
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+        className: "components-datetime__time-pm-button" // Unused, for backwards compatibility.
+        ,
+        variant: dayPeriod === 'PM' ? 'primary' : 'secondary',
+        __next40pxDefaultSize: true,
+        onClick: buildAmPmChangeCallback('PM'),
+        children: (0,external_wp_i18n_namespaceObject.__)('PM')
+      })]
+    })]
+  });
+}
+/* harmony default export */ const time_input = ((/* unused pure expression or super */ null && (TimeInput)));
+
 ;// CONCATENATED MODULE: ./packages/components/build-module/date-time/time/index.js
 /**
  * External dependencies
@@ -56855,35 +57026,6 @@ const timezone_TimeZone = () => {
 
 
 
-
-
-
-
-function from12hTo24h(hours, isPm) {
-  return isPm ? (hours % 12 + 12) % 24 : hours % 12;
-}
-
-/**
- * Creates an InputControl reducer used to pad an input so that it is always a
- * given width. For example, the hours and minutes inputs are padded to 2 so
- * that '4' appears as '04'.
- *
- * @param pad How many digits the value should be.
- */
-function buildPadInputStateReducer(pad) {
-  return (state, action) => {
-    const nextState = {
-      ...state
-    };
-    if (action.type === COMMIT || action.type === PRESS_UP || action.type === PRESS_DOWN) {
-      if (nextState.value !== undefined) {
-        nextState.value = nextState.value.toString().padStart(pad, '0');
-      }
-    }
-    return nextState;
-  };
-}
-
 /**
  * TimePicker is a React component that renders a clock for time selection.
  *
@@ -56904,6 +57046,9 @@ function buildPadInputStateReducer(pad) {
  * };
  * ```
  */
+
+
+
 function TimePicker({
   is12Hour,
   currentTime,
@@ -56923,41 +57068,25 @@ function TimePicker({
     month,
     year,
     minutes,
-    hours,
-    am
+    hours
   } = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     day: format(date, 'dd'),
     month: format(date, 'MM'),
     year: format(date, 'yyyy'),
     minutes: format(date, 'mm'),
-    hours: format(date, is12Hour ? 'hh' : 'HH'),
+    hours: format(date, 'HH'),
     am: format(date, 'a')
-  }), [date, is12Hour]);
+  }), [date]);
   const buildNumberControlChangeCallback = method => {
     const callback = (value, {
       event
     }) => {
-      var _ownerDocument$defaul;
-      // `instanceof` checks need to get the instance definition from the
-      // corresponding window object — therefore, the following logic makes
-      // the component work correctly even when rendered inside an iframe.
-      const HTMLInputElementInstance = (_ownerDocument$defaul = event.target?.ownerDocument.defaultView?.HTMLInputElement) !== null && _ownerDocument$defaul !== void 0 ? _ownerDocument$defaul : HTMLInputElement;
-      if (!(event.target instanceof HTMLInputElementInstance)) {
-        return;
-      }
-      if (!event.target.validity.valid) {
+      if (!validateInputElementTarget(event)) {
         return;
       }
 
       // We can safely assume value is a number if target is valid.
-      let numberValue = Number(value);
-
-      // If the 12-hour format is being used and the 'PM' period is
-      // selected, then the incoming value (which ranges 1-12) should be
-      // increased by 12 to match the expected 24-hour format.
-      if (method === 'hours' && is12Hour) {
-        numberValue = from12hTo24h(numberValue, am === 'PM');
-      }
+      const numberValue = Number(value);
       const newDate = set_set(date, {
         [method]: numberValue
       });
@@ -56966,17 +57095,17 @@ function TimePicker({
     };
     return callback;
   };
-  function buildAmPmChangeCallback(value) {
-    return () => {
-      if (am === value) {
-        return;
-      }
-      const parsedHours = parseInt(hours, 10);
-      const newDate = setHours(date, from12hTo24h(parsedHours, value === 'PM'));
-      setDate(newDate);
-      onChange?.(format(newDate, TIMEZONELESS_FORMAT));
-    };
-  }
+  const onTimeInputChangeCallback = ({
+    hours: newHours,
+    minutes: newMinutes
+  }) => {
+    const newDate = set_set(date, {
+      hours: newHours,
+      minutes: newMinutes
+    });
+    setDate(newDate);
+    onChange?.(format(newDate, TIMEZONELESS_FORMAT));
+  };
   const dayField = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DayInput, {
     className: "components-datetime__time-field components-datetime__time-field-day" // Unused, for backwards compatibility.
     ,
@@ -57059,67 +57188,13 @@ function TimePicker({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(h_stack_component, {
         className: "components-datetime__time-wrapper" // Unused, for backwards compatibility.
         ,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(TimeWrapper, {
-          className: "components-datetime__time-field components-datetime__time-field-time" // Unused, for backwards compatibility.
-          ,
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HoursInput, {
-            className: "components-datetime__time-field-hours-input" // Unused, for backwards compatibility.
-            ,
-            label: (0,external_wp_i18n_namespaceObject.__)('Hours'),
-            hideLabelFromVision: true,
-            __next40pxDefaultSize: true,
-            value: hours,
-            step: 1,
-            min: is12Hour ? 1 : 0,
-            max: is12Hour ? 12 : 23,
-            required: true,
-            spinControls: "none",
-            isPressEnterToChange: true,
-            isDragEnabled: false,
-            isShiftStepEnabled: false,
-            onChange: buildNumberControlChangeCallback('hours'),
-            __unstableStateReducer: buildPadInputStateReducer(2)
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TimeSeparator, {
-            className: "components-datetime__time-separator" // Unused, for backwards compatibility.
-            ,
-            "aria-hidden": "true",
-            children: ":"
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MinutesInput, {
-            className: "components-datetime__time-field-minutes-input" // Unused, for backwards compatibility.
-            ,
-            label: (0,external_wp_i18n_namespaceObject.__)('Minutes'),
-            hideLabelFromVision: true,
-            __next40pxDefaultSize: true,
-            value: minutes,
-            step: 1,
-            min: 0,
-            max: 59,
-            required: true,
-            spinControls: "none",
-            isPressEnterToChange: true,
-            isDragEnabled: false,
-            isShiftStepEnabled: false,
-            onChange: buildNumberControlChangeCallback('minutes'),
-            __unstableStateReducer: buildPadInputStateReducer(2)
-          })]
-        }), is12Hour && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(button_group, {
-          className: "components-datetime__time-field components-datetime__time-field-am-pm" // Unused, for backwards compatibility.
-          ,
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-            className: "components-datetime__time-am-button" // Unused, for backwards compatibility.
-            ,
-            variant: am === 'AM' ? 'primary' : 'secondary',
-            __next40pxDefaultSize: true,
-            onClick: buildAmPmChangeCallback('AM'),
-            children: (0,external_wp_i18n_namespaceObject.__)('AM')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-            className: "components-datetime__time-pm-button" // Unused, for backwards compatibility.
-            ,
-            variant: am === 'PM' ? 'primary' : 'secondary',
-            __next40pxDefaultSize: true,
-            onClick: buildAmPmChangeCallback('PM'),
-            children: (0,external_wp_i18n_namespaceObject.__)('PM')
-          })]
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TimeInput, {
+          value: {
+            hours: Number(hours),
+            minutes: Number(minutes)
+          },
+          is12Hour: is12Hour,
+          onChange: onTimeInputChangeCallback
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(timezone, {})]
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Fieldset, {
@@ -57256,6 +57331,7 @@ const DateTimePicker = (0,external_wp_element_namespaceObject.forwardRef)(Unforw
 /**
  * Internal dependencies
  */
+
 
 
 
