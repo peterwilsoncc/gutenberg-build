@@ -28628,7 +28628,7 @@ function utils_isTemplateRemovable(template) {
   // In patterns list page we map the templates parts to a different object
   // than the one returned from the endpoint. This is why we need to check for
   // two props whether is custom or has a theme file.
-  return [template.source, template.source].includes(TEMPLATE_ORIGINS.custom) && !template.has_theme_file && !template?.has_theme_file;
+  return [template.source, template.source].includes(TEMPLATE_ORIGINS.custom) && !template.has_theme_file;
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/delete-post.js
