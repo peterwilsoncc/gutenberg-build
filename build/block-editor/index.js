@@ -37534,6 +37534,11 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
   const hasParentPattern = !!props.context['pattern/overrides'];
   const hasPatternOverridesDefaultBinding = props.attributes.metadata?.bindings?.[DEFAULT_ATTRIBUTE]?.source === 'core/pattern-overrides';
   const bindings = (0,external_wp_element_namespaceObject.useMemo)(() => replacePatternOverrideDefaultBindings(name, props.attributes.metadata?.bindings), [props.attributes.metadata?.bindings, name]);
+
+  // While this hook doesn't directly call any selectors, `useSelect` is
+  // used purposely here to ensure `boundAttributes` is updated whenever
+  // there are attribute updates.
+  // `source.getValues` may also call a selector via `registry.select`.
   const boundAttributes = (0,external_wp_data_namespaceObject.useSelect)(() => {
     if (!bindings) {
       return;
