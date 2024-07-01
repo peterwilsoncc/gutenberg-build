@@ -45150,6 +45150,9 @@ const post_title_metadata = {
       "default": "_self"
     }
   },
+  example: {
+    viewportWidth: 350
+  },
   supports: {
     align: ["wide", "full"],
     html: false,
