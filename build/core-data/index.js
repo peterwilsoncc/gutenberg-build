@@ -23711,8 +23711,6 @@ const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
 
 
 
-/** @typedef {import('@wordpress/blocks').WPBlock} WPBlock */
-
 const EMPTY_ARRAY = [];
 const EntityContext = (0,external_wp_element_namespaceObject.createContext)({});
 
@@ -23824,7 +23822,7 @@ const parsedBlocksCache = new WeakMap();
  * @param {Object} options
  * @param {string} [options.id] An entity ID to use instead of the context-provided one.
  *
- * @return {[WPBlock[], Function, Function]} The block array and setters.
+ * @return {[unknown[], Function, Function]} The block array and setters.
  */
 function useEntityBlockEditor(kind, name, {
   id: _id

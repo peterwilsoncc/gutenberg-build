@@ -5937,15 +5937,15 @@ const memoizedGetFilteredTemplatePartBlocks = memize(getFilteredTemplatePartBloc
  * WordPress dependencies
  */
 
+
 /**
  * Internal dependencies
  */
 
-const private_selectors_EMPTY_ARRAY = [];
-function getEntityActions(state, kind, name) {
-  var _state$actions$kind$n;
-  return (_state$actions$kind$n = state.actions[kind]?.[name]) !== null && _state$actions$kind$n !== void 0 ? _state$actions$kind$n : private_selectors_EMPTY_ARRAY;
-}
+const getEntityActions = (0,external_wp_data_namespaceObject.createSelector)((state, kind, name) => {
+  var _state$actions$kind$n, _state$actions$kind$;
+  return [...((_state$actions$kind$n = state.actions[kind]?.[name]) !== null && _state$actions$kind$n !== void 0 ? _state$actions$kind$n : []), ...((_state$actions$kind$ = state.actions[kind]?.['*']) !== null && _state$actions$kind$ !== void 0 ? _state$actions$kind$ : [])];
+}, (state, kind, name) => [state.actions[kind]?.[name], state.actions[kind]?.['*']]);
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/store/private-selectors.js
 /**
@@ -25446,69 +25446,6 @@ function getItemTitle(item) {
   }
   return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title?.rendered || '');
 }
-
-// This action is used for templates, patterns and template parts.
-// Every other post type uses the similar `trashPostAction` which
-// moves the post to trash.
-const deletePostAction = {
-  id: 'delete-post',
-  label: (0,external_wp_i18n_namespaceObject.__)('Delete'),
-  isPrimary: true,
-  icon: library_trash,
-  isEligible(post) {
-    if ([TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE].includes(post.type)) {
-      return isTemplateRemovable(post);
-    }
-    // We can only remove user patterns.
-    return post.type === actions_PATTERN_TYPES.user;
-  },
-  supportsBulk: true,
-  hideModalHeader: true,
-  RenderModal: ({
-    items,
-    closeModal,
-    onActionPerformed
-  }) => {
-    const [isBusy, setIsBusy] = (0,external_wp_element_namespaceObject.useState)(false);
-    const {
-      removeTemplates
-    } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-      spacing: "5",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-        children: items.length > 1 ? (0,external_wp_i18n_namespaceObject.sprintf)(
-        // translators: %d: number of items to delete.
-        (0,external_wp_i18n_namespaceObject._n)('Delete %d item?', 'Delete %d items?', items.length), items.length) : (0,external_wp_i18n_namespaceObject.sprintf)(
-        // translators: %s: The template or template part's titles
-        (0,external_wp_i18n_namespaceObject.__)('Delete "%s"?'), getItemTitle(items[0]))
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        justify: "right",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          variant: "tertiary",
-          onClick: closeModal,
-          disabled: isBusy,
-          __experimentalIsFocusable: true,
-          children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          variant: "primary",
-          onClick: async () => {
-            setIsBusy(true);
-            await removeTemplates(items, {
-              allowUndo: false
-            });
-            onActionPerformed?.(items);
-            setIsBusy(false);
-            closeModal();
-          },
-          isBusy: isBusy,
-          disabled: isBusy,
-          __experimentalIsFocusable: true,
-          children: (0,external_wp_i18n_namespaceObject.__)('Delete')
-        })]
-      })]
-    });
-  }
-};
 const trashPostAction = {
   id: 'move-to-trash',
   label: (0,external_wp_i18n_namespaceObject.__)('Move to Trash'),
@@ -26279,7 +26216,7 @@ function usePostActions({
     if (!isLoaded) {
       return [];
     }
-    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && duplicateTemplatePartAction, isPattern && userCanCreatePostType && duplicatePatternAction, supportsTitle && renamePostActionForPostType, isPattern && exportPatternAsJSONAction, isTemplateOrTemplatePart ? resetTemplateAction : restorePostActionForPostType, isTemplateOrTemplatePart || isPattern ? deletePostAction : trashPostActionForPostType, !isTemplateOrTemplatePart && permanentlyDeletePostActionForPostType, ...defaultActions].filter(Boolean);
+    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && duplicateTemplatePartAction, isPattern && userCanCreatePostType && duplicatePatternAction, supportsTitle && renamePostActionForPostType, isPattern && exportPatternAsJSONAction, isTemplateOrTemplatePart ? resetTemplateAction : restorePostActionForPostType, !isTemplateOrTemplatePart && !isPattern && trashPostActionForPostType, !isTemplateOrTemplatePart && permanentlyDeletePostActionForPostType, ...defaultActions].filter(Boolean);
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
     // and the consumer should provide the context to filter the actions, if needed.
@@ -28658,6 +28595,150 @@ function EditorPreferencesModal({
   });
 }
 
+;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/utils.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+function isTemplateOrTemplatePart(p) {
+  return p.type === TEMPLATE_POST_TYPE || p.type === TEMPLATE_PART_POST_TYPE;
+}
+function utils_getItemTitle(item) {
+  if (typeof item.title === 'string') {
+    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title);
+  }
+  return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title?.rendered || '');
+}
+
+/**
+ * Check if a template is removable.
+ *
+ * @param template The template entity to check.
+ * @return Whether the template is removable.
+ */
+function utils_isTemplateRemovable(template) {
+  if (!template) {
+    return false;
+  }
+  // In patterns list page we map the templates parts to a different object
+  // than the one returned from the endpoint. This is why we need to check for
+  // two props whether is custom or has a theme file.
+  return [template.source, template.source].includes(TEMPLATE_ORIGINS.custom) && !template.has_theme_file && !template?.has_theme_file;
+}
+
+;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/delete-post.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+// @ts-ignore
+
+/**
+ * Internal dependencies
+ */
+
+// @ts-ignore
+
+
+
+
+const {
+  PATTERN_TYPES: delete_post_PATTERN_TYPES
+} = unlock(external_wp_patterns_namespaceObject.privateApis);
+
+// This action is used for templates, patterns and template parts.
+// Every other post type uses the similar `trashPostAction` which
+// moves the post to trash.
+const deletePostAction = {
+  id: 'delete-post',
+  label: (0,external_wp_i18n_namespaceObject.__)('Delete'),
+  isPrimary: true,
+  icon: library_trash,
+  isEligible(post) {
+    if (isTemplateOrTemplatePart(post)) {
+      return utils_isTemplateRemovable(post);
+    }
+    // We can only remove user patterns.
+    return post.type === delete_post_PATTERN_TYPES.user;
+  },
+  supportsBulk: true,
+  hideModalHeader: true,
+  RenderModal: ({
+    items,
+    closeModal,
+    onActionPerformed
+  }) => {
+    const [isBusy, setIsBusy] = (0,external_wp_element_namespaceObject.useState)(false);
+    const {
+      removeTemplates
+    } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      spacing: "5",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+        children: items.length > 1 ? (0,external_wp_i18n_namespaceObject.sprintf)(
+        // translators: %d: number of items to delete.
+        (0,external_wp_i18n_namespaceObject._n)('Delete %d item?', 'Delete %d items?', items.length), items.length) : (0,external_wp_i18n_namespaceObject.sprintf)(
+        // translators: %s: The template or template part's titles
+        (0,external_wp_i18n_namespaceObject.__)('Delete "%s"?'), utils_getItemTitle(items[0]))
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        justify: "right",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          variant: "tertiary",
+          onClick: closeModal,
+          disabled: isBusy,
+          __experimentalIsFocusable: true,
+          children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          variant: "primary",
+          onClick: async () => {
+            setIsBusy(true);
+            await removeTemplates(items, {
+              allowUndo: false
+            });
+            onActionPerformed?.(items);
+            setIsBusy(false);
+            closeModal?.();
+          },
+          isBusy: isBusy,
+          disabled: isBusy,
+          __experimentalIsFocusable: true,
+          children: (0,external_wp_i18n_namespaceObject.__)('Delete')
+        })]
+      })]
+    });
+  }
+};
+/* harmony default export */ const delete_post = (deletePostAction);
+
+;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+// @ts-ignore
+
+
+function registerDefaultActions() {
+  const {
+    registerEntityAction
+  } = unlock((0,external_wp_data_namespaceObject.dispatch)(store_store));
+  registerEntityAction('postType', '*', delete_post);
+}
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/private-apis.js
 /**
  * WordPress dependencies
@@ -28667,6 +28748,7 @@ function EditorPreferencesModal({
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -28700,6 +28782,7 @@ lock(privateApis, {
   ToolsMoreMenuGroup: tools_more_menu_group,
   ViewMoreMenuGroup: view_more_menu_group,
   ResizableEditor: resizable_editor,
+  registerDefaultActions: registerDefaultActions,
   // This is a temporary private API while we're updating the site editor to use EditorProvider.
   useBlockEditorSettings: use_block_editor_settings,
   interfaceStore,

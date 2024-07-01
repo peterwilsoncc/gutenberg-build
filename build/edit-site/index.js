@@ -43331,13 +43331,17 @@ function initializePostsDashboard(id) {
 
 
 
+
+const {
+  registerDefaultActions
+} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+
 /**
  * Initializes the site editor screen.
  *
  * @param {string} id       ID of the root element to render the screen in.
  * @param {Object} settings Editor settings.
  */
-
 function initializeEditor(id, settings) {
   const target = document.getElementById(id);
   const root = (0,external_wp_element_namespaceObject.createRoot)(target);
@@ -43358,6 +43362,7 @@ function initializeEditor(id, settings) {
       enableFSEBlocks: true
     });
   }
+  registerDefaultActions();
 
   // We dispatch actions and update the store synchronously before rendering
   // so that we won't trigger unnecessary re-renders with useEffect.
