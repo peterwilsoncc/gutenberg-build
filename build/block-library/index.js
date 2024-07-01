@@ -30789,6 +30789,9 @@ const loginout_metadata = {
       "default": true
     }
   },
+  example: {
+    viewportWidth: 350
+  },
   supports: {
     className: true,
     spacing: {
