@@ -41164,7 +41164,8 @@ function rename_modal_RenameModal({
           __next40pxDefaultSize: true,
           value: editedMenuTitle,
           placeholder: (0,external_wp_i18n_namespaceObject.__)('Navigation title'),
-          onChange: setEditedMenuTitle
+          onChange: setEditedMenuTitle,
+          label: (0,external_wp_i18n_namespaceObject.__)('Name')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
           justify: "right",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -42642,6 +42643,7 @@ function RenameItemModalContent({
         justify: "right",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           variant: "tertiary",
+          __next40pxDefaultSize: true,
           onClick: () => {
             setIsRenaming(false);
           },
@@ -42650,7 +42652,8 @@ function RenameItemModalContent({
           variant: "primary",
           type: "submit",
           "aria-disabled": !title,
-          children: (0,external_wp_i18n_namespaceObject.__)('Rename')
+          __next40pxDefaultSize: true,
+          children: (0,external_wp_i18n_namespaceObject.__)('Save')
         })]
       })]
     })
@@ -42728,10 +42731,12 @@ function CustomDataViewItem({
         })
       })
     }), isRenaming && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Rename view'),
+      title: (0,external_wp_i18n_namespaceObject.__)('Rename'),
       onRequestClose: () => {
         setIsRenaming(false);
       },
+      focusOnMount: "firstContentElement",
+      size: "small",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RenameItemModalContent, {
         dataviewId: dataviewId,
         setIsRenaming: setIsRenaming,

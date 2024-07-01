@@ -37119,7 +37119,6 @@ function BlockRenameModal({
   hasOverridesWarning
 }) {
   const [editedBlockName, setEditedBlockName] = (0,external_wp_element_namespaceObject.useState)(blockName);
-  const descriptionId = (0,external_wp_element_namespaceObject.useId)();
   const nameHasChanged = editedBlockName !== blockName;
   const nameIsOriginal = editedBlockName === originalBlockName;
   const nameIsEmpty = isEmptyString(editedBlockName);
@@ -37142,11 +37141,8 @@ function BlockRenameModal({
     onRequestClose: onClose,
     overlayClassName: "block-editor-block-rename-modal",
     focusOnMount: "firstContentElement",
-    aria: {
-      describedby: descriptionId
-    },
     size: "small",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("form", {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
       onSubmit: e => {
         e.preventDefault();
         if (!isNameValid) {
@@ -37154,17 +37150,13 @@ function BlockRenameModal({
         }
         handleSubmit();
       },
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-        id: descriptionId,
-        children: (0,external_wp_i18n_namespaceObject.__)('Enter a custom name for this block.')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
         spacing: "3",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
           __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: true,
           value: editedBlockName,
-          label: (0,external_wp_i18n_namespaceObject.__)('Block name'),
-          hideLabelFromVision: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Name'),
           help: hasOverridesWarning ? (0,external_wp_i18n_namespaceObject.__)('This block allows overrides. Changing the name can cause problems with content entered into instances of this pattern.') : undefined,
           placeholder: originalBlockName,
           onChange: setEditedBlockName,
@@ -37184,7 +37176,7 @@ function BlockRenameModal({
             children: (0,external_wp_i18n_namespaceObject.__)('Save')
           })]
         })]
-      })]
+      })
     })
   });
 }
