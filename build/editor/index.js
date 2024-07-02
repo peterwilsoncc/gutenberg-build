@@ -24317,13 +24317,25 @@ function SavePublishPanels({
   } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
   const {
     publishSidebarOpened,
-    hasNonPostEntityChanges,
-    hasPostMetaChanges
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => ({
-    publishSidebarOpened: select(store_store).isPublishSidebarOpened(),
-    hasNonPostEntityChanges: select(store_store).hasNonPostEntityChanges(),
-    hasPostMetaChanges: unlock(select(store_store)).hasPostMetaChanges()
-  }), []);
+    isPublishable,
+    isDirty,
+    hasOtherEntitiesChanges
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      isPublishSidebarOpened,
+      isEditedPostPublishable,
+      isCurrentPostPublished,
+      isEditedPostDirty,
+      hasNonPostEntityChanges
+    } = select(store_store);
+    const _hasOtherEntitiesChanges = hasNonPostEntityChanges() || unlock(select(store_store)).hasPostMetaChanges();
+    return {
+      publishSidebarOpened: isPublishSidebarOpened(),
+      isPublishable: !isCurrentPostPublished() && isEditedPostPublishable(),
+      isDirty: _hasOtherEntitiesChanges || isEditedPostDirty(),
+      hasOtherEntitiesChanges: _hasOtherEntitiesChanges
+    };
+  }, []);
   const openEntitiesSavedStates = (0,external_wp_element_namespaceObject.useCallback)(() => setEntitiesSavedStatesCallback(true), []);
 
   // It is ok for these components to be unmounted when not in visual use.
@@ -24336,18 +24348,7 @@ function SavePublishPanels({
       PrePublishExtension: plugin_pre_publish_panel.Slot,
       PostPublishExtension: plugin_post_publish_panel.Slot
     });
-  } else if (hasNonPostEntityChanges || hasPostMetaChanges) {
-    unmountableContent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "editor-layout__toggle-entities-saved-states-panel",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        variant: "secondary",
-        className: "editor-layout__toggle-entities-saved-states-panel-button",
-        onClick: openEntitiesSavedStates,
-        "aria-expanded": false,
-        children: (0,external_wp_i18n_namespaceObject.__)('Open save panel')
-      })
-    });
-  } else {
+  } else if (isPublishable && !hasOtherEntitiesChanges) {
     unmountableContent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "editor-layout__toggle-publish-panel",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -24356,6 +24357,19 @@ function SavePublishPanels({
         onClick: togglePublishSidebar,
         "aria-expanded": false,
         children: (0,external_wp_i18n_namespaceObject.__)('Open publish panel')
+      })
+    });
+  } else {
+    unmountableContent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "editor-layout__toggle-entities-saved-states-panel",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        variant: "secondary",
+        className: "editor-layout__toggle-entities-saved-states-panel-button",
+        onClick: openEntitiesSavedStates,
+        "aria-expanded": false,
+        disabled: !isDirty,
+        __experimentalIsFocusable: true,
+        children: (0,external_wp_i18n_namespaceObject.__)('Open save panel')
       })
     });
   }
@@ -25165,6 +25179,7 @@ function EditorInterface({
   disableIframe,
   autoFocus,
   customSaveButton,
+  customSavePanel,
   forceDisableBlockTools,
   title,
   icon,
@@ -25270,7 +25285,7 @@ function EditorInterface({
     footer: !isPreviewMode && !isDistractionFree && isLargeViewport && showBlockBreadcrumbs && isRichEditingEnabled && blockEditorMode !== 'zoom-out' && mode === 'visual' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockBreadcrumb, {
       rootLabelText: documentLabel
     }),
-    actions: !isPreviewMode ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SavePublishPanels, {
+    actions: !isPreviewMode ? customSavePanel || /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SavePublishPanels, {
       closeEntitiesSavedStates: closeEntitiesSavedStates,
       isEntitiesSavedStatesOpen: entitiesSavedStatesCallback,
       setEntitiesSavedStatesCallback: setEntitiesSavedStatesCallback,

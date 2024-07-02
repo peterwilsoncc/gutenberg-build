@@ -8331,240 +8331,6 @@ function ResizableFrame({
 }
 /* harmony default export */ const resizable_frame = (ResizableFrame);
 
-;// CONCATENATED MODULE: ./packages/edit-site/build-module/utils/is-previewing-theme.js
-/**
- * WordPress dependencies
- */
-
-function isPreviewingTheme() {
-  return (0,external_wp_url_namespaceObject.getQueryArg)(window.location.href, 'wp_theme_preview') !== undefined;
-}
-function currentlyPreviewingTheme() {
-  if (isPreviewingTheme()) {
-    return (0,external_wp_url_namespaceObject.getQueryArg)(window.location.href, 'wp_theme_preview');
-  }
-  return null;
-}
-
-;// CONCATENATED MODULE: ./packages/edit-site/build-module/utils/use-activate-theme.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-const {
-  useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
-
-/**
- * This should be refactored to use the REST API, once the REST API can activate themes.
- *
- * @return {Function} A function that activates the theme.
- */
-function useActivateTheme() {
-  const history = useHistory();
-  const {
-    startResolution,
-    finishResolution
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  return async () => {
-    if (isPreviewingTheme()) {
-      const activationURL = 'themes.php?action=activate&stylesheet=' + currentlyPreviewingTheme() + '&_wpnonce=' + window.WP_BLOCK_THEME_ACTIVATE_NONCE;
-      startResolution('activateTheme');
-      await window.fetch(activationURL);
-      finishResolution('activateTheme');
-      // Remove the wp_theme_preview query param: we've finished activating
-      // the queue and are switching to normal Site Editor.
-      const {
-        params
-      } = history.getLocationWithParams();
-      history.replace({
-        ...params,
-        wp_theme_preview: undefined
-      });
-    }
-  };
-}
-
-;// CONCATENATED MODULE: external ["wp","apiFetch"]
-const external_wp_apiFetch_namespaceObject = window["wp"]["apiFetch"];
-var external_wp_apiFetch_default = /*#__PURE__*/__webpack_require__.n(external_wp_apiFetch_namespaceObject);
-;// CONCATENATED MODULE: ./packages/edit-site/build-module/utils/use-actual-current-theme.js
-/**
- * WordPress dependencies
- */
-
-
-
-const ACTIVE_THEMES_URL = '/wp/v2/themes?status=active';
-function useActualCurrentTheme() {
-  const [currentTheme, setCurrentTheme] = (0,external_wp_element_namespaceObject.useState)();
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    // Set the `wp_theme_preview` to empty string to bypass the createThemePreviewMiddleware.
-    const path = (0,external_wp_url_namespaceObject.addQueryArgs)(ACTIVE_THEMES_URL, {
-      context: 'edit',
-      wp_theme_preview: ''
-    });
-    external_wp_apiFetch_default()({
-      path
-    }).then(activeThemes => setCurrentTheme(activeThemes[0]))
-    // Do nothing
-    .catch(() => {});
-  }, []);
-  return currentTheme;
-}
-
-;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/save-panel/index.js
-/**
- * External dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-
-const {
-  EntitiesSavedStatesExtensible,
-  NavigableRegion
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
-const EntitiesSavedStatesForPreview = ({
-  onClose
-}) => {
-  var _currentTheme$name$re, _previewingTheme$name;
-  const isDirtyProps = (0,external_wp_editor_namespaceObject.useEntitiesSavedStatesIsDirty)();
-  let activateSaveLabel;
-  if (isDirtyProps.isDirty) {
-    activateSaveLabel = (0,external_wp_i18n_namespaceObject.__)('Activate & Save');
-  } else {
-    activateSaveLabel = (0,external_wp_i18n_namespaceObject.__)('Activate');
-  }
-  const currentTheme = useActualCurrentTheme();
-  const previewingTheme = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getCurrentTheme(), []);
-  const additionalPrompt = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-    children: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %1$s: The name of active theme, %2$s: The name of theme to be activated. */
-    (0,external_wp_i18n_namespaceObject.__)('Saving your changes will change your active theme from %1$s to %2$s.'), (_currentTheme$name$re = currentTheme?.name?.rendered) !== null && _currentTheme$name$re !== void 0 ? _currentTheme$name$re : '...', (_previewingTheme$name = previewingTheme?.name?.rendered) !== null && _previewingTheme$name !== void 0 ? _previewingTheme$name : '...')
-  });
-  const activateTheme = useActivateTheme();
-  const onSave = async values => {
-    await activateTheme();
-    return values;
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EntitiesSavedStatesExtensible, {
-    ...isDirtyProps,
-    additionalPrompt,
-    close: onClose,
-    onSave,
-    saveEnabled: true,
-    saveLabel: activateSaveLabel
-  });
-};
-const _EntitiesSavedStates = ({
-  onClose,
-  renderDialog = undefined
-}) => {
-  if (isPreviewingTheme()) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EntitiesSavedStatesForPreview, {
-      onClose: onClose
-    });
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EntitiesSavedStates, {
-    close: onClose,
-    renderDialog: renderDialog
-  });
-};
-function SavePanel() {
-  const {
-    isSaveViewOpen,
-    canvasMode,
-    isDirty,
-    isSaving
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      __experimentalGetDirtyEntityRecords,
-      isSavingEntityRecord,
-      isResolving
-    } = select(external_wp_coreData_namespaceObject.store);
-    const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
-    const isActivatingTheme = isResolving('activateTheme');
-    const {
-      isSaveViewOpened,
-      getCanvasMode
-    } = lock_unlock_unlock(select(store));
-
-    // The currently selected entity to display.
-    // Typically template or template part in the site editor.
-    return {
-      isSaveViewOpen: isSaveViewOpened(),
-      canvasMode: getCanvasMode(),
-      isDirty: dirtyEntityRecords.length > 0,
-      isSaving: dirtyEntityRecords.some(record => isSavingEntityRecord(record.kind, record.name, record.key)) || isActivatingTheme
-    };
-  }, []);
-  const {
-    setIsSaveViewOpened
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const onClose = () => setIsSaveViewOpened(false);
-  if (canvasMode === 'view') {
-    return isSaveViewOpen ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
-      className: "edit-site-save-panel__modal",
-      onRequestClose: onClose,
-      __experimentalHideHeader: true,
-      contentLabel: (0,external_wp_i18n_namespaceObject.__)('Save site, content, and template changes'),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(_EntitiesSavedStates, {
-        onClose: onClose
-      })
-    }) : null;
-  }
-  const activateSaveEnabled = isPreviewingTheme() || isDirty;
-  const disabled = isSaving || !activateSaveEnabled;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(NavigableRegion, {
-    className: dist_clsx('edit-site-layout__actions', {
-      'is-entity-save-view-open': isSaveViewOpen
-    }),
-    ariaLabel: (0,external_wp_i18n_namespaceObject.__)('Save panel'),
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: dist_clsx('edit-site-editor__toggle-save-panel', {
-        'screen-reader-text': isSaveViewOpen
-      }),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        variant: "secondary",
-        className: "edit-site-editor__toggle-save-panel-button",
-        onClick: () => setIsSaveViewOpened(true),
-        "aria-haspopup": "dialog",
-        disabled: disabled,
-        __experimentalIsFocusable: true,
-        children: (0,external_wp_i18n_namespaceObject.__)('Open save panel')
-      })
-    }), isSaveViewOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(_EntitiesSavedStates, {
-      onClose: onClose,
-      renderDialog: true
-    })]
-  });
-}
-
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/keyboard-shortcuts/register.js
 /**
  * WordPress dependencies
@@ -13207,6 +12973,21 @@ const check = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 });
 /* harmony default export */ const library_check = (check);
 
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/utils/is-previewing-theme.js
+/**
+ * WordPress dependencies
+ */
+
+function isPreviewingTheme() {
+  return (0,external_wp_url_namespaceObject.getQueryArg)(window.location.href, 'wp_theme_preview') !== undefined;
+}
+function currentlyPreviewingTheme() {
+  if (isPreviewingTheme()) {
+    return (0,external_wp_url_namespaceObject.getQueryArg)(window.location.href, 'wp_theme_preview');
+  }
+  return null;
+}
+
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/save-button/index.js
 /**
  * WordPress dependencies
@@ -13389,6 +13170,225 @@ function SaveHub() {
   });
 }
 
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/utils/use-activate-theme.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const {
+  useHistory
+} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+
+/**
+ * This should be refactored to use the REST API, once the REST API can activate themes.
+ *
+ * @return {Function} A function that activates the theme.
+ */
+function useActivateTheme() {
+  const history = useHistory();
+  const {
+    startResolution,
+    finishResolution
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
+  return async () => {
+    if (isPreviewingTheme()) {
+      const activationURL = 'themes.php?action=activate&stylesheet=' + currentlyPreviewingTheme() + '&_wpnonce=' + window.WP_BLOCK_THEME_ACTIVATE_NONCE;
+      startResolution('activateTheme');
+      await window.fetch(activationURL);
+      finishResolution('activateTheme');
+      // Remove the wp_theme_preview query param: we've finished activating
+      // the queue and are switching to normal Site Editor.
+      const {
+        params
+      } = history.getLocationWithParams();
+      history.replace({
+        ...params,
+        wp_theme_preview: undefined
+      });
+    }
+  };
+}
+
+;// CONCATENATED MODULE: external ["wp","apiFetch"]
+const external_wp_apiFetch_namespaceObject = window["wp"]["apiFetch"];
+var external_wp_apiFetch_default = /*#__PURE__*/__webpack_require__.n(external_wp_apiFetch_namespaceObject);
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/utils/use-actual-current-theme.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+const ACTIVE_THEMES_URL = '/wp/v2/themes?status=active';
+function useActualCurrentTheme() {
+  const [currentTheme, setCurrentTheme] = (0,external_wp_element_namespaceObject.useState)();
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    // Set the `wp_theme_preview` to empty string to bypass the createThemePreviewMiddleware.
+    const path = (0,external_wp_url_namespaceObject.addQueryArgs)(ACTIVE_THEMES_URL, {
+      context: 'edit',
+      wp_theme_preview: ''
+    });
+    external_wp_apiFetch_default()({
+      path
+    }).then(activeThemes => setCurrentTheme(activeThemes[0]))
+    // Do nothing
+    .catch(() => {});
+  }, []);
+  return currentTheme;
+}
+
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/save-panel/index.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+const {
+  EntitiesSavedStatesExtensible,
+  NavigableRegion
+} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+const EntitiesSavedStatesForPreview = ({
+  onClose
+}) => {
+  var _currentTheme$name$re, _previewingTheme$name;
+  const isDirtyProps = (0,external_wp_editor_namespaceObject.useEntitiesSavedStatesIsDirty)();
+  let activateSaveLabel;
+  if (isDirtyProps.isDirty) {
+    activateSaveLabel = (0,external_wp_i18n_namespaceObject.__)('Activate & Save');
+  } else {
+    activateSaveLabel = (0,external_wp_i18n_namespaceObject.__)('Activate');
+  }
+  const currentTheme = useActualCurrentTheme();
+  const previewingTheme = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getCurrentTheme(), []);
+  const additionalPrompt = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+    children: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %1$s: The name of active theme, %2$s: The name of theme to be activated. */
+    (0,external_wp_i18n_namespaceObject.__)('Saving your changes will change your active theme from %1$s to %2$s.'), (_currentTheme$name$re = currentTheme?.name?.rendered) !== null && _currentTheme$name$re !== void 0 ? _currentTheme$name$re : '...', (_previewingTheme$name = previewingTheme?.name?.rendered) !== null && _previewingTheme$name !== void 0 ? _previewingTheme$name : '...')
+  });
+  const activateTheme = useActivateTheme();
+  const onSave = async values => {
+    await activateTheme();
+    return values;
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EntitiesSavedStatesExtensible, {
+    ...isDirtyProps,
+    additionalPrompt,
+    close: onClose,
+    onSave,
+    saveEnabled: true,
+    saveLabel: activateSaveLabel
+  });
+};
+const _EntitiesSavedStates = ({
+  onClose,
+  renderDialog = undefined
+}) => {
+  if (isPreviewingTheme()) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EntitiesSavedStatesForPreview, {
+      onClose: onClose
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EntitiesSavedStates, {
+    close: onClose,
+    renderDialog: renderDialog
+  });
+};
+function SavePanel() {
+  const {
+    isSaveViewOpen,
+    canvasMode,
+    isDirty,
+    isSaving
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      __experimentalGetDirtyEntityRecords,
+      isSavingEntityRecord,
+      isResolving
+    } = select(external_wp_coreData_namespaceObject.store);
+    const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
+    const isActivatingTheme = isResolving('activateTheme');
+    const {
+      isSaveViewOpened,
+      getCanvasMode
+    } = lock_unlock_unlock(select(store));
+
+    // The currently selected entity to display.
+    // Typically template or template part in the site editor.
+    return {
+      isSaveViewOpen: isSaveViewOpened(),
+      canvasMode: getCanvasMode(),
+      isDirty: dirtyEntityRecords.length > 0,
+      isSaving: dirtyEntityRecords.some(record => isSavingEntityRecord(record.kind, record.name, record.key)) || isActivatingTheme
+    };
+  }, []);
+  const {
+    setIsSaveViewOpened
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const onClose = () => setIsSaveViewOpened(false);
+  if (canvasMode === 'view') {
+    return isSaveViewOpen ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
+      className: "edit-site-save-panel__modal",
+      onRequestClose: onClose,
+      __experimentalHideHeader: true,
+      contentLabel: (0,external_wp_i18n_namespaceObject.__)('Save site, content, and template changes'),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(_EntitiesSavedStates, {
+        onClose: onClose
+      })
+    }) : null;
+  }
+  const activateSaveEnabled = isPreviewingTheme() || isDirty;
+  const disabled = isSaving || !activateSaveEnabled;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(NavigableRegion, {
+    className: dist_clsx('edit-site-layout__actions', {
+      'is-entity-save-view-open': isSaveViewOpen
+    }),
+    ariaLabel: (0,external_wp_i18n_namespaceObject.__)('Save panel'),
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: dist_clsx('edit-site-editor__toggle-save-panel', {
+        'screen-reader-text': isSaveViewOpen
+      }),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        variant: "secondary",
+        className: "edit-site-editor__toggle-save-panel-button",
+        onClick: () => setIsSaveViewOpened(true),
+        "aria-haspopup": "dialog",
+        disabled: disabled,
+        __experimentalIsFocusable: true,
+        children: (0,external_wp_i18n_namespaceObject.__)('Open save panel')
+      })
+    }), isSaveViewOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(_EntitiesSavedStates, {
+      onClose: onClose,
+      renderDialog: true
+    })]
+  });
+}
+
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/sync-state-with-url/use-sync-canvas-mode-with-url.js
 /**
  * WordPress dependencies
@@ -13560,13 +13560,13 @@ function Layout({
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_commands_namespaceObject.CommandMenu, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(register, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(global, {}), fullResizer, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_commands_namespaceObject.CommandMenu, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(register, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(global, {}), fullResizer, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...navigateRegionsProps,
       ref: navigateRegionsProps.ref,
       className: dist_clsx('edit-site-layout', navigateRegionsProps.className, {
         'is-full-canvas': canvasMode === 'edit'
       }),
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
         className: "edit-site-layout__content",
         children: [(!isMobileViewport || !areas.mobile) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(layout_NavigableRegion, {
           ariaLabel: (0,external_wp_i18n_namespaceObject.__)('Navigation'),
@@ -13596,7 +13596,7 @@ function Layout({
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarContent, {
                 routeKey: routeKey,
                 children: areas.sidebar
-              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SaveHub, {})]
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SaveHub, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SavePanel, {})]
             })
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EditorSnackbars, {}), isMobileViewport && areas.mobile && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -13633,7 +13633,7 @@ function Layout({
             })
           })]
         })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SavePanel, {})]
+      })
     })]
   });
 }
@@ -27408,6 +27408,7 @@ function useEditorTitle() {
 
 
 
+
 const {
   Editor,
   BackButton
@@ -27546,6 +27547,7 @@ function EditSiteEditor({
       customSaveButton: _isPreviewingTheme && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SaveButton, {
         size: "compact"
       }),
+      customSavePanel: _isPreviewingTheme && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SavePanel, {}),
       forceDisableBlockTools: !hasDefaultEditorCanvasView,
       title: title,
       icon: icon,
