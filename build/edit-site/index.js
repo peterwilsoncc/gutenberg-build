@@ -7375,9 +7375,9 @@ const setCanvasMode = mode => ({
   registry,
   dispatch
 }) => {
+  const isMediumOrBigger = window.matchMedia('(min-width: 782px)').matches;
   const switchCanvasMode = () => {
     registry.batch(() => {
-      const isMediumOrBigger = window.matchMedia('(min-width: 782px)').matches;
       registry.dispatch(external_wp_blockEditor_namespaceObject.store).clearSelectedBlock();
       registry.dispatch(external_wp_editor_namespaceObject.store).setDeviceType('Desktop');
       registry.dispatch(external_wp_blockEditor_namespaceObject.store).__unstableSetEditorMode('edit');
@@ -7402,7 +7402,12 @@ const setCanvasMode = mode => ({
       registry.dispatch(external_wp_editor_namespaceObject.store).setIsInserterOpened(false);
     });
   };
-  if (!document.startViewTransition) {
+
+  /*
+   * Skip transition in mobile, otherwise it crashes the browser.
+   * See: https://github.com/WordPress/gutenberg/pull/63002.
+   */
+  if (!isMediumOrBigger || !document.startViewTransition) {
     switchCanvasMode();
   } else {
     document.documentElement.classList.add(`canvas-mode-${mode}-transition`);
@@ -43000,6 +43005,7 @@ function useLayoutAreas() {
     isCustom,
     canvas
   } = params;
+  const hasEditCanvasMode = canvas === 'edit';
   useRedirectOldPaths();
 
   // Page list
@@ -43016,8 +43022,8 @@ function useLayoutAreas() {
         content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostsList, {
           postType: postType
         }),
-        preview: (isListLayout || canvas === 'edit') && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
-        mobile: canvas === 'edit' ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostsList, {
+        preview: (isListLayout || hasEditCanvasMode) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
+        mobile: hasEditCanvasMode ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostsList, {
           postType: postType
         })
       },
@@ -43037,8 +43043,8 @@ function useLayoutAreas() {
           backPath: {}
         }),
         content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageTemplates, {}),
-        preview: (isListLayout || canvas === 'edit') && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
-        mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageTemplates, {})
+        preview: (isListLayout || hasEditCanvasMode) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
+        mobile: hasEditCanvasMode ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageTemplates, {})
       },
       widths: {
         content: isListLayout ? 380 : undefined
@@ -43055,8 +43061,8 @@ function useLayoutAreas() {
           backPath: {}
         }),
         content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsPatterns, {}),
-        mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsPatterns, {}),
-        preview: canvas === 'edit' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {})
+        mobile: hasEditCanvasMode ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsPatterns, {}),
+        preview: hasEditCanvasMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {})
       }
     };
   }
@@ -43070,7 +43076,7 @@ function useLayoutAreas() {
           backPath: {}
         }),
         preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
-        mobile: canvas === 'edit' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {})
+        mobile: hasEditCanvasMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {})
       }
     };
   }
@@ -43087,7 +43093,7 @@ function useLayoutAreas() {
             }
           }),
           preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
-          mobile: canvas === 'edit' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {})
+          mobile: hasEditCanvasMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {})
         }
       };
     }
@@ -43098,7 +43104,7 @@ function useLayoutAreas() {
           backPath: {}
         }),
         preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
-        mobile: canvas === 'edit' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {})
+        mobile: hasEditCanvasMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {})
       }
     };
   }
@@ -43109,7 +43115,7 @@ function useLayoutAreas() {
     areas: {
       sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenMain, {}),
       preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
-      mobile: canvas === 'edit' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {})
+      mobile: hasEditCanvasMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {})
     }
   };
 }
