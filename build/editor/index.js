@@ -24128,8 +24128,6 @@ function ListViewOutline() {
 
 
 
-
-
 /**
  * Internal dependencies
  */
@@ -24137,10 +24135,9 @@ function ListViewOutline() {
 
 
 
-
 const {
-  Tabs
-} = unlock(external_wp_components_namespaceObject.privateApis);
+  TabbedSidebar
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function ListViewSidebar() {
   const {
     setIsListViewOpened
@@ -24221,42 +24218,11 @@ function ListViewSidebar() {
       className: "editor-list-view-sidebar",
       onKeyDown: closeOnEscape,
       ref: sidebarRef,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Tabs, {
-        onSelect: tabName => setTab(tabName),
-        selectOnMove: false
-        // The initial tab value is set explicitly to avoid an initial
-        // render where no tab is selected. This ensures that the
-        // tabpanel height is correct so the relevant scroll container
-        // can be rendered internally.
-        ,
-        defaultTabId: "list-view",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-          className: "editor-list-view-sidebar__header",
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            className: "editor-list-view-sidebar__close-button",
-            icon: close_small,
-            label: (0,external_wp_i18n_namespaceObject.__)('Close'),
-            onClick: closeListView,
-            size: "small"
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Tabs.TabList, {
-            className: "editor-list-view-sidebar__tabs-tablist",
-            ref: tabsRef,
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tabs.Tab, {
-              className: "editor-list-view-sidebar__tabs-tab",
-              tabId: "list-view",
-              children: (0,external_wp_i18n_namespaceObject._x)('List View', 'Post overview')
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tabs.Tab, {
-              className: "editor-list-view-sidebar__tabs-tab",
-              tabId: "outline",
-              children: (0,external_wp_i18n_namespaceObject._x)('Outline', 'Post overview')
-            })]
-          })]
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tabs.TabPanel, {
-          ref: listViewContainerRef,
-          className: "editor-list-view-sidebar__tabs-tabpanel",
-          tabId: "list-view",
-          focusable: false,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TabbedSidebar, {
+        tabs: [{
+          name: 'list-view',
+          title: (0,external_wp_i18n_namespaceObject._x)('List View', 'Post overview'),
+          panel: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
             className: "editor-list-view-sidebar__list-view-container",
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
               className: "editor-list-view-sidebar__list-view-panel-content",
@@ -24264,16 +24230,21 @@ function ListViewSidebar() {
                 dropZoneElement: dropZoneElement
               })
             })
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tabs.TabPanel, {
-          className: "editor-list-view-sidebar__tabs-tabpanel",
-          tabId: "outline",
-          focusable: false,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          }),
+          panelRef: listViewContainerRef
+        }, {
+          name: 'outline',
+          title: (0,external_wp_i18n_namespaceObject._x)('Outline', 'Post overview'),
+          panel: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
             className: "editor-list-view-sidebar__list-view-container",
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ListViewOutline, {})
           })
-        })]
+        }],
+        onClose: closeListView,
+        onSelect: tabName => setTab(tabName),
+        defaultTabId: "list-view",
+        ref: tabsRef,
+        closeButtonLabel: (0,external_wp_i18n_namespaceObject.__)('Close')
       })
     })
   );
@@ -27708,7 +27679,7 @@ const sidebars = {
 
 
 const {
-  Tabs: header_Tabs
+  Tabs
 } = unlock(external_wp_components_namespaceObject.privateApis);
 const SidebarHeader = (_, ref) => {
   const {
@@ -27722,15 +27693,15 @@ const SidebarHeader = (_, ref) => {
       documentLabel: getPostTypeLabel() || (0,external_wp_i18n_namespaceObject._x)('Document', 'noun')
     };
   }, []);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(header_Tabs.TabList, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Tabs.TabList, {
     ref: ref,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header_Tabs.Tab, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tabs.Tab, {
       tabId: sidebars.document
       // Used for focus management in the SettingsSidebar component.
       ,
       "data-tab-id": sidebars.document,
       children: documentLabel
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header_Tabs.Tab, {
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tabs.Tab, {
       tabId: sidebars.block
       // Used for focus management in the SettingsSidebar component.
       ,

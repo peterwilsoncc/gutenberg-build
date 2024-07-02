@@ -52465,11 +52465,10 @@ const closeSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 });
 /* harmony default export */ const close_small = (closeSmall);
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inserter/tabs.js
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/tabbed-sidebar/index.js
 /**
  * WordPress dependencies
  */
-
 
 
 
@@ -52481,62 +52480,51 @@ const closeSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 
 
 const {
-  Tabs: tabs_Tabs
+  Tabs: tabbed_sidebar_Tabs
 } = unlock(external_wp_components_namespaceObject.privateApis);
-const blocksTab = {
-  name: 'blocks',
-  /* translators: Blocks tab title in the block inserter. */
-  title: (0,external_wp_i18n_namespaceObject.__)('Blocks')
-};
-const patternsTab = {
-  name: 'patterns',
-  /* translators: Theme and Directory Patterns tab title in the block inserter. */
-  title: (0,external_wp_i18n_namespaceObject.__)('Patterns')
-};
-const mediaTab = {
-  name: 'media',
-  /* translators: Media tab title in the block inserter. */
-  title: (0,external_wp_i18n_namespaceObject.__)('Media')
-};
-function InserterTabs({
-  onSelect,
-  children,
+function TabbedSidebar({
+  defaultTabId,
   onClose,
-  selectedTab
+  onSelect,
+  selectedTab,
+  tabs,
+  closeButtonLabel
 }, ref) {
-  const tabs = [blocksTab, patternsTab, mediaTab];
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    className: "block-editor-inserter__tabs",
-    ref: ref,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(tabs_Tabs, {
+    className: "block-editor-tabbed-sidebar",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(tabbed_sidebar_Tabs, {
+      selectOnMove: false,
+      defaultTabId: defaultTabId,
       onSelect: onSelect,
       selectedTabId: selectedTab,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-        className: "block-editor-inserter__tablist-and-close-button",
+        className: "block-editor-tabbed-sidebar__tablist-and-close-button",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          className: "block-editor-inserter__close-button",
+          className: "block-editor-tabbed-sidebar__close-button",
           icon: close_small,
-          label: (0,external_wp_i18n_namespaceObject.__)('Close block inserter'),
+          label: closeButtonLabel,
           onClick: () => onClose(),
           size: "small"
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tabs_Tabs.TabList, {
-          className: "block-editor-inserter__tablist",
-          children: tabs.map(tab => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tabs_Tabs.Tab, {
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tabbed_sidebar_Tabs.TabList, {
+          className: "block-editor-tabbed-sidebar__tablist",
+          ref: ref,
+          children: tabs.map(tab => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tabbed_sidebar_Tabs.Tab, {
             tabId: tab.name,
-            className: "block-editor-inserter__tab",
+            className: "block-editor-tabbed-sidebar__tab",
             children: tab.title
           }, tab.name))
         })]
-      }), tabs.map(tab => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tabs_Tabs.TabPanel, {
+      }), tabs.map(tab => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tabbed_sidebar_Tabs.TabPanel, {
         tabId: tab.name,
         focusable: false,
-        className: "block-editor-inserter__tabpanel",
-        children: children
+        className: "block-editor-tabbed-sidebar__tabpanel",
+        ref: tab.panelRef,
+        children: tab.panel
       }, tab.name))]
     })
   });
 }
-/* harmony default export */ const tabs = ((0,external_wp_element_namespaceObject.forwardRef)(InserterTabs));
+/* harmony default export */ const tabbed_sidebar = ((0,external_wp_element_namespaceObject.forwardRef)(TabbedSidebar));
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inserter/menu.js
 /**
@@ -52738,12 +52726,31 @@ function InserterMenu({
     ref: ref,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "block-editor-inserter__main-area",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(tabs, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tabbed_sidebar, {
         ref: tabsRef,
         onSelect: handleSetSelectedTab,
         onClose: onClose,
         selectedTab: selectedTab,
-        children: [inserterSearch, selectedTab === 'blocks' && !delayedFilterValue && blocksTab, selectedTab === 'patterns' && !delayedFilterValue && patternsTab, selectedTab === 'media' && mediaTab]
+        closeButtonLabel: (0,external_wp_i18n_namespaceObject.__)('Close block inserter'),
+        tabs: [{
+          name: 'blocks',
+          title: (0,external_wp_i18n_namespaceObject.__)('Blocks'),
+          panel: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+            children: [inserterSearch, selectedTab === 'blocks' && !delayedFilterValue && blocksTab]
+          })
+        }, {
+          name: 'patterns',
+          title: (0,external_wp_i18n_namespaceObject.__)('Patterns'),
+          panel: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+            children: [inserterSearch, selectedTab === 'patterns' && !delayedFilterValue && patternsTab]
+          })
+        }, {
+          name: 'media',
+          title: (0,external_wp_i18n_namespaceObject.__)('Media'),
+          panel: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+            children: [inserterSearch, mediaTab]
+          })
+        }]
       })
     }), showInserterHelpPanel && hoveredItem && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Popover, {
       className: "block-editor-inserter__preview-container__popover",
@@ -76125,6 +76132,7 @@ function ResolutionTool({
 
 
 
+
 /**
  * Private @wordpress/block-editor APIs.
  */
@@ -76153,6 +76161,7 @@ lock(privateApis, {
   useLayoutStyles: useLayoutStyles,
   DimensionsTool: dimensions_tool,
   ResolutionTool: ResolutionTool,
+  TabbedSidebar: tabbed_sidebar,
   TextAlignmentControl: TextAlignmentControl,
   ReusableBlocksRenameHint: ReusableBlocksRenameHint,
   useReusableBlocksRenameHint: useReusableBlocksRenameHint,
