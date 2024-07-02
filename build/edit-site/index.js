@@ -16940,6 +16940,46 @@ function TypographyElements() {
 }
 /* harmony default export */ const typography_elements = (TypographyElements);
 
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/preview-typography.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const StylesPreviewTypography = ({
+  variation,
+  isFocused,
+  withHoverView
+}) => {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreviewIframe, {
+    label: variation.title,
+    isFocused: isFocused,
+    withHoverView: withHoverView,
+    children: ({
+      ratio,
+      key
+    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
+      spacing: 10 * ratio,
+      justify: "center",
+      style: {
+        height: '100%',
+        overflow: 'hidden'
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreviewTypography, {
+        variation: variation,
+        fontSize: 85 * ratio
+      })
+    }, key)
+  });
+};
+/* harmony default export */ const preview_typography = (StylesPreviewTypography);
+
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/variations/variation.js
 /**
  * External dependencies
@@ -17050,13 +17090,11 @@ function Variation({
 
 
 
-
 function TypographyVariations({
   title,
   gap = 2
 }) {
   const typographyVariations = useTypographyVariations();
-
   // Return null if there is only one variation (the default).
   if (typographyVariations?.length <= 1) {
     return null;
@@ -17070,30 +17108,16 @@ function TypographyVariations({
       columns: 3,
       gap: gap,
       className: "edit-site-global-styles-style-variations-container",
-      children: typographyVariations && typographyVariations.length && typographyVariations.map((variation, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Variation, {
-        variation: variation,
-        property: "typography",
-        showTooltip: true,
-        children: isFocused => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreviewIframe, {
-          label: variation?.title,
-          isFocused: isFocused,
-          children: ({
-            ratio,
-            key
-          }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
-            spacing: 10 * ratio,
-            justify: "center",
-            style: {
-              height: '100%',
-              overflow: 'hidden'
-            },
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreviewTypography, {
-              variation: variation,
-              fontSize: 85 * ratio
-            })
-          }, key)
-        })
-      }, index))
+      children: typographyVariations.map((variation, index) => {
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Variation, {
+          variation: variation,
+          property: "typography",
+          showTooltip: true,
+          children: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(preview_typography, {
+            variation: variation
+          })
+        }, index);
+      })
     })]
   });
 }
