@@ -25132,17 +25132,12 @@ function BackgroundPanel() {
   });
   const _links = useGlobalStyleLinks();
   const [settings] = background_panel_useGlobalSetting('');
-  const defaultControls = {
-    backgroundImage: true,
-    backgroundSize: hasBackgroundImageValue(style) || hasBackgroundImageValue(inheritedStyle)
-  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StylesBackgroundPanel, {
     inheritedValue: inheritedStyle,
     value: style,
     onChange: setStyle,
     settings: settings,
     defaultValues: BACKGROUND_DEFAULT_VALUES,
-    defaultControls: defaultControls,
     themeFileURIs: _links?.['wp:theme-file']
   });
 }

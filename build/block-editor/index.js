@@ -24593,9 +24593,15 @@ function setThemeFileUris(themeJson, themeFileURIs) {
 
 const IMAGE_BACKGROUND_TYPE = 'image';
 const background_panel_DEFAULT_CONTROLS = {
-  backgroundImage: true,
-  backgroundSize: false
+  backgroundImage: true
 };
+const BACKGROUND_POPOVER_PROPS = {
+  placement: 'left-start',
+  offset: 36,
+  shift: true,
+  className: 'block-editor-global-styles-background-panel__popover'
+};
+const background_panel_noop = () => {};
 
 /**
  * Checks site settings to see if the background panel may be used.
@@ -24687,21 +24693,30 @@ const backgroundPositionToCoords = value => {
     y
   };
 };
-function InspectorImagePreview({
-  label,
+function InspectorImagePreviewItem({
+  as = 'span',
+  imgUrl,
+  toggleProps = {},
   filename,
-  url: imgUrl
+  label,
+  className,
+  onToggleCallback = background_panel_noop
 }) {
-  const imgLabel = label || (0,external_wp_url_namespaceObject.getFilename)(imgUrl) || (0,external_wp_i18n_namespaceObject.__)('Add background image');
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (typeof toggleProps?.isOpen !== 'undefined') {
+      onToggleCallback(toggleProps?.isOpen);
+    }
+  }, [toggleProps?.isOpen, onToggleCallback]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
-    as: "span",
+    as: as,
+    className: className,
+    ...toggleProps,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-      justify: imgUrl ? 'flex-start' : 'center',
+      justify: "flex-start",
       as: "span",
+      className: "block-editor-global-styles-background-panel__inspector-preview-inner",
       children: [imgUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        className: dist_clsx('block-editor-global-styles-background-panel__inspector-image-indicator-wrapper', {
-          'has-image': imgUrl
-        }),
+        className: "block-editor-global-styles-background-panel__inspector-image-indicator-wrapper",
         "aria-hidden": true,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: "block-editor-global-styles-background-panel__inspector-image-indicator",
@@ -24711,26 +24726,69 @@ function InspectorImagePreview({
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.FlexItem, {
         as: "span",
+        style: imgUrl ? {} : {
+          flexGrow: 1
+        },
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalTruncate, {
           numberOfLines: 1,
           className: "block-editor-global-styles-background-panel__inspector-media-replace-title",
-          children: imgLabel
+          children: label
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
           as: "span",
           children: imgUrl ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: file name */
-          (0,external_wp_i18n_namespaceObject.__)('Background image: %s'), filename || imgLabel) : (0,external_wp_i18n_namespaceObject.__)('No background image selected')
+          (0,external_wp_i18n_namespaceObject.__)('Background image: %s'), filename || label) : (0,external_wp_i18n_namespaceObject.__)('No background image selected')
         })]
       })]
     })
   });
 }
-function BackgroundImageToolsPanelItem({
-  panelId,
-  isShownByDefault,
+function BackgroundControlsPanel({
+  label,
+  filename,
+  url: imgUrl,
+  children,
+  onToggle: onToggleCallback = background_panel_noop,
+  hasImageValue
+}) {
+  if (!hasImageValue) {
+    return;
+  }
+  const imgLabel = label || (0,external_wp_url_namespaceObject.getFilename)(imgUrl) || (0,external_wp_i18n_namespaceObject.__)('Add background image');
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
+    popoverProps: BACKGROUND_POPOVER_PROPS,
+    renderToggle: ({
+      onToggle,
+      isOpen
+    }) => {
+      const toggleProps = {
+        onClick: onToggle,
+        className: 'block-editor-global-styles-background-panel__dropdown-toggle',
+        'aria-expanded': isOpen,
+        'aria-label': (0,external_wp_i18n_namespaceObject.__)('Background size, position and repeat options.'),
+        isOpen
+      };
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorImagePreviewItem, {
+        imgUrl: imgUrl,
+        filename: filename,
+        label: imgLabel,
+        toggleProps: toggleProps,
+        as: "button",
+        onToggleCallback: onToggleCallback
+      });
+    },
+    renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalDropdownContentWrapper, {
+      className: "block-editor-global-styles-background-panel__dropdown-content-wrapper",
+      paddingSize: "medium",
+      children: children
+    })
+  });
+}
+function BackgroundImageControls({
   onChange,
   style,
   inheritedValue,
-  themeFileURIs
+  onRemoveImage = background_panel_noop,
+  displayInPanel
 }) {
   const mediaUpload = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getSettings().mediaUpload, []);
   const {
@@ -24790,15 +24848,6 @@ function BackgroundImageToolsPanelItem({
       onError: onUploadError
     });
   };
-  const resetAllFilter = (0,external_wp_element_namespaceObject.useCallback)(previousValue => {
-    return {
-      ...previousValue,
-      style: {
-        ...previousValue.style,
-        background: undefined
-      }
-    };
-  }, []);
   const hasValue = hasBackgroundImageValue(style);
   const closeAndFocus = () => {
     const [toggleButton] = external_wp_dom_namespaceObject.focus.tabbable.find(replaceContainerRef.current);
@@ -24810,52 +24859,48 @@ function BackgroundImageToolsPanelItem({
   };
   const onRemove = () => onChange(setImmutably(style, ['background', 'backgroundImage'], 'none'));
   const canRemove = !hasValue && hasBackgroundImageValue(inheritedValue);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-    className: "single-column",
-    hasValue: () => hasValue,
-    label: (0,external_wp_i18n_namespaceObject.__)('Background image'),
-    onDeselect: resetBackgroundImage,
-    isShownByDefault: isShownByDefault,
-    resetAllFilter: resetAllFilter,
-    panelId: panelId,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      className: "block-editor-global-styles-background-panel__inspector-media-replace-container",
-      ref: replaceContainerRef,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(media_replace_flow, {
-        mediaId: id,
-        mediaURL: url,
-        allowedTypes: [IMAGE_BACKGROUND_TYPE],
-        accept: "image/*",
-        onSelect: onSelectMedia,
-        name: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorImagePreview, {
-          label: title,
-          filename: title,
-          url: getResolvedThemeFilePath(url, themeFileURIs)
-        }),
-        variant: "secondary",
-        children: [canRemove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-          onClick: () => {
-            closeAndFocus();
-            onRemove();
-          },
-          children: (0,external_wp_i18n_namespaceObject.__)('Remove')
-        }), hasValue && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-          onClick: () => {
-            closeAndFocus();
-            resetBackgroundImage();
-          },
-          children: (0,external_wp_i18n_namespaceObject.__)('Reset ')
-        })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropZone, {
-        onFilesDrop: onFilesDrop,
-        label: (0,external_wp_i18n_namespaceObject.__)('Drop to upload')
+  const imgLabel = title || (0,external_wp_url_namespaceObject.getFilename)(url) || (0,external_wp_i18n_namespaceObject.__)('Add background image');
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    ref: replaceContainerRef,
+    className: "block-editor-global-styles-background-panel__image-tools-panel-item",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(media_replace_flow, {
+      mediaId: id,
+      mediaURL: url,
+      allowedTypes: [IMAGE_BACKGROUND_TYPE],
+      accept: "image/*",
+      onSelect: onSelectMedia,
+      popoverProps: {
+        className: dist_clsx({
+          'block-editor-global-styles-background-panel__media-replace-popover': displayInPanel
+        })
+      },
+      name: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorImagePreviewItem, {
+        className: "block-editor-global-styles-background-panel__image-preview",
+        imgUrl: url,
+        filename: title,
+        label: imgLabel
+      }),
+      variant: "secondary",
+      children: [canRemove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+        onClick: () => {
+          closeAndFocus();
+          onRemove();
+        },
+        children: (0,external_wp_i18n_namespaceObject.__)('Remove')
+      }), hasValue && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+        onClick: () => {
+          closeAndFocus();
+          onRemoveImage();
+        },
+        children: (0,external_wp_i18n_namespaceObject.__)('Reset ')
       })]
-    })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropZone, {
+      onFilesDrop: onFilesDrop,
+      label: (0,external_wp_i18n_namespaceObject.__)('Drop to upload')
+    })]
   });
 }
-function BackgroundSizeToolsPanelItem({
-  panelId,
-  isShownByDefault,
+function BackgroundSizeControls({
   onChange,
   style,
   inheritedValue,
@@ -24882,20 +24927,6 @@ function BackgroundSizeToolsPanelItem({
    * should reflect the current repeat value.
    */
   const repeatCheckedValue = !(repeatValue === 'no-repeat' || currentValueForToggle === 'cover' && repeatValue === undefined);
-  const hasValue = hasBackgroundSizeValue(style);
-  const resetAllFilter = (0,external_wp_element_namespaceObject.useCallback)(previousValue => {
-    return {
-      ...previousValue,
-      style: {
-        ...previousValue.style,
-        background: {
-          ...previousValue.style?.background,
-          backgroundRepeat: undefined,
-          backgroundSize: undefined
-        }
-      }
-    };
-  }, []);
   const updateBackgroundSize = next => {
     // When switching to 'contain' toggle the repeat off.
     let nextRepeat = repeatValue;
@@ -24939,24 +24970,12 @@ function BackgroundSizeToolsPanelItem({
     onChange(setImmutably(style, ['background', 'backgroundPosition'], coordsToBackgroundPosition(next)));
   };
   const toggleIsRepeated = () => onChange(setImmutably(style, ['background', 'backgroundRepeat'], repeatCheckedValue === true ? 'no-repeat' : 'repeat'));
-  const resetBackgroundSize = () => onChange(setImmutably(style, ['background'], {
-    ...style?.background,
-    backgroundPosition: undefined,
-    backgroundRepeat: undefined,
-    backgroundSize: undefined
-  }));
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-    as: external_wp_components_namespaceObject.__experimentalToolsPanelItem,
-    spacing: 2,
+    spacing: 3,
     className: "single-column",
-    hasValue: () => hasValue,
-    label: (0,external_wp_i18n_namespaceObject.__)('Size'),
-    onDeselect: resetBackgroundSize,
-    isShownByDefault: isShownByDefault,
-    resetAllFilter: resetAllFilter,
-    panelId: panelId,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FocalPointPicker, {
       __next40pxDefaultSize: true,
+      __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Position'),
       url: getResolvedThemeFilePath(imageValue, themeFileURIs),
       value: backgroundPositionToCoords(positionValue),
@@ -24982,18 +25001,20 @@ function BackgroundSizeToolsPanelItem({
       justify: "flex-start",
       spacing: 2,
       as: "span",
-      children: [currentValueForToggle !== undefined && currentValueForToggle !== 'cover' && currentValueForToggle !== 'contain' ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
         "aria-label": (0,external_wp_i18n_namespaceObject.__)('Background image width'),
         onChange: updateBackgroundSize,
         value: sizeValue,
         size: "__unstable-large",
         __unstableInputWidth: "100px",
         min: 0,
-        placeholder: (0,external_wp_i18n_namespaceObject.__)('Auto')
-      }) : null, currentValueForToggle !== 'cover' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        placeholder: (0,external_wp_i18n_namespaceObject.__)('Auto'),
+        disabled: currentValueForToggle !== 'auto' || currentValueForToggle === undefined
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
         label: (0,external_wp_i18n_namespaceObject.__)('Repeat'),
         checked: repeatCheckedValue,
-        onChange: toggleIsRepeated
+        onChange: toggleIsRepeated,
+        disabled: currentValueForToggle === 'cover'
       })]
     })]
   });
@@ -25039,28 +25060,65 @@ function BackgroundPanel({
       background: {}
     };
   }, []);
-  const shouldShowBackgroundSizeControls = settings?.background?.backgroundSize;
+  const resetBackground = () => onChange(setImmutably(value, ['background'], {}));
+  const {
+    title,
+    url
+  } = value?.background?.backgroundImage || {
+    ...inheritedValue?.background?.backgroundImage
+  };
+  const hasImageValue = hasBackgroundImageValue(value) || hasBackgroundImageValue(inheritedValue);
+  const shouldShowBackgroundImageControls = hasImageValue && (settings?.background?.backgroundSize || settings?.background?.backgroundPosition || settings?.background?.backgroundRepeat);
+  const [isDropDownOpen, setIsDropDownOpen] = (0,external_wp_element_namespaceObject.useState)(false);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Wrapper, {
     resetAllFilter: resetAllFilter,
     value: value,
     onChange: onChange,
     panelId: panelId,
     headerLabel: headerLabel,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundImageToolsPanelItem, {
-      onChange: onChange,
-      panelId: panelId,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: dist_clsx('block-editor-global-styles-background-panel__inspector-media-replace-container', {
+        'is-open': isDropDownOpen
+      }),
+      children: shouldShowBackgroundImageControls ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundControlsPanel, {
+        label: title,
+        filename: title,
+        url: getResolvedThemeFilePath(url, themeFileURIs),
+        onToggle: setIsDropDownOpen,
+        hasImageValue: hasImageValue,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+          spacing: 3,
+          className: "single-column",
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundImageControls, {
+            onChange: onChange,
+            style: value,
+            inheritedValue: inheritedValue,
+            displayInPanel: true,
+            onRemoveImage: () => {
+              setIsDropDownOpen(false);
+              resetBackground();
+            }
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundSizeControls, {
+            onChange: onChange,
+            panelId: panelId,
+            style: value,
+            defaultValues: defaultValues,
+            inheritedValue: inheritedValue,
+            themeFileURIs: themeFileURIs
+          })]
+        })
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundImageControls, {
+        onChange: onChange,
+        style: value,
+        inheritedValue: inheritedValue
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      hasValue: () => hasImageValue,
+      label: (0,external_wp_i18n_namespaceObject.__)('Image'),
+      onDeselect: resetBackground,
       isShownByDefault: defaultControls.backgroundImage,
-      style: value,
-      inheritedValue: inheritedValue,
-      themeFileURIs: themeFileURIs
-    }), shouldShowBackgroundSizeControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundSizeToolsPanelItem, {
-      onChange: onChange,
       panelId: panelId,
-      isShownByDefault: defaultControls.backgroundSize,
-      style: value,
-      inheritedValue: inheritedValue,
-      defaultValues: defaultValues,
-      themeFileURIs: themeFileURIs
+      className: "block-editor-global-styles-background-panel__hidden-tools-panel-item"
     })]
   });
 }
@@ -25184,7 +25242,6 @@ function BackgroundImagePanel({
   if (!useHasBackgroundPanel(settings) || !hasBackgroundSupport(name, 'backgroundImage')) {
     return null;
   }
-  const defaultControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [BACKGROUND_SUPPORT_KEY, '__experimentalDefaultControls']);
   const onChange = newStyle => {
     setAttributes({
       style: utils_cleanEmptyObject(newStyle)
@@ -25200,7 +25257,6 @@ function BackgroundImagePanel({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundPanel, {
     as: BackgroundInspectorControl,
     panelId: clientId,
-    defaultControls: defaultControls,
     defaultValues: BACKGROUND_DEFAULT_VALUES,
     settings: updatedSettings,
     onChange: onChange,
