@@ -31818,13 +31818,13 @@ function FlexControls({
       isBlock: true,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
         value: "fit",
-        label: (0,external_wp_i18n_namespaceObject.__)('Fit')
+        label: (0,external_wp_i18n_namespaceObject._x)('Fit', 'Intrinsic block width in flex layout')
       }, "fit"), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
         value: "fill",
-        label: (0,external_wp_i18n_namespaceObject.__)('Fill')
+        label: (0,external_wp_i18n_namespaceObject._x)('Grow', 'Block with expanding width in flex layout')
       }, "fill"), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
         value: "fixed",
-        label: (0,external_wp_i18n_namespaceObject.__)('Fixed')
+        label: (0,external_wp_i18n_namespaceObject._x)('Fixed', 'Block with fixed width in flex layout')
       }, "fixed")]
     }), selfStretch === 'fixed' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
       size: "__unstable-large",
