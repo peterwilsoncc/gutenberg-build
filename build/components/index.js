@@ -34285,6 +34285,7 @@ function ListBox({
       id: `components-autocomplete-item-${instanceId}-${option.key}`,
       role: "option",
       "aria-selected": index === selectedIndex,
+      __experimentalIsFocusable: true,
       disabled: option.isDisabled,
       className: dist_clsx('components-autocomplete__result', className, {
         'is-selected': index === selectedIndex
@@ -37517,7 +37518,10 @@ function UnforwardedRangeControl(props, forwardedRef) {
         value: inputSliderValue
       }), allowReset && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionRightWrapper, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-          className: "components-range-control__reset",
+          className: "components-range-control__reset"
+          // If the RangeControl itself is disabled, the reset button shouldn't be in the tab sequence.
+          ,
+          __experimentalIsFocusable: !disabled,
           disabled: disabled || value === undefined,
           variant: "secondary",
           size: "small",
@@ -45481,6 +45485,7 @@ function UnconnectedDropdownMenu(dropdownMenuProps) {
           label: control.label,
           "aria-checked": control.role === 'menuitemcheckbox' || control.role === 'menuitemradio' ? control.isActive : undefined,
           role: control.role === 'menuitemcheckbox' || control.role === 'menuitemradio' ? control.role : 'menuitem',
+          __experimentalIsFocusable: true,
           disabled: control.isDisabled,
           children: control.title
         }, [indexOfSet, indexOfControl].join())))]
@@ -46563,7 +46568,10 @@ function ComboboxControl(props) {
           }), allowReset && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(flex_item_component, {
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
               className: "components-combobox-control__reset",
-              icon: close_small,
+              icon: close_small
+              // Disable reason: Focus returns to input field when reset is clicked.
+              // eslint-disable-next-line no-restricted-syntax
+              ,
               disabled: !value,
               onClick: handleOnReset,
               label: (0,external_wp_i18n_namespaceObject.__)('Reset')
@@ -59829,7 +59837,10 @@ function Token({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
       className: "components-form-token-field__remove-token",
       icon: close_small,
-      onClick: !disabled ? onClick : undefined,
+      onClick: !disabled ? onClick : undefined
+      // Disable reason: Even when FormTokenField itself is accessibly disabled, token reset buttons shouldn't be in the tab sequence.
+      // eslint-disable-next-line no-restricted-syntax
+      ,
       disabled: disabled,
       label: messages.remove,
       "aria-describedby": `components-form-token-field__token-text-${instanceId}`
@@ -68130,6 +68141,7 @@ function UnforwardedToolbarButton({
         },
         className: dist_clsx('components-toolbar__control', className),
         isPressed: isActive,
+        __experimentalIsFocusable: true,
         disabled: isDisabled,
         "data-toolbar-item": true,
         ...extraProps,
@@ -68149,7 +68161,12 @@ function UnforwardedToolbarButton({
     ref: ref,
     children: toolbarItemProps => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
       label: title,
-      isPressed: isActive,
+      isPressed: isActive
+      // TODO: Should be focusable disabled, but adding `__experimentalIsFocusable` will trigger a
+      // focus bug when ToolbarButton is disabled via the `disabled` prop.
+      // Must address first: https://github.com/WordPress/gutenberg/issues/63070
+      // eslint-disable-next-line no-restricted-syntax
+      ,
       disabled: isDisabled,
       ...toolbarItemProps,
       children: children
