@@ -24021,10 +24021,6 @@ function InserterSidebar() {
     disableComplementaryArea
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
-  const [inserterDialogRef, inserterDialogProps] = (0,external_wp_compose_namespaceObject.__experimentalUseDialog)({
-    onClose: () => setIsInserterOpened(false),
-    focusOnMount: true
-  });
   const libraryRef = (0,external_wp_element_namespaceObject.useRef)();
 
   // When closing the inserter, focus should return to the toggle button.
@@ -24054,23 +24050,15 @@ function InserterSidebar() {
       onClose: closeInserterSidebar
     })
   });
-  if (window.__experimentalEnableZoomedOutPatternsTab) {
-    return (
-      /*#__PURE__*/
-      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-      (0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        onKeyDown: closeOnEscape,
-        className: "editor-inserter-sidebar",
-        children: inserterContents
-      })
-    );
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    ref: inserterDialogRef,
-    ...inserterDialogProps,
-    className: "editor-inserter-sidebar",
-    children: inserterContents
-  });
+  return (
+    /*#__PURE__*/
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    (0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      onKeyDown: closeOnEscape,
+      className: "editor-inserter-sidebar",
+      children: inserterContents
+    })
+  );
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/list-view-sidebar/list-view-outline.js
