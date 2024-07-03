@@ -5279,18 +5279,16 @@ const external_wp_htmlEntities_namespaceObject = window["wp"]["htmlEntities"];
 // Copy of the function from packages/edit-site/src/utils/is-template-revertable.js
 
 /**
- * Check if a template is revertable to its original theme-provided template file.
+ * Check if a template or template part is revertable to its original theme-provided file.
  *
- * @param {Object} template The template entity to check.
- * @return {boolean} Whether the template is revertable.
+ * @param {Object} templateOrTemplatePart The entity to check.
+ * @return {boolean} Whether the entity is revertable.
  */
-function isTemplateRevertable(template) {
-  if (!template) {
+function isTemplateRevertable(templateOrTemplatePart) {
+  if (!templateOrTemplatePart) {
     return false;
   }
-  /* eslint-disable camelcase */
-  return template?.source === TEMPLATE_ORIGINS.custom && template?.has_theme_file;
-  /* eslint-enable camelcase */
+  return templateOrTemplatePart.source === TEMPLATE_ORIGINS.custom && templateOrTemplatePart.has_theme_file;
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/store/private-actions.js
@@ -25421,11 +25419,6 @@ function isTemplateRemovable(template) {
   // two props whether is custom or has a theme file.
   return template?.source === TEMPLATE_ORIGINS.custom && !template?.has_theme_file;
 }
-const canDeleteOrReset = item => {
-  const isTemplatePart = item.type === TEMPLATE_PART_POST_TYPE;
-  const isUserPattern = item.type === actions_PATTERN_TYPES.user;
-  return isUserPattern || isTemplatePart && item.source === TEMPLATE_ORIGINS.custom;
-};
 function getItemTitle(item) {
   if (typeof item.title === 'string') {
     return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title);
@@ -26001,18 +25994,11 @@ const useDuplicatePostAction = postType => {
     }
   }, [userCanCreatePost]);
 };
-const isTemplatePartRevertable = item => {
-  if (!item) {
-    return false;
-  }
-  const hasThemeFile = item?.has_theme_file;
-  return canDeleteOrReset(item) && hasThemeFile;
-};
 const resetTemplateAction = {
   id: 'reset-template',
   label: (0,external_wp_i18n_namespaceObject.__)('Reset'),
   isEligible: item => {
-    return item.type === TEMPLATE_PART_POST_TYPE ? isTemplatePartRevertable(item) : isTemplateRevertable(item);
+    return isTemplateRevertable(item);
   },
   icon: library_backup,
   supportsBulk: true,
@@ -26024,8 +26010,7 @@ const resetTemplateAction = {
   }) => {
     const [isBusy, setIsBusy] = (0,external_wp_element_namespaceObject.useState)(false);
     const {
-      revertTemplate,
-      removeTemplates
+      revertTemplate
     } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));
     const {
       saveEditedEntityRecord
@@ -26036,24 +26021,18 @@ const resetTemplateAction = {
     } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
     const onConfirm = async () => {
       try {
-        if (items[0].type === TEMPLATE_PART_POST_TYPE) {
-          await removeTemplates(items);
-        } else {
-          for (const template of items) {
-            if (template.type === TEMPLATE_POST_TYPE) {
-              await revertTemplate(template, {
-                allowUndo: false
-              });
-              await saveEditedEntityRecord('postType', template.type, template.id);
-            }
-          }
-          createSuccessNotice(items.length > 1 ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of items. */
-          (0,external_wp_i18n_namespaceObject.__)('%s items reset.'), items.length) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The template/part's name. */
-          (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(getItemTitle(items[0]))), {
-            type: 'snackbar',
-            id: 'revert-template-action'
+        for (const template of items) {
+          await revertTemplate(template, {
+            allowUndo: false
           });
+          await saveEditedEntityRecord('postType', template.type, template.id);
         }
+        createSuccessNotice(items.length > 1 ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of items. */
+        (0,external_wp_i18n_namespaceObject.__)('%s items reset.'), items.length) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The template/part's name. */
+        (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(getItemTitle(items[0]))), {
+          type: 'snackbar',
+          id: 'revert-template-action'
+        });
       } catch (error) {
         let fallbackErrorMessage;
         if (items[0].type === TEMPLATE_POST_TYPE) {
