@@ -36419,7 +36419,7 @@ function GridItemMovers({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       icon: arrow_up,
       label: (0,external_wp_i18n_namespaceObject.__)('Move block up'),
-      isDisabled: rowStart <= 1,
+      disabled: rowStart <= 1,
       onClick: () => {
         onChange({
           rowStart: rowStart - 1
@@ -36430,7 +36430,7 @@ function GridItemMovers({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       icon: arrow_down,
       label: (0,external_wp_i18n_namespaceObject.__)('Move block down'),
-      isDisabled: rowCount && rowEnd >= rowCount,
+      disabled: rowCount && rowEnd >= rowCount,
       onClick: () => {
         onChange({
           rowStart: rowStart + 1
@@ -36441,7 +36441,7 @@ function GridItemMovers({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       icon: arrow_left,
       label: (0,external_wp_i18n_namespaceObject.__)('Move block left'),
-      isDisabled: columnStart <= 1,
+      disabled: columnStart <= 1,
       onClick: () => {
         onChange({
           columnStart: columnStartNumber - 1
@@ -36452,7 +36452,7 @@ function GridItemMovers({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       icon: arrow_right,
       label: (0,external_wp_i18n_namespaceObject.__)('Move block right'),
-      isDisabled: columnCount && columnEnd >= columnCount,
+      disabled: columnCount && columnEnd >= columnCount,
       onClick: () => {
         onChange({
           columnStart: columnStartNumber + 1

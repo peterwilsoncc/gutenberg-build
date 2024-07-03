@@ -68112,40 +68112,48 @@ const ToolbarButtonContainer = ({
 
 
 
-function UnforwardedToolbarButton({
-  children,
-  className,
-  containerClassName,
-  extraProps,
-  isActive,
+function toolbar_button_useDeprecatedProps({
   isDisabled,
-  title,
-  ...props
-}, ref) {
+  ...otherProps
+}) {
+  return {
+    disabled: isDisabled,
+    ...otherProps
+  };
+}
+function UnforwardedToolbarButton(props, ref) {
+  const {
+    children,
+    className,
+    containerClassName,
+    extraProps,
+    isActive,
+    title,
+    ...restProps
+  } = toolbar_button_useDeprecatedProps(props);
   const accessibleToolbarState = (0,external_wp_element_namespaceObject.useContext)(toolbar_context);
   if (!accessibleToolbarState) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(toolbar_button_container, {
       className: containerClassName,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
         ref: ref,
-        icon: props.icon,
+        icon: restProps.icon,
         label: title,
-        shortcut: props.shortcut,
-        "data-subscript": props.subscript,
+        shortcut: restProps.shortcut,
+        "data-subscript": restProps.subscript,
         onClick: event => {
           event.stopPropagation();
-          // TODO: Possible bug; maybe use onClick instead of props.onClick.
-          if (props.onClick) {
-            props.onClick(event);
+          // TODO: Possible bug; maybe use onClick instead of restProps.onClick.
+          if (restProps.onClick) {
+            restProps.onClick(event);
           }
         },
         className: dist_clsx('components-toolbar__control', className),
         isPressed: isActive,
         __experimentalIsFocusable: true,
-        disabled: isDisabled,
         "data-toolbar-item": true,
         ...extraProps,
-        ...props,
+        ...restProps,
         children: children
       })
     });
@@ -68157,17 +68165,11 @@ function UnforwardedToolbarButton({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(toolbar_item, {
     className: dist_clsx('components-toolbar-button', className),
     ...extraProps,
-    ...props,
+    ...restProps,
     ref: ref,
     children: toolbarItemProps => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
       label: title,
-      isPressed: isActive
-      // TODO: Should be focusable disabled, but adding `__experimentalIsFocusable` will trigger a
-      // focus bug when ToolbarButton is disabled via the `disabled` prop.
-      // Must address first: https://github.com/WordPress/gutenberg/issues/63070
-      // eslint-disable-next-line no-restricted-syntax
-      ,
-      disabled: isDisabled,
+      isPressed: isActive,
       ...toolbarItemProps,
       children: children
     })

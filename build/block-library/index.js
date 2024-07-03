@@ -30530,7 +30530,7 @@ function edit_IndentUI({
       icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_indent_rtl : format_indent,
       title: (0,external_wp_i18n_namespaceObject.__)('Indent'),
       describedBy: (0,external_wp_i18n_namespaceObject.__)('Indent list item'),
-      isDisabled: !canIndent,
+      disabled: !canIndent,
       onClick: () => indentListItem()
     })]
   });
@@ -38426,7 +38426,7 @@ function NavigationSubmenuEdit({
           title: (0,external_wp_i18n_namespaceObject.__)('Convert to Link'),
           onClick: transformToLink,
           className: "wp-block-navigation__submenu__revert",
-          isDisabled: !canConvertToLink
+          disabled: !canConvertToLink
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
