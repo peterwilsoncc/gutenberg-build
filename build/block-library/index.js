@@ -16187,6 +16187,7 @@ function WpEmbedPreview({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -16243,11 +16244,10 @@ class EmbedPreview extends external_wp_element_namespaceObject.Component {
       interactive
     } = this.state;
     const html = 'photo' === type ? getPhotoHtml(preview) : preview.html;
-    const parsedHost = new URL(url).host.split('.');
-    const parsedHostBaseUrl = parsedHost.splice(parsedHost.length - 2, parsedHost.length - 1).join('.');
+    const embedSourceUrl = (0,external_wp_url_namespaceObject.getAuthority)(url);
     const iframeTitle = (0,external_wp_i18n_namespaceObject.sprintf)(
     // translators: %s: host providing embed content e.g: www.youtube.com
-    (0,external_wp_i18n_namespaceObject.__)('Embedded content from %s'), parsedHostBaseUrl);
+    (0,external_wp_i18n_namespaceObject.__)('Embedded content from %s'), embedSourceUrl);
     const sandboxClassnames = dist_clsx(type, className, 'wp-block-embed__wrapper');
 
     // Disabled because the overlay div doesn't actually have a role or functionality
@@ -16290,7 +16290,7 @@ class EmbedPreview extends external_wp_element_namespaceObject.Component {
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
           className: "components-placeholder__error",
           children: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: host providing embed content e.g: www.youtube.com */
-          (0,external_wp_i18n_namespaceObject.__)("Embedded content from %s can't be previewed in the editor."), parsedHostBaseUrl)
+          (0,external_wp_i18n_namespaceObject.__)("Embedded content from %s can't be previewed in the editor."), embedSourceUrl)
         })]
       }), (!external_wp_blockEditor_namespaceObject.RichText.isEmpty(caption) || isSelected) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
         identifier: "caption",
