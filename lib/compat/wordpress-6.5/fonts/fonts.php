@@ -282,12 +282,17 @@ if ( ! function_exists( '_wp_filter_font_directory' ) ) {
 			return $font_dir;
 		}
 
+		$site_path = '';
+		if ( is_multisite() && ! ( is_main_network() && is_main_site() ) ) {
+			$site_path = '/sites/' . get_current_blog_id();
+		}
+
 		$font_dir = array(
-			'path'    => untrailingslashit( $font_dir['basedir'] ) . '/fonts',
-			'url'     => untrailingslashit( $font_dir['baseurl'] ) . '/fonts',
+			'path'    => path_join( WP_CONTENT_DIR, 'fonts' ) . $site_path,
+			'url'     => untrailingslashit( content_url( 'fonts' ) ) . $site_path,
 			'subdir'  => '',
-			'basedir' => untrailingslashit( $font_dir['basedir'] ) . '/fonts',
-			'baseurl' => untrailingslashit( $font_dir['baseurl'] ) . '/fonts',
+			'basedir' => path_join( WP_CONTENT_DIR, 'fonts' ) . $site_path,
+			'baseurl' => untrailingslashit( content_url( 'fonts' ) ) . $site_path,
 			'error'   => false,
 		);
 
@@ -360,7 +365,7 @@ if ( ! function_exists( '_wp_before_delete_font_face' ) ) {
 		}
 
 		$font_files = get_post_meta( $post_id, '_wp_font_face_file', false );
-		$font_dir   = untrailingslashit( wp_get_font_dir()['basedir'] );
+		$font_dir   = wp_get_font_dir()['path'];
 
 		foreach ( $font_files as $font_file ) {
 			wp_delete_file( $font_dir . '/' . $font_file );
@@ -368,41 +373,6 @@ if ( ! function_exists( '_wp_before_delete_font_face' ) ) {
 	}
 	add_action( 'before_delete_post', '_wp_before_delete_font_face', 10, 2 );
 }
-
-// @core-merge: Do not merge this function, it is for deleting fonts from the wp-content/fonts directory only used in Gutenberg.
-/**
- * Deletes associated font files from wp-content/fonts, when a font face is deleted.
- *
- * @param int     $post_id Post ID.
- * @param WP_Post $post    Post object.
- */
-function gutenberg_before_delete_font_face( $post_id, $post ) {
-	if ( 'wp_font_face' !== $post->post_type ) {
-		return;
-	}
-
-	$font_files = get_post_meta( $post_id, '_wp_font_face_file', false );
-
-	if ( empty( $font_files ) ) {
-		return;
-	}
-
-	$site_path = '';
-	if ( is_multisite() && ! ( is_main_network() && is_main_site() ) ) {
-		$site_path = '/sites/' . get_current_blog_id();
-	}
-
-	$font_dir = path_join( WP_CONTENT_DIR, 'fonts' ) . $site_path;
-
-	foreach ( $font_files as $font_file ) {
-		$font_path = $font_dir . '/' . $font_file;
-
-		if ( file_exists( $font_path ) ) {
-			wp_delete_file( $font_path );
-		}
-	}
-}
-add_action( 'before_delete_post', 'gutenberg_before_delete_font_face', 10, 2 );
 
 // @core-merge: Do not merge this back compat function, it is for supporting a legacy font family format only in Gutenberg.
 /**

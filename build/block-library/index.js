@@ -3011,13 +3011,10 @@ const getMergedAttributesWithPreview = (currentAttributes, preview, title, isRes
   };
 };
 
-;// CONCATENATED MODULE: external ["wp","compose"]
-const external_wp_compose_namespaceObject = window["wp"]["compose"];
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/utils/hooks.js
 /**
  * WordPress dependencies
  */
-
 
 
 
@@ -3095,17 +3092,9 @@ function useUploadMediaFromBlobURL(args = {}) {
     });
   }, [getSettings]);
 }
-function useToolsPanelDropdownMenuProps() {
-  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
-  return !isMobile ? {
-    popoverProps: {
-      placement: 'left-start',
-      // For non-mobile, inner sidebar width (248px) - button width (24px) - border (1px) + padding (16px) + spacing (20px)
-      offset: 259
-    }
-  } : {};
-}
 
+;// CONCATENATED MODULE: external ["wp","compose"]
+const external_wp_compose_namespaceObject = window["wp"]["compose"];
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/caption.js
 /**
  * WordPress dependencies
@@ -16187,7 +16176,6 @@ function WpEmbedPreview({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -16244,10 +16232,11 @@ class EmbedPreview extends external_wp_element_namespaceObject.Component {
       interactive
     } = this.state;
     const html = 'photo' === type ? getPhotoHtml(preview) : preview.html;
-    const embedSourceUrl = (0,external_wp_url_namespaceObject.getAuthority)(url);
+    const parsedHost = new URL(url).host.split('.');
+    const parsedHostBaseUrl = parsedHost.splice(parsedHost.length - 2, parsedHost.length - 1).join('.');
     const iframeTitle = (0,external_wp_i18n_namespaceObject.sprintf)(
     // translators: %s: host providing embed content e.g: www.youtube.com
-    (0,external_wp_i18n_namespaceObject.__)('Embedded content from %s'), embedSourceUrl);
+    (0,external_wp_i18n_namespaceObject.__)('Embedded content from %s'), parsedHostBaseUrl);
     const sandboxClassnames = dist_clsx(type, className, 'wp-block-embed__wrapper');
 
     // Disabled because the overlay div doesn't actually have a role or functionality
@@ -16290,7 +16279,7 @@ class EmbedPreview extends external_wp_element_namespaceObject.Component {
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
           className: "components-placeholder__error",
           children: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: host providing embed content e.g: www.youtube.com */
-          (0,external_wp_i18n_namespaceObject.__)("Embedded content from %s can't be previewed in the editor."), embedSourceUrl)
+          (0,external_wp_i18n_namespaceObject.__)("Embedded content from %s can't be previewed in the editor."), parsedHostBaseUrl)
         })]
       }), (!external_wp_blockEditor_namespaceObject.RichText.isEmpty(caption) || isSelected) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
         identifier: "caption",
@@ -23416,11 +23405,6 @@ function GroupPlaceHolder({
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: 'wp-block-group__placeholder'
   });
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (variations && variations.length === 1) {
-      onSelect(variations[0]);
-    }
-  }, [onSelect, variations]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ...blockProps,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
@@ -26359,6 +26343,16 @@ const upload = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 });
 /* harmony default export */ const library_upload = (upload);
 
+;// CONCATENATED MODULE: ./packages/block-library/build-module/utils/constants.js
+// The following dropdown menu props aim to provide a consistent offset and
+// placement for ToolsPanel menus for block controls to match color popovers.
+const TOOLSPANEL_DROPDOWNMENU_PROPS = {
+  popoverProps: {
+    placement: 'left-start',
+    offset: 259 // Inner sidebar width (248px) - button width (24px) - border (1px) + padding (16px) + spacing (20px)
+  }
+};
+
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/image/image.js
 /**
  * WordPress dependencies
@@ -26518,7 +26512,7 @@ function image_Image({
   const [externalBlob, setExternalBlob] = (0,external_wp_element_namespaceObject.useState)();
   const hasNonContentControls = blockEditingMode === 'default';
   const isContentOnlyMode = blockEditingMode === 'contentOnly';
-  const isResizable = allowResize && hasNonContentControls && !isWideAligned && isLargeViewport;
+  const isResizable = allowResize && hasNonContentControls && !isWideAligned && isLargeViewport && parentLayoutType !== 'grid';
   const imageSizeOptions = imageSizes.filter(({
     slug
   }) => image?.media_details?.sizes?.[slug]?.source_url).map(({
@@ -26689,7 +26683,6 @@ function image_Image({
   // remove that override, even if the lightbox UI is disabled in the settings.
   !!lightbox && lightbox?.enabled !== lightboxSetting?.enabled || lightboxSetting?.allowEditing;
   const lightboxChecked = !!lightbox?.enabled || !lightbox && !!lightboxSetting?.enabled;
-  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const dimensionsControl = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DimensionsTool, {
     value: {
       width,
@@ -26722,21 +26715,6 @@ function image_Image({
     scaleOptions: scaleOptions,
     unitsOptions: dimensionsUnitsOptions
   });
-  const aspectRatioControl = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DimensionsTool, {
-    value: {
-      aspectRatio
-    },
-    onChange: ({
-      aspectRatio: newAspectRatio
-    }) => {
-      setAttributes({
-        aspectRatio: newAspectRatio,
-        scale: 'cover'
-      });
-    },
-    defaultAspectRatio: "auto",
-    tools: ['aspectRatio']
-  });
   const resetAll = () => {
     setAttributes({
       alt: undefined,
@@ -26751,8 +26729,8 @@ function image_Image({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
       label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
       resetAll: resetAll,
-      dropdownMenuProps: dropdownMenuProps,
-      children: isResizable && (parentLayoutType === 'grid' ? aspectRatioControl : dimensionsControl)
+      dropdownMenuProps: TOOLSPANEL_DROPDOWNMENU_PROPS,
+      children: isResizable && dimensionsControl
     })
   });
   const arePatternOverridesEnabled = metadata?.bindings?.__default?.source === 'core/pattern-overrides';
@@ -26772,11 +26750,14 @@ function image_Image({
       getBlockBindingsSource
     } = unlock(select(external_wp_blocks_namespaceObject.store));
     const {
+      getBlockParentsByBlockName
+    } = unlock(select(external_wp_blockEditor_namespaceObject.store));
+    const {
       url: urlBinding,
       alt: altBinding,
       title: titleBinding
     } = metadata?.bindings || {};
-    const hasParentPattern = !!context['pattern/overrides'];
+    const hasParentPattern = getBlockParentsByBlockName(clientId, 'core/block').length > 0;
     const urlBindingSource = getBlockBindingsSource(urlBinding?.source);
     const altBindingSource = getBlockBindingsSource(altBinding?.source);
     const titleBindingSource = getBlockBindingsSource(titleBinding?.source);
@@ -26809,7 +26790,7 @@ function image_Image({
       lockTitleControlsMessage: titleBindingSource?.label ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Label of the bindings source. */
       (0,external_wp_i18n_namespaceObject.__)('Connected to %s'), titleBindingSource.label) : (0,external_wp_i18n_namespaceObject.__)('Connected to dynamic data')
     };
-  }, [arePatternOverridesEnabled, context, isSingleSelected, metadata?.bindings]);
+  }, [clientId, isSingleSelected, metadata?.bindings]);
   const showUrlInput = isSingleSelected && !isEditingImage && !lockHrefControls && !lockUrlControls;
   const showCoverControls = isSingleSelected && canInsertCover;
   const showBlockControls = showUrlInput || allowCrop || showCoverControls;
@@ -26941,7 +26922,7 @@ function image_Image({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
         label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
         resetAll: resetAll,
-        dropdownMenuProps: dropdownMenuProps,
+        dropdownMenuProps: TOOLSPANEL_DROPDOWNMENU_PROPS,
         children: [isSingleSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Alternative text'),
           isShownByDefault: true,
@@ -26966,7 +26947,7 @@ function image_Image({
             }),
             __nextHasNoMarginBottom: true
           })
-        }), isResizable && (parentLayoutType === 'grid' ? aspectRatioControl : dimensionsControl), !!imageSizeOptions.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResolutionTool, {
+        }), isResizable && dimensionsControl, !!imageSizeOptions.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResolutionTool, {
           value: sizeSlug,
           onChange: updateImage,
           options: imageSizeOptions
@@ -27050,7 +27031,7 @@ function image_Image({
         borderProps: isRounded ? undefined : borderProps
       })
     });
-  } else if (!isResizable || parentLayoutType === 'grid') {
+  } else if (!isResizable) {
     img = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       style: {
         width,
@@ -30443,14 +30424,7 @@ function useMerge(clientId, onMerge) {
         // list.
         const [nestedListClientId] = getBlockOrder(clientIdB);
         if (nestedListClientId) {
-          // If we are merging with the previous list item, and the
-          // previous list item does not have nested list, move the
-          // nested list to the previous list item.
-          if (getPreviousBlockClientId(clientIdB) === clientIdA && !getBlockOrder(clientIdA).length) {
-            moveBlocksToPosition([nestedListClientId], clientIdB, clientIdA);
-          } else {
-            moveBlocksToPosition(getBlockOrder(nestedListClientId), nestedListClientId, getBlockRootClientId(clientIdA));
-          }
+          moveBlocksToPosition(getBlockOrder(nestedListClientId), nestedListClientId, getBlockRootClientId(clientIdA));
         }
         mergeBlocks(clientIdA, clientIdB);
       });
@@ -30530,7 +30504,7 @@ function edit_IndentUI({
       icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_indent_rtl : format_indent,
       title: (0,external_wp_i18n_namespaceObject.__)('Indent'),
       describedBy: (0,external_wp_i18n_namespaceObject.__)('Indent list item'),
-      disabled: !canIndent,
+      isDisabled: !canIndent,
       onClick: () => indentListItem()
     })]
   });
@@ -30646,15 +30620,8 @@ const list_item_metadata = {
   },
   supports: {
     className: false,
+    __experimentalSelector: ".wp-block-list > li",
     splitting: true,
-    color: {
-      gradients: true,
-      link: true,
-      __experimentalDefaultControls: {
-        background: true,
-        text: true
-      }
-    },
     spacing: {
       margin: true,
       padding: true,
@@ -30679,9 +30646,6 @@ const list_item_metadata = {
     interactivity: {
       clientNavigation: true
     }
-  },
-  selectors: {
-    root: ".wp-block-list > li"
   }
 };
 
@@ -30805,9 +30769,6 @@ const loginout_metadata = {
       type: "boolean",
       "default": true
     }
-  },
-  example: {
-    viewportWidth: 350
   },
   supports: {
     className: true,
@@ -32170,7 +32131,6 @@ function MediaTextEdit({
       mediaSizeSlug: newMediaSizeSlug
     });
   };
-  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const mediaTextGeneralSettings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
     label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
     resetAll: () => {
@@ -32183,7 +32143,7 @@ function MediaTextEdit({
         mediaSizeSlug: undefined
       });
     },
-    dropdownMenuProps: dropdownMenuProps,
+    dropdownMenuProps: TOOLSPANEL_DROPDOWNMENU_PROPS,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Media width'),
       isShownByDefault: true,
@@ -38436,7 +38396,7 @@ function NavigationSubmenuEdit({
           title: (0,external_wp_i18n_namespaceObject.__)('Convert to Link'),
           onClick: transformToLink,
           className: "wp-block-navigation__submenu__revert",
-          disabled: !canConvertToLink
+          isDisabled: !canConvertToLink
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
@@ -42217,9 +42177,6 @@ const post_content_metadata = {
   description: "Displays the contents of a post or page.",
   textdomain: "default",
   usesContext: ["postId", "postType", "queryId"],
-  example: {
-    viewportWidth: 350
-  },
   supports: {
     align: ["wide", "full"],
     html: false,
@@ -42872,9 +42829,6 @@ const post_excerpt_metadata = {
     }
   },
   usesContext: ["postId", "postType", "queryId"],
-  example: {
-    viewportWidth: 350
-  },
   supports: {
     html: false,
     color: {
@@ -45172,9 +45126,6 @@ const post_title_metadata = {
       type: "string",
       "default": "_self"
     }
-  },
-  example: {
-    viewportWidth: 350
   },
   supports: {
     align: ["wide", "full"],
@@ -47572,7 +47523,6 @@ function QueryInspectorControls(props) {
   const showSearchControl = isControlAllowed(allowedControls, 'search');
   const showParentControl = isControlAllowed(allowedControls, 'parents') && isPostTypeHierarchical;
   const showFiltersPanel = showTaxControl || showAuthorControl || showSearchControl || showParentControl;
-  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [!!postType && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockInfo, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(create_new_post_link, {
@@ -47636,7 +47586,7 @@ function QueryInspectorControls(props) {
         });
         setQuerySearch('');
       },
-      dropdownMenuProps: dropdownMenuProps,
+      dropdownMenuProps: TOOLSPANEL_DROPDOWNMENU_PROPS,
       children: [showTaxControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         label: (0,external_wp_i18n_namespaceObject.__)('Taxonomies'),
         hasValue: () => Object.values(taxQuery || {}).some(terms => !!terms.length),
@@ -51202,12 +51152,8 @@ const block_metadata = {
       type: "number"
     },
     content: {
-      type: "object",
-      "default": {}
+      type: "object"
     }
-  },
-  providesContext: {
-    "pattern/overrides": "content"
   },
   supports: {
     customClassName: false,
@@ -55419,8 +55365,8 @@ const SocialLinkEdit = ({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelRow, {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
             __nextHasNoMarginBottom: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Text'),
-            help: (0,external_wp_i18n_namespaceObject.__)('The text is visible when enabled from the parent Social Icons block.'),
+            label: (0,external_wp_i18n_namespaceObject.__)('Link text'),
+            help: (0,external_wp_i18n_namespaceObject.__)('The link text is visible when enabled from the parent Social Icons block.'),
             value: label,
             onChange: value => setAttributes({
               label: value
@@ -59857,9 +59803,8 @@ function __await(v) {
 function __asyncGenerator(thisArg, _arguments, generator) {
   if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
   var g = generator.apply(thisArg, _arguments || []), i, q = [];
-  return i = {}, verb("next"), verb("throw"), verb("return", awaitReturn), i[Symbol.asyncIterator] = function () { return this; }, i;
-  function awaitReturn(f) { return function (v) { return Promise.resolve(v).then(f, reject); }; }
-  function verb(n, f) { if (g[n]) { i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; if (f) i[n] = f(i[n]); } }
+  return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+  function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
   function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
   function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
   function fulfill(value) { resume("next", value); }
@@ -59925,18 +59870,16 @@ function __classPrivateFieldIn(state, receiver) {
 function __addDisposableResource(env, value, async) {
   if (value !== null && value !== void 0) {
     if (typeof value !== "object" && typeof value !== "function") throw new TypeError("Object expected.");
-    var dispose, inner;
+    var dispose;
     if (async) {
-      if (!Symbol.asyncDispose) throw new TypeError("Symbol.asyncDispose is not defined.");
-      dispose = value[Symbol.asyncDispose];
+        if (!Symbol.asyncDispose) throw new TypeError("Symbol.asyncDispose is not defined.");
+        dispose = value[Symbol.asyncDispose];
     }
     if (dispose === void 0) {
-      if (!Symbol.dispose) throw new TypeError("Symbol.dispose is not defined.");
-      dispose = value[Symbol.dispose];
-      if (async) inner = dispose;
+        if (!Symbol.dispose) throw new TypeError("Symbol.dispose is not defined.");
+        dispose = value[Symbol.dispose];
     }
     if (typeof dispose !== "function") throw new TypeError("Object not disposable.");
-    if (inner) dispose = function() { try { inner.call(this); } catch (e) { return Promise.reject(e); } };
     env.stack.push({ value: value, dispose: dispose, async: async });
   }
   else if (async) {

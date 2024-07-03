@@ -361,10 +361,6 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 	public function next_tag( $query = null ) {
 		if ( null === $query ) {
 			while ( $this->step() ) {
-				if ( '#tag' !== $this->get_token_type() ) {
-					continue;
-				}
-
 				if ( ! $this->is_tag_closer() ) {
 					return true;
 				}
@@ -388,10 +384,6 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 
 		if ( ! ( array_key_exists( 'breadcrumbs', $query ) && is_array( $query['breadcrumbs'] ) ) ) {
 			while ( $this->step() ) {
-				if ( '#tag' !== $this->get_token_type() ) {
-					continue;
-				}
-
 				if ( ! $this->is_tag_closer() ) {
 					return true;
 				}
@@ -413,10 +405,6 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 		$match_offset = isset( $query['match_offset'] ) ? (int) $query['match_offset'] : 1;
 
 		while ( $match_offset > 0 && $this->step() ) {
-			if ( '#tag' !== $this->get_token_type() ) {
-				continue;
-			}
-
 			if ( $this->matches_breadcrumbs( $breadcrumbs ) && 0 === --$match_offset ) {
 				return true;
 			}
@@ -440,7 +428,13 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 	 * @return bool
 	 */
 	public function next_token() {
-		return $this->step();
+		$found_a_token = parent::next_token();
+
+		if ( '#tag' === $this->get_token_type() ) {
+			$this->step( self::PROCESS_CURRENT_NODE );
+		}
+
+		return $found_a_token;
 	}
 
 	/**
@@ -469,6 +463,10 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 	 * @return bool Whether the currently-matched tag is found at the given nested structure.
 	 */
 	public function matches_breadcrumbs( $breadcrumbs ) {
+		if ( ! $this->get_tag() ) {
+			return false;
+		}
+
 		// Everything matches when there are zero constraints.
 		if ( 0 === count( $breadcrumbs ) ) {
 			return true;
@@ -531,35 +529,25 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 			 *        is provided in the opening tag, otherwise it expects a tag closer.
 			 */
 			$top_node = $this->state->stack_of_open_elements->current_node();
-			if (
-				$top_node && (
-					// Void elements.
-					self::is_void( $top_node->node_name ) ||
-					// Comments, text nodes, and other atomic tokens.
-					'#' === $top_node->node_name[0] ||
-					// Doctype declarations.
-					'html' === $top_node->node_name
-				)
-			) {
+			if ( $top_node && self::is_void( $top_node->node_name ) ) {
 				$this->state->stack_of_open_elements->pop();
 			}
 		}
 
 		if ( self::PROCESS_NEXT_NODE === $node_to_process ) {
-			parent::next_token();
+			while ( parent::next_token() && '#tag' !== $this->get_token_type() ) {
+				continue;
+			}
 		}
 
 		// Finish stepping when there are no more tokens in the document.
-		if (
-			WP_HTML_Tag_Processor::STATE_INCOMPLETE_INPUT === $this->parser_state ||
-			WP_HTML_Tag_Processor::STATE_COMPLETE === $this->parser_state
-		) {
+		if ( null === $this->get_tag() ) {
 			return false;
 		}
 
 		$this->state->current_token = new WP_HTML_Token(
-			$this->bookmark_token(),
-			$this->get_token_name(),
+			$this->bookmark_tag(),
+			$this->get_tag(),
 			$this->has_self_closing_flag(),
 			$this->release_internal_bookmark_on_destruct
 		);
@@ -603,6 +591,10 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 	 * @return string[]|null Array of tag names representing path to matched node, if matched, otherwise NULL.
 	 */
 	public function get_breadcrumbs() {
+		if ( ! $this->get_tag() ) {
+			return null;
+		}
+
 		$breadcrumbs = array();
 		foreach ( $this->state->stack_of_open_elements->walk_down() as $stack_item ) {
 			$breadcrumbs[] = $stack_item->node_name;
@@ -627,61 +619,11 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 	 * @return bool Whether an element was found.
 	 */
 	private function step_in_body() {
-		$token_name = $this->get_token_name();
-		$token_type = $this->get_token_type();
-		$op_sigil   = '#tag' === $token_type ? ( $this->is_tag_closer() ? '-' : '+' ) : '';
-		$op         = "{$op_sigil}{$token_name}";
+		$tag_name = $this->get_tag();
+		$op_sigil = $this->is_tag_closer() ? '-' : '+';
+		$op       = "{$op_sigil}{$tag_name}";
 
 		switch ( $op ) {
-			case '#comment':
-			case '#funky-comment':
-			case '#presumptuous-tag':
-				$this->insert_html_element( $this->state->current_token );
-				return true;
-
-			case '#text':
-				$this->reconstruct_active_formatting_elements();
-
-				$current_token = $this->bookmarks[ $this->state->current_token->bookmark_name ];
-
-				/*
-				 * > A character token that is U+0000 NULL
-				 *
-				 * Any successive sequence of NULL bytes is ignored and won't
-				 * trigger active format reconstruction. Therefore, if the text
-				 * only comprises NULL bytes then the token should be ignored
-				 * here, but if there are any other characters in the stream
-				 * the active formats should be reconstructed.
-				 */
-				if (
-					1 <= $current_token->length &&
-					"\x00" === $this->html[ $current_token->start ] &&
-					strspn( $this->html, "\x00", $current_token->start, $current_token->length ) === $current_token->length
-				) {
-					// Parse error: ignore the token.
-					return $this->step();
-				}
-
-				/*
-				 * Whitespace-only text does not affect the frameset-ok flag.
-				 * It is probably inter-element whitespace, but it may also
-				 * contain character references which decode only to whitespace.
-				 */
-				$text = $this->get_modifiable_text();
-				if ( strlen( $text ) !== strspn( $text, " \t\n\f\r" ) ) {
-					$this->state->frameset_ok = false;
-				}
-
-				$this->insert_html_element( $this->state->current_token );
-				return true;
-
-			case 'html':
-				/*
-				 * > A DOCTYPE token
-				 * > Parse error. Ignore the token.
-				 */
-				return $this->step();
-
 			/*
 			 * > A start tag whose tag name is "button"
 			 */
@@ -769,17 +711,17 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 			case '-SECTION':
 			case '-SUMMARY':
 			case '-UL':
-				if ( ! $this->state->stack_of_open_elements->has_element_in_scope( $token_name ) ) {
+				if ( ! $this->state->stack_of_open_elements->has_element_in_scope( $tag_name ) ) {
 					// @todo Report parse error.
 					// Ignore the token.
 					return $this->step();
 				}
 
 				$this->generate_implied_end_tags();
-				if ( $this->state->stack_of_open_elements->current_node()->node_name !== $token_name ) {
+				if ( $this->state->stack_of_open_elements->current_node()->node_name !== $tag_name ) {
 					// @todo Record parse error: this error doesn't impact parsing.
 				}
-				$this->state->stack_of_open_elements->pop_until( $token_name );
+				$this->state->stack_of_open_elements->pop_until( $tag_name );
 				return true;
 
 			/*
@@ -841,7 +783,7 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 
 				$this->generate_implied_end_tags();
 
-				if ( $this->state->stack_of_open_elements->current_node()->node_name !== $token_name ) {
+				if ( $this->state->stack_of_open_elements->current_node()->node_name !== $tag_name ) {
 					// @todo Record parse error: this error doesn't impact parsing.
 				}
 
@@ -857,7 +799,7 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 			case '+LI':
 				$this->state->frameset_ok = false;
 				$node                     = $this->state->stack_of_open_elements->current_node();
-				$is_li                    = 'LI' === $token_name;
+				$is_li                    = 'LI' === $tag_name;
 
 				in_body_list_loop:
 				/*
@@ -920,7 +862,7 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 					 * then this is a parse error; ignore the token.
 					 */
 					(
-						'LI' === $token_name &&
+						'LI' === $tag_name &&
 						! $this->state->stack_of_open_elements->has_element_in_list_item_scope( 'LI' )
 					) ||
 					/*
@@ -930,8 +872,8 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 					 * parse error; ignore the token.
 					 */
 					(
-						'LI' !== $token_name &&
-						! $this->state->stack_of_open_elements->has_element_in_scope( $token_name )
+						'LI' !== $tag_name &&
+						! $this->state->stack_of_open_elements->has_element_in_scope( $tag_name )
 					)
 				) {
 					/*
@@ -942,13 +884,13 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 					return $this->step();
 				}
 
-				$this->generate_implied_end_tags( $token_name );
+				$this->generate_implied_end_tags( $tag_name );
 
-				if ( $token_name !== $this->state->stack_of_open_elements->current_node()->node_name ) {
+				if ( $tag_name !== $this->state->stack_of_open_elements->current_node()->node_name ) {
 					// @todo Indicate a parse error once it's possible. This error does not impact the logic here.
 				}
 
-				$this->state->stack_of_open_elements->pop_until( $token_name );
+				$this->state->stack_of_open_elements->pop_until( $tag_name );
 				return true;
 
 			/*
@@ -1101,7 +1043,7 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 		 *
 		 * @see https://html.spec.whatwg.org/multipage/parsing.html#parsing-main-inbody
 		 */
-		switch ( $token_name ) {
+		switch ( $tag_name ) {
 			case 'APPLET':
 			case 'BASE':
 			case 'BASEFONT':
@@ -1149,7 +1091,7 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 			case 'TR':
 			case 'XMP':
 				$this->last_error = self::ERROR_UNSUPPORTED;
-				throw new WP_HTML_Unsupported_Exception( "Cannot process {$token_name} element." );
+				throw new WP_HTML_Unsupported_Exception( "Cannot process {$tag_name} element." );
 		}
 
 		if ( ! $this->is_tag_closer() ) {
@@ -1171,7 +1113,7 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 			 * close anything beyond its containing `P` or `DIV` element.
 			 */
 			foreach ( $this->state->stack_of_open_elements->walk_up() as $node ) {
-				if ( $token_name === $node->node_name ) {
+				if ( $tag_name === $node->node_name ) {
 					break;
 				}
 
@@ -1181,7 +1123,7 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 				}
 			}
 
-			$this->generate_implied_end_tags( $token_name );
+			$this->generate_implied_end_tags( $tag_name );
 			if ( $node !== $this->state->stack_of_open_elements->current_node() ) {
 				// @todo Record parse error: this error doesn't impact parsing.
 			}
@@ -1200,16 +1142,19 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 	 */
 
 	/**
-	 * Creates a new bookmark for the currently-matched token and returns the generated name.
+	 * Creates a new bookmark for the currently-matched tag and returns the generated name.
 	 *
 	 * @since 6.4.0
-	 * @since 6.5.0 Renamed from bookmark_tag() to bookmark_token().
 	 *
 	 * @throws Exception When unable to allocate requested bookmark.
 	 *
 	 * @return string|false Name of created bookmark, or false if unable to create.
 	 */
-	private function bookmark_token() {
+	private function bookmark_tag() {
+		if ( ! $this->get_tag() ) {
+			return false;
+		}
+
 		if ( ! parent::set_bookmark( ++$this->bookmark_counter ) ) {
 			$this->last_error = self::ERROR_EXCEEDED_MAX_BOOKMARKS;
 			throw new Exception( 'could not allocate bookmark' );
@@ -1281,10 +1226,6 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 	/**
 	 * Moves the internal cursor in the HTML Processor to a given bookmark's location.
 	 *
-	 * Be careful! Seeking backwards to a previous location resets the parser to the
-	 * start of the document and reparses the entire contents up until it finds the
-	 * sought-after bookmarked location.
-	 *
 	 * In order to prevent accidental infinite loops, there's a
 	 * maximum limit on the number of times seek() can be called.
 	 *
@@ -1296,9 +1237,6 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 	 * @return bool Whether the internal cursor was successfully moved to the bookmark's location.
 	 */
 	public function seek( $bookmark_name ) {
-		// Flush any pending updates to the document before beginning.
-		$this->get_updated_html();
-
 		$actual_bookmark_name = "_{$bookmark_name}";
 		$processor_started_at = $this->state->current_token
 			? $this->bookmarks[ $this->state->current_token->bookmark_name ]->start
@@ -1306,73 +1244,44 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 		$bookmark_starts_at   = $this->bookmarks[ $actual_bookmark_name ]->start;
 		$direction            = $bookmark_starts_at > $processor_started_at ? 'forward' : 'backward';
 
-		/*
-		 * If seeking backwards, it's possible that the sought-after bookmark exists within an element
-		 * which has been closed before the current cursor; in other words, it has already been removed
-		 * from the stack of open elements. This means that it's insufficient to simply pop off elements
-		 * from the stack of open elements which appear after the bookmarked location and then jump to
-		 * that location, as the elements which were open before won't be re-opened.
-		 *
-		 * In order to maintain consistency, the HTML Processor rewinds to the start of the document
-		 * and reparses everything until it finds the sought-after bookmark.
-		 *
-		 * There are potentially better ways to do this: cache the parser state for each bookmark and
-		 * restore it when seeking; store an immutable and idempotent register of where elements open
-		 * and close.
-		 *
-		 * If caching the parser state it will be essential to properly maintain the cached stack of
-		 * open elements and active formatting elements when modifying the document. This could be a
-		 * tedious and time-consuming process as well, and so for now will not be performed.
-		 *
-		 * It may be possible to track bookmarks for where elements open and close, and in doing so
-		 * be able to quickly recalculate breadcrumbs for any element in the document. It may even
-		 * be possible to remove the stack of open elements and compute it on the fly this way.
-		 * If doing this, the parser would need to track the opening and closing locations for all
-		 * tokens in the breadcrumb path for any and all bookmarks. By utilizing bookmarks themselves
-		 * this list could be automatically maintained while modifying the document. Finding the
-		 * breadcrumbs would then amount to traversing that list from the start until the token
-		 * being inspected. Once an element closes, if there are no bookmarks pointing to locations
-		 * within that element, then all of these locations may be forgotten to save on memory use
-		 * and computation time.
-		 */
-		if ( 'backward' === $direction ) {
-			/*
-			 * Instead of clearing the parser state and starting fresh, calling the stack methods
-			 * maintains the proper flags in the parser.
-			 */
-			foreach ( $this->state->stack_of_open_elements->walk_up() as $item ) {
-				if ( 'context-node' === $item->bookmark_name ) {
-					break;
+		switch ( $direction ) {
+			case 'forward':
+				// When moving forwards, re-parse the document until reaching the same location as the original bookmark.
+				while ( $this->step() ) {
+					if ( $bookmark_starts_at === $this->bookmarks[ $this->state->current_token->bookmark_name ]->start ) {
+						return true;
+					}
 				}
 
-				$this->state->stack_of_open_elements->remove_node( $item );
-			}
+				return false;
 
-			foreach ( $this->state->active_formatting_elements->walk_up() as $item ) {
-				if ( 'context-node' === $item->bookmark_name ) {
-					break;
+			case 'backward':
+				/*
+				 * When moving backwards, clear out all existing stack entries which appear after the destination
+				 * bookmark. These could be stored for later retrieval, but doing so would require additional
+				 * memory overhead and also demand that references and bookmarks are updated as the document
+				 * changes. In time this could be a valuable optimization, but it's okay to give up that
+				 * optimization in exchange for more CPU time to recompute the stack, to re-parse the
+				 * document that may have already been parsed once.
+				 */
+				foreach ( $this->state->stack_of_open_elements->walk_up() as $item ) {
+					if ( $bookmark_starts_at >= $this->bookmarks[ $item->bookmark_name ]->start ) {
+						break;
+					}
+
+					$this->state->stack_of_open_elements->remove_node( $item );
 				}
 
-				$this->state->active_formatting_elements->remove_node( $item );
-			}
+				foreach ( $this->state->active_formatting_elements->walk_up() as $item ) {
+					if ( $bookmark_starts_at >= $this->bookmarks[ $item->bookmark_name ]->start ) {
+						break;
+					}
 
-			parent::seek( 'context-node' );
-			$this->state->insertion_mode = WP_HTML_Processor_State::INSERTION_MODE_IN_BODY;
-			$this->state->frameset_ok    = true;
+					$this->state->active_formatting_elements->remove_node( $item );
+				}
+
+				return parent::seek( $actual_bookmark_name );
 		}
-
-		// When moving forwards, reparse the document until reaching the same location as the original bookmark.
-		if ( $bookmark_starts_at === $this->bookmarks[ $this->state->current_token->bookmark_name ]->start ) {
-			return true;
-		}
-
-		while ( $this->step() ) {
-			if ( $bookmark_starts_at === $this->bookmarks[ $this->state->current_token->bookmark_name ]->start ) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	/**
@@ -1457,18 +1366,6 @@ class Gutenberg_HTML_Processor_6_5 extends Gutenberg_HTML_Tag_Processor_6_5 {
 	 */
 	public function set_bookmark( $bookmark_name ) {
 		return parent::set_bookmark( "_{$bookmark_name}" );
-	}
-
-	/**
-	 * Checks whether a bookmark with the given name exists.
-	 *
-	 * @since 6.5.0
-	 *
-	 * @param string $bookmark_name Name to identify a bookmark that potentially exists.
-	 * @return bool Whether that bookmark exists.
-	 */
-	public function has_bookmark( $bookmark_name ) {
-		return parent::has_bookmark( "_{$bookmark_name}" );
 	}
 
 	/*
