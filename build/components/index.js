@@ -8490,15 +8490,6 @@ function isOverflowElement(element) {
 function isTableElement(element) {
   return ['table', 'td', 'th'].includes(getNodeName(element));
 }
-function isTopLayer(element) {
-  return [':popover-open', ':modal'].some(selector => {
-    try {
-      return element.matches(selector);
-    } catch (e) {
-      return false;
-    }
-  });
-}
 function isContainingBlock(element) {
   const webkit = isWebKit();
   const css = floating_ui_utils_dom_getComputedStyle(element);
@@ -8509,9 +8500,6 @@ function isContainingBlock(element) {
 function getContainingBlock(element) {
   let currentNode = getParentNode(element);
   while (isHTMLElement(currentNode) && !isLastTraversableNode(currentNode)) {
-    if (isTopLayer(currentNode)) {
-      return null;
-    }
     if (isContainingBlock(currentNode)) {
       return currentNode;
     }
@@ -8720,7 +8708,7 @@ function getBoundingClientRect(element, includeScale, isFixedStrategy, offsetPar
 }
 
 const topLayerSelectors = [':popover-open', ':modal'];
-function floating_ui_dom_isTopLayer(floating) {
+function isTopLayer(floating) {
   return topLayerSelectors.some(selector => {
     try {
       return floating.matches(selector);
@@ -8739,7 +8727,7 @@ function convertOffsetParentRelativeRectToViewportRelativeRect(_ref) {
   } = _ref;
   const isFixed = strategy === 'fixed';
   const documentElement = getDocumentElement(offsetParent);
-  const topLayer = elements ? floating_ui_dom_isTopLayer(elements.floating) : false;
+  const topLayer = elements ? isTopLayer(elements.floating) : false;
   if (offsetParent === documentElement || topLayer && isFixed) {
     return rect;
   }
@@ -8987,7 +8975,7 @@ function getTrueOffsetParent(element, polyfill) {
 // such as table ancestors and cross browser bugs.
 function getOffsetParent(element, polyfill) {
   const window = floating_ui_utils_dom_getWindow(element);
-  if (!isHTMLElement(element) || floating_ui_dom_isTopLayer(element)) {
+  if (!isHTMLElement(element) || isTopLayer(element)) {
     return window;
   }
   let offsetParent = getTrueOffsetParent(element, polyfill);
@@ -10478,7 +10466,7 @@ function isPlainObject(o) {
 /**
  * A `React.useEffect` that will not run on the first render.
  * Source:
- * https://github.com/ariakit/ariakit/blob/main/packages/ariakit-react-core/src/utils/hooks.ts
+ * https://github.com/ariakit/ariakit/blob/reakit/packages/reakit-utils/src/useUpdateEffect.ts
  *
  * @param {import('react').EffectCallback} effect
  * @param {import('react').DependencyList} deps
@@ -10497,9 +10485,6 @@ function use_update_effect_useUpdateEffect(effect, deps) {
     // see https://github.com/WordPress/gutenberg/pull/41166
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
-  (0,external_wp_element_namespaceObject.useEffect)(() => () => {
-    mounted.current = false;
-  }, []);
 }
 /* harmony default export */ const use_update_effect = (use_update_effect_useUpdateEffect);
 
@@ -10883,9 +10868,8 @@ function __await(v) {
 function __asyncGenerator(thisArg, _arguments, generator) {
   if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
   var g = generator.apply(thisArg, _arguments || []), i, q = [];
-  return i = {}, verb("next"), verb("throw"), verb("return", awaitReturn), i[Symbol.asyncIterator] = function () { return this; }, i;
-  function awaitReturn(f) { return function (v) { return Promise.resolve(v).then(f, reject); }; }
-  function verb(n, f) { if (g[n]) { i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; if (f) i[n] = f(i[n]); } }
+  return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+  function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
   function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
   function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
   function fulfill(value) { resume("next", value); }
@@ -10951,18 +10935,16 @@ function __classPrivateFieldIn(state, receiver) {
 function __addDisposableResource(env, value, async) {
   if (value !== null && value !== void 0) {
     if (typeof value !== "object" && typeof value !== "function") throw new TypeError("Object expected.");
-    var dispose, inner;
+    var dispose;
     if (async) {
-      if (!Symbol.asyncDispose) throw new TypeError("Symbol.asyncDispose is not defined.");
-      dispose = value[Symbol.asyncDispose];
+        if (!Symbol.asyncDispose) throw new TypeError("Symbol.asyncDispose is not defined.");
+        dispose = value[Symbol.asyncDispose];
     }
     if (dispose === void 0) {
-      if (!Symbol.dispose) throw new TypeError("Symbol.dispose is not defined.");
-      dispose = value[Symbol.dispose];
-      if (async) inner = dispose;
+        if (!Symbol.dispose) throw new TypeError("Symbol.dispose is not defined.");
+        dispose = value[Symbol.dispose];
     }
     if (typeof dispose !== "function") throw new TypeError("Object not disposable.");
-    if (inner) dispose = function() { try { inner.call(this); } catch (e) { return Promise.reject(e); } };
     env.stack.push({ value: value, dispose: dispose, async: async });
   }
   else if (async) {
@@ -13653,15 +13635,19 @@ const visuallyHidden = {
 
 ;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
 function extends_extends() {
-  return extends_extends = Object.assign ? Object.assign.bind() : function (n) {
-    for (var e = 1; e < arguments.length; e++) {
-      var t = arguments[e];
-      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
+  extends_extends = Object.assign ? Object.assign.bind() : function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
     }
-    return n;
-  }, extends_extends.apply(null, arguments);
+    return target;
+  };
+  return extends_extends.apply(this, arguments);
 }
-
 ;// CONCATENATED MODULE: ./node_modules/@emotion/styled/node_modules/@emotion/memoize/dist/emotion-memoize.esm.js
 function emotion_memoize_esm_memoize(fn) {
   var cache = Object.create(null);
@@ -39309,8 +39295,8 @@ const baseUnitLabelStyles = ({
   selectSize
 }) => {
   const sizes = {
-    small: /*#__PURE__*/emotion_react_browser_esm_css("box-sizing:border-box;padding:2px 1px;width:20px;font-size:8px;line-height:1;letter-spacing:-0.5px;text-transform:uppercase;text-align-last:center;&:not( :disabled ){color:", COLORS.gray[800], ";}" + ( true ? "" : 0),  true ? "" : 0),
-    default: /*#__PURE__*/emotion_react_browser_esm_css("box-sizing:border-box;min-width:24px;max-width:48px;height:24px;margin-inline-end:", space(2), ";padding:", space(1), ";font-size:13px;line-height:1;text-align-last:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;&:not( :disabled ){color:", COLORS.theme.accent, ";}" + ( true ? "" : 0),  true ? "" : 0)
+    small: /*#__PURE__*/emotion_react_browser_esm_css("box-sizing:border-box;padding:2px 1px;width:20px;color:", COLORS.gray[800], ";font-size:8px;line-height:1;letter-spacing:-0.5px;text-transform:uppercase;text-align-last:center;" + ( true ? "" : 0),  true ? "" : 0),
+    default: /*#__PURE__*/emotion_react_browser_esm_css("box-sizing:border-box;min-width:24px;max-width:48px;height:24px;margin-inline-end:", space(2), ";padding:", space(1), ";color:", COLORS.theme.accent, ";font-size:13px;line-height:1;text-align-last:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" + ( true ? "" : 0),  true ? "" : 0)
   };
   return sizes[selectSize];
 };
@@ -39325,7 +39311,7 @@ const unitSelectSizes = ({
       borderTopLeftRadius: 0,
       borderBottomLeftRadius: 0
     })(), " &:not(:disabled):hover{background-color:", COLORS.gray[100], ";}&:focus{border:1px solid ", COLORS.ui.borderFocus, ";box-shadow:inset 0 0 0 ", config_values.borderWidth + ' ' + COLORS.ui.borderFocus, ";outline-offset:0;outline:2px solid transparent;z-index:1;}" + ( true ? "" : 0),  true ? "" : 0),
-    default: /*#__PURE__*/emotion_react_browser_esm_css("display:flex;justify-content:center;align-items:center;&:where( :not( :disabled ) ):hover{box-shadow:inset 0 0 0 ", config_values.borderWidth + ' ' + COLORS.ui.borderFocus, ";outline:", config_values.borderWidth, " solid transparent;}&:focus{box-shadow:0 0 0 ", config_values.borderWidthFocus + ' ' + COLORS.ui.borderFocus, ";outline:", config_values.borderWidthFocus, " solid transparent;}" + ( true ? "" : 0),  true ? "" : 0)
+    default: /*#__PURE__*/emotion_react_browser_esm_css("display:flex;justify-content:center;align-items:center;&:hover{color:", COLORS.ui.borderFocus, ";box-shadow:inset 0 0 0 ", config_values.borderWidth + ' ' + COLORS.ui.borderFocus, ";outline:", config_values.borderWidth, " solid transparent;}&:focus{box-shadow:0 0 0 ", config_values.borderWidthFocus + ' ' + COLORS.ui.borderFocus, ";outline:", config_values.borderWidthFocus, " solid transparent;}" + ( true ? "" : 0),  true ? "" : 0)
   };
   return sizes[selectSize];
 };
@@ -40252,10 +40238,10 @@ function UnforwardedUnitControl(unitControlProps, forwardedRef) {
   if (!disableUnits && isUnitSelectTabbable && units.length) {
     handleOnKeyDown = event => {
       props.onKeyDown?.(event);
-      // Unless the meta or ctrl key was pressed (to avoid interfering with
-      // shortcuts, e.g. pastes), move focus to the unit select if a key
+      // Unless the meta key was pressed (to avoid interfering with
+      // shortcuts, e.g. pastes), moves focus to the unit select if a key
       // matches the first character of a unit.
-      if (!event.metaKey && !event.ctrlKey && reFirstCharacterOfUnits.test(event.key)) {
+      if (!event.metaKey && reFirstCharacterOfUnits.test(event.key)) {
         refInputSuffix.current?.focus();
       }
     };
@@ -47325,16 +47311,17 @@ const ConfirmDialog = contextConnect(UnconnectedConfirmDialog, 'ConfirmDialog');
 /* harmony default export */ const confirm_dialog_component = (ConfirmDialog);
 
 ;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
-function objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(r, e) {
-  if (null == r) return {};
-  var t = {};
-  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
-    if (e.indexOf(n) >= 0) continue;
-    t[n] = r[n];
+function objectWithoutPropertiesLoose_objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  for (var key in source) {
+    if (Object.prototype.hasOwnProperty.call(source, key)) {
+      if (excluded.indexOf(key) >= 0) continue;
+      target[key] = source[key];
+    }
   }
-  return t;
+  return target;
 }
-
 // EXTERNAL MODULE: ./node_modules/prop-types/index.js
 var prop_types = __webpack_require__(2652);
 var prop_types_default = /*#__PURE__*/__webpack_require__.n(prop_types);
@@ -56236,12 +56223,6 @@ const DayButton = /*#__PURE__*/emotion_styled_base_browser_esm(build_module_butt
 
 
 /**
- * Internal dependencies
- */
-
-
-
-/**
  * Like date-fn's toDate, but tries to guess the format when a string is
  * given.
  *
@@ -56252,61 +56233,6 @@ function inputToDate(input) {
     return new Date(input);
   }
   return toDate_toDate(input);
-}
-
-/**
- * Converts a 12-hour time to a 24-hour time.
- * @param hours
- * @param isPm
- */
-function from12hTo24h(hours, isPm) {
-  return isPm ? (hours % 12 + 12) % 24 : hours % 12;
-}
-
-/**
- * Converts a 24-hour time to a 12-hour time.
- * @param hours
- */
-function from24hTo12h(hours) {
-  return hours % 12 || 12;
-}
-
-/**
- * Creates an InputControl reducer used to pad an input so that it is always a
- * given width. For example, the hours and minutes inputs are padded to 2 so
- * that '4' appears as '04'.
- *
- * @param pad How many digits the value should be.
- */
-function buildPadInputStateReducer(pad) {
-  return (state, action) => {
-    const nextState = {
-      ...state
-    };
-    if (action.type === COMMIT || action.type === PRESS_UP || action.type === PRESS_DOWN) {
-      if (nextState.value !== undefined) {
-        nextState.value = nextState.value.toString().padStart(pad, '0');
-      }
-    }
-    return nextState;
-  };
-}
-
-/**
- * Validates the target of a React event to ensure it is an input element and
- * that the input is valid.
- * @param event
- */
-function validateInputElementTarget(event) {
-  var _ownerDocument$defaul;
-  // `instanceof` checks need to get the instance definition from the
-  // corresponding window object — therefore, the following logic makes
-  // the component work correctly even when rendered inside an iframe.
-  const HTMLInputElementInstance = (_ownerDocument$defaul = event.target?.ownerDocument.defaultView?.HTMLInputElement) !== null && _ownerDocument$defaul !== void 0 ? _ownerDocument$defaul : HTMLInputElement;
-  if (!(event.target instanceof HTMLInputElementInstance)) {
-    return false;
-  }
-  return event.target.validity.valid;
 }
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/date-time/constants.js
@@ -56744,6 +56670,38 @@ function set_set(date, values) {
 // Fallback for modularized imports:
 /* harmony default export */ const date_fns_set = ((/* unused pure expression or super */ null && (set_set)));
 
+;// CONCATENATED MODULE: ./node_modules/date-fns/setHours.mjs
+
+
+/**
+ * @name setHours
+ * @category Hour Helpers
+ * @summary Set the hours to the given date.
+ *
+ * @description
+ * Set the hours to the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param hours - The hours of the new date
+ *
+ * @returns The new date with the hours set
+ *
+ * @example
+ * // Set 4 hours to 1 September 2014 11:30:00:
+ * const result = setHours(new Date(2014, 8, 1, 11, 30), 4)
+ * //=> Mon Sep 01 2014 04:30:00
+ */
+function setHours(date, hours) {
+  const _date = toDate_toDate(date);
+  _date.setHours(hours);
+  return _date;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_setHours = ((/* unused pure expression or super */ null && (setHours)));
+
 ;// CONCATENATED MODULE: ./packages/components/build-module/date-time/time/styles.js
 
 function time_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
@@ -56859,148 +56817,6 @@ const timezone_TimeZone = () => {
 };
 /* harmony default export */ const timezone = (timezone_TimeZone);
 
-;// CONCATENATED MODULE: ./packages/components/build-module/date-time/time-input/index.js
-/**
- * External dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-
-
-function TimeInput({
-  value: valueProp,
-  defaultValue,
-  is12Hour,
-  minutesProps,
-  onChange
-}) {
-  const [value = {
-    hours: new Date().getHours(),
-    minutes: new Date().getMinutes()
-  }, setValue] = useControlledValue({
-    value: valueProp,
-    onChange,
-    defaultValue
-  });
-  const dayPeriod = parseDayPeriod(value.hours);
-  const hours12Format = from24hTo12h(value.hours);
-  const buildNumberControlChangeCallback = method => {
-    return (_value, {
-      event
-    }) => {
-      if (!validateInputElementTarget(event)) {
-        return;
-      }
-
-      // We can safely assume value is a number if target is valid.
-      const numberValue = Number(_value);
-      setValue({
-        ...value,
-        [method]: method === 'hours' && is12Hour ? from12hTo24h(numberValue, dayPeriod === 'PM') : numberValue
-      });
-    };
-  };
-  const buildAmPmChangeCallback = _value => {
-    return () => {
-      if (dayPeriod === _value) {
-        return;
-      }
-      setValue({
-        ...value,
-        hours: from12hTo24h(hours12Format, _value === 'PM')
-      });
-    };
-  };
-  function parseDayPeriod(_hours) {
-    return _hours < 12 ? 'AM' : 'PM';
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(h_stack_component, {
-    alignment: "left",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(TimeWrapper, {
-      className: "components-datetime__time-field components-datetime__time-field-time" // Unused, for backwards compatibility.
-      ,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HoursInput, {
-        className: "components-datetime__time-field-hours-input" // Unused, for backwards compatibility.
-        ,
-        label: (0,external_wp_i18n_namespaceObject.__)('Hours'),
-        hideLabelFromVision: true,
-        __next40pxDefaultSize: true,
-        value: String(is12Hour ? hours12Format : value.hours).padStart(2, '0'),
-        step: 1,
-        min: is12Hour ? 1 : 0,
-        max: is12Hour ? 12 : 23,
-        required: true,
-        spinControls: "none",
-        isPressEnterToChange: true,
-        isDragEnabled: false,
-        isShiftStepEnabled: false,
-        onChange: buildNumberControlChangeCallback('hours'),
-        __unstableStateReducer: buildPadInputStateReducer(2)
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TimeSeparator, {
-        className: "components-datetime__time-separator" // Unused, for backwards compatibility.
-        ,
-        "aria-hidden": "true",
-        children: ":"
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MinutesInput, {
-        className: dist_clsx('components-datetime__time-field-minutes-input',
-        // Unused, for backwards compatibility.
-        minutesProps?.className),
-        label: (0,external_wp_i18n_namespaceObject.__)('Minutes'),
-        hideLabelFromVision: true,
-        __next40pxDefaultSize: true,
-        value: String(value.minutes).padStart(2, '0'),
-        step: 1,
-        min: 0,
-        max: 59,
-        required: true,
-        spinControls: "none",
-        isPressEnterToChange: true,
-        isDragEnabled: false,
-        isShiftStepEnabled: false,
-        onChange: (...args) => {
-          buildNumberControlChangeCallback('minutes')(...args);
-          minutesProps?.onChange?.(...args);
-        },
-        __unstableStateReducer: buildPadInputStateReducer(2),
-        ...minutesProps
-      })]
-    }), is12Hour && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(button_group, {
-      className: "components-datetime__time-field components-datetime__time-field-am-pm" // Unused, for backwards compatibility.
-      ,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-        className: "components-datetime__time-am-button" // Unused, for backwards compatibility.
-        ,
-        variant: dayPeriod === 'AM' ? 'primary' : 'secondary',
-        __next40pxDefaultSize: true,
-        onClick: buildAmPmChangeCallback('AM'),
-        children: (0,external_wp_i18n_namespaceObject.__)('AM')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-        className: "components-datetime__time-pm-button" // Unused, for backwards compatibility.
-        ,
-        variant: dayPeriod === 'PM' ? 'primary' : 'secondary',
-        __next40pxDefaultSize: true,
-        onClick: buildAmPmChangeCallback('PM'),
-        children: (0,external_wp_i18n_namespaceObject.__)('PM')
-      })]
-    })]
-  });
-}
-/* harmony default export */ const time_input = ((/* unused pure expression or super */ null && (TimeInput)));
-
 ;// CONCATENATED MODULE: ./packages/components/build-module/date-time/time/index.js
 /**
  * External dependencies
@@ -57026,6 +56842,35 @@ function TimeInput({
 
 
 
+
+
+
+
+function from12hTo24h(hours, isPm) {
+  return isPm ? (hours % 12 + 12) % 24 : hours % 12;
+}
+
+/**
+ * Creates an InputControl reducer used to pad an input so that it is always a
+ * given width. For example, the hours and minutes inputs are padded to 2 so
+ * that '4' appears as '04'.
+ *
+ * @param pad How many digits the value should be.
+ */
+function buildPadInputStateReducer(pad) {
+  return (state, action) => {
+    const nextState = {
+      ...state
+    };
+    if (action.type === COMMIT || action.type === PRESS_UP || action.type === PRESS_DOWN) {
+      if (nextState.value !== undefined) {
+        nextState.value = nextState.value.toString().padStart(pad, '0');
+      }
+    }
+    return nextState;
+  };
+}
+
 /**
  * TimePicker is a React component that renders a clock for time selection.
  *
@@ -57046,9 +56891,6 @@ function TimeInput({
  * };
  * ```
  */
-
-
-
 function TimePicker({
   is12Hour,
   currentTime,
@@ -57068,25 +56910,41 @@ function TimePicker({
     month,
     year,
     minutes,
-    hours
+    hours,
+    am
   } = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     day: format(date, 'dd'),
     month: format(date, 'MM'),
     year: format(date, 'yyyy'),
     minutes: format(date, 'mm'),
-    hours: format(date, 'HH'),
+    hours: format(date, is12Hour ? 'hh' : 'HH'),
     am: format(date, 'a')
-  }), [date]);
+  }), [date, is12Hour]);
   const buildNumberControlChangeCallback = method => {
     const callback = (value, {
       event
     }) => {
-      if (!validateInputElementTarget(event)) {
+      var _ownerDocument$defaul;
+      // `instanceof` checks need to get the instance definition from the
+      // corresponding window object — therefore, the following logic makes
+      // the component work correctly even when rendered inside an iframe.
+      const HTMLInputElementInstance = (_ownerDocument$defaul = event.target?.ownerDocument.defaultView?.HTMLInputElement) !== null && _ownerDocument$defaul !== void 0 ? _ownerDocument$defaul : HTMLInputElement;
+      if (!(event.target instanceof HTMLInputElementInstance)) {
+        return;
+      }
+      if (!event.target.validity.valid) {
         return;
       }
 
       // We can safely assume value is a number if target is valid.
-      const numberValue = Number(value);
+      let numberValue = Number(value);
+
+      // If the 12-hour format is being used and the 'PM' period is
+      // selected, then the incoming value (which ranges 1-12) should be
+      // increased by 12 to match the expected 24-hour format.
+      if (method === 'hours' && is12Hour) {
+        numberValue = from12hTo24h(numberValue, am === 'PM');
+      }
       const newDate = set_set(date, {
         [method]: numberValue
       });
@@ -57095,17 +56953,17 @@ function TimePicker({
     };
     return callback;
   };
-  const onTimeInputChangeCallback = ({
-    hours: newHours,
-    minutes: newMinutes
-  }) => {
-    const newDate = set_set(date, {
-      hours: newHours,
-      minutes: newMinutes
-    });
-    setDate(newDate);
-    onChange?.(format(newDate, TIMEZONELESS_FORMAT));
-  };
+  function buildAmPmChangeCallback(value) {
+    return () => {
+      if (am === value) {
+        return;
+      }
+      const parsedHours = parseInt(hours, 10);
+      const newDate = setHours(date, from12hTo24h(parsedHours, value === 'PM'));
+      setDate(newDate);
+      onChange?.(format(newDate, TIMEZONELESS_FORMAT));
+    };
+  }
   const dayField = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DayInput, {
     className: "components-datetime__time-field components-datetime__time-field-day" // Unused, for backwards compatibility.
     ,
@@ -57188,13 +57046,67 @@ function TimePicker({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(h_stack_component, {
         className: "components-datetime__time-wrapper" // Unused, for backwards compatibility.
         ,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TimeInput, {
-          value: {
-            hours: Number(hours),
-            minutes: Number(minutes)
-          },
-          is12Hour: is12Hour,
-          onChange: onTimeInputChangeCallback
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(TimeWrapper, {
+          className: "components-datetime__time-field components-datetime__time-field-time" // Unused, for backwards compatibility.
+          ,
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HoursInput, {
+            className: "components-datetime__time-field-hours-input" // Unused, for backwards compatibility.
+            ,
+            label: (0,external_wp_i18n_namespaceObject.__)('Hours'),
+            hideLabelFromVision: true,
+            __next40pxDefaultSize: true,
+            value: hours,
+            step: 1,
+            min: is12Hour ? 1 : 0,
+            max: is12Hour ? 12 : 23,
+            required: true,
+            spinControls: "none",
+            isPressEnterToChange: true,
+            isDragEnabled: false,
+            isShiftStepEnabled: false,
+            onChange: buildNumberControlChangeCallback('hours'),
+            __unstableStateReducer: buildPadInputStateReducer(2)
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TimeSeparator, {
+            className: "components-datetime__time-separator" // Unused, for backwards compatibility.
+            ,
+            "aria-hidden": "true",
+            children: ":"
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MinutesInput, {
+            className: "components-datetime__time-field-minutes-input" // Unused, for backwards compatibility.
+            ,
+            label: (0,external_wp_i18n_namespaceObject.__)('Minutes'),
+            hideLabelFromVision: true,
+            __next40pxDefaultSize: true,
+            value: minutes,
+            step: 1,
+            min: 0,
+            max: 59,
+            required: true,
+            spinControls: "none",
+            isPressEnterToChange: true,
+            isDragEnabled: false,
+            isShiftStepEnabled: false,
+            onChange: buildNumberControlChangeCallback('minutes'),
+            __unstableStateReducer: buildPadInputStateReducer(2)
+          })]
+        }), is12Hour && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(button_group, {
+          className: "components-datetime__time-field components-datetime__time-field-am-pm" // Unused, for backwards compatibility.
+          ,
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+            className: "components-datetime__time-am-button" // Unused, for backwards compatibility.
+            ,
+            variant: am === 'AM' ? 'primary' : 'secondary',
+            __next40pxDefaultSize: true,
+            onClick: buildAmPmChangeCallback('AM'),
+            children: (0,external_wp_i18n_namespaceObject.__)('AM')
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+            className: "components-datetime__time-pm-button" // Unused, for backwards compatibility.
+            ,
+            variant: am === 'PM' ? 'primary' : 'secondary',
+            __next40pxDefaultSize: true,
+            onClick: buildAmPmChangeCallback('PM'),
+            children: (0,external_wp_i18n_namespaceObject.__)('PM')
+          })]
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(timezone, {})]
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Fieldset, {
@@ -57331,7 +57243,6 @@ const DateTimePicker = (0,external_wp_element_namespaceObject.forwardRef)(Unforw
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -62059,7 +61970,8 @@ const search = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 /** @typedef {import('react').ComponentType} ComponentType */
 
 /**
- * A Higher Order Component used to provide speak and debounced speak functions.
+ * A Higher Order Component used to be provide speak and debounced speak
+ * functions.
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-a11y/#speak
  *
@@ -73349,7 +73261,7 @@ const useTabsContext = () => (0,external_wp_element_namespaceObject.useContext)(
 
 const TabListWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "enfox0g2"
-} : 0)("position:relative;display:flex;align-items:stretch;flex-direction:row;&[aria-orientation='vertical']{flex-direction:column;}@media not ( prefers-reduced-motion: reduce ){&.is-animation-enabled::after{transition-property:left,top,width,height;transition-duration:0.2s;transition-timing-function:ease-out;}}&::after{content:'';position:absolute;pointer-events:none;outline:2px solid transparent;outline-offset:-1px;}&:not( [aria-orientation='vertical'] )::after{bottom:0;left:var( --indicator-left );width:var( --indicator-width );height:0;border-bottom:var( --wp-admin-border-width-focus ) solid ", COLORS.theme.accent, ";}&[aria-orientation='vertical']::after{z-index:-1;left:0;width:100%;top:var( --indicator-top );height:var( --indicator-height );background-color:", COLORS.theme.gray[100], ";}" + ( true ? "" : 0));
+} : 0)("position:relative;display:flex;align-items:stretch;flex-direction:row;&[aria-orientation='vertical']{flex-direction:column;}@media not ( prefers-reduced-motion: reduce ){&.is-animation-enabled::after{transition-property:left,top,width,height;transition-duration:0.2s;transition-timing-function:ease-out;}}&::after{content:'';position:absolute;pointer-events:none;outline:2px solid transparent;outline-offset:-1px;}&:not( [aria-orientation='vertical'] )::after{left:var( --indicator-left );bottom:0;width:var( --indicator-width );height:0;border-bottom:var( --wp-admin-border-width-focus ) solid ", COLORS.theme.accent, ";}&[aria-orientation='vertical']::after{opacity:0;right:0;top:var( --indicator-top );height:var( --indicator-height );border-right:var( --wp-admin-border-width-focus ) solid ", COLORS.theme.accent, ";}" + ( true ? "" : 0));
 const styles_Tab = /*#__PURE__*/emotion_styled_base_browser_esm(Tab,  true ? {
   target: "enfox0g1"
 } : 0)("&{display:inline-flex;align-items:center;position:relative;border-radius:0;height:", space(12), ";background:transparent;border:none;box-shadow:none;cursor:pointer;padding:3px ", space(4), ";margin-left:0;font-weight:500;&[aria-disabled='true']{cursor:default;opacity:0.3;}&:hover{color:", COLORS.theme.accent, ";}&:focus:not( :disabled ){position:relative;box-shadow:none;outline:none;}&::before{content:'';position:absolute;top:", space(3), ";right:", space(3), ";bottom:", space(3), ";left:", space(3), ";pointer-events:none;box-shadow:0 0 0 var( --wp-admin-border-width-focus ) ", COLORS.theme.accent, ";border-radius:2px;opacity:0;@media not ( prefers-reduced-motion ){transition:opacity 0.1s linear;}}&:focus-visible::before{opacity:1;outline:2px solid transparent;}}" + ( true ? "" : 0));
@@ -73421,94 +73333,43 @@ const tab_Tab = (0,external_wp_element_namespaceObject.forwardRef)(function Tab(
 
 
 
-// TODO: move these into a separate utility file, for use in other components
-// such as ToggleGroupControl.
-
-/**
- * Any function.
- */
-
-/**
- * Creates a stable callback function that has access to the latest state and
- * can be used within event handlers and effect callbacks. Throws when used in
- * the render phase.
- *
- * @example
- *
- * ```tsx
- * function Component(props) {
- *   const onClick = useEvent(props.onClick);
- *   React.useEffect(() => {}, [onClick]);
- * }
- * ```
- */
-function tablist_useEvent(callback) {
-  const ref = (0,external_wp_element_namespaceObject.useRef)(() => {
-    throw new Error('Cannot call an event handler while rendering.');
+function useTrackElementOffset(targetElement, onUpdate) {
+  const [indicatorPosition, setIndicatorPosition] = (0,external_wp_element_namespaceObject.useState)({
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0
   });
-  (0,external_wp_element_namespaceObject.useInsertionEffect)(() => {
-    ref.current = callback;
+
+  // TODO: replace with useEventCallback or similar when officially available.
+  const updateCallbackRef = (0,external_wp_element_namespaceObject.useRef)(onUpdate);
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    updateCallbackRef.current = onUpdate;
   });
-  return (0,external_wp_element_namespaceObject.useCallback)((...args) => ref.current?.(...args), []);
-}
-
-/**
- * `useResizeObserver` options.
- */
-
-/**
- * Fires `onResize` when the target element is resized.
- *
- * **The element must not be stored in a ref**, else it won't be observed
- * or updated. Instead, it should be stored in a React state or equivalent.
- *
- * It sets up a `ResizeObserver` that tracks the element under the hood. The
- * target element can be changed dynamically, and the observer will be
- * updated accordingly.
- *
- * By default, `onResize` is called when the observer is set up, in addition
- * to when the element is resized. This behavior can be disabled with the
- * `fireOnObserve` option.
- *
- * @example
- *
- * ```tsx
- * const [ targetElement, setTargetElement ] = useState< HTMLElement | null >();
- *
- * useResizeObserver( targetElement, ( element ) => {
- *   console.log( 'Element resized:', element );
- * } );
- *
- * <div ref={ setTargetElement } />;
- * ```
- */
-function useResizeObserver(
-/**
- * The target element to observe. It can be changed dynamically.
- */
-targetElement,
-/**
- * Callback to fire when the element is resized. It will also be
- * called when the observer is set up, unless `fireOnObserve` is
- * set to `false`.
- */
-onResize, {
-  fireOnObserve = true
-} = {}) {
-  const onResizeEvent = tablist_useEvent(onResize);
   const observedElementRef = (0,external_wp_element_namespaceObject.useRef)();
   const resizeObserverRef = (0,external_wp_element_namespaceObject.useRef)();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (targetElement === observedElementRef.current) {
       return;
     }
-    observedElementRef.current = targetElement;
+    observedElementRef.current = targetElement !== null && targetElement !== void 0 ? targetElement : undefined;
+    function updateIndicator(element) {
+      setIndicatorPosition({
+        // Workaround to prevent unwanted scrollbars, see:
+        // https://github.com/WordPress/gutenberg/pull/61979
+        left: Math.max(element.offsetLeft - 1, 0),
+        top: Math.max(element.offsetTop - 1, 0),
+        width: parseFloat(getComputedStyle(element).width),
+        height: parseFloat(getComputedStyle(element).height)
+      });
+      updateCallbackRef.current?.();
+    }
 
     // Set up a ResizeObserver.
     if (!resizeObserverRef.current) {
       resizeObserverRef.current = new ResizeObserver(() => {
         if (observedElementRef.current) {
-          onResizeEvent(observedElementRef.current);
+          updateIndicator(observedElementRef.current);
         }
       });
     }
@@ -73518,9 +73379,7 @@ onResize, {
 
     // Observe new element.
     if (targetElement) {
-      if (fireOnObserve) {
-        onResizeEvent(targetElement);
-      }
+      updateIndicator(targetElement);
       resizeObserver.observe(targetElement);
     }
     return () => {
@@ -73529,84 +73388,25 @@ onResize, {
         resizeObserver.unobserve(observedElementRef.current);
       }
     };
-  }, [fireOnObserve, onResizeEvent, targetElement]);
-}
-
-/**
- * The position and dimensions of an element, relative to its offset parent.
- */
-
-/**
- * An `ElementOffsetRect` object with all values set to zero.
- */
-const NULL_ELEMENT_OFFSET_RECT = {
-  left: 0,
-  top: 0,
-  width: 0,
-  height: 0
-};
-
-/**
- * Returns the position and dimensions of an element, relative to its offset
- * parent. This is useful in contexts where `getBoundingClientRect` is not
- * suitable, such as when the element is transformed.
- *
- * **Note:** the `left` and `right` values are adjusted due to a limitation
- * in the way the browser calculates the offset position of the element,
- * which can cause unwanted scrollbars to appear. This adjustment makes the
- * values potentially inaccurate within a range of 1 pixel.
- */
-function getElementOffsetRect(element) {
-  return {
-    // The adjustments mentioned in the documentation above are necessary
-    // because `offsetLeft` and `offsetTop` are rounded to the nearest pixel,
-    // which can result in a position mismatch that causes unwanted overflow.
-    // For context, see: https://github.com/WordPress/gutenberg/pull/61979
-    left: Math.max(element.offsetLeft - 1, 0),
-    top: Math.max(element.offsetTop - 1, 0),
-    // This is a workaround to obtain these values with a sub-pixel precision,
-    // since `offsetWidth` and `offsetHeight` are rounded to the nearest pixel.
-    width: parseFloat(getComputedStyle(element).width),
-    height: parseFloat(getComputedStyle(element).height)
-  };
-}
-
-/**
- * Tracks the position and dimensions of an element, relative to its offset
- * parent. The element can be changed dynamically.
- */
-function useTrackElementOffsetRect(targetElement) {
-  const [indicatorPosition, setIndicatorPosition] = (0,external_wp_element_namespaceObject.useState)(NULL_ELEMENT_OFFSET_RECT);
-  useResizeObserver(targetElement, element => setIndicatorPosition(getElementOffsetRect(element)));
+  }, [targetElement]);
   return indicatorPosition;
 }
-
-/**
- * Context object for the `onUpdate` callback of `useOnValueUpdate`.
- */
-
-/**
- * Calls the `onUpdate` callback when the `value` changes.
- */
-function useOnValueUpdate(
-/**
- * The value to watch for changes.
- */
-value,
-/**
- * Callback to fire when the value changes.
- */
-onUpdate) {
+function useOnValueUpdate(value, onUpdate) {
   const previousValueRef = (0,external_wp_element_namespaceObject.useRef)(value);
-  const updateCallbackEvent = tablist_useEvent(onUpdate);
+
+  // TODO: replace with useEventCallback or similar when officially available.
+  const updateCallbackRef = (0,external_wp_element_namespaceObject.useRef)(onUpdate);
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    updateCallbackRef.current = onUpdate;
+  });
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (previousValueRef.current !== value) {
-      updateCallbackEvent({
+      updateCallbackRef.current({
         previousValue: previousValueRef.current
       });
       previousValueRef.current = value;
     }
-  }, [updateCallbackEvent, value]);
+  }, [value]);
 }
 const TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabList({
   children,
@@ -73614,7 +73414,7 @@ const TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabL
 }, ref) {
   const context = useTabsContext();
   const selectedId = context?.store.useState('selectedId');
-  const indicatorPosition = useTrackElementOffsetRect(context?.store.item(selectedId)?.element);
+  const indicatorPosition = useTrackElementOffset(context?.store.item(selectedId)?.element);
   const [animationEnabled, setAnimationEnabled] = (0,external_wp_element_namespaceObject.useState)(false);
   useOnValueUpdate(selectedId, ({
     previousValue

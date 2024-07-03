@@ -487,7 +487,7 @@ const directivePriorities = {};
  * ```js
  * directive(
  *   'color', // Name without prefix and suffix.
- *   ( { directives: { color: colors }, ref, evaluate } ) =>
+ *   ( { directives: { color }, ref, evaluate } ) =>
  *     colors.forEach( ( color ) => {
  *       if ( color.suffix = 'text' ) {
  *         ref.style.setProperty(
