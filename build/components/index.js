@@ -56878,9 +56878,11 @@ const timezone_TimeZone = () => {
  */
 
 
+
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -56893,6 +56895,7 @@ function TimeInput({
   value: valueProp,
   defaultValue,
   is12Hour,
+  label,
   minutesProps,
   onChange
 }) {
@@ -56936,73 +56939,79 @@ function TimeInput({
   function parseDayPeriod(_hours) {
     return _hours < 12 ? 'AM' : 'PM';
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(h_stack_component, {
-    alignment: "left",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(TimeWrapper, {
-      className: "components-datetime__time-field components-datetime__time-field-time" // Unused, for backwards compatibility.
-      ,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HoursInput, {
-        className: "components-datetime__time-field-hours-input" // Unused, for backwards compatibility.
+  const Wrapper = label ? Fieldset : external_wp_element_namespaceObject.Fragment;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Wrapper, {
+    children: [label && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control.VisualLabel, {
+      as: "legend",
+      children: label
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(h_stack_component, {
+      alignment: "left",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(TimeWrapper, {
+        className: "components-datetime__time-field components-datetime__time-field-time" // Unused, for backwards compatibility.
         ,
-        label: (0,external_wp_i18n_namespaceObject.__)('Hours'),
-        hideLabelFromVision: true,
-        __next40pxDefaultSize: true,
-        value: String(is12Hour ? hours12Format : value.hours).padStart(2, '0'),
-        step: 1,
-        min: is12Hour ? 1 : 0,
-        max: is12Hour ? 12 : 23,
-        required: true,
-        spinControls: "none",
-        isPressEnterToChange: true,
-        isDragEnabled: false,
-        isShiftStepEnabled: false,
-        onChange: buildNumberControlChangeCallback('hours'),
-        __unstableStateReducer: buildPadInputStateReducer(2)
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TimeSeparator, {
-        className: "components-datetime__time-separator" // Unused, for backwards compatibility.
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HoursInput, {
+          className: "components-datetime__time-field-hours-input" // Unused, for backwards compatibility.
+          ,
+          label: (0,external_wp_i18n_namespaceObject.__)('Hours'),
+          hideLabelFromVision: true,
+          __next40pxDefaultSize: true,
+          value: String(is12Hour ? hours12Format : value.hours).padStart(2, '0'),
+          step: 1,
+          min: is12Hour ? 1 : 0,
+          max: is12Hour ? 12 : 23,
+          required: true,
+          spinControls: "none",
+          isPressEnterToChange: true,
+          isDragEnabled: false,
+          isShiftStepEnabled: false,
+          onChange: buildNumberControlChangeCallback('hours'),
+          __unstableStateReducer: buildPadInputStateReducer(2)
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TimeSeparator, {
+          className: "components-datetime__time-separator" // Unused, for backwards compatibility.
+          ,
+          "aria-hidden": "true",
+          children: ":"
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MinutesInput, {
+          className: dist_clsx('components-datetime__time-field-minutes-input',
+          // Unused, for backwards compatibility.
+          minutesProps?.className),
+          label: (0,external_wp_i18n_namespaceObject.__)('Minutes'),
+          hideLabelFromVision: true,
+          __next40pxDefaultSize: true,
+          value: String(value.minutes).padStart(2, '0'),
+          step: 1,
+          min: 0,
+          max: 59,
+          required: true,
+          spinControls: "none",
+          isPressEnterToChange: true,
+          isDragEnabled: false,
+          isShiftStepEnabled: false,
+          onChange: (...args) => {
+            buildNumberControlChangeCallback('minutes')(...args);
+            minutesProps?.onChange?.(...args);
+          },
+          __unstableStateReducer: buildPadInputStateReducer(2),
+          ...minutesProps
+        })]
+      }), is12Hour && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(button_group, {
+        className: "components-datetime__time-field components-datetime__time-field-am-pm" // Unused, for backwards compatibility.
         ,
-        "aria-hidden": "true",
-        children: ":"
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MinutesInput, {
-        className: dist_clsx('components-datetime__time-field-minutes-input',
-        // Unused, for backwards compatibility.
-        minutesProps?.className),
-        label: (0,external_wp_i18n_namespaceObject.__)('Minutes'),
-        hideLabelFromVision: true,
-        __next40pxDefaultSize: true,
-        value: String(value.minutes).padStart(2, '0'),
-        step: 1,
-        min: 0,
-        max: 59,
-        required: true,
-        spinControls: "none",
-        isPressEnterToChange: true,
-        isDragEnabled: false,
-        isShiftStepEnabled: false,
-        onChange: (...args) => {
-          buildNumberControlChangeCallback('minutes')(...args);
-          minutesProps?.onChange?.(...args);
-        },
-        __unstableStateReducer: buildPadInputStateReducer(2),
-        ...minutesProps
-      })]
-    }), is12Hour && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(button_group, {
-      className: "components-datetime__time-field components-datetime__time-field-am-pm" // Unused, for backwards compatibility.
-      ,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-        className: "components-datetime__time-am-button" // Unused, for backwards compatibility.
-        ,
-        variant: dayPeriod === 'AM' ? 'primary' : 'secondary',
-        __next40pxDefaultSize: true,
-        onClick: buildAmPmChangeCallback('AM'),
-        children: (0,external_wp_i18n_namespaceObject.__)('AM')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-        className: "components-datetime__time-pm-button" // Unused, for backwards compatibility.
-        ,
-        variant: dayPeriod === 'PM' ? 'primary' : 'secondary',
-        __next40pxDefaultSize: true,
-        onClick: buildAmPmChangeCallback('PM'),
-        children: (0,external_wp_i18n_namespaceObject.__)('PM')
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+          className: "components-datetime__time-am-button" // Unused, for backwards compatibility.
+          ,
+          variant: dayPeriod === 'AM' ? 'primary' : 'secondary',
+          __next40pxDefaultSize: true,
+          onClick: buildAmPmChangeCallback('AM'),
+          children: (0,external_wp_i18n_namespaceObject.__)('AM')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+          className: "components-datetime__time-pm-button" // Unused, for backwards compatibility.
+          ,
+          variant: dayPeriod === 'PM' ? 'primary' : 'secondary',
+          __next40pxDefaultSize: true,
+          onClick: buildAmPmChangeCallback('PM'),
+          children: (0,external_wp_i18n_namespaceObject.__)('PM')
+        })]
       })]
     })]
   });
