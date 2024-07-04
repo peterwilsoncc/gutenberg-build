@@ -10073,7 +10073,6 @@ function Shortcut(props) {
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 /**
  * Internal dependencies
@@ -10323,7 +10322,6 @@ const computePopoverPosition = c => c === null || Number.isNaN(c) ? undefined : 
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 
 /**
@@ -33878,9 +33876,6 @@ function overlayMiddlewares() {
 
 
 
-// eslint-disable-next-line no-restricted-imports
-
-// eslint-disable-next-line no-restricted-imports
 
 
 /**
@@ -35390,7 +35385,6 @@ function useComputeControlledOrUncontrolledValue(valueProp) {
  * External dependencies
  */
 
-// eslint-disable-next-line no-restricted-imports
 
 
 /**
@@ -35566,7 +35560,6 @@ const ToggleGroupControlAsButtonGroup = (0,external_wp_element_namespaceObject.f
  * External dependencies
  */
 
-// eslint-disable-next-line no-restricted-imports
 
 
 /**
@@ -35852,9 +35845,7 @@ const backdropView = /*#__PURE__*/emotion_react_browser_esm_css("background:", C
  * External dependencies
  */
 
-// eslint-disable-next-line no-restricted-imports
 
-// eslint-disable-next-line no-restricted-imports
 
 
 /**
@@ -43193,7 +43184,6 @@ const DividerView = /*#__PURE__*/emotion_styled_base_browser_esm("hr",  true ? {
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 
 /**
@@ -57584,7 +57574,6 @@ Disabled.Consumer = Consumer;
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 
 /**
@@ -64757,7 +64746,6 @@ function QueryControls({
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 /**
  * WordPress dependencies
@@ -64777,7 +64765,6 @@ const RadioGroupContext = (0,external_wp_element_namespaceObject.createContext)(
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 
 /**
@@ -64820,7 +64807,6 @@ const radio_Radio = (0,external_wp_element_namespaceObject.forwardRef)(Unforward
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 
 /**
@@ -67377,7 +67363,6 @@ if (false) {}
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 
 /**
@@ -68025,7 +68010,6 @@ if (false) {}
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 /**
  * WordPress dependencies
@@ -68038,7 +68022,6 @@ const ToolbarContext = (0,external_wp_element_namespaceObject.createContext)(und
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 /**
  * WordPress dependencies
@@ -68481,7 +68464,6 @@ if (false) {}
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 /**
  * WordPress dependencies
@@ -72245,7 +72227,6 @@ function custom_select_control_v2_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { retu
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 
 /**
@@ -72491,7 +72472,6 @@ CustomSelectItem.displayName = 'CustomSelectControlV2.Item';
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 
 
@@ -74146,7 +74126,6 @@ function dropdown_menu_v2_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You 
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 
 /**
@@ -74267,7 +74246,6 @@ const styles_DropdownMenuItemHelpText = /*#__PURE__*/emotion_styled_base_browser
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 
 /**
@@ -74738,7 +74716,6 @@ const useTabsContext = () => (0,external_wp_element_namespaceObject.useContext)(
  * External dependencies
  */
 
-// eslint-disable-next-line no-restricted-imports
 
 
 /**
@@ -74803,7 +74780,6 @@ const tab_Tab = (0,external_wp_element_namespaceObject.forwardRef)(function Tab(
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 
 /**
@@ -75120,7 +75096,6 @@ const tabpanel_TabPanel = (0,external_wp_element_namespaceObject.forwardRef)(fun
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
 
 
 /**
