@@ -37673,27 +37673,13 @@ function BlockHooksControlPure({
     name: blockName,
     blockHooks
   }) => blockHooks && name in blockHooks || ignoredHookedBlocks.includes(blockName)), [blockTypes, name, ignoredHookedBlocks]);
-  const {
-    blockIndex,
-    rootClientId,
-    innerBlocksLength
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getBlocks,
-      getBlockIndex,
-      getBlockRootClientId
-    } = select(store);
-    return {
-      blockIndex: getBlockIndex(clientId),
-      innerBlocksLength: getBlocks(clientId)?.length,
-      rootClientId: getBlockRootClientId(clientId)
-    };
-  }, [clientId]);
   const hookedBlockClientIds = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlocks,
+      getBlockRootClientId,
       getGlobalBlockCount
     } = select(store);
+    const rootClientId = getBlockRootClientId(clientId);
     const _hookedBlockClientIds = hookedBlocksForCurrentBlock.reduce((clientIds, block) => {
       // If the block doesn't exist anywhere in the block tree,
       // we know that we have to set the toggle to disabled.
@@ -37743,7 +37729,12 @@ function BlockHooksControlPure({
       return _hookedBlockClientIds;
     }
     return block_hooks_EMPTY_OBJECT;
-  }, [hookedBlocksForCurrentBlock, name, clientId, rootClientId]);
+  }, [hookedBlocksForCurrentBlock, name, clientId]);
+  const {
+    getBlockIndex,
+    getBlockCount,
+    getBlockRootClientId
+  } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const {
     insertBlock,
     removeBlock
@@ -37762,6 +37753,9 @@ function BlockHooksControlPure({
     return groups;
   }, {});
   const insertBlockIntoDesignatedLocation = (block, relativePosition) => {
+    const blockIndex = getBlockIndex(clientId);
+    const innerBlocksLength = getBlockCount(clientId);
+    const rootClientId = getBlockRootClientId(clientId);
     switch (relativePosition) {
       case 'before':
       case 'after':
