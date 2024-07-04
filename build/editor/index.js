@@ -25481,7 +25481,6 @@ const exportPatternAsJSONAction = {
 
 
 
-
 // Patterns.
 
 
@@ -26097,88 +26096,6 @@ const useDuplicatePostAction = postType => {
     }
   }, [userCanCreatePost]);
 };
-const resetTemplateAction = {
-  id: 'reset-template',
-  label: (0,external_wp_i18n_namespaceObject.__)('Reset'),
-  isEligible: item => {
-    return isTemplateRevertable(item);
-  },
-  icon: library_backup,
-  supportsBulk: true,
-  hideModalHeader: true,
-  RenderModal: ({
-    items,
-    closeModal,
-    onActionPerformed
-  }) => {
-    const [isBusy, setIsBusy] = (0,external_wp_element_namespaceObject.useState)(false);
-    const {
-      revertTemplate
-    } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));
-    const {
-      saveEditedEntityRecord
-    } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-    const {
-      createSuccessNotice,
-      createErrorNotice
-    } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
-    const onConfirm = async () => {
-      try {
-        for (const template of items) {
-          await revertTemplate(template, {
-            allowUndo: false
-          });
-          await saveEditedEntityRecord('postType', template.type, template.id);
-        }
-        createSuccessNotice(items.length > 1 ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of items. */
-        (0,external_wp_i18n_namespaceObject.__)('%s items reset.'), items.length) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The template/part's name. */
-        (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(getItemTitle(items[0]))), {
-          type: 'snackbar',
-          id: 'revert-template-action'
-        });
-      } catch (error) {
-        let fallbackErrorMessage;
-        if (items[0].type === TEMPLATE_POST_TYPE) {
-          fallbackErrorMessage = items.length === 1 ? (0,external_wp_i18n_namespaceObject.__)('An error occurred while reverting the template.') : (0,external_wp_i18n_namespaceObject.__)('An error occurred while reverting the templates.');
-        } else {
-          fallbackErrorMessage = items.length === 1 ? (0,external_wp_i18n_namespaceObject.__)('An error occurred while reverting the template part.') : (0,external_wp_i18n_namespaceObject.__)('An error occurred while reverting the template parts.');
-        }
-        const errorMessage = error.message && error.code !== 'unknown_error' ? error.message : fallbackErrorMessage;
-        createErrorNotice(errorMessage, {
-          type: 'snackbar'
-        });
-      }
-    };
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-      spacing: "5",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-        children: (0,external_wp_i18n_namespaceObject.__)('Reset to default and clear all customizations?')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        justify: "right",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          variant: "tertiary",
-          onClick: closeModal,
-          disabled: isBusy,
-          __experimentalIsFocusable: true,
-          children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          variant: "primary",
-          onClick: async () => {
-            setIsBusy(true);
-            await onConfirm(items);
-            onActionPerformed?.(items);
-            setIsBusy(false);
-            closeModal();
-          },
-          isBusy: isBusy,
-          disabled: isBusy,
-          __experimentalIsFocusable: true,
-          children: (0,external_wp_i18n_namespaceObject.__)('Reset')
-        })]
-      })]
-    });
-  }
-};
 const duplicatePatternAction = {
   id: 'duplicate-pattern',
   label: (0,external_wp_i18n_namespaceObject._x)('Duplicate', 'action label'),
@@ -26284,7 +26201,7 @@ function usePostActions({
     if (!isLoaded) {
       return [];
     }
-    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && duplicateTemplatePartAction, isPattern && userCanCreatePostType && duplicatePatternAction, supportsTitle && renamePostActionForPostType, isPattern && exportPatternAsJSONAction, isTemplateOrTemplatePart ? resetTemplateAction : restorePostActionForPostType, !isTemplateOrTemplatePart && !isPattern && trashPostActionForPostType, !isTemplateOrTemplatePart && permanentlyDeletePostActionForPostType, ...defaultActions].filter(Boolean);
+    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && duplicateTemplatePartAction, isPattern && userCanCreatePostType && duplicatePatternAction, supportsTitle && renamePostActionForPostType, isPattern && exportPatternAsJSONAction, !isTemplateOrTemplatePart && restorePostActionForPostType, !isTemplateOrTemplatePart && !isPattern && trashPostActionForPostType, !isTemplateOrTemplatePart && permanentlyDeletePostActionForPostType, ...defaultActions].filter(Boolean);
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
     // and the consumer should provide the context to filter the actions, if needed.
@@ -28787,6 +28704,111 @@ const deletePostAction = {
 };
 /* harmony default export */ const delete_post = (deletePostAction);
 
+;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/reset-post.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+const reset_post_resetPost = {
+  id: 'reset-post',
+  label: (0,external_wp_i18n_namespaceObject.__)('Reset'),
+  isEligible: item => {
+    return isTemplateOrTemplatePart(item) && item?.source === TEMPLATE_ORIGINS.custom && item?.has_theme_file;
+  },
+  icon: library_backup,
+  supportsBulk: true,
+  hideModalHeader: true,
+  RenderModal: ({
+    items,
+    closeModal,
+    onActionPerformed
+  }) => {
+    const [isBusy, setIsBusy] = (0,external_wp_element_namespaceObject.useState)(false);
+    const {
+      revertTemplate
+    } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));
+    const {
+      saveEditedEntityRecord
+    } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
+    const {
+      createSuccessNotice,
+      createErrorNotice
+    } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
+    const onConfirm = async () => {
+      try {
+        for (const template of items) {
+          await revertTemplate(template, {
+            allowUndo: false
+          });
+          await saveEditedEntityRecord('postType', template.type, template.id);
+        }
+        createSuccessNotice(items.length > 1 ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of items. */
+        (0,external_wp_i18n_namespaceObject.__)('%s items reset.'), items.length) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The template/part's name. */
+        (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), utils_getItemTitle(items[0])), {
+          type: 'snackbar',
+          id: 'revert-template-action'
+        });
+      } catch (error) {
+        let fallbackErrorMessage;
+        if (items[0].type === TEMPLATE_POST_TYPE) {
+          fallbackErrorMessage = items.length === 1 ? (0,external_wp_i18n_namespaceObject.__)('An error occurred while reverting the template.') : (0,external_wp_i18n_namespaceObject.__)('An error occurred while reverting the templates.');
+        } else {
+          fallbackErrorMessage = items.length === 1 ? (0,external_wp_i18n_namespaceObject.__)('An error occurred while reverting the template part.') : (0,external_wp_i18n_namespaceObject.__)('An error occurred while reverting the template parts.');
+        }
+        const typedError = error;
+        const errorMessage = typedError.message && typedError.code !== 'unknown_error' ? typedError.message : fallbackErrorMessage;
+        createErrorNotice(errorMessage, {
+          type: 'snackbar'
+        });
+      }
+    };
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      spacing: "5",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+        children: (0,external_wp_i18n_namespaceObject.__)('Reset to default and clear all customizations?')
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        justify: "right",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          variant: "tertiary",
+          onClick: closeModal,
+          disabled: isBusy,
+          __experimentalIsFocusable: true,
+          children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          variant: "primary",
+          onClick: async () => {
+            setIsBusy(true);
+            await onConfirm();
+            onActionPerformed?.(items);
+            setIsBusy(false);
+            closeModal?.();
+          },
+          isBusy: isBusy,
+          disabled: isBusy,
+          __experimentalIsFocusable: true,
+          children: (0,external_wp_i18n_namespaceObject.__)('Reset')
+        })]
+      })]
+    });
+  }
+};
+/* harmony default export */ const reset_post = (reset_post_resetPost);
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/index.js
 /**
  * WordPress dependencies
@@ -28797,6 +28819,8 @@ const deletePostAction = {
  * Internal dependencies
  */
 
+
+
 // @ts-ignore
 
 
@@ -28804,6 +28828,7 @@ function registerDefaultActions() {
   const {
     registerEntityAction
   } = unlock((0,external_wp_data_namespaceObject.dispatch)(store_store));
+  registerEntityAction('postType', '*', reset_post);
   registerEntityAction('postType', '*', delete_post);
 }
 
