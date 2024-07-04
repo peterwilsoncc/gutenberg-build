@@ -9950,7 +9950,8 @@ function ParentRow() {
           title: (0,external_wp_i18n_namespaceObject.__)('Parent'),
           onClose: onClose
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-          children: [(0,external_wp_i18n_namespaceObject.__)("Child pages inherit characteristics from their parent, such as URL structure. For instance, if 'Web Design' is a child of 'Services,' its URL would be mysite.com/services/web-design."), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("p", {
+          children: [/* translators: The domain name should be a reserved domain name to prevent linking to third party sites outside the WordPress project's control. You may also wish to use wordpress.org or a wordpress.org sub-domain. */
+          (0,external_wp_i18n_namespaceObject.__)("Child pages inherit characteristics from their parent, such as URL structure. For instance, if 'Web Design' is a child of 'Services', its URL would be example.org/services/web-design."), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("p", {
             children: [(0,external_wp_i18n_namespaceObject.__)('They also show up as sub-items in the default navigation menu. '), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
               href: (0,external_wp_i18n_namespaceObject.__)('https://wordpress.org/documentation/article/page-post-settings-sidebar/#page-attributes'),
               children: (0,external_wp_i18n_namespaceObject.__)('Learn more')
