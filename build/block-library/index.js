@@ -57909,10 +57909,10 @@ function isEmptyRow(row) {
 
 
 
-
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -57956,7 +57956,6 @@ function TableEdit({
 }) {
   const {
     hasFixedLayout,
-    caption,
     head,
     foot
   } = attributes;
@@ -58325,21 +58324,7 @@ function TableEdit({
         ...borderProps.style
       },
       children: renderedSections
-    }), !isEmpty && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
-      identifier: "caption",
-      tagName: "figcaption",
-      className: (0,external_wp_blockEditor_namespaceObject.__experimentalGetElementClassName)('caption'),
-      "aria-label": (0,external_wp_i18n_namespaceObject.__)('Table caption text'),
-      placeholder: (0,external_wp_i18n_namespaceObject.__)('Add caption'),
-      value: caption,
-      onChange: value => setAttributes({
-        caption: value
-      })
-      // Deselect the selected table cell when the caption is focused.
-      ,
-      onFocus: () => setSelectedCell(),
-      __unstableOnSplitAtEnd: () => insertBlocksAfter((0,external_wp_blocks_namespaceObject.createBlock)((0,external_wp_blocks_namespaceObject.getDefaultBlockName)()))
-    }), isEmpty && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
+    }), isEmpty ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
       label: (0,external_wp_i18n_namespaceObject.__)('Table'),
       icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
         icon: block_table,
@@ -58374,6 +58359,12 @@ function TableEdit({
           children: (0,external_wp_i18n_namespaceObject.__)('Create Table')
         })]
       })
+    }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Caption, {
+      attributes: attributes,
+      setAttributes: setAttributes,
+      isSelected: isSelected,
+      insertBlocksAfter: insertBlocksAfter,
+      label: (0,external_wp_i18n_namespaceObject.__)('Table caption text')
     })]
   });
 }
