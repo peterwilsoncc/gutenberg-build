@@ -6142,16 +6142,6 @@ var r={grad:.9,turn:360,rad:360/(2*Math.PI)},t=function(r){return"string"==typeo
 ;// CONCATENATED MODULE: ./node_modules/colord/plugins/a11y.mjs
 var a11y_o=function(o){var t=o/255;return t<.04045?t/12.92:Math.pow((t+.055)/1.055,2.4)},a11y_t=function(t){return.2126*a11y_o(t.r)+.7152*a11y_o(t.g)+.0722*a11y_o(t.b)};/* harmony default export */ function a11y(o){o.prototype.luminance=function(){return o=a11y_t(this.rgba),void 0===(r=2)&&(r=0),void 0===n&&(n=Math.pow(10,r)),Math.round(n*o)/n+0;var o,r,n},o.prototype.contrast=function(r){void 0===r&&(r="#FFF");var n,a,i,e,v,u,d,c=r instanceof o?r:new o(r);return e=this.rgba,v=c.toRgb(),u=a11y_t(e),d=a11y_t(v),n=u>d?(u+.05)/(d+.05):(d+.05)/(u+.05),void 0===(a=2)&&(a=0),void 0===i&&(i=Math.pow(10,a)),Math.floor(i*n)/i+0},o.prototype.isReadable=function(o,t){return void 0===o&&(o="#FFF"),void 0===t&&(t={}),this.contrast(o)>=(e=void 0===(i=(r=t).size)?"normal":i,"AAA"===(a=void 0===(n=r.level)?"AA":n)&&"normal"===e?7:"AA"===a&&"large"===e?3:4.5);var r,n,a,i,e}}
 
-;// CONCATENATED MODULE: ./packages/edit-site/build-module/utils/clone-deep.js
-/**
- * Makes a copy of an object without storing any references to the original object.
- * @param {Object} object
- * @return {Object} The cloned object.
- */
-function cloneDeep(object) {
-  return !object ? {} : JSON.parse(JSON.stringify(object));
-}
-
 ;// CONCATENATED MODULE: external ["wp","privateApis"]
 const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/lock-unlock.js
@@ -6163,132 +6153,6 @@ const {
   lock,
   unlock: lock_unlock_unlock
 } = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/edit-site');
-
-;// CONCATENATED MODULE: ./packages/edit-site/build-module/hooks/use-theme-style-variations/use-theme-style-variations-by-property.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-const {
-  GlobalStylesContext,
-  areGlobalStyleConfigsEqual
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
-const {
-  mergeBaseAndUserConfigs
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
-
-/**
- * Removes all instances of properties from an object.
- *
- * @param {Object}   object     The object to remove the properties from.
- * @param {string[]} properties The properties to remove.
- * @return {Object} The modified object.
- */
-function removePropertiesFromObject(object, properties) {
-  if (!properties?.length) {
-    return object;
-  }
-  if (typeof object !== 'object' || !object || !Object.keys(object).length) {
-    return object;
-  }
-  for (const key in object) {
-    if (properties.includes(key)) {
-      delete object[key];
-    } else if (typeof object[key] === 'object') {
-      removePropertiesFromObject(object[key], properties);
-    }
-  }
-  return object;
-}
-
-/**
- * Fetches the current theme style variations that contain only the specified properties
- * and merges them with the user config.
- *
- * @param {Object}   props            Object of hook args.
- * @param {string[]} props.properties The properties to filter by.
- * @return {Object[]|*} The merged object.
- */
-function useCurrentMergeThemeStyleVariationsWithUserConfig({
-  properties = []
-}) {
-  const {
-    variationsFromTheme
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const _variationsFromTheme = select(external_wp_coreData_namespaceObject.store).__experimentalGetCurrentThemeGlobalStylesVariations();
-    return {
-      variationsFromTheme: _variationsFromTheme || []
-    };
-  }, []);
-  const {
-    user: userVariation
-  } = (0,external_wp_element_namespaceObject.useContext)(GlobalStylesContext);
-  return (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const clonedUserVariation = cloneDeep(userVariation);
-
-    // Get user variation and remove the settings for the given property.
-    const userVariationWithoutProperties = removePropertiesFromObject(clonedUserVariation, properties);
-    userVariationWithoutProperties.title = (0,external_wp_i18n_namespaceObject.__)('Default');
-    const variationsWithPropertiesAndBase = variationsFromTheme.filter(variation => {
-      return isVariationWithProperties(variation, properties);
-    }).map(variation => {
-      return mergeBaseAndUserConfigs(userVariationWithoutProperties, variation);
-    });
-    return [userVariationWithoutProperties, ...variationsWithPropertiesAndBase];
-  }, [properties.toString(), userVariation, variationsFromTheme]);
-}
-
-/**
- * Returns a new object, with properties specified in `properties` array.,
- * maintain the original object tree structure.
- * The function is recursive, so it will perform a deep search for the given properties.
- * E.g., the function will return `{ a: { b: { c: { test: 1 } } } }` if the properties are  `[ 'test' ]`.
- *
- * @param {Object}   object     The object to filter
- * @param {string[]} properties The properties to filter by
- * @return {Object} The merged object.
- */
-const filterObjectByProperties = (object, properties) => {
-  if (!object || !properties?.length) {
-    return {};
-  }
-  const newObject = {};
-  Object.keys(object).forEach(key => {
-    if (properties.includes(key)) {
-      newObject[key] = object[key];
-    } else if (typeof object[key] === 'object') {
-      const newFilter = filterObjectByProperties(object[key], properties);
-      if (Object.keys(newFilter).length) {
-        newObject[key] = newFilter;
-      }
-    }
-  });
-  return newObject;
-};
-
-/**
- * Compares a style variation to the same variation filtered by the specified properties.
- * Returns true if the variation contains only the properties specified.
- *
- * @param {Object}   variation  The variation to compare.
- * @param {string[]} properties The properties to compare.
- * @return {boolean} Whether the variation contains only the specified properties.
- */
-function isVariationWithProperties(variation, properties) {
-  const variationWithProperties = filterObjectByProperties(cloneDeep(variation), properties);
-  return areGlobalStyleConfigsEqual(variationWithProperties, variation);
-}
 
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/hooks.js
 /**
@@ -6303,11 +6167,9 @@ function isVariationWithProperties(variation, properties) {
 
 
 
-
 /**
  * Internal dependencies
  */
-
 
 
 const {
@@ -6374,41 +6236,15 @@ function useSupportedStyles(name, element) {
   }, [name, element]);
   return supportedPanels;
 }
-function useColorVariations() {
-  const colorVariations = useCurrentMergeThemeStyleVariationsWithUserConfig({
-    properties: ['color']
-  });
-  /*
-   * Filter out variations with no settings or styles.
-   */
-  return colorVariations?.length ? colorVariations.filter(variation => {
-    const {
-      settings,
-      styles,
-      title
-    } = variation;
-    return title === (0,external_wp_i18n_namespaceObject.__)('Default') ||
-    // Always preseve the default variation.
-    Object.keys(settings).length > 0 || Object.keys(styles).length > 0;
-  }) : [];
-}
-function useTypographyVariations() {
-  const typographyVariations = useCurrentMergeThemeStyleVariationsWithUserConfig({
-    properties: ['typography']
-  });
-  /*
-   * Filter out variations with no settings or styles.
-   */
-  return typographyVariations?.length ? typographyVariations.filter(variation => {
-    const {
-      settings,
-      styles,
-      title
-    } = variation;
-    return title === (0,external_wp_i18n_namespaceObject.__)('Default') ||
-    // Always preseve the default variation.
-    Object.keys(settings).length > 0 || Object.keys(styles).length > 0;
-  }) : [];
+
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/utils/clone-deep.js
+/**
+ * Makes a copy of an object without storing any references to the original object.
+ * @param {Object} object
+ * @return {Object} The cloned object.
+ */
+function cloneDeep(object) {
+  return !object ? {} : JSON.parse(JSON.stringify(object));
 }
 
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/utils/set-nested-value.js
@@ -6479,7 +6315,7 @@ const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
 
 const {
   cleanEmptyObject,
-  GlobalStylesContext: push_changes_to_global_styles_GlobalStylesContext
+  GlobalStylesContext
 } = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
 // Block Gap is a special case and isn't defined within the blocks
@@ -6683,7 +6519,7 @@ function PushChangesToGlobalStylesControl({
   const {
     user: userConfig,
     setUserConfig
-  } = (0,external_wp_element_namespaceObject.useContext)(push_changes_to_global_styles_GlobalStylesContext);
+  } = (0,external_wp_element_namespaceObject.useContext)(GlobalStylesContext);
   const changes = useChangesToPush(name, attributes, userConfig);
   const {
     __unstableMarkNextChangeAsNotPersistent
@@ -15802,7 +15638,7 @@ const {
   GlobalStylesContext: typography_example_GlobalStylesContext
 } = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
-  mergeBaseAndUserConfigs: typography_example_mergeBaseAndUserConfigs
+  mergeBaseAndUserConfigs
 } = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
 function PreviewTypography({
   fontSize,
@@ -15813,7 +15649,7 @@ function PreviewTypography({
   } = (0,external_wp_element_namespaceObject.useContext)(typography_example_GlobalStylesContext);
   let config = base;
   if (variation) {
-    config = typography_example_mergeBaseAndUserConfigs(base, variation);
+    config = mergeBaseAndUserConfigs(base, variation);
   }
   const [bodyFontFamilies, headingFontFamilies] = getFontFamilies(config);
   const bodyPreviewStyle = bodyFontFamilies ? getFamilyPreviewStyle(bodyFontFamilies) : {};
@@ -17085,6 +16921,154 @@ const StylesPreviewTypography = ({
 };
 /* harmony default export */ const preview_typography = (StylesPreviewTypography);
 
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/hooks/use-theme-style-variations/use-theme-style-variations-by-property.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const {
+  GlobalStylesContext: use_theme_style_variations_by_property_GlobalStylesContext,
+  areGlobalStyleConfigsEqual
+} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+const {
+  mergeBaseAndUserConfigs: use_theme_style_variations_by_property_mergeBaseAndUserConfigs
+} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+
+/**
+ * Removes all instances of properties from an object.
+ *
+ * @param {Object}   object     The object to remove the properties from.
+ * @param {string[]} properties The properties to remove.
+ * @return {Object} The modified object.
+ */
+function removePropertiesFromObject(object, properties) {
+  if (!properties?.length) {
+    return object;
+  }
+  if (typeof object !== 'object' || !object || !Object.keys(object).length) {
+    return object;
+  }
+  for (const key in object) {
+    if (properties.includes(key)) {
+      delete object[key];
+    } else if (typeof object[key] === 'object') {
+      removePropertiesFromObject(object[key], properties);
+    }
+  }
+  return object;
+}
+
+/**
+ * Checks whether a style variation is empty.
+ *
+ * @param {Object} variation          A style variation object.
+ * @param {string} variation.title    The title of the variation.
+ * @param {Object} variation.settings The settings of the variation.
+ * @param {Object} variation.styles   The styles of the variation.
+ * @return {boolean} Whether the variation is empty.
+ */
+function hasThemeVariation({
+  title,
+  settings,
+  styles
+}) {
+  return title === (0,external_wp_i18n_namespaceObject.__)('Default') ||
+  // Always preserve the default variation.
+  Object.keys(settings).length > 0 || Object.keys(styles).length > 0;
+}
+
+/**
+ * Fetches the current theme style variations that contain only the specified properties
+ * and merges them with the user config.
+ *
+ * @param {string[]} properties The properties to filter by.
+ * @return {Object[]|*} The merged object.
+ */
+function useCurrentMergeThemeStyleVariationsWithUserConfig(properties = []) {
+  const {
+    variationsFromTheme
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const _variationsFromTheme = select(external_wp_coreData_namespaceObject.store).__experimentalGetCurrentThemeGlobalStylesVariations();
+    return {
+      variationsFromTheme: _variationsFromTheme || []
+    };
+  }, []);
+  const {
+    user: userVariation
+  } = (0,external_wp_element_namespaceObject.useContext)(use_theme_style_variations_by_property_GlobalStylesContext);
+  const propertiesAsString = properties.toString();
+  return (0,external_wp_element_namespaceObject.useMemo)(() => {
+    const clonedUserVariation = cloneDeep(userVariation);
+
+    // Get user variation and remove the settings for the given property.
+    const userVariationWithoutProperties = removePropertiesFromObject(clonedUserVariation, properties);
+    userVariationWithoutProperties.title = (0,external_wp_i18n_namespaceObject.__)('Default');
+    const variationsWithPropertiesAndBase = variationsFromTheme.filter(variation => {
+      return isVariationWithProperties(variation, properties);
+    }).map(variation => {
+      return use_theme_style_variations_by_property_mergeBaseAndUserConfigs(userVariationWithoutProperties, variation);
+    });
+    const variationsByProperties = [userVariationWithoutProperties, ...variationsWithPropertiesAndBase];
+
+    /*
+     * Filter out variations with no settings or styles.
+     */
+    return variationsByProperties?.length ? variationsByProperties.filter(hasThemeVariation) : [];
+  }, [propertiesAsString, userVariation, variationsFromTheme]);
+}
+
+/**
+ * Returns a new object, with properties specified in `properties` array.,
+ * maintain the original object tree structure.
+ * The function is recursive, so it will perform a deep search for the given properties.
+ * E.g., the function will return `{ a: { b: { c: { test: 1 } } } }` if the properties are  `[ 'test' ]`.
+ *
+ * @param {Object}   object     The object to filter
+ * @param {string[]} properties The properties to filter by
+ * @return {Object} The merged object.
+ */
+const filterObjectByProperties = (object, properties) => {
+  if (!object || !properties?.length) {
+    return {};
+  }
+  const newObject = {};
+  Object.keys(object).forEach(key => {
+    if (properties.includes(key)) {
+      newObject[key] = object[key];
+    } else if (typeof object[key] === 'object') {
+      const newFilter = filterObjectByProperties(object[key], properties);
+      if (Object.keys(newFilter).length) {
+        newObject[key] = newFilter;
+      }
+    }
+  });
+  return newObject;
+};
+
+/**
+ * Compares a style variation to the same variation filtered by the specified properties.
+ * Returns true if the variation contains only the properties specified.
+ *
+ * @param {Object}   variation  The variation to compare.
+ * @param {string[]} properties The properties to compare.
+ * @return {boolean} Whether the variation contains only the specified properties.
+ */
+function isVariationWithProperties(variation, properties) {
+  const variationWithProperties = filterObjectByProperties(cloneDeep(variation), properties);
+  return areGlobalStyleConfigsEqual(variationWithProperties, variation);
+}
+
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/variations/variation.js
 /**
  * External dependencies
@@ -17195,11 +17179,14 @@ function Variation({
 
 
 
+
 function TypographyVariations({
   title,
   gap = 2
 }) {
-  const typographyVariations = useTypographyVariations();
+  const propertiesToFilter = ['typography'];
+  const typographyVariations = useCurrentMergeThemeStyleVariationsWithUserConfig(propertiesToFilter);
+
   // Return null if there is only one variation (the default).
   if (typographyVariations?.length <= 1) {
     return null;
@@ -17216,7 +17203,7 @@ function TypographyVariations({
       children: typographyVariations.map((variation, index) => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Variation, {
           variation: variation,
-          properties: ['typography'],
+          properties: propertiesToFilter,
           showTooltip: true,
           children: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(preview_typography, {
             variation: variation
@@ -24022,7 +24009,8 @@ function ColorVariations({
   title,
   gap = 2
 }) {
-  const colorVariations = useColorVariations();
+  const propertiesToFilter = ['color'];
+  const colorVariations = useCurrentMergeThemeStyleVariationsWithUserConfig(propertiesToFilter);
 
   // Return null if there is only one variation (the default).
   if (colorVariations?.length <= 1) {
@@ -24038,7 +24026,7 @@ function ColorVariations({
       children: colorVariations.map((variation, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Variation, {
         variation: variation,
         isPill: true,
-        properties: ['color'],
+        properties: propertiesToFilter,
         showTooltip: true,
         children: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(preview_colors, {})
       }, index))
@@ -41080,8 +41068,8 @@ function SidebarNavigationScreenGlobalStylesContent() {
       storedSettings: getSettings()
     };
   }, []);
-  const colorVariations = useColorVariations();
-  const typographyVariations = useTypographyVariations();
+  const colorVariations = useCurrentMergeThemeStyleVariationsWithUserConfig(['color']);
+  const typographyVariations = useCurrentMergeThemeStyleVariationsWithUserConfig(['typography']);
   const gap = 3;
 
   // Wrap in a BlockEditorProvider to ensure that the Iframe's dependencies are
