@@ -72243,6 +72243,7 @@ function custom_select_control_v2_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { retu
 
 
 
+
 const INLINE_PADDING = {
   compact: 8,
   // space(2)
@@ -72299,7 +72300,9 @@ const styles_Select = /*#__PURE__*/emotion_styled_base_browser_esm(select_Select
 } : 0)(({
   size,
   hasCustomRenderProp
-}) => /*#__PURE__*/emotion_react_browser_esm_css("display:block;background-color:", COLORS.theme.background, ";border:none;color:", COLORS.theme.foreground, ";cursor:pointer;font-family:inherit;font-size:", config_values.fontSize, ";text-align:start;user-select:none;width:100%;&[data-focus-visible]{outline:none;}", getSelectSize(size, hasCustomRenderProp ? 'minHeight' : 'height'), " ", !hasCustomRenderProp && truncateStyles, ";" + ( true ? "" : 0),  true ? "" : 0),  true ? "" : 0);
+}) => /*#__PURE__*/emotion_react_browser_esm_css("display:block;background-color:", COLORS.theme.background, ";border:none;color:", COLORS.theme.foreground, ";cursor:pointer;font-family:inherit;text-align:start;user-select:none;width:100%;&[data-focus-visible]{outline:none;}", getSelectSize(size, hasCustomRenderProp ? 'minHeight' : 'height'), " ", !hasCustomRenderProp && truncateStyles, " ", fontSizeStyles({
+  inputSize: size
+}), ";" + ( true ? "" : 0),  true ? "" : 0),  true ? "" : 0);
 const styles_SelectPopover = /*#__PURE__*/emotion_styled_base_browser_esm(SelectPopover,  true ? {
   target: "e1p3eej76"
 } : 0)("display:flex;flex-direction:column;background-color:", COLORS.theme.background, ";border-radius:2px;border:1px solid ", COLORS.theme.foreground, ";z-index:1000000;max-height:min( var( --popover-available-height, 400px ), 400px );overflow:auto;overscroll-behavior:contain;min-width:min-content;&[data-focus-visible]{outline:none;}" + ( true ? "" : 0));
