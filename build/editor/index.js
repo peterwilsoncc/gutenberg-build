@@ -25417,7 +25417,8 @@ const permanentlyDeletePostAction = {
     return status === 'trash';
   },
   async callback(posts, {
-    registry
+    registry,
+    onActionPerformed
   }) {
     const {
       createSuccessNotice,
@@ -25448,6 +25449,7 @@ const permanentlyDeletePostAction = {
         type: 'snackbar',
         id: 'permanently-delete-post-action'
       });
+      onActionPerformed?.(posts);
     } else {
       // If there was at lease one failure.
       let errorMessage;
