@@ -16878,7 +16878,6 @@ function ElementItem({
   const [fontFamily] = typography_elements_useGlobalStyle(prefix + 'typography.fontFamily');
   const [fontStyle] = typography_elements_useGlobalStyle(prefix + 'typography.fontStyle');
   const [fontWeight] = typography_elements_useGlobalStyle(prefix + 'typography.fontWeight');
-  const [letterSpacing] = typography_elements_useGlobalStyle(prefix + 'typography.letterSpacing');
   const [backgroundColor] = typography_elements_useGlobalStyle(prefix + 'color.background');
   const [fallbackBackgroundColor] = typography_elements_useGlobalStyle('color.background');
   const [gradientValue] = typography_elements_useGlobalStyle(prefix + 'color.gradient');
@@ -16899,7 +16898,6 @@ function ElementItem({
           color,
           fontStyle,
           fontWeight,
-          letterSpacing,
           ...extraStyles
         },
         children: (0,external_wp_i18n_namespaceObject.__)('Aa')
