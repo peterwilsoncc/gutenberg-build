@@ -6754,7 +6754,7 @@ function PushChangesToGlobalStylesControl({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       __next40pxDefaultSize: true,
       variant: "secondary",
-      __experimentalIsFocusable: true,
+      accessibleWhenDisabled: true,
       disabled: changes.length === 0,
       onClick: pushChanges,
       children: (0,external_wp_i18n_namespaceObject.__)('Apply globally')
@@ -13385,7 +13385,7 @@ function SavePanel() {
         onClick: () => setIsSaveViewOpened(true),
         "aria-haspopup": "dialog",
         disabled: disabled,
-        __experimentalIsFocusable: true,
+        accessibleWhenDisabled: true,
         children: (0,external_wp_i18n_namespaceObject.__)('Open save panel')
       })
     }), isSaveViewOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(_EntitiesSavedStates, {
@@ -18462,7 +18462,7 @@ function InstalledFonts() {
             saveFontFamilies(fontFamilies);
           },
           disabled: !fontFamiliesHasChanges,
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Update')
         })]
       })]
@@ -18985,7 +18985,7 @@ function FontCollection({
           onClick: handleInstall,
           isBusy: isInstalling,
           disabled: fontsToInstall.length === 0 || isInstalling,
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Install')
         })
       }), !selectedFont && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
@@ -18996,7 +18996,7 @@ function FontCollection({
           size: "compact",
           onClick: () => setPage(1),
           disabled: page === 1,
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: "\xAB"
           })
@@ -19005,7 +19005,7 @@ function FontCollection({
           size: "compact",
           onClick: () => setPage(page - 1),
           disabled: page === 1,
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: "\u2039"
           })
@@ -19035,7 +19035,7 @@ function FontCollection({
           size: "compact",
           onClick: () => setPage(page + 1),
           disabled: page === totalPages,
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: "\u203A"
           })
@@ -19044,7 +19044,7 @@ function FontCollection({
           size: "compact",
           onClick: () => setPage(totalPages),
           disabled: page === totalPages,
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: "\xBB"
           })
@@ -26262,7 +26262,7 @@ function RevisionsButtons({
         "aria-current": isSelected,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           className: "edit-site-global-styles-screen-revisions__revision-button",
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           disabled: isSelected,
           onClick: () => {
             onChange(revision);
@@ -26385,7 +26385,7 @@ function Pagination({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         variant: buttonVariant,
         onClick: () => changePage(1),
-        __experimentalIsFocusable: true,
+        accessibleWhenDisabled: true,
         disabled: disabled || currentPage === 1,
         label: (0,external_wp_i18n_namespaceObject.__)('First page'),
         icon: library_previous,
@@ -26393,7 +26393,7 @@ function Pagination({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         variant: buttonVariant,
         onClick: () => changePage(currentPage - 1),
-        __experimentalIsFocusable: true,
+        accessibleWhenDisabled: true,
         disabled: disabled || currentPage === 1,
         label: (0,external_wp_i18n_namespaceObject.__)('Previous page'),
         icon: chevron_left,
@@ -26410,7 +26410,7 @@ function Pagination({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         variant: buttonVariant,
         onClick: () => changePage(currentPage + 1),
-        __experimentalIsFocusable: true,
+        accessibleWhenDisabled: true,
         disabled: disabled || currentPage === numPages,
         label: (0,external_wp_i18n_namespaceObject.__)('Next page'),
         icon: chevron_right,
@@ -26418,7 +26418,7 @@ function Pagination({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         variant: buttonVariant,
         onClick: () => changePage(numPages),
-        __experimentalIsFocusable: true,
+        accessibleWhenDisabled: true,
         disabled: disabled || currentPage === numPages,
         label: (0,external_wp_i18n_namespaceObject.__)('Last page'),
         icon: library_next,
@@ -27092,7 +27092,7 @@ function GlobalStylesSidebar() {
           icon: library_seen,
           label: (0,external_wp_i18n_namespaceObject.__)('Style Book'),
           isPressed: isStyleBookOpened || isRevisionsStyleBookOpened,
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           disabled: shouldClearCanvasContainerView,
           onClick: toggleStyleBook,
           size: "compact"
@@ -27102,7 +27102,7 @@ function GlobalStylesSidebar() {
           label: (0,external_wp_i18n_namespaceObject.__)('Revisions'),
           icon: library_backup,
           onClick: toggleRevisions,
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           disabled: !hasRevisions,
           isPressed: isRevisionsOpened || isRevisionsStyleBookOpened,
           size: "compact"
@@ -27672,7 +27672,7 @@ const pagination_Pagination = (0,external_wp_element_namespaceObject.memo)(funct
           page: currentPage - 1
         }),
         disabled: currentPage === 1,
-        __experimentalIsFocusable: true,
+        accessibleWhenDisabled: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Previous page'),
         icon: chevron_left,
         showTooltip: true,
@@ -27684,7 +27684,7 @@ const pagination_Pagination = (0,external_wp_element_namespaceObject.memo)(funct
           page: currentPage + 1
         }),
         disabled: currentPage >= totalPages,
-        __experimentalIsFocusable: true,
+        accessibleWhenDisabled: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Next page'),
         icon: chevron_right,
         showTooltip: true,
@@ -28098,7 +28098,7 @@ function CompactItemActions({
       size: "compact",
       icon: more_vertical,
       label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
-      __experimentalIsFocusable: true,
+      accessibleWhenDisabled: true,
       disabled: !actions.length,
       className: "dataviews-all-actions-button"
     }),
@@ -29088,7 +29088,7 @@ function ListItem({
                 size: "compact",
                 icon: more_vertical,
                 label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
-                __experimentalIsFocusable: true,
+                accessibleWhenDisabled: true,
                 disabled: !actions.length,
                 onKeyDown: event => {
                   if (event.key === 'ArrowDown') {
@@ -35027,7 +35027,7 @@ function AddFilter({
   const inactiveFilters = filters.filter(filter => !filter.isVisible);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_DropdownMenu, {
     trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      __experimentalIsFocusable: true,
+      accessibleWhenDisabled: true,
       size: "compact",
       className: "dataviews-filters-button",
       variant: "tertiary",
@@ -35078,7 +35078,7 @@ function ResetFilter({
   const isDisabled = !view.search && !view.filters?.some(_filter => _filter.value !== undefined || !isPrimary(_filter.field));
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     disabled: isDisabled,
-    __experimentalIsFocusable: true,
+    accessibleWhenDisabled: true,
     size: "compact",
     variant: "tertiary",
     className: "dataviews-filters__reset-button",
@@ -41238,7 +41238,7 @@ function rename_modal_RenameModal({
             children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
             __next40pxDefaultSize: true,
-            __experimentalIsFocusable: true,
+            accessibleWhenDisabled: true,
             disabled: !isEditedMenuTitleValid,
             variant: "primary",
             type: "submit",

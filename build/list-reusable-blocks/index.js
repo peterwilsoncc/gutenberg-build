@@ -725,7 +725,7 @@ function ImportForm({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       type: "submit",
       isBusy: isLoading,
-      __experimentalIsFocusable: true,
+      accessibleWhenDisabled: true,
       disabled: !file || isLoading,
       variant: "secondary",
       className: "list-reusable-blocks-import-form__button",

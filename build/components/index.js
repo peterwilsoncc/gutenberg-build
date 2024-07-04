@@ -31485,6 +31485,7 @@ function Icon({
 
 const disabledEventsOnDisabledButton = ['onMouseDown', 'onClick'];
 function button_useDeprecatedProps({
+  __experimentalIsFocusable,
   isDefault,
   isPrimary,
   isSecondary,
@@ -31499,6 +31500,7 @@ function button_useDeprecatedProps({
   let computedSize = size;
   let computedVariant = variant;
   const newProps = {
+    accessibleWhenDisabled: __experimentalIsFocusable,
     // @todo Mark `isPressed` as deprecated
     'aria-pressed': isPressed
   };
@@ -31540,6 +31542,7 @@ function button_useDeprecatedProps({
 function UnforwardedButton(props, ref) {
   const {
     __next40pxDefaultSize,
+    accessibleWhenDisabled,
     isBusy,
     isDestructive,
     className,
@@ -31555,7 +31558,6 @@ function UnforwardedButton(props, ref) {
     size = 'default',
     text,
     variant,
-    __experimentalIsFocusable: isFocusable,
     describedBy,
     ...buttonOrAnchorProps
   } = button_useDeprecatedProps(props);
@@ -31591,7 +31593,7 @@ function UnforwardedButton(props, ref) {
     'has-text': !!icon && (hasChildren || text),
     'has-icon': !!icon
   });
-  const trulyDisabled = disabled && !isFocusable;
+  const trulyDisabled = disabled && !accessibleWhenDisabled;
   const Tag = href !== undefined && !trulyDisabled ? 'a' : 'button';
   const buttonProps = Tag === 'button' ? {
     type: 'button',
@@ -31605,7 +31607,7 @@ function UnforwardedButton(props, ref) {
     target
   } : {};
   const disableEventProps = {};
-  if (disabled && isFocusable) {
+  if (disabled && accessibleWhenDisabled) {
     // In this case, the button will be disabled, but still focusable and
     // perceivable by screen reader users.
     buttonProps['aria-disabled'] = true;
@@ -34285,7 +34287,7 @@ function ListBox({
       id: `components-autocomplete-item-${instanceId}-${option.key}`,
       role: "option",
       "aria-selected": index === selectedIndex,
-      __experimentalIsFocusable: true,
+      accessibleWhenDisabled: true,
       disabled: option.isDisabled,
       className: dist_clsx('components-autocomplete__result', className, {
         'is-selected': index === selectedIndex
@@ -37521,7 +37523,7 @@ function UnforwardedRangeControl(props, forwardedRef) {
           className: "components-range-control__reset"
           // If the RangeControl itself is disabled, the reset button shouldn't be in the tab sequence.
           ,
-          __experimentalIsFocusable: !disabled,
+          accessibleWhenDisabled: !disabled,
           disabled: disabled || value === undefined,
           variant: "secondary",
           size: "small",
@@ -45485,7 +45487,7 @@ function UnconnectedDropdownMenu(dropdownMenuProps) {
           label: control.label,
           "aria-checked": control.role === 'menuitemcheckbox' || control.role === 'menuitemradio' ? control.isActive : undefined,
           role: control.role === 'menuitemcheckbox' || control.role === 'menuitemradio' ? control.role : 'menuitem',
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           disabled: control.isDisabled,
           children: control.title
         }, [indexOfSet, indexOfControl].join())))]
@@ -59627,7 +59629,7 @@ const UnforwardedFontSizePicker = (props, ref) => {
         }), withReset && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(flex_item_component, {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Button, {
             disabled: isDisabled,
-            __experimentalIsFocusable: true,
+            accessibleWhenDisabled: true,
             onClick: () => {
               onChange?.(undefined);
             },
@@ -68160,7 +68162,7 @@ function UnforwardedToolbarButton(props, ref) {
         },
         className: dist_clsx('components-toolbar__control', className),
         isPressed: isActive,
-        __experimentalIsFocusable: true,
+        accessibleWhenDisabled: true,
         "data-toolbar-item": true,
         ...extraProps,
         ...restProps,

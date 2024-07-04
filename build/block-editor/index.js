@@ -23725,7 +23725,7 @@ function LinkPreview({
         // Ends up looking like "Copy link: https://example.com".
         isEmptyURL || showIconLabels ? '' : ': ' + value.url),
         ref: ref,
-        __experimentalIsFocusable: true,
+        accessibleWhenDisabled: true,
         disabled: isEmptyURL,
         size: "compact"
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewerSlot, {
@@ -50508,7 +50508,7 @@ function Pagination({
           onClick: () => changePage(1),
           disabled: currentPage === 1,
           "aria-label": (0,external_wp_i18n_namespaceObject.__)('First page'),
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: "\xAB"
           })
@@ -50517,7 +50517,7 @@ function Pagination({
           onClick: () => changePage(currentPage - 1),
           disabled: currentPage === 1,
           "aria-label": (0,external_wp_i18n_namespaceObject.__)('Previous page'),
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: "\u2039"
           })
@@ -50536,7 +50536,7 @@ function Pagination({
           onClick: () => changePage(currentPage + 1),
           disabled: currentPage === numPages,
           "aria-label": (0,external_wp_i18n_namespaceObject.__)('Next page'),
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: "\u203A"
           })
@@ -50546,7 +50546,7 @@ function Pagination({
           disabled: currentPage === numPages,
           "aria-label": (0,external_wp_i18n_namespaceObject.__)('Last page'),
           size: "default",
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: "\xBB"
           })
@@ -56885,7 +56885,7 @@ const BlockMoverButton = (0,external_wp_element_namespaceObject.forwardRef)(({
       ...props,
       onClick: isDisabled ? null : onClick,
       disabled: isDisabled,
-      __experimentalIsFocusable: true
+      accessibleWhenDisabled: true
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
       id: descriptionId,
       children: getBlockMoverDescription(blocksCount, blockType && blockType.title, firstIndex, isFirst, isLast, direction === 'up' ? -1 : 1, orientation)
@@ -65128,13 +65128,13 @@ const CarouselNavigation = ({
     label: (0,external_wp_i18n_namespaceObject.__)('Previous pattern'),
     onClick: handlePrevious,
     disabled: activeSlide === 0,
-    __experimentalIsFocusable: true
+    accessibleWhenDisabled: true
   }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     icon: chevron_right,
     label: (0,external_wp_i18n_namespaceObject.__)('Next pattern'),
     onClick: handleNext,
     disabled: activeSlide === totalSlides - 1,
-    __experimentalIsFocusable: true
+    accessibleWhenDisabled: true
   })]
 });
 const SetupToolbar = ({

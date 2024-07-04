@@ -1468,7 +1468,7 @@ function PatternOverridesControls({
             }
           },
           disabled: !hasOverrides && hasUnsupportedImageAttributes,
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: hasOverrides ? (0,external_wp_i18n_namespaceObject.__)('Disable overrides') : (0,external_wp_i18n_namespaceObject.__)('Enable overrides')
         })
       })

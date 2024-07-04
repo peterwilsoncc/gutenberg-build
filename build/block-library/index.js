@@ -39317,7 +39317,7 @@ function ConvertToLinksModal({
         children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         variant: "primary",
-        __experimentalIsFocusable: true,
+        accessibleWhenDisabled: true,
         disabled: disabled,
         onClick: onClick,
         children: (0,external_wp_i18n_namespaceObject.__)('Edit')
@@ -39596,7 +39596,7 @@ function PageListEdit({
           children: convertDescription
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           variant: "primary",
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           disabled: !hasResolvedPages,
           onClick: convertToNavigationLinks,
           children: (0,external_wp_i18n_namespaceObject.__)('Edit')
@@ -60318,7 +60318,7 @@ function TitleModal({
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
             variant: "primary",
             type: "submit",
-            __experimentalIsFocusable: true,
+            accessibleWhenDisabled: true,
             disabled: !title.length,
             children: (0,external_wp_i18n_namespaceObject.__)('Create')
           })

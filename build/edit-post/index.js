@@ -1752,7 +1752,7 @@ function InitPatternModal() {
               variant: "primary",
               type: "submit",
               disabled: !title,
-              __experimentalIsFocusable: true,
+              accessibleWhenDisabled: true,
               children: (0,external_wp_i18n_namespaceObject.__)('Create')
             })
           })]
@@ -2145,7 +2145,7 @@ function CustomFieldsConfirmation({
       className: "edit-post-preferences-modal__custom-fields-confirmation-button",
       variant: "secondary",
       isBusy: isReloading,
-      __experimentalIsFocusable: true,
+      accessibleWhenDisabled: true,
       disabled: isReloading,
       onClick: () => {
         setIsReloading(true);

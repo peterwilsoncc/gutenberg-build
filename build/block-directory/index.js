@@ -1617,7 +1617,7 @@ function DownloadableBlockListItem({
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(CompositeItem, {
     render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      __experimentalIsFocusable: true,
+      accessibleWhenDisabled: true,
       type: "button",
       role: "option",
       className: "block-directory-downloadable-block-list-item",
@@ -2103,7 +2103,7 @@ function InstallButton({
         }
       }
     }),
-    __experimentalIsFocusable: true,
+    accessibleWhenDisabled: true,
     disabled: isInstallingBlock,
     isBusy: isInstallingBlock,
     variant: "primary",

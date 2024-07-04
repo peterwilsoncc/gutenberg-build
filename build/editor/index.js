@@ -9059,7 +9059,7 @@ function EntitiesSavedStatesExtensible({
         ref: saveButtonRef,
         variant: "primary",
         disabled: !saveEnabled,
-        __experimentalIsFocusable: true,
+        accessibleWhenDisabled: true,
         onClick: () => saveDirtyEntities({
           onSave,
           dirtyEntityRecords,
@@ -13703,7 +13703,7 @@ function PostPreviewButton({
     className: className || 'editor-post-preview',
     href: href,
     target: targetId,
-    __experimentalIsFocusable: true,
+    accessibleWhenDisabled: true,
     disabled: !isSaveable,
     onClick: openPreviewWindow,
     role: role,
@@ -16498,7 +16498,7 @@ class PostPublishPanel extends external_wp_element_namespaceObject.Component {
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
             className: "editor-post-publish-panel__header-cancel-button",
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-              __experimentalIsFocusable: true,
+              accessibleWhenDisabled: true,
               disabled: isSavingNonPostEntityChanges,
               onClick: onClose,
               variant: "secondary",
@@ -23471,7 +23471,7 @@ function PreviewDropdown({
     size: 'compact',
     showTooltip: !showIconLabels,
     disabled,
-    __experimentalIsFocusable: disabled
+    accessibleWhenDisabled: disabled
   };
   const menuProps = {
     'aria-label': (0,external_wp_i18n_namespaceObject.__)('View options')
@@ -24080,7 +24080,7 @@ function SavePublishPanels({
         onClick: openEntitiesSavedStates,
         "aria-expanded": false,
         disabled: !isDirty,
-        __experimentalIsFocusable: true,
+        accessibleWhenDisabled: true,
         children: (0,external_wp_i18n_namespaceObject.__)('Open save panel')
       })
     });
@@ -25317,7 +25317,7 @@ const trashPostAction = {
           variant: "tertiary",
           onClick: closeModal,
           disabled: isBusy,
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           variant: "primary",
@@ -25388,7 +25388,7 @@ const trashPostAction = {
           },
           isBusy: isBusy,
           disabled: isBusy,
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Trash')
         })]
       })]
@@ -26081,7 +26081,7 @@ function PostActions({
       icon: more_vertical,
       label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
       disabled: !actions.length,
-      __experimentalIsFocusable: true,
+      accessibleWhenDisabled: true,
       className: "editor-all-actions-button",
       onClick: () => setIsActionsMenuOpen(!isActionsMenuOpen),
       ...buttonProps
@@ -28385,7 +28385,7 @@ const deletePostAction = {
           variant: "tertiary",
           onClick: closeModal,
           disabled: isBusy,
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           variant: "primary",
@@ -28400,7 +28400,7 @@ const deletePostAction = {
           },
           isBusy: isBusy,
           disabled: isBusy,
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Delete')
         })]
       })]
@@ -28492,7 +28492,7 @@ const reset_post_resetPost = {
           variant: "tertiary",
           onClick: closeModal,
           disabled: isBusy,
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           variant: "primary",
@@ -28505,7 +28505,7 @@ const reset_post_resetPost = {
           },
           isBusy: isBusy,
           disabled: isBusy,
-          __experimentalIsFocusable: true,
+          accessibleWhenDisabled: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Reset')
         })]
       })]
