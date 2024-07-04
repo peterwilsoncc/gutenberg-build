@@ -25334,12 +25334,9 @@ const trashPostAction = {
               if (promiseResult.length === 1) {
                 successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The item's title. */
                 (0,external_wp_i18n_namespaceObject.__)('"%s" moved to trash.'), getItemTitle(items[0]));
-              } else if (items[0].type === 'page') {
+              } else {
                 successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of items. */
                 (0,external_wp_i18n_namespaceObject._n)('%s item moved to trash.', '%s items moved to trash.', items.length), items.length);
-              } else {
-                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of posts. */
-                (0,external_wp_i18n_namespaceObject.__)('%s items move to trash.'), items.length);
               }
               createSuccessNotice(successMessage, {
                 type: 'snackbar',
