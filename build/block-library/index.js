@@ -46801,7 +46801,6 @@ const useUnsupportedBlocks = clientId => {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -46819,7 +46818,6 @@ function QueryToolbar({
   clientId
 }) {
   const hasPatterns = !!usePatterns(clientId, name).length;
-  const maxPageInputId = (0,external_wp_compose_namespaceObject.useInstanceId)(QueryToolbar, 'blocks-query-pagination-max-page-input');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [!query.inherit && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
@@ -46832,65 +46830,60 @@ function QueryToolbar({
           onClick: onToggle
         }),
         renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
-              __unstableInputWidth: "60px",
-              label: (0,external_wp_i18n_namespaceObject.__)('Items per Page'),
-              labelPosition: "edge",
-              min: 1,
-              max: 100,
-              onChange: value => {
-                if (isNaN(value) || value < 1 || value > 100) {
-                  return;
-                }
-                setQuery({
-                  perPage: value
-                });
-              },
-              step: "1",
-              value: query.perPage,
-              isDragEnabled: false
-            })
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
-              __unstableInputWidth: "60px",
-              label: (0,external_wp_i18n_namespaceObject.__)('Offset'),
-              labelPosition: "edge",
-              min: 0,
-              max: 100,
-              onChange: value => {
-                if (isNaN(value) || value < 0 || value > 100) {
-                  return;
-                }
-                setQuery({
-                  offset: value
-                });
-              },
-              step: "1",
-              value: query.offset,
-              isDragEnabled: false
-            })
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
-            id: maxPageInputId,
-            help: (0,external_wp_i18n_namespaceObject.__)('Limit the pages you want to show, even if the query has more results. To show all pages use 0 (zero).'),
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
-              id: maxPageInputId,
-              __unstableInputWidth: "60px",
-              label: (0,external_wp_i18n_namespaceObject.__)('Max page to show'),
-              labelPosition: "edge",
-              min: 0,
-              onChange: value => {
-                if (isNaN(value) || value < 0) {
-                  return;
-                }
-                setQuery({
-                  pages: value
-                });
-              },
-              step: "1",
-              value: query.pages,
-              isDragEnabled: false
-            })
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+            __unstableInputWidth: "60px",
+            className: "block-library-query-toolbar__popover-number-control",
+            label: (0,external_wp_i18n_namespaceObject.__)('Items per Page'),
+            labelPosition: "edge",
+            min: 1,
+            max: 100,
+            onChange: value => {
+              if (isNaN(value) || value < 1 || value > 100) {
+                return;
+              }
+              setQuery({
+                perPage: value
+              });
+            },
+            step: "1",
+            value: query.perPage,
+            isDragEnabled: false
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+            __unstableInputWidth: "60px",
+            className: "block-library-query-toolbar__popover-number-control",
+            label: (0,external_wp_i18n_namespaceObject.__)('Offset'),
+            labelPosition: "edge",
+            min: 0,
+            max: 100,
+            onChange: value => {
+              if (isNaN(value) || value < 0 || value > 100) {
+                return;
+              }
+              setQuery({
+                offset: value
+              });
+            },
+            step: "1",
+            value: query.offset,
+            isDragEnabled: false
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+            __unstableInputWidth: "60px",
+            className: "block-library-query-toolbar__popover-number-control",
+            label: (0,external_wp_i18n_namespaceObject.__)('Max pages to show'),
+            labelPosition: "edge",
+            min: 0,
+            onChange: value => {
+              if (isNaN(value) || value < 0) {
+                return;
+              }
+              setQuery({
+                pages: value
+              });
+            },
+            step: "1",
+            value: query.pages,
+            isDragEnabled: false,
+            help: (0,external_wp_i18n_namespaceObject.__)('Limit the pages you want to show, even if the query has more results. To show all pages use 0 (zero).')
           })]
         })
       })
