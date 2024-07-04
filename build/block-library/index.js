@@ -30646,8 +30646,15 @@ const list_item_metadata = {
   },
   supports: {
     className: false,
-    __experimentalSelector: ".wp-block-list > li",
     splitting: true,
+    color: {
+      gradients: true,
+      link: true,
+      __experimentalDefaultControls: {
+        background: true,
+        text: true
+      }
+    },
     spacing: {
       margin: true,
       padding: true,
@@ -30672,6 +30679,9 @@ const list_item_metadata = {
     interactivity: {
       clientNavigation: true
     }
+  },
+  selectors: {
+    root: ".wp-block-list > li"
   }
 };
 
