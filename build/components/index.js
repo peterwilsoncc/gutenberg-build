@@ -68081,6 +68081,7 @@ function toolbar_item_ToolbarItem({
     children: children
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ToolbarItem, {
+    accessibleWhenDisabled: true,
     ...allProps,
     store: accessibleToolbarStore,
     render: render
