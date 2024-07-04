@@ -59362,7 +59362,6 @@ function BlockLockToolbar({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
       className: "block-editor-block-lock-toolbar",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-        accessibleWhenDisabled: true,
         disabled: !canLock,
         icon: isLocked ? library_lock : library_unlock,
         label: label,

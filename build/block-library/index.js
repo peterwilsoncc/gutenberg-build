@@ -51042,7 +51042,6 @@ function ReusableBlockEdit({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
           onClick: resetContent,
           disabled: !content,
-          __experimentalIsFocusable: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Reset')
         })
       })

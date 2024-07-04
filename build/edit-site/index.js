@@ -35321,7 +35321,6 @@ function ActionTrigger({
     size: "compact",
     onClick: onClick,
     isBusy: isBusy,
-    __experimentalIsFocusable: true,
     tooltipPosition: "top"
   });
 }
