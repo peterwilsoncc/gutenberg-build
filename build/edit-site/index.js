@@ -28372,6 +28372,7 @@ function WithDropDownMenuSeparators({
 const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function HeaderMenu({
   field,
   view,
+  fields,
   onChangeView,
   onHide,
   setOpenedFilter
@@ -28457,11 +28458,11 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
           icon: library_unseen
         }),
         onClick: () => {
-          var _view$hiddenFields;
+          const viewFields = view.fields || fields.map(f => f.id);
           onHide(field);
           onChangeView({
             ...view,
-            hiddenFields: ((_view$hiddenFields = view.hiddenFields) !== null && _view$hiddenFields !== void 0 ? _view$hiddenFields : []).concat(field.id)
+            fields: viewFields.filter(fieldId => fieldId !== field.id)
           });
         },
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_table_DropdownMenuItemLabel, {
@@ -28633,7 +28634,8 @@ function ViewTable({
     const fallback = hidden ? headerMenuRefs.current.get(hidden.fallback) : undefined;
     setNextHeaderMenuToFocus(fallback?.node);
   };
-  const visibleFields = fields.filter(field => !view.hiddenFields?.includes(field.id) && ![view.layout.mediaField].includes(field.id));
+  const viewFields = view.fields || fields.map(f => f.id);
+  const visibleFields = fields.filter(field => viewFields.includes(field.id) || [view.layout.mediaField].includes(field.id));
   const hasData = !!data?.length;
   const primaryField = fields.find(field => field.id === view.layout.primaryField);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -28680,6 +28682,7 @@ function ViewTable({
               },
               field: field,
               view: view,
+              fields: fields,
               onChangeView: onChangeView,
               onHide: onHide,
               setOpenedFilter: setOpenedFilter
@@ -28862,11 +28865,12 @@ function ViewGrid({
 }) {
   const mediaField = fields.find(field => field.id === view.layout.mediaField);
   const primaryField = fields.find(field => field.id === view.layout.primaryField);
+  const viewFields = view.fields || fields.map(field => field.id);
   const {
     visibleFields,
     badgeFields
   } = fields.reduce((accumulator, field) => {
-    if (view.hiddenFields?.includes(field.id) || [view.layout.mediaField, view.layout.primaryField].includes(field.id)) {
+    if (!viewFields.includes(field.id) || [view.layout.mediaField, view.layout.primaryField].includes(field.id)) {
       return accumulator;
     }
     // If the field is a badge field, add it to the badgeFields array
@@ -29147,7 +29151,8 @@ function ViewList(props) {
   const selectedItem = data?.findLast(item => selection.includes(getItemId(item)));
   const mediaField = fields.find(field => field.id === view.layout.mediaField);
   const primaryField = fields.find(field => field.id === view.layout.primaryField);
-  const visibleFields = fields.filter(field => !view.hiddenFields?.includes(field.id) && ![view.layout.primaryField, view.layout.mediaField].includes(field.id));
+  const viewFields = view.fields || fields.map(field => field.id);
+  const visibleFields = fields.filter(field => viewFields.includes(field.id) && ![view.layout.primaryField, view.layout.mediaField].includes(field.id));
   const onSelect = item => onSelectionChange([getItemId(item)]);
   const getItemDomId = (0,external_wp_element_namespaceObject.useCallback)(item => item ? `${baseId}-${getItemId(item)}` : undefined, [baseId, getItemId]);
   const store = view_list_useCompositeStore({
@@ -29352,6 +29357,7 @@ function FieldsVisibilityMenu({
   fields
 }) {
   const hidableFields = fields.filter(field => field.enableHiding !== false && field.id !== view.layout.mediaField);
+  const viewFields = view.fields || fields.map(field => field.id);
   if (!hidableFields?.length) {
     return null;
   }
@@ -29364,11 +29370,11 @@ function FieldsVisibilityMenu({
     children: hidableFields?.map(field => {
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuCheckboxItem, {
         value: field.id,
-        checked: !view.hiddenFields?.includes(field.id),
+        checked: viewFields.includes(field.id),
         onChange: () => {
           onChangeView({
             ...view,
-            hiddenFields: view.hiddenFields?.includes(field.id) ? view.hiddenFields.filter(id => id !== field.id) : [...(view.hiddenFields || []), field.id]
+            fields: viewFields.includes(field.id) ? viewFields.filter(id => id !== field.id) : [...viewFields, field.id]
           });
         },
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_actions_DropdownMenuItemLabel, {
@@ -35810,9 +35816,7 @@ const DEFAULT_POST_BASE = {
     field: 'date',
     direction: 'desc'
   },
-  // All fields are visible by default, so it's
-  // better to keep track of the hidden ones.
-  hiddenFields: ['date', 'featured-image'],
+  fields: ['title', 'author', 'status'],
   layout: {
     ...DEFAULT_CONFIG_PER_VIEW_TYPE[LAYOUT_LIST]
   }
@@ -40221,9 +40225,7 @@ const page_templates_DEFAULT_VIEW = {
     field: 'title',
     direction: 'asc'
   },
-  // All fields are visible by default, so it's
-  // better to keep track of the hidden ones.
-  hiddenFields: ['preview'],
+  fields: ['title', 'description', 'author'],
   layout: page_templates_defaultConfigPerViewType[LAYOUT_GRID],
   filters: []
 };
