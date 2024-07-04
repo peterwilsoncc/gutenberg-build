@@ -26220,14 +26220,15 @@ function usePostActions({
           const existingCallback = actions[i].callback;
           actions[i] = {
             ...actions[i],
-            callback: (items, {
-              _onActionPerformed
-            }) => {
-              existingCallback(items, _items => {
-                if (_onActionPerformed) {
-                  _onActionPerformed(_items);
+            callback: (items, argsObject) => {
+              existingCallback(items, {
+                ...argsObject,
+                onActionPerformed: _items => {
+                  if (argsObject.onActionPerformed) {
+                    argsObject.onActionPerformed(_items);
+                  }
+                  onActionPerformed(actions[i].id, _items);
                 }
-                onActionPerformed(actions[i].id, _items);
               });
             }
           };
