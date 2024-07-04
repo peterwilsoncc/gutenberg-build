@@ -64285,17 +64285,25 @@ function progress_bar_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have
 
 
 /**
+ * WordPress dependencies
+ */
+
+
+/**
  * Internal dependencies
  */
 
-const animateProgressBar = emotion_react_browser_esm_keyframes({
-  '0%': {
-    left: '-50%'
-  },
-  '100%': {
-    left: '100%'
-  }
-});
+function animateProgressBar(isRtl = false) {
+  const animationDirection = isRtl ? 'right' : 'left';
+  return emotion_react_browser_esm_keyframes({
+    '0%': {
+      [animationDirection]: '-50%'
+    },
+    '100%': {
+      [animationDirection]: '100%'
+    }
+  });
+}
 
 // Width of the indicator for the indeterminate progress bar
 const INDETERMINATE_TRACK_WIDTH = 50;
@@ -64314,7 +64322,7 @@ const Indicator = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   animationDuration: '1.5s',
   animationTimingFunction: 'ease-in-out',
   animationIterationCount: 'infinite',
-  animationName: animateProgressBar,
+  animationName: animateProgressBar((0,external_wp_i18n_namespaceObject.isRTL)()),
   width: `${INDETERMINATE_TRACK_WIDTH}%`
 },  true ? "" : 0,  true ? "" : 0) : progress_bar_styles_ref, ";" + ( true ? "" : 0));
 const ProgressElement = /*#__PURE__*/emotion_styled_base_browser_esm("progress",  true ? {
