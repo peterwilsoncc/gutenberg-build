@@ -68064,6 +68064,9 @@ const URLPopover = (0,external_wp_element_namespaceObject.forwardRef)(({
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Popover, {
     ref: ref,
+    role: "dialog",
+    "aria-modal": "true",
+    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Edit URL'),
     className: "block-editor-url-popover",
     focusOnMount: focusOnMount,
     placement: computedPlacement,
@@ -68156,24 +68159,37 @@ const InsertFromURLPopover = ({
   })
 });
 const URLSelectionUI = ({
-  isURLInputVisible,
   src,
   onChangeSrc,
-  onSubmitSrc,
-  openURLInput,
-  closeURLInput
+  onSelectURL
 }) => {
   // Use internal state instead of a ref to make sure that the component
   // re-renders when the popover's anchor updates.
   const [popoverAnchor, setPopoverAnchor] = (0,external_wp_element_namespaceObject.useState)(null);
+  const [isURLInputVisible, setIsURLInputVisible] = (0,external_wp_element_namespaceObject.useState)(false);
+  const openURLInput = () => {
+    setIsURLInputVisible(true);
+  };
+  const closeURLInput = () => {
+    setIsURLInputVisible(false);
+    popoverAnchor?.focus();
+  };
+  const onSubmitSrc = event => {
+    event.preventDefault();
+    if (src && onSelectURL) {
+      onSelectURL(src);
+      closeURLInput();
+    }
+  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "block-editor-media-placeholder__url-input-container",
-    ref: setPopoverAnchor,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       className: "block-editor-media-placeholder__button",
       onClick: openURLInput,
       isPressed: isURLInputVisible,
       variant: "secondary",
+      "aria-haspopup": "dialog",
+      ref: setPopoverAnchor,
       children: (0,external_wp_i18n_namespaceObject.__)('Insert from URL')
     }), isURLInputVisible && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InsertFromURLPopover, {
       src: src,
@@ -68225,7 +68241,6 @@ function MediaPlaceholder({
     return getSettings().mediaUpload;
   }, []);
   const [src, setSrc] = (0,external_wp_element_namespaceObject.useState)('');
-  const [isURLInputVisible, setIsURLInputVisible] = (0,external_wp_element_namespaceObject.useState)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     var _value$src;
     setSrc((_value$src = value?.src) !== null && _value$src !== void 0 ? _value$src : '');
@@ -68238,19 +68253,6 @@ function MediaPlaceholder({
   };
   const onChangeSrc = event => {
     setSrc(event.target.value);
-  };
-  const openURLInput = () => {
-    setIsURLInputVisible(true);
-  };
-  const closeURLInput = () => {
-    setIsURLInputVisible(false);
-  };
-  const onSubmitSrc = event => {
-    event.preventDefault();
-    if (src && onSelectURL) {
-      onSelectURL(src);
-      closeURLInput();
-    }
   };
   const onFilesUpload = files => {
     if (!handleUpload) {
@@ -68426,12 +68428,9 @@ function MediaPlaceholder({
   };
   const renderUrlSelectionUI = () => {
     return onSelectURL && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(URLSelectionUI, {
-      isURLInputVisible: isURLInputVisible,
       src: src,
       onChangeSrc: onChangeSrc,
-      onSubmitSrc: onSubmitSrc,
-      openURLInput: openURLInput,
-      closeURLInput: closeURLInput
+      onSelectURL: onSelectURL
     });
   };
   const renderFeaturedImageToggle = () => {
