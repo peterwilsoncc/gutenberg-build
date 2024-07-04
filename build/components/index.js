@@ -72338,6 +72338,11 @@ const WithHintItemHint = /*#__PURE__*/emotion_styled_base_browser_esm("span",  t
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/custom-select-control-v2/custom-select.js
 /**
+ * External dependencies
+ */
+// eslint-disable-next-line no-restricted-imports
+
+/**
  * WordPress dependencies
  */
 
@@ -72379,11 +72384,7 @@ const CustomSelectButton = ({
     ...restProps,
     size: size,
     hasCustomRenderProp: !!renderSelectedValue,
-    store: store
-    // to match legacy behavior where using arrow keys
-    // move selection rather than open the popover
-    ,
-    showOnKeyDown: false,
+    store: store,
     children: computedRenderSelectedValue(currentValue)
   });
 };
@@ -72429,6 +72430,9 @@ function _CustomSelect(props) {
           ...restProps,
           size: size,
           store: store
+          // Match legacy behavior (move selection rather than open the popover)
+          ,
+          showOnKeyDown: !isLegacy
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_SelectPopover, {
           gutter: 12,
           store: store,
