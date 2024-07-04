@@ -1834,7 +1834,6 @@ __webpack_require__.d(store_private_actions_namespaceObject, {
 var store_private_selectors_namespaceObject = {};
 __webpack_require__.r(store_private_selectors_namespaceObject);
 __webpack_require__.d(store_private_selectors_namespaceObject, {
-  getCurrentTemplateTemplateParts: () => (getCurrentTemplateTemplateParts),
   getEntityActions: () => (private_selectors_getEntityActions),
   getInserterSidebarToggleRef: () => (getInserterSidebarToggleRef),
   getInsertionPoint: () => (getInsertionPoint),
@@ -5703,233 +5702,6 @@ const verse = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 });
 /* harmony default export */ const library_verse = (verse);
 
-;// CONCATENATED MODULE: ./node_modules/memize/dist/index.js
-/**
- * Memize options object.
- *
- * @typedef MemizeOptions
- *
- * @property {number} [maxSize] Maximum size of the cache.
- */
-
-/**
- * Internal cache entry.
- *
- * @typedef MemizeCacheNode
- *
- * @property {?MemizeCacheNode|undefined} [prev] Previous node.
- * @property {?MemizeCacheNode|undefined} [next] Next node.
- * @property {Array<*>}                   args   Function arguments for cache
- *                                               entry.
- * @property {*}                          val    Function result.
- */
-
-/**
- * Properties of the enhanced function for controlling cache.
- *
- * @typedef MemizeMemoizedFunction
- *
- * @property {()=>void} clear Clear the cache.
- */
-
-/**
- * Accepts a function to be memoized, and returns a new memoized function, with
- * optional options.
- *
- * @template {(...args: any[]) => any} F
- *
- * @param {F}             fn        Function to memoize.
- * @param {MemizeOptions} [options] Options object.
- *
- * @return {((...args: Parameters<F>) => ReturnType<F>) & MemizeMemoizedFunction} Memoized function.
- */
-function memize(fn, options) {
-	var size = 0;
-
-	/** @type {?MemizeCacheNode|undefined} */
-	var head;
-
-	/** @type {?MemizeCacheNode|undefined} */
-	var tail;
-
-	options = options || {};
-
-	function memoized(/* ...args */) {
-		var node = head,
-			len = arguments.length,
-			args,
-			i;
-
-		searchCache: while (node) {
-			// Perform a shallow equality test to confirm that whether the node
-			// under test is a candidate for the arguments passed. Two arrays
-			// are shallowly equal if their length matches and each entry is
-			// strictly equal between the two sets. Avoid abstracting to a
-			// function which could incur an arguments leaking deoptimization.
-
-			// Check whether node arguments match arguments length
-			if (node.args.length !== arguments.length) {
-				node = node.next;
-				continue;
-			}
-
-			// Check whether node arguments match arguments values
-			for (i = 0; i < len; i++) {
-				if (node.args[i] !== arguments[i]) {
-					node = node.next;
-					continue searchCache;
-				}
-			}
-
-			// At this point we can assume we've found a match
-
-			// Surface matched node to head if not already
-			if (node !== head) {
-				// As tail, shift to previous. Must only shift if not also
-				// head, since if both head and tail, there is no previous.
-				if (node === tail) {
-					tail = node.prev;
-				}
-
-				// Adjust siblings to point to each other. If node was tail,
-				// this also handles new tail's empty `next` assignment.
-				/** @type {MemizeCacheNode} */ (node.prev).next = node.next;
-				if (node.next) {
-					node.next.prev = node.prev;
-				}
-
-				node.next = head;
-				node.prev = null;
-				/** @type {MemizeCacheNode} */ (head).prev = node;
-				head = node;
-			}
-
-			// Return immediately
-			return node.val;
-		}
-
-		// No cached value found. Continue to insertion phase:
-
-		// Create a copy of arguments (avoid leaking deoptimization)
-		args = new Array(len);
-		for (i = 0; i < len; i++) {
-			args[i] = arguments[i];
-		}
-
-		node = {
-			args: args,
-
-			// Generate the result from original function
-			val: fn.apply(null, args),
-		};
-
-		// Don't need to check whether node is already head, since it would
-		// have been returned above already if it was
-
-		// Shift existing head down list
-		if (head) {
-			head.prev = node;
-			node.next = head;
-		} else {
-			// If no head, follows that there's no tail (at initial or reset)
-			tail = node;
-		}
-
-		// Trim tail if we're reached max size and are pending cache insertion
-		if (size === /** @type {MemizeOptions} */ (options).maxSize) {
-			tail = /** @type {MemizeCacheNode} */ (tail).prev;
-			/** @type {MemizeCacheNode} */ (tail).next = null;
-		} else {
-			size++;
-		}
-
-		head = node;
-
-		return node.val;
-	}
-
-	memoized.clear = function () {
-		head = null;
-		tail = null;
-		size = 0;
-	};
-
-	// Ignore reason: There's not a clear solution to create an intersection of
-	// the function with additional properties, where the goal is to retain the
-	// function signature of the incoming argument and add control properties
-	// on the return value.
-
-	// @ts-ignore
-	return memoized;
-}
-
-
-
-;// CONCATENATED MODULE: ./packages/editor/build-module/store/utils/get-filtered-template-parts.js
-/**
- * External dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-const EMPTY_ARRAY = [];
-
-/**
- * Get a flattened and filtered list of template parts and the matching block for that template part.
- *
- * Takes a list of blocks defined within a template, and a list of template parts, and returns a
- * flattened list of template parts and the matching block for that template part.
- *
- * @param {Array}  blocks        Blocks to flatten.
- * @param {?Array} templateParts Available template parts.
- * @return {Array} An array of template parts and their blocks.
- */
-function getFilteredTemplatePartBlocks(blocks = EMPTY_ARRAY, templateParts) {
-  const templatePartsById = templateParts ?
-  // Key template parts by their ID.
-  templateParts.reduce((newTemplateParts, part) => ({
-    ...newTemplateParts,
-    [part.id]: part
-  }), {}) : {};
-  const result = [];
-
-  // Iterate over all blocks, recursing into inner blocks.
-  // Output will be based on a depth-first traversal.
-  const stack = [...blocks];
-  while (stack.length) {
-    const {
-      innerBlocks,
-      ...block
-    } = stack.shift();
-    // Place inner blocks at the beginning of the stack to preserve order.
-    stack.unshift(...innerBlocks);
-    if ((0,external_wp_blocks_namespaceObject.isTemplatePart)(block)) {
-      const {
-        attributes: {
-          theme,
-          slug
-        }
-      } = block;
-      const templatePartId = `${theme}//${slug}`;
-      const templatePart = templatePartsById[templatePartId];
-
-      // Only add to output if the found template part block is in the list of available template parts.
-      if (templatePart) {
-        result.push({
-          templatePart,
-          block
-        });
-      }
-    }
-  }
-  return result;
-}
-const memoizedGetFilteredTemplatePartBlocks = memize(getFilteredTemplatePartBlocks);
-
-
 ;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/store/private-selectors.js
 /**
  * WordPress dependencies
@@ -5962,8 +5734,6 @@ const getEntityActions = (0,external_wp_data_namespaceObject.createSelector)((st
 /**
  * Internal dependencies
  */
-
-
 
 
 const EMPTY_INSERTION_POINT = {
@@ -6027,21 +5797,6 @@ const getPostIcon = (0,external_wp_data_namespaceObject.createRegistrySelector)(
     }
     return library_page;
   }
-});
-
-/**
- * Returns the template parts and their blocks for the current edited template.
- *
- * @param {Object} state Global application state.
- * @return {Array} Template parts and their blocks in an array.
- */
-const getCurrentTemplateTemplateParts = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
-  const templateParts = select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', TEMPLATE_PART_POST_TYPE, {
-    per_page: -1
-  });
-  const clientIds = select(external_wp_blockEditor_namespaceObject.store).getBlocksByName('core/template-part');
-  const blocks = select(external_wp_blockEditor_namespaceObject.store).getBlocksByClientId(clientIds);
-  return memoizedGetFilteredTemplatePartBlocks(blocks, templateParts);
 });
 
 /**
@@ -15433,7 +15188,7 @@ function MostUsedTerms({
 
 
 
-const flat_term_selector_EMPTY_ARRAY = [];
+const EMPTY_ARRAY = [];
 
 /**
  * How the max suggestions limit was chosen:
@@ -15487,7 +15242,7 @@ function FlatTermSelector({
     } = select(external_wp_coreData_namespaceObject.store);
     const post = getCurrentPost();
     const _taxonomy = getTaxonomy(slug);
-    const _termIds = _taxonomy ? getEditedPostAttribute(_taxonomy.rest_base) : flat_term_selector_EMPTY_ARRAY;
+    const _termIds = _taxonomy ? getEditedPostAttribute(_taxonomy.rest_base) : EMPTY_ARRAY;
     const query = {
       ...flat_term_selector_DEFAULT_QUERY,
       include: _termIds.join(','),
@@ -15498,7 +15253,7 @@ function FlatTermSelector({
       hasAssignAction: _taxonomy ? (_post$_links2 = post._links?.['wp:action-assign-' + _taxonomy.rest_base]) !== null && _post$_links2 !== void 0 ? _post$_links2 : false : false,
       taxonomy: _taxonomy,
       termIds: _termIds,
-      terms: _termIds.length ? getEntityRecords('taxonomy', slug, query) : flat_term_selector_EMPTY_ARRAY,
+      terms: _termIds.length ? getEntityRecords('taxonomy', slug, query) : EMPTY_ARRAY,
       hasResolvedTerms: hasFinishedResolution('getEntityRecords', ['taxonomy', slug, query])
     };
   }, [slug]);
@@ -15512,7 +15267,7 @@ function FlatTermSelector({
       searchResults: !!search ? getEntityRecords('taxonomy', slug, {
         ...flat_term_selector_DEFAULT_QUERY,
         search
-      }) : flat_term_selector_EMPTY_ARRAY
+      }) : EMPTY_ARRAY
     };
   }, [search, slug]);
 
@@ -27311,85 +27066,6 @@ function SiteDiscussion() {
   });
 }
 
-;// CONCATENATED MODULE: ./packages/editor/build-module/components/template-areas/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-function TemplateAreaItem({
-  area,
-  clientId
-}) {
-  const {
-    selectBlock,
-    toggleBlockHighlight
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
-  const templatePartArea = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const defaultAreas = select(store_store).__experimentalGetDefaultTemplatePartAreas();
-    return defaultAreas.find(defaultArea => defaultArea.area === area);
-  }, [area]);
-  const highlightBlock = () => toggleBlockHighlight(clientId, true);
-  const cancelHighlightBlock = () => toggleBlockHighlight(clientId, false);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-    className: "editor-template-areas__item",
-    icon: templatePartArea?.icon,
-    onMouseOver: highlightBlock,
-    onMouseLeave: cancelHighlightBlock,
-    onFocus: highlightBlock,
-    onBlur: cancelHighlightBlock,
-    onClick: () => {
-      selectBlock(clientId);
-    },
-    children: templatePartArea?.label
-  });
-}
-function TemplateAreas() {
-  const {
-    isTemplate,
-    templateParts
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const _isTemplate = select(store_store).getCurrentPostType() === TEMPLATE_POST_TYPE;
-    return {
-      isTemplate: _isTemplate,
-      templateParts: _isTemplate && unlock(select(store_store)).getCurrentTemplateTemplateParts()
-    };
-  }, []);
-  if (!isTemplate || !templateParts.length) {
-    return null;
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("section", {
-    className: "editor-template-areas",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHeading, {
-      level: 3,
-      className: "editor-template-areas__title",
-      children: (0,external_wp_i18n_namespaceObject.__)('Areas')
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
-      className: "editor-template-areas__list",
-      children: templateParts.map(({
-        templatePart,
-        block
-      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplateAreaItem, {
-          area: templatePart.area,
-          clientId: block.clientId
-        })
-      }, block.clientId))
-    })]
-  });
-}
-
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/sidebar/post-summary.js
 /**
  * WordPress dependencies
@@ -27400,7 +27076,6 @@ function TemplateAreas() {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -27468,7 +27143,7 @@ function PostSummary({
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
               spacing: 1,
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostStatus, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSchedulePanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostURLPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(panel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTemplatePanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostDiscussionPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrivatePostLastRevision, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageAttributesPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSyncStatus, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlogTitle, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostsPerPage, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SiteDiscussion, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_format_panel, {})]
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplateAreas, {}), fills]
+            }), fills]
           })]
         })
       })
@@ -27721,26 +27396,51 @@ const SidebarHeader = (_, ref) => {
 
 
 
+
 /**
  * Internal dependencies
  */
+
+
 
 
 const {
   BlockQuickNavigation
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const PAGE_CONTENT_BLOCKS = ['core/post-content', 'core/post-featured-image', 'core/post-title'];
-function TemplateContentPanel() {
-  const clientIds = (0,external_wp_data_namespaceObject.useSelect)(select => {
+const TEMPLATE_PART_BLOCK = 'core/template-part';
+function TemplateContentPanel({
+  renderingMode
+}) {
+  const {
+    enableComplementaryArea
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const {
+    clientIds,
+    postType
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlocksByName
     } = select(external_wp_blockEditor_namespaceObject.store);
-    return getBlocksByName(PAGE_CONTENT_BLOCKS);
+    const {
+      getCurrentPostType
+    } = select(store_store);
+    const _postType = getCurrentPostType();
+    return {
+      postType: _postType,
+      clientIds: getBlocksByName(TEMPLATE_POST_TYPE === _postType ? TEMPLATE_PART_BLOCK : PAGE_CONTENT_BLOCKS)
+    };
   }, []);
+  if (renderingMode === 'post-only' && postType !== TEMPLATE_POST_TYPE) {
+    return null;
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
     title: (0,external_wp_i18n_namespaceObject.__)('Content'),
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockQuickNavigation, {
-      clientIds: clientIds
+      clientIds: clientIds,
+      onSelect: () => {
+        enableComplementaryArea('core', 'edit-post/document');
+      }
     })
   });
 }
@@ -27954,7 +27654,9 @@ const SidebarContent = ({
         focusable: false,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSummary, {
           onActionPerformed: onActionPerformed
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(plugin_document_setting_panel.Slot, {}), renderingMode !== 'post-only' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplateContentPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplatePartContentPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTransformPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_taxonomies_panel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternOverridesPanel, {}), extraPanels]
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(plugin_document_setting_panel.Slot, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplateContentPanel, {
+          renderingMode: renderingMode
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplatePartContentPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTransformPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_taxonomies_panel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternOverridesPanel, {}), extraPanels]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(sidebar_Tabs.TabPanel, {
         tabId: sidebars.block,
         focusable: false,

@@ -71789,7 +71789,6 @@ BlockInfo.Slot = props => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -71797,8 +71796,11 @@ BlockInfo.Slot = props => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
 
 
 
+
+
 function BlockQuickNavigation({
-  clientIds
+  clientIds,
+  onSelect
 }) {
   if (!clientIds.length) {
     return null;
@@ -71806,32 +71808,28 @@ function BlockQuickNavigation({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 1,
     children: clientIds.map(clientId => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockQuickNavigationItem, {
+      onSelect: onSelect,
       clientId: clientId
     }, clientId))
   });
 }
 function BlockQuickNavigationItem({
-  clientId
+  clientId,
+  onSelect
 }) {
+  const blockInformation = useBlockDisplayInformation(clientId);
+  const blockTitle = useBlockDisplayTitle({
+    clientId,
+    context: 'list-view'
+  });
   const {
-    name,
-    icon,
     isSelected
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getBlockName,
-      getBlockAttributes,
       isBlockSelected,
       hasSelectedInnerBlock
     } = select(store);
-    const {
-      getBlockType
-    } = select(external_wp_blocks_namespaceObject.store);
-    const blockType = getBlockType(getBlockName(clientId));
-    const attributes = getBlockAttributes(clientId);
     return {
-      name: blockType && (0,external_wp_blocks_namespaceObject.__experimentalGetBlockLabel)(blockType, attributes, 'list-view'),
-      icon: blockType?.icon,
       isSelected: isBlockSelected(clientId) || hasSelectedInnerBlock(clientId, /* deep: */true)
     };
   }, [clientId]);
@@ -71840,18 +71838,23 @@ function BlockQuickNavigationItem({
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     isPressed: isSelected,
-    onClick: () => selectBlock(clientId),
+    onClick: async () => {
+      await selectBlock(clientId);
+      if (onSelect) {
+        onSelect(clientId);
+      }
+    },
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
-          icon: icon
+          icon: blockInformation?.icon
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexBlock, {
         style: {
           textAlign: 'left'
         },
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalTruncate, {
-          children: name
+          children: blockTitle
         })
       })]
     })
