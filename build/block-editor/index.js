@@ -65819,10 +65819,18 @@ const external_wp_date_namespaceObject = window["wp"]["date"];
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
+
+const {
+  CustomSelectControlV2Legacy: date_format_picker_CustomSelectControl
+} = unlock(external_wp_components_namespaceObject.privateApis);
+
 // So that we illustrate the different formats in the dropdown properly, show a date that is
 // somwhat recent, has a day greater than 12, and a month with more than three letters.
-
-
 const exampleDate = new Date();
 exampleDate.setDate(20);
 exampleDate.setMonth(exampleDate.getMonth() - 3);
@@ -65912,7 +65920,7 @@ function NonDefaultControls({
   };
   const [isCustom, setIsCustom] = (0,external_wp_element_namespaceObject.useState)(() => !!format && !suggestedOptions.some(option => option.format === format));
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CustomSelectControl, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(date_format_picker_CustomSelectControl, {
       label: (0,external_wp_i18n_namespaceObject.__)('Choose a format'),
       options: [...suggestedOptions, customOption],
       value: isCustom ? customOption : (_suggestedOptions$fin = suggestedOptions.find(option => option.format === format)) !== null && _suggestedOptions$fin !== void 0 ? _suggestedOptions$fin : customOption,
