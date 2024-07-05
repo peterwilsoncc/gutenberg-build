@@ -34998,10 +34998,6 @@ function useBorderBoxControlVisualizer(props) {
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/border-box-control/border-box-control-visualizer/component.js
 /**
- * WordPress dependencies
- */
-
-/**
  * Internal dependencies
  */
 
@@ -57270,6 +57266,7 @@ const date_time_styles_Wrapper = /*#__PURE__*/emotion_styled_base_browser_esm(v_
  * WordPress dependencies
  */
 
+
 /**
  * Internal dependencies
  */
@@ -59166,10 +59163,6 @@ const settings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(
 /* harmony default export */ const library_settings = (settings);
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/font-size-picker/utils.js
-/**
- * WordPress dependencies
- */
-
 /**
  * Internal dependencies
  */
@@ -75289,10 +75282,6 @@ const {
 } = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/components');
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/private-apis.js
-/**
- * WordPress dependencies
- */
-
 /**
  * Internal dependencies
  */

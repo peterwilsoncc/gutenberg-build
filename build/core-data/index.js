@@ -21260,7 +21260,9 @@ function getEntitiesByKind(state, kind) {
  *
  * @return Array of entities with config matching kind.
  */
-const getEntitiesConfig = (0,external_wp_data_namespaceObject.createSelector)((state, kind) => state.entities.config.filter(entity => entity.kind === kind), (state, kind) => state.entities.config);
+const getEntitiesConfig = (0,external_wp_data_namespaceObject.createSelector)((state, kind) => state.entities.config.filter(entity => entity.kind === kind), /* eslint-disable @typescript-eslint/no-unused-vars */
+(state, kind) => state.entities.config
+/* eslint-enable @typescript-eslint/no-unused-vars */);
 /**
  * Returns the entity config given its kind and name.
  *
@@ -21766,6 +21768,7 @@ function getLastEntityDeleteError(state, kind, name, recordId) {
   return state.entities.records?.[kind]?.[name]?.deleting?.[recordId]?.error;
 }
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * Returns the previous edit from the current undo offset
  * for the entity records edits history, if any.
@@ -21782,7 +21785,9 @@ function getUndoEdit(state) {
   });
   return undefined;
 }
+/* eslint-enable @typescript-eslint/no-unused-vars */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * Returns the next edit from the current undo offset
  * for the entity records edits history, if any.
@@ -21799,6 +21804,7 @@ function getRedoEdit(state) {
   });
   return undefined;
 }
+/* eslint-enable @typescript-eslint/no-unused-vars */
 
 /**
  * Returns true if there is a previous edit from the current undo offset
