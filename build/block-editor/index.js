@@ -10438,6 +10438,7 @@ const symbol = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 const external_wp_richText_namespaceObject = window["wp"]["richText"];
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/store/private-keys.js
 const globalStylesDataKey = Symbol('globalStylesDataKey');
+const globalStylesLinksDataKey = Symbol('globalStylesLinks');
 const selectBlockPatternsKey = Symbol('selectBlockPatternsKey');
 const reusableBlocksSelectKey = Symbol('reusableBlocksSelect');
 
@@ -17214,6 +17215,14 @@ function useSettingsForBlockElement(parentSettings, blockName, element) {
       if (!supportedStyles.includes('border' + key.charAt(0).toUpperCase() + key.slice(1))) {
         updatedSettings.border = {
           ...updatedSettings.border,
+          [key]: false
+        };
+      }
+    });
+    ['backgroundImage', 'backgroundSize'].forEach(key => {
+      if (!supportedStyles.includes(key)) {
+        updatedSettings.background = {
+          ...updatedSettings.background,
           [key]: false
         };
       }
@@ -24822,7 +24831,8 @@ function BackgroundImageControls({
   style,
   inheritedValue,
   onRemoveImage = background_panel_noop,
-  displayInPanel
+  displayInPanel,
+  themeFileURIs
 }) {
   const mediaUpload = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getSettings().mediaUpload, []);
   const {
@@ -24910,7 +24920,7 @@ function BackgroundImageControls({
       },
       name: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorImagePreviewItem, {
         className: "block-editor-global-styles-background-panel__image-preview",
-        imgUrl: url,
+        imgUrl: getResolvedThemeFilePath(url, themeFileURIs),
         filename: title,
         label: imgLabel
       }),
@@ -25127,6 +25137,7 @@ function BackgroundPanel({
             onChange: onChange,
             style: value,
             inheritedValue: inheritedValue,
+            themeFileURIs: themeFileURIs,
             displayInPanel: true,
             onRemoveImage: () => {
               setIsDropDownOpen(false);
@@ -25144,7 +25155,8 @@ function BackgroundPanel({
       }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundImageControls, {
         onChange: onChange,
         style: value,
-        inheritedValue: inheritedValue
+        inheritedValue: inheritedValue,
+        themeFileURIs: themeFileURIs
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       hasValue: () => hasImageValue,
@@ -25168,6 +25180,7 @@ function BackgroundPanel({
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -25272,7 +25285,28 @@ function BackgroundImagePanel({
   setAttributes,
   settings
 }) {
-  const style = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getBlockAttributes(clientId)?.style, [clientId]);
+  const {
+    style,
+    inheritedValue,
+    _links
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockAttributes,
+      getSettings
+    } = select(store);
+    const _settings = getSettings();
+    return {
+      style: getBlockAttributes(clientId)?.style,
+      _links: _settings[globalStylesLinksDataKey],
+      /*
+       * @TODO 1. Pass inherited value down to all block style controls,
+       *   See: packages/block-editor/src/hooks/style.js
+       * @TODO 2. Add support for block style variations,
+       *   See implementation: packages/block-editor/src/hooks/block-style-variation.js
+       */
+      inheritedValue: _settings[globalStylesDataKey]?.blocks?.[name]
+    };
+  }, [clientId, name]);
   if (!useHasBackgroundPanel(settings) || !hasBackgroundSupport(name, 'backgroundImage')) {
     return null;
   }
@@ -25289,12 +25323,14 @@ function BackgroundImagePanel({
     }
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundPanel, {
+    inheritedValue: inheritedValue,
     as: BackgroundInspectorControl,
     panelId: clientId,
     defaultValues: BACKGROUND_DEFAULT_VALUES,
     settings: updatedSettings,
     onChange: onChange,
-    value: style
+    value: style,
+    themeFileURIs: _links?.['wp:theme-file']
   });
 }
 /* harmony default export */ const background = ({
@@ -34573,6 +34609,7 @@ function position_useBlockProps({
 
 
 
+
 // List of block support features that can have their related styles
 // generated under their own feature level selector rather than the block's.
 const BLOCK_SUPPORT_FEATURE_LEVEL_SELECTORS = {
@@ -34827,6 +34864,20 @@ function getStylesDeclarations(blockStyles = {}, selector = '', useRootPaddingAl
     }
     return declarations;
   }, []);
+
+  /*
+   * Set background defaults.
+   * Applies to all background styles except the top-level site background.
+   */
+  if (!isRoot && !!blockStyles.background) {
+    blockStyles = {
+      ...blockStyles,
+      background: {
+        ...blockStyles.background,
+        ...setBackgroundStyleDefaults(blockStyles.background)
+      }
+    };
+  }
 
   // The goal is to move everything to server side generated engine styles
   // This is temporary as we absorb more and more styles into the engine.
@@ -38571,6 +38622,7 @@ function useZoomOut(zoomOut = true) {
 createBlockEditFilter([block_bindings, align, text_align, hooks_anchor, custom_class_name, style, duotone, position, layout, content_lock_ui, block_hooks, layout_child].filter(Boolean));
 createBlockListBlockFilter([align, text_align, background, style, color, dimensions, duotone, font_family, font_size, border, position, block_style_variation, layout_child]);
 createBlockSaveFilter([align, text_align, hooks_anchor, aria_label, custom_class_name, border, color, style, font_family, font_size]);
+
 
 
 
@@ -76401,6 +76453,7 @@ lock(privateApis, {
   usesContextKey: usesContextKey,
   useFlashEditableBlocks: useFlashEditableBlocks,
   globalStylesDataKey: globalStylesDataKey,
+  globalStylesLinksDataKey: globalStylesLinksDataKey,
   selectBlockPatternsKey: selectBlockPatternsKey,
   requiresWrapperOnCopy: requiresWrapperOnCopy,
   PrivateRichText: PrivateRichText,
@@ -76410,7 +76463,8 @@ lock(privateApis, {
   PrivatePublishDateTimePicker: PrivatePublishDateTimePicker,
   useSpacingSizes: useSpacingSizes,
   useBlockDisplayTitle: useBlockDisplayTitle,
-  __unstableBlockStyleVariationOverridesWithConfig: __unstableBlockStyleVariationOverridesWithConfig
+  __unstableBlockStyleVariationOverridesWithConfig: __unstableBlockStyleVariationOverridesWithConfig,
+  setBackgroundStyleDefaults: setBackgroundStyleDefaults
 });
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/index.js

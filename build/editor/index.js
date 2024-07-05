@@ -19225,7 +19225,7 @@ function GlobalStylesProvider({
 
 
 const EMPTY_BLOCKS_LIST = [];
-const DEFAULT_STYLES = {};
+const use_block_editor_settings_EMPTY_OBJECT = {};
 function __experimentalReusableBlocksSelect(select) {
   var _select$getEntityReco;
   return (_select$getEntityReco = select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_block', {
@@ -19235,6 +19235,7 @@ function __experimentalReusableBlocksSelect(select) {
 const BLOCK_EDITOR_SETTINGS = ['__experimentalBlockDirectory', '__experimentalDiscussionSettings', '__experimentalFeatures', '__experimentalGlobalStylesBaseStyles', '__unstableGalleryWithImageBlocks', 'alignWide', 'blockInspectorTabs', 'allowedMimeTypes', 'bodyPlaceholder', 'canLockBlocks', 'capabilities', 'clearBlockSelection', 'codeEditingEnabled', 'colors', 'disableCustomColors', 'disableCustomFontSizes', 'disableCustomSpacingSizes', 'disableCustomGradients', 'disableLayoutStyles', 'enableCustomLineHeight', 'enableCustomSpacing', 'enableCustomUnits', 'enableOpenverseMediaCategory', 'fontSizes', 'gradients', 'generateAnchors', 'onNavigateToEntityRecord', 'imageDefaultSize', 'imageDimensions', 'imageEditing', 'imageSizes', 'isRTL', 'locale', 'maxWidth', 'postContentAttributes', 'postsPerPage', 'readOnly', 'sectionRootClientId', 'styles', 'titlePlaceholder', 'supportsLayout', 'widgetTypesToHideFromLegacyWidgetBlock', '__unstableHasCustomAppender', '__unstableIsPreviewMode', '__unstableResolvedAssets', '__unstableIsBlockBasedTheme', '__experimentalArchiveTitleTypeLabel', '__experimentalArchiveTitleNameLabel'];
 const {
   globalStylesDataKey,
+  globalStylesLinksDataKey,
   selectBlockPatternsKey,
   reusableBlocksSelectKey
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
@@ -19250,7 +19251,7 @@ const {
  * @return {Object} Block Editor Settings.
  */
 function useBlockEditorSettings(settings, postType, postId, renderingMode) {
-  var _mergedGlobalStyles$s, _settings$__experimen, _settings$__experimen2;
+  var _mergedGlobalStyles$s, _mergedGlobalStyles$_, _settings$__experimen, _settings$__experimen2;
   const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
   const {
     allowRightClickOverrides,
@@ -19317,7 +19318,8 @@ function useBlockEditorSettings(settings, postType, postId, renderingMode) {
   const {
     merged: mergedGlobalStyles
   } = useGlobalStylesContext();
-  const globalStylesData = (_mergedGlobalStyles$s = mergedGlobalStyles.styles) !== null && _mergedGlobalStyles$s !== void 0 ? _mergedGlobalStyles$s : DEFAULT_STYLES;
+  const globalStylesData = (_mergedGlobalStyles$s = mergedGlobalStyles.styles) !== null && _mergedGlobalStyles$s !== void 0 ? _mergedGlobalStyles$s : use_block_editor_settings_EMPTY_OBJECT;
+  const globalStylesLinksData = (_mergedGlobalStyles$_ = mergedGlobalStyles._links) !== null && _mergedGlobalStyles$_ !== void 0 ? _mergedGlobalStyles$_ : use_block_editor_settings_EMPTY_OBJECT;
   const settingsBlockPatterns = (_settings$__experimen = settings.__experimentalAdditionalBlockPatterns) !== null && _settings$__experimen !== void 0 ? _settings$__experimen :
   // WP 6.0
   settings.__experimentalBlockPatterns; // WP 5.9
@@ -19372,6 +19374,7 @@ function useBlockEditorSettings(settings, postType, postId, renderingMode) {
     const blockEditorSettings = {
       ...Object.fromEntries(Object.entries(settings).filter(([key]) => BLOCK_EDITOR_SETTINGS.includes(key))),
       [globalStylesDataKey]: globalStylesData,
+      [globalStylesLinksDataKey]: globalStylesLinksData,
       allowedBlockTypes,
       allowRightClickOverrides,
       focusMode: focusMode && !forceDisableFocusMode,

@@ -16673,8 +16673,13 @@ function Subtitle({
 
 
 
+// Initial control values where no block style is set.
 
 
+
+const BACKGROUND_BLOCK_DEFAULT_VALUES = {
+  backgroundSize: 'cover'
+};
 function applyFallbackStyle(border) {
   if (!border) {
     return border;
@@ -16715,6 +16720,8 @@ const {
   useHasFiltersPanel,
   useHasImageSettingsPanel,
   useGlobalStyle: screen_block_useGlobalStyle,
+  useHasBackgroundPanel,
+  BackgroundPanel: StylesBackgroundPanel,
   BorderPanel: StylesBorderPanel,
   ColorPanel: StylesColorPanel,
   TypographyPanel: StylesTypographyPanel,
@@ -16758,6 +16765,7 @@ function ScreenBlock({
     settings.dimensions.aspectRatio = false;
   }
   const blockVariations = useBlockVariations(name);
+  const hasBackgroundPanel = useHasBackgroundPanel(settings);
   const hasTypographyPanel = screen_block_useHasTypographyPanel(settings);
   const hasColorPanel = screen_block_useHasColorPanel(settings);
   const hasBorderPanel = screen_block_useHasBorderPanel(settings);
@@ -16916,6 +16924,13 @@ function ScreenBlock({
       onChange: onChangeLightbox,
       value: userSettings,
       inheritedValue: settings
+    }), hasBackgroundPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StylesBackgroundPanel, {
+      inheritedValue: inheritedStyle,
+      value: style,
+      onChange: setStyle,
+      settings: settings,
+      defaultValues: BACKGROUND_BLOCK_DEFAULT_VALUES,
+      defaultControls: blockType?.supports?.background?.__experimentalDefaultControls
     }), canEditCSS && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
       title: (0,external_wp_i18n_namespaceObject.__)('Advanced'),
       initialOpen: false,
@@ -25195,7 +25210,7 @@ const {
   useGlobalStyle: background_panel_useGlobalStyle,
   useGlobalSetting: background_panel_useGlobalSetting,
   useGlobalStyleLinks,
-  BackgroundPanel: StylesBackgroundPanel
+  BackgroundPanel: background_panel_StylesBackgroundPanel
 } = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
 /**
@@ -25217,7 +25232,7 @@ function BackgroundPanel() {
   });
   const _links = useGlobalStyleLinks();
   const [settings] = background_panel_useGlobalSetting('');
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StylesBackgroundPanel, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(background_panel_StylesBackgroundPanel, {
     inheritedValue: inheritedStyle,
     value: style,
     onChange: setStyle,
@@ -25245,7 +25260,7 @@ function BackgroundPanel() {
 
 
 const {
-  useHasBackgroundPanel,
+  useHasBackgroundPanel: screen_layout_useHasBackgroundPanel,
   useHasDimensionsPanel: screen_layout_useHasDimensionsPanel,
   useGlobalSetting: screen_layout_useGlobalSetting,
   useSettingsForBlockElement: screen_layout_useSettingsForBlockElement
@@ -25254,7 +25269,11 @@ function ScreenLayout() {
   const [rawSettings] = screen_layout_useGlobalSetting('');
   const settings = screen_layout_useSettingsForBlockElement(rawSettings);
   const hasDimensionsPanel = screen_layout_useHasDimensionsPanel(settings);
-  const hasBackgroundPanel = useHasBackgroundPanel(settings);
+  /*
+   * Use the raw settings to determine if the background panel should be displayed,
+   * as the background panel is not dependent on the block element settings.
+   */
+  const hasBackgroundPanel = screen_layout_useHasBackgroundPanel(rawSettings);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header, {
       title: (0,external_wp_i18n_namespaceObject.__)('Layout')
