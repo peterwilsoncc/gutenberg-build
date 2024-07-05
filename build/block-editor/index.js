@@ -60851,11 +60851,12 @@ function ZoomOutModeInserters() {
     sectionRootClientId,
     insertionPoint,
     setInserterIsOpened,
-    selectedSection
+    hasSelection
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getSettings,
-      getBlockOrder
+      getBlockOrder,
+      getSelectionStart
     } = select(store);
     const {
       sectionRootClientId: root
@@ -60868,7 +60869,7 @@ function ZoomOutModeInserters() {
     // eslint-disable-next-line @wordpress/data-no-store-string-literals
     const editor = select('core/editor');
     return {
-      selectedSection: editor.getSelectedBlock(),
+      hasSelection: !!getSelectionStart().clientId,
       blockOrder: getBlockOrder(root),
       insertionPoint: unlock(editor).getInsertionPoint(),
       sectionRootClientId: root,
@@ -60894,7 +60895,7 @@ function ZoomOutModeInserters() {
       clearTimeout(timeout);
     };
   }, []);
-  if (!isReady || !selectedSection) {
+  if (!isReady || !hasSelection) {
     return null;
   }
   return [undefined, ...blockOrder].map((clientId, index) => {
