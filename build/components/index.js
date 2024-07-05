@@ -31124,6 +31124,10 @@ const StyledVisualLabel = /*#__PURE__*/emotion_styled_base_browser_esm("span",  
  * External dependencies
  */
 
+/**
+ * WordPress dependencies
+ */
+
 
 /**
  * Internal dependencies
@@ -31215,17 +31219,20 @@ const UnconnectedBaseControl = props => {
  * 	</BaseControl>
  * );
  */
-const VisualLabel = ({
-  className,
-  children,
-  ...props
-}) => {
+const UnforwardedVisualLabel = (props, ref) => {
+  const {
+    className,
+    children,
+    ...restProps
+  } = props;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledVisualLabel, {
-    ...props,
+    ref: ref,
+    ...restProps,
     className: dist_clsx('components-base-control__label', className),
     children: children
   });
 };
+const VisualLabel = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedVisualLabel);
 const BaseControl = Object.assign(contextConnectWithoutRef(UnconnectedBaseControl, 'BaseControl'), {
   VisualLabel
 });
