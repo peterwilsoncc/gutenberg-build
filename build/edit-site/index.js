@@ -29548,7 +29548,7 @@ function _ViewActions({
     trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       size: "compact",
       icon: library_cog,
-      label: (0,external_wp_i18n_namespaceObject.__)('View options')
+      label: (0,external_wp_i18n_namespaceObject._x)('View options', 'View is used as a noun')
     }),
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(view_actions_DropdownMenuGroup, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewTypeMenu, {
