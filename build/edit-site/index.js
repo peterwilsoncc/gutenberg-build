@@ -36723,7 +36723,7 @@ function filterSortAndPaginate(data, view, fields) {
       }).some(field => field.includes(normalizedSearch));
     });
   }
-  if (view.filters.length > 0) {
+  if (view.filters?.length > 0) {
     view.filters.forEach(filter => {
       const field = _fields.find(_field => _field.id === filter.field);
       if (field) {
@@ -36799,6 +36799,9 @@ function filterSortAndPaginate(data, view, fields) {
         const valueB = (_fieldToSort$getValue2 = fieldToSort.getValue({
           item: b
         })) !== null && _fieldToSort$getValue2 !== void 0 ? _fieldToSort$getValue2 : '';
+        if (typeof valueA === 'number' && typeof valueB === 'number') {
+          return view.sort?.direction === 'asc' ? valueA - valueB : valueB - valueA;
+        }
         return view.sort?.direction === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
       });
     }
