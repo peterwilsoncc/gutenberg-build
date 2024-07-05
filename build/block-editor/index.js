@@ -20313,7 +20313,7 @@ function GridVisualizer({
   if (isDistractionFree || !gridElement) {
     return null;
   }
-  const isManualGrid = parentLayout?.columnCount && window.__experimentalEnableGridInteractivity;
+  const isManualGrid = parentLayout?.isManualPlacement && window.__experimentalEnableGridInteractivity;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridVisualizerGrid, {
     clientId: clientId,
     gridElement: gridElement,
@@ -20542,8 +20542,7 @@ function useGridLayoutSync({
       rowCount,
       isManualPlacement
     } = gridLayout;
-    const isManualGrid = !!isManualPlacement;
-    if (isManualGrid) {
+    if (isManualPlacement) {
       const rects = [];
 
       // Respect the position of blocks that already have a columnStart and rowStart value.
@@ -36216,7 +36215,7 @@ function GridItemResizer({
   const blockElement = useBlockElement(clientId);
   const rootBlockElement = blockElement?.parentElement;
   const {
-    columnCount
+    isManualPlacement
   } = parentLayout;
   if (!blockElement || !rootBlockElement) {
     return null;
@@ -36227,7 +36226,7 @@ function GridItemResizer({
     blockElement: blockElement,
     rootBlockElement: rootBlockElement,
     onChange: onChange,
-    isManualGrid: !!columnCount && window.__experimentalEnableGridInteractivity
+    isManualGrid: isManualPlacement && window.__experimentalEnableGridInteractivity
   });
 }
 function GridItemResizerInner({
@@ -36606,7 +36605,7 @@ function ChildLayoutControlsPure({
   const {
     type: parentLayoutType = 'default',
     allowSizingOnChildren = false,
-    columnCount
+    isManualPlacement
   } = parentLayout;
   const rootClientId = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return select(store).getBlockRootClientId(clientId);
@@ -36617,7 +36616,6 @@ function ChildLayoutControlsPure({
   if (parentLayoutType !== 'grid') {
     return null;
   }
-  const isManualGrid = !!columnCount;
   function updateLayout(layout) {
     setAttributes({
       style: {
@@ -36641,7 +36639,7 @@ function ChildLayoutControlsPure({
       bounds: resizerBounds,
       onChange: updateLayout,
       parentLayout: parentLayout
-    }), isManualGrid && window.__experimentalEnableGridInteractivity && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItemMovers, {
+    }), isManualPlacement && window.__experimentalEnableGridInteractivity && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItemMovers, {
       layout: style?.layout,
       parentLayout: parentLayout,
       onChange: updateLayout,
@@ -56962,7 +56960,7 @@ function BlockMover({
       isFirst: firstIndex === 0,
       isLast: lastIndex === blockOrder.length - 1,
       orientation: getBlockListSettings(_rootClientId)?.orientation,
-      isManualGrid: layout.type === 'grid' && !!layout.columnCount && window.__experimentalEnableGridInteractivity
+      isManualGrid: layout.type === 'grid' && layout.isManualPlacement && window.__experimentalEnableGridInteractivity
     };
   }, [clientIds]);
   if (!canMove || isFirst && isLast && !rootClientId) {
