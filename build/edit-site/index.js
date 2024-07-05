@@ -36953,9 +36953,33 @@ const {
 
 
 // Default search helpers.
-const defaultGetName = item => item.type !== TEMPLATE_PART_POST_TYPE ? item.name || '' : '';
-const defaultGetTitle = item => typeof item.title === 'string' ? item.title : item.title.rendered;
-const defaultGetDescription = item => item.description || '';
+const defaultGetName = item => {
+  if (item.type === PATTERN_TYPES.user) {
+    return item.slug;
+  }
+  if (item.type === TEMPLATE_PART_POST_TYPE) {
+    return '';
+  }
+  return item.name || '';
+};
+const defaultGetTitle = item => {
+  if (typeof item.title === 'string') {
+    return item.title;
+  }
+  if (item.title && item.title.rendered) {
+    return item.title.rendered;
+  }
+  if (item.title && item.title.raw) {
+    return item.title.raw;
+  }
+  return '';
+};
+const defaultGetDescription = item => {
+  if (item.type === PATTERN_TYPES.user) {
+    return item.excerpt.raw;
+  }
+  return item.description || '';
+};
 const defaultGetKeywords = item => item.keywords || [];
 const defaultHasCategory = () => false;
 const removeMatchingTerms = (unmatchedTerms, unprocessedTerms) => {
@@ -37137,24 +37161,35 @@ const selectPatterns = (0,external_wp_data_namespaceObject.createSelector)((sele
   } = selectThemePatterns(select);
   const {
     patterns: userPatterns,
-    isResolving: isResolvingUserPatterns
+    isResolving: isResolvingUserPatterns,
+    categories: userPatternCategories
   } = selectUserPatterns(select);
   let patterns = [...(themePatterns || []), ...(userPatterns || [])];
   if (syncStatus) {
     // User patterns can have their sync statuses checked directly
     // Non-user patterns are all unsynced for the time being.
     patterns = patterns.filter(pattern => {
-      return pattern.type === PATTERN_TYPES.user ? pattern.syncStatus === syncStatus : syncStatus === PATTERN_SYNC_TYPES.unsynced;
+      return pattern.type === PATTERN_TYPES.user ? (pattern.wp_pattern_sync_status || PATTERN_SYNC_TYPES.full) === syncStatus : syncStatus === PATTERN_SYNC_TYPES.unsynced;
     });
   }
   if (categoryId) {
     patterns = searchItems(patterns, search, {
       categoryId,
-      hasCategory: (item, currentCategory) => item.categories?.includes(currentCategory)
+      hasCategory: (item, currentCategory) => {
+        if (item.type === PATTERN_TYPES.user) {
+          return item.wp_pattern_category.some(catId => userPatternCategories.find(cat => cat.id === catId)?.slug === currentCategory);
+        }
+        return item.categories?.includes(currentCategory);
+      }
     });
   } else {
     patterns = searchItems(patterns, search, {
-      hasCategory: item => !item.hasOwnProperty('categories')
+      hasCategory: item => {
+        if (item.type === PATTERN_TYPES.user) {
+          return userPatternCategories?.length && (!item.wp_pattern_category?.length || !item.wp_pattern_category.some(catId => userPatternCategories.find(cat => cat.id === catId)));
+        }
+        return !item.hasOwnProperty('categories');
+      }
     });
   }
   return {
@@ -37162,32 +37197,6 @@ const selectPatterns = (0,external_wp_data_namespaceObject.createSelector)((sele
     isResolving: isResolvingThemePatterns || isResolvingUserPatterns
   };
 }, select => [selectThemePatterns(select), selectUserPatterns(select)]);
-
-/**
- * Converts a post of type `wp_block` to a 'pattern item' that more closely
- * matches the structure of theme provided patterns.
- *
- * @param {Object} patternPost The `wp_block` record being normalized.
- * @param {Map}    categories  A Map of user created categories.
- *
- * @return {Object} The normalized item.
- */
-const convertPatternPostToItem = (patternPost, categories) => ({
-  blocks: (0,external_wp_blocks_namespaceObject.parse)(patternPost.content.raw, {
-    __unstableSkipMigrationLogs: true
-  }),
-  ...(patternPost.wp_pattern_category.length > 0 && {
-    categories: patternPost.wp_pattern_category.map(patternCategoryId => categories && categories.get(patternCategoryId) ? categories.get(patternCategoryId).slug : patternCategoryId)
-  }),
-  termLabels: patternPost.wp_pattern_category.map(patternCategoryId => categories?.get(patternCategoryId) ? categories.get(patternCategoryId).label : patternCategoryId),
-  id: patternPost.id,
-  name: patternPost.slug,
-  syncStatus: patternPost.wp_pattern_sync_status || PATTERN_SYNC_TYPES.full,
-  title: patternPost.title.raw,
-  type: patternPost.type,
-  description: patternPost.excerpt.raw,
-  patternPost
-});
 const selectUserPatterns = (0,external_wp_data_namespaceObject.createSelector)((select, syncStatus, search = '') => {
   const {
     getEntityRecords,
@@ -37201,10 +37210,10 @@ const selectUserPatterns = (0,external_wp_data_namespaceObject.createSelector)((
   const userPatternCategories = getUserPatternCategories();
   const categories = new Map();
   userPatternCategories.forEach(userCategory => categories.set(userCategory.id, userCategory));
-  let patterns = patternPosts ? patternPosts.map(record => convertPatternPostToItem(record, categories)) : EMPTY_PATTERN_LIST;
+  let patterns = patternPosts !== null && patternPosts !== void 0 ? patternPosts : EMPTY_PATTERN_LIST;
   const isResolving = isResolvingSelector('getEntityRecords', ['postType', PATTERN_TYPES.user, query]);
   if (syncStatus) {
-    patterns = patterns.filter(pattern => pattern.syncStatus === syncStatus);
+    patterns = patterns.filter(pattern => pattern.wp_pattern_sync_status || PATTERN_SYNC_TYPES.full === syncStatus);
   }
   patterns = searchItems(patterns, search, {
     // We exit user pattern retrieval early if we aren't in the
@@ -37601,13 +37610,14 @@ function usePatternCategories() {
 
     // Update the category counts to reflect user registered patterns.
     userPatterns.forEach(pattern => {
-      pattern.categories?.forEach(category => {
+      pattern.wp_pattern_category?.forEach(catId => {
+        const category = userPatternCategories.find(cat => cat.id === catId)?.name;
         if (categoryMap[category]) {
           categoryMap[category].count += 1;
         }
       });
       // If the pattern has no categories, add it to uncategorized.
-      if (!pattern.categories?.length) {
+      if (!pattern.wp_pattern_category?.length || !pattern.wp_pattern_category.some(catId => userPatternCategories.find(cat => cat.id === catId))) {
         categoryMap.uncategorized.count += 1;
       }
     });
@@ -38119,6 +38129,7 @@ function Preview({
   viewType
 }) {
   const descriptionId = (0,external_wp_element_namespaceObject.useId)();
+  const description = item.description || item?.excerpt?.raw;
   const isUserPattern = item.type === PATTERN_TYPES.user;
   const isTemplatePart = item.type === TEMPLATE_PART_POST_TYPE;
   const [backgroundColor] = page_patterns_useGlobalStyle('color.background');
@@ -38144,17 +38155,17 @@ function Preview({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(PreviewWrapper, {
       item: item,
       onClick: onClick,
-      ariaDescribedBy: item.description ? descriptionId : undefined,
+      ariaDescribedBy: !!description ? descriptionId : undefined,
       children: [isEmpty && isTemplatePart && (0,external_wp_i18n_namespaceObject.__)('Empty template part'), isEmpty && !isTemplatePart && (0,external_wp_i18n_namespaceObject.__)('Empty pattern'), !isEmpty && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Async, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview, {
           blocks: blocks,
           viewportWidth: item.viewportWidth
         })
       })]
-    }), item.description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    }), !!description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       hidden: true,
       id: descriptionId,
-      children: item.description
+      children: description
     })]
   });
 }
@@ -38221,7 +38232,7 @@ function Title({
         // See https://github.com/WordPress/gutenberg/pull/51898#discussion_r1243399243.
         ,
         tabIndex: "-1",
-        children: title || item.name
+        children: title
       })
     }), item.type === PATTERN_TYPES.theme && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
       placement: "top",
@@ -38303,15 +38314,14 @@ function DataviewsPatterns() {
         render: ({
           item
         }) => {
+          const syncStatus = 'wp_pattern_sync_status' in item ? item.wp_pattern_sync_status || PATTERN_SYNC_TYPES.full : PATTERN_SYNC_TYPES.unsynced;
           // User patterns can have their sync statuses checked directly.
           // Non-user patterns are all unsynced for the time being.
           return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-            className: `edit-site-patterns__field-sync-status-${item.syncStatus}`,
-            children: (SYNC_FILTERS.find(({
+            className: `edit-site-patterns__field-sync-status-${syncStatus}`,
+            children: SYNC_FILTERS.find(({
               value
-            }) => value === item.syncStatus) || SYNC_FILTERS.find(({
-              value
-            }) => value === PATTERN_SYNC_TYPES.unsynced)).label
+            }) => value === syncStatus).label
           });
         },
         elements: SYNC_FILTERS,
