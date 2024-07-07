@@ -24927,8 +24927,7 @@ function shadows_edit_panel_ShadowItem({
         className: dist_clsx('edit-site-global-styles__shadow-editor__remove-button', {
           'is-open': isOpen
         }),
-        ariaLabel: (0,external_wp_i18n_namespaceObject.__)('Remove shadow'),
-        tooltip: (0,external_wp_i18n_namespaceObject.__)('Remove shadow')
+        label: (0,external_wp_i18n_namespaceObject.__)('Remove shadow')
       };
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         align: "center",
