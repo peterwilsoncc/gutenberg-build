@@ -72290,9 +72290,6 @@ const getSelectItemSize = size => {
   };
   return sizes[size] || sizes.default;
 };
-const styles_SelectLabel = /*#__PURE__*/emotion_styled_base_browser_esm(SelectLabel,  true ? {
-  target: "e1p3eej78"
-} : 0)("font-size:11px;font-weight:500;line-height:", config_values.fontLineHeightBase, ";text-transform:uppercase;margin-bottom:", space(2), ";" + ( true ? "" : 0));
 const styles_Select = /*#__PURE__*/emotion_styled_base_browser_esm(select_Select,  true ? {
   // Do not forward `hasCustomRenderProp` to the underlying Ariakit.Select component
   shouldForwardProp: prop => prop !== 'hasCustomRenderProp',
@@ -72335,7 +72332,7 @@ const WithHintItemHint = /*#__PURE__*/emotion_styled_base_browser_esm("span",  t
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-restricted-imports
+
 
 /**
  * WordPress dependencies
@@ -72346,6 +72343,7 @@ const WithHintItemHint = /*#__PURE__*/emotion_styled_base_browser_esm("span",  t
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -72408,14 +72406,17 @@ function _CustomSelect(props) {
     // Where should `restProps` be forwarded to?
     (0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: className,
-      children: [hideLabelFromVision ?
-      /*#__PURE__*/
-      // TODO: Replace with BaseControl
-      (0,external_ReactJSXRuntime_namespaceObject.jsx)(visually_hidden_component, {
-        as: "label",
-        children: label
-      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_SelectLabel, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SelectLabel, {
         store: store,
+        render: hideLabelFromVision ?
+        /*#__PURE__*/
+        // @ts-expect-error `children` are passed via the render prop
+        (0,external_ReactJSXRuntime_namespaceObject.jsx)(visually_hidden_component, {}) :
+        /*#__PURE__*/
+        // @ts-expect-error `children` are passed via the render prop
+        (0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control.VisualLabel, {
+          as: "div"
+        }),
         children: label
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(input_base, {
         __next40pxDefaultSize: true,
