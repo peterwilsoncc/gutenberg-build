@@ -21224,15 +21224,15 @@ function GalleryEdit(props) {
       id
     }) => id === file.id) : null;
     const mediaTypeSelector = nativeFileData ? nativeFileData?.media_type : file.type;
-    return edit_ALLOWED_MEDIA_TYPES.some(mediaType => mediaTypeSelector?.indexOf(mediaType) === 0) || file.url?.indexOf('blob:') === 0;
+    return edit_ALLOWED_MEDIA_TYPES.some(mediaType => mediaTypeSelector?.indexOf(mediaType) === 0) || file.blob;
   }
   function updateImages(selectedImages) {
     const newFileUploads = Object.prototype.toString.call(selectedImages) === '[object FileList]';
     const imageArray = newFileUploads ? Array.from(selectedImages).map(file => {
       if (!file.url) {
-        return pickRelevantMediaFiles({
-          url: (0,external_wp_blob_namespaceObject.createBlobURL)(file)
-        });
+        return {
+          blob: (0,external_wp_blob_namespaceObject.createBlobURL)(file)
+        };
       }
       return file;
     }) : selectedImages;
@@ -21244,9 +21244,9 @@ function GalleryEdit(props) {
     }
     const processedImages = imageArray.filter(file => file.url || isValidFileType(file)).map(file => {
       if (!file.url) {
-        return pickRelevantMediaFiles({
-          url: (0,external_wp_blob_namespaceObject.createBlobURL)(file)
-        });
+        return {
+          blob: file.blob || (0,external_wp_blob_namespaceObject.createBlobURL)(file)
+        };
       }
       return file;
     });
@@ -21260,6 +21260,7 @@ function GalleryEdit(props) {
     const newBlocks = newImageList.map(image => {
       return (0,external_wp_blocks_namespaceObject.createBlock)('core/image', {
         id: image.id,
+        blob: image.blob,
         url: image.url,
         caption: image.caption,
         alt: image.alt
@@ -22706,7 +22707,7 @@ const gallery_transforms_transforms = {
     transform(files) {
       if (isGalleryV2Enabled()) {
         const innerBlocks = files.map(file => (0,external_wp_blocks_namespaceObject.createBlock)('core/image', {
-          url: (0,external_wp_blob_namespaceObject.createBlobURL)(file)
+          blob: (0,external_wp_blob_namespaceObject.createBlobURL)(file)
         }));
         return (0,external_wp_blocks_namespaceObject.createBlock)('core/gallery', {}, innerBlocks);
       }
@@ -27208,17 +27209,6 @@ const edit_pickRelevantMediaFiles = (image, size) => {
 };
 
 /**
- * Is the URL a temporary blob URL? A blob URL is one that is used temporarily
- * while the image is being uploaded and will not have an id yet allocated.
- *
- * @param {number=} id  The id of the image.
- * @param {string=} url The url of the image.
- *
- * @return {boolean} Is the URL a Blob URL
- */
-const edit_isTemporaryImage = (id, url) => !id && (0,external_wp_blob_namespaceObject.isBlobURL)(url);
-
-/**
  * Is the url for the image hosted externally. An externally hosted image has no
  * id and is not a blob url.
  *
@@ -27266,9 +27256,7 @@ function ImageEdit({
     align,
     metadata
   } = attributes;
-  const [temporaryURL, setTemporaryURL] = (0,external_wp_element_namespaceObject.useState)(() => {
-    return edit_isTemporaryImage(id, url) ? url : undefined;
-  });
+  const [temporaryURL, setTemporaryURL] = (0,external_wp_element_namespaceObject.useState)(attributes.blob);
   const altRef = (0,external_wp_element_namespaceObject.useRef)();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     altRef.current = alt;
@@ -27305,9 +27293,9 @@ function ImageEdit({
     setAttributes({
       src: undefined,
       id: undefined,
-      url: undefined
+      url: undefined,
+      blob: undefined
     });
-    setTemporaryURL(undefined);
   }
   function onSelectImage(media) {
     if (!media || !media.url) {
@@ -27316,15 +27304,16 @@ function ImageEdit({
         alt: undefined,
         id: undefined,
         title: undefined,
-        caption: undefined
+        caption: undefined,
+        blob: undefined
       });
+      setTemporaryURL();
       return;
     }
     if ((0,external_wp_blob_namespaceObject.isBlobURL)(media.url)) {
       setTemporaryURL(media.url);
       return;
     }
-    setTemporaryURL();
     const {
       imageDefaultSize
     } = getSettings();
@@ -27398,22 +27387,26 @@ function ImageEdit({
     }
     mediaAttributes.href = href;
     setAttributes({
+      blob: undefined,
       ...mediaAttributes,
       ...additionalAttributes,
       linkDestination
     });
+    setTemporaryURL();
   }
   function onSelectURL(newURL) {
     if (newURL !== url) {
       setAttributes({
+        blob: undefined,
         url: newURL,
         id: undefined,
         sizeSlug: getSettings().imageDefaultSize
       });
+      setTemporaryURL();
     }
   }
   useUploadMediaFromBlobURL({
-    url,
+    url: temporaryURL,
     allowedTypes: constants_ALLOWED_MEDIA_TYPES,
     onChange: onSelectImage,
     onError: onUploadError
@@ -27429,7 +27422,7 @@ function ImageEdit({
   const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseBorderProps)(attributes);
   const shadowProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetShadowClassesAndStyles)(attributes);
   const classes = dist_clsx(className, {
-    'is-transient': temporaryURL,
+    'is-transient': !!temporaryURL,
     'is-resized': !!width || !!height,
     [`size-${sizeSlug}`]: sizeSlug,
     'has-custom-border': !!borderProps.className || borderProps.style && Object.keys(borderProps.style).length > 0
@@ -27712,7 +27705,7 @@ const image_transforms_transforms = {
     transform(files) {
       const blocks = files.map(file => {
         return (0,external_wp_blocks_namespaceObject.createBlock)('core/image', {
-          url: (0,external_wp_blob_namespaceObject.createBlobURL)(file)
+          blob: (0,external_wp_blob_namespaceObject.createBlobURL)(file)
         });
       });
       return blocks;
@@ -27809,6 +27802,10 @@ const image_metadata = {
   keywords: ["img", "photo", "picture"],
   textdomain: "default",
   attributes: {
+    blob: {
+      type: "string",
+      __experimentalRole: "local"
+    },
     url: {
       type: "string",
       source: "attribute",

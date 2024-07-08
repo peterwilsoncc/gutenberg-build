@@ -10530,6 +10530,11 @@ function getCommentAttributes(blockType, attributes) {
       return accumulator;
     }
 
+    // Ignore all local attributes
+    if (attributeSchema.__experimentalRole === 'local') {
+      return accumulator;
+    }
+
     // Ignore default value.
     if ('default' in attributeSchema && JSON.stringify(attributeSchema.default) === JSON.stringify(value)) {
       return accumulator;
