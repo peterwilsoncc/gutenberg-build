@@ -35631,6 +35631,7 @@ function useGlobalStylesOutput(disableRootPadding = false) {
 
 
 
+
 const VARIATION_PREFIX = 'is-style-';
 function getVariationMatches(className) {
   if (!className) {
@@ -35771,6 +35772,61 @@ function __unstableBlockStyleVariationOverridesWithConfig({
     }, override.id))
   });
 }
+
+/**
+ * Retrieves any variation styles data and resolves any referenced values.
+ *
+ * @param {Object}    globalStyles A complete global styles object, containing settings and styles.
+ * @param {string}    name         The name of the desired block type.
+ * @param {variation} variation    The of the block style variation to retrieve data for.
+ *
+ * @return {Object|undefined} The global styles data for the specified variation.
+ */
+function getVariationStylesWithRefValues(globalStyles, name, variation) {
+  if (!globalStyles?.styles?.blocks?.[name]?.variations?.[variation]) {
+    return;
+  }
+
+  // Helper to recursively look for `ref` values to resolve.
+  const replaceRefs = variationStyles => {
+    Object.keys(variationStyles).forEach(key => {
+      const value = variationStyles[key];
+
+      // Only process objects.
+      if (typeof value === 'object' && value !== null) {
+        // Process `ref` value if present.
+        if (value.ref !== undefined) {
+          if (typeof value.ref !== 'string' || value.ref.trim() === '') {
+            // Remove invalid ref.
+            delete variationStyles[key];
+          } else {
+            // Resolve `ref` value.
+            const refValue = getValueFromObjectPath(globalStyles, value.ref);
+            if (refValue) {
+              variationStyles[key] = refValue;
+            } else {
+              delete variationStyles[key];
+            }
+          }
+        } else {
+          // Recursively resolve `ref` values in nested objects.
+          replaceRefs(value);
+
+          // After recursion, if value is empty due to explicitly
+          // `undefined` ref value, remove it.
+          if (Object.keys(value).length === 0) {
+            delete variationStyles[key];
+          }
+        }
+      }
+    });
+  };
+
+  // Deep clone variation node to avoid mutating it within global styles and losing refs.
+  const styles = JSON.parse(JSON.stringify(globalStyles.styles.blocks[name].variations[variation]));
+  replaceRefs(styles);
+  return styles;
+}
 function useBlockStyleVariation(name, variation, clientId) {
   // Prefer global styles data in GlobalStylesContext, which are available
   // if in the site editor. Otherwise fall back to whatever is in the
@@ -35789,11 +35845,13 @@ function useBlockStyleVariation(name, variation, clientId) {
     };
   }, []);
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
-    var _mergedConfig$styles, _mergedConfig$setting;
-    const styles = (_mergedConfig$styles = mergedConfig?.styles) !== null && _mergedConfig$styles !== void 0 ? _mergedConfig$styles : globalStyles;
-    const variationStyles = styles?.blocks?.[name]?.variations?.[variation];
-    return {
+    var _mergedConfig$setting, _mergedConfig$styles, _mergedConfig$setting2;
+    const variationStyles = getVariationStylesWithRefValues({
       settings: (_mergedConfig$setting = mergedConfig?.settings) !== null && _mergedConfig$setting !== void 0 ? _mergedConfig$setting : globalSettings,
+      styles: (_mergedConfig$styles = mergedConfig?.styles) !== null && _mergedConfig$styles !== void 0 ? _mergedConfig$styles : globalStyles
+    }, name, variation);
+    return {
+      settings: (_mergedConfig$setting2 = mergedConfig?.settings) !== null && _mergedConfig$setting2 !== void 0 ? _mergedConfig$setting2 : globalSettings,
       // The variation style data is all that is needed to generate
       // the styles for the current application to a block. The variation
       // name is updated to match the instance specific class name.
