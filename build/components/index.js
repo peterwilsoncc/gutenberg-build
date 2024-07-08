@@ -56949,6 +56949,7 @@ function TimeInput({
       children: label
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(h_stack_component, {
       alignment: "left",
+      expanded: false,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(TimeWrapper, {
         className: "components-datetime__time-field components-datetime__time-field-time" // Unused, for backwards compatibility.
         ,
