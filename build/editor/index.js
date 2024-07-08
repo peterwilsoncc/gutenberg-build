@@ -23800,6 +23800,7 @@ function InserterSidebar() {
       shouldFocusBlock: isMobileViewport,
       rootClientId: blockSectionRootClientId !== null && blockSectionRootClientId !== void 0 ? blockSectionRootClientId : insertionPoint.rootClientId,
       __experimentalInsertionIndex: insertionPoint.insertionIndex,
+      onSelect: insertionPoint.onSelect,
       __experimentalInitialTab: insertionPoint.tab,
       __experimentalInitialCategory: insertionPoint.category,
       __experimentalFilterValue: insertionPoint.filterValue,
