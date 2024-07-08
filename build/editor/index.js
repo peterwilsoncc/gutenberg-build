@@ -14909,6 +14909,7 @@ function validateTimezone(_hours, minutes) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -14980,6 +14981,8 @@ function PrivatePostSchedule({
     currentDate: postDate,
     onChange: onUpdateDate,
     is12Hour: is12HourTime,
+    dateOrder: /* translators: Order of day, month, and year. Available formats are 'dmy', 'mdy', and 'ymd'. */
+    (0,external_wp_i18n_namespaceObject._x)('dmy', 'date order'),
     events: events,
     onMonthPreviewed: date => setPreviewedMonth(parseISO(date)),
     onClose: onClose,

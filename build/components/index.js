@@ -57047,6 +57047,9 @@ function TimeInput({
 
 
 
+
+const VALID_DATE_ORDERS = ['dmy', 'mdy', 'ymd'];
+
 /**
  * TimePicker is a React component that renders a clock for time selection.
  *
@@ -57067,13 +57070,11 @@ function TimeInput({
  * };
  * ```
  */
-
-
-
 function TimePicker({
   is12Hour,
   currentTime,
-  onChange
+  onChange,
+  dateOrder: dateOrderProp
 }) {
   const [date, setDate] = (0,external_wp_element_namespaceObject.useState)(() =>
   // Truncate the date at the minutes, see: #15495.
@@ -57143,7 +57144,7 @@ function TimePicker({
     isDragEnabled: false,
     isShiftStepEnabled: false,
     onChange: buildNumberControlChangeCallback('date')
-  });
+  }, "day");
   const monthField = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MonthSelectWrapper, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(select_control, {
       className: "components-datetime__time-field components-datetime__time-field-month" // Unused, for backwards compatibility.
@@ -57196,6 +57197,38 @@ function TimePicker({
         onChange?.(format(newDate, TIMEZONELESS_FORMAT));
       }
     })
+  }, "month");
+  const yearField = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(YearInput, {
+    className: "components-datetime__time-field components-datetime__time-field-year" // Unused, for backwards compatibility.
+    ,
+    label: (0,external_wp_i18n_namespaceObject.__)('Year'),
+    hideLabelFromVision: true,
+    __next40pxDefaultSize: true,
+    value: year,
+    step: 1,
+    min: 1,
+    max: 9999,
+    required: true,
+    spinControls: "none",
+    isPressEnterToChange: true,
+    isDragEnabled: false,
+    isShiftStepEnabled: false,
+    onChange: buildNumberControlChangeCallback('year'),
+    __unstableStateReducer: buildPadInputStateReducer(4)
+  }, "year");
+  const defaultDateOrder = is12Hour ? 'mdy' : 'dmy';
+  const dateOrder = dateOrderProp && VALID_DATE_ORDERS.includes(dateOrderProp) ? dateOrderProp : defaultDateOrder;
+  const fields = dateOrder.split('').map(field => {
+    switch (field) {
+      case 'd':
+        return dayField;
+      case 'm':
+        return monthField;
+      case 'y':
+        return yearField;
+      default:
+        return null;
+    }
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(time_styles_Wrapper, {
     className: "components-datetime__time" // Unused, for backwards compatibility.
@@ -57224,31 +57257,10 @@ function TimePicker({
         className: "components-datetime__time-legend" // Unused, for backwards compatibility.
         ,
         children: (0,external_wp_i18n_namespaceObject.__)('Date')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(h_stack_component, {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(h_stack_component, {
         className: "components-datetime__time-wrapper" // Unused, for backwards compatibility.
         ,
-        children: [is12Hour ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: [monthField, dayField]
-        }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: [dayField, monthField]
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(YearInput, {
-          className: "components-datetime__time-field components-datetime__time-field-year" // Unused, for backwards compatibility.
-          ,
-          label: (0,external_wp_i18n_namespaceObject.__)('Year'),
-          hideLabelFromVision: true,
-          __next40pxDefaultSize: true,
-          value: year,
-          step: 1,
-          min: 1,
-          max: 9999,
-          required: true,
-          spinControls: "none",
-          isPressEnterToChange: true,
-          isDragEnabled: false,
-          isShiftStepEnabled: false,
-          onChange: buildNumberControlChangeCallback('year'),
-          __unstableStateReducer: buildPadInputStateReducer(4)
-        })]
+        children: fields
       })]
     })]
   });
@@ -57297,6 +57309,7 @@ const date_time_noop = () => {};
 function UnforwardedDateTimePicker({
   currentDate,
   is12Hour,
+  dateOrder,
   isInvalidDate,
   onMonthPreviewed = date_time_noop,
   onChange,
@@ -57311,7 +57324,8 @@ function UnforwardedDateTimePicker({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(date_time_time, {
         currentTime: currentDate,
         onChange: onChange,
-        is12Hour: is12Hour
+        is12Hour: is12Hour,
+        dateOrder: dateOrder
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(date, {
         currentDate: currentDate,
         onChange: onChange,

@@ -42365,7 +42365,9 @@ function PostDateEdit({
             currentDate: date,
             onChange: setDate,
             is12Hour: is12HourFormat(siteTimeFormat),
-            onClose: onClose
+            onClose: onClose,
+            dateOrder: /* translators: Order of day, month, and year. Available formats are 'dmy', 'mdy', and 'ymd'. */
+            (0,external_wp_i18n_namespaceObject._x)('dmy', 'date order')
           }),
           renderToggle: ({
             isOpen,
