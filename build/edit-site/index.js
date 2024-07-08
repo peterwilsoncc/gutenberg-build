@@ -38099,6 +38099,7 @@ const DEFAULT_VIEW = {
   layout: {
     ...defaultConfigPerViewType[LAYOUT_GRID]
   },
+  fields: ['title', 'sync-status'],
   filters: []
 };
 const SYNC_FILTERS = [{
@@ -38297,7 +38298,6 @@ function DataviewsPatterns() {
         viewType: view.type
       }),
       enableSorting: false,
-      enableHiding: false,
       width: '1%'
     }, {
       header: (0,external_wp_i18n_namespaceObject.__)('Title'),
