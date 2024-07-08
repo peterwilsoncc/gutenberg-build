@@ -3245,6 +3245,7 @@ function Caption({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -3270,9 +3271,9 @@ function AudioEdit({
     preload,
     src
   } = attributes;
-  const isTemporaryAudio = !id && (0,external_wp_blob_namespaceObject.isBlobURL)(src);
+  const [temporaryURL, setTemporaryURL] = (0,external_wp_element_namespaceObject.useState)(attributes.blob);
   useUploadMediaFromBlobURL({
-    url: src,
+    url: temporaryURL,
     allowedTypes: ALLOWED_MEDIA_TYPES,
     onChange: onSelectAudio,
     onError: onUploadError
@@ -3300,8 +3301,10 @@ function AudioEdit({
       }
       setAttributes({
         src: newSrc,
-        id: undefined
+        id: undefined,
+        blob: undefined
       });
+      setTemporaryURL();
     }
   }
   const {
@@ -3322,25 +3325,34 @@ function AudioEdit({
       setAttributes({
         src: undefined,
         id: undefined,
-        caption: undefined
+        caption: undefined,
+        blob: undefined
       });
+      setTemporaryURL();
       return;
     }
+    if ((0,external_wp_blob_namespaceObject.isBlobURL)(media.url)) {
+      setTemporaryURL(media.url);
+      return;
+    }
+
     // Sets the block's attribute and updates the edit component from the
     // selected media, then switches off the editing UI.
     setAttributes({
+      blob: undefined,
       src: media.url,
       id: media.id,
       caption: media.caption
     });
+    setTemporaryURL();
   }
   const classes = dist_clsx(className, {
-    'is-transient': isTemporaryAudio
+    'is-transient': !!temporaryURL
   });
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: classes
   });
-  if (!src) {
+  if (!src && !temporaryURL) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
@@ -3412,9 +3424,9 @@ function AudioEdit({
         isDisabled: !isSingleSelected,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("audio", {
           controls: "controls",
-          src: src
+          src: src !== null && src !== void 0 ? src : temporaryURL
         })
-      }), isTemporaryAudio && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Caption, {
+      }), !!temporaryURL && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Caption, {
         attributes: attributes,
         setAttributes: setAttributes,
         isSelected: isSingleSelected,
@@ -3478,7 +3490,7 @@ const transforms = {
       // It's already done as part of the `componentDidMount`
       // in the audio block.
       const block = (0,external_wp_blocks_namespaceObject.createBlock)('core/audio', {
-        src: (0,external_wp_blob_namespaceObject.createBlobURL)(file)
+        blob: (0,external_wp_blob_namespaceObject.createBlobURL)(file)
       });
       return block;
     }
@@ -3558,6 +3570,10 @@ const audio_metadata = {
   keywords: ["music", "sound", "podcast", "recording"],
   textdomain: "default",
   attributes: {
+    blob: {
+      type: "string",
+      __experimentalRole: "local"
+    },
     src: {
       type: "string",
       source: "attribute",
