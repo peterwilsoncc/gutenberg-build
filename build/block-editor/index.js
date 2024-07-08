@@ -34298,28 +34298,24 @@ function useBlockDisplayInformation(clientId) {
 
 
 const {
-  CustomSelectControl: position_CustomSelectControl
+  CustomSelectControlV2Legacy: position_CustomSelectControl
 } = unlock(external_wp_components_namespaceObject.privateApis);
 const POSITION_SUPPORT_KEY = 'position';
-const OPTION_CLASSNAME = 'block-editor-hooks__position-selection__select-control__option';
 const DEFAULT_OPTION = {
   key: 'default',
   value: '',
-  name: (0,external_wp_i18n_namespaceObject.__)('Default'),
-  className: OPTION_CLASSNAME
+  name: (0,external_wp_i18n_namespaceObject.__)('Default')
 };
 const STICKY_OPTION = {
   key: 'sticky',
   value: 'sticky',
   name: (0,external_wp_i18n_namespaceObject._x)('Sticky', 'Name for the value of the CSS position property'),
-  className: OPTION_CLASSNAME,
   __experimentalHint: (0,external_wp_i18n_namespaceObject.__)('The block will stick to the top of the window instead of scrolling.')
 };
 const FIXED_OPTION = {
   key: 'fixed',
   value: 'fixed',
   name: (0,external_wp_i18n_namespaceObject._x)('Fixed', 'Name for the value of the CSS position property'),
-  className: OPTION_CLASSNAME,
   __experimentalHint: (0,external_wp_i18n_namespaceObject.__)('The block will not move when the page is scrolled.')
 };
 const POSITION_SIDES = ['top', 'right', 'bottom', 'left'];
@@ -34528,12 +34524,10 @@ function PositionPanelPure({
     web: options.length > 1 ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls, {
       group: "position",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
-        className: "block-editor-hooks__position-selection",
         __nextHasNoMarginBottom: true,
         help: stickyHelpText,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(position_CustomSelectControl, {
           __next40pxDefaultSize: true,
-          className: "block-editor-hooks__position-selection__select-control",
           label: (0,external_wp_i18n_namespaceObject.__)('Position'),
           hideLabelFromVision: true,
           describedBy: (0,external_wp_i18n_namespaceObject.sprintf)(
@@ -34541,7 +34535,6 @@ function PositionPanelPure({
           (0,external_wp_i18n_namespaceObject.__)('Currently selected position: %s'), selectedOption.name),
           options: options,
           value: selectedOption,
-          __experimentalShowSelectedHint: true,
           onChange: ({
             selectedItem
           }) => {
