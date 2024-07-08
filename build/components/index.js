@@ -36938,7 +36938,13 @@ const markLabelFill = ({
 };
 const MarkLabel = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1epgpqk6"
-} : 0)("color:", COLORS.gray[300], ";left:0;font-size:11px;position:absolute;top:12px;transform:translateX( -50% );white-space:nowrap;", markLabelFill, ";" + ( true ? "" : 0));
+} : 0)("color:", COLORS.gray[300], ";font-size:11px;position:absolute;top:12px;white-space:nowrap;", rtl({
+  left: 0
+}), ";", rtl({
+  transform: 'translateX( -50% )'
+}, {
+  transform: 'translateX( 50% )'
+}), ";", markLabelFill, ";" + ( true ? "" : 0));
 const thumbColor = ({
   disabled
 }) => disabled ? /*#__PURE__*/emotion_react_browser_esm_css("background-color:", COLORS.gray[400], ";" + ( true ? "" : 0),  true ? "" : 0) : /*#__PURE__*/emotion_react_browser_esm_css("background-color:", COLORS.theme.accent, ";" + ( true ? "" : 0),  true ? "" : 0);
