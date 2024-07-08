@@ -55632,7 +55632,7 @@ function useInnerBlocksProps(props = {}, options = {}) {
     rootClientId: clientId,
     parentClientId
   });
-  const ref = (0,external_wp_compose_namespaceObject.useMergeRefs)([props.ref, __unstableDisableDropZone || isDropZoneDisabled || layout?.columnCount && window.__experimentalEnableGridInteractivity ? null : blockDropZoneRef]);
+  const ref = (0,external_wp_compose_namespaceObject.useMergeRefs)([props.ref, __unstableDisableDropZone || isDropZoneDisabled || layout?.isManualPlacement && window.__experimentalEnableGridInteractivity ? null : blockDropZoneRef]);
   const innerBlocksProps = {
     __experimentalCaptureToolbars,
     layout,
