@@ -10324,6 +10324,7 @@ const computePopoverPosition = c => c === null || Number.isNaN(c) ? undefined : 
  */
 
 
+
 /**
  * WordPress dependencies
  */
@@ -10353,6 +10354,7 @@ const CONTEXT_VALUE = {
 function UnforwardedTooltip(props, ref) {
   const {
     children,
+    className,
     delay = TOOLTIP_DELAY,
     hideOnClick = true,
     placement,
@@ -10407,7 +10409,7 @@ function UnforwardedTooltip(props, ref) {
       children: isOnlyChild ? undefined : children
     }), isOnlyChild && (text || shortcut) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Tooltip, {
       ...restProps,
-      className: "components-tooltip",
+      className: dist_clsx('components-tooltip', className),
       unmountOnHide: true,
       gutter: 4,
       id: describedById,
