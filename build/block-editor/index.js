@@ -35086,7 +35086,7 @@ const getNodesWithStyles = (tree, blockSelectors) => {
         if (variation?.css) {
           variations[variationName].css = variation.css;
         }
-        const variationSelector = blockSelectors[blockName].styleVariationSelectors?.[variationName];
+        const variationSelector = blockSelectors[blockName]?.styleVariationSelectors?.[variationName];
 
         // Process the variation's inner element styles.
         // This comes before the inner block styles so the
@@ -35104,9 +35104,9 @@ const getNodesWithStyles = (tree, blockSelectors) => {
         // Process the variations inner block type styles.
         Object.entries((_variation$blocks = variation?.blocks) !== null && _variation$blocks !== void 0 ? _variation$blocks : {}).forEach(([variationBlockName, variationBlockStyles]) => {
           var _variationBlockStyles;
-          const variationBlockSelector = scopeSelector(variationSelector, blockSelectors[variationBlockName].selector);
-          const variationDuotoneSelector = scopeSelector(variationSelector, blockSelectors[variationBlockName].duotoneSelector);
-          const variationFeatureSelectors = scopeFeatureSelectors(variationSelector, blockSelectors[variationBlockName].featureSelectors);
+          const variationBlockSelector = scopeSelector(variationSelector, blockSelectors[variationBlockName]?.selector);
+          const variationDuotoneSelector = scopeSelector(variationSelector, blockSelectors[variationBlockName]?.duotoneSelector);
+          const variationFeatureSelectors = scopeFeatureSelectors(variationSelector, blockSelectors[variationBlockName]?.featureSelectors);
           const variationBlockStyleNodes = pickStyleKeys(variationBlockStyles);
           if (variationBlockStyles?.css) {
             variationBlockStyleNodes.css = variationBlockStyles.css;
@@ -35115,8 +35115,8 @@ const getNodesWithStyles = (tree, blockSelectors) => {
             selector: variationBlockSelector,
             duotoneSelector: variationDuotoneSelector,
             featureSelectors: variationFeatureSelectors,
-            fallbackGapValue: blockSelectors[variationBlockName].fallbackGapValue,
-            hasLayoutSupport: blockSelectors[variationBlockName].hasLayoutSupport,
+            fallbackGapValue: blockSelectors[variationBlockName]?.fallbackGapValue,
+            hasLayoutSupport: blockSelectors[variationBlockName]?.hasLayoutSupport,
             styles: variationBlockStyleNodes
           });
 
