@@ -28373,7 +28373,7 @@ function getJsonFromItem(item) {
   return JSON.stringify({
     __file: item.type,
     title: getItemTitle(item),
-    content: item.content.raw,
+    content: typeof item.content === 'string' ? item.content : item.content?.raw,
     syncStatus: item.wp_pattern_sync_status
   }, null, 2);
 }
