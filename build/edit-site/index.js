@@ -29350,6 +29350,7 @@ const VIEW_LAYOUTS = [{
 
 
 
+
 const {
   DropdownMenuV2: view_actions_DropdownMenu,
   DropdownMenuGroupV2: view_actions_DropdownMenuGroup,
@@ -29370,41 +29371,29 @@ function ViewTypeMenu({
   if (_availableViews.length === 1) {
     return null;
   }
-  const activeView = _availableViews.find(v => view.type === v.type);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_actions_DropdownMenu, {
-    trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_actions_DropdownMenuItem, {
-      suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        "aria-hidden": "true",
-        children: activeView?.label
-      }),
+  return _availableViews.map(availableView => {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_actions_DropdownMenuRadioItem, {
+      value: availableView.type,
+      name: "view-actions-available-view",
+      checked: availableView.type === view.type,
+      hideOnClick: true,
+      onChange: e => {
+        switch (e.target.value) {
+          case 'list':
+          case 'grid':
+          case 'table':
+            return onChangeView({
+              ...view,
+              type: e.target.value,
+              layout: {}
+            });
+        }
+        throw new Error('Invalid dataview');
+      },
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_actions_DropdownMenuItemLabel, {
-        children: (0,external_wp_i18n_namespaceObject.__)('Layout')
+        children: availableView.label
       })
-    }),
-    children: _availableViews.map(availableView => {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_actions_DropdownMenuRadioItem, {
-        value: availableView.type,
-        name: "view-actions-available-view",
-        checked: availableView.type === view.type,
-        hideOnClick: true,
-        onChange: e => {
-          switch (e.target.value) {
-            case 'list':
-            case 'grid':
-            case 'table':
-              return onChangeView({
-                ...view,
-                type: e.target.value,
-                layout: {}
-              });
-          }
-          throw new Error('Invalid dataview');
-        },
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_actions_DropdownMenuItemLabel, {
-          children: availableView.label
-        })
-      }, availableView.type);
-    })
+    }, availableView.type);
   });
 }
 const PAGE_SIZE_VALUES = [10, 20, 50, 100];
@@ -29543,28 +29532,45 @@ function _ViewActions({
   onChangeView,
   supportedLayouts
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_actions_DropdownMenu, {
-    trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      size: "compact",
-      icon: library_cog,
-      label: (0,external_wp_i18n_namespaceObject._x)('View options', 'View is used as a noun')
-    }),
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(view_actions_DropdownMenuGroup, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewTypeMenu, {
-        view: view,
-        onChangeView: onChangeView,
-        supportedLayouts: supportedLayouts
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SortMenu, {
-        fields: fields,
-        view: view,
-        onChangeView: onChangeView
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldsVisibilityMenu, {
-        fields: fields,
-        view: view,
-        onChangeView: onChangeView
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageSizeMenu, {
-        view: view,
-        onChangeView: onChangeView
+  const activeView = VIEW_LAYOUTS.find(v => view.type === v.type);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+      spacing: 1,
+      expanded: false,
+      style: {
+        flexShrink: 0
+      },
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_actions_DropdownMenu, {
+        trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          size: "compact",
+          icon: activeView?.icon,
+          label: (0,external_wp_i18n_namespaceObject.__)('Layout')
+        }),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewTypeMenu, {
+          view: view,
+          onChangeView: onChangeView,
+          supportedLayouts: supportedLayouts
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_actions_DropdownMenu, {
+        trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          size: "compact",
+          icon: library_cog,
+          label: (0,external_wp_i18n_namespaceObject._x)('View options', 'View is used as a noun')
+        }),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(view_actions_DropdownMenuGroup, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SortMenu, {
+            fields: fields,
+            view: view,
+            onChangeView: onChangeView
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldsVisibilityMenu, {
+            fields: fields,
+            view: view,
+            onChangeView: onChangeView
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageSizeMenu, {
+            view: view,
+            onChangeView: onChangeView
+          })]
+        })
       })]
     })
   });
