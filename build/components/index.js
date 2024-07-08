@@ -72314,25 +72314,25 @@ const styles_SelectItem = /*#__PURE__*/emotion_styled_base_browser_esm(SelectIte
 } : 0)(({
   size
 }) => /*#__PURE__*/emotion_react_browser_esm_css("cursor:default;display:flex;align-items:center;justify-content:space-between;font-size:", config_values.fontSize, ";line-height:28px;padding-block:", space(2), ";scroll-margin:", space(1), ";user-select:none;&[aria-disabled='true']{cursor:not-allowed;}&[data-active-item]{background-color:", COLORS.theme.gray[300], ";}", getSelectItemSize(size), ";" + ( true ? "" : 0),  true ? "" : 0),  true ? "" : 0);
-const SelectedItemCheck = /*#__PURE__*/emotion_styled_base_browser_esm(SelectItemCheck,  true ? {
-  target: "e1p3eej74"
-} : 0)("display:flex;align-items:center;margin-inline-start:", space(2), ";font-size:24px;" + ( true ? "" : 0));
 const truncateStyles =  true ? {
   name: "1h52dri",
   styles: "overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
 } : 0;
 const SelectedExperimentalHintWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
-  target: "e1p3eej73"
+  target: "e1p3eej74"
 } : 0)(truncateStyles, ";" + ( true ? "" : 0));
 const SelectedExperimentalHintItem = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
-  target: "e1p3eej72"
+  target: "e1p3eej73"
 } : 0)("color:", COLORS.theme.gray[600], ";margin-inline-start:", space(2), ";" + ( true ? "" : 0));
 const WithHintItemWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
-  target: "e1p3eej71"
+  target: "e1p3eej72"
 } : 0)("display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;flex:1;column-gap:", space(4), ";" + ( true ? "" : 0));
 const WithHintItemHint = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
-  target: "e1p3eej70"
+  target: "e1p3eej71"
 } : 0)("color:", COLORS.theme.gray[600], ";text-align:initial;line-height:", config_values.fontLineHeightBase, ";padding-inline-end:", space(1), ";margin-block:", space(1), ";" + ( true ? "" : 0));
+const SelectedItemCheck = /*#__PURE__*/emotion_styled_base_browser_esm(SelectItemCheck,  true ? {
+  target: "e1p3eej70"
+} : 0)("display:flex;align-items:center;margin-inline-start:", space(2), ";font-size:0;", WithHintItemWrapper, "~&,&:not(:empty){font-size:24px;}" + ( true ? "" : 0));
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/custom-select-control-v2/custom-select.js
 /**
