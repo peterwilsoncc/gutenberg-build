@@ -62205,6 +62205,10 @@ const video_deprecated_metadata = {
       attribute: "preload",
       "default": "metadata"
     },
+    blob: {
+      type: "string",
+      __experimentalRole: "local"
+    },
     src: {
       type: "string",
       source: "attribute",
@@ -62738,9 +62742,9 @@ function VideoEdit({
     src,
     tracks
   } = attributes;
-  const isTemporaryVideo = !id && (0,external_wp_blob_namespaceObject.isBlobURL)(src);
+  const [temporaryURL, setTemporaryURL] = (0,external_wp_element_namespaceObject.useState)(attributes.blob);
   useUploadMediaFromBlobURL({
-    url: src,
+    url: temporaryURL,
     allowedTypes: video_edit_ALLOWED_MEDIA_TYPES,
     onChange: onSelectVideo,
     onError: onUploadError
@@ -62760,19 +62764,27 @@ function VideoEdit({
         src: undefined,
         id: undefined,
         poster: undefined,
-        caption: undefined
+        caption: undefined,
+        blob: undefined
       });
+      setTemporaryURL();
+      return;
+    }
+    if ((0,external_wp_blob_namespaceObject.isBlobURL)(media.url)) {
+      setTemporaryURL(media.url);
       return;
     }
 
     // Sets the block's attribute and updates the edit component from the
     // selected media.
     setAttributes({
+      blob: undefined,
       src: media.url,
       id: media.id,
       poster: media.image?.src !== media.icon ? media.image?.src : undefined,
       caption: media.caption
     });
+    setTemporaryURL();
   }
   function onSelectURL(newSrc) {
     if (newSrc !== src) {
@@ -62787,10 +62799,12 @@ function VideoEdit({
         return;
       }
       setAttributes({
+        blob: undefined,
         src: newSrc,
         id: undefined,
         poster: undefined
       });
+      setTemporaryURL();
     }
   }
   const {
@@ -62802,12 +62816,12 @@ function VideoEdit({
     });
   }
   const classes = dist_clsx(className, {
-    'is-transient': isTemporaryVideo
+    'is-transient': !!temporaryURL
   });
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: classes
   });
-  if (!src) {
+  if (!src && !temporaryURL) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
@@ -62905,13 +62919,13 @@ function VideoEdit({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("video", {
           controls: controls,
           poster: poster,
-          src: src,
+          src: src || temporaryURL,
           ref: videoPlayer,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tracks, {
             tracks: tracks
           })
         })
-      }), isTemporaryVideo && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Caption, {
+      }), !!temporaryURL && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Caption, {
         attributes: attributes,
         setAttributes: setAttributes,
         isSelected: isSingleSelected,
@@ -62991,7 +63005,7 @@ const video_transforms_transforms = {
       // It's already done as part of the `componentDidMount`
       // in the video block
       const block = (0,external_wp_blocks_namespaceObject.createBlock)('core/video', {
-        src: (0,external_wp_blob_namespaceObject.createBlobURL)(file)
+        blob: (0,external_wp_blob_namespaceObject.createBlobURL)(file)
       });
       return block;
     }
@@ -63146,6 +63160,10 @@ const video_metadata = {
       selector: "video",
       attribute: "preload",
       "default": "metadata"
+    },
+    blob: {
+      type: "string",
+      __experimentalRole: "local"
     },
     src: {
       type: "string",
