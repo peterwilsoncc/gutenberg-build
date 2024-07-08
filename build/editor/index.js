@@ -25114,7 +25114,8 @@ function DataFormTextControl({
     label: header,
     placeholder: placeholder,
     value: value,
-    onChange: onChangeControl
+    onChange: onChangeControl,
+    __next40pxDefaultSize: true
   });
 }
 const controls = {
@@ -25810,12 +25811,14 @@ const useDuplicatePostAction = postType => {
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
               variant: "tertiary",
               onClick: closeModal,
+              __next40pxDefaultSize: true,
               children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
               variant: "primary",
               type: "submit",
               isBusy: isCreatingPage,
               "aria-disabled": isCreatingPage,
+              __next40pxDefaultSize: true,
               children: (0,external_wp_i18n_namespaceObject._x)('Duplicate', 'action label')
             })]
           })]
