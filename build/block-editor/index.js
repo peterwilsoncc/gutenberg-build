@@ -20788,6 +20788,10 @@ const units = [{
       rowCount = null
     } = layout;
 
+    // Check that the grid layout attributes are of the correct type, so that we don't accidentally
+    // write code that stores a string attribute instead of a number.
+    if (false) {}
+
     // If a block's block.json skips serialization for spacing or spacing.blockGap,
     // don't apply the user-defined value to the styles.
     const blockGapValue = style?.spacing?.blockGap && !shouldSkipSerialization(blockName, 'spacing', 'blockGap') ? getGapCSSValue(style?.spacing?.blockGap, '0.5em') : undefined;
@@ -20877,7 +20881,7 @@ function GridLayoutMinimumWidthControl({
           onChange: newValue => {
             onChange({
               ...layout,
-              minimumColumnWidth: newValue
+              minimumColumnWidth: newValue === '' ? undefined : newValue
             });
           },
           onUnitChange: handleUnitChange,
@@ -20909,8 +20913,10 @@ function GridLayoutColumnsAndRowsControl({
   onChange,
   allowSizingOnChildren
 }) {
+  // If the grid interactivity experiment is enabled, allow unsetting the column count.
+  const defaultColumnCount = window.__experimentalEnableGridInteractivity ? undefined : 3;
   const {
-    columnCount = 3,
+    columnCount = defaultColumnCount,
     rowCount,
     isManualPlacement
   } = layout;
@@ -20926,15 +20932,22 @@ function GridLayoutColumnsAndRowsControl({
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
             size: "__unstable-large",
             onChange: value => {
-              /**
-               * If the input is cleared, avoid switching
-               * back to "Auto" by setting a value of "1".
-               */
-              const validValue = value !== '' ? value : '1';
-              onChange({
-                ...layout,
-                columnCount: window.__experimentalEnableGridInteractivity ? parseInt(value, 10) || null : parseInt(validValue, 10)
-              });
+              if (window.__experimentalEnableGridInteractivity) {
+                // Allow unsetting the column count when in auto mode.
+                const defaultNewColumnCount = isManualPlacement ? 1 : undefined;
+                const newColumnCount = value === '' ? defaultNewColumnCount : parseInt(value, 10);
+                onChange({
+                  ...layout,
+                  columnCount: newColumnCount
+                });
+              } else {
+                // Don't allow unsetting the column count.
+                const newColumnCount = value === '' ? 1 : parseInt(value, 10);
+                onChange({
+                  ...layout,
+                  columnCount: newColumnCount
+                });
+              }
             },
             value: columnCount,
             min: 0,
@@ -20946,17 +20959,18 @@ function GridLayoutColumnsAndRowsControl({
           children: window.__experimentalEnableGridInteractivity && allowSizingOnChildren && isManualPlacement ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
             size: "__unstable-large",
             onChange: value => {
+              // Don't allow unsetting the row count.
+              const newRowCount = value === '' ? 1 : parseInt(value, 10);
               onChange({
                 ...layout,
-                rowCount: parseInt(value, 10)
+                rowCount: newRowCount
               });
             },
             value: rowCount,
             min: 0,
             label: (0,external_wp_i18n_namespaceObject.__)('Rows')
           }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
-            value: parseInt(columnCount, 10) // RangeControl can't deal with strings.
-            ,
+            value: columnCount !== null && columnCount !== void 0 ? columnCount : 0,
             onChange: value => onChange({
               ...layout,
               columnCount: value
@@ -31893,15 +31907,15 @@ function GridControls({
     rowSpan
   } = childLayout;
   const {
-    columnCount
+    columnCount = 3,
+    rowCount
   } = parentLayout !== null && parentLayout !== void 0 ? parentLayout : {};
-  const gridColumnNumber = parseInt(columnCount, 10) || 3;
   const rootClientId = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getBlockRootClientId(panelId));
   const {
     moveBlocksToPosition,
     __unstableMarkNextChangeAsNotPersistent
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(rootClientId, gridColumnNumber);
+  const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(rootClientId, columnCount);
   const hasStartValue = () => !!columnStart || !!rowStart;
   const hasSpanValue = () => !!columnSpan || !!rowSpan;
   const resetGridStarts = () => {
@@ -31929,28 +31943,32 @@ function GridControls({
         label: (0,external_wp_i18n_namespaceObject.__)('Column span'),
         type: "number",
         onChange: value => {
+          // Don't allow unsetting.
+          const newColumnSpan = value === '' ? 1 : parseInt(value, 10);
           onChange({
             columnStart,
             rowStart,
             rowSpan,
-            columnSpan: value
+            columnSpan: newColumnSpan
           });
         },
-        value: columnSpan,
+        value: columnSpan !== null && columnSpan !== void 0 ? columnSpan : 1,
         min: 1
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
         size: "__unstable-large",
         label: (0,external_wp_i18n_namespaceObject.__)('Row span'),
         type: "number",
         onChange: value => {
+          // Don't allow unsetting.
+          const newRowSpan = value === '' ? 1 : parseInt(value, 10);
           onChange({
             columnStart,
             rowStart,
             columnSpan,
-            rowSpan: value
+            rowSpan: newRowSpan
           });
         },
-        value: rowSpan,
+        value: rowSpan !== null && rowSpan !== void 0 ? rowSpan : 1,
         min: 1
       })]
     }), window.__experimentalEnableGridInteractivity && columnCount &&
@@ -31974,18 +31992,20 @@ function GridControls({
           label: (0,external_wp_i18n_namespaceObject.__)('Column'),
           type: "number",
           onChange: value => {
+            // Don't allow unsetting.
+            const newColumnStart = value === '' ? 1 : parseInt(value, 10);
             onChange({
-              columnStart: value,
+              columnStart: newColumnStart,
               rowStart,
               columnSpan,
               rowSpan
             });
             __unstableMarkNextChangeAsNotPersistent();
-            moveBlocksToPosition([panelId], rootClientId, rootClientId, getNumberOfBlocksBeforeCell(value, rowStart));
+            moveBlocksToPosition([panelId], rootClientId, rootClientId, getNumberOfBlocksBeforeCell(newColumnStart, rowStart));
           },
-          value: columnStart,
+          value: columnStart !== null && columnStart !== void 0 ? columnStart : 1,
           min: 1,
-          max: gridColumnNumber ? gridColumnNumber - (columnSpan !== null && columnSpan !== void 0 ? columnSpan : 1) + 1 : undefined
+          max: columnCount ? columnCount - (columnSpan !== null && columnSpan !== void 0 ? columnSpan : 1) + 1 : undefined
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
         style: {
@@ -31996,18 +32016,20 @@ function GridControls({
           label: (0,external_wp_i18n_namespaceObject.__)('Row'),
           type: "number",
           onChange: value => {
+            // Don't allow unsetting.
+            const newRowStart = value === '' ? 1 : parseInt(value, 10);
             onChange({
               columnStart,
-              rowStart: value,
+              rowStart: newRowStart,
               columnSpan,
               rowSpan
             });
             __unstableMarkNextChangeAsNotPersistent();
-            moveBlocksToPosition([panelId], rootClientId, rootClientId, getNumberOfBlocksBeforeCell(columnStart, value));
+            moveBlocksToPosition([panelId], rootClientId, rootClientId, getNumberOfBlocksBeforeCell(columnStart, newRowStart));
           },
-          value: rowStart,
+          value: rowStart !== null && rowStart !== void 0 ? rowStart : 1,
           min: 1,
-          max: parentLayout?.rowCount ? parentLayout.rowCount - (rowSpan !== null && rowSpan !== void 0 ? rowSpan : 1) + 1 : undefined
+          max: rowCount ? rowCount - (rowSpan !== null && rowSpan !== void 0 ? rowSpan : 1) + 1 : undefined
         })
       })]
     })]
@@ -36460,10 +36482,7 @@ function GridItemMovers({
   const rowEnd = rowStart + rowSpan - 1;
   const columnCount = parentLayout?.columnCount;
   const rowCount = parentLayout?.rowCount;
-  const columnCountNumber = parseInt(columnCount, 10);
-  const rowStartNumber = parseInt(rowStart, 10);
-  const columnStartNumber = parseInt(columnStart, 10);
-  const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(gridClientId, columnCountNumber);
+  const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(gridClientId, columnCount);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(block_controls, {
     group: "parent",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
@@ -36475,7 +36494,7 @@ function GridItemMovers({
           rowStart: rowStart - 1
         });
         __unstableMarkNextChangeAsNotPersistent();
-        moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStartNumber, rowStartNumber - 1));
+        moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart, rowStart - 1));
       }
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       icon: arrow_down,
@@ -36486,7 +36505,7 @@ function GridItemMovers({
           rowStart: rowStart + 1
         });
         __unstableMarkNextChangeAsNotPersistent();
-        moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStartNumber, rowStartNumber + 1));
+        moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart, rowStart + 1));
       }
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       icon: arrow_left,
@@ -36494,10 +36513,10 @@ function GridItemMovers({
       disabled: columnStart <= 1,
       onClick: () => {
         onChange({
-          columnStart: columnStartNumber - 1
+          columnStart: columnStart - 1
         });
         __unstableMarkNextChangeAsNotPersistent();
-        moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStartNumber - 1, rowStartNumber));
+        moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart - 1, rowStart));
       }
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       icon: arrow_right,
@@ -36505,10 +36524,10 @@ function GridItemMovers({
       disabled: columnCount && columnEnd >= columnCount,
       onClick: () => {
         onChange({
-          columnStart: columnStartNumber + 1
+          columnStart: columnStart + 1
         });
         __unstableMarkNextChangeAsNotPersistent();
-        moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStartNumber + 1, rowStartNumber));
+        moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart + 1, rowStart));
       }
     })]
   });
@@ -36555,6 +36574,10 @@ function useBlockPropsChildLayoutStyles({
   } = parentLayout;
   const id = (0,external_wp_compose_namespaceObject.useInstanceId)(useBlockPropsChildLayoutStyles);
   const selector = `.wp-container-content-${id}`;
+
+  // Check that the grid layout attributes are of the correct type, so that we don't accidentally
+  // write code that stores a string attribute instead of a number.
+  if (false) {}
   let css = '';
   if (shouldRenderChildLayoutStyles) {
     if (selfStretch === 'fixed' && flexSize) {
@@ -36598,10 +36621,6 @@ function useBlockPropsChildLayoutStyles({
      * container query is needed for the span to resize.
      */
     if ((columnSpan || columnStart) && (minimumColumnWidth || !columnCount)) {
-      // Check if columnSpan and columnStart are numbers so Math.max doesn't break.
-      const columnSpanNumber = columnSpan ? parseInt(columnSpan) : null;
-      const columnStartNumber = columnStart ? parseInt(columnStart) : null;
-      const highestNumber = Math.max(columnSpanNumber, columnStartNumber);
       let parentColumnValue = parseFloat(minimumColumnWidth);
       /**
        * 12rem is the default minimumColumnWidth value.
@@ -36618,6 +36637,7 @@ function useBlockPropsChildLayoutStyles({
       if (!['px', 'rem', 'em'].includes(parentColumnUnit)) {
         parentColumnUnit = 'rem';
       }
+      const highestNumber = Math.max(columnSpan, columnStart);
       const defaultGapValue = parentColumnUnit === 'px' ? 24 : 1.5;
       const containerQueryValue = highestNumber * parentColumnValue + (highestNumber - 1) * defaultGapValue;
       // For blocks that only span one column, we want to remove any rowStart values as
