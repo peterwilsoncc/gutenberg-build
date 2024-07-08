@@ -28726,6 +28726,10 @@ function getFontStylesAndWeights(fontFamilyFaces) {
  */
 
 
+
+const {
+  CustomSelectControlV2Legacy: CustomSelectControl
+} = unlock(external_wp_components_namespaceObject.privateApis);
 /**
  * Adjusts font appearance field label in case either font styles or weights
  * are disabled.
@@ -28734,7 +28738,6 @@ function getFontStylesAndWeights(fontFamilyFaces) {
  * @param {boolean} hasFontWeights Whether font weights are enabled and present.
  * @return {string} A label representing what font appearance is being edited.
  */
-
 const getFontAppearanceLabel = (hasFontStyles, hasFontWeights) => {
   if (!hasFontStyles) {
     return (0,external_wp_i18n_namespaceObject.__)('Font weight');
@@ -28861,7 +28864,7 @@ function FontAppearanceControl(props) {
     // translators: %s: Currently selected font appearance.
     (0,external_wp_i18n_namespaceObject.__)('Currently selected font appearance: %s'), currentSelection.name);
   };
-  return hasStylesOrWeights && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CustomSelectControl, {
+  return hasStylesOrWeights && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CustomSelectControl, {
     ...otherProps,
     className: "components-font-appearance-control",
     label: label,
@@ -29896,8 +29899,7 @@ function TypographyPanel({
         hasFontStyles: hasFontStyles,
         hasFontWeights: hasFontWeights,
         fontFamilyFaces: fontFamilyFaces,
-        size: "__unstable-large",
-        __nextHasNoMarginBottom: true
+        size: "__unstable-large"
       })
     }), hasLineHeightEnabled && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       className: "single-column",
@@ -34296,7 +34298,7 @@ function useBlockDisplayInformation(clientId) {
 
 
 const {
-  CustomSelectControl
+  CustomSelectControl: position_CustomSelectControl
 } = unlock(external_wp_components_namespaceObject.privateApis);
 const POSITION_SUPPORT_KEY = 'position';
 const OPTION_CLASSNAME = 'block-editor-hooks__position-selection__select-control__option';
@@ -34529,7 +34531,7 @@ function PositionPanelPure({
         className: "block-editor-hooks__position-selection",
         __nextHasNoMarginBottom: true,
         help: stickyHelpText,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CustomSelectControl, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(position_CustomSelectControl, {
           __next40pxDefaultSize: true,
           className: "block-editor-hooks__position-selection__select-control",
           label: (0,external_wp_i18n_namespaceObject.__)('Position'),
