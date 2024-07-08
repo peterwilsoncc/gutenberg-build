@@ -22891,9 +22891,11 @@ const resolvers_canUser = (requestedAction, resource, id) => async ({
   for (const [actionName, methodName] of Object.entries(methods)) {
     permissions[actionName] = allowedMethods.includes(methodName);
   }
-  for (const action of retrievedActions) {
-    dispatch.receiveUserPermission(`${action}/${resourcePath}`, permissions[action]);
-  }
+  registry.batch(() => {
+    for (const action of retrievedActions) {
+      dispatch.receiveUserPermission(`${action}/${resourcePath}`, permissions[action]);
+    }
+  });
 };
 
 /**
