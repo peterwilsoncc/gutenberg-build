@@ -17886,6 +17886,7 @@ function FileEdit({
     displayPreview,
     previewHeight
   } = attributes;
+  const [temporaryURL, setTemporaryURL] = (0,external_wp_element_namespaceObject.useState)(attributes.blob);
   const {
     media
   } = (0,external_wp_data_namespaceObject.useSelect)(select => ({
@@ -17899,7 +17900,7 @@ function FileEdit({
     __unstableMarkNextChangeAsNotPersistent
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   useUploadMediaFromBlobURL({
-    url: href,
+    url: temporaryURL,
     onChange: onSelectFile,
     onError: onUploadError
   });
@@ -17918,6 +17919,11 @@ function FileEdit({
   }, []);
   function onSelectFile(newMedia) {
     if (!newMedia || !newMedia.url) {
+      setTemporaryURL();
+      return;
+    }
+    if ((0,external_wp_blob_namespaceObject.isBlobURL)(newMedia.url)) {
+      setTemporaryURL(newMedia.url);
       return;
     }
     const isPdf = newMedia.url.endsWith('.pdf');
@@ -17928,8 +17934,10 @@ function FileEdit({
       id: newMedia.id,
       displayPreview: isPdf ? true : undefined,
       previewHeight: isPdf ? 600 : undefined,
-      fileId: `wp-block-file--media-${clientId}`
+      fileId: `wp-block-file--media-${clientId}`,
+      blob: undefined
     });
+    setTemporaryURL();
   }
   function onUploadError(message) {
     setAttributes({
@@ -17975,14 +17983,14 @@ function FileEdit({
   }
   const attachmentPage = media && media.link;
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
-    className: dist_clsx((0,external_wp_blob_namespaceObject.isBlobURL)(href) && (0,external_wp_components_namespaceObject.__unstableGetAnimateClassName)({
+    className: dist_clsx(!!temporaryURL && (0,external_wp_components_namespaceObject.__unstableGetAnimateClassName)({
       type: 'loading'
     }), {
-      'is-transient': (0,external_wp_blob_namespaceObject.isBlobURL)(href)
+      'is-transient': !!temporaryURL
     })
   });
   const displayPreviewInEditor = browserSupportsPdfs() && displayPreview;
-  if (!href) {
+  if (!href && !temporaryURL) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
@@ -18002,7 +18010,7 @@ function FileEdit({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FileBlockInspector, {
       hrefs: {
-        href,
+        href: href || temporaryURL,
         textLinkHref,
         attachmentPage
       },
@@ -18186,9 +18194,8 @@ const file_transforms_transforms = {
 
         // File will be uploaded in componentDidMount()
         blocks.push((0,external_wp_blocks_namespaceObject.createBlock)('core/file', {
-          href: blobURL,
-          fileName: file.name,
-          textLinkHref: blobURL
+          blob: blobURL,
+          fileName: file.name
         }));
       });
       return blocks;
@@ -18328,6 +18335,10 @@ const file_metadata = {
   attributes: {
     id: {
       type: "number"
+    },
+    blob: {
+      type: "string",
+      __experimentalRole: "local"
     },
     href: {
       type: "string"
