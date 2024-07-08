@@ -28375,6 +28375,7 @@ const exportPattern = {
   id: 'export-pattern',
   label: (0,external_wp_i18n_namespaceObject.__)('Export as JSON'),
   supportsBulk: true,
+  isEligible: item => item.type === 'wp_block',
   callback: async items => {
     if (items.length === 1) {
       return (0,external_wp_blob_namespaceObject.downloadBlob)(`${paramCase(getItemTitle(items[0]) || items[0].slug)}.json`, getJsonFromItem(items[0]), 'application/json');
