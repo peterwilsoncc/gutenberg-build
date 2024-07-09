@@ -5925,6 +5925,10 @@ unlock(store_store).registerPrivateSelectors(store_private_selectors_namespaceOb
     context,
     args
   }) {
+    // Lock editing in query loop.
+    if (context?.query || context?.queryId) {
+      return false;
+    }
     const postType = context?.postType || select(store_store).getCurrentPostType();
 
     // Check that editing is happening in the post editor and not a template.
