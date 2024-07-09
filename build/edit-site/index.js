@@ -28710,9 +28710,9 @@ function ViewTable({
     setNextHeaderMenuToFocus(fallback?.node);
   };
   const viewFields = view.fields || fields.map(f => f.id);
-  const visibleFields = fields.filter(field => viewFields.includes(field.id) || [view.layout.mediaField].includes(field.id));
+  const visibleFields = fields.filter(field => viewFields.includes(field.id) || [view.layout?.mediaField].includes(field.id));
   const hasData = !!data?.length;
-  const primaryField = fields.find(field => field.id === view.layout.primaryField);
+  const primaryField = fields.find(field => field.id === view.layout?.primaryField);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("table", {
       className: "dataviews-view-table",
@@ -28938,19 +28938,19 @@ function ViewGrid({
   selection,
   view
 }) {
-  const mediaField = fields.find(field => field.id === view.layout.mediaField);
-  const primaryField = fields.find(field => field.id === view.layout.primaryField);
+  const mediaField = fields.find(field => field.id === view.layout?.mediaField);
+  const primaryField = fields.find(field => field.id === view.layout?.primaryField);
   const viewFields = view.fields || fields.map(field => field.id);
   const {
     visibleFields,
     badgeFields
   } = fields.reduce((accumulator, field) => {
-    if (!viewFields.includes(field.id) || [view.layout.mediaField, view.layout.primaryField].includes(field.id)) {
+    if (!viewFields.includes(field.id) || [view.layout?.mediaField, view?.layout?.primaryField].includes(field.id)) {
       return accumulator;
     }
     // If the field is a badge field, add it to the badgeFields array
     // otherwise add it to the rest visibleFields array.
-    const key = view.layout.badgeFields?.includes(field.id) ? 'badgeFields' : 'visibleFields';
+    const key = view.layout?.badgeFields?.includes(field.id) ? 'badgeFields' : 'visibleFields';
     accumulator[key].push(field);
     return accumulator;
   }, {
@@ -28976,7 +28976,7 @@ function ViewGrid({
           primaryField: primaryField,
           visibleFields: visibleFields,
           badgeFields: badgeFields,
-          columnFields: view.layout.columnFields
+          columnFields: view.layout?.columnFields
         }, getItemId(item));
       })
     }), !hasData && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -29224,10 +29224,10 @@ function ViewList(props) {
   } = props;
   const baseId = (0,external_wp_compose_namespaceObject.useInstanceId)(ViewList, 'view-list');
   const selectedItem = data?.findLast(item => selection.includes(getItemId(item)));
-  const mediaField = fields.find(field => field.id === view.layout.mediaField);
-  const primaryField = fields.find(field => field.id === view.layout.primaryField);
+  const mediaField = fields.find(field => field.id === view.layout?.mediaField);
+  const primaryField = fields.find(field => field.id === view.layout?.primaryField);
   const viewFields = view.fields || fields.map(field => field.id);
-  const visibleFields = fields.filter(field => viewFields.includes(field.id) && ![view.layout.primaryField, view.layout.mediaField].includes(field.id));
+  const visibleFields = fields.filter(field => viewFields.includes(field.id) && ![view.layout?.primaryField, view.layout?.mediaField].includes(field.id));
   const onSelect = item => onSelectionChange([getItemId(item)]);
   const getItemDomId = (0,external_wp_element_namespaceObject.useCallback)(item => item ? `${baseId}-${getItemId(item)}` : undefined, [baseId, getItemId]);
   const store = view_list_useCompositeStore({
@@ -29345,20 +29345,25 @@ const {
 function ViewTypeMenu({
   view,
   onChangeView,
-  supportedLayouts
-}) {
-  let _availableViews = VIEW_LAYOUTS;
-  if (supportedLayouts) {
-    _availableViews = _availableViews.filter(_view => supportedLayouts.includes(_view.type));
+  defaultLayouts = {
+    list: {},
+    grid: {},
+    table: {}
   }
-  if (_availableViews.length === 1) {
+}) {
+  const availableLayouts = Object.keys(defaultLayouts);
+  if (availableLayouts.length <= 1) {
     return null;
   }
-  return _availableViews.map(availableView => {
+  return availableLayouts.map(layout => {
+    const config = VIEW_LAYOUTS.find(v => v.type === layout);
+    if (!config) {
+      return null;
+    }
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_actions_DropdownMenuRadioItem, {
-      value: availableView.type,
+      value: layout,
       name: "view-actions-available-view",
-      checked: availableView.type === view.type,
+      checked: layout === view.type,
       hideOnClick: true,
       onChange: e => {
         switch (e.target.value) {
@@ -29368,15 +29373,15 @@ function ViewTypeMenu({
             return onChangeView({
               ...view,
               type: e.target.value,
-              layout: {}
+              ...defaultLayouts[e.target.value]
             });
         }
         throw new Error('Invalid dataview');
       },
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_actions_DropdownMenuItemLabel, {
-        children: availableView.label
+        children: config.label
       })
-    }, availableView.type);
+    }, layout);
   });
 }
 const PAGE_SIZE_VALUES = [10, 20, 50, 100];
@@ -29420,7 +29425,7 @@ function FieldsVisibilityMenu({
   onChangeView,
   fields
 }) {
-  const hidableFields = fields.filter(field => field.enableHiding !== false && field.id !== view.layout.mediaField);
+  const hidableFields = fields.filter(field => field.enableHiding !== false && field.id !== view?.layout?.mediaField);
   const viewFields = view.fields || fields.map(field => field.id);
   if (!hidableFields?.length) {
     return null;
@@ -29513,7 +29518,7 @@ function _ViewActions({
   fields,
   view,
   onChangeView,
-  supportedLayouts
+  defaultLayouts
 }) {
   const activeView = VIEW_LAYOUTS.find(v => view.type === v.type);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -29532,7 +29537,7 @@ function _ViewActions({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewTypeMenu, {
           view: view,
           onChangeView: onChangeView,
-          supportedLayouts: supportedLayouts
+          defaultLayouts: defaultLayouts
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_actions_DropdownMenu, {
         trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -34719,7 +34724,7 @@ function ListBox({
     // so the first item is not selected, since the focus is on the operators control.
     defaultActiveId: filter.operators?.length === 1 ? undefined : null
   });
-  const currentFilter = view.filters.find(f => f.field === filter.field);
+  const currentFilter = view.filters?.find(f => f.field === filter.field);
   const currentValue = getCurrentValue(filter, currentFilter);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(search_widget_Composite, {
     store: compositeStore,
@@ -34744,7 +34749,8 @@ function ListBox({
           className: "dataviews-search-widget-listitem"
         }),
         onClick: () => {
-          const newFilters = currentFilter ? [...view.filters.map(_filter => {
+          var _view$filters, _view$filters2;
+          const newFilters = currentFilter ? [...((_view$filters = view.filters) !== null && _view$filters !== void 0 ? _view$filters : []).map(_filter => {
             if (_filter.field === filter.field) {
               return {
                 ..._filter,
@@ -34753,7 +34759,7 @@ function ListBox({
               };
             }
             return _filter;
-          })] : [...view.filters, {
+          })] : [...((_view$filters2 = view.filters) !== null && _view$filters2 !== void 0 ? _view$filters2 : []), {
             field: filter.field,
             operator: filter.operators[0],
             value: getNewValue(filter, currentFilter, element.value)
@@ -34788,7 +34794,7 @@ function search_widget_ComboboxList({
 }) {
   const [searchValue, setSearchValue] = (0,external_wp_element_namespaceObject.useState)('');
   const deferredSearchValue = (0,external_wp_element_namespaceObject.useDeferredValue)(searchValue);
-  const currentFilter = view.filters.find(_filter => _filter.field === filter.field);
+  const currentFilter = view.filters?.find(_filter => _filter.field === filter.field);
   const currentValue = getCurrentValue(filter, currentFilter);
   const matches = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const normalizedSearch = normalizeSearchInput(deferredSearchValue);
@@ -34798,7 +34804,8 @@ function search_widget_ComboboxList({
     resetValueOnSelect: false,
     selectedValue: currentValue,
     setSelectedValue: value => {
-      const newFilters = currentFilter ? [...view.filters.map(_filter => {
+      var _view$filters3, _view$filters4;
+      const newFilters = currentFilter ? [...((_view$filters3 = view.filters) !== null && _view$filters3 !== void 0 ? _view$filters3 : []).map(_filter => {
         if (_filter.field === filter.field) {
           return {
             ..._filter,
@@ -34807,7 +34814,7 @@ function search_widget_ComboboxList({
           };
         }
         return _filter;
-      })] : [...view.filters, {
+      })] : [...((_view$filters4 = view.filters) !== null && _view$filters4 !== void 0 ? _view$filters4 : []), {
         field: filter.field,
         operator: filter.operators[0],
         value
@@ -34950,7 +34957,7 @@ function OperatorSelector({
     value: operator,
     label: OPERATORS[operator]?.label
   }));
-  const currentFilter = view.filters.find(_filter => _filter.field === filter.field);
+  const currentFilter = view.filters?.find(_filter => _filter.field === filter.field);
   const value = currentFilter?.operator || filter.operators[0];
   return operatorOptions.length > 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
     spacing: 2,
@@ -34964,8 +34971,9 @@ function OperatorSelector({
       value: value,
       options: operatorOptions,
       onChange: newValue => {
+        var _view$filters, _view$filters2;
         const operator = newValue;
-        const newFilters = currentFilter ? [...view.filters.map(_filter => {
+        const newFilters = currentFilter ? [...((_view$filters = view.filters) !== null && _view$filters !== void 0 ? _view$filters : []).map(_filter => {
           if (_filter.field === filter.field) {
             return {
               ..._filter,
@@ -34973,7 +34981,7 @@ function OperatorSelector({
             };
           }
           return _filter;
-        })] : [...view.filters, {
+        })] : [...((_view$filters2 = view.filters) !== null && _view$filters2 !== void 0 ? _view$filters2 : []), {
           field: filter.field,
           operator,
           value: undefined
@@ -35001,7 +35009,7 @@ function FilterSummary({
     view,
     onChangeView
   } = commonProps;
-  const filterInView = view.filters.find(f => f.field === filter.field);
+  const filterInView = view.filters?.find(f => f.field === filter.field);
   const activeElements = filter.elements.filter(element => {
     if (filter.singleSelection) {
       return element.value === filterInView?.value;
@@ -35064,7 +35072,7 @@ function FilterSummary({
             onChangeView({
               ...view,
               page: 1,
-              filters: view.filters.filter(_filter => _filter.field !== filter.field)
+              filters: view.filters?.filter(_filter => _filter.field !== filter.field)
             });
             // If the filter is not primary and can be removed, it will be added
             // back to the available filters from `Add filter` component.
@@ -35238,7 +35246,7 @@ function _Filters({
       elements: field.elements,
       singleSelection: operators.some(op => [constants_OPERATOR_IS, constants_OPERATOR_IS_NOT].includes(op)),
       operators,
-      isVisible: isPrimary || view.filters.some(f => f.field === field.id && ALL_OPERATORS.includes(f.operator)),
+      isVisible: isPrimary || !!view.filters?.some(f => f.field === field.id && ALL_OPERATORS.includes(f.operator)),
       isPrimary
     });
   });
@@ -35590,7 +35598,7 @@ function DataViews({
   getItemId = defaultGetItemId,
   isLoading = false,
   paginationInfo,
-  supportedLayouts,
+  defaultLayouts,
   selection: selectionProperty,
   setSelection: setSelectionProperty,
   onSelectionChange = defaultOnSelectionChange
@@ -35642,7 +35650,7 @@ function DataViews({
         fields: _fields,
         view: view,
         onChangeView: onChangeView,
-        supportedLayouts: supportedLayouts
+        defaultLayouts: defaultLayouts
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewComponent, {
       actions: actions,
@@ -36815,7 +36823,7 @@ function filterSortAndPaginate(data, view, fields) {
       }).some(field => field.includes(normalizedSearch));
     });
   }
-  if (view.filters?.length > 0) {
+  if (view.filters && view.filters?.length > 0) {
     view.filters.forEach(filter => {
       const field = _fields.find(_field => _field.id === filter.field);
       if (field) {
@@ -38157,14 +38165,18 @@ const {
   useLocation: page_patterns_useLocation
 } = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
 const page_patterns_EMPTY_ARRAY = [];
-const defaultConfigPerViewType = {
+const defaultLayouts = {
   [LAYOUT_TABLE]: {
-    primaryField: 'title'
+    layout: {
+      primaryField: 'title'
+    }
   },
   [LAYOUT_GRID]: {
-    mediaField: 'preview',
-    primaryField: 'title',
-    badgeFields: ['sync-status']
+    layout: {
+      mediaField: 'preview',
+      primaryField: 'title',
+      badgeFields: ['sync-status']
+    }
   }
 };
 const DEFAULT_VIEW = {
@@ -38172,9 +38184,7 @@ const DEFAULT_VIEW = {
   search: '',
   page: 1,
   perPage: 20,
-  layout: {
-    ...defaultConfigPerViewType[LAYOUT_GRID]
-  },
+  layout: defaultLayouts[LAYOUT_GRID].layout,
   fields: ['title', 'sync-status'],
   filters: []
 };
@@ -38470,17 +38480,6 @@ function DataviewsPatterns() {
     }
     return [editAction, ...patternActions].filter(Boolean);
   }, [editAction, type, templatePartActions, patternActions]);
-  const onChangeView = (0,external_wp_element_namespaceObject.useCallback)(newView => {
-    if (newView.type !== view.type) {
-      newView = {
-        ...newView,
-        layout: {
-          ...defaultConfigPerViewType[newView.type]
-        }
-      };
-    }
-    setView(newView);
-  }, [view.type, setView]);
   const id = (0,external_wp_element_namespaceObject.useId)();
   const settings = usePatternSettings();
   // Wrap everything in a block editor provider.
@@ -38508,8 +38507,8 @@ function DataviewsPatterns() {
         },
         isLoading: isResolving,
         view: view,
-        onChangeView: onChangeView,
-        supportedLayouts: [LAYOUT_GRID, LAYOUT_TABLE]
+        onChangeView: setView,
+        defaultLayouts: defaultLayouts
       })]
     })
   });
@@ -40383,18 +40382,24 @@ const {
   useLocation: page_templates_useLocation
 } = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
 const page_templates_EMPTY_ARRAY = [];
-const page_templates_defaultConfigPerViewType = {
+const page_templates_defaultLayouts = {
   [LAYOUT_TABLE]: {
-    primaryField: 'title'
+    layout: {
+      primaryField: 'title'
+    }
   },
   [LAYOUT_GRID]: {
-    mediaField: 'preview',
-    primaryField: 'title',
-    columnFields: ['description']
+    layout: {
+      mediaField: 'preview',
+      primaryField: 'title',
+      columnFields: ['description']
+    }
   },
   [LAYOUT_LIST]: {
-    primaryField: 'title',
-    mediaField: 'preview'
+    layout: {
+      primaryField: 'title',
+      mediaField: 'preview'
+    }
   }
 };
 const page_templates_DEFAULT_VIEW = {
@@ -40407,7 +40412,7 @@ const page_templates_DEFAULT_VIEW = {
     direction: 'asc'
   },
   fields: ['title', 'description', 'author'],
-  layout: page_templates_defaultConfigPerViewType[LAYOUT_GRID],
+  layout: page_templates_defaultLayouts[LAYOUT_GRID].layout,
   filters: []
 };
 function page_templates_Title({
@@ -40527,7 +40532,7 @@ function PageTemplates() {
     return {
       ...page_templates_DEFAULT_VIEW,
       type: usedType,
-      layout: page_templates_defaultConfigPerViewType[usedType],
+      layout: page_templates_defaultLayouts[usedType].layout,
       filters: activeView !== 'all' ? [{
         field: 'author',
         operator: 'isAny',
@@ -40657,12 +40662,6 @@ function PageTemplates() {
   const actions = (0,external_wp_element_namespaceObject.useMemo)(() => [editAction, ...postTypeActions], [postTypeActions, editAction]);
   const onChangeView = (0,external_wp_element_namespaceObject.useCallback)(newView => {
     if (newView.type !== view.type) {
-      newView = {
-        ...newView,
-        layout: {
-          ...page_templates_defaultConfigPerViewType[newView.type]
-        }
-      };
       history.push({
         ...params,
         layout: newView.type
@@ -40684,7 +40683,8 @@ function PageTemplates() {
       onChangeView: onChangeView,
       onSelectionChange: onSelectionChange,
       selection: selection,
-      setSelection: setSelection
+      setSelection: setSelection,
+      defaultLayouts: page_templates_defaultLayouts
     })
   });
 }
