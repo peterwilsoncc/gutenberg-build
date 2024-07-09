@@ -16654,6 +16654,321 @@ const cloud = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 });
 /* harmony default export */ const library_cloud = (cloud);
 
+;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-sticky/check.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Wrapper component that renders its children only if post has a sticky action.
+ *
+ * @param {Object}  props          Props.
+ * @param {Element} props.children Children to be rendered.
+ *
+ * @return {Component} The component to be rendered or null if post type is not 'post' or hasStickyAction is false.
+ */
+function PostStickyCheck({
+  children
+}) {
+  const {
+    hasStickyAction,
+    postType
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _post$_links$wpActio;
+    const post = select(store_store).getCurrentPost();
+    return {
+      hasStickyAction: (_post$_links$wpActio = post._links?.['wp:action-sticky']) !== null && _post$_links$wpActio !== void 0 ? _post$_links$wpActio : false,
+      postType: select(store_store).getCurrentPostType()
+    };
+  }, []);
+  if (postType !== 'post' || !hasStickyAction) {
+    return null;
+  }
+  return children;
+}
+
+;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-sticky/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+/**
+ * Renders the PostSticky component. It provides a checkbox control for the sticky post feature.
+ *
+ * @return {Component} The component to be rendered.
+ */
+
+function PostSticky() {
+  const postSticky = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _select$getEditedPost;
+    return (_select$getEditedPost = select(store_store).getEditedPostAttribute('sticky')) !== null && _select$getEditedPost !== void 0 ? _select$getEditedPost : false;
+  }, []);
+  const {
+    editPost
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostStickyCheck, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+      className: "editor-post-sticky__checkbox-control",
+      label: (0,external_wp_i18n_namespaceObject.__)('Sticky'),
+      help: (0,external_wp_i18n_namespaceObject.__)('Pin this post to the top of the blog'),
+      checked: postSticky,
+      onChange: () => editPost({
+        sticky: !postSticky
+      }),
+      __nextHasNoMarginBottom: true
+    })
+  });
+}
+
+;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-status/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+
+const labels = {
+  'auto-draft': (0,external_wp_i18n_namespaceObject.__)('Draft'),
+  draft: (0,external_wp_i18n_namespaceObject.__)('Draft'),
+  pending: (0,external_wp_i18n_namespaceObject.__)('Pending'),
+  private: (0,external_wp_i18n_namespaceObject.__)('Private'),
+  future: (0,external_wp_i18n_namespaceObject.__)('Scheduled'),
+  publish: (0,external_wp_i18n_namespaceObject.__)('Published')
+};
+const STATUS_OPTIONS = [{
+  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [(0,external_wp_i18n_namespaceObject.__)('Draft'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+      variant: "muted",
+      size: 12,
+      children: (0,external_wp_i18n_namespaceObject.__)('Not ready to publish.')
+    })]
+  }),
+  value: 'draft'
+}, {
+  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [(0,external_wp_i18n_namespaceObject.__)('Pending'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+      variant: "muted",
+      size: 12,
+      children: (0,external_wp_i18n_namespaceObject.__)('Waiting for review before publishing.')
+    })]
+  }),
+  value: 'pending'
+}, {
+  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [(0,external_wp_i18n_namespaceObject.__)('Private'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+      variant: "muted",
+      size: 12,
+      children: (0,external_wp_i18n_namespaceObject.__)('Only visible to site admins and editors.')
+    })]
+  }),
+  value: 'private'
+}, {
+  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [(0,external_wp_i18n_namespaceObject.__)('Scheduled'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+      variant: "muted",
+      size: 12,
+      children: (0,external_wp_i18n_namespaceObject.__)('Publish automatically on a chosen date.')
+    })]
+  }),
+  value: 'future'
+}, {
+  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [(0,external_wp_i18n_namespaceObject.__)('Published'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+      variant: "muted",
+      size: 12,
+      children: (0,external_wp_i18n_namespaceObject.__)('Visible to everyone.')
+    })]
+  }),
+  value: 'publish'
+}];
+const DESIGN_POST_TYPES = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE, PATTERN_POST_TYPE, NAVIGATION_POST_TYPE];
+function PostStatus() {
+  const {
+    status,
+    date,
+    password,
+    postId,
+    postType,
+    canEdit
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _getCurrentPost$_link;
+    const {
+      getEditedPostAttribute,
+      getCurrentPostId,
+      getCurrentPostType,
+      getCurrentPost
+    } = select(store_store);
+    return {
+      status: getEditedPostAttribute('status'),
+      date: getEditedPostAttribute('date'),
+      password: getEditedPostAttribute('password'),
+      postId: getCurrentPostId(),
+      postType: getCurrentPostType(),
+      canEdit: (_getCurrentPost$_link = getCurrentPost()._links?.['wp:action-publish']) !== null && _getCurrentPost$_link !== void 0 ? _getCurrentPost$_link : false
+    };
+  }, []);
+  const [showPassword, setShowPassword] = (0,external_wp_element_namespaceObject.useState)(!!password);
+  const passwordInputId = (0,external_wp_compose_namespaceObject.useInstanceId)(PostStatus, 'editor-change-status__password-input');
+  const {
+    editEntityRecord
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
+  const [popoverAnchor, setPopoverAnchor] = (0,external_wp_element_namespaceObject.useState)(null);
+  // Memoize popoverProps to avoid returning a new object every time.
+  const popoverProps = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    // Anchor the popover to the middle of the entire row so that it doesn't
+    // move around when the label changes.
+    anchor: popoverAnchor,
+    'aria-label': (0,external_wp_i18n_namespaceObject.__)('Status & visibility'),
+    headerTitle: (0,external_wp_i18n_namespaceObject.__)('Status & visibility'),
+    placement: 'left-start',
+    offset: 36,
+    shift: true
+  }), [popoverAnchor]);
+  if (DESIGN_POST_TYPES.includes(postType)) {
+    return null;
+  }
+  const updatePost = ({
+    status: newStatus = status,
+    password: newPassword = password,
+    date: newDate = date
+  }) => {
+    editEntityRecord('postType', postType, postId, {
+      status: newStatus,
+      date: newDate,
+      password: newPassword
+    });
+  };
+  const handleTogglePassword = value => {
+    setShowPassword(value);
+    if (!value) {
+      updatePost({
+        password: ''
+      });
+    }
+  };
+  const handleStatus = value => {
+    let newDate = date;
+    let newPassword = password;
+    if (status === 'future' && new Date(date) > new Date()) {
+      newDate = null;
+    }
+    if (value === 'private' && password) {
+      newPassword = '';
+    }
+    updatePost({
+      status: value,
+      date: newDate,
+      password: newPassword
+    });
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_panel_row, {
+    label: (0,external_wp_i18n_namespaceObject.__)('Status'),
+    ref: setPopoverAnchor,
+    children: canEdit ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
+      className: "editor-post-status",
+      contentClassName: "editor-change-status__content",
+      popoverProps: popoverProps,
+      focusOnMount: true,
+      renderToggle: ({
+        onToggle
+      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        variant: "tertiary",
+        size: "compact",
+        onClick: onToggle,
+        "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(
+        // translators: %s: Current post status.
+        (0,external_wp_i18n_namespaceObject.__)('Change post status: %s'), labels[status]),
+        children: labels[status]
+      }),
+      renderContent: ({
+        onClose
+      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalInspectorPopoverHeader, {
+          title: (0,external_wp_i18n_namespaceObject.__)('Status & visibility'),
+          onClose: onClose
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+            spacing: 4,
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
+              className: "editor-change-status__options",
+              hideLabelFromVision: true,
+              label: (0,external_wp_i18n_namespaceObject.__)('Status'),
+              options: STATUS_OPTIONS,
+              onChange: handleStatus,
+              selected: status === 'auto-draft' ? 'draft' : status
+            }), status === 'future' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+              className: "editor-change-status__publish-date-wrapper",
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrivatePostSchedule, {
+                showPopoverHeaderActions: false,
+                isCompact: true
+              })
+            }), status !== 'private' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+              as: "fieldset",
+              spacing: 4,
+              className: "editor-change-status__password-fieldset",
+              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+                __nextHasNoMarginBottom: true,
+                label: (0,external_wp_i18n_namespaceObject.__)('Password protected'),
+                help: (0,external_wp_i18n_namespaceObject.__)('Only visible to those who know the password'),
+                checked: showPassword,
+                onChange: handleTogglePassword
+              }), showPassword && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+                className: "editor-change-status__password-input",
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+                  label: (0,external_wp_i18n_namespaceObject.__)('Password'),
+                  onChange: value => updatePost({
+                    password: value
+                  }),
+                  value: password,
+                  placeholder: (0,external_wp_i18n_namespaceObject.__)('Use a secure password'),
+                  type: "text",
+                  id: passwordInputId,
+                  __next40pxDefaultSize: true,
+                  __nextHasNoMarginBottom: true
+                })
+              })]
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSticky, {})]
+          })
+        })]
+      })
+    }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "editor-post-status is-read-only",
+      children: labels[status]
+    })
+  });
+}
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-saved-state/index.js
 /**
  * External dependencies
@@ -16675,6 +16990,7 @@ const cloud = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 /**
  * Internal dependencies
  */
+
 
 
 /**
@@ -16757,7 +17073,16 @@ function PostSavedState({
   if (!hasPublishAction && isPending) {
     return null;
   }
-  if (isPublished || isScheduled || !['pending', 'draft', 'auto-draft'].includes(postStatus) || postStatusHasChanged && ['pending', 'draft'].includes(postStatus)) {
+
+  // We shouldn't render the button if the post has not one of the following statuses: pending, draft, auto-draft.
+  // The reason for this is that this button handles the `save as pending` and `save draft` actions.
+  // An exception for this is when the post has a custom status and there should be a way to save changes without
+  // having to publish. This should be handled better in the future when custom statuses have better support.
+  // @see https://github.com/WordPress/gutenberg/issues/3144.
+  const isIneligibleStatus = !['pending', 'draft', 'auto-draft'].includes(postStatus) && STATUS_OPTIONS.map(({
+    value
+  }) => value).includes(postStatus);
+  if (isPublished || isScheduled || isIneligibleStatus || postStatusHasChanged && ['pending', 'draft'].includes(postStatus)) {
     return null;
   }
 
@@ -16861,7 +17186,7 @@ function PostScheduleCheck({
 
 
 
-const DESIGN_POST_TYPES = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE, PATTERN_POST_TYPE, NAVIGATION_POST_TYPE];
+const panel_DESIGN_POST_TYPES = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE, PATTERN_POST_TYPE, NAVIGATION_POST_TYPE];
 
 /**
  * Renders the Post Schedule Panel component.
@@ -16885,7 +17210,7 @@ function PostSchedulePanel() {
   const fullLabel = usePostScheduleLabel({
     full: true
   });
-  if (DESIGN_POST_TYPES.includes(postType)) {
+  if (panel_DESIGN_POST_TYPES.includes(postType)) {
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostScheduleCheck, {
@@ -17016,87 +17341,6 @@ function PostSlugControl() {
 function PostSlug() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSlugCheck, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSlugControl, {})
-  });
-}
-
-;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-sticky/check.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-/**
- * Wrapper component that renders its children only if post has a sticky action.
- *
- * @param {Object}  props          Props.
- * @param {Element} props.children Children to be rendered.
- *
- * @return {Component} The component to be rendered or null if post type is not 'post' or hasStickyAction is false.
- */
-function PostStickyCheck({
-  children
-}) {
-  const {
-    hasStickyAction,
-    postType
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _post$_links$wpActio;
-    const post = select(store_store).getCurrentPost();
-    return {
-      hasStickyAction: (_post$_links$wpActio = post._links?.['wp:action-sticky']) !== null && _post$_links$wpActio !== void 0 ? _post$_links$wpActio : false,
-      postType: select(store_store).getCurrentPostType()
-    };
-  }, []);
-  if (postType !== 'post' || !hasStickyAction) {
-    return null;
-  }
-  return children;
-}
-
-;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-sticky/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-/**
- * Renders the PostSticky component. It provides a checkbox control for the sticky post feature.
- *
- * @return {Component} The component to be rendered.
- */
-
-function PostSticky() {
-  const postSticky = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _select$getEditedPost;
-    return (_select$getEditedPost = select(store_store).getEditedPostAttribute('sticky')) !== null && _select$getEditedPost !== void 0 ? _select$getEditedPost : false;
-  }, []);
-  const {
-    editPost
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostStickyCheck, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-      className: "editor-post-sticky__checkbox-control",
-      label: (0,external_wp_i18n_namespaceObject.__)('Sticky'),
-      help: (0,external_wp_i18n_namespaceObject.__)('Pin this post to the top of the blog'),
-      checked: postSticky,
-      onChange: () => editPost({
-        sticky: !postSticky
-      }),
-      __nextHasNoMarginBottom: true
-    })
   });
 }
 
@@ -26471,240 +26715,6 @@ function PostPanelSection({
   });
 }
 /* harmony default export */ const post_panel_section = (PostPanelSection);
-
-;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-status/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-
-
-const labels = {
-  'auto-draft': (0,external_wp_i18n_namespaceObject.__)('Draft'),
-  draft: (0,external_wp_i18n_namespaceObject.__)('Draft'),
-  pending: (0,external_wp_i18n_namespaceObject.__)('Pending'),
-  private: (0,external_wp_i18n_namespaceObject.__)('Private'),
-  future: (0,external_wp_i18n_namespaceObject.__)('Scheduled'),
-  publish: (0,external_wp_i18n_namespaceObject.__)('Published')
-};
-const STATUS_OPTIONS = [{
-  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(0,external_wp_i18n_namespaceObject.__)('Draft'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      variant: "muted",
-      size: 12,
-      children: (0,external_wp_i18n_namespaceObject.__)('Not ready to publish.')
-    })]
-  }),
-  value: 'draft'
-}, {
-  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(0,external_wp_i18n_namespaceObject.__)('Pending'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      variant: "muted",
-      size: 12,
-      children: (0,external_wp_i18n_namespaceObject.__)('Waiting for review before publishing.')
-    })]
-  }),
-  value: 'pending'
-}, {
-  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(0,external_wp_i18n_namespaceObject.__)('Private'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      variant: "muted",
-      size: 12,
-      children: (0,external_wp_i18n_namespaceObject.__)('Only visible to site admins and editors.')
-    })]
-  }),
-  value: 'private'
-}, {
-  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(0,external_wp_i18n_namespaceObject.__)('Scheduled'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      variant: "muted",
-      size: 12,
-      children: (0,external_wp_i18n_namespaceObject.__)('Publish automatically on a chosen date.')
-    })]
-  }),
-  value: 'future'
-}, {
-  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(0,external_wp_i18n_namespaceObject.__)('Published'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      variant: "muted",
-      size: 12,
-      children: (0,external_wp_i18n_namespaceObject.__)('Visible to everyone.')
-    })]
-  }),
-  value: 'publish'
-}];
-const post_status_DESIGN_POST_TYPES = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE, PATTERN_POST_TYPE, NAVIGATION_POST_TYPE];
-function PostStatus() {
-  const {
-    status,
-    date,
-    password,
-    postId,
-    postType,
-    canEdit
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _getCurrentPost$_link;
-    const {
-      getEditedPostAttribute,
-      getCurrentPostId,
-      getCurrentPostType,
-      getCurrentPost
-    } = select(store_store);
-    return {
-      status: getEditedPostAttribute('status'),
-      date: getEditedPostAttribute('date'),
-      password: getEditedPostAttribute('password'),
-      postId: getCurrentPostId(),
-      postType: getCurrentPostType(),
-      canEdit: (_getCurrentPost$_link = getCurrentPost()._links?.['wp:action-publish']) !== null && _getCurrentPost$_link !== void 0 ? _getCurrentPost$_link : false
-    };
-  }, []);
-  const [showPassword, setShowPassword] = (0,external_wp_element_namespaceObject.useState)(!!password);
-  const passwordInputId = (0,external_wp_compose_namespaceObject.useInstanceId)(PostStatus, 'editor-change-status__password-input');
-  const {
-    editEntityRecord
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  const [popoverAnchor, setPopoverAnchor] = (0,external_wp_element_namespaceObject.useState)(null);
-  // Memoize popoverProps to avoid returning a new object every time.
-  const popoverProps = (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    // Anchor the popover to the middle of the entire row so that it doesn't
-    // move around when the label changes.
-    anchor: popoverAnchor,
-    'aria-label': (0,external_wp_i18n_namespaceObject.__)('Status & visibility'),
-    headerTitle: (0,external_wp_i18n_namespaceObject.__)('Status & visibility'),
-    placement: 'left-start',
-    offset: 36,
-    shift: true
-  }), [popoverAnchor]);
-  if (post_status_DESIGN_POST_TYPES.includes(postType)) {
-    return null;
-  }
-  const updatePost = ({
-    status: newStatus = status,
-    password: newPassword = password,
-    date: newDate = date
-  }) => {
-    editEntityRecord('postType', postType, postId, {
-      status: newStatus,
-      date: newDate,
-      password: newPassword
-    });
-  };
-  const handleTogglePassword = value => {
-    setShowPassword(value);
-    if (!value) {
-      updatePost({
-        password: ''
-      });
-    }
-  };
-  const handleStatus = value => {
-    let newDate = date;
-    let newPassword = password;
-    if (status === 'future' && new Date(date) > new Date()) {
-      newDate = null;
-    }
-    if (value === 'private' && password) {
-      newPassword = '';
-    }
-    updatePost({
-      status: value,
-      date: newDate,
-      password: newPassword
-    });
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_panel_row, {
-    label: (0,external_wp_i18n_namespaceObject.__)('Status'),
-    ref: setPopoverAnchor,
-    children: canEdit ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
-      className: "editor-post-status",
-      contentClassName: "editor-change-status__content",
-      popoverProps: popoverProps,
-      focusOnMount: true,
-      renderToggle: ({
-        onToggle
-      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        variant: "tertiary",
-        size: "compact",
-        onClick: onToggle,
-        "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(
-        // translators: %s: Current post status.
-        (0,external_wp_i18n_namespaceObject.__)('Change post status: %s'), labels[status]),
-        children: labels[status]
-      }),
-      renderContent: ({
-        onClose
-      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalInspectorPopoverHeader, {
-          title: (0,external_wp_i18n_namespaceObject.__)('Status & visibility'),
-          onClose: onClose
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-            spacing: 4,
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
-              className: "editor-change-status__options",
-              hideLabelFromVision: true,
-              label: (0,external_wp_i18n_namespaceObject.__)('Status'),
-              options: STATUS_OPTIONS,
-              onChange: handleStatus,
-              selected: status === 'auto-draft' ? 'draft' : status
-            }), status === 'future' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-              className: "editor-change-status__publish-date-wrapper",
-              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrivatePostSchedule, {
-                showPopoverHeaderActions: false,
-                isCompact: true
-              })
-            }), status !== 'private' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-              as: "fieldset",
-              spacing: 4,
-              className: "editor-change-status__password-fieldset",
-              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-                __nextHasNoMarginBottom: true,
-                label: (0,external_wp_i18n_namespaceObject.__)('Password protected'),
-                help: (0,external_wp_i18n_namespaceObject.__)('Only visible to those who know the password'),
-                checked: showPassword,
-                onChange: handleTogglePassword
-              }), showPassword && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-                className: "editor-change-status__password-input",
-                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-                  label: (0,external_wp_i18n_namespaceObject.__)('Password'),
-                  onChange: value => updatePost({
-                    password: value
-                  }),
-                  value: password,
-                  placeholder: (0,external_wp_i18n_namespaceObject.__)('Use a secure password'),
-                  type: "text",
-                  id: passwordInputId,
-                  __next40pxDefaultSize: true,
-                  __nextHasNoMarginBottom: true
-                })
-              })]
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSticky, {})]
-          })
-        })]
-      })
-    }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "editor-post-status is-read-only",
-      children: labels[status]
-    })
-  });
-}
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/blog-title/index.js
 /**
