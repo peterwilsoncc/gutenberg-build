@@ -36416,7 +36416,7 @@ function PostStatusField({
   const icon = status?.icon;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
     alignment: "left",
-    spacing: 1,
+    spacing: 0,
     children: [icon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "posts-list-page-post-author-field__icon-container",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
@@ -36428,12 +36428,10 @@ function PostStatusField({
   });
 }
 function PostAuthorField({
-  item,
-  viewType
+  item
 }) {
   const {
     text,
-    icon,
     imageUrl
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
@@ -36441,18 +36439,15 @@ function PostAuthorField({
     } = select(external_wp_coreData_namespaceObject.store);
     const user = getUser(item.author);
     return {
-      icon: comment_author_avatar,
       imageUrl: user?.avatar_urls?.[48],
       text: user?.name
     };
   }, [item]);
-  const withAuthorImage = viewType !== LAYOUT_LIST && imageUrl;
-  const withAuthorIcon = viewType !== LAYOUT_LIST && !imageUrl;
   const [isImageLoaded, setIsImageLoaded] = (0,external_wp_element_namespaceObject.useState)(false);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
     alignment: "left",
-    spacing: 1,
-    children: [withAuthorImage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    spacing: 0,
+    children: [!!imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: dist_clsx('page-templates-author-field__avatar', {
         'is-loaded': isImageLoaded
       }),
@@ -36461,10 +36456,10 @@ function PostAuthorField({
         alt: (0,external_wp_i18n_namespaceObject.__)('Author avatar'),
         src: imageUrl
       })
-    }), withAuthorIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    }), !imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "page-templates-author-field__icon",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-        icon: icon
+        icon: comment_author_avatar
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
       className: "page-templates-author-field__name",
@@ -36641,14 +36636,7 @@ function PostsList({
       value: id,
       label: name
     })) || [],
-    render: ({
-      item
-    }) => {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostAuthorField, {
-        viewType: view.type,
-        item: item
-      });
-    }
+    render: PostAuthorField
   }, {
     header: (0,external_wp_i18n_namespaceObject.__)('Status'),
     id: 'status',
@@ -38271,7 +38259,7 @@ function Author({
   const withIcon = viewType !== LAYOUT_LIST;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
     alignment: "left",
-    spacing: 1,
+    spacing: 0,
     children: [withIcon && imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: dist_clsx('page-templates-author-field__avatar', {
         'is-loaded': isImageLoaded
@@ -40435,8 +40423,7 @@ function page_templates_Title({
   });
 }
 function AuthorField({
-  item,
-  viewType
+  item
 }) {
   const [isImageLoaded, setIsImageLoaded] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
@@ -40444,11 +40431,10 @@ function AuthorField({
     icon,
     imageUrl
   } = useAddedBy(item.type, item.id);
-  const withIcon = viewType !== LAYOUT_LIST;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
     alignment: "left",
-    spacing: 1,
-    children: [withIcon && imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    spacing: 0,
+    children: [imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: dist_clsx('page-templates-author-field__avatar', {
         'is-loaded': isImageLoaded
       }),
@@ -40457,7 +40443,7 @@ function AuthorField({
         alt: "",
         src: imageUrl
       })
-    }), withIcon && !imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    }), !imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "page-templates-author-field__icon",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
         icon: icon
