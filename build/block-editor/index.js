@@ -30085,6 +30085,10 @@ const settings_settings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
 
 
 
+
+const {
+  CustomSelectControlV2Legacy: spacing_input_control_CustomSelectControl
+} = unlock(external_wp_components_namespaceObject.privateApis);
 const CUSTOM_VALUE_SETTINGS = {
   px: {
     max: 300,
@@ -30363,7 +30367,7 @@ function SpacingInputControl({
       __nextHasNoMarginBottom: true,
       onFocus: onMouseOver,
       onBlur: onMouseOut
-    }), !showRangeControl && !showCustomValueControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CustomSelectControl, {
+    }), !showRangeControl && !showCustomValueControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacing_input_control_CustomSelectControl, {
       className: "spacing-sizes-control__custom-select-control",
       value: options.find(option => option.key === currentValue) || '' // passing undefined here causes a downshift controlled/uncontrolled warning
       ,
