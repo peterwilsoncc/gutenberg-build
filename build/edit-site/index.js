@@ -18538,7 +18538,7 @@ function InstalledFonts() {
         })]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         justify: "flex-end",
-        className: "font-library-modal__tabpanel-layout__footer",
+        className: "font-library-modal__footer",
         children: [isInstalling && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ProgressBar, {}), shouldDisplayDeleteButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           isDestructive: true,
           variant: "tertiary",
@@ -19067,7 +19067,7 @@ function FontCollection({
         })]
       }), selectedFont && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Flex, {
         justify: "flex-end",
-        className: "font-library-modal__tabpanel-layout__footer",
+        className: "font-library-modal__footer",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           variant: "primary",
           onClick: handleInstall,
@@ -19076,31 +19076,24 @@ function FontCollection({
           accessibleWhenDisabled: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Install')
         })
-      }), !selectedFont && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
+      }), !selectedFont && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        spacing: 4,
         justify: "center",
-        className: "font-library-modal__tabpanel-layout__footer",
+        className: "font-library-modal__footer",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          label: (0,external_wp_i18n_namespaceObject.__)('First page'),
-          size: "compact",
-          onClick: () => setPage(1),
-          disabled: page === 1,
-          accessibleWhenDisabled: true,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-            children: "\xAB"
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           label: (0,external_wp_i18n_namespaceObject.__)('Previous page'),
           size: "compact",
           onClick: () => setPage(page - 1),
           disabled: page === 1,
+          showTooltip: true,
           accessibleWhenDisabled: true,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-            children: "\u2039"
-          })
+          icon: chevron_left,
+          tooltipPosition: "top"
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
           justify: "flex-start",
           expanded: false,
           spacing: 2,
+          className: "font-library-modal__page-selection",
           children: (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(
           // translators: %s: Total number of pages.
           (0,external_wp_i18n_namespaceObject._x)('Page <CurrentPageControl /> of %s', 'paging'), totalPages), {
@@ -19124,18 +19117,8 @@ function FontCollection({
           onClick: () => setPage(page + 1),
           disabled: page === totalPages,
           accessibleWhenDisabled: true,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-            children: "\u203A"
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Last page'),
-          size: "compact",
-          onClick: () => setPage(totalPages),
-          disabled: page === totalPages,
-          accessibleWhenDisabled: true,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-            children: "\xBB"
-          })
+          icon: chevron_right,
+          tooltipPosition: "top"
         })]
       })]
     })]
