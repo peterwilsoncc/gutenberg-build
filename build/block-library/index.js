@@ -22770,6 +22770,7 @@ const group_metadata = {
         text: true
       }
     },
+    shadow: true,
     spacing: {
       margin: ["top", "bottom"],
       padding: true,
