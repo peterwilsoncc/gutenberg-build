@@ -12463,7 +12463,7 @@ function PrivateExcerpt() {
   const excerptText = !!excerpt && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
     align: "left",
     numberOfLines: 4,
-    truncate: true,
+    truncate: allowEditing,
     children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(excerpt)
   });
   if (!allowEditing) {
