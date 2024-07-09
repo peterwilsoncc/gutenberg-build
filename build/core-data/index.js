@@ -18943,7 +18943,7 @@ const deleteEntityRecord = (kind, name, recordId, query, {
   const entityConfig = configs.find(config => config.kind === kind && config.name === name);
   let error;
   let deletedRecord = false;
-  if (!entityConfig || entityConfig?.__experimentalNoFetch) {
+  if (!entityConfig) {
     return;
   }
   const lock = await dispatch.__unstableAcquireStoreLock(STORE_NAME, ['entities', 'records', kind, name, recordId], {
@@ -19131,7 +19131,7 @@ const saveEntityRecord = (kind, name, record, {
 }) => {
   const configs = await dispatch(getOrLoadEntitiesConfig(kind, name));
   const entityConfig = configs.find(config => config.kind === kind && config.name === name);
-  if (!entityConfig || entityConfig?.__experimentalNoFetch) {
+  if (!entityConfig) {
     return;
   }
   const entityIdKey = entityConfig.key || DEFAULT_ENTITY_KEY;
@@ -22610,7 +22610,7 @@ const resolvers_getEntityRecord = (kind, name, key = '', query) => async ({
 }) => {
   const configs = await dispatch(getOrLoadEntitiesConfig(kind, name));
   const entityConfig = configs.find(config => config.name === name && config.kind === kind);
-  if (!entityConfig || entityConfig?.__experimentalNoFetch) {
+  if (!entityConfig) {
     return;
   }
   const lock = await dispatch.__unstableAcquireStoreLock(STORE_NAME, ['entities', 'records', kind, name, key], {
@@ -22712,7 +22712,7 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
 }) => {
   const configs = await dispatch(getOrLoadEntitiesConfig(kind, name));
   const entityConfig = configs.find(config => config.name === name && config.kind === kind);
-  if (!entityConfig || entityConfig?.__experimentalNoFetch) {
+  if (!entityConfig) {
     return;
   }
   const lock = await dispatch.__unstableAcquireStoreLock(STORE_NAME, ['entities', 'records', kind, name], {
@@ -23142,7 +23142,7 @@ const resolvers_getRevisions = (kind, name, recordKey, query = {}) => async ({
 }) => {
   const configs = await dispatch(getOrLoadEntitiesConfig(kind, name));
   const entityConfig = configs.find(config => config.name === name && config.kind === kind);
-  if (!entityConfig || entityConfig?.__experimentalNoFetch) {
+  if (!entityConfig) {
     return;
   }
   if (query._fields) {
@@ -23228,7 +23228,7 @@ const resolvers_getRevision = (kind, name, recordKey, revisionKey, query) => asy
 }) => {
   const configs = await dispatch(getOrLoadEntitiesConfig(kind, name));
   const entityConfig = configs.find(config => config.name === name && config.kind === kind);
-  if (!entityConfig || entityConfig?.__experimentalNoFetch) {
+  if (!entityConfig) {
     return;
   }
   if (query !== undefined && query._fields) {
