@@ -19562,6 +19562,7 @@ const external_wp_styleEngine_namespaceObject = window["wp"]["styleEngine"];
 
 
 
+
 /* harmony default export */ const constrained = ({
   name: 'constrained',
   label: (0,external_wp_i18n_namespaceObject.__)('Constrained'),
@@ -19668,8 +19669,25 @@ const external_wp_styleEngine_namespaceObject = window["wp"]["styleEngine"];
       })]
     });
   },
-  toolBarControls: function DefaultLayoutToolbarControls() {
-    return null;
+  toolBarControls: function DefaultLayoutToolbarControls({
+    layout = {},
+    onChange,
+    layoutBlockSupport
+  }) {
+    const {
+      allowJustification = true
+    } = layoutBlockSupport;
+    if (!allowJustification) {
+      return null;
+    }
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_controls, {
+      group: "block",
+      __experimentalShareWithChildBlocks: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DefaultLayoutJustifyContentControl, {
+        layout: layout,
+        onChange: onChange
+      })
+    });
   },
   getLayoutStyle: function getLayoutStyle({
     selector,
@@ -19790,6 +19808,30 @@ const external_wp_styleEngine_namespaceObject = window["wp"]["styleEngine"];
     return alignments;
   }
 });
+const constrained_POPOVER_PROPS = {
+  placement: 'bottom-start'
+};
+function DefaultLayoutJustifyContentControl({
+  layout,
+  onChange
+}) {
+  const {
+    justifyContent = 'center'
+  } = layout;
+  const onJustificationChange = value => {
+    onChange({
+      ...layout,
+      justifyContent: value
+    });
+  };
+  const allowedControls = ['left', 'center', 'right'];
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(JustifyContentControl, {
+    allowedControls: allowedControls,
+    value: justifyContent,
+    onChange: onJustificationChange,
+    popoverProps: constrained_POPOVER_PROPS
+  });
+}
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/provider/block-refs-provider.js
 /**
