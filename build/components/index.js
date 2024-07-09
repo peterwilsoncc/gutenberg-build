@@ -36369,16 +36369,18 @@ const InputControlSuffixWrapper = contextConnect(UnconnectedInputControlSuffixWr
 
 
 
+
 const select_control_styles_disabledStyles = ({
   disabled
 }) => {
   if (!disabled) {
     return '';
   }
-  return /*#__PURE__*/emotion_react_browser_esm_css({
-    color: COLORS.ui.textDisabled
-  },  true ? "" : 0,  true ? "" : 0);
+  return /*#__PURE__*/emotion_react_browser_esm_css("color:", COLORS.ui.textDisabled, ";cursor:default;" + ( true ? "" : 0),  true ? "" : 0);
 };
+const StyledInputBase = /*#__PURE__*/emotion_styled_base_browser_esm(input_base,  true ? {
+  target: "e1mv6sxx3"
+} : 0)("color:", COLORS.theme.foreground, ";cursor:pointer;", select_control_styles_disabledStyles, ";" + ( true ? "" : 0));
 const select_control_styles_sizeStyles = ({
   __next40pxDefaultSize,
   multiple,
@@ -36459,10 +36461,10 @@ const overflowStyles = ({
 
 const Select = /*#__PURE__*/emotion_styled_base_browser_esm("select",  true ? {
   target: "e1mv6sxx2"
-} : 0)("&&&{appearance:none;background:transparent;box-sizing:border-box;border:none;box-shadow:none!important;color:", COLORS.gray[900], ";display:block;font-family:inherit;margin:0;width:100%;max-width:none;cursor:pointer;white-space:nowrap;text-overflow:ellipsis;", select_control_styles_disabledStyles, ";", fontSizeStyles, ";", select_control_styles_sizeStyles, ";", sizePaddings, ";", overflowStyles, ";}" + ( true ? "" : 0));
+} : 0)("&&&{appearance:none;background:transparent;box-sizing:border-box;border:none;box-shadow:none!important;cursor:inherit;display:block;font-family:inherit;margin:0;width:100%;max-width:none;white-space:nowrap;text-overflow:ellipsis;", fontSizeStyles, ";", select_control_styles_sizeStyles, ";", sizePaddings, ";", overflowStyles, ";}" + ( true ? "" : 0));
 const DownArrowWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "e1mv6sxx1"
-} : 0)("margin-inline-end:", space(-1), ";line-height:0;" + ( true ? "" : 0));
+} : 0)("margin-inline-end:", space(-1), ";line-height:0;path{fill:currentColor;}" + ( true ? "" : 0));
 const InputControlSuffixWrapperWithClickThrough = /*#__PURE__*/emotion_styled_base_browser_esm(input_suffix_wrapper,  true ? {
   target: "e1mv6sxx0"
 } : 0)("position:absolute;pointer-events:none;", rtl({
@@ -36559,7 +36561,6 @@ const SelectControlChevronDown = () => {
 
 
 
-
 function select_control_useUniqueId(idProp) {
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(SelectControl);
   const id = `inspector-select-control-${instanceId}`;
@@ -36615,7 +36616,7 @@ function UnforwardedSelectControl(props, ref) {
     help: help,
     id: id,
     __nextHasNoMarginBottom: __nextHasNoMarginBottom,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(input_base, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledInputBase, {
       className: classes,
       disabled: disabled,
       hideLabelFromVision: hideLabelFromVision,
