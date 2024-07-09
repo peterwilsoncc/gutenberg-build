@@ -35686,6 +35686,23 @@ function DataViews({
   });
 }
 
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/comment-author-avatar.js
+/**
+ * WordPress dependencies
+ */
+
+
+const commentAuthorAvatar = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    d: "M7.25 16.437a6.5 6.5 0 1 1 9.5 0V16A2.75 2.75 0 0 0 14 13.25h-4A2.75 2.75 0 0 0 7.25 16v.437Zm1.5 1.193a6.47 6.47 0 0 0 3.25.87 6.47 6.47 0 0 0 3.25-.87V16c0-.69-.56-1.25-1.25-1.25h-4c-.69 0-1.25.56-1.25 1.25v1.63ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm10-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z",
+    clipRule: "evenodd"
+  })
+});
+/* harmony default export */ const comment_author_avatar = (commentAuthorAvatar);
+
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/page/header.js
 /**
  * WordPress dependencies
@@ -36208,8 +36225,14 @@ const useEditPostAction = () => {
 
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/posts-app/posts-list.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
+
 
 
 
@@ -36386,6 +36409,51 @@ function FeaturedImage({
 function getItemId(item) {
   return item.id.toString();
 }
+function PostAuthorField({
+  item,
+  viewType
+}) {
+  const {
+    text,
+    icon,
+    imageUrl
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getUser
+    } = select(external_wp_coreData_namespaceObject.store);
+    const user = getUser(item.author);
+    return {
+      icon: comment_author_avatar,
+      imageUrl: user?.avatar_urls?.[48],
+      text: user?.name
+    };
+  }, [item]);
+  const withAuthorImage = viewType !== LAYOUT_LIST && imageUrl;
+  const withAuthorIcon = viewType !== LAYOUT_LIST && !imageUrl;
+  const [isImageLoaded, setIsImageLoaded] = (0,external_wp_element_namespaceObject.useState)(false);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+    alignment: "left",
+    spacing: 1,
+    children: [withAuthorImage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: dist_clsx('page-templates-author-field__avatar', {
+        'is-loaded': isImageLoaded
+      }),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+        onLoad: () => setIsImageLoaded(true),
+        alt: (0,external_wp_i18n_namespaceObject.__)('Author avatar'),
+        src: imageUrl
+      })
+    }), withAuthorIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "page-templates-author-field__icon",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+        icon: icon
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "page-templates-author-field__name",
+      children: text
+    })]
+  });
+}
 function PostsList({
   postType
 }) {
@@ -36554,7 +36622,15 @@ function PostsList({
     }) => ({
       value: id,
       label: name
-    })) || []
+    })) || [],
+    render: ({
+      item
+    }) => {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostAuthorField, {
+        viewType: view.type,
+        item: item
+      });
+    }
   }, {
     header: (0,external_wp_i18n_namespaceObject.__)('Status'),
     id: 'status',
@@ -37934,23 +38010,6 @@ const globe = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
   })
 });
 /* harmony default export */ const library_globe = (globe);
-
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/comment-author-avatar.js
-/**
- * WordPress dependencies
- */
-
-
-const commentAuthorAvatar = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    d: "M7.25 16.437a6.5 6.5 0 1 1 9.5 0V16A2.75 2.75 0 0 0 14 13.25h-4A2.75 2.75 0 0 0 7.25 16v.437Zm1.5 1.193a6.47 6.47 0 0 0 3.25.87 6.47 6.47 0 0 0 3.25-.87V16c0-.69-.56-1.25-1.25-1.25h-4c-.69 0-1.25.56-1.25 1.25v1.63ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm10-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z",
-    clipRule: "evenodd"
-  })
-});
-/* harmony default export */ const comment_author_avatar = (commentAuthorAvatar);
 
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/page-templates/hooks.js
 /**
