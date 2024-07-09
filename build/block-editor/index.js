@@ -50895,63 +50895,13 @@ function BlockPatternsTab({
 }
 /* harmony default export */ const block_patterns_tab = (BlockPatternsTab);
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/hooks/use-zoom-out.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-/**
- * A hook used to set the editor mode to zoomed out mode, invoking the hook sets the mode.
- *
- * @param {boolean} zoomOut If we should enter into zoomOut mode or not
- */
-function useZoomOut(zoomOut = true) {
-  const {
-    __unstableSetEditorMode
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const {
-    __unstableGetEditorMode
-  } = (0,external_wp_data_namespaceObject.useSelect)(store);
-  const originalEditingMode = (0,external_wp_element_namespaceObject.useRef)(null);
-  const mode = __unstableGetEditorMode();
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    // Only set this on mount so we know what to return to when we unmount.
-    if (!originalEditingMode.current) {
-      originalEditingMode.current = mode;
-    }
-    return () => {
-      // We need to use  __unstableGetEditorMode() here and not `mode`, as mode may not update on unmount
-      if (__unstableGetEditorMode() === 'zoom-out' && __unstableGetEditorMode() !== originalEditingMode.current) {
-        __unstableSetEditorMode(originalEditingMode.current);
-      }
-    };
-  }, []);
-
-  // The effect opens the zoom-out view if we want it open and it's not currently in zoom-out mode.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (zoomOut && mode !== 'zoom-out') {
-      __unstableSetEditorMode('zoom-out');
-    } else if (!zoomOut && __unstableGetEditorMode() === 'zoom-out' && originalEditingMode.current !== mode) {
-      __unstableSetEditorMode(originalEditingMode.current);
-    }
-  }, [__unstableSetEditorMode, zoomOut, mode]);
-}
-
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inserter/block-patterns-tab/pattern-category-preview-panel.js
 /**
  * Internal dependencies
  */
 
 
-
-function PatternCategoryPreviewPanelInner({
+function PatternCategoryPreviewPanel({
   rootClientId,
   onInsert,
   onHover,
@@ -50967,23 +50917,6 @@ function PatternCategoryPreviewPanelInner({
     showTitlesAsTooltip: showTitlesAsTooltip,
     patternFilter: patternFilter
   }, category.name);
-}
-function PatternCategoryPreviewPanelWithZoomOut(props) {
-  useZoomOut();
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternCategoryPreviewPanelInner, {
-    ...props
-  });
-}
-function PatternCategoryPreviewPanel(props) {
-  // When the pattern panel is showing, we want to use zoom out mode
-  if (window.__experimentalEnableZoomedOutPatternsTab) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternCategoryPreviewPanelWithZoomOut, {
-      ...props
-    });
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternCategoryPreviewPanelInner, {
-    ...props
-  });
 }
 
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/external.js
@@ -51883,6 +51816,55 @@ function TabbedSidebar({
 }
 /* harmony default export */ const tabbed_sidebar = ((0,external_wp_element_namespaceObject.forwardRef)(TabbedSidebar));
 
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/hooks/use-zoom-out.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * A hook used to set the editor mode to zoomed out mode, invoking the hook sets the mode.
+ *
+ * @param {boolean} zoomOut If we should enter into zoomOut mode or not
+ */
+function useZoomOut(zoomOut = true) {
+  const {
+    __unstableSetEditorMode
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const {
+    __unstableGetEditorMode
+  } = (0,external_wp_data_namespaceObject.useSelect)(store);
+  const originalEditingMode = (0,external_wp_element_namespaceObject.useRef)(null);
+  const mode = __unstableGetEditorMode();
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    // Only set this on mount so we know what to return to when we unmount.
+    if (!originalEditingMode.current) {
+      originalEditingMode.current = mode;
+    }
+    return () => {
+      // We need to use  __unstableGetEditorMode() here and not `mode`, as mode may not update on unmount
+      if (__unstableGetEditorMode() === 'zoom-out' && __unstableGetEditorMode() !== originalEditingMode.current) {
+        __unstableSetEditorMode(originalEditingMode.current);
+      }
+    };
+  }, []);
+
+  // The effect opens the zoom-out view if we want it open and it's not currently in zoom-out mode.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (zoomOut && mode !== 'zoom-out') {
+      __unstableSetEditorMode('zoom-out');
+    } else if (!zoomOut && __unstableGetEditorMode() === 'zoom-out' && originalEditingMode.current !== mode) {
+      __unstableSetEditorMode(originalEditingMode.current);
+    }
+  }, [__unstableSetEditorMode, zoomOut, mode]);
+}
+
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inserter/menu.js
 /**
  * External dependencies
@@ -51901,6 +51883,7 @@ function TabbedSidebar({
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -51977,6 +51960,8 @@ function InserterMenu({
   }, [setSelectedPatternCategory, onPatternCategorySelection]);
   const showPatternPanel = selectedTab === 'patterns' && !delayedFilterValue && !!selectedPatternCategory;
   const showMediaPanel = selectedTab === 'media' && !!selectedMediaCategory;
+  const showZoomOut = showPatternPanel && window.__experimentalEnableZoomedOutPatternsTab;
+  useZoomOut(showZoomOut);
   const inserterSearch = (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (selectedTab === 'media') {
       return null;
