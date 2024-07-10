@@ -45293,7 +45293,7 @@ function UncontrolledInnerBlocks(props) {
     wrapperRef: wrapperRef,
     placeholder: placeholder
   });
-  if (Object.keys(blockType.providesContext).length === 0) {
+  if (!blockType?.providesContext || Object.keys(blockType.providesContext).length === 0) {
     return items;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockContext, {
