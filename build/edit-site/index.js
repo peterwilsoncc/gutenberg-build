@@ -28445,13 +28445,21 @@ function WithDropDownMenuSeparators({
   }, i));
 }
 const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function HeaderMenu({
-  field,
+  fieldId,
   view,
   fields,
   onChangeView,
   onHide,
   setOpenedFilter
 }, ref) {
+  const combinedField = view.layout?.combinedFields?.find(f => f.id === fieldId);
+  if (!!combinedField) {
+    return combinedField.header;
+  }
+  const field = fields.find(f => f.id === fieldId);
+  if (!field) {
+    return null;
+  }
   const isHidable = field.enableHiding !== false;
   const isSortable = field.enableSorting !== false;
   const isSorted = view.sort?.field === field.id;
@@ -28537,7 +28545,7 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
           onHide(field);
           onChangeView({
             ...view,
-            fields: viewFields.filter(fieldId => fieldId !== field.id)
+            fields: viewFields.filter(id => id !== field.id)
           });
         },
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_table_DropdownMenuItemLabel, {
@@ -28579,12 +28587,71 @@ function BulkSelectionCheckbox({
     "aria-label": areAllSelected ? (0,external_wp_i18n_namespaceObject.__)('Deselect all') : (0,external_wp_i18n_namespaceObject.__)('Select all')
   });
 }
+function TableColumn({
+  column,
+  fields,
+  view,
+  ...props
+}) {
+  const field = fields.find(f => f.id === column);
+  if (!!field) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TableColumnField, {
+      ...props,
+      field: field
+    });
+  }
+  const combinedField = view.layout?.combinedFields?.find(f => f.id === column);
+  if (!!combinedField) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TableColumnCombined, {
+      ...props,
+      fields: fields,
+      view: view,
+      field: combinedField
+    });
+  }
+  return null;
+}
+function TableColumnField({
+  primaryField,
+  item,
+  field
+}) {
+  const value = field.render({
+    item
+  });
+  return !!value && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    className: dist_clsx('dataviews-view-table__cell-content-wrapper', {
+      'dataviews-view-table__primary-field': primaryField?.id === field.id
+    }),
+    children: value
+  });
+}
+function TableColumnCombined({
+  field,
+  ...props
+}) {
+  const children = field.children.map(child => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TableColumn, {
+    ...props,
+    column: child
+  }, child));
+  if (field.direction === 'horizontal') {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
+      spacing: 3,
+      children: children
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: 0,
+    children: children
+  });
+}
 function TableRow({
   hasBulkActions,
   item,
   actions,
+  fields,
   id,
-  visibleFields,
+  view,
   primaryField,
   selection,
   getItemId,
@@ -28604,6 +28671,7 @@ function TableRow({
   // `onClick` and can be used to exclude touchscreen devices from certain
   // behaviours.
   const isTouchDevice = (0,external_wp_element_namespaceObject.useRef)(false);
+  const columns = view.fields || fields.map(f => f.id);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("tr", {
     className: dist_clsx('dataviews-view-table__row', {
       'is-selected': hasPossibleBulkAction && isSelected,
@@ -28639,21 +28707,29 @@ function TableRow({
           disabled: !hasPossibleBulkAction
         })
       })
-    }), visibleFields.map(field => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("td", {
-      style: {
-        width: field.width || undefined,
-        minWidth: field.minWidth || undefined,
-        maxWidth: field.maxWidth || undefined
-      },
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: dist_clsx('dataviews-view-table__cell-content-wrapper', {
-          'dataviews-view-table__primary-field': primaryField?.id === field.id
-        }),
-        children: field.render({
-          item
+    }), columns.map(column => {
+      var _view$layout$styles$c;
+      // Explicits picks the supported styles.
+      const {
+        width,
+        maxWidth,
+        minWidth
+      } = (_view$layout$styles$c = view.layout?.styles?.[column]) !== null && _view$layout$styles$c !== void 0 ? _view$layout$styles$c : {};
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("td", {
+        style: {
+          width,
+          maxWidth,
+          minWidth
+        },
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TableColumn, {
+          primaryField: primaryField,
+          fields: fields,
+          item: item,
+          column: column,
+          view: view
         })
-      })
-    }, field.id)), !!actions?.length &&
+      }, column);
+    }), !!actions?.length &&
     /*#__PURE__*/
     // Disable reason: we are not making the element interactive,
     // but preventing any click events from bubbling up to the
@@ -28709,8 +28785,7 @@ function ViewTable({
     const fallback = hidden ? headerMenuRefs.current.get(hidden.fallback) : undefined;
     setNextHeaderMenuToFocus(fallback?.node);
   };
-  const viewFields = view.fields || fields.map(f => f.id);
-  const visibleFields = fields.filter(field => viewFields.includes(field.id) || [view.layout?.mediaField].includes(field.id));
+  const columns = view.fields || fields.map(f => f.id);
   const hasData = !!data?.length;
   const primaryField = fields.find(field => field.id === view.layout?.primaryField);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -28726,7 +28801,6 @@ function ViewTable({
             style: {
               width: '1%'
             },
-            "data-field-id": "selection",
             scope: "col",
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BulkSelectionCheckbox, {
               selection: selection,
@@ -28735,35 +28809,42 @@ function ViewTable({
               actions: actions,
               getItemId: getItemId
             })
-          }), visibleFields.map((field, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("th", {
-            style: {
-              width: field.width || undefined,
-              minWidth: field.minWidth || undefined,
-              maxWidth: field.maxWidth || undefined
-            },
-            "data-field-id": field.id,
-            "aria-sort": view.sort?.field === field.id ? sortValues[view.sort.direction] : undefined,
-            scope: "col",
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HeaderMenu, {
-              ref: node => {
-                if (node) {
-                  headerMenuRefs.current.set(field.id, {
-                    node,
-                    fallback: visibleFields[index > 0 ? index - 1 : 1]?.id
-                  });
-                } else {
-                  headerMenuRefs.current.delete(field.id);
-                }
+          }), columns.map((column, index) => {
+            var _view$layout$styles$c2;
+            // Explicits picks the supported styles.
+            const {
+              width,
+              maxWidth,
+              minWidth
+            } = (_view$layout$styles$c2 = view.layout?.styles?.[column]) !== null && _view$layout$styles$c2 !== void 0 ? _view$layout$styles$c2 : {};
+            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("th", {
+              style: {
+                width,
+                maxWidth,
+                minWidth
               },
-              field: field,
-              view: view,
-              fields: fields,
-              onChangeView: onChangeView,
-              onHide: onHide,
-              setOpenedFilter: setOpenedFilter
-            })
-          }, field.id)), !!actions?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("th", {
-            "data-field-id": "actions",
+              "aria-sort": view.sort?.field === column ? sortValues[view.sort.direction] : undefined,
+              scope: "col",
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HeaderMenu, {
+                ref: node => {
+                  if (node) {
+                    headerMenuRefs.current.set(column, {
+                      node,
+                      fallback: columns[index > 0 ? index - 1 : 1]
+                    });
+                  } else {
+                    headerMenuRefs.current.delete(column);
+                  }
+                },
+                fieldId: column,
+                view: view,
+                fields: fields,
+                onChangeView: onChangeView,
+                onHide: onHide,
+                setOpenedFilter: setOpenedFilter
+              })
+            }, column);
+          }), !!actions?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("th", {
             className: "dataviews-view-table__actions-column",
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
               className: "dataviews-view-table-header",
@@ -28776,8 +28857,9 @@ function ViewTable({
           item: item,
           hasBulkActions: hasBulkActions,
           actions: actions,
+          fields: fields,
           id: getItemId(item) || index.toString(),
-          visibleFields: visibleFields,
+          view: view,
           primaryField: primaryField,
           selection: selection,
           getItemId: getItemId,
@@ -29312,6 +29394,19 @@ const VIEW_LAYOUTS = [{
   component: ViewList,
   icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_list_bullets_rtl : format_list_bullets
 }];
+function getMandatoryFields(view) {
+  if (view.type === 'table') {
+    var _view$layout$combined;
+    return [view.layout?.primaryField].concat((_view$layout$combined = view.layout?.combinedFields?.flatMap(field => field.children)) !== null && _view$layout$combined !== void 0 ? _view$layout$combined : []).filter(item => !!item);
+  }
+  if (view.type === 'grid') {
+    return [view.layout?.primaryField, view.layout?.mediaField].filter(item => !!item);
+  }
+  if (view.type === 'list') {
+    return [view.layout?.primaryField, view.layout?.mediaField].filter(item => !!item);
+  }
+  return [];
+}
 
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/view-actions.js
 /**
@@ -29426,7 +29521,8 @@ function FieldsVisibilityMenu({
   onChangeView,
   fields
 }) {
-  const hidableFields = fields.filter(field => field.enableHiding !== false && field.id !== view?.layout?.mediaField);
+  const mandatoryFields = getMandatoryFields(view);
+  const hidableFields = fields.filter(field => field.enableHiding !== false && !mandatoryFields.includes(field.id));
   const viewFields = view.fields || fields.map(field => field.id);
   if (!hidableFields?.length) {
     return null;
@@ -36259,6 +36355,24 @@ const {
   useHistory: posts_list_useHistory
 } = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
 const posts_list_EMPTY_ARRAY = [];
+const defaultLayouts = {
+  [LAYOUT_TABLE]: {
+    layout: {
+      'featured-image': {
+        width: '1%'
+      },
+      title: {
+        maxWidth: 300
+      }
+    }
+  },
+  [LAYOUT_GRID]: {
+    layout: {}
+  },
+  [LAYOUT_LIST]: {
+    layout: {}
+  }
+};
 const getFormattedDate = dateToDisplay => (0,external_wp_date_namespaceObject.dateI18n)((0,external_wp_date_namespaceObject.getSettings)().formats.datetimeAbbreviated, (0,external_wp_date_namespaceObject.getDate)(dateToDisplay));
 function useView(postType) {
   const {
@@ -36581,8 +36695,7 @@ function PostsList({
       item: item,
       viewType: view.type
     }),
-    enableSorting: false,
-    width: '1%'
+    enableSorting: false
   }, {
     header: (0,external_wp_i18n_namespaceObject.__)('Title'),
     id: 'title',
@@ -36622,7 +36735,6 @@ function PostsList({
         children: [title, suffix]
       });
     },
-    maxWidth: 300,
     enableHiding: false
   }, {
     header: (0,external_wp_i18n_namespaceObject.__)('Author'),
@@ -36759,7 +36871,8 @@ function PostsList({
       selection: selection,
       setSelection: setSelection,
       onSelectionChange: onSelectionChange,
-      getItemId: getItemId
+      getItemId: getItemId,
+      defaultLayouts: defaultLayouts
     })
   });
 }
@@ -38154,10 +38267,18 @@ const {
   useLocation: page_patterns_useLocation
 } = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
 const page_patterns_EMPTY_ARRAY = [];
-const defaultLayouts = {
+const page_patterns_defaultLayouts = {
   [LAYOUT_TABLE]: {
     layout: {
-      primaryField: 'title'
+      primaryField: 'title',
+      styles: {
+        preview: {
+          width: '1%'
+        },
+        author: {
+          width: '1%'
+        }
+      }
     }
   },
   [LAYOUT_GRID]: {
@@ -38173,7 +38294,7 @@ const DEFAULT_VIEW = {
   search: '',
   page: 1,
   perPage: 20,
-  layout: defaultLayouts[LAYOUT_GRID].layout,
+  layout: page_patterns_defaultLayouts[LAYOUT_GRID].layout,
   fields: ['title', 'sync-status'],
   filters: []
 };
@@ -38372,8 +38493,7 @@ function DataviewsPatterns() {
         item: item,
         viewType: view.type
       }),
-      enableSorting: false,
-      width: '1%'
+      enableSorting: false
     }, {
       header: (0,external_wp_i18n_namespaceObject.__)('Title'),
       id: 'title',
@@ -38426,8 +38546,7 @@ function DataviewsPatterns() {
         elements: authors,
         filterBy: {
           isPrimary: true
-        },
-        width: '1%'
+        }
       });
     }
     return _fields;
@@ -38497,7 +38616,7 @@ function DataviewsPatterns() {
         isLoading: isResolving,
         view: view,
         onChangeView: setView,
-        defaultLayouts: defaultLayouts
+        defaultLayouts: page_patterns_defaultLayouts
       })]
     })
   });
@@ -40358,7 +40477,6 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
 
 
 
-
 const {
   usePostActions: page_templates_usePostActions
 } = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
@@ -40373,11 +40491,32 @@ const {
 const page_templates_EMPTY_ARRAY = [];
 const page_templates_defaultLayouts = {
   [LAYOUT_TABLE]: {
+    fields: ['template', 'author'],
     layout: {
-      primaryField: 'title'
+      primaryField: 'title',
+      combinedFields: [{
+        id: 'template',
+        header: (0,external_wp_i18n_namespaceObject.__)('Template'),
+        children: ['title', 'description'],
+        direction: 'vertical'
+      }],
+      styles: {
+        template: {
+          maxWidth: 400,
+          minWidth: 320
+        },
+        preview: {
+          minWidth: 120,
+          maxWidth: 120
+        },
+        author: {
+          width: '1%'
+        }
+      }
     }
   },
   [LAYOUT_GRID]: {
+    fields: ['title', 'description', 'author'],
     layout: {
       mediaField: 'preview',
       primaryField: 'title',
@@ -40385,6 +40524,7 @@ const page_templates_defaultLayouts = {
     }
   },
   [LAYOUT_LIST]: {
+    fields: ['title', 'description', 'author'],
     layout: {
       primaryField: 'title',
       mediaField: 'preview'
@@ -40400,7 +40540,7 @@ const page_templates_DEFAULT_VIEW = {
     field: 'title',
     direction: 'asc'
   },
-  fields: ['title', 'description', 'author'],
+  fields: page_templates_defaultLayouts[LAYOUT_GRID].fields,
   layout: page_templates_defaultLayouts[LAYOUT_GRID].layout,
   filters: []
 };
@@ -40520,6 +40660,7 @@ function PageTemplates() {
       ...page_templates_DEFAULT_VIEW,
       type: usedType,
       layout: page_templates_defaultLayouts[usedType].layout,
+      fields: page_templates_defaultLayouts[usedType].fields,
       filters: activeView !== 'all' ? [{
         field: 'author',
         operator: 'isAny',
@@ -40577,8 +40718,6 @@ function PageTemplates() {
         viewType: view.type
       });
     },
-    minWidth: 120,
-    maxWidth: 120,
     enableSorting: false
   }, {
     header: (0,external_wp_i18n_namespaceObject.__)('Template'),
@@ -40592,7 +40731,6 @@ function PageTemplates() {
       item: item,
       viewType: view.type
     }),
-    maxWidth: 400,
     enableHiding: false,
     enableGlobalSearch: true
   }, {
@@ -40601,21 +40739,11 @@ function PageTemplates() {
     render: ({
       item
     }) => {
-      return item.description ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      return item.description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "page-templates-description",
         children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.description)
-      }) : view.type === LAYOUT_TABLE && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-          variant: "muted",
-          "aria-hidden": "true",
-          children: "\u2014"
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
-          children: (0,external_wp_i18n_namespaceObject.__)('No description.')
-        })]
       });
     },
-    maxWidth: 400,
-    minWidth: 320,
     enableSorting: false,
     enableGlobalSearch: true
   }, {
@@ -40632,8 +40760,7 @@ function PageTemplates() {
         item: item
       });
     },
-    elements: authors,
-    width: '1%'
+    elements: authors
   }], [authors, view.type]);
   const {
     data,
