@@ -33829,13 +33829,13 @@ const STICKY_OPTION = {
   key: 'sticky',
   value: 'sticky',
   name: (0,external_wp_i18n_namespaceObject._x)('Sticky', 'Name for the value of the CSS position property'),
-  __experimentalHint: (0,external_wp_i18n_namespaceObject.__)('The block will stick to the top of the window instead of scrolling.')
+  hint: (0,external_wp_i18n_namespaceObject.__)('The block will stick to the top of the window instead of scrolling.')
 };
 const FIXED_OPTION = {
   key: 'fixed',
   value: 'fixed',
   name: (0,external_wp_i18n_namespaceObject._x)('Fixed', 'Name for the value of the CSS position property'),
-  __experimentalHint: (0,external_wp_i18n_namespaceObject.__)('The block will not move when the page is scrolled.')
+  hint: (0,external_wp_i18n_namespaceObject.__)('The block will not move when the page is scrolled.')
 };
 const POSITION_SIDES = ['top', 'right', 'bottom', 'left'];
 const VALID_POSITION_TYPES = ['sticky', 'fixed'];
@@ -66147,7 +66147,7 @@ function NonDefaultControls({
     key: 'custom',
     name: (0,external_wp_i18n_namespaceObject.__)('Custom'),
     className: 'block-editor-date-format-picker__custom-format-select-control__custom-option',
-    __experimentalHint: (0,external_wp_i18n_namespaceObject.__)('Enter your own date format')
+    hint: (0,external_wp_i18n_namespaceObject.__)('Enter your own date format')
   };
   const [isCustom, setIsCustom] = (0,external_wp_element_namespaceObject.useState)(() => !!format && !suggestedOptions.some(option => option.format === format));
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {

@@ -61090,9 +61090,30 @@ CustomSelectItem.displayName = 'CustomSelectControlV2.Item';
 
 
 
+function legacy_component_useDeprecatedProps({
+  __experimentalShowSelectedHint,
+  ...otherProps
+}) {
+  return {
+    showSelectedHint: __experimentalShowSelectedHint,
+    ...otherProps
+  };
+}
+
+// The removal of `__experimentalHint` in favour of `hint` doesn't happen in
+// the `useDeprecatedProps` hook in order not to break consumers that rely
+// on object identity (see https://github.com/WordPress/gutenberg/pull/63248#discussion_r1672213131)
+function applyOptionDeprecations({
+  __experimentalHint,
+  ...rest
+}) {
+  return {
+    hint: __experimentalHint,
+    ...rest
+  };
+}
 function legacy_component_CustomSelectControl(props) {
   const {
-    __experimentalShowSelectedHint = false,
     __next40pxDefaultSize = false,
     describedBy,
     options,
@@ -61100,8 +61121,9 @@ function legacy_component_CustomSelectControl(props) {
     size = 'default',
     value,
     className: classNameProp,
+    showSelectedHint = false,
     ...restProps
-  } = props;
+  } = legacy_component_useDeprecatedProps(props);
 
   // Forward props + store from v2 implementation
   const store = useSelectStore({
@@ -61131,10 +61153,10 @@ function legacy_component_CustomSelectControl(props) {
     // on initial render, thus making this implementation closer to the v1.
     defaultValue: options[0]?.name
   });
-  const children = options.map(({
+  const children = options.map(applyOptionDeprecations).map(({
     name,
     key,
-    __experimentalHint,
+    hint,
     style,
     className
   }) => {
@@ -61142,12 +61164,12 @@ function legacy_component_CustomSelectControl(props) {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         children: name
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WithHintItemHint, {
-        children: __experimentalHint
+        children: hint
       })]
     });
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(custom_select_control_v2_item, {
       value: name,
-      children: __experimentalHint ? withHint : name,
+      children: hint ? withHint : name,
       style: style,
       className: dist_clsx(
       // TODO: Legacy classname. Add V1 styles are removed from the codebase
@@ -61155,7 +61177,7 @@ function legacy_component_CustomSelectControl(props) {
       className
       // TODO: Legacy classname. Add V1 styles are removed from the codebase
       // {
-      // 	'has-hint': __experimentalHint,
+      // 	'has-hint': hint,
       // }
       )
     }, key);
@@ -61164,12 +61186,12 @@ function legacy_component_CustomSelectControl(props) {
     const {
       value: currentValue
     } = store.getState();
-    const currentHint = options?.find(({
+    const selectedOptionHint = options?.map(applyOptionDeprecations)?.find(({
       name
-    }) => currentValue === name);
+    }) => currentValue === name)?.hint;
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(SelectedExperimentalHintWrapper, {
-      children: [currentValue, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SelectedExperimentalHintItem, {
-        children: currentHint?.__experimentalHint
+      children: [currentValue, selectedOptionHint && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SelectedExperimentalHintItem, {
+        children: selectedOptionHint
       })]
     });
   };
@@ -61184,7 +61206,7 @@ function legacy_component_CustomSelectControl(props) {
   })();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(custom_select, {
     "aria-describedby": describedBy,
-    renderSelectedValue: __experimentalShowSelectedHint ? renderSelectedValueHint : undefined,
+    renderSelectedValue: showSelectedHint ? renderSelectedValueHint : undefined,
     size: translatedSize,
     store: store,
     className: dist_clsx(
@@ -61246,7 +61268,7 @@ const FontSizePickerSelect = props => {
       key: fontSize.slug,
       name: fontSize.name || fontSize.slug,
       value: fontSize.size,
-      __experimentalHint: hint
+      hint
     };
   }), ...(disableCustomFontSizes ? [] : [CUSTOM_OPTION])];
   const selectedOption = value ? (_options$find = options.find(option => option.value === value)) !== null && _options$find !== void 0 ? _options$find : CUSTOM_OPTION : DEFAULT_OPTION;
@@ -61260,7 +61282,7 @@ const FontSizePickerSelect = props => {
     (0,external_wp_i18n_namespaceObject.__)('Currently selected font size: %s'), selectedOption.name),
     options: options,
     value: selectedOption,
-    __experimentalShowSelectedHint: true,
+    showSelectedHint: true,
     onChange: ({
       selectedItem
     }) => {
