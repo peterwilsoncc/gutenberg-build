@@ -53161,40 +53161,46 @@ function GridItemResizerInner({
   });
 }
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/arrow-up.js
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/chevron-up.js
 /**
  * WordPress dependencies
  */
 
 
-const arrowUp = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
+const chevronUp = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M12 3.9 6.5 9.5l1 1 3.8-3.7V20h1.5V6.8l3.7 3.7 1-1z"
+    d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z"
   })
 });
-/* harmony default export */ const arrow_up = (arrowUp);
+/* harmony default export */ const chevron_up = (chevronUp);
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/arrow-left.js
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/chevron-down.js
 /**
  * WordPress dependencies
  */
 
 
-const arrowLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
+const chevronDown = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M20 11.2H6.8l3.7-3.7-1-1L3.9 12l5.6 5.5 1-1-3.7-3.7H20z"
+    d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"
   })
 });
-/* harmony default export */ const arrow_left = (arrowLeft);
+/* harmony default export */ const chevron_down = (chevronDown);
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/grid/grid-item-movers.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
+
 
 
 
@@ -53203,6 +53209,7 @@ const arrowLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -53229,52 +53236,91 @@ function GridItemMovers({
   const columnCount = parentLayout?.columnCount;
   const rowCount = parentLayout?.rowCount;
   const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(gridClientId, columnCount);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(block_controls, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_controls, {
     group: "parent",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
+      className: "block-editor-grid-item-mover__move-button-container",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItemMover, {
+        className: "is-left-button",
+        icon: chevron_left,
+        label: (0,external_wp_i18n_namespaceObject.__)('Move left'),
+        description: (0,external_wp_i18n_namespaceObject.__)('Move left'),
+        isDisabled: columnStart <= 1,
+        onClick: () => {
+          onChange({
+            columnStart: columnStart - 1
+          });
+          __unstableMarkNextChangeAsNotPersistent();
+          moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart - 1, rowStart));
+        }
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+        className: "block-editor-grid-item-mover__move-vertical-button-container",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItemMover, {
+          className: "is-up-button",
+          icon: chevron_up,
+          label: (0,external_wp_i18n_namespaceObject.__)('Move up'),
+          description: (0,external_wp_i18n_namespaceObject.__)('Move up'),
+          isDisabled: rowStart <= 1,
+          onClick: () => {
+            onChange({
+              rowStart: rowStart - 1
+            });
+            __unstableMarkNextChangeAsNotPersistent();
+            moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart, rowStart - 1));
+          }
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItemMover, {
+          className: "is-down-button",
+          icon: chevron_down,
+          label: (0,external_wp_i18n_namespaceObject.__)('Move down'),
+          description: (0,external_wp_i18n_namespaceObject.__)('Move down'),
+          isDisabled: rowCount && rowEnd >= rowCount,
+          onClick: () => {
+            onChange({
+              rowStart: rowStart + 1
+            });
+            __unstableMarkNextChangeAsNotPersistent();
+            moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart, rowStart + 1));
+          }
+        })]
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItemMover, {
+        className: "is-right-button",
+        icon: chevron_right,
+        label: (0,external_wp_i18n_namespaceObject.__)('Move right'),
+        description: (0,external_wp_i18n_namespaceObject.__)('Move right'),
+        isDisabled: columnCount && columnEnd >= columnCount,
+        onClick: () => {
+          onChange({
+            columnStart: columnStart + 1
+          });
+          __unstableMarkNextChangeAsNotPersistent();
+          moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart + 1, rowStart));
+        }
+      })]
+    })
+  });
+}
+function GridItemMover({
+  className,
+  icon,
+  label,
+  isDisabled,
+  onClick,
+  description
+}) {
+  const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(GridItemMover);
+  const descriptionId = `block-editor-grid-item-mover-button__description-${instanceId}`;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-      icon: arrow_up,
-      label: (0,external_wp_i18n_namespaceObject.__)('Move block up'),
-      disabled: rowStart <= 1,
-      onClick: () => {
-        onChange({
-          rowStart: rowStart - 1
-        });
-        __unstableMarkNextChangeAsNotPersistent();
-        moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart, rowStart - 1));
-      }
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-      icon: arrow_down,
-      label: (0,external_wp_i18n_namespaceObject.__)('Move block down'),
-      disabled: rowCount && rowEnd >= rowCount,
-      onClick: () => {
-        onChange({
-          rowStart: rowStart + 1
-        });
-        __unstableMarkNextChangeAsNotPersistent();
-        moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart, rowStart + 1));
-      }
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-      icon: arrow_left,
-      label: (0,external_wp_i18n_namespaceObject.__)('Move block left'),
-      disabled: columnStart <= 1,
-      onClick: () => {
-        onChange({
-          columnStart: columnStart - 1
-        });
-        __unstableMarkNextChangeAsNotPersistent();
-        moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart - 1, rowStart));
-      }
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-      icon: arrow_right,
-      label: (0,external_wp_i18n_namespaceObject.__)('Move block right'),
-      disabled: columnCount && columnEnd >= columnCount,
-      onClick: () => {
-        onChange({
-          columnStart: columnStart + 1
-        });
-        __unstableMarkNextChangeAsNotPersistent();
-        moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart + 1, rowStart));
-      }
+      className: dist_clsx('block-editor-grid-item-mover-button', className),
+      icon: icon,
+      label: label,
+      "aria-describedby": descriptionId,
+      onClick: isDisabled ? null : onClick,
+      disabled: isDisabled,
+      accessibleWhenDisabled: true
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
+      id: descriptionId,
+      children: description
     })]
   });
 }
@@ -56799,36 +56845,6 @@ const BlockDraggable = ({
   });
 };
 /* harmony default export */ const block_draggable = (BlockDraggable);
-
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/chevron-up.js
-/**
- * WordPress dependencies
- */
-
-
-const chevronUp = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z"
-  })
-});
-/* harmony default export */ const chevron_up = (chevronUp);
-
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/chevron-down.js
-/**
- * WordPress dependencies
- */
-
-
-const chevronDown = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"
-  })
-});
-/* harmony default export */ const chevron_down = (chevronDown);
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-mover/mover-description.js
 /**
@@ -71132,6 +71148,21 @@ function UnitControl({
     ...props
   });
 }
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/arrow-left.js
+/**
+ * WordPress dependencies
+ */
+
+
+const arrowLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M20 11.2H6.8l3.7-3.7-1-1L3.9 12l5.6 5.5 1-1-3.7-3.7H20z"
+  })
+});
+/* harmony default export */ const arrow_left = (arrowLeft);
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/url-input/button.js
 /**
