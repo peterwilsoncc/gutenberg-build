@@ -54764,6 +54764,7 @@ function addLabelCallback(settings) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -54774,16 +54775,19 @@ function useGridLayoutSync({
 }) {
   const {
     gridLayout,
-    blockOrder
+    blockOrder,
+    selectedBlockLayout
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _getBlockAttributes$l;
     const {
       getBlockAttributes,
       getBlockOrder
     } = select(store);
+    const selectedBlock = select(store).getSelectedBlock();
     return {
       gridLayout: (_getBlockAttributes$l = getBlockAttributes(gridClientId).layout) !== null && _getBlockAttributes$l !== void 0 ? _getBlockAttributes$l : {},
-      blockOrder: getBlockOrder(gridClientId)
+      blockOrder: getBlockOrder(gridClientId),
+      selectedBlockLayout: selectedBlock?.attributes.style?.layout
     };
   }, [gridClientId]);
   const {
@@ -54793,29 +54797,26 @@ function useGridLayoutSync({
     updateBlockAttributes,
     __unstableMarkNextChangeAsNotPersistent
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const selectedBlockRect = (0,external_wp_element_namespaceObject.useMemo)(() => selectedBlockLayout ? new GridRect(selectedBlockLayout) : null, [selectedBlockLayout]);
+  const previouslySelectedBlockRect = (0,external_wp_compose_namespaceObject.usePrevious)(selectedBlockRect);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     const updates = {};
-    const {
-      columnCount,
-      rowCount,
-      isManualPlacement
-    } = gridLayout;
-    if (isManualPlacement) {
-      const rects = [];
+    if (gridLayout.isManualPlacement) {
+      const occupiedRects = [];
 
       // Respect the position of blocks that already have a columnStart and rowStart value.
       for (const clientId of blockOrder) {
-        const attributes = getBlockAttributes(clientId);
+        var _getBlockAttributes$s;
         const {
           columnStart,
           rowStart,
           columnSpan = 1,
           rowSpan = 1
-        } = attributes.style?.layout || {};
+        } = (_getBlockAttributes$s = getBlockAttributes(clientId).style?.layout) !== null && _getBlockAttributes$s !== void 0 ? _getBlockAttributes$s : {};
         if (!columnStart || !rowStart) {
           continue;
         }
-        rects.push(new GridRect({
+        occupiedRects.push(new GridRect({
           columnStart,
           rowStart,
           columnSpan,
@@ -54825,18 +54826,19 @@ function useGridLayoutSync({
 
       // When in manual mode, ensure that every block has a columnStart and rowStart value.
       for (const clientId of blockOrder) {
+        var _attributes$style$lay;
         const attributes = getBlockAttributes(clientId);
         const {
           columnStart,
           rowStart,
           columnSpan = 1,
           rowSpan = 1
-        } = attributes.style?.layout || {};
+        } = (_attributes$style$lay = attributes.style?.layout) !== null && _attributes$style$lay !== void 0 ? _attributes$style$lay : {};
         if (columnStart && rowStart) {
           continue;
         }
-        const [newColumnStart, newRowStart] = getFirstEmptyCell(rects, columnCount, columnSpan, rowSpan);
-        rects.push(new GridRect({
+        const [newColumnStart, newRowStart] = placeBlock(occupiedRects, gridLayout.columnCount, columnSpan, rowSpan, previouslySelectedBlockRect?.columnEnd, previouslySelectedBlockRect?.rowEnd);
+        occupiedRects.push(new GridRect({
           columnStart: newColumnStart,
           rowStart: newRowStart,
           columnSpan,
@@ -54855,8 +54857,8 @@ function useGridLayoutSync({
       }
 
       // Ensure there's enough rows to fit all blocks.
-      const bottomMostRow = Math.max(...rects.map(r => r.rowEnd));
-      if (!rowCount || rowCount < bottomMostRow) {
+      const bottomMostRow = Math.max(...occupiedRects.map(r => r.rowEnd));
+      if (!gridLayout.rowCount || gridLayout.rowCount < bottomMostRow) {
         updates[gridClientId] = {
           layout: {
             ...gridLayout,
@@ -54867,12 +54869,13 @@ function useGridLayoutSync({
     } else {
       // When in auto mode, remove all of the columnStart and rowStart values.
       for (const clientId of blockOrder) {
+        var _attributes$style$lay2;
         const attributes = getBlockAttributes(clientId);
         const {
           columnStart,
           rowStart,
           ...layout
-        } = attributes.style?.layout || {};
+        } = (_attributes$style$lay2 = attributes.style?.layout) !== null && _attributes$style$lay2 !== void 0 ? _attributes$style$lay2 : {};
         // Only update attributes if columnStart or rowStart are set.
         if (columnStart || rowStart) {
           updates[clientId] = {
@@ -54885,7 +54888,7 @@ function useGridLayoutSync({
       }
 
       // Remove row styles in auto mode
-      if (rowCount) {
+      if (gridLayout.rowCount) {
         updates[gridClientId] = {
           layout: {
             ...gridLayout,
@@ -54900,20 +54903,29 @@ function useGridLayoutSync({
     }
   }, [
   // Actual deps to sync:
-  gridClientId, gridLayout, blockOrder,
-  // Needed for linter:
+  gridClientId, gridLayout, blockOrder, previouslySelectedBlockRect,
+  // These won't change, but the linter thinks they might:
   __unstableMarkNextChangeAsNotPersistent, getBlockAttributes, updateBlockAttributes]);
 }
-function getFirstEmptyCell(rects, columnCount, columnSpan = 1, rowSpan = 1) {
-  for (let row = 1;; row++) {
-    for (let column = 1; column <= columnCount; column++) {
-      const rect = new GridRect({
+
+/**
+ * @param {GridRect[]} occupiedRects
+ * @param {number}     gridColumnCount
+ * @param {number}     blockColumnSpan
+ * @param {number}     blockRowSpan
+ * @param {number?}    startColumn
+ * @param {number?}    startRow
+ */
+function placeBlock(occupiedRects, gridColumnCount, blockColumnSpan, blockRowSpan, startColumn = 1, startRow = 1) {
+  for (let row = startRow;; row++) {
+    for (let column = row === startRow ? startColumn : 1; column <= gridColumnCount; column++) {
+      const candidateRect = new GridRect({
         columnStart: column,
         rowStart: row,
-        columnSpan,
-        rowSpan
+        columnSpan: blockColumnSpan,
+        rowSpan: blockRowSpan
       });
-      if (!rects.some(r => r.intersectsRect(rect))) {
+      if (!occupiedRects.some(r => r.intersectsRect(candidateRect))) {
         return [column, row];
       }
     }
@@ -54956,15 +54968,12 @@ function GridTools({
       isDragging: isDraggingBlocks()
     };
   });
-  if (!isSelected && !isDragging) {
-    return null;
-  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridVisualizer, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridLayoutSync, {
+      clientId: clientId
+    }), (isSelected || isDragging) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridVisualizer, {
       clientId: clientId,
       parentLayout: layout
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridLayoutSync, {
-      clientId: clientId
     })]
   });
 }
