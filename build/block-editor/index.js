@@ -43999,7 +43999,8 @@ function useInBetweenInserter() {
     getTemplateLock,
     __unstableIsWithinBlockOverlay,
     getBlockEditingMode,
-    getBlockName
+    getBlockName,
+    getBlockAttributes
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const {
     showInsertionPoint,
@@ -44032,7 +44033,7 @@ function useInBetweenInserter() {
         const blockElement = !!event.target.getAttribute('data-block') ? event.target : event.target.closest('[data-block]');
         rootClientId = blockElement.getAttribute('data-block');
       }
-      if (getTemplateLock(rootClientId) || getBlockEditingMode(rootClientId) === 'disabled' || getBlockName(rootClientId) === 'core/block') {
+      if (getTemplateLock(rootClientId) || getBlockEditingMode(rootClientId) === 'disabled' || getBlockName(rootClientId) === 'core/block' || rootClientId && getBlockAttributes(rootClientId).layout?.isManualPlacement) {
         return;
       }
       const orientation = getBlockListSettings(rootClientId)?.orientation || 'vertical';
