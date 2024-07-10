@@ -29107,7 +29107,8 @@ function ListItem({
                 className: "dataviews-view-list__media-placeholder"
               })
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-              spacing: 0,
+              spacing: 1,
+              className: "dataviews-view-list__field-wrapper",
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
                 className: "dataviews-view-list__primary-field",
                 id: labelId,
@@ -29135,7 +29136,7 @@ function ListItem({
           })
         })
       }), eligibleActions?.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        spacing: 1,
+        spacing: 3,
         justify: "flex-end",
         className: "dataviews-view-list__item-actions",
         style: {
@@ -29150,7 +29151,7 @@ function ListItem({
               label: primaryActionLabel,
               icon: primaryAction.icon,
               isDestructive: primaryAction.isDestructive,
-              size: "compact",
+              size: "small",
               onClick: () => setIsModalOpen(true)
             }),
             children: isModalOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionModal, {
@@ -29167,7 +29168,7 @@ function ListItem({
               label: primaryActionLabel,
               icon: primaryAction.icon,
               isDestructive: primaryAction.isDestructive,
-              size: "compact",
+              size: "small",
               onClick: () => {
                 primaryAction.callback([item], {
                   registry
@@ -29181,7 +29182,7 @@ function ListItem({
             trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_list_CompositeItem, {
               store: store,
               render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-                size: "compact",
+                size: "small",
                 icon: more_vertical,
                 label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
                 accessibleWhenDisabled: true,
