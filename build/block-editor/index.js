@@ -43331,12 +43331,14 @@ function DefaultBlockAppender({
   const {
     showPrompt,
     isLocked,
-    placeholder
+    placeholder,
+    isManualGrid
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockCount,
       getSettings,
-      getTemplateLock
+      getTemplateLock,
+      getBlockAttributes
     } = select(store);
     const isEmpty = !getBlockCount(rootClientId);
     const {
@@ -43345,14 +43347,15 @@ function DefaultBlockAppender({
     return {
       showPrompt: isEmpty,
       isLocked: !!getTemplateLock(rootClientId),
-      placeholder: bodyPlaceholder
+      placeholder: bodyPlaceholder,
+      isManualGrid: getBlockAttributes(rootClientId)?.layout?.isManualPlacement
     };
   }, [rootClientId]);
   const {
     insertDefaultBlock,
     startTyping
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  if (isLocked) {
+  if (isLocked || isManualGrid) {
     return null;
   }
   const value = (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(placeholder) || (0,external_wp_i18n_namespaceObject.__)('Type / to choose a block');
