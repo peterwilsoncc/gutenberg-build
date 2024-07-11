@@ -27973,10 +27973,6 @@ function getFontStylesAndWeights(fontFamilyFaces) {
  */
 
 
-
-const {
-  CustomSelectControlV2Legacy: CustomSelectControl
-} = unlock(external_wp_components_namespaceObject.privateApis);
 /**
  * Adjusts font appearance field label in case either font styles or weights
  * are disabled.
@@ -27985,6 +27981,7 @@ const {
  * @param {boolean} hasFontWeights Whether font weights are enabled and present.
  * @return {string} A label representing what font appearance is being edited.
  */
+
 const getFontAppearanceLabel = (hasFontStyles, hasFontWeights) => {
   if (!hasFontStyles) {
     return (0,external_wp_i18n_namespaceObject.__)('Font weight');
@@ -28111,7 +28108,7 @@ function FontAppearanceControl(props) {
     // translators: %s: Currently selected font appearance.
     (0,external_wp_i18n_namespaceObject.__)('Currently selected font appearance: %s'), currentSelection.name);
   };
-  return hasStylesOrWeights && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CustomSelectControl, {
+  return hasStylesOrWeights && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CustomSelectControl, {
     ...otherProps,
     className: "components-font-appearance-control",
     label: label,
@@ -30087,7 +30084,7 @@ const settings_settings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
 
 
 const {
-  CustomSelectControlV2Legacy: spacing_input_control_CustomSelectControl
+  CustomSelectControlV2Legacy: CustomSelectControl
 } = unlock(external_wp_components_namespaceObject.privateApis);
 const CUSTOM_VALUE_SETTINGS = {
   px: {
@@ -30367,10 +30364,12 @@ function SpacingInputControl({
       __nextHasNoMarginBottom: true,
       onFocus: onMouseOver,
       onBlur: onMouseOut
-    }), !showRangeControl && !showCustomValueControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacing_input_control_CustomSelectControl, {
+    }), !showRangeControl && !showCustomValueControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CustomSelectControl, {
       className: "spacing-sizes-control__custom-select-control",
-      value: options.find(option => option.key === currentValue) || '' // passing undefined here causes a downshift controlled/uncontrolled warning
-      ,
+      value:
+      // passing empty string as a fallback to continue using the
+      // component in controlled mode
+      options.find(option => option.key === currentValue) || '',
       onChange: selection => {
         onChange(getNewPresetValue(selection.selectedItem.key, 'selectList'));
       },
@@ -33815,10 +33814,6 @@ function useBlockDisplayInformation(clientId) {
 
 
 
-
-const {
-  CustomSelectControlV2Legacy: position_CustomSelectControl
-} = unlock(external_wp_components_namespaceObject.privateApis);
 const POSITION_SUPPORT_KEY = 'position';
 const DEFAULT_OPTION = {
   key: 'default',
@@ -34045,7 +34040,7 @@ function PositionPanelPure({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
         __nextHasNoMarginBottom: true,
         help: stickyHelpText,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(position_CustomSelectControl, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CustomSelectControl, {
           __next40pxDefaultSize: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Position'),
           hideLabelFromVision: true,
@@ -66079,18 +66074,10 @@ const external_wp_date_namespaceObject = window["wp"]["date"];
 
 
 
-/**
- * Internal dependencies
- */
-
-
-
-const {
-  CustomSelectControlV2Legacy: date_format_picker_CustomSelectControl
-} = unlock(external_wp_components_namespaceObject.privateApis);
-
 // So that we illustrate the different formats in the dropdown properly, show a date that is
 // somwhat recent, has a day greater than 12, and a month with more than three letters.
+
+
 const exampleDate = new Date();
 exampleDate.setDate(20);
 exampleDate.setMonth(exampleDate.getMonth() - 3);
@@ -66180,7 +66167,7 @@ function NonDefaultControls({
   };
   const [isCustom, setIsCustom] = (0,external_wp_element_namespaceObject.useState)(() => !!format && !suggestedOptions.some(option => option.format === format));
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(date_format_picker_CustomSelectControl, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CustomSelectControl, {
       label: (0,external_wp_i18n_namespaceObject.__)('Choose a format'),
       options: [...suggestedOptions, customOption],
       value: isCustom ? customOption : (_suggestedOptions$fin = suggestedOptions.find(option => option.format === format)) !== null && _suggestedOptions$fin !== void 0 ? _suggestedOptions$fin : customOption,
