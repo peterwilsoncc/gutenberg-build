@@ -7331,7 +7331,13 @@ const __experimentalGetPreviewDeviceType = (0,external_wp_data_namespaceObject.c
  *
  * @return {Object} Whether the current user can create media or not.
  */
-const getCanUserCreateMedia = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => select(external_wp_coreData_namespaceObject.store).canUser('create', 'media'));
+const getCanUserCreateMedia = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
+  external_wp_deprecated_default()(`wp.data.select( 'core/edit-site' ).getCanUserCreateMedia()`, {
+    since: '6.7',
+    alternative: `wp.data.select( 'core' ).canUser( 'create', { kind: 'root', type: 'media' } )`
+  });
+  return select(external_wp_coreData_namespaceObject.store).canUser('create', 'media');
+});
 
 /**
  * Returns any available Reusable blocks.
@@ -7341,9 +7347,10 @@ const getCanUserCreateMedia = (0,external_wp_data_namespaceObject.createRegistry
  * @return {Array} The available reusable blocks.
  */
 const getReusableBlocks = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
-  external_wp_deprecated_default()("select( 'core/core' ).getEntityRecords( 'postType', 'wp_block' )", {
+  external_wp_deprecated_default()(`select( 'core/edit-site' ).getReusableBlocks()`, {
     since: '6.5',
-    version: '6.8'
+    version: '6.8',
+    alternative: `select( 'core/core' ).getEntityRecords( 'postType', 'wp_block' )`
   });
   const isWeb = external_wp_element_namespaceObject.Platform.OS === 'web';
   return isWeb ? select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_block', {
