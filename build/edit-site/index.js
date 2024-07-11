@@ -16445,8 +16445,9 @@ const BlockPreviewPanel = ({
     }
     return (0,external_wp_blocks_namespaceObject.getBlockFromExample)(name, example);
   }, [name, blockExample, variation]);
-  const viewportWidth = (_blockExample$viewpor = blockExample?.viewportWidth) !== null && _blockExample$viewpor !== void 0 ? _blockExample$viewpor : null;
-  const previewHeight = 150;
+  const viewportWidth = (_blockExample$viewpor = blockExample?.viewportWidth) !== null && _blockExample$viewpor !== void 0 ? _blockExample$viewpor : 500;
+  // Same as height of InserterPreviewPanel.
+  const previewHeight = 144;
   if (!blockExample) {
     return null;
   }
@@ -16463,12 +16464,17 @@ const BlockPreviewPanel = ({
         blocks: blocks,
         viewportWidth: viewportWidth,
         minHeight: previewHeight,
-        additionalStyles: [{
+        additionalStyles:
+        //We want this CSS to be in sync with the one in InserterPreviewPanel.
+        [{
           css: `
 								body{
-									min-height:${previewHeight}px;
-									display:flex;align-items:center;justify-content:center;
+									padding: 24px;
+									min-height:100%;
+									display:flex;
+									align-items:center;
 								}
+								.is-root-container { width: 100%; }
 							`
         }]
       })

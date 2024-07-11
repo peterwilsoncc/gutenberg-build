@@ -5853,6 +5853,12 @@ const {
 const buttons_settings = {
   icon: library_buttons,
   example: {
+    attributes: {
+      layout: {
+        type: 'flex',
+        justifyContent: 'center'
+      }
+    },
     innerBlocks: [{
       name: 'core/button',
       attributes: {
@@ -23660,7 +23666,8 @@ const heading_settings = {
   example: {
     attributes: {
       content: (0,external_wp_i18n_namespaceObject.__)('Code is Poetry'),
-      level: 2
+      level: 2,
+      textAlign: 'center'
     }
   },
   __experimentalLabel(attributes, {
@@ -52713,7 +52720,12 @@ const site_tagline_metadata = {
       "default": 0
     }
   },
-  example: {},
+  example: {
+    viewportWidth: 350,
+    attributes: {
+      textAlign: "center"
+    }
+  },
   supports: {
     align: ["wide", "full"],
     html: false,
@@ -53086,7 +53098,12 @@ const {
 
 const site_title_settings = {
   icon: map_marker,
-  example: {},
+  example: {
+    viewportWidth: 350,
+    attributes: {
+      textAlign: 'center'
+    }
+  },
   edit: SiteTitleEdit,
   transforms: site_title_transforms,
   deprecated: site_title_deprecated

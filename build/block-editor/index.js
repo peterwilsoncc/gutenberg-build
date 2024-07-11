@@ -48578,6 +48578,12 @@ function InserterPreviewPanel({
       innerBlocks: example.innerBlocks
     });
   }, [name, example, initialAttributes]);
+  // Same as height of BlockPreviewPanel.
+  const previewHeight = 144;
+  const sidebarWidth = 280;
+  const viewportWidth = (_example$viewportWidt = example?.viewportWidth) !== null && _example$viewportWidt !== void 0 ? _example$viewportWidt : 500;
+  const scale = sidebarWidth / viewportWidth;
+  const minHeight = scale !== 0 && scale < 1 && previewHeight ? previewHeight / scale : previewHeight;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "block-editor-inserter__preview-container",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -48586,9 +48592,20 @@ function InserterPreviewPanel({
         className: "block-editor-inserter__preview-content",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_preview, {
           blocks: blocks,
-          viewportWidth: (_example$viewportWidt = example?.viewportWidth) !== null && _example$viewportWidt !== void 0 ? _example$viewportWidt : 500,
-          additionalStyles: [{
-            css: 'body { padding: 24px; }'
+          viewportWidth: viewportWidth,
+          minHeight: previewHeight,
+          additionalStyles:
+          //We want this CSS to be in sync with the one in BlockPreviewPanel.
+          [{
+            css: `
+										body { 
+											padding: 24px;
+											min-height:${Math.round(minHeight)}px;
+											display:flex;
+											align-items:center;
+										}
+										.is-root-container { width: 100%; }
+									`
           }]
         })
       }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
