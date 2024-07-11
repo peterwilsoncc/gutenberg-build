@@ -47230,34 +47230,11 @@ const imageDateTitle = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.
  */
 
 
-
 /**
  * Internal dependencies
  */
 
 const query_variations_variations = [{
-  name: 'posts-list',
-  title: (0,external_wp_i18n_namespaceObject.__)('Posts List'),
-  description: (0,external_wp_i18n_namespaceObject.__)('Display a list of your most recent posts, excluding sticky posts.'),
-  icon: post_list,
-  attributes: {
-    namespace: 'core/posts-list',
-    query: {
-      perPage: 4,
-      pages: 1,
-      offset: 0,
-      postType: 'post',
-      order: 'desc',
-      orderBy: 'date',
-      author: '',
-      search: '',
-      sticky: 'exclude',
-      inherit: false
-    }
-  },
-  scope: ['inserter'],
-  isActive: ['namespace', 'query.postType']
-}, {
   name: 'title-date',
   title: (0,external_wp_i18n_namespaceObject.__)('Title & Date'),
   icon: titleDate,
