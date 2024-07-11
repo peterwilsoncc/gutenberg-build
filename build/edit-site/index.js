@@ -28404,7 +28404,7 @@ function BulkActions({
   });
 }
 
-;// CONCATENATED MODULE: ./packages/dataviews/build-module/view-table.js
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/layouts/table/index.js
 /**
  * External dependencies
  */
@@ -28430,18 +28430,18 @@ function BulkActions({
 
 
 const {
-  DropdownMenuV2: view_table_DropdownMenu,
-  DropdownMenuGroupV2: view_table_DropdownMenuGroup,
-  DropdownMenuItemV2: view_table_DropdownMenuItem,
+  DropdownMenuV2: table_DropdownMenu,
+  DropdownMenuGroupV2: table_DropdownMenuGroup,
+  DropdownMenuItemV2: table_DropdownMenuItem,
   DropdownMenuRadioItemV2: DropdownMenuRadioItem,
-  DropdownMenuItemLabelV2: view_table_DropdownMenuItemLabel,
-  DropdownMenuSeparatorV2: view_table_DropdownMenuSeparator
+  DropdownMenuItemLabelV2: table_DropdownMenuItemLabel,
+  DropdownMenuSeparatorV2: table_DropdownMenuSeparator
 } = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function WithDropDownMenuSeparators({
   children
 }) {
   return external_wp_element_namespaceObject.Children.toArray(children).filter(Boolean).map((child, i) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_element_namespaceObject.Fragment, {
-    children: [i > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_table_DropdownMenuSeparator, {}), child]
+    children: [i > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(table_DropdownMenuSeparator, {}), child]
   }, i));
 }
 const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function HeaderMenu({
@@ -28472,7 +28472,7 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
   if (!isSortable && !isHidable && !canAddFilter) {
     return field.header;
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_table_DropdownMenu, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(table_DropdownMenu, {
     align: "start",
     trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
       size: "compact",
@@ -28488,7 +28488,7 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
       minWidth: '240px'
     },
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(WithDropDownMenuSeparators, {
-      children: [isSortable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_table_DropdownMenuGroup, {
+      children: [isSortable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(table_DropdownMenuGroup, {
         children: SORTING_DIRECTIONS.map(direction => {
           const isChecked = view.sort && isSorted && view.sort.direction === direction;
           const value = `${field.id}-${direction}`;
@@ -28510,13 +28510,13 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
                 }
               });
             },
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_table_DropdownMenuItemLabel, {
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(table_DropdownMenuItemLabel, {
               children: sortLabels[direction]
             })
           }, value);
         })
-      }), canAddFilter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_table_DropdownMenuGroup, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_table_DropdownMenuItem, {
+      }), canAddFilter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(table_DropdownMenuGroup, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(table_DropdownMenuItem, {
           prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
             icon: library_funnel
           }),
@@ -28532,11 +28532,11 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
               }]
             });
           },
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_table_DropdownMenuItemLabel, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(table_DropdownMenuItemLabel, {
             children: (0,external_wp_i18n_namespaceObject.__)('Add filter')
           })
         })
-      }), isHidable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_table_DropdownMenuItem, {
+      }), isHidable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(table_DropdownMenuItem, {
         prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
           icon: library_unseen
         }),
@@ -28548,7 +28548,7 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
             fields: viewFields.filter(id => id !== field.id)
           });
         },
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_table_DropdownMenuItemLabel, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(table_DropdownMenuItemLabel, {
           children: (0,external_wp_i18n_namespaceObject.__)('Hide')
         })
       })]
@@ -28878,9 +28878,9 @@ function ViewTable({
     })]
   });
 }
-/* harmony default export */ const view_table = (ViewTable);
+/* harmony default export */ const table = (ViewTable);
 
-;// CONCATENATED MODULE: ./packages/dataviews/build-module/view-grid.js
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/layouts/grid/index.js
 /**
  * External dependencies
  */
@@ -29073,7 +29073,7 @@ function ViewGrid({
   });
 }
 
-;// CONCATENATED MODULE: ./packages/dataviews/build-module/view-list.js
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/layouts/list/index.js
 /**
  * External dependencies
  */
@@ -29099,11 +29099,11 @@ function ViewGrid({
 
 
 const {
-  useCompositeStoreV2: view_list_useCompositeStore,
-  CompositeV2: view_list_Composite,
-  CompositeItemV2: view_list_CompositeItem,
+  useCompositeStoreV2: list_useCompositeStore,
+  CompositeV2: list_Composite,
+  CompositeItemV2: list_CompositeItem,
   CompositeRowV2: CompositeRow,
-  DropdownMenuV2: view_list_DropdownMenu
+  DropdownMenuV2: list_DropdownMenu
 } = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function ListItem({
   actions,
@@ -29167,7 +29167,7 @@ function ListItem({
       spacing: 0,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         role: "gridcell",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_list_CompositeItem, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_CompositeItem, {
           store: store,
           render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {}),
           role: "button",
@@ -29227,7 +29227,7 @@ function ListItem({
         },
         children: [primaryAction && 'RenderModal' in primaryAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           role: "gridcell",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_list_CompositeItem, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_CompositeItem, {
             store: store,
             render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
               label: primaryActionLabel,
@@ -29244,7 +29244,7 @@ function ListItem({
           })
         }), primaryAction && !('RenderModal' in primaryAction) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           role: "gridcell",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_list_CompositeItem, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_CompositeItem, {
             store: store,
             render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
               label: primaryActionLabel,
@@ -29260,8 +29260,8 @@ function ListItem({
           })
         }, primaryAction.id), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           role: "gridcell",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_list_DropdownMenu, {
-            trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_list_CompositeItem, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_DropdownMenu, {
+            trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_CompositeItem, {
               store: store,
               render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
                 size: "small",
@@ -29313,7 +29313,7 @@ function ViewList(props) {
   const visibleFields = fields.filter(field => viewFields.includes(field.id) && ![view.layout?.primaryField, view.layout?.mediaField].includes(field.id));
   const onSelect = item => onSelectionChange([getItemId(item)]);
   const getItemDomId = (0,external_wp_element_namespaceObject.useCallback)(item => item ? `${baseId}-${getItemId(item)}` : undefined, [baseId, getItemId]);
-  const store = view_list_useCompositeStore({
+  const store = list_useCompositeStore({
     defaultActiveId: getItemDomId(selectedItem)
   });
 
@@ -29341,7 +29341,7 @@ function ViewList(props) {
       })
     });
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_list_Composite, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_Composite, {
     id: baseId,
     render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {}),
     className: "dataviews-view-list",
@@ -29364,7 +29364,7 @@ function ViewList(props) {
   });
 }
 
-;// CONCATENATED MODULE: ./packages/dataviews/build-module/layouts.js
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/layouts/index.js
 /**
  * WordPress dependencies
  */
@@ -29381,7 +29381,7 @@ function ViewList(props) {
 const VIEW_LAYOUTS = [{
   type: constants_LAYOUT_TABLE,
   label: (0,external_wp_i18n_namespaceObject.__)('Table'),
-  component: view_table,
+  component: table,
   icon: block_table
 }, {
   type: constants_LAYOUT_GRID,
