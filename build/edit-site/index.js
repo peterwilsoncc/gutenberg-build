@@ -29648,7 +29648,7 @@ function GridItem({
       })
     }), !!visibleFields?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
       className: "dataviews-view-grid__fields",
-      spacing: 3,
+      spacing: 1,
       children: visibleFields.map(field => {
         const renderedValue = field.render({
           item
