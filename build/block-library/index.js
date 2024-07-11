@@ -42645,6 +42645,9 @@ const post_featured_image_metadata = {
     }
   },
   usesContext: ["postId", "postType", "queryId"],
+  example: {
+    viewportWidth: 350
+  },
   supports: {
     align: ["left", "right", "center", "wide", "full"],
     color: {
