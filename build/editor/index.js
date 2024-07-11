@@ -5943,7 +5943,11 @@ unlock(store_store).registerPrivateSelectors(store_private_selectors_namespaceOb
     }
 
     // Check that the user has the capability to edit post meta.
-    const canUserEdit = select(external_wp_coreData_namespaceObject.store).canUserEditEntityRecord('postType', context?.postType, context?.postId);
+    const canUserEdit = select(external_wp_coreData_namespaceObject.store).canUser('update', {
+      kind: 'postType',
+      name: context?.postType,
+      id: context?.postId
+    });
     if (!canUserEdit) {
       return false;
     }

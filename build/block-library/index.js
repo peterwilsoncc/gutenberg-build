@@ -3032,7 +3032,11 @@ const external_wp_compose_namespaceObject = window["wp"]["compose"];
  * @param {string} recordId Record's id.
  */
 function useCanEditEntity(kind, name, recordId) {
-  return (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).canUserEditEntityRecord(kind, name, recordId), [kind, name, recordId]);
+  return (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).canUser('update', {
+    kind,
+    name,
+    id: recordId
+  }), [kind, name, recordId]);
 }
 
 /**
@@ -43900,7 +43904,11 @@ function PostTitleEdit({
     if (isDescendentOfQueryLoop) {
       return false;
     }
-    return select(external_wp_coreData_namespaceObject.store).canUserEditEntityRecord('postType', postType, postId);
+    return select(external_wp_coreData_namespaceObject.store).canUser('update', {
+      kind: 'postType',
+      name: postType,
+      id: postId
+    });
   }, [isDescendentOfQueryLoop, postType, postId]);
   const [rawTitle = '', setTitle, fullTitle] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', postType, 'title', postId);
   const [link] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', postType, 'link', postId);
