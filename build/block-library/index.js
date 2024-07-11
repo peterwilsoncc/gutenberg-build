@@ -43652,6 +43652,9 @@ const post_terms_metadata = {
     }
   },
   usesContext: ["postId", "postType"],
+  example: {
+    viewportWidth: 350
+  },
   supports: {
     html: false,
     color: {
