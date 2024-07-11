@@ -22918,6 +22918,11 @@ const resolvers_canUser = (requestedAction, resource, id) => async ({
     for (const action of retrievedActions) {
       const key = (typeof resource === 'object' ? [action, resource.kind, resource.name, resource.id] : [action, resource, id]).filter(Boolean).join('/');
       dispatch.receiveUserPermission(key, permissions[action]);
+
+      // Mark related action resolutions as finished.
+      if (action !== requestedAction) {
+        dispatch.finishResolution('canUser', [action, resource, id]);
+      }
     }
   });
 };
