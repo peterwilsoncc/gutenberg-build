@@ -36311,7 +36311,7 @@ const useEditPostAction = () => {
   }), [history]);
 };
 
-;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/posts-app/posts-list.js
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/post-list/index.js
 /**
  * External dependencies
  */
@@ -36351,10 +36351,10 @@ const {
   usePostActions
 } = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
 const {
-  useLocation: posts_list_useLocation,
-  useHistory: posts_list_useHistory
+  useLocation: post_list_useLocation,
+  useHistory: post_list_useHistory
 } = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
-const posts_list_EMPTY_ARRAY = [];
+const post_list_EMPTY_ARRAY = [];
 const defaultLayouts = {
   [LAYOUT_TABLE]: {
     layout: {
@@ -36381,8 +36381,8 @@ function useView(postType) {
       isCustom = 'false',
       layout
     }
-  } = posts_list_useLocation();
-  const history = posts_list_useHistory();
+  } = post_list_useLocation();
+  const history = post_list_useHistory();
   const DEFAULT_VIEWS = useDefaultViews({
     postType
   });
@@ -36502,15 +36502,15 @@ function FeaturedImage({
   const hasMedia = !!item.featured_media;
   const size = viewType === LAYOUT_GRID ? ['large', 'full', 'medium', 'thumbnail'] : ['thumbnail', 'medium', 'large', 'full'];
   const media = hasMedia ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(components_media, {
-    className: "posts-list-page__featured-image",
+    className: "edit-site-post-list__featured-image",
     id: item.featured_media,
     size: size
   }) : null;
   const renderButton = viewType !== LAYOUT_LIST && !isDisabled;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    className: `posts-list-page__featured-image-wrapper is-layout-${viewType}`,
+    className: `edit-site-post-list__featured-image-wrapper is-layout-${viewType}`,
     children: renderButton ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("button", {
-      className: "posts-list-page-preview-field__button",
+      className: "edit-site-post-list__featured-image-button",
       type: "button",
       onClick: onClick,
       "aria-label": item.title?.rendered || (0,external_wp_i18n_namespaceObject.__)('(no title)'),
@@ -36533,7 +36533,7 @@ function PostStatusField({
     alignment: "left",
     spacing: 0,
     children: [icon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "posts-list-page-post-author-field__icon-container",
+      className: "edit-site-post-list__status-icon",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
         icon: icon
       })
@@ -36582,17 +36582,17 @@ function PostAuthorField({
     })]
   });
 }
-function PostsList({
+function PostList({
   postType
 }) {
   var _records$map, _usePrevious;
   const [view, setView] = useView(postType);
-  const history = posts_list_useHistory();
+  const history = post_list_useHistory();
   const {
     params: {
       postId
     }
-  } = posts_list_useLocation();
+  } = post_list_useLocation();
   const [selection, setSelection] = (0,external_wp_element_namespaceObject.useState)([postId]);
   const onSelectionChange = (0,external_wp_element_namespaceObject.useCallback)(items => {
     var _params$isCustom;
@@ -36719,17 +36719,17 @@ function PostsList({
       let suffix = '';
       if (item.id === frontPageId) {
         suffix = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          className: "posts-list-page-title-badge",
+          className: "edit-site-post-list__title-badge",
           children: (0,external_wp_i18n_namespaceObject.__)('Front Page')
         });
       } else if (item.id === postsPageId) {
         suffix = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          className: "posts-list-page-title-badge",
+          className: "edit-site-post-list__title-badge",
           children: (0,external_wp_i18n_namespaceObject.__)('Posts Page')
         });
       }
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        className: "posts-list-page-title",
+        className: "edit-site-post-list__title",
         alignment: "center",
         justify: "flex-start",
         children: [title, suffix]
@@ -36864,7 +36864,7 @@ function PostsList({
       paginationInfo: paginationInfo,
       fields: fields,
       actions: actions,
-      data: records || posts_list_EMPTY_ARRAY,
+      data: records || post_list_EMPTY_ARRAY,
       isLoading: isLoadingMainEntities || isLoadingAuthors,
       view: view,
       onChangeView: onChangeView,
@@ -43326,11 +43326,11 @@ function useLayoutAreas() {
           backPath: {},
           content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSidebarContent, {})
         }),
-        content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostsList, {
+        content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
           postType: postType
         }),
         preview: (isListLayout || hasEditCanvasMode) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
-        mobile: hasEditCanvasMode ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostsList, {
+        mobile: hasEditCanvasMode ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
           postType: postType
         })
       },
@@ -43647,7 +43647,7 @@ function router_useLayoutAreas() {
           isRoot: true,
           content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSidebarContent, {})
         }),
-        content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostsList, {
+        content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
           postType: postType
         }),
         preview: (isListLayout || canvas === 'edit') && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {
@@ -43655,7 +43655,7 @@ function router_useLayoutAreas() {
         }),
         mobile: canvas === 'edit' ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {
           isPostsList: true
-        }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostsList, {
+        }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
           postType: postType
         })
       },
