@@ -31453,7 +31453,7 @@ function UnforwardedButton(props, ref) {
     'has-icon': !!icon
   });
   const trulyDisabled = disabled && !accessibleWhenDisabled;
-  const Tag = href !== undefined && !trulyDisabled ? 'a' : 'button';
+  const Tag = href !== undefined && !disabled ? 'a' : 'button';
   const buttonProps = Tag === 'button' ? {
     type: 'button',
     disabled: trulyDisabled,
