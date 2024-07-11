@@ -10193,10 +10193,14 @@ function useAllowSwitchingTemplates() {
   } = useEditedPostContext();
   return (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
+      canUser,
       getEntityRecord,
       getEntityRecords
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEntityRecord('root', 'site');
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEntityRecord('root', 'site') : undefined;
     const templates = getEntityRecords('postType', 'wp_template', {
       per_page: -1
     });
@@ -18594,9 +18598,13 @@ function PostURLToggle({
       getCurrentPost
     } = select(store_store);
     const {
-      getEditedEntityRecord
+      getEditedEntityRecord,
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEditedEntityRecord('root', 'site');
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEditedEntityRecord('root', 'site') : undefined;
     const _id = getCurrentPostId();
     return {
       slug: select(store_store).getEditedPostSlug(),
@@ -19357,10 +19365,18 @@ function useGlobalStylesUserConfig() {
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEditedEntityRecord,
-      hasFinishedResolution
+      hasFinishedResolution,
+      getUser,
+      getCurrentUser
     } = select(external_wp_coreData_namespaceObject.store);
     const _globalStylesId = select(external_wp_coreData_namespaceObject.store).__experimentalGetCurrentGlobalStylesId();
-    const record = _globalStylesId ? getEditedEntityRecord('root', 'globalStyles', _globalStylesId) : undefined;
+
+    // Doing canUser( 'read', 'global_styles' ) returns false even for users with the capability.
+    // See: https://github.com/WordPress/gutenberg/issues/63438
+    // So we need to check the user capabilities directly.
+    const userId = getCurrentUser()?.id;
+    const canEditThemeOptions = userId && getUser(userId)?.capabilities?.edit_theme_options;
+    const record = _globalStylesId && canEditThemeOptions ? getEditedEntityRecord('root', 'globalStyles', _globalStylesId) : undefined;
     let hasResolved = false;
     if (hasFinishedResolution('__experimentalGetCurrentGlobalStylesId')) {
       hasResolved = _globalStylesId ? hasFinishedResolution('getEditedEntityRecord', ['root', 'globalStyles', _globalStylesId]) : true;
@@ -19412,7 +19428,18 @@ function useGlobalStylesUserConfig() {
 }
 function useGlobalStylesBaseConfig() {
   const baseConfig = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    return select(external_wp_coreData_namespaceObject.store).__experimentalGetCurrentThemeBaseGlobalStyles();
+    const {
+      getCurrentUser,
+      getUser,
+      __experimentalGetCurrentThemeBaseGlobalStyles
+    } = select(external_wp_coreData_namespaceObject.store);
+
+    // Doing canUser( 'read', 'global_styles' ) returns false even for users with the capability.
+    // See: https://github.com/WordPress/gutenberg/issues/63438
+    // So we need to check the user capabilities directly.
+    const userId = getCurrentUser()?.id;
+    const canEditThemeOptions = userId && getUser(userId)?.capabilities?.edit_theme_options;
+    return canEditThemeOptions && __experimentalGetCurrentThemeBaseGlobalStyles();
   }, []);
   return [!!baseConfig, baseConfig];
 }
@@ -26446,9 +26473,15 @@ function PostCardPanel({
       __experimentalGetTemplateInfo
     } = select(store_store);
     const {
+      canUser
+    } = select(external_wp_coreData_namespaceObject.store);
+    const {
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEditedEntityRecord('root', 'site');
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEditedEntityRecord('root', 'site') : undefined;
     const _type = getCurrentPostType();
     const _id = getCurrentPostId();
     const _record = getEditedEntityRecord('postType', _type, _id);
@@ -26535,9 +26568,15 @@ function PostContentInformation() {
       getCurrentPostId
     } = select(store_store);
     const {
+      canUser
+    } = select(external_wp_coreData_namespaceObject.store);
+    const {
       getEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEntityRecord('root', 'site');
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEntityRecord('root', 'site') : undefined;
     const postType = getCurrentPostType();
     const _id = getCurrentPostId();
     const isPostsPage = +_id === siteSettings?.page_for_posts;
@@ -26747,9 +26786,13 @@ function BlogTitle() {
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEntityRecord,
-      getEditedEntityRecord
+      getEditedEntityRecord,
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEntityRecord('root', 'site');
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEntityRecord('root', 'site') : undefined;
     const _postsPageRecord = siteSettings?.page_for_posts ? getEditedEntityRecord('postType', 'page', siteSettings?.page_for_posts) : blog_title_EMPTY_OBJECT;
     const {
       getEditedPostAttribute,
@@ -26857,9 +26900,13 @@ function PostsPerPage() {
       getCurrentPostType
     } = select(store_store);
     const {
-      getEditedEntityRecord
+      getEditedEntityRecord,
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEditedEntityRecord('root', 'site');
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEditedEntityRecord('root', 'site') : undefined;
     return {
       isTemplate: getCurrentPostType() === TEMPLATE_POST_TYPE,
       postSlug: getEditedPostAttribute('slug'),
@@ -26984,9 +27031,13 @@ function SiteDiscussion() {
       getCurrentPostType
     } = select(store_store);
     const {
-      getEditedEntityRecord
+      getEditedEntityRecord,
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEditedEntityRecord('root', 'site');
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEditedEntityRecord('root', 'site') : undefined;
     return {
       isTemplate: getCurrentPostType() === TEMPLATE_POST_TYPE,
       postSlug: getEditedPostAttribute('slug'),
