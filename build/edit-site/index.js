@@ -23477,6 +23477,82 @@ function FontFamilies() {
   })
 }));
 
+;// CONCATENATED MODULE: ./packages/icons/build-module/icon/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+/** @typedef {{icon: JSX.Element, size?: number} & import('@wordpress/primitives').SVGProps} IconProps */
+
+/**
+ * Return an SVG icon.
+ *
+ * @param {IconProps}                                 props icon is the SVG component to render
+ *                                                          size is a number specifiying the icon size in pixels
+ *                                                          Other props will be passed to wrapped SVG component
+ * @param {import('react').ForwardedRef<HTMLElement>} ref   The forwarded ref to the SVG element.
+ *
+ * @return {JSX.Element}  Icon component
+ */
+function Icon({
+  icon,
+  size = 24,
+  ...props
+}, ref) {
+  return (0,external_wp_element_namespaceObject.cloneElement)(icon, {
+    width: size,
+    height: size,
+    ...props,
+    ref
+  });
+}
+/* harmony default export */ const build_module_icon = ((0,external_wp_element_namespaceObject.forwardRef)(Icon));
+
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/font-sizes/font-sizes-count.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+function FontSizes() {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: 2,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
+      justify: "space-between",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(subtitle, {
+        level: 3,
+        children: (0,external_wp_i18n_namespaceObject.__)('Font Sizes')
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+      isBordered: true,
+      isSeparated: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
+        path: "/typography/font-sizes/",
+        "aria-label": (0,external_wp_i18n_namespaceObject.__)('Edit font size presets'),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+          direction: "row",
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+            children: (0,external_wp_i18n_namespaceObject.__)('Font size presets')
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+            icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_left : chevron_right
+          })]
+        })
+      })
+    })]
+  });
+}
+/* harmony default export */ const font_sizes_count = (FontSizes);
+
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/screen-typography.js
 /**
  * WordPress dependencies
@@ -23496,6 +23572,7 @@ function FontFamilies() {
 
 
 
+
 function ScreenTypography() {
   const fontLibraryEnabled = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_editor_namespaceObject.store).getEditorSettings().fontLibraryEnabled, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -23508,7 +23585,7 @@ function ScreenTypography() {
         spacing: 7,
         children: [!window.__experimentalDisableFontLibrary && fontLibraryEnabled && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_families, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(typography_elements, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TypographyVariations, {
           title: (0,external_wp_i18n_namespaceObject.__)('Presets')
-        })]
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_count, {})]
       })
     })]
   });
@@ -23709,37 +23786,632 @@ function ScreenTypographyElement({
 }
 /* harmony default export */ const screen_typography_element = (ScreenTypographyElement);
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/icon/index.js
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/font-sizes/font-size-preview.js
 /**
  * WordPress dependencies
  */
 
 
-/** @typedef {{icon: JSX.Element, size?: number} & import('@wordpress/primitives').SVGProps} IconProps */
 
 /**
- * Return an SVG icon.
- *
- * @param {IconProps}                                 props icon is the SVG component to render
- *                                                          size is a number specifiying the icon size in pixels
- *                                                          Other props will be passed to wrapped SVG component
- * @param {import('react').ForwardedRef<HTMLElement>} ref   The forwarded ref to the SVG element.
- *
- * @return {JSX.Element}  Icon component
+ * Internal dependencies
  */
-function Icon({
-  icon,
-  size = 24,
-  ...props
-}, ref) {
-  return (0,external_wp_element_namespaceObject.cloneElement)(icon, {
-    width: size,
-    height: size,
-    ...props,
-    ref
+
+
+const {
+  useGlobalStyle: font_size_preview_useGlobalStyle
+} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+function FontSizePreview({
+  fontSize
+}) {
+  var _font$fontFamily;
+  const [font] = font_size_preview_useGlobalStyle('typography');
+  const input = fontSize?.fluid?.min && fontSize?.fluid?.max ? {
+    minimumFontSize: fontSize.fluid.min,
+    maximumFontSize: fontSize.fluid.max
+  } : {
+    fontSize: fontSize.size
+  };
+  const computedFontSize = (0,external_wp_blockEditor_namespaceObject.getComputedFluidTypographyValue)(input);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    className: "edit-site-typography-preview",
+    style: {
+      fontSize: computedFontSize,
+      fontFamily: (_font$fontFamily = font?.fontFamily) !== null && _font$fontFamily !== void 0 ? _font$fontFamily : 'serif'
+    },
+    children: (0,external_wp_i18n_namespaceObject.__)('Aa')
   });
 }
-/* harmony default export */ const build_module_icon = ((0,external_wp_element_namespaceObject.forwardRef)(Icon));
+/* harmony default export */ const font_size_preview = (FontSizePreview);
+
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/font-sizes/confirm-delete-font-size-dialog.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+function ConfirmDeleteFontSizeDialog({
+  fontSize,
+  isOpen,
+  toggleOpen,
+  handleRemoveFontSize
+}) {
+  const handleConfirm = async () => {
+    toggleOpen();
+    handleRemoveFontSize(fontSize);
+  };
+  const handleCancel = () => {
+    toggleOpen();
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalConfirmDialog, {
+    isOpen: isOpen,
+    cancelButtonText: (0,external_wp_i18n_namespaceObject.__)('Cancel'),
+    confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Delete'),
+    onCancel: handleCancel,
+    onConfirm: handleConfirm,
+    size: "medium",
+    children: fontSize && (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Name of the font size preset. */
+    (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to delete "%s" font size preset?'), fontSize.name)
+  });
+}
+/* harmony default export */ const confirm_delete_font_size_dialog = (ConfirmDeleteFontSizeDialog);
+
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/font-sizes/rename-font-size-dialog.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+function RenameFontSizeDialog({
+  fontSize,
+  toggleOpen,
+  handleRename
+}) {
+  const [newName, setNewName] = (0,external_wp_element_namespaceObject.useState)(fontSize.name);
+  const handleConfirm = () => {
+    // If the new name is not empty, call the handleRename function
+    if (newName.trim()) {
+      handleRename(newName);
+    }
+    toggleOpen();
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
+    onRequestClose: toggleOpen,
+    focusOnMount: "firstContentElement",
+    title: (0,external_wp_i18n_namespaceObject.__)('Rename'),
+    size: "small",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
+      onSubmit: event => {
+        event.preventDefault();
+        handleConfirm();
+        toggleOpen();
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        spacing: "3",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
+          __next40pxDefaultSize: true,
+          autoComplete: "off",
+          value: newName,
+          onChange: setNewName,
+          label: (0,external_wp_i18n_namespaceObject.__)('Name'),
+          placeholder: (0,external_wp_i18n_namespaceObject.__)('Font size preset name')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+          justify: "right",
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
+            variant: "tertiary",
+            onClick: toggleOpen,
+            children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
+            variant: "primary",
+            type: "submit",
+            children: (0,external_wp_i18n_namespaceObject.__)('Save')
+          })]
+        })]
+      })
+    })
+  });
+}
+/* harmony default export */ const rename_font_size_dialog = (RenameFontSizeDialog);
+
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/size-control/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const DEFAULT_UNITS = ['px', 'em', 'rem', 'vw', 'vh'];
+function SizeControl(props) {
+  const {
+    baseControlProps
+  } = (0,external_wp_components_namespaceObject.useBaseControlProps)(props);
+  const {
+    value,
+    onChange,
+    fallbackValue,
+    disabled
+  } = props;
+  const units = (0,external_wp_components_namespaceObject.__experimentalUseCustomUnits)({
+    availableUnits: DEFAULT_UNITS
+  });
+  const [valueQuantity, valueUnit = 'px'] = (0,external_wp_components_namespaceObject.__experimentalParseQuantityAndUnitFromRawValue)(value, units);
+  const isValueUnitRelative = !!valueUnit && ['em', 'rem', 'vw', 'vh'].includes(valueUnit);
+
+  // Receives the new value from the UnitControl component as a string containing the value and unit.
+  const handleUnitControlChange = newValue => {
+    onChange(newValue);
+  };
+
+  // Receives the new value from the RangeControl component as a number.
+  const handleRangeControlChange = newValue => {
+    onChange?.(newValue + valueUnit);
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
+    ...baseControlProps,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+        isBlock: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+          __next40pxDefaultSize: true,
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Custom'),
+          hideLabelFromVision: true,
+          value: value,
+          onChange: handleUnitControlChange,
+          units: units,
+          min: 0,
+          disabled: disabled
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+        isBlock: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
+          marginX: 2,
+          marginBottom: 0,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+            __next40pxDefaultSize: true,
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Custom Size'),
+            hideLabelFromVision: true,
+            value: valueQuantity,
+            initialPosition: fallbackValue,
+            withInputField: false,
+            onChange: handleRangeControlChange,
+            min: 0,
+            max: isValueUnitRelative ? 10 : 100,
+            step: isValueUnitRelative ? 0.1 : 1,
+            disabled: disabled
+          })
+        })
+      })]
+    })
+  });
+}
+/* harmony default export */ const size_control = (SizeControl);
+
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/font-sizes/font-size.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+const {
+  DropdownMenuV2: DropdownMenu,
+  DropdownMenuItemV2: DropdownMenuItem,
+  DropdownMenuItemLabelV2: DropdownMenuItemLabel
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+const {
+  useGlobalSetting: font_size_useGlobalSetting
+} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+
+
+
+
+
+
+
+
+function FontSize() {
+  var _fontSizes$origin, _fontSize$fluid;
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = (0,external_wp_element_namespaceObject.useState)(false);
+  const [isRenameDialogOpen, setIsRenameDialogOpen] = (0,external_wp_element_namespaceObject.useState)(false);
+  const {
+    params: {
+      origin,
+      slug
+    },
+    goBack,
+    goTo
+  } = (0,external_wp_components_namespaceObject.__experimentalUseNavigator)();
+  const [fontSizes, setFontSizes] = font_size_useGlobalSetting('typography.fontSizes');
+
+  // Get the font sizes from the origin, default to empty array.
+  const sizes = (_fontSizes$origin = fontSizes[origin]) !== null && _fontSizes$origin !== void 0 ? _fontSizes$origin : [];
+
+  // Get the font size by slug.
+  const fontSize = sizes.find(size => size.slug === slug);
+
+  // Whether fluid is true or an object, set it to true, otherwise false.
+  const isFluid = (_fontSize$fluid = !!fontSize.fluid) !== null && _fontSize$fluid !== void 0 ? _fontSize$fluid : false;
+
+  // Whether custom fluid values are used.
+  const isCustomFluid = typeof fontSize.fluid === 'object';
+  const handleNameChange = value => {
+    updateFontSize('name', value);
+  };
+  const handleFontSizeChange = value => {
+    updateFontSize('size', value);
+  };
+  const handleFluidChange = value => {
+    updateFontSize('fluid', value);
+  };
+  const handleCustomFluidValues = value => {
+    if (value) {
+      // If custom values are used, init the values with the current ones.
+      updateFontSize('fluid', {
+        min: fontSize.size,
+        max: fontSize.size
+      });
+    } else {
+      // If custom fluid values are disabled, set fluid to true.
+      updateFontSize('fluid', true);
+    }
+  };
+  const handleMinChange = value => {
+    updateFontSize('fluid', {
+      ...fontSize.fluid,
+      min: value
+    });
+  };
+  const handleMaxChange = value => {
+    updateFontSize('fluid', {
+      ...fontSize.fluid,
+      max: value
+    });
+  };
+  const updateFontSize = (key, value) => {
+    const newFontSizes = sizes.map(size => {
+      if (size.slug === slug) {
+        return {
+          ...size,
+          [key]: value
+        }; // Create a new object with updated key
+      }
+      return size;
+    });
+    setFontSizes({
+      ...fontSizes,
+      [origin]: newFontSizes
+    });
+  };
+  const handleRemoveFontSize = () => {
+    // Navigate to the font sizes list.
+    goBack();
+    const newFontSizes = sizes.filter(size => size.slug !== slug);
+    setFontSizes({
+      ...fontSizes,
+      [origin]: newFontSizes
+    });
+  };
+  const toggleDeleteConfirm = () => {
+    setIsDeleteConfirmOpen(!isDeleteConfirmOpen);
+  };
+  const toggleRenameDialog = () => {
+    setIsRenameDialogOpen(!isRenameDialogOpen);
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(confirm_delete_font_size_dialog, {
+      fontSize: fontSize,
+      isOpen: isDeleteConfirmOpen,
+      toggleOpen: toggleDeleteConfirm,
+      handleRemoveFontSize: handleRemoveFontSize
+    }), isRenameDialogOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(rename_font_size_dialog, {
+      fontSize: fontSize,
+      toggleOpen: toggleRenameDialog,
+      handleRename: handleNameChange
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      spacing: 4,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        justify: "space-between",
+        align: "flex-start",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header, {
+          title: fontSize.name,
+          description: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: font size preset name. */
+          (0,external_wp_i18n_namespaceObject.__)('Manage the font size %s.'), fontSize.name),
+          onBack: () => goTo('/typography/font-sizes/')
+        }), origin === 'custom' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
+            marginTop: 3,
+            marginBottom: 0,
+            paddingX: 4,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenu, {
+              trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+                size: "small",
+                icon: more_vertical,
+                label: (0,external_wp_i18n_namespaceObject.__)('Font size options')
+              }),
+              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItem, {
+                onClick: toggleRenameDialog,
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItemLabel, {
+                  children: (0,external_wp_i18n_namespaceObject.__)('Rename')
+                })
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItem, {
+                onClick: toggleDeleteConfirm,
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItemLabel, {
+                  children: (0,external_wp_i18n_namespaceObject.__)('Delete')
+                })
+              })]
+            })
+          })
+        })]
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalView, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
+          paddingX: 4,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+            spacing: 4,
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_size_preview, {
+                fontSize: fontSize
+              })
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(size_control, {
+              label: (0,external_wp_i18n_namespaceObject.__)('Size'),
+              value: !isCustomFluid ? fontSize.size : '',
+              onChange: handleFontSizeChange,
+              disabled: isCustomFluid
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+              label: (0,external_wp_i18n_namespaceObject.__)('Fluid typography'),
+              help: (0,external_wp_i18n_namespaceObject.__)('Scale the font size dynamically to fit the screen or viewport.'),
+              checked: isFluid,
+              onChange: handleFluidChange,
+              __nextHasNoMarginBottom: true
+            }), isFluid && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+              label: (0,external_wp_i18n_namespaceObject.__)('Custom fluid values'),
+              help: (0,external_wp_i18n_namespaceObject.__)('Set custom min and max values for the fluid font size.'),
+              checked: isCustomFluid,
+              onChange: handleCustomFluidValues,
+              __nextHasNoMarginBottom: true
+            }), isCustomFluid && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(size_control, {
+                label: (0,external_wp_i18n_namespaceObject.__)('Minimum'),
+                value: fontSize.fluid?.min,
+                onChange: handleMinChange
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(size_control, {
+                label: (0,external_wp_i18n_namespaceObject.__)('Maximum'),
+                value: fontSize.fluid?.max,
+                onChange: handleMaxChange
+              })]
+            })]
+          })
+        })
+      })]
+    })]
+  });
+}
+/* harmony default export */ const font_size = (FontSize);
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/plus.js
+/**
+ * WordPress dependencies
+ */
+
+
+const plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z"
+  })
+});
+/* harmony default export */ const library_plus = (plus);
+
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/font-sizes/confirm-reset-font-sizes-dialog.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+function ConfirmResetFontSizesDialog({
+  text,
+  confirmButtonText,
+  isOpen,
+  toggleOpen,
+  onConfirm
+}) {
+  const handleConfirm = async () => {
+    toggleOpen();
+    onConfirm();
+  };
+  const handleCancel = () => {
+    toggleOpen();
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalConfirmDialog, {
+    isOpen: isOpen,
+    cancelButtonText: (0,external_wp_i18n_namespaceObject.__)('Cancel'),
+    confirmButtonText: confirmButtonText,
+    onCancel: handleCancel,
+    onConfirm: handleConfirm,
+    size: "medium",
+    children: text
+  });
+}
+/* harmony default export */ const confirm_reset_font_sizes_dialog = (ConfirmResetFontSizesDialog);
+
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/font-sizes/font-sizes.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+const {
+  DropdownMenuV2: font_sizes_DropdownMenu,
+  DropdownMenuItemV2: font_sizes_DropdownMenuItem,
+  DropdownMenuItemLabelV2: font_sizes_DropdownMenuItemLabel
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+const {
+  useGlobalSetting: font_sizes_useGlobalSetting
+} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+
+
+
+
+
+
+
+
+function FontSizeGroup({
+  label,
+  origin,
+  sizes,
+  handleAddFontSize,
+  handleResetFontSizes
+}) {
+  const [isResetDialogOpen, setIsResetDialogOpen] = (0,external_wp_element_namespaceObject.useState)(false);
+  const toggleResetDialog = () => setIsResetDialogOpen(!isResetDialogOpen);
+  const resetDialogText = origin === 'custom' ? (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to remove all custom font size presets?') : (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to reset all font size presets to their default values?');
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [isResetDialogOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(confirm_reset_font_sizes_dialog, {
+      text: resetDialogText,
+      confirmButtonText: origin === 'custom' ? (0,external_wp_i18n_namespaceObject.__)('Remove') : (0,external_wp_i18n_namespaceObject.__)('Reset'),
+      isOpen: isResetDialogOpen,
+      toggleOpen: toggleResetDialog,
+      onConfirm: handleResetFontSizes
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      spacing: 4,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        justify: "space-between",
+        align: "center",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(subtitle, {
+          level: 3,
+          children: label
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.FlexItem, {
+          children: [origin === 'custom' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            label: (0,external_wp_i18n_namespaceObject.__)('Add font size'),
+            icon: library_plus,
+            size: "small",
+            onClick: handleAddFontSize
+          }), !!handleResetFontSizes && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_DropdownMenu, {
+            trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              size: "small",
+              icon: more_vertical,
+              label: (0,external_wp_i18n_namespaceObject.__)('Font size presets options')
+            }),
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_DropdownMenuItem, {
+              onClick: toggleResetDialog,
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_DropdownMenuItemLabel, {
+                children: origin === 'custom' ? (0,external_wp_i18n_namespaceObject.__)('Remove font size presets') : (0,external_wp_i18n_namespaceObject.__)('Reset font size presets')
+              })
+            })
+          })]
+        })]
+      }), !!sizes.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+        isBordered: true,
+        isSeparated: true,
+        children: sizes.map(size => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
+          path: `/typography/font-sizes/${origin}/${size.slug}`,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+            direction: "row",
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+              className: "edit-site-font-size__item",
+              children: size.name
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+                justify: "flex-end",
+                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexBlock, {
+                  className: "edit-site-font-size__item edit-site-font-size__item-value",
+                  children: size.size
+                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+                  icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_left : chevron_right
+                })]
+              })
+            })]
+          })
+        }, size.slug))
+      })]
+    })]
+  });
+}
+function font_sizes_FontSizes() {
+  const [themeFontSizes, setThemeFontSizes] = font_sizes_useGlobalSetting('typography.fontSizes.theme');
+  const [baseThemeFontSizes] = font_sizes_useGlobalSetting('typography.fontSizes.theme', null, 'base');
+  const [defaultFontSizes, setDefaultFontSizes] = font_sizes_useGlobalSetting('typography.fontSizes.default');
+  const [baseDefaultFontSizes] = font_sizes_useGlobalSetting('typography.fontSizes.default', null, 'base');
+  const [customFontSizes = [], setCustomFontSizes] = font_sizes_useGlobalSetting('typography.fontSizes.custom');
+  const [defaultFontSizesEnabled] = font_sizes_useGlobalSetting('typography.defaultFontSizes');
+  const handleAddFontSize = () => {
+    const index = getNewIndexFromPresets(customFontSizes, 'custom-');
+    const newFontSize = {
+      /* translators: %d: font size index */
+      name: (0,external_wp_i18n_namespaceObject.sprintf)((0,external_wp_i18n_namespaceObject.__)('New Font Size %d'), index),
+      size: '16px',
+      slug: `custom-${index}`
+    };
+    setCustomFontSizes([...customFontSizes, newFontSize]);
+  };
+  const hasSameSizeValues = (arr1, arr2) => arr1.map(item => item.size).join('') === arr2.map(item => item.size).join('');
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: 2,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Font size presets'),
+      description: (0,external_wp_i18n_namespaceObject.__)('Create and edit the presets used for font sizes across the site.')
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalView, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
+        paddingX: 4,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+          spacing: 8,
+          children: [!!themeFontSizes?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FontSizeGroup, {
+            label: (0,external_wp_i18n_namespaceObject.__)('Theme'),
+            origin: "theme",
+            sizes: themeFontSizes,
+            baseSizes: baseThemeFontSizes,
+            handleAddFontSize: handleAddFontSize,
+            handleResetFontSizes: hasSameSizeValues(themeFontSizes, baseThemeFontSizes) ? null : () => setThemeFontSizes(baseThemeFontSizes)
+          }), defaultFontSizesEnabled && !!defaultFontSizes?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FontSizeGroup, {
+            label: (0,external_wp_i18n_namespaceObject.__)('Default'),
+            origin: "default",
+            sizes: defaultFontSizes,
+            baseSizes: baseDefaultFontSizes,
+            handleAddFontSize: handleAddFontSize,
+            handleResetFontSizes: hasSameSizeValues(defaultFontSizes, baseDefaultFontSizes) ? null : () => setDefaultFontSizes(baseDefaultFontSizes)
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FontSizeGroup, {
+            label: (0,external_wp_i18n_namespaceObject.__)('Custom'),
+            origin: "custom",
+            sizes: customFontSizes,
+            handleAddFontSize: handleAddFontSize,
+            handleResetFontSizes: customFontSizes.length > 0 ? () => setCustomFontSizes([]) : null
+          })]
+        })
+      })
+    })]
+  });
+}
+/* harmony default export */ const font_sizes = (font_sizes_FontSizes);
 
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/shuffle.js
 /**
@@ -24227,21 +24899,6 @@ function ScreenColorPalette({
 }
 /* harmony default export */ const screen_color_palette = (ScreenColorPalette);
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/plus.js
-/**
- * WordPress dependencies
- */
-
-
-const plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z"
-  })
-});
-/* harmony default export */ const library_plus = (plus);
-
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/shadows-panel.js
 /**
  * WordPress dependencies
@@ -24649,9 +25306,9 @@ const {
   useGlobalSetting: shadows_edit_panel_useGlobalSetting
 } = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
-  DropdownMenuV2: DropdownMenu,
-  DropdownMenuItemV2: DropdownMenuItem,
-  DropdownMenuItemLabelV2: DropdownMenuItemLabel
+  DropdownMenuV2: shadows_edit_panel_DropdownMenu,
+  DropdownMenuItemV2: shadows_edit_panel_DropdownMenuItem,
+  DropdownMenuItemLabelV2: shadows_edit_panel_DropdownMenuItemLabel
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 const customShadowMenuItems = [{
   label: (0,external_wp_i18n_namespaceObject.__)('Rename'),
@@ -24732,16 +25389,16 @@ function ShadowsEditPanel() {
           marginTop: 2,
           marginBottom: 0,
           paddingX: 4,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenu, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_edit_panel_DropdownMenu, {
             trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
               size: "small",
               icon: more_vertical,
               label: (0,external_wp_i18n_namespaceObject.__)('Menu')
             }),
-            children: (category === 'custom' ? customShadowMenuItems : presetShadowMenuItems).map(item => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItem, {
+            children: (category === 'custom' ? customShadowMenuItems : presetShadowMenuItems).map(item => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_edit_panel_DropdownMenuItem, {
               onClick: () => onMenuClick(item.action),
               disabled: item.action === 'reset' && selectedShadow.shadow === baseSelectedShadow.shadow,
-              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItemLabel, {
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_edit_panel_DropdownMenuItemLabel, {
                 children: item.label
               })
             }, item.action))
@@ -26697,6 +27354,8 @@ function ScreenRevisions() {
 
 
 
+
+
 const SLOT_FILL_NAME = 'GlobalStylesMenu';
 const {
   useGlobalStylesReset: ui_useGlobalStylesReset
@@ -26933,6 +27592,12 @@ function GlobalStylesUI() {
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesNavigationScreen, {
       path: "/typography",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(screen_typography, {})
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesNavigationScreen, {
+      path: "/typography/font-sizes/",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes, {})
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesNavigationScreen, {
+      path: "/typography/font-sizes/:origin/:slug",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_size, {})
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesNavigationScreen, {
       path: "/typography/text",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(screen_typography_element, {
