@@ -70416,28 +70416,12 @@ const tab_Tab = (0,external_wp_element_namespaceObject.forwardRef)(function Tab(
   });
 });
 
-;// CONCATENATED MODULE: ./packages/components/build-module/tabs/tablist.js
-/**
- * External dependencies
- */
-
-
+;// CONCATENATED MODULE: ./packages/components/build-module/utils/hooks/use-event.js
+/* eslint-disable jsdoc/require-param */
 /**
  * WordPress dependencies
  */
 
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-// TODO: move these into a separate utility file, for use in other components
-// such as ToggleGroupControl.
 
 /**
  * Any function.
@@ -70457,7 +70441,7 @@ const tab_Tab = (0,external_wp_element_namespaceObject.forwardRef)(function Tab(
  * }
  * ```
  */
-function tablist_useEvent(callback) {
+function use_event_useEvent(callback) {
   const ref = (0,external_wp_element_namespaceObject.useRef)(() => {
     throw new Error('Cannot call an event handler while rendering.');
   });
@@ -70466,53 +70450,69 @@ function tablist_useEvent(callback) {
   });
   return (0,external_wp_element_namespaceObject.useCallback)((...args) => ref.current?.(...args), []);
 }
+/* eslint-enable jsdoc/require-param */
 
+;// CONCATENATED MODULE: ./packages/components/build-module/utils/element-rect.js
+/* eslint-disable jsdoc/require-param */
 /**
- * `useResizeObserver` options.
+ * WordPress dependencies
  */
 
 /**
- * Fires `onResize` when the target element is resized.
+ * Internal dependencies
+ */
+
+
+/**
+ * `useTrackElementRectUpdates` options.
+ */
+
+/**
+ * Tracks an element's "rect" (size and position) and fires `onRect` for all
+ * of its discrete values. The element can be changed dynamically and **it
+ * must not be stored in a ref**. Instead, it should be stored in a React
+ * state or equivalent.
  *
- * **The element must not be stored in a ref**, else it won't be observed
- * or updated. Instead, it should be stored in a React state or equivalent.
+ * By default, `onRect` is called initially for the target element (including
+ * when the target element changes), not only on size or position updates.
+ * This allows consumers of the hook to always be in sync with all rect values
+ * of the target element throughout its lifetime. This behavior can be
+ * disabled by setting the `fireOnElementInit` option to `false`.
  *
- * It sets up a `ResizeObserver` that tracks the element under the hood. The
+ * Under the hood, it sets up a `ResizeObserver` that tracks the element. The
  * target element can be changed dynamically, and the observer will be
  * updated accordingly.
- *
- * By default, `onResize` is called when the observer is set up, in addition
- * to when the element is resized. This behavior can be disabled with the
- * `fireOnObserve` option.
  *
  * @example
  *
  * ```tsx
  * const [ targetElement, setTargetElement ] = useState< HTMLElement | null >();
  *
- * useResizeObserver( targetElement, ( element ) => {
+ * useTrackElementRectUpdates( targetElement, ( element ) => {
  *   console.log( 'Element resized:', element );
  * } );
  *
  * <div ref={ setTargetElement } />;
  * ```
  */
-function useResizeObserver(
+function useTrackElementRectUpdates(
 /**
  * The target element to observe. It can be changed dynamically.
  */
 targetElement,
 /**
  * Callback to fire when the element is resized. It will also be
- * called when the observer is set up, unless `fireOnObserve` is
+ * called when the observer is set up, unless `fireOnElementInit` is
  * set to `false`.
  */
-onResize, {
-  fireOnObserve = true
+onRect, {
+  fireOnElementInit = true
 } = {}) {
-  const onResizeEvent = tablist_useEvent(onResize);
+  const onRectEvent = use_event_useEvent(onRect);
   const observedElementRef = (0,external_wp_element_namespaceObject.useRef)();
   const resizeObserverRef = (0,external_wp_element_namespaceObject.useRef)();
+
+  // TODO: could this be a layout effect?
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (targetElement === observedElementRef.current) {
       return;
@@ -70521,9 +70521,9 @@ onResize, {
 
     // Set up a ResizeObserver.
     if (!resizeObserverRef.current) {
-      resizeObserverRef.current = new ResizeObserver(() => {
+      resizeObserverRef.current = new ResizeObserver(entries => {
         if (observedElementRef.current) {
-          onResizeEvent(observedElementRef.current);
+          onRectEvent(observedElementRef.current, entries);
         }
       });
     }
@@ -70533,8 +70533,10 @@ onResize, {
 
     // Observe new element.
     if (targetElement) {
-      if (fireOnObserve) {
-        onResizeEvent(targetElement);
+      if (fireOnElementInit) {
+        // TODO: investigate if this can be removed,
+        // see: https://stackoverflow.com/a/60026394
+        onRectEvent(targetElement);
       }
       resizeObserver.observe(targetElement);
     }
@@ -70544,7 +70546,7 @@ onResize, {
         resizeObserver.unobserve(observedElementRef.current);
       }
     };
-  }, [fireOnObserve, onResizeEvent, targetElement]);
+  }, [fireOnElementInit, onRectEvent, targetElement]);
 }
 
 /**
@@ -70592,9 +70594,22 @@ function getElementOffsetRect(element) {
  */
 function useTrackElementOffsetRect(targetElement) {
   const [indicatorPosition, setIndicatorPosition] = (0,external_wp_element_namespaceObject.useState)(NULL_ELEMENT_OFFSET_RECT);
-  useResizeObserver(targetElement, element => setIndicatorPosition(getElementOffsetRect(element)));
+  useTrackElementRectUpdates(targetElement, element => setIndicatorPosition(getElementOffsetRect(element)));
   return indicatorPosition;
 }
+
+/* eslint-enable jsdoc/require-param */
+
+;// CONCATENATED MODULE: ./packages/components/build-module/utils/hooks/use-on-value-update.js
+/* eslint-disable jsdoc/require-param */
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
 
 /**
  * Context object for the `onUpdate` callback of `useOnValueUpdate`.
@@ -70613,7 +70628,7 @@ value,
  */
 onUpdate) {
   const previousValueRef = (0,external_wp_element_namespaceObject.useRef)(value);
-  const updateCallbackEvent = tablist_useEvent(onUpdate);
+  const updateCallbackEvent = use_event_useEvent(onUpdate);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (previousValueRef.current !== value) {
       updateCallbackEvent({
@@ -70623,6 +70638,30 @@ onUpdate) {
     }
   }, [updateCallbackEvent, value]);
 }
+/* eslint-enable jsdoc/require-param */
+
+;// CONCATENATED MODULE: ./packages/components/build-module/tabs/tablist.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
 const TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabList({
   children,
   ...otherProps
