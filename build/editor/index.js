@@ -25617,17 +25617,21 @@ const trashPostAction = {
     });
   }
 };
-function useCanUserEligibilityCheckPostType(capability, resource, action) {
+function useCanUserEligibilityCheckPostType(capability, postType, action) {
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   return (0,external_wp_element_namespaceObject.useMemo)(() => ({
     ...action,
     isEligible(item) {
-      return action.isEligible(item) && registry.select(external_wp_coreData_namespaceObject.store).canUser(capability, resource, item.id);
+      return action.isEligible(item) && registry.select(external_wp_coreData_namespaceObject.store).canUser(capability, {
+        kind: 'postType',
+        name: postType,
+        id: item.id
+      });
     }
-  }), [action, registry, capability, resource]);
+  }), [action, registry, capability, postType]);
 }
-function useTrashPostAction(resource) {
-  return useCanUserEligibilityCheckPostType('delete', resource, trashPostAction);
+function useTrashPostAction(postType) {
+  return useCanUserEligibilityCheckPostType('delete', postType, trashPostAction);
 }
 const permanentlyDeletePostAction = {
   id: 'permanently-delete',
@@ -25709,8 +25713,8 @@ const permanentlyDeletePostAction = {
     }
   }
 };
-function usePermanentlyDeletePostAction(resource) {
-  return useCanUserEligibilityCheckPostType('delete', resource, permanentlyDeletePostAction);
+function usePermanentlyDeletePostAction(postType) {
+  return useCanUserEligibilityCheckPostType('delete', postType, permanentlyDeletePostAction);
 }
 const restorePostAction = {
   id: 'restore',
@@ -25803,8 +25807,8 @@ const restorePostAction = {
     }
   }
 };
-function useRestorePostAction(resource) {
-  return useCanUserEligibilityCheckPostType('update', resource, restorePostAction);
+function useRestorePostAction(postType) {
+  return useCanUserEligibilityCheckPostType('update', postType, restorePostAction);
 }
 const viewPostAction = {
   id: 'view-post',
@@ -25950,21 +25954,15 @@ const renamePostAction = {
     });
   }
 };
-function useRenamePostAction(resource) {
-  return useCanUserEligibilityCheckPostType('update', resource, renamePostAction);
+function useRenamePostAction(postType) {
+  return useCanUserEligibilityCheckPostType('update', postType, renamePostAction);
 }
 const useDuplicatePostAction = postType => {
-  const {
-    userCanCreatePost
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getPostType,
-      canUser
-    } = select(external_wp_coreData_namespaceObject.store);
-    const resource = getPostType(postType)?.rest_base || '';
-    return {
-      userCanCreatePost: canUser('create', resource)
-    };
+  const userCanCreatePost = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return select(external_wp_coreData_namespaceObject.store).canUser('create', {
+      kind: 'postType',
+      name: postType
+    });
   }, [postType]);
   return (0,external_wp_element_namespaceObject.useMemo)(() => userCanCreatePost && {
     id: 'duplicate-post',
@@ -26146,7 +26144,6 @@ function usePostActions({
     defaultActions,
     postTypeObject,
     userCanCreatePostType,
-    resource,
     cachedCanUserResolvers
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
@@ -26158,20 +26155,21 @@ function usePostActions({
       getEntityActions
     } = unlock(select(store_store));
     const _postTypeObject = getPostType(postType);
-    const _resource = _postTypeObject?.rest_base || '';
     return {
       postTypeObject: _postTypeObject,
       defaultActions: getEntityActions('postType', postType),
-      userCanCreatePostType: canUser('create', _resource),
-      resource: _resource,
+      userCanCreatePostType: canUser('create', {
+        kind: 'postType',
+        name: postType
+      }),
       cachedCanUserResolvers: getCachedResolvers()?.canUser
     };
   }, [postType]);
   const duplicatePostAction = useDuplicatePostAction(postType);
-  const trashPostActionForPostType = useTrashPostAction(resource);
-  const permanentlyDeletePostActionForPostType = usePermanentlyDeletePostAction(resource);
-  const renamePostActionForPostType = useRenamePostAction(resource);
-  const restorePostActionForPostType = useRestorePostAction(resource);
+  const trashPostActionForPostType = useTrashPostAction(postType);
+  const permanentlyDeletePostActionForPostType = usePermanentlyDeletePostAction(postType);
+  const renamePostActionForPostType = useRenamePostAction(postType);
+  const restorePostActionForPostType = useRestorePostAction(postType);
   const isTemplateOrTemplatePart = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE].includes(postType);
   const isPattern = postType === PATTERN_POST_TYPE;
   const isLoaded = !!postTypeObject;
