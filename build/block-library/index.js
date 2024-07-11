@@ -47230,21 +47230,6 @@ const imageDateTitle = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.
  * Internal dependencies
  */
 
-const QUERY_DEFAULT_ATTRIBUTES = {
-  query: {
-    perPage: 3,
-    pages: 0,
-    offset: 0,
-    postType: 'post',
-    order: 'desc',
-    orderBy: 'date',
-    author: '',
-    search: '',
-    exclude: [],
-    sticky: '',
-    inherit: false
-  }
-};
 const query_variations_variations = [{
   name: 'posts-list',
   title: (0,external_wp_i18n_namespaceObject.__)('Posts List'),
@@ -47271,36 +47256,28 @@ const query_variations_variations = [{
   name: 'title-date',
   title: (0,external_wp_i18n_namespaceObject.__)('Title & Date'),
   icon: titleDate,
-  attributes: {
-    ...QUERY_DEFAULT_ATTRIBUTES
-  },
+  attributes: {},
   innerBlocks: [['core/post-template', {}, [['core/post-title'], ['core/post-date']]], ['core/query-pagination'], ['core/query-no-results']],
   scope: ['block']
 }, {
   name: 'title-excerpt',
   title: (0,external_wp_i18n_namespaceObject.__)('Title & Excerpt'),
   icon: titleExcerpt,
-  attributes: {
-    ...QUERY_DEFAULT_ATTRIBUTES
-  },
+  attributes: {},
   innerBlocks: [['core/post-template', {}, [['core/post-title'], ['core/post-excerpt']]], ['core/query-pagination'], ['core/query-no-results']],
   scope: ['block']
 }, {
   name: 'title-date-excerpt',
   title: (0,external_wp_i18n_namespaceObject.__)('Title, Date, & Excerpt'),
   icon: titleDateExcerpt,
-  attributes: {
-    ...QUERY_DEFAULT_ATTRIBUTES
-  },
+  attributes: {},
   innerBlocks: [['core/post-template', {}, [['core/post-title'], ['core/post-date'], ['core/post-excerpt']]], ['core/query-pagination'], ['core/query-no-results']],
   scope: ['block']
 }, {
   name: 'image-date-title',
   title: (0,external_wp_i18n_namespaceObject.__)('Image, Date, & Title'),
   icon: imageDateTitle,
-  attributes: {
-    ...QUERY_DEFAULT_ATTRIBUTES
-  },
+  attributes: {},
   innerBlocks: [['core/post-template', {}, [['core/post-featured-image'], ['core/post-date'], ['core/post-title']]], ['core/query-pagination'], ['core/query-no-results']],
   scope: ['block']
 }];
