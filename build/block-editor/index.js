@@ -52791,7 +52791,7 @@ const GridVisualizerGrid = (0,external_wp_element_namespaceObject.forwardRef)(({
       'is-dropping-allowed': isDroppingAllowed
     }),
     clientId: gridClientId,
-    __unstablePopoverSlot: "block-toolbar",
+    __unstablePopoverSlot: "__unstable-block-tools-after",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ref: ref,
       className: "block-editor-grid-visualizer__grid",
