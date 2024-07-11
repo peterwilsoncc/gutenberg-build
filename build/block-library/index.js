@@ -39963,6 +39963,7 @@ function PostAuthorEdit({
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -40044,6 +40045,13 @@ const {
 
 const post_author_settings = {
   icon: post_author,
+  example: {
+    viewportWidth: 350,
+    attributes: {
+      showBio: true,
+      byline: (0,external_wp_i18n_namespaceObject.__)('Posted by')
+    }
+  },
   edit: post_author_edit
 };
 const post_author_init = () => initBlock({
@@ -40202,6 +40210,9 @@ const post_author_name_metadata = {
     }
   },
   usesContext: ["postType", "postId"],
+  example: {
+    viewportWidth: 350
+  },
   supports: {
     html: false,
     spacing: {
@@ -40341,6 +40352,9 @@ const post_author_biography_metadata = {
     }
   },
   usesContext: ["postType", "postId"],
+  example: {
+    viewportWidth: 350
+  },
   supports: {
     spacing: {
       margin: true,
