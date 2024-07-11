@@ -16738,6 +16738,11 @@ const embed_transforms_transforms = {
 
 /** @typedef {import('@wordpress/blocks').WPBlockVariation} WPBlockVariation */
 
+function getTitle(providerName) {
+  return (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: provider name */
+  (0,external_wp_i18n_namespaceObject.__)('%s Embed'), providerName);
+}
+
 /**
  * The embed provider services.
  *
@@ -16745,7 +16750,7 @@ const embed_transforms_transforms = {
  */
 const embed_variations_variations = [{
   name: 'twitter',
-  title: 'Twitter',
+  title: getTitle('Twitter'),
   icon: embedTwitterIcon,
   keywords: ['tweet', (0,external_wp_i18n_namespaceObject.__)('social')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a tweet.'),
@@ -16756,7 +16761,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'youtube',
-  title: 'YouTube',
+  title: getTitle('YouTube'),
   icon: embedYouTubeIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('music'), (0,external_wp_i18n_namespaceObject.__)('video')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a YouTube video.'),
@@ -16769,7 +16774,7 @@ const embed_variations_variations = [{
   // Deprecate Facebook Embed per FB policy
   // See: https://developers.facebook.com/docs/plugins/oembed-legacy
   name: 'facebook',
-  title: 'Facebook',
+  title: getTitle('Facebook'),
   icon: embedFacebookIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('social')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a Facebook post.'),
@@ -16784,7 +16789,7 @@ const embed_variations_variations = [{
   // Deprecate Instagram per FB policy
   // See: https://developers.facebook.com/docs/instagram/oembed-legacy
   name: 'instagram',
-  title: 'Instagram',
+  title: getTitle('Instagram'),
   icon: embedInstagramIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('image'), (0,external_wp_i18n_namespaceObject.__)('social')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed an Instagram post.'),
@@ -16796,7 +16801,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'wordpress',
-  title: 'WordPress',
+  title: getTitle('WordPress'),
   icon: embedWordPressIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('post'), (0,external_wp_i18n_namespaceObject.__)('blog')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a WordPress post.'),
@@ -16805,7 +16810,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'soundcloud',
-  title: 'SoundCloud',
+  title: getTitle('SoundCloud'),
   icon: embedAudioIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('music'), (0,external_wp_i18n_namespaceObject.__)('audio')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed SoundCloud content.'),
@@ -16816,7 +16821,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'spotify',
-  title: 'Spotify',
+  title: getTitle('Spotify'),
   icon: embedSpotifyIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('music'), (0,external_wp_i18n_namespaceObject.__)('audio')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Spotify content.'),
@@ -16827,7 +16832,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'flickr',
-  title: 'Flickr',
+  title: getTitle('Flickr'),
   icon: embedFlickrIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('image')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Flickr content.'),
@@ -16838,7 +16843,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'vimeo',
-  title: 'Vimeo',
+  title: getTitle('Vimeo'),
   icon: embedVimeoIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('video')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a Vimeo video.'),
@@ -16849,7 +16854,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'animoto',
-  title: 'Animoto',
+  title: getTitle('Animoto'),
   icon: embedAnimotoIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed an Animoto video.'),
   patterns: [/^https?:\/\/(www\.)?(animoto|video214)\.com\/.+/i],
@@ -16859,7 +16864,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'cloudup',
-  title: 'Cloudup',
+  title: getTitle('Cloudup'),
   icon: embedContentIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Cloudup content.'),
   patterns: [/^https?:\/\/cloudup\.com\/.+/i],
@@ -16870,7 +16875,7 @@ const embed_variations_variations = [{
 }, {
   // Deprecated since CollegeHumor content is now powered by YouTube.
   name: 'collegehumor',
-  title: 'CollegeHumor',
+  title: getTitle('CollegeHumor'),
   icon: embedVideoIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed CollegeHumor content.'),
   scope: ['block'],
@@ -16881,7 +16886,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'crowdsignal',
-  title: 'Crowdsignal',
+  title: getTitle('Crowdsignal'),
   icon: embedContentIcon,
   keywords: ['polldaddy', (0,external_wp_i18n_namespaceObject.__)('survey')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Crowdsignal (formerly Polldaddy) content.'),
@@ -16892,7 +16897,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'dailymotion',
-  title: 'Dailymotion',
+  title: getTitle('Dailymotion'),
   icon: embedDailymotionIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('video')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a Dailymotion video.'),
@@ -16903,7 +16908,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'imgur',
-  title: 'Imgur',
+  title: getTitle('Imgur'),
   icon: embedPhotoIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Imgur content.'),
   patterns: [/^https?:\/\/(.+\.)?imgur\.com\/.+/i],
@@ -16913,7 +16918,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'issuu',
-  title: 'Issuu',
+  title: getTitle('Issuu'),
   icon: embedContentIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Issuu content.'),
   patterns: [/^https?:\/\/(www\.)?issuu\.com\/.+/i],
@@ -16923,7 +16928,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'kickstarter',
-  title: 'Kickstarter',
+  title: getTitle('Kickstarter'),
   icon: embedContentIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Kickstarter content.'),
   patterns: [/^https?:\/\/(www\.)?kickstarter\.com\/.+/i, /^https?:\/\/kck\.st\/.+/i],
@@ -16933,7 +16938,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'mixcloud',
-  title: 'Mixcloud',
+  title: getTitle('Mixcloud'),
   icon: embedAudioIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('music'), (0,external_wp_i18n_namespaceObject.__)('audio')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Mixcloud content.'),
@@ -16944,7 +16949,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'pocket-casts',
-  title: 'Pocket Casts',
+  title: getTitle('Pocket Casts'),
   icon: embedPocketCastsIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('podcast'), (0,external_wp_i18n_namespaceObject.__)('audio')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a podcast player from Pocket Casts.'),
@@ -16955,7 +16960,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'reddit',
-  title: 'Reddit',
+  title: getTitle('Reddit'),
   icon: embedRedditIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a Reddit thread.'),
   patterns: [/^https?:\/\/(www\.)?reddit\.com\/.+/i],
@@ -16965,7 +16970,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'reverbnation',
-  title: 'ReverbNation',
+  title: getTitle('ReverbNation'),
   icon: embedAudioIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed ReverbNation content.'),
   patterns: [/^https?:\/\/(www\.)?reverbnation\.com\/.+/i],
@@ -16975,7 +16980,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'screencast',
-  title: 'Screencast',
+  title: getTitle('Screencast'),
   icon: embedVideoIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Screencast content.'),
   patterns: [/^https?:\/\/(www\.)?screencast\.com\/.+/i],
@@ -16985,7 +16990,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'scribd',
-  title: 'Scribd',
+  title: getTitle('Scribd'),
   icon: embedContentIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Scribd content.'),
   patterns: [/^https?:\/\/(www\.)?scribd\.com\/.+/i],
@@ -16995,7 +17000,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'smugmug',
-  title: 'SmugMug',
+  title: getTitle('SmugMug'),
   icon: embedPhotoIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed SmugMug content.'),
   patterns: [/^https?:\/\/(.+\.)?smugmug\.com\/.*/i],
@@ -17006,7 +17011,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'speaker-deck',
-  title: 'Speaker Deck',
+  title: getTitle('Speaker Deck'),
   icon: embedContentIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Speaker Deck content.'),
   patterns: [/^https?:\/\/(www\.)?speakerdeck\.com\/.+/i],
@@ -17016,7 +17021,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'tiktok',
-  title: 'TikTok',
+  title: getTitle('TikTok'),
   icon: embedVideoIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('video')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a TikTok video.'),
@@ -17027,7 +17032,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'ted',
-  title: 'TED',
+  title: getTitle('TED'),
   icon: embedVideoIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a TED video.'),
   patterns: [/^https?:\/\/(www\.|embed\.)?ted\.com\/.+/i],
@@ -17037,7 +17042,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'tumblr',
-  title: 'Tumblr',
+  title: getTitle('Tumblr'),
   icon: embedTumblrIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('social')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a Tumblr post.'),
@@ -17048,7 +17053,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'videopress',
-  title: 'VideoPress',
+  title: getTitle('VideoPress'),
   icon: embedVideoIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('video')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a VideoPress video.'),
@@ -17059,7 +17064,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'wordpress-tv',
-  title: 'WordPress.tv',
+  title: getTitle('WordPress.tv'),
   icon: embedVideoIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a WordPress.tv video.'),
   patterns: [/^https?:\/\/wordpress\.tv\/.+/i],
@@ -17069,7 +17074,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'amazon-kindle',
-  title: 'Amazon Kindle',
+  title: getTitle('Amazon Kindle'),
   icon: embedAmazonIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('ebook')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Amazon Kindle content.'),
@@ -17079,7 +17084,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'pinterest',
-  title: 'Pinterest',
+  title: getTitle('Pinterest'),
   icon: embedPinterestIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('social'), (0,external_wp_i18n_namespaceObject.__)('bookmark')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Pinterest pins, boards, and profiles.'),
@@ -17089,7 +17094,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'wolfram-cloud',
-  title: 'Wolfram',
+  title: getTitle('Wolfram'),
   icon: embedWolframIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Wolfram notebook content.'),
   patterns: [/^https?:\/\/(www\.)?wolframcloud\.com\/obj\/.+/i],
@@ -17099,7 +17104,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'bluesky',
-  title: 'Bluesky',
+  title: getTitle('Bluesky'),
   icon: embedBlueskyIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a Bluesky post.'),
   patterns: [/^https?:\/\/bsky\.app\/profile\/.+\/post\/.+/i],
