@@ -28341,6 +28341,7 @@ const deletePostAction = {
           onClick: closeModal,
           disabled: isBusy,
           accessibleWhenDisabled: true,
+          __next40pxDefaultSize: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           variant: "primary",
@@ -28356,6 +28357,7 @@ const deletePostAction = {
           isBusy: isBusy,
           disabled: isBusy,
           accessibleWhenDisabled: true,
+          __next40pxDefaultSize: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Delete')
         })]
       })]
