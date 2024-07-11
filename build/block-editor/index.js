@@ -53457,9 +53457,16 @@ function useBlockPropsChildLayoutStyles({
       if (!['px', 'rem', 'em'].includes(parentColumnUnit)) {
         parentColumnUnit = 'rem';
       }
-      const highestNumber = Math.max(columnSpan, columnStart);
+      let numColsToBreakAt = 2;
+      if (columnSpan && columnStart) {
+        numColsToBreakAt = columnSpan + columnStart - 1;
+      } else if (columnSpan) {
+        numColsToBreakAt = columnSpan;
+      } else {
+        numColsToBreakAt = columnStart;
+      }
       const defaultGapValue = parentColumnUnit === 'px' ? 24 : 1.5;
-      const containerQueryValue = highestNumber * parentColumnValue + (highestNumber - 1) * defaultGapValue;
+      const containerQueryValue = numColsToBreakAt * parentColumnValue + (numColsToBreakAt - 1) * defaultGapValue;
       // For blocks that only span one column, we want to remove any rowStart values as
       // the container reduces in size, so that blocks are still arranged in markup order.
       const minimumContainerQueryValue = parentColumnValue * 2 + defaultGapValue - 1;
