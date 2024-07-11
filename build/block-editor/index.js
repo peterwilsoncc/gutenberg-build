@@ -51980,7 +51980,7 @@ function InserterMenu({
   }, [setSelectedPatternCategory, onPatternCategorySelection]);
   const showPatternPanel = selectedTab === 'patterns' && !delayedFilterValue && !!selectedPatternCategory;
   const showMediaPanel = selectedTab === 'media' && !!selectedMediaCategory;
-  const showZoomOut = showPatternPanel && window.__experimentalEnableZoomedOutPatternsTab;
+  const showZoomOut = showPatternPanel && !!window.__experimentalEnableZoomedOutPatternsTab;
   useZoomOut(showZoomOut);
   const inserterSearch = (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (selectedTab === 'media') {
