@@ -12721,8 +12721,9 @@ function PostFeaturedImage({
               ref: toggleRef,
               className: !featuredImageId ? 'editor-post-featured-image__toggle' : 'editor-post-featured-image__preview',
               onClick: open,
-              "aria-label": !featuredImageId ? null : (0,external_wp_i18n_namespaceObject.__)('Edit or replace the image'),
+              "aria-label": !featuredImageId ? null : (0,external_wp_i18n_namespaceObject.__)('Edit or replace the featured image'),
               "aria-describedby": !featuredImageId ? null : `editor-post-featured-image-${featuredImageId}-describedby`,
+              "aria-haspopup": "dialog",
               children: [!!featuredImageId && media && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
                 className: "editor-post-featured-image__preview-image",
                 src: mediaSourceUrl,
@@ -12733,6 +12734,7 @@ function PostFeaturedImage({
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
                 className: "editor-post-featured-image__action",
                 onClick: open,
+                "aria-haspopup": "dialog",
                 children: (0,external_wp_i18n_namespaceObject.__)('Replace')
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
                 className: "editor-post-featured-image__action",
