@@ -48951,7 +48951,10 @@ function _CustomSelect(props) {
           store: store,
           sameWidth: true,
           slide: false,
-          onKeyDown: onSelectPopoverKeyDown,
+          onKeyDown: onSelectPopoverKeyDown
+          // Match legacy behavior
+          ,
+          flip: !isLegacy,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CustomSelectContext.Provider, {
             value: contextValue,
             children: children
