@@ -41518,6 +41518,9 @@ const post_date_metadata = {
     }
   },
   usesContext: ["postId", "postType", "queryId"],
+  example: {
+    viewportWidth: 350
+  },
   supports: {
     html: false,
     color: {
