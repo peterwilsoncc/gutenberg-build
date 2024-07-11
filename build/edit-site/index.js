@@ -36003,17 +36003,31 @@ const pages = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ext
  * Internal dependencies
  */
 
-const DEFAULT_CONFIG_PER_VIEW_TYPE = {
+const defaultLayouts = {
   [LAYOUT_TABLE]: {
-    primaryField: 'title'
+    layout: {
+      primaryField: 'title',
+      styles: {
+        'featured-image': {
+          width: '1%'
+        },
+        title: {
+          maxWidth: 300
+        }
+      }
+    }
   },
   [LAYOUT_GRID]: {
-    mediaField: 'featured-image',
-    primaryField: 'title'
+    layout: {
+      mediaField: 'featured-image',
+      primaryField: 'title'
+    }
   },
   [LAYOUT_LIST]: {
-    primaryField: 'title',
-    mediaField: 'featured-image'
+    layout: {
+      primaryField: 'title',
+      mediaField: 'featured-image'
+    }
   }
 };
 const DEFAULT_POST_BASE = {
@@ -36027,9 +36041,7 @@ const DEFAULT_POST_BASE = {
     direction: 'desc'
   },
   fields: ['title', 'author', 'status'],
-  layout: {
-    ...DEFAULT_CONFIG_PER_VIEW_TYPE[LAYOUT_LIST]
-  }
+  layout: defaultLayouts[LAYOUT_LIST].layout
 };
 function useDefaultViews({
   postType
@@ -36362,24 +36374,6 @@ const {
   useHistory: post_list_useHistory
 } = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
 const post_list_EMPTY_ARRAY = [];
-const defaultLayouts = {
-  [LAYOUT_TABLE]: {
-    layout: {
-      'featured-image': {
-        width: '1%'
-      },
-      title: {
-        maxWidth: 300
-      }
-    }
-  },
-  [LAYOUT_GRID]: {
-    layout: {}
-  },
-  [LAYOUT_LIST]: {
-    layout: {}
-  }
-};
 const getFormattedDate = dateToDisplay => (0,external_wp_date_namespaceObject.dateI18n)((0,external_wp_date_namespaceObject.getSettings)().formats.datetimeAbbreviated, (0,external_wp_date_namespaceObject.getDate)(dateToDisplay));
 function useView(postType) {
   const {
@@ -36401,9 +36395,7 @@ function useView(postType) {
       return {
         ...defaultView,
         type: layout,
-        layout: {
-          ...(DEFAULT_CONFIG_PER_VIEW_TYPE[layout] || {})
-        }
+        layout: defaultLayouts[layout]?.layout
       };
     }
     return defaultView;
@@ -36434,9 +36426,7 @@ function useView(postType) {
     }
     return {
       ...storedView,
-      layout: {
-        ...(DEFAULT_CONFIG_PER_VIEW_TYPE[storedView?.type] || {})
-      }
+      layout: defaultLayouts[storedView?.type]?.layout
     };
   }, [editedViewRecord?.content]);
   const setCustomView = (0,external_wp_element_namespaceObject.useCallback)(viewToSet => {
@@ -36828,17 +36818,6 @@ function PostList({
   });
   const editAction = useEditPostAction();
   const actions = (0,external_wp_element_namespaceObject.useMemo)(() => [editAction, ...postTypeActions], [postTypeActions, editAction]);
-  const onChangeView = (0,external_wp_element_namespaceObject.useCallback)(newView => {
-    if (newView.type !== view.type) {
-      newView = {
-        ...newView,
-        layout: {
-          ...DEFAULT_CONFIG_PER_VIEW_TYPE[newView.type]
-        }
-      };
-    }
-    setView(newView);
-  }, [view.type, setView]);
   const [showAddPostModal, setShowAddPostModal] = (0,external_wp_element_namespaceObject.useState)(false);
   const openModal = () => setShowAddPostModal(true);
   const closeModal = () => setShowAddPostModal(false);
@@ -36874,7 +36853,7 @@ function PostList({
       data: records || post_list_EMPTY_ARRAY,
       isLoading: isLoadingMainEntities || isLoadingAuthors,
       view: view,
-      onChangeView: onChangeView,
+      onChangeView: setView,
       selection: selection,
       setSelection: setSelection,
       onSelectionChange: onSelectionChange,
