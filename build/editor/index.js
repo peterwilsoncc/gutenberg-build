@@ -15256,7 +15256,7 @@ function FlatTermSelector({
     const _termIds = _taxonomy ? getEditedPostAttribute(_taxonomy.rest_base) : EMPTY_ARRAY;
     const query = {
       ...flat_term_selector_DEFAULT_QUERY,
-      include: _termIds.join(','),
+      include: _termIds?.join(','),
       per_page: -1
     };
     return {
@@ -15264,7 +15264,7 @@ function FlatTermSelector({
       hasAssignAction: _taxonomy ? (_post$_links2 = post._links?.['wp:action-assign-' + _taxonomy.rest_base]) !== null && _post$_links2 !== void 0 ? _post$_links2 : false : false,
       taxonomy: _taxonomy,
       termIds: _termIds,
-      terms: _termIds.length ? getEntityRecords('taxonomy', slug, query) : EMPTY_ARRAY,
+      terms: _termIds?.length ? getEntityRecords('taxonomy', slug, query) : EMPTY_ARRAY,
       hasResolvedTerms: hasFinishedResolution('getEntityRecords', ['taxonomy', slug, query])
     };
   }, [slug]);
