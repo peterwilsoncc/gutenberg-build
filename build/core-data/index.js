@@ -22779,16 +22779,7 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
       if (!query?._fields && !query.context) {
         const key = entityConfig.key || DEFAULT_ENTITY_KEY;
         const resolutionsArgs = records.filter(record => record?.[key]).map(record => [kind, name, record[key]]);
-        dispatch({
-          type: 'START_RESOLUTIONS',
-          selectorName: 'getEntityRecord',
-          args: resolutionsArgs
-        });
-        dispatch({
-          type: 'FINISH_RESOLUTIONS',
-          selectorName: 'getEntityRecord',
-          args: resolutionsArgs
-        });
+        dispatch.finishResolutions('getEntityRecord', resolutionsArgs);
       }
       dispatch.__unstableReleaseStoreLock(lock);
     });
@@ -23222,16 +23213,8 @@ const resolvers_getRevisions = (kind, name, recordKey, query = {}) => async ({
     if (!query?._fields && !query.context) {
       const key = entityConfig.key || DEFAULT_ENTITY_KEY;
       const resolutionsArgs = records.filter(record => record[key]).map(record => [kind, name, recordKey, record[key]]);
-      dispatch({
-        type: 'START_RESOLUTIONS',
-        selectorName: 'getRevision',
-        args: resolutionsArgs
-      });
-      dispatch({
-        type: 'FINISH_RESOLUTIONS',
-        selectorName: 'getRevision',
-        args: resolutionsArgs
-      });
+      dispatch.startResolutions('getRevision', resolutionsArgs);
+      dispatch.finishResolutions('getRevision', resolutionsArgs);
     }
   }
 };
