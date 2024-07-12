@@ -17192,7 +17192,6 @@ function Variation({
 
 
 
-
 function TypographyVariations({
   title,
   gap = 2
@@ -26037,6 +26036,64 @@ function StyleVariationsContainer({
   });
 }
 
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/sidebar-navigation-screen-global-styles/content.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+const content_noop = () => {};
+function SidebarNavigationScreenGlobalStylesContent() {
+  const {
+    storedSettings
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getSettings
+    } = lock_unlock_unlock(select(store));
+    return {
+      storedSettings: getSettings()
+    };
+  }, []);
+  const gap = 3;
+
+  // Wrap in a BlockEditorProvider to ensure that the Iframe's dependencies are
+  // loaded. This is necessary because the Iframe component waits until
+  // the block editor store's `__internalIsInitialized` is true before
+  // rendering the iframe. Without this, the iframe previews will not render
+  // in mobile viewport sizes, where the editor canvas is hidden.
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockEditorProvider, {
+    settings: storedSettings,
+    onChange: content_noop,
+    onInput: content_noop,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      spacing: 10,
+      className: "edit-site-global-styles-variation-container",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleVariationsContainer, {
+        gap: gap
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ColorVariations, {
+        title: (0,external_wp_i18n_namespaceObject.__)('Palettes'),
+        gap: gap
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TypographyVariations, {
+        title: (0,external_wp_i18n_namespaceObject.__)('Typography'),
+        gap: gap
+      })]
+    })
+  });
+}
+
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/screen-style-variations.js
 /**
  * WordPress dependencies
@@ -26066,7 +26123,7 @@ function ScreenStyleVariations() {
       isBorderless: true,
       className: "edit-site-global-styles-screen-style-variations",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CardBody, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleVariationsContainer, {})
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenGlobalStylesContent, {})
       })
     })]
   });
@@ -41873,8 +41930,6 @@ function SidebarNavigationScreenDetailsFooter({
 
 
 
-
-
 /**
  * Internal dependencies
  */
@@ -41890,10 +41945,6 @@ function SidebarNavigationScreenDetailsFooter({
 
 
 
-
-
-
-const sidebar_navigation_screen_global_styles_noop = () => {};
 function SidebarNavigationItemGlobalStyles(props) {
   const {
     openGeneralSidebar
@@ -41919,45 +41970,6 @@ function SidebarNavigationItemGlobalStyles(props) {
       // Open global styles sidebar.
       openGeneralSidebar('edit-site/global-styles');
     }
-  });
-}
-function SidebarNavigationScreenGlobalStylesContent() {
-  const {
-    storedSettings
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getSettings
-    } = lock_unlock_unlock(select(store));
-    return {
-      storedSettings: getSettings()
-    };
-  }, []);
-  const colorVariations = useCurrentMergeThemeStyleVariationsWithUserConfig(['color']);
-  const typographyVariations = useCurrentMergeThemeStyleVariationsWithUserConfig(['typography']);
-  const gap = 3;
-
-  // Wrap in a BlockEditorProvider to ensure that the Iframe's dependencies are
-  // loaded. This is necessary because the Iframe component waits until
-  // the block editor store's `__internalIsInitialized` is true before
-  // rendering the iframe. Without this, the iframe previews will not render
-  // in mobile viewport sizes, where the editor canvas is hidden.
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockEditorProvider, {
-    settings: storedSettings,
-    onChange: sidebar_navigation_screen_global_styles_noop,
-    onInput: sidebar_navigation_screen_global_styles_noop,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-      spacing: 10,
-      className: "edit-site-global-styles-variation-container",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleVariationsContainer, {
-        gap: gap
-      }), colorVariations?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ColorVariations, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Palettes'),
-        gap: gap
-      }), typographyVariations?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TypographyVariations, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Typography'),
-        gap: gap
-      })]
-    })
   });
 }
 function SidebarNavigationScreenGlobalStyles({
