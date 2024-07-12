@@ -26229,7 +26229,7 @@ function usePostActions({
               existingCallback(items, {
                 ...argsObject,
                 onActionPerformed: _items => {
-                  if (argsObject.onActionPerformed) {
+                  if (argsObject?.onActionPerformed) {
                     argsObject.onActionPerformed(_items);
                   }
                   onActionPerformed(actions[i].id, _items);
