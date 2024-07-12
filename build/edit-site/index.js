@@ -29303,14 +29303,13 @@ function TableColumnField({
   item,
   field
 }) {
-  const value = field.render({
-    item
-  });
-  return !!value && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: dist_clsx('dataviews-view-table__cell-content-wrapper', {
       'dataviews-view-table__primary-field': primaryField?.id === field.id
     }),
-    children: value
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.render, {
+      item
+    })
   });
 }
 function TableColumnCombined({
@@ -29603,6 +29602,12 @@ function GridItem({
   const hasBulkAction = useHasAPossibleBulkAction(actions, item);
   const id = getItemId(item);
   const isSelected = selection.includes(id);
+  const renderedMediaField = mediaField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(mediaField.render, {
+    item: item
+  }) : null;
+  const renderedPrimaryField = primaryField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(primaryField.render, {
+    item: item
+  }) : null;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 0,
     className: dist_clsx('dataviews-view-grid__card', {
@@ -29620,9 +29625,7 @@ function GridItem({
     },
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "dataviews-view-grid__media",
-      children: mediaField?.render({
-        item
-      })
+      children: renderedMediaField
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       justify: "space-between",
       className: "dataviews-view-grid__title-actions",
@@ -29635,9 +29638,7 @@ function GridItem({
         disabled: !hasBulkAction
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
         className: "dataviews-view-grid__primary-field",
-        children: primaryField?.render({
-          item
-        })
+        children: renderedPrimaryField
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemActions, {
         item: item,
         actions: actions,
@@ -29650,27 +29651,17 @@ function GridItem({
       alignment: "top",
       justify: "flex-start",
       children: badgeFields.map(field => {
-        const renderedValue = field.render({
-          item
-        });
-        if (!renderedValue) {
-          return null;
-        }
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
           className: "dataviews-view-grid__field-value",
-          children: renderedValue
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.render, {
+            item: item
+          })
         }, field.id);
       })
     }), !!visibleFields?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
       className: "dataviews-view-grid__fields",
       spacing: 1,
       children: visibleFields.map(field => {
-        const renderedValue = field.render({
-          item
-        });
-        if (!renderedValue) {
-          return null;
-        }
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Flex, {
           className: dist_clsx('dataviews-view-grid__field', columnFields?.includes(field.id) ? 'is-column' : 'is-row'),
           gap: 1,
@@ -29689,7 +29680,9 @@ function GridItem({
               style: {
                 maxHeight: 'none'
               },
-              children: renderedValue
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.render, {
+                item: item
+              })
             })]
           })
         }, field.id);
@@ -29838,6 +29831,14 @@ function ListItem({
   }, [actions, item]);
   const [isModalOpen, setIsModalOpen] = (0,external_wp_element_namespaceObject.useState)(false);
   const primaryActionLabel = primaryAction && (typeof primaryAction.label === 'string' ? primaryAction.label : primaryAction.label([item]));
+  const renderedMediaField = mediaField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(mediaField.render, {
+    item: item
+  }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    className: "dataviews-view-list__media-placeholder"
+  });
+  const renderedPrimaryField = primaryField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(primaryField.render, {
+    item: item
+  }) : null;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CompositeRow, {
     ref: itemRef,
     render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {}),
@@ -29870,20 +29871,14 @@ function ListItem({
             alignment: "flex-start",
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
               className: "dataviews-view-list__media-wrapper",
-              children: mediaField?.render({
-                item
-              }) || /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-                className: "dataviews-view-list__media-placeholder"
-              })
+              children: renderedMediaField
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
               spacing: 1,
               className: "dataviews-view-list__field-wrapper",
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
                 className: "dataviews-view-list__primary-field",
                 id: labelId,
-                children: primaryField?.render({
-                  item
-                })
+                children: renderedPrimaryField
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
                 className: "dataviews-view-list__fields",
                 id: descriptionId,
@@ -29895,8 +29890,8 @@ function ListItem({
                     children: field.header
                   }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
                     className: "dataviews-view-list__field-value",
-                    children: field.render({
-                      item
+                    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.render, {
+                      item: item
                     })
                   })]
                 }, field.id))
