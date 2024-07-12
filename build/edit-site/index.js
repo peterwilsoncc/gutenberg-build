@@ -18459,14 +18459,14 @@ function InstalledFonts() {
               status: notice.type,
               onRemove: () => setNotice(null),
               children: notice.message
-            }), baseCustomFonts.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+            }), baseThemeFonts.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
                 className: "font-library-modal__fonts-title",
-                children: (0,external_wp_i18n_namespaceObject.__)('Installed Fonts')
+                children: (0,external_wp_i18n_namespaceObject.__)('Theme Fonts')
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
                 role: "list",
                 className: "font-library-modal__fonts-list",
-                children: baseCustomFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
+                children: baseThemeFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
                   className: "font-library-modal__fonts-list-item",
                   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_card, {
                     font: font,
@@ -18478,14 +18478,14 @@ function InstalledFonts() {
                   })
                 }, font.slug))
               })]
-            }), baseThemeFonts.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+            }), baseCustomFonts.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
                 className: "font-library-modal__fonts-title",
-                children: (0,external_wp_i18n_namespaceObject.__)('Theme Fonts')
+                children: (0,external_wp_i18n_namespaceObject.__)('Custom fonts')
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
                 role: "list",
                 className: "font-library-modal__fonts-list",
-                children: baseThemeFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
+                children: baseCustomFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
                   className: "font-library-modal__fonts-list-item",
                   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_card, {
                     font: font,
@@ -23443,34 +23443,43 @@ function FontFamilies() {
       onRequestClose: () => setModalTabOpen(null),
       defaultTabId: modalTabOpen
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-      spacing: 2,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(subtitle, {
-        level: 3,
-        children: (0,external_wp_i18n_namespaceObject.__)('Fonts')
-      }), hasFonts ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+      spacing: 4,
+      children: [themeFonts.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(subtitle, {
+          level: 3,
+          children: (0,external_wp_i18n_namespaceObject.__)('Theme Fonts')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
           isBordered: true,
           isSeparated: true,
-          children: [customFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_family_item, {
+          children: themeFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_family_item, {
             font: font
-          }, font.slug)), themeFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_family_item, {
+          }, font.slug))
+        })]
+      }), customFonts.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(subtitle, {
+          level: 3,
+          children: (0,external_wp_i18n_namespaceObject.__)('Custom fonts')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+          isBordered: true,
+          isSeparated: true,
+          children: customFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_family_item, {
             font: font
-          }, font.slug))]
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          className: "edit-site-global-styles-font-families__manage-fonts",
-          variant: "secondary",
-          __next40pxDefaultSize: true,
-          onClick: () => setModalTabOpen('installed-fonts'),
-          children: (0,external_wp_i18n_namespaceObject.__)('Manage fonts')
+          }, font.slug))
         })]
-      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: [(0,external_wp_i18n_namespaceObject.__)('No fonts installed.'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          className: "edit-site-global-styles-font-families__add-fonts",
-          variant: "secondary",
-          __next40pxDefaultSize: true,
-          onClick: () => setModalTabOpen('upload-fonts'),
-          children: (0,external_wp_i18n_namespaceObject.__)('Add fonts')
+      }), !hasFonts && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(subtitle, {
+          level: 3,
+          children: (0,external_wp_i18n_namespaceObject.__)('Fonts')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+          as: "p",
+          children: (0,external_wp_i18n_namespaceObject.__)('No fonts installed.')
         })]
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        className: "edit-site-global-styles-font-families__manage-fonts",
+        variant: "secondary",
+        __next40pxDefaultSize: true,
+        onClick: () => setModalTabOpen(hasFonts ? 'installed-fonts' : 'upload-fonts'),
+        children: hasFonts ? (0,external_wp_i18n_namespaceObject.__)('Manage fonts') : (0,external_wp_i18n_namespaceObject.__)('Add fonts')
       })]
     })]
   });
