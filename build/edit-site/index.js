@@ -14978,7 +14978,6 @@ function useNavigateToEntityRecord() {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -14993,72 +14992,6 @@ const {
   useLocation: use_site_editor_settings_useLocation,
   useHistory: use_site_editor_settings_useHistory
 } = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
-function useArchiveLabel(templateSlug) {
-  const taxonomyMatches = templateSlug?.match(/^(category|tag|taxonomy-([^-]+))$|^(((category|tag)|taxonomy-([^-]+))-(.+))$/);
-  let taxonomy;
-  let term;
-  let isAuthor = false;
-  let authorSlug;
-  if (taxonomyMatches) {
-    // If is for a all taxonomies of a type
-    if (taxonomyMatches[1]) {
-      taxonomy = taxonomyMatches[2] ? taxonomyMatches[2] : taxonomyMatches[1];
-    }
-    // If is for a all taxonomies of a type
-    else if (taxonomyMatches[3]) {
-      taxonomy = taxonomyMatches[6] ? taxonomyMatches[6] : taxonomyMatches[4];
-      term = taxonomyMatches[7];
-    }
-    taxonomy = taxonomy === 'tag' ? 'post_tag' : taxonomy;
-
-    //getTaxonomy( 'category' );
-    //wp.data.select('core').getEntityRecords( 'taxonomy', 'category', {slug: 'newcat'} );
-  } else {
-    const authorMatches = templateSlug?.match(/^(author)$|^author-(.+)$/);
-    if (authorMatches) {
-      isAuthor = true;
-      if (authorMatches[2]) {
-        authorSlug = authorMatches[2];
-      }
-    }
-  }
-  return (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEntityRecords,
-      getTaxonomy,
-      getAuthors
-    } = select(external_wp_coreData_namespaceObject.store);
-    let archiveTypeLabel;
-    let archiveNameLabel;
-    if (taxonomy) {
-      archiveTypeLabel = getTaxonomy(taxonomy)?.labels?.singular_name;
-    }
-    if (term) {
-      const records = getEntityRecords('taxonomy', taxonomy, {
-        slug: term,
-        per_page: 1
-      });
-      if (records && records[0]) {
-        archiveNameLabel = records[0].name;
-      }
-    }
-    if (isAuthor) {
-      archiveTypeLabel = 'Author';
-      if (authorSlug) {
-        const authorRecords = getAuthors({
-          slug: authorSlug
-        });
-        if (authorRecords && authorRecords[0]) {
-          archiveNameLabel = authorRecords[0].name;
-        }
-      }
-    }
-    return {
-      archiveTypeLabel,
-      archiveNameLabel
-    };
-  }, [authorSlug, isAuthor, taxonomy, term]);
-}
 function useNavigateToPreviousEntityRecord() {
   const location = use_site_editor_settings_useLocation();
   const previousLocation = (0,external_wp_compose_namespaceObject.usePrevious)(location);
@@ -15078,27 +15011,17 @@ function useNavigateToPreviousEntityRecord() {
 function useSpecificEditorSettings() {
   const onNavigateToEntityRecord = useNavigateToEntityRecord();
   const {
-    templateSlug,
     canvasMode,
     settings,
     shouldUseTemplateAsDefaultRenderingMode
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getEditedPostType,
-      getEditedPostId,
       getEditedPostContext,
       getCanvasMode,
       getSettings
     } = lock_unlock_unlock(select(store));
-    const {
-      getEditedEntityRecord
-    } = select(external_wp_coreData_namespaceObject.store);
-    const usedPostType = getEditedPostType();
-    const usedPostId = getEditedPostId();
-    const _record = getEditedEntityRecord('postType', usedPostType, usedPostId);
     const _context = getEditedPostContext();
     return {
-      templateSlug: _record.slug,
       canvasMode: getCanvasMode(),
       settings: getSettings(),
       // TODO: The `postType` check should be removed when the default rendering mode per post type is merged.
@@ -15106,7 +15029,6 @@ function useSpecificEditorSettings() {
       shouldUseTemplateAsDefaultRenderingMode: _context?.postId && _context?.postType !== 'post'
     };
   }, []);
-  const archiveLabels = useArchiveLabel(templateSlug);
   const defaultRenderingMode = shouldUseTemplateAsDefaultRenderingMode ? 'template-locked' : 'post-only';
   const onNavigateToPreviousEntityRecord = useNavigateToPreviousEntityRecord();
   const defaultEditorSettings = (0,external_wp_element_namespaceObject.useMemo)(() => {
@@ -15118,12 +15040,9 @@ function useSpecificEditorSettings() {
       defaultRenderingMode,
       onNavigateToEntityRecord,
       onNavigateToPreviousEntityRecord,
-      // I wonder if they should be set in the post editor too
-      __experimentalArchiveTitleTypeLabel: archiveLabels.archiveTypeLabel,
-      __experimentalArchiveTitleNameLabel: archiveLabels.archiveNameLabel,
       __unstableIsPreviewMode: canvasMode === 'view'
     };
-  }, [settings, canvasMode, defaultRenderingMode, onNavigateToEntityRecord, onNavigateToPreviousEntityRecord, archiveLabels.archiveTypeLabel, archiveLabels.archiveNameLabel]);
+  }, [settings, canvasMode, defaultRenderingMode, onNavigateToEntityRecord, onNavigateToPreviousEntityRecord]);
   return defaultEditorSettings;
 }
 function useSiteEditorSettings() {
