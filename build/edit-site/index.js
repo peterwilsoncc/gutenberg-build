@@ -36861,7 +36861,6 @@ function useDefaultViews({
         icon: library_trash,
         view: {
           ...DEFAULT_POST_BASE,
-          type: LAYOUT_TABLE,
           filters: [{
             field: 'status',
             operator: OPERATOR_IS_ANY,
@@ -43163,8 +43162,7 @@ function DataViewItem({
   const {
     params: {
       postType,
-      layout,
-      activeView: previousView
+      layout
     }
   } = dataview_item_useLocation();
   const iconToUse = icon || VIEW_LAYOUTS.find(v => v.type === type).icon;
@@ -43174,7 +43172,7 @@ function DataViewItem({
   }
   const linkInfo = useLink({
     postType,
-    layout: type !== 'list' || previousView === 'trash' ? type : layout,
+    layout,
     activeView,
     isCustom: isCustom ? 'true' : undefined
   });
