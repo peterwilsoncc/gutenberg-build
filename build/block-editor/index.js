@@ -61064,7 +61064,7 @@ function ZoomOutToolbar({
     }), canRemove && !isBlockTemplatePart && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       className: "zoom-out-toolbar-button",
       icon: library_trash,
-      label: "Delete",
+      label: (0,external_wp_i18n_namespaceObject.__)('Delete'),
       onClick: () => {
         removeBlock(clientId);
       }
