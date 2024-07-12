@@ -34141,6 +34141,12 @@ function position_useBlockProps({
 
 
 
+// Elements that rely on class names in their selectors.
+const ELEMENT_CLASS_NAMES = {
+  button: 'wp-element-button',
+  caption: 'wp-element-caption'
+};
+
 // List of block support features that can have their related styles
 // generated under their own feature level selector rather than the block's.
 const BLOCK_SUPPORT_FEATURE_LEVEL_SELECTORS = {
@@ -34583,7 +34589,10 @@ const getNodesWithStyles = (tree, blockSelectors) => {
     if (tree.styles?.elements?.[name]) {
       nodes.push({
         styles: tree.styles?.elements?.[name],
-        selector
+        selector,
+        // Top level elements that don't use a class name should not receive the
+        // `:root :where()` wrapper to maintain backwards compatibility.
+        skipSelectorWrapper: !ELEMENT_CLASS_NAMES[name]
       });
     }
   });
@@ -34797,7 +34806,8 @@ const toStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSuppor
       fallbackGapValue,
       hasLayoutSupport,
       featureSelectors,
-      styleVariationSelectors
+      styleVariationSelectors,
+      skipSelectorWrapper
     }) => {
       // Process styles for block support features with custom feature level
       // CSS selectors set.
@@ -34838,7 +34848,8 @@ const toStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSuppor
       // Process the remaining block styles (they use either normal block class or __experimentalSelector).
       const styleDeclarations = getStylesDeclarations(styles, selector, useRootPaddingAlign, tree, disableRootPadding);
       if (styleDeclarations?.length) {
-        ruleset += `:root :where(${selector}){${styleDeclarations.join(';')};}`;
+        const generalSelector = skipSelectorWrapper ? selector : `:root :where(${selector})`;
+        ruleset += `${generalSelector}{${styleDeclarations.join(';')};}`;
       }
       if (styles?.css) {
         ruleset += processCSSNesting(styles.css, `:root :where(${selector})`);
@@ -34888,7 +34899,12 @@ const toStyles = (tree, blockSelectors, hasBlockGapSupport, hasFallbackGapSuppor
           // Split and append pseudo selector to create
           // the proper rules to target the elements.
           const _selector = selector.split(',').map(sel => sel + pseudoKey).join(',');
-          const pseudoRule = `${_selector}{${pseudoDeclarations.join(';')};}`;
+
+          // As pseudo classes such as :hover, :focus etc. have class-level
+          // specificity, they must use the `:root :where()` wrapper. This.
+          // caps the specificity at `0-1-0` to allow proper nesting of variations
+          // and block type element styles.
+          const pseudoRule = `:root :where(${_selector}){${pseudoDeclarations.join(';')};}`;
           ruleset += pseudoRule;
         });
       }
@@ -73342,12 +73358,12 @@ function ReusableBlocksRenameHint() {
 
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/elements/index.js
-const ELEMENT_CLASS_NAMES = {
+const elements_ELEMENT_CLASS_NAMES = {
   button: 'wp-element-button',
   caption: 'wp-element-caption'
 };
 const __experimentalGetElementClassName = element => {
-  return ELEMENT_CLASS_NAMES[element] ? ELEMENT_CLASS_NAMES[element] : '';
+  return elements_ELEMENT_CLASS_NAMES[element] ? elements_ELEMENT_CLASS_NAMES[element] : '';
 };
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/utils/get-px-from-css-unit.js
