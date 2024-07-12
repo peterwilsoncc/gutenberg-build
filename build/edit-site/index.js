@@ -29048,7 +29048,6 @@ function BulkActionItem({
   }, [action, selectedItems]);
   const shouldShowModal = ('RenderModal' in action);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(bulk_actions_DropdownMenuItem, {
-    disabled: eligibleItems.length === 0,
     hideOnClick: !shouldShowModal,
     onClick: async () => {
       if (shouldShowModal) {
@@ -29059,7 +29058,7 @@ function BulkActionItem({
         });
       }
     },
-    suffix: eligibleItems.length > 0 ? eligibleItems.length : undefined,
+    suffix: eligibleItems.length,
     children: action.label
   }, action.id);
 }
@@ -29068,9 +29067,14 @@ function ActionsMenuGroup({
   selectedItems,
   setActionWithModal
 }) {
+  const elligibleActions = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return actions.filter(action => {
+      return selectedItems.some(item => !action.isEligible || action.isEligible(item));
+    });
+  }, [actions, selectedItems]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(bulk_actions_DropdownMenuGroup, {
-      children: actions.map(action => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BulkActionItem, {
+      children: elligibleActions.map(action => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BulkActionItem, {
         action: action,
         selectedItems: selectedItems,
         setActionWithModal: setActionWithModal
