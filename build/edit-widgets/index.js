@@ -2169,16 +2169,16 @@ const EMPTY_INSERTION_POINT = {
  *
  * @return {Object[]} API List of widgets.
  */
-const selectors_getWidgets = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
+const selectors_getWidgets = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(() => {
+  var _widgets$reduce;
   const widgets = select(external_wp_coreData_namespaceObject.store).getEntityRecords('root', 'widget', buildWidgetsQuery());
-  return (
-    // Key widgets by their ID.
-    widgets?.reduce((allWidgets, widget) => ({
+  return (// Key widgets by their ID.
+    (_widgets$reduce = widgets?.reduce((allWidgets, widget) => ({
       ...allWidgets,
       [widget.id]: widget
-    }), {}) || {}
+    }), {})) !== null && _widgets$reduce !== void 0 ? _widgets$reduce : {}
   );
-});
+}, () => [select(external_wp_coreData_namespaceObject.store).getEntityRecords('root', 'widget', buildWidgetsQuery())]));
 
 /**
  * Returns API widget data for a particular widget ID.
@@ -3067,6 +3067,7 @@ const {
 const {
   BlockKeyboardShortcuts
 } = unlock(external_wp_blockLibrary_namespaceObject.privateApis);
+const EMPTY_ARRAY = [];
 function WidgetAreasBlockEditorProvider({
   blockEditorSettings,
   children,
@@ -3090,7 +3091,7 @@ function WidgetAreasBlockEditorProvider({
     return {
       widgetAreas: select(store_store).getWidgetAreas(),
       widgets: select(store_store).getWidgets(),
-      reusableBlocks: ALLOW_REUSABLE_BLOCKS ? getEntityRecords('postType', 'wp_block') : [],
+      reusableBlocks: ALLOW_REUSABLE_BLOCKS ? getEntityRecords('postType', 'wp_block') : EMPTY_ARRAY,
       isFixedToolbarActive: !!select(external_wp_preferences_namespaceObject.store).get('core/edit-widgets', 'fixedToolbar'),
       keepCaretInsideBlock: !!select(external_wp_preferences_namespaceObject.store).get('core/edit-widgets', 'keepCaretInsideBlock'),
       pageOnFront: siteSettings?.page_on_front,

@@ -3032,7 +3032,11 @@ const external_wp_compose_namespaceObject = window["wp"]["compose"];
  * @param {string} recordId Record's id.
  */
 function useCanEditEntity(kind, name, recordId) {
-  return (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).canUserEditEntityRecord(kind, name, recordId), [kind, name, recordId]);
+  return (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).canUser('update', {
+    kind,
+    name,
+    id: recordId
+  }), [kind, name, recordId]);
 }
 
 /**
@@ -5849,6 +5853,12 @@ const {
 const buttons_settings = {
   icon: library_buttons,
   example: {
+    attributes: {
+      layout: {
+        type: 'flex',
+        justifyContent: 'center'
+      }
+    },
     innerBlocks: [{
       name: 'core/button',
       attributes: {
@@ -16734,6 +16744,11 @@ const embed_transforms_transforms = {
 
 /** @typedef {import('@wordpress/blocks').WPBlockVariation} WPBlockVariation */
 
+function getTitle(providerName) {
+  return (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: provider name */
+  (0,external_wp_i18n_namespaceObject.__)('%s Embed'), providerName);
+}
+
 /**
  * The embed provider services.
  *
@@ -16741,7 +16756,7 @@ const embed_transforms_transforms = {
  */
 const embed_variations_variations = [{
   name: 'twitter',
-  title: 'Twitter',
+  title: getTitle('Twitter'),
   icon: embedTwitterIcon,
   keywords: ['tweet', (0,external_wp_i18n_namespaceObject.__)('social')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a tweet.'),
@@ -16752,7 +16767,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'youtube',
-  title: 'YouTube',
+  title: getTitle('YouTube'),
   icon: embedYouTubeIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('music'), (0,external_wp_i18n_namespaceObject.__)('video')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a YouTube video.'),
@@ -16765,7 +16780,7 @@ const embed_variations_variations = [{
   // Deprecate Facebook Embed per FB policy
   // See: https://developers.facebook.com/docs/plugins/oembed-legacy
   name: 'facebook',
-  title: 'Facebook',
+  title: getTitle('Facebook'),
   icon: embedFacebookIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('social')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a Facebook post.'),
@@ -16780,7 +16795,7 @@ const embed_variations_variations = [{
   // Deprecate Instagram per FB policy
   // See: https://developers.facebook.com/docs/instagram/oembed-legacy
   name: 'instagram',
-  title: 'Instagram',
+  title: getTitle('Instagram'),
   icon: embedInstagramIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('image'), (0,external_wp_i18n_namespaceObject.__)('social')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed an Instagram post.'),
@@ -16792,7 +16807,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'wordpress',
-  title: 'WordPress',
+  title: getTitle('WordPress'),
   icon: embedWordPressIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('post'), (0,external_wp_i18n_namespaceObject.__)('blog')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a WordPress post.'),
@@ -16801,7 +16816,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'soundcloud',
-  title: 'SoundCloud',
+  title: getTitle('SoundCloud'),
   icon: embedAudioIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('music'), (0,external_wp_i18n_namespaceObject.__)('audio')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed SoundCloud content.'),
@@ -16812,7 +16827,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'spotify',
-  title: 'Spotify',
+  title: getTitle('Spotify'),
   icon: embedSpotifyIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('music'), (0,external_wp_i18n_namespaceObject.__)('audio')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Spotify content.'),
@@ -16823,7 +16838,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'flickr',
-  title: 'Flickr',
+  title: getTitle('Flickr'),
   icon: embedFlickrIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('image')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Flickr content.'),
@@ -16834,7 +16849,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'vimeo',
-  title: 'Vimeo',
+  title: getTitle('Vimeo'),
   icon: embedVimeoIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('video')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a Vimeo video.'),
@@ -16845,7 +16860,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'animoto',
-  title: 'Animoto',
+  title: getTitle('Animoto'),
   icon: embedAnimotoIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed an Animoto video.'),
   patterns: [/^https?:\/\/(www\.)?(animoto|video214)\.com\/.+/i],
@@ -16855,7 +16870,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'cloudup',
-  title: 'Cloudup',
+  title: getTitle('Cloudup'),
   icon: embedContentIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Cloudup content.'),
   patterns: [/^https?:\/\/cloudup\.com\/.+/i],
@@ -16866,7 +16881,7 @@ const embed_variations_variations = [{
 }, {
   // Deprecated since CollegeHumor content is now powered by YouTube.
   name: 'collegehumor',
-  title: 'CollegeHumor',
+  title: getTitle('CollegeHumor'),
   icon: embedVideoIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed CollegeHumor content.'),
   scope: ['block'],
@@ -16877,7 +16892,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'crowdsignal',
-  title: 'Crowdsignal',
+  title: getTitle('Crowdsignal'),
   icon: embedContentIcon,
   keywords: ['polldaddy', (0,external_wp_i18n_namespaceObject.__)('survey')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Crowdsignal (formerly Polldaddy) content.'),
@@ -16888,7 +16903,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'dailymotion',
-  title: 'Dailymotion',
+  title: getTitle('Dailymotion'),
   icon: embedDailymotionIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('video')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a Dailymotion video.'),
@@ -16899,7 +16914,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'imgur',
-  title: 'Imgur',
+  title: getTitle('Imgur'),
   icon: embedPhotoIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Imgur content.'),
   patterns: [/^https?:\/\/(.+\.)?imgur\.com\/.+/i],
@@ -16909,7 +16924,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'issuu',
-  title: 'Issuu',
+  title: getTitle('Issuu'),
   icon: embedContentIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Issuu content.'),
   patterns: [/^https?:\/\/(www\.)?issuu\.com\/.+/i],
@@ -16919,7 +16934,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'kickstarter',
-  title: 'Kickstarter',
+  title: getTitle('Kickstarter'),
   icon: embedContentIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Kickstarter content.'),
   patterns: [/^https?:\/\/(www\.)?kickstarter\.com\/.+/i, /^https?:\/\/kck\.st\/.+/i],
@@ -16929,7 +16944,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'mixcloud',
-  title: 'Mixcloud',
+  title: getTitle('Mixcloud'),
   icon: embedAudioIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('music'), (0,external_wp_i18n_namespaceObject.__)('audio')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Mixcloud content.'),
@@ -16940,7 +16955,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'pocket-casts',
-  title: 'Pocket Casts',
+  title: getTitle('Pocket Casts'),
   icon: embedPocketCastsIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('podcast'), (0,external_wp_i18n_namespaceObject.__)('audio')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a podcast player from Pocket Casts.'),
@@ -16951,7 +16966,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'reddit',
-  title: 'Reddit',
+  title: getTitle('Reddit'),
   icon: embedRedditIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a Reddit thread.'),
   patterns: [/^https?:\/\/(www\.)?reddit\.com\/.+/i],
@@ -16961,7 +16976,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'reverbnation',
-  title: 'ReverbNation',
+  title: getTitle('ReverbNation'),
   icon: embedAudioIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed ReverbNation content.'),
   patterns: [/^https?:\/\/(www\.)?reverbnation\.com\/.+/i],
@@ -16971,7 +16986,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'screencast',
-  title: 'Screencast',
+  title: getTitle('Screencast'),
   icon: embedVideoIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Screencast content.'),
   patterns: [/^https?:\/\/(www\.)?screencast\.com\/.+/i],
@@ -16981,7 +16996,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'scribd',
-  title: 'Scribd',
+  title: getTitle('Scribd'),
   icon: embedContentIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Scribd content.'),
   patterns: [/^https?:\/\/(www\.)?scribd\.com\/.+/i],
@@ -16991,7 +17006,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'smugmug',
-  title: 'SmugMug',
+  title: getTitle('SmugMug'),
   icon: embedPhotoIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed SmugMug content.'),
   patterns: [/^https?:\/\/(.+\.)?smugmug\.com\/.*/i],
@@ -17002,7 +17017,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'speaker-deck',
-  title: 'Speaker Deck',
+  title: getTitle('Speaker Deck'),
   icon: embedContentIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Speaker Deck content.'),
   patterns: [/^https?:\/\/(www\.)?speakerdeck\.com\/.+/i],
@@ -17012,7 +17027,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'tiktok',
-  title: 'TikTok',
+  title: getTitle('TikTok'),
   icon: embedVideoIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('video')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a TikTok video.'),
@@ -17023,7 +17038,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'ted',
-  title: 'TED',
+  title: getTitle('TED'),
   icon: embedVideoIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a TED video.'),
   patterns: [/^https?:\/\/(www\.|embed\.)?ted\.com\/.+/i],
@@ -17033,7 +17048,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'tumblr',
-  title: 'Tumblr',
+  title: getTitle('Tumblr'),
   icon: embedTumblrIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('social')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a Tumblr post.'),
@@ -17044,7 +17059,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'videopress',
-  title: 'VideoPress',
+  title: getTitle('VideoPress'),
   icon: embedVideoIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('video')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a VideoPress video.'),
@@ -17055,7 +17070,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'wordpress-tv',
-  title: 'WordPress.tv',
+  title: getTitle('WordPress.tv'),
   icon: embedVideoIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a WordPress.tv video.'),
   patterns: [/^https?:\/\/wordpress\.tv\/.+/i],
@@ -17065,7 +17080,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'amazon-kindle',
-  title: 'Amazon Kindle',
+  title: getTitle('Amazon Kindle'),
   icon: embedAmazonIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('ebook')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Amazon Kindle content.'),
@@ -17075,7 +17090,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'pinterest',
-  title: 'Pinterest',
+  title: getTitle('Pinterest'),
   icon: embedPinterestIcon,
   keywords: [(0,external_wp_i18n_namespaceObject.__)('social'), (0,external_wp_i18n_namespaceObject.__)('bookmark')],
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Pinterest pins, boards, and profiles.'),
@@ -17085,7 +17100,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'wolfram-cloud',
-  title: 'Wolfram',
+  title: getTitle('Wolfram'),
   icon: embedWolframIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed Wolfram notebook content.'),
   patterns: [/^https?:\/\/(www\.)?wolframcloud\.com\/obj\/.+/i],
@@ -17095,7 +17110,7 @@ const embed_variations_variations = [{
   }
 }, {
   name: 'bluesky',
-  title: 'Bluesky',
+  title: getTitle('Bluesky'),
   icon: embedBlueskyIcon,
   description: (0,external_wp_i18n_namespaceObject.__)('Embed a Bluesky post.'),
   patterns: [/^https?:\/\/bsky\.app\/profile\/.+\/post\/.+/i],
@@ -23651,7 +23666,8 @@ const heading_settings = {
   example: {
     attributes: {
       content: (0,external_wp_i18n_namespaceObject.__)('Code is Poetry'),
-      level: 2
+      level: 2,
+      textAlign: 'center'
     }
   },
   __experimentalLabel(attributes, {
@@ -33095,6 +33111,7 @@ function NavigationMenuDeleteControl({
         setIsConfirmDialogVisible(false);
       },
       confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Delete'),
+      size: "medium",
       children: (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to delete this Navigation Menu?')
     })]
   });
@@ -39953,6 +39970,7 @@ function PostAuthorEdit({
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -40034,6 +40052,13 @@ const {
 
 const post_author_settings = {
   icon: post_author,
+  example: {
+    viewportWidth: 350,
+    attributes: {
+      showBio: true,
+      byline: (0,external_wp_i18n_namespaceObject.__)('Posted by')
+    }
+  },
   edit: post_author_edit
 };
 const post_author_init = () => initBlock({
@@ -40192,6 +40217,9 @@ const post_author_name_metadata = {
     }
   },
   usesContext: ["postType", "postId"],
+  example: {
+    viewportWidth: 350
+  },
   supports: {
     html: false,
     spacing: {
@@ -40331,6 +40359,9 @@ const post_author_biography_metadata = {
     }
   },
   usesContext: ["postType", "postId"],
+  example: {
+    viewportWidth: 350
+  },
   supports: {
     spacing: {
       margin: true,
@@ -41487,6 +41518,9 @@ const post_date_metadata = {
     }
   },
   usesContext: ["postId", "postType", "queryId"],
+  example: {
+    viewportWidth: 350
+  },
   supports: {
     html: false,
     color: {
@@ -42611,6 +42645,9 @@ const post_featured_image_metadata = {
     }
   },
   usesContext: ["postId", "postType", "queryId"],
+  example: {
+    viewportWidth: 350
+  },
   supports: {
     align: ["left", "right", "center", "wide", "full"],
     color: {
@@ -43618,6 +43655,9 @@ const post_terms_metadata = {
     }
   },
   usesContext: ["postId", "postType"],
+  example: {
+    viewportWidth: 350
+  },
   supports: {
     html: false,
     color: {
@@ -43899,7 +43939,11 @@ function PostTitleEdit({
     if (isDescendentOfQueryLoop) {
       return false;
     }
-    return select(external_wp_coreData_namespaceObject.store).canUserEditEntityRecord('postType', postType, postId);
+    return select(external_wp_coreData_namespaceObject.store).canUser('update', {
+      kind: 'postType',
+      name: postType,
+      id: postId
+    });
   }, [isDescendentOfQueryLoop, postType, postId]);
   const [rawTitle = '', setTitle, fullTitle] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', postType, 'title', postId);
   const [link] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', postType, 'link', postId);
@@ -45563,7 +45607,8 @@ const getTransformedBlocksFromPattern = (blocks, queryBlockAttributes) => {
     query: {
       postType,
       inherit
-    }
+    },
+    namespace
   } = queryBlockAttributes;
   const clonedBlocks = blocks.map(block => (0,external_wp_blocks_namespaceObject.cloneBlock)(block));
   const queryClientIds = [];
@@ -45576,6 +45621,9 @@ const getTransformedBlocksFromPattern = (blocks, queryBlockAttributes) => {
         postType,
         inherit
       };
+      if (namespace) {
+        block.attributes.namespace = namespace;
+      }
       queryClientIds.push(block.clientId);
     }
     block.innerBlocks?.forEach(innerBlock => {
@@ -47212,82 +47260,36 @@ const imageDateTitle = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.
  */
 
 
-
 /**
  * Internal dependencies
  */
 
-const QUERY_DEFAULT_ATTRIBUTES = {
-  query: {
-    perPage: 3,
-    pages: 0,
-    offset: 0,
-    postType: 'post',
-    order: 'desc',
-    orderBy: 'date',
-    author: '',
-    search: '',
-    exclude: [],
-    sticky: '',
-    inherit: false
-  }
-};
 const query_variations_variations = [{
-  name: 'posts-list',
-  title: (0,external_wp_i18n_namespaceObject.__)('Posts List'),
-  description: (0,external_wp_i18n_namespaceObject.__)('Display a list of your most recent posts, excluding sticky posts.'),
-  icon: post_list,
-  attributes: {
-    namespace: 'core/posts-list',
-    query: {
-      perPage: 4,
-      pages: 1,
-      offset: 0,
-      postType: 'post',
-      order: 'desc',
-      orderBy: 'date',
-      author: '',
-      search: '',
-      sticky: 'exclude',
-      inherit: false
-    }
-  },
-  scope: ['inserter'],
-  isActive: ['namespace', 'query.postType']
-}, {
   name: 'title-date',
   title: (0,external_wp_i18n_namespaceObject.__)('Title & Date'),
   icon: titleDate,
-  attributes: {
-    ...QUERY_DEFAULT_ATTRIBUTES
-  },
+  attributes: {},
   innerBlocks: [['core/post-template', {}, [['core/post-title'], ['core/post-date']]], ['core/query-pagination'], ['core/query-no-results']],
   scope: ['block']
 }, {
   name: 'title-excerpt',
   title: (0,external_wp_i18n_namespaceObject.__)('Title & Excerpt'),
   icon: titleExcerpt,
-  attributes: {
-    ...QUERY_DEFAULT_ATTRIBUTES
-  },
+  attributes: {},
   innerBlocks: [['core/post-template', {}, [['core/post-title'], ['core/post-excerpt']]], ['core/query-pagination'], ['core/query-no-results']],
   scope: ['block']
 }, {
   name: 'title-date-excerpt',
   title: (0,external_wp_i18n_namespaceObject.__)('Title, Date, & Excerpt'),
   icon: titleDateExcerpt,
-  attributes: {
-    ...QUERY_DEFAULT_ATTRIBUTES
-  },
+  attributes: {},
   innerBlocks: [['core/post-template', {}, [['core/post-title'], ['core/post-date'], ['core/post-excerpt']]], ['core/query-pagination'], ['core/query-no-results']],
   scope: ['block']
 }, {
   name: 'image-date-title',
   title: (0,external_wp_i18n_namespaceObject.__)('Image, Date, & Title'),
   icon: imageDateTitle,
-  attributes: {
-    ...QUERY_DEFAULT_ATTRIBUTES
-  },
+  attributes: {},
   innerBlocks: [['core/post-template', {}, [['core/post-featured-image'], ['core/post-date'], ['core/post-title']]], ['core/query-pagination'], ['core/query-no-results']],
   scope: ['block']
 }];
@@ -48641,6 +48643,95 @@ const query_pagination_previous_init = () => initBlock({
   settings: query_pagination_previous_settings
 });
 
+;// CONCATENATED MODULE: ./packages/block-library/build-module/query-title/use-archive-label.js
+/**
+ * WordPress dependencies
+ */
+
+
+function useArchiveLabel() {
+  const templateSlug = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    // @wordpress/block-library should not depend on @wordpress/editor.
+    // Blocks can be loaded into a *non-post* block editor, so to avoid
+    // declaring @wordpress/editor as a dependency, we must access its
+    // store by string.
+    // The solution here is to split WP specific blocks from generic blocks.
+    // eslint-disable-next-line @wordpress/data-no-store-string-literals
+    const {
+      getCurrentPostId,
+      getCurrentPostType,
+      getCurrentTemplateId
+    } = select('core/editor');
+    const currentPostType = getCurrentPostType();
+    const templateId = getCurrentTemplateId() || (currentPostType === 'wp_template' ? getCurrentPostId() : null);
+    return templateId ? select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', 'wp_template', templateId)?.slug : null;
+  }, []);
+  const taxonomyMatches = templateSlug?.match(/^(category|tag|taxonomy-([^-]+))$|^(((category|tag)|taxonomy-([^-]+))-(.+))$/);
+  let taxonomy;
+  let term;
+  let isAuthor = false;
+  let authorSlug;
+  if (taxonomyMatches) {
+    // If is for a all taxonomies of a type
+    if (taxonomyMatches[1]) {
+      taxonomy = taxonomyMatches[2] ? taxonomyMatches[2] : taxonomyMatches[1];
+    }
+    // If is for a all taxonomies of a type
+    else if (taxonomyMatches[3]) {
+      taxonomy = taxonomyMatches[6] ? taxonomyMatches[6] : taxonomyMatches[4];
+      term = taxonomyMatches[7];
+    }
+    taxonomy = taxonomy === 'tag' ? 'post_tag' : taxonomy;
+
+    //getTaxonomy( 'category' );
+    //wp.data.select('core').getEntityRecords( 'taxonomy', 'category', {slug: 'newcat'} );
+  } else {
+    const authorMatches = templateSlug?.match(/^(author)$|^author-(.+)$/);
+    if (authorMatches) {
+      isAuthor = true;
+      if (authorMatches[2]) {
+        authorSlug = authorMatches[2];
+      }
+    }
+  }
+  return (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecords,
+      getTaxonomy,
+      getAuthors
+    } = select(external_wp_coreData_namespaceObject.store);
+    let archiveTypeLabel;
+    let archiveNameLabel;
+    if (taxonomy) {
+      archiveTypeLabel = getTaxonomy(taxonomy)?.labels?.singular_name;
+    }
+    if (term) {
+      const records = getEntityRecords('taxonomy', taxonomy, {
+        slug: term,
+        per_page: 1
+      });
+      if (records && records[0]) {
+        archiveNameLabel = records[0].name;
+      }
+    }
+    if (isAuthor) {
+      archiveTypeLabel = 'Author';
+      if (authorSlug) {
+        const authorRecords = getAuthors({
+          slug: authorSlug
+        });
+        if (authorRecords && authorRecords[0]) {
+          archiveNameLabel = authorRecords[0].name;
+        }
+      }
+    }
+    return {
+      archiveTypeLabel,
+      archiveNameLabel
+    };
+  }, [authorSlug, isAuthor, taxonomy, term]);
+}
+
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/query-title/edit.js
 /**
  * External dependencies
@@ -48653,6 +48744,10 @@ const query_pagination_previous_init = () => initBlock({
 
 
 
+
+/**
+ * Internal dependencies
+ */
 
 
 
@@ -48669,21 +48764,9 @@ function QueryTitleEdit({
   setAttributes
 }) {
   const {
-    archiveTypeTitle,
+    archiveTypeLabel,
     archiveNameLabel
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getSettings
-    } = select(external_wp_blockEditor_namespaceObject.store);
-    const {
-      __experimentalArchiveTitleNameLabel,
-      __experimentalArchiveTitleTypeLabel
-    } = getSettings();
-    return {
-      archiveTypeTitle: __experimentalArchiveTitleTypeLabel,
-      archiveNameLabel: __experimentalArchiveTitleNameLabel
-    };
-  });
+  } = useArchiveLabel();
   const TagName = `h${level}`;
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: dist_clsx('wp-block-query-title__placeholder', {
@@ -48701,20 +48784,20 @@ function QueryTitleEdit({
   let titleElement;
   if (type === 'archive') {
     let title;
-    if (archiveTypeTitle) {
+    if (archiveTypeLabel) {
       if (showPrefix) {
         if (archiveNameLabel) {
           title = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: 1: Archive type title e.g: "Category", 2: Label of the archive e.g: "Shoes" */
-          (0,external_wp_i18n_namespaceObject.__)('%1$s: %2$s'), archiveTypeTitle, archiveNameLabel);
+          (0,external_wp_i18n_namespaceObject.__)('%1$s: %2$s'), archiveTypeLabel, archiveNameLabel);
         } else {
           title = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Archive type title e.g: "Category", "Tag"... */
-          (0,external_wp_i18n_namespaceObject.__)('%s: Name'), archiveTypeTitle);
+          (0,external_wp_i18n_namespaceObject.__)('%s: Name'), archiveTypeLabel);
         }
       } else if (archiveNameLabel) {
         title = archiveNameLabel;
       } else {
         title = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Archive type title e.g: "Category", "Tag"... */
-        (0,external_wp_i18n_namespaceObject.__)('%s name'), archiveTypeTitle);
+        (0,external_wp_i18n_namespaceObject.__)('%s name'), archiveTypeLabel);
       }
     } else {
       title = showPrefix ? (0,external_wp_i18n_namespaceObject.__)('Archive type: Name') : (0,external_wp_i18n_namespaceObject.__)('Archive title');
@@ -52727,7 +52810,12 @@ const site_tagline_metadata = {
       "default": 0
     }
   },
-  example: {},
+  example: {
+    viewportWidth: 350,
+    attributes: {
+      textAlign: "center"
+    }
+  },
   supports: {
     align: ["wide", "full"],
     html: false,
@@ -53100,7 +53188,12 @@ const {
 
 const site_title_settings = {
   icon: map_marker,
-  example: {},
+  example: {
+    viewportWidth: 350,
+    attributes: {
+      textAlign: 'center'
+    }
+  },
   edit: SiteTitleEdit,
   transforms: site_title_transforms,
   deprecated: site_title_deprecated
@@ -53682,7 +53775,7 @@ const SoundCloudIcon = () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceO
   viewBox: "0 0 24 24",
   version: "1.1",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M8.9,16.1L9,14L8.9,9.5c0-0.1,0-0.1-0.1-0.1c0,0-0.1-0.1-0.1-0.1c-0.1,0-0.1,0-0.1,0.1c0,0-0.1,0.1-0.1,0.1L8.3,14l0.1,2.1 c0,0.1,0,0.1,0.1,0.1c0,0,0.1,0.1,0.1,0.1C8.8,16.3,8.9,16.3,8.9,16.1z M11.4,15.9l0.1-1.8L11.4,9c0-0.1,0-0.2-0.1-0.2 c0,0-0.1,0-0.1,0s-0.1,0-0.1,0c-0.1,0-0.1,0.1-0.1,0.2l0,0.1l-0.1,5c0,0,0,0.7,0.1,2v0c0,0.1,0,0.1,0.1,0.1c0.1,0.1,0.1,0.1,0.2,0.1 c0.1,0,0.1,0,0.2-0.1c0.1,0,0.1-0.1,0.1-0.2L11.4,15.9z M2.4,12.9L2.5,14l-0.2,1.1c0,0.1,0,0.1-0.1,0.1c0,0-0.1,0-0.1-0.1L2.1,14 l0.1-1.1C2.2,12.9,2.3,12.9,2.4,12.9C2.3,12.9,2.4,12.9,2.4,12.9z M3.1,12.2L3.3,14l-0.2,1.8c0,0.1,0,0.1-0.1,0.1 c-0.1,0-0.1,0-0.1-0.1L2.8,14L3,12.2C3,12.2,3,12.2,3.1,12.2C3.1,12.2,3.1,12.2,3.1,12.2z M3.9,11.9L4.1,14l-0.2,2.1 c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.1-0.1L3.5,14l0.2-2.1c0-0.1,0-0.1,0.1-0.1C3.9,11.8,3.9,11.8,3.9,11.9z M4.7,11.9L4.9,14 l-0.2,2.1c0,0.1-0.1,0.1-0.1,0.1c-0.1,0-0.1,0-0.1-0.1L4.3,14l0.2-2.2c0-0.1,0-0.1,0.1-0.1C4.7,11.7,4.7,11.8,4.7,11.9z M5.6,12 l0.2,2l-0.2,2.1c0,0.1-0.1,0.1-0.1,0.1c0,0-0.1,0-0.1,0c0,0,0-0.1,0-0.1L5.1,14l0.2-2c0,0,0-0.1,0-0.1s0.1,0,0.1,0 C5.5,11.9,5.5,11.9,5.6,12L5.6,12z M6.4,10.7L6.6,14l-0.2,2.1c0,0,0,0.1,0,0.1c0,0-0.1,0-0.1,0c-0.1,0-0.1-0.1-0.2-0.2L5.9,14 l0.2-3.3c0-0.1,0.1-0.2,0.2-0.2c0,0,0.1,0,0.1,0C6.4,10.7,6.4,10.7,6.4,10.7z M7.2,10l0.2,4.1l-0.2,2.1c0,0,0,0.1,0,0.1 c0,0-0.1,0-0.1,0c-0.1,0-0.2-0.1-0.2-0.2l-0.1-2.1L6.8,10c0-0.1,0.1-0.2,0.2-0.2c0,0,0.1,0,0.1,0S7.2,9.9,7.2,10z M8,9.6L8.2,14 L8,16.1c0,0.1-0.1,0.2-0.2,0.2c-0.1,0-0.2-0.1-0.2-0.2L7.5,14l0.1-4.4c0-0.1,0-0.1,0.1-0.1c0,0,0.1-0.1,0.1-0.1c0.1,0,0.1,0,0.1,0.1 C8,9.6,8,9.6,8,9.6z M11.4,16.1L11.4,16.1L11.4,16.1z M9.7,9.6L9.8,14l-0.1,2.1c0,0.1,0,0.1-0.1,0.2s-0.1,0.1-0.2,0.1 c-0.1,0-0.1,0-0.1-0.1s-0.1-0.1-0.1-0.2L9.2,14l0.1-4.4c0-0.1,0-0.1,0.1-0.2s0.1-0.1,0.2-0.1c0.1,0,0.1,0,0.2,0.1S9.7,9.5,9.7,9.6 L9.7,9.6z M10.6,9.8l0.1,4.3l-0.1,2c0,0.1,0,0.1-0.1,0.2c0,0-0.1,0.1-0.2,0.1c-0.1,0-0.1,0-0.2-0.1c0,0-0.1-0.1-0.1-0.2L10,14 l0.1-4.3c0-0.1,0-0.1,0.1-0.2c0,0,0.1-0.1,0.2-0.1c0.1,0,0.1,0,0.2,0.1S10.6,9.7,10.6,9.8z M12.4,14l-0.1,2c0,0.1,0,0.1-0.1,0.2 c-0.1,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.1,0-0.2-0.1c-0.1-0.1-0.1-0.1-0.1-0.2l-0.1-1l-0.1-1l0.1-5.5v0c0-0.1,0-0.2,0.1-0.2 c0.1,0,0.1-0.1,0.2-0.1c0,0,0.1,0,0.1,0c0.1,0,0.1,0.1,0.1,0.2L12.4,14z M22.1,13.9c0,0.7-0.2,1.3-0.7,1.7c-0.5,0.5-1.1,0.7-1.7,0.7 h-6.8c-0.1,0-0.1,0-0.2-0.1c-0.1-0.1-0.1-0.1-0.1-0.2V8.2c0-0.1,0.1-0.2,0.2-0.3c0.5-0.2,1-0.3,1.6-0.3c1.1,0,2.1,0.4,2.9,1.1 c0.8,0.8,1.3,1.7,1.4,2.8c0.3-0.1,0.6-0.2,1-0.2c0.7,0,1.3,0.2,1.7,0.7C21.8,12.6,22.1,13.2,22.1,13.9L22.1,13.9z"
+    d: "M23.994 14.552a3.36 3.36 0 01-3.401 3.171h-8.176a.685.685 0 01-.679-.681V8.238a.749.749 0 01.452-.716S12.942 7 14.526 7a5.357 5.357 0 012.748.755 5.44 5.44 0 012.56 3.546c.282-.08.574-.12.868-.119a3.273 3.273 0 013.292 3.37zM10.718 8.795a.266.266 0 10-.528 0c-.224 2.96-.397 5.735 0 8.685a.265.265 0 00.528 0c.425-2.976.246-5.7 0-8.685zM9.066 9.82a.278.278 0 00-.553 0 33.183 33.183 0 000 7.663.278.278 0 00.55 0c.33-2.544.332-5.12.003-7.664zM7.406 9.56a.269.269 0 00-.535 0c-.253 2.7-.38 5.222 0 7.917a.266.266 0 10.531 0c.394-2.73.272-5.181.004-7.917zM5.754 10.331a.275.275 0 10-.55 0 28.035 28.035 0 000 7.155.272.272 0 00.54 0c.332-2.373.335-4.78.01-7.155zM4.087 12.12a.272.272 0 00-.544 0c-.393 1.843-.208 3.52.016 5.386a.26.26 0 00.512 0c.247-1.892.435-3.53.016-5.386zM2.433 11.838a.282.282 0 00-.56 0c-.349 1.882-.234 3.54.01 5.418.025.285.508.282.54 0 .269-1.907.394-3.517.01-5.418zM.762 12.76a.282.282 0 00-.56 0c-.32 1.264-.22 2.31.023 3.578a.262.262 0 00.521 0c.282-1.293.42-2.317.016-3.578z"
   })
 });
 

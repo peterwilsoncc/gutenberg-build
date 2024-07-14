@@ -5943,7 +5943,11 @@ unlock(store_store).registerPrivateSelectors(store_private_selectors_namespaceOb
     }
 
     // Check that the user has the capability to edit post meta.
-    const canUserEdit = select(external_wp_coreData_namespaceObject.store).canUserEditEntityRecord('postType', context?.postType, context?.postId);
+    const canUserEdit = select(external_wp_coreData_namespaceObject.store).canUser('update', {
+      kind: 'postType',
+      name: context?.postType,
+      id: context?.postId
+    });
     if (!canUserEdit) {
       return false;
     }
@@ -10189,10 +10193,14 @@ function useAllowSwitchingTemplates() {
   } = useEditedPostContext();
   return (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
+      canUser,
       getEntityRecord,
       getEntityRecords
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEntityRecord('root', 'site');
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEntityRecord('root', 'site') : undefined;
     const templates = getEntityRecords('postType', 'wp_template', {
       per_page: -1
     });
@@ -12717,8 +12725,9 @@ function PostFeaturedImage({
               ref: toggleRef,
               className: !featuredImageId ? 'editor-post-featured-image__toggle' : 'editor-post-featured-image__preview',
               onClick: open,
-              "aria-label": !featuredImageId ? null : (0,external_wp_i18n_namespaceObject.__)('Edit or replace the image'),
+              "aria-label": !featuredImageId ? null : (0,external_wp_i18n_namespaceObject.__)('Edit or replace the featured image'),
               "aria-describedby": !featuredImageId ? null : `editor-post-featured-image-${featuredImageId}-describedby`,
+              "aria-haspopup": "dialog",
               children: [!!featuredImageId && media && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
                 className: "editor-post-featured-image__preview-image",
                 src: mediaSourceUrl,
@@ -12729,6 +12738,7 @@ function PostFeaturedImage({
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
                 className: "editor-post-featured-image__action",
                 onClick: open,
+                "aria-haspopup": "dialog",
                 children: (0,external_wp_i18n_namespaceObject.__)('Replace')
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
                 className: "editor-post-featured-image__action",
@@ -13820,7 +13830,6 @@ function PublishButtonLabel() {
 
 
 
-
 const post_publish_button_noop = () => {};
 class PostPublishButton extends external_wp_element_namespaceObject.Component {
   constructor(props) {
@@ -13849,18 +13858,14 @@ class PostPublishButton extends external_wp_element_namespaceObject.Component {
     return (...args) => {
       const {
         hasNonPostEntityChanges,
-        hasPostMetaChanges,
-        setEntitiesSavedStatesCallback,
-        isPublished
+        setEntitiesSavedStatesCallback
       } = this.props;
       // If a post with non-post entities is published, but the user
       // elects to not save changes to the non-post entities, those
       // entities will still be dirty when the Publish button is clicked.
       // We also need to check that the `setEntitiesSavedStatesCallback`
       // prop was passed. See https://github.com/WordPress/gutenberg/pull/37383
-      //
-      // TODO: Explore how to manage `hasPostMetaChanges` and pre-publish workflow properly.
-      if ((hasNonPostEntityChanges || hasPostMetaChanges && isPublished) && setEntitiesSavedStatesCallback) {
+      if (hasNonPostEntityChanges && setEntitiesSavedStatesCallback) {
         // The modal for multiple entity saving will open,
         // hold the callback for saving/publishing the post
         // so that we can call it if the post entity is checked.
@@ -13998,9 +14003,8 @@ class PostPublishButton extends external_wp_element_namespaceObject.Component {
     hasNonPostEntityChanges,
     isSavingNonPostEntityChanges,
     getEditedPostAttribute,
-    getPostEdits,
-    hasPostMetaChanges
-  } = unlock(select(store_store));
+    getPostEdits
+  } = select(store_store);
   return {
     isSaving: isSavingPost(),
     isAutoSaving: isAutosavingPost(),
@@ -14016,7 +14020,6 @@ class PostPublishButton extends external_wp_element_namespaceObject.Component {
     postStatus: getEditedPostAttribute('status'),
     postStatusHasChanged: getPostEdits()?.status,
     hasNonPostEntityChanges: hasNonPostEntityChanges(),
-    hasPostMetaChanges: hasPostMetaChanges(),
     isSavingNonPostEntityChanges: isSavingNonPostEntityChanges()
   };
 }), (0,external_wp_data_namespaceObject.withDispatch)(dispatch => {
@@ -15257,7 +15260,7 @@ function FlatTermSelector({
     const _termIds = _taxonomy ? getEditedPostAttribute(_taxonomy.rest_base) : EMPTY_ARRAY;
     const query = {
       ...flat_term_selector_DEFAULT_QUERY,
-      include: _termIds.join(','),
+      include: _termIds?.join(','),
       per_page: -1
     };
     return {
@@ -15265,7 +15268,7 @@ function FlatTermSelector({
       hasAssignAction: _taxonomy ? (_post$_links2 = post._links?.['wp:action-assign-' + _taxonomy.rest_base]) !== null && _post$_links2 !== void 0 ? _post$_links2 : false : false,
       taxonomy: _taxonomy,
       termIds: _termIds,
-      terms: _termIds.length ? getEntityRecords('taxonomy', slug, query) : EMPTY_ARRAY,
+      terms: _termIds?.length ? getEntityRecords('taxonomy', slug, query) : EMPTY_ARRAY,
       hasResolvedTerms: hasFinishedResolution('getEntityRecords', ['taxonomy', slug, query])
     };
   }, [slug]);
@@ -18595,9 +18598,13 @@ function PostURLToggle({
       getCurrentPost
     } = select(store_store);
     const {
-      getEditedEntityRecord
+      getEditedEntityRecord,
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEditedEntityRecord('root', 'site');
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEditedEntityRecord('root', 'site') : undefined;
     const _id = getCurrentPostId();
     return {
       slug: select(store_store).getEditedPostSlug(),
@@ -19358,10 +19365,18 @@ function useGlobalStylesUserConfig() {
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEditedEntityRecord,
-      hasFinishedResolution
+      hasFinishedResolution,
+      getUser,
+      getCurrentUser
     } = select(external_wp_coreData_namespaceObject.store);
     const _globalStylesId = select(external_wp_coreData_namespaceObject.store).__experimentalGetCurrentGlobalStylesId();
-    const record = _globalStylesId ? getEditedEntityRecord('root', 'globalStyles', _globalStylesId) : undefined;
+
+    // Doing canUser( 'read', 'global_styles' ) returns false even for users with the capability.
+    // See: https://github.com/WordPress/gutenberg/issues/63438
+    // So we need to check the user capabilities directly.
+    const userId = getCurrentUser()?.id;
+    const canEditThemeOptions = userId && getUser(userId)?.capabilities?.edit_theme_options;
+    const record = _globalStylesId && canEditThemeOptions ? getEditedEntityRecord('root', 'globalStyles', _globalStylesId) : undefined;
     let hasResolved = false;
     if (hasFinishedResolution('__experimentalGetCurrentGlobalStylesId')) {
       hasResolved = _globalStylesId ? hasFinishedResolution('getEditedEntityRecord', ['root', 'globalStyles', _globalStylesId]) : true;
@@ -19413,7 +19428,18 @@ function useGlobalStylesUserConfig() {
 }
 function useGlobalStylesBaseConfig() {
   const baseConfig = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    return select(external_wp_coreData_namespaceObject.store).__experimentalGetCurrentThemeBaseGlobalStyles();
+    const {
+      getCurrentUser,
+      getUser,
+      __experimentalGetCurrentThemeBaseGlobalStyles
+    } = select(external_wp_coreData_namespaceObject.store);
+
+    // Doing canUser( 'read', 'global_styles' ) returns false even for users with the capability.
+    // See: https://github.com/WordPress/gutenberg/issues/63438
+    // So we need to check the user capabilities directly.
+    const userId = getCurrentUser()?.id;
+    const canEditThemeOptions = userId && getUser(userId)?.capabilities?.edit_theme_options;
+    return canEditThemeOptions && __experimentalGetCurrentThemeBaseGlobalStyles();
   }, []);
   return [!!baseConfig, baseConfig];
 }
@@ -19479,7 +19505,7 @@ function __experimentalReusableBlocksSelect(select) {
     per_page: -1
   })) !== null && _select$getEntityReco !== void 0 ? _select$getEntityReco : EMPTY_BLOCKS_LIST;
 }
-const BLOCK_EDITOR_SETTINGS = ['__experimentalBlockDirectory', '__experimentalDiscussionSettings', '__experimentalFeatures', '__experimentalGlobalStylesBaseStyles', 'alignWide', 'blockInspectorTabs', 'allowedMimeTypes', 'bodyPlaceholder', 'canLockBlocks', 'capabilities', 'clearBlockSelection', 'codeEditingEnabled', 'colors', 'disableCustomColors', 'disableCustomFontSizes', 'disableCustomSpacingSizes', 'disableCustomGradients', 'disableLayoutStyles', 'enableCustomLineHeight', 'enableCustomSpacing', 'enableCustomUnits', 'enableOpenverseMediaCategory', 'fontSizes', 'gradients', 'generateAnchors', 'onNavigateToEntityRecord', 'imageDefaultSize', 'imageDimensions', 'imageEditing', 'imageSizes', 'isRTL', 'locale', 'maxWidth', 'postContentAttributes', 'postsPerPage', 'readOnly', 'sectionRootClientId', 'styles', 'titlePlaceholder', 'supportsLayout', 'widgetTypesToHideFromLegacyWidgetBlock', '__unstableHasCustomAppender', '__unstableIsPreviewMode', '__unstableResolvedAssets', '__unstableIsBlockBasedTheme', '__experimentalArchiveTitleTypeLabel', '__experimentalArchiveTitleNameLabel'];
+const BLOCK_EDITOR_SETTINGS = ['__experimentalBlockDirectory', '__experimentalDiscussionSettings', '__experimentalFeatures', '__experimentalGlobalStylesBaseStyles', 'alignWide', 'blockInspectorTabs', 'allowedMimeTypes', 'bodyPlaceholder', 'canLockBlocks', 'capabilities', 'clearBlockSelection', 'codeEditingEnabled', 'colors', 'disableCustomColors', 'disableCustomFontSizes', 'disableCustomSpacingSizes', 'disableCustomGradients', 'disableLayoutStyles', 'enableCustomLineHeight', 'enableCustomSpacing', 'enableCustomUnits', 'enableOpenverseMediaCategory', 'fontSizes', 'gradients', 'generateAnchors', 'onNavigateToEntityRecord', 'imageDefaultSize', 'imageDimensions', 'imageEditing', 'imageSizes', 'isRTL', 'locale', 'maxWidth', 'postContentAttributes', 'postsPerPage', 'readOnly', 'sectionRootClientId', 'styles', 'titlePlaceholder', 'supportsLayout', 'widgetTypesToHideFromLegacyWidgetBlock', '__unstableHasCustomAppender', '__unstableIsPreviewMode', '__unstableResolvedAssets', '__unstableIsBlockBasedTheme'];
 const {
   globalStylesDataKey,
   globalStylesLinksDataKey,
@@ -24263,7 +24289,6 @@ function ListViewSidebar() {
 
 
 
-
 const {
   Fill: save_publish_panels_Fill,
   Slot: save_publish_panels_Slot
@@ -24292,7 +24317,7 @@ function SavePublishPanels({
       isEditedPostDirty,
       hasNonPostEntityChanges
     } = select(store_store);
-    const _hasOtherEntitiesChanges = hasNonPostEntityChanges() || unlock(select(store_store)).hasPostMetaChanges();
+    const _hasOtherEntitiesChanges = hasNonPostEntityChanges();
     return {
       publishSidebarOpened: isPublishSidebarOpened(),
       isPublishable: !isCurrentPostPublished() && isEditedPostPublishable(),
@@ -25619,17 +25644,21 @@ const trashPostAction = {
     });
   }
 };
-function useCanUserEligibilityCheckPostType(capability, resource, action) {
+function useCanUserEligibilityCheckPostType(capability, postType, action) {
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   return (0,external_wp_element_namespaceObject.useMemo)(() => ({
     ...action,
     isEligible(item) {
-      return action.isEligible(item) && registry.select(external_wp_coreData_namespaceObject.store).canUser(capability, resource, item.id);
+      return action.isEligible(item) && registry.select(external_wp_coreData_namespaceObject.store).canUser(capability, {
+        kind: 'postType',
+        name: postType,
+        id: item.id
+      });
     }
-  }), [action, registry, capability, resource]);
+  }), [action, registry, capability, postType]);
 }
-function useTrashPostAction(resource) {
-  return useCanUserEligibilityCheckPostType('delete', resource, trashPostAction);
+function useTrashPostAction(postType) {
+  return useCanUserEligibilityCheckPostType('delete', postType, trashPostAction);
 }
 const permanentlyDeletePostAction = {
   id: 'permanently-delete',
@@ -25711,8 +25740,8 @@ const permanentlyDeletePostAction = {
     }
   }
 };
-function usePermanentlyDeletePostAction(resource) {
-  return useCanUserEligibilityCheckPostType('delete', resource, permanentlyDeletePostAction);
+function usePermanentlyDeletePostAction(postType) {
+  return useCanUserEligibilityCheckPostType('delete', postType, permanentlyDeletePostAction);
 }
 const restorePostAction = {
   id: 'restore',
@@ -25805,8 +25834,8 @@ const restorePostAction = {
     }
   }
 };
-function useRestorePostAction(resource) {
-  return useCanUserEligibilityCheckPostType('update', resource, restorePostAction);
+function useRestorePostAction(postType) {
+  return useCanUserEligibilityCheckPostType('update', postType, restorePostAction);
 }
 const viewPostAction = {
   id: 'view-post',
@@ -25952,21 +25981,15 @@ const renamePostAction = {
     });
   }
 };
-function useRenamePostAction(resource) {
-  return useCanUserEligibilityCheckPostType('update', resource, renamePostAction);
+function useRenamePostAction(postType) {
+  return useCanUserEligibilityCheckPostType('update', postType, renamePostAction);
 }
 const useDuplicatePostAction = postType => {
-  const {
-    userCanCreatePost
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getPostType,
-      canUser
-    } = select(external_wp_coreData_namespaceObject.store);
-    const resource = getPostType(postType)?.rest_base || '';
-    return {
-      userCanCreatePost: canUser('create', resource)
-    };
+  const userCanCreatePost = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return select(external_wp_coreData_namespaceObject.store).canUser('create', {
+      kind: 'postType',
+      name: postType
+    });
   }, [postType]);
   return (0,external_wp_element_namespaceObject.useMemo)(() => userCanCreatePost && {
     id: 'duplicate-post',
@@ -26148,7 +26171,6 @@ function usePostActions({
     defaultActions,
     postTypeObject,
     userCanCreatePostType,
-    resource,
     cachedCanUserResolvers
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
@@ -26160,20 +26182,21 @@ function usePostActions({
       getEntityActions
     } = unlock(select(store_store));
     const _postTypeObject = getPostType(postType);
-    const _resource = _postTypeObject?.rest_base || '';
     return {
       postTypeObject: _postTypeObject,
       defaultActions: getEntityActions('postType', postType),
-      userCanCreatePostType: canUser('create', _resource),
-      resource: _resource,
+      userCanCreatePostType: canUser('create', {
+        kind: 'postType',
+        name: postType
+      }),
       cachedCanUserResolvers: getCachedResolvers()?.canUser
     };
   }, [postType]);
   const duplicatePostAction = useDuplicatePostAction(postType);
-  const trashPostActionForPostType = useTrashPostAction(resource);
-  const permanentlyDeletePostActionForPostType = usePermanentlyDeletePostAction(resource);
-  const renamePostActionForPostType = useRenamePostAction(resource);
-  const restorePostActionForPostType = useRestorePostAction(resource);
+  const trashPostActionForPostType = useTrashPostAction(postType);
+  const permanentlyDeletePostActionForPostType = usePermanentlyDeletePostAction(postType);
+  const renamePostActionForPostType = useRenamePostAction(postType);
+  const restorePostActionForPostType = useRestorePostAction(postType);
   const isTemplateOrTemplatePart = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE].includes(postType);
   const isPattern = postType === PATTERN_POST_TYPE;
   const isLoaded = !!postTypeObject;
@@ -26450,9 +26473,15 @@ function PostCardPanel({
       __experimentalGetTemplateInfo
     } = select(store_store);
     const {
+      canUser
+    } = select(external_wp_coreData_namespaceObject.store);
+    const {
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEditedEntityRecord('root', 'site');
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEditedEntityRecord('root', 'site') : undefined;
     const _type = getCurrentPostType();
     const _id = getCurrentPostId();
     const _record = getEditedEntityRecord('postType', _type, _id);
@@ -26539,9 +26568,15 @@ function PostContentInformation() {
       getCurrentPostId
     } = select(store_store);
     const {
+      canUser
+    } = select(external_wp_coreData_namespaceObject.store);
+    const {
       getEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEntityRecord('root', 'site');
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEntityRecord('root', 'site') : undefined;
     const postType = getCurrentPostType();
     const _id = getCurrentPostId();
     const isPostsPage = +_id === siteSettings?.page_for_posts;
@@ -26751,9 +26786,13 @@ function BlogTitle() {
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEntityRecord,
-      getEditedEntityRecord
+      getEditedEntityRecord,
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEntityRecord('root', 'site');
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEntityRecord('root', 'site') : undefined;
     const _postsPageRecord = siteSettings?.page_for_posts ? getEditedEntityRecord('postType', 'page', siteSettings?.page_for_posts) : blog_title_EMPTY_OBJECT;
     const {
       getEditedPostAttribute,
@@ -26861,9 +26900,13 @@ function PostsPerPage() {
       getCurrentPostType
     } = select(store_store);
     const {
-      getEditedEntityRecord
+      getEditedEntityRecord,
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEditedEntityRecord('root', 'site');
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEditedEntityRecord('root', 'site') : undefined;
     return {
       isTemplate: getCurrentPostType() === TEMPLATE_POST_TYPE,
       postSlug: getEditedPostAttribute('slug'),
@@ -26988,9 +27031,13 @@ function SiteDiscussion() {
       getCurrentPostType
     } = select(store_store);
     const {
-      getEditedEntityRecord
+      getEditedEntityRecord,
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEditedEntityRecord('root', 'site');
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEditedEntityRecord('root', 'site') : undefined;
     return {
       isTemplate: getCurrentPostType() === TEMPLATE_POST_TYPE,
       postSlug: getEditedPostAttribute('slug'),
@@ -28341,6 +28388,7 @@ const deletePostAction = {
           onClick: closeModal,
           disabled: isBusy,
           accessibleWhenDisabled: true,
+          __next40pxDefaultSize: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           variant: "primary",
@@ -28356,6 +28404,7 @@ const deletePostAction = {
           isBusy: isBusy,
           disabled: isBusy,
           accessibleWhenDisabled: true,
+          __next40pxDefaultSize: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Delete')
         })]
       })]
