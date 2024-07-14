@@ -71908,74 +71908,10 @@ const PositionControls = () => {
 };
 /* harmony default export */ const position_controls_panel = (PositionControls);
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/close.js
-/**
- * WordPress dependencies
- */
-
-
-const close_close = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M13 11.8l6.1-6.3-1-1-6.1 6.2-6.1-6.2-1 1 6.1 6.3-6.5 6.7 1 1 6.5-6.6 6.5 6.6 1-1z"
-  })
-});
-/* harmony default export */ const library_close = (close_close);
-
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inspector-controls-tabs/settings-tab-hint.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-
-
-
-const PREFERENCE_NAME = 'isInspectorControlsTabsHintVisible';
-function InspectorControlsTabsHint() {
-  const isInspectorControlsTabsHintVisible = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _select$get;
-    return (_select$get = select(external_wp_preferences_namespaceObject.store).get('core', PREFERENCE_NAME)) !== null && _select$get !== void 0 ? _select$get : true;
-  }, []);
-  const ref = (0,external_wp_element_namespaceObject.useRef)();
-  const {
-    set: setPreference
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_preferences_namespaceObject.store);
-  if (!isInspectorControlsTabsHintVisible) {
-    return null;
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-    ref: ref,
-    className: "block-editor-inspector-controls-tabs__hint",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "block-editor-inspector-controls-tabs__hint-content",
-      children: (0,external_wp_i18n_namespaceObject.__)("Looking for other block settings? They've moved to the styles tab.")
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      className: "block-editor-inspector-controls-tabs__hint-dismiss",
-      icon: library_close,
-      iconSize: "16",
-      label: (0,external_wp_i18n_namespaceObject.__)('Dismiss hint'),
-      onClick: () => {
-        // Retain focus when dismissing the element.
-        const previousElement = external_wp_dom_namespaceObject.focus.tabbable.findPrevious(ref.current);
-        previousElement?.focus();
-        setPreference('core', PREFERENCE_NAME, false);
-      },
-      showTooltip: false
-    })]
-  });
-}
-
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inspector-controls-tabs/settings-tab.js
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -71987,7 +71923,7 @@ const SettingsTab = ({
 }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
   children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(position_controls_panel, {}), showAdvancedControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(advanced_controls_panel, {})
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorControlsTabsHint, {})]
+  })]
 });
 /* harmony default export */ const settings_tab = (SettingsTab);
 
@@ -73169,6 +73105,21 @@ function PublicPublishDateTimePicker(props, ref) {
 }
 /* harmony default export */ const publish_date_time_picker = ((0,external_wp_element_namespaceObject.forwardRef)(PublicPublishDateTimePicker));
 
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/close.js
+/**
+ * WordPress dependencies
+ */
+
+
+const close_close = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M13 11.8l6.1-6.3-1-1-6.1 6.2-6.1-6.2-1 1 6.1 6.3-6.5 6.7 1 1 6.5-6.6 6.5 6.6 1-1z"
+  })
+});
+/* harmony default export */ const library_close = (close_close);
+
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inserter/reusable-block-rename-hint.js
 /**
  * WordPress dependencies
@@ -73182,7 +73133,7 @@ function PublicPublishDateTimePicker(props, ref) {
 
 
 
-const reusable_block_rename_hint_PREFERENCE_NAME = 'isResuableBlocksrRenameHintVisible';
+const PREFERENCE_NAME = 'isResuableBlocksrRenameHintVisible';
 /*
  * This hook was added in 6.3 to help users with the transition from Reusable blocks to Patterns.
  * It is only exported for use in the reusable-blocks package as well as block-editor.
@@ -73191,7 +73142,7 @@ const reusable_block_rename_hint_PREFERENCE_NAME = 'isResuableBlocksrRenameHintV
 function useReusableBlocksRenameHint() {
   return (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _select$get;
-    return (_select$get = select(external_wp_preferences_namespaceObject.store).get('core', reusable_block_rename_hint_PREFERENCE_NAME)) !== null && _select$get !== void 0 ? _select$get : true;
+    return (_select$get = select(external_wp_preferences_namespaceObject.store).get('core', PREFERENCE_NAME)) !== null && _select$get !== void 0 ? _select$get : true;
   }, []);
 }
 
@@ -73203,7 +73154,7 @@ function useReusableBlocksRenameHint() {
 function ReusableBlocksRenameHint() {
   const isReusableBlocksRenameHint = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _select$get2;
-    return (_select$get2 = select(external_wp_preferences_namespaceObject.store).get('core', reusable_block_rename_hint_PREFERENCE_NAME)) !== null && _select$get2 !== void 0 ? _select$get2 : true;
+    return (_select$get2 = select(external_wp_preferences_namespaceObject.store).get('core', PREFERENCE_NAME)) !== null && _select$get2 !== void 0 ? _select$get2 : true;
   }, []);
   const ref = (0,external_wp_element_namespaceObject.useRef)();
   const {
@@ -73227,7 +73178,7 @@ function ReusableBlocksRenameHint() {
         // Retain focus when dismissing the element.
         const previousElement = external_wp_dom_namespaceObject.focus.tabbable.findPrevious(ref.current);
         previousElement?.focus();
-        setPreference('core', reusable_block_rename_hint_PREFERENCE_NAME, false);
+        setPreference('core', PREFERENCE_NAME, false);
       },
       showTooltip: false
     })]
