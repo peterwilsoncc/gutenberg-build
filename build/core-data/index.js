@@ -21911,14 +21911,19 @@ function isPreviewEmbedFallback(state, url) {
  *
  * @param state    Data state.
  * @param action   Action to check. One of: 'create', 'read', 'update', 'delete'.
- * @param resource REST resource to check, e.g. 'media' or 'posts'.
+ * @param resource Entity resource to check. Accepts entity object `{ kind: 'root', name: 'media', id: 1 }`
+ *                 or REST base as a string - `media`.
  * @param id       Optional ID of the rest resource to check.
  *
  * @return Whether or not the user can perform the action,
  *                             or `undefined` if the OPTIONS request is still being made.
  */
 function canUser(state, action, resource, id) {
-  const key = [action, resource, id].filter(Boolean).join('/');
+  const isEntity = typeof resource === 'object';
+  if (isEntity && (!resource.kind || !resource.name)) {
+    return false;
+  }
+  const key = (isEntity ? [action, resource.kind, resource.name, resource.id] : [action, resource, id]).filter(Boolean).join('/');
   return state.userPermissions[key];
 }
 
@@ -21938,12 +21943,15 @@ function canUser(state, action, resource, id) {
  * or `undefined` if the OPTIONS request is still being made.
  */
 function canUserEditEntityRecord(state, kind, name, recordId) {
-  const entityConfig = getEntityConfig(state, kind, name);
-  if (!entityConfig) {
-    return false;
-  }
-  const resource = entityConfig.__unstable_rest_base;
-  return canUser(state, 'update', resource, recordId);
+  external_wp_deprecated_default()(`wp.data.select( 'core' ).canUserEditEntityRecord()`, {
+    since: '6.7',
+    alternative: `wp.data.select( 'core' ).canUser( 'update', { kind, name, id } )`
+  });
+  return canUser(state, 'update', {
+    kind,
+    name,
+    id: recordId
+  });
 }
 
 /**
@@ -22771,16 +22779,7 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
       if (!query?._fields && !query.context) {
         const key = entityConfig.key || DEFAULT_ENTITY_KEY;
         const resolutionsArgs = records.filter(record => record?.[key]).map(record => [kind, name, record[key]]);
-        dispatch({
-          type: 'START_RESOLUTIONS',
-          selectorName: 'getEntityRecord',
-          args: resolutionsArgs
-        });
-        dispatch({
-          type: 'FINISH_RESOLUTIONS',
-          selectorName: 'getEntityRecord',
-          args: resolutionsArgs
-        });
+        dispatch.finishResolutions('getEntityRecord', resolutionsArgs);
       }
       dispatch.__unstableReleaseStoreLock(lock);
     });
@@ -22835,23 +22834,38 @@ const resolvers_getEmbedPreview = url => async ({
  * Checks whether the current user can perform the given action on the given
  * REST resource.
  *
- * @param {string}  requestedAction Action to check. One of: 'create', 'read', 'update',
- *                                  'delete'.
- * @param {string}  resource        REST resource to check, e.g. 'media' or 'posts'.
- * @param {?string} id              ID of the rest resource to check.
+ * @param {string}        requestedAction Action to check. One of: 'create', 'read', 'update',
+ *                                        'delete'.
+ * @param {string|Object} resource        Entity resource to check. Accepts entity object `{ kind: 'root', name: 'media', id: 1 }`
+ *                                        or REST base as a string - `media`.
+ * @param {?string}       id              ID of the rest resource to check.
  */
 const resolvers_canUser = (requestedAction, resource, id) => async ({
   dispatch,
   registry
 }) => {
-  const {
-    hasStartedResolution
-  } = registry.select(STORE_NAME);
-  const resourcePath = id ? `${resource}/${id}` : resource;
   const retrievedActions = ['create', 'read', 'update', 'delete'];
   if (!retrievedActions.includes(requestedAction)) {
     throw new Error(`'${requestedAction}' is not a valid action.`);
   }
+  let resourcePath = null;
+  if (typeof resource === 'object') {
+    if (!resource.kind || !resource.name) {
+      throw new Error('The entity resource object is not valid.');
+    }
+    const configs = await dispatch(getOrLoadEntitiesConfig(resource.kind, resource.name));
+    const entityConfig = configs.find(config => config.name === resource.name && config.kind === resource.kind);
+    if (!entityConfig) {
+      return;
+    }
+    resourcePath = entityConfig.baseURL + (resource.id ? '/' + resource.id : '');
+  } else {
+    // @todo: Maybe warn when detecting a legacy usage.
+    resourcePath = `/wp/v2/${resource}` + (id ? '/' + id : '');
+  }
+  const {
+    hasStartedResolution
+  } = registry.select(STORE_NAME);
 
   // Prevent resolving the same resource twice.
   for (const relatedAction of retrievedActions) {
@@ -22866,7 +22880,7 @@ const resolvers_canUser = (requestedAction, resource, id) => async ({
   let response;
   try {
     response = await external_wp_apiFetch_default()({
-      path: `/wp/v2/${resourcePath}`,
+      path: resourcePath,
       method: 'OPTIONS',
       parse: false
     });
@@ -22893,7 +22907,13 @@ const resolvers_canUser = (requestedAction, resource, id) => async ({
   }
   registry.batch(() => {
     for (const action of retrievedActions) {
-      dispatch.receiveUserPermission(`${action}/${resourcePath}`, permissions[action]);
+      const key = (typeof resource === 'object' ? [action, resource.kind, resource.name, resource.id] : [action, resource, id]).filter(Boolean).join('/');
+      dispatch.receiveUserPermission(key, permissions[action]);
+
+      // Mark related action resolutions as finished.
+      if (action !== requestedAction) {
+        dispatch.finishResolution('canUser', [action, resource, id]);
+      }
     }
   });
 };
@@ -22909,13 +22929,11 @@ const resolvers_canUser = (requestedAction, resource, id) => async ({
 const resolvers_canUserEditEntityRecord = (kind, name, recordId) => async ({
   dispatch
 }) => {
-  const configs = await dispatch(getOrLoadEntitiesConfig(kind, name));
-  const entityConfig = configs.find(config => config.name === name && config.kind === kind);
-  if (!entityConfig) {
-    return;
-  }
-  const resource = entityConfig.__unstable_rest_base;
-  await dispatch(resolvers_canUser('update', resource, recordId));
+  await dispatch(resolvers_canUser('update', {
+    kind,
+    name,
+    id: recordId
+  }));
 };
 
 /**
@@ -23195,16 +23213,8 @@ const resolvers_getRevisions = (kind, name, recordKey, query = {}) => async ({
     if (!query?._fields && !query.context) {
       const key = entityConfig.key || DEFAULT_ENTITY_KEY;
       const resolutionsArgs = records.filter(record => record[key]).map(record => [kind, name, recordKey, record[key]]);
-      dispatch({
-        type: 'START_RESOLUTIONS',
-        selectorName: 'getRevision',
-        args: resolutionsArgs
-      });
-      dispatch({
-        type: 'FINISH_RESOLUTIONS',
-        selectorName: 'getRevision',
-        args: resolutionsArgs
-      });
+      dispatch.startResolutions('getRevision', resolutionsArgs);
+      dispatch.finishResolutions('getRevision', resolutionsArgs);
     }
   }
 };
