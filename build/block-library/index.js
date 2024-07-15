@@ -46990,8 +46990,7 @@ function QueryPlaceholder({
   attributes,
   clientId,
   name,
-  openPatternSelectionModal,
-  setAttributes
+  openPatternSelectionModal
 }) {
   const [isStartingBlank, setIsStartingBlank] = (0,external_wp_element_namespaceObject.useState)(false);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
@@ -47022,7 +47021,6 @@ function QueryPlaceholder({
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QueryVariationPicker, {
       clientId: clientId,
       attributes: attributes,
-      setAttributes: setAttributes,
       icon: icon,
       label: label
     });
@@ -47050,7 +47048,6 @@ function QueryPlaceholder({
 function QueryVariationPicker({
   clientId,
   attributes,
-  setAttributes,
   icon,
   label
 }) {
@@ -47066,16 +47063,6 @@ function QueryVariationPicker({
       label: label,
       variations: scopeVariations,
       onSelect: variation => {
-        if (variation.attributes) {
-          setAttributes({
-            ...variation.attributes,
-            query: {
-              ...variation.attributes.query,
-              postType: attributes.query.postType || variation.attributes.query.postType
-            },
-            namespace: attributes.namespace
-          });
-        }
         if (variation.innerBlocks) {
           replaceInnerBlocks(clientId, (0,external_wp_blocks_namespaceObject.createBlocksFromInnerBlocksTemplate)(variation.innerBlocks), false);
         }
