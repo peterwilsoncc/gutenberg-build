@@ -15202,6 +15202,7 @@ function MostUsedTerms({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -15240,18 +15241,27 @@ const termNamesToIds = (names, terms) => {
 /**
  * Renders a flat term selector component.
  *
- * @param {Object} props      The component props.
- * @param {string} props.slug The slug of the taxonomy.
+ * @param {Object}  props                         The component props.
+ * @param {string}  props.slug                    The slug of the taxonomy.
+ * @param {boolean} props.__nextHasNoMarginBottom Start opting into the new margin-free styles that will become the default in a future version, currently scheduled to be WordPress 7.0. (The prop can be safely removed once this happens.)
  *
  * @return {JSX.Element} The rendered flat term selector component.
  */
 function FlatTermSelector({
-  slug
+  slug,
+  __nextHasNoMarginBottom
 }) {
   var _taxonomy$labels$add_, _taxonomy$labels$sing2;
   const [values, setValues] = (0,external_wp_element_namespaceObject.useState)([]);
   const [search, setSearch] = (0,external_wp_element_namespaceObject.useState)('');
   const debouncedSearch = (0,external_wp_compose_namespaceObject.useDebounce)(setSearch, 500);
+  if (!__nextHasNoMarginBottom) {
+    external_wp_deprecated_default()('Bottom margin styles for wp.editor.PostTaxonomiesFlatTermSelector', {
+      since: '6.7',
+      version: '7.0',
+      hint: 'Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version.'
+    });
+  }
   const {
     terms,
     termIds,
@@ -15413,7 +15423,8 @@ function FlatTermSelector({
         added: termAddedLabel,
         removed: termRemovedLabel,
         remove: removeTermLabel
-      }
+      },
+      __nextHasNoMarginBottom: __nextHasNoMarginBottom
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MostUsedTerms, {
       taxonomy: taxonomy,
       onSelect: appendTerm
@@ -15450,7 +15461,8 @@ const TagsPanel = () => {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
       children: (0,external_wp_i18n_namespaceObject.__)('Tags help users and search engines navigate your site and find your content. Add a few keywords to describe your post.')
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(flat_term_selector, {
-      slug: "post_tag"
+      slug: "post_tag",
+      __nextHasNoMarginBottom: true
     })]
   });
 };
@@ -17541,9 +17553,15 @@ function PostTaxonomies({
   taxonomy.types.includes(postType) && taxonomy.visibility?.show_ui);
   return visibleTaxonomies.map(taxonomy => {
     const TaxonomyComponent = taxonomy.hierarchical ? hierarchical_term_selector : flat_term_selector;
+    const taxonomyComponentProps = {
+      slug: taxonomy.slug,
+      ...(taxonomy.hierarchical ? {} : {
+        __nextHasNoMarginBottom: true
+      })
+    };
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.Fragment, {
       children: taxonomyWrapper( /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TaxonomyComponent, {
-        slug: taxonomy.slug
+        ...taxonomyComponentProps
       }), taxonomy)
     }, `taxonomy-${taxonomy.slug}`);
   });

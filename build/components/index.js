@@ -57436,6 +57436,7 @@ const TokensAndInputWrapperFlex = /*#__PURE__*/emotion_styled_base_browser_esm(f
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -57496,6 +57497,13 @@ function FormTokenField(props) {
     __nextHasNoMarginBottom = false,
     tokenizeOnBlur = false
   } = useDeprecated36pxDefaultSizeProp(props);
+  if (!__nextHasNoMarginBottom) {
+    external_wp_deprecated_default()('Bottom margin styles for wp.components.FormTokenField', {
+      since: '6.7',
+      version: '7.0',
+      hint: 'Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version.'
+    });
+  }
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(FormTokenField);
 
   // We reset to these initial values again in the onBlur

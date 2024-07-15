@@ -46049,6 +46049,7 @@ function AuthorControl({
     suggestions: authorsInfo.names,
     onChange: onAuthorChange,
     __experimentalShowHowTo: false,
+    __nextHasNoMarginBottom: true,
     __next40pxDefaultSize: true
   });
 }
@@ -46187,7 +46188,8 @@ function ParentControl({
     onInputChange: debouncedSearch,
     suggestions: suggestions,
     onChange: onParentChange,
-    __experimentalShowHowTo: false
+    __experimentalShowHowTo: false,
+    __nextHasNoMarginBottom: true
   });
 }
 /* harmony default export */ const parent_control = (ParentControl);
@@ -46206,7 +46208,6 @@ function ParentControl({
 /**
  * Internal dependencies
  */
-
 
 
 const taxonomy_controls_EMPTY_ARRAY = [];
@@ -46248,7 +46249,8 @@ function TaxonomyControls({
   if (!taxonomies || taxonomies.length === 0) {
     return null;
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: 4,
     children: taxonomies.map(taxonomy => {
       const termIds = taxQuery?.[taxonomy.slug] || [];
       const handleChange = newTermIds => onChange({
@@ -46377,6 +46379,7 @@ function TaxonomyItem({
       displayTransform: external_wp_htmlEntities_namespaceObject.decodeEntities,
       onChange: onTermsChange,
       __experimentalShowHowTo: false,
+      __nextHasNoMarginBottom: true,
       __next40pxDefaultSize: true
     })
   });
@@ -46669,7 +46672,8 @@ function QueryInspectorControls(props) {
         clientId: clientId
       })]
     }), !inherit && showFiltersPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
-      className: "block-library-query-toolspanel__filters",
+      className: "block-library-query-toolspanel__filters" // unused but kept for backward compatibility
+      ,
       label: (0,external_wp_i18n_namespaceObject.__)('Filters'),
       resetAll: () => {
         setQuery({
