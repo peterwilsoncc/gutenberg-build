@@ -46369,6 +46369,13 @@ function ComboboxControl(props) {
     inputContainer.current?.focus();
   };
 
+  // Stop propagation of the keydown event when pressing Enter on the Reset
+  // button to prevent calling the onKeydown callback on the container div
+  // element which actually sets the selected suggestion.
+  const handleResetStopPropagation = event => {
+    event.stopPropagation();
+  };
+
   // Update current selections when the filter input changes.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     const hasMatchingSuggestions = matchingSuggestions.length > 0;
@@ -46430,6 +46437,7 @@ function ComboboxControl(props) {
               ,
               disabled: !value,
               onClick: handleOnReset,
+              onKeyDown: handleResetStopPropagation,
               label: (0,external_wp_i18n_namespaceObject.__)('Reset')
             })
           })]
