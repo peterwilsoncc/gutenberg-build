@@ -45954,6 +45954,7 @@ function OrderControl({
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
     __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Order by'),
     value: `${orderBy}/${order}`,
     options: orderOptions,
@@ -46044,7 +46045,8 @@ function AuthorControl({
     value: sanitizedValue,
     suggestions: authorsInfo.names,
     onChange: onAuthorChange,
-    __experimentalShowHowTo: false
+    __experimentalShowHowTo: false,
+    __next40pxDefaultSize: true
   });
 }
 /* harmony default export */ const author_control = (AuthorControl);
@@ -46371,7 +46373,8 @@ function TaxonomyItem({
       suggestions: suggestions,
       displayTransform: external_wp_htmlEntities_namespaceObject.decodeEntities,
       onChange: onTermsChange,
-      __experimentalShowHowTo: false
+      __experimentalShowHowTo: false,
+      __next40pxDefaultSize: true
     })
   });
 }
@@ -46399,6 +46402,7 @@ function StickyControl({
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
     __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Sticky posts'),
     options: stickyOptions,
     value: value,
@@ -46584,6 +46588,8 @@ function QueryInspectorControls(props) {
   }, [querySearch, onChangeDebounced]);
   const showInheritControl = isControlAllowed(allowedControls, 'inherit');
   const showPostTypeControl = !inherit && isControlAllowed(allowedControls, 'postType');
+  const postTypeControlLabel = (0,external_wp_i18n_namespaceObject.__)('Content type');
+  const postTypeControlHelp = (0,external_wp_i18n_namespaceObject.__)('WordPress contains different types of content you can filter by. Posts and pages are the default types, but plugins could add more.');
   const showColumnsControl = false;
   const showOrderControl = !inherit && isControlAllowed(allowedControls, 'order');
   const showStickyControl = !inherit && showSticky && isControlAllowed(allowedControls, 'sticky');
@@ -46609,16 +46615,30 @@ function QueryInspectorControls(props) {
         onChange: value => setQuery({
           inherit: !!value
         })
-      }), showPostTypeControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+      }), showPostTypeControl && (postTypesSelectOptions.length > 2 ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
         __nextHasNoMarginBottom: true,
+        __next40pxDefaultSize: true,
         options: postTypesSelectOptions,
         value: postType,
-        label: (0,external_wp_i18n_namespaceObject.__)('Post type'),
+        label: postTypeControlLabel,
         onChange: onPostTypeChange,
-        help: (0,external_wp_i18n_namespaceObject.__)('WordPress contains different types of content and they are divided into collections called “Post types”. By default there are a few different ones such as blog posts and pages, but plugins could add more.')
-      }), showColumnsControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+        help: postTypeControlHelp
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+        __nextHasNoMarginBottom: true,
+        __next40pxDefaultSize: true,
+        isBlock: true,
+        value: postType,
+        label: postTypeControlLabel,
+        onChange: onPostTypeChange,
+        help: postTypeControlHelp,
+        children: postTypesSelectOptions.map(option => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+          value: option.value,
+          label: option.label
+        }, option.value))
+      })), showColumnsControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
           __nextHasNoMarginBottom: true,
+          __next40pxDefaultSize: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Columns'),
           value: displayLayout.columns,
           onChange: value => setDisplayLayout({
@@ -46684,6 +46704,7 @@ function QueryInspectorControls(props) {
         onDeselect: () => setQuerySearch(''),
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
           __nextHasNoMarginBottom: true,
+          __next40pxDefaultSize: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Keyword'),
           value: querySearch,
           onChange: setQuerySearch
