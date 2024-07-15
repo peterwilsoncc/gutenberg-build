@@ -25943,6 +25943,9 @@ function StyleVariationsContainer({
       };
     })];
   }, [fullStyleVariations, userStyles?.blocks, userStyles?.css]);
+  if (!fullStyleVariations || fullStyleVariations?.length < 1) {
+    return null;
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalGrid, {
     columns: 2,
     className: "edit-site-global-styles-style-variations-container",
