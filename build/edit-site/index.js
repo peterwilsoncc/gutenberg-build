@@ -28421,7 +28421,7 @@ const pagination_Pagination = (0,external_wp_element_namespaceObject.memo)(funct
         disabled: currentPage === 1,
         accessibleWhenDisabled: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Previous page'),
-        icon: chevron_left,
+        icon: library_previous,
         showTooltip: true,
         size: "compact",
         tooltipPosition: "top"
@@ -28433,7 +28433,7 @@ const pagination_Pagination = (0,external_wp_element_namespaceObject.memo)(funct
         disabled: currentPage >= totalPages,
         accessibleWhenDisabled: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Next page'),
-        icon: chevron_right,
+        icon: library_next,
         showTooltip: true,
         size: "compact",
         tooltipPosition: "top"
