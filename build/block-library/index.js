@@ -13579,7 +13579,8 @@ function CoverInspectorControls({
             customOverlayColor: undefined,
             gradient: undefined,
             customGradient: undefined
-          })
+          }),
+          clearable: true
         }],
         panelId: clientId,
         ...colorGradientSettings
