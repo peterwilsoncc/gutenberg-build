@@ -41134,7 +41134,6 @@ const {
   usePostActions: page_templates_usePostActions
 } = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
 const {
-  ExperimentalBlockEditorProvider: page_templates_ExperimentalBlockEditorProvider,
   useGlobalStyle: page_templates_useGlobalStyle
 } = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
@@ -41272,7 +41271,8 @@ function page_templates_Preview({
   // TODO: Same approach is used in the patterns list and it becomes obvious that some of
   // the block editor settings are needed in context where we don't have the block editor.
   // Explore how we can solve this in a better way.
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(page_templates_ExperimentalBlockEditorProvider, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EditorProvider, {
+    post: item,
     settings: settings,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: `page-templates-preview-field is-viewtype-${viewType}`,
