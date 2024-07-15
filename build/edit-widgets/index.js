@@ -3087,7 +3087,10 @@ function WidgetAreasBlockEditorProvider({
       getEntityRecord,
       getEntityRecords
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = canUser('read', 'settings') ? getEntityRecord('root', 'site') : undefined;
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEntityRecord('root', 'site') : undefined;
     return {
       widgetAreas: select(store_store).getWidgetAreas(),
       widgets: select(store_store).getWidgets(),

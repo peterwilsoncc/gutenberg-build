@@ -18332,7 +18332,11 @@ function InstalledFonts() {
     const {
       canUser
     } = select(external_wp_coreData_namespaceObject.store);
-    return customFontFamilyId && canUser('delete', 'font-families', customFontFamilyId);
+    return customFontFamilyId && canUser('delete', {
+      kind: 'postType',
+      name: 'wp_font_family',
+      id: customFontFamilyId
+    });
   }, [customFontFamilyId]);
   const shouldDisplayDeleteButton = !!libraryFontSelected && libraryFontSelected?.source !== 'theme' && canUserDelete;
   const handleUninstallClick = () => {
@@ -23213,10 +23217,10 @@ function FontLibraryModal({
     setNotice
   } = (0,external_wp_element_namespaceObject.useContext)(FontLibraryContext);
   const canUserCreate = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      canUser
-    } = select(external_wp_coreData_namespaceObject.store);
-    return canUser('create', 'font-families');
+    return select(external_wp_coreData_namespaceObject.store).canUser('create', {
+      kind: 'postType',
+      name: 'wp_font_family'
+    });
   }, []);
   const tabs = [DEFAULT_TAB];
   if (canUserCreate) {
@@ -37325,12 +37329,14 @@ function PostList({
       canUser
     } = select(external_wp_coreData_namespaceObject.store);
     const siteSettings = getEntityRecord('root', 'site');
-    const postTypeObject = getPostType(postType);
     return {
       frontPageId: siteSettings?.page_on_front,
       postsPageId: siteSettings?.page_for_posts,
       labels: getPostType(postType)?.labels,
-      canCreateRecord: canUser('create', postTypeObject?.rest_base || 'posts')
+      canCreateRecord: canUser('create', {
+        kind: 'postType',
+        name: postType
+      })
     };
   }, [postType]);
 
@@ -38206,8 +38212,14 @@ function AddNewPattern() {
       addNewPatternLabel: getPostType(PATTERN_TYPES.user)?.labels?.add_new_item,
       addNewTemplatePartLabel: getPostType(TEMPLATE_PART_POST_TYPE)?.labels?.add_new_item,
       // Blocks refers to the wp_block post type, this checks the ability to create a post of that type.
-      canCreatePattern: canUser('create', 'blocks'),
-      canCreateTemplatePart: canUser('create', 'template-parts')
+      canCreatePattern: canUser('create', {
+        kind: 'postType',
+        name: PATTERN_TYPES.user
+      }),
+      canCreateTemplatePart: canUser('create', {
+        kind: 'postType',
+        name: TEMPLATE_PART_POST_TYPE
+      })
     };
   }, []);
   function handleCreatePattern({

@@ -38732,7 +38732,10 @@ const icons_ItemSubmenuIcon = () => /*#__PURE__*/(0,external_ReactJSXRuntime_nam
 
 function useFrontPageId() {
   return (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const canReadSettings = select(external_wp_coreData_namespaceObject.store).canUser('read', 'settings');
+    const canReadSettings = select(external_wp_coreData_namespaceObject.store).canUser('read', {
+      kind: 'root',
+      name: 'site'
+    });
     if (!canReadSettings) {
       return undefined;
     }
@@ -46852,7 +46855,10 @@ function QueryContent({
       getEntityRecord,
       canUser
     } = select(external_wp_coreData_namespaceObject.store);
-    const settingPerPage = canUser('read', 'settings') ? +getEntityRecord('root', 'site')?.posts_per_page : +getSettings().postsPerPage;
+    const settingPerPage = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? +getEntityRecord('root', 'site')?.posts_per_page : +getSettings().postsPerPage;
     return {
       postsPerPage: settingPerPage || DEFAULTS_POSTS_PER_PAGE
     };
@@ -50072,7 +50078,11 @@ function ReusableBlockEdit({
     const {
       getBlockBindingsSource
     } = unlock(select(external_wp_blocks_namespaceObject.store));
-    const canEdit = canUser('update', 'blocks', ref);
+    const canEdit = canUser('update', {
+      kind: 'postType',
+      name: 'wp_block',
+      id: ref
+    });
 
     // For editing link to the site editor if the theme and user permissions support it.
     return {
@@ -52336,7 +52346,10 @@ function LogoEdit({
       getEntityRecord,
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const _canUserEdit = canUser('update', 'settings');
+    const _canUserEdit = canUser('update', {
+      kind: 'root',
+      name: 'site'
+    });
     const siteSettings = _canUserEdit ? getEditedEntityRecord('root', 'site') : undefined;
     const siteData = getEntityRecord('root', '__unstableBase');
     const _siteLogoId = _canUserEdit ? siteSettings?.site_logo : siteData?.site_logo;
@@ -52720,11 +52733,14 @@ function SiteTaglineEdit({
       getEntityRecord,
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const canEdit = canUser('update', 'settings');
+    const canEdit = canUser('update', {
+      kind: 'root',
+      name: 'site'
+    });
     const settings = canEdit ? getEditedEntityRecord('root', 'site') : {};
     const readOnlySettings = getEntityRecord('root', '__unstableBase');
     return {
-      canUserEdit: canUser('update', 'settings'),
+      canUserEdit: canEdit,
       tagline: canEdit ? settings?.description : readOnlySettings?.description
     };
   }, []);
@@ -52983,7 +52999,10 @@ function SiteTitleEdit({
       getEntityRecord,
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const canEdit = canUser('update', 'settings');
+    const canEdit = canUser('update', {
+      kind: 'root',
+      name: 'site'
+    });
     const settings = canEdit ? getEditedEntityRecord('root', 'site') : {};
     const readOnlySettings = getEntityRecord('root', '__unstableBase');
     return {
@@ -60062,10 +60081,15 @@ function TemplatePartInnerBlocks({
     canViewTemplatePart,
     canEditTemplatePart
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _select$canUser, _select$canUser2;
     return {
-      canViewTemplatePart: (_select$canUser = select(external_wp_coreData_namespaceObject.store).canUser('read', 'templates')) !== null && _select$canUser !== void 0 ? _select$canUser : false,
-      canEditTemplatePart: (_select$canUser2 = select(external_wp_coreData_namespaceObject.store).canUser('create', 'templates')) !== null && _select$canUser2 !== void 0 ? _select$canUser2 : false
+      canViewTemplatePart: !!select(external_wp_coreData_namespaceObject.store).canUser('read', {
+        kind: 'postType',
+        name: 'wp_template'
+      }),
+      canEditTemplatePart: !!select(external_wp_coreData_namespaceObject.store).canUser('create', {
+        kind: 'postType',
+        name: 'wp_template'
+      })
     };
   }, []);
   if (!canViewTemplatePart) {
@@ -60188,7 +60212,6 @@ function TemplatePartEdit({
     title,
     canEditTemplate
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _select$canUser;
     const {
       getEditedEntityRecord,
       hasFinishedResolution
@@ -60201,7 +60224,10 @@ function TemplatePartEdit({
     const entityRecord = templatePartId ? getEditedEntityRecord(...getEntityArgs) : null;
     const _area = entityRecord?.area || attributes.area;
     const hasResolvedEntity = templatePartId ? hasFinishedResolution('getEditedEntityRecord', getEntityArgs) : false;
-    const _canEditTemplate = (_select$canUser = select(external_wp_coreData_namespaceObject.store).canUser('create', 'templates')) !== null && _select$canUser !== void 0 ? _select$canUser : false;
+    const _canEditTemplate = select(external_wp_coreData_namespaceObject.store).canUser('create', {
+      kind: 'postType',
+      name: 'wp_template_part'
+    });
     return {
       hasInnerBlocks: getBlockCount(clientId) > 0,
       isResolved: hasResolvedEntity,
@@ -60209,7 +60235,7 @@ function TemplatePartEdit({
       area: _area,
       onNavigateToEntityRecord: getSettings().onNavigateToEntityRecord,
       title: entityRecord?.title,
-      canEditTemplate: _canEditTemplate
+      canEditTemplate: !!_canEditTemplate
     };
   }, [templatePartId, attributes.area, clientId]);
   const areaObject = useTemplatePartArea(area);

@@ -10283,7 +10283,10 @@ function PostTemplateToggle({
     if (!supportsTemplateMode && availableTemplates[templateSlug]) {
       return availableTemplates[templateSlug];
     }
-    const template = select(external_wp_coreData_namespaceObject.store).canUser('create', 'templates') && select(store_store).getCurrentTemplateId();
+    const template = select(external_wp_coreData_namespaceObject.store).canUser('create', {
+      kind: 'postType',
+      name: 'wp_template'
+    }) && select(store_store).getCurrentTemplateId();
     return template?.title || template?.slug || availableTemplates?.[templateSlug];
   }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -10324,7 +10327,10 @@ function PostTemplateDropdownContent({
       getEntityRecords
     } = select(external_wp_coreData_namespaceObject.store);
     const editorSettings = select(store_store).getEditorSettings();
-    const canCreateTemplates = canUser('create', 'templates');
+    const canCreateTemplates = canUser('create', {
+      kind: 'postType',
+      name: 'wp_template'
+    });
     const _currentTemplateId = select(store_store).getCurrentTemplateId();
     return {
       availableTemplates: editorSettings.availableTemplates,
@@ -11327,7 +11333,10 @@ function CreateNewTemplate({
       canUser
     } = select(external_wp_coreData_namespaceObject.store);
     return {
-      canCreateTemplates: canUser('create', 'templates')
+      canCreateTemplates: canUser('create', {
+        kind: 'postType',
+        name: 'wp_template'
+      })
     };
   }, []);
   const [isCreateModalOpen, setIsCreateModalOpen] = (0,external_wp_element_namespaceObject.useState)(false);
@@ -11410,10 +11419,10 @@ function BlockThemeControl({
   const {
     setRenderingMode
   } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
-  const canCreateTemplate = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _select$canUser;
-    return (_select$canUser = select(external_wp_coreData_namespaceObject.store).canUser('create', 'templates')) !== null && _select$canUser !== void 0 ? _select$canUser : false;
-  });
+  const canCreateTemplate = (0,external_wp_data_namespaceObject.useSelect)(select => !!select(external_wp_coreData_namespaceObject.store).canUser('create', {
+    kind: 'postType',
+    name: 'wp_template'
+  }), []);
   if (!hasResolved) {
     return null;
   }
@@ -11525,12 +11534,18 @@ function PostTemplatePanel() {
     if (!settings.supportsTemplateMode) {
       return false;
     }
-    const canCreateTemplates = (_select$canUser = select(external_wp_coreData_namespaceObject.store).canUser('create', 'templates')) !== null && _select$canUser !== void 0 ? _select$canUser : false;
+    const canCreateTemplates = (_select$canUser = select(external_wp_coreData_namespaceObject.store).canUser('create', {
+      kind: 'postType',
+      name: 'wp_template'
+    })) !== null && _select$canUser !== void 0 ? _select$canUser : false;
     return canCreateTemplates;
   }, []);
   const canViewTemplates = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _select$canUser2;
-    return (_select$canUser2 = select(external_wp_coreData_namespaceObject.store).canUser('read', 'templates')) !== null && _select$canUser2 !== void 0 ? _select$canUser2 : false;
+    return (_select$canUser2 = select(external_wp_coreData_namespaceObject.store).canUser('read', {
+      kind: 'postType',
+      name: 'wp_template'
+    })) !== null && _select$canUser2 !== void 0 ? _select$canUser2 : false;
   }, []);
   if ((!isBlockTheme || !canViewTemplates) && isVisible) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_panel_row, {
@@ -15962,7 +15977,10 @@ function MaybeCategoryPanel() {
       getTaxonomy
     } = select(external_wp_coreData_namespaceObject.store);
     const categoriesTaxonomy = getTaxonomy('category');
-    const defaultCategoryId = canUser('read', 'settings') ? getEntityRecord('root', 'site')?.default_category : undefined;
+    const defaultCategoryId = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEntityRecord('root', 'site')?.default_category : undefined;
     const defaultCategory = defaultCategoryId ? getEntityRecord('taxonomy', 'category', defaultCategoryId) : undefined;
     const postTypeSupportsCategories = categoriesTaxonomy && categoriesTaxonomy.types.some(type => type === postType);
     const categories = categoriesTaxonomy && select(store_store).getEditedPostAttribute(categoriesTaxonomy.rest_base);
@@ -18252,14 +18270,16 @@ function PostTrashCheck({
       getCurrentPostType
     } = select(store_store);
     const {
-      getPostType,
       canUser
     } = select(external_wp_coreData_namespaceObject.store);
-    const postType = getPostType(getCurrentPostType());
+    const postType = getCurrentPostType();
     const postId = getCurrentPostId();
     const isNew = isEditedPostNew();
-    const resource = postType?.rest_base || ''; // eslint-disable-line camelcase
-    const canUserDelete = postId && resource ? canUser('delete', resource, postId) : false;
+    const canUserDelete = !!postId ? canUser('delete', {
+      kind: 'postType',
+      name: postType,
+      id: postId
+    }) : false;
     return {
       canTrashPost: (!isNew || postId) && canUserDelete
     };
@@ -19561,7 +19581,10 @@ function useBlockEditorSettings(settings, postType, postId, renderingMode) {
       getBlocksByName,
       getBlockAttributes
     } = select(external_wp_blockEditor_namespaceObject.store);
-    const siteSettings = canUser('read', 'settings') ? getEntityRecord('root', 'site') : undefined;
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEntityRecord('root', 'site') : undefined;
     function getSectionRootBlock() {
       var _getBlocksByName$find;
       if (renderingMode === 'template-locked') {
@@ -19579,8 +19602,14 @@ function useBlockEditorSettings(settings, postType, postId, renderingMode) {
       hiddenBlockTypes: get('core', 'hiddenBlockTypes'),
       isDistractionFree: get('core', 'distractionFree'),
       keepCaretInsideBlock: get('core', 'keepCaretInsideBlock'),
-      hasUploadPermissions: (_canUser = canUser('create', 'media')) !== null && _canUser !== void 0 ? _canUser : true,
-      userCanCreatePages: canUser('create', 'pages'),
+      hasUploadPermissions: (_canUser = canUser('create', {
+        kind: 'root',
+        name: 'media'
+      })) !== null && _canUser !== void 0 ? _canUser : true,
+      userCanCreatePages: canUser('create', {
+        kind: 'postType',
+        name: 'page'
+      }),
       pageOnFront: siteSettings?.page_on_front,
       pageForPosts: siteSettings?.page_for_posts,
       userPatternCategories: getUserPatternCategories(),
@@ -20990,7 +21019,10 @@ function ContentOnlySettingsMenuItems({
         record = select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', 'wp_template', templateId);
       }
     }
-    const _canEditTemplates = select(external_wp_coreData_namespaceObject.store).canUser('create', 'templates');
+    const _canEditTemplates = select(external_wp_coreData_namespaceObject.store).canUser('create', {
+      kind: 'postType',
+      name: 'wp_template'
+    });
     return {
       canEditTemplates: _canEditTemplates,
       entity: record,
@@ -24487,10 +24519,10 @@ function EditTemplateBlocksNotification({
       templateId: getCurrentTemplateId()
     };
   }, []);
-  const canEditTemplate = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _select$canUser;
-    return (_select$canUser = select(external_wp_coreData_namespaceObject.store).canUser('create', 'templates')) !== null && _select$canUser !== void 0 ? _select$canUser : false;
-  });
+  const canEditTemplate = (0,external_wp_data_namespaceObject.useSelect)(select => !!select(external_wp_coreData_namespaceObject.store).canUser('create', {
+    kind: 'postType',
+    name: 'wp_template'
+  }), []);
   const [isDialogOpen, setIsDialogOpen] = (0,external_wp_element_namespaceObject.useState)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     const handleDblClick = event => {
@@ -24873,7 +24905,10 @@ function VisualEditor({
     const editorSettings = getEditorSettings();
     const supportsTemplateMode = editorSettings.supportsTemplateMode;
     const postTypeObject = getPostType(postTypeSlug);
-    const canEditTemplate = canUser('create', 'templates');
+    const canEditTemplate = canUser('create', {
+      kind: 'postType',
+      name: 'wp_template'
+    });
     const currentTemplateId = getCurrentTemplateId();
     const template = currentTemplateId ? getEditedEntityRecord('postType', TEMPLATE_POST_TYPE, currentTemplateId) : undefined;
     return {

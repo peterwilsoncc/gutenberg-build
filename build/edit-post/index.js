@@ -2080,7 +2080,10 @@ function ManagePatternsMenuItem() {
     // The site editor and templates both check whether the user has
     // edit_theme_options capabilities. We can leverage that here and not
     // display the manage patterns link if the user can't access it.
-    return canUser('create', 'templates') ? patternsUrl : defaultUrl;
+    return canUser('create', {
+      kind: 'postType',
+      name: 'wp_template'
+    }) ? patternsUrl : defaultUrl;
   }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
     role: "menuitem",
@@ -2968,7 +2971,10 @@ function Layout({
     } = select(external_wp_coreData_namespaceObject.store);
     const supportsTemplateMode = settings.supportsTemplateMode;
     const isViewable = (_getPostType$viewable = getPostType(currentPost.postType)?.viewable) !== null && _getPostType$viewable !== void 0 ? _getPostType$viewable : false;
-    const canViewTemplate = canUser('read', 'templates');
+    const canViewTemplate = canUser('read', {
+      kind: 'postType',
+      name: 'wp_template'
+    });
     return {
       mode: select(external_wp_editor_namespaceObject.store).getEditorMode(),
       isFullscreenActive: select(store).isFeatureActive('fullscreenMode'),
