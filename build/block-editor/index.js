@@ -16413,6 +16413,270 @@ function roundToPrecision(value, digits = 3) {
   return Number.isFinite(value) ? parseFloat(Math.round(value * base) / base) : undefined;
 }
 
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/utils/format-font-style.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Formats font styles to human readable names.
+ *
+ * @param {string} fontStyle font style string
+ * @return {Object} new object with formatted font style
+ */
+function formatFontStyle(fontStyle) {
+  if (!fontStyle) {
+    return {};
+  }
+  if (typeof fontStyle === 'object') {
+    return fontStyle;
+  }
+  let name;
+  switch (fontStyle) {
+    case 'normal':
+      name = (0,external_wp_i18n_namespaceObject._x)('Regular', 'font style');
+      break;
+    case 'italic':
+      name = (0,external_wp_i18n_namespaceObject._x)('Italic', 'font style');
+      break;
+    case 'oblique':
+      name = (0,external_wp_i18n_namespaceObject._x)('Oblique', 'font style');
+      break;
+    default:
+      name = fontStyle;
+      break;
+  }
+  return {
+    name,
+    value: fontStyle
+  };
+}
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/utils/format-font-weight.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Formats font weights to human readable names.
+ *
+ * @param {string} fontWeight font weight string
+ * @return {Object} new object with formatted font weight
+ */
+function formatFontWeight(fontWeight) {
+  if (!fontWeight) {
+    return {};
+  }
+  if (typeof fontWeight === 'object') {
+    return fontWeight;
+  }
+  let name;
+  switch (fontWeight) {
+    case 'normal':
+    case '400':
+      name = (0,external_wp_i18n_namespaceObject._x)('Regular', 'font weight');
+      break;
+    case 'bold':
+    case '700':
+      name = (0,external_wp_i18n_namespaceObject._x)('Bold', 'font weight');
+      break;
+    case '100':
+      name = (0,external_wp_i18n_namespaceObject._x)('Thin', 'font weight');
+      break;
+    case '200':
+      name = (0,external_wp_i18n_namespaceObject._x)('Extra Light', 'font weight');
+      break;
+    case '300':
+      name = (0,external_wp_i18n_namespaceObject._x)('Light', 'font weight');
+      break;
+    case '500':
+      name = (0,external_wp_i18n_namespaceObject._x)('Medium', 'font weight');
+      break;
+    case '600':
+      name = (0,external_wp_i18n_namespaceObject._x)('Semi Bold', 'font weight');
+      break;
+    case '800':
+      name = (0,external_wp_i18n_namespaceObject._x)('Extra Bold', 'font weight');
+      break;
+    case '900':
+      name = (0,external_wp_i18n_namespaceObject._x)('Black', 'font weight');
+      break;
+    case '1000':
+      name = (0,external_wp_i18n_namespaceObject._x)('Extra Black', 'font weight');
+      break;
+    default:
+      name = fontWeight;
+      break;
+  }
+  return {
+    name,
+    value: fontWeight
+  };
+}
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/utils/get-font-styles-and-weights.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const FONT_STYLES = [{
+  name: (0,external_wp_i18n_namespaceObject._x)('Regular', 'font style'),
+  value: 'normal'
+}, {
+  name: (0,external_wp_i18n_namespaceObject._x)('Italic', 'font style'),
+  value: 'italic'
+}];
+const FONT_WEIGHTS = [{
+  name: (0,external_wp_i18n_namespaceObject._x)('Thin', 'font weight'),
+  value: '100'
+}, {
+  name: (0,external_wp_i18n_namespaceObject._x)('Extra Light', 'font weight'),
+  value: '200'
+}, {
+  name: (0,external_wp_i18n_namespaceObject._x)('Light', 'font weight'),
+  value: '300'
+}, {
+  name: (0,external_wp_i18n_namespaceObject._x)('Regular', 'font weight'),
+  value: '400'
+}, {
+  name: (0,external_wp_i18n_namespaceObject._x)('Medium', 'font weight'),
+  value: '500'
+}, {
+  name: (0,external_wp_i18n_namespaceObject._x)('Semi Bold', 'font weight'),
+  value: '600'
+}, {
+  name: (0,external_wp_i18n_namespaceObject._x)('Bold', 'font weight'),
+  value: '700'
+}, {
+  name: (0,external_wp_i18n_namespaceObject._x)('Extra Bold', 'font weight'),
+  value: '800'
+}, {
+  name: (0,external_wp_i18n_namespaceObject._x)('Black', 'font weight'),
+  value: '900'
+}, {
+  name: (0,external_wp_i18n_namespaceObject._x)('Extra Black', 'font weight'),
+  value: '1000'
+}];
+
+/**
+ * Builds a list of font style and weight options based on font family faces.
+ * Defaults to the standard font styles and weights if no font family faces are provided.
+ *
+ * @param {Array} fontFamilyFaces font family faces array
+ * @return {Object} new object with combined and separated font style and weight properties
+ */
+function getFontStylesAndWeights(fontFamilyFaces) {
+  let fontStyles = [];
+  let fontWeights = [];
+  const combinedStyleAndWeightOptions = [];
+  const isSystemFont = !fontFamilyFaces || fontFamilyFaces?.length === 0;
+  let isVariableFont = false;
+  fontFamilyFaces?.forEach(face => {
+    // Check for variable font by looking for a space in the font weight value. e.g. "100 900"
+    if (/\s/.test(face.fontWeight.trim())) {
+      isVariableFont = true;
+
+      // Find font weight start and end values.
+      let [startValue, endValue] = face.fontWeight.split(' ');
+      startValue = parseInt(startValue.slice(0, 1));
+      if (endValue === '1000') {
+        endValue = 10;
+      } else {
+        endValue = parseInt(endValue.slice(0, 1));
+      }
+
+      // Create font weight options for available variable weights.
+      for (let i = startValue; i <= endValue; i++) {
+        const fontWeightValue = `${i.toString()}00`;
+        if (!fontWeights.some(weight => weight.value === fontWeightValue)) {
+          fontWeights.push(formatFontWeight(fontWeightValue));
+        }
+      }
+    }
+
+    // Format font style and weight values.
+    const fontWeight = formatFontWeight(face.fontWeight);
+    const fontStyle = formatFontStyle(face.fontStyle);
+
+    // Create font style and font weight lists without duplicates.
+    if (fontStyle) {
+      if (!fontStyles.some(style => style.value === fontStyle.value)) {
+        fontStyles.push(fontStyle);
+      }
+    }
+    if (fontWeight) {
+      if (!fontWeights.some(weight => weight.value === fontWeight.value)) {
+        if (!isVariableFont) {
+          fontWeights.push(fontWeight);
+        }
+      }
+    }
+  });
+
+  // If there is no font weight of 600 or above, then include faux bold as an option.
+  if (!fontWeights.some(weight => weight.value >= '600')) {
+    fontWeights.push({
+      name: (0,external_wp_i18n_namespaceObject._x)('Bold', 'font weight'),
+      value: '700'
+    });
+  }
+
+  // If there is no italic font style, then include faux italic as an option.
+  if (!fontStyles.some(style => style.value === 'italic')) {
+    fontStyles.push({
+      name: (0,external_wp_i18n_namespaceObject._x)('Italic', 'font style'),
+      value: 'italic'
+    });
+  }
+
+  // Use default font styles and weights for system fonts.
+  if (isSystemFont) {
+    fontStyles = FONT_STYLES;
+    fontWeights = FONT_WEIGHTS;
+  }
+
+  // Use default styles and weights if there are no available styles or weights from the provided font faces.
+  fontStyles = fontStyles.length === 0 ? FONT_STYLES : fontStyles;
+  fontWeights = fontWeights.length === 0 ? FONT_WEIGHTS : fontWeights;
+
+  // Generate combined font style and weight options for available fonts.
+  fontStyles.forEach(({
+    name: styleName,
+    value: styleValue
+  }) => {
+    fontWeights.forEach(({
+      name: weightName,
+      value: weightValue
+    }) => {
+      const optionName = styleValue === 'normal' ? weightName : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: 1: Font weight name. 2: Font style name. */
+      (0,external_wp_i18n_namespaceObject.__)('%1$s %2$s'), weightName, styleName);
+      combinedStyleAndWeightOptions.push({
+        key: `${styleValue}-${weightValue}`,
+        name: optionName,
+        style: {
+          fontStyle: styleValue,
+          fontWeight: weightValue
+        }
+      });
+    });
+  });
+  return {
+    fontStyles,
+    fontWeights,
+    combinedStyleAndWeightOptions,
+    isSystemFont,
+    isVariableFont
+  };
+}
+
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/global-styles/typography-utils.js
 /**
  * The fluid utilities must match the backend equivalent.
@@ -16423,6 +16687,7 @@ function roundToPrecision(value, digits = 3) {
 /**
  * Internal dependencies
  */
+
 
 
 /**
@@ -16520,9 +16785,9 @@ function getFluidTypographyOptionsFromSettings(settings) {
  * Returns an object of merged font families and the font faces from the selected font family
  * based on the theme.json settings object and the currently selected font family.
  *
- * @param {Object} settings           Theme.json settings
- * @param {string} selectedFontFamily Decoded font family string
- * @return {Object} Merged font families and font faces from the selected font family
+ * @param {Object} settings           Theme.json settings.
+ * @param {string} selectedFontFamily Decoded font family string.
+ * @return {Object} Merged font families and font faces from the selected font family.
  */
 function getMergedFontFamiliesAndFontFamilyFaces(settings, selectedFontFamily) {
   var _fontFamilies$find$fo;
@@ -16542,11 +16807,10 @@ function getMergedFontFamiliesAndFontFamilyFaces(settings, selectedFontFamily) {
  * Returns the nearest font weight value from the available font weight list based on the new font weight.
  * The nearest font weight is the one with the smallest difference from the new font weight.
  *
- * @param {Array}  availableFontWeights Array of available font weights
- * @param {string} newFontWeightValue   New font weight value
- * @return {string} Nearest font weight
+ * @param {Array}  availableFontWeights Array of available font weights.
+ * @param {string} newFontWeightValue   New font weight value.
+ * @return {string} Nearest font weight.
  */
-
 function findNearestFontWeight(availableFontWeights, newFontWeightValue) {
   if (!newFontWeightValue || typeof newFontWeightValue !== 'string') {
     return '';
@@ -16562,6 +16826,75 @@ function findNearestFontWeight(availableFontWeights, newFontWeightValue) {
     return currentDiff < nearestDiff ? fw : nearest;
   }, availableFontWeights[0]?.value);
   return nearestFontWeight;
+}
+
+/**
+ * Returns the nearest font style based on the new font style.
+ * Defaults to an empty string if the new font style is not valid or available.
+ *
+ * @param {Array}  availableFontStyles Array of available font weights.
+ * @param {string} newFontStyleValue   New font style value.
+ * @return {string} Nearest font style or an empty string.
+ */
+function findNearestFontStyle(availableFontStyles, newFontStyleValue) {
+  if (typeof newFontStyleValue !== 'string' || !newFontStyleValue) {
+    return '';
+  }
+  const validStyles = ['normal', 'italic', 'oblique'];
+  if (!validStyles.includes(newFontStyleValue)) {
+    return '';
+  }
+  if (!availableFontStyles || availableFontStyles.length === 0 || availableFontStyles.find(style => style.value === newFontStyleValue)) {
+    return newFontStyleValue;
+  }
+  if (newFontStyleValue === 'oblique' && !availableFontStyles.find(style => style.value === 'oblique')) {
+    return 'italic';
+  }
+  return '';
+}
+
+/**
+ * Returns the nearest font style and weight based on the available font family faces and the new font style and weight.
+ *
+ * @param {Array}  fontFamilyFaces Array of available font family faces.
+ * @param {string} fontStyle       New font style. Defaults to previous value.
+ * @param {string} fontWeight      New font weight. Defaults to previous value.
+ * @return {Object} Nearest font style and font weight.
+ */
+function findNearestStyleAndWeight(fontFamilyFaces, fontStyle, fontWeight) {
+  let nearestFontStyle = fontStyle;
+  let nearestFontWeight = fontWeight;
+  const {
+    fontStyles,
+    fontWeights,
+    combinedStyleAndWeightOptions
+  } = getFontStylesAndWeights(fontFamilyFaces);
+
+  // Check if the new font style and weight are available in the font family faces.
+  const hasFontStyle = fontStyles?.some(({
+    value: fs
+  }) => fs === fontStyle);
+  const hasFontWeight = fontWeights?.some(({
+    value: fw
+  }) => fw === fontWeight);
+  if (!hasFontStyle) {
+    /*
+     * Default to italic if oblique is not available.
+     * Or find the nearest font style based on the nearest font weight.
+     */
+    nearestFontStyle = fontStyle ? findNearestFontStyle(fontStyles, fontStyle) : combinedStyleAndWeightOptions?.find(option => option.style.fontWeight === findNearestFontWeight(fontWeights, fontWeight))?.style?.fontStyle;
+  }
+  if (!hasFontWeight) {
+    /*
+     * Find the nearest font weight based on available weights.
+     * Or find the nearest font weight based on the nearest font style.
+     */
+    nearestFontWeight = fontWeight ? findNearestFontWeight(fontWeights, fontWeight) : combinedStyleAndWeightOptions?.find(option => option.style.fontStyle === (nearestFontStyle || fontStyle))?.style?.fontWeight;
+  }
+  return {
+    nearestFontStyle,
+    nearestFontWeight
+  };
 }
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/global-styles/utils.js
@@ -27696,270 +28029,6 @@ function FontFamilyControl({
   });
 }
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/utils/format-font-style.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Formats font styles to human readable names.
- *
- * @param {string} fontStyle font style string
- * @return {Object} new object with formatted font style
- */
-function formatFontStyle(fontStyle) {
-  if (!fontStyle) {
-    return {};
-  }
-  if (typeof fontStyle === 'object') {
-    return fontStyle;
-  }
-  let name;
-  switch (fontStyle) {
-    case 'normal':
-      name = (0,external_wp_i18n_namespaceObject._x)('Regular', 'font style');
-      break;
-    case 'italic':
-      name = (0,external_wp_i18n_namespaceObject._x)('Italic', 'font style');
-      break;
-    case 'oblique':
-      name = (0,external_wp_i18n_namespaceObject._x)('Oblique', 'font style');
-      break;
-    default:
-      name = fontStyle;
-      break;
-  }
-  return {
-    name,
-    value: fontStyle
-  };
-}
-
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/utils/format-font-weight.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Formats font weights to human readable names.
- *
- * @param {string} fontWeight font weight string
- * @return {Object} new object with formatted font weight
- */
-function formatFontWeight(fontWeight) {
-  if (!fontWeight) {
-    return {};
-  }
-  if (typeof fontWeight === 'object') {
-    return fontWeight;
-  }
-  let name;
-  switch (fontWeight) {
-    case 'normal':
-    case '400':
-      name = (0,external_wp_i18n_namespaceObject._x)('Regular', 'font weight');
-      break;
-    case 'bold':
-    case '700':
-      name = (0,external_wp_i18n_namespaceObject._x)('Bold', 'font weight');
-      break;
-    case '100':
-      name = (0,external_wp_i18n_namespaceObject._x)('Thin', 'font weight');
-      break;
-    case '200':
-      name = (0,external_wp_i18n_namespaceObject._x)('Extra Light', 'font weight');
-      break;
-    case '300':
-      name = (0,external_wp_i18n_namespaceObject._x)('Light', 'font weight');
-      break;
-    case '500':
-      name = (0,external_wp_i18n_namespaceObject._x)('Medium', 'font weight');
-      break;
-    case '600':
-      name = (0,external_wp_i18n_namespaceObject._x)('Semi Bold', 'font weight');
-      break;
-    case '800':
-      name = (0,external_wp_i18n_namespaceObject._x)('Extra Bold', 'font weight');
-      break;
-    case '900':
-      name = (0,external_wp_i18n_namespaceObject._x)('Black', 'font weight');
-      break;
-    case '1000':
-      name = (0,external_wp_i18n_namespaceObject._x)('Extra Black', 'font weight');
-      break;
-    default:
-      name = fontWeight;
-      break;
-  }
-  return {
-    name,
-    value: fontWeight
-  };
-}
-
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/utils/get-font-styles-and-weights.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-const FONT_STYLES = [{
-  name: (0,external_wp_i18n_namespaceObject._x)('Regular', 'font style'),
-  value: 'normal'
-}, {
-  name: (0,external_wp_i18n_namespaceObject._x)('Italic', 'font style'),
-  value: 'italic'
-}];
-const FONT_WEIGHTS = [{
-  name: (0,external_wp_i18n_namespaceObject._x)('Thin', 'font weight'),
-  value: '100'
-}, {
-  name: (0,external_wp_i18n_namespaceObject._x)('Extra Light', 'font weight'),
-  value: '200'
-}, {
-  name: (0,external_wp_i18n_namespaceObject._x)('Light', 'font weight'),
-  value: '300'
-}, {
-  name: (0,external_wp_i18n_namespaceObject._x)('Regular', 'font weight'),
-  value: '400'
-}, {
-  name: (0,external_wp_i18n_namespaceObject._x)('Medium', 'font weight'),
-  value: '500'
-}, {
-  name: (0,external_wp_i18n_namespaceObject._x)('Semi Bold', 'font weight'),
-  value: '600'
-}, {
-  name: (0,external_wp_i18n_namespaceObject._x)('Bold', 'font weight'),
-  value: '700'
-}, {
-  name: (0,external_wp_i18n_namespaceObject._x)('Extra Bold', 'font weight'),
-  value: '800'
-}, {
-  name: (0,external_wp_i18n_namespaceObject._x)('Black', 'font weight'),
-  value: '900'
-}, {
-  name: (0,external_wp_i18n_namespaceObject._x)('Extra Black', 'font weight'),
-  value: '1000'
-}];
-
-/**
- * Builds a list of font style and weight options based on font family faces.
- * Defaults to the standard font styles and weights if no font family faces are provided.
- *
- * @param {Array} fontFamilyFaces font family faces array
- * @return {Object} new object with combined and separated font style and weight properties
- */
-function getFontStylesAndWeights(fontFamilyFaces) {
-  let fontStyles = [];
-  let fontWeights = [];
-  const combinedStyleAndWeightOptions = [];
-  const isSystemFont = !fontFamilyFaces || fontFamilyFaces?.length === 0;
-  let isVariableFont = false;
-  fontFamilyFaces?.forEach(face => {
-    // Check for variable font by looking for a space in the font weight value. e.g. "100 900"
-    if (/\s/.test(face.fontWeight.trim())) {
-      isVariableFont = true;
-
-      // Find font weight start and end values.
-      let [startValue, endValue] = face.fontWeight.split(' ');
-      startValue = parseInt(startValue.slice(0, 1));
-      if (endValue === '1000') {
-        endValue = 10;
-      } else {
-        endValue = parseInt(endValue.slice(0, 1));
-      }
-
-      // Create font weight options for available variable weights.
-      for (let i = startValue; i <= endValue; i++) {
-        const fontWeightValue = `${i.toString()}00`;
-        if (!fontWeights.some(weight => weight.value === fontWeightValue)) {
-          fontWeights.push(formatFontWeight(fontWeightValue));
-        }
-      }
-    }
-
-    // Format font style and weight values.
-    const fontWeight = formatFontWeight(face.fontWeight);
-    const fontStyle = formatFontStyle(face.fontStyle);
-
-    // Create font style and font weight lists without duplicates.
-    if (fontStyle) {
-      if (!fontStyles.some(style => style.value === fontStyle.value)) {
-        fontStyles.push(fontStyle);
-      }
-    }
-    if (fontWeight) {
-      if (!fontWeights.some(weight => weight.value === fontWeight.value)) {
-        if (!isVariableFont) {
-          fontWeights.push(fontWeight);
-        }
-      }
-    }
-  });
-
-  // If there is no font weight of 600 or above, then include faux bold as an option.
-  if (!fontWeights.some(weight => weight.value >= '600')) {
-    fontWeights.push({
-      name: (0,external_wp_i18n_namespaceObject._x)('Bold', 'font weight'),
-      value: '700'
-    });
-  }
-
-  // If there is no italic font style, then include faux italic as an option.
-  if (!fontStyles.some(style => style.value === 'italic')) {
-    fontStyles.push({
-      name: (0,external_wp_i18n_namespaceObject._x)('Italic', 'font style'),
-      value: 'italic'
-    });
-  }
-
-  // Use default font styles and weights for system fonts.
-  if (isSystemFont) {
-    fontStyles = FONT_STYLES;
-    fontWeights = FONT_WEIGHTS;
-  }
-
-  // Use default styles and weights if there are no available styles or weights from the provided font faces.
-  fontStyles = fontStyles.length === 0 ? FONT_STYLES : fontStyles;
-  fontWeights = fontWeights.length === 0 ? FONT_WEIGHTS : fontWeights;
-
-  // Generate combined font style and weight options for available fonts.
-  fontStyles.forEach(({
-    name: styleName,
-    value: styleValue
-  }) => {
-    fontWeights.forEach(({
-      name: weightName,
-      value: weightValue
-    }) => {
-      const optionName = styleValue === 'normal' ? weightName : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: 1: Font weight name. 2: Font style name. */
-      (0,external_wp_i18n_namespaceObject.__)('%1$s %2$s'), weightName, styleName);
-      combinedStyleAndWeightOptions.push({
-        key: `${styleValue}-${weightValue}`,
-        name: optionName,
-        style: {
-          fontStyle: styleValue,
-          fontWeight: weightValue
-        }
-      });
-    });
-  });
-  return {
-    fontStyles,
-    fontWeights,
-    combinedStyleAndWeightOptions,
-    isSystemFont,
-    isVariableFont
-  };
-}
-
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/font-appearance-control/index.js
 /**
  * WordPress dependencies
@@ -28821,7 +28890,6 @@ function WritingModeControl({
 
 
 
-
 const MIN_TEXT_COLUMNS = 1;
 const MAX_TEXT_COLUMNS = 6;
 function useHasTypographyPanel(settings) {
@@ -28972,59 +29040,43 @@ function TypographyPanel({
   const hasFontWeights = settings?.typography?.fontWeight;
   const fontStyle = decodeValue(inheritedValue?.typography?.fontStyle);
   const fontWeight = decodeValue(inheritedValue?.typography?.fontWeight);
-  const setFontAppearance = ({
+  const {
+    nearestFontStyle,
+    nearestFontWeight
+  } = findNearestStyleAndWeight(fontFamilyFaces, fontStyle, fontWeight);
+  const setFontAppearance = (0,external_wp_element_namespaceObject.useCallback)(({
     fontStyle: newFontStyle,
     fontWeight: newFontWeight
   }) => {
-    onChange({
-      ...value,
-      typography: {
-        ...value?.typography,
-        fontStyle: newFontStyle || undefined,
-        fontWeight: newFontWeight || undefined
-      }
-    });
-  };
+    // Only update the font style and weight if they have changed.
+    if (newFontStyle !== fontStyle || newFontWeight !== fontWeight) {
+      onChange({
+        ...value,
+        typography: {
+          ...value?.typography,
+          fontStyle: newFontStyle || undefined,
+          fontWeight: newFontWeight || undefined
+        }
+      });
+    }
+  }, [fontStyle, fontWeight, onChange, value]);
   const hasFontAppearance = () => !!value?.typography?.fontStyle || !!value?.typography?.fontWeight;
-  const resetFontAppearance = () => {
+  const resetFontAppearance = (0,external_wp_element_namespaceObject.useCallback)(() => {
     setFontAppearance({});
-  };
+  }, [setFontAppearance]);
 
-  // Check if previous font style and weight values are available in the new font family
+  // Check if previous font style and weight values are available in the new font family.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    const {
-      fontStyles,
-      fontWeights,
-      isSystemFont
-    } = getFontStylesAndWeights(fontFamilyFaces);
-    const hasFontStyle = fontStyles?.some(({
-      value: fs
-    }) => fs === fontStyle);
-    const hasFontWeight = fontWeights?.some(({
-      value: fw
-    }) => fw === fontWeight);
-
-    // Try to set nearest available font weight
-    if (!hasFontWeight && fontWeight) {
+    if (nearestFontStyle && nearestFontWeight) {
       setFontAppearance({
-        fontStyle,
-        fontWeight: findNearestFontWeight(fontWeights, fontWeight)
+        fontStyle: nearestFontStyle,
+        fontWeight: nearestFontWeight
       });
-    }
-
-    // Set the same weight and style values if the font family is a system font or if both are the same
-    if (isSystemFont || hasFontStyle && hasFontWeight) {
-      setFontAppearance({
-        fontStyle,
-        fontWeight
-      });
-    }
-
-    // Reset font appearance if the font family does not have the selected font style
-    if (!hasFontStyle) {
+    } else {
+      // Reset font appearance if there are no available styles or weights.
       resetFontAppearance();
     }
-  }, [fontFamily]);
+  }, [nearestFontStyle, nearestFontWeight, resetFontAppearance, setFontAppearance]);
 
   // Line Height
   const hasLineHeightEnabled = useHasLineHeightControl(settings);
