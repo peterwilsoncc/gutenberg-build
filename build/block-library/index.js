@@ -62758,8 +62758,8 @@ const footnotes_settings = {
   icon: format_list_numbered,
   edit: FootnotesEdit
 };
-(0,external_wp_richText_namespaceObject.registerFormatType)(formatName, format);
 const footnotes_init = () => {
+  (0,external_wp_richText_namespaceObject.registerFormatType)(formatName, format);
   initBlock({
     name: footnotes_name,
     metadata: footnotes_metadata,
