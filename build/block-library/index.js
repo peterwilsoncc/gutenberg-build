@@ -21860,6 +21860,16 @@ const gallery_metadata = {
   supports: {
     anchor: true,
     align: true,
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true,
+      __experimentalDefaultControls: {
+        color: true,
+        radius: true
+      }
+    },
     html: false,
     units: ["px", "em", "rem", "vh", "vw"],
     spacing: {
