@@ -6149,7 +6149,9 @@ function CategoriesEdit({
     showHierarchy,
     showPostCounts,
     showOnlyTopLevel,
-    showEmpty
+    showEmpty,
+    label,
+    showLabel
   },
   setAttributes,
   className
@@ -6212,10 +6214,19 @@ function CategoriesEdit({
     const parentId = showHierarchy ? 0 : null;
     const categoriesList = getCategoriesList(parentId);
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
+      children: [showLabel ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
+        className: "wp-block-categories__label",
+        "aria-label": (0,external_wp_i18n_namespaceObject.__)('Label text'),
+        placeholder: (0,external_wp_i18n_namespaceObject.__)('Categories'),
+        withoutInteractiveFormatting: true,
+        value: label,
+        onChange: html => setAttributes({
+          label: html
+        })
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
         as: "label",
         htmlFor: selectId,
-        children: (0,external_wp_i18n_namespaceObject.__)('Categories')
+        children: label ? label : (0,external_wp_i18n_namespaceObject.__)('Categories')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("select", {
         id: selectId,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("option", {
@@ -6256,6 +6267,12 @@ function CategoriesEdit({
           label: (0,external_wp_i18n_namespaceObject.__)('Display as dropdown'),
           checked: displayAsDropdown,
           onChange: toggleAttribute('displayAsDropdown')
+        }), displayAsDropdown && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          __nextHasNoMarginBottom: true,
+          className: "wp-block-categories__indentation",
+          label: (0,external_wp_i18n_namespaceObject.__)('Show label'),
+          checked: showLabel,
+          onChange: toggleAttribute('showLabel')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
           __nextHasNoMarginBottom: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Show post counts'),
@@ -6326,6 +6343,14 @@ const categories_metadata = {
     showEmpty: {
       type: "boolean",
       "default": false
+    },
+    label: {
+      type: "string",
+      __experimentalRole: "content"
+    },
+    showLabel: {
+      type: "boolean",
+      "default": true
     }
   },
   supports: {
