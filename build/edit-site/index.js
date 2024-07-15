@@ -28946,6 +28946,9 @@ function ActionsMenuGroup({
       return selectedItems.some(item => !action.isEligible || action.isEligible(item));
     });
   }, [actions, selectedItems]);
+  if (!elligibleActions.length) {
+    return null;
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(bulk_actions_DropdownMenuGroup, {
       children: elligibleActions.map(action => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BulkActionItem, {
