@@ -25,6 +25,20 @@ let isTouching = false;
  * @type {number}
  */
 let lastTouchTime = 0;
+
+/**
+ * Stores the image reference of the currently opened lightbox.
+ *
+ * @type {HTMLElement}
+ */
+let imageRef;
+
+/**
+ * Stores the button reference of the currently opened lightbox.
+ *
+ * @type {HTMLElement}
+ */
+let buttonRef;
 const {
   state,
   actions,
@@ -64,6 +78,8 @@ const {
 
       // Moves the information of the expaned image to the state.
       ctx.currentSrc = ctx.imageRef.currentSrc;
+      imageRef = ctx.imageRef;
+      buttonRef = ctx.buttonRef;
       state.currentImage = ctx;
       state.overlayEnabled = true;
 
@@ -81,12 +97,14 @@ const {
           // Delays before changing the focus. Otherwise the focus ring will
           // appear on Firefox before the image has finished animating, which
           // looks broken.
-          state.currentImage.buttonRef.focus({
+          buttonRef.focus({
             preventScroll: true
           });
 
           // Resets the current image to mark the overlay as closed.
           state.currentImage = {};
+          imageRef = null;
+          buttonRef = null;
         }, 450);
 
         // Starts the overlay closing animation. The showClosingAnimation
@@ -154,7 +172,7 @@ const {
   },
   callbacks: {
     setOverlayStyles() {
-      if (!state.currentImage.imageRef) {
+      if (!imageRef) {
         return;
       }
       let {
@@ -162,11 +180,11 @@ const {
         naturalHeight,
         offsetWidth: originalWidth,
         offsetHeight: originalHeight
-      } = state.currentImage.imageRef;
+      } = imageRef;
       let {
         x: screenPosX,
         y: screenPosY
-      } = state.currentImage.imageRef.getBoundingClientRect();
+      } = imageRef.getBoundingClientRect();
 
       // Natural ratio of the image clicked to open the lightbox.
       const naturalRatio = naturalWidth / naturalHeight;

@@ -27,9 +27,6 @@
 		}
 	},
 	"usesContext": [ "postId", "postType" ],
-	"example": {
-		"viewportWidth": 350
-	},
 	"supports": {
 		"html": false,
 		"color": {
