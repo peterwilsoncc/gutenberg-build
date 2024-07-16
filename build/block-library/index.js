@@ -23651,6 +23651,18 @@ const heading_metadata = {
     anchor: true,
     className: true,
     splitting: true,
+    __experimentalBorder: {
+      color: true,
+      radius: true,
+      style: true,
+      width: true,
+      __experimentalDefaultControls: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      }
+    },
     color: {
       gradients: true,
       link: true,
