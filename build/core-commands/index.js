@@ -468,7 +468,10 @@ function useSiteEditorBasicNavigationCommands() {
   const history = useHistory();
   const isSiteEditor = (0,external_wp_url_namespaceObject.getPath)(window.location.href)?.includes('site-editor.php');
   const canCreateTemplate = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    return select(external_wp_coreData_namespaceObject.store).canUser('create', 'templates');
+    return select(external_wp_coreData_namespaceObject.store).canUser('create', {
+      kind: 'postType',
+      name: 'wp_template'
+    });
   }, []);
   const isBlockBasedTheme = useIsBlockBasedTheme();
   const commands = (0,external_wp_element_namespaceObject.useMemo)(() => {
