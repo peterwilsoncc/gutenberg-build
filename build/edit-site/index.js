@@ -16367,6 +16367,9 @@ const BlockPreviewPanel = ({
   const viewportWidth = (_blockExample$viewpor = blockExample?.viewportWidth) !== null && _blockExample$viewpor !== void 0 ? _blockExample$viewpor : 500;
   // Same as height of InserterPreviewPanel.
   const previewHeight = 144;
+  const sidebarWidth = 235;
+  const scale = sidebarWidth / viewportWidth;
+  const minHeight = scale !== 0 && scale < 1 && previewHeight ? previewHeight / scale : previewHeight;
   if (!blockExample) {
     return null;
   }
@@ -16389,7 +16392,7 @@ const BlockPreviewPanel = ({
           css: `
 								body{
 									padding: 24px;
-									min-height:100%;
+									min-height:${Math.round(minHeight)}px;
 									display:flex;
 									align-items:center;
 								}
