@@ -57687,6 +57687,7 @@ const copy = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -57696,24 +57697,26 @@ const copy = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
 function PreviewBlockPopover({
   blocks
 }) {
+  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
+  if (isMobile) {
+    return null;
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    className: "block-editor-block-switcher__popover__preview__parent",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "block-editor-block-switcher__popover__preview__container",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Popover, {
-        className: "block-editor-block-switcher__preview__popover",
-        placement: "bottom-start",
-        focusOnMount: false,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-          className: "block-editor-block-switcher__preview",
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-            className: "block-editor-block-switcher__preview-title",
-            children: (0,external_wp_i18n_namespaceObject.__)('Preview')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_preview, {
-            viewportWidth: 500,
-            blocks: blocks
-          })]
-        })
+    className: "block-editor-block-switcher__popover-preview-container",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Popover, {
+      className: "block-editor-block-switcher__popover-preview",
+      placement: "right-start",
+      focusOnMount: false,
+      offset: 16,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+        className: "block-editor-block-switcher__preview",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          className: "block-editor-block-switcher__preview-title",
+          children: (0,external_wp_i18n_namespaceObject.__)('Preview')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_preview, {
+          viewportWidth: 500,
+          blocks: blocks
+        })]
       })
     })
   });
@@ -58443,19 +58446,18 @@ function PreviewPatternsPopover({
   patterns,
   onSelect
 }) {
+  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    className: "block-editor-block-switcher__popover__preview__parent",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "block-editor-block-switcher__popover__preview__container",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Popover, {
-        className: "block-editor-block-switcher__preview__popover",
-        position: "bottom right",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-          className: "block-editor-block-switcher__preview is-pattern-list-preview",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pattern_transformations_menu_BlockPatternsList, {
-            patterns: patterns,
-            onSelect: onSelect
-          })
+    className: "block-editor-block-switcher__popover-preview-container",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Popover, {
+      className: "block-editor-block-switcher__popover-preview",
+      placement: isMobile ? 'bottom' : 'right-start',
+      offset: 16,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        className: "block-editor-block-switcher__preview is-pattern-list-preview",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pattern_transformations_menu_BlockPatternsList, {
+          patterns: patterns,
+          onSelect: onSelect
         })
       })
     })
