@@ -1883,111 +1883,18 @@ __webpack_require__.d(build_module_namespaceObject, {
   store: () => (store)
 });
 
-;// CONCATENATED MODULE: external ["wp","blocks"]
-const external_wp_blocks_namespaceObject = window["wp"]["blocks"];
 ;// CONCATENATED MODULE: external ["wp","data"]
 const external_wp_data_namespaceObject = window["wp"]["data"];
-;// CONCATENATED MODULE: external ["wp","privateApis"]
-const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
-;// CONCATENATED MODULE: ./packages/editor/build-module/lock-unlock.js
-/**
- * WordPress dependencies
- */
-
-const {
-  lock,
-  unlock
-} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/editor');
-
-;// CONCATENATED MODULE: external ["wp","i18n"]
-const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
-;// CONCATENATED MODULE: external ["wp","blockEditor"]
-const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
-;// CONCATENATED MODULE: ./packages/editor/build-module/bindings/pattern-overrides.js
-/**
- * WordPress dependencies
- */
-
-
-const CONTENT = 'content';
-/* harmony default export */ const pattern_overrides = ({
-  name: 'core/pattern-overrides',
-  label: (0,external_wp_i18n_namespaceObject._x)('Pattern Overrides', 'block bindings source'),
-  getValue({
-    registry,
-    clientId,
-    context,
-    attributeName
-  }) {
-    const patternOverridesContent = context['pattern/overrides'];
-    const {
-      getBlockAttributes
-    } = registry.select(external_wp_blockEditor_namespaceObject.store);
-    const currentBlockAttributes = getBlockAttributes(clientId);
-    if (!patternOverridesContent) {
-      return currentBlockAttributes[attributeName];
-    }
-    const overridableValue = patternOverridesContent?.[currentBlockAttributes?.metadata?.name]?.[attributeName];
-
-    // If there is no pattern client ID, or it is not overwritten, return the default value.
-    if (overridableValue === undefined) {
-      return currentBlockAttributes[attributeName];
-    }
-    return overridableValue === '' ? undefined : overridableValue;
-  },
-  setValues({
-    registry,
-    clientId,
-    attributes
-  }) {
-    const {
-      getBlockAttributes,
-      getBlockParentsByBlockName,
-      getBlocks
-    } = registry.select(external_wp_blockEditor_namespaceObject.store);
-    const currentBlockAttributes = getBlockAttributes(clientId);
-    const blockName = currentBlockAttributes?.metadata?.name;
-    if (!blockName) {
-      return;
-    }
-    const [patternClientId] = getBlockParentsByBlockName(clientId, 'core/block', true);
-
-    // If there is no pattern client ID, sync blocks with the same name and same attributes.
-    if (!patternClientId) {
-      const syncBlocksWithSameName = blocks => {
-        for (const block of blocks) {
-          if (block.attributes?.metadata?.name === blockName) {
-            registry.dispatch(external_wp_blockEditor_namespaceObject.store).updateBlockAttributes(block.clientId, attributes);
-          }
-          syncBlocksWithSameName(block.innerBlocks);
-        }
-      };
-      syncBlocksWithSameName(getBlocks());
-      return;
-    }
-    const currentBindingValue = getBlockAttributes(patternClientId)?.[CONTENT];
-    registry.dispatch(external_wp_blockEditor_namespaceObject.store).updateBlockAttributes(patternClientId, {
-      [CONTENT]: {
-        ...currentBindingValue,
-        [blockName]: {
-          ...currentBindingValue?.[blockName],
-          ...Object.entries(attributes).reduce((acc, [key, value]) => {
-            // TODO: We need a way to represent `undefined` in the serialized overrides.
-            // Also see: https://github.com/WordPress/gutenberg/pull/57249#discussion_r1452987871
-            // We use an empty string to represent undefined for now until
-            // we support a richer format for overrides and the block bindings API.
-            acc[key] = value === undefined ? '' : value;
-            return acc;
-          }, {})
-        }
-      }
-    });
-  },
-  canUserEditValue: () => true
-});
-
 ;// CONCATENATED MODULE: external ["wp","coreData"]
 const external_wp_coreData_namespaceObject = window["wp"]["coreData"];
+;// CONCATENATED MODULE: external ["wp","element"]
+const external_wp_element_namespaceObject = window["wp"]["element"];
+;// CONCATENATED MODULE: external ["wp","compose"]
+const external_wp_compose_namespaceObject = window["wp"]["compose"];
+;// CONCATENATED MODULE: external ["wp","hooks"]
+const external_wp_hooks_namespaceObject = window["wp"]["hooks"];
+;// CONCATENATED MODULE: external ["wp","blockEditor"]
+const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
 ;// CONCATENATED MODULE: ./packages/editor/build-module/store/defaults.js
 /**
  * WordPress dependencies
@@ -2457,6 +2364,8 @@ function publishSidebarActive(state = false, action) {
   dataviews: reducer
 }));
 
+;// CONCATENATED MODULE: external ["wp","blocks"]
+const external_wp_blocks_namespaceObject = window["wp"]["blocks"];
 ;// CONCATENATED MODULE: external ["wp","date"]
 const external_wp_date_namespaceObject = window["wp"]["date"];
 ;// CONCATENATED MODULE: external ["wp","url"]
@@ -2464,8 +2373,6 @@ const external_wp_url_namespaceObject = window["wp"]["url"];
 ;// CONCATENATED MODULE: external ["wp","deprecated"]
 const external_wp_deprecated_namespaceObject = window["wp"]["deprecated"];
 var external_wp_deprecated_default = /*#__PURE__*/__webpack_require__.n(external_wp_deprecated_namespaceObject);
-;// CONCATENATED MODULE: external ["wp","element"]
-const external_wp_element_namespaceObject = window["wp"]["element"];
 ;// CONCATENATED MODULE: external ["wp","primitives"]
 const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
 ;// CONCATENATED MODULE: external "ReactJSXRuntime"
@@ -4138,8 +4045,8 @@ const external_wp_apiFetch_namespaceObject = window["wp"]["apiFetch"];
 var external_wp_apiFetch_default = /*#__PURE__*/__webpack_require__.n(external_wp_apiFetch_namespaceObject);
 ;// CONCATENATED MODULE: external ["wp","notices"]
 const external_wp_notices_namespaceObject = window["wp"]["notices"];
-;// CONCATENATED MODULE: external ["wp","hooks"]
-const external_wp_hooks_namespaceObject = window["wp"]["hooks"];
+;// CONCATENATED MODULE: external ["wp","i18n"]
+const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
 ;// CONCATENATED MODULE: ./packages/editor/build-module/store/local-autosave.js
 /**
  * Function returning a sessionStorage key to set or retrieve a given post's
@@ -5838,6 +5745,18 @@ function private_selectors_getEntityActions(state, ...args) {
   return getEntityActions(state.dataviews, ...args);
 }
 
+;// CONCATENATED MODULE: external ["wp","privateApis"]
+const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
+;// CONCATENATED MODULE: ./packages/editor/build-module/lock-unlock.js
+/**
+ * WordPress dependencies
+ */
+
+const {
+  lock,
+  unlock
+} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/editor');
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/store/index.js
 /**
  * WordPress dependencies
@@ -5882,99 +5801,6 @@ const store_store = (0,external_wp_data_namespaceObject.createReduxStore)(STORE_
 unlock(store_store).registerPrivateActions(store_private_actions_namespaceObject);
 unlock(store_store).registerPrivateSelectors(store_private_selectors_namespaceObject);
 
-;// CONCATENATED MODULE: ./packages/editor/build-module/bindings/post-meta.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-/* harmony default export */ const post_meta = ({
-  name: 'core/post-meta',
-  label: (0,external_wp_i18n_namespaceObject._x)('Post Meta', 'block bindings source'),
-  getPlaceholder({
-    args
-  }) {
-    return args.key;
-  },
-  getValue({
-    registry,
-    context,
-    args
-  }) {
-    return registry.select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', context?.postType, context?.postId).meta?.[args.key];
-  },
-  setValue({
-    registry,
-    context,
-    args,
-    value
-  }) {
-    registry.dispatch(external_wp_coreData_namespaceObject.store).editEntityRecord('postType', context?.postType, context?.postId, {
-      meta: {
-        [args.key]: value
-      }
-    });
-  },
-  canUserEditValue({
-    select,
-    context,
-    args
-  }) {
-    // Lock editing in query loop.
-    if (context?.query || context?.queryId) {
-      return false;
-    }
-    const postType = context?.postType || select(store_store).getCurrentPostType();
-
-    // Check that editing is happening in the post editor and not a template.
-    if (postType === 'wp_template') {
-      return false;
-    }
-
-    // Check that the custom field is not protected and available in the REST API.
-    const isFieldExposed = !!select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', postType, context?.postId)?.meta?.[args.key];
-    if (!isFieldExposed) {
-      return false;
-    }
-
-    // Check that the user has the capability to edit post meta.
-    const canUserEdit = select(external_wp_coreData_namespaceObject.store).canUser('update', {
-      kind: 'postType',
-      name: context?.postType,
-      id: context?.postId
-    });
-    if (!canUserEdit) {
-      return false;
-    }
-    return true;
-  }
-});
-
-;// CONCATENATED MODULE: ./packages/editor/build-module/bindings/index.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-const {
-  registerBlockBindingsSource
-} = unlock((0,external_wp_data_namespaceObject.dispatch)(external_wp_blocks_namespaceObject.store));
-registerBlockBindingsSource(post_meta);
-registerBlockBindingsSource(pattern_overrides);
-
-;// CONCATENATED MODULE: external ["wp","compose"]
-const external_wp_compose_namespaceObject = window["wp"]["compose"];
 ;// CONCATENATED MODULE: ./packages/editor/build-module/hooks/custom-sources-backwards-compatibility.js
 /**
  * WordPress dependencies
@@ -28648,6 +28474,193 @@ function registerDefaultActions() {
   registerEntityAction('postType', '*', delete_post);
 }
 
+;// CONCATENATED MODULE: ./packages/editor/build-module/bindings/pattern-overrides.js
+/**
+ * WordPress dependencies
+ */
+
+
+const CONTENT = 'content';
+/* harmony default export */ const pattern_overrides = ({
+  name: 'core/pattern-overrides',
+  label: (0,external_wp_i18n_namespaceObject._x)('Pattern Overrides', 'block bindings source'),
+  getValue({
+    registry,
+    clientId,
+    context,
+    attributeName
+  }) {
+    const patternOverridesContent = context['pattern/overrides'];
+    const {
+      getBlockAttributes
+    } = registry.select(external_wp_blockEditor_namespaceObject.store);
+    const currentBlockAttributes = getBlockAttributes(clientId);
+    if (!patternOverridesContent) {
+      return currentBlockAttributes[attributeName];
+    }
+    const overridableValue = patternOverridesContent?.[currentBlockAttributes?.metadata?.name]?.[attributeName];
+
+    // If there is no pattern client ID, or it is not overwritten, return the default value.
+    if (overridableValue === undefined) {
+      return currentBlockAttributes[attributeName];
+    }
+    return overridableValue === '' ? undefined : overridableValue;
+  },
+  setValues({
+    registry,
+    clientId,
+    attributes
+  }) {
+    const {
+      getBlockAttributes,
+      getBlockParentsByBlockName,
+      getBlocks
+    } = registry.select(external_wp_blockEditor_namespaceObject.store);
+    const currentBlockAttributes = getBlockAttributes(clientId);
+    const blockName = currentBlockAttributes?.metadata?.name;
+    if (!blockName) {
+      return;
+    }
+    const [patternClientId] = getBlockParentsByBlockName(clientId, 'core/block', true);
+
+    // If there is no pattern client ID, sync blocks with the same name and same attributes.
+    if (!patternClientId) {
+      const syncBlocksWithSameName = blocks => {
+        for (const block of blocks) {
+          if (block.attributes?.metadata?.name === blockName) {
+            registry.dispatch(external_wp_blockEditor_namespaceObject.store).updateBlockAttributes(block.clientId, attributes);
+          }
+          syncBlocksWithSameName(block.innerBlocks);
+        }
+      };
+      syncBlocksWithSameName(getBlocks());
+      return;
+    }
+    const currentBindingValue = getBlockAttributes(patternClientId)?.[CONTENT];
+    registry.dispatch(external_wp_blockEditor_namespaceObject.store).updateBlockAttributes(patternClientId, {
+      [CONTENT]: {
+        ...currentBindingValue,
+        [blockName]: {
+          ...currentBindingValue?.[blockName],
+          ...Object.entries(attributes).reduce((acc, [key, value]) => {
+            // TODO: We need a way to represent `undefined` in the serialized overrides.
+            // Also see: https://github.com/WordPress/gutenberg/pull/57249#discussion_r1452987871
+            // We use an empty string to represent undefined for now until
+            // we support a richer format for overrides and the block bindings API.
+            acc[key] = value === undefined ? '' : value;
+            return acc;
+          }, {})
+        }
+      }
+    });
+  },
+  canUserEditValue: () => true
+});
+
+;// CONCATENATED MODULE: ./packages/editor/build-module/bindings/post-meta.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+/* harmony default export */ const post_meta = ({
+  name: 'core/post-meta',
+  label: (0,external_wp_i18n_namespaceObject._x)('Post Meta', 'block bindings source'),
+  getPlaceholder({
+    args
+  }) {
+    return args.key;
+  },
+  getValue({
+    registry,
+    context,
+    args
+  }) {
+    return registry.select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', context?.postType, context?.postId).meta?.[args.key];
+  },
+  setValue({
+    registry,
+    context,
+    args,
+    value
+  }) {
+    registry.dispatch(external_wp_coreData_namespaceObject.store).editEntityRecord('postType', context?.postType, context?.postId, {
+      meta: {
+        [args.key]: value
+      }
+    });
+  },
+  canUserEditValue({
+    select,
+    context,
+    args
+  }) {
+    // Lock editing in query loop.
+    if (context?.query || context?.queryId) {
+      return false;
+    }
+    const postType = context?.postType || select(store_store).getCurrentPostType();
+
+    // Check that editing is happening in the post editor and not a template.
+    if (postType === 'wp_template') {
+      return false;
+    }
+
+    // Check that the custom field is not protected and available in the REST API.
+    const isFieldExposed = !!select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', postType, context?.postId)?.meta?.[args.key];
+    if (!isFieldExposed) {
+      return false;
+    }
+
+    // Check that the user has the capability to edit post meta.
+    const canUserEdit = select(external_wp_coreData_namespaceObject.store).canUser('update', {
+      kind: 'postType',
+      name: context?.postType,
+      id: context?.postId
+    });
+    if (!canUserEdit) {
+      return false;
+    }
+    return true;
+  }
+});
+
+;// CONCATENATED MODULE: ./packages/editor/build-module/bindings/api.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+/**
+ * Function to register core block bindings sources provided by the editor.
+ *
+ * @example
+ * ```js
+ * import { registerCoreBlockBindingsSources } from '@wordpress/editor';
+ *
+ * registerCoreBlockBindingsSources();
+ * ```
+ */
+function registerCoreBlockBindingsSources() {
+  const {
+    registerBlockBindingsSource
+  } = unlock(external_wp_blocks_namespaceObject.privateApis);
+  registerBlockBindingsSource(pattern_overrides);
+  registerBlockBindingsSource(post_meta);
+}
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/private-apis.js
 /**
  * WordPress dependencies
@@ -28657,6 +28670,7 @@ function registerDefaultActions() {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -28692,6 +28706,7 @@ lock(privateApis, {
   ViewMoreMenuGroup: view_more_menu_group,
   ResizableEditor: resizable_editor,
   registerDefaultActions: registerDefaultActions,
+  registerCoreBlockBindingsSources: registerCoreBlockBindingsSources,
   // This is a temporary private API while we're updating the site editor to use EditorProvider.
   useBlockEditorSettings: use_block_editor_settings,
   interfaceStore,
@@ -28757,7 +28772,6 @@ function api_unregisterEntityAction(kind, name, actionId) {
 /**
  * Internal dependencies
  */
-
 
 
 
