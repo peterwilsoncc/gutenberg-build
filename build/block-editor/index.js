@@ -27633,11 +27633,18 @@ function useBlockRef(clientId) {
  * @return {Element|null} The block's wrapper element.
  */
 function useBlockElement(clientId) {
-  var _useObservableValue;
   const {
     refsMap
   } = (0,external_wp_element_namespaceObject.useContext)(BlockRefs);
-  return (_useObservableValue = (0,external_wp_compose_namespaceObject.useObservableValue)(refsMap, clientId)) !== null && _useObservableValue !== void 0 ? _useObservableValue : null;
+  const [blockElement, setBlockElement] = (0,external_wp_element_namespaceObject.useState)(null);
+  // Delay setting the resulting `blockElement` until an effect. If the block element
+  // changes (i.e., the block is unmounted and re-mounted), this allows enough time
+  // for the ref callbacks to clean up the old element and set the new one.
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    setBlockElement(refsMap.get(clientId));
+    return refsMap.subscribe(clientId, () => setBlockElement(refsMap.get(clientId)));
+  }, [refsMap, clientId]);
+  return blockElement;
 }
 
 
