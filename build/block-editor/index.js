@@ -72459,6 +72459,9 @@ const BlockInspector = ({
           label: (0,external_wp_i18n_namespaceObject.__)('Color'),
           className: "color-block-support-panel__inner-wrapper"
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
+          group: "background",
+          label: (0,external_wp_i18n_namespaceObject.__)('Background image')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
           group: "typography",
           label: (0,external_wp_i18n_namespaceObject.__)('Typography')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
@@ -72579,6 +72582,9 @@ const BlockInspectorSingleBlock = ({
         label: (0,external_wp_i18n_namespaceObject.__)('Color'),
         className: "color-block-support-panel__inner-wrapper"
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
+        group: "background",
+        label: (0,external_wp_i18n_namespaceObject.__)('Background image')
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
         group: "typography",
         label: (0,external_wp_i18n_namespaceObject.__)('Typography')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
@@ -72589,9 +72595,6 @@ const BlockInspectorSingleBlock = ({
         label: borderPanelLabel
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
         group: "styles"
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-        group: "background",
-        label: (0,external_wp_i18n_namespaceObject.__)('Background image')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(position_controls_panel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(advanced_controls_panel, {})
       })]
