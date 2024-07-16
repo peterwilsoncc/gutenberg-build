@@ -31782,6 +31782,18 @@ const media_text_metadata = {
     anchor: true,
     align: ["wide", "full"],
     html: false,
+    __experimentalBorder: {
+      color: true,
+      radius: true,
+      style: true,
+      width: true,
+      __experimentalDefaultControls: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      }
+    },
     color: {
       gradients: true,
       heading: true,
