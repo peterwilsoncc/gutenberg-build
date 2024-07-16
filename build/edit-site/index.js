@@ -18389,7 +18389,8 @@ function InstalledFonts() {
             }), baseThemeFonts.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
                 className: "font-library-modal__fonts-title",
-                children: (0,external_wp_i18n_namespaceObject.__)('Theme Fonts')
+                children: /* translators: Heading for a list of fonts provided by the theme. */
+                (0,external_wp_i18n_namespaceObject._x)('Theme', 'font source')
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
                 role: "list",
                 className: "font-library-modal__fonts-list",
@@ -18408,7 +18409,8 @@ function InstalledFonts() {
             }), baseCustomFonts.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
                 className: "font-library-modal__fonts-title",
-                children: (0,external_wp_i18n_namespaceObject.__)('Custom fonts')
+                children: /* translators: Heading for a list of fonts installed by the user. */
+                (0,external_wp_i18n_namespaceObject._x)('Custom', 'font source')
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
                 role: "list",
                 className: "font-library-modal__fonts-list",
@@ -23374,7 +23376,8 @@ function FontFamilies() {
       children: [themeFonts.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(subtitle, {
           level: 3,
-          children: (0,external_wp_i18n_namespaceObject.__)('Theme Fonts')
+          children: /* translators: Heading for a list of fonts provided by the theme. */
+          (0,external_wp_i18n_namespaceObject._x)('Theme', 'font source')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
           isBordered: true,
           isSeparated: true,
@@ -23385,7 +23388,8 @@ function FontFamilies() {
       }), customFonts.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(subtitle, {
           level: 3,
-          children: (0,external_wp_i18n_namespaceObject.__)('Custom fonts')
+          children: /* translators: Heading for a list of fonts installed by the user. */
+          (0,external_wp_i18n_namespaceObject._x)('Custom', 'font source')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
           isBordered: true,
           isSeparated: true,
