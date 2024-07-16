@@ -28615,7 +28615,7 @@ const formatListBullets = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
 
 function SingleSelectionCheckbox({
   selection,
-  onSelectionChange,
+  onChangeSelection,
   item,
   getItemId,
   primaryField,
@@ -28643,7 +28643,7 @@ function SingleSelectionCheckbox({
       if (disabled) {
         return;
       }
-      onSelectionChange(selection.includes(id) ? selection.filter(itemId => id !== itemId) : [...selection, id]);
+      onChangeSelection(selection.includes(id) ? selection.filter(itemId => id !== itemId) : [...selection, id]);
     }
   });
 }
@@ -28970,7 +28970,7 @@ function BulkActions({
   data,
   actions,
   selection,
-  onSelectionChange,
+  onChangeSelection,
   getItemId
 }) {
   const bulkActions = (0,external_wp_element_namespaceObject.useMemo)(() => actions.filter(action => action.supportsBulk), [actions]);
@@ -29014,7 +29014,7 @@ function BulkActions({
           disabled: areAllSelected,
           hideOnClick: false,
           onClick: () => {
-            onSelectionChange(selectableItems.map(item => getItemId(item)));
+            onChangeSelection(selectableItems.map(item => getItemId(item)));
           },
           suffix: numberSelectableItems,
           children: (0,external_wp_i18n_namespaceObject.__)('Select all')
@@ -29022,7 +29022,7 @@ function BulkActions({
           disabled: selection.length === 0,
           hideOnClick: false,
           onClick: () => {
-            onSelectionChange([]);
+            onChangeSelection([]);
           },
           children: (0,external_wp_i18n_namespaceObject.__)('Deselect')
         })]
@@ -29337,7 +29337,7 @@ const ColumnHeaderMenu = _HeaderMenu;
 
 function BulkSelectionCheckbox({
   selection,
-  onSelectionChange,
+  onChangeSelection,
   data,
   actions,
   getItemId
@@ -29356,9 +29356,9 @@ function BulkSelectionCheckbox({
     indeterminate: !areAllSelected && !!selectedItems.length,
     onChange: () => {
       if (areAllSelected) {
-        onSelectionChange([]);
+        onChangeSelection([]);
       } else {
-        onSelectionChange(selectableItems.map(item => getItemId(item)));
+        onChangeSelection(selectableItems.map(item => getItemId(item)));
       }
     },
     "aria-label": areAllSelected ? (0,external_wp_i18n_namespaceObject.__)('Deselect all') : (0,external_wp_i18n_namespaceObject.__)('Select all')
@@ -29431,7 +29431,7 @@ function TableRow({
   primaryField,
   selection,
   getItemId,
-  onSelectionChange
+  onChangeSelection
 }) {
   const hasPossibleBulkAction = useHasAPossibleBulkAction(actions, item);
   const isSelected = hasPossibleBulkAction && selection.includes(id);
@@ -29464,7 +29464,7 @@ function TableRow({
         return;
       }
       if (!isTouchDevice.current && document.getSelection()?.type !== 'Range') {
-        onSelectionChange(selection.includes(id) ? selection.filter(itemId => id !== itemId) : [...selection, id]);
+        onChangeSelection(selection.includes(id) ? selection.filter(itemId => id !== itemId) : [...selection, id]);
       }
     },
     children: [hasBulkActions && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("td", {
@@ -29477,7 +29477,7 @@ function TableRow({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SingleSelectionCheckbox, {
           item: item,
           selection: selection,
-          onSelectionChange: onSelectionChange,
+          onChangeSelection: onChangeSelection,
           getItemId: getItemId,
           primaryField: primaryField,
           disabled: !hasPossibleBulkAction
@@ -29531,7 +29531,7 @@ function ViewTable({
   getItemId,
   isLoading = false,
   onChangeView,
-  onSelectionChange,
+  onChangeSelection,
   selection,
   setOpenedFilter,
   view
@@ -29580,7 +29580,7 @@ function ViewTable({
             scope: "col",
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BulkSelectionCheckbox, {
               selection: selection,
-              onSelectionChange: onSelectionChange,
+              onChangeSelection: onChangeSelection,
               data: data,
               actions: actions,
               getItemId: getItemId
@@ -29639,7 +29639,7 @@ function ViewTable({
           primaryField: primaryField,
           selection: selection,
           getItemId: getItemId,
-          onSelectionChange: onSelectionChange
+          onChangeSelection: onChangeSelection
         }, getItemId(item)))
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -29679,7 +29679,7 @@ function ViewTable({
 
 function GridItem({
   selection,
-  onSelectionChange,
+  onChangeSelection,
   getItemId,
   item,
   actions,
@@ -29710,7 +29710,7 @@ function GridItem({
         if (!hasBulkAction) {
           return;
         }
-        onSelectionChange(selection.includes(id) ? selection.filter(itemId => id !== itemId) : [...selection, id]);
+        onChangeSelection(selection.includes(id) ? selection.filter(itemId => id !== itemId) : [...selection, id]);
       }
     },
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -29722,7 +29722,7 @@ function GridItem({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SingleSelectionCheckbox, {
         item: item,
         selection: selection,
-        onSelectionChange: onSelectionChange,
+        onChangeSelection: onChangeSelection,
         getItemId: getItemId,
         primaryField: primaryField,
         disabled: !hasBulkAction
@@ -29786,7 +29786,7 @@ function ViewGrid({
   fields,
   getItemId,
   isLoading,
-  onSelectionChange,
+  onChangeSelection,
   selection,
   view
 }) {
@@ -29820,7 +29820,7 @@ function ViewGrid({
       children: data.map(item => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItem, {
           selection: selection,
-          onSelectionChange: onSelectionChange,
+          onChangeSelection: onChangeSelection,
           getItemId: getItemId,
           item: item,
           actions: actions,
@@ -30073,7 +30073,7 @@ function ViewList(props) {
     fields,
     getItemId,
     isLoading,
-    onSelectionChange,
+    onChangeSelection,
     selection,
     view
   } = props;
@@ -30083,7 +30083,7 @@ function ViewList(props) {
   const primaryField = fields.find(field => field.id === view.layout?.primaryField);
   const viewFields = view.fields || fields.map(field => field.id);
   const visibleFields = fields.filter(field => viewFields.includes(field.id) && ![view.layout?.primaryField, view.layout?.mediaField].includes(field.id));
-  const onSelect = item => onSelectionChange([getItemId(item)]);
+  const onSelect = item => onChangeSelection([getItemId(item)]);
   const getItemDomId = (0,external_wp_element_namespaceObject.useCallback)(item => item ? `${baseId}-${getItemId(item)}` : undefined, [baseId, getItemId]);
   const store = list_useCompositeStore({
     defaultActiveId: getItemDomId(selectedItem)
@@ -36337,7 +36337,7 @@ function ActionButton({
     isBusy: actionInProgress === action.id
   }, action.id);
 }
-function renderToolbarContent(selection, actionsToShow, selectedItems, actionInProgress, setActionInProgress, onSelectionChange) {
+function renderToolbarContent(selection, actionsToShow, selectedItems, actionInProgress, setActionInProgress, onChangeSelection) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -36363,7 +36363,7 @@ function renderToolbarContent(selection, actionsToShow, selectedItems, actionInP
         label: (0,external_wp_i18n_namespaceObject.__)('Cancel'),
         disabled: !!actionInProgress,
         onClick: () => {
-          onSelectionChange(bulk_actions_toolbar_EMPTY_ARRAY);
+          onChangeSelection(bulk_actions_toolbar_EMPTY_ARRAY);
         }
       })
     })]
@@ -36373,7 +36373,7 @@ function ToolbarContent({
   selection,
   actionsToShow,
   selectedItems,
-  onSelectionChange
+  onChangeSelection
 }) {
   const [actionInProgress, setActionInProgress] = (0,external_wp_element_namespaceObject.useState)(null);
   const buttons = (0,external_wp_element_namespaceObject.useRef)(null);
@@ -36381,9 +36381,9 @@ function ToolbarContent({
     if (buttons.current) {
       buttons.current = null;
     }
-    return renderToolbarContent(selection, actionsToShow, selectedItems, actionInProgress, setActionInProgress, onSelectionChange);
+    return renderToolbarContent(selection, actionsToShow, selectedItems, actionInProgress, setActionInProgress, onChangeSelection);
   } else if (!buttons.current) {
-    buttons.current = renderToolbarContent(selection, actionsToShow, selectedItems, actionInProgress, setActionInProgress, onSelectionChange);
+    buttons.current = renderToolbarContent(selection, actionsToShow, selectedItems, actionInProgress, setActionInProgress, onChangeSelection);
   }
   return buttons.current;
 }
@@ -36391,7 +36391,7 @@ function BulkActionsToolbar({
   data,
   selection,
   actions = bulk_actions_toolbar_EMPTY_ARRAY,
-  onSelectionChange,
+  onChangeSelection,
   getItemId
 }) {
   const isReducedMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
@@ -36421,7 +36421,7 @@ function BulkActionsToolbar({
             selection: selection,
             actionsToShow: actionsToShow,
             selectedItems: selectedItems,
-            onSelectionChange: onSelectionChange
+            onChangeSelection: onChangeSelection
           })
         })
       })
@@ -36455,7 +36455,7 @@ function BulkActionsToolbar({
 
 
 const defaultGetItemId = item => item.id;
-const defaultOnSelectionChange = () => {};
+const defaultOnChangeSelection = () => {};
 function DataViews({
   view,
   onChangeView,
@@ -36470,7 +36470,7 @@ function DataViews({
   defaultLayouts,
   selection: selectionProperty,
   setSelection: setSelectionProperty,
-  onSelectionChange = defaultOnSelectionChange
+  onChangeSelection = defaultOnChangeSelection
 }) {
   const [selectionState, setSelectionState] = (0,external_wp_element_namespaceObject.useState)([]);
   const isUncontrolled = selectionProperty === undefined || setSelectionProperty === undefined;
@@ -36479,7 +36479,7 @@ function DataViews({
   const [openedFilter, setOpenedFilter] = (0,external_wp_element_namespaceObject.useState)(null);
   function setSelectionWithChange(value) {
     const newValue = typeof value === 'function' ? value(selection) : value;
-    onSelectionChange(data.filter(item => newValue.includes(getItemId(item))));
+    onChangeSelection(data.filter(item => newValue.includes(getItemId(item))));
     return setSelection(value);
   }
   const ViewComponent = VIEW_LAYOUTS.find(v => v.type === view.type)?.component;
@@ -36512,7 +36512,7 @@ function DataViews({
       }), [constants_LAYOUT_TABLE, constants_LAYOUT_GRID].includes(view.type) && hasPossibleBulkAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BulkActions, {
         actions: actions,
         data: data,
-        onSelectionChange: setSelectionWithChange,
+        onChangeSelection: setSelectionWithChange,
         selection: _selection,
         getItemId: getItemId
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_actions, {
@@ -36528,7 +36528,7 @@ function DataViews({
       getItemId: getItemId,
       isLoading: isLoading,
       onChangeView: onChangeView,
-      onSelectionChange: setSelectionWithChange,
+      onChangeSelection: setSelectionWithChange,
       selection: _selection,
       setOpenedFilter: setOpenedFilter,
       view: view
@@ -36540,7 +36540,7 @@ function DataViews({
       data: data,
       actions: actions,
       selection: _selection,
-      onSelectionChange: setSelectionWithChange,
+      onChangeSelection: setSelectionWithChange,
       getItemId: getItemId
     })]
   });
@@ -37356,7 +37356,7 @@ function PostList({
     }
   } = post_list_useLocation();
   const [selection, setSelection] = (0,external_wp_element_namespaceObject.useState)([postId]);
-  const onSelectionChange = (0,external_wp_element_namespaceObject.useCallback)(items => {
+  const onChangeSelection = (0,external_wp_element_namespaceObject.useCallback)(items => {
     var _params$isCustom;
     const {
       params
@@ -37623,7 +37623,7 @@ function PostList({
       onChangeView: setView,
       selection: selection,
       setSelection: setSelection,
-      onSelectionChange: onSelectionChange,
+      onChangeSelection: onChangeSelection,
       getItemId: getItemId,
       defaultLayouts: defaultLayouts
     })
@@ -41445,7 +41445,7 @@ function PageTemplates() {
     per_page: -1
   });
   const history = page_templates_useHistory();
-  const onSelectionChange = (0,external_wp_element_namespaceObject.useCallback)(items => {
+  const onChangeSelection = (0,external_wp_element_namespaceObject.useCallback)(items => {
     if (view?.type === LAYOUT_LIST) {
       history.push({
         ...params,
@@ -41554,7 +41554,7 @@ function PageTemplates() {
       isLoading: isLoadingData,
       view: view,
       onChangeView: onChangeView,
-      onSelectionChange: onSelectionChange,
+      onChangeSelection: onChangeSelection,
       selection: selection,
       setSelection: setSelection,
       defaultLayouts: page_templates_defaultLayouts
