@@ -46661,7 +46661,7 @@ function QueryInspectorControls(props) {
       children: [showInheritControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
         __nextHasNoMarginBottom: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Inherit query from template'),
-        help: (0,external_wp_i18n_namespaceObject.__)('Toggle to use the global query context that is set with the current template, such as an archive or search. Disable to customize the settings independently.'),
+        help: (0,external_wp_i18n_namespaceObject.__)('Enable to use the global query context that is set with the current template, such as an archive or search. Disable to customize the settings independently.'),
         checked: !!inherit,
         onChange: value => setQuery({
           inherit: !!value
