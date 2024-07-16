@@ -8580,8 +8580,8 @@ const columns_settings = {
   icon: library_columns,
   variations: columns_variations,
   example: {
-    viewportWidth: 600,
-    // Columns collapse "@media (max-width: 599px)".
+    viewportWidth: 782,
+    // Columns collapse "@media (max-width: 781px)".
     innerBlocks: [{
       name: 'core/column',
       innerBlocks: [{
