@@ -5811,8 +5811,16 @@ const buttons_metadata = {
     align: ["wide", "full"],
     html: false,
     __experimentalExposeControlsToChildren: true,
+    color: {
+      gradients: true,
+      text: false,
+      __experimentalDefaultControls: {
+        background: true
+      }
+    },
     spacing: {
       blockGap: true,
+      padding: true,
       margin: ["top", "bottom"],
       __experimentalDefaultControls: {
         blockGap: true
@@ -5829,6 +5837,18 @@ const buttons_metadata = {
       __experimentalLetterSpacing: true,
       __experimentalDefaultControls: {
         fontSize: true
+      }
+    },
+    __experimentalBorder: {
+      color: true,
+      radius: true,
+      style: true,
+      width: true,
+      __experimentalDefaultControls: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
       }
     },
     layout: {
