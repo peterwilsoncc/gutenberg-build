@@ -24450,6 +24450,7 @@ function BackgroundSizeControls({
   const repeatValue = style?.background?.backgroundRepeat || inheritedValue?.background?.backgroundRepeat;
   const imageValue = style?.background?.backgroundImage?.url || inheritedValue?.background?.backgroundImage?.url;
   const positionValue = style?.background?.backgroundPosition || inheritedValue?.background?.backgroundPosition;
+  const attachmentValue = style?.background?.backgroundAttachment || inheritedValue?.background?.backgroundAttachment;
 
   /*
    * An `undefined` value is replaced with any supplied
@@ -24509,8 +24510,9 @@ function BackgroundSizeControls({
     onChange(setImmutably(style, ['background', 'backgroundPosition'], coordsToBackgroundPosition(next)));
   };
   const toggleIsRepeated = () => onChange(setImmutably(style, ['background', 'backgroundRepeat'], repeatCheckedValue === true ? 'no-repeat' : 'repeat'));
+  const toggleScrollWithPage = () => onChange(setImmutably(style, ['background', 'backgroundAttachment'], attachmentValue === 'fixed' ? 'scroll' : 'fixed'));
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-    spacing: 3,
+    spacing: 4,
     className: "single-column",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FocalPointPicker, {
       __next40pxDefaultSize: true,
@@ -24519,6 +24521,11 @@ function BackgroundSizeControls({
       url: getResolvedThemeFilePath(imageValue, themeFileURIs),
       value: backgroundPositionToCoords(positionValue),
       onChange: updateBackgroundPosition
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Fixed background'),
+      checked: attachmentValue === 'fixed',
+      onChange: toggleScrollWithPage,
+      help: (0,external_wp_i18n_namespaceObject.__)('Whether your image should scroll with the page or stay fixed in place.')
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
       size: "__unstable-large",
       label: (0,external_wp_i18n_namespaceObject.__)('Size'),

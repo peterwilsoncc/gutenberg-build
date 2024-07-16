@@ -16496,7 +16496,8 @@ const {
   DimensionsPanel: StylesDimensionsPanel,
   FiltersPanel: StylesFiltersPanel,
   ImageSettingsPanel,
-  AdvancedPanel: StylesAdvancedPanel
+  AdvancedPanel: StylesAdvancedPanel,
+  useGlobalStyleLinks
 } = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function ScreenBlock({
   name,
@@ -16517,6 +16518,7 @@ function ScreenBlock({
   const [rawSettings, setSettings] = screen_block_useGlobalSetting('', name);
   const settings = screen_block_useSettingsForBlockElement(rawSettings, name);
   const blockType = (0,external_wp_blocks_namespaceObject.getBlockType)(name);
+  const _links = useGlobalStyleLinks();
 
   // Only allow `blockGap` support if serialization has not been skipped, to be sure global spacing can be applied.
   if (settings?.spacing?.blockGap && blockType?.supports?.spacing?.blockGap && (blockType?.supports?.spacing?.__experimentalSkipSerialization === true || blockType?.supports?.spacing?.__experimentalSkipSerialization?.some?.(spacingType => spacingType === 'blockGap'))) {
@@ -16698,7 +16700,7 @@ function ScreenBlock({
       onChange: setStyle,
       settings: settings,
       defaultValues: BACKGROUND_BLOCK_DEFAULT_VALUES,
-      defaultControls: blockType?.supports?.background?.__experimentalDefaultControls
+      themeFileURIs: _links?.['wp:theme-file']
     }), canEditCSS && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
       title: (0,external_wp_i18n_namespaceObject.__)('Advanced'),
       initialOpen: false,
@@ -25780,7 +25782,7 @@ const BACKGROUND_DEFAULT_VALUES = {
 const {
   useGlobalStyle: background_panel_useGlobalStyle,
   useGlobalSetting: background_panel_useGlobalSetting,
-  useGlobalStyleLinks,
+  useGlobalStyleLinks: background_panel_useGlobalStyleLinks,
   BackgroundPanel: background_panel_StylesBackgroundPanel
 } = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
@@ -25801,7 +25803,7 @@ function BackgroundPanel() {
   const [inheritedStyle, setStyle] = background_panel_useGlobalStyle('', undefined, 'all', {
     shouldDecodeEncode: false
   });
-  const _links = useGlobalStyleLinks();
+  const _links = background_panel_useGlobalStyleLinks();
   const [settings] = background_panel_useGlobalSetting('');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(background_panel_StylesBackgroundPanel, {
     inheritedValue: inheritedStyle,
