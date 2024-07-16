@@ -49869,7 +49869,9 @@ const quote_metadata = {
       allowEditing: false
     },
     spacing: {
-      blockGap: true
+      blockGap: true,
+      padding: true,
+      margin: true
     },
     interactivity: {
       clientNavigation: true
