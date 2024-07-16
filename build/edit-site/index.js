@@ -6614,7 +6614,7 @@ function PushChangesToGlobalStyles(props) {
 const withPushChangesToGlobalStyles = (0,external_wp_compose_namespaceObject.createHigherOrderComponent)(BlockEdit => props => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
   children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockEdit, {
     ...props
-  }), props.isSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PushChangesToGlobalStyles, {
+  }, "edit"), props.isSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PushChangesToGlobalStyles, {
     ...props
   })]
 }));

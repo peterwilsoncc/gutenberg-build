@@ -2606,7 +2606,7 @@ const withMoveToSidebarToolbarItem = (0,external_wp_compose_namespaceObject.crea
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockEdit, {
       ...props
-    }), hasMultipleSidebars && canInsertBlockInSidebar && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+    }, "edit"), hasMultipleSidebars && canInsertBlockInSidebar && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_widgets_namespaceObject.MoveToWidgetArea, {
         widgetAreas: sidebarControls.map(sidebarControl => ({
           id: sidebarControl.id,
@@ -2649,7 +2649,7 @@ const withWideWidgetDisplay = (0,external_wp_compose_namespaceObject.createHighe
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockEdit, {
     ...props,
     isWide: isWide
-  });
+  }, "edit");
 }, 'withWideWidgetDisplay');
 (0,external_wp_hooks_namespaceObject.addFilter)('editor.BlockEdit', 'core/customize-widgets/wide-widget-display', withWideWidgetDisplay);
 
