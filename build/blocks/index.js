@@ -6774,6 +6774,8 @@ const __EXPERIMENTAL_PATHS_WITH_OVERRIDE = {
   'spacing.spacingSizes': true
 };
 
+;// CONCATENATED MODULE: external ["wp","warning"]
+const external_wp_warning_namespaceObject = window["wp"]["warning"];
 ;// CONCATENATED MODULE: external ["wp","privateApis"]
 const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
 ;// CONCATENATED MODULE: ./packages/blocks/build-module/lock-unlock.js
@@ -6787,11 +6789,10 @@ const {
 } = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/blocks');
 
 ;// CONCATENATED MODULE: ./packages/blocks/build-module/api/registration.js
-/* eslint no-console: [ 'error', { allow: [ 'error', 'warn' ] } ] */
-
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -6998,15 +6999,15 @@ function getBlockSettingsFromMetadata({
 function registerBlockType(blockNameOrMetadata, settings) {
   const name = isObject(blockNameOrMetadata) ? blockNameOrMetadata.name : blockNameOrMetadata;
   if (typeof name !== 'string') {
-    console.error('Block names must be strings.');
+     false ? 0 : void 0;
     return;
   }
   if (!/^[a-z][a-z0-9-]*\/[a-z][a-z0-9-]*$/.test(name)) {
-    console.error('Block names must contain a namespace prefix, include only lowercase alphanumeric characters or dashes, and start with a letter. Example: my-plugin/my-custom-block');
+     false ? 0 : void 0;
     return;
   }
   if ((0,external_wp_data_namespaceObject.select)(store).getBlockType(name)) {
-    console.error('Block "' + name + '" is already registered.');
+     false ? 0 : void 0;
     return;
   }
   const {
@@ -7129,7 +7130,7 @@ function unregisterBlockCollection(namespace) {
 function unregisterBlockType(name) {
   const oldBlock = (0,external_wp_data_namespaceObject.select)(store).getBlockType(name);
   if (!oldBlock) {
-    console.error('Block "' + name + '" is not registered.');
+     false ? 0 : void 0;
     return;
   }
   (0,external_wp_data_namespaceObject.dispatch)(store).removeBlockTypes(name);
@@ -7464,7 +7465,7 @@ const getBlockVariations = (blockName, scope) => {
  */
 const registerBlockVariation = (blockName, variation) => {
   if (typeof variation.name !== 'string') {
-    console.warn('Variation names must be unique strings.');
+     false ? 0 : void 0;
   }
   (0,external_wp_data_namespaceObject.dispatch)(store).addBlockVariations(blockName, variation);
 };
@@ -7542,69 +7543,69 @@ const registerBlockBindingsSource = source => {
   // Check if the source is already registered.
   const existingSource = unlock((0,external_wp_data_namespaceObject.select)(store)).getBlockBindingsSource(name);
   if (existingSource) {
-    console.error('Block bindings source "' + name + '" is already registered.');
+     false ? 0 : void 0;
     return;
   }
 
   // Check the `name` property is correct.
   if (!name) {
-    console.error('Block bindings source must contain a name.');
+     false ? 0 : void 0;
     return;
   }
   if (typeof name !== 'string') {
-    console.error('Block bindings source name must be a string.');
+     false ? 0 : void 0;
     return;
   }
   if (/[A-Z]+/.test(name)) {
-    console.error('Block bindings source name must not contain uppercase characters.');
+     false ? 0 : void 0;
     return;
   }
   if (!/^[a-z0-9/-]+$/.test(name)) {
-    console.error('Block bindings source name must contain only valid characters: lowercase characters, hyphens, or digits. Example: my-plugin/my-custom-source.');
+     false ? 0 : void 0;
     return;
   }
   if (!/^[a-z0-9-]+\/[a-z0-9-]+$/.test(name)) {
-    console.error('Block bindings source name must contain a namespace and valid characters. Example: my-plugin/my-custom-source.');
+     false ? 0 : void 0;
     return;
   }
 
   // Check the `label` property is correct.
   if (!label) {
-    console.error('Block bindings source must contain a label.');
+     false ? 0 : void 0;
     return;
   }
   if (typeof label !== 'string') {
-    console.error('Block bindings source label must be a string.');
+     false ? 0 : void 0;
     return;
   }
 
   // Check the `getValue` property is correct.
   if (getValue && typeof getValue !== 'function') {
-    console.error('Block bindings source getValue must be a function.');
+     false ? 0 : void 0;
     return;
   }
 
   // Check the `setValue` property is correct.
   if (setValue && typeof setValue !== 'function') {
-    console.error('Block bindings source setValue must be a function.');
+     false ? 0 : void 0;
     return;
   }
 
   // Check the `setValues` property is correct.
   if (setValues && typeof setValues !== 'function') {
-    console.error('Block bindings source setValues must be a function.');
+     false ? 0 : void 0;
     return;
   }
 
   // Check the `getPlaceholder` property is correct.
   if (getPlaceholder && typeof getPlaceholder !== 'function') {
-    console.error('Block bindings source getPlaceholder must be a function.');
+     false ? 0 : void 0;
     return;
   }
 
   // Check the `getPlaceholder` property is correct.
   if (canUserEditValue && typeof canUserEditValue !== 'function') {
-    console.error('Block bindings source canUserEditValue must be a function.');
+     false ? 0 : void 0;
     return;
   }
   return unlock((0,external_wp_data_namespaceObject.dispatch)(store)).addBlockBindingsSource(source);
@@ -7625,7 +7626,7 @@ const registerBlockBindingsSource = source => {
 function unregisterBlockBindingsSource(name) {
   const oldSource = getBlockBindingsSource(name);
   if (!oldSource) {
-    console.error('Block bindings source "' + name + '" is not registered.');
+     false ? 0 : void 0;
     return;
   }
   unlock((0,external_wp_data_namespaceObject.dispatch)(store)).removeBlockBindingsSource(name);
@@ -9335,6 +9336,7 @@ const external_wp_hooks_namespaceObject = window["wp"]["hooks"];
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -9342,9 +9344,6 @@ const external_wp_hooks_namespaceObject = window["wp"]["hooks"];
 
 
 /** @typedef {import('../api/registration').WPBlockType} WPBlockType */
-
-const error = (...args) => window?.console?.error?.(...args);
-const warn = (...args) => window?.console?.warn?.(...args);
 
 /**
  * Mapping of legacy category slugs to their latest normal values, used to
@@ -9435,15 +9434,15 @@ const processBlockType = (name, blockSettings) => ({
     }, blockType.name, deprecation)).filter(([key]) => DEPRECATED_ENTRY_KEYS.includes(key))));
   }
   if (!isPlainObject(settings)) {
-    error('Block settings must be a valid object.');
+     false ? 0 : void 0;
     return;
   }
   if (typeof settings.save !== 'function') {
-    error('The "save" property must be a valid function.');
+     false ? 0 : void 0;
     return;
   }
   if ('edit' in settings && !(0,react_is.isValidElementType)(settings.edit)) {
-    error('The "edit" property must be a valid component.');
+     false ? 0 : void 0;
     return;
   }
 
@@ -9454,20 +9453,20 @@ const processBlockType = (name, blockSettings) => ({
   if ('category' in settings && !select.getCategories().some(({
     slug
   }) => slug === settings.category)) {
-    warn('The block "' + name + '" is registered with an invalid category "' + settings.category + '".');
+     false ? 0 : void 0;
     delete settings.category;
   }
   if (!('title' in settings) || settings.title === '') {
-    error('The block "' + name + '" must have a title.');
+     false ? 0 : void 0;
     return;
   }
   if (typeof settings.title !== 'string') {
-    error('Block titles must be strings.');
+     false ? 0 : void 0;
     return;
   }
   settings.icon = normalizeIconObject(settings.icon);
   if (!isValidIcon(settings.icon.src)) {
-    error('The icon passed is invalid. ' + 'The icon should be a string, an element, a function, or an object following the specifications documented in https://developer.wordpress.org/block-editor/developers/block-api/block-registration/#icon-optional');
+     false ? 0 : void 0;
     return;
   }
   return settings;
