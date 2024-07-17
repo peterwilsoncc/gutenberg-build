@@ -819,13 +819,9 @@ const getEditedPostTemplateId = (0,external_wp_data_namespaceObject.createRegist
   } = select(external_wp_editor_namespaceObject.store).getCurrentPost();
   const {
     getSite,
-    getEntityRecords,
-    canUser
+    getEntityRecords
   } = select(external_wp_coreData_namespaceObject.store);
-  const siteSettings = canUser('read', {
-    kind: 'root',
-    name: 'site'
-  }) ? getSite() : undefined;
+  const siteSettings = getSite();
   // First check if the current page is set as the posts page.
   const isPostsPage = +postId === siteSettings?.page_for_posts;
   if (isPostsPage) {
@@ -2080,10 +2076,7 @@ function ManagePatternsMenuItem() {
     // The site editor and templates both check whether the user has
     // edit_theme_options capabilities. We can leverage that here and not
     // display the manage patterns link if the user can't access it.
-    return canUser('create', {
-      kind: 'postType',
-      name: 'wp_template'
-    }) ? patternsUrl : defaultUrl;
+    return canUser('create', 'templates') ? patternsUrl : defaultUrl;
   }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
     role: "menuitem",
@@ -2971,10 +2964,7 @@ function Layout({
     } = select(external_wp_coreData_namespaceObject.store);
     const supportsTemplateMode = settings.supportsTemplateMode;
     const isViewable = (_getPostType$viewable = getPostType(currentPost.postType)?.viewable) !== null && _getPostType$viewable !== void 0 ? _getPostType$viewable : false;
-    const canViewTemplate = canUser('read', {
-      kind: 'postType',
-      name: 'wp_template'
-    });
+    const canViewTemplate = canUser('read', 'templates');
     return {
       mode: select(external_wp_editor_namespaceObject.store).getEditorMode(),
       isFullscreenActive: select(store).isFeatureActive('fullscreenMode'),
@@ -3270,8 +3260,7 @@ function __experimentalPluginPostExcerpt() {
 
 const {
   BackButton: __experimentalMainDashboardButton,
-  registerDefaultActions,
-  registerCoreBlockBindingsSources
+  registerDefaultActions
 } = unlock(external_wp_editor_namespaceObject.privateApis);
 
 /**
@@ -3316,7 +3305,6 @@ function initializeEditor(id, postType, postId, settings, initialEdits) {
     (0,external_wp_data_namespaceObject.dispatch)(external_wp_editor_namespaceObject.store).setIsListViewOpened(true);
   }
   (0,external_wp_blockLibrary_namespaceObject.registerCoreBlocks)();
-  registerCoreBlockBindingsSources();
   (0,external_wp_widgets_namespaceObject.registerLegacyWidgetBlock)({
     inserter: false
   });
