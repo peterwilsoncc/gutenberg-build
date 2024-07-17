@@ -20839,7 +20839,7 @@ function BlockAlignmentUI({
     })
   } : {
     toggleProps: {
-      describedBy: (0,external_wp_i18n_namespaceObject.__)('Change alignment')
+      description: (0,external_wp_i18n_namespaceObject.__)('Change alignment')
     },
     children: ({
       onClose
@@ -29777,7 +29777,7 @@ function AlignmentUI({
   onChange,
   alignmentControls = DEFAULT_ALIGNMENT_CONTROLS,
   label = (0,external_wp_i18n_namespaceObject.__)('Align text'),
-  describedBy = (0,external_wp_i18n_namespaceObject.__)('Change text alignment'),
+  description = (0,external_wp_i18n_namespaceObject.__)('Change text alignment'),
   isCollapsed = true,
   isToolbar
 }) {
@@ -29796,7 +29796,7 @@ function AlignmentUI({
     isCollapsed
   } : {
     toggleProps: {
-      describedBy
+      description
     },
     popoverProps: ui_POPOVER_PROPS
   };
@@ -58756,7 +58756,7 @@ const BlockSwitcher = ({
           })]
         }),
         toggleProps: {
-          describedBy: blockSwitcherDescription,
+          description: blockSwitcherDescription,
           ...toggleProps
         },
         menuProps: {
@@ -69165,7 +69165,7 @@ const FormatToolbar = () => {
               className: dist_clsx(toggleProps.className, {
                 'is-pressed': hasActive
               }),
-              describedBy: (0,external_wp_i18n_namespaceObject.__)('Displays more block tools')
+              description: (0,external_wp_i18n_namespaceObject.__)('Displays more block tools')
             },
             controls: orderBy(fills.map(([{
               props

@@ -31354,6 +31354,7 @@ function button_useDeprecatedProps({
   isSmall,
   size,
   variant,
+  describedBy,
   ...otherProps
 }) {
   let computedSize = size;
@@ -31361,7 +31362,8 @@ function button_useDeprecatedProps({
   const newProps = {
     accessibleWhenDisabled: __experimentalIsFocusable,
     // @todo Mark `isPressed` as deprecated
-    'aria-pressed': isPressed
+    'aria-pressed': isPressed,
+    description: describedBy
   };
   if (isSmall) {
     var _computedSize;
@@ -31417,7 +31419,7 @@ function UnforwardedButton(props, ref) {
     size = 'default',
     text,
     variant,
-    describedBy,
+    description,
     ...buttonOrAnchorProps
   } = button_useDeprecatedProps(props);
   const {
@@ -31493,7 +31495,7 @@ function UnforwardedButton(props, ref) {
   !children?.length &&
   // The tooltip is not explicitly disabled.
   false !== showTooltip);
-  const descriptionId = describedBy ? instanceId : undefined;
+  const descriptionId = description ? instanceId : undefined;
   const describedById = additionalProps['aria-describedby'] || descriptionId;
   const commonProps = {
     className: classes,
@@ -31531,7 +31533,7 @@ function UnforwardedButton(props, ref) {
   // In order to make sure that the tooltip doesn't show when it shouldn't,
   // we don't pass the props to the `Tooltip` component.
   const tooltipProps = shouldShowTooltip ? {
-    text: children?.length && describedBy ? describedBy : label,
+    text: children?.length && description ? description : label,
     shortcut,
     placement: tooltipPosition &&
     // Convert legacy `position` values to be used with the new `placement` prop
@@ -31541,10 +31543,10 @@ function UnforwardedButton(props, ref) {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tooltip, {
       ...tooltipProps,
       children: element
-    }), describedBy && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(visually_hidden_component, {
+    }), description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(visually_hidden_component, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         id: descriptionId,
-        children: describedBy
+        children: description
       })
     })]
   });
@@ -66494,7 +66496,7 @@ const component_ToolsPanelHeader = (props, forwardedRef) => {
       },
       toggleProps: {
         size: 'small',
-        describedBy: dropdownMenuDescriptionText
+        description: dropdownMenuDescriptionText
       },
       children: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(menu_group, {

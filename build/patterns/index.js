@@ -1664,7 +1664,7 @@ function PatternOverridesToolbarIndicator({
         })
       }),
       toggleProps: {
-        describedBy: blockDescription,
+        description: blockDescription,
         ...toggleProps
       },
       menuProps: {
