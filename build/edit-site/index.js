@@ -36455,7 +36455,6 @@ function BulkActionsToolbar({
 
 
 const defaultGetItemId = item => item.id;
-const defaultOnChangeSelection = () => {};
 function DataViews({
   view,
   onChangeView,
@@ -36469,18 +36468,20 @@ function DataViews({
   paginationInfo,
   defaultLayouts,
   selection: selectionProperty,
-  setSelection: setSelectionProperty,
-  onChangeSelection = defaultOnChangeSelection
+  onChangeSelection
 }) {
   const [selectionState, setSelectionState] = (0,external_wp_element_namespaceObject.useState)([]);
-  const isUncontrolled = selectionProperty === undefined || setSelectionProperty === undefined;
+  const isUncontrolled = selectionProperty === undefined || onChangeSelection === undefined;
   const selection = isUncontrolled ? selectionState : selectionProperty;
-  const setSelection = isUncontrolled ? setSelectionState : setSelectionProperty;
   const [openedFilter, setOpenedFilter] = (0,external_wp_element_namespaceObject.useState)(null);
   function setSelectionWithChange(value) {
     const newValue = typeof value === 'function' ? value(selection) : value;
-    onChangeSelection(data.filter(item => newValue.includes(getItemId(item))));
-    return setSelection(value);
+    if (!isUncontrolled) {
+      setSelectionState(newValue);
+    }
+    if (onChangeSelection) {
+      onChangeSelection(newValue);
+    }
   }
   const ViewComponent = VIEW_LAYOUTS.find(v => v.type === view.type)?.component;
   const _fields = (0,external_wp_element_namespaceObject.useMemo)(() => normalizeFields(fields), [fields]);
@@ -37358,13 +37359,14 @@ function PostList({
   const [selection, setSelection] = (0,external_wp_element_namespaceObject.useState)([postId]);
   const onChangeSelection = (0,external_wp_element_namespaceObject.useCallback)(items => {
     var _params$isCustom;
+    setSelection(items);
     const {
       params
     } = history.getLocationWithParams();
     if (((_params$isCustom = params.isCustom) !== null && _params$isCustom !== void 0 ? _params$isCustom : 'false') === 'false' && view?.type === LAYOUT_LIST) {
       history.push({
         ...params,
-        postId: items.length === 1 ? items[0].id : undefined
+        postId: items.length === 1 ? items[0] : undefined
       });
     }
   }, [history, view?.type]);
@@ -37622,7 +37624,6 @@ function PostList({
       view: view,
       onChangeView: setView,
       selection: selection,
-      setSelection: setSelection,
       onChangeSelection: onChangeSelection,
       getItemId: getItemId,
       defaultLayouts: defaultLayouts
@@ -41446,10 +41447,11 @@ function PageTemplates() {
   });
   const history = page_templates_useHistory();
   const onChangeSelection = (0,external_wp_element_namespaceObject.useCallback)(items => {
+    setSelection(items);
     if (view?.type === LAYOUT_LIST) {
       history.push({
         ...params,
-        postId: items.length === 1 ? items[0].id : undefined
+        postId: items.length === 1 ? items[0] : undefined
       });
     }
   }, [history, params, view?.type]);
@@ -41556,7 +41558,6 @@ function PageTemplates() {
       onChangeView: onChangeView,
       onChangeSelection: onChangeSelection,
       selection: selection,
-      setSelection: setSelection,
       defaultLayouts: page_templates_defaultLayouts
     })
   });
