@@ -26037,10 +26037,10 @@ const duplicateTemplatePartAction = {
     const [item] = items;
     const blocks = (0,external_wp_element_namespaceObject.useMemo)(() => {
       var _item$blocks;
-      return (_item$blocks = item.blocks) !== null && _item$blocks !== void 0 ? _item$blocks : (0,external_wp_blocks_namespaceObject.parse)(item.content.raw, {
+      return (_item$blocks = item.blocks) !== null && _item$blocks !== void 0 ? _item$blocks : (0,external_wp_blocks_namespaceObject.parse)(typeof item.content === 'string' ? item.content : item.content.raw, {
         __unstableSkipMigrationLogs: true
       });
-    }, [item?.content?.raw, item.blocks]);
+    }, [item.content, item.blocks]);
     const {
       createSuccessNotice
     } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
