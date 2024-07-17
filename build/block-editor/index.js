@@ -60301,7 +60301,7 @@ function Shuffle({
       );
     });
   }, [categories, patterns]);
-  if (sameCategoryPatternsWithSingleWrapper.length === 0) {
+  if (sameCategoryPatternsWithSingleWrapper.length < 2) {
     return null;
   }
   function getNextPattern() {
