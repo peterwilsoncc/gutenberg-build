@@ -36215,6 +36215,7 @@ const InputControlSuffixWrapper = contextConnect(UnconnectedInputControlSuffixWr
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/select-control/styles/select-control-styles.js
 
+function select_control_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
 /**
  * External dependencies
  */
@@ -36235,9 +36236,21 @@ const select_control_styles_disabledStyles = ({
   }
   return /*#__PURE__*/emotion_react_browser_esm_css("color:", COLORS.ui.textDisabled, ";cursor:default;" + ( true ? "" : 0),  true ? "" : 0);
 };
+var select_control_styles_ref2 =  true ? {
+  name: "1lv1yo7",
+  styles: "display:inline-flex"
+} : 0;
+const inputBaseVariantStyles = ({
+  variant
+}) => {
+  if (variant === 'minimal') {
+    return select_control_styles_ref2;
+  }
+  return '';
+};
 const StyledInputBase = /*#__PURE__*/emotion_styled_base_browser_esm(input_base,  true ? {
   target: "e1mv6sxx3"
-} : 0)("color:", COLORS.theme.foreground, ";cursor:pointer;", select_control_styles_disabledStyles, ";" + ( true ? "" : 0));
+} : 0)("color:", COLORS.theme.foreground, ";cursor:pointer;", select_control_styles_disabledStyles, " ", inputBaseVariantStyles, ";" + ( true ? "" : 0));
 const select_control_styles_sizeStyles = ({
   __next40pxDefaultSize,
   multiple,
@@ -36312,13 +36325,25 @@ const overflowStyles = ({
     overflow: multiple ? 'auto' : 'hidden'
   };
 };
+var select_control_styles_ref =  true ? {
+  name: "n1jncc",
+  styles: "field-sizing:content"
+} : 0;
+const variantStyles = ({
+  variant
+}) => {
+  if (variant === 'minimal') {
+    return select_control_styles_ref;
+  }
+  return '';
+};
 
 // TODO: Resolve need to use &&& to increase specificity
 // https://github.com/WordPress/gutenberg/issues/18483
 
 const Select = /*#__PURE__*/emotion_styled_base_browser_esm("select",  true ? {
   target: "e1mv6sxx2"
-} : 0)("&&&{appearance:none;background:transparent;box-sizing:border-box;border:none;box-shadow:none!important;cursor:inherit;display:block;font-family:inherit;margin:0;width:100%;max-width:none;white-space:nowrap;text-overflow:ellipsis;", fontSizeStyles, ";", select_control_styles_sizeStyles, ";", sizePaddings, ";", overflowStyles, ";}" + ( true ? "" : 0));
+} : 0)("&&&{appearance:none;background:transparent;box-sizing:border-box;border:none;box-shadow:none!important;cursor:inherit;display:block;font-family:inherit;margin:0;width:100%;max-width:none;white-space:nowrap;text-overflow:ellipsis;", fontSizeStyles, ";", select_control_styles_sizeStyles, ";", sizePaddings, ";", overflowStyles, " ", variantStyles, ";}" + ( true ? "" : 0));
 const DownArrowWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "e1mv6sxx1"
 } : 0)("margin-inline-end:", space(-1), ";line-height:0;path{fill:currentColor;}" + ( true ? "" : 0));
@@ -36440,6 +36465,7 @@ function UnforwardedSelectControl(props, ref) {
     children,
     prefix,
     suffix,
+    variant = 'default',
     __next40pxDefaultSize = false,
     __nextHasNoMarginBottom = false,
     ...restProps
@@ -36478,11 +36504,14 @@ function UnforwardedSelectControl(props, ref) {
       disabled: disabled,
       hideLabelFromVision: hideLabelFromVision,
       id: id,
+      isBorderless: variant === 'minimal',
       label: label,
       size: size,
       suffix: suffix || !multiple && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(select_control_chevron_down, {}),
       prefix: prefix,
       labelPosition: labelPosition,
+      __unstableInputWidth: variant === 'minimal' ? 'auto' : undefined,
+      variant: variant,
       __next40pxDefaultSize: __next40pxDefaultSize,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Select, {
         ...restProps,
@@ -36496,6 +36525,7 @@ function UnforwardedSelectControl(props, ref) {
         ref: ref,
         selectSize: size,
         value: valueProp,
+        variant: variant,
         children: children || options.map((option, index) => {
           const key = option.id || `${option.label}-${option.value}-${index}`;
           return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("option", {
