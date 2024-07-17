@@ -57055,6 +57055,7 @@ const FontSizePickerToggleGroup = props => {
 
 
 const DEFAULT_UNITS = ['px', 'em', 'rem', 'vw', 'vh'];
+const MAX_TOGGLE_GROUP_SIZES = 5;
 const UnforwardedFontSizePicker = (props, ref) => {
   const {
     __next40pxDefaultSize = false,
@@ -57071,26 +57072,37 @@ const UnforwardedFontSizePicker = (props, ref) => {
   const units = useCustomUnits({
     availableUnits: unitsProp
   });
-  const shouldUseSelectControl = fontSizes.length > 5;
   const selectedFontSize = fontSizes.find(fontSize => fontSize.size === value);
   const isCustomValue = !!value && !selectedFontSize;
-  const [showCustomValueControl, setShowCustomValueControl] = (0,external_wp_element_namespaceObject.useState)(!disableCustomFontSizes && isCustomValue);
+
+  // Initially request a custom picker if the value is not from the predef list.
+  const [userRequestedCustom, setUserRequestedCustom] = (0,external_wp_element_namespaceObject.useState)(isCustomValue);
+  let currentPickerType;
+  if (!disableCustomFontSizes && userRequestedCustom) {
+    // While showing the custom value picker, switch back to predef only if
+    // `disableCustomFontSizes` is set to `true`.
+    currentPickerType = 'custom';
+  } else {
+    currentPickerType = fontSizes.length > MAX_TOGGLE_GROUP_SIZES ? 'select' : 'togglegroup';
+  }
   const headerHint = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (showCustomValueControl) {
-      return (0,external_wp_i18n_namespaceObject.__)('Custom');
-    }
-    if (!shouldUseSelectControl) {
-      if (selectedFontSize) {
-        return selectedFontSize.name || T_SHIRT_NAMES[fontSizes.indexOf(selectedFontSize)];
-      }
-      return '';
-    }
-    const commonUnit = getCommonSizeUnit(fontSizes);
-    if (commonUnit) {
-      return `(${commonUnit})`;
+    switch (currentPickerType) {
+      case 'custom':
+        return (0,external_wp_i18n_namespaceObject.__)('Custom');
+      case 'togglegroup':
+        if (selectedFontSize) {
+          return selectedFontSize.name || T_SHIRT_NAMES[fontSizes.indexOf(selectedFontSize)];
+        }
+        break;
+      case 'select':
+        const commonUnit = getCommonSizeUnit(fontSizes);
+        if (commonUnit) {
+          return `(${commonUnit})`;
+        }
+        break;
     }
     return '';
-  }, [showCustomValueControl, shouldUseSelectControl, selectedFontSize, fontSizes]);
+  }, [currentPickerType, selectedFontSize, fontSizes]);
   if (fontSizes.length === 0 && disableCustomFontSizes) {
     return null;
   }
@@ -57118,17 +57130,15 @@ const UnforwardedFontSizePicker = (props, ref) => {
             children: headerHint
           })]
         }), !disableCustomFontSizes && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HeaderToggle, {
-          label: showCustomValueControl ? (0,external_wp_i18n_namespaceObject.__)('Use size preset') : (0,external_wp_i18n_namespaceObject.__)('Set custom size'),
+          label: currentPickerType === 'custom' ? (0,external_wp_i18n_namespaceObject.__)('Use size preset') : (0,external_wp_i18n_namespaceObject.__)('Set custom size'),
           icon: library_settings,
-          onClick: () => {
-            setShowCustomValueControl(!showCustomValueControl);
-          },
-          isPressed: showCustomValueControl,
+          onClick: () => setUserRequestedCustom(!userRequestedCustom),
+          isPressed: currentPickerType === 'custom',
           size: "small"
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      children: [!!fontSizes.length && shouldUseSelectControl && !showCustomValueControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_size_picker_select, {
+      children: [currentPickerType === 'select' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_size_picker_select, {
         __next40pxDefaultSize: __next40pxDefaultSize,
         fontSizes: fontSizes,
         value: value,
@@ -57141,8 +57151,8 @@ const UnforwardedFontSizePicker = (props, ref) => {
             onChange?.(hasUnits ? newValue : Number(newValue), fontSizes.find(fontSize => fontSize.size === newValue));
           }
         },
-        onSelectCustom: () => setShowCustomValueControl(true)
-      }), !shouldUseSelectControl && !showCustomValueControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_size_picker_toggle_group, {
+        onSelectCustom: () => setUserRequestedCustom(true)
+      }), currentPickerType === 'togglegroup' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_size_picker_toggle_group, {
         fontSizes: fontSizes,
         value: value,
         __next40pxDefaultSize: __next40pxDefaultSize,
@@ -57154,7 +57164,7 @@ const UnforwardedFontSizePicker = (props, ref) => {
             onChange?.(hasUnits ? newValue : Number(newValue), fontSizes.find(fontSize => fontSize.size === newValue));
           }
         }
-      }), !disableCustomFontSizes && showCustomValueControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(flex_component, {
+      }), currentPickerType === 'custom' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(flex_component, {
         className: "components-font-size-picker__custom-size-control",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(flex_item_component, {
           isBlock: true,
@@ -57165,6 +57175,7 @@ const UnforwardedFontSizePicker = (props, ref) => {
             hideLabelFromVision: true,
             value: value,
             onChange: newValue => {
+              setUserRequestedCustom(true);
               if (newValue === undefined) {
                 onChange?.(undefined);
               } else {
@@ -57190,6 +57201,7 @@ const UnforwardedFontSizePicker = (props, ref) => {
               initialPosition: fallbackFontSize,
               withInputField: false,
               onChange: newValue => {
+                setUserRequestedCustom(true);
                 if (newValue === undefined) {
                   onChange?.(undefined);
                 } else if (hasUnits) {
