@@ -43895,19 +43895,57 @@ function CustomDataViewsList({
 
 
 
+
+
 /**
  * Internal dependencies
  */
 
 
+
+
+
+
+
 const {
-  useLocation: sidebar_dataviews_useLocation
+  useLocation: sidebar_dataviews_useLocation,
+  useHistory: sidebar_dataviews_useHistory
 } = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
 
-
-
-
-
+/**
+ * Hook to switch to table layout when switching to the trash view.
+ * When going out of the trash view, it switches back to the previous layout if
+ * there was an automatic switch to table layout.
+ */
+function useSwitchToTableOnTrash() {
+  const {
+    params: {
+      activeView,
+      layout,
+      ...restParams
+    }
+  } = sidebar_dataviews_useLocation();
+  const history = sidebar_dataviews_useHistory();
+  const viewToSwitchOutOfTrash = (0,external_wp_element_namespaceObject.useRef)(undefined);
+  const previousActiveView = (0,external_wp_compose_namespaceObject.usePrevious)(activeView);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (activeView === 'trash' && previousActiveView !== 'trash') {
+      viewToSwitchOutOfTrash.current = layout || 'list';
+      history.push({
+        ...restParams,
+        layout: 'table',
+        activeView
+      });
+    } else if (previousActiveView === 'trash' && activeView !== 'trash' && viewToSwitchOutOfTrash.current) {
+      history.push({
+        ...restParams,
+        layout: viewToSwitchOutOfTrash.current,
+        activeView
+      });
+      viewToSwitchOutOfTrash.current = undefined;
+    }
+  }, [previousActiveView, activeView, layout, history, restParams]);
+}
 function DataViewsSidebarContent() {
   const {
     params: {
@@ -43916,6 +43954,7 @@ function DataViewsSidebarContent() {
       isCustom = 'false'
     }
   } = sidebar_dataviews_useLocation();
+  useSwitchToTableOnTrash();
   const DEFAULT_VIEWS = useDefaultViews({
     postType
   });
