@@ -50094,6 +50094,37 @@ function ReusableBlockEditRecursionWrapper(props) {
     })
   });
 }
+function ReusableBlockControl({
+  recordId,
+  canOverrideBlocks,
+  hasContent,
+  handleEditOriginal,
+  resetContent
+}) {
+  const canUserEdit = (0,external_wp_data_namespaceObject.useSelect)(select => !!select(external_wp_coreData_namespaceObject.store).canUser('update', {
+    kind: 'postType',
+    name: 'wp_block',
+    id: recordId
+  }), [recordId]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [canUserEdit && !!handleEditOriginal && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+          onClick: handleEditOriginal,
+          children: (0,external_wp_i18n_namespaceObject.__)('Edit original')
+        })
+      })
+    }), canOverrideBlocks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+          onClick: resetContent,
+          disabled: !hasContent,
+          children: (0,external_wp_i18n_namespaceObject.__)('Reset')
+        })
+      })
+    })]
+  });
+}
 function ReusableBlockEdit({
   name,
   attributes: {
@@ -50118,14 +50149,10 @@ function ReusableBlockEdit({
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const {
     innerBlocks,
-    userCanEdit,
     onNavigateToEntityRecord,
     editingMode,
     hasPatternOverridesSource
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      canUser
-    } = select(external_wp_coreData_namespaceObject.store);
     const {
       getBlocks,
       getSettings,
@@ -50134,22 +50161,15 @@ function ReusableBlockEdit({
     const {
       getBlockBindingsSource
     } = unlock(select(external_wp_blocks_namespaceObject.store));
-    const canEdit = canUser('update', {
-      kind: 'postType',
-      name: 'wp_block',
-      id: ref
-    });
-
     // For editing link to the site editor if the theme and user permissions support it.
     return {
       innerBlocks: getBlocks(patternClientId),
-      userCanEdit: canEdit,
       getBlockEditingMode: _getBlockEditingMode,
       onNavigateToEntityRecord: getSettings().onNavigateToEntityRecord,
       editingMode: _getBlockEditingMode(patternClientId),
       hasPatternOverridesSource: !!getBlockBindingsSource('core/pattern-overrides')
     };
-  }, [patternClientId, ref]);
+  }, [patternClientId]);
 
   // Sync the editing mode of the pattern block with the inner blocks.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -50207,21 +50227,12 @@ function ReusableBlockEdit({
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [userCanEdit && onNavigateToEntityRecord && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-          onClick: handleEditOriginal,
-          children: (0,external_wp_i18n_namespaceObject.__)('Edit original')
-        })
-      })
-    }), canOverrideBlocks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-          onClick: resetContent,
-          disabled: !content,
-          children: (0,external_wp_i18n_namespaceObject.__)('Reset')
-        })
-      })
+    children: [hasResolved && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ReusableBlockControl, {
+      recordId: ref,
+      canOverrideBlocks: canOverrideBlocks,
+      hasContent: !!content,
+      handleEditOriginal: onNavigateToEntityRecord ? handleEditOriginal : undefined,
+      resetContent: resetContent
     }), children === null ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...innerBlocksProps
     }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {

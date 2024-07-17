@@ -21140,6 +21140,31 @@ function isRawAttribute(entity, attribute) {
   return (entity.rawAttributes || []).includes(attribute);
 }
 
+;// CONCATENATED MODULE: ./packages/core-data/build-module/utils/user-permissions.js
+const ALLOWED_RESOURCE_ACTIONS = ['create', 'read', 'update', 'delete'];
+function getUserPermissionsFromResponse(response) {
+  const permissions = {};
+
+  // Optional chaining operator is used here because the API requests don't
+  // return the expected result in the React native version. Instead, API requests
+  // only return the result, without including response properties like the headers.
+  const allowedMethods = response.headers?.get('allow') || '';
+  const methods = {
+    create: 'POST',
+    read: 'GET',
+    update: 'PUT',
+    delete: 'DELETE'
+  };
+  for (const [actionName, methodName] of Object.entries(methods)) {
+    permissions[actionName] = allowedMethods.includes(methodName);
+  }
+  return permissions;
+}
+function getUserPermissionCacheKey(action, resource, id) {
+  const key = (typeof resource === 'object' ? [action, resource.kind, resource.name, resource.id] : [action, resource, id]).filter(Boolean).join('/');
+  return key;
+}
+
 ;// CONCATENATED MODULE: ./packages/core-data/build-module/selectors.js
 /**
  * WordPress dependencies
@@ -21923,7 +21948,7 @@ function canUser(state, action, resource, id) {
   if (isEntity && (!resource.kind || !resource.name)) {
     return false;
   }
-  const key = (isEntity ? [action, resource.kind, resource.name, resource.id] : [action, resource, id]).filter(Boolean).join('/');
+  const key = getUserPermissionCacheKey(action, resource, id);
   return state.userPermissions[key];
 }
 
@@ -22614,7 +22639,8 @@ const resolvers_getCurrentUser = () => async ({
  */
 const resolvers_getEntityRecord = (kind, name, key = '', query) => async ({
   select,
-  dispatch
+  dispatch,
+  registry
 }) => {
   const configs = await dispatch(getOrLoadEntitiesConfig(kind, name));
   const entityConfig = configs.find(config => config.name === name && config.kind === kind);
@@ -22686,10 +22712,28 @@ const resolvers_getEntityRecord = (kind, name, key = '', query) => async ({
           return;
         }
       }
-      const record = await external_wp_apiFetch_default()({
-        path
+      const response = await external_wp_apiFetch_default()({
+        path,
+        parse: false
       });
-      dispatch.receiveEntityRecords(kind, name, record, query);
+      const record = await response.json();
+      const permissions = getUserPermissionsFromResponse(response);
+      registry.batch(() => {
+        dispatch.receiveEntityRecords(kind, name, record, query);
+        for (const action of ALLOWED_RESOURCE_ACTIONS) {
+          const permissionKey = getUserPermissionCacheKey(action, {
+            kind,
+            name,
+            id: key
+          });
+          dispatch.receiveUserPermission(permissionKey, permissions[action]);
+          dispatch.finishResolution('canUser', [action, {
+            kind,
+            name,
+            id: key
+          }]);
+        }
+      });
     }
   } finally {
     dispatch.__unstableReleaseStoreLock(lock);
@@ -22844,8 +22888,7 @@ const resolvers_canUser = (requestedAction, resource, id) => async ({
   dispatch,
   registry
 }) => {
-  const retrievedActions = ['create', 'read', 'update', 'delete'];
-  if (!retrievedActions.includes(requestedAction)) {
+  if (!ALLOWED_RESOURCE_ACTIONS.includes(requestedAction)) {
     throw new Error(`'${requestedAction}' is not a valid action.`);
   }
   let resourcePath = null;
@@ -22868,7 +22911,7 @@ const resolvers_canUser = (requestedAction, resource, id) => async ({
   } = registry.select(STORE_NAME);
 
   // Prevent resolving the same resource twice.
-  for (const relatedAction of retrievedActions) {
+  for (const relatedAction of ALLOWED_RESOURCE_ACTIONS) {
     if (relatedAction === requestedAction) {
       continue;
     }
@@ -22889,24 +22932,10 @@ const resolvers_canUser = (requestedAction, resource, id) => async ({
     // 5xx). The previously determined isAllowed value will remain in the store.
     return;
   }
-
-  // Optional chaining operator is used here because the API requests don't
-  // return the expected result in the native version. Instead, API requests
-  // only return the result, without including response properties like the headers.
-  const allowedMethods = response.headers?.get('allow') || '';
-  const permissions = {};
-  const methods = {
-    create: 'POST',
-    read: 'GET',
-    update: 'PUT',
-    delete: 'DELETE'
-  };
-  for (const [actionName, methodName] of Object.entries(methods)) {
-    permissions[actionName] = allowedMethods.includes(methodName);
-  }
+  const permissions = getUserPermissionsFromResponse(response);
   registry.batch(() => {
-    for (const action of retrievedActions) {
-      const key = (typeof resource === 'object' ? [action, resource.kind, resource.name, resource.id] : [action, resource, id]).filter(Boolean).join('/');
+    for (const action of ALLOWED_RESOURCE_ACTIONS) {
+      const key = getUserPermissionCacheKey(action, resource, id);
       dispatch.receiveUserPermission(key, permissions[action]);
 
       // Mark related action resolutions as finished.
