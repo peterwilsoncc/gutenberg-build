@@ -87,6 +87,14 @@ const {
         imageId
       } = (0,interactivity_namespaceObject.getContext)();
       return state.metadata[imageId].imageButtonTop;
+    },
+    get isContentHidden() {
+      const ctx = (0,interactivity_namespaceObject.getContext)();
+      return state.overlayEnabled && state.currentImageId === ctx.imageId;
+    },
+    get isContentVisible() {
+      const ctx = (0,interactivity_namespaceObject.getContext)();
+      return !state.overlayEnabled && state.currentImageId === ctx.imageId;
     }
   },
   actions: {
@@ -106,8 +114,8 @@ const {
       state.scrollLeftReset = document.documentElement.scrollLeft;
 
       // Sets the current expanded image in the state and enables the overlay.
-      state.currentImageId = imageId;
       state.overlayEnabled = true;
+      state.currentImageId = imageId;
 
       // Computes the styles of the overlay for the animation.
       callbacks.setOverlayStyles();
