@@ -39634,6 +39634,12 @@ const {
     splitting: true,
     anchor: true,
     className: false,
+    __experimentalBorder: {
+      color: true,
+      radius: true,
+      style: true,
+      width: true
+    },
     color: {
       gradients: true,
       link: true,
@@ -39750,6 +39756,12 @@ const paragraph_metadata = {
     splitting: true,
     anchor: true,
     className: false,
+    __experimentalBorder: {
+      color: true,
+      radius: true,
+      style: true,
+      width: true
+    },
     color: {
       gradients: true,
       link: true,
