@@ -6933,6 +6933,10 @@ function isObject(object) {
 /**
  * Sets the server side block definition of blocks.
  *
+ * Ignored from documentation due to being marked as unstable.
+ *
+ * @ignore
+ *
  * @param {Object} definitions Server-side block definitions
  */
 // eslint-disable-next-line camelcase
@@ -6946,7 +6950,7 @@ function unstable__bootstrapServerSideBlockDefinitions(definitions) {
 }
 
 /**
- * Gets block settings from metadata loaded from `block.json` file.
+ * Gets block settings from metadata loaded from `block.json` file
  *
  * @param {Object} metadata            Block metadata loaded from `block.json`.
  * @param {string} metadata.textdomain Textdomain to use with translations.
