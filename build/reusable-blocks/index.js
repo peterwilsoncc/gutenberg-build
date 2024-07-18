@@ -248,17 +248,6 @@ const symbol = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 const external_wp_notices_namespaceObject = window["wp"]["notices"];
 ;// CONCATENATED MODULE: external ["wp","coreData"]
 const external_wp_coreData_namespaceObject = window["wp"]["coreData"];
-;// CONCATENATED MODULE: external ["wp","privateApis"]
-const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
-;// CONCATENATED MODULE: ./packages/reusable-blocks/build-module/lock-unlock.js
-/**
- * WordPress dependencies
- */
-
-const {
-  unlock
-} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/reusable-blocks');
-
 ;// CONCATENATED MODULE: ./packages/reusable-blocks/build-module/components/reusable-blocks-menu-items/reusable-block-convert-button.js
 /**
  * WordPress dependencies
@@ -278,14 +267,6 @@ const {
  */
 
 
-
-
-
-const {
-  useReusableBlocksRenameHint,
-  ReusableBlocksRenameHint
-} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
-
 /**
  * Menu control to convert block(s) to reusable block.
  *
@@ -295,12 +276,14 @@ const {
  * @param {()=>void} props.onClose      Callback to close the menu.
  * @return {import('react').ComponentType} The menu control or null.
  */
+
+
+
 function ReusableBlockConvertButton({
   clientIds,
   rootClientId,
   onClose
 }) {
-  const showRenameHint = useReusableBlocksRenameHint();
   const [syncType, setSyncType] = (0,external_wp_element_namespaceObject.useState)(undefined);
   const [isModalOpen, setIsModalOpen] = (0,external_wp_element_namespaceObject.useState)(false);
   const [title, setTitle] = (0,external_wp_element_namespaceObject.useState)('');
@@ -368,7 +351,7 @@ function ReusableBlockConvertButton({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
       icon: library_symbol,
       onClick: () => setIsModalOpen(true),
-      children: showRenameHint ? (0,external_wp_i18n_namespaceObject.__)('Create pattern/reusable block') : (0,external_wp_i18n_namespaceObject.__)('Create pattern')
+      children: (0,external_wp_i18n_namespaceObject.__)('Create pattern')
     }), isModalOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
       title: (0,external_wp_i18n_namespaceObject.__)('Create pattern'),
       onRequestClose: () => {
@@ -386,7 +369,7 @@ function ReusableBlockConvertButton({
         },
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
           spacing: "5",
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ReusableBlocksRenameHint, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
             __nextHasNoMarginBottom: true,
             label: (0,external_wp_i18n_namespaceObject.__)('Name'),
             value: title,

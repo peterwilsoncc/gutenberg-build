@@ -7785,7 +7785,6 @@ __webpack_require__.d(__webpack_exports__, {
   PanelColorSettings: () => (/* reexport */ panel_color_settings),
   PlainText: () => (/* reexport */ plain_text),
   RecursionProvider: () => (/* reexport */ RecursionProvider),
-  ReusableBlocksRenameHint: () => (/* reexport */ ReusableBlocksRenameHint),
   RichText: () => (/* reexport */ rich_text),
   RichTextShortcut: () => (/* reexport */ RichTextShortcut),
   RichTextToolbarButton: () => (/* reexport */ RichTextToolbarButton),
@@ -73185,86 +73184,6 @@ function PublicPublishDateTimePicker(props, ref) {
 }
 /* harmony default export */ const publish_date_time_picker = ((0,external_wp_element_namespaceObject.forwardRef)(PublicPublishDateTimePicker));
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/close.js
-/**
- * WordPress dependencies
- */
-
-
-const close_close = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m13.06 12 6.47-6.47-1.06-1.06L12 10.94 5.53 4.47 4.47 5.53 10.94 12l-6.47 6.47 1.06 1.06L12 13.06l6.47 6.47 1.06-1.06L13.06 12Z"
-  })
-});
-/* harmony default export */ const library_close = (close_close);
-
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inserter/reusable-block-rename-hint.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-
-
-
-const PREFERENCE_NAME = 'isResuableBlocksrRenameHintVisible';
-/*
- * This hook was added in 6.3 to help users with the transition from Reusable blocks to Patterns.
- * It is only exported for use in the reusable-blocks package as well as block-editor.
- * It will be removed in 6.4. and should not be used in any new code.
- */
-function useReusableBlocksRenameHint() {
-  return (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _select$get;
-    return (_select$get = select(external_wp_preferences_namespaceObject.store).get('core', PREFERENCE_NAME)) !== null && _select$get !== void 0 ? _select$get : true;
-  }, []);
-}
-
-/*
- * This component was added in 6.3 to help users with the transition from Reusable blocks to Patterns.
- * It is only exported for use in the reusable-blocks package as well as block-editor.
- * It will be removed in 6.4. and should not be used in any new code.
- */
-function ReusableBlocksRenameHint() {
-  const isReusableBlocksRenameHint = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _select$get2;
-    return (_select$get2 = select(external_wp_preferences_namespaceObject.store).get('core', PREFERENCE_NAME)) !== null && _select$get2 !== void 0 ? _select$get2 : true;
-  }, []);
-  const ref = (0,external_wp_element_namespaceObject.useRef)();
-  const {
-    set: setPreference
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_preferences_namespaceObject.store);
-  if (!isReusableBlocksRenameHint) {
-    return null;
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-    ref: ref,
-    className: "reusable-blocks-menu-items__rename-hint",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "reusable-blocks-menu-items__rename-hint-content",
-      children: (0,external_wp_i18n_namespaceObject.__)('Reusable blocks are now synced patterns. A synced pattern will behave in exactly the same way as a reusable block.')
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      className: "reusable-blocks-menu-items__rename-hint-dismiss",
-      icon: library_close,
-      iconSize: "16",
-      label: (0,external_wp_i18n_namespaceObject.__)('Dismiss hint'),
-      onClick: () => {
-        // Retain focus when dismissing the element.
-        const previousElement = external_wp_dom_namespaceObject.focus.tabbable.findPrevious(ref.current);
-        previousElement?.focus();
-        setPreference('core', PREFERENCE_NAME, false);
-      },
-      showTooltip: false
-    })]
-  });
-}
-
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/index.js
 /*
  * Block Creation Components
@@ -73388,11 +73307,6 @@ function ReusableBlocksRenameHint() {
 
 
 
-
-
-/*
- * The following rename hint component can be removed in 6.4.
- */
 
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/elements/index.js
@@ -76761,7 +76675,6 @@ function ResolutionTool({
 
 
 
-
 /**
  * Private @wordpress/block-editor APIs.
  */
@@ -76792,8 +76705,6 @@ lock(privateApis, {
   ResolutionTool: ResolutionTool,
   TabbedSidebar: tabbed_sidebar,
   TextAlignmentControl: TextAlignmentControl,
-  ReusableBlocksRenameHint: ReusableBlocksRenameHint,
-  useReusableBlocksRenameHint: useReusableBlocksRenameHint,
   usesContextKey: usesContextKey,
   useFlashEditableBlocks: useFlashEditableBlocks,
   globalStylesDataKey: globalStylesDataKey,
