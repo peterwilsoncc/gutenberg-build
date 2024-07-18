@@ -37179,7 +37179,6 @@ const ItemSubmenuIcon = () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespace
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -37273,7 +37272,6 @@ function NavigationSubmenuEdit({
 }) {
   const {
     label,
-    type,
     url,
     description,
     rel,
@@ -37299,8 +37297,6 @@ function NavigationSubmenuEdit({
   const isDraggingWithin = edit_useIsDraggingWithin(listItemRef);
   const itemLabelPlaceholder = (0,external_wp_i18n_namespaceObject.__)('Add text…');
   const ref = (0,external_wp_element_namespaceObject.useRef)();
-  const pagesPermissions = (0,external_wp_coreData_namespaceObject.useResourcePermissions)('pages');
-  const postsPermissions = (0,external_wp_coreData_namespaceObject.useResourcePermissions)('posts');
   const {
     parentCount,
     isParentOfSelectedBlock,
@@ -37387,12 +37383,6 @@ function NavigationSubmenuEdit({
     range.selectNodeContents(ref.current);
     selection.removeAllRanges();
     selection.addRange(range);
-  }
-  let userCanCreate = false;
-  if (!type || type === 'page') {
-    userCanCreate = pagesPermissions.canCreate;
-  } else if (type === 'post') {
-    userCanCreate = postsPermissions.canCreate;
   }
   const {
     textColor,
@@ -37582,7 +37572,6 @@ function NavigationSubmenuEdit({
             }
           },
           anchor: popoverAnchor,
-          hasCreateSuggestion: userCanCreate,
           onRemove: () => {
             setAttributes({
               url: ''
