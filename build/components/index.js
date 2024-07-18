@@ -38022,13 +38022,6 @@ const options = [{
   label: 'Hex',
   value: 'hex'
 }];
-
-// `isBorderless` is still experimental and not a public prop for InputControl yet.
-const BORDERLESS_SELECT_CONTROL_CONTEXT = {
-  InputBase: {
-    isBorderless: true
-  }
-};
 const UnconnectedColorPicker = (props, forwardedRef) => {
   const {
     enableAlpha = false,
@@ -38063,16 +38056,14 @@ const UnconnectedColorPicker = (props, forwardedRef) => {
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(AuxiliaryColorArtefactWrapper, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(AuxiliaryColorArtefactHStackHeader, {
         justify: "space-between",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ContextSystemProvider, {
-          value: BORDERLESS_SELECT_CONTROL_CONTEXT,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_SelectControl, {
-            __nextHasNoMarginBottom: true,
-            options: options,
-            value: colorType,
-            onChange: nextColorType => setColorType(nextColorType),
-            label: (0,external_wp_i18n_namespaceObject.__)('Color format'),
-            hideLabelFromVision: true
-          })
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_SelectControl, {
+          __nextHasNoMarginBottom: true,
+          options: options,
+          value: colorType,
+          onChange: nextColorType => setColorType(nextColorType),
+          label: (0,external_wp_i18n_namespaceObject.__)('Color format'),
+          hideLabelFromVision: true,
+          variant: "minimal"
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ColorCopyButton, {
           color: safeColordColor,
           colorType: copyFormat || colorType
