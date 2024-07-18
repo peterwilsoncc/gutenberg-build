@@ -26929,6 +26929,9 @@ const image_metadata = {
     filter: {
       duotone: true
     },
+    spacing: {
+      margin: true
+    },
     __experimentalBorder: {
       color: true,
       radius: true,
