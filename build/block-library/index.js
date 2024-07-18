@@ -19048,6 +19048,7 @@ function InputFieldBlock({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
         title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
         children: ['checkbox' !== type && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+          __nextHasNoMarginBottom: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Inline label'),
           checked: inlineLabel,
           onChange: newVal => {
@@ -19056,6 +19057,7 @@ function InputFieldBlock({
             });
           }
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+          __nextHasNoMarginBottom: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Required'),
           checked: required,
           onChange: newVal => {
@@ -38623,6 +38625,7 @@ function PageListEdit({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: [pagesTree.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ComboboxControl, {
+          __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: true,
           className: "editor-page-attributes__parent",
           label: (0,external_wp_i18n_namespaceObject.__)('Parent'),

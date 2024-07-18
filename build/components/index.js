@@ -43419,6 +43419,7 @@ const CardMedia = contextConnect(UnconnectedCardMedia, 'CardMedia');
  *   const [ isChecked, setChecked ] = useState( true );
  *   return (
  *     <CheckboxControl
+ *       __nextHasNoMarginBottom
  *       label="Is author"
  *       help="Is the user a author or not?"
  *       checked={ isChecked }
@@ -46245,6 +46246,7 @@ const getIndexOfMatchingSuggestion = (selectedSuggestion, matchingSuggestions) =
  * 	const [ filteredOptions, setFilteredOptions ] = useState( options );
  * 	return (
  * 		<ComboboxControl
+ * 			__nextHasNoMarginBottom
  * 			label="Font Size"
  * 			value={ fontSize }
  * 			onChange={ setFontSize }

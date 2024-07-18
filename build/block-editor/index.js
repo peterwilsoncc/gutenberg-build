@@ -51528,6 +51528,7 @@ function MediaCategoryPanel({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: baseCssClass,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SearchControl, {
+      __nextHasNoMarginBottom: true,
       className: `${baseCssClass}-search`,
       onChange: setSearch,
       value: search,
