@@ -40905,6 +40905,7 @@ function AddCustomGenericTemplateModalContent({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -41003,6 +41004,7 @@ function NewTemplateModal({
     createErrorNotice,
     createSuccessNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
+  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   const {
     homeUrl
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -41083,7 +41085,7 @@ function NewTemplateModal({
     onRequestClose: onModalClose,
     overlayClassName: modalContent === modalContentMap.customGenericTemplate ? 'edit-site-custom-generic-template__modal' : undefined,
     children: [modalContent === modalContentMap.templatesList && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalGrid, {
-      columns: 3,
+      columns: isMobile ? 2 : 3,
       gap: 4,
       align: "flex-start",
       justify: "center",
