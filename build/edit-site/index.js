@@ -39315,7 +39315,10 @@ function DataviewsPatterns() {
   // Reset the page number when the category changes.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (previousCategoryId !== categoryId) {
-      setView(DEFAULT_VIEW);
+      setView(prevView => ({
+        ...prevView,
+        page: 1
+      }));
     }
   }, [categoryId, previousCategoryId]);
   const {
