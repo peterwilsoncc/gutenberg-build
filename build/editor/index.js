@@ -12966,7 +12966,8 @@ function PrivatePostLastRevision() {
         }),
         className: "editor-private-post-last-revision__button",
         text: revisionsCount,
-        variant: "tertiary"
+        variant: "tertiary",
+        size: "compact"
       })
     })
   });
@@ -16442,6 +16443,91 @@ const cloud = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 });
 /* harmony default export */ const library_cloud = (cloud);
 
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/drafts.js
+/**
+ * WordPress dependencies
+ */
+
+
+const drafts = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm8 4a4 4 0 0 0 4-4H8a4 4 0 0 0 4 4Z"
+  })
+});
+/* harmony default export */ const library_drafts = (drafts);
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/pending.js
+/**
+ * WordPress dependencies
+ */
+
+
+const pending = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm8 4a4 4 0 0 1-4-4h4V8a4 4 0 0 1 0 8Z"
+  })
+});
+/* harmony default export */ const library_pending = (pending);
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/not-allowed.js
+/**
+ * WordPress dependencies
+ */
+
+
+const notAllowed = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M12 18.5A6.5 6.5 0 0 1 6.93 7.931l9.139 9.138A6.473 6.473 0 0 1 12 18.5Zm5.123-2.498a6.5 6.5 0 0 0-9.124-9.124l9.124 9.124ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Z"
+  })
+});
+/* harmony default export */ const not_allowed = (notAllowed);
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/scheduled.js
+/**
+ * WordPress dependencies
+ */
+
+
+const scheduled = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm9 1V8h-1.5v3.5h-2V13H13Z"
+  })
+});
+/* harmony default export */ const library_scheduled = (scheduled);
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/published.js
+/**
+ * WordPress dependencies
+ */
+
+
+const published = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm11.53-1.47-1.06-1.06L11 12.94l-1.47-1.47-1.06 1.06L11 15.06l4.53-4.53Z"
+  })
+});
+/* harmony default export */ const library_published = (published);
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-sticky/check.js
 /**
  * WordPress dependencies
@@ -16535,6 +16621,7 @@ function PostSticky() {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -16546,13 +16633,31 @@ function PostSticky() {
 
 
 
-const labels = {
-  'auto-draft': (0,external_wp_i18n_namespaceObject.__)('Draft'),
-  draft: (0,external_wp_i18n_namespaceObject.__)('Draft'),
-  pending: (0,external_wp_i18n_namespaceObject.__)('Pending'),
-  private: (0,external_wp_i18n_namespaceObject.__)('Private'),
-  future: (0,external_wp_i18n_namespaceObject.__)('Scheduled'),
-  publish: (0,external_wp_i18n_namespaceObject.__)('Published')
+const postStatusesInfo = {
+  'auto-draft': {
+    label: (0,external_wp_i18n_namespaceObject.__)('Draft'),
+    icon: library_drafts
+  },
+  draft: {
+    label: (0,external_wp_i18n_namespaceObject.__)('Draft'),
+    icon: library_drafts
+  },
+  pending: {
+    label: (0,external_wp_i18n_namespaceObject.__)('Pending'),
+    icon: library_pending
+  },
+  private: {
+    label: (0,external_wp_i18n_namespaceObject.__)('Private'),
+    icon: not_allowed
+  },
+  future: {
+    label: (0,external_wp_i18n_namespaceObject.__)('Scheduled'),
+    icon: library_scheduled
+  },
+  publish: {
+    label: (0,external_wp_i18n_namespaceObject.__)('Published'),
+    icon: library_published
+  }
 };
 const STATUS_OPTIONS = [{
   label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -16694,10 +16799,11 @@ function PostStatus() {
         variant: "tertiary",
         size: "compact",
         onClick: onToggle,
+        icon: postStatusesInfo[status]?.icon,
         "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(
         // translators: %s: Current post status.
-        (0,external_wp_i18n_namespaceObject.__)('Change post status: %s'), labels[status]),
-        children: labels[status]
+        (0,external_wp_i18n_namespaceObject.__)('Change post status: %s'), postStatusesInfo[status]?.label),
+        children: postStatusesInfo[status]?.label
       }),
       renderContent: ({
         onClose
@@ -16752,7 +16858,7 @@ function PostStatus() {
       })
     }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "editor-post-status is-read-only",
-      children: labels[status]
+      children: postStatusesInfo[status]?.label
     })
   });
 }
