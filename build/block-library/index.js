@@ -51534,6 +51534,9 @@ const search_metadata = {
         width: true
       }
     },
+    spacing: {
+      margin: true
+    },
     html: false
   },
   editorStyle: "wp-block-search-editor",
