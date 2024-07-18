@@ -39257,6 +39257,9 @@ function DataviewsPatterns() {
     }, {
       header: (0,external_wp_i18n_namespaceObject.__)('Title'),
       id: 'title',
+      getValue: ({
+        item
+      }) => item.title?.raw || item.title,
       render: ({
         item
       }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Title, {
