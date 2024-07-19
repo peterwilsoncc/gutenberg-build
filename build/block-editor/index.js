@@ -42458,92 +42458,106 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
   } = props;
   const hasParentPattern = !!props.context['pattern/overrides'];
   const hasPatternOverridesDefaultBinding = props.attributes.metadata?.bindings?.[DEFAULT_ATTRIBUTE]?.source === 'core/pattern-overrides';
-  const bindings = (0,external_wp_element_namespaceObject.useMemo)(() => replacePatternOverrideDefaultBindings(name, props.attributes.metadata?.bindings), [props.attributes.metadata?.bindings, name]);
+  const blockBindings = (0,external_wp_element_namespaceObject.useMemo)(() => replacePatternOverrideDefaultBindings(name, props.attributes.metadata?.bindings), [props.attributes.metadata?.bindings, name]);
 
   // While this hook doesn't directly call any selectors, `useSelect` is
   // used purposely here to ensure `boundAttributes` is updated whenever
   // there are attribute updates.
   // `source.getValues` may also call a selector via `registry.select`.
   const boundAttributes = (0,external_wp_data_namespaceObject.useSelect)(() => {
-    if (!bindings) {
+    if (!blockBindings) {
       return;
     }
     const attributes = {};
-    for (const [attributeName, boundAttribute] of Object.entries(bindings)) {
-      const source = sources[boundAttribute.source];
-      if (!source?.getValue || !canBindAttribute(name, attributeName)) {
+    const blockBindingsBySource = new Map();
+    for (const [attributeName, binding] of Object.entries(blockBindings)) {
+      const {
+        source: sourceName,
+        args: sourceArgs
+      } = binding;
+      const source = sources[sourceName];
+      if (!source?.getValues || !canBindAttribute(name, attributeName)) {
         continue;
       }
-      const args = {
-        registry,
-        context,
-        clientId,
-        attributeName,
-        args: boundAttribute.args
-      };
-      attributes[attributeName] = source.getValue(args);
-      if (attributes[attributeName] === undefined) {
-        if (attributeName === 'url') {
-          attributes[attributeName] = null;
-        } else {
-          attributes[attributeName] = source.getPlaceholder?.(args);
+      blockBindingsBySource.set(source, {
+        ...blockBindingsBySource.get(source),
+        [attributeName]: {
+          args: sourceArgs
+        }
+      });
+    }
+    if (blockBindingsBySource.size) {
+      for (const [source, bindings] of blockBindingsBySource) {
+        // Get values in batch if the source supports it.
+        const values = source.getValues({
+          registry,
+          context,
+          clientId,
+          bindings
+        });
+        for (const [attributeName, value] of Object.entries(values)) {
+          // Use placeholder when value is undefined.
+          if (value === undefined) {
+            if (attributeName === 'url') {
+              attributes[attributeName] = null;
+            } else {
+              attributes[attributeName] = source.getPlaceholder?.({
+                registry,
+                context,
+                clientId,
+                attributeName,
+                args: bindings[attributeName].args
+              });
+            }
+          } else {
+            attributes[attributeName] = value;
+          }
         }
       }
     }
     return attributes;
-  }, [bindings, name, clientId, context, registry, sources]);
+  }, [blockBindings, name, clientId, context, registry, sources]);
   const {
     setAttributes
   } = props;
   const _setAttributes = (0,external_wp_element_namespaceObject.useCallback)(nextAttributes => {
     registry.batch(() => {
-      if (!bindings) {
+      if (!blockBindings) {
         setAttributes(nextAttributes);
         return;
       }
       const keptAttributes = {
         ...nextAttributes
       };
-      const updatesBySource = new Map();
+      const blockBindingsBySource = new Map();
 
       // Loop only over the updated attributes to avoid modifying the bound ones that haven't changed.
       for (const [attributeName, newValue] of Object.entries(keptAttributes)) {
-        if (!bindings[attributeName] || !canBindAttribute(name, attributeName)) {
+        if (!blockBindings[attributeName] || !canBindAttribute(name, attributeName)) {
           continue;
         }
-        const binding = bindings[attributeName];
+        const binding = blockBindings[attributeName];
         const source = sources[binding?.source];
-        if (!source?.setValue && !source?.setValues) {
+        if (!source?.setValues) {
           continue;
         }
-        updatesBySource.set(source, {
-          ...updatesBySource.get(source),
-          [attributeName]: newValue
+        blockBindingsBySource.set(source, {
+          ...blockBindingsBySource.get(source),
+          [attributeName]: {
+            args: binding.args,
+            newValue
+          }
         });
         delete keptAttributes[attributeName];
       }
-      if (updatesBySource.size) {
-        for (const [source, attributes] of updatesBySource) {
-          if (source.setValues) {
-            source.setValues({
-              registry,
-              context,
-              clientId,
-              attributes
-            });
-          } else {
-            for (const [attributeName, value] of Object.entries(attributes)) {
-              const binding = bindings[attributeName];
-              source.setValue({
-                registry,
-                context,
-                clientId,
-                attributeName,
-                args: binding.args,
-                value
-              });
-            }
-          }
+      if (blockBindingsBySource.size) {
+        for (const [source, bindings] of blockBindingsBySource) {
+          source.setValues({
+            registry,
+            context,
+            clientId,
+            bindings
+          });
         }
       }
       if (
@@ -42558,7 +42572,7 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
         setAttributes(keptAttributes);
       }
     });
-  }, [registry, bindings, name, clientId, context, setAttributes, sources, hasPatternOverridesDefaultBinding, hasParentPattern]);
+  }, [registry, blockBindings, name, clientId, context, setAttributes, sources, hasPatternOverridesDefaultBinding, hasParentPattern]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockEdit, {
       ...props,

@@ -7511,8 +7511,7 @@ const unregisterBlockVariation = (blockName, variationName) => {
  * @param {Object}   source                    Properties of the source to be registered.
  * @param {string}   source.name               The unique and machine-readable name.
  * @param {string}   source.label              Human-readable label.
- * @param {Function} [source.getValue]         Function to get the value of the source.
- * @param {Function} [source.setValue]         Function to update the value of the source.
+ * @param {Function} [source.getValues]        Function to get the values from the source.
  * @param {Function} [source.setValues]        Function to update multiple values connected to the source.
  * @param {Function} [source.getPlaceholder]   Function to get the placeholder when the value is undefined.
  * @param {Function} [source.canUserEditValue] Function to determine if the user can edit the value.
@@ -7525,8 +7524,7 @@ const unregisterBlockVariation = (blockName, variationName) => {
  * registerBlockBindingsSource( {
  *     name: 'plugin/my-custom-source',
  *     label: _x( 'My Custom Source', 'block bindings source' ),
- *     getValue: () => 'Value to place in the block attribute',
- *     setValue: () => updateMyCustomValue(),
+ *     getValues: () => getSourceValues(),
  *     setValues: () => updateMyCustomValuesInBatch(),
  *     getPlaceholder: () => 'Placeholder text when the value is undefined',
  *     canUserEditValue: () => true,
@@ -7537,8 +7535,7 @@ const registerBlockBindingsSource = source => {
   const {
     name,
     label,
-    getValue,
-    setValue,
+    getValues,
     setValues,
     getPlaceholder,
     canUserEditValue
@@ -7583,14 +7580,8 @@ const registerBlockBindingsSource = source => {
     return;
   }
 
-  // Check the `getValue` property is correct.
-  if (getValue && typeof getValue !== 'function') {
-     false ? 0 : void 0;
-    return;
-  }
-
-  // Check the `setValue` property is correct.
-  if (setValue && typeof setValue !== 'function') {
+  // Check the `getValues` property is correct.
+  if (getValues && typeof getValues !== 'function') {
      false ? 0 : void 0;
     return;
   }
@@ -8278,8 +8269,7 @@ function blockBindingsSources(state = {}, action) {
         ...state,
         [action.name]: {
           label: action.label,
-          getValue: action.getValue,
-          setValue: action.setValue,
+          getValues: action.getValues,
           setValues: action.setValues,
           getPlaceholder: action.getPlaceholder,
           canUserEditValue: action.canUserEditValue
@@ -9847,8 +9837,7 @@ function addBlockBindingsSource(source) {
     type: 'ADD_BLOCK_BINDINGS_SOURCE',
     name: source.name,
     label: source.label,
-    getValue: source.getValue,
-    setValue: source.setValue,
+    getValues: source.getValues,
     setValues: source.setValues,
     getPlaceholder: source.getPlaceholder,
     canUserEditValue: source.canUserEditValue

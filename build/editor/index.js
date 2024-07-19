@@ -28614,32 +28614,36 @@ const CONTENT = 'content';
 /* harmony default export */ const pattern_overrides = ({
   name: 'core/pattern-overrides',
   label: (0,external_wp_i18n_namespaceObject._x)('Pattern Overrides', 'block bindings source'),
-  getValue({
+  getValues({
     registry,
     clientId,
     context,
-    attributeName
+    bindings
   }) {
     const patternOverridesContent = context['pattern/overrides'];
     const {
       getBlockAttributes
     } = registry.select(external_wp_blockEditor_namespaceObject.store);
     const currentBlockAttributes = getBlockAttributes(clientId);
-    if (!patternOverridesContent) {
-      return currentBlockAttributes[attributeName];
-    }
-    const overridableValue = patternOverridesContent?.[currentBlockAttributes?.metadata?.name]?.[attributeName];
+    const overridesValues = {};
+    for (const attributeName of Object.keys(bindings)) {
+      const overridableValue = patternOverridesContent?.[currentBlockAttributes?.metadata?.name]?.[attributeName];
 
-    // If there is no pattern client ID, or it is not overwritten, return the default value.
-    if (overridableValue === undefined) {
-      return currentBlockAttributes[attributeName];
+      // If it has not been overriden, return the original value.
+      // Check undefined because empty string is a valid value.
+      if (overridableValue === undefined) {
+        overridesValues[attributeName] = currentBlockAttributes[attributeName];
+        continue;
+      } else {
+        overridesValues[attributeName] = overridableValue === '' ? undefined : overridableValue;
+      }
     }
-    return overridableValue === '' ? undefined : overridableValue;
+    return overridesValues;
   },
   setValues({
     registry,
     clientId,
-    attributes
+    bindings
   }) {
     const {
       getBlockAttributes,
@@ -28652,6 +28656,14 @@ const CONTENT = 'content';
       return;
     }
     const [patternClientId] = getBlockParentsByBlockName(clientId, 'core/block', true);
+
+    // Extract the updated attributes from the source bindings.
+    const attributes = Object.entries(bindings).reduce((attrs, [key, {
+      newValue
+    }]) => {
+      attrs[key] = newValue;
+      return attrs;
+    }, {});
 
     // If there is no pattern client ID, sync blocks with the same name and same attributes.
     if (!patternClientId) {
@@ -28706,23 +28718,32 @@ const CONTENT = 'content';
   }) {
     return args.key;
   },
-  getValue({
+  getValues({
     registry,
     context,
-    args
+    bindings
   }) {
-    return registry.select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', context?.postType, context?.postId).meta?.[args.key];
+    const meta = registry.select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', context?.postType, context?.postId)?.meta;
+    const newValues = {};
+    for (const [attributeName, source] of Object.entries(bindings)) {
+      newValues[attributeName] = meta?.[source.args.key];
+    }
+    return newValues;
   },
-  setValue({
+  setValues({
     registry,
     context,
-    args,
-    value
+    bindings
   }) {
+    const newMeta = {};
+    Object.values(bindings).forEach(({
+      args,
+      newValue
+    }) => {
+      newMeta[args.key] = newValue;
+    });
     registry.dispatch(external_wp_coreData_namespaceObject.store).editEntityRecord('postType', context?.postType, context?.postId, {
-      meta: {
-        [args.key]: value
-      }
+      meta: newMeta
     });
   },
   canUserEditValue({
