@@ -34655,7 +34655,10 @@ const getNodesWithStyles = (tree, blockSelectors) => {
   if (styles) {
     nodes.push({
       styles,
-      selector: ROOT_BLOCK_SELECTOR
+      selector: ROOT_BLOCK_SELECTOR,
+      // Root selector (body) styles should not be wrapped in `:root where()` to keep
+      // specificity at (0,0,1) and maintain backwards compatibility.
+      skipSelectorWrapper: true
     });
   }
   Object.entries(external_wp_blocks_namespaceObject.__EXPERIMENTAL_ELEMENTS).forEach(([name, selector]) => {
