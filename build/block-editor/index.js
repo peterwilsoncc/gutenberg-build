@@ -61267,7 +61267,8 @@ function ZoomOutPopover({
   const props = {
     ...popoverProps,
     placement: 'left-start',
-    flip: false
+    flip: false,
+    shift: true
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_popover, {
     clientId: capturingClientId || clientId,
