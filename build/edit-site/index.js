@@ -36476,7 +36476,7 @@ function DataViews({
   const [openedFilter, setOpenedFilter] = (0,external_wp_element_namespaceObject.useState)(null);
   function setSelectionWithChange(value) {
     const newValue = typeof value === 'function' ? value(selection) : value;
-    if (!isUncontrolled) {
+    if (isUncontrolled) {
       setSelectionState(newValue);
     }
     if (onChangeSelection) {
@@ -39211,7 +39211,6 @@ function DataviewsPatterns() {
       categoryId: categoryIdFromURL
     }
   } = page_patterns_useLocation();
-  const [selection, setSelection] = (0,external_wp_element_namespaceObject.useState)([]);
   const type = postType || PATTERN_TYPES.user;
   const categoryId = categoryIdFromURL || PATTERN_DEFAULT_CATEGORY;
   const [view, setView] = (0,external_wp_element_namespaceObject.useState)(DEFAULT_VIEW);
@@ -39383,8 +39382,6 @@ function DataviewsPatterns() {
         isLoading: isResolving,
         view: view,
         onChangeView: setView,
-        selection: selection,
-        onChangeSelection: setSelection,
         defaultLayouts: page_patterns_defaultLayouts
       })]
     })
