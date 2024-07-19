@@ -48869,6 +48869,13 @@ const InserterDraggableBlocks = ({
     startDragging,
     stopDragging
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  if (!isEnabled) {
+    return children({
+      draggable: false,
+      onDragStart: undefined,
+      onDragEnd: undefined
+    });
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Draggable, {
     __experimentalTransferDataType: "wp-blocks",
     transferData: transferData,
@@ -48892,9 +48899,9 @@ const InserterDraggableBlocks = ({
       onDraggableEnd
     }) => {
       return children({
-        draggable: isEnabled,
-        onDragStart: isEnabled ? onDraggableStart : undefined,
-        onDragEnd: isEnabled ? onDraggableEnd : undefined
+        draggable: true,
+        onDragStart: onDraggableStart,
+        onDragEnd: onDraggableEnd
       });
     }
   });
