@@ -3092,8 +3092,6 @@ function WidgetAreasBlockEditorProvider({
       name: 'site'
     }) ? getEntityRecord('root', 'site') : undefined;
     return {
-      widgetAreas: select(store_store).getWidgetAreas(),
-      widgets: select(store_store).getWidgets(),
       reusableBlocks: ALLOW_REUSABLE_BLOCKS ? getEntityRecords('postType', 'wp_block') : EMPTY_ARRAY,
       isFixedToolbarActive: !!select(external_wp_preferences_namespaceObject.store).get('core/edit-widgets', 'fixedToolbar'),
       keepCaretInsideBlock: !!select(external_wp_preferences_namespaceObject.store).get('core/edit-widgets', 'keepCaretInsideBlock'),
