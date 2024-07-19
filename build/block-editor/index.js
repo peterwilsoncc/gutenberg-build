@@ -61465,21 +61465,19 @@ function useShowBlockTools() {
       isTyping
     } = select(store);
     const clientId = getSelectedBlockClientId() || getFirstMultiSelectedBlockClientId();
-    const block = getBlock(clientId) || {
-      name: '',
-      attributes: {}
-    };
+    const block = getBlock(clientId);
     const editorMode = __unstableGetEditorMode();
-    const hasSelectedBlock = clientId && block?.name;
-    const isEmptyDefaultBlock = (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(block);
+    const hasSelectedBlock = !!clientId && !!block;
+    const isEmptyDefaultBlock = hasSelectedBlock && (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(block);
     const _showEmptyBlockSideInserter = clientId && !isTyping() && editorMode === 'edit' && isEmptyDefaultBlock;
     const maybeShowBreadcrumb = hasSelectedBlock && !hasMultiSelection() && editorMode === 'navigation';
-    const _showBlockToolbarPopover = editorMode !== 'zoom-out' && !getSettings().hasFixedToolbar && !_showEmptyBlockSideInserter && hasSelectedBlock && !isEmptyDefaultBlock && !maybeShowBreadcrumb;
+    const isZoomOut = editorMode === 'zoom-out';
+    const _showBlockToolbarPopover = !isZoomOut && !getSettings().hasFixedToolbar && !_showEmptyBlockSideInserter && hasSelectedBlock && !isEmptyDefaultBlock && !maybeShowBreadcrumb;
     return {
       showEmptyBlockSideInserter: _showEmptyBlockSideInserter,
       showBreadcrumb: !_showEmptyBlockSideInserter && maybeShowBreadcrumb,
       showBlockToolbarPopover: _showBlockToolbarPopover,
-      showZoomOutToolbar: editorMode === 'zoom-out' && !_showEmptyBlockSideInserter && !maybeShowBreadcrumb && !_showBlockToolbarPopover
+      showZoomOutToolbar: hasSelectedBlock && isZoomOut && !_showEmptyBlockSideInserter && !maybeShowBreadcrumb && !_showBlockToolbarPopover
     };
   }, []);
 }
