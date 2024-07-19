@@ -25267,7 +25267,7 @@ function normalizeFields(fields) {
   });
 }
 
-;// CONCATENATED MODULE: ./packages/dataviews/build-module/dataform.js
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/components/dataform/index.js
 /**
  * External dependencies
  */
