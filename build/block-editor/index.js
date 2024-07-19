@@ -7995,6 +7995,7 @@ __webpack_require__.d(selectors_namespaceObject, {
   getDraggedBlockClientIds: () => (getDraggedBlockClientIds),
   getFirstMultiSelectedBlockClientId: () => (getFirstMultiSelectedBlockClientId),
   getGlobalBlockCount: () => (getGlobalBlockCount),
+  getHoveredBlockClientId: () => (getHoveredBlockClientId),
   getInserterItems: () => (getInserterItems),
   getLastMultiSelectedBlockClientId: () => (getLastMultiSelectedBlockClientId),
   getLowestCommonAncestorWithSelectedBlock: () => (getLowestCommonAncestorWithSelectedBlock),
@@ -8086,6 +8087,7 @@ __webpack_require__.d(actions_namespaceObject, {
   exitFormattedText: () => (exitFormattedText),
   flashBlock: () => (flashBlock),
   hideInsertionPoint: () => (hideInsertionPoint),
+  hoverBlock: () => (hoverBlock),
   insertAfterBlock: () => (insertAfterBlock),
   insertBeforeBlock: () => (insertBeforeBlock),
   insertBlock: () => (insertBlock),
@@ -10337,6 +10339,22 @@ function lastFocus(state = false, action) {
   }
   return state;
 }
+
+/**
+ * Reducer setting currently hovered block.
+ *
+ * @param {boolean} state  Current state.
+ * @param {Object}  action Dispatched action.
+ *
+ * @return {boolean} Updated state.
+ */
+function hoveredBlockClientId(state = false, action) {
+  switch (action.type) {
+    case 'HOVER_BLOCK':
+      return action.clientId;
+  }
+  return state;
+}
 const combinedReducers = (0,external_wp_data_namespaceObject.combineReducers)({
   blocks,
   isDragging,
@@ -10368,7 +10386,8 @@ const combinedReducers = (0,external_wp_data_namespaceObject.combineReducers)({
   removalPromptData,
   blockRemovalRules,
   openedBlockSettingsMenu,
-  registeredInserterMediaCategories
+  registeredInserterMediaCategories,
+  hoveredBlockClientId
 });
 function withAutomaticChangeReset(reducer) {
   return (state, action) => {
@@ -13545,6 +13564,16 @@ function isBlockVisible(state, clientId) {
 }
 
 /**
+ * Returns the currently hovered block.
+ *
+ * @param {Object} state Global application state.
+ * @return {Object} Client Id of the hovered block.
+ */
+function getHoveredBlockClientId(state) {
+  return state.hoveredBlockClientId;
+}
+
+/**
  * Returns the list of all hidden blocks.
  *
  * @param {Object} state Global application state.
@@ -14390,6 +14419,21 @@ function selectBlock(clientId, initialPosition = 0) {
   return {
     type: 'SELECT_BLOCK',
     initialPosition,
+    clientId
+  };
+}
+
+/**
+ * Returns an action object used in signalling that the block with the
+ * specified client ID has been hovered.
+ *
+ * @param {string} clientId Block client ID.
+ *
+ * @return {Object} Action object.
+ */
+function hoverBlock(clientId) {
+  return {
+    type: 'HOVER_BLOCK',
     clientId
   };
 }
@@ -41960,20 +42004,36 @@ function useFocusFirstElement({
  * WordPress dependencies
  */
 
-function listener(event) {
-  if (event.defaultPrevented) {
-    return;
-  }
-  const action = event.type === 'mouseover' ? 'add' : 'remove';
-  event.preventDefault();
-  event.currentTarget.classList[action]('is-hovered');
-}
+
+
+/**
+ * Internal dependencies
+ */
+
 
 /*
  * Adds `is-hovered` class when the block is hovered and in navigation or
  * outline mode.
  */
-function useIsHovered() {
+function useIsHovered({
+  clientId
+}) {
+  const {
+    hoverBlock
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  function listener(event) {
+    if (event.defaultPrevented) {
+      return;
+    }
+    const action = event.type === 'mouseover' ? 'add' : 'remove';
+    event.preventDefault();
+    event.currentTarget.classList[action]('is-hovered');
+    if (action === 'add') {
+      hoverBlock(clientId);
+    } else {
+      hoverBlock(null);
+    }
+  }
   return (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
     node.addEventListener('mouseout', listener);
     node.addEventListener('mouseover', listener);
@@ -41983,6 +42043,7 @@ function useIsHovered() {
 
       // Remove class in case it lingers.
       node.classList.remove('is-hovered');
+      hoverBlock(null);
     };
   }, []);
 }
@@ -42645,7 +42706,9 @@ function use_block_props_useBlockProps(props = {}, {
   }), useBlockRefProvider(clientId), useFocusHandler(clientId), useEventHandlers({
     clientId,
     isSelected
-  }), useNavModeExit(clientId), useIsHovered(), useIntersectionObserver(), use_moving_animation({
+  }), useNavModeExit(clientId), useIsHovered({
+    clientId
+  }), useIntersectionObserver(), use_moving_animation({
     triggerAnimationOnChange: index,
     clientId
   }), (0,external_wp_compose_namespaceObject.useDisabled)({
@@ -61207,13 +61270,48 @@ function ZoomOutPopover({
   });
 }
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-tools/zoom-out-mode-inserters.js
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-tools/zoom-out-mode-inserter-button.js
+/**
+ * External dependencies
+ */
+
+
 /**
  * WordPress dependencies
  */
 
 
 
+
+
+function ZoomOutModeInserterButton({
+  isVisible,
+  onClick
+}) {
+  const [zoomOutModeInserterButtonHovered, setZoomOutModeInserterButtonHovered] = (0,external_wp_element_namespaceObject.useState)(false);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    variant: "primary",
+    icon: library_plus,
+    size: "compact",
+    className: dist_clsx('block-editor-button-pattern-inserter__button', 'block-editor-block-tools__zoom-out-mode-inserter-button', {
+      'is-visible': isVisible || zoomOutModeInserterButtonHovered
+    }),
+    onClick: onClick,
+    onMouseOver: () => {
+      setZoomOutModeInserterButtonHovered(true);
+    },
+    onMouseOut: () => {
+      setZoomOutModeInserterButtonHovered(false);
+    },
+    label: (0,external_wp_i18n_namespaceObject._x)('Add pattern', 'Generic label for pattern inserter button')
+  });
+}
+/* harmony default export */ const zoom_out_mode_inserter_button = (ZoomOutModeInserterButton);
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-tools/zoom-out-mode-inserters.js
+/**
+ * WordPress dependencies
+ */
 
 
 
@@ -61225,19 +61323,24 @@ function ZoomOutPopover({
 
 
 
+
 function ZoomOutModeInserters() {
   const [isReady, setIsReady] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
+    hasSelection,
     blockOrder,
-    sectionRootClientId,
     insertionPoint,
     setInserterIsOpened,
-    hasSelection
+    sectionRootClientId,
+    selectedBlockClientId,
+    hoveredBlockClientId
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getSettings,
       getBlockOrder,
-      getSelectionStart
+      getSelectionStart,
+      getSelectedBlockClientId,
+      getHoveredBlockClientId
     } = select(store);
     const {
       sectionRootClientId: root
@@ -61254,7 +61357,9 @@ function ZoomOutModeInserters() {
       blockOrder: getBlockOrder(root),
       insertionPoint: unlock(editor).getInsertionPoint(),
       sectionRootClientId: root,
-      setInserterIsOpened: getSettings().__experimentalSetIsInserterOpened
+      setInserterIsOpened: getSettings().__experimentalSetIsInserterOpened,
+      selectedBlockClientId: getSelectedBlockClientId(),
+      hoveredBlockClientId: getHoveredBlockClientId()
     };
   }, []);
   const isMounted = (0,external_wp_element_namespaceObject.useRef)(false);
@@ -61276,14 +61381,23 @@ function ZoomOutModeInserters() {
       clearTimeout(timeout);
     };
   }, []);
-  if (!isReady || !hasSelection) {
+  if (!isReady) {
     return null;
   }
   return [undefined, ...blockOrder].map((clientId, index) => {
+    const shouldRenderInserter = insertionPoint.insertionIndex !== index;
+    const shouldRenderInsertionPoint = insertionPoint.insertionIndex === index;
+    if (!shouldRenderInserter && !shouldRenderInsertionPoint) {
+      return null;
+    }
+    const previousClientId = clientId;
+    const nextClientId = blockOrder[index];
+    const isSelected = hasSelection && (selectedBlockClientId === previousClientId || selectedBlockClientId === nextClientId);
+    const isHovered = hoveredBlockClientId === previousClientId || hoveredBlockClientId === nextClientId;
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(inbetween, {
-      previousClientId: clientId,
-      nextClientId: blockOrder[index],
-      children: [insertionPoint.insertionIndex === index && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      previousClientId: previousClientId,
+      nextClientId: nextClientId,
+      children: [shouldRenderInsertionPoint && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         style: {
           borderRadius: '0',
           height: '12px',
@@ -61292,11 +61406,8 @@ function ZoomOutModeInserters() {
           width: '100%'
         },
         className: "block-editor-block-list__insertion-point-indicator"
-      }), insertionPoint.insertionIndex !== index && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        variant: "primary",
-        icon: library_plus,
-        size: "compact",
-        className: "block-editor-button-pattern-inserter__button",
+      }), shouldRenderInserter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_mode_inserter_button, {
+        isVisible: isSelected || isHovered,
         onClick: () => {
           setInserterIsOpened({
             rootClientId: sectionRootClientId,
@@ -61304,8 +61415,7 @@ function ZoomOutModeInserters() {
             tab: 'patterns',
             category: 'all'
           });
-        },
-        label: (0,external_wp_i18n_namespaceObject._x)('Add pattern', 'Generic label for pattern inserter button')
+        }
       })]
     }, index);
   });
