@@ -70712,7 +70712,7 @@ function RichTextWrapper({
 
         // If the source is not defined, or if its value of `canUserEditValue` is `false`, disable it.
         const blockBindingsSource = getBlockBindingsSource(binding.source);
-        if (!blockBindingsSource?.canUserEditValue({
+        if (!blockBindingsSource?.canUserEditValue?.({
           select,
           context: blockContext,
           args: binding.args

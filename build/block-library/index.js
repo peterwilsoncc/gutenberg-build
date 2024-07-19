@@ -5085,7 +5085,7 @@ function ButtonEdit(props) {
     }
     const blockBindingsSource = unlock(select(external_wp_blocks_namespaceObject.store)).getBlockBindingsSource(metadata?.bindings?.url?.source);
     return {
-      lockUrlControls: !!metadata?.bindings?.url && !blockBindingsSource?.canUserEditValue({
+      lockUrlControls: !!metadata?.bindings?.url && !blockBindingsSource?.canUserEditValue?.({
         select,
         context,
         args: metadata?.bindings?.url?.args
@@ -25814,7 +25814,7 @@ function image_Image({
     const altBindingSource = getBlockBindingsSource(altBinding?.source);
     const titleBindingSource = getBlockBindingsSource(titleBinding?.source);
     return {
-      lockUrlControls: !!urlBinding && !urlBindingSource?.canUserEditValue({
+      lockUrlControls: !!urlBinding && !urlBindingSource?.canUserEditValue?.({
         select,
         context,
         args: urlBinding?.args
@@ -25827,14 +25827,14 @@ function image_Image({
       // Disable editing the caption if the image is inside a pattern instance.
       // This is a temporary solution until we support overriding the caption on the frontend.
       hasParentPattern,
-      lockAltControls: !!altBinding && !altBindingSource?.canUserEditValue({
+      lockAltControls: !!altBinding && !altBindingSource?.canUserEditValue?.({
         select,
         context,
         args: altBinding?.args
       }),
       lockAltControlsMessage: altBindingSource?.label ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Label of the bindings source. */
       (0,external_wp_i18n_namespaceObject.__)('Connected to %s'), altBindingSource.label) : (0,external_wp_i18n_namespaceObject.__)('Connected to dynamic data'),
-      lockTitleControls: !!titleBinding && !titleBindingSource?.canUserEditValue({
+      lockTitleControls: !!titleBinding && !titleBindingSource?.canUserEditValue?.({
         select,
         context,
         args: titleBinding?.args
@@ -26473,7 +26473,7 @@ function ImageEdit({
     }
     const blockBindingsSource = unlock(select(external_wp_blocks_namespaceObject.store)).getBlockBindingsSource(metadata?.bindings?.url?.source);
     return {
-      lockUrlControls: !!metadata?.bindings?.url && !blockBindingsSource?.canUserEditValue({
+      lockUrlControls: !!metadata?.bindings?.url && !blockBindingsSource?.canUserEditValue?.({
         select,
         context,
         args: metadata?.bindings?.url?.args
