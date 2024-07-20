@@ -59579,6 +59579,8 @@ function TitleModal({
 
 
 
+
+
 /**
  * Internal dependencies
  */
@@ -59598,20 +59600,38 @@ function TemplatePartPlaceholder({
     isResolving
   } = useAlternativeTemplateParts(area, templatePartId);
   const blockPatterns = useAlternativeBlockPatterns(area, clientId);
+  const {
+    isBlockBasedTheme,
+    canCreateTemplatePart
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getCurrentTheme,
+      canUser
+    } = select(external_wp_coreData_namespaceObject.store);
+    return {
+      isBlockBasedTheme: getCurrentTheme()?.is_block_theme,
+      canCreateTemplatePart: canUser('create', {
+        kind: 'postType',
+        name: 'wp_template_part'
+      })
+    };
+  }, []);
   const [showTitleModal, setShowTitleModal] = (0,external_wp_element_namespaceObject.useState)(false);
   const areaObject = useTemplatePartArea(area);
   const createFromBlocks = useCreateTemplatePartFromBlocks(area, setAttributes);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Placeholder, {
     icon: areaObject.icon,
     label: areaObject.label,
-    instructions: (0,external_wp_i18n_namespaceObject.sprintf)(
+    instructions: isBlockBasedTheme ? (0,external_wp_i18n_namespaceObject.sprintf)(
     // Translators: %s as template part area title ("Header", "Footer", etc.).
-    (0,external_wp_i18n_namespaceObject.__)('Choose an existing %s or create a new one.'), areaObject.label.toLowerCase()),
+    (0,external_wp_i18n_namespaceObject.__)('Choose an existing %s or create a new one.'), areaObject.label.toLowerCase()) : (0,external_wp_i18n_namespaceObject.sprintf)(
+    // Translators: %s as template part area title ("Header", "Footer", etc.).
+    (0,external_wp_i18n_namespaceObject.__)('Choose an existing %s.'), areaObject.label.toLowerCase()),
     children: [isResolving && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}), !isResolving && !!(templateParts.length || blockPatterns.length) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       variant: "primary",
       onClick: onOpenSelectionModal,
       children: (0,external_wp_i18n_namespaceObject.__)('Choose')
-    }), !isResolving && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    }), !isResolving && isBlockBasedTheme && canCreateTemplatePart && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       variant: "secondary",
       onClick: () => {
         setShowTitleModal(true);
