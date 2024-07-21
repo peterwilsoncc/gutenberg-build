@@ -26535,7 +26535,7 @@ function PostCardPanel({
         lineHeight: "20px",
         children: [title ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title) : (0,external_wp_i18n_namespaceObject.__)('No Title'), isFrontPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: "editor-post-card-panel__title-badge",
-          children: (0,external_wp_i18n_namespaceObject.__)('Front Page')
+          children: (0,external_wp_i18n_namespaceObject.__)('Homepage')
         }), isPostsPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: "editor-post-card-panel__title-badge",
           children: (0,external_wp_i18n_namespaceObject.__)('Posts Page')

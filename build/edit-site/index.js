@@ -37571,7 +37571,7 @@ function PostList({
       if (item.id === frontPageId) {
         suffix = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: "edit-site-post-list__title-badge",
-          children: (0,external_wp_i18n_namespaceObject.__)('Front Page')
+          children: (0,external_wp_i18n_namespaceObject.__)('Homepage')
         });
       } else if (item.id === postsPageId) {
         suffix = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
