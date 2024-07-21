@@ -22905,19 +22905,17 @@ const EditorContentSlotFill = createPrivateSlotFill(SLOT_FILL_NAME);
 // Keeping an old name for backward compatibility.
 
 const slotName = '__experimentalMainDashboardButton';
+const useHasBackButton = () => {
+  const fills = (0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(slotName);
+  return Boolean(fills && fills.length);
+};
 const {
   Fill: back_button_Fill,
   Slot: back_button_Slot
 } = (0,external_wp_components_namespaceObject.createSlotFill)(slotName);
 const BackButton = back_button_Fill;
-const BackButtonSlot = ({
-  children
-}) => {
+const BackButtonSlot = () => {
   const fills = (0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(slotName);
-  const hasFills = Boolean(fills && fills.length);
-  if (!hasFills) {
-    return children;
-  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(back_button_Slot, {
     bubblesVirtually: true,
     fillProps: {
@@ -22984,7 +22982,7 @@ const previous = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(e
 const {
   useHasBlockToolbar
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
-function CollapsableBlockToolbar({
+function CollapsibleBlockToolbar({
   isCollapsed,
   onToggle
 }) {
@@ -23027,7 +23025,6 @@ function CollapsableBlockToolbar({
     })]
   });
 }
-/* harmony default export */ const collapsible_block_toolbar = (CollapsableBlockToolbar);
 
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/plus.js
 /**
@@ -23846,11 +23843,6 @@ function PreviewDropdown({
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/header/index.js
 /**
- * External dependencies
- */
-
-
-/**
  * WordPress dependencies
  */
 
@@ -23921,6 +23913,7 @@ function Header({
 }) {
   const isWideViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('large');
   const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
+  const isTooNarrowForDocumentBar = (0,external_wp_compose_namespaceObject.useMediaQuery)('(max-width: 403px)');
   const {
     isTextEditor,
     isPublishSidebarOpened,
@@ -23949,14 +23942,16 @@ function Header({
       isZoomedOutView: __unstableGetEditorMode() === 'zoom-out'
     };
   }, []);
-  const hasTopToolbar = isLargeViewport && hasFixedToolbar;
   const [isBlockToolsCollapsed, setIsBlockToolsCollapsed] = (0,external_wp_element_namespaceObject.useState)(true);
+  const hasCenter = isBlockToolsCollapsed && !isTooNarrowForDocumentBar;
+  const hasBackButton = useHasBackButton();
 
   // The edit-post-header classname is only kept for backward compatibilty
   // as some plugins might be relying on its presence.
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "editor-header edit-post-header",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
+    children: [hasBackButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
+      className: "editor-header__back-button",
       variants: backButtonVariations,
       transition: {
         type: 'tween'
@@ -23970,18 +23965,20 @@ function Header({
       },
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(document_tools, {
         disableBlockTools: forceDisableBlockTools || isTextEditor
-      }), hasTopToolbar && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(collapsible_block_toolbar, {
+      }), hasFixedToolbar && isLargeViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollapsibleBlockToolbar, {
         isCollapsed: isBlockToolsCollapsed,
         onToggle: setIsBlockToolsCollapsed
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: dist_clsx('editor-header__center', {
-          'is-collapsed': !isBlockToolsCollapsed && hasTopToolbar
-        }),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DocumentBar, {
-          title: title,
-          icon: icon
-        })
       })]
+    }), hasCenter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
+      className: "editor-header__center",
+      variants: toolbarVariations,
+      transition: {
+        type: 'tween'
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DocumentBar, {
+        title: title,
+        icon: icon
+      })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__unstableMotion.div, {
       variants: toolbarVariations,
       transition: {
