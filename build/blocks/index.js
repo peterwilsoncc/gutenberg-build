@@ -5966,6 +5966,7 @@ var private_actions_namespaceObject = {};
 __webpack_require__.r(private_actions_namespaceObject);
 __webpack_require__.d(private_actions_namespaceObject, {
   addBlockBindingsSource: () => (addBlockBindingsSource),
+  addBootstrappedBlockBindingsSource: () => (addBootstrappedBlockBindingsSource),
   addBootstrappedBlockType: () => (addBootstrappedBlockType),
   addUnprocessedBlockType: () => (addUnprocessedBlockType),
   removeBlockBindingsSource: () => (removeBlockBindingsSource)
@@ -7510,7 +7511,7 @@ const unregisterBlockVariation = (blockName, variationName) => {
  *
  * @param {Object}   source                    Properties of the source to be registered.
  * @param {string}   source.name               The unique and machine-readable name.
- * @param {string}   source.label              Human-readable label.
+ * @param {string}   [source.label]            Human-readable label.
  * @param {Function} [source.getValues]        Function to get the values from the source.
  * @param {Function} [source.setValues]        Function to update multiple values connected to the source.
  * @param {Function} [source.getPlaceholder]   Function to get the placeholder when the value is undefined.
@@ -7540,10 +7541,13 @@ const registerBlockBindingsSource = source => {
     getPlaceholder,
     canUserEditValue
   } = source;
-
-  // Check if the source is already registered.
   const existingSource = unlock((0,external_wp_data_namespaceObject.select)(store)).getBlockBindingsSource(name);
-  if (existingSource) {
+
+  /*
+   * Check if the source has been already registered on the client.
+   * If the `getValues` property is defined, it could be assumed the source is already registered.
+   */
+  if (existingSource?.getValues) {
      false ? 0 : void 0;
     return;
   }
@@ -7571,11 +7575,15 @@ const registerBlockBindingsSource = source => {
   }
 
   // Check the `label` property is correct.
-  if (!label) {
+  if (label && existingSource?.label) {
      false ? 0 : void 0;
     return;
   }
-  if (typeof label !== 'string') {
+  if (!label && !existingSource?.label) {
+     false ? 0 : void 0;
+    return;
+  }
+  if (label && typeof label !== 'string') {
      false ? 0 : void 0;
     return;
   }
@@ -8268,11 +8276,20 @@ function blockBindingsSources(state = {}, action) {
       return {
         ...state,
         [action.name]: {
-          label: action.label,
+          // Don't override the label if it's already set.
+          label: state[action.name]?.label || action.label,
           getValues: action.getValues,
           setValues: action.setValues,
           getPlaceholder: action.getPlaceholder,
           canUserEditValue: action.canUserEditValue
+        }
+      };
+    case 'ADD_BOOTSTRAPPED_BLOCK_BINDINGS_SOURCE':
+      return {
+        ...state,
+        [action.name]: {
+          label: action.label,
+          usesContext: action.usesContext
         }
       };
     case 'REMOVE_BLOCK_BINDINGS_SOURCE':
@@ -9853,6 +9870,20 @@ function removeBlockBindingsSource(name) {
   return {
     type: 'REMOVE_BLOCK_BINDINGS_SOURCE',
     name
+  };
+}
+
+/**
+ * Add bootstrapped block bindings sources, usually initialized from the server.
+ *
+ * @param {string} source Name of the source to bootstrap.
+ */
+function addBootstrappedBlockBindingsSource(source) {
+  return {
+    type: 'ADD_BOOTSTRAPPED_BLOCK_BINDINGS_SOURCE',
+    name: source.name,
+    label: source.label,
+    usesContext: source.usesContext
   };
 }
 

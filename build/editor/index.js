@@ -28609,11 +28609,9 @@ function registerDefaultActions() {
  * WordPress dependencies
  */
 
-
 const CONTENT = 'content';
 /* harmony default export */ const pattern_overrides = ({
   name: 'core/pattern-overrides',
-  label: (0,external_wp_i18n_namespaceObject._x)('Pattern Overrides', 'block bindings source'),
   getValues({
     registry,
     clientId,
@@ -28705,14 +28703,12 @@ const CONTENT = 'content';
  */
 
 
-
 /**
  * Internal dependencies
  */
 
 /* harmony default export */ const post_meta = ({
   name: 'core/post-meta',
-  label: (0,external_wp_i18n_namespaceObject._x)('Post Meta', 'block bindings source'),
   getPlaceholder({
     args
   }) {
@@ -28787,6 +28783,7 @@ const CONTENT = 'content';
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -28810,6 +28807,32 @@ function registerCoreBlockBindingsSources() {
   } = unlock(external_wp_blocks_namespaceObject.privateApis);
   registerBlockBindingsSource(pattern_overrides);
   registerBlockBindingsSource(post_meta);
+}
+
+/**
+ * Function to bootstrap core block bindings sources defined in the server.
+ *
+ * @param {Object} sources Object containing the sources to bootstrap.
+ *
+ * @example
+ * ```js
+ * import { bootstrapBlockBindingsSourcesFromServer } from '@wordpress/editor';
+ *
+ * bootstrapBlockBindingsSourcesFromServer( sources );
+ * ```
+ */
+function bootstrapBlockBindingsSourcesFromServer(sources) {
+  if (sources) {
+    const {
+      addBootstrappedBlockBindingsSource
+    } = unlock((0,external_wp_data_namespaceObject.dispatch)(external_wp_blocks_namespaceObject.store));
+    for (const [name, args] of Object.entries(sources)) {
+      addBootstrappedBlockBindingsSource({
+        name,
+        ...args
+      });
+    }
+  }
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/private-apis.js
@@ -28858,6 +28881,7 @@ lock(privateApis, {
   ResizableEditor: resizable_editor,
   registerDefaultActions: registerDefaultActions,
   registerCoreBlockBindingsSources: registerCoreBlockBindingsSources,
+  bootstrapBlockBindingsSourcesFromServer: bootstrapBlockBindingsSourcesFromServer,
   // This is a temporary private API while we're updating the site editor to use EditorProvider.
   useBlockEditorSettings: use_block_editor_settings,
   interfaceStore,

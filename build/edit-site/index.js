@@ -44666,7 +44666,8 @@ function initializePostsDashboard(id, settings) {
 
 const {
   registerDefaultActions,
-  registerCoreBlockBindingsSources
+  registerCoreBlockBindingsSources,
+  bootstrapBlockBindingsSourcesFromServer
 } = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
 
 /**
@@ -44683,6 +44684,7 @@ function initializeEditor(id, settings) {
     name
   }) => name !== 'core/freeform');
   (0,external_wp_blockLibrary_namespaceObject.registerCoreBlocks)(coreBlocks);
+  bootstrapBlockBindingsSourcesFromServer(settings?.blockBindingsSources);
   registerCoreBlockBindingsSources();
   (0,external_wp_data_namespaceObject.dispatch)(external_wp_blocks_namespaceObject.store).setFreeformFallbackBlockName('core/html');
   (0,external_wp_widgets_namespaceObject.registerLegacyWidgetBlock)({
