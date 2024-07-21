@@ -37180,6 +37180,10 @@ function useTooltipPosition({
 
 
 const range_control_noop = () => {};
+function range_control_useUniqueId(idProp) {
+  const id = (0,external_wp_compose_namespaceObject.useInstanceId)(UnforwardedRangeControl, 'inspector-range-control');
+  return idProp || id;
+}
 function UnforwardedRangeControl(props, forwardedRef) {
   const {
     __nextHasNoMarginBottom = false,
@@ -37192,6 +37196,7 @@ function UnforwardedRangeControl(props, forwardedRef) {
     disabled = false,
     help,
     hideLabelFromVision = false,
+    id: idProp,
     initialPosition,
     isShiftStepEnabled = true,
     label,
@@ -37243,7 +37248,7 @@ function UnforwardedRangeControl(props, forwardedRef) {
   const fillValueOffset = `${math_clamp(fillValue, 0, 100)}%`;
   const classes = dist_clsx('components-range-control', className);
   const wrapperClasses = dist_clsx('components-range-control__wrapper', !!marks && 'is-marked');
-  const id = (0,external_wp_compose_namespaceObject.useInstanceId)(UnforwardedRangeControl, 'inspector-range-control');
+  const id = range_control_useUniqueId(idProp);
   const describedBy = !!help ? `${id}__help` : undefined;
   const enableTooltip = hasTooltip !== false && Number.isFinite(value);
   const handleOnRangeChange = event => {

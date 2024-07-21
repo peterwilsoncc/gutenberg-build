@@ -30902,6 +30902,7 @@ function SpacingSizesControl({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -31042,6 +31043,10 @@ function HeightControl({
 }) {
   var _RANGE_CONTROL_CUSTOM, _RANGE_CONTROL_CUSTOM2;
   const customRangeValue = parseFloat(value);
+  const id = (0,external_wp_compose_namespaceObject.useInstanceId)(HeightControl, 'block-editor-height-control');
+  const labelId = `${id}__label`;
+  const inputId = `${id}__input`;
+  const rangeId = `${id}__range`;
   const [availableUnits] = use_settings_useSettings('spacing.units');
   const units = (0,external_wp_components_namespaceObject.__experimentalUseCustomUnits)({
     availableUnits: availableUnits || ['%', 'px', 'em', 'rem', 'vh', 'vw']
@@ -31065,15 +31070,19 @@ function HeightControl({
       onChange(100 + newUnit);
     }
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "block-editor-height-control",
+    id: id,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
-      as: "legend",
+      as: "label",
+      for: inputId,
+      id: labelId,
       children: label
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
         isBlock: true,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+          id: inputId,
           value: value,
           units: units,
           onChange: onChange,
@@ -31089,6 +31098,9 @@ function HeightControl({
           marginX: 2,
           marginBottom: 0,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+            "aria-controls": inputId,
+            "aria-labelledby": labelId,
+            id: rangeId,
             value: customRangeValue,
             min: 0,
             max: (_RANGE_CONTROL_CUSTOM = RANGE_CONTROL_CUSTOM_SETTINGS[selectedUnit]?.max) !== null && _RANGE_CONTROL_CUSTOM !== void 0 ? _RANGE_CONTROL_CUSTOM : 100,
