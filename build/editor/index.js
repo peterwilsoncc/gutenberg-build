@@ -11685,7 +11685,7 @@ function panel_PostAuthor() {
 
 const COMMENT_OPTIONS = [{
   label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(0,external_wp_i18n_namespaceObject.__)('Open'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+    children: [(0,external_wp_i18n_namespaceObject._x)('Open', 'Adjective: e.g. "Comments are open"'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
       variant: "muted",
       size: 12,
       children: (0,external_wp_i18n_namespaceObject.__)('Visitors can add new comments and replies.')
@@ -11853,9 +11853,9 @@ function PostDiscussionToggle({
   let label;
   if (commentStatus === 'open') {
     if (pingStatus === 'open') {
-      label = (0,external_wp_i18n_namespaceObject.__)('Open');
+      label = (0,external_wp_i18n_namespaceObject._x)('Open', 'Adjective: e.g. "Comments are open"');
     } else {
-      label = trackbacksSupported ? (0,external_wp_i18n_namespaceObject.__)('Comments only') : (0,external_wp_i18n_namespaceObject.__)('Open');
+      label = trackbacksSupported ? (0,external_wp_i18n_namespaceObject.__)('Comments only') : (0,external_wp_i18n_namespaceObject._x)('Open', 'Adjective: e.g. "Comments are open"');
     }
   } else if (pingStatus === 'open') {
     label = commentsSupported ? (0,external_wp_i18n_namespaceObject.__)('Pings only') : (0,external_wp_i18n_namespaceObject.__)('Pings enabled');
@@ -27005,7 +27005,7 @@ function PostsPerPage() {
 
 const site_discussion_COMMENT_OPTIONS = [{
   label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(0,external_wp_i18n_namespaceObject.__)('Open'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+    children: [(0,external_wp_i18n_namespaceObject._x)('Open', 'Adjective: e.g. "Comments are open"'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
       variant: "muted",
       size: 12,
       children: (0,external_wp_i18n_namespaceObject.__)('Visitors can add new comments and replies.')
