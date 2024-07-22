@@ -24583,7 +24583,7 @@ function ResizableEditor({
 }
 /* harmony default export */ const resizable_editor = (ResizableEditor);
 
-;// CONCATENATED MODULE: ./packages/editor/build-module/hooks/use-select-nearest-editable-block.js
+;// CONCATENATED MODULE: ./packages/editor/build-module/components/visual-editor/use-select-nearest-editable-block.js
 /**
  * WordPress dependencies
  */
