@@ -23356,10 +23356,12 @@ const {
 } = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function FontFamilies() {
   const {
+    baseCustomFonts,
     modalTabOpen,
     setModalTabOpen
   } = (0,external_wp_element_namespaceObject.useContext)(FontLibraryContext);
   const [fontFamilies] = font_families_useGlobalSetting('typography.fontFamilies');
+  const [baseFontFamilies] = font_families_useGlobalSetting('typography.fontFamilies', undefined, 'base');
   const themeFonts = fontFamilies?.theme ? fontFamilies.theme.map(f => setUIValuesNeeded(f, {
     source: 'theme'
   })).sort((a, b) => a.name.localeCompare(b.name)) : [];
@@ -23367,6 +23369,7 @@ function FontFamilies() {
     source: 'custom'
   })).sort((a, b) => a.name.localeCompare(b.name)) : [];
   const hasFonts = 0 < customFonts.length || 0 < themeFonts.length;
+  const hasInstalledFonts = hasFonts || baseFontFamilies?.theme?.length > 0 || baseCustomFonts?.length > 0;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [!!modalTabOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_library_modal, {
       onRequestClose: () => setModalTabOpen(null),
@@ -23403,14 +23406,14 @@ function FontFamilies() {
           children: (0,external_wp_i18n_namespaceObject.__)('Fonts')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
           as: "p",
-          children: (0,external_wp_i18n_namespaceObject.__)('No fonts installed.')
+          children: hasInstalledFonts ? (0,external_wp_i18n_namespaceObject.__)('No fonts activated.') : (0,external_wp_i18n_namespaceObject.__)('No fonts installed.')
         })]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         className: "edit-site-global-styles-font-families__manage-fonts",
         variant: "secondary",
         __next40pxDefaultSize: true,
-        onClick: () => setModalTabOpen(hasFonts ? 'installed-fonts' : 'upload-fonts'),
-        children: hasFonts ? (0,external_wp_i18n_namespaceObject.__)('Manage fonts') : (0,external_wp_i18n_namespaceObject.__)('Add fonts')
+        onClick: () => setModalTabOpen(hasInstalledFonts ? 'installed-fonts' : 'upload-fonts'),
+        children: hasInstalledFonts ? (0,external_wp_i18n_namespaceObject.__)('Manage fonts') : (0,external_wp_i18n_namespaceObject.__)('Add fonts')
       })]
     })]
   });
