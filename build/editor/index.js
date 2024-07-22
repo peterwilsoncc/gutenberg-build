@@ -27576,15 +27576,14 @@ const {
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const PAGE_CONTENT_BLOCKS = ['core/post-content', 'core/post-featured-image', 'core/post-title'];
 const TEMPLATE_PART_BLOCK = 'core/template-part';
-function TemplateContentPanel({
-  renderingMode
-}) {
+function TemplateContentPanel() {
   const {
     enableComplementaryArea
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const {
     clientIds,
-    postType
+    postType,
+    renderingMode
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlocksByName
@@ -27595,7 +27594,8 @@ function TemplateContentPanel({
     const _postType = getCurrentPostType();
     return {
       postType: _postType,
-      clientIds: getBlocksByName(TEMPLATE_POST_TYPE === _postType ? TEMPLATE_PART_BLOCK : PAGE_CONTENT_BLOCKS)
+      clientIds: getBlocksByName(TEMPLATE_POST_TYPE === _postType ? TEMPLATE_PART_BLOCK : PAGE_CONTENT_BLOCKS),
+      renderingMode: select(store_store).getRenderingMode()
     };
   }, []);
   if (renderingMode === 'post-only' && postType !== TEMPLATE_POST_TYPE) {
@@ -27765,7 +27765,6 @@ const SIDEBAR_ACTIVE_BY_DEFAULT = external_wp_element_namespaceObject.Platform.s
 const SidebarContent = ({
   tabName,
   keyboardShortcut,
-  renderingMode,
   onActionPerformed,
   extraPanels
 }) => {
@@ -27821,9 +27820,7 @@ const SidebarContent = ({
         focusable: false,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSummary, {
           onActionPerformed: onActionPerformed
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(plugin_document_setting_panel.Slot, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplateContentPanel, {
-          renderingMode: renderingMode
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplatePartContentPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTransformPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_taxonomies_panel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternOverridesPanel, {}), extraPanels]
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(plugin_document_setting_panel.Slot, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplateContentPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplatePartContentPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTransformPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_taxonomies_panel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternOverridesPanel, {}), extraPanels]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(sidebar_Tabs.TabPanel, {
         tabId: sidebars.block,
         focusable: false,
@@ -27840,8 +27837,7 @@ const Sidebar = ({
   const {
     tabName,
     keyboardShortcut,
-    showSummary,
-    renderingMode
+    showSummary
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const shortcut = select(external_wp_keyboardShortcuts_namespaceObject.store).getShortcutRepresentation('core/editor/toggle-sidebar');
     const sidebar = select(store).getActiveComplementaryArea('core');
@@ -27853,8 +27849,7 @@ const Sidebar = ({
     return {
       tabName: _tabName,
       keyboardShortcut: shortcut,
-      showSummary: ![TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE, NAVIGATION_POST_TYPE].includes(select(store_store).getCurrentPostType()),
-      renderingMode: select(store_store).getRenderingMode()
+      showSummary: ![TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE, NAVIGATION_POST_TYPE].includes(select(store_store).getCurrentPostType())
     };
   }, []);
   const {
@@ -27873,7 +27868,6 @@ const Sidebar = ({
       tabName: tabName,
       keyboardShortcut: keyboardShortcut,
       showSummary: showSummary,
-      renderingMode: renderingMode,
       onActionPerformed: onActionPerformed,
       extraPanels: extraPanels
     })
