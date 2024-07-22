@@ -28449,7 +28449,8 @@ const DataViewsContext = (0,external_wp_element_namespaceObject.createContext)({
   onChangeSelection: () => {},
   setOpenedFilter: () => {},
   openedFilter: null,
-  getItemId: item => item.id
+  getItemId: item => item.id,
+  density: 0
 });
 /* harmony default export */ const dataviews_context = (DataViewsContext);
 
@@ -35660,7 +35661,8 @@ function ViewGrid({
   isLoading,
   onChangeSelection,
   selection,
-  view
+  view,
+  density
 }) {
   const mediaField = fields.find(field => field.id === view.layout?.mediaField);
   const primaryField = fields.find(field => field.id === view.layout?.primaryField);
@@ -35682,12 +35684,16 @@ function ViewGrid({
     badgeFields: []
   });
   const hasData = !!data?.length;
+  const gridStyle = density ? {
+    gridTemplateColumns: `repeat(${density}, minmax(0, 1fr))`
+  } : {};
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [hasData && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalGrid, {
       gap: 8,
       columns: 2,
       alignment: "top",
       className: "dataviews-view-grid",
+      style: gridStyle,
       "aria-busy": isLoading,
       children: data.map(item => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItem, {
@@ -36079,7 +36085,8 @@ function DataViewsLayout() {
     onChangeView,
     selection,
     onChangeSelection,
-    setOpenedFilter
+    setOpenedFilter,
+    density
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const ViewComponent = VIEW_LAYOUTS.find(v => v.type === view.type)?.component;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewComponent, {
@@ -36092,7 +36099,8 @@ function DataViewsLayout() {
     onChangeSelection: onChangeSelection,
     selection: selection,
     setOpenedFilter: setOpenedFilter,
-    view: view
+    view: view,
+    density: density
   });
 }
 
@@ -36542,6 +36550,160 @@ function normalizeFields(fields) {
   });
 }
 
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/line-solid.js
+/**
+ * WordPress dependencies
+ */
+
+
+const lineSolid = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M5 11.25h14v1.5H5z"
+  })
+});
+/* harmony default export */ const line_solid = (lineSolid);
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/layouts/grid/density-picker.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+
+const viewportBreaks = {
+  xhuge: {
+    min: 3,
+    max: 6,
+    default: 5
+  },
+  huge: {
+    min: 2,
+    max: 4,
+    default: 4
+  },
+  xlarge: {
+    min: 2,
+    max: 3,
+    default: 3
+  },
+  large: {
+    min: 1,
+    max: 2,
+    default: 2
+  },
+  mobile: {
+    min: 1,
+    max: 2,
+    default: 2
+  }
+};
+function useViewPortBreakpoint() {
+  const isXHuge = (0,external_wp_compose_namespaceObject.useViewportMatch)('xhuge', '>=');
+  const isHuge = (0,external_wp_compose_namespaceObject.useViewportMatch)('huge', '>=');
+  const isXlarge = (0,external_wp_compose_namespaceObject.useViewportMatch)('xlarge', '>=');
+  const isLarge = (0,external_wp_compose_namespaceObject.useViewportMatch)('large', '>=');
+  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('mobile', '>=');
+  if (isXHuge) {
+    return 'xhuge';
+  }
+  if (isHuge) {
+    return 'huge';
+  }
+  if (isXlarge) {
+    return 'xlarge';
+  }
+  if (isLarge) {
+    return 'large';
+  }
+  if (isMobile) {
+    return 'mobile';
+  }
+  return null;
+}
+
+// Value is number from 0 to 100 representing how big an item is in the grid
+// 100 being the biggest and 0 being the smallest.
+// The size is relative to the viewport size, if one a given viewport the
+// number of allowed items in a grid is 3 to 6 a 0 ( the smallest ) will mean that the grid will
+// have 6 items in a row, a 100 ( the biggest ) will mean that the grid will have 3 items in a row.
+// A value of 75 will mean that the grid will have 4 items in a row.
+function getRangeValue(density, breakValues) {
+  const inverseDensity = breakValues.max - density;
+  const max = breakValues.max - breakValues.min;
+  return Math.round(inverseDensity * 100 / max);
+}
+function DensityPicker({
+  density,
+  setDensity
+}) {
+  const viewport = useViewPortBreakpoint();
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    setDensity(_density => {
+      if (!viewport || !_density) {
+        return 0;
+      }
+      const breakValues = viewportBreaks[viewport];
+      if (_density < breakValues.min) {
+        return breakValues.min;
+      }
+      if (_density > breakValues.max) {
+        return breakValues.max;
+      }
+      return _density;
+    });
+  }, [setDensity, viewport]);
+  if (!viewport) {
+    return null;
+  }
+  const breakValues = viewportBreaks[viewport];
+  const densityToUse = density || breakValues.default;
+  const rangeValue = getRangeValue(densityToUse, breakValues);
+  const step = 100 / (breakValues.max - breakValues.min + 1);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      size: "compact",
+      icon: line_solid,
+      disabled: rangeValue <= 0,
+      accessibleWhenDisabled: true,
+      label: (0,external_wp_i18n_namespaceObject.__)('Decrease size'),
+      onClick: () => {
+        setDensity(densityToUse + 1);
+      }
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+      __nextHasNoMarginBottom: true,
+      showTooltip: false,
+      className: "dataviews-density-picker__range-control",
+      label: (0,external_wp_i18n_namespaceObject.__)('Item size'),
+      hideLabelFromVision: true,
+      value: rangeValue,
+      min: 0,
+      max: 100,
+      withInputField: false,
+      onChange: (value = 0) => {
+        const inverseValue = 100 - value;
+        setDensity(Math.round(inverseValue * (breakValues.max - breakValues.min) / 100 + breakValues.min));
+      },
+      step: step
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      size: "compact",
+      icon: library_plus,
+      disabled: rangeValue >= 100,
+      accessibleWhenDisabled: true,
+      label: (0,external_wp_i18n_namespaceObject.__)('Increase size'),
+      onClick: () => {
+        setDensity(densityToUse - 1);
+      }
+    })]
+  });
+}
+
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/components/dataviews/index.js
 /**
  * WordPress dependencies
@@ -36552,6 +36714,8 @@ function normalizeFields(fields) {
 /**
  * Internal dependencies
  */
+
+
 
 
 
@@ -36580,6 +36744,7 @@ function DataViews({
   onChangeSelection
 }) {
   const [selectionState, setSelectionState] = (0,external_wp_element_namespaceObject.useState)([]);
+  const [density, setDensity] = (0,external_wp_element_namespaceObject.useState)(0);
   const isUncontrolled = selectionProperty === undefined || onChangeSelection === undefined;
   const selection = isUncontrolled ? selectionState : selectionProperty;
   const [openedFilter, setOpenedFilter] = (0,external_wp_element_namespaceObject.useState)(null);
@@ -36609,7 +36774,8 @@ function DataViews({
       onChangeSelection: setSelectionWithChange,
       openedFilter,
       setOpenedFilter,
-      getItemId
+      getItemId,
+      density
     },
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "dataviews-wrapper",
@@ -36624,6 +36790,9 @@ function DataViews({
           children: [search && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_search, {
             label: searchLabel
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_filters, {})]
+        }), view.type === constants_LAYOUT_GRID && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DensityPicker, {
+          density: density,
+          setDensity: setDensity
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BulkActions, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config, {
           defaultLayouts: defaultLayouts
         })]
