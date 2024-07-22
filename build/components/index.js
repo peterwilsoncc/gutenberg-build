@@ -62543,7 +62543,7 @@ function RadioControl(props) {
     help: help,
     className: dist_clsx(className, 'components-radio-control'),
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(v_stack_component, {
-      spacing: 3,
+      spacing: 2,
       children: options.map((option, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
         className: "components-radio-control__option",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
@@ -65481,6 +65481,7 @@ function Tip(props) {
 
 
 
+
 /**
  * WordPress dependencies
  */
@@ -65555,12 +65556,15 @@ function ToggleControl({
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control, {
     id: id,
-    help: helpLabel,
+    help: helpLabel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "components-toggle-control__help",
+      children: helpLabel
+    }),
     className: classes,
     __nextHasNoMarginBottom: true,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(h_stack_component, {
       justify: "flex-start",
-      spacing: 3,
+      spacing: 2,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(form_toggle, {
         id: id,
         checked: checked,
@@ -65571,7 +65575,9 @@ function ToggleControl({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(flex_block_component, {
         as: "label",
         htmlFor: id,
-        className: "components-toggle-control__label",
+        className: dist_clsx('components-toggle-control__label', {
+          'is-disabled': disabled
+        }),
         children: label
       })]
     })
