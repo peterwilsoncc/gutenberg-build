@@ -20429,6 +20429,7 @@ function GridLayoutMinimumWidthControl({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
         isBlock: true,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+          __nextHasNoMarginBottom: true,
           onChange: handleSliderChange,
           value: quantity || 0,
           min: 0,
@@ -20505,6 +20506,7 @@ function GridLayoutColumnsAndRowsControl({
             min: 0,
             label: (0,external_wp_i18n_namespaceObject.__)('Rows')
           }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+            __nextHasNoMarginBottom: true,
             value: columnCount !== null && columnCount !== void 0 ? columnCount : 0,
             onChange: value => onChange({
               ...layout,
