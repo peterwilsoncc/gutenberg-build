@@ -42380,6 +42380,7 @@ function useFlashEditableBlocks({
  */
 
 
+
 /** @typedef {import('@wordpress/compose').WPHigherOrderComponent} WPHigherOrderComponent */
 /** @typedef {import('@wordpress/blocks').WPBlockSettings} WPBlockSettings */
 
@@ -42452,11 +42453,11 @@ function canBindAttribute(blockName, attributeName) {
 }
 const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHigherOrderComponent)(BlockEdit => props => {
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
+  const blockContext = (0,external_wp_element_namespaceObject.useContext)(block_context);
   const sources = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(external_wp_blocks_namespaceObject.store)).getAllBlockBindingsSources());
   const {
     name,
-    clientId,
-    context
+    clientId
   } = props;
   const hasParentPattern = !!props.context['pattern/overrides'];
   const hasPatternOverridesDefaultBinding = props.attributes.metadata?.bindings?.[DEFAULT_ATTRIBUTE]?.source === 'core/pattern-overrides';
@@ -42490,6 +42491,14 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
     }
     if (blockBindingsBySource.size) {
       for (const [source, bindings] of blockBindingsBySource) {
+        // Populate context.
+        const context = {};
+        if (source.usesContext?.length) {
+          for (const key of source.usesContext) {
+            context[key] = blockContext[key];
+          }
+        }
+
         // Get values in batch if the source supports it.
         const values = source.getValues({
           registry,
@@ -42518,7 +42527,7 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
       }
     }
     return attributes;
-  }, [blockBindings, name, clientId, context, registry, sources]);
+  }, [blockBindings, name, clientId, blockContext, registry, sources]);
   const {
     setAttributes
   } = props;
@@ -42554,6 +42563,13 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
       }
       if (blockBindingsBySource.size) {
         for (const [source, bindings] of blockBindingsBySource) {
+          // Populate context.
+          const context = {};
+          if (source.usesContext?.length) {
+            for (const key of source.usesContext) {
+              context[key] = blockContext[key];
+            }
+          }
           source.setValues({
             registry,
             context,
@@ -42574,7 +42590,7 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
         setAttributes(keptAttributes);
       }
     });
-  }, [registry, blockBindings, name, clientId, context, setAttributes, sources, hasPatternOverridesDefaultBinding, hasParentPattern]);
+  }, [registry, blockBindings, name, clientId, blockContext, setAttributes, sources, hasPatternOverridesDefaultBinding, hasParentPattern]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockEdit, {
       ...props,

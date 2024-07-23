@@ -7512,6 +7512,7 @@ const unregisterBlockVariation = (blockName, variationName) => {
  * @param {Object}   source                    Properties of the source to be registered.
  * @param {string}   source.name               The unique and machine-readable name.
  * @param {string}   [source.label]            Human-readable label.
+ * @param {Array}    [source.usesContext]      Array of context needed by the source only in the editor.
  * @param {Function} [source.getValues]        Function to get the values from the source.
  * @param {Function} [source.setValues]        Function to update multiple values connected to the source.
  * @param {Function} [source.getPlaceholder]   Function to get the placeholder when the value is undefined.
@@ -7536,6 +7537,7 @@ const registerBlockBindingsSource = source => {
   const {
     name,
     label,
+    usesContext,
     getValues,
     setValues,
     getPlaceholder,
@@ -7584,6 +7586,12 @@ const registerBlockBindingsSource = source => {
     return;
   }
   if (label && typeof label !== 'string') {
+     false ? 0 : void 0;
+    return;
+  }
+
+  // Check the `usesContext` property is correct.
+  if (usesContext && !Array.isArray(usesContext)) {
      false ? 0 : void 0;
     return;
   }
@@ -8273,11 +8281,16 @@ function collections(state = {}, action) {
 function blockBindingsSources(state = {}, action) {
   switch (action.type) {
     case 'ADD_BLOCK_BINDINGS_SOURCE':
+      // Merge usesContext with existing values, potentially defined in the server registration.
+      let mergedUsesContext = [...(state[action.name]?.usesContext || []), ...(action.usesContext || [])];
+      // Remove duplicates.
+      mergedUsesContext = mergedUsesContext.length > 0 ? [...new Set(mergedUsesContext)] : undefined;
       return {
         ...state,
         [action.name]: {
           // Don't override the label if it's already set.
           label: state[action.name]?.label || action.label,
+          usesContext: mergedUsesContext,
           getValues: action.getValues,
           setValues: action.setValues,
           getPlaceholder: action.getPlaceholder,
@@ -9854,6 +9867,7 @@ function addBlockBindingsSource(source) {
     type: 'ADD_BLOCK_BINDINGS_SOURCE',
     name: source.name,
     label: source.label,
+    usesContext: source.usesContext,
     getValues: source.getValues,
     setValues: source.setValues,
     getPlaceholder: source.getPlaceholder,
