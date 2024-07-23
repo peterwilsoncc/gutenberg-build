@@ -25422,7 +25422,7 @@ function DataFormTextControl({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
     label: label,
     placeholder: placeholder,
-    value: value,
+    value: value !== null && value !== void 0 ? value : '',
     onChange: onChangeControl,
     __next40pxDefaultSize: true
   });

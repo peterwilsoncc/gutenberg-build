@@ -37896,7 +37896,7 @@ function getItemId(item) {
 function PostList({
   postType
 }) {
-  var _records$map, _usePrevious;
+  var _postId$split, _records$map, _usePrevious;
   const [view, setView] = useView(postType);
   const history = post_list_useHistory();
   const location = post_list_useLocation();
@@ -37904,7 +37904,7 @@ function PostList({
     postId,
     quickEdit = false
   } = location.params;
-  const [selection, setSelection] = (0,external_wp_element_namespaceObject.useState)([postId]);
+  const [selection, setSelection] = (0,external_wp_element_namespaceObject.useState)((_postId$split = postId?.split(',')) !== null && _postId$split !== void 0 ? _postId$split : []);
   const onChangeSelection = (0,external_wp_element_namespaceObject.useCallback)(items => {
     var _params$isCustom;
     setSelection(items);
@@ -37914,7 +37914,7 @@ function PostList({
     if (((_params$isCustom = params.isCustom) !== null && _params$isCustom !== void 0 ? _params$isCustom : 'false') === 'false') {
       history.push({
         ...params,
-        postId: items.length === 1 ? items[0] : undefined
+        postId: items.join(',')
       });
     }
   }, [history]);
@@ -44445,7 +44445,7 @@ function DataFormTextControl({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
     label: label,
     placeholder: placeholder,
-    value: value,
+    value: value !== null && value !== void 0 ? value : '',
     onChange: onChangeControl,
     __next40pxDefaultSize: true
   });
@@ -44508,13 +44508,16 @@ function PostEditForm({
   postType,
   postId
 }) {
+  const ids = (0,external_wp_element_namespaceObject.useMemo)(() => postId.split(','), [postId]);
   const {
-    item
+    initialEdits
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    if (ids.length !== 1) {}
     return {
-      item: select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', postType, postId)
+      initialEdits: ids.length === 1 ? select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', postType, ids[0]) : null
     };
-  }, [postType, postId]);
+  }, [postType, ids]);
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const {
     saveEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
@@ -44527,18 +44530,24 @@ function PostEditForm({
   const [edits, setEdits] = (0,external_wp_element_namespaceObject.useState)({});
   const itemWithEdits = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return {
-      ...item,
+      ...initialEdits,
       ...edits
     };
-  }, [item, edits]);
-  const onSubmit = event => {
+  }, [initialEdits, edits]);
+  const onSubmit = async event => {
     event.preventDefault();
-    saveEntityRecord('postType', postType, itemWithEdits);
+    const {
+      getEntityRecord
+    } = registry.resolveSelect(external_wp_coreData_namespaceObject.store);
+    for (const id of ids) {
+      const item = await getEntityRecord('postType', postType, id);
+      saveEntityRecord('postType', postType, {
+        ...item,
+        ...edits
+      });
+    }
     setEdits({});
   };
-  if (!item) {
-    return null;
-  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("form", {
     onSubmit: onSubmit,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
