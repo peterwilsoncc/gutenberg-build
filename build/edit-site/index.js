@@ -7269,6 +7269,64 @@ const setEditorCanvasContainerView = view => ({
   });
 };
 
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/utils/get-filtered-template-parts.js
+/**
+ * WordPress dependencies
+ */
+
+const EMPTY_ARRAY = [];
+
+/**
+ * Get a flattened and filtered list of template parts and the matching block for that template part.
+ *
+ * Takes a list of blocks defined within a template, and a list of template parts, and returns a
+ * flattened list of template parts and the matching block for that template part.
+ *
+ * @param {Array}  blocks        Blocks to flatten.
+ * @param {?Array} templateParts Available template parts.
+ * @return {Array} An array of template parts and their blocks.
+ */
+function getFilteredTemplatePartBlocks(blocks = EMPTY_ARRAY, templateParts) {
+  const templatePartsById = templateParts ?
+  // Key template parts by their ID.
+  templateParts.reduce((newTemplateParts, part) => ({
+    ...newTemplateParts,
+    [part.id]: part
+  }), {}) : {};
+  const result = [];
+
+  // Iterate over all blocks, recursing into inner blocks.
+  // Output will be based on a depth-first traversal.
+  const stack = [...blocks];
+  while (stack.length) {
+    const {
+      innerBlocks,
+      ...block
+    } = stack.shift();
+    // Place inner blocks at the beginning of the stack to preserve order.
+    stack.unshift(...innerBlocks);
+    if ((0,external_wp_blocks_namespaceObject.isTemplatePart)(block)) {
+      const {
+        attributes: {
+          theme,
+          slug
+        }
+      } = block;
+      const templatePartId = `${theme}//${slug}`;
+      const templatePart = templatePartsById[templatePartId];
+
+      // Only add to output if the found template part block is in the list of available template parts.
+      if (templatePart) {
+        result.push({
+          templatePart,
+          block
+        });
+      }
+    }
+  }
+  return result;
+}
+
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/store/selectors.js
 /**
  * WordPress dependencies
@@ -7280,9 +7338,12 @@ const setEditorCanvasContainerView = view => ({
 
 
 
+
 /**
  * Internal dependencies
  */
+
+
 
 
 /**
@@ -7489,16 +7550,34 @@ const isListViewOpened = (0,external_wp_data_namespaceObject.createRegistrySelec
 function isSaveViewOpened(state) {
   return state.saveViewPanel;
 }
+function getBlocksAndTemplateParts(select) {
+  const templateParts = select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', TEMPLATE_PART_POST_TYPE, {
+    per_page: -1
+  });
+  const {
+    getBlocksByName,
+    getBlocksByClientId
+  } = select(external_wp_blockEditor_namespaceObject.store);
+  const clientIds = getBlocksByName('core/template-part');
+  const blocks = getBlocksByClientId(clientIds);
+  return [blocks, templateParts];
+}
 
 /**
  * Returns the template parts and their blocks for the current edited template.
  *
+ * @deprecated
  * @param {Object} state Global application state.
  * @return {Array} Template parts and their blocks in an array.
  */
-const getCurrentTemplateTemplateParts = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
-  return lock_unlock_unlock(select(external_wp_editor_namespaceObject.store)).getCurrentTemplateTemplateParts();
-});
+const getCurrentTemplateTemplateParts = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(() => {
+  external_wp_deprecated_default()(`select( 'core/edit-site' ).getCurrentTemplateTemplateParts()`, {
+    since: '6.7',
+    version: '6.9',
+    alternative: `select( 'core/block-editor' ).getBlocksByName( 'core/template-part' )`
+  });
+  return getFilteredTemplatePartBlocks(...getBlocksAndTemplateParts(select));
+}, () => getBlocksAndTemplateParts(select)));
 
 /**
  * Returns the current editing mode.
@@ -26772,7 +26851,7 @@ const DEFAULT_QUERY = {
   per_page: 100,
   page: 1
 };
-const EMPTY_ARRAY = [];
+const use_global_styles_revisions_EMPTY_ARRAY = [];
 const {
   GlobalStylesContext: use_global_styles_revisions_GlobalStylesContext
 } = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
@@ -26810,8 +26889,8 @@ function useGlobalStylesRevisions({
     const globalStylesId = __experimentalGetCurrentGlobalStylesId();
     const globalStyles = globalStylesId ? getEntityRecord('root', 'globalStyles', globalStylesId) : undefined;
     const _revisionsCount = (_globalStyles$_links$ = globalStyles?._links?.['version-history']?.[0]?.count) !== null && _globalStyles$_links$ !== void 0 ? _globalStyles$_links$ : 0;
-    const globalStylesRevisions = getRevisions('root', 'globalStyles', globalStylesId, _query) || EMPTY_ARRAY;
-    const _authors = getUsers(SITE_EDITOR_AUTHORS_QUERY) || EMPTY_ARRAY;
+    const globalStylesRevisions = getRevisions('root', 'globalStyles', globalStylesId, _query) || use_global_styles_revisions_EMPTY_ARRAY;
+    const _authors = getUsers(SITE_EDITOR_AUTHORS_QUERY) || use_global_styles_revisions_EMPTY_ARRAY;
     const _isResolving = isResolving('getRevisions', ['root', 'globalStyles', globalStylesId, _query]);
     return {
       authors: _authors,
@@ -26825,7 +26904,7 @@ function useGlobalStylesRevisions({
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (!authors.length || isLoadingGlobalStylesRevisions) {
       return {
-        revisions: EMPTY_ARRAY,
+        revisions: use_global_styles_revisions_EMPTY_ARRAY,
         hasUnsavedChanges: isDirty,
         isLoading: true,
         revisionsCount
