@@ -27172,6 +27172,15 @@ const latest_comments_metadata = {
   },
   supports: {
     align: true,
+    color: {
+      gradients: true,
+      link: true,
+      __experimentalDefaultControls: {
+        background: true,
+        text: true,
+        link: true
+      }
+    },
     html: false,
     spacing: {
       margin: true,
