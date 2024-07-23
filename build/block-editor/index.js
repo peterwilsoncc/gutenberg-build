@@ -50746,9 +50746,22 @@ function MobileTabNavigation({
 
 
 const getShouldDisableSyncFilter = sourceFilter => sourceFilter !== 'all' && sourceFilter !== 'user';
-const getShouldDisableNonUserSources = category => {
+const getShouldHideSourcesFilter = category => {
   return category.name === myPatternsCategory.name;
 };
+const PATTERN_SOURCE_MENU_OPTIONS = [{
+  value: 'all',
+  label: (0,external_wp_i18n_namespaceObject._x)('All', 'patterns')
+}, {
+  value: INSERTER_PATTERN_TYPES.directory,
+  label: (0,external_wp_i18n_namespaceObject.__)('Pattern Directory')
+}, {
+  value: INSERTER_PATTERN_TYPES.theme,
+  label: (0,external_wp_i18n_namespaceObject.__)('Theme & Plugins')
+}, {
+  value: INSERTER_PATTERN_TYPES.user,
+  label: (0,external_wp_i18n_namespaceObject.__)('User')
+}];
 function PatternsFilter({
   setPatternSyncFilter,
   setPatternSourceFilter,
@@ -50767,9 +50780,9 @@ function PatternsFilter({
   // otherwise applying them will just result in no patterns being shown.
   const shouldDisableSyncFilter = getShouldDisableSyncFilter(currentPatternSourceFilter);
 
-  // We also need to disable the directory and theme source filter options if the category
-  // is `myPatterns` otherwise applying them will also just result in no patterns being shown.
-  const shouldDisableNonUserSources = getShouldDisableNonUserSources(category);
+  // We also hide the directory and theme source filter if the category is `myPatterns`
+  // otherwise there will only be one option available.
+  const shouldHideSourcesFilter = getShouldHideSourcesFilter(category);
   const patternSyncMenuOptions = (0,external_wp_element_namespaceObject.useMemo)(() => [{
     value: 'all',
     label: (0,external_wp_i18n_namespaceObject._x)('All', 'patterns')
@@ -50782,22 +50795,6 @@ function PatternsFilter({
     label: (0,external_wp_i18n_namespaceObject._x)('Not synced', 'patterns'),
     disabled: shouldDisableSyncFilter
   }], [shouldDisableSyncFilter]);
-  const patternSourceMenuOptions = (0,external_wp_element_namespaceObject.useMemo)(() => [{
-    value: 'all',
-    label: (0,external_wp_i18n_namespaceObject._x)('All', 'patterns'),
-    disabled: shouldDisableNonUserSources
-  }, {
-    value: INSERTER_PATTERN_TYPES.directory,
-    label: (0,external_wp_i18n_namespaceObject.__)('Pattern Directory'),
-    disabled: shouldDisableNonUserSources
-  }, {
-    value: INSERTER_PATTERN_TYPES.theme,
-    label: (0,external_wp_i18n_namespaceObject.__)('Theme & Plugins'),
-    disabled: shouldDisableNonUserSources
-  }, {
-    value: INSERTER_PATTERN_TYPES.user,
-    label: (0,external_wp_i18n_namespaceObject.__)('User')
-  }], [shouldDisableNonUserSources]);
   function handleSetSourceFilterChange(newSourceFilter) {
     setPatternSourceFilter(newSourceFilter);
     if (getShouldDisableSyncFilter(newSourceFilter)) {
@@ -50827,10 +50824,10 @@ function PatternsFilter({
         })
       }),
       children: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
+        children: [!shouldHideSourcesFilter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
           label: (0,external_wp_i18n_namespaceObject.__)('Source'),
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItemsChoice, {
-            choices: patternSourceMenuOptions,
+            choices: PATTERN_SOURCE_MENU_OPTIONS,
             onSelect: value => {
               handleSetSourceFilterChange(value);
               scrollContainerRef.current?.scrollTo(0, 0);
