@@ -25378,7 +25378,7 @@ function normalizeFields(fields) {
     }) => item[field.id]);
     return {
       ...field,
-      header: field.header || field.id,
+      label: field.label || field.id,
       getValue,
       render: field.render || getValue
     };
@@ -25409,7 +25409,7 @@ function DataFormTextControl({
 }) {
   const {
     id,
-    header,
+    label,
     placeholder
   } = field;
   const value = field.getValue({
@@ -25420,7 +25420,7 @@ function DataFormTextControl({
     [id]: newValue
   })), [id, onChange]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-    label: header,
+    label: label,
     placeholder: placeholder,
     value: value,
     onChange: onChangeControl,

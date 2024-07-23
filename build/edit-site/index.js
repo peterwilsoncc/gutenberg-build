@@ -34854,7 +34854,7 @@ function Filters() {
     const isPrimary = !!field.filterBy?.isPrimary;
     filters.push({
       field: field.id,
-      name: field.header,
+      name: field.label,
       elements: field.elements,
       singleSelection: operators.some(op => [constants_OPERATOR_IS, constants_OPERATOR_IS_NOT].includes(op)),
       operators,
@@ -35125,7 +35125,7 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
   const combinedField = view.layout?.combinedFields?.find(f => f.id === fieldId);
   const index = view.fields?.indexOf(fieldId);
   if (!!combinedField) {
-    return combinedField.header;
+    return combinedField.label;
   }
   const field = fields.find(f => f.id === fieldId);
   if (!field) {
@@ -35141,7 +35141,7 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
   // 3. If it's not primary. If it is, it should be already visible.
   const canAddFilter = !view.filters?.some(_filter => field.id === _filter.field) && !!field.elements?.length && !!operators.length && !field.filterBy?.isPrimary;
   if (!isSortable && !isHidable && !canAddFilter) {
-    return field.header;
+    return field.label;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenu, {
     align: "start",
@@ -35150,7 +35150,7 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
       className: "dataviews-view-table-header-button",
       ref: ref,
       variant: "tertiary",
-      children: [field.header, view.sort && isSorted && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      children: [field.label, view.sort && isSorted && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         "aria-hidden": "true",
         children: sortArrows[view.sort.direction]
       })]
@@ -35722,7 +35722,7 @@ function GridItem({
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
               className: "dataviews-view-grid__field-name",
-              children: field.header
+              children: field.label
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
               className: "dataviews-view-grid__field-value",
               style: {
@@ -35940,7 +35940,7 @@ function ListItem({
                   children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
                     as: "span",
                     className: "dataviews-view-list__field-label",
-                    children: field.header
+                    children: field.label
                   }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
                     className: "dataviews-view-list__field-value",
                     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.render, {
@@ -36489,7 +36489,7 @@ function FieldsVisibilityMenu({
           });
         },
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItemLabel, {
-          children: field.header
+          children: field.label
         })
       }, field.id);
     })
@@ -36509,7 +36509,7 @@ function SortMenu({
     trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItem, {
       suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         "aria-hidden": "true",
-        children: currentSortedField?.header
+        children: currentSortedField?.label
       }),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItemLabel, {
         children: (0,external_wp_i18n_namespaceObject.__)('Sort by')
@@ -36520,7 +36520,7 @@ function SortMenu({
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenu, {
         trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItem, {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItemLabel, {
-            children: field.header
+            children: field.label
           })
         }),
         style: {
@@ -36628,7 +36628,7 @@ function normalizeFields(fields) {
     }) => item[field.id]);
     return {
       ...field,
-      header: field.header || field.id,
+      label: field.label || field.id,
       getValue,
       render: field.render || getValue
     };
@@ -37635,7 +37635,7 @@ function usePostFields(viewType) {
   }, []);
   const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [{
     id: 'featured-image',
-    header: (0,external_wp_i18n_namespaceObject.__)('Featured Image'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Featured Image'),
     getValue: ({
       item
     }) => item.featured_media,
@@ -37647,7 +37647,7 @@ function usePostFields(viewType) {
     }),
     enableSorting: false
   }, {
-    header: (0,external_wp_i18n_namespaceObject.__)('Title'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Title'),
     id: 'title',
     type: 'text',
     getValue: ({
@@ -37688,7 +37688,7 @@ function usePostFields(viewType) {
     },
     enableHiding: false
   }, {
-    header: (0,external_wp_i18n_namespaceObject.__)('Author'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Author'),
     id: 'author',
     getValue: ({
       item
@@ -37702,7 +37702,7 @@ function usePostFields(viewType) {
     })) || [],
     render: PostAuthorField
   }, {
-    header: (0,external_wp_i18n_namespaceObject.__)('Status'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Status'),
     id: 'status',
     getValue: ({
       item
@@ -37719,7 +37719,7 @@ function usePostFields(viewType) {
       operators: [OPERATOR_IS_ANY]
     }
   }, {
-    header: (0,external_wp_i18n_namespaceObject.__)('Date'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Date'),
     id: 'date',
     render: ({
       item
@@ -39663,7 +39663,7 @@ function DataviewsPatterns() {
   }, [records]);
   const fields = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const _fields = [{
-      header: (0,external_wp_i18n_namespaceObject.__)('Preview'),
+      label: (0,external_wp_i18n_namespaceObject.__)('Preview'),
       id: 'preview',
       render: ({
         item
@@ -39673,7 +39673,7 @@ function DataviewsPatterns() {
       }),
       enableSorting: false
     }, {
-      header: (0,external_wp_i18n_namespaceObject.__)('Title'),
+      label: (0,external_wp_i18n_namespaceObject.__)('Title'),
       id: 'title',
       getValue: ({
         item
@@ -39687,7 +39687,7 @@ function DataviewsPatterns() {
     }];
     if (type === PATTERN_TYPES.user) {
       _fields.push({
-        header: (0,external_wp_i18n_namespaceObject.__)('Sync status'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Sync status'),
         id: 'sync-status',
         render: ({
           item
@@ -39711,7 +39711,7 @@ function DataviewsPatterns() {
       });
     } else if (type === TEMPLATE_PART_POST_TYPE) {
       _fields.push({
-        header: (0,external_wp_i18n_namespaceObject.__)('Author'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Author'),
         id: 'author',
         getValue: ({
           item
@@ -41681,7 +41681,7 @@ const page_templates_defaultLayouts = {
       primaryField: 'title',
       combinedFields: [{
         id: 'template',
-        header: (0,external_wp_i18n_namespaceObject.__)('Template'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Template'),
         children: ['title', 'description'],
         direction: 'vertical'
       }],
@@ -41895,7 +41895,7 @@ function PageTemplates() {
     }));
   }, [records]);
   const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [{
-    header: (0,external_wp_i18n_namespaceObject.__)('Preview'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Preview'),
     id: 'preview',
     render: ({
       item
@@ -41907,7 +41907,7 @@ function PageTemplates() {
     },
     enableSorting: false
   }, {
-    header: (0,external_wp_i18n_namespaceObject.__)('Template'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Template'),
     id: 'title',
     getValue: ({
       item
@@ -41921,7 +41921,7 @@ function PageTemplates() {
     enableHiding: false,
     enableGlobalSearch: true
   }, {
-    header: (0,external_wp_i18n_namespaceObject.__)('Description'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Description'),
     id: 'description',
     render: ({
       item
@@ -41934,7 +41934,7 @@ function PageTemplates() {
     enableSorting: false,
     enableGlobalSearch: true
   }, {
-    header: (0,external_wp_i18n_namespaceObject.__)('Author'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Author'),
     id: 'author',
     getValue: ({
       item
@@ -44432,7 +44432,7 @@ function DataFormTextControl({
 }) {
   const {
     id,
-    header,
+    label,
     placeholder
   } = field;
   const value = field.getValue({
@@ -44443,7 +44443,7 @@ function DataFormTextControl({
     [id]: newValue
   })), [id, onChange]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-    label: header,
+    label: label,
     placeholder: placeholder,
     value: value,
     onChange: onChangeControl,
