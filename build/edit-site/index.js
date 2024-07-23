@@ -23626,7 +23626,7 @@ function ScreenTypography() {
       className: "edit-site-global-styles-screen",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
         spacing: 7,
-        children: [!window.__experimentalDisableFontLibrary && fontLibraryEnabled && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_families, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(typography_elements, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TypographyVariations, {
+        children: [fontLibraryEnabled && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_families, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(typography_elements, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TypographyVariations, {
           title: (0,external_wp_i18n_namespaceObject.__)('Presets')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_count, {})]
       })
