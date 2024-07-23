@@ -36343,7 +36343,7 @@ const variantStyles = ({
 
 const Select = /*#__PURE__*/emotion_styled_base_browser_esm("select",  true ? {
   target: "e1mv6sxx2"
-} : 0)("&&&{appearance:none;background:transparent;box-sizing:border-box;border:none;box-shadow:none!important;cursor:inherit;display:block;font-family:inherit;margin:0;width:100%;max-width:none;white-space:nowrap;text-overflow:ellipsis;", fontSizeStyles, ";", select_control_styles_sizeStyles, ";", sizePaddings, ";", overflowStyles, " ", variantStyles, ";}" + ( true ? "" : 0));
+} : 0)("&&&{appearance:none;background:transparent;box-sizing:border-box;border:none;box-shadow:none!important;color:currentColor;cursor:inherit;display:block;font-family:inherit;margin:0;width:100%;max-width:none;white-space:nowrap;text-overflow:ellipsis;", fontSizeStyles, ";", select_control_styles_sizeStyles, ";", sizePaddings, ";", overflowStyles, " ", variantStyles, ";}" + ( true ? "" : 0));
 const DownArrowWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "e1mv6sxx1"
 } : 0)("margin-inline-end:", space(-1), ";line-height:0;path{fill:currentColor;}" + ( true ? "" : 0));
