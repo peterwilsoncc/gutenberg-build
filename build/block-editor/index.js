@@ -61488,12 +61488,13 @@ function useShowBlockTools() {
     const _showEmptyBlockSideInserter = clientId && !isTyping() && editorMode === 'edit' && isEmptyDefaultBlock;
     const maybeShowBreadcrumb = hasSelectedBlock && !hasMultiSelection() && editorMode === 'navigation';
     const isZoomOut = editorMode === 'zoom-out';
-    const _showBlockToolbarPopover = !isZoomOut && !getSettings().hasFixedToolbar && !_showEmptyBlockSideInserter && hasSelectedBlock && !isEmptyDefaultBlock && !maybeShowBreadcrumb;
+    const _showZoomOutToolbar = isZoomOut && block?.attributes?.align === 'full' && !_showEmptyBlockSideInserter && !maybeShowBreadcrumb;
+    const _showBlockToolbarPopover = !_showZoomOutToolbar && !getSettings().hasFixedToolbar && !_showEmptyBlockSideInserter && hasSelectedBlock && !isEmptyDefaultBlock && !maybeShowBreadcrumb;
     return {
       showEmptyBlockSideInserter: _showEmptyBlockSideInserter,
       showBreadcrumb: !_showEmptyBlockSideInserter && maybeShowBreadcrumb,
       showBlockToolbarPopover: _showBlockToolbarPopover,
-      showZoomOutToolbar: hasSelectedBlock && isZoomOut && !_showEmptyBlockSideInserter && !maybeShowBreadcrumb && !_showBlockToolbarPopover
+      showZoomOutToolbar: _showZoomOutToolbar
     };
   }, []);
 }
