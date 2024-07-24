@@ -18455,6 +18455,7 @@ function InstalledFonts() {
     handleSetLibraryFontSelected(libraryFontSelected);
     refreshLibrary();
   }, []);
+  const hasFonts = baseThemeFonts.length > 0 || baseCustomFonts.length > 0;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "font-library-modal__tabpanel-layout",
     children: [isResolvingLibrary && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -18471,6 +18472,9 @@ function InstalledFonts() {
               status: notice.type,
               onRemove: () => setNotice(null),
               children: notice.message
+            }), !hasFonts && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+              as: "p",
+              children: (0,external_wp_i18n_namespaceObject.__)('No fonts installed.')
             }), baseThemeFonts.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
                 className: "font-library-modal__fonts-title",
@@ -23443,7 +23447,8 @@ function FontFamilies() {
   const {
     baseCustomFonts,
     modalTabOpen,
-    setModalTabOpen
+    setModalTabOpen,
+    setNotice
   } = (0,external_wp_element_namespaceObject.useContext)(FontLibraryContext);
   const [fontFamilies] = font_families_useGlobalSetting('typography.fontFamilies');
   const [baseFontFamilies] = font_families_useGlobalSetting('typography.fontFamilies', undefined, 'base');
@@ -23497,7 +23502,11 @@ function FontFamilies() {
         className: "edit-site-global-styles-font-families__manage-fonts",
         variant: "secondary",
         __next40pxDefaultSize: true,
-        onClick: () => setModalTabOpen(hasInstalledFonts ? 'installed-fonts' : 'upload-fonts'),
+        onClick: () => {
+          // Reset notice when opening the modal.
+          setNotice(null);
+          setModalTabOpen(hasInstalledFonts ? 'installed-fonts' : 'upload-fonts');
+        },
         children: hasInstalledFonts ? (0,external_wp_i18n_namespaceObject.__)('Manage fonts') : (0,external_wp_i18n_namespaceObject.__)('Add fonts')
       })]
     })]
