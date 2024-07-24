@@ -16756,6 +16756,13 @@ function ScreenBlock({
       value: style,
       onChange: setStyle,
       settings: settings
+    }), hasBackgroundPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StylesBackgroundPanel, {
+      inheritedValue: inheritedStyle,
+      value: style,
+      onChange: setStyle,
+      settings: settings,
+      defaultValues: BACKGROUND_BLOCK_DEFAULT_VALUES,
+      themeFileURIs: _links?.['wp:theme-file']
     }), hasTypographyPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StylesTypographyPanel, {
       inheritedValue: inheritedStyle,
       value: style,
@@ -16782,13 +16789,6 @@ function ScreenBlock({
       onChange: onChangeLightbox,
       value: userSettings,
       inheritedValue: settings
-    }), hasBackgroundPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StylesBackgroundPanel, {
-      inheritedValue: inheritedStyle,
-      value: style,
-      onChange: setStyle,
-      settings: settings,
-      defaultValues: BACKGROUND_BLOCK_DEFAULT_VALUES,
-      themeFileURIs: _links?.['wp:theme-file']
     }), canEditCSS && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
       title: (0,external_wp_i18n_namespaceObject.__)('Advanced'),
       initialOpen: false,
