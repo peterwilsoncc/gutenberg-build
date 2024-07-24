@@ -510,7 +510,7 @@ __webpack_require__.d(__webpack_exports__, {
   useEntityProp: () => (/* reexport */ useEntityProp),
   useEntityRecord: () => (/* reexport */ useEntityRecord),
   useEntityRecords: () => (/* reexport */ useEntityRecords),
-  useResourcePermissions: () => (/* reexport */ useResourcePermissions)
+  useResourcePermissions: () => (/* reexport */ use_resource_permissions)
 });
 
 // NAMESPACE OBJECT: ./packages/core-data/build-module/actions.js
@@ -24171,10 +24171,13 @@ function __experimentalUseEntityRecords(kind, name, queryArgs, options) {
   return useEntityRecords(kind, name, queryArgs, options);
 }
 
+;// CONCATENATED MODULE: external ["wp","warning"]
+const external_wp_warning_namespaceObject = window["wp"]["warning"];
 ;// CONCATENATED MODULE: ./packages/core-data/build-module/hooks/use-resource-permissions.js
 /**
  * WordPress dependencies
  */
+
 
 
 /**
@@ -24193,15 +24196,17 @@ function __experimentalUseEntityRecords(kind, name, queryArgs, options) {
  *
  * @since 6.1.0 Introduced in WordPress core.
  *
- * @param    resource The resource in question, e.g. media.
- * @param    id       ID of a specific resource entry, if needed, e.g. 10.
+ * @param    resource Entity resource to check. Accepts entity object `{ kind: 'root', name: 'media', id: 1 }`
+ *                    or REST base as a string - `media`.
+ * @param    id       Optional ID of the resource to check, e.g. 10. Note: This argument is discouraged
+ *                    when using an entity object as a resource to check permissions and will be ignored.
  *
  * @example
  * ```js
  * import { useResourcePermissions } from '@wordpress/core-data';
  *
  * function PagesList() {
- *   const { canCreate, isResolving } = useResourcePermissions( 'pages' );
+ *   const { canCreate, isResolving } = useResourcePermissions( { kind: 'postType', name: 'page' } );
  *
  *   if ( isResolving ) {
  *     return 'Loading ...';
@@ -24229,7 +24234,7 @@ function __experimentalUseEntityRecords(kind, name, queryArgs, options) {
  *     canUpdate,
  *     canDelete,
  *     isResolving
- *   } = useResourcePermissions( 'pages', pageId );
+ *   } = useResourcePermissions( { kind: 'postType', name: 'page', id: pageId } );
  *
  *   if ( isResolving ) {
  *     return 'Loading ...';
@@ -24257,12 +24262,25 @@ function __experimentalUseEntityRecords(kind, name, queryArgs, options) {
  * @template IdType
  */
 function useResourcePermissions(resource, id) {
+  // Serialize `resource` to a string that can be safely used as a React dep.
+  // We can't just pass `resource` as one of the deps, because if it is passed
+  // as an object literal, then it will be a different object on each call even
+  // if the values remain the same.
+  const isEntity = typeof resource === 'object';
+  const resourceAsString = isEntity ? JSON.stringify(resource) : resource;
+  if (isEntity && typeof id !== 'undefined') {
+     false ? 0 : void 0;
+  }
   return useQuerySelect(resolve => {
+    const hasId = isEntity ? !!resource.id : !!id;
     const {
       canUser
     } = resolve(store);
-    const create = canUser('create', resource);
-    if (!id) {
+    const create = canUser('create', isEntity ? {
+      kind: resource.kind,
+      name: resource.name
+    } : resource);
+    if (!hasId) {
       const read = canUser('read', resource);
       const isResolving = create.isResolving || read.isResolving;
       const hasResolved = create.hasResolved && read.hasResolved;
@@ -24300,8 +24318,9 @@ function useResourcePermissions(resource, id) {
       canUpdate: hasResolved && update.data,
       canDelete: hasResolved && _delete.data
     };
-  }, [resource, id]);
+  }, [resourceAsString, id]);
 }
+/* harmony default export */ const use_resource_permissions = (useResourcePermissions);
 function __experimentalUseResourcePermissions(resource, id) {
   external_wp_deprecated_default()(`wp.data.__experimentalUseResourcePermissions`, {
     alternative: 'wp.data.useResourcePermissions',

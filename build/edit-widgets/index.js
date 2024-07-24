@@ -3073,15 +3073,16 @@ function WidgetAreasBlockEditorProvider({
   children,
   ...props
 }) {
-  const mediaPermissions = (0,external_wp_coreData_namespaceObject.useResourcePermissions)('media');
   const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
   const {
+    hasUploadPermissions,
     reusableBlocks,
     isFixedToolbarActive,
     keepCaretInsideBlock,
     pageOnFront,
     pageForPosts
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _canUser;
     const {
       canUser,
       getEntityRecord,
@@ -3092,6 +3093,10 @@ function WidgetAreasBlockEditorProvider({
       name: 'site'
     }) ? getEntityRecord('root', 'site') : undefined;
     return {
+      hasUploadPermissions: (_canUser = canUser('create', {
+        kind: 'root',
+        name: 'media'
+      })) !== null && _canUser !== void 0 ? _canUser : true,
       reusableBlocks: ALLOW_REUSABLE_BLOCKS ? getEntityRecords('postType', 'wp_block') : EMPTY_ARRAY,
       isFixedToolbarActive: !!select(external_wp_preferences_namespaceObject.store).get('core/edit-widgets', 'fixedToolbar'),
       keepCaretInsideBlock: !!select(external_wp_preferences_namespaceObject.store).get('core/edit-widgets', 'keepCaretInsideBlock'),
@@ -3104,7 +3109,7 @@ function WidgetAreasBlockEditorProvider({
   } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
   const settings = (0,external_wp_element_namespaceObject.useMemo)(() => {
     let mediaUploadBlockEditor;
-    if (mediaPermissions.canCreate) {
+    if (hasUploadPermissions) {
       mediaUploadBlockEditor = ({
         onError,
         ...argumentsObject
@@ -3129,7 +3134,7 @@ function WidgetAreasBlockEditorProvider({
       pageOnFront,
       pageForPosts
     };
-  }, [blockEditorSettings, isFixedToolbarActive, isLargeViewport, keepCaretInsideBlock, mediaPermissions.canCreate, reusableBlocks, setIsInserterOpened, pageOnFront, pageForPosts]);
+  }, [hasUploadPermissions, blockEditorSettings, isFixedToolbarActive, isLargeViewport, keepCaretInsideBlock, reusableBlocks, setIsInserterOpened, pageOnFront, pageForPosts]);
   const widgetAreaId = use_last_selected_widget_area();
   const [blocks, onInput, onChange] = (0,external_wp_coreData_namespaceObject.useEntityBlockEditor)(KIND, POST_TYPE, {
     id: buildWidgetAreasPostId()

@@ -32383,7 +32383,11 @@ const SELECT_NAVIGATION_MENUS_ARGS = ['postType', 'wp_navigation', PRELOADED_NAV
  */
 
 function useNavigationMenu(ref) {
-  const permissions = (0,external_wp_coreData_namespaceObject.useResourcePermissions)('navigation', ref);
+  const permissions = (0,external_wp_coreData_namespaceObject.useResourcePermissions)({
+    kind: 'postType',
+    name: 'wp_navigation',
+    id: ref
+  });
   const {
     navigationMenu,
     isNavigationMenuResolved,
@@ -34472,15 +34476,24 @@ function LinkUIBlockInserter({
   });
 }
 function UnforwardedLinkUI(props, ref) {
+  const {
+    label,
+    url,
+    opensInNewTab,
+    type,
+    kind
+  } = props.link;
+  const postType = type || 'page';
   const [addingBlock, setAddingBlock] = (0,external_wp_element_namespaceObject.useState)(false);
   const [focusAddBlockButton, setFocusAddBlockButton] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
     saveEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  const pagesPermissions = (0,external_wp_coreData_namespaceObject.useResourcePermissions)('pages');
-  const postsPermissions = (0,external_wp_coreData_namespaceObject.useResourcePermissions)('posts');
+  const permissions = (0,external_wp_coreData_namespaceObject.useResourcePermissions)({
+    kind: 'postType',
+    name: postType
+  });
   async function handleCreate(pageTitle) {
-    const postType = props.link.type || 'page';
     const page = await saveEntityRecord('postType', postType, {
       title: pageTitle,
       status: 'draft'
@@ -34502,19 +34515,6 @@ function UnforwardedLinkUI(props, ref) {
       url: page.link,
       kind: 'post-type'
     };
-  }
-  const {
-    label,
-    url,
-    opensInNewTab,
-    type,
-    kind
-  } = props.link;
-  let userCanCreate = false;
-  if (!type || type === 'page') {
-    userCanCreate = pagesPermissions.canCreate;
-  } else if (type === 'post') {
-    userCanCreate = postsPermissions.canCreate;
   }
 
   // Memoize link value to avoid overriding the LinkControl's internal state.
@@ -34555,7 +34555,7 @@ function UnforwardedLinkUI(props, ref) {
         hasRichPreviews: true,
         value: link,
         showInitialSuggestions: true,
-        withCreateSuggestion: userCanCreate,
+        withCreateSuggestion: permissions.canCreate,
         createSuggestion: handleCreate,
         createSuggestionButtonText: searchTerm => {
           let format;
