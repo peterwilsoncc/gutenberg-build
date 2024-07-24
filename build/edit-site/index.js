@@ -18951,6 +18951,19 @@ function FontCollection({
   const resetFontsToInstall = () => {
     setFontsToInstall([]);
   };
+  const selectFontCount = fontsToInstall.length > 0 ? fontsToInstall[0]?.fontFace?.length : 0;
+
+  // Check if any fonts are selected.
+  const isIndeterminate = selectFontCount > 0 && selectFontCount !== selectedFont?.fontFace?.length;
+
+  // Check if all fonts are selected.
+  const isSelectAllChecked = selectFontCount === selectedFont?.fontFace?.length;
+
+  // Toggle select all fonts.
+  const toggleSelectAll = () => {
+    const newFonts = isSelectAllChecked ? [] : [selectedFont];
+    setFontsToInstall(newFonts);
+  };
   const handleInstall = async () => {
     setNotice(null);
     const fontFamily = fontsToInstall[0];
@@ -19118,6 +19131,13 @@ function FontCollection({
             children: (0,external_wp_i18n_namespaceObject.__)('Select font variants to install.')
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
             margin: 4
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+            className: "font-library-modal__select-all",
+            label: (0,external_wp_i18n_namespaceObject.__)('Select all'),
+            checked: isSelectAllChecked,
+            onChange: toggleSelectAll,
+            indeterminate: isIndeterminate,
+            __nextHasNoMarginBottom: true
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
             spacing: 0,
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
