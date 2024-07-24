@@ -61395,15 +61395,6 @@ function ZoomOutModeInserters() {
       hoveredBlockClientId: getHoveredBlockClientId()
     };
   }, []);
-  const isMounted = (0,external_wp_element_namespaceObject.useRef)(false);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!isMounted.current) {
-      isMounted.current = true;
-      return;
-    }
-    // reset insertion point when the block order changes
-    setInserterIsOpened(true);
-  }, [blockOrder, setInserterIsOpened]);
 
   // Defer the initial rendering to avoid the jumps due to the animation.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
