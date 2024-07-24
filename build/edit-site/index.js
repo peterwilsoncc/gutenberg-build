@@ -18386,6 +18386,7 @@ const {
   useGlobalSetting: installed_fonts_useGlobalSetting
 } = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function InstalledFonts() {
+  var _libraryFontSelected$;
   const {
     baseCustomFonts,
     libraryFontSelected,
@@ -18397,9 +18398,9 @@ function InstalledFonts() {
     saveFontFamilies,
     getFontFacesActivated,
     notice,
-    setNotice,
-    fontFamilies
+    setNotice
   } = (0,external_wp_element_namespaceObject.useContext)(FontLibraryContext);
+  const [fontFamilies, setFontFamilies] = installed_fonts_useGlobalSetting('typography.fontFamilies');
   const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = (0,external_wp_element_namespaceObject.useState)(false);
   const [baseFontFamilies] = installed_fonts_useGlobalSetting('typography.fontFamilies', undefined, 'base');
   const globalStylesId = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -18455,6 +18456,36 @@ function InstalledFonts() {
     handleSetLibraryFontSelected(libraryFontSelected);
     refreshLibrary();
   }, []);
+
+  // Get activated fonts count.
+  const activeFontsCount = libraryFontSelected ? getFontFacesActivated(libraryFontSelected.slug, libraryFontSelected.source).length : 0;
+  const selectedFontsCount = (_libraryFontSelected$ = libraryFontSelected?.fontFace?.length) !== null && _libraryFontSelected$ !== void 0 ? _libraryFontSelected$ : libraryFontSelected?.fontFamily ? 1 : 0;
+
+  // Check if any fonts are selected.
+  const isIndeterminate = activeFontsCount > 0 && activeFontsCount !== selectedFontsCount;
+
+  // Check if all fonts are selected.
+  const isSelectAllChecked = activeFontsCount === selectedFontsCount;
+
+  // Toggle select all fonts.
+  const toggleSelectAll = () => {
+    var _fontFamilies$library;
+    const initialFonts = (_fontFamilies$library = fontFamilies?.[libraryFontSelected.source]?.filter(f => f.slug !== libraryFontSelected.slug)) !== null && _fontFamilies$library !== void 0 ? _fontFamilies$library : [];
+    const newFonts = isSelectAllChecked ? initialFonts : [...initialFonts, libraryFontSelected];
+    setFontFamilies({
+      ...fontFamilies,
+      [libraryFontSelected.source]: newFonts
+    });
+    if (libraryFontSelected.fontFace) {
+      libraryFontSelected.fontFace.forEach(face => {
+        if (isSelectAllChecked) {
+          unloadFontFaceInBrowser(face, 'all');
+        } else {
+          loadFontFaceInBrowser(face, getDisplaySrcFromFontFace(face?.src), 'all');
+        }
+      });
+    }
+  };
   const hasFonts = baseThemeFonts.length > 0 || baseCustomFonts.length > 0;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "font-library-modal__tabpanel-layout",
@@ -18559,7 +18590,14 @@ function InstalledFonts() {
             margin: 4
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
             spacing: 0,
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+              className: "font-library-modal__select-all",
+              label: (0,external_wp_i18n_namespaceObject.__)('Select all'),
+              checked: isSelectAllChecked,
+              onChange: toggleSelectAll,
+              indeterminate: isIndeterminate,
+              __nextHasNoMarginBottom: true
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
               margin: 8
             }), getFontFacesToDisplay(libraryFontSelected).map((face, i) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(library_font_variant, {
               font: libraryFontSelected,
