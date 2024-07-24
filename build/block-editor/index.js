@@ -71728,7 +71728,7 @@ const ImageURLInputUI = ({
           icon: link_off,
           label: (0,external_wp_i18n_namespaceObject.__)('Disable expand on click'),
           onClick: () => {
-            onSetLightbox(false);
+            onSetLightbox?.(false);
           },
           size: "compact"
         })]
@@ -71753,7 +71753,7 @@ const ImageURLInputUI = ({
           label: (0,external_wp_i18n_namespaceObject.__)('Remove link'),
           onClick: () => {
             onLinkRemove();
-            resetLightbox();
+            resetLightbox?.();
           },
           size: "compact"
         })]
@@ -71796,7 +71796,7 @@ const ImageURLInputUI = ({
               linkDestination: LINK_DESTINATION_NONE,
               href: ''
             });
-            onSetLightbox(true);
+            onSetLightbox?.(true);
             stopEditLink();
           },
           children: (0,external_wp_i18n_namespaceObject.__)('Expand on click')
