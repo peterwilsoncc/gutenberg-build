@@ -19386,17 +19386,14 @@ function useGlobalStylesUserConfig() {
     const {
       getEditedEntityRecord,
       hasFinishedResolution,
-      getUser,
-      getCurrentUser
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
     const _globalStylesId = select(external_wp_coreData_namespaceObject.store).__experimentalGetCurrentGlobalStylesId();
-
-    // Doing canUser( 'read', 'global_styles' ) returns false even for users with the capability.
-    // See: https://github.com/WordPress/gutenberg/issues/63438
-    // So we need to check the user capabilities directly.
-    const userId = getCurrentUser()?.id;
-    const canEditThemeOptions = userId && getUser(userId)?.capabilities?.edit_theme_options;
-    const record = _globalStylesId && canEditThemeOptions ? getEditedEntityRecord('root', 'globalStyles', _globalStylesId) : undefined;
+    const record = _globalStylesId && canUser('read', {
+      kind: 'root',
+      name: 'globalStyles',
+      id: _globalStylesId
+    }) ? getEditedEntityRecord('root', 'globalStyles', _globalStylesId) : undefined;
     let hasResolved = false;
     if (hasFinishedResolution('__experimentalGetCurrentGlobalStylesId')) {
       hasResolved = _globalStylesId ? hasFinishedResolution('getEditedEntityRecord', ['root', 'globalStyles', _globalStylesId]) : true;
@@ -19449,17 +19446,13 @@ function useGlobalStylesUserConfig() {
 function useGlobalStylesBaseConfig() {
   const baseConfig = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getCurrentUser,
-      getUser,
-      __experimentalGetCurrentThemeBaseGlobalStyles
+      __experimentalGetCurrentThemeBaseGlobalStyles,
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
-
-    // Doing canUser( 'read', 'global_styles' ) returns false even for users with the capability.
-    // See: https://github.com/WordPress/gutenberg/issues/63438
-    // So we need to check the user capabilities directly.
-    const userId = getCurrentUser()?.id;
-    const canEditThemeOptions = userId && getUser(userId)?.capabilities?.edit_theme_options;
-    return canEditThemeOptions && __experimentalGetCurrentThemeBaseGlobalStyles();
+    return canUser('read', {
+      kind: 'root',
+      name: 'theme'
+    }) && __experimentalGetCurrentThemeBaseGlobalStyles();
   }, []);
   return [!!baseConfig, baseConfig];
 }
