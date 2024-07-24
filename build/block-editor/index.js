@@ -62684,7 +62684,6 @@ function useListViewImages({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -62733,9 +62732,6 @@ function ListViewBlockSelectButton({
     clientId,
     isExpanded
   });
-  const positionLabel = blockInformation?.positionLabel ? (0,external_wp_i18n_namespaceObject.sprintf)(
-  // translators: 1: Position of selected block, e.g. "Sticky" or "Fixed".
-  (0,external_wp_i18n_namespaceObject.__)('Position: %1$s'), blockInformation.positionLabel) : '';
 
   // The `href` attribute triggers the browser's native HTML drag operations.
   // When the link is dragged, the element's outerHTML is set in DataTransfer object as text/html.
@@ -62793,8 +62789,8 @@ function ListViewBlockSelectButton({
           ellipsizeMode: "auto",
           children: blockInformation.anchor
         })
-      }), positionLabel && isSticky && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
-        text: positionLabel,
+      }), isSticky && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        className: "block-editor-list-view-block-select-button__sticky",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
           icon: pin_small
         })
@@ -62926,7 +62922,9 @@ const ListViewBlockContents = (0,external_wp_element_namespaceObject.forwardRef)
 
 const getBlockPositionDescription = (position, siblingCount, level) => (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: 1: The numerical position of the block. 2: The total number of blocks. 3. The level of nesting for the block. */
 (0,external_wp_i18n_namespaceObject.__)('Block %1$d of %2$d, Level %3$d.'), position, siblingCount, level);
-const getBlockPropertiesDescription = isLocked => isLocked ? (0,external_wp_i18n_namespaceObject.__)('This block is locked.') : '';
+const getBlockPropertiesDescription = (blockInformation, isLocked) => [blockInformation?.positionLabel ? `${(0,external_wp_i18n_namespaceObject.sprintf)(
+// translators: %s: Position of selected block, e.g. "Sticky" or "Fixed".
+(0,external_wp_i18n_namespaceObject.__)('Position: %s'), blockInformation.positionLabel)}.` : undefined, isLocked ? (0,external_wp_i18n_namespaceObject.__)('This block is locked.') : undefined].filter(Boolean).join(' ');
 
 /**
  * Returns true if the client ID occurs within the block selection or multi-selection,
@@ -63469,7 +63467,7 @@ function ListViewBlock({
     return null;
   }
   const blockPositionDescription = getBlockPositionDescription(position, siblingBlockCount, level);
-  const blockPropertiesDescription = getBlockPropertiesDescription(isLocked);
+  const blockPropertiesDescription = getBlockPropertiesDescription(blockInformation, isLocked);
   const hasSiblings = siblingBlockCount > 0;
   const hasRenderedMovers = showBlockMovers && hasSiblings;
   const moverCellClassName = dist_clsx('block-editor-list-view-block__mover-cell', {
@@ -63554,7 +63552,7 @@ function ListViewBlock({
           ariaDescribedBy: descriptionId
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AriaReferencedText, {
           id: descriptionId,
-          children: `${blockPositionDescription} ${blockPropertiesDescription}`
+          children: [blockPositionDescription, blockPropertiesDescription].filter(Boolean).join(' ')
         })]
       })
     }), hasRenderedMovers && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
