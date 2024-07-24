@@ -25546,6 +25546,7 @@ function image_Image({
   }, setLoadedNaturalSize] = (0,external_wp_element_namespaceObject.useState)({});
   const [isEditingImage, setIsEditingImage] = (0,external_wp_element_namespaceObject.useState)(false);
   const [externalBlob, setExternalBlob] = (0,external_wp_element_namespaceObject.useState)();
+  const [hasImageErrored, setHasImageErrored] = (0,external_wp_element_namespaceObject.useState)(false);
   const hasNonContentControls = blockEditingMode === 'default';
   const isContentOnlyMode = blockEditingMode === 'contentOnly';
   const isResizable = allowResize && hasNonContentControls && !isWideAligned && isLargeViewport;
@@ -25597,6 +25598,8 @@ function image_Image({
     toggleSelection(true);
   }
   function onImageError() {
+    setHasImageErrored(true);
+
     // Check if there's an embed block that handles this URL, e.g., instagram URL.
     // See: https://github.com/WordPress/gutenberg/pull/11472
     const embedBlock = createUpgradedEmbedBlock({
@@ -25607,6 +25610,13 @@ function image_Image({
     if (undefined !== embedBlock) {
       onReplace(embedBlock);
     }
+  }
+  function onImageLoad(event) {
+    setHasImageErrored(false);
+    setLoadedNaturalSize({
+      loadedNaturalWidth: event.target?.naturalWidth,
+      loadedNaturalHeight: event.target?.naturalHeight
+    });
   }
   function onSetHref(props) {
     setAttributes(props);
@@ -26035,7 +26045,15 @@ function image_Image({
   const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseBorderProps)(attributes);
   const shadowProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetShadowClassesAndStyles)(attributes);
   const isRounded = attributes.className?.includes('is-style-rounded');
-  let img =
+  let img = temporaryURL && hasImageErrored ?
+  /*#__PURE__*/
+  // Show a placeholder during upload when the blob URL can't be loaded. This can
+  // happen when the user uploads a HEIC image in a browser that doesn't support them.
+  (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
+    className: "wp-block-image__placeholder",
+    withIllustration: true,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
+  }) :
   /*#__PURE__*/
   // Disable reason: Image itself is not meant to be interactive, but
   // should direct focus to block.
@@ -26044,13 +26062,8 @@ function image_Image({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
       src: temporaryURL || url,
       alt: defaultedAlt,
-      onError: () => onImageError(),
-      onLoad: event => {
-        setLoadedNaturalSize({
-          loadedNaturalWidth: event.target?.naturalWidth,
-          loadedNaturalHeight: event.target?.naturalHeight
-        });
-      },
+      onError: onImageError,
+      onLoad: onImageLoad,
       ref: imageRef,
       className: borderProps.className,
       style: {
