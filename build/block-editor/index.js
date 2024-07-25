@@ -61396,7 +61396,9 @@ function ZoomOutModeInserters() {
       hoveredBlockClientId: getHoveredBlockClientId()
     };
   }, []);
-  const blockEditorDispatch = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const {
+    showInsertionPoint
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
 
   // Defer the initial rendering to avoid the jumps due to the animation.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -61416,9 +61418,6 @@ function ZoomOutModeInserters() {
     const nextClientId = blockOrder[index];
     const isSelected = hasSelection && (selectedBlockClientId === previousClientId || selectedBlockClientId === nextClientId);
     const isHovered = hoveredBlockClientId === previousClientId || hoveredBlockClientId === nextClientId;
-    const {
-      showInsertionPoint
-    } = blockEditorDispatch;
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(inbetween, {
       previousClientId: previousClientId,
       nextClientId: nextClientId,
