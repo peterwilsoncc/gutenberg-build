@@ -41834,7 +41834,7 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
 }
 /* harmony default export */ const add_new_template = ((0,external_wp_element_namespaceObject.memo)(NewTemplate));
 
-;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/page-templates/index.js
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/page-templates/fields.js
 /**
  * External dependencies
  */
@@ -41843,9 +41843,6 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
 /**
  * WordPress dependencies
  */
-
-
-
 
 
 
@@ -41864,6 +41861,157 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
 
 
 
+const {
+  useGlobalStyle: fields_useGlobalStyle
+} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+function PreviewField({
+  item
+}) {
+  const settings = usePatternSettings();
+  const [backgroundColor = 'white'] = fields_useGlobalStyle('color.background');
+  const blocks = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return (0,external_wp_blocks_namespaceObject.parse)(item.content.raw);
+  }, [item.content.raw]);
+  const {
+    onClick
+  } = useLink({
+    postId: item.id,
+    postType: item.type,
+    canvas: 'edit'
+  });
+  const isEmpty = !blocks?.length;
+  // Wrap everything in a block editor provider to ensure 'styles' that are needed
+  // for the previews are synced between the site editor store and the block editor store.
+  // Additionally we need to have the `__experimentalBlockPatterns` setting in order to
+  // render patterns inside the previews.
+  // TODO: Same approach is used in the patterns list and it becomes obvious that some of
+  // the block editor settings are needed in context where we don't have the block editor.
+  // Explore how we can solve this in a better way.
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EditorProvider, {
+    post: item,
+    settings: settings,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "page-templates-preview-field",
+      style: {
+        backgroundColor
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
+        className: "page-templates-preview-field__button",
+        type: "button",
+        onClick: onClick,
+        "aria-label": item.title?.rendered || item.title,
+        children: [isEmpty && (0,external_wp_i18n_namespaceObject.__)('Empty template'), !isEmpty && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Async, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview, {
+            blocks: blocks
+          })
+        })]
+      })
+    })
+  });
+}
+const previewField = {
+  label: (0,external_wp_i18n_namespaceObject.__)('Preview'),
+  id: 'preview',
+  render: PreviewField,
+  enableSorting: false
+};
+function TitleField({
+  item
+}) {
+  const linkProps = {
+    params: {
+      postId: item.id,
+      postType: item.type,
+      canvas: 'edit'
+    }
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Link, {
+    ...linkProps,
+    children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title?.rendered) || (0,external_wp_i18n_namespaceObject.__)('(no title)')
+  });
+}
+const titleField = {
+  label: (0,external_wp_i18n_namespaceObject.__)('Template'),
+  id: 'title',
+  getValue: ({
+    item
+  }) => item.title?.rendered,
+  render: TitleField,
+  enableHiding: false,
+  enableGlobalSearch: true
+};
+const descriptionField = {
+  label: (0,external_wp_i18n_namespaceObject.__)('Description'),
+  id: 'description',
+  render: ({
+    item
+  }) => {
+    return item.description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "page-templates-description",
+      children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.description)
+    });
+  },
+  enableSorting: false,
+  enableGlobalSearch: true
+};
+function AuthorField({
+  item
+}) {
+  const [isImageLoaded, setIsImageLoaded] = (0,external_wp_element_namespaceObject.useState)(false);
+  const {
+    text,
+    icon,
+    imageUrl
+  } = useAddedBy(item.type, item.id);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+    alignment: "left",
+    spacing: 0,
+    children: [imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: dist_clsx('page-templates-author-field__avatar', {
+        'is-loaded': isImageLoaded
+      }),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+        onLoad: () => setIsImageLoaded(true),
+        alt: "",
+        src: imageUrl
+      })
+    }), !imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "page-templates-author-field__icon",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+        icon: icon
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "page-templates-author-field__name",
+      children: text
+    })]
+  });
+}
+const authorField = {
+  label: (0,external_wp_i18n_namespaceObject.__)('Author'),
+  id: 'author',
+  getValue: ({
+    item
+  }) => item.author_text,
+  render: AuthorField
+};
+
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/page-templates/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
 
 
 
@@ -41871,9 +42019,6 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
 const {
   usePostActions: page_templates_usePostActions
 } = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
-const {
-  useGlobalStyle: page_templates_useGlobalStyle
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
   useHistory: page_templates_useHistory,
   useLocation: page_templates_useLocation
@@ -41934,107 +42079,6 @@ const page_templates_DEFAULT_VIEW = {
   layout: page_templates_defaultLayouts[LAYOUT_GRID].layout,
   filters: []
 };
-function page_templates_Title({
-  item,
-  viewType
-}) {
-  if (viewType === LAYOUT_LIST) {
-    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title?.rendered) || (0,external_wp_i18n_namespaceObject.__)('(no title)');
-  }
-  const linkProps = {
-    params: {
-      postId: item.id,
-      postType: item.type,
-      canvas: 'edit'
-    }
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Link, {
-    ...linkProps,
-    children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title?.rendered) || (0,external_wp_i18n_namespaceObject.__)('(no title)')
-  });
-}
-function AuthorField({
-  item
-}) {
-  const [isImageLoaded, setIsImageLoaded] = (0,external_wp_element_namespaceObject.useState)(false);
-  const {
-    text,
-    icon,
-    imageUrl
-  } = useAddedBy(item.type, item.id);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-    alignment: "left",
-    spacing: 0,
-    children: [imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: dist_clsx('page-templates-author-field__avatar', {
-        'is-loaded': isImageLoaded
-      }),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
-        onLoad: () => setIsImageLoaded(true),
-        alt: "",
-        src: imageUrl
-      })
-    }), !imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "page-templates-author-field__icon",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-        icon: icon
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-      className: "page-templates-author-field__name",
-      children: text
-    })]
-  });
-}
-function page_templates_Preview({
-  item,
-  viewType
-}) {
-  const settings = usePatternSettings();
-  const [backgroundColor = 'white'] = page_templates_useGlobalStyle('color.background');
-  const blocks = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return (0,external_wp_blocks_namespaceObject.parse)(item.content.raw);
-  }, [item.content.raw]);
-  const {
-    onClick
-  } = useLink({
-    postId: item.id,
-    postType: item.type,
-    canvas: 'edit'
-  });
-  const isEmpty = !blocks?.length;
-  // Wrap everything in a block editor provider to ensure 'styles' that are needed
-  // for the previews are synced between the site editor store and the block editor store.
-  // Additionally we need to have the `__experimentalBlockPatterns` setting in order to
-  // render patterns inside the previews.
-  // TODO: Same approach is used in the patterns list and it becomes obvious that some of
-  // the block editor settings are needed in context where we don't have the block editor.
-  // Explore how we can solve this in a better way.
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EditorProvider, {
-    post: item,
-    settings: settings,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      className: `page-templates-preview-field is-viewtype-${viewType}`,
-      style: {
-        backgroundColor
-      },
-      children: [viewType === LAYOUT_LIST && !isEmpty && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Async, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview, {
-          blocks: blocks
-        })
-      }), viewType !== LAYOUT_LIST && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
-        className: "page-templates-preview-field__button",
-        type: "button",
-        onClick: onClick,
-        "aria-label": item.title?.rendered || item.title,
-        children: [isEmpty && (0,external_wp_i18n_namespaceObject.__)('Empty template'), !isEmpty && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Async, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview, {
-            blocks: blocks
-          })
-        })]
-      })]
-    })
-  });
-}
 function PageTemplates() {
   const {
     params
@@ -42099,61 +42143,10 @@ function PageTemplates() {
       label: author
     }));
   }, [records]);
-  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [{
-    label: (0,external_wp_i18n_namespaceObject.__)('Preview'),
-    id: 'preview',
-    render: ({
-      item
-    }) => {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(page_templates_Preview, {
-        item: item,
-        viewType: view.type
-      });
-    },
-    enableSorting: false
-  }, {
-    label: (0,external_wp_i18n_namespaceObject.__)('Template'),
-    id: 'title',
-    getValue: ({
-      item
-    }) => item.title?.rendered,
-    render: ({
-      item
-    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(page_templates_Title, {
-      item: item,
-      viewType: view.type
-    }),
-    enableHiding: false,
-    enableGlobalSearch: true
-  }, {
-    label: (0,external_wp_i18n_namespaceObject.__)('Description'),
-    id: 'description',
-    render: ({
-      item
-    }) => {
-      return item.description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        className: "page-templates-description",
-        children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.description)
-      });
-    },
-    enableSorting: false,
-    enableGlobalSearch: true
-  }, {
-    label: (0,external_wp_i18n_namespaceObject.__)('Author'),
-    id: 'author',
-    getValue: ({
-      item
-    }) => item.author_text,
-    render: ({
-      item
-    }) => {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AuthorField, {
-        viewType: view.type,
-        item: item
-      });
-    },
+  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [previewField, titleField, descriptionField, {
+    ...authorField,
     elements: authors
-  }], [authors, view.type]);
+  }], [authors]);
   const {
     data,
     paginationInfo
