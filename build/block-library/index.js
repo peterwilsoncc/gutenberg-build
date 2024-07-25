@@ -52377,6 +52377,7 @@ const SiteLogo = ({
 // This is a light wrapper around MediaReplaceFlow because the block has two
 // different MediaReplaceFlows, one for the inspector and one for the toolbar.
 function SiteLogoReplaceFlow({
+  mediaURL,
   onRemoveLogo,
   ...mediaReplaceProps
 }) {
@@ -52384,8 +52385,13 @@ function SiteLogoReplaceFlow({
     ...mediaReplaceProps,
     allowedTypes: site_logo_edit_ALLOWED_MEDIA_TYPES,
     accept: ACCEPT_MEDIA_STRING,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-      onClick: onRemoveLogo,
+    children: ({
+      onClose
+    }) => mediaURL && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+      onClick: () => {
+        onRemoveLogo();
+        onClose();
+      },
       children: (0,external_wp_i18n_namespaceObject.__)('Reset')
     })
   });
@@ -52547,16 +52553,18 @@ function LogoEdit({
         }
         onInitialSelectLogo(image);
       },
-      onError: onUploadError
+      onError: onUploadError,
+      onRemoveLogo
     });
   };
   const mediaReplaceFlowProps = {
     mediaURL: logoUrl,
+    name: !logoUrl ? (0,external_wp_i18n_namespaceObject.__)('Choose logo') : (0,external_wp_i18n_namespaceObject.__)('Replace'),
     onSelect: onSelectLogo,
     onError: onUploadError,
     onRemoveLogo
   };
-  const controls = canUserEdit && logoUrl && !temporaryURL && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+  const controls = canUserEdit && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
     group: "other",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SiteLogoReplaceFlow, {
       ...mediaReplaceFlowProps

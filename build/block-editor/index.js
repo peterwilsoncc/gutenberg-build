@@ -24037,7 +24037,9 @@ const MediaReplaceFlow = ({
           onClick: onToggleFeaturedImage,
           isPressed: useFeaturedImage,
           children: (0,external_wp_i18n_namespaceObject.__)('Use featured image')
-        }), children]
+        }), typeof children === 'function' ? children({
+          onClose
+        }) : children]
       }), onSelectURL &&
       /*#__PURE__*/
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
