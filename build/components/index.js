@@ -69946,7 +69946,7 @@ const styles_DropdownMenuItemLabel = /*#__PURE__*/emotion_styled_base_browser_es
 } : 0)("font-size:", font('default.fontSize'), ";line-height:20px;color:inherit;" + ( true ? "" : 0));
 const styles_DropdownMenuItemHelpText = /*#__PURE__*/emotion_styled_base_browser_esm(truncate_component,  true ? {
   target: "e1kdzosf0"
-} : 0)("font-size:", font('helpText.fontSize'), ";line-height:16px;color:", COLORS.gray['700'], ";[data-active-item]:not( [data-focus-visible] ) *:not( ", dropdown_menu_v2_styles_DropdownMenu, " ) &,[aria-disabled='true'] *:not( ", dropdown_menu_v2_styles_DropdownMenu, " ) &{color:inherit;}" + ( true ? "" : 0));
+} : 0)("font-size:", font('helpText.fontSize'), ";line-height:16px;color:", COLORS.gray['700'], ";word-break:break-all;[data-active-item]:not( [data-focus-visible] ) *:not( ", dropdown_menu_v2_styles_DropdownMenu, " ) &,[aria-disabled='true'] *:not( ", dropdown_menu_v2_styles_DropdownMenu, " ) &{color:inherit;}" + ( true ? "" : 0));
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/index.js
 /**
