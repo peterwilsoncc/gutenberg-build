@@ -30458,7 +30458,9 @@ function SpacingInputControl({
         withInputField: false,
         onChange: handleCustomValueSliderChange,
         className: "spacing-sizes-control__custom-value-range",
-        __nextHasNoMarginBottom: true
+        __nextHasNoMarginBottom: true,
+        label: ariaLabel,
+        hideLabelFromVision: true
       })]
     }), showRangeControl && !showCustomValueControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
       onMouseOver: onMouseOver,
@@ -31290,7 +31292,9 @@ function FlexControls({
           flexSize: value
         });
       },
-      value: flexSize
+      value: flexSize,
+      label: flexResetLabel,
+      hideLabelFromVision: true
     })]
   });
 }
