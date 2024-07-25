@@ -61365,8 +61365,9 @@ function ZoomOutModeInserters() {
   const [isReady, setIsReady] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
     hasSelection,
+    blockInsertionPoint,
     blockOrder,
-    insertionPoint,
+    blockInsertionPointVisible,
     setInserterIsOpened,
     sectionRootClientId,
     selectedBlockClientId,
@@ -61374,31 +61375,28 @@ function ZoomOutModeInserters() {
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getSettings,
+      getBlockInsertionPoint,
       getBlockOrder,
       getSelectionStart,
       getSelectedBlockClientId,
-      getHoveredBlockClientId
+      getHoveredBlockClientId,
+      isBlockInsertionPointVisible
     } = select(store);
     const {
       sectionRootClientId: root
     } = unlock(getSettings());
-    // To do: move ZoomOutModeInserters to core/editor.
-    // Or we perhaps we should move the insertion point state to the
-    // block-editor store. I'm not sure what it was ever moved to the editor
-    // store, because all the inserter components all live in the
-    // block-editor package.
-    // eslint-disable-next-line @wordpress/data-no-store-string-literals
-    const editor = select('core/editor');
     return {
       hasSelection: !!getSelectionStart().clientId,
+      blockInsertionPoint: getBlockInsertionPoint(),
       blockOrder: getBlockOrder(root),
-      insertionPoint: unlock(editor).getInsertionPoint(),
+      blockInsertionPointVisible: isBlockInsertionPointVisible(),
       sectionRootClientId: root,
       setInserterIsOpened: getSettings().__experimentalSetIsInserterOpened,
       selectedBlockClientId: getSelectedBlockClientId(),
       hoveredBlockClientId: getHoveredBlockClientId()
     };
   }, []);
+  const blockEditorDispatch = (0,external_wp_data_namespaceObject.useDispatch)(store);
 
   // Defer the initial rendering to avoid the jumps due to the animation.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -61413,15 +61411,14 @@ function ZoomOutModeInserters() {
     return null;
   }
   return [undefined, ...blockOrder].map((clientId, index) => {
-    const shouldRenderInserter = insertionPoint.insertionIndex !== index;
-    const shouldRenderInsertionPoint = insertionPoint.insertionIndex === index;
-    if (!shouldRenderInserter && !shouldRenderInsertionPoint) {
-      return null;
-    }
+    const shouldRenderInsertionPoint = blockInsertionPointVisible && blockInsertionPoint.index === index;
     const previousClientId = clientId;
     const nextClientId = blockOrder[index];
     const isSelected = hasSelection && (selectedBlockClientId === previousClientId || selectedBlockClientId === nextClientId);
     const isHovered = hoveredBlockClientId === previousClientId || hoveredBlockClientId === nextClientId;
+    const {
+      showInsertionPoint
+    } = blockEditorDispatch;
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(inbetween, {
       previousClientId: previousClientId,
       nextClientId: nextClientId,
@@ -61434,7 +61431,7 @@ function ZoomOutModeInserters() {
           width: '100%'
         },
         className: "block-editor-block-list__insertion-point-indicator"
-      }), shouldRenderInserter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_mode_inserter_button, {
+      }), !shouldRenderInsertionPoint && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_mode_inserter_button, {
         isVisible: isSelected || isHovered,
         onClick: () => {
           setInserterIsOpened({
@@ -61442,6 +61439,9 @@ function ZoomOutModeInserters() {
             insertionIndex: index,
             tab: 'patterns',
             category: 'all'
+          });
+          showInsertionPoint(sectionRootClientId, index, {
+            operation: 'insert'
           });
         }
       })]
