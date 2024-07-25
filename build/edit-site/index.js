@@ -23530,6 +23530,7 @@ function FontFamilies() {
           children: /* translators: Heading for a list of fonts provided by the theme. */
           (0,external_wp_i18n_namespaceObject._x)('Theme', 'font source')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+          size: "large",
           isBordered: true,
           isSeparated: true,
           children: themeFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_family_item, {
@@ -23542,6 +23543,7 @@ function FontFamilies() {
           children: /* translators: Heading for a list of fonts installed by the user. */
           (0,external_wp_i18n_namespaceObject._x)('Custom', 'font source')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+          size: "large",
           isBordered: true,
           isSeparated: true,
           children: customFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_family_item, {
