@@ -8279,12 +8279,13 @@ function collections(state = {}, action) {
   return state;
 }
 function blockBindingsSources(state = {}, action) {
+  // Merge usesContext with existing values, potentially defined in the server registration.
+  const existingUsesContext = state[action.name]?.usesContext || [];
+  const newUsesContext = action.usesContext || [];
+  const mergedArrays = Array.from(new Set(existingUsesContext.concat(newUsesContext)));
+  const mergedUsesContext = mergedArrays.length > 0 ? mergedArrays : undefined;
   switch (action.type) {
     case 'ADD_BLOCK_BINDINGS_SOURCE':
-      // Merge usesContext with existing values, potentially defined in the server registration.
-      let mergedUsesContext = [...(state[action.name]?.usesContext || []), ...(action.usesContext || [])];
-      // Remove duplicates.
-      mergedUsesContext = mergedUsesContext.length > 0 ? [...new Set(mergedUsesContext)] : undefined;
       return {
         ...state,
         [action.name]: {
@@ -8301,8 +8302,13 @@ function blockBindingsSources(state = {}, action) {
       return {
         ...state,
         [action.name]: {
+          /*
+           * Keep the exisitng properties in case the source has been registered
+           * in the client before bootstrapping.
+           */
+          ...state[action.name],
           label: action.label,
-          usesContext: action.usesContext
+          usesContext: mergedUsesContext
         }
       };
     case 'REMOVE_BLOCK_BINDINGS_SOURCE':
