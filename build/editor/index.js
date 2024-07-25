@@ -1838,6 +1838,7 @@ __webpack_require__.d(store_private_selectors_namespaceObject, {
   getInserterSidebarToggleRef: () => (getInserterSidebarToggleRef),
   getInsertionPoint: () => (getInsertionPoint),
   getListViewToggleRef: () => (getListViewToggleRef),
+  getPostBlocksByName: () => (getPostBlocksByName),
   getPostIcon: () => (getPostIcon),
   hasPostMetaChanges: () => (hasPostMetaChanges)
 });
@@ -5744,6 +5745,33 @@ const hasPostMetaChanges = (0,external_wp_data_namespaceObject.createRegistrySel
 function private_selectors_getEntityActions(state, ...args) {
   return getEntityActions(state.dataviews, ...args);
 }
+
+/**
+ * Similar to getBlocksByName in @wordpress/block-editor, but only returns the top-most
+ * blocks that aren't descendants of the query block.
+ *
+ * @param {Object}       state      Global application state.
+ * @param {Array|string} blockNames Block names of the blocks to retrieve.
+ *
+ * @return {Array} Block client IDs.
+ */
+const getPostBlocksByName = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)((state, blockNames) => {
+  blockNames = Array.isArray(blockNames) ? blockNames : [blockNames];
+  const {
+    getBlocksByName,
+    getBlockParents,
+    getBlockName
+  } = select(external_wp_blockEditor_namespaceObject.store);
+  return getBlocksByName(blockNames).filter(clientId => getBlockParents(clientId).every(parentClientId => {
+    const parentBlockName = getBlockName(parentClientId);
+    return (
+      // Ignore descendents of the query block.
+      parentBlockName !== 'core/query' &&
+      // Enable only the top-most block.
+      !blockNames.includes(parentBlockName)
+    );
+  }));
+}, () => [select(external_wp_blockEditor_namespaceObject.store).getBlocks()]));
 
 ;// CONCATENATED MODULE: external ["wp","privateApis"]
 const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
@@ -19726,33 +19754,29 @@ function useBlockEditorSettings(settings, postType, postId, renderingMode) {
 
 
 
-const DEFAULT_CONTENT_ONLY_BLOCKS = ['core/post-title', 'core/post-featured-image', 'core/post-content', 'core/template-part'];
+
+/**
+ * Internal dependencies
+ */
+
+
+const POST_CONTENT_BLOCK_TYPES = ['core/post-title', 'core/post-featured-image', 'core/post-content'];
 
 /**
  * Component that when rendered, makes it so that the site editor allows only
  * page content to be edited.
  */
 function DisableNonPageContentBlocks() {
-  const contentOnlyBlocks = (0,external_wp_hooks_namespaceObject.applyFilters)('editor.postContentBlockTypes', DEFAULT_CONTENT_ONLY_BLOCKS);
+  const contentOnlyBlockTypes = (0,external_wp_element_namespaceObject.useMemo)(() => [...(0,external_wp_hooks_namespaceObject.applyFilters)('editor.postContentBlockTypes', POST_CONTENT_BLOCK_TYPES), 'core/template-part'], []);
 
-  // Note that there are two separate subscription because the result for each
+  // Note that there are two separate subscriptions because the result for each
   // returns a new array.
   const contentOnlyIds = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getBlocksByName,
-      getBlockParents,
-      getBlockName
-    } = select(external_wp_blockEditor_namespaceObject.store);
-    return getBlocksByName(contentOnlyBlocks).filter(clientId => getBlockParents(clientId).every(parentClientId => {
-      const parentBlockName = getBlockName(parentClientId);
-      return (
-        // Ignore descendents of the query block.
-        parentBlockName !== 'core/query' &&
-        // Enable only the top-most block.
-        !contentOnlyBlocks.includes(parentBlockName)
-      );
-    }));
-  }, []);
+      getPostBlocksByName
+    } = unlock(select(store_store));
+    return getPostBlocksByName(contentOnlyBlockTypes);
+  }, [contentOnlyBlockTypes]);
   const disabledIds = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlocksByName,
@@ -27557,6 +27581,8 @@ const SidebarHeader = (_, ref) => {
 
 
 
+
+
 /**
  * Internal dependencies
  */
@@ -27567,30 +27593,30 @@ const SidebarHeader = (_, ref) => {
 const {
   BlockQuickNavigation
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
-const PAGE_CONTENT_BLOCKS = ['core/post-content', 'core/post-featured-image', 'core/post-title'];
+const template_content_panel_POST_CONTENT_BLOCK_TYPES = ['core/post-title', 'core/post-featured-image', 'core/post-content'];
 const TEMPLATE_PART_BLOCK = 'core/template-part';
 function TemplateContentPanel() {
-  const {
-    enableComplementaryArea
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const postContentBlockTypes = (0,external_wp_element_namespaceObject.useMemo)(() => (0,external_wp_hooks_namespaceObject.applyFilters)('editor.postContentBlockTypes', template_content_panel_POST_CONTENT_BLOCK_TYPES), []);
   const {
     clientIds,
     postType,
     renderingMode
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getBlocksByName
-    } = select(external_wp_blockEditor_namespaceObject.store);
-    const {
-      getCurrentPostType
-    } = select(store_store);
+      getCurrentPostType,
+      getPostBlocksByName,
+      getRenderingMode
+    } = unlock(select(store_store));
     const _postType = getCurrentPostType();
     return {
       postType: _postType,
-      clientIds: getBlocksByName(TEMPLATE_POST_TYPE === _postType ? TEMPLATE_PART_BLOCK : PAGE_CONTENT_BLOCKS),
-      renderingMode: select(store_store).getRenderingMode()
+      clientIds: getPostBlocksByName(TEMPLATE_POST_TYPE === _postType ? TEMPLATE_PART_BLOCK : postContentBlockTypes),
+      renderingMode: getRenderingMode()
     };
-  }, []);
+  }, [postContentBlockTypes]);
+  const {
+    enableComplementaryArea
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   if (renderingMode === 'post-only' && postType !== TEMPLATE_POST_TYPE) {
     return null;
   }
