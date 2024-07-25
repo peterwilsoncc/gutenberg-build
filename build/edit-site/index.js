@@ -38404,70 +38404,6 @@ function filterSortAndPaginate(data, view, fields) {
   };
 }
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/lock-small.js
-/**
- * WordPress dependencies
- */
-
-
-const lockSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M15 11h-.2V9c0-1.5-1.2-2.8-2.8-2.8S9.2 7.5 9.2 9v2H9c-.6 0-1 .4-1 1v4c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-4c0-.6-.4-1-1-1zm-1.8 0h-2.5V9c0-.7.6-1.2 1.2-1.2s1.2.6 1.2 1.2v2z"
-  })
-});
-/* harmony default export */ const lock_small = (lockSmall);
-
-;// CONCATENATED MODULE: external ["wp","priorityQueue"]
-const external_wp_priorityQueue_namespaceObject = window["wp"]["priorityQueue"];
-;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/async/index.js
-/**
- * WordPress dependencies
- */
-
-
-const blockPreviewQueue = (0,external_wp_priorityQueue_namespaceObject.createQueue)();
-
-/**
- * Renders a component at the next idle time.
- * @param {*} props
- */
-function Async({
-  children,
-  placeholder
-}) {
-  const [shouldRender, setShouldRender] = (0,external_wp_element_namespaceObject.useState)(false);
-
-  // In the future, we could try to use startTransition here, but currently
-  // react will batch all transitions, which means all previews will be
-  // rendered at the same time.
-  // https://react.dev/reference/react/startTransition#caveats
-  // > If there are multiple ongoing Transitions, React currently batches them
-  // > together. This is a limitation that will likely be removed in a future
-  // > release.
-
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    const context = {};
-    blockPreviewQueue.add(context, () => {
-      // Synchronously run all renders so it consumes timeRemaining.
-      // See https://github.com/WordPress/gutenberg/pull/48238
-      (0,external_wp_element_namespaceObject.flushSync)(() => {
-        setShouldRender(true);
-      });
-    });
-    return () => {
-      blockPreviewQueue.cancel(context);
-    };
-  }, []);
-  if (!shouldRender) {
-    return placeholder;
-  }
-  return children;
-}
-
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/page-patterns/utils.js
 const filterOutDuplicatesByName = (currentItem, index, items) => index === items.findIndex(item => currentItem.name === item.name);
 
@@ -39485,6 +39421,70 @@ function PatternsHeader({
   });
 }
 
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/lock-small.js
+/**
+ * WordPress dependencies
+ */
+
+
+const lockSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M15 11h-.2V9c0-1.5-1.2-2.8-2.8-2.8S9.2 7.5 9.2 9v2H9c-.6 0-1 .4-1 1v4c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-4c0-.6-.4-1-1-1zm-1.8 0h-2.5V9c0-.7.6-1.2 1.2-1.2s1.2.6 1.2 1.2v2z"
+  })
+});
+/* harmony default export */ const lock_small = (lockSmall);
+
+;// CONCATENATED MODULE: external ["wp","priorityQueue"]
+const external_wp_priorityQueue_namespaceObject = window["wp"]["priorityQueue"];
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/async/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+const blockPreviewQueue = (0,external_wp_priorityQueue_namespaceObject.createQueue)();
+
+/**
+ * Renders a component at the next idle time.
+ * @param {*} props
+ */
+function Async({
+  children,
+  placeholder
+}) {
+  const [shouldRender, setShouldRender] = (0,external_wp_element_namespaceObject.useState)(false);
+
+  // In the future, we could try to use startTransition here, but currently
+  // react will batch all transitions, which means all previews will be
+  // rendered at the same time.
+  // https://react.dev/reference/react/startTransition#caveats
+  // > If there are multiple ongoing Transitions, React currently batches them
+  // > together. This is a limitation that will likely be removed in a future
+  // > release.
+
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    const context = {};
+    blockPreviewQueue.add(context, () => {
+      // Synchronously run all renders so it consumes timeRemaining.
+      // See https://github.com/WordPress/gutenberg/pull/48238
+      (0,external_wp_element_namespaceObject.flushSync)(() => {
+        setShouldRender(true);
+      });
+    });
+    return () => {
+      blockPreviewQueue.cancel(context);
+    };
+  }, []);
+  if (!shouldRender) {
+    return placeholder;
+  }
+  return children;
+}
+
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/plugins.js
 /**
  * WordPress dependencies
@@ -39601,7 +39601,7 @@ function useAddedBy(postType, postId) {
   }, [postType, postId]);
 }
 
-;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/page-patterns/index.js
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/page-patterns/fields.js
 /**
  * External dependencies
  */
@@ -39610,11 +39610,6 @@ function useAddedBy(postType, postId) {
 /**
  * WordPress dependencies
  */
-
-
-
-
-
 
 
 
@@ -39634,62 +39629,9 @@ function useAddedBy(postType, postId) {
 
 
 
-
-
-
-
-
 const {
-  ExperimentalBlockEditorProvider: page_patterns_ExperimentalBlockEditorProvider,
-  useGlobalStyle: page_patterns_useGlobalStyle
+  useGlobalStyle: fields_useGlobalStyle
 } = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
-const {
-  usePostActions: page_patterns_usePostActions
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
-const {
-  useLocation: page_patterns_useLocation
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
-const page_patterns_EMPTY_ARRAY = [];
-const page_patterns_defaultLayouts = {
-  [LAYOUT_TABLE]: {
-    layout: {
-      primaryField: 'title',
-      styles: {
-        preview: {
-          width: '1%'
-        },
-        author: {
-          width: '1%'
-        }
-      }
-    }
-  },
-  [LAYOUT_GRID]: {
-    layout: {
-      mediaField: 'preview',
-      primaryField: 'title',
-      badgeFields: ['sync-status']
-    }
-  }
-};
-const DEFAULT_VIEW = {
-  type: LAYOUT_GRID,
-  search: '',
-  page: 1,
-  perPage: 20,
-  layout: page_patterns_defaultLayouts[LAYOUT_GRID].layout,
-  fields: ['title', 'sync-status'],
-  filters: []
-};
-const SYNC_FILTERS = [{
-  value: PATTERN_SYNC_TYPES.full,
-  label: (0,external_wp_i18n_namespaceObject._x)('Synced', 'pattern (singular)'),
-  description: (0,external_wp_i18n_namespaceObject.__)('Patterns that are kept in sync across the site.')
-}, {
-  value: PATTERN_SYNC_TYPES.unsynced,
-  label: (0,external_wp_i18n_namespaceObject._x)('Not synced', 'pattern (singular)'),
-  description: (0,external_wp_i18n_namespaceObject.__)('Patterns that can be changed freely without affecting the site.')
-}];
 function PreviewWrapper({
   item,
   onClick,
@@ -39706,15 +39648,14 @@ function PreviewWrapper({
     children: children
   });
 }
-function Preview({
-  item,
-  viewType
+function PreviewField({
+  item
 }) {
   const descriptionId = (0,external_wp_element_namespaceObject.useId)();
   const description = item.description || item?.excerpt?.raw;
   const isUserPattern = item.type === PATTERN_TYPES.user;
   const isTemplatePart = item.type === TEMPLATE_PART_POST_TYPE;
-  const [backgroundColor] = page_patterns_useGlobalStyle('color.background');
+  const [backgroundColor] = fields_useGlobalStyle('color.background');
   const {
     onClick
   } = useLink({
@@ -39730,7 +39671,7 @@ function Preview({
   }, [item?.content?.raw, item.blocks]);
   const isEmpty = !blocks?.length;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-    className: `page-patterns-preview-field is-viewtype-${viewType}`,
+    className: "page-patterns-preview-field",
     style: {
       backgroundColor
     },
@@ -39751,41 +39692,13 @@ function Preview({
     })]
   });
 }
-function Author({
-  item,
-  viewType
-}) {
-  const [isImageLoaded, setIsImageLoaded] = (0,external_wp_element_namespaceObject.useState)(false);
-  const {
-    text,
-    icon,
-    imageUrl
-  } = useAddedBy(item.type, item.id);
-  const withIcon = viewType !== LAYOUT_LIST;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-    alignment: "left",
-    spacing: 0,
-    children: [withIcon && imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: dist_clsx('page-templates-author-field__avatar', {
-        'is-loaded': isImageLoaded
-      }),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
-        onLoad: () => setIsImageLoaded(true),
-        alt: "",
-        src: imageUrl
-      })
-    }), withIcon && !imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "page-templates-author-field__icon",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-        icon: icon
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-      className: "page-templates-author-field__name",
-      children: text
-    })]
-  });
-}
-function Title({
+const previewField = {
+  label: (0,external_wp_i18n_namespaceObject.__)('Preview'),
+  id: 'preview',
+  render: PreviewField,
+  enableSorting: false
+};
+function TitleField({
   item
 }) {
   const isUserPattern = item.type === PATTERN_TYPES.user;
@@ -39827,6 +39740,158 @@ function Title({
     })]
   });
 }
+const titleField = {
+  label: (0,external_wp_i18n_namespaceObject.__)('Title'),
+  id: 'title',
+  getValue: ({
+    item
+  }) => item.title?.raw || item.title,
+  render: TitleField,
+  enableHiding: false
+};
+const SYNC_FILTERS = [{
+  value: PATTERN_SYNC_TYPES.full,
+  label: (0,external_wp_i18n_namespaceObject._x)('Synced', 'pattern (singular)'),
+  description: (0,external_wp_i18n_namespaceObject.__)('Patterns that are kept in sync across the site.')
+}, {
+  value: PATTERN_SYNC_TYPES.unsynced,
+  label: (0,external_wp_i18n_namespaceObject._x)('Not synced', 'pattern (singular)'),
+  description: (0,external_wp_i18n_namespaceObject.__)('Patterns that can be changed freely without affecting the site.')
+}];
+const patternStatusField = {
+  label: (0,external_wp_i18n_namespaceObject.__)('Sync status'),
+  id: 'sync-status',
+  render: ({
+    item
+  }) => {
+    const syncStatus = 'wp_pattern_sync_status' in item ? item.wp_pattern_sync_status || PATTERN_SYNC_TYPES.full : PATTERN_SYNC_TYPES.unsynced;
+    // User patterns can have their sync statuses checked directly.
+    // Non-user patterns are all unsynced for the time being.
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: `edit-site-patterns__field-sync-status-${syncStatus}`,
+      children: SYNC_FILTERS.find(({
+        value
+      }) => value === syncStatus).label
+    });
+  },
+  elements: SYNC_FILTERS,
+  filterBy: {
+    operators: [OPERATOR_IS],
+    isPrimary: true
+  },
+  enableSorting: false
+};
+function AuthorField({
+  item
+}) {
+  const [isImageLoaded, setIsImageLoaded] = (0,external_wp_element_namespaceObject.useState)(false);
+  const {
+    text,
+    icon,
+    imageUrl
+  } = useAddedBy(item.type, item.id);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+    alignment: "left",
+    spacing: 0,
+    children: [imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: dist_clsx('page-templates-author-field__avatar', {
+        'is-loaded': isImageLoaded
+      }),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+        onLoad: () => setIsImageLoaded(true),
+        alt: "",
+        src: imageUrl
+      })
+    }), !imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "page-templates-author-field__icon",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+        icon: icon
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "page-templates-author-field__name",
+      children: text
+    })]
+  });
+}
+const templatePartAuthorField = {
+  label: (0,external_wp_i18n_namespaceObject.__)('Author'),
+  id: 'author',
+  getValue: ({
+    item
+  }) => item.author_text,
+  render: AuthorField,
+  filterBy: {
+    isPrimary: true
+  }
+};
+
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/page-patterns/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+
+
+
+const {
+  ExperimentalBlockEditorProvider: page_patterns_ExperimentalBlockEditorProvider
+} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+const {
+  usePostActions: page_patterns_usePostActions
+} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+const {
+  useLocation: page_patterns_useLocation
+} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+const page_patterns_EMPTY_ARRAY = [];
+const page_patterns_defaultLayouts = {
+  [LAYOUT_TABLE]: {
+    layout: {
+      primaryField: 'title',
+      styles: {
+        preview: {
+          width: '1%'
+        },
+        author: {
+          width: '1%'
+        }
+      }
+    }
+  },
+  [LAYOUT_GRID]: {
+    layout: {
+      mediaField: 'preview',
+      primaryField: 'title',
+      badgeFields: ['sync-status']
+    }
+  }
+};
+const DEFAULT_VIEW = {
+  type: LAYOUT_GRID,
+  search: '',
+  page: 1,
+  perPage: 20,
+  layout: page_patterns_defaultLayouts[LAYOUT_GRID].layout,
+  fields: ['title', 'sync-status'],
+  filters: []
+};
 function DataviewsPatterns() {
   const {
     params: {
@@ -39867,76 +39932,17 @@ function DataviewsPatterns() {
     }));
   }, [records]);
   const fields = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const _fields = [{
-      label: (0,external_wp_i18n_namespaceObject.__)('Preview'),
-      id: 'preview',
-      render: ({
-        item
-      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Preview, {
-        item: item,
-        viewType: view.type
-      }),
-      enableSorting: false
-    }, {
-      label: (0,external_wp_i18n_namespaceObject.__)('Title'),
-      id: 'title',
-      getValue: ({
-        item
-      }) => item.title?.raw || item.title,
-      render: ({
-        item
-      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Title, {
-        item: item
-      }),
-      enableHiding: false
-    }];
+    const _fields = [previewField, titleField];
     if (type === PATTERN_TYPES.user) {
-      _fields.push({
-        label: (0,external_wp_i18n_namespaceObject.__)('Sync status'),
-        id: 'sync-status',
-        render: ({
-          item
-        }) => {
-          const syncStatus = 'wp_pattern_sync_status' in item ? item.wp_pattern_sync_status || PATTERN_SYNC_TYPES.full : PATTERN_SYNC_TYPES.unsynced;
-          // User patterns can have their sync statuses checked directly.
-          // Non-user patterns are all unsynced for the time being.
-          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-            className: `edit-site-patterns__field-sync-status-${syncStatus}`,
-            children: SYNC_FILTERS.find(({
-              value
-            }) => value === syncStatus).label
-          });
-        },
-        elements: SYNC_FILTERS,
-        filterBy: {
-          operators: [OPERATOR_IS],
-          isPrimary: true
-        },
-        enableSorting: false
-      });
+      _fields.push(patternStatusField);
     } else if (type === TEMPLATE_PART_POST_TYPE) {
       _fields.push({
-        label: (0,external_wp_i18n_namespaceObject.__)('Author'),
-        id: 'author',
-        getValue: ({
-          item
-        }) => item.author_text,
-        render: ({
-          item
-        }) => {
-          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Author, {
-            viewType: view.type,
-            item: item
-          });
-        },
-        elements: authors,
-        filterBy: {
-          isPrimary: true
-        }
+        ...templatePartAuthorField,
+        elements: authors
       });
     }
     return _fields;
-  }, [view.type, type, authors]);
+  }, [type, authors]);
 
   // Reset the page number when the category changes.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -41862,13 +41868,13 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
 
 
 const {
-  useGlobalStyle: fields_useGlobalStyle
+  useGlobalStyle: page_templates_fields_useGlobalStyle
 } = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
-function PreviewField({
+function fields_PreviewField({
   item
 }) {
   const settings = usePatternSettings();
-  const [backgroundColor = 'white'] = fields_useGlobalStyle('color.background');
+  const [backgroundColor = 'white'] = page_templates_fields_useGlobalStyle('color.background');
   const blocks = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return (0,external_wp_blocks_namespaceObject.parse)(item.content.raw);
   }, [item.content.raw]);
@@ -41909,13 +41915,13 @@ function PreviewField({
     })
   });
 }
-const previewField = {
+const fields_previewField = {
   label: (0,external_wp_i18n_namespaceObject.__)('Preview'),
   id: 'preview',
-  render: PreviewField,
+  render: fields_PreviewField,
   enableSorting: false
 };
-function TitleField({
+function fields_TitleField({
   item
 }) {
   const linkProps = {
@@ -41930,13 +41936,13 @@ function TitleField({
     children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title?.rendered) || (0,external_wp_i18n_namespaceObject.__)('(no title)')
   });
 }
-const titleField = {
+const fields_titleField = {
   label: (0,external_wp_i18n_namespaceObject.__)('Template'),
   id: 'title',
   getValue: ({
     item
   }) => item.title?.rendered,
-  render: TitleField,
+  render: fields_TitleField,
   enableHiding: false,
   enableGlobalSearch: true
 };
@@ -41954,7 +41960,7 @@ const descriptionField = {
   enableSorting: false,
   enableGlobalSearch: true
 };
-function AuthorField({
+function fields_AuthorField({
   item
 }) {
   const [isImageLoaded, setIsImageLoaded] = (0,external_wp_element_namespaceObject.useState)(false);
@@ -41992,7 +41998,7 @@ const authorField = {
   getValue: ({
     item
   }) => item.author_text,
-  render: AuthorField
+  render: fields_AuthorField
 };
 
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/page-templates/index.js
@@ -42143,7 +42149,7 @@ function PageTemplates() {
       label: author
     }));
   }, [records]);
-  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [previewField, titleField, descriptionField, {
+  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [fields_previewField, fields_titleField, descriptionField, {
     ...authorField,
     elements: authors
   }], [authors]);
