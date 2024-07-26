@@ -7542,10 +7542,12 @@ const column_metadata = {
     },
     __experimentalBorder: {
       color: true,
+      radius: true,
       style: true,
       width: true,
       __experimentalDefaultControls: {
         color: true,
+        radius: true,
         style: true,
         width: true
       }
