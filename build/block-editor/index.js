@@ -51112,30 +51112,6 @@ function BlockPatternsTab({
 }
 /* harmony default export */ const block_patterns_tab = (BlockPatternsTab);
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inserter/block-patterns-tab/pattern-category-preview-panel.js
-/**
- * Internal dependencies
- */
-
-
-function PatternCategoryPreviewPanel({
-  rootClientId,
-  onInsert,
-  onHover,
-  category,
-  showTitlesAsTooltip,
-  patternFilter
-}) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternCategoryPreviews, {
-    rootClientId: rootClientId,
-    onInsert: onInsert,
-    onHover: onHover,
-    category: category,
-    showTitlesAsTooltip: showTitlesAsTooltip,
-    patternFilter: patternFilter
-  }, category.name);
-}
-
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/external.js
 /**
  * WordPress dependencies
@@ -52238,7 +52214,7 @@ function InserterMenu({
       onInsert: onInsertPattern,
       onSelectCategory: onClickPatternCategory,
       selectedCategory: selectedPatternCategory,
-      children: showPatternPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternCategoryPreviewPanel, {
+      children: showPatternPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternCategoryPreviews, {
         rootClientId: destinationRootClientId,
         onInsert: onInsertPattern,
         onHover: onHoverPattern,
