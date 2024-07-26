@@ -49045,8 +49045,16 @@ CustomSelectItem.displayName = 'CustomSelectControlV2.Item';
 
 
 /**
+ * WordPress dependencies
+ */
+
+
+
+/**
  * Internal dependencies
  */
+
+
 
 
 
@@ -49074,6 +49082,14 @@ function applyOptionDeprecations({
     ...rest
   };
 }
+function getDescribedBy(currentValue, describedBy) {
+  if (describedBy) {
+    return describedBy;
+  }
+
+  // translators: %s: The selected option.
+  return (0,external_wp_i18n_namespaceObject.sprintf)((0,external_wp_i18n_namespaceObject.__)('Currently selected: %s'), currentValue);
+}
 function CustomSelectControl(props) {
   const {
     __next40pxDefaultSize = false,
@@ -49086,6 +49102,7 @@ function CustomSelectControl(props) {
     showSelectedHint = false,
     ...restProps
   } = custom_select_control_useDeprecatedProps(props);
+  const descriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(CustomSelectControl, 'custom-select-control__description');
 
   // Forward props + store from v2 implementation
   const store = useSelectStore({
@@ -49143,10 +49160,10 @@ function CustomSelectControl(props) {
       })
     }, key);
   });
+  const {
+    value: currentValue
+  } = store.getState();
   const renderSelectedValueHint = () => {
-    const {
-      value: currentValue
-    } = store.getState();
     const selectedOptionHint = options?.map(applyOptionDeprecations)?.find(({
       name
     }) => currentValue === name)?.hint;
@@ -49167,17 +49184,24 @@ function CustomSelectControl(props) {
     }
     return size;
   })();
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(custom_select, {
-    "aria-describedby": describedBy,
-    renderSelectedValue: showSelectedHint ? renderSelectedValueHint : undefined,
-    size: translatedSize,
-    store: store,
-    className: dist_clsx(
-    // Keeping the classname for legacy reasons
-    'components-custom-select-control', classNameProp),
-    isLegacy: true,
-    ...restProps,
-    children: children
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(custom_select, {
+      "aria-describedby": descriptionId,
+      renderSelectedValue: showSelectedHint ? renderSelectedValueHint : undefined,
+      size: translatedSize,
+      store: store,
+      className: dist_clsx(
+      // Keeping the classname for legacy reasons
+      'components-custom-select-control', classNameProp),
+      isLegacy: true,
+      ...restProps,
+      children: children
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(visually_hidden_component, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        id: descriptionId,
+        children: getDescribedBy(currentValue, describedBy)
+      })
+    })]
   });
 }
 /* harmony default export */ const custom_select_control = (CustomSelectControl);
