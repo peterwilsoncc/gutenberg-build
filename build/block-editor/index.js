@@ -53305,7 +53305,7 @@ function GridItemResizerInner({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(cover, {
     className: "block-editor-grid-item-resizer",
     clientId: clientId,
-    __unstablePopoverSlot: "block-toolbar",
+    __unstablePopoverSlot: "__unstable-block-tools-after",
     additionalStyles: styles,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ResizableBox, {
       className: "block-editor-grid-item-resizer__box",
