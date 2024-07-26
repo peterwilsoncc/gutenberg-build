@@ -16192,9 +16192,10 @@ function use_settings_useSettings(...paths) {
  * It looks up the setting first in the block instance hierarchy.
  * If none is found, it'll look it up in the block editor settings.
  *
+ * @deprecated 6.5.0 Use useSettings instead.
+ *
  * @param {string} path The path to the setting.
  * @return {any} Returns the value defined for the setting.
- * @deprecated 6.5.0 Use useSettings instead.
  * @example
  * ```js
  * const isEnabled = useSetting( 'typography.dropCap' );
