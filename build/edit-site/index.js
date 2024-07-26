@@ -38013,6 +38013,9 @@ const {
   useLocation: post_list_useLocation,
   useHistory: post_list_useHistory
 } = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+const {
+  useEntityRecordsWithPermissions
+} = lock_unlock_unlock(external_wp_coreData_namespaceObject.privateApis);
 const post_list_EMPTY_ARRAY = [];
 function useView(postType) {
   const {
@@ -38155,7 +38158,7 @@ function PostList({
     isResolving: isLoadingMainEntities,
     totalItems,
     totalPages
-  } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('postType', postType, queryArgs);
+  } = useEntityRecordsWithPermissions('postType', postType, queryArgs);
   const ids = (_records$map = records?.map(record => getItemId(record))) !== null && _records$map !== void 0 ? _records$map : [];
   const prevIds = (_usePrevious = (0,external_wp_compose_namespaceObject.usePrevious)(ids)) !== null && _usePrevious !== void 0 ? _usePrevious : [];
   const deletedIds = prevIds.filter(id => !ids.includes(id));
@@ -44654,8 +44657,34 @@ function DataFormTextControl({
     __next40pxDefaultSize: true
   });
 }
+function DataFormNumberControl({
+  data,
+  field,
+  onChange
+}) {
+  const {
+    id,
+    label,
+    description
+  } = field;
+  const value = field.getValue({
+    item: data
+  });
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
+    ...prevItem,
+    [id]: newValue
+  })), [id, onChange]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+    label: label,
+    help: description,
+    value: value,
+    onChange: onChangeControl,
+    __next40pxDefaultSize: true
+  });
+}
 const controls = {
-  text: DataFormTextControl
+  text: DataFormTextControl,
+  integer: DataFormNumberControl
 };
 function getControlForField(field) {
   if (!field.type) {

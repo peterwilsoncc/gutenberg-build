@@ -25402,6 +25402,33 @@ function normalizeFields(fields) {
   });
 }
 
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/validation.js
+/**
+ * Internal dependencies
+ */
+
+function isItemValid(item, fields, form) {
+  const _fields = normalizeFields(fields.filter(({
+    id
+  }) => !!form.visibleFields?.includes(id)));
+  return _fields.every(field => {
+    const value = field.getValue({
+      item
+    });
+
+    // TODO: this implicitely means the value is required.
+    if (field.type === 'integer' && value === '') {
+      return false;
+    }
+    if (field.type === 'integer' && !Number.isInteger(Number(value))) {
+      return false;
+    }
+
+    // Nothing to validate.
+    return true;
+  });
+}
+
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/components/dataform/index.js
 /**
  * External dependencies
@@ -25444,8 +25471,34 @@ function DataFormTextControl({
     __next40pxDefaultSize: true
   });
 }
+function DataFormNumberControl({
+  data,
+  field,
+  onChange
+}) {
+  const {
+    id,
+    label,
+    description
+  } = field;
+  const value = field.getValue({
+    item: data
+  });
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
+    ...prevItem,
+    [id]: newValue
+  })), [id, onChange]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+    label: label,
+    help: description,
+    value: value,
+    onChange: onChangeControl,
+    __next40pxDefaultSize: true
+  });
+}
 const controls = {
-  text: DataFormTextControl
+  text: DataFormTextControl,
+  integer: DataFormNumberControl
 };
 function getControlForField(field) {
   if (!field.type) {
@@ -25552,18 +25605,26 @@ const {
   useDuplicatePatternProps
 } = unlock(external_wp_patterns_namespaceObject.privateApis);
 
-// TODO: this should be shared with other components (page-pages).
+// TODO: this should be shared with other components (see post-fields in edit-site).
 const fields = [{
   type: 'text',
-  header: (0,external_wp_i18n_namespaceObject.__)('Title'),
   id: 'title',
+  label: (0,external_wp_i18n_namespaceObject.__)('Title'),
   placeholder: (0,external_wp_i18n_namespaceObject.__)('No title'),
   getValue: ({
     item
   }) => item.title
+}, {
+  type: 'integer',
+  id: 'menu_order',
+  label: (0,external_wp_i18n_namespaceObject.__)('Order'),
+  description: (0,external_wp_i18n_namespaceObject.__)('Determines the order of pages.')
 }];
-const actions_form = {
+const formDuplicateAction = {
   visibleFields: ['title']
+};
+const formOrderAction = {
+  visibleFields: ['menu_order']
 };
 
 /**
@@ -26038,7 +26099,8 @@ function ReorderModal({
   closeModal,
   onActionPerformed
 }) {
-  const [item] = items;
+  const [item, setItem] = (0,external_wp_element_namespaceObject.useState)(items[0]);
+  const orderInput = item.menu_order;
   const {
     editEntityRecord,
     saveEditedEntityRecord
@@ -26047,10 +26109,9 @@ function ReorderModal({
     createSuccessNotice,
     createErrorNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
-  const [orderInput, setOrderInput] = (0,external_wp_element_namespaceObject.useState)(item.menu_order);
   async function onOrder(event) {
     event.preventDefault();
-    if (!Number.isInteger(Number(orderInput)) || orderInput?.trim?.() === '') {
+    if (!isItemValid(item, fields, formOrderAction)) {
       return;
     }
     try {
@@ -26073,19 +26134,18 @@ function ReorderModal({
       });
     }
   }
-  const saveIsDisabled = !Number.isInteger(Number(orderInput)) || orderInput?.trim?.() === '';
+  const isSaveDisabled = !isItemValid(item, fields, formOrderAction);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
     onSubmit: onOrder,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       spacing: "5",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         children: (0,external_wp_i18n_namespaceObject.__)('Determines the order of pages. Pages with the same order value are sorted alphabetically. Negative order values are supported.')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
-        __next40pxDefaultSize: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Order'),
-        help: (0,external_wp_i18n_namespaceObject.__)('Set the page order.'),
-        value: orderInput,
-        onChange: setOrderInput
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
+        data: item,
+        fields: fields,
+        form: formOrderAction,
+        onChange: setItem
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         justify: "right",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -26100,7 +26160,7 @@ function ReorderModal({
           variant: "primary",
           type: "submit",
           accessibleWhenDisabled: true,
-          disabled: saveIsDisabled,
+          disabled: isSaveDisabled,
           __experimentalIsFocusable: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Save')
         })]
@@ -26221,7 +26281,7 @@ const useDuplicatePostAction = postType => {
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
             data: item,
             fields: fields,
-            form: actions_form,
+            form: formDuplicateAction,
             onChange: setItem
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
             spacing: 2,
