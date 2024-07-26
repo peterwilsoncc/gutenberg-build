@@ -19782,7 +19782,7 @@ function DisableNonPageContentBlocks() {
       getBlocksByName,
       getBlockOrder
     } = select(external_wp_blockEditor_namespaceObject.store);
-    return getBlocksByName(['core/template-part']).flatMap(clientId => getBlockOrder(clientId));
+    return getBlocksByName('core/template-part').flatMap(clientId => getBlockOrder(clientId));
   }, []);
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
