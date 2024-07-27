@@ -20254,7 +20254,10 @@ function useEditorCommandLoader() {
     name: 'core/open-shortcut-help',
     label: (0,external_wp_i18n_namespaceObject.__)('Keyboard shortcuts'),
     icon: library_keyboard,
-    callback: () => {
+    callback: ({
+      close
+    }) => {
+      close();
       openModal('editor/keyboard-shortcut-help');
     }
   });
@@ -20271,7 +20274,10 @@ function useEditorCommandLoader() {
   commands.push({
     name: 'core/open-preferences',
     label: (0,external_wp_i18n_namespaceObject.__)('Editor preferences'),
-    callback: () => {
+    callback: ({
+      close
+    }) => {
+      close();
       openModal('editor/preferences');
     }
   });
