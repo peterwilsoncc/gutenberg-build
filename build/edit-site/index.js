@@ -37912,9 +37912,7 @@ function usePostFields(viewType) {
   }, {
     label: (0,external_wp_i18n_namespaceObject.__)('Author'),
     id: 'author',
-    getValue: ({
-      item
-    }) => item._embedded?.author[0]?.name,
+    type: 'integer',
     elements: authors?.map(({
       id,
       name
@@ -44632,6 +44630,39 @@ function DataViewsSidebarContent() {
   });
 }
 
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/validation.js
+/**
+ * Internal dependencies
+ */
+
+function isItemValid(item, fields, form) {
+  const _fields = normalizeFields(fields.filter(({
+    id
+  }) => !!form.visibleFields?.includes(id)));
+  return _fields.every(field => {
+    const value = field.getValue({
+      item
+    });
+
+    // TODO: this implicitely means the value is required.
+    if (field.type === 'integer' && value === '') {
+      return false;
+    }
+    if (field.type === 'integer' && !Number.isInteger(Number(value))) {
+      return false;
+    }
+    if (field.elements) {
+      const validValues = field.elements.map(f => f.value);
+      if (!validValues.includes(Number(value))) {
+        return false;
+      }
+    }
+
+    // Nothing to validate.
+    return true;
+  });
+}
+
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/components/dataform/index.js
 /**
  * External dependencies
@@ -44640,6 +44671,7 @@ function DataViewsSidebarContent() {
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -44679,18 +44711,39 @@ function DataFormNumberControl({
   field,
   onChange
 }) {
+  var _field$getValue;
   const {
     id,
     label,
     description
   } = field;
-  const value = field.getValue({
+  const value = (_field$getValue = field.getValue({
     item: data
-  });
+  })) !== null && _field$getValue !== void 0 ? _field$getValue : '';
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
     ...prevItem,
     [id]: newValue
   })), [id, onChange]);
+  if (field.elements) {
+    const elements = [
+    /*
+     * Value can be undefined when:
+     *
+     * - the field is not required
+     * - in bulk editing
+     *
+     */
+    {
+      label: (0,external_wp_i18n_namespaceObject.__)('Select item'),
+      value: ''
+    }, ...field.elements];
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+      label: label,
+      value: value,
+      options: elements,
+      onChange: onChangeControl
+    });
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
     label: label,
     help: description,
@@ -44775,7 +44828,7 @@ function PostEditForm({
     fields
   } = post_fields();
   const form = {
-    visibleFields: ['title']
+    visibleFields: ['title', 'author']
   };
   const [edits, setEdits] = (0,external_wp_element_namespaceObject.useState)({});
   const itemWithEdits = (0,external_wp_element_namespaceObject.useMemo)(() => {
@@ -44786,6 +44839,9 @@ function PostEditForm({
   }, [initialEdits, edits]);
   const onSubmit = async event => {
     event.preventDefault();
+    if (!isItemValid(itemWithEdits, fields, form)) {
+      return;
+    }
     const {
       getEntityRecord
     } = registry.resolveSelect(external_wp_coreData_namespaceObject.store);
@@ -44798,6 +44854,7 @@ function PostEditForm({
     }
     setEdits({});
   };
+  const isUpdateDisabled = !isItemValid(itemWithEdits, fields, form);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("form", {
     onSubmit: onSubmit,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
@@ -44808,6 +44865,8 @@ function PostEditForm({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       variant: "primary",
       type: "submit",
+      accessibleWhenDisabled: true,
+      disabled: isUpdateDisabled,
       children: (0,external_wp_i18n_namespaceObject.__)('Update')
     })]
   });

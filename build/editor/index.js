@@ -25429,6 +25429,12 @@ function isItemValid(item, fields, form) {
     if (field.type === 'integer' && !Number.isInteger(Number(value))) {
       return false;
     }
+    if (field.elements) {
+      const validValues = field.elements.map(f => f.value);
+      if (!validValues.includes(Number(value))) {
+        return false;
+      }
+    }
 
     // Nothing to validate.
     return true;
@@ -25443,6 +25449,7 @@ function isItemValid(item, fields, form) {
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -25482,18 +25489,39 @@ function DataFormNumberControl({
   field,
   onChange
 }) {
+  var _field$getValue;
   const {
     id,
     label,
     description
   } = field;
-  const value = field.getValue({
+  const value = (_field$getValue = field.getValue({
     item: data
-  });
+  })) !== null && _field$getValue !== void 0 ? _field$getValue : '';
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
     ...prevItem,
     [id]: newValue
   })), [id, onChange]);
+  if (field.elements) {
+    const elements = [
+    /*
+     * Value can be undefined when:
+     *
+     * - the field is not required
+     * - in bulk editing
+     *
+     */
+    {
+      label: (0,external_wp_i18n_namespaceObject.__)('Select item'),
+      value: ''
+    }, ...field.elements];
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+      label: label,
+      value: value,
+      options: elements,
+      onChange: onChangeControl
+    });
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
     label: label,
     help: description,
