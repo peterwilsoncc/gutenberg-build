@@ -26633,33 +26633,7 @@ function isObjectEmpty(object) {
   return !object || Object.keys(object).length === 0;
 }
 function getExamples() {
-  // Use our own example for the Heading block so that we can show multiple
-  // heading levels.
-  const headingsExample = {
-    name: 'core/heading',
-    title: (0,external_wp_i18n_namespaceObject.__)('Headings'),
-    category: 'text',
-    blocks: [(0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
-      content: (0,external_wp_i18n_namespaceObject.__)('Heading 1'),
-      level: 1
-    }), (0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
-      content: (0,external_wp_i18n_namespaceObject.__)('Heading 2'),
-      level: 2
-    }), (0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
-      content: (0,external_wp_i18n_namespaceObject.__)('Heading 3'),
-      level: 3
-    }), (0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
-      content: (0,external_wp_i18n_namespaceObject.__)('Heading 4'),
-      level: 4
-    }), (0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
-      content: (0,external_wp_i18n_namespaceObject.__)('Heading 5'),
-      level: 5
-    }), (0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
-      content: (0,external_wp_i18n_namespaceObject.__)('Heading 6'),
-      level: 6
-    })]
-  };
-  const otherExamples = (0,external_wp_blocks_namespaceObject.getBlockTypes)().filter(blockType => {
+  const nonHeadingBlockExamples = (0,external_wp_blocks_namespaceObject.getBlockTypes)().filter(blockType => {
     const {
       name,
       example,
@@ -26672,7 +26646,27 @@ function getExamples() {
     category: blockType.category,
     blocks: (0,external_wp_blocks_namespaceObject.getBlockFromExample)(blockType.name, blockType.example)
   }));
-  return [headingsExample, ...otherExamples];
+  const isHeadingBlockRegistered = !!(0,external_wp_blocks_namespaceObject.getBlockType)('core/heading');
+  if (!isHeadingBlockRegistered) {
+    return nonHeadingBlockExamples;
+  }
+
+  // Use our own example for the Heading block so that we can show multiple
+  // heading levels.
+  const headingsExample = {
+    name: 'core/heading',
+    title: (0,external_wp_i18n_namespaceObject.__)('Headings'),
+    category: 'text',
+    blocks: [1, 2, 3, 4, 5, 6].map(level => {
+      return (0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
+        content: (0,external_wp_i18n_namespaceObject.sprintf)(
+        // translators: %d: heading level e.g: "1", "2", "3"
+        (0,external_wp_i18n_namespaceObject.__)('Heading %d'), level),
+        level
+      });
+    })
+  };
+  return [headingsExample, ...nonHeadingBlockExamples];
 }
 function StyleBook({
   enableResizing = true,
