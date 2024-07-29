@@ -25847,13 +25847,11 @@ function shadows_edit_panel_ShadowItem({
       });
     },
     renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalDropdownContentWrapper, {
-      paddingSize: "none",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "edit-site-global-styles__shadow-editor__dropdown-content",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ShadowPopover, {
-          shadowObj: shadowObj,
-          onChange: onShadowChange
-        })
+      paddingSize: "medium",
+      className: "edit-site-global-styles__shadow-editor__dropdown-content",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ShadowPopover, {
+        shadowObj: shadowObj,
+        onChange: onShadowChange
       })
     })
   });
@@ -25871,60 +25869,53 @@ function ShadowPopover({
     };
     onChange(newShadow);
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: 4,
     className: "edit-site-global-styles__shadow-editor-panel",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-      spacing: 2,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHeading, {
-        level: 5,
-        children: (0,external_wp_i18n_namespaceObject.__)('Shadow')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "edit-site-global-styles__shadow-editor-color-palette",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ColorPalette, {
-          clearable: false,
-          enableAlpha: enableAlpha,
-          __experimentalIsRenderedInSidebar: __experimentalIsRenderedInSidebar,
-          value: shadowObj.color,
-          onChange: value => onShadowChange('color', value)
-        })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
-        value: shadowObj.inset ? 'inset' : 'outset',
-        isBlock: true,
-        onChange: value => onShadowChange('inset', value === 'inset'),
-        hideLabelFromVision: true,
-        __next40pxDefaultSize: true,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-          value: "outset",
-          label: (0,external_wp_i18n_namespaceObject.__)('Outset')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-          value: "inset",
-          label: (0,external_wp_i18n_namespaceObject.__)('Inset')
-        })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalGrid, {
-        columns: 2,
-        gap: 4,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ShadowInputControl, {
-          label: (0,external_wp_i18n_namespaceObject.__)('X Position'),
-          value: shadowObj.x,
-          hasNegativeRange: true,
-          onChange: value => onShadowChange('x', value)
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ShadowInputControl, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Y Position'),
-          value: shadowObj.y,
-          hasNegativeRange: true,
-          onChange: value => onShadowChange('y', value)
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ShadowInputControl, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Blur'),
-          value: shadowObj.blur,
-          onChange: value => onShadowChange('blur', value)
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ShadowInputControl, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Spread'),
-          value: shadowObj.spread,
-          hasNegativeRange: true,
-          onChange: value => onShadowChange('spread', value)
-        })]
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ColorPalette, {
+      clearable: false,
+      enableAlpha: enableAlpha,
+      __experimentalIsRenderedInSidebar: __experimentalIsRenderedInSidebar,
+      value: shadowObj.color,
+      onChange: value => onShadowChange('color', value)
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+      __nextHasNoMarginBottom: true,
+      value: shadowObj.inset ? 'inset' : 'outset',
+      isBlock: true,
+      onChange: value => onShadowChange('inset', value === 'inset'),
+      hideLabelFromVision: true,
+      __next40pxDefaultSize: true,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+        value: "outset",
+        label: (0,external_wp_i18n_namespaceObject.__)('Outset')
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+        value: "inset",
+        label: (0,external_wp_i18n_namespaceObject.__)('Inset')
       })]
-    })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalGrid, {
+      columns: 2,
+      gap: 4,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ShadowInputControl, {
+        label: (0,external_wp_i18n_namespaceObject.__)('X Position'),
+        value: shadowObj.x,
+        hasNegativeRange: true,
+        onChange: value => onShadowChange('x', value)
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ShadowInputControl, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Y Position'),
+        value: shadowObj.y,
+        hasNegativeRange: true,
+        onChange: value => onShadowChange('y', value)
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ShadowInputControl, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Blur'),
+        value: shadowObj.blur,
+        onChange: value => onShadowChange('blur', value)
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ShadowInputControl, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Spread'),
+        value: shadowObj.spread,
+        hasNegativeRange: true,
+        onChange: value => onShadowChange('spread', value)
+      })]
+    })]
   });
 }
 function ShadowInputControl({
