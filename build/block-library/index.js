@@ -46725,6 +46725,7 @@ function QueryInspectorControls(props) {
       title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
       children: [showInheritControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
         __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Query type'),
         isBlock: true,
         onChange: value => {

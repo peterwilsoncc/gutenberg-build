@@ -24578,11 +24578,13 @@ function BackgroundSizeControls({
       value: backgroundPositionToCoords(positionValue),
       onChange: updateBackgroundPosition
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+      __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Fixed background'),
       checked: attachmentValue === 'fixed',
       onChange: toggleScrollWithPage,
       help: (0,external_wp_i18n_namespaceObject.__)('Whether your image should scroll with the page or stay fixed in place.')
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+      __nextHasNoMarginBottom: true,
       size: "__unstable-large",
       label: (0,external_wp_i18n_namespaceObject.__)('Size'),
       value: currentValueForToggle,
@@ -24613,6 +24615,7 @@ function BackgroundSizeControls({
         placeholder: (0,external_wp_i18n_namespaceObject.__)('Auto'),
         disabled: currentValueForToggle !== 'auto' || currentValueForToggle === undefined
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        __nextHasNoMarginBottom: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Repeat'),
         checked: repeatCheckedValue,
         onChange: toggleIsRepeated,
@@ -74262,6 +74265,7 @@ function ScaleTool({
     onDeselect: () => onChange(defaultValue),
     panelId: panelId,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+      __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Scale'),
       isBlock: true,
       help: scaleHelp[displayValue],
