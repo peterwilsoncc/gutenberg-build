@@ -26626,20 +26626,23 @@ function getExamples() {
     title: (0,external_wp_i18n_namespaceObject.__)('Headings'),
     category: 'text',
     blocks: [(0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
-      content: (0,external_wp_i18n_namespaceObject.__)('Code Is Poetry'),
+      content: (0,external_wp_i18n_namespaceObject.__)('Heading 1'),
       level: 1
     }), (0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
-      content: (0,external_wp_i18n_namespaceObject.__)('Code Is Poetry'),
+      content: (0,external_wp_i18n_namespaceObject.__)('Heading 2'),
       level: 2
     }), (0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
-      content: (0,external_wp_i18n_namespaceObject.__)('Code Is Poetry'),
+      content: (0,external_wp_i18n_namespaceObject.__)('Heading 3'),
       level: 3
     }), (0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
-      content: (0,external_wp_i18n_namespaceObject.__)('Code Is Poetry'),
+      content: (0,external_wp_i18n_namespaceObject.__)('Heading 4'),
       level: 4
     }), (0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
-      content: (0,external_wp_i18n_namespaceObject.__)('Code Is Poetry'),
+      content: (0,external_wp_i18n_namespaceObject.__)('Heading 5'),
       level: 5
+    }), (0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
+      content: (0,external_wp_i18n_namespaceObject.__)('Heading 6'),
+      level: 6
     })]
   };
   const otherExamples = (0,external_wp_blocks_namespaceObject.getBlockTypes)().filter(blockType => {
