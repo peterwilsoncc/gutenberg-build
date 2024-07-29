@@ -57330,27 +57330,7 @@ function FormFileUpload({
 
 
 const form_toggle_noop = () => {};
-
-/**
- * FormToggle switches a single setting on or off.
- *
- * ```jsx
- * import { FormToggle } from '@wordpress/components';
- * import { useState } from '@wordpress/element';
- *
- * const MyFormToggle = () => {
- *   const [ isChecked, setChecked ] = useState( true );
- *
- *   return (
- *     <FormToggle
- *       checked={ isChecked }
- *       onChange={ () => setChecked( ( state ) => ! state ) }
- *     />
- *   );
- * };
- * ```
- */
-function FormToggle(props, ref) {
+function UnforwardedFormToggle(props, ref) {
   const {
     className,
     checked,
@@ -57381,7 +57361,28 @@ function FormToggle(props, ref) {
     })]
   });
 }
-/* harmony default export */ const form_toggle = ((0,external_wp_element_namespaceObject.forwardRef)(FormToggle));
+
+/**
+ * FormToggle switches a single setting on or off.
+ *
+ * ```jsx
+ * import { FormToggle } from '@wordpress/components';
+ * import { useState } from '@wordpress/element';
+ *
+ * const MyFormToggle = () => {
+ *   const [ isChecked, setChecked ] = useState( true );
+ *
+ *   return (
+ *     <FormToggle
+ *       checked={ isChecked }
+ *       onChange={ () => setChecked( ( state ) => ! state ) }
+ *     />
+ *   );
+ * };
+ * ```
+ */
+const FormToggle = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedFormToggle);
+/* harmony default export */ const form_toggle = (FormToggle);
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/form-token-field/token.js
 /**
@@ -65513,29 +65514,8 @@ function Tip(props) {
 
 
 
-/**
- * ToggleControl is used to generate a toggle user interface.
- *
- * ```jsx
- * import { ToggleControl } from '@wordpress/components';
- * import { useState } from '@wordpress/element';
- *
- * const MyToggleControl = () => {
- *   const [ value, setValue ] = useState( false );
- *
- *   return (
- *     <ToggleControl
- *       label="Fixed Background"
- *       checked={ value }
- *       onChange={ () => setValue( ( state ) => ! state ) }
- *     />
- *   );
- * };
- * ```
- */
 
-
-function ToggleControl({
+function UnforwardedToggleControl({
   __nextHasNoMarginBottom,
   label,
   checked,
@@ -65598,7 +65578,29 @@ function ToggleControl({
     })
   });
 }
-/* harmony default export */ const toggle_control = ((0,external_wp_element_namespaceObject.forwardRef)(ToggleControl));
+
+/**
+ * ToggleControl is used to generate a toggle user interface.
+ *
+ * ```jsx
+ * import { ToggleControl } from '@wordpress/components';
+ * import { useState } from '@wordpress/element';
+ *
+ * const MyToggleControl = () => {
+ *   const [ value, setValue ] = useState( false );
+ *
+ *   return (
+ *     <ToggleControl
+ *       label="Fixed Background"
+ *       checked={ value }
+ *       onChange={ () => setValue( ( state ) => ! state ) }
+ *     />
+ *   );
+ * };
+ * ```
+ */
+const ToggleControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedToggleControl);
+/* harmony default export */ const toggle_control = (ToggleControl);
 
 ;// CONCATENATED MODULE: ./node_modules/@ariakit/react-core/esm/__chunks/SOK7T35T.js
 "use client";
