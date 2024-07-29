@@ -25682,7 +25682,7 @@ const trashPostAction = {
   isPrimary: true,
   icon: library_trash,
   isEligible(item) {
-    return !['auto-draft', 'trash'].includes(item.status);
+    return !['auto-draft', 'trash'].includes(item.status) && item.permissions?.delete;
   },
   supportsBulk: true,
   hideModalHeader: true,
@@ -25788,30 +25788,15 @@ const trashPostAction = {
     });
   }
 };
-function useCanUserEligibilityCheckPostType(capability, postType, action) {
-  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
-  return (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    ...action,
-    isEligible(item) {
-      return action.isEligible(item) && registry.select(external_wp_coreData_namespaceObject.store).canUser(capability, {
-        kind: 'postType',
-        name: postType,
-        id: item.id
-      });
-    }
-  }), [action, registry, capability, postType]);
-}
-function useTrashPostAction(postType) {
-  return useCanUserEligibilityCheckPostType('delete', postType, trashPostAction);
-}
 const permanentlyDeletePostAction = {
   id: 'permanently-delete',
   label: (0,external_wp_i18n_namespaceObject.__)('Permanently delete'),
   supportsBulk: true,
   isEligible({
-    status
+    status,
+    permissions
   }) {
-    return status === 'trash';
+    return status === 'trash' && permissions?.delete;
   },
   async callback(posts, {
     registry,
@@ -25884,9 +25869,6 @@ const permanentlyDeletePostAction = {
     }
   }
 };
-function usePermanentlyDeletePostAction(postType) {
-  return useCanUserEligibilityCheckPostType('delete', postType, permanentlyDeletePostAction);
-}
 const restorePostAction = {
   id: 'restore',
   label: (0,external_wp_i18n_namespaceObject.__)('Restore'),
@@ -25894,9 +25876,10 @@ const restorePostAction = {
   icon: library_backup,
   supportsBulk: true,
   isEligible({
-    status
+    status,
+    permissions
   }) {
-    return status === 'trash';
+    return status === 'trash' && permissions?.update;
   },
   async callback(posts, {
     registry,
@@ -25978,9 +25961,6 @@ const restorePostAction = {
     }
   }
 };
-function useRestorePostAction(postType) {
-  return useCanUserEligibilityCheckPostType('update', postType, restorePostAction);
-}
 const viewPostAction = {
   id: 'view-post',
   label: (0,external_wp_i18n_namespaceObject.__)('View'),
@@ -26039,11 +26019,11 @@ const renamePostAction = {
     }
     // Templates, template parts and patterns have special checks for renaming.
     if (![TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE, ...Object.values(actions_PATTERN_TYPES)].includes(post.type)) {
-      return true;
+      return post.permissions?.update;
     }
     // In the case of templates, we can only rename custom templates.
     if (post.type === TEMPLATE_POST_TYPE) {
-      return actions_isTemplateRemovable(post) && post.is_custom;
+      return actions_isTemplateRemovable(post) && post.is_custom && post.permissions?.update;
     }
     // Make necessary checks for template parts and patterns.
     const isTemplatePart = post.type === TEMPLATE_PART_POST_TYPE;
@@ -26053,7 +26033,7 @@ const renamePostAction = {
     // two props whether is custom or has a theme file.
     const isCustomPattern = isUserPattern || isTemplatePart && post.source === TEMPLATE_ORIGINS.custom;
     const hasThemeFile = post?.has_theme_file;
-    return isCustomPattern && !hasThemeFile;
+    return isCustomPattern && !hasThemeFile && post.permissions?.update;
   },
   RenderModal: ({
     items,
@@ -26125,9 +26105,6 @@ const renamePostAction = {
     });
   }
 };
-function useRenamePostAction(postType) {
-  return useCanUserEligibilityCheckPostType('update', postType, renamePostAction);
-}
 function ReorderModal({
   items,
   closeModal,
@@ -26430,10 +26407,6 @@ function usePostActions({
     };
   }, [postType]);
   const duplicatePostAction = useDuplicatePostAction(postType);
-  const trashPostActionForPostType = useTrashPostAction(postType);
-  const permanentlyDeletePostActionForPostType = usePermanentlyDeletePostAction(postType);
-  const renamePostActionForPostType = useRenamePostAction(postType);
-  const restorePostActionForPostType = useRestorePostAction(postType);
   const reorderPagesAction = useReorderPagesAction(postType);
   const isTemplateOrTemplatePart = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE].includes(postType);
   const isPattern = postType === PATTERN_POST_TYPE;
@@ -26444,7 +26417,7 @@ function usePostActions({
     if (!isLoaded) {
       return [];
     }
-    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && duplicateTemplatePartAction, isPattern && userCanCreatePostType && duplicatePatternAction, supportsTitle && renamePostActionForPostType, reorderPagesAction, !isTemplateOrTemplatePart && restorePostActionForPostType, !isTemplateOrTemplatePart && !isPattern && trashPostActionForPostType, !isTemplateOrTemplatePart && permanentlyDeletePostActionForPostType, ...defaultActions].filter(Boolean);
+    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && duplicateTemplatePartAction, isPattern && userCanCreatePostType && duplicatePatternAction, supportsTitle && renamePostAction, reorderPagesAction, !isTemplateOrTemplatePart && !isPattern && restorePostAction, !isTemplateOrTemplatePart && !isPattern && trashPostAction, !isTemplateOrTemplatePart && !isPattern && permanentlyDeletePostAction, ...defaultActions].filter(Boolean);
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
     // and the consumer should provide the context to filter the actions, if needed.
@@ -26499,7 +26472,7 @@ function usePostActions({
     // We are making this use memo depend on cachedCanUserResolvers as a way to make the component using this hook re-render
     // when user capabilities are resolved. This makes sure the isEligible functions of actions dependent on capabilities are re-evaluated.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultActions, userCanCreatePostType, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, duplicatePostAction, reorderPagesAction, trashPostActionForPostType, restorePostActionForPostType, renamePostActionForPostType, permanentlyDeletePostActionForPostType, onActionPerformed, isLoaded, supportsRevisions, supportsTitle, context, cachedCanUserResolvers]);
+  }, [defaultActions, userCanCreatePostType, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, duplicatePostAction, reorderPagesAction, onActionPerformed, isLoaded, supportsRevisions, supportsTitle, context, cachedCanUserResolvers]);
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-actions/index.js
@@ -26536,6 +26509,7 @@ function PostActions({
   const [isActionsMenuOpen, setIsActionsMenuOpen] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
     item,
+    permissions,
     postType
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
@@ -26543,23 +26517,32 @@ function PostActions({
       getCurrentPostId
     } = select(store_store);
     const {
-      getEditedEntityRecord
-    } = select(external_wp_coreData_namespaceObject.store);
+      getEditedEntityRecord,
+      getEntityRecordPermissions
+    } = unlock(select(external_wp_coreData_namespaceObject.store));
     const _postType = getCurrentPostType();
+    const _id = getCurrentPostId();
     return {
-      item: getEditedEntityRecord('postType', _postType, getCurrentPostId()),
+      item: getEditedEntityRecord('postType', _postType, _id),
+      permissions: getEntityRecordPermissions('postType', _postType, _id),
       postType: _postType
     };
   }, []);
+  const itemWithPermissions = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return {
+      ...item,
+      permissions
+    };
+  }, [item, permissions]);
   const allActions = usePostActions({
     postType,
     onActionPerformed
   });
   const actions = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return allActions.filter(action => {
-      return !action.isEligible || action.isEligible(item);
+      return !action.isEligible || action.isEligible(itemWithPermissions);
     });
-  }, [allActions, item]);
+  }, [allActions, itemWithPermissions]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenu, {
     open: isActionsMenuOpen,
     trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -26576,7 +26559,7 @@ function PostActions({
     placement: "bottom-end",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsDropdownMenuGroup, {
       actions: actions,
-      item: item,
+      item: itemWithPermissions,
       onClose: () => {
         setIsActionsMenuOpen(false);
       }

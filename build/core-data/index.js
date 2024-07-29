@@ -608,6 +608,7 @@ var private_selectors_namespaceObject = {};
 __webpack_require__.r(private_selectors_namespaceObject);
 __webpack_require__.d(private_selectors_namespaceObject, {
   getBlockPatternsForPostType: () => (getBlockPatternsForPostType),
+  getEntityRecordPermissions: () => (getEntityRecordPermissions),
   getEntityRecordsPermissions: () => (getEntityRecordsPermissions),
   getNavigationFallbackId: () => (getNavigationFallbackId),
   getUndoManager: () => (getUndoManager)
@@ -22287,6 +22288,20 @@ const getEntityRecordsPermissions = (0,external_wp_data_namespaceObject.createRe
     })
   }));
 }, state => [state.userPermissions]));
+
+/**
+ * Returns the entity record permissions for the given entity record id.
+ *
+ * @param state Data state.
+ * @param kind  Entity kind.
+ * @param name  Entity name.
+ * @param id    Entity record id.
+ *
+ * @return The entity record permissions.
+ */
+function getEntityRecordPermissions(state, kind, name, id) {
+  return getEntityRecordsPermissions(state, kind, name, [id])[0];
+}
 
 ;// CONCATENATED MODULE: ./node_modules/camel-case/dist.es2015/index.js
 

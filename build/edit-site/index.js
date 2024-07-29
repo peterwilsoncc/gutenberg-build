@@ -38612,6 +38612,7 @@ function getItemSearchRank(item, searchTerm, config) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -38765,7 +38766,10 @@ const usePatterns = (postType, categoryId, {
   search = '',
   syncStatus
 } = {}) => {
-  return (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const {
+    patterns,
+    ...rest
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     if (postType === TEMPLATE_PART_POST_TYPE) {
       return selectTemplateParts(select, categoryId, search);
     } else if (postType === PATTERN_TYPES.user && !!categoryId) {
@@ -38779,6 +38783,27 @@ const usePatterns = (postType, categoryId, {
       isResolving: false
     };
   }, [categoryId, postType, search, syncStatus]);
+  const ids = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    var _patterns$map;
+    return (_patterns$map = patterns?.map(record => record.id)) !== null && _patterns$map !== void 0 ? _patterns$map : [];
+  }, [patterns]);
+  const permissions = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecordsPermissions
+    } = lock_unlock_unlock(select(external_wp_coreData_namespaceObject.store));
+    return getEntityRecordsPermissions('postType', postType, ids);
+  }, [ids, postType]);
+  const patternsWithPermissions = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    var _patterns$map2;
+    return (_patterns$map2 = patterns?.map((record, index) => ({
+      ...record,
+      permissions: permissions[index]
+    }))) !== null && _patterns$map2 !== void 0 ? _patterns$map2 : [];
+  }, [patterns, permissions]);
+  return {
+    ...rest,
+    patterns: patternsWithPermissions
+  };
 };
 /* harmony default export */ const use_patterns = (usePatterns);
 
@@ -42041,6 +42066,9 @@ const {
   useHistory: page_templates_useHistory,
   useLocation: page_templates_useLocation
 } = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+const {
+  useEntityRecordsWithPermissions: page_templates_useEntityRecordsWithPermissions
+} = lock_unlock_unlock(external_wp_coreData_namespaceObject.privateApis);
 const page_templates_EMPTY_ARRAY = [];
 const page_templates_defaultLayouts = {
   [LAYOUT_TABLE]: {
@@ -42135,7 +42163,7 @@ function PageTemplates() {
   const {
     records,
     isResolving: isLoadingData
-  } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('postType', TEMPLATE_POST_TYPE, {
+  } = page_templates_useEntityRecordsWithPermissions('postType', TEMPLATE_POST_TYPE, {
     per_page: -1
   });
   const history = page_templates_useHistory();
