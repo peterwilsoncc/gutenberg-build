@@ -1227,7 +1227,17 @@ const getGlobalAsyncEventDirective = type => {
     evaluate
   }) => {
     watch.forEach(entry => {
-      useWatch(() => evaluate(entry));
+      useWatch(() => {
+        let start;
+        if (true) {
+          if (false) {}
+        }
+        const result = evaluate(entry);
+        if (true) {
+          if (false) {}
+        }
+        return result;
+      });
     });
   });
 
@@ -1240,7 +1250,17 @@ const getGlobalAsyncEventDirective = type => {
   }) => {
     init.forEach(entry => {
       // TODO: Replace with useEffect to prevent unneeded scopes.
-      useInit(() => evaluate(entry));
+      useInit(() => {
+        let start;
+        if (true) {
+          if (false) {}
+        }
+        const result = evaluate(entry);
+        if (true) {
+          if (false) {}
+        }
+        return result;
+      });
     });
   });
 
@@ -1269,7 +1289,14 @@ const getGlobalAsyncEventDirective = type => {
           if (existingHandler) {
             existingHandler(event);
           }
+          let start;
+          if (true) {
+            if (false) {}
+          }
           evaluate(entry, event);
+          if (true) {
+            if (false) {}
+          }
         });
       };
     });
