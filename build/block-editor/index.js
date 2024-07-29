@@ -27626,7 +27626,7 @@ function BlockRefsProvider({
 
 
 /** @typedef {import('@wordpress/element').RefCallback} RefCallback */
-/** @typedef {import('@wordpress/element').RefObject} RefObject */
+/** @typedef {import('@wordpress/element').Ref} Ref */
 
 /**
  * Provides a ref to the BlockRefs context.
@@ -27644,32 +27644,33 @@ function useBlockRefProvider(clientId) {
     return () => refsMap.delete(clientId);
   }, [clientId]);
 }
+function assignRef(ref, value) {
+  if (typeof ref === 'function') {
+    ref(value);
+  } else if (ref) {
+    ref.current = value;
+  }
+}
 
 /**
- * Gets a ref pointing to the current block element. Continues to return the same
- * stable ref object even if the `clientId` argument changes. This hook is not
- * reactive, i.e., it won't trigger a rerender of the calling component if the
- * ref value changes. For reactive use cases there is the `useBlockElement` hook.
+ * Tracks the DOM element for the block identified by `clientId` and assigns it to the `ref`
+ * whenever it changes.
  *
- * @param {string} clientId The client ID to get a ref for.
- *
- * @return {RefObject} A ref containing the element.
+ * @param {string} clientId The client ID to track.
+ * @param {Ref}    ref      The ref object/callback to assign to.
  */
-function useBlockRef(clientId) {
+function useBlockElementRef(clientId, ref) {
   const {
     refsMap
   } = (0,external_wp_element_namespaceObject.useContext)(BlockRefs);
-  const latestClientId = (0,external_wp_element_namespaceObject.useRef)();
-  latestClientId.current = clientId;
-
-  // Always return an object, even if no ref exists for a given client ID, so
-  // that `current` works at a later point.
-  return (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    get current() {
-      var _refsMap$get;
-      return (_refsMap$get = refsMap.get(latestClientId.current)) !== null && _refsMap$get !== void 0 ? _refsMap$get : null;
-    }
-  }), [refsMap]);
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    assignRef(ref, refsMap.get(clientId));
+    const unsubscribe = refsMap.subscribe(clientId, () => assignRef(ref, refsMap.get(clientId)));
+    return () => {
+      unsubscribe();
+      assignRef(ref, null);
+    };
+  }, [refsMap, clientId, ref]);
 }
 
 /**
@@ -27681,21 +27682,10 @@ function useBlockRef(clientId) {
  * @return {Element|null} The block's wrapper element.
  */
 function useBlockElement(clientId) {
-  const {
-    refsMap
-  } = (0,external_wp_element_namespaceObject.useContext)(BlockRefs);
   const [blockElement, setBlockElement] = (0,external_wp_element_namespaceObject.useState)(null);
-  // Delay setting the resulting `blockElement` until an effect. If the block element
-  // changes (i.e., the block is unmounted and re-mounted), this allows enough time
-  // for the ref callbacks to clean up the old element and set the new one.
-  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    setBlockElement(refsMap.get(clientId));
-    return refsMap.subscribe(clientId, () => setBlockElement(refsMap.get(clientId)));
-  }, [refsMap, clientId]);
+  useBlockElementRef(clientId, setBlockElement);
   return blockElement;
 }
-
-
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/hooks/contrast-checker.js
 /**
@@ -27718,28 +27708,28 @@ function BlockColorContrastChecker({
   const [detectedBackgroundColor, setDetectedBackgroundColor] = (0,external_wp_element_namespaceObject.useState)();
   const [detectedColor, setDetectedColor] = (0,external_wp_element_namespaceObject.useState)();
   const [detectedLinkColor, setDetectedLinkColor] = (0,external_wp_element_namespaceObject.useState)();
-  const ref = useBlockRef(clientId);
+  const blockEl = useBlockElement(clientId);
 
   // There are so many things that can change the color of a block
   // So we perform this check on every render.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!ref.current) {
+    if (!blockEl) {
       return;
     }
-    setDetectedColor(getComputedStyle(ref.current).color);
-    const firstLinkElement = ref.current?.querySelector('a');
+    setDetectedColor(getComputedStyle(blockEl).color);
+    const firstLinkElement = blockEl.querySelector('a');
     if (firstLinkElement && !!firstLinkElement.innerText) {
       setDetectedLinkColor(getComputedStyle(firstLinkElement).color);
     }
-    let backgroundColorNode = ref.current;
+    let backgroundColorNode = blockEl;
     let backgroundColor = getComputedStyle(backgroundColorNode).backgroundColor;
     while (backgroundColor === 'rgba(0, 0, 0, 0)' && backgroundColorNode.parentNode && backgroundColorNode.parentNode.nodeType === backgroundColorNode.parentNode.ELEMENT_NODE) {
       backgroundColorNode = backgroundColorNode.parentNode;
       backgroundColor = getComputedStyle(backgroundColorNode).backgroundColor;
     }
     setDetectedBackgroundColor(backgroundColor);
-  });
+  }, [blockEl]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(contrast_checker, {
     backgroundColor: detectedBackgroundColor,
     textColor: detectedColor,
@@ -56403,6 +56393,7 @@ function getEditorRegion(editor) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -56449,7 +56440,8 @@ function BlockBreadcrumb({
 
   // We don't care about this specific ref, but this is a way
   // to get a ref within the editor canvas so we can focus it later.
-  const blockRef = useBlockRef(clientId);
+  const blockRef = (0,external_wp_element_namespaceObject.useRef)();
+  useBlockElementRef(clientId, blockRef);
 
   /*
    * Disable reason: The `list` ARIA role is redundant but
@@ -56939,8 +56931,8 @@ const BlockDraggable = ({
   }, []);
 
   // Find the root of the editor iframe.
-  const blockRef = useBlockRef(clientIds[0]);
-  const editorRoot = blockRef.current?.closest('body');
+  const blockEl = useBlockElement(clientIds[0]);
+  const editorRoot = blockEl?.closest('body');
 
   /*
    * Add a dragover event listener to the editor root to track the blocks being dragged over.
@@ -71885,6 +71877,7 @@ function useResizeCanvas(deviceType) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -71897,9 +71890,10 @@ function useResizeCanvas(deviceType) {
 
 function SkipToSelectedBlock() {
   const selectedBlockClientId = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getBlockSelectionStart(), []);
-  const ref = useBlockRef(selectedBlockClientId);
+  const ref = (0,external_wp_element_namespaceObject.useRef)();
+  useBlockElementRef(selectedBlockClientId, ref);
   const onClick = () => {
-    ref.current.focus();
+    ref.current?.focus();
   };
   return selectedBlockClientId ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     variant: "secondary",
