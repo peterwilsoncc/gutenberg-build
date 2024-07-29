@@ -30953,7 +30953,7 @@ const deprecatedMarginField = ({
 const StyledField = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "ej5x27r3"
 } : 0)(deprecatedMarginField, " .components-panel__row &{margin-bottom:inherit;}" + ( true ? "" : 0));
-const labelStyles = /*#__PURE__*/emotion_react_browser_esm_css(baseLabelTypography, ";display:inline-block;margin-bottom:", space(2), ";padding:0;" + ( true ? "" : 0),  true ? "" : 0);
+const labelStyles = /*#__PURE__*/emotion_react_browser_esm_css(baseLabelTypography, ";display:block;margin-bottom:", space(2), ";padding:0;" + ( true ? "" : 0),  true ? "" : 0);
 const StyledLabel = /*#__PURE__*/emotion_styled_base_browser_esm("label",  true ? {
   target: "ej5x27r2"
 } : 0)(labelStyles, ";" + ( true ? "" : 0));
@@ -39222,7 +39222,6 @@ const UnitSelect = /*#__PURE__*/emotion_styled_base_browser_esm("select",  true 
 } : 0)("&&&{appearance:none;background:transparent;border-radius:2px;border:none;display:block;outline:none;margin:0;min-height:auto;font-family:inherit;", baseUnitLabelStyles, ";", unitSelectSizes, ";&:not( :disabled ){cursor:pointer;}}" + ( true ? "" : 0));
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/border-control/styles.js
-function border_control_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
 /**
  * External dependencies
  */
@@ -39235,10 +39234,6 @@ function border_control_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You ha
 
 
 
-const styles_labelStyles =  true ? {
-  name: "f3vz0n",
-  styles: "font-weight:500"
-} : 0;
 const focusBoxShadow = /*#__PURE__*/emotion_react_browser_esm_css("box-shadow:inset ", config_values.controlBoxShadowFocus, ";" + ( true ? "" : 0),  true ? "" : 0);
 const borderControl = /*#__PURE__*/emotion_react_browser_esm_css("border:0;padding:0;margin:0;", boxSizingReset, ";" + ( true ? "" : 0),  true ? "" : 0);
 const innerWrapper = () => /*#__PURE__*/emotion_react_browser_esm_css(ValueInput, "{flex:1 1 40%;}&& ", UnitSelect, "{min-height:0;}" + ( true ? "" : 0),  true ? "" : 0);
@@ -39276,7 +39271,7 @@ const colorIndicatorWrapper = (border, size) => {
 // @wordpress/components/src/circular-option-picker/style.scss
 const swatchSize = 28;
 const swatchGap = 12;
-const borderControlPopoverControls = /*#__PURE__*/emotion_react_browser_esm_css("width:", swatchSize * 6 + swatchGap * 5, "px;>div:first-of-type>", StyledLabel, "{margin-bottom:0;", styles_labelStyles, ";}&& ", StyledLabel, "+button:not( .has-text ){min-width:24px;padding:0;}" + ( true ? "" : 0),  true ? "" : 0);
+const borderControlPopoverControls = /*#__PURE__*/emotion_react_browser_esm_css("width:", swatchSize * 6 + swatchGap * 5, "px;>div:first-of-type>", StyledLabel, "{margin-bottom:0;}&& ", StyledLabel, "+button:not( .has-text ){min-width:24px;padding:0;}" + ( true ? "" : 0),  true ? "" : 0);
 const borderControlPopoverContent = /*#__PURE__*/emotion_react_browser_esm_css( true ? "" : 0,  true ? "" : 0);
 const borderColorIndicator = /*#__PURE__*/emotion_react_browser_esm_css( true ? "" : 0,  true ? "" : 0);
 const resetButton = /*#__PURE__*/emotion_react_browser_esm_css("justify-content:center;width:100%;&&{border-top:", config_values.borderWidth, " solid ", COLORS.gray[400], ";border-top-left-radius:0;border-top-right-radius:0;height:40px;}" + ( true ? "" : 0),  true ? "" : 0);
