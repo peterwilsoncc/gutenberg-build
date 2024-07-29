@@ -23407,6 +23407,7 @@ function HeadingEdit({
     textAlign,
     content,
     level,
+    levelOptions,
     placeholder,
     anchor
   } = attributes;
@@ -23466,6 +23467,7 @@ function HeadingEdit({
       group: "block",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
         value: level,
+        options: levelOptions,
         onChange: newLevel => setAttributes({
           level: newLevel
         })
@@ -23675,6 +23677,9 @@ const heading_metadata = {
     level: {
       type: "number",
       "default": 2
+    },
+    levelOptions: {
+      type: "array"
     },
     placeholder: {
       type: "string"
