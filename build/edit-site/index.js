@@ -23992,24 +23992,38 @@ function ScreenTypographyElement({
         __nextHasNoMarginBottom: true,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
           value: "heading",
+          showTooltip: true,
+          "aria-label": (0,external_wp_i18n_namespaceObject.__)('All headings'),
           label: (0,external_wp_i18n_namespaceObject._x)('All', 'heading levels')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
           value: "h1",
+          showTooltip: true,
+          "aria-label": (0,external_wp_i18n_namespaceObject.__)('Heading 1'),
           label: (0,external_wp_i18n_namespaceObject.__)('H1')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
           value: "h2",
+          showTooltip: true,
+          "aria-label": (0,external_wp_i18n_namespaceObject.__)('Heading 2'),
           label: (0,external_wp_i18n_namespaceObject.__)('H2')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
           value: "h3",
+          showTooltip: true,
+          "aria-label": (0,external_wp_i18n_namespaceObject.__)('Heading 3'),
           label: (0,external_wp_i18n_namespaceObject.__)('H3')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
           value: "h4",
+          showTooltip: true,
+          "aria-label": (0,external_wp_i18n_namespaceObject.__)('Heading 4'),
           label: (0,external_wp_i18n_namespaceObject.__)('H4')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
           value: "h5",
+          showTooltip: true,
+          "aria-label": (0,external_wp_i18n_namespaceObject.__)('Heading 5'),
           label: (0,external_wp_i18n_namespaceObject.__)('H5')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
           value: "h6",
+          showTooltip: true,
+          "aria-label": (0,external_wp_i18n_namespaceObject.__)('Heading 6'),
           label: (0,external_wp_i18n_namespaceObject.__)('H6')
         })]
       })
