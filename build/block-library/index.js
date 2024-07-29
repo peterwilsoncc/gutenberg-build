@@ -58650,9 +58650,22 @@ const table_of_contents_metadata = {
     },
     interactivity: {
       clientNavigation: true
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true,
+      __experimentalDefaultControls: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
+      }
     }
   },
-  example: {}
+  example: {},
+  style: "wp-block-table-of-contents"
 };
 
 
