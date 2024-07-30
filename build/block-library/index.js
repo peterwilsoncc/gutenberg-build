@@ -53172,9 +53172,16 @@ const site_tagline_metadata = {
     },
     interactivity: {
       clientNavigation: true
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true
     }
   },
-  editorStyle: "wp-block-site-tagline-editor"
+  editorStyle: "wp-block-site-tagline-editor",
+  style: "wp-block-site-tagline"
 };
 
 
