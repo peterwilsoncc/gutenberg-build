@@ -14256,7 +14256,6 @@ function findRichTextAttributeKey(blockType) {
 
 
 
-
 /** @typedef {import('../components/use-on-block-drop/types').WPDropOperation} WPDropOperation */
 
 const actions_castArray = maybeArray => Array.isArray(maybeArray) ? maybeArray : [maybeArray];
@@ -15651,7 +15650,7 @@ const __unstableSetEditorMode = mode => ({
     const firstSelectedClientId = select.getBlockSelectionStart();
     const {
       sectionRootClientId
-    } = unlock(registry.select(STORE_NAME).getSettings());
+    } = registry.select(STORE_NAME).getSettings();
     if (firstSelectedClientId) {
       let sectionClientId;
       if (sectionRootClientId) {
