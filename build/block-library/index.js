@@ -52975,7 +52975,6 @@ const site_logo_init = () => initBlock({
 
 
 
-const HEADING_LEVELS = [0, 1, 2, 3, 4, 5, 6];
 function SiteTaglineEdit({
   attributes,
   setAttributes,
@@ -52983,7 +52982,8 @@ function SiteTaglineEdit({
 }) {
   const {
     textAlign,
-    level
+    level,
+    levelOptions
   } = attributes;
   const {
     canUserEdit,
@@ -53038,8 +53038,8 @@ function SiteTaglineEdit({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
       group: "block",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
-        options: HEADING_LEVELS,
         value: level,
+        options: levelOptions,
         onChange: newLevel => setAttributes({
           level: newLevel
         })
@@ -53141,6 +53141,10 @@ const site_tagline_metadata = {
     level: {
       type: "number",
       "default": 0
+    },
+    levelOptions: {
+      type: "array",
+      "default": [0, 1, 2, 3, 4, 5, 6]
     }
   },
   example: {
@@ -53246,7 +53250,6 @@ const mapMarker = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 
 
 
-const edit_HEADING_LEVELS = [0, 1, 2, 3, 4, 5, 6];
 function SiteTitleEdit({
   attributes,
   setAttributes,
@@ -53254,6 +53257,7 @@ function SiteTitleEdit({
 }) {
   const {
     level,
+    levelOptions,
     textAlign,
     isLink,
     linkTarget
@@ -53320,8 +53324,8 @@ function SiteTitleEdit({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
       group: "block",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
-        options: edit_HEADING_LEVELS,
         value: level,
+        options: levelOptions,
         onChange: newLevel => setAttributes({
           level: newLevel
         })
@@ -53465,6 +53469,10 @@ const site_title_metadata = {
     level: {
       type: "number",
       "default": 1
+    },
+    levelOptions: {
+      type: "array",
+      "default": [0, 1, 2, 3, 4, 5, 6]
     },
     textAlign: {
       type: "string"
