@@ -23753,6 +23753,7 @@ const desktop = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
 
 
 
+
 function PreviewDropdown({
   forceIsAutosaveable,
   disabled
@@ -23810,6 +23811,55 @@ function PreviewDropdown({
     tablet: library_tablet,
     desktop: library_desktop
   };
+
+  /**
+   * The choices for the device type.
+   *
+   * @type {Array}
+   */
+  const choices = [{
+    value: 'Desktop',
+    label: (0,external_wp_i18n_namespaceObject.__)('Desktop'),
+    icon: library_desktop
+  }, {
+    value: 'Tablet',
+    label: (0,external_wp_i18n_namespaceObject.__)('Tablet'),
+    icon: library_tablet
+  }, {
+    value: 'Mobile',
+    label: (0,external_wp_i18n_namespaceObject.__)('Mobile'),
+    icon: library_mobile
+  }];
+
+  /**
+   * The selected choice.
+   *
+   * @type {Object}
+   */
+  let selectedChoice = choices.find(choice => choice.value === deviceType);
+
+  /**
+   * If no selected choice is found, default to the first
+   */
+  if (!selectedChoice) {
+    selectedChoice = choices[0];
+  }
+
+  /**
+   * Handles the selection of a device type.
+   *
+   * @param {string} value The device type.
+   */
+  const onSelect = value => {
+    setDeviceType(value);
+    if (value === 'Desktop') {
+      (0,external_wp_a11y_namespaceObject.speak)((0,external_wp_i18n_namespaceObject.__)('Desktop selected'), 'assertive');
+    } else if (value === 'Tablet') {
+      (0,external_wp_a11y_namespaceObject.speak)((0,external_wp_i18n_namespaceObject.__)('Tablet selected'), 'assertive');
+    } else {
+      (0,external_wp_a11y_namespaceObject.speak)((0,external_wp_i18n_namespaceObject.__)('Mobile selected'), 'assertive');
+    }
+  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
     className: "editor-preview-dropdown",
     popoverProps: popoverProps,
@@ -23821,20 +23871,12 @@ function PreviewDropdown({
     children: ({
       onClose
     }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuGroup, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-          onClick: () => setDeviceType('Desktop'),
-          icon: deviceType === 'Desktop' && library_check,
-          children: (0,external_wp_i18n_namespaceObject.__)('Desktop')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-          onClick: () => setDeviceType('Tablet'),
-          icon: deviceType === 'Tablet' && library_check,
-          children: (0,external_wp_i18n_namespaceObject.__)('Tablet')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-          onClick: () => setDeviceType('Mobile'),
-          icon: deviceType === 'Mobile' && library_check,
-          children: (0,external_wp_i18n_namespaceObject.__)('Mobile')
-        })]
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItemsChoice, {
+          choices: choices,
+          value: selectedChoice.value,
+          onSelect: onSelect
+        })
       }), isTemplate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuItem, {
           href: homeUrl,
@@ -23852,6 +23894,7 @@ function PreviewDropdown({
           className: "editor-preview-dropdown__button-external",
           role: "menuitem",
           forceIsAutosaveable: forceIsAutosaveable,
+          "aria-label": (0,external_wp_i18n_namespaceObject.__)('Preview in new tab'),
           textContent: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
             children: [(0,external_wp_i18n_namespaceObject.__)('Preview in new tab'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
               icon: library_external
