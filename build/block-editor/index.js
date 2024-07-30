@@ -42450,6 +42450,9 @@ function canBindBlock(blockName) {
 function canBindAttribute(blockName, attributeName) {
   return canBindBlock(blockName) && BLOCK_BINDINGS_ALLOWED_BLOCKS[blockName].includes(attributeName);
 }
+function getBindableAttributes(blockName) {
+  return BLOCK_BINDINGS_ALLOWED_BLOCKS[blockName];
+}
 const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHigherOrderComponent)(BlockEdit => props => {
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const blockContext = (0,external_wp_element_namespaceObject.useContext)(block_context);
@@ -54832,6 +54835,8 @@ function BlockHooksControlPure({
 
 
 
+
+
 /**
  * Internal dependencies
  */
@@ -54840,28 +54845,140 @@ function BlockHooksControlPure({
 
 
 
+
+
+
+const {
+  DropdownMenuV2: DropdownMenu,
+  DropdownMenuGroupV2: DropdownMenuGroup,
+  DropdownMenuRadioItemV2: DropdownMenuRadioItem,
+  DropdownMenuItemLabelV2: DropdownMenuItemLabel,
+  DropdownMenuItemHelpTextV2: DropdownMenuItemHelpText,
+  DropdownMenuSeparatorV2: DropdownMenuSeparator
+} = unlock(external_wp_components_namespaceObject.privateApis);
+const block_bindings_useToolsPanelDropdownMenuProps = () => {
+  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
+  return !isMobile ? {
+    popoverProps: {
+      placement: 'left-start',
+      // For non-mobile, inner sidebar width (248px) - button width (24px) - border (1px) + padding (16px) + spacing (20px)
+      offset: 259
+    }
+  } : {};
+};
+function BlockBindingsPanelDropdown({
+  fieldsList,
+  addConnection,
+  attribute,
+  binding
+}) {
+  const currentKey = binding?.args?.key;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: Object.entries(fieldsList).map(([label, fields], i) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_element_namespaceObject.Fragment, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenuGroup, {
+        children: [Object.keys(fieldsList).length > 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+          className: "block-editor-bindings__source-label",
+          upperCase: true,
+          variant: "muted",
+          "aria-hidden": true,
+          children: label
+        }), Object.entries(fields).map(([key, value]) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenuRadioItem, {
+          onChange: () => addConnection(key, attribute),
+          name: attribute + '-binding',
+          value: key,
+          checked: key === currentKey,
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItemLabel, {
+            children: key
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItemHelpText, {
+            children: value
+          })]
+        }, key))]
+      }), i !== Object.keys(fieldsList).length - 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuSeparator, {})]
+    }, label))
+  });
+}
+function BlockBindingsAttribute({
+  attribute,
+  binding
+}) {
+  const {
+    source: sourceName,
+    args
+  } = binding || {};
+  const sourceProps = unlock(external_wp_blocks_namespaceObject.privateApis).getBlockBindingsSource(sourceName);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalTruncate, {
+      children: attribute
+    }), !!binding && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+      variant: "muted",
+      className: "block-editor-bindings__item-explanation",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalTruncate, {
+        children: args?.key || sourceProps?.label || sourceName
+      })
+    })]
+  });
+}
+function ReadOnlyBlockBindingsPanelItems({
+  bindings
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: Object.entries(bindings).map(([attribute, binding]) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockBindingsAttribute, {
+        attribute: attribute,
+        binding: binding
+      })
+    }, attribute))
+  });
+}
+function EditableBlockBindingsPanelItems({
+  attributes,
+  bindings,
+  fieldsList,
+  addConnection,
+  removeConnection
+}) {
+  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: attributes.map(attribute => {
+      const binding = bindings[attribute];
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => !!binding,
+        label: attribute,
+        onDeselect: () => {
+          removeConnection(attribute);
+        },
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenu, {
+          placement: isMobile ? 'bottom-start' : 'left-start',
+          gutter: isMobile ? 8 : 36,
+          className: "block-editor-bindings__popover",
+          trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockBindingsAttribute, {
+              attribute: attribute,
+              binding: binding
+            })
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockBindingsPanelDropdown, {
+            fieldsList: fieldsList,
+            addConnection: addConnection,
+            attribute: attribute,
+            binding: binding
+          })
+        })
+      }, attribute);
+    })
+  });
+}
 const BlockBindingsPanel = ({
   name,
   metadata
 }) => {
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
+  const blockContext = (0,external_wp_element_namespaceObject.useContext)(block_context);
   const {
     bindings
   } = metadata || {};
-  const {
-    sources
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const _sources = unlock(select(external_wp_blocks_namespaceObject.store)).getAllBlockBindingsSources();
-    return {
-      sources: _sources
-    };
-  }, []);
-  if (!bindings) {
-    return null;
-  }
-
-  // Don't show not allowed attributes.
-  // Don't show the bindings connected to pattern overrides in the inspectors panel.
-  // TODO: Explore if this should be abstracted to let other sources decide.
+  const bindableAttributes = getBindableAttributes(name);
+  const dropdownMenuProps = block_bindings_useToolsPanelDropdownMenuProps();
   const filteredBindings = {
     ...bindings
   };
@@ -54870,33 +54987,132 @@ const BlockBindingsPanel = ({
       delete filteredBindings[key];
     }
   });
-  if (Object.keys(filteredBindings).length === 0) {
+  const {
+    updateBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const {
+    _id
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getSelectedBlockClientId
+    } = select(store);
+    return {
+      _id: getSelectedBlockClientId()
+    };
+  }, []);
+  if (!bindableAttributes || bindableAttributes.length === 0) {
+    return null;
+  }
+  const removeAllConnections = () => {
+    const newMetadata = {
+      ...metadata
+    };
+    delete newMetadata.bindings;
+    updateBlockAttributes(_id, {
+      metadata: Object.keys(newMetadata).length === 0 ? undefined : newMetadata
+    });
+  };
+  const addConnection = (value, attribute) => {
+    // Assuming the block expects a flat structure for its metadata attribute
+    const newMetadata = {
+      ...metadata,
+      // Adjust this according to the actual structure expected by your block
+      bindings: {
+        ...metadata?.bindings,
+        [attribute]: {
+          source: 'core/post-meta',
+          args: {
+            key: value
+          }
+        }
+      }
+    };
+    // Update the block's attributes with the new metadata
+    updateBlockAttributes(_id, {
+      metadata: newMetadata
+    });
+  };
+  const removeConnection = key => {
+    const newMetadata = {
+      ...metadata
+    };
+    if (!newMetadata.bindings) {
+      return;
+    }
+    delete newMetadata.bindings[key];
+    if (Object.keys(newMetadata.bindings).length === 0) {
+      delete newMetadata.bindings;
+    }
+    updateBlockAttributes(_id, {
+      metadata: Object.keys(newMetadata).length === 0 ? undefined : newMetadata
+    });
+  };
+  const fieldsList = {};
+  const {
+    getBlockBindingsSources
+  } = unlock(external_wp_blocks_namespaceObject.privateApis);
+  const registeredSources = getBlockBindingsSources();
+  Object.values(registeredSources).forEach(({
+    getFieldsList,
+    label,
+    usesContext
+  }) => {
+    if (getFieldsList) {
+      // Populate context.
+      const context = {};
+      if (usesContext?.length) {
+        for (const key of usesContext) {
+          context[key] = blockContext[key];
+        }
+      }
+      const sourceList = getFieldsList({
+        registry,
+        context
+      });
+      // Only add source if the list is not empty.
+      if (sourceList) {
+        fieldsList[label] = {
+          ...sourceList
+        };
+      }
+    }
+  });
+  // Remove empty sources.
+  Object.entries(fieldsList).forEach(([key, value]) => {
+    if (!Object.keys(value).length) {
+      delete fieldsList[key];
+    }
+  });
+
+  // Lock the UI when the experiment is not enabled or there are no fields to connect to.
+  const readOnly = !window.__experimentalBlockBindingsUI || !Object.keys(fieldsList).length;
+  if (readOnly && Object.keys(filteredBindings).length === 0) {
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Attributes'),
-      className: "components-panel__block-bindings-panel",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
-        help: (0,external_wp_i18n_namespaceObject.__)('Attributes connected to various sources.'),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
-          isBordered: true,
-          isSeparated: true,
-          size: "large",
-          children: Object.keys(filteredBindings).map(key => {
-            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {
-              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-                  children: key
-                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-                  className: "components-item__block-bindings-source",
-                  children: sources[filteredBindings[key].source] ? sources[filteredBindings[key].source].label : filteredBindings[key].source
-                })]
-              })
-            }, key);
-          })
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Attributes'),
+      resetAll: () => {
+        removeAllConnections();
+      },
+      dropdownMenuProps: dropdownMenuProps,
+      className: "block-editor-bindings__panel",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+        isBordered: true,
+        isSeparated: true,
+        children: readOnly ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ReadOnlyBlockBindingsPanelItems, {
+          bindings: filteredBindings
+        }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditableBlockBindingsPanelItems, {
+          attributes: bindableAttributes,
+          bindings: filteredBindings,
+          fieldsList: fieldsList,
+          addConnection: addConnection,
+          removeConnection: removeConnection
         })
-      })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+        variant: "muted",
+        children: (0,external_wp_i18n_namespaceObject.__)('Attributes connected to various sources.')
+      })]
     })
   });
 };
@@ -55524,7 +55740,7 @@ function useCachedTruthy(value) {
 
 
 
-createBlockEditFilter([block_bindings, align, text_align, hooks_anchor, custom_class_name, style, duotone, position, layout, content_lock_ui, block_hooks, layout_child].filter(Boolean));
+createBlockEditFilter([align, text_align, hooks_anchor, custom_class_name, style, duotone, position, layout, content_lock_ui, block_hooks, block_bindings, layout_child].filter(Boolean));
 createBlockListBlockFilter([align, text_align, background, style, color, dimensions, duotone, font_family, font_size, border, position, block_style_variation, layout_child]);
 createBlockSaveFilter([align, text_align, hooks_anchor, aria_label, custom_class_name, border, color, style, font_family, font_size]);
 

@@ -7517,6 +7517,7 @@ const unregisterBlockVariation = (blockName, variationName) => {
  * @param {Function} [source.setValues]        Function to update multiple values connected to the source.
  * @param {Function} [source.getPlaceholder]   Function to get the placeholder when the value is undefined.
  * @param {Function} [source.canUserEditValue] Function to determine if the user can edit the value.
+ * @param {Function} [source.getFieldsList]    Function to get the lists of fields to expose in the connections panel.
  *
  * @example
  * ```js
@@ -7541,7 +7542,8 @@ const registerBlockBindingsSource = source => {
     getValues,
     setValues,
     getPlaceholder,
-    canUserEditValue
+    canUserEditValue,
+    getFieldsList
   } = source;
   const existingSource = unlock((0,external_wp_data_namespaceObject.select)(store)).getBlockBindingsSource(name);
 
@@ -7616,6 +7618,13 @@ const registerBlockBindingsSource = source => {
 
   // Check the `getPlaceholder` property is correct.
   if (canUserEditValue && typeof canUserEditValue !== 'function') {
+     false ? 0 : void 0;
+    return;
+  }
+
+  // Check the `getFieldsList` property is correct.
+  if (getFieldsList && typeof getFieldsList !== 'function') {
+    // eslint-disable-next-line no-console
      false ? 0 : void 0;
     return;
   }
@@ -8302,7 +8311,8 @@ function blockBindingsSources(state = {}, action) {
           getValues: action.getValues,
           setValues: action.setValues,
           getPlaceholder: action.getPlaceholder,
-          canUserEditValue: action.canUserEditValue
+          canUserEditValue: action.canUserEditValue,
+          getFieldsList: action.getFieldsList
         }
       };
     case 'ADD_BOOTSTRAPPED_BLOCK_BINDINGS_SOURCE':
@@ -9884,7 +9894,8 @@ function addBlockBindingsSource(source) {
     getValues: source.getValues,
     setValues: source.setValues,
     getPlaceholder: source.getPlaceholder,
-    canUserEditValue: source.canUserEditValue
+    canUserEditValue: source.canUserEditValue,
+    getFieldsList: source.getFieldsList
   };
 }
 

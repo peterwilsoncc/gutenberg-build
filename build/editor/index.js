@@ -29017,6 +29017,18 @@ const CONTENT = 'content';
       return false;
     }
     return true;
+  },
+  getFieldsList({
+    registry,
+    context
+  }) {
+    const metaFields = registry.select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', context?.postType, context?.postId).meta;
+    if (!metaFields || !Object.keys(metaFields).length) {
+      return null;
+    }
+
+    // Remove footnotes from the list of fields
+    return Object.fromEntries(Object.entries(metaFields).filter(([key]) => key !== 'footnotes'));
   }
 });
 
