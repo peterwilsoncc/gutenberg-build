@@ -29975,6 +29975,12 @@ const loginout_metadata = {
   },
   supports: {
     className: true,
+    color: {
+      background: true,
+      text: false,
+      gradients: true,
+      link: true
+    },
     spacing: {
       margin: true,
       padding: true,
@@ -29996,10 +30002,17 @@ const loginout_metadata = {
         fontSize: true
       }
     },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true
+    },
     interactivity: {
       clientNavigation: true
     }
-  }
+  },
+  style: "wp-block-loginout"
 };
 const {
   name: loginout_name
