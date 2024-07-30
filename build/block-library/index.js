@@ -44163,6 +44163,7 @@ const post_time_to_read_init = () => initBlock({
 function PostTitleEdit({
   attributes: {
     level,
+    levelOptions,
     textAlign,
     isLink,
     rel,
@@ -44260,6 +44261,7 @@ function PostTitleEdit({
         group: "block",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
           value: level,
+          options: levelOptions,
           onChange: newLevel => setAttributes({
             level: newLevel
           })
@@ -44398,6 +44400,9 @@ const post_title_metadata = {
     level: {
       type: "number",
       "default": 2
+    },
+    levelOptions: {
+      type: "array"
     },
     isLink: {
       type: "boolean",
