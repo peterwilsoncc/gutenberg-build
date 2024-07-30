@@ -20676,6 +20676,36 @@ const gallery_deprecated_v1 = {
 
 ;// CONCATENATED MODULE: external ["wp","viewport"]
 const external_wp_viewport_namespaceObject = window["wp"]["viewport"];
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/custom-link.js
+/**
+ * WordPress dependencies
+ */
+
+
+const customLink = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M12.5 14.5h-1V16h1c2.2 0 4-1.8 4-4s-1.8-4-4-4h-1v1.5h1c1.4 0 2.5 1.1 2.5 2.5s-1.1 2.5-2.5 2.5zm-4 1.5v-1.5h-1C6.1 14.5 5 13.4 5 12s1.1-2.5 2.5-2.5h1V8h-1c-2.2 0-4 1.8-4 4s1.8 4 4 4h1zm-1-3.2h5v-1.5h-5v1.5zM18 4H9c-1.1 0-2 .9-2 2v.5h1.5V6c0-.3.2-.5.5-.5h9c.3 0 .5.2.5.5v12c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5v-.5H7v.5c0 1.1.9 2 2 2h9c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"
+  })
+});
+/* harmony default export */ const custom_link = (customLink);
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/image.js
+/**
+ * WordPress dependencies
+ */
+
+
+const image_image = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v8.4l-3-2.9c-.3-.3-.8-.3-1 0L11.9 14 9 12c-.3-.2-.6-.2-.8 0l-3.6 2.6V5c-.1-.3.1-.5.4-.5zm14 15H5c-.3 0-.5-.2-.5-.5v-2.4l4.1-3 3 1.9c.3.2.7.2.9-.1L16 12l3.5 3.4V19c0 .3-.2.5-.5.5z"
+  })
+});
+/* harmony default export */ const library_image = (image_image);
+
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/gallery/shared-icon.js
 /**
  * WordPress dependencies
@@ -21097,6 +21127,7 @@ function GapStyles({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -21115,14 +21146,20 @@ function GapStyles({
 
 const MAX_COLUMNS = 8;
 const linkOptions = [{
+  icon: custom_link,
+  label: (0,external_wp_i18n_namespaceObject.__)('Link images to attachment pages'),
   value: LINK_DESTINATION_ATTACHMENT,
-  label: (0,external_wp_i18n_namespaceObject.__)('Attachment Page')
+  noticeText: (0,external_wp_i18n_namespaceObject.__)('Attachment Pages')
 }, {
+  icon: library_image,
+  label: (0,external_wp_i18n_namespaceObject.__)('Link images to media files'),
   value: LINK_DESTINATION_MEDIA,
-  label: (0,external_wp_i18n_namespaceObject.__)('Media File')
+  noticeText: (0,external_wp_i18n_namespaceObject.__)('Media Files')
 }, {
+  icon: link_off,
+  label: (0,external_wp_i18n_namespaceObject._x)('None', 'Media item link option'),
   value: LINK_DESTINATION_NONE,
-  label: (0,external_wp_i18n_namespaceObject._x)('None', 'Media item link option')
+  noticeText: (0,external_wp_i18n_namespaceObject.__)('None')
 }];
 const edit_ALLOWED_MEDIA_TYPES = ['image'];
 const PLACEHOLDER_TEXT = external_wp_element_namespaceObject.Platform.isNative ? (0,external_wp_i18n_namespaceObject.__)('Add media') : (0,external_wp_i18n_namespaceObject.__)('Drag images, upload new ones or select files from your library.');
@@ -21325,7 +21362,7 @@ function GalleryEdit(props) {
     updateBlockAttributes(blocks, changedAttributes, true);
     const linkToText = [...linkOptions].find(linkType => linkType.value === value);
     createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: image size settings */
-    (0,external_wp_i18n_namespaceObject.__)('All gallery image links updated to: %s'), linkToText.label), {
+    (0,external_wp_i18n_namespaceObject.__)('All gallery image links updated to: %s'), linkToText.noticeText), {
       id: 'gallery-attributes-linkTo',
       type: 'snackbar'
     });
@@ -21471,15 +21508,15 @@ function GalleryEdit(props) {
           onChange: updateImagesSize,
           hideCancelButton: true,
           size: "__unstable-large"
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+        }), external_wp_element_namespaceObject.Platform.isNative ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
           __nextHasNoMarginBottom: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Link to'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Link'),
           value: linkTo,
           onChange: setLinkTo,
           options: linkOptions,
           hideCancelButton: true,
           size: "__unstable-large"
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        }) : null, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
           __nextHasNoMarginBottom: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Crop images to fit'),
           checked: !!imageCrop,
@@ -21504,7 +21541,34 @@ function GalleryEdit(props) {
           })]
         })]
       })
-    }), external_wp_element_namespaceObject.Platform.isWeb && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    }), external_wp_element_namespaceObject.Platform.isWeb ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      group: "block",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarDropdownMenu, {
+        icon: library_link,
+        label: (0,external_wp_i18n_namespaceObject.__)('Link'),
+        children: ({
+          onClose
+        }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
+          children: linkOptions.map(linkItem => {
+            const isOptionSelected = linkTo === linkItem.value;
+            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+              isSelected: isOptionSelected,
+              className: dist_clsx('components-dropdown-menu__menu-item', {
+                'is-active': isOptionSelected
+              }),
+              iconPosition: "left",
+              icon: linkItem.icon,
+              onClick: () => {
+                setLinkTo(linkItem.value);
+                onClose();
+              },
+              role: "menuitemradio",
+              children: linkItem.label
+            }, linkItem.value);
+          })
+        })
+      })
+    }) : null, external_wp_element_namespaceObject.Platform.isWeb && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [!multiGallerySelection && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
         group: "other",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaReplaceFlow, {
@@ -24245,21 +24309,6 @@ const html_init = () => initBlock({
   metadata: html_metadata,
   settings: html_settings
 });
-
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/image.js
-/**
- * WordPress dependencies
- */
-
-
-const image_image = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 4.5h14c.3 0 .5.2.5.5v8.4l-3-2.9c-.3-.3-.8-.3-1 0L11.9 14 9 12c-.3-.2-.6-.2-.8 0l-3.6 2.6V5c-.1-.3.1-.5.4-.5zm14 15H5c-.3 0-.5-.2-.5-.5v-2.4l4.1-3 3 1.9c.3.2.7.2.9-.1L16 12l3.5 3.4V19c0 .3-.2.5-.5.5z"
-  })
-});
-/* harmony default export */ const library_image = (image_image);
 
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/image/deprecated.js
 /**
@@ -36273,21 +36322,6 @@ const navigation_init = () => initBlock({
   metadata: navigation_metadata,
   settings: navigation_settings
 });
-
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/custom-link.js
-/**
- * WordPress dependencies
- */
-
-
-const customLink = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M12.5 14.5h-1V16h1c2.2 0 4-1.8 4-4s-1.8-4-4-4h-1v1.5h1c1.4 0 2.5 1.1 2.5 2.5s-1.1 2.5-2.5 2.5zm-4 1.5v-1.5h-1C6.1 14.5 5 13.4 5 12s1.1-2.5 2.5-2.5h1V8h-1c-2.2 0-4 1.8-4 4s1.8 4 4 4h1zm-1-3.2h5v-1.5h-5v1.5zM18 4H9c-1.1 0-2 .9-2 2v.5h1.5V6c0-.3.2-.5.5-.5h9c.3 0 .5.2.5.5v12c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5v-.5H7v.5c0 1.1.9 2 2 2h9c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"
-  })
-});
-/* harmony default export */ const custom_link = (customLink);
 
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/navigation-link/edit.js
 /**
