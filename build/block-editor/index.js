@@ -7889,6 +7889,7 @@ __webpack_require__.d(__webpack_exports__, {
   useInnerBlocksProps: () => (/* reexport */ useInnerBlocksProps),
   useSetting: () => (/* reexport */ useSetting),
   useSettings: () => (/* reexport */ use_settings_useSettings),
+  useStyleOverride: () => (/* reexport */ useStyleOverride),
   useZoomOut: () => (/* reexport */ useZoomOut),
   withColorContext: () => (/* reexport */ with_color_context),
   withColors: () => (/* reexport */ withColors),
@@ -17772,7 +17773,26 @@ function shouldSkipSerialization(blockNameOrType, featureSet, feature) {
   return skipSerialization;
 }
 const pendingStyleOverrides = new WeakMap();
+
+/**
+ * Override a block editor settings style. Leave the ID blank to create a new
+ * style.
+ *
+ * @param {Object}  override     Override object.
+ * @param {?string} override.id  Id of the style override, leave blank to create
+ *                               a new style.
+ * @param {string}  override.css CSS to apply.
+ */
 function useStyleOverride({
+  id,
+  css
+}) {
+  return usePrivateStyleOverride({
+    id,
+    css
+  });
+}
+function usePrivateStyleOverride({
   id,
   css,
   assets,
@@ -33713,11 +33733,11 @@ function useDuotoneStyles({
   });
   const selector = selectorsScoped.join(', ');
   const isValidFilter = Array.isArray(colors) || colors === 'unset';
-  useStyleOverride(isValidFilter ? {
+  usePrivateStyleOverride(isValidFilter ? {
     css: colors !== 'unset' ? getDuotoneStylesheet(selector, filterId) : getDuotoneUnsetStylesheet(selector),
     __unstableType: 'presets'
   } : undefined);
-  useStyleOverride(isValidFilter ? {
+  usePrivateStyleOverride(isValidFilter ? {
     assets: colors !== 'unset' ? getDuotoneFilter(filterId, colors) : '',
     __unstableType: 'svgs'
   } : undefined);
@@ -35321,7 +35341,7 @@ function getVariationNameFromClass(className, registeredStyles = []) {
 function OverrideStyles({
   override
 }) {
-  useStyleOverride(override);
+  usePrivateStyleOverride(override);
 }
 
 /**
@@ -35555,7 +35575,7 @@ function block_style_variation_useBlockProps({
       variationStyles: true
     });
   }, [variation, settings, styles, getBlockStyles, clientId]);
-  useStyleOverride({
+  usePrivateStyleOverride({
     id: `variation-${clientId}`,
     css: variationStyles,
     __unstableType: 'variation',
@@ -55743,6 +55763,7 @@ function useCachedTruthy(value) {
 createBlockEditFilter([align, text_align, hooks_anchor, custom_class_name, style, duotone, position, layout, content_lock_ui, block_hooks, block_bindings, layout_child].filter(Boolean));
 createBlockListBlockFilter([align, text_align, background, style, color, dimensions, duotone, font_family, font_size, border, position, block_style_variation, layout_child]);
 createBlockSaveFilter([align, text_align, hooks_anchor, aria_label, custom_class_name, border, color, style, font_family, font_size]);
+
 
 
 
@@ -77037,7 +77058,6 @@ lock(privateApis, {
   BlockInfo: block_info_slot_fill,
   useHasBlockToolbar: useHasBlockToolbar,
   cleanEmptyObject: utils_cleanEmptyObject,
-  useStyleOverride: useStyleOverride,
   BlockQuickNavigation: BlockQuickNavigation,
   LayoutStyle: LayoutStyle,
   BlockRemovalWarningModal: BlockRemovalWarningModal,

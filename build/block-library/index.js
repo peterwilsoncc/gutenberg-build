@@ -21069,14 +21069,6 @@ function useGetMedia(innerBlockImages) {
  * WordPress dependencies
  */
 
-
-/**
- * Internal dependencies
- */
-
-const {
-  useStyleOverride
-} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function GapStyles({
   blockGap,
   clientId
@@ -21100,7 +21092,7 @@ function GapStyles({
 		--wp--style--unstable-gallery-gap: ${column === '0' ? '0px' : column};
 		gap: ${gapValue}
 	}`;
-  useStyleOverride({
+  (0,external_wp_blockEditor_namespaceObject.useStyleOverride)({
     css: gap
   });
   return null;
