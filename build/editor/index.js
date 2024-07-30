@@ -26176,26 +26176,22 @@ function usePostActions({
   const {
     defaultActions,
     postTypeObject,
-    userCanCreatePostType,
-    cachedCanUserResolvers
+    userCanCreatePostType
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getPostType,
-      canUser,
-      getCachedResolvers
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
     const {
       getEntityActions
     } = unlock(select(store_store));
-    const _postTypeObject = getPostType(postType);
     return {
-      postTypeObject: _postTypeObject,
+      postTypeObject: getPostType(postType),
       defaultActions: getEntityActions('postType', postType),
       userCanCreatePostType: canUser('create', {
         kind: 'postType',
         name: postType
-      }),
-      cachedCanUserResolvers: getCachedResolvers()?.canUser
+      })
     };
   }, [postType]);
   const duplicatePostAction = useDuplicatePostAction(postType);
@@ -26261,10 +26257,7 @@ function usePostActions({
       }
     }
     return actions;
-    // We are making this use memo depend on cachedCanUserResolvers as a way to make the component using this hook re-render
-    // when user capabilities are resolved. This makes sure the isEligible functions of actions dependent on capabilities are re-evaluated.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultActions, userCanCreatePostType, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, duplicatePostAction, reorderPagesAction, onActionPerformed, isLoaded, supportsRevisions, supportsTitle, context, cachedCanUserResolvers]);
+  }, [defaultActions, userCanCreatePostType, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, duplicatePostAction, reorderPagesAction, onActionPerformed, isLoaded, supportsRevisions, supportsTitle, context]);
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-actions/index.js
