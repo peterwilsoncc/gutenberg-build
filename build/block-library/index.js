@@ -53512,6 +53512,12 @@ const site_title_metadata = {
     },
     interactivity: {
       clientNavigation: true
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true
     }
   },
   editorStyle: "wp-block-site-title-editor",
