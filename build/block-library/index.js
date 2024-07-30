@@ -22740,6 +22740,51 @@ const grid = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
  */
 
 
+const example = {
+  innerBlocks: [{
+    name: 'core/paragraph',
+    attributes: {
+      customTextColor: '#cf2e2e',
+      fontSize: 'large',
+      content: (0,external_wp_i18n_namespaceObject.__)('One.')
+    }
+  }, {
+    name: 'core/paragraph',
+    attributes: {
+      customTextColor: '#ff6900',
+      fontSize: 'large',
+      content: (0,external_wp_i18n_namespaceObject.__)('Two.')
+    }
+  }, {
+    name: 'core/paragraph',
+    attributes: {
+      customTextColor: '#fcb900',
+      fontSize: 'large',
+      content: (0,external_wp_i18n_namespaceObject.__)('Three.')
+    }
+  }, {
+    name: 'core/paragraph',
+    attributes: {
+      customTextColor: '#00d084',
+      fontSize: 'large',
+      content: (0,external_wp_i18n_namespaceObject.__)('Four.')
+    }
+  }, {
+    name: 'core/paragraph',
+    attributes: {
+      customTextColor: '#0693e3',
+      fontSize: 'large',
+      content: (0,external_wp_i18n_namespaceObject.__)('Five.')
+    }
+  }, {
+    name: 'core/paragraph',
+    attributes: {
+      customTextColor: '#9b51e0',
+      fontSize: 'large',
+      content: (0,external_wp_i18n_namespaceObject.__)('Six.')
+    }
+  }]
+};
 const group_variations_variations = [{
   name: 'group',
   title: (0,external_wp_i18n_namespaceObject.__)('Group'),
@@ -22765,7 +22810,8 @@ const group_variations_variations = [{
   },
   scope: ['block', 'inserter', 'transform'],
   isActive: blockAttributes => blockAttributes.layout?.type === 'flex' && (!blockAttributes.layout?.orientation || blockAttributes.layout?.orientation === 'horizontal'),
-  icon: library_row
+  icon: library_row,
+  example
 }, {
   name: 'group-stack',
   title: (0,external_wp_i18n_namespaceObject.__)('Stack'),
@@ -22778,7 +22824,8 @@ const group_variations_variations = [{
   },
   scope: ['block', 'inserter', 'transform'],
   isActive: blockAttributes => blockAttributes.layout?.type === 'flex' && blockAttributes.layout?.orientation === 'vertical',
-  icon: library_stack
+  icon: library_stack,
+  example
 }, {
   name: 'group-grid',
   title: (0,external_wp_i18n_namespaceObject.__)('Grid'),
@@ -22790,7 +22837,8 @@ const group_variations_variations = [{
   },
   scope: ['block', 'inserter', 'transform'],
   isActive: blockAttributes => blockAttributes.layout?.type === 'grid',
-  icon: library_grid
+  icon: library_grid,
+  example
 }];
 /* harmony default export */ const group_variations = (group_variations_variations);
 
@@ -22915,49 +22963,46 @@ const {
 const group_settings = {
   icon: library_group,
   example: {
+    attributes: {
+      layout: {
+        type: 'constrained',
+        justifyContent: 'center'
+      },
+      style: {
+        spacing: {
+          padding: {
+            top: '4em',
+            right: '3em',
+            bottom: '4em',
+            left: '3em'
+          }
+        }
+      }
+    },
     innerBlocks: [{
-      name: 'core/paragraph',
+      name: 'core/heading',
       attributes: {
-        customTextColor: '#cf2e2e',
-        fontSize: 'large',
-        content: (0,external_wp_i18n_namespaceObject.__)('One.')
+        content: (0,external_wp_i18n_namespaceObject.__)('La Mancha'),
+        textAlign: 'center'
       }
     }, {
       name: 'core/paragraph',
       attributes: {
-        customTextColor: '#ff6900',
-        fontSize: 'large',
-        content: (0,external_wp_i18n_namespaceObject.__)('Two.')
+        align: 'center',
+        content: (0,external_wp_i18n_namespaceObject.__)('In a village of La Mancha, the name of which I have no desire to call to mind, there lived not long since one of those gentlemen that keep a lance in the lance-rack, an old buckler, a lean hack, and a greyhound for coursing.')
       }
     }, {
-      name: 'core/paragraph',
+      name: 'core/spacer',
       attributes: {
-        customTextColor: '#fcb900',
-        fontSize: 'large',
-        content: (0,external_wp_i18n_namespaceObject.__)('Three.')
+        height: '10px'
       }
     }, {
-      name: 'core/paragraph',
+      name: 'core/button',
       attributes: {
-        customTextColor: '#00d084',
-        fontSize: 'large',
-        content: (0,external_wp_i18n_namespaceObject.__)('Four.')
+        text: (0,external_wp_i18n_namespaceObject.__)('Read more')
       }
-    }, {
-      name: 'core/paragraph',
-      attributes: {
-        customTextColor: '#0693e3',
-        fontSize: 'large',
-        content: (0,external_wp_i18n_namespaceObject.__)('Five.')
-      }
-    }, {
-      name: 'core/paragraph',
-      attributes: {
-        customTextColor: '#9b51e0',
-        fontSize: 'large',
-        content: (0,external_wp_i18n_namespaceObject.__)('Six.')
-      }
-    }]
+    }],
+    viewportWidth: 600
   },
   transforms: group_transforms,
   edit: group_edit,
