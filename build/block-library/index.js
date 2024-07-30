@@ -49045,6 +49045,7 @@ function QueryTitleEdit({
   attributes: {
     type,
     level,
+    levelOptions,
     textAlign,
     showPrefix,
     showSearchTerm
@@ -49134,6 +49135,7 @@ function QueryTitleEdit({
       group: "block",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
         value: level,
+        options: levelOptions,
         onChange: newLevel => setAttributes({
           level: newLevel
         })
@@ -49272,6 +49274,9 @@ const query_title_metadata = {
     level: {
       type: "number",
       "default": 1
+    },
+    levelOptions: {
+      type: "array"
     },
     showPrefix: {
       type: "boolean",
