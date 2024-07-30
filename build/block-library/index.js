@@ -11530,7 +11530,8 @@ function comments_title_edit_Edit({
     textAlign,
     showPostTitle,
     showCommentsCount,
-    level
+    level,
+    levelOptions
   },
   setAttributes,
   context: {
@@ -11594,6 +11595,7 @@ function comments_title_edit_Edit({
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
       value: level,
+      options: levelOptions,
       onChange: newLevel => setAttributes({
         level: newLevel
       })
@@ -11686,6 +11688,9 @@ const deprecated_metadata = {
     level: {
       type: "number",
       "default": 2
+    },
+    levelOptions: {
+      type: "array"
     }
   },
   supports: {
@@ -11795,6 +11800,9 @@ const comments_title_metadata = {
     level: {
       type: "number",
       "default": 2
+    },
+    levelOptions: {
+      type: "array"
     }
   },
   supports: {
