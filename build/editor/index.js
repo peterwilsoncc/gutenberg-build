@@ -25409,23 +25409,6 @@ function PatternOverridesPanel() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OverridesPanel, {});
 }
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/trash.js
-/**
- * WordPress dependencies
- */
-
-
-const trash = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M12 5.5A2.25 2.25 0 0 0 9.878 7h4.244A2.251 2.251 0 0 0 12 5.5ZM12 4a3.751 3.751 0 0 0-3.675 3H5v1.5h1.27l.818 8.997a2.75 2.75 0 0 0 2.739 2.501h4.347a2.75 2.75 0 0 0 2.738-2.5L17.73 8.5H19V7h-3.325A3.751 3.751 0 0 0 12 4Zm4.224 4.5H7.776l.806 8.861a1.25 1.25 0 0 0 1.245 1.137h4.347a1.25 1.25 0 0 0 1.245-1.137l.805-8.861Z"
-  })
-});
-/* harmony default export */ const library_trash = (trash);
-
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/normalize-fields.js
 /**
  * Internal dependencies
@@ -25719,118 +25702,6 @@ function actions_isTemplateRemovable(template) {
   // two props whether is custom or has a theme file.
   return template?.source === TEMPLATE_ORIGINS.custom && !template?.has_theme_file;
 }
-const trashPostAction = {
-  id: 'move-to-trash',
-  label: (0,external_wp_i18n_namespaceObject.__)('Move to Trash'),
-  isPrimary: true,
-  icon: library_trash,
-  isEligible(item) {
-    return !['auto-draft', 'trash'].includes(item.status) && item.permissions?.delete;
-  },
-  supportsBulk: true,
-  hideModalHeader: true,
-  RenderModal: ({
-    items,
-    closeModal,
-    onActionPerformed
-  }) => {
-    const [isBusy, setIsBusy] = (0,external_wp_element_namespaceObject.useState)(false);
-    const {
-      createSuccessNotice,
-      createErrorNotice
-    } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
-    const {
-      deleteEntityRecord
-    } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-      spacing: "5",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-        children: items.length === 1 ? (0,external_wp_i18n_namespaceObject.sprintf)(
-        // translators: %s: The item's title.
-        (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to move to trash "%s"?'), getItemTitle(items[0])) : (0,external_wp_i18n_namespaceObject.sprintf)(
-        // translators: %d: The number of items (2 or more).
-        (0,external_wp_i18n_namespaceObject._n)('Are you sure you want to move to trash %d item?', 'Are you sure you want to move to trash %d items?', items.length), items.length)
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        justify: "right",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          variant: "tertiary",
-          onClick: closeModal,
-          disabled: isBusy,
-          accessibleWhenDisabled: true,
-          children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          variant: "primary",
-          onClick: async () => {
-            setIsBusy(true);
-            const promiseResult = await Promise.allSettled(items.map(item => deleteEntityRecord('postType', item.type, item.id, {}, {
-              throwOnError: true
-            })));
-            // If all the promises were fulfilled with success.
-            if (promiseResult.every(({
-              status
-            }) => status === 'fulfilled')) {
-              let successMessage;
-              if (promiseResult.length === 1) {
-                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The item's title. */
-                (0,external_wp_i18n_namespaceObject.__)('"%s" moved to trash.'), getItemTitle(items[0]));
-              } else {
-                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of items. */
-                (0,external_wp_i18n_namespaceObject._n)('%s item moved to trash.', '%s items moved to trash.', items.length), items.length);
-              }
-              createSuccessNotice(successMessage, {
-                type: 'snackbar',
-                id: 'move-to-trash-action'
-              });
-            } else {
-              // If there was at least one failure.
-              let errorMessage;
-              // If we were trying to delete a single item.
-              if (promiseResult.length === 1) {
-                if (promiseResult[0].reason?.message) {
-                  errorMessage = promiseResult[0].reason.message;
-                } else {
-                  errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while moving to trash the item.');
-                }
-                // If we were trying to delete multiple items.
-              } else {
-                const errorMessages = new Set();
-                const failedPromises = promiseResult.filter(({
-                  status
-                }) => status === 'rejected');
-                for (const failedPromise of failedPromises) {
-                  if (failedPromise.reason?.message) {
-                    errorMessages.add(failedPromise.reason.message);
-                  }
-                }
-                if (errorMessages.size === 0) {
-                  errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while moving to trash the items.');
-                } else if (errorMessages.size === 1) {
-                  errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
-                  (0,external_wp_i18n_namespaceObject.__)('An error occurred while moving to trash the item: %s'), [...errorMessages][0]);
-                } else {
-                  errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
-                  (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while moving to trash the items: %s'), [...errorMessages].join(','));
-                }
-              }
-              createErrorNotice(errorMessage, {
-                type: 'snackbar'
-              });
-            }
-            if (onActionPerformed) {
-              onActionPerformed(items);
-            }
-            setIsBusy(false);
-            closeModal();
-          },
-          isBusy: isBusy,
-          disabled: isBusy,
-          accessibleWhenDisabled: true,
-          children: (0,external_wp_i18n_namespaceObject.__)('Trash')
-        })]
-      })]
-    });
-  }
-};
 const permanentlyDeletePostAction = {
   id: 'permanently-delete',
   label: (0,external_wp_i18n_namespaceObject.__)('Permanently delete'),
@@ -26460,7 +26331,7 @@ function usePostActions({
     if (!isLoaded) {
       return [];
     }
-    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && duplicateTemplatePartAction, isPattern && userCanCreatePostType && duplicatePatternAction, supportsTitle && renamePostAction, reorderPagesAction, !isTemplateOrTemplatePart && !isPattern && restorePostAction, !isTemplateOrTemplatePart && !isPattern && trashPostAction, !isTemplateOrTemplatePart && !isPattern && permanentlyDeletePostAction, ...defaultActions].filter(Boolean);
+    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && duplicateTemplatePartAction, isPattern && userCanCreatePostType && duplicatePatternAction, supportsTitle && renamePostAction, reorderPagesAction, !isTemplateOrTemplatePart && !isPattern && restorePostAction, !isTemplateOrTemplatePart && !isPattern && permanentlyDeletePostAction, ...defaultActions].filter(Boolean);
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
     // and the consumer should provide the context to filter the actions, if needed.
@@ -28583,6 +28454,23 @@ function EditorPreferencesModal({
   });
 }
 
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/trash.js
+/**
+ * WordPress dependencies
+ */
+
+
+const trash = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M12 5.5A2.25 2.25 0 0 0 9.878 7h4.244A2.251 2.251 0 0 0 12 5.5ZM12 4a3.751 3.751 0 0 0-3.675 3H5v1.5h1.27l.818 8.997a2.75 2.75 0 0 0 2.739 2.501h4.347a2.75 2.75 0 0 0 2.738-2.5L17.73 8.5H19V7h-3.325A3.751 3.751 0 0 0 12 4Zm4.224 4.5H7.776l.806 8.861a1.25 1.25 0 0 0 1.245 1.137h4.347a1.25 1.25 0 0 0 1.245-1.137l.805-8.861Z"
+  })
+});
+/* harmony default export */ const library_trash = (trash);
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/delete-post.js
 /**
  * WordPress dependencies
@@ -28830,6 +28718,142 @@ const reset_post_resetPost = {
 };
 /* harmony default export */ const reset_post = (reset_post_resetPost);
 
+;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/trash-post.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const trash_post_trashPost = {
+  id: 'move-to-trash',
+  label: (0,external_wp_i18n_namespaceObject.__)('Move to Trash'),
+  isPrimary: true,
+  icon: library_trash,
+  isEligible(item) {
+    if (isTemplateOrTemplatePart(item) || item.type === 'wp_block') {
+      return false;
+    }
+    return !!item.status && !['auto-draft', 'trash'].includes(item.status) && item.permissions?.delete;
+  },
+  supportsBulk: true,
+  hideModalHeader: true,
+  RenderModal: ({
+    items,
+    closeModal,
+    onActionPerformed
+  }) => {
+    const [isBusy, setIsBusy] = (0,external_wp_element_namespaceObject.useState)(false);
+    const {
+      createSuccessNotice,
+      createErrorNotice
+    } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
+    const {
+      deleteEntityRecord
+    } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      spacing: "5",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+        children: items.length === 1 ? (0,external_wp_i18n_namespaceObject.sprintf)(
+        // translators: %s: The item's title.
+        (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to move to trash "%s"?'), getItemTitle(items[0])) : (0,external_wp_i18n_namespaceObject.sprintf)(
+        // translators: %d: The number of items (2 or more).
+        (0,external_wp_i18n_namespaceObject._n)('Are you sure you want to move to trash %d item?', 'Are you sure you want to move to trash %d items?', items.length), items.length)
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        justify: "right",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          variant: "tertiary",
+          onClick: closeModal,
+          disabled: isBusy,
+          accessibleWhenDisabled: true,
+          children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          variant: "primary",
+          onClick: async () => {
+            setIsBusy(true);
+            const promiseResult = await Promise.allSettled(items.map(item => deleteEntityRecord('postType', item.type, item.id.toString(), {}, {
+              throwOnError: true
+            })));
+            // If all the promises were fulfilled with success.
+            if (promiseResult.every(({
+              status
+            }) => status === 'fulfilled')) {
+              let successMessage;
+              if (promiseResult.length === 1) {
+                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The item's title. */
+                (0,external_wp_i18n_namespaceObject.__)('"%s" moved to trash.'), getItemTitle(items[0]));
+              } else {
+                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of items. */
+                (0,external_wp_i18n_namespaceObject._n)('%s item moved to trash.', '%s items moved to trash.', items.length), items.length);
+              }
+              createSuccessNotice(successMessage, {
+                type: 'snackbar',
+                id: 'move-to-trash-action'
+              });
+            } else {
+              // If there was at least one failure.
+              let errorMessage;
+              // If we were trying to delete a single item.
+              if (promiseResult.length === 1) {
+                const typedError = promiseResult[0];
+                if (typedError.reason?.message) {
+                  errorMessage = typedError.reason.message;
+                } else {
+                  errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while moving to trash the item.');
+                }
+                // If we were trying to delete multiple items.
+              } else {
+                const errorMessages = new Set();
+                const failedPromises = promiseResult.filter(({
+                  status
+                }) => status === 'rejected');
+                for (const failedPromise of failedPromises) {
+                  const typedError = failedPromise;
+                  if (typedError.reason?.message) {
+                    errorMessages.add(typedError.reason.message);
+                  }
+                }
+                if (errorMessages.size === 0) {
+                  errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while moving to trash the items.');
+                } else if (errorMessages.size === 1) {
+                  errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
+                  (0,external_wp_i18n_namespaceObject.__)('An error occurred while moving to trash the item: %s'), [...errorMessages][0]);
+                } else {
+                  errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
+                  (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while moving to trash the items: %s'), [...errorMessages].join(','));
+                }
+              }
+              createErrorNotice(errorMessage, {
+                type: 'snackbar'
+              });
+            }
+            if (onActionPerformed) {
+              onActionPerformed(items);
+            }
+            setIsBusy(false);
+            closeModal?.();
+          },
+          isBusy: isBusy,
+          disabled: isBusy,
+          accessibleWhenDisabled: true,
+          children: (0,external_wp_i18n_namespaceObject.__)('Trash')
+        })]
+      })]
+    });
+  }
+};
+/* harmony default export */ const trash_post = (trash_post_trashPost);
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/index.js
 /**
  * WordPress dependencies
@@ -28839,6 +28863,7 @@ const reset_post_resetPost = {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -28853,6 +28878,7 @@ function registerDefaultActions() {
   registerEntityAction('postType', 'wp_block', export_pattern);
   registerEntityAction('postType', '*', reset_post);
   registerEntityAction('postType', '*', delete_post);
+  registerEntityAction('postType', '*', trash_post);
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/bindings/pattern-overrides.js
