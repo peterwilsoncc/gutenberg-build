@@ -44104,6 +44104,12 @@ const post_time_to_read_metadata = {
     },
     interactivity: {
       clientNavigation: true
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true
     }
   }
 };
