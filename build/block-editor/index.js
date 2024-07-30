@@ -53419,19 +53419,21 @@ function GridItemMovers({
     group: "parent",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
       className: "block-editor-grid-item-mover__move-button-container",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItemMover, {
-        className: "is-left-button",
-        icon: chevron_left,
-        label: (0,external_wp_i18n_namespaceObject.__)('Move left'),
-        description: (0,external_wp_i18n_namespaceObject.__)('Move left'),
-        isDisabled: columnStart <= 1,
-        onClick: () => {
-          onChange({
-            columnStart: columnStart - 1
-          });
-          __unstableMarkNextChangeAsNotPersistent();
-          moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart - 1, rowStart));
-        }
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        className: "block-editor-grid-item-mover__move-horizontal-button-container is-left",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItemMover, {
+          icon: chevron_left,
+          label: (0,external_wp_i18n_namespaceObject.__)('Move left'),
+          description: (0,external_wp_i18n_namespaceObject.__)('Move left'),
+          isDisabled: columnStart <= 1,
+          onClick: () => {
+            onChange({
+              columnStart: columnStart - 1
+            });
+            __unstableMarkNextChangeAsNotPersistent();
+            moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart - 1, rowStart));
+          }
+        })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
         className: "block-editor-grid-item-mover__move-vertical-button-container",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItemMover, {
@@ -53461,19 +53463,21 @@ function GridItemMovers({
             moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart, rowStart + 1));
           }
         })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItemMover, {
-        className: "is-right-button",
-        icon: chevron_right,
-        label: (0,external_wp_i18n_namespaceObject.__)('Move right'),
-        description: (0,external_wp_i18n_namespaceObject.__)('Move right'),
-        isDisabled: columnCount && columnEnd >= columnCount,
-        onClick: () => {
-          onChange({
-            columnStart: columnStart + 1
-          });
-          __unstableMarkNextChangeAsNotPersistent();
-          moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart + 1, rowStart));
-        }
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        className: "block-editor-grid-item-mover__move-horizontal-button-container is-right",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItemMover, {
+          icon: chevron_right,
+          label: (0,external_wp_i18n_namespaceObject.__)('Move right'),
+          description: (0,external_wp_i18n_namespaceObject.__)('Move right'),
+          isDisabled: columnCount && columnEnd >= columnCount,
+          onClick: () => {
+            onChange({
+              columnStart: columnStart + 1
+            });
+            __unstableMarkNextChangeAsNotPersistent();
+            moveBlocksToPosition([blockClientId], gridClientId, gridClientId, getNumberOfBlocksBeforeCell(columnStart + 1, rowStart));
+          }
+        })
       })]
     })
   });
@@ -57465,7 +57469,7 @@ function BlockMover({
       isManualGrid: layout.type === 'grid' && layout.isManualPlacement && window.__experimentalEnableGridInteractivity
     };
   }, [clientIds]);
-  if (!canMove || isFirst && isLast && !rootClientId) {
+  if (!canMove || isFirst && isLast && !rootClientId || hideDragHandle && isManualGrid) {
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
