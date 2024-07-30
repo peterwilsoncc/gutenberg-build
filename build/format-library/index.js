@@ -281,18 +281,17 @@ function InlineUI({
       },
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         alignment: "bottom",
-        spacing: "0",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
-          className: "block-editor-format-toolbar__image-container-value",
           label: (0,external_wp_i18n_namespaceObject.__)('Width'),
           value: width,
           min: 1,
-          onChange: newWidth => setWidth(newWidth)
+          onChange: newWidth => setWidth(newWidth),
+          size: "__unstable-large"
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          className: "block-editor-format-toolbar__image-container-button",
           icon: keyboard_return,
           label: (0,external_wp_i18n_namespaceObject.__)('Apply'),
-          type: "submit"
+          type: "submit",
+          __next40pxDefaultSize: true
         })]
       })
     })
