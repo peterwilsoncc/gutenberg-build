@@ -25702,87 +25702,6 @@ function actions_isTemplateRemovable(template) {
   // two props whether is custom or has a theme file.
   return template?.source === TEMPLATE_ORIGINS.custom && !template?.has_theme_file;
 }
-const permanentlyDeletePostAction = {
-  id: 'permanently-delete',
-  label: (0,external_wp_i18n_namespaceObject.__)('Permanently delete'),
-  supportsBulk: true,
-  isEligible({
-    status,
-    permissions
-  }) {
-    return status === 'trash' && permissions?.delete;
-  },
-  async callback(posts, {
-    registry,
-    onActionPerformed
-  }) {
-    const {
-      createSuccessNotice,
-      createErrorNotice
-    } = registry.dispatch(external_wp_notices_namespaceObject.store);
-    const {
-      deleteEntityRecord
-    } = registry.dispatch(external_wp_coreData_namespaceObject.store);
-    const promiseResult = await Promise.allSettled(posts.map(post => {
-      return deleteEntityRecord('postType', post.type, post.id, {
-        force: true
-      }, {
-        throwOnError: true
-      });
-    }));
-    // If all the promises were fulfilled with success.
-    if (promiseResult.every(({
-      status
-    }) => status === 'fulfilled')) {
-      let successMessage;
-      if (promiseResult.length === 1) {
-        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The posts's title. */
-        (0,external_wp_i18n_namespaceObject.__)('"%s" permanently deleted.'), getItemTitle(posts[0]));
-      } else {
-        successMessage = (0,external_wp_i18n_namespaceObject.__)('The posts were permanently deleted.');
-      }
-      createSuccessNotice(successMessage, {
-        type: 'snackbar',
-        id: 'permanently-delete-post-action'
-      });
-      onActionPerformed?.(posts);
-    } else {
-      // If there was at lease one failure.
-      let errorMessage;
-      // If we were trying to permanently delete a single post.
-      if (promiseResult.length === 1) {
-        if (promiseResult[0].reason?.message) {
-          errorMessage = promiseResult[0].reason.message;
-        } else {
-          errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the post.');
-        }
-        // If we were trying to permanently delete multiple posts
-      } else {
-        const errorMessages = new Set();
-        const failedPromises = promiseResult.filter(({
-          status
-        }) => status === 'rejected');
-        for (const failedPromise of failedPromises) {
-          if (failedPromise.reason?.message) {
-            errorMessages.add(failedPromise.reason.message);
-          }
-        }
-        if (errorMessages.size === 0) {
-          errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the posts.');
-        } else if (errorMessages.size === 1) {
-          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
-          (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the posts: %s'), [...errorMessages][0]);
-        } else {
-          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
-          (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while permanently deleting the posts: %s'), [...errorMessages].join(','));
-        }
-      }
-      createErrorNotice(errorMessage, {
-        type: 'snackbar'
-      });
-    }
-  }
-};
 const restorePostAction = {
   id: 'restore',
   label: (0,external_wp_i18n_namespaceObject.__)('Restore'),
@@ -26331,7 +26250,7 @@ function usePostActions({
     if (!isLoaded) {
       return [];
     }
-    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && duplicateTemplatePartAction, isPattern && userCanCreatePostType && duplicatePatternAction, supportsTitle && renamePostAction, reorderPagesAction, !isTemplateOrTemplatePart && !isPattern && restorePostAction, !isTemplateOrTemplatePart && !isPattern && permanentlyDeletePostAction, ...defaultActions].filter(Boolean);
+    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && duplicateTemplatePartAction, isPattern && userCanCreatePostType && duplicatePatternAction, supportsTitle && renamePostAction, reorderPagesAction, !isTemplateOrTemplatePart && !isPattern && restorePostAction, ...defaultActions].filter(Boolean);
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
     // and the consumer should provide the context to filter the actions, if needed.
@@ -28854,6 +28773,106 @@ const trash_post_trashPost = {
 };
 /* harmony default export */ const trash_post = (trash_post_trashPost);
 
+;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/permanently-delete-post.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+const permanentlyDeletePost = {
+  id: 'permanently-delete',
+  label: (0,external_wp_i18n_namespaceObject.__)('Permanently delete'),
+  supportsBulk: true,
+  isEligible(item) {
+    if (isTemplateOrTemplatePart(item) || item.type === 'wp_block') {
+      return false;
+    }
+    const {
+      status,
+      permissions
+    } = item;
+    return status === 'trash' && permissions?.delete;
+  },
+  async callback(posts, {
+    registry,
+    onActionPerformed
+  }) {
+    const {
+      createSuccessNotice,
+      createErrorNotice
+    } = registry.dispatch(external_wp_notices_namespaceObject.store);
+    const {
+      deleteEntityRecord
+    } = registry.dispatch(external_wp_coreData_namespaceObject.store);
+    const promiseResult = await Promise.allSettled(posts.map(post => {
+      return deleteEntityRecord('postType', post.type, post.id, {
+        force: true
+      }, {
+        throwOnError: true
+      });
+    }));
+    // If all the promises were fulfilled with success.
+    if (promiseResult.every(({
+      status
+    }) => status === 'fulfilled')) {
+      let successMessage;
+      if (promiseResult.length === 1) {
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The posts's title. */
+        (0,external_wp_i18n_namespaceObject.__)('"%s" permanently deleted.'), getItemTitle(posts[0]));
+      } else {
+        successMessage = (0,external_wp_i18n_namespaceObject.__)('The posts were permanently deleted.');
+      }
+      createSuccessNotice(successMessage, {
+        type: 'snackbar',
+        id: 'permanently-delete-post-action'
+      });
+      onActionPerformed?.(posts);
+    } else {
+      // If there was at lease one failure.
+      let errorMessage;
+      // If we were trying to permanently delete a single post.
+      if (promiseResult.length === 1) {
+        const typedError = promiseResult[0];
+        if (typedError.reason?.message) {
+          errorMessage = typedError.reason.message;
+        } else {
+          errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the post.');
+        }
+        // If we were trying to permanently delete multiple posts
+      } else {
+        const errorMessages = new Set();
+        const failedPromises = promiseResult.filter(({
+          status
+        }) => status === 'rejected');
+        for (const failedPromise of failedPromises) {
+          const typedError = failedPromise;
+          if (typedError.reason?.message) {
+            errorMessages.add(typedError.reason.message);
+          }
+        }
+        if (errorMessages.size === 0) {
+          errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the posts.');
+        } else if (errorMessages.size === 1) {
+          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
+          (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the posts: %s'), [...errorMessages][0]);
+        } else {
+          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
+          (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while permanently deleting the posts: %s'), [...errorMessages].join(','));
+        }
+      }
+      createErrorNotice(errorMessage, {
+        type: 'snackbar'
+      });
+    }
+  }
+};
+/* harmony default export */ const permanently_delete_post = (permanentlyDeletePost);
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/index.js
 /**
  * WordPress dependencies
@@ -28863,6 +28882,7 @@ const trash_post_trashPost = {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -28879,6 +28899,7 @@ function registerDefaultActions() {
   registerEntityAction('postType', '*', reset_post);
   registerEntityAction('postType', '*', delete_post);
   registerEntityAction('postType', '*', trash_post);
+  registerEntityAction('postType', '*', permanently_delete_post);
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/bindings/pattern-overrides.js
