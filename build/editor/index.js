@@ -23712,7 +23712,6 @@ const desktop = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
 
 
 
-
 function PreviewDropdown({
   forceIsAutosaveable,
   disabled
@@ -23803,22 +23802,6 @@ function PreviewDropdown({
   if (!selectedChoice) {
     selectedChoice = choices[0];
   }
-
-  /**
-   * Handles the selection of a device type.
-   *
-   * @param {string} value The device type.
-   */
-  const onSelect = value => {
-    setDeviceType(value);
-    if (value === 'Desktop') {
-      (0,external_wp_a11y_namespaceObject.speak)((0,external_wp_i18n_namespaceObject.__)('Desktop selected'), 'assertive');
-    } else if (value === 'Tablet') {
-      (0,external_wp_a11y_namespaceObject.speak)((0,external_wp_i18n_namespaceObject.__)('Tablet selected'), 'assertive');
-    } else {
-      (0,external_wp_a11y_namespaceObject.speak)((0,external_wp_i18n_namespaceObject.__)('Mobile selected'), 'assertive');
-    }
-  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
     className: "editor-preview-dropdown",
     popoverProps: popoverProps,
@@ -23834,7 +23817,7 @@ function PreviewDropdown({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItemsChoice, {
           choices: choices,
           value: selectedChoice.value,
-          onSelect: onSelect
+          onSelect: setDeviceType
         })
       }), isTemplate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuItem, {
