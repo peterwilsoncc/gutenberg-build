@@ -11709,30 +11709,14 @@ function panel_PostAuthor() {
  */
 
 
-
-
 const COMMENT_OPTIONS = [{
-  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(0,external_wp_i18n_namespaceObject._x)('Open', 'Adjective: e.g. "Comments are open"'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      variant: "muted",
-      size: 12,
-      children: (0,external_wp_i18n_namespaceObject.__)('Visitors can add new comments and replies.')
-    })]
-  }),
-  value: 'open'
+  label: (0,external_wp_i18n_namespaceObject._x)('Open', 'Adjective: e.g. "Comments are open"'),
+  value: 'open',
+  description: (0,external_wp_i18n_namespaceObject.__)('Visitors can add new comments and replies.')
 }, {
-  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(0,external_wp_i18n_namespaceObject.__)('Closed'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      variant: "muted",
-      size: 12,
-      children: (0,external_wp_i18n_namespaceObject.__)('Visitors cannot add new comments or replies.')
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      variant: "muted",
-      size: 12,
-      children: (0,external_wp_i18n_namespaceObject.__)('Existing comments remain visible.')
-    })]
-  }),
-  value: 'closed'
+  label: (0,external_wp_i18n_namespaceObject.__)('Closed'),
+  value: 'closed',
+  description: [(0,external_wp_i18n_namespaceObject.__)('Visitors cannot add new comments or replies.'), (0,external_wp_i18n_namespaceObject.__)('Existing comments remain visible.')].join(' ')
 }];
 function PostComments() {
   const commentStatus = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -16688,50 +16672,25 @@ const postStatusesInfo = {
   }
 };
 const STATUS_OPTIONS = [{
-  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(0,external_wp_i18n_namespaceObject.__)('Draft'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      variant: "muted",
-      size: 12,
-      children: (0,external_wp_i18n_namespaceObject.__)('Not ready to publish.')
-    })]
-  }),
-  value: 'draft'
+  label: (0,external_wp_i18n_namespaceObject.__)('Draft'),
+  value: 'draft',
+  description: (0,external_wp_i18n_namespaceObject.__)('Not ready to publish.')
 }, {
-  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(0,external_wp_i18n_namespaceObject.__)('Pending'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      variant: "muted",
-      size: 12,
-      children: (0,external_wp_i18n_namespaceObject.__)('Waiting for review before publishing.')
-    })]
-  }),
-  value: 'pending'
+  label: (0,external_wp_i18n_namespaceObject.__)('Pending'),
+  value: 'pending',
+  description: (0,external_wp_i18n_namespaceObject.__)('Waiting for review before publishing.')
 }, {
-  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(0,external_wp_i18n_namespaceObject.__)('Private'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      variant: "muted",
-      size: 12,
-      children: (0,external_wp_i18n_namespaceObject.__)('Only visible to site admins and editors.')
-    })]
-  }),
-  value: 'private'
+  label: (0,external_wp_i18n_namespaceObject.__)('Private'),
+  value: 'private',
+  description: (0,external_wp_i18n_namespaceObject.__)('Only visible to site admins and editors.')
 }, {
-  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(0,external_wp_i18n_namespaceObject.__)('Scheduled'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      variant: "muted",
-      size: 12,
-      children: (0,external_wp_i18n_namespaceObject.__)('Publish automatically on a chosen date.')
-    })]
-  }),
-  value: 'future'
+  label: (0,external_wp_i18n_namespaceObject.__)('Scheduled'),
+  value: 'future',
+  description: (0,external_wp_i18n_namespaceObject.__)('Publish automatically on a chosen date.')
 }, {
-  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(0,external_wp_i18n_namespaceObject.__)('Published'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      variant: "muted",
-      size: 12,
-      children: (0,external_wp_i18n_namespaceObject.__)('Visible to everyone.')
-    })]
-  }),
-  value: 'publish'
+  label: (0,external_wp_i18n_namespaceObject.__)('Published'),
+  value: 'publish',
+  description: (0,external_wp_i18n_namespaceObject.__)('Visible to everyone.')
 }];
 const DESIGN_POST_TYPES = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE, PATTERN_POST_TYPE, NAVIGATION_POST_TYPE];
 function PostStatus() {
@@ -27049,27 +27008,13 @@ function PostsPerPage() {
 
 
 const site_discussion_COMMENT_OPTIONS = [{
-  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(0,external_wp_i18n_namespaceObject._x)('Open', 'Adjective: e.g. "Comments are open"'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      variant: "muted",
-      size: 12,
-      children: (0,external_wp_i18n_namespaceObject.__)('Visitors can add new comments and replies.')
-    })]
-  }),
-  value: 'open'
+  label: (0,external_wp_i18n_namespaceObject._x)('Open', 'Adjective: e.g. "Comments are open"'),
+  value: 'open',
+  description: (0,external_wp_i18n_namespaceObject.__)('Visitors can add new comments and replies.')
 }, {
-  label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(0,external_wp_i18n_namespaceObject.__)('Closed'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      variant: "muted",
-      size: 12,
-      children: (0,external_wp_i18n_namespaceObject.__)('Visitors cannot add new comments or replies.')
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      variant: "muted",
-      size: 12,
-      children: (0,external_wp_i18n_namespaceObject.__)('Existing comments remain visible.')
-    })]
-  }),
-  value: ''
+  label: (0,external_wp_i18n_namespaceObject.__)('Closed'),
+  value: '',
+  description: [(0,external_wp_i18n_namespaceObject.__)('Visitors cannot add new comments or replies.'), (0,external_wp_i18n_namespaceObject.__)('Existing comments remain visible.')].join(' ')
 }];
 function SiteDiscussion() {
   const {

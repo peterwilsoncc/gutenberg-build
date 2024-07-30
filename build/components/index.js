@@ -62507,6 +62507,16 @@ const radio_group_RadioGroup = (0,external_wp_element_namespaceObject.forwardRef
 
 
 
+
+
+
+function generateOptionDescriptionId(radioGroupId, index) {
+  return `${radioGroupId}-${index}-option-description`;
+}
+function generateOptionId(radioGroupId, index) {
+  return `${radioGroupId}-${index}`;
+}
+
 /**
  * Render a user interface to select the user type using radio inputs.
  *
@@ -62532,8 +62542,6 @@ const radio_group_RadioGroup = (0,external_wp_element_namespaceObject.forwardRef
  * };
  * ```
  */
-
-
 function RadioControl(props) {
   const {
     label,
@@ -62543,11 +62551,21 @@ function RadioControl(props) {
     onChange,
     hideLabelFromVision,
     options = [],
+    id: preferredId,
     ...additionalProps
   } = props;
-  const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(RadioControl);
-  const id = `inspector-radio-control-${instanceId}`;
+  const id = (0,external_wp_compose_namespaceObject.useInstanceId)(RadioControl, 'inspector-radio-control', preferredId);
   const onChangeValue = event => onChange(event.target.value);
+
+  // Use `useBaseControlProps` to get the id of the help text.
+  const {
+    controlProps: {
+      'aria-describedby': helpTextId
+    }
+  } = useBaseControlProps({
+    id,
+    help
+  });
   if (!options?.length) {
     return null;
   }
@@ -62559,25 +62577,33 @@ function RadioControl(props) {
     help: help,
     className: dist_clsx(className, 'components-radio-control'),
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(v_stack_component, {
-      spacing: 2,
+      spacing: 3,
+      className: dist_clsx('components-radio-control__group-wrapper', {
+        'has-help': !!help
+      }),
       children: options.map((option, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
         className: "components-radio-control__option",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
-          id: `${id}-${index}`,
+          id: generateOptionId(id, index),
           className: "components-radio-control__input",
           type: "radio",
           name: id,
           value: option.value,
           onChange: onChangeValue,
           checked: option.value === selected,
-          "aria-describedby": !!help ? `${id}__help` : undefined,
+          "aria-describedby": dist_clsx([!!option.description && generateOptionDescriptionId(id, index), helpTextId]) || undefined,
           ...additionalProps
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("label", {
           className: "components-radio-control__label",
-          htmlFor: `${id}-${index}`,
+          htmlFor: generateOptionId(id, index),
           children: option.label
-        })]
-      }, `${id}-${index}`))
+        }), !!option.description ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledHelp, {
+          __nextHasNoMarginBottom: true,
+          id: generateOptionDescriptionId(id, index),
+          className: "components-radio-control__option-description",
+          children: option.description
+        }) : null]
+      }, generateOptionId(id, index)))
     })
   });
 }
