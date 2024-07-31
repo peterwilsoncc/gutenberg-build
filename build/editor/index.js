@@ -16842,7 +16842,8 @@ function PostStatus() {
                   type: "text",
                   id: passwordInputId,
                   __next40pxDefaultSize: true,
-                  __nextHasNoMarginBottom: true
+                  __nextHasNoMarginBottom: true,
+                  maxLength: 255
                 })
               })]
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSticky, {})]
