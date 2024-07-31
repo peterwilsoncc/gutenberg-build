@@ -58944,18 +58944,43 @@ function TagCloudEdit({
       title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
         __nextHasNoMarginBottom: true,
+        __next40pxDefaultSize: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Taxonomy'),
         options: getTaxonomyOptions(),
         value: taxonomy,
         onChange: selectedTaxonomy => setAttributes({
           taxonomy: selectedTaxonomy
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-        __nextHasNoMarginBottom: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Show post counts'),
-        checked: showTagCounts,
-        onChange: () => setAttributes({
-          showTagCounts: !showTagCounts
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
+          gap: 4,
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+            isBlock: true,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+              label: (0,external_wp_i18n_namespaceObject.__)('Smallest size'),
+              value: smallestFontSize,
+              onChange: value => {
+                onFontSizeChange('smallestFontSize', value);
+              },
+              units: units,
+              min: MIN_FONT_SIZE,
+              max: MAX_FONT_SIZE,
+              size: "__unstable-large"
+            })
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+            isBlock: true,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+              label: (0,external_wp_i18n_namespaceObject.__)('Largest size'),
+              value: largestFontSize,
+              onChange: value => {
+                onFontSizeChange('largestFontSize', value);
+              },
+              units: units,
+              min: MIN_FONT_SIZE,
+              max: MAX_FONT_SIZE,
+              size: "__unstable-large"
+            })
+          })]
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
         __nextHasNoMarginBottom: true,
@@ -58968,32 +58993,12 @@ function TagCloudEdit({
         min: MIN_TAGS,
         max: MAX_TAGS,
         required: true
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-          isBlock: true,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
-            label: (0,external_wp_i18n_namespaceObject.__)('Smallest size'),
-            value: smallestFontSize,
-            onChange: value => {
-              onFontSizeChange('smallestFontSize', value);
-            },
-            units: units,
-            min: MIN_FONT_SIZE,
-            max: MAX_FONT_SIZE
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-          isBlock: true,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
-            label: (0,external_wp_i18n_namespaceObject.__)('Largest size'),
-            value: largestFontSize,
-            onChange: value => {
-              onFontSizeChange('largestFontSize', value);
-            },
-            units: units,
-            min: MIN_FONT_SIZE,
-            max: MAX_FONT_SIZE
-          })
-        })]
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Show tag counts'),
+        checked: showTagCounts,
+        onChange: () => setAttributes({
+          showTagCounts: !showTagCounts
+        })
       })]
     })
   });
@@ -59029,7 +59034,7 @@ const tag_cloud_metadata = {
   name: "core/tag-cloud",
   title: "Tag Cloud",
   category: "widgets",
-  description: "A cloud of your most used tags.",
+  description: "A cloud of popular keywords, each sized by how often it appears.",
   textdomain: "default",
   attributes: {
     numberOfTags: {
