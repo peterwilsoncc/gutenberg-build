@@ -17503,7 +17503,6 @@ function FontLibraryProvider({
   const globalStyles = (0,external_wp_coreData_namespaceObject.useEntityRecord)('root', 'globalStyles', globalStylesId);
   const [isInstalling, setIsInstalling] = (0,external_wp_element_namespaceObject.useState)(false);
   const [refreshKey, setRefreshKey] = (0,external_wp_element_namespaceObject.useState)(0);
-  const [notice, setNotice] = (0,external_wp_element_namespaceObject.useState)(null);
   const refreshLibrary = () => {
     setRefreshKey(Date.now());
   };
@@ -17566,8 +17565,6 @@ function FontLibraryProvider({
     }
   }, [modalTabOpen]);
   const handleSetLibraryFontSelected = font => {
-    setNotice(null);
-
     // If font is null, reset the selected font
     if (!font) {
       setLibraryFontSelected(null);
@@ -17846,8 +17843,6 @@ function FontLibraryProvider({
       modalTabOpen,
       setModalTabOpen,
       refreshLibrary,
-      notice,
-      setNotice,
       saveFontFamilies,
       isResolvingLibrary,
       isInstalling,
@@ -18387,12 +18382,11 @@ function InstalledFonts() {
     isResolvingLibrary,
     isInstalling,
     saveFontFamilies,
-    getFontFacesActivated,
-    notice,
-    setNotice
+    getFontFacesActivated
   } = (0,external_wp_element_namespaceObject.useContext)(FontLibraryContext);
   const [fontFamilies, setFontFamilies] = installed_fonts_useGlobalSetting('typography.fontFamilies');
   const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = (0,external_wp_element_namespaceObject.useState)(false);
+  const [notice, setNotice] = (0,external_wp_element_namespaceObject.useState)(false);
   const [baseFontFamilies] = installed_fonts_useGlobalSetting('typography.fontFamilies', undefined, 'base');
   const globalStylesId = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
@@ -18423,6 +18417,21 @@ function InstalledFonts() {
   const shouldDisplayDeleteButton = !!libraryFontSelected && libraryFontSelected?.source !== 'theme' && canUserDelete;
   const handleUninstallClick = () => {
     setIsConfirmDeleteOpen(true);
+  };
+  const handleUpdate = async () => {
+    setNotice(null);
+    try {
+      await saveFontFamilies(fontFamilies);
+      setNotice({
+        type: 'success',
+        message: (0,external_wp_i18n_namespaceObject.__)('Font family updated successfully.')
+      });
+    } catch (error) {
+      setNotice({
+        type: 'error',
+        message: (0,external_wp_i18n_namespaceObject.__)('There was an error updating the font family. ') + error.message
+      });
+    }
   };
   const getFontFacesToDisplay = font => {
     if (!font) {
@@ -18512,6 +18521,7 @@ function InstalledFonts() {
                     navigatorPath: "/fontFamily",
                     variantsText: getFontCardVariantsText(font),
                     onClick: () => {
+                      setNotice(null);
                       handleSetLibraryFontSelected(font);
                     }
                   })
@@ -18532,6 +18542,7 @@ function InstalledFonts() {
                     navigatorPath: "/fontFamily",
                     variantsText: getFontCardVariantsText(font),
                     onClick: () => {
+                      setNotice(null);
                       handleSetLibraryFontSelected(font);
                     }
                   })
@@ -18555,6 +18566,7 @@ function InstalledFonts() {
               size: "small",
               onClick: () => {
                 handleSetLibraryFontSelected(null);
+                setNotice(null);
               },
               label: (0,external_wp_i18n_namespaceObject.__)('Back')
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHeading, {
@@ -18606,9 +18618,7 @@ function InstalledFonts() {
           children: (0,external_wp_i18n_namespaceObject.__)('Delete')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           variant: "primary",
-          onClick: () => {
-            saveFontFamilies(fontFamilies);
-          },
+          onClick: handleUpdate,
           disabled: !fontFamiliesHasChanges,
           accessibleWhenDisabled: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Update')
@@ -18849,6 +18859,7 @@ function FontCollection({
     return window.localStorage.getItem(LOCAL_STORAGE_ITEM) === 'true';
   };
   const [selectedFont, setSelectedFont] = (0,external_wp_element_namespaceObject.useState)(null);
+  const [notice, setNotice] = (0,external_wp_element_namespaceObject.useState)(false);
   const [fontsToInstall, setFontsToInstall] = (0,external_wp_element_namespaceObject.useState)([]);
   const [page, setPage] = (0,external_wp_element_namespaceObject.useState)(1);
   const [filters, setFilters] = (0,external_wp_element_namespaceObject.useState)({});
@@ -18857,9 +18868,7 @@ function FontCollection({
     collections,
     getFontCollection,
     installFonts,
-    isInstalling,
-    notice,
-    setNotice
+    isInstalling
   } = (0,external_wp_element_namespaceObject.useContext)(FontLibraryContext);
   const selectedCollection = collections.find(collection => collection.slug === slug);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -18892,8 +18901,7 @@ function FontCollection({
   }, [slug, getFontCollection, setNotice, notice]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     setSelectedFont(null);
-    setNotice(null);
-  }, [slug, setNotice]);
+  }, [slug]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     // If the selected fonts change, reset the selected fonts to install
     setFontsToInstall([]);
@@ -23124,11 +23132,10 @@ function makeFamiliesFromFaces(fontFaces) {
 
 function UploadFonts() {
   const {
-    installFonts,
-    notice,
-    setNotice
+    installFonts
   } = (0,external_wp_element_namespaceObject.useContext)(FontLibraryContext);
   const [isUploading, setIsUploading] = (0,external_wp_element_namespaceObject.useState)(false);
+  const [notice, setNotice] = (0,external_wp_element_namespaceObject.useState)(false);
   const handleDropZone = files => {
     handleFilesUpload(files);
   };
@@ -23358,8 +23365,7 @@ function FontLibraryModal({
   defaultTabId = 'installed-fonts'
 }) {
   const {
-    collections,
-    setNotice
+    collections
   } = (0,external_wp_element_namespaceObject.useContext)(FontLibraryContext);
   const canUserCreate = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return select(external_wp_coreData_namespaceObject.store).canUser('create', {
@@ -23372,11 +23378,6 @@ function FontLibraryModal({
     tabs.push(UPLOAD_TAB);
     tabs.push(...tabsFromCollections(collections || []));
   }
-
-  // Reset notice when new tab is selected.
-  const onSelect = () => {
-    setNotice(null);
-  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
     title: (0,external_wp_i18n_namespaceObject.__)('Fonts'),
     onRequestClose: onRequestClose,
@@ -23386,7 +23387,6 @@ function FontLibraryModal({
       className: "font-library-modal__tabs",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Tabs, {
         defaultTabId: defaultTabId,
-        onSelect: onSelect,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tabs.TabList, {
           children: tabs.map(({
             id,
@@ -23496,8 +23496,7 @@ function FontFamilies() {
   const {
     baseCustomFonts,
     modalTabOpen,
-    setModalTabOpen,
-    setNotice
+    setModalTabOpen
   } = (0,external_wp_element_namespaceObject.useContext)(FontLibraryContext);
   const [fontFamilies] = font_families_useGlobalSetting('typography.fontFamilies');
   const [baseFontFamilies] = font_families_useGlobalSetting('typography.fontFamilies', undefined, 'base');
@@ -23554,8 +23553,6 @@ function FontFamilies() {
         variant: "secondary",
         __next40pxDefaultSize: true,
         onClick: () => {
-          // Reset notice when opening the modal.
-          setNotice(null);
           setModalTabOpen(hasInstalledFonts ? 'installed-fonts' : 'upload-fonts');
         },
         children: hasInstalledFonts ? (0,external_wp_i18n_namespaceObject.__)('Manage fonts') : (0,external_wp_i18n_namespaceObject.__)('Add fonts')
