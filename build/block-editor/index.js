@@ -51025,6 +51025,7 @@ function PatternCategoryPreviews({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -51040,6 +51041,15 @@ function CategoryTabs({
   onSelectCategory,
   children
 }) {
+  // Copied from InterfaceSkeleton.
+  const ANIMATION_DURATION = 0.25;
+  const disableMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
+  const defaultTransition = {
+    type: 'tween',
+    duration: disableMotion ? 0 : ANIMATION_DURATION,
+    ease: [0.6, 0, 0.4, 1]
+  };
+  const previousSelectedCategory = (0,external_wp_compose_namespaceObject.usePrevious)(selectedCategory);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(category_tabs_Tabs, {
     className: "block-editor-inserter__category-tabs",
     selectOnMove: false,
@@ -51067,8 +51077,25 @@ function CategoryTabs({
     }), categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(category_tabs_Tabs.TabPanel, {
       tabId: category.name,
       focusable: false,
-      className: "block-editor-inserter__category-panel",
-      children: children
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
+        className: "block-editor-inserter__category-panel",
+        initial: !previousSelectedCategory ? 'closed' : 'open',
+        animate: "open",
+        variants: {
+          open: {
+            transform: 'translateX( 0 )',
+            transitionEnd: {
+              zIndex: '1'
+            }
+          },
+          closed: {
+            transform: 'translateX( -100% )',
+            zIndex: '-1'
+          }
+        },
+        transition: defaultTransition,
+        children: children
+      })
     }, category.name))]
   });
 }
