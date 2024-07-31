@@ -14582,6 +14582,53 @@ function useInitEditedEntityFromURL() {
   }, [isReady, postType, postId, context, setEditedEntity]);
 }
 
+;// CONCATENATED MODULE: ./packages/icons/build-module/icon/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+/** @typedef {{icon: JSX.Element, size?: number} & import('@wordpress/primitives').SVGProps} IconProps */
+
+/**
+ * Return an SVG icon.
+ *
+ * @param {IconProps}                                 props icon is the SVG component to render
+ *                                                          size is a number specifiying the icon size in pixels
+ *                                                          Other props will be passed to wrapped SVG component
+ * @param {import('react').ForwardedRef<HTMLElement>} ref   The forwarded ref to the SVG element.
+ *
+ * @return {JSX.Element}  Icon component
+ */
+function Icon({
+  icon,
+  size = 24,
+  ...props
+}, ref) {
+  return (0,external_wp_element_namespaceObject.cloneElement)(icon, {
+    width: size,
+    height: size,
+    ...props,
+    ref
+  });
+}
+/* harmony default export */ const build_module_icon = ((0,external_wp_element_namespaceObject.forwardRef)(Icon));
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/chevron-left.js
+/**
+ * WordPress dependencies
+ */
+
+
+const chevronLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z"
+  })
+});
+/* harmony default export */ const chevron_left = (chevronLeft);
+
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/welcome-guide/image.js
 
 
@@ -15236,21 +15283,6 @@ const moreVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
   })
 });
 /* harmony default export */ const more_vertical = (moreVertical);
-
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/chevron-left.js
-/**
- * WordPress dependencies
- */
-
-
-const chevronLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z"
-  })
-});
-/* harmony default export */ const chevron_left = (chevronLeft);
 
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/chevron-right.js
 /**
@@ -16911,38 +16943,6 @@ function TypographyElements() {
   });
 }
 /* harmony default export */ const typography_elements = (TypographyElements);
-
-;// CONCATENATED MODULE: ./packages/icons/build-module/icon/index.js
-/**
- * WordPress dependencies
- */
-
-
-/** @typedef {{icon: JSX.Element, size?: number} & import('@wordpress/primitives').SVGProps} IconProps */
-
-/**
- * Return an SVG icon.
- *
- * @param {IconProps}                                 props icon is the SVG component to render
- *                                                          size is a number specifiying the icon size in pixels
- *                                                          Other props will be passed to wrapped SVG component
- * @param {import('react').ForwardedRef<HTMLElement>} ref   The forwarded ref to the SVG element.
- *
- * @return {JSX.Element}  Icon component
- */
-function Icon({
-  icon,
-  size = 24,
-  ...props
-}, ref) {
-  return (0,external_wp_element_namespaceObject.cloneElement)(icon, {
-    width: size,
-    height: size,
-    ...props,
-    ref
-  });
-}
-/* harmony default export */ const build_module_icon = ((0,external_wp_element_namespaceObject.forwardRef)(Icon));
 
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/font-sizes/font-sizes-count.js
 /**
@@ -28458,6 +28458,7 @@ function useEditorTitle() {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -28492,9 +28493,32 @@ const {
 const {
   BlockKeyboardShortcuts
 } = lock_unlock_unlock(external_wp_blockLibrary_namespaceObject.privateApis);
+const toggleHomeIconVariants = {
+  edit: {
+    opacity: 0,
+    scale: 0.2
+  },
+  hover: {
+    opacity: 1,
+    scale: 1,
+    clipPath: 'inset( 22% round 2px )'
+  }
+};
+const siteIconVariants = {
+  edit: {
+    clipPath: 'inset(0% round 0)'
+  },
+  hover: {
+    clipPath: 'inset( 22% round 2px )'
+  },
+  tap: {
+    clipPath: 'inset(0% round 0)'
+  }
+};
 function EditSiteEditor({
   isPostsList = false
 }) {
+  const disableMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
   const {
     params
   } = editor_useLocation();
@@ -28509,7 +28533,8 @@ function EditSiteEditor({
     supportsGlobalStyles,
     showIconLabels,
     editorCanvasView,
-    currentPostIsTrashed
+    currentPostIsTrashed,
+    hasSiteIcon
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEditorCanvasContainerView,
@@ -28523,9 +28548,11 @@ function EditSiteEditor({
       get
     } = select(external_wp_preferences_namespaceObject.store);
     const {
-      getCurrentTheme
+      getCurrentTheme,
+      getEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
     const _context = getEditedPostContext();
+    const siteData = getEntityRecord('root', '__unstableBase', undefined);
 
     // The currently selected entity to display.
     // Typically template or template part in the site editor.
@@ -28539,7 +28566,8 @@ function EditSiteEditor({
       supportsGlobalStyles: getCurrentTheme()?.is_block_theme,
       showIconLabels: get('core', 'showIconLabels'),
       editorCanvasView: getEditorCanvasContainerView(),
-      currentPostIsTrashed: select(external_wp_editor_namespaceObject.store).getCurrentPostAttribute('status') === 'trash'
+      currentPostIsTrashed: select(external_wp_editor_namespaceObject.store).getCurrentPostAttribute('status') === 'trash',
+      hasSiteIcon: !!siteData?.site_icon_url
     };
   }, []);
   use_editor_title();
@@ -28603,6 +28631,9 @@ function EditSiteEditor({
     icon
   } = getEditorCanvasContainerTitleAndIcon(editorCanvasView);
   const isReady = !isLoading;
+  const transition = {
+    duration: disableMotion ? 0 : 0.2
+  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesRenderer, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EditorKeyboardShortcutsRegister, {}), isEditMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockKeyboardShortcuts, {}), !isReady ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CanvasLoader, {
       id: loadingProgressId
@@ -28629,23 +28660,43 @@ function EditSiteEditor({
       children: [isEditMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackButton, {
         children: ({
           length
-        }) => length <= 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Open Navigation'),
-          className: "edit-site-layout__view-mode-toggle",
-          onClick: () => {
-            setCanvasMode('view');
-            // TODO: this is a temporary solution to navigate to the posts list if we are
-            // come here through `posts list` and are in focus mode editing a template, template part etc..
-            if (isPostsList && params?.focusMode) {
-              history.push({
-                page: 'gutenberg-posts-dashboard',
-                postType: 'post'
-              });
-            }
-          },
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(site_icon, {
-            className: "edit-site-layout__view-mode-toggle-icon"
-          })
+        }) => length <= 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__unstableMotion.div, {
+          className: "edit-site-editor__view-mode-toggle",
+          transition: transition,
+          animate: "edit",
+          initial: "edit",
+          whileHover: "hover",
+          whileTap: "tap",
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            label: (0,external_wp_i18n_namespaceObject.__)('Open Navigation'),
+            showTooltip: true,
+            tooltipPosition: "middle right",
+            onClick: () => {
+              setCanvasMode('view');
+              // TODO: this is a temporary solution to navigate to the posts list if we are
+              // come here through `posts list` and are in focus mode editing a template, template part etc..
+              if (isPostsList && params?.focusMode) {
+                history.push({
+                  page: 'gutenberg-posts-dashboard',
+                  postType: 'post'
+                });
+              }
+            },
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
+              variants: siteIconVariants,
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(site_icon, {
+                className: "edit-site-editor__view-mode-toggle-icon"
+              })
+            })
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
+            className: dist_clsx('edit-site-editor__back-icon', {
+              'has-site-icon': hasSiteIcon
+            }),
+            variants: toggleHomeIconVariants,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+              icon: chevron_left
+            })
+          })]
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MoreMenu, {}), supportsGlobalStyles && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesSidebar, {})]
     })]
