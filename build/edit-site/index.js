@@ -18067,14 +18067,14 @@ function TypesetButton() {
     if (Object.keys(userTypographyConfig).length === 0) {
       return (0,external_wp_i18n_namespaceObject.__)('Default');
     }
-    const activeVariation = variations.find(variation => {
+    const activeVariation = variations?.find(variation => {
       return JSON.stringify(filterObjectByProperties(variation, 'typography')) === JSON.stringify(userTypographyConfig);
     });
     if (activeVariation) {
       return activeVariation.title;
     }
     return allFontFamilies.map(font => font?.name).join(', ');
-  }, [userTypographyConfig, variations]);
+  }, [allFontFamilies, userTypographyConfig, variations]);
   return hasFonts && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 2,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
