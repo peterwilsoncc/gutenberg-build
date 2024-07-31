@@ -41460,6 +41460,7 @@ const post_content_metadata = {
       }
     }
   },
+  style: "wp-block-post-content",
   editorStyle: "wp-block-post-content-editor"
 };
 
