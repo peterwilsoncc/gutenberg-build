@@ -45814,12 +45814,17 @@ const usePostTypes = () => {
 const useTaxonomies = postType => {
   const taxonomies = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getTaxonomies
+      getTaxonomies,
+      getPostType
     } = select(external_wp_coreData_namespaceObject.store);
-    return getTaxonomies({
-      type: postType,
-      per_page: -1
-    });
+    // Does the post type have taxonomies?
+    if (getPostType(postType)?.taxonomies?.length > 0) {
+      return getTaxonomies({
+        type: postType,
+        per_page: -1
+      });
+    }
+    return [];
   }, [postType]);
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
     return taxonomies?.filter(({
