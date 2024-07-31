@@ -28666,23 +28666,10 @@ const OrderedListSettings = ({
 }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
     title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+      __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Start value'),
-      type: "number",
-      onChange: value => {
-        const int = parseInt(value, 10);
-        setAttributes({
-          // It should be possible to unset the value,
-          // e.g. with an empty string.
-          start: isNaN(int) ? undefined : int
-        });
-      },
-      value: Number.isInteger(start) ? start.toString(10) : '',
-      step: "1"
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-      __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Numbering style'),
+      label: (0,external_wp_i18n_namespaceObject.__)('List style'),
       options: [{
         label: (0,external_wp_i18n_namespaceObject.__)('Numbers'),
         value: 'decimal'
@@ -28703,9 +28690,24 @@ const OrderedListSettings = ({
       onChange: newValue => setAttributes({
         type: newValue
       })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+      __next40pxDefaultSize: true,
+      __nextHasNoMarginBottom: true,
+      label: (0,external_wp_i18n_namespaceObject.__)('Start value'),
+      type: "number",
+      onChange: value => {
+        const int = parseInt(value, 10);
+        setAttributes({
+          // It should be possible to unset the value,
+          // e.g. with an empty string.
+          start: isNaN(int) ? undefined : int
+        });
+      },
+      value: Number.isInteger(start) ? start.toString(10) : '',
+      step: "1"
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
       __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Reverse list numbering'),
+      label: (0,external_wp_i18n_namespaceObject.__)('Reverse order'),
       checked: reversed || false,
       onChange: value => {
         setAttributes({
@@ -29080,7 +29082,7 @@ const list_metadata = {
   title: "List",
   category: "text",
   allowedBlocks: ["core/list-item"],
-  description: "Create a bulleted or numbered list.",
+  description: "An organized collection of items displayed in a specific order.",
   keywords: ["bullet list", "ordered list", "numbered list"],
   textdomain: "default",
   attributes: {
@@ -29795,7 +29797,7 @@ const list_item_metadata = {
   category: "text",
   parent: ["core/list"],
   allowedBlocks: ["core/list"],
-  description: "Create a list item.",
+  description: "An individual item within a list.",
   textdomain: "default",
   attributes: {
     placeholder: {
@@ -29814,8 +29816,8 @@ const list_item_metadata = {
     color: {
       gradients: true,
       link: true,
+      background: true,
       __experimentalDefaultControls: {
-        background: true,
         text: true
       }
     },
