@@ -60444,14 +60444,16 @@ function TemplatePartInnerBlocks({
     return {
       canViewTemplatePart: !!select(external_wp_coreData_namespaceObject.store).canUser('read', {
         kind: 'postType',
-        name: 'wp_template'
+        name: 'wp_template_part',
+        id
       }),
-      canEditTemplatePart: !!select(external_wp_coreData_namespaceObject.store).canUser('create', {
+      canEditTemplatePart: !!select(external_wp_coreData_namespaceObject.store).canUser('update', {
         kind: 'postType',
-        name: 'wp_template'
+        name: 'wp_template_part',
+        id
       })
     };
-  }, []);
+  }, [id]);
   if (!canViewTemplatePart) {
     return null;
   }
