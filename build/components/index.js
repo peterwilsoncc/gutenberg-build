@@ -46764,7 +46764,7 @@ function unmodalize() {
 // Used to track and dismiss the prior modal when another opens unless nested.
 
 
-const ModalContext = (0,external_wp_element_namespaceObject.createContext)([]);
+const ModalContext = (0,external_wp_element_namespaceObject.createContext)(new Set());
 
 // Used to track body class names applied while modals are open.
 const bodyOpenClasses = new Map();
@@ -46851,22 +46851,28 @@ function UnforwardedModal(props, forwardedRef) {
   // one should remain open at a time and the list enables closing prior ones.
   const dismissers = (0,external_wp_element_namespaceObject.useContext)(ModalContext);
   // Used for the tracking and dismissing any nested modals.
-  const nestedDismissers = (0,external_wp_element_namespaceObject.useRef)([]);
+  const [nestedDismissers] = (0,external_wp_element_namespaceObject.useState)(() => new Set());
 
   // Updates the stack tracking open modals at this level and calls
   // onRequestClose for any prior and/or nested modals as applicable.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    dismissers.push(refOnRequestClose);
-    const [first, second] = dismissers;
-    if (second) {
-      first?.current?.();
+    // add this modal instance to the dismissers set
+    dismissers.add(refOnRequestClose);
+    // request that all the other modals close themselves
+    for (const dismisser of dismissers) {
+      if (dismisser !== refOnRequestClose) {
+        dismisser.current?.();
+      }
     }
-    const nested = nestedDismissers.current;
     return () => {
-      nested[0]?.current?.();
-      dismissers.shift();
+      // request that all the nested modals close themselves
+      for (const dismisser of nestedDismissers) {
+        dismisser.current?.();
+      }
+      // remove this modal instance from the dismissers set
+      dismissers.delete(refOnRequestClose);
     };
-  }, [dismissers]);
+  }, [dismissers, nestedDismissers]);
 
   // Adds/removes the value of bodyOpenClassName to body element.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -46999,7 +47005,7 @@ function UnforwardedModal(props, forwardedRef) {
     })
   });
   return (0,external_wp_element_namespaceObject.createPortal)( /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ModalContext.Provider, {
-    value: nestedDismissers.current,
+    value: nestedDismissers,
     children: modal
   }), document.body);
 }
