@@ -18430,8 +18430,6 @@ function usePostURLLabel() {
  * @return {JSX.Element} The rendered PostURLPanel component.
  */
 
-
-
 function PostURLPanel() {
   // Use internal state instead of a ref to make sure that the component
   // re-renders when the popover's anchor updates.
@@ -18508,8 +18506,9 @@ function PostURLToggle({
     ,
     "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)((0,external_wp_i18n_namespaceObject.__)('Change link: %s'), decodedSlug),
     onClick: onClick,
-    children: isFrontPage ? postLink : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: ["/", decodedSlug]
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalTruncate, {
+      numberOfLines: 1,
+      children: isFrontPage ? postLink : `/${decodedSlug}`
     })
   });
 }
