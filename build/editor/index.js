@@ -25359,6 +25359,13 @@ function PatternOverridesPanel() {
 
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/integer.js
 /**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
  * Internal dependencies
  */
 
@@ -25381,174 +25388,7 @@ function isValid(value, context) {
   }
   return true;
 }
-/* harmony default export */ const integer = ({
-  sort,
-  isValid
-});
-
-;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/text.js
-/**
- * Internal dependencies
- */
-
-function text_sort(valueA, valueB, direction) {
-  return direction === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-}
-function text_isValid(value, context) {
-  if (context?.elements) {
-    const validValues = context?.elements?.map(f => f.value);
-    if (!validValues.includes(value)) {
-      return false;
-    }
-  }
-  return true;
-}
-/* harmony default export */ const field_types_text = ({
-  sort: text_sort,
-  isValid: text_isValid
-});
-
-;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/index.js
-/**
- * Internal dependencies
- */
-
-
-
-
-/**
- *
- * @param {FieldType} type The field type definition to get.
- *
- * @return A field type definition.
- */
-function getFieldTypeDefinition(type) {
-  if ('integer' === type) {
-    return integer;
-  }
-  if ('text' === type) {
-    return field_types_text;
-  }
-  return {
-    sort: (a, b, direction) => {
-      if (typeof a === 'number' && typeof b === 'number') {
-        return direction === 'asc' ? a - b : b - a;
-      }
-      return direction === 'asc' ? a.localeCompare(b) : b.localeCompare(a);
-    },
-    isValid: (value, context) => {
-      if (context?.elements) {
-        const validValues = context?.elements?.map(f => f.value);
-        if (!validValues.includes(value)) {
-          return false;
-        }
-      }
-      return true;
-    }
-  };
-}
-
-;// CONCATENATED MODULE: ./packages/dataviews/build-module/normalize-fields.js
-/**
- * Internal dependencies
- */
-
-/**
- * Apply default values and normalize the fields config.
- *
- * @param fields Fields config.
- * @return Normalized fields config.
- */
-function normalizeFields(fields) {
-  return fields.map(field => {
-    var _field$sort, _field$isValid;
-    const fieldTypeDefinition = getFieldTypeDefinition(field.type);
-    const getValue = field.getValue || (({
-      item
-    }) => item[field.id]);
-    const sort = (_field$sort = field.sort) !== null && _field$sort !== void 0 ? _field$sort : function sort(a, b, direction) {
-      return fieldTypeDefinition.sort(getValue({
-        item: a
-      }), getValue({
-        item: b
-      }), direction);
-    };
-    const isValid = (_field$isValid = field.isValid) !== null && _field$isValid !== void 0 ? _field$isValid : function isValid(item, context) {
-      return fieldTypeDefinition.isValid(getValue({
-        item
-      }), context);
-    };
-    return {
-      ...field,
-      label: field.label || field.id,
-      getValue,
-      render: field.render || getValue,
-      sort,
-      isValid
-    };
-  });
-}
-
-;// CONCATENATED MODULE: ./packages/dataviews/build-module/validation.js
-/**
- * Internal dependencies
- */
-
-function isItemValid(item, fields, form) {
-  const _fields = normalizeFields(fields.filter(({
-    id
-  }) => !!form.visibleFields?.includes(id)));
-  return _fields.every(field => {
-    return field.isValid(item, {
-      elements: field.elements
-    });
-  });
-}
-
-;// CONCATENATED MODULE: ./packages/dataviews/build-module/components/dataform/index.js
-/**
- * External dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-function DataFormTextControl({
-  data,
-  field,
-  onChange
-}) {
-  const {
-    id,
-    label,
-    placeholder
-  } = field;
-  const value = field.getValue({
-    item: data
-  });
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
-    ...prevItem,
-    [id]: newValue
-  })), [id, onChange]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-    label: label,
-    placeholder: placeholder,
-    value: value !== null && value !== void 0 ? value : '',
-    onChange: onChangeControl,
-    __next40pxDefaultSize: true
-  });
-}
-function DataFormNumberControl({
+function Edit({
   data,
   field,
   onChange
@@ -25594,19 +25434,181 @@ function DataFormNumberControl({
     __next40pxDefaultSize: true
   });
 }
-const controls = {
-  text: DataFormTextControl,
-  integer: DataFormNumberControl
-};
-function getControlForField(field) {
-  if (!field.type) {
-    return null;
-  }
-  if (!Object.keys(controls).includes(field.type)) {
-    return null;
-  }
-  return controls[field.type];
+/* harmony default export */ const integer = ({
+  sort,
+  isValid,
+  Edit
+});
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/text.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+function text_sort(valueA, valueB, direction) {
+  return direction === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
 }
+function text_isValid(value, context) {
+  if (context?.elements) {
+    const validValues = context?.elements?.map(f => f.value);
+    if (!validValues.includes(value)) {
+      return false;
+    }
+  }
+  return true;
+}
+function text_Edit({
+  data,
+  field,
+  onChange
+}) {
+  const {
+    id,
+    label,
+    placeholder
+  } = field;
+  const value = field.getValue({
+    item: data
+  });
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
+    ...prevItem,
+    [id]: newValue
+  })), [id, onChange]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+    label: label,
+    placeholder: placeholder,
+    value: value !== null && value !== void 0 ? value : '',
+    onChange: onChangeControl,
+    __next40pxDefaultSize: true
+  });
+}
+/* harmony default export */ const field_types_text = ({
+  sort: text_sort,
+  isValid: text_isValid,
+  Edit: text_Edit
+});
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/index.js
+/**
+ * Internal dependencies
+ */
+
+
+
+
+/**
+ *
+ * @param {FieldType} type The field type definition to get.
+ *
+ * @return A field type definition.
+ */
+function getFieldTypeDefinition(type) {
+  if ('integer' === type) {
+    return integer;
+  }
+  if ('text' === type) {
+    return field_types_text;
+  }
+  return {
+    sort: (a, b, direction) => {
+      if (typeof a === 'number' && typeof b === 'number') {
+        return direction === 'asc' ? a - b : b - a;
+      }
+      return direction === 'asc' ? a.localeCompare(b) : b.localeCompare(a);
+    },
+    isValid: (value, context) => {
+      if (context?.elements) {
+        const validValues = context?.elements?.map(f => f.value);
+        if (!validValues.includes(value)) {
+          return false;
+        }
+      }
+      return true;
+    },
+    Edit: () => null
+  };
+}
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/normalize-fields.js
+/**
+ * Internal dependencies
+ */
+
+/**
+ * Apply default values and normalize the fields config.
+ *
+ * @param fields Fields config.
+ * @return Normalized fields config.
+ */
+function normalizeFields(fields) {
+  return fields.map(field => {
+    var _field$sort, _field$isValid;
+    const fieldTypeDefinition = getFieldTypeDefinition(field.type);
+    const getValue = field.getValue || (({
+      item
+    }) => item[field.id]);
+    const sort = (_field$sort = field.sort) !== null && _field$sort !== void 0 ? _field$sort : function sort(a, b, direction) {
+      return fieldTypeDefinition.sort(getValue({
+        item: a
+      }), getValue({
+        item: b
+      }), direction);
+    };
+    const isValid = (_field$isValid = field.isValid) !== null && _field$isValid !== void 0 ? _field$isValid : function isValid(item, context) {
+      return fieldTypeDefinition.isValid(getValue({
+        item
+      }), context);
+    };
+    const Edit = field.Edit || fieldTypeDefinition.Edit;
+    return {
+      ...field,
+      label: field.label || field.id,
+      getValue,
+      render: field.render || getValue,
+      sort,
+      isValid,
+      Edit
+    };
+  });
+}
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/validation.js
+/**
+ * Internal dependencies
+ */
+
+function isItemValid(item, fields, form) {
+  const _fields = normalizeFields(fields.filter(({
+    id
+  }) => !!form.visibleFields?.includes(id)));
+  return _fields.every(field => {
+    return field.isValid(item, {
+      elements: field.elements
+    });
+  });
+}
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/components/dataform/index.js
+/**
+ * External dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
 function DataForm({
   data,
   fields,
@@ -25617,12 +25619,11 @@ function DataForm({
     id
   }) => !!form.visibleFields?.includes(id))), [fields, form.visibleFields]);
   return visibleFields.map(field => {
-    const DataFormControl = getControlForField(field);
-    return DataFormControl ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataFormControl, {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.Edit, {
       data: data,
       field: field,
       onChange: onChange
-    }, field.id) : null;
+    }, field.id);
   });
 }
 

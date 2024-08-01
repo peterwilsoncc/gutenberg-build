@@ -28785,6 +28785,13 @@ const constants_LAYOUT_LIST = 'list';
 
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/integer.js
 /**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
  * Internal dependencies
  */
 
@@ -28807,12 +28814,65 @@ function isValid(value, context) {
   }
   return true;
 }
+function Edit({
+  data,
+  field,
+  onChange
+}) {
+  var _field$getValue;
+  const {
+    id,
+    label,
+    description
+  } = field;
+  const value = (_field$getValue = field.getValue({
+    item: data
+  })) !== null && _field$getValue !== void 0 ? _field$getValue : '';
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
+    ...prevItem,
+    [id]: newValue
+  })), [id, onChange]);
+  if (field.elements) {
+    const elements = [
+    /*
+     * Value can be undefined when:
+     *
+     * - the field is not required
+     * - in bulk editing
+     *
+     */
+    {
+      label: (0,external_wp_i18n_namespaceObject.__)('Select item'),
+      value: ''
+    }, ...field.elements];
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+      label: label,
+      value: value,
+      options: elements,
+      onChange: onChangeControl
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+    label: label,
+    help: description,
+    value: value,
+    onChange: onChangeControl,
+    __next40pxDefaultSize: true
+  });
+}
 /* harmony default export */ const integer = ({
   sort,
-  isValid
+  isValid,
+  Edit
 });
 
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/text.js
+/**
+ * WordPress dependencies
+ */
+
+
+
 /**
  * Internal dependencies
  */
@@ -28829,9 +28889,35 @@ function text_isValid(value, context) {
   }
   return true;
 }
+function text_Edit({
+  data,
+  field,
+  onChange
+}) {
+  const {
+    id,
+    label,
+    placeholder
+  } = field;
+  const value = field.getValue({
+    item: data
+  });
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
+    ...prevItem,
+    [id]: newValue
+  })), [id, onChange]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+    label: label,
+    placeholder: placeholder,
+    value: value !== null && value !== void 0 ? value : '',
+    onChange: onChangeControl,
+    __next40pxDefaultSize: true
+  });
+}
 /* harmony default export */ const field_types_text = ({
   sort: text_sort,
-  isValid: text_isValid
+  isValid: text_isValid,
+  Edit: text_Edit
 });
 
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/index.js
@@ -28870,7 +28956,8 @@ function getFieldTypeDefinition(type) {
         }
       }
       return true;
-    }
+    },
+    Edit: () => null
   };
 }
 
@@ -28904,13 +28991,15 @@ function normalizeFields(fields) {
         item
       }), context);
     };
+    const Edit = field.Edit || fieldTypeDefinition.Edit;
     return {
       ...field,
       label: field.label || field.id,
       getValue,
       render: field.render || getValue,
       sort,
-      isValid
+      isValid,
+      Edit
     };
   });
 }
@@ -44853,98 +44942,11 @@ function isItemValid(item, fields, form) {
  */
 
 
-
-
 /**
  * Internal dependencies
  */
 
 
-
-function DataFormTextControl({
-  data,
-  field,
-  onChange
-}) {
-  const {
-    id,
-    label,
-    placeholder
-  } = field;
-  const value = field.getValue({
-    item: data
-  });
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
-    ...prevItem,
-    [id]: newValue
-  })), [id, onChange]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-    label: label,
-    placeholder: placeholder,
-    value: value !== null && value !== void 0 ? value : '',
-    onChange: onChangeControl,
-    __next40pxDefaultSize: true
-  });
-}
-function DataFormNumberControl({
-  data,
-  field,
-  onChange
-}) {
-  var _field$getValue;
-  const {
-    id,
-    label,
-    description
-  } = field;
-  const value = (_field$getValue = field.getValue({
-    item: data
-  })) !== null && _field$getValue !== void 0 ? _field$getValue : '';
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
-    ...prevItem,
-    [id]: newValue
-  })), [id, onChange]);
-  if (field.elements) {
-    const elements = [
-    /*
-     * Value can be undefined when:
-     *
-     * - the field is not required
-     * - in bulk editing
-     *
-     */
-    {
-      label: (0,external_wp_i18n_namespaceObject.__)('Select item'),
-      value: ''
-    }, ...field.elements];
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-      label: label,
-      value: value,
-      options: elements,
-      onChange: onChangeControl
-    });
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
-    label: label,
-    help: description,
-    value: value,
-    onChange: onChangeControl,
-    __next40pxDefaultSize: true
-  });
-}
-const controls = {
-  text: DataFormTextControl,
-  integer: DataFormNumberControl
-};
-function getControlForField(field) {
-  if (!field.type) {
-    return null;
-  }
-  if (!Object.keys(controls).includes(field.type)) {
-    return null;
-  }
-  return controls[field.type];
-}
 function DataForm({
   data,
   fields,
@@ -44955,12 +44957,11 @@ function DataForm({
     id
   }) => !!form.visibleFields?.includes(id))), [fields, form.visibleFields]);
   return visibleFields.map(field => {
-    const DataFormControl = getControlForField(field);
-    return DataFormControl ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataFormControl, {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.Edit, {
       data: data,
       field: field,
       onChange: onChange
-    }, field.id) : null;
+    }, field.id);
   });
 }
 
