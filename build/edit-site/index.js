@@ -29791,6 +29791,183 @@ function BulkActionsToolbar() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(_BulkActionsToolbar, {});
 }
 
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/I2NJJ3XW.js
+"use client";
+
+// src/utils/dom.ts
+var I2NJJ3XW_canUseDOM = checkIsBrowser();
+function checkIsBrowser() {
+  var _a;
+  return typeof window !== "undefined" && !!((_a = window.document) == null ? void 0 : _a.createElement);
+}
+function getDocument(node) {
+  return node ? node.ownerDocument || node : document;
+}
+function getWindow(node) {
+  return getDocument(node).defaultView || window;
+}
+function I2NJJ3XW_getActiveElement(node, activeDescendant = false) {
+  const { activeElement } = getDocument(node);
+  if (!(activeElement == null ? void 0 : activeElement.nodeName)) {
+    return null;
+  }
+  if (I2NJJ3XW_isFrame(activeElement) && activeElement.contentDocument) {
+    return I2NJJ3XW_getActiveElement(
+      activeElement.contentDocument.body,
+      activeDescendant
+    );
+  }
+  if (activeDescendant) {
+    const id = activeElement.getAttribute("aria-activedescendant");
+    if (id) {
+      const element = getDocument(activeElement).getElementById(id);
+      if (element) {
+        return element;
+      }
+    }
+  }
+  return activeElement;
+}
+function contains(parent, child) {
+  return parent === child || parent.contains(child);
+}
+function I2NJJ3XW_isFrame(element) {
+  return element.tagName === "IFRAME";
+}
+function isButton(element) {
+  const tagName = element.tagName.toLowerCase();
+  if (tagName === "button")
+    return true;
+  if (tagName === "input" && element.type) {
+    return buttonInputTypes.indexOf(element.type) !== -1;
+  }
+  return false;
+}
+var buttonInputTypes = [
+  "button",
+  "color",
+  "file",
+  "image",
+  "reset",
+  "submit"
+];
+function isVisible(element) {
+  if (typeof element.checkVisibility === "function") {
+    return element.checkVisibility();
+  }
+  const htmlElement = element;
+  return htmlElement.offsetWidth > 0 || htmlElement.offsetHeight > 0 || element.getClientRects().length > 0;
+}
+function isTextField(element) {
+  try {
+    const isTextInput = element instanceof HTMLInputElement && element.selectionStart !== null;
+    const isTextArea = element.tagName === "TEXTAREA";
+    return isTextInput || isTextArea || false;
+  } catch (error) {
+    return false;
+  }
+}
+function isTextbox(element) {
+  return element.isContentEditable || isTextField(element);
+}
+function getTextboxValue(element) {
+  if (isTextField(element)) {
+    return element.value;
+  }
+  if (element.isContentEditable) {
+    const range = getDocument(element).createRange();
+    range.selectNodeContents(element);
+    return range.toString();
+  }
+  return "";
+}
+function getTextboxSelection(element) {
+  let start = 0;
+  let end = 0;
+  if (isTextField(element)) {
+    start = element.selectionStart || 0;
+    end = element.selectionEnd || 0;
+  } else if (element.isContentEditable) {
+    const selection = getDocument(element).getSelection();
+    if ((selection == null ? void 0 : selection.rangeCount) && selection.anchorNode && contains(element, selection.anchorNode) && selection.focusNode && contains(element, selection.focusNode)) {
+      const range = selection.getRangeAt(0);
+      const nextRange = range.cloneRange();
+      nextRange.selectNodeContents(element);
+      nextRange.setEnd(range.startContainer, range.startOffset);
+      start = nextRange.toString().length;
+      nextRange.setEnd(range.endContainer, range.endOffset);
+      end = nextRange.toString().length;
+    }
+  }
+  return { start, end };
+}
+function getPopupRole(element, fallback) {
+  const allowedPopupRoles = ["dialog", "menu", "listbox", "tree", "grid"];
+  const role = element == null ? void 0 : element.getAttribute("role");
+  if (role && allowedPopupRoles.indexOf(role) !== -1) {
+    return role;
+  }
+  return fallback;
+}
+function getPopupItemRole(element, fallback) {
+  var _a;
+  const itemRoleByPopupRole = {
+    menu: "menuitem",
+    listbox: "option",
+    tree: "treeitem"
+  };
+  const popupRole = getPopupRole(element);
+  if (!popupRole)
+    return fallback;
+  const key = popupRole;
+  return (_a = itemRoleByPopupRole[key]) != null ? _a : fallback;
+}
+function scrollIntoViewIfNeeded(element, arg) {
+  if (isPartiallyHidden(element) && "scrollIntoView" in element) {
+    element.scrollIntoView(arg);
+  }
+}
+function getScrollingElement(element) {
+  if (!element)
+    return null;
+  if (element.clientHeight && element.scrollHeight > element.clientHeight) {
+    const { overflowY } = getComputedStyle(element);
+    const isScrollable = overflowY !== "visible" && overflowY !== "hidden";
+    if (isScrollable)
+      return element;
+  } else if (element.clientWidth && element.scrollWidth > element.clientWidth) {
+    const { overflowX } = getComputedStyle(element);
+    const isScrollable = overflowX !== "visible" && overflowX !== "hidden";
+    if (isScrollable)
+      return element;
+  }
+  return getScrollingElement(element.parentElement) || document.scrollingElement || document.body;
+}
+function isPartiallyHidden(element) {
+  const elementRect = element.getBoundingClientRect();
+  const scroller = getScrollingElement(element);
+  if (!scroller)
+    return false;
+  const scrollerRect = scroller.getBoundingClientRect();
+  const isHTML = scroller.tagName === "HTML";
+  const scrollerTop = isHTML ? scrollerRect.top + scroller.scrollTop : scrollerRect.top;
+  const scrollerBottom = isHTML ? scroller.clientHeight : scrollerRect.bottom;
+  const scrollerLeft = isHTML ? scrollerRect.left + scroller.scrollLeft : scrollerRect.left;
+  const scrollerRight = isHTML ? scroller.clientWidth : scrollerRect.right;
+  const top = elementRect.top < scrollerTop;
+  const left = elementRect.left < scrollerLeft;
+  const bottom = elementRect.bottom > scrollerBottom;
+  const right = elementRect.right > scrollerRight;
+  return top || left || bottom || right;
+}
+function setSelectionRange(element, ...args) {
+  if (/text|search|password|tel|url/i.test(element.type)) {
+    element.setSelectionRange(...args);
+  }
+}
+
+
+
 ;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/3IEDWLST.js
 "use client";
 
@@ -30097,7 +30274,7 @@ function defaultValue(...values) {
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/XM66DUTO.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/4ROCFRIN.js
 "use client";
 
 
@@ -30116,14 +30293,17 @@ function isValidElementWithRef(element) {
     return false;
   if (!(0,external_React_.isValidElement)(element))
     return false;
-  if (!("ref" in element))
-    return false;
-  return true;
+  if ("ref" in element.props)
+    return true;
+  if ("ref" in element)
+    return true;
+  return false;
 }
 function getRefProperty(element) {
   if (!isValidElementWithRef(element))
     return null;
-  return element.ref;
+  const props = _4R3V3JGP_spreadValues({}, element.props);
+  return props.ref || element.ref;
 }
 function mergeProps(base, overrides) {
   const props = _4R3V3JGP_spreadValues({}, base);
@@ -30158,203 +30338,24 @@ function mergeProps(base, overrides) {
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/RRSZHCH6.js
-"use client";
-
-// src/utils/dom.ts
-var RRSZHCH6_canUseDOM = checkIsBrowser();
-function checkIsBrowser() {
-  var _a;
-  return typeof window !== "undefined" && !!((_a = window.document) == null ? void 0 : _a.createElement);
-}
-function RRSZHCH6_getDocument(node) {
-  return node ? node.ownerDocument || node : document;
-}
-function getWindow(node) {
-  return RRSZHCH6_getDocument(node).defaultView || window;
-}
-function RRSZHCH6_getActiveElement(node, activeDescendant = false) {
-  const { activeElement } = RRSZHCH6_getDocument(node);
-  if (!(activeElement == null ? void 0 : activeElement.nodeName)) {
-    return null;
-  }
-  if (RRSZHCH6_isFrame(activeElement) && activeElement.contentDocument) {
-    return RRSZHCH6_getActiveElement(
-      activeElement.contentDocument.body,
-      activeDescendant
-    );
-  }
-  if (activeDescendant) {
-    const id = activeElement.getAttribute("aria-activedescendant");
-    if (id) {
-      const element = RRSZHCH6_getDocument(activeElement).getElementById(id);
-      if (element) {
-        return element;
-      }
-    }
-  }
-  return activeElement;
-}
-function contains(parent, child) {
-  return parent === child || parent.contains(child);
-}
-function RRSZHCH6_isFrame(element) {
-  return element.tagName === "IFRAME";
-}
-function isButton(element) {
-  const tagName = element.tagName.toLowerCase();
-  if (tagName === "button")
-    return true;
-  if (tagName === "input" && element.type) {
-    return buttonInputTypes.indexOf(element.type) !== -1;
-  }
-  return false;
-}
-var buttonInputTypes = [
-  "button",
-  "color",
-  "file",
-  "image",
-  "reset",
-  "submit"
-];
-function matches(element, selectors) {
-  if ("matches" in element) {
-    return element.matches(selectors);
-  }
-  if ("msMatchesSelector" in element) {
-    return element.msMatchesSelector(selectors);
-  }
-  return element.webkitMatchesSelector(selectors);
-}
-function isVisible(element) {
-  const htmlElement = element;
-  return htmlElement.offsetWidth > 0 || htmlElement.offsetHeight > 0 || element.getClientRects().length > 0;
-}
-function RRSZHCH6_closest(element, selectors) {
-  if ("closest" in element)
-    return element.closest(selectors);
-  do {
-    if (matches(element, selectors))
-      return element;
-    element = element.parentElement || element.parentNode;
-  } while (element !== null && element.nodeType === 1);
-  return null;
-}
-function RRSZHCH6_isTextField(element) {
-  try {
-    const isTextInput = element instanceof HTMLInputElement && element.selectionStart !== null;
-    const isTextArea = element.tagName === "TEXTAREA";
-    return isTextInput || isTextArea || false;
-  } catch (error) {
-    return false;
-  }
-}
-function getPopupRole(element, fallback) {
-  const allowedPopupRoles = ["dialog", "menu", "listbox", "tree", "grid"];
-  const role = element == null ? void 0 : element.getAttribute("role");
-  if (role && allowedPopupRoles.indexOf(role) !== -1) {
-    return role;
-  }
-  return fallback;
-}
-function getPopupItemRole(element, fallback) {
-  var _a;
-  const itemRoleByPopupRole = {
-    menu: "menuitem",
-    listbox: "option",
-    tree: "treeitem"
-  };
-  const popupRole = getPopupRole(element);
-  if (!popupRole)
-    return fallback;
-  const key = popupRole;
-  return (_a = itemRoleByPopupRole[key]) != null ? _a : fallback;
-}
-function getTextboxSelection(element) {
-  let start = 0;
-  let end = 0;
-  if (RRSZHCH6_isTextField(element)) {
-    start = element.selectionStart || 0;
-    end = element.selectionEnd || 0;
-  } else if (element.isContentEditable) {
-    const selection = RRSZHCH6_getDocument(element).getSelection();
-    if ((selection == null ? void 0 : selection.rangeCount) && selection.anchorNode && contains(element, selection.anchorNode) && selection.focusNode && contains(element, selection.focusNode)) {
-      const range = selection.getRangeAt(0);
-      const nextRange = range.cloneRange();
-      nextRange.selectNodeContents(element);
-      nextRange.setEnd(range.startContainer, range.startOffset);
-      start = nextRange.toString().length;
-      nextRange.setEnd(range.endContainer, range.endOffset);
-      end = nextRange.toString().length;
-    }
-  }
-  return { start, end };
-}
-function scrollIntoViewIfNeeded(element, arg) {
-  if (isPartiallyHidden(element) && "scrollIntoView" in element) {
-    element.scrollIntoView(arg);
-  }
-}
-function getScrollingElement(element) {
-  if (!element)
-    return null;
-  if (element.clientHeight && element.scrollHeight > element.clientHeight) {
-    const { overflowY } = getComputedStyle(element);
-    const isScrollable = overflowY !== "visible" && overflowY !== "hidden";
-    if (isScrollable)
-      return element;
-  } else if (element.clientWidth && element.scrollWidth > element.clientWidth) {
-    const { overflowX } = getComputedStyle(element);
-    const isScrollable = overflowX !== "visible" && overflowX !== "hidden";
-    if (isScrollable)
-      return element;
-  }
-  return getScrollingElement(element.parentElement) || document.scrollingElement || document.body;
-}
-function isPartiallyHidden(element) {
-  const elementRect = element.getBoundingClientRect();
-  const scroller = getScrollingElement(element);
-  if (!scroller)
-    return false;
-  const scrollerRect = scroller.getBoundingClientRect();
-  const isHTML = scroller.tagName === "HTML";
-  const scrollerTop = isHTML ? scrollerRect.top + scroller.scrollTop : scrollerRect.top;
-  const scrollerBottom = isHTML ? scroller.clientHeight : scrollerRect.bottom;
-  const scrollerLeft = isHTML ? scrollerRect.left + scroller.scrollLeft : scrollerRect.left;
-  const scrollerRight = isHTML ? scroller.clientWidth : scrollerRect.right;
-  const top = elementRect.top < scrollerTop;
-  const left = elementRect.left < scrollerLeft;
-  const bottom = elementRect.bottom > scrollerBottom;
-  const right = elementRect.right > scrollerRight;
-  return top || left || bottom || right;
-}
-function setSelectionRange(element, ...args) {
-  if (/text|search|password|tel|url/i.test(element.type)) {
-    element.setSelectionRange(...args);
-  }
-}
-
-
-
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/VDNATJW2.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/CLSHHUGK.js
 "use client";
 
 
 // src/utils/platform.ts
 function isTouchDevice() {
-  return RRSZHCH6_canUseDOM && !!navigator.maxTouchPoints;
+  return I2NJJ3XW_canUseDOM && !!navigator.maxTouchPoints;
 }
 function isApple() {
-  if (!RRSZHCH6_canUseDOM)
+  if (!I2NJJ3XW_canUseDOM)
     return false;
   return /mac|iphone|ipad|ipod/i.test(navigator.platform);
 }
 function isSafari() {
-  return RRSZHCH6_canUseDOM && isApple() && /apple/i.test(navigator.vendor);
+  return I2NJJ3XW_canUseDOM && isApple() && /apple/i.test(navigator.vendor);
 }
 function isFirefox() {
-  return RRSZHCH6_canUseDOM && /firefox\//i.test(navigator.userAgent);
+  return I2NJJ3XW_canUseDOM && /firefox\//i.test(navigator.userAgent);
 }
 function isMac() {
   return canUseDOM && navigator.platform.startsWith("Mac") && !isTouchDevice();
@@ -30441,20 +30442,35 @@ function isFocusEventOutside(event, container) {
   const relatedTarget = event.relatedTarget;
   return !relatedTarget || !contains(containerElement, relatedTarget);
 }
-function queueBeforeEvent(element, type, callback) {
-  const raf = requestAnimationFrame(() => {
-    element.removeEventListener(type, callImmediately, true);
+function getInputType(event) {
+  const nativeEvent = "nativeEvent" in event ? event.nativeEvent : event;
+  if (!nativeEvent)
+    return;
+  if (!("inputType" in nativeEvent))
+    return;
+  if (typeof nativeEvent.inputType !== "string")
+    return;
+  return nativeEvent.inputType;
+}
+function queueBeforeEvent(element, type, callback, timeout) {
+  const createTimer = (callback2) => {
+    if (timeout) {
+      const timerId2 = setTimeout(callback2, timeout);
+      return () => clearTimeout(timerId2);
+    }
+    const timerId = requestAnimationFrame(callback2);
+    return () => cancelAnimationFrame(timerId);
+  };
+  const cancelTimer = createTimer(() => {
+    element.removeEventListener(type, callSync, true);
     callback();
   });
-  const callImmediately = () => {
-    cancelAnimationFrame(raf);
+  const callSync = () => {
+    cancelTimer();
     callback();
   };
-  element.addEventListener(type, callImmediately, {
-    once: true,
-    capture: true
-  });
-  return raf;
+  element.addEventListener(type, callSync, { once: true, capture: true });
+  return cancelTimer;
 }
 function addGlobalEventListener(type, listener, options, scope = window) {
   const children = [];
@@ -30470,13 +30486,15 @@ function addGlobalEventListener(type, listener, options, scope = window) {
       scope.document.removeEventListener(type, listener, options);
     } catch (e) {
     }
-    children.forEach((remove) => remove());
+    for (const remove of children) {
+      remove();
+    }
   };
   return removeEventListener;
 }
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/6O5OEQGF.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/OPTPHWV7.js
 "use client";
 
 
@@ -30491,7 +30509,7 @@ var _React = _4R3V3JGP_spreadValues({}, external_React_namespaceObject);
 var useReactId = _React.useId;
 var useReactDeferredValue = _React.useDeferredValue;
 var useReactInsertionEffect = _React.useInsertionEffect;
-var useSafeLayoutEffect = RRSZHCH6_canUseDOM ? external_React_.useLayoutEffect : external_React_.useEffect;
+var useSafeLayoutEffect = I2NJJ3XW_canUseDOM ? external_React_.useLayoutEffect : external_React_.useEffect;
 function useInitialValue(value) {
   const [initialValue] = useState(value);
   return initialValue;
@@ -30533,12 +30551,32 @@ function useEvent(callback) {
     return (_a = ref.current) == null ? void 0 : _a.call(ref, ...args);
   }, []);
 }
+function useTransactionState(callback) {
+  const [state, setState] = (0,external_React_.useState)(null);
+  useSafeLayoutEffect(() => {
+    if (state == null)
+      return;
+    if (!callback)
+      return;
+    let prevState = null;
+    callback((prev) => {
+      prevState = prev;
+      return state;
+    });
+    return () => {
+      callback(prevState);
+    };
+  }, [state, callback]);
+  return [state, setState];
+}
 function useMergeRefs(...refs) {
   return (0,external_React_.useMemo)(() => {
     if (!refs.some(Boolean))
       return;
     return (value) => {
-      refs.forEach((ref) => setRef(ref, value));
+      for (const ref of refs) {
+        setRef(ref, value);
+      }
     };
   }, refs);
 }
@@ -30594,10 +30632,18 @@ function useAttribute(refOrElement, attributeName, defaultValue) {
   const [attribute, setAttribute] = (0,external_React_.useState)(defaultValue);
   useSafeLayoutEffect(() => {
     const element = refOrElement && "current" in refOrElement ? refOrElement.current : refOrElement;
-    const value = element == null ? void 0 : element.getAttribute(attributeName);
-    if (value == null)
+    if (!element)
       return;
-    setAttribute(value);
+    const callback = () => {
+      const value = element.getAttribute(attributeName);
+      if (value == null)
+        return;
+      setAttribute(value);
+    };
+    const observer = new MutationObserver(callback);
+    observer.observe(element, { attributeFilter: [attributeName] });
+    callback();
+    return () => observer.disconnect();
   }, [refOrElement, attributeName]);
   return attribute;
 }
@@ -30664,7 +30710,7 @@ function defineSetNextState(arg) {
     Object.defineProperty(arg, SET_NEXT_STATE, { value: true });
   }
 }
-function _6O5OEQGF_useForceUpdate() {
+function OPTPHWV7_useForceUpdate() {
   return (0,external_React_.useReducer)(() => [], []);
 }
 function useBooleanEvent(booleanOrCallback) {
@@ -30730,7 +30776,7 @@ function resetMouseMoving() {
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/5M6RSQEC.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/YIF72NQG.js
 "use client";
 
 
@@ -30814,36 +30860,36 @@ function createStoreContext(providers = [], scopedProviders = []) {
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/MADQZZRL.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/FU7RTSEI.js
 "use client";
 
 
 // src/collection/collection-context.tsx
-var MADQZZRL_ctx = createStoreContext();
-var useCollectionContext = MADQZZRL_ctx.useContext;
-var useCollectionScopedContext = MADQZZRL_ctx.useScopedContext;
-var useCollectionProviderContext = MADQZZRL_ctx.useProviderContext;
-var CollectionContextProvider = MADQZZRL_ctx.ContextProvider;
-var CollectionScopedContextProvider = MADQZZRL_ctx.ScopedContextProvider;
+var FU7RTSEI_ctx = createStoreContext();
+var useCollectionContext = FU7RTSEI_ctx.useContext;
+var useCollectionScopedContext = FU7RTSEI_ctx.useScopedContext;
+var useCollectionProviderContext = FU7RTSEI_ctx.useProviderContext;
+var CollectionContextProvider = FU7RTSEI_ctx.ContextProvider;
+var CollectionScopedContextProvider = FU7RTSEI_ctx.ScopedContextProvider;
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/3D6OCOHF.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/53KINMNA.js
 "use client";
 
 
 
 // src/composite/composite-context.tsx
 
-var _3D6OCOHF_ctx = createStoreContext(
+var _53KINMNA_ctx = createStoreContext(
   [CollectionContextProvider],
   [CollectionScopedContextProvider]
 );
-var useCompositeContext = _3D6OCOHF_ctx.useContext;
-var useCompositeScopedContext = _3D6OCOHF_ctx.useScopedContext;
-var useCompositeProviderContext = _3D6OCOHF_ctx.useProviderContext;
-var CompositeContextProvider = _3D6OCOHF_ctx.ContextProvider;
-var CompositeScopedContextProvider = _3D6OCOHF_ctx.ScopedContextProvider;
+var useCompositeContext = _53KINMNA_ctx.useContext;
+var useCompositeScopedContext = _53KINMNA_ctx.useScopedContext;
+var useCompositeProviderContext = _53KINMNA_ctx.useProviderContext;
+var CompositeContextProvider = _53KINMNA_ctx.ContextProvider;
+var CompositeScopedContextProvider = _53KINMNA_ctx.ScopedContextProvider;
 var CompositeItemContext = (0,external_React_.createContext)(
   void 0
 );
@@ -30853,7 +30899,7 @@ var CompositeRowContext = (0,external_React_.createContext)(
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/DMSZFK7W.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/O7HGX5PA.js
 "use client";
 
 
@@ -30861,7 +30907,7 @@ var CompositeRowContext = (0,external_React_.createContext)(
 
 
 
-// src/composite/composite-typeahead.ts
+// src/composite/composite-typeahead.tsx
 
 
 
@@ -30873,7 +30919,7 @@ function clearChars() {
 }
 function isValidTypeaheadEvent(event) {
   const target = event.target;
-  if (target && RRSZHCH6_isTextField(target))
+  if (target && isTextField(target))
     return false;
   if (event.key === " " && chars.length)
     return true;
@@ -30893,7 +30939,11 @@ function getEnabledItems(items) {
 }
 function itemTextStartsWith(item, text) {
   var _a;
-  const itemText = ((_a = item.element) == null ? void 0 : _a.textContent) || item.children;
+  const itemText = ((_a = item.element) == null ? void 0 : _a.textContent) || item.children || // The composite item object itself doesn't include a value property, but
+  // other components like Select do. Since CompositeTypeahead is a generic
+  // component that can be used with those as well, we also consider the value
+  // property as a fallback for the typeahead text content.
+  "value" in item && item.value;
   if (!itemText)
     return false;
   return normalizeString(itemText).trim().toLowerCase().startsWith(text.toLowerCase());
@@ -30932,10 +30982,12 @@ var useCompositeTypeahead = createHook(function useCompositeTypeahead2(_a) {
       return;
     if (!store)
       return;
-    const { items, activeId } = store.getState();
+    const { renderedItems, items, activeId } = store.getState();
     if (!isValidTypeaheadEvent(event))
       return clearChars();
-    let enabledItems = getEnabledItems(items);
+    let enabledItems = getEnabledItems(
+      renderedItems.length ? renderedItems : items
+    );
     if (!isSelfTargetOrItem(event, enabledItems))
       return clearChars();
     event.preventDefault();
@@ -30971,17 +31023,17 @@ var CompositeTypeahead = forwardRef2(function CompositeTypeahead2(props) {
 
 
 // src/utils/focus.ts
-var selector = "input:not([type='hidden']):not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], button:not([disabled]), [tabindex], iframe, object, embed, area[href], audio[controls], video[controls], [contenteditable]:not([contenteditable='false'])";
+var selector = "input:not([type='hidden']):not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], button:not([disabled]), [tabindex], summary, iframe, object, embed, area[href], audio[controls], video[controls], [contenteditable]:not([contenteditable='false'])";
 function hasNegativeTabIndex(element) {
-  const tabIndex = parseInt(element.getAttribute("tabindex") || "0", 10);
+  const tabIndex = Number.parseInt(element.getAttribute("tabindex") || "0", 10);
   return tabIndex < 0;
 }
 function isFocusable(element) {
-  if (!matches(element, selector))
+  if (!element.matches(selector))
     return false;
   if (!isVisible(element))
     return false;
-  if (RRSZHCH6_closest(element, "[inert]"))
+  if (element.closest("[inert]"))
     return false;
   return true;
 }
@@ -31123,12 +31175,12 @@ function getPreviousTabbable(fallbackToFirst, fallbackToFocusable) {
 }
 function getClosestFocusable(element) {
   while (element && !isFocusable(element)) {
-    element = closest(element, selector);
+    element = element.closest(selector);
   }
   return element || null;
 }
 function hasFocus(element) {
-  const activeElement = RRSZHCH6_getActiveElement(element);
+  const activeElement = I2NJJ3XW_getActiveElement(element);
   if (!activeElement)
     return false;
   if (activeElement === element)
@@ -31139,7 +31191,7 @@ function hasFocus(element) {
   return activeDescendant === element.id;
 }
 function hasFocusWithin(element) {
-  const activeElement = RRSZHCH6_getActiveElement(element);
+  const activeElement = I2NJJ3XW_getActiveElement(element);
   if (!activeElement)
     return false;
   if (contains(element, activeElement))
@@ -31166,7 +31218,9 @@ function disableFocus(element) {
 }
 function disableFocusIn(container, includeContainer) {
   const tabbableElements = getAllTabbableIn(container, includeContainer);
-  tabbableElements.forEach(disableFocus);
+  for (const element of tabbableElements) {
+    disableFocus(element);
+  }
 }
 function restoreFocusIn(container) {
   const elements = container.querySelectorAll("[data-tabindex]");
@@ -31182,7 +31236,9 @@ function restoreFocusIn(container) {
   if (container.hasAttribute("data-tabindex")) {
     restoreTabIndex(container);
   }
-  elements.forEach(restoreTabIndex);
+  for (const element of elements) {
+    restoreTabIndex(element);
+  }
 }
 function focusIntoView(element, options) {
   if (!("scrollIntoView" in element)) {
@@ -31194,19 +31250,19 @@ function focusIntoView(element, options) {
 }
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/WL6TTPTB.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/CBOSGWHO.js
 "use client";
 
 
 
 
 
-// src/composite/composite-hover.ts
+// src/composite/composite-hover.tsx
 
 
 
 
-var WL6TTPTB_TagName = "div";
+var CBOSGWHO_TagName = "div";
 function getMouseDestination(event) {
   const relatedTarget = event.relatedTarget;
   if ((relatedTarget == null ? void 0 : relatedTarget.nodeType) === Node.ELEMENT_NODE) {
@@ -31304,13 +31360,36 @@ var useCompositeHover = createHook(
 var CompositeHover = memo2(
   forwardRef2(function CompositeHover2(props) {
     const htmlProps = useCompositeHover(props);
-    return createElement(WL6TTPTB_TagName, htmlProps);
+    return createElement(CBOSGWHO_TagName, htmlProps);
   })
 );
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/R676XYVY.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/F6GOJSFF.js
+"use client";
+
+
+
+// src/tag/tag-context.tsx
+
+var TagValueContext = (0,external_React_.createContext)(null);
+var TagRemoveIdContext = (0,external_React_.createContext)(
+  null
+);
+var F6GOJSFF_ctx = createStoreContext(
+  [CompositeContextProvider],
+  [CompositeScopedContextProvider]
+);
+var useTagContext = F6GOJSFF_ctx.useContext;
+var useTagScopedContext = F6GOJSFF_ctx.useScopedContext;
+var useTagProviderContext = F6GOJSFF_ctx.useProviderContext;
+var TagContextProvider = F6GOJSFF_ctx.ContextProvider;
+var TagScopedContextProvider = F6GOJSFF_ctx.ScopedContextProvider;
+
+
+
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/KLPDXTDE.js
 "use client";
 
 
@@ -31358,7 +31437,7 @@ function createStore(initialState, ...stores) {
             return;
           if (!_22HHDS5F_hasOwnProperty(storeState, key))
             return;
-          return R676XYVY_sync(store, [key], (state2) => {
+          return KLPDXTDE_sync(store, [key], (state2) => {
             setState(
               key,
               state2[key],
@@ -31371,7 +31450,9 @@ function createStore(initialState, ...stores) {
       )
     );
     const teardowns = [];
-    setups.forEach((setup2) => teardowns.push(setup2()));
+    for (const setup2 of setups) {
+      teardowns.push(setup2());
+    }
     const cleanups = stores.map(init);
     destroy = chain(...desyncs, ...teardowns, ...cleanups);
     return maybeDestroy;
@@ -31400,16 +31481,16 @@ function createStore(initialState, ...stores) {
   const storeOmit = (keys) => createStore(omit(state, keys), finalStore);
   const getState = () => state;
   const setState = (key, value, fromStores = false) => {
+    var _a;
     if (!_22HHDS5F_hasOwnProperty(state, key))
       return;
     const nextValue = _22HHDS5F_applyState(value, state[key]);
     if (nextValue === state[key])
       return;
     if (!fromStores) {
-      stores.forEach((store) => {
-        var _a;
+      for (const store of stores) {
         (_a = store == null ? void 0 : store.setState) == null ? void 0 : _a.call(store, key, nextValue);
-      });
+      }
     }
     const prevState = state;
     state = _chunks_4R3V3JGP_spreadProps(_chunks_4R3V3JGP_spreadValues({}, state), { [key]: nextValue });
@@ -31417,24 +31498,24 @@ function createStore(initialState, ...stores) {
     lastUpdate = thisUpdate;
     updatedKeys.add(key);
     const run = (listener, prev, uKeys) => {
-      var _a;
+      var _a2;
       const keys = listenerKeys.get(listener);
       const updated = (k) => uKeys ? uKeys.has(k) : k === key;
       if (!keys || keys.some(updated)) {
-        (_a = disposables.get(listener)) == null ? void 0 : _a();
+        (_a2 = disposables.get(listener)) == null ? void 0 : _a2();
         disposables.set(listener, listener(state, prev));
       }
     };
-    listeners.forEach((listener) => {
+    for (const listener of listeners) {
       run(listener, prevState);
-    });
+    }
     queueMicrotask(() => {
       if (lastUpdate !== thisUpdate)
         return;
       const snapshot = state;
-      batchListeners.forEach((listener) => {
+      for (const listener of batchListeners) {
         run(listener, prevStateBatch, updatedKeys);
-      });
+      }
       prevStateBatch = snapshot;
       updatedKeys.clear();
     });
@@ -31469,7 +31550,7 @@ function subscribe(store, ...args) {
     return;
   return getInternal(store, "subscribe")(...args);
 }
-function R676XYVY_sync(store, ...args) {
+function KLPDXTDE_sync(store, ...args) {
   if (!store)
     return;
   return getInternal(store, "sync")(...args);
@@ -31495,7 +31576,7 @@ function mergeStore(...stores) {
     const nextState = (_a = store2 == null ? void 0 : store2.getState) == null ? void 0 : _a.call(store2);
     if (!nextState)
       return state;
-    return _chunks_4R3V3JGP_spreadValues(_chunks_4R3V3JGP_spreadValues({}, state), nextState);
+    return Object.assign(state, nextState);
   }, {});
   const store = createStore(initialState, ...stores);
   return store;
@@ -31541,7 +31622,7 @@ If there's a particular need for this, please submit a feature request at https:
 
 // EXTERNAL MODULE: ./node_modules/use-sync-external-store/shim/index.js
 var shim = __webpack_require__(635);
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/EKQEJRUF.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/DTNGDFNU.js
 "use client";
 
 
@@ -31584,7 +31665,7 @@ function useStoreProps(store, props, key, setKey) {
   const setValue = setKey ? props[setKey] : void 0;
   const propsRef = useLiveRef({ value, setValue });
   useSafeLayoutEffect(() => {
-    return R676XYVY_sync(store, [key], (state, prev) => {
+    return KLPDXTDE_sync(store, [key], (state, prev) => {
       const { value: value2, setValue: setValue2 } = propsRef.current;
       if (!setValue2)
         return;
@@ -31606,7 +31687,7 @@ function useStoreProps(store, props, key, setKey) {
     });
   });
 }
-function EKQEJRUF_useStore(createStore, props) {
+function DTNGDFNU_useStore(createStore, props) {
   const [store, setStore] = external_React_.useState(() => createStore(props));
   useSafeLayoutEffect(() => init(store), [store]);
   const useState2 = external_React_.useCallback(
@@ -31625,7 +31706,7 @@ function EKQEJRUF_useStore(createStore, props) {
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/Y6GYTNQ2.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/X3TS2MQG.js
 "use client";
 
 
@@ -31644,7 +31725,7 @@ function useCollectionStore(props = {}) {
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/7GBW5FLS.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/WH6Q5C3D.js
 "use client";
 
 
@@ -31663,14 +31744,14 @@ function useCompositeStoreProps(store, update, props) {
   useStoreProps(store, props, "focusShift");
   return store;
 }
-function _7GBW5FLS_useCompositeStore(props = {}) {
+function WH6Q5C3D_useCompositeStore(props = {}) {
   const [store, update] = useStore(Core.createCompositeStore, props);
   return useCompositeStoreProps(store, update, props);
 }
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/HZJ2XALY.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/5UDX7WKK.js
 "use client";
 
 
@@ -31691,7 +31772,7 @@ function useDisclosureStore(props = {}) {
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/I62TROYO.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/X5ETRS5D.js
 "use client";
 
 
@@ -31708,7 +31789,7 @@ function useDialogStore(props = {}) {
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/XWCFCD3Q.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/GO53B7AR.js
 "use client";
 
 
@@ -31728,135 +31809,7 @@ function usePopoverStore(props = {}) {
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/WCKXDMU7.js
-"use client";
-
-
-
-
-// src/disclosure/disclosure-store.ts
-function createDisclosureStore(props = {}) {
-  const store = mergeStore(
-    props.store,
-    omit2(props.disclosure, ["contentElement", "disclosureElement"])
-  );
-  throwOnConflictingProps(props, store);
-  const syncState = store == null ? void 0 : store.getState();
-  const open = defaultValue(
-    props.open,
-    syncState == null ? void 0 : syncState.open,
-    props.defaultOpen,
-    false
-  );
-  const animated = defaultValue(props.animated, syncState == null ? void 0 : syncState.animated, false);
-  const initialState = {
-    open,
-    animated,
-    animating: !!animated && open,
-    mounted: open,
-    contentElement: defaultValue(syncState == null ? void 0 : syncState.contentElement, null),
-    disclosureElement: defaultValue(syncState == null ? void 0 : syncState.disclosureElement, null)
-  };
-  const disclosure = createStore(initialState, store);
-  setup(
-    disclosure,
-    () => R676XYVY_sync(disclosure, ["animated", "animating"], (state) => {
-      if (state.animated)
-        return;
-      disclosure.setState("animating", false);
-    })
-  );
-  setup(
-    disclosure,
-    () => subscribe(disclosure, ["open"], () => {
-      if (!disclosure.getState().animated)
-        return;
-      disclosure.setState("animating", true);
-    })
-  );
-  setup(
-    disclosure,
-    () => R676XYVY_sync(disclosure, ["open", "animating"], (state) => {
-      disclosure.setState("mounted", state.open || state.animating);
-    })
-  );
-  return _chunks_4R3V3JGP_spreadProps(_chunks_4R3V3JGP_spreadValues({}, disclosure), {
-    disclosure: props.disclosure,
-    setOpen: (value) => disclosure.setState("open", value),
-    show: () => disclosure.setState("open", true),
-    hide: () => disclosure.setState("open", false),
-    toggle: () => disclosure.setState("open", (open2) => !open2),
-    stopAnimation: () => disclosure.setState("animating", false),
-    setContentElement: (value) => disclosure.setState("contentElement", value),
-    setDisclosureElement: (value) => disclosure.setState("disclosureElement", value)
-  });
-}
-
-
-
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/5RJNXXU2.js
-"use client";
-
-
-// src/dialog/dialog-store.ts
-function createDialogStore(props = {}) {
-  return createDisclosureStore(props);
-}
-
-
-
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/MFZZDIHG.js
-"use client";
-
-
-
-
-
-// src/popover/popover-store.ts
-function createPopoverStore(_a = {}) {
-  var _b = _a, {
-    popover: otherPopover
-  } = _b, props = _4R3V3JGP_objRest(_b, [
-    "popover"
-  ]);
-  const store = mergeStore(
-    props.store,
-    omit2(otherPopover, [
-      "arrowElement",
-      "anchorElement",
-      "contentElement",
-      "popoverElement",
-      "disclosureElement"
-    ])
-  );
-  throwOnConflictingProps(props, store);
-  const syncState = store == null ? void 0 : store.getState();
-  const dialog = createDialogStore(_chunks_4R3V3JGP_spreadProps(_chunks_4R3V3JGP_spreadValues({}, props), { store }));
-  const placement = defaultValue(
-    props.placement,
-    syncState == null ? void 0 : syncState.placement,
-    "bottom"
-  );
-  const initialState = _chunks_4R3V3JGP_spreadProps(_chunks_4R3V3JGP_spreadValues({}, dialog.getState()), {
-    placement,
-    currentPlacement: placement,
-    anchorElement: defaultValue(syncState == null ? void 0 : syncState.anchorElement, null),
-    popoverElement: defaultValue(syncState == null ? void 0 : syncState.popoverElement, null),
-    arrowElement: defaultValue(syncState == null ? void 0 : syncState.arrowElement, null),
-    rendered: Symbol("rendered")
-  });
-  const popover = createStore(initialState, dialog, store);
-  return _chunks_4R3V3JGP_spreadProps(_chunks_4R3V3JGP_spreadValues(_chunks_4R3V3JGP_spreadValues({}, dialog), popover), {
-    setAnchorElement: (element) => popover.setState("anchorElement", element),
-    setPopoverElement: (element) => popover.setState("popoverElement", element),
-    setArrowElement: (element) => popover.setState("arrowElement", element),
-    render: () => popover.setState("rendered", Symbol("rendered"))
-  });
-}
-
-
-
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/URUD7X4C.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/I2WJ7JBQ.js
 "use client";
 
 
@@ -31907,7 +31860,7 @@ function getCommonParent(items) {
     }
     parentElement = parentElement.parentElement;
   }
-  return RRSZHCH6_getDocument(parentElement).body;
+  return getDocument(parentElement).body;
 }
 function getPrivateStore(store) {
   return store == null ? void 0 : store.__unstablePrivateStore;
@@ -32075,7 +32028,7 @@ function reverseArray(array) {
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/2H5K47H4.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/VH2P7HEP.js
 "use client";
 
 
@@ -32084,8 +32037,8 @@ function reverseArray(array) {
 
 
 // src/composite/composite-store.ts
-var _2H5K47H4_NULL_ITEM = { id: null };
-function _2H5K47H4_findFirstEnabledItem(items, excludeId) {
+var VH2P7HEP_NULL_ITEM = { id: null };
+function VH2P7HEP_findFirstEnabledItem(items, excludeId) {
   return items.find((item) => {
     if (excludeId) {
       return !item.disabled && item.id !== excludeId;
@@ -32093,7 +32046,7 @@ function _2H5K47H4_findFirstEnabledItem(items, excludeId) {
     return !item.disabled;
   });
 }
-function _2H5K47H4_getEnabledItems(items, excludeId) {
+function VH2P7HEP_getEnabledItems(items, excludeId) {
   return items.filter((item) => {
     if (excludeId) {
       return !item.disabled && item.id !== excludeId;
@@ -32111,15 +32064,15 @@ function getOppositeOrientation(orientation) {
 function getItemsInRow(items, rowId) {
   return items.filter((item) => item.rowId === rowId);
 }
-function _2H5K47H4_flipItems(items, activeId, shouldInsertNullItem = false) {
+function VH2P7HEP_flipItems(items, activeId, shouldInsertNullItem = false) {
   const index = items.findIndex((item) => item.id === activeId);
   return [
     ...items.slice(index + 1),
-    ...shouldInsertNullItem ? [_2H5K47H4_NULL_ITEM] : [],
+    ...shouldInsertNullItem ? [VH2P7HEP_NULL_ITEM] : [],
     ...items.slice(0, index)
   ];
 }
-function _2H5K47H4_groupItemsByRows(items) {
+function VH2P7HEP_groupItemsByRows(items) {
   const rows = [];
   for (const item of items) {
     const row = rows.find((currentRow) => {
@@ -32157,7 +32110,7 @@ function normalizeRows(rows, activeId, focusShift) {
       const item = row[i];
       if (!item || focusShift && item.disabled) {
         const isFirst = i === 0;
-        const previousItem = isFirst && focusShift ? _2H5K47H4_findFirstEnabledItem(row) : row[i - 1];
+        const previousItem = isFirst && focusShift ? VH2P7HEP_findFirstEnabledItem(row) : row[i - 1];
         row[i] = previousItem && activeId !== previousItem.id && focusShift ? previousItem : createEmptyItem(previousItem == null ? void 0 : previousItem.rowId);
       }
     }
@@ -32165,7 +32118,7 @@ function normalizeRows(rows, activeId, focusShift) {
   return rows;
 }
 function verticalizeItems(items) {
-  const rows = _2H5K47H4_groupItemsByRows(items);
+  const rows = VH2P7HEP_groupItemsByRows(items);
   const maxLength = getMaxRowLength(rows);
   const verticalized = [];
   for (let i = 0; i < maxLength; i += 1) {
@@ -32221,12 +32174,12 @@ function createCompositeStore(props = {}) {
   const composite = createStore(initialState, collection, props.store);
   setup(
     composite,
-    () => R676XYVY_sync(composite, ["renderedItems", "activeId"], (state) => {
+    () => KLPDXTDE_sync(composite, ["renderedItems", "activeId"], (state) => {
       composite.setState("activeId", (activeId2) => {
         var _a2;
         if (activeId2 !== void 0)
           return activeId2;
-        return (_a2 = _2H5K47H4_findFirstEnabledItem(state.renderedItems)) == null ? void 0 : _a2.id;
+        return (_a2 = VH2P7HEP_findFirstEnabledItem(state.renderedItems)) == null ? void 0 : _a2.id;
       });
     })
   );
@@ -32237,18 +32190,18 @@ function createCompositeStore(props = {}) {
     const isRTL = rtl && isHorizontal;
     const allItems = isRTL ? reverseArray(items) : items;
     if (activeId2 == null) {
-      return (_a2 = _2H5K47H4_findFirstEnabledItem(allItems)) == null ? void 0 : _a2.id;
+      return (_a2 = VH2P7HEP_findFirstEnabledItem(allItems)) == null ? void 0 : _a2.id;
     }
     const activeItem = allItems.find((item) => item.id === activeId2);
     if (!activeItem) {
-      return (_b = _2H5K47H4_findFirstEnabledItem(allItems)) == null ? void 0 : _b.id;
+      return (_b = VH2P7HEP_findFirstEnabledItem(allItems)) == null ? void 0 : _b.id;
     }
     const isGrid = !!activeItem.rowId;
     const activeIndex = allItems.indexOf(activeItem);
     const nextItems = allItems.slice(activeIndex + 1);
     const nextItemsInRow = getItemsInRow(nextItems, activeItem.rowId);
     if (skip !== void 0) {
-      const nextEnabledItemsInRow = _2H5K47H4_getEnabledItems(nextItemsInRow, activeId2);
+      const nextEnabledItemsInRow = VH2P7HEP_getEnabledItems(nextItemsInRow, activeId2);
       const nextItem2 = nextEnabledItemsInRow.slice(skip)[0] || // If we can't find an item, just return the last one.
       nextEnabledItemsInRow[nextEnabledItemsInRow.length - 1];
       return nextItem2 == null ? void 0 : nextItem2.id;
@@ -32264,12 +32217,12 @@ function createCompositeStore(props = {}) {
     hasNullItem = hasNullItem || !isGrid && canLoop && includesBaseElement;
     if (canLoop) {
       const loopItems = canWrap && !hasNullItem ? allItems : getItemsInRow(allItems, activeItem.rowId);
-      const sortedItems = _2H5K47H4_flipItems(loopItems, activeId2, hasNullItem);
-      const nextItem2 = _2H5K47H4_findFirstEnabledItem(sortedItems, activeId2);
+      const sortedItems = VH2P7HEP_flipItems(loopItems, activeId2, hasNullItem);
+      const nextItem2 = VH2P7HEP_findFirstEnabledItem(sortedItems, activeId2);
       return nextItem2 == null ? void 0 : nextItem2.id;
     }
     if (canWrap) {
-      const nextItem2 = _2H5K47H4_findFirstEnabledItem(
+      const nextItem2 = VH2P7HEP_findFirstEnabledItem(
         // We can use nextItems, which contains all the next items, including
         // items from other rows, to wrap between rows. However, if there is a
         // null item (the composite container), we'll only use the next items in
@@ -32282,7 +32235,7 @@ function createCompositeStore(props = {}) {
       const nextId = hasNullItem ? (nextItem2 == null ? void 0 : nextItem2.id) || null : nextItem2 == null ? void 0 : nextItem2.id;
       return nextId;
     }
-    const nextItem = _2H5K47H4_findFirstEnabledItem(nextItemsInRow, activeId2);
+    const nextItem = VH2P7HEP_findFirstEnabledItem(nextItemsInRow, activeId2);
     if (!nextItem && hasNullItem) {
       return null;
     }
@@ -32299,11 +32252,11 @@ function createCompositeStore(props = {}) {
     },
     first: () => {
       var _a2;
-      return (_a2 = _2H5K47H4_findFirstEnabledItem(composite.getState().renderedItems)) == null ? void 0 : _a2.id;
+      return (_a2 = VH2P7HEP_findFirstEnabledItem(composite.getState().renderedItems)) == null ? void 0 : _a2.id;
     },
     last: () => {
       var _a2;
-      return (_a2 = _2H5K47H4_findFirstEnabledItem(reverseArray(composite.getState().renderedItems))) == null ? void 0 : _a2.id;
+      return (_a2 = VH2P7HEP_findFirstEnabledItem(reverseArray(composite.getState().renderedItems))) == null ? void 0 : _a2.id;
     },
     next: (skip) => {
       const { renderedItems, orientation } = composite.getState();
@@ -32312,7 +32265,7 @@ function createCompositeStore(props = {}) {
     previous: (skip) => {
       var _a2;
       const { renderedItems, orientation, includesBaseElement } = composite.getState();
-      const isGrid = !!((_a2 = _2H5K47H4_findFirstEnabledItem(renderedItems)) == null ? void 0 : _a2.rowId);
+      const isGrid = !!((_a2 = VH2P7HEP_findFirstEnabledItem(renderedItems)) == null ? void 0 : _a2.rowId);
       const hasNullItem = !isGrid && includesBaseElement;
       return getNextId(
         reverseArray(renderedItems),
@@ -32332,7 +32285,7 @@ function createCompositeStore(props = {}) {
       const shouldShift = focusShift && !skip;
       const verticalItems = verticalizeItems(
         flatten2DArray(
-          normalizeRows(_2H5K47H4_groupItemsByRows(renderedItems), activeId2, shouldShift)
+          normalizeRows(VH2P7HEP_groupItemsByRows(renderedItems), activeId2, shouldShift)
         )
       );
       const canLoop = focusLoop && focusLoop !== "horizontal";
@@ -32346,7 +32299,7 @@ function createCompositeStore(props = {}) {
         reverseArray(
           flatten2DArray(
             normalizeRows(
-              _2H5K47H4_groupItemsByRows(renderedItems),
+              VH2P7HEP_groupItemsByRows(renderedItems),
               activeId2,
               shouldShift
             )
@@ -32356,6 +32309,134 @@ function createCompositeStore(props = {}) {
       const hasNullItem = includesBaseElement;
       return getNextId(verticalItems, "vertical", hasNullItem, skip);
     }
+  });
+}
+
+
+
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/KDSZSVV5.js
+"use client";
+
+
+
+
+// src/disclosure/disclosure-store.ts
+function createDisclosureStore(props = {}) {
+  const store = mergeStore(
+    props.store,
+    omit2(props.disclosure, ["contentElement", "disclosureElement"])
+  );
+  throwOnConflictingProps(props, store);
+  const syncState = store == null ? void 0 : store.getState();
+  const open = defaultValue(
+    props.open,
+    syncState == null ? void 0 : syncState.open,
+    props.defaultOpen,
+    false
+  );
+  const animated = defaultValue(props.animated, syncState == null ? void 0 : syncState.animated, false);
+  const initialState = {
+    open,
+    animated,
+    animating: !!animated && open,
+    mounted: open,
+    contentElement: defaultValue(syncState == null ? void 0 : syncState.contentElement, null),
+    disclosureElement: defaultValue(syncState == null ? void 0 : syncState.disclosureElement, null)
+  };
+  const disclosure = createStore(initialState, store);
+  setup(
+    disclosure,
+    () => KLPDXTDE_sync(disclosure, ["animated", "animating"], (state) => {
+      if (state.animated)
+        return;
+      disclosure.setState("animating", false);
+    })
+  );
+  setup(
+    disclosure,
+    () => subscribe(disclosure, ["open"], () => {
+      if (!disclosure.getState().animated)
+        return;
+      disclosure.setState("animating", true);
+    })
+  );
+  setup(
+    disclosure,
+    () => KLPDXTDE_sync(disclosure, ["open", "animating"], (state) => {
+      disclosure.setState("mounted", state.open || state.animating);
+    })
+  );
+  return _chunks_4R3V3JGP_spreadProps(_chunks_4R3V3JGP_spreadValues({}, disclosure), {
+    disclosure: props.disclosure,
+    setOpen: (value) => disclosure.setState("open", value),
+    show: () => disclosure.setState("open", true),
+    hide: () => disclosure.setState("open", false),
+    toggle: () => disclosure.setState("open", (open2) => !open2),
+    stopAnimation: () => disclosure.setState("animating", false),
+    setContentElement: (value) => disclosure.setState("contentElement", value),
+    setDisclosureElement: (value) => disclosure.setState("disclosureElement", value)
+  });
+}
+
+
+
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/NWACXGIN.js
+"use client";
+
+
+// src/dialog/dialog-store.ts
+function createDialogStore(props = {}) {
+  return createDisclosureStore(props);
+}
+
+
+
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/SAZZJI72.js
+"use client";
+
+
+
+
+
+// src/popover/popover-store.ts
+function createPopoverStore(_a = {}) {
+  var _b = _a, {
+    popover: otherPopover
+  } = _b, props = _4R3V3JGP_objRest(_b, [
+    "popover"
+  ]);
+  const store = mergeStore(
+    props.store,
+    omit2(otherPopover, [
+      "arrowElement",
+      "anchorElement",
+      "contentElement",
+      "popoverElement",
+      "disclosureElement"
+    ])
+  );
+  throwOnConflictingProps(props, store);
+  const syncState = store == null ? void 0 : store.getState();
+  const dialog = createDialogStore(_chunks_4R3V3JGP_spreadProps(_chunks_4R3V3JGP_spreadValues({}, props), { store }));
+  const placement = defaultValue(
+    props.placement,
+    syncState == null ? void 0 : syncState.placement,
+    "bottom"
+  );
+  const initialState = _chunks_4R3V3JGP_spreadProps(_chunks_4R3V3JGP_spreadValues({}, dialog.getState()), {
+    placement,
+    currentPlacement: placement,
+    anchorElement: defaultValue(syncState == null ? void 0 : syncState.anchorElement, null),
+    popoverElement: defaultValue(syncState == null ? void 0 : syncState.popoverElement, null),
+    arrowElement: defaultValue(syncState == null ? void 0 : syncState.arrowElement, null),
+    rendered: Symbol("rendered")
+  });
+  const popover = createStore(initialState, dialog, store);
+  return _chunks_4R3V3JGP_spreadProps(_chunks_4R3V3JGP_spreadValues(_chunks_4R3V3JGP_spreadValues({}, dialog), popover), {
+    setAnchorElement: (element) => popover.setState("anchorElement", element),
+    setPopoverElement: (element) => popover.setState("popoverElement", element),
+    setArrowElement: (element) => popover.setState("arrowElement", element),
+    render: () => popover.setState("rendered", Symbol("rendered"))
   });
 }
 
@@ -32376,11 +32457,17 @@ function createCompositeStore(props = {}) {
 
 
 // src/combobox/combobox-store.ts
-var isSafariOnMobile = isSafari() && isTouchDevice();
-function createComboboxStore(props = {}) {
-  var _a;
-  throwOnConflictingProps(props, props.store);
-  const syncState = (_a = props.store) == null ? void 0 : _a.getState();
+var isTouchSafari = isSafari() && isTouchDevice();
+function createComboboxStore(_a = {}) {
+  var _b = _a, {
+    tag
+  } = _b, props = _4R3V3JGP_objRest(_b, [
+    "tag"
+  ]);
+  const store = mergeStore(props.store, pick2(tag, ["value", "rtl"]));
+  throwOnConflictingProps(props, store);
+  const tagState = tag == null ? void 0 : tag.getState();
+  const syncState = store == null ? void 0 : store.getState();
   const activeId = defaultValue(
     props.activeId,
     syncState == null ? void 0 : syncState.activeId,
@@ -32404,7 +32491,7 @@ function createComboboxStore(props = {}) {
     virtualFocus: defaultValue(
       props.virtualFocus,
       syncState == null ? void 0 : syncState.virtualFocus,
-      !isSafariOnMobile
+      true
     )
   }));
   const popover = createPopoverStore(_chunks_4R3V3JGP_spreadProps(_chunks_4R3V3JGP_spreadValues({}, props), {
@@ -32423,6 +32510,7 @@ function createComboboxStore(props = {}) {
   const selectedValue = defaultValue(
     props.selectedValue,
     syncState == null ? void 0 : syncState.selectedValue,
+    tagState == null ? void 0 : tagState.values,
     props.defaultSelectedValue,
     ""
   );
@@ -32438,25 +32526,39 @@ function createComboboxStore(props = {}) {
     resetValueOnHide: defaultValue(
       props.resetValueOnHide,
       syncState == null ? void 0 : syncState.resetValueOnHide,
-      multiSelectable
+      multiSelectable && !tag
     ),
     activeValue: syncState == null ? void 0 : syncState.activeValue
   });
-  const combobox = createStore(initialState, composite, popover, props.store);
+  const combobox = createStore(initialState, composite, popover, store);
+  if (isTouchSafari) {
+    setup(
+      combobox,
+      () => KLPDXTDE_sync(combobox, ["virtualFocus"], () => {
+        combobox.setState("virtualFocus", false);
+      })
+    );
+  }
+  setup(combobox, () => {
+    if (!tag)
+      return;
+    return chain(
+      KLPDXTDE_sync(combobox, ["selectedValue"], (state) => {
+        if (!Array.isArray(state.selectedValue))
+          return;
+        tag.setValues(state.selectedValue);
+      }),
+      KLPDXTDE_sync(tag, ["values"], (state) => {
+        combobox.setState("selectedValue", state.values);
+      })
+    );
+  });
   setup(
     combobox,
-    () => R676XYVY_sync(combobox, ["resetValueOnHide", "mounted"], (state) => {
+    () => KLPDXTDE_sync(combobox, ["resetValueOnHide", "mounted"], (state) => {
       if (!state.resetValueOnHide)
         return;
       if (state.mounted)
-        return;
-      combobox.setState("value", value);
-    })
-  );
-  setup(
-    combobox,
-    () => R676XYVY_sync(combobox, ["resetValueOnSelect", "selectedValue"], (state) => {
-      if (!state.resetValueOnSelect)
         return;
       combobox.setState("value", value);
     })
@@ -32472,7 +32574,7 @@ function createComboboxStore(props = {}) {
   );
   setup(
     combobox,
-    () => R676XYVY_sync(combobox, ["moves", "activeId"], (state, prevState) => {
+    () => KLPDXTDE_sync(combobox, ["moves", "activeId"], (state, prevState) => {
       if (state.moves === prevState.moves) {
         combobox.setState("activeValue", void 0);
       }
@@ -32489,14 +32591,19 @@ function createComboboxStore(props = {}) {
     })
   );
   return _chunks_4R3V3JGP_spreadProps(_chunks_4R3V3JGP_spreadValues(_chunks_4R3V3JGP_spreadValues(_chunks_4R3V3JGP_spreadValues({}, popover), composite), combobox), {
+    tag,
     setValue: (value2) => combobox.setState("value", value2),
+    resetValue: () => combobox.setState("value", initialState.value),
     setSelectedValue: (selectedValue2) => combobox.setState("selectedValue", selectedValue2)
   });
 }
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/URCSOWGR.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/42G2NDPP.js
 "use client";
+
+
+
 
 
 
@@ -32504,77 +32611,85 @@ function createComboboxStore(props = {}) {
 // src/combobox/combobox-store.ts
 
 function useComboboxStoreProps(store, update, props) {
+  useUpdateEffect(update, [props.tag]);
   useStoreProps(store, props, "value", "setValue");
   useStoreProps(store, props, "selectedValue", "setSelectedValue");
   useStoreProps(store, props, "resetValueOnHide");
   useStoreProps(store, props, "resetValueOnSelect");
-  return useCompositeStoreProps(
-    usePopoverStoreProps(store, update, props),
-    update,
-    props
+  return Object.assign(
+    useCompositeStoreProps(
+      usePopoverStoreProps(store, update, props),
+      update,
+      props
+    ),
+    { tag: props.tag }
   );
 }
 function useComboboxStore(props = {}) {
-  const [store, update] = EKQEJRUF_useStore(createComboboxStore, props);
+  const tag = useTagContext();
+  props = _4R3V3JGP_spreadProps(_4R3V3JGP_spreadValues({}, props), {
+    tag: props.tag !== void 0 ? props.tag : tag
+  });
+  const [store, update] = DTNGDFNU_useStore(createComboboxStore, props);
   return useComboboxStoreProps(store, update, props);
 }
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/J55AVALY.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/SJ5YBTFK.js
 "use client";
 
 
 // src/disclosure/disclosure-context.tsx
-var J55AVALY_ctx = createStoreContext();
-var useDisclosureContext = J55AVALY_ctx.useContext;
-var useDisclosureScopedContext = J55AVALY_ctx.useScopedContext;
-var useDisclosureProviderContext = J55AVALY_ctx.useProviderContext;
-var DisclosureContextProvider = J55AVALY_ctx.ContextProvider;
-var DisclosureScopedContextProvider = J55AVALY_ctx.ScopedContextProvider;
+var SJ5YBTFK_ctx = createStoreContext();
+var useDisclosureContext = SJ5YBTFK_ctx.useContext;
+var useDisclosureScopedContext = SJ5YBTFK_ctx.useScopedContext;
+var useDisclosureProviderContext = SJ5YBTFK_ctx.useProviderContext;
+var DisclosureContextProvider = SJ5YBTFK_ctx.ContextProvider;
+var DisclosureScopedContextProvider = SJ5YBTFK_ctx.ScopedContextProvider;
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/XXVAHUAO.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/J7UNXP2A.js
 "use client";
 
 
 
 // src/dialog/dialog-context.tsx
 
-var XXVAHUAO_ctx = createStoreContext(
+var J7UNXP2A_ctx = createStoreContext(
   [DisclosureContextProvider],
   [DisclosureScopedContextProvider]
 );
-var useDialogContext = XXVAHUAO_ctx.useContext;
-var useDialogScopedContext = XXVAHUAO_ctx.useScopedContext;
-var useDialogProviderContext = XXVAHUAO_ctx.useProviderContext;
-var DialogContextProvider = XXVAHUAO_ctx.ContextProvider;
-var DialogScopedContextProvider = XXVAHUAO_ctx.ScopedContextProvider;
+var useDialogContext = J7UNXP2A_ctx.useContext;
+var useDialogScopedContext = J7UNXP2A_ctx.useScopedContext;
+var useDialogProviderContext = J7UNXP2A_ctx.useProviderContext;
+var DialogContextProvider = J7UNXP2A_ctx.ContextProvider;
+var DialogScopedContextProvider = J7UNXP2A_ctx.ScopedContextProvider;
 var DialogHeadingContext = (0,external_React_.createContext)(void 0);
 var DialogDescriptionContext = (0,external_React_.createContext)(void 0);
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/TE637IA7.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/URSEQETI.js
 "use client";
 
 
 
 // src/popover/popover-context.tsx
-var TE637IA7_ctx = createStoreContext(
+var URSEQETI_ctx = createStoreContext(
   [DialogContextProvider],
   [DialogScopedContextProvider]
 );
-var usePopoverContext = TE637IA7_ctx.useContext;
-var usePopoverScopedContext = TE637IA7_ctx.useScopedContext;
-var usePopoverProviderContext = TE637IA7_ctx.useProviderContext;
-var PopoverContextProvider = TE637IA7_ctx.ContextProvider;
-var PopoverScopedContextProvider = TE637IA7_ctx.ScopedContextProvider;
+var usePopoverContext = URSEQETI_ctx.useContext;
+var usePopoverScopedContext = URSEQETI_ctx.useScopedContext;
+var usePopoverProviderContext = URSEQETI_ctx.useProviderContext;
+var PopoverContextProvider = URSEQETI_ctx.ContextProvider;
+var PopoverScopedContextProvider = URSEQETI_ctx.ScopedContextProvider;
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/UNDSQXBK.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/3L4UCDWT.js
 "use client";
 
 
@@ -32582,15 +32697,18 @@ var PopoverScopedContextProvider = TE637IA7_ctx.ScopedContextProvider;
 
 // src/combobox/combobox-context.tsx
 
-var UNDSQXBK_ctx = createStoreContext(
+var ComboboxListRoleContext = (0,external_React_.createContext)(
+  void 0
+);
+var _3L4UCDWT_ctx = createStoreContext(
   [PopoverContextProvider, CompositeContextProvider],
   [PopoverScopedContextProvider, CompositeScopedContextProvider]
 );
-var useComboboxContext = UNDSQXBK_ctx.useContext;
-var useComboboxScopedContext = UNDSQXBK_ctx.useScopedContext;
-var useComboboxProviderContext = UNDSQXBK_ctx.useProviderContext;
-var ComboboxContextProvider = UNDSQXBK_ctx.ContextProvider;
-var ComboboxScopedContextProvider = UNDSQXBK_ctx.ScopedContextProvider;
+var useComboboxContext = _3L4UCDWT_ctx.useContext;
+var useComboboxScopedContext = _3L4UCDWT_ctx.useScopedContext;
+var useComboboxProviderContext = _3L4UCDWT_ctx.useProviderContext;
+var ComboboxContextProvider = _3L4UCDWT_ctx.ContextProvider;
+var ComboboxScopedContextProvider = _3L4UCDWT_ctx.ScopedContextProvider;
 var ComboboxItemValueContext = (0,external_React_.createContext)(
   void 0
 );
@@ -32600,6 +32718,7 @@ var ComboboxItemCheckedContext = (0,external_React_.createContext)(false);
 
 ;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/combobox/combobox-provider.js
 "use client";
+
 
 
 
@@ -32639,7 +32758,7 @@ function ComboboxProvider(props = {}) {
 
 
 
-// src/combobox/combobox-label.ts
+// src/combobox/combobox-label.tsx
 
 var combobox_label_TagName = "label";
 var useComboboxLabel = createHook(
@@ -32669,15 +32788,15 @@ var ComboboxLabel = memo2(
 );
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/NLT7LY5Y.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/IH5KTPNA.js
 "use client";
 
 
 
 
 
-// src/popover/popover-anchor.ts
-var NLT7LY5Y_TagName = "div";
+// src/popover/popover-anchor.tsx
+var IH5KTPNA_TagName = "div";
 var usePopoverAnchor = createHook(
   function usePopoverAnchor2(_a) {
     var _b = _a, { store } = _b, props = __objRest(_b, ["store"]);
@@ -32691,35 +32810,35 @@ var usePopoverAnchor = createHook(
 );
 var PopoverAnchor = forwardRef2(function PopoverAnchor2(props) {
   const htmlProps = usePopoverAnchor(props);
-  return createElement(NLT7LY5Y_TagName, htmlProps);
+  return createElement(IH5KTPNA_TagName, htmlProps);
 });
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/SHA3WOPI.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/SWN3JYXT.js
 "use client";
 
-// src/focusable/focusable-context.ts
+// src/focusable/focusable-context.tsx
 
 var FocusableContext = (0,external_React_.createContext)(true);
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/WAZE6NXP.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/DYAGAZRT.js
 "use client";
 
 
 
 
 
-// src/focusable/focusable.ts
+// src/focusable/focusable.tsx
 
 
 
 
 
 
-var WAZE6NXP_TagName = "div";
+var DYAGAZRT_TagName = "div";
 var isSafariBrowser = isSafari();
 var alwaysFocusVisibleInputTypes = [
   "text",
@@ -32747,13 +32866,11 @@ function isAlwaysFocusVisible(element) {
   }
   if (element.isContentEditable)
     return true;
-  return false;
-}
-function isAlwaysFocusVisibleDelayed(element) {
   const role = element.getAttribute("role");
-  if (role !== "combobox")
-    return false;
-  return !!element.dataset.name;
+  if (role === "combobox" && element.dataset.name) {
+    return true;
+  }
+  return false;
 }
 function getLabels(element) {
   if ("labels" in element) {
@@ -32771,7 +32888,7 @@ function isNativeCheckboxOrRadio(element) {
 function isNativeTabbable(tagName) {
   if (!tagName)
     return true;
-  return tagName === "button" || tagName === "input" || tagName === "select" || tagName === "textarea" || tagName === "a";
+  return tagName === "button" || tagName === "summary" || tagName === "input" || tagName === "select" || tagName === "textarea" || tagName === "a";
 }
 function supportsDisabledAttribute(tagName) {
   if (!tagName)
@@ -32855,11 +32972,13 @@ var useFocusable = createHook(
         if (!labels)
           return;
         const onMouseUp = () => queueMicrotask(() => element.focus());
-        labels.forEach((label) => label.addEventListener("mouseup", onMouseUp));
+        for (const label of labels) {
+          label.addEventListener("mouseup", onMouseUp);
+        }
         return () => {
-          labels.forEach(
-            (label) => label.removeEventListener("mouseup", onMouseUp)
-          );
+          for (const label of labels) {
+            label.removeEventListener("mouseup", onMouseUp);
+          }
         };
       }, [focusable]);
     }
@@ -32961,7 +33080,8 @@ var useFocusable = createHook(
       if (!isSelfTarget(event))
         return;
       const element = event.currentTarget;
-      queueMicrotask(() => handleFocusVisible(event, element));
+      const applyFocusVisible = () => handleFocusVisible(event, element);
+      queueBeforeEvent(element, "focusout", applyFocusVisible);
     });
     const onFocusCaptureProp = props.onFocusCapture;
     const onFocusCapture = useEvent((event) => {
@@ -32977,8 +33097,6 @@ var useFocusable = createHook(
       const element = event.currentTarget;
       const applyFocusVisible = () => handleFocusVisible(event, element);
       if (isKeyboardModality || isAlwaysFocusVisible(event.target)) {
-        queueMicrotask(applyFocusVisible);
-      } else if (isAlwaysFocusVisibleDelayed(event.target)) {
         queueBeforeEvent(event.target, "focusout", applyFocusVisible);
       } else {
         setFocusVisible(false);
@@ -33051,12 +33169,12 @@ var useFocusable = createHook(
 );
 var Focusable = forwardRef2(function Focusable2(props) {
   const htmlProps = useFocusable(props);
-  return createElement(WAZE6NXP_TagName, htmlProps);
+  return createElement(DYAGAZRT_TagName, htmlProps);
 });
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/FTNKYK65.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/QMBMAMY2.js
 "use client";
 
 
@@ -33073,13 +33191,13 @@ var Focusable = forwardRef2(function Focusable2(props) {
 
 
 
-var FTNKYK65_TagName = "div";
+var QMBMAMY2_TagName = "div";
 function isGrid(items) {
   return items.some((item) => !!item.rowId);
 }
 function isPrintableKey(event) {
   const target = event.target;
-  if (target && !RRSZHCH6_isTextField(target))
+  if (target && !isTextField(target))
     return false;
   return event.key.length === 1 && !event.ctrlKey && !event.metaKey;
 }
@@ -33158,9 +33276,13 @@ var useComposite = createHook(
       store,
        false && 0
     );
+    const ref = (0,external_React_.useRef)(null);
     const previousElementRef = (0,external_React_.useRef)(null);
     const scheduleFocus = useScheduleFocus(store);
     const moves = store.useState("moves");
+    const [, setBaseElement] = useTransactionState(
+      composite ? store.setBaseElement : null
+    );
     (0,external_React_.useEffect)(() => {
       var _a2;
       if (!store)
@@ -33214,7 +33336,7 @@ var useComposite = createHook(
       if (!previousElement)
         return;
       const activeElement = (_a2 = getEnabledItem(store, activeId)) == null ? void 0 : _a2.element;
-      const relatedTarget = activeElement || RRSZHCH6_getActiveElement(previousElement);
+      const relatedTarget = activeElement || I2NJJ3XW_getActiveElement(previousElement);
       if (relatedTarget === previousElement)
         return;
       fireBlurEvent(previousElement, { relatedTarget });
@@ -33318,7 +33440,7 @@ var useComposite = createHook(
       const isHorizontal = orientation !== "vertical";
       const grid = isGrid(renderedItems);
       const isHorizontalKey = event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "Home" || event.key === "End";
-      if (isHorizontalKey && RRSZHCH6_isTextField(event.currentTarget))
+      if (isHorizontalKey && isTextField(event.currentTarget))
         return;
       const up = () => {
         if (grid) {
@@ -33366,7 +33488,7 @@ var useComposite = createHook(
     props = _4R3V3JGP_spreadProps(_4R3V3JGP_spreadValues({
       "aria-activedescendant": activeDescendant
     }, props), {
-      ref: useMergeRefs(composite ? store.setBaseElement : null, props.ref),
+      ref: useMergeRefs(ref, setBaseElement, props.ref),
       onKeyDownCapture,
       onKeyUpCapture,
       onFocusCapture,
@@ -33381,9 +33503,9 @@ var useComposite = createHook(
     return props;
   }
 );
-var FTNKYK65_Composite = forwardRef2(function Composite2(props) {
+var QMBMAMY2_Composite = forwardRef2(function Composite2(props) {
   const htmlProps = useComposite(props);
-  return createElement(FTNKYK65_TagName, htmlProps);
+  return createElement(QMBMAMY2_TagName, htmlProps);
 });
 
 
@@ -33406,7 +33528,7 @@ var FTNKYK65_Composite = forwardRef2(function Composite2(props) {
 
 
 
-// src/combobox/combobox.ts
+// src/combobox/combobox.tsx
 
 
 
@@ -33434,6 +33556,15 @@ function isInputEvent(event) {
 function isAriaAutoCompleteValue(value) {
   return value === "inline" || value === "list" || value === "both" || value === "none";
 }
+function getDefaultAutoSelectId(items) {
+  const item = items.find((item2) => {
+    var _a;
+    if (item2.disabled)
+      return false;
+    return ((_a = item2.element) == null ? void 0 : _a.getAttribute("role")) !== "tab";
+  });
+  return item == null ? void 0 : item.id;
+}
 var useCombobox = createHook(
   function useCombobox2(_a) {
     var _b = _a, {
@@ -33441,14 +33572,15 @@ var useCombobox = createHook(
       focusable = true,
       autoSelect: autoSelectProp = false,
       getAutoSelectId,
-      showOnChange = true,
-      setValueOnChange = true,
-      showOnMouseDown = true,
+      setValueOnChange,
+      showMinLength = 0,
+      showOnChange,
+      showOnMouseDown,
       showOnClick = showOnMouseDown,
+      showOnKeyDown,
+      showOnKeyPress = showOnKeyDown,
       blurActiveItemOnClick,
       setValueOnClick = true,
-      showOnKeyDown = true,
-      showOnKeyPress = showOnKeyDown,
       moveOnKeyPress = true,
       autoComplete = "list"
     } = _b, props = __objRest(_b, [
@@ -33456,14 +33588,15 @@ var useCombobox = createHook(
       "focusable",
       "autoSelect",
       "getAutoSelectId",
-      "showOnChange",
       "setValueOnChange",
+      "showMinLength",
+      "showOnChange",
       "showOnMouseDown",
       "showOnClick",
-      "blurActiveItemOnClick",
-      "setValueOnClick",
       "showOnKeyDown",
       "showOnKeyPress",
+      "blurActiveItemOnClick",
+      "setValueOnClick",
       "moveOnKeyPress",
       "autoComplete"
     ]);
@@ -33474,7 +33607,7 @@ var useCombobox = createHook(
        false && 0
     );
     const ref = (0,external_React_.useRef)(null);
-    const [valueUpdated, forceValueUpdate] = _6O5OEQGF_useForceUpdate();
+    const [valueUpdated, forceValueUpdate] = OPTPHWV7_useForceUpdate();
     const canAutoSelectRef = (0,external_React_.useRef)(false);
     const composingRef = (0,external_React_.useRef)(false);
     const autoSelect = store.useState(
@@ -33488,9 +33621,26 @@ var useCombobox = createHook(
       setCanInline(true);
     }, [inline]);
     const storeValue = store.useState("value");
-    const activeValue = store.useState(
-      (state) => inline && canInline ? state.activeValue : void 0
-    );
+    const prevSelectedValueRef = (0,external_React_.useRef)();
+    (0,external_React_.useEffect)(() => {
+      return KLPDXTDE_sync(store, ["selectedValue", "activeId"], (_, prev) => {
+        prevSelectedValueRef.current = prev.selectedValue;
+      });
+    }, []);
+    const inlineActiveValue = store.useState((state) => {
+      var _a2;
+      if (!inline)
+        return;
+      if (!canInline)
+        return;
+      if (state.activeValue && Array.isArray(state.selectedValue)) {
+        if (state.selectedValue.includes(state.activeValue))
+          return;
+        if ((_a2 = prevSelectedValueRef.current) == null ? void 0 : _a2.includes(state.activeValue))
+          return;
+      }
+      return state.activeValue;
+    });
     const items = store.useState("renderedItems");
     const open = store.useState("open");
     const contentElement = store.useState("contentElement");
@@ -33501,18 +33651,18 @@ var useCombobox = createHook(
         return storeValue;
       const firstItemAutoSelected = isFirstItemAutoSelected(
         items,
-        activeValue,
+        inlineActiveValue,
         autoSelect
       );
       if (firstItemAutoSelected) {
-        if (hasCompletionString(storeValue, activeValue)) {
-          const slice = (activeValue == null ? void 0 : activeValue.slice(storeValue.length)) || "";
+        if (hasCompletionString(storeValue, inlineActiveValue)) {
+          const slice = (inlineActiveValue == null ? void 0 : inlineActiveValue.slice(storeValue.length)) || "";
           return storeValue + slice;
         }
         return storeValue;
       }
-      return activeValue || storeValue;
-    }, [inline, canInline, items, activeValue, autoSelect, storeValue]);
+      return inlineActiveValue || storeValue;
+    }, [inline, canInline, items, inlineActiveValue, autoSelect, storeValue]);
     (0,external_React_.useEffect)(() => {
       const element = ref.current;
       if (!element)
@@ -33528,28 +33678,43 @@ var useCombobox = createHook(
         return;
       if (!canInline)
         return;
-      if (!activeValue)
+      if (!inlineActiveValue)
         return;
       const firstItemAutoSelected = isFirstItemAutoSelected(
         items,
-        activeValue,
+        inlineActiveValue,
         autoSelect
       );
       if (!firstItemAutoSelected)
         return;
-      if (!hasCompletionString(storeValue, activeValue))
+      if (!hasCompletionString(storeValue, inlineActiveValue))
         return;
+      let cleanup = _22HHDS5F_noop;
       queueMicrotask(() => {
         const element = ref.current;
         if (!element)
           return;
-        setSelectionRange(element, storeValue.length, activeValue.length);
+        const { start: prevStart, end: prevEnd } = getTextboxSelection(element);
+        const nextStart = storeValue.length;
+        const nextEnd = inlineActiveValue.length;
+        setSelectionRange(element, nextStart, nextEnd);
+        cleanup = () => {
+          if (!hasFocus(element))
+            return;
+          const { start, end } = getTextboxSelection(element);
+          if (start !== nextStart)
+            return;
+          if (end !== nextEnd)
+            return;
+          setSelectionRange(element, prevStart, prevEnd);
+        };
       });
+      return () => cleanup();
     }, [
       valueUpdated,
       inline,
       canInline,
-      activeValue,
+      inlineActiveValue,
       items,
       autoSelect,
       storeValue
@@ -33566,7 +33731,7 @@ var useCombobox = createHook(
       if (!scrollingElement)
         return;
       scrollingElementRef.current = scrollingElement;
-      const onWheel = () => {
+      const onUserScroll = () => {
         canAutoSelectRef.current = false;
       };
       const onScroll = () => {
@@ -33582,10 +33747,12 @@ var useCombobox = createHook(
         canAutoSelectRef.current = false;
       };
       const options = { passive: true, capture: true };
-      scrollingElement.addEventListener("wheel", onWheel, options);
+      scrollingElement.addEventListener("wheel", onUserScroll, options);
+      scrollingElement.addEventListener("touchmove", onUserScroll, options);
       scrollingElement.addEventListener("scroll", onScroll, options);
       return () => {
-        scrollingElement.removeEventListener("wheel", onWheel, true);
+        scrollingElement.removeEventListener("wheel", onUserScroll, true);
+        scrollingElement.removeEventListener("touchmove", onUserScroll, true);
         scrollingElement.removeEventListener("scroll", onScroll, true);
       };
     }, [open, contentElement, store]);
@@ -33603,7 +33770,7 @@ var useCombobox = createHook(
     }, [autoSelect, open]);
     const resetValueOnSelect = store.useState("resetValueOnSelect");
     useUpdateEffect(() => {
-      var _a2;
+      var _a2, _b2;
       const canAutoSelect = canAutoSelectRef.current;
       if (!store)
         return;
@@ -33621,11 +33788,11 @@ var useCombobox = createHook(
       }
       if (autoSelect && canAutoSelect) {
         const userAutoSelectId = getAutoSelectIdProp(items);
-        const autoSelectId = userAutoSelectId !== void 0 ? userAutoSelectId : store.first();
+        const autoSelectId = userAutoSelectId !== void 0 ? userAutoSelectId : (_a2 = getDefaultAutoSelectId(items)) != null ? _a2 : store.first();
         autoSelectIdRef.current = autoSelectId;
         store.move(autoSelectId != null ? autoSelectId : null);
       } else {
-        const element = (_a2 = store.item(activeId)) == null ? void 0 : _a2.element;
+        const element = (_b2 = store.item(activeId)) == null ? void 0 : _b2.element;
         if (element && "scrollIntoView" in element) {
           element.scrollIntoView({ block: "nearest", inline: "nearest" });
         }
@@ -33655,21 +33822,34 @@ var useCombobox = createHook(
           store == null ? void 0 : store.setValue(value);
         }
       };
-      elements.forEach((el) => el.addEventListener("focusout", onBlur2));
+      for (const element of elements) {
+        element.addEventListener("focusout", onBlur2);
+      }
       return () => {
-        elements.forEach((el) => el.removeEventListener("focusout", onBlur2));
+        for (const element of elements) {
+          element.removeEventListener("focusout", onBlur2);
+        }
       };
     }, [inline, contentElement, store, value]);
+    const canShow = (event) => {
+      const currentTarget = event.currentTarget;
+      return currentTarget.value.length >= showMinLength;
+    };
     const onChangeProp = props.onChange;
-    const showOnChangeProp = useBooleanEvent(showOnChange);
-    const setValueOnChangeProp = useBooleanEvent(setValueOnChange);
+    const showOnChangeProp = useBooleanEvent(showOnChange != null ? showOnChange : canShow);
+    const setValueOnChangeProp = useBooleanEvent(
+      // If the combobox is combined with tags, the value will be set by the tag
+      // input component.
+      setValueOnChange != null ? setValueOnChange : !store.tag
+    );
     const onChange = useEvent((event) => {
       onChangeProp == null ? void 0 : onChangeProp(event);
       if (event.defaultPrevented)
         return;
       if (!store)
         return;
-      const { value: value2, selectionStart, selectionEnd } = event.target;
+      const currentTarget = event.currentTarget;
+      const { value: value2, selectionStart, selectionEnd } = currentTarget;
       const nativeEvent = event.nativeEvent;
       canAutoSelectRef.current = true;
       if (isInputEvent(nativeEvent)) {
@@ -33685,8 +33865,10 @@ var useCombobox = createHook(
       }
       if (setValueOnChangeProp(event)) {
         const isSameValue = value2 === store.getState().value;
-        (0,external_ReactDOM_namespaceObject.flushSync)(() => store == null ? void 0 : store.setValue(value2));
-        setSelectionRange(event.currentTarget, selectionStart, selectionEnd);
+        store.setValue(value2);
+        queueMicrotask(() => {
+          setSelectionRange(currentTarget, selectionStart, selectionEnd);
+        });
         if (inline && autoSelect && isSameValue) {
           forceValueUpdate();
         }
@@ -33714,7 +33896,7 @@ var useCombobox = createHook(
       blurActiveItemOnClick != null ? blurActiveItemOnClick : () => !!(store == null ? void 0 : store.getState().includesBaseElement)
     );
     const setValueOnClickProp = useBooleanEvent(setValueOnClick);
-    const showOnClickProp = useBooleanEvent(showOnClick);
+    const showOnClickProp = useBooleanEvent(showOnClick != null ? showOnClick : canShow);
     const onMouseDown = useEvent((event) => {
       onMouseDownProp == null ? void 0 : onMouseDownProp(event);
       if (event.defaultPrevented)
@@ -33736,7 +33918,7 @@ var useCombobox = createHook(
       }
     });
     const onKeyDownProp = props.onKeyDown;
-    const showOnKeyPressProp = useBooleanEvent(showOnKeyPress);
+    const showOnKeyPressProp = useBooleanEvent(showOnKeyPress != null ? showOnKeyPress : canShow);
     const onKeyDown = useEvent((event) => {
       onKeyDownProp == null ? void 0 : onKeyDownProp(event);
       if (!event.repeat) {
@@ -33817,7 +33999,7 @@ var Combobox = forwardRef2(function Combobox2(props) {
 });
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/RQZGFHI2.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/TNHM3SUC.js
 "use client";
 
 
@@ -33831,12 +34013,12 @@ var Combobox = forwardRef2(function Combobox2(props) {
 
 
 
-var RQZGFHI2_TagName = "div";
+var TNHM3SUC_TagName = "div";
 function afterTimeout(timeoutMs, cb) {
   const timeoutId = setTimeout(cb, timeoutMs);
   return () => clearTimeout(timeoutId);
 }
-function RQZGFHI2_afterPaint(cb) {
+function TNHM3SUC_afterPaint(cb) {
   let raf = requestAnimationFrame(() => {
     raf = requestAnimationFrame(cb);
   });
@@ -33845,7 +34027,7 @@ function RQZGFHI2_afterPaint(cb) {
 function parseCSSTime(...times) {
   return times.join(", ").split(", ").reduce((longestTime, currentTimeString) => {
     const multiplier = currentTimeString.endsWith("ms") ? 1 : 1e3;
-    const currentTime = parseFloat(currentTimeString || "0s") * multiplier;
+    const currentTime = Number.parseFloat(currentTimeString || "0s") * multiplier;
     if (currentTime > longestTime)
       return currentTime;
     return longestTime;
@@ -33894,7 +34076,7 @@ var useDisclosureContent = createHook(function useDisclosureContent2(_a) {
       setTransition(null);
       return;
     }
-    return RQZGFHI2_afterPaint(() => {
+    return TNHM3SUC_afterPaint(() => {
       setTransition(open ? "enter" : mounted ? "leave" : null);
     });
   }, [animated, contentElement, open, mounted]);
@@ -33979,7 +34161,7 @@ var useDisclosureContent = createHook(function useDisclosureContent2(_a) {
 });
 var DisclosureContentImpl = forwardRef2(function DisclosureContentImpl2(props) {
   const htmlProps = useDisclosureContent(props);
-  return createElement(RQZGFHI2_TagName, htmlProps);
+  return createElement(TNHM3SUC_TagName, htmlProps);
 });
 var DisclosureContent = forwardRef2(function DisclosureContent2(_a) {
   var _b = _a, {
@@ -34000,7 +34182,7 @@ var DisclosureContent = forwardRef2(function DisclosureContent2(_a) {
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/Y3BYYHRY.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/VC5OPI3O.js
 "use client";
 
 
@@ -34012,23 +34194,20 @@ var DisclosureContent = forwardRef2(function DisclosureContent2(_a) {
 
 
 
-var Y3BYYHRY_TagName = "div";
+var VC5OPI3O_TagName = "div";
 var useComboboxList = createHook(
   function useComboboxList2(_a) {
     var _b = _a, { store, alwaysVisible } = _b, props = __objRest(_b, ["store", "alwaysVisible"]);
-    const context = useComboboxProviderContext();
+    const scopedContext = useComboboxScopedContext(true);
+    const context = useComboboxContext();
     store = store || context;
+    const scopedContextSameStore = !!store && store === scopedContext;
     invariant(
       store,
        false && 0
     );
     const ref = (0,external_React_.useRef)(null);
     const id = useId(props.id);
-    props = useWrapElement(
-      props,
-      (element) => /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(ComboboxScopedContextProvider, { value: store, children: element }),
-      [store]
-    );
     const mounted = store.useState("mounted");
     const hidden = isHidden(mounted, props.hidden, alwaysVisible);
     const style = hidden ? _4R3V3JGP_spreadProps(_4R3V3JGP_spreadValues({}, props.style), { display: "none" }) : props.style;
@@ -34038,13 +34217,45 @@ var useComboboxList = createHook(
     const role = useAttribute(ref, "role", props.role);
     const isCompositeRole = role === "listbox" || role === "tree" || role === "grid";
     const ariaMultiSelectable = isCompositeRole ? multiSelectable || void 0 : void 0;
+    const [hasListboxInside, setHasListboxInside] = (0,external_React_.useState)(false);
+    const contentElement = store.useState("contentElement");
+    useSafeLayoutEffect(() => {
+      if (!mounted)
+        return;
+      const element = ref.current;
+      if (!element)
+        return;
+      if (contentElement !== element)
+        return;
+      const callback = () => {
+        setHasListboxInside(!!element.querySelector("[role='listbox']"));
+      };
+      const observer = new MutationObserver(callback);
+      observer.observe(element, {
+        subtree: true,
+        childList: true,
+        attributeFilter: ["role"]
+      });
+      callback();
+      return () => observer.disconnect();
+    }, [mounted, contentElement]);
+    if (!hasListboxInside) {
+      props = _4R3V3JGP_spreadValues({
+        role: "listbox",
+        "aria-multiselectable": ariaMultiSelectable
+      }, props);
+    }
+    props = useWrapElement(
+      props,
+      (element) => /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(ComboboxScopedContextProvider, { value: store, children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(ComboboxListRoleContext.Provider, { value: role, children: element }) }),
+      [store, role]
+    );
+    const setContentElement = id && (!scopedContext || !scopedContextSameStore) ? store.setContentElement : null;
     props = _4R3V3JGP_spreadProps(_4R3V3JGP_spreadValues({
       id,
-      hidden,
-      role: "listbox",
-      "aria-multiselectable": ariaMultiSelectable
+      hidden
     }, props), {
-      ref: useMergeRefs(id ? store.setContentElement : null, ref, props.ref),
+      ref: useMergeRefs(setContentElement, ref, props.ref),
       style
     });
     return removeUndefinedValues(props);
@@ -34052,25 +34263,78 @@ var useComboboxList = createHook(
 );
 var ComboboxList = forwardRef2(function ComboboxList2(props) {
   const htmlProps = useComboboxList(props);
-  return createElement(Y3BYYHRY_TagName, htmlProps);
+  return createElement(VC5OPI3O_TagName, htmlProps);
 });
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/KSZPJCUA.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/OEBCGVCG.js
 "use client";
 
 
 
 
 
-// src/command/command.ts
+// src/collection/collection-item.tsx
+
+
+var OEBCGVCG_TagName = "div";
+var useCollectionItem = createHook(
+  function useCollectionItem2(_a) {
+    var _b = _a, {
+      store,
+      shouldRegisterItem = true,
+      getItem = identity,
+      element: element
+    } = _b, props = __objRest(_b, [
+      "store",
+      "shouldRegisterItem",
+      "getItem",
+      // @ts-expect-error This prop may come from a collection renderer.
+      "element"
+    ]);
+    const context = useCollectionContext();
+    store = store || context;
+    const id = useId(props.id);
+    const ref = (0,external_React_.useRef)(element);
+    (0,external_React_.useEffect)(() => {
+      const element2 = ref.current;
+      if (!id)
+        return;
+      if (!element2)
+        return;
+      if (!shouldRegisterItem)
+        return;
+      const item = getItem({ id, element: element2 });
+      return store == null ? void 0 : store.renderItem(item);
+    }, [id, shouldRegisterItem, getItem, store]);
+    props = _4R3V3JGP_spreadProps(_4R3V3JGP_spreadValues({}, props), {
+      ref: useMergeRefs(ref, props.ref)
+    });
+    return removeUndefinedValues(props);
+  }
+);
+var CollectionItem = forwardRef2(function CollectionItem2(props) {
+  const htmlProps = useCollectionItem(props);
+  return createElement(OEBCGVCG_TagName, htmlProps);
+});
+
+
+
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/5EKYTDKF.js
+"use client";
 
 
 
 
 
-var KSZPJCUA_TagName = "button";
+// src/command/command.tsx
+
+
+
+
+
+var _5EKYTDKF_TagName = "button";
 function isNativeClick(event) {
   if (!event.isTrusted)
     return false;
@@ -34083,7 +34347,7 @@ function isNativeClick(event) {
   }
   return false;
 }
-var KSZPJCUA_symbol = Symbol("command");
+var _5EKYTDKF_symbol = Symbol("command");
 var useCommand = createHook(
   function useCommand2(_a) {
     var _b = _a, { clickOnEnter = true, clickOnSpace = true } = _b, props = __objRest(_b, ["clickOnEnter", "clickOnSpace"]);
@@ -34101,7 +34365,7 @@ var useCommand = createHook(
     const [active, setActive] = (0,external_React_.useState)(false);
     const activeRef = (0,external_React_.useRef)(false);
     const disabled = disabledFromProps(props);
-    const [isDuplicate, metadataProps] = useMetadataProps(props, KSZPJCUA_symbol, true);
+    const [isDuplicate, metadataProps] = useMetadataProps(props, _5EKYTDKF_symbol, true);
     const onKeyDownProp = props.onKeyDown;
     const onKeyDown = useEvent((event) => {
       onKeyDownProp == null ? void 0 : onKeyDownProp(event);
@@ -34114,7 +34378,7 @@ var useCommand = createHook(
         return;
       if (!isSelfTarget(event))
         return;
-      if (RRSZHCH6_isTextField(element))
+      if (isTextField(element))
         return;
       if (element.isContentEditable)
         return;
@@ -34185,65 +34449,12 @@ var useCommand = createHook(
 );
 var Command = forwardRef2(function Command2(props) {
   const htmlProps = useCommand(props);
-  return createElement(KSZPJCUA_TagName, htmlProps);
+  return createElement(_5EKYTDKF_TagName, htmlProps);
 });
 
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/7YKLTEOQ.js
-"use client";
-
-
-
-
-
-// src/collection/collection-item.ts
-
-
-var _7YKLTEOQ_TagName = "div";
-var useCollectionItem = createHook(
-  function useCollectionItem2(_a) {
-    var _b = _a, {
-      store,
-      shouldRegisterItem = true,
-      getItem = identity,
-      element: element
-    } = _b, props = __objRest(_b, [
-      "store",
-      "shouldRegisterItem",
-      "getItem",
-      // @ts-expect-error This prop may come from a collection renderer.
-      "element"
-    ]);
-    const context = useCollectionContext();
-    store = store || context;
-    const id = useId(props.id);
-    const ref = (0,external_React_.useRef)(element);
-    (0,external_React_.useEffect)(() => {
-      const element2 = ref.current;
-      if (!id)
-        return;
-      if (!element2)
-        return;
-      if (!shouldRegisterItem)
-        return;
-      const item = getItem({ id, element: element2 });
-      return store == null ? void 0 : store.renderItem(item);
-    }, [id, shouldRegisterItem, getItem, store]);
-    props = _4R3V3JGP_spreadProps(_4R3V3JGP_spreadValues({}, props), {
-      ref: useMergeRefs(ref, props.ref)
-    });
-    return removeUndefinedValues(props);
-  }
-);
-var CollectionItem = forwardRef2(function CollectionItem2(props) {
-  const htmlProps = useCollectionItem(props);
-  return createElement(_7YKLTEOQ_TagName, htmlProps);
-});
-
-
-
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/C6OBNQ4F.js
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/UN4MKOLN.js
 "use client";
 
 
@@ -34260,11 +34471,10 @@ var CollectionItem = forwardRef2(function CollectionItem2(props) {
 
 
 
-var C6OBNQ4F_TagName = "button";
+
+var UN4MKOLN_TagName = "button";
 function isEditableElement(element) {
-  if (element.isContentEditable)
-    return true;
-  if (RRSZHCH6_isTextField(element))
+  if (isTextbox(element))
     return true;
   return element.tagName === "INPUT" && !isButton(element);
 }
@@ -34422,11 +34632,12 @@ var useCompositeItem = createHook(
         return;
       if (!store)
         return;
-      const { activeId, virtualFocus: virtualFocus2, baseElement: baseElement2 } = store.getState();
       if (targetIsAnotherItem(event, store))
         return;
-      if (activeId !== id) {
-        store.setActiveId(id);
+      const { virtualFocus: virtualFocus2, baseElement: baseElement2 } = store.getState();
+      store.setActiveId(id);
+      if (isTextbox(event.currentTarget)) {
+        selectTextField(event.currentTarget);
       }
       if (!virtualFocus2)
         return;
@@ -34436,6 +34647,12 @@ var useCompositeItem = createHook(
         return;
       if (!(baseElement2 == null ? void 0 : baseElement2.isConnected))
         return;
+      if (isSafari() && event.currentTarget.hasAttribute("data-autofocus")) {
+        event.currentTarget.scrollIntoView({
+          block: "nearest",
+          inline: "nearest"
+        });
+      }
       hasFocusedComposite.current = true;
       const fromComposite = event.relatedTarget === baseElement2 || isItem(store, event.relatedTarget);
       if (fromComposite) {
@@ -34480,7 +34697,7 @@ var useCompositeItem = createHook(
           return true;
         if (!state.baseElement)
           return true;
-        if (!RRSZHCH6_isTextField(state.baseElement))
+        if (!isTextField(state.baseElement))
           return true;
         return false;
       };
@@ -34514,6 +34731,19 @@ var useCompositeItem = createHook(
       };
       const action = keyMap[event.key];
       if (action) {
+        if (isTextbox(currentTarget)) {
+          const selection = getTextboxSelection(currentTarget);
+          const isLeft = isHorizontal && event.key === "ArrowLeft";
+          const isRight = isHorizontal && event.key === "ArrowRight";
+          const isUp = isVertical && event.key === "ArrowUp";
+          const isDown = isVertical && event.key === "ArrowDown";
+          if (isRight || isDown) {
+            const { length: valueLength } = getTextboxValue(currentTarget);
+            if (selection.end !== valueLength)
+              return;
+          } else if ((isLeft || isUp) && selection.start !== 0)
+            return;
+        }
         const nextId = action();
         if (preventScrollOnKeyDownProp(event) || nextId !== void 0) {
           if (!moveOnKeyPressProp(event))
@@ -34600,7 +34830,7 @@ var useCompositeItem = createHook(
       store
     }, props), {
       getItem,
-      shouldRegisterItem: !!id ? props.shouldRegisterItem : false
+      shouldRegisterItem: id ? props.shouldRegisterItem : false
     }));
     return removeUndefinedValues(_4R3V3JGP_spreadProps(_4R3V3JGP_spreadValues({}, props), {
       "aria-setsize": ariaSetSize,
@@ -34608,10 +34838,10 @@ var useCompositeItem = createHook(
     }));
   }
 );
-var C6OBNQ4F_CompositeItem = memo2(
+var UN4MKOLN_CompositeItem = memo2(
   forwardRef2(function CompositeItem2(props) {
     const htmlProps = useCompositeItem(props);
-    return createElement(C6OBNQ4F_TagName, htmlProps);
+    return createElement(UN4MKOLN_TagName, htmlProps);
   })
 );
 
@@ -34656,14 +34886,25 @@ function isSelected(storeValue, itemValue) {
   }
   return storeValue === itemValue;
 }
+function getItemRole(popupRole) {
+  var _a;
+  const itemRoleByPopupRole = {
+    menu: "menuitem",
+    listbox: "option",
+    tree: "treeitem"
+  };
+  const key = popupRole;
+  return (_a = itemRoleByPopupRole[key]) != null ? _a : "option";
+}
 var useComboboxItem = createHook(
   function useComboboxItem2(_a) {
     var _b = _a, {
       store,
       value,
       hideOnClick,
-      selectValueOnClick = true,
       setValueOnClick,
+      selectValueOnClick = true,
+      resetValueOnSelect,
       focusOnHover = false,
       moveOnKeyPress = true,
       getItem: getItemProp
@@ -34671,12 +34912,14 @@ var useComboboxItem = createHook(
       "store",
       "value",
       "hideOnClick",
-      "selectValueOnClick",
       "setValueOnClick",
+      "selectValueOnClick",
+      "resetValueOnSelect",
       "focusOnHover",
       "moveOnKeyPress",
       "getItem"
     ]);
+    var _a2;
     const context = useComboboxScopedContext();
     store = store || context;
     invariant(
@@ -34696,11 +34939,18 @@ var useComboboxItem = createHook(
     const multiSelectable = store.useState(
       (state) => Array.isArray(state.selectedValue)
     );
+    const selected = store.useState(
+      (state) => isSelected(state.selectedValue, value)
+    );
+    const resetValueOnSelectState = store.useState("resetValueOnSelect");
     setValueOnClick = setValueOnClick != null ? setValueOnClick : !multiSelectable;
     hideOnClick = hideOnClick != null ? hideOnClick : value != null && !multiSelectable;
     const onClickProp = props.onClick;
     const setValueOnClickProp = useBooleanEvent(setValueOnClick);
     const selectValueOnClickProp = useBooleanEvent(selectValueOnClick);
+    const resetValueOnSelectProp = useBooleanEvent(
+      (_a2 = resetValueOnSelect != null ? resetValueOnSelect : resetValueOnSelectState) != null ? _a2 : multiSelectable
+    );
     const hideOnClickProp = useBooleanEvent(hideOnClick);
     const onClick = useEvent((event) => {
       onClickProp == null ? void 0 : onClickProp(event);
@@ -34712,6 +34962,9 @@ var useComboboxItem = createHook(
         return;
       if (value != null) {
         if (selectValueOnClickProp(event)) {
+          if (resetValueOnSelectProp(event)) {
+            store == null ? void 0 : store.resetValue();
+          }
           store == null ? void 0 : store.setSelectedValue((prevValue) => {
             if (!Array.isArray(prevValue))
               return value;
@@ -34742,14 +34995,11 @@ var useComboboxItem = createHook(
       const printable = event.key.length === 1;
       if (printable || event.key === "Backspace" || event.key === "Delete") {
         queueMicrotask(() => baseElement.focus());
-        if (RRSZHCH6_isTextField(baseElement)) {
+        if (isTextField(baseElement)) {
           store == null ? void 0 : store.setValue(baseElement.value);
         }
       }
     });
-    const selected = store.useState(
-      (state) => isSelected(state.selectedValue, value)
-    );
     if (multiSelectable && selected != null) {
       props = _4R3V3JGP_spreadValues({
         "aria-selected": selected
@@ -34760,9 +35010,9 @@ var useComboboxItem = createHook(
       (element) => /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(ComboboxItemValueContext.Provider, { value, children: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(ComboboxItemCheckedContext.Provider, { value: selected != null ? selected : false, children: element }) }),
       [value, selected]
     );
-    const contentElement = store.useState("contentElement");
+    const popupRole = (0,external_React_.useContext)(ComboboxListRoleContext);
     props = _4R3V3JGP_spreadProps(_4R3V3JGP_spreadValues({
-      role: getPopupItemRole(contentElement),
+      role: getItemRole(popupRole),
       children: value
     }, props), {
       onClick,
