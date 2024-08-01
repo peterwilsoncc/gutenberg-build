@@ -25365,8 +25365,25 @@ function PatternOverridesPanel() {
 function sort(a, b, direction) {
   return direction === 'asc' ? a - b : b - a;
 }
+function isValid(value, context) {
+  // TODO: this implicitely means the value is required.
+  if (value === '') {
+    return false;
+  }
+  if (!Number.isInteger(Number(value))) {
+    return false;
+  }
+  if (context?.elements) {
+    const validValues = context?.elements.map(f => f.value);
+    if (!validValues.includes(Number(value))) {
+      return false;
+    }
+  }
+  return true;
+}
 /* harmony default export */ const integer = ({
-  sort
+  sort,
+  isValid
 });
 
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/index.js
@@ -25384,10 +25401,17 @@ function getFieldTypeDefinition(type) {
   if ('integer' === type) {
     return integer;
   }
-
-  // If no type found, the sort function doesn't do anything.
   return {
-    sort: () => 0
+    sort: () => 0,
+    isValid: (value, context) => {
+      if (context?.elements) {
+        const validValues = context?.elements?.map(f => f.value);
+        if (!validValues.includes(value)) {
+          return false;
+        }
+      }
+      return true;
+    }
   };
 }
 
@@ -25404,7 +25428,7 @@ function getFieldTypeDefinition(type) {
  */
 function normalizeFields(fields) {
   return fields.map(field => {
-    var _field$sort;
+    var _field$sort, _field$isValid;
     const fieldTypeDefinition = getFieldTypeDefinition(field.type);
     const getValue = field.getValue || (({
       item
@@ -25416,12 +25440,18 @@ function normalizeFields(fields) {
         item: b
       }), direction);
     };
+    const isValid = (_field$isValid = field.isValid) !== null && _field$isValid !== void 0 ? _field$isValid : function isValid(item, context) {
+      return fieldTypeDefinition.isValid(getValue({
+        item
+      }), context);
+    };
     return {
       ...field,
       label: field.label || field.id,
       getValue,
       render: field.render || getValue,
-      sort
+      sort,
+      isValid
     };
   });
 }
@@ -25436,26 +25466,9 @@ function isItemValid(item, fields, form) {
     id
   }) => !!form.visibleFields?.includes(id)));
   return _fields.every(field => {
-    const value = field.getValue({
-      item
+    return field.isValid(item, {
+      elements: field.elements
     });
-
-    // TODO: this implicitely means the value is required.
-    if (field.type === 'integer' && value === '') {
-      return false;
-    }
-    if (field.type === 'integer' && !Number.isInteger(Number(value))) {
-      return false;
-    }
-    if (field.elements) {
-      const validValues = field.elements.map(f => f.value);
-      if (!validValues.includes(Number(value))) {
-        return false;
-      }
-    }
-
-    // Nothing to validate.
-    return true;
   });
 }
 
