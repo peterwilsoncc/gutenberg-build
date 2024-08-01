@@ -25386,10 +25386,35 @@ function isValid(value, context) {
   isValid
 });
 
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/text.js
+/**
+ * Internal dependencies
+ */
+
+function text_sort(valueA, valueB, direction) {
+  return direction === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+}
+function text_isValid(value, context) {
+  if (context?.elements) {
+    const validValues = context?.elements?.map(f => f.value);
+    if (!validValues.includes(value)) {
+      return false;
+    }
+  }
+  return true;
+}
+/* harmony default export */ const field_types_text = ({
+  sort: text_sort,
+  isValid: text_isValid
+});
+
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/index.js
 /**
  * Internal dependencies
  */
+
+
+
 
 /**
  *
@@ -25401,8 +25426,16 @@ function getFieldTypeDefinition(type) {
   if ('integer' === type) {
     return integer;
   }
+  if ('text' === type) {
+    return field_types_text;
+  }
   return {
-    sort: () => 0,
+    sort: (a, b, direction) => {
+      if (typeof a === 'number' && typeof b === 'number') {
+        return direction === 'asc' ? a - b : b - a;
+      }
+      return direction === 'asc' ? a.localeCompare(b) : b.localeCompare(a);
+    },
     isValid: (value, context) => {
       if (context?.elements) {
         const validValues = context?.elements?.map(f => f.value);
