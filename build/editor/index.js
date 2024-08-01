@@ -25357,6 +25357,40 @@ function PatternOverridesPanel() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OverridesPanel, {});
 }
 
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/integer.js
+/**
+ * Internal dependencies
+ */
+
+function sort(a, b, direction) {
+  return direction === 'asc' ? a - b : b - a;
+}
+/* harmony default export */ const integer = ({
+  sort
+});
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/index.js
+/**
+ * Internal dependencies
+ */
+
+/**
+ *
+ * @param {FieldType} type The field type definition to get.
+ *
+ * @return A field type definition.
+ */
+function getFieldTypeDefinition(type) {
+  if ('integer' === type) {
+    return integer;
+  }
+
+  // If no type found, the sort function doesn't do anything.
+  return {
+    sort: () => 0
+  };
+}
+
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/normalize-fields.js
 /**
  * Internal dependencies
@@ -25370,14 +25404,24 @@ function PatternOverridesPanel() {
  */
 function normalizeFields(fields) {
   return fields.map(field => {
+    var _field$sort;
+    const fieldTypeDefinition = getFieldTypeDefinition(field.type);
     const getValue = field.getValue || (({
       item
     }) => item[field.id]);
+    const sort = (_field$sort = field.sort) !== null && _field$sort !== void 0 ? _field$sort : function sort(a, b, direction) {
+      return fieldTypeDefinition.sort(getValue({
+        item: a
+      }), getValue({
+        item: b
+      }), direction);
+    };
     return {
       ...field,
       label: field.label || field.id,
       getValue,
-      render: field.render || getValue
+      render: field.render || getValue,
+      sort
     };
   });
 }

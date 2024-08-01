@@ -28700,6 +28700,9 @@ function EditSiteEditor({
   });
 }
 
+// EXTERNAL MODULE: ./node_modules/remove-accents/index.js
+var remove_accents = __webpack_require__(4793);
+var remove_accents_default = /*#__PURE__*/__webpack_require__.n(remove_accents);
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/constants.js
 /**
  * WordPress dependencies
@@ -28762,6 +28765,231 @@ const sortLabels = {
 const constants_LAYOUT_TABLE = 'table';
 const constants_LAYOUT_GRID = 'grid';
 const constants_LAYOUT_LIST = 'list';
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/integer.js
+/**
+ * Internal dependencies
+ */
+
+function sort(a, b, direction) {
+  return direction === 'asc' ? a - b : b - a;
+}
+/* harmony default export */ const integer = ({
+  sort
+});
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/index.js
+/**
+ * Internal dependencies
+ */
+
+/**
+ *
+ * @param {FieldType} type The field type definition to get.
+ *
+ * @return A field type definition.
+ */
+function getFieldTypeDefinition(type) {
+  if ('integer' === type) {
+    return integer;
+  }
+
+  // If no type found, the sort function doesn't do anything.
+  return {
+    sort: () => 0
+  };
+}
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/normalize-fields.js
+/**
+ * Internal dependencies
+ */
+
+/**
+ * Apply default values and normalize the fields config.
+ *
+ * @param fields Fields config.
+ * @return Normalized fields config.
+ */
+function normalizeFields(fields) {
+  return fields.map(field => {
+    var _field$sort;
+    const fieldTypeDefinition = getFieldTypeDefinition(field.type);
+    const getValue = field.getValue || (({
+      item
+    }) => item[field.id]);
+    const sort = (_field$sort = field.sort) !== null && _field$sort !== void 0 ? _field$sort : function sort(a, b, direction) {
+      return fieldTypeDefinition.sort(getValue({
+        item: a
+      }), getValue({
+        item: b
+      }), direction);
+    };
+    return {
+      ...field,
+      label: field.label || field.id,
+      getValue,
+      render: field.render || getValue,
+      sort
+    };
+  });
+}
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/filter-and-sort-data-view.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+function normalizeSearchInput(input = '') {
+  return remove_accents_default()(input.trim().toLowerCase());
+}
+const filter_and_sort_data_view_EMPTY_ARRAY = [];
+
+/**
+ * Applies the filtering, sorting and pagination to the raw data based on the view configuration.
+ *
+ * @param data   Raw data.
+ * @param view   View config.
+ * @param fields Fields config.
+ *
+ * @return Filtered, sorted and paginated data.
+ */
+function filterSortAndPaginate(data, view, fields) {
+  if (!data) {
+    return {
+      data: filter_and_sort_data_view_EMPTY_ARRAY,
+      paginationInfo: {
+        totalItems: 0,
+        totalPages: 0
+      }
+    };
+  }
+  const _fields = normalizeFields(fields);
+  let filteredData = [...data];
+  // Handle global search.
+  if (view.search) {
+    const normalizedSearch = normalizeSearchInput(view.search);
+    filteredData = filteredData.filter(item => {
+      return _fields.filter(field => field.enableGlobalSearch).map(field => {
+        return normalizeSearchInput(field.getValue({
+          item
+        }));
+      }).some(field => field.includes(normalizedSearch));
+    });
+  }
+  if (view.filters && view.filters?.length > 0) {
+    view.filters.forEach(filter => {
+      const field = _fields.find(_field => _field.id === filter.field);
+      if (field) {
+        if (filter.operator === constants_OPERATOR_IS_ANY && filter?.value?.length > 0) {
+          filteredData = filteredData.filter(item => {
+            const fieldValue = field.getValue({
+              item
+            });
+            if (Array.isArray(fieldValue)) {
+              return filter.value.some(filterValue => fieldValue.includes(filterValue));
+            } else if (typeof fieldValue === 'string') {
+              return filter.value.includes(fieldValue);
+            }
+            return false;
+          });
+        } else if (filter.operator === constants_OPERATOR_IS_NONE && filter?.value?.length > 0) {
+          filteredData = filteredData.filter(item => {
+            const fieldValue = field.getValue({
+              item
+            });
+            if (Array.isArray(fieldValue)) {
+              return !filter.value.some(filterValue => fieldValue.includes(filterValue));
+            } else if (typeof fieldValue === 'string') {
+              return !filter.value.includes(fieldValue);
+            }
+            return false;
+          });
+        } else if (filter.operator === OPERATOR_IS_ALL && filter?.value?.length > 0) {
+          filteredData = filteredData.filter(item => {
+            return filter.value.every(value => {
+              return field.getValue({
+                item
+              })?.includes(value);
+            });
+          });
+        } else if (filter.operator === OPERATOR_IS_NOT_ALL && filter?.value?.length > 0) {
+          filteredData = filteredData.filter(item => {
+            return filter.value.every(value => {
+              return !field.getValue({
+                item
+              })?.includes(value);
+            });
+          });
+        } else if (filter.operator === constants_OPERATOR_IS) {
+          filteredData = filteredData.filter(item => {
+            return filter.value === field.getValue({
+              item
+            });
+          });
+        } else if (filter.operator === constants_OPERATOR_IS_NOT) {
+          filteredData = filteredData.filter(item => {
+            return filter.value !== field.getValue({
+              item
+            });
+          });
+        }
+      }
+    });
+  }
+
+  // Handle sorting.
+  if (view.sort) {
+    const fieldId = view.sort.field;
+    const fieldToSort = _fields.find(field => {
+      return field.id === fieldId;
+    });
+    if (fieldToSort) {
+      filteredData.sort((a, b) => {
+        var _fieldToSort$getValue, _fieldToSort$getValue2;
+        const valueA = (_fieldToSort$getValue = fieldToSort.getValue({
+          item: a
+        })) !== null && _fieldToSort$getValue !== void 0 ? _fieldToSort$getValue : '';
+        const valueB = (_fieldToSort$getValue2 = fieldToSort.getValue({
+          item: b
+        })) !== null && _fieldToSort$getValue2 !== void 0 ? _fieldToSort$getValue2 : '';
+        if (fieldToSort.type === 'integer') {
+          var _view$sort$direction;
+          return fieldToSort.sort(a, b, (_view$sort$direction = view.sort?.direction) !== null && _view$sort$direction !== void 0 ? _view$sort$direction : 'desc');
+        }
+
+        // When/if types become required, we can remove the following logic.
+        if (typeof valueA === 'number' && typeof valueB === 'number') {
+          return view.sort?.direction === 'asc' ? valueA - valueB : valueB - valueA;
+        }
+        return view.sort?.direction === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+      });
+    }
+  }
+
+  // Handle pagination.
+  let totalItems = filteredData.length;
+  let totalPages = 1;
+  if (view.page !== undefined && view.perPage !== undefined) {
+    const start = (view.page - 1) * view.perPage;
+    totalItems = filteredData?.length || 0;
+    totalPages = Math.ceil(totalItems / view.perPage);
+    filteredData = filteredData?.slice(start, start + view.perPage);
+  }
+  return {
+    data: filteredData,
+    paginationInfo: {
+      totalItems,
+      totalPages
+    }
+  };
+}
 
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/components/dataviews-context/index.js
 /**
@@ -34487,9 +34715,6 @@ var ComboboxItemValue = forwardRef2(function ComboboxItemValue2(props) {
 });
 
 
-// EXTERNAL MODULE: ./node_modules/remove-accents/index.js
-var remove_accents = __webpack_require__(4793);
-var remove_accents_default = /*#__PURE__*/__webpack_require__.n(remove_accents);
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/components/dataviews-filters/search-widget.js
 /**
  * External dependencies
@@ -34527,7 +34752,7 @@ const radioCheck = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
     r: 3
   })
 });
-function normalizeSearchInput(input = '') {
+function search_widget_normalizeSearchInput(input = '') {
   return remove_accents_default()(input.trim().toLowerCase());
 }
 const search_widget_EMPTY_ARRAY = [];
@@ -34638,8 +34863,8 @@ function search_widget_ComboboxList({
   const currentFilter = view.filters?.find(_filter => _filter.field === filter.field);
   const currentValue = getCurrentValue(filter, currentFilter);
   const matches = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const normalizedSearch = normalizeSearchInput(deferredSearchValue);
-    return filter.elements.filter(item => normalizeSearchInput(item.label).includes(normalizedSearch));
+    const normalizedSearch = search_widget_normalizeSearchInput(deferredSearchValue);
+    return filter.elements.filter(item => search_widget_normalizeSearchInput(item.label).includes(normalizedSearch));
   }, [filter.elements, deferredSearchValue]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ComboboxProvider, {
     resetValueOnSelect: false,
@@ -36865,31 +37090,6 @@ function _DataViewsViewConfig({
 const DataViewsViewConfig = (0,external_wp_element_namespaceObject.memo)(_DataViewsViewConfig);
 /* harmony default export */ const dataviews_view_config = (DataViewsViewConfig);
 
-;// CONCATENATED MODULE: ./packages/dataviews/build-module/normalize-fields.js
-/**
- * Internal dependencies
- */
-
-/**
- * Apply default values and normalize the fields config.
- *
- * @param fields Fields config.
- * @return Normalized fields config.
- */
-function normalizeFields(fields) {
-  return fields.map(field => {
-    const getValue = field.getValue || (({
-      item
-    }) => item[field.id]);
-    return {
-      ...field,
-      label: field.label || field.id,
-      getValue,
-      render: field.render || getValue
-    };
-  });
-}
-
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/line-solid.js
 /**
  * WordPress dependencies
@@ -37953,7 +38153,12 @@ function usePostFields(viewType) {
       value: id,
       label: name
     })) || [],
-    render: PostAuthorField
+    render: PostAuthorField,
+    sort: (a, b, direction) => {
+      const nameA = a._embedded?.author?.[0]?.name || '';
+      const nameB = b._embedded?.author?.[0]?.name || '';
+      return direction === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+    }
   }, {
     label: (0,external_wp_i18n_namespaceObject.__)('Status'),
     id: 'status',
@@ -38152,7 +38357,7 @@ function getItemId(item) {
 function PostList({
   postType
 }) {
-  var _postId$split, _records$map, _usePrevious;
+  var _postId$split, _data$map, _usePrevious;
   const [view, setView] = useView(postType);
   const history = post_list_useHistory();
   const location = post_list_useLocation();
@@ -38174,6 +38379,10 @@ function PostList({
       });
     }
   }, [history]);
+  const {
+    isLoading: isLoadingFields,
+    fields
+  } = post_fields(view.type);
   const queryArgs = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const filters = {};
     view.filters.forEach(filter => {
@@ -38203,11 +38412,23 @@ function PostList({
   }, [view]);
   const {
     records,
-    isResolving: isLoadingMainEntities,
+    isResolving: isLoadingData,
     totalItems,
     totalPages
   } = useEntityRecordsWithPermissions('postType', postType, queryArgs);
-  const ids = (_records$map = records?.map(record => getItemId(record))) !== null && _records$map !== void 0 ? _records$map : [];
+
+  // The REST API sort the authors by ID, but we want to sort them by name.
+  const data = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (!isLoadingFields && view?.sort?.field === 'author') {
+      return filterSortAndPaginate(records, {
+        sort: {
+          ...view.sort
+        }
+      }, fields).data;
+    }
+    return records;
+  }, [records, fields, isLoadingFields, view?.sort]);
+  const ids = (_data$map = data?.map(record => getItemId(record))) !== null && _data$map !== void 0 ? _data$map : [];
   const prevIds = (_usePrevious = (0,external_wp_compose_namespaceObject.usePrevious)(ids)) !== null && _usePrevious !== void 0 ? _usePrevious : [];
   const deletedIds = prevIds.filter(id => !ids.includes(id));
   const postIdWasDeleted = deletedIds.includes(postId);
@@ -38259,10 +38480,6 @@ function PostList({
     });
     closeModal();
   };
-  const {
-    isLoading: isLoadingFields,
-    fields
-  } = post_fields(view.type);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Page, {
     title: labels?.name,
     actions: labels?.add_new_item && canCreateRecord && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -38281,8 +38498,8 @@ function PostList({
       paginationInfo: paginationInfo,
       fields: fields,
       actions: actions,
-      data: records || post_list_EMPTY_ARRAY,
-      isLoading: isLoadingMainEntities || isLoadingFields,
+      data: data || post_list_EMPTY_ARRAY,
+      isLoading: isLoadingData || isLoadingFields,
       view: view,
       onChangeView: setView,
       selection: selection,
@@ -38303,156 +38520,6 @@ function PostList({
       })
     })
   });
-}
-
-;// CONCATENATED MODULE: ./packages/dataviews/build-module/filter-and-sort-data-view.js
-/**
- * External dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-function filter_and_sort_data_view_normalizeSearchInput(input = '') {
-  return remove_accents_default()(input.trim().toLowerCase());
-}
-const filter_and_sort_data_view_EMPTY_ARRAY = [];
-
-/**
- * Applies the filtering, sorting and pagination to the raw data based on the view configuration.
- *
- * @param data   Raw data.
- * @param view   View config.
- * @param fields Fields config.
- *
- * @return Filtered, sorted and paginated data.
- */
-function filterSortAndPaginate(data, view, fields) {
-  if (!data) {
-    return {
-      data: filter_and_sort_data_view_EMPTY_ARRAY,
-      paginationInfo: {
-        totalItems: 0,
-        totalPages: 0
-      }
-    };
-  }
-  const _fields = normalizeFields(fields);
-  let filteredData = [...data];
-  // Handle global search.
-  if (view.search) {
-    const normalizedSearch = filter_and_sort_data_view_normalizeSearchInput(view.search);
-    filteredData = filteredData.filter(item => {
-      return _fields.filter(field => field.enableGlobalSearch).map(field => {
-        return filter_and_sort_data_view_normalizeSearchInput(field.getValue({
-          item
-        }));
-      }).some(field => field.includes(normalizedSearch));
-    });
-  }
-  if (view.filters && view.filters?.length > 0) {
-    view.filters.forEach(filter => {
-      const field = _fields.find(_field => _field.id === filter.field);
-      if (field) {
-        if (filter.operator === constants_OPERATOR_IS_ANY && filter?.value?.length > 0) {
-          filteredData = filteredData.filter(item => {
-            const fieldValue = field.getValue({
-              item
-            });
-            if (Array.isArray(fieldValue)) {
-              return filter.value.some(filterValue => fieldValue.includes(filterValue));
-            } else if (typeof fieldValue === 'string') {
-              return filter.value.includes(fieldValue);
-            }
-            return false;
-          });
-        } else if (filter.operator === constants_OPERATOR_IS_NONE && filter?.value?.length > 0) {
-          filteredData = filteredData.filter(item => {
-            const fieldValue = field.getValue({
-              item
-            });
-            if (Array.isArray(fieldValue)) {
-              return !filter.value.some(filterValue => fieldValue.includes(filterValue));
-            } else if (typeof fieldValue === 'string') {
-              return !filter.value.includes(fieldValue);
-            }
-            return false;
-          });
-        } else if (filter.operator === OPERATOR_IS_ALL && filter?.value?.length > 0) {
-          filteredData = filteredData.filter(item => {
-            return filter.value.every(value => {
-              return field.getValue({
-                item
-              })?.includes(value);
-            });
-          });
-        } else if (filter.operator === OPERATOR_IS_NOT_ALL && filter?.value?.length > 0) {
-          filteredData = filteredData.filter(item => {
-            return filter.value.every(value => {
-              return !field.getValue({
-                item
-              })?.includes(value);
-            });
-          });
-        } else if (filter.operator === constants_OPERATOR_IS) {
-          filteredData = filteredData.filter(item => {
-            return filter.value === field.getValue({
-              item
-            });
-          });
-        } else if (filter.operator === constants_OPERATOR_IS_NOT) {
-          filteredData = filteredData.filter(item => {
-            return filter.value !== field.getValue({
-              item
-            });
-          });
-        }
-      }
-    });
-  }
-
-  // Handle sorting.
-  if (view.sort) {
-    const fieldId = view.sort.field;
-    const fieldToSort = _fields.find(field => {
-      return field.id === fieldId;
-    });
-    if (fieldToSort) {
-      filteredData.sort((a, b) => {
-        var _fieldToSort$getValue, _fieldToSort$getValue2;
-        const valueA = (_fieldToSort$getValue = fieldToSort.getValue({
-          item: a
-        })) !== null && _fieldToSort$getValue !== void 0 ? _fieldToSort$getValue : '';
-        const valueB = (_fieldToSort$getValue2 = fieldToSort.getValue({
-          item: b
-        })) !== null && _fieldToSort$getValue2 !== void 0 ? _fieldToSort$getValue2 : '';
-        if (typeof valueA === 'number' && typeof valueB === 'number') {
-          return view.sort?.direction === 'asc' ? valueA - valueB : valueB - valueA;
-        }
-        return view.sort?.direction === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-      });
-    }
-  }
-
-  // Handle pagination.
-  let totalItems = filteredData.length;
-  let totalPages = 1;
-  if (view.page !== undefined && view.perPage !== undefined) {
-    const start = (view.page - 1) * view.perPage;
-    totalItems = filteredData?.length || 0;
-    totalPages = Math.ceil(totalItems / view.perPage);
-    filteredData = filteredData?.slice(start, start + view.perPage);
-  }
-  return {
-    data: filteredData,
-    paginationInfo: {
-      totalItems,
-      totalPages
-    }
-  };
 }
 
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/page-patterns/utils.js
