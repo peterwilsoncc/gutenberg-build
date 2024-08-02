@@ -56703,7 +56703,7 @@ function getEditorRegion(editor) {
     return iframeDocument === editor.ownerDocument;
   })) !== null && _Array$from$find !== void 0 ? _Array$from$find : editor;
 
-  // The region is provivided by the editor, not the block-editor.
+  // The region is provided by the editor, not the block-editor.
   // We should send focus to the region if one is available to reuse the
   // same interface for navigating landmarks. If no region is available,
   // use the canvas instead.
@@ -73763,7 +73763,7 @@ const __experimentalGetElementClassName = element => {
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/utils/get-px-from-css-unit.js
 /**
- * This function was accidentially exposed for mobile/native usage.
+ * This function was accidentally exposed for mobile/native usage.
  *
  * @deprecated
  *
