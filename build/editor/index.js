@@ -7860,7 +7860,7 @@ function DocumentBar(props) {
           "aria-label": !props.title && TYPE_LABELS[postType] ?
           // eslint-disable-next-line @wordpress/valid-sprintf
           (0,external_wp_i18n_namespaceObject.sprintf)(TYPE_LABELS[postType], title) : undefined,
-          children: title ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title) : (0,external_wp_i18n_namespaceObject.__)('No Title')
+          children: title ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title) : (0,external_wp_i18n_namespaceObject.__)('No title')
         })]
       }, hasBackButton), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "editor-document-bar__shortcut",
@@ -26526,7 +26526,7 @@ function PostCardPanel({
         weight: 500,
         as: "h2",
         lineHeight: "20px",
-        children: [title ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title) : (0,external_wp_i18n_namespaceObject.__)('No Title'), isFrontPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        children: [title ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title) : (0,external_wp_i18n_namespaceObject.__)('No title'), isFrontPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: "editor-post-card-panel__title-badge",
           children: (0,external_wp_i18n_namespaceObject.__)('Homepage')
         }), isPostsPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
@@ -26855,7 +26855,7 @@ function BlogTitle() {
           title: (0,external_wp_i18n_namespaceObject.__)('Blog title'),
           onClose: onClose
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
-          placeholder: (0,external_wp_i18n_namespaceObject.__)('No Title'),
+          placeholder: (0,external_wp_i18n_namespaceObject.__)('No title'),
           size: "__unstable-large",
           value: postsPageTitle,
           onChange: (0,external_wp_compose_namespaceObject.debounce)(setPostsPageTitle, 300),

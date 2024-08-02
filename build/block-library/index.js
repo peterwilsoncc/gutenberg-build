@@ -44218,7 +44218,7 @@ function PostTitleEdit({
   if (postType && postId) {
     titleElement = userCanEdit ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.PlainText, {
       tagName: TagName,
-      placeholder: (0,external_wp_i18n_namespaceObject.__)('No Title'),
+      placeholder: (0,external_wp_i18n_namespaceObject.__)('No title'),
       value: rawTitle,
       onChange: setTitle,
       __experimentalVersion: 2,
@@ -44239,7 +44239,7 @@ function PostTitleEdit({
         href: link,
         target: linkTarget,
         rel: rel,
-        placeholder: !rawTitle.length ? (0,external_wp_i18n_namespaceObject.__)('No Title') : null,
+        placeholder: !rawTitle.length ? (0,external_wp_i18n_namespaceObject.__)('No title') : null,
         value: rawTitle,
         onChange: setTitle,
         __experimentalVersion: 2,
