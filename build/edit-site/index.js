@@ -36129,7 +36129,7 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
             });
           },
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuItemLabel, {
-            children: (0,external_wp_i18n_namespaceObject.__)('Hide')
+            children: (0,external_wp_i18n_namespaceObject.__)('Hide column')
           })
         })]
       })]
