@@ -7342,8 +7342,8 @@ function ColumnInspectorControls({
     title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
       label: (0,external_wp_i18n_namespaceObject.__)('Width'),
-      labelPosition: "edge",
-      __unstableInputWidth: "80px",
+      __unstableInputWidth: "calc(50% - 8px)",
+      __next40pxDefaultSize: true,
       value: width || '',
       onChange: nextWidth => {
         nextWidth = 0 > parseFloat(nextWidth) ? '0' : nextWidth;
