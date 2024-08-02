@@ -15657,7 +15657,15 @@ const __unstableSetEditorMode = mode => ({
       let sectionClientId;
       if (sectionRootClientId) {
         const sectionClientIds = select.getBlockOrder(sectionRootClientId);
-        sectionClientId = select.getBlockParents(firstSelectedClientId).find(parent => sectionClientIds.includes(parent));
+
+        // If the selected block is a section block, use it.
+        if (sectionClientIds?.includes(firstSelectedClientId)) {
+          sectionClientId = firstSelectedClientId;
+        } else {
+          // If the selected block is not a section block, find
+          // the parent section that contains the selected block.
+          sectionClientId = select.getBlockParents(firstSelectedClientId).find(parent => sectionClientIds.includes(parent));
+        }
       } else {
         sectionClientId = select.getBlockHierarchyRootClientId(firstSelectedClientId);
       }
