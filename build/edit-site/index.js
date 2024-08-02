@@ -37494,21 +37494,6 @@ function _DataViewsViewConfig({
 const DataViewsViewConfig = (0,external_wp_element_namespaceObject.memo)(_DataViewsViewConfig);
 /* harmony default export */ const dataviews_view_config = (DataViewsViewConfig);
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/line-solid.js
-/**
- * WordPress dependencies
- */
-
-
-const lineSolid = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M5 11.25h14v1.5H5z"
-  })
-});
-/* harmony default export */ const line_solid = (lineSolid);
-
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/layouts/grid/density-picker.js
 /**
  * WordPress dependencies
@@ -37613,7 +37598,7 @@ function DensityPicker({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       size: "compact",
-      icon: line_solid,
+      icon: library_reset,
       disabled: rangeValue <= 0,
       accessibleWhenDisabled: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Decrease size'),
