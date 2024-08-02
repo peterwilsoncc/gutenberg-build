@@ -17355,6 +17355,98 @@ function getBlockStyleVariationSelector(variation, blockSelector) {
   return result.join(',');
 }
 
+/**
+ * Converts style preset values `var:` to CSS custom var values.
+ * TODO: Export and use the style engine util: getCSSVarFromStyleValue().
+ *
+ * Example:
+ *
+ * compileStyleValue( 'var:preset|color|primary' ) // returns 'var(--wp--color-primary)'
+ *
+ * @param {string} uncompiledValue A block style value.
+ * @return {string} The compiled, or original value.
+ */
+function compileStyleValue(uncompiledValue) {
+  const VARIABLE_REFERENCE_PREFIX = 'var:';
+  if ('string' === typeof uncompiledValue && uncompiledValue?.startsWith?.(VARIABLE_REFERENCE_PREFIX)) {
+    const VARIABLE_PATH_SEPARATOR_TOKEN_ATTRIBUTE = '|';
+    const VARIABLE_PATH_SEPARATOR_TOKEN_STYLE = '--';
+    const variable = uncompiledValue.slice(VARIABLE_REFERENCE_PREFIX.length).split(VARIABLE_PATH_SEPARATOR_TOKEN_ATTRIBUTE).join(VARIABLE_PATH_SEPARATOR_TOKEN_STYLE);
+    return `var(--wp--${variable})`;
+  }
+  return uncompiledValue;
+}
+
+/**
+ * Looks up a theme file URI based on a relative path.
+ *
+ * @param {string}        file          A relative path.
+ * @param {Array<Object>} themeFileURIs A collection of absolute theme file URIs and their corresponding file paths.
+ * @return {string} A resolved theme file URI, if one is found in the themeFileURIs collection.
+ */
+function getResolvedThemeFilePath(file, themeFileURIs) {
+  if (!file || !themeFileURIs || !Array.isArray(themeFileURIs)) {
+    return file;
+  }
+  const uri = themeFileURIs.find(themeFileUri => themeFileUri?.name === file);
+  if (!uri?.href) {
+    return file;
+  }
+  return uri?.href;
+}
+
+/**
+ * Resolves ref values in theme JSON.
+ *
+ * @param {Object|string} ruleValue A block style value that may contain a reference to a theme.json value.
+ * @param {Object}        tree      A theme.json object.
+ * @return {*} The resolved value or incoming ruleValue.
+ */
+function getResolvedRefValue(ruleValue, tree) {
+  if (!ruleValue || !tree) {
+    return ruleValue;
+  }
+  if (typeof ruleValue !== 'string' && ruleValue?.ref) {
+    const refPath = ruleValue.ref.split('.');
+    const resolvedRuleValue = compileStyleValue(getValueFromObjectPath(tree, refPath));
+
+    /*
+     * Presence of another ref indicates a reference to another dynamic value.
+     * Pointing to another dynamic value is not supported.
+     */
+    if (resolvedRuleValue?.ref) {
+      return undefined;
+    }
+    if (!resolvedRuleValue) {
+      return ruleValue;
+    }
+    return resolvedRuleValue;
+  }
+  return ruleValue;
+}
+
+/**
+ * Resolves ref and relative path values in theme JSON.
+ *
+ * @param {Object|string} ruleValue A block style value that may contain a reference to a theme.json value.
+ * @param {Object}        tree      A theme.json object.
+ * @return {*} The resolved value or incoming ruleValue.
+ */
+function getResolvedValue(ruleValue, tree) {
+  if (!ruleValue || !tree) {
+    return ruleValue;
+  }
+
+  // Resolve ref values.
+  const resolvedValue = getResolvedRefValue(ruleValue, tree);
+
+  // Resolve relative paths.
+  if (resolvedValue?.url) {
+    resolvedValue.url = getResolvedThemeFilePath(resolvedValue.url, tree?._links?.['wp:theme-file']);
+  }
+  return resolvedValue;
+}
+
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/global-styles/context.js
 /**
  * WordPress dependencies
@@ -24102,76 +24194,18 @@ const MediaReplaceFlow = ({
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/global-styles/theme-file-uri-utils.js
 /**
- * Internal dependencies
- */
-
-
-/**
  * Looks up a theme file URI based on a relative path.
  *
  * @param {string}        file          A relative path.
  * @param {Array<Object>} themeFileURIs A collection of absolute theme file URIs and their corresponding file paths.
  * @return {string?} A resolved theme file URI, if one is found in the themeFileURIs collection.
  */
-function getResolvedThemeFilePath(file, themeFileURIs = []) {
+function theme_file_uri_utils_getResolvedThemeFilePath(file, themeFileURIs = []) {
   const uri = themeFileURIs.find(themeFileUri => themeFileUri.name === file);
   if (!uri?.href) {
     return file;
   }
   return uri?.href;
-}
-
-/**
- * Mutates an object by settings a value at the provided path.
- *
- * @param {Object}              object Object to set a value in.
- * @param {number|string|Array} path   Path in the object to modify.
- * @param {*}                   value  New value to set.
- * @return {Object} Object with the new value set.
- */
-function setMutably(object, path, value) {
-  path = path.split('.');
-  const finalValueKey = path.pop();
-  let prev = object;
-  for (const key of path) {
-    const current = prev[key];
-    prev = current;
-  }
-  prev[finalValueKey] = value;
-  return object;
-}
-
-/**
- * Resolves any relative paths if a corresponding theme file URI is available.
- * Note: this function mutates the object and is specifically to be used in
- * an async styles build context in useGlobalStylesOutput
- *
- * @param {Object}        themeJson     Theme.json/Global styles tree.
- * @param {Array<Object>} themeFileURIs A collection of absolute theme file URIs and their corresponding file paths.
- * @return {Object} Returns mutated object.
- */
-function setThemeFileUris(themeJson, themeFileURIs) {
-  if (!themeJson?.styles || !themeFileURIs) {
-    return themeJson;
-  }
-  themeFileURIs.forEach(({
-    name,
-    href,
-    target
-  }) => {
-    const value = getValueFromObjectPath(themeJson, target);
-    if (value === name) {
-      /*
-       * The object must not be updated immutably here because the
-       * themeJson is a reference to the global styles tree used as a dependency in the
-       * useGlobalStylesOutputWithConfig() hook. If we don't mutate the object,
-       * the hook will detect the change and re-render the component, resulting
-       * in a maximum depth exceeded error.
-       */
-      themeJson = setMutably(themeJson, target, href);
-    }
-  });
-  return themeJson;
 }
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/global-styles/background-panel.js
@@ -24488,7 +24522,7 @@ function BackgroundImageControls({
       },
       name: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorImagePreviewItem, {
         className: "block-editor-global-styles-background-panel__image-preview",
-        imgUrl: getResolvedThemeFilePath(url, themeFileURIs),
+        imgUrl: theme_file_uri_utils_getResolvedThemeFilePath(url, themeFileURIs),
         filename: title,
         label: imgLabel
       }),
@@ -24591,7 +24625,7 @@ function BackgroundSizeControls({
       __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Focal point'),
-      url: getResolvedThemeFilePath(imageValue, themeFileURIs),
+      url: theme_file_uri_utils_getResolvedThemeFilePath(imageValue, themeFileURIs),
       value: backgroundPositionToCoords(positionValue),
       onChange: updateBackgroundPosition
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
@@ -24705,7 +24739,7 @@ function BackgroundPanel({
       children: shouldShowBackgroundImageControls ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundControlsPanel, {
         label: title,
         filename: title,
-        url: getResolvedThemeFilePath(url, themeFileURIs),
+        url: theme_file_uri_utils_getResolvedThemeFilePath(url, themeFileURIs),
         onToggle: setIsDropDownOpen,
         hasImageValue: hasImageValue,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
@@ -34276,7 +34310,6 @@ function position_useBlockProps({
 
 
 
-
 // Elements that rely on class names in their selectors.
 const ELEMENT_CLASS_NAMES = {
   button: 'wp-element-button',
@@ -34294,16 +34327,6 @@ const BLOCK_SUPPORT_FEATURE_LEVEL_SELECTORS = {
 const {
   kebabCase: use_global_styles_output_kebabCase
 } = unlock(external_wp_components_namespaceObject.privateApis);
-function compileStyleValue(uncompiledValue) {
-  const VARIABLE_REFERENCE_PREFIX = 'var:';
-  const VARIABLE_PATH_SEPARATOR_TOKEN_ATTRIBUTE = '|';
-  const VARIABLE_PATH_SEPARATOR_TOKEN_STYLE = '--';
-  if (uncompiledValue?.startsWith?.(VARIABLE_REFERENCE_PREFIX)) {
-    const variable = uncompiledValue.slice(VARIABLE_REFERENCE_PREFIX.length).split(VARIABLE_PATH_SEPARATOR_TOKEN_ATTRIBUTE).join(VARIABLE_PATH_SEPARATOR_TOKEN_STYLE);
-    return `var(--wp--${variable})`;
-  }
-  return uncompiledValue;
-}
 
 /**
  * Transform given preset tree into a set of style declarations.
@@ -34539,21 +34562,36 @@ function getStylesDeclarations(blockStyles = {}, selector = '', useRootPaddingAl
   }, []);
 
   /*
-   * Set background defaults.
-   * Applies to all background styles except the top-level site background.
+   * Preprocess background image values.
+   *
+   * Note: As we absorb more and more styles into the engine, we could simplify this function.
+   * A refactor is for the style engine to handle ref resolution (and possibly defaults)
+   * via a public util used internally and externally. Theme.json tree and defaults could be passed
+   * as options.
    */
-  if (!isRoot && !!blockStyles.background) {
-    blockStyles = {
-      ...blockStyles,
-      background: {
-        ...blockStyles.background,
-        ...setBackgroundStyleDefaults(blockStyles.background)
-      }
-    };
-  }
+  if (!!blockStyles.background) {
+    /*
+     * Resolve dynamic values before they are compiled by the style engine,
+     * which doesn't (yet) resolve dynamic values.
+     */
+    if (blockStyles.background?.backgroundImage) {
+      blockStyles.background.backgroundImage = getResolvedValue(blockStyles.background.backgroundImage, tree);
+    }
 
-  // The goal is to move everything to server side generated engine styles
-  // This is temporary as we absorb more and more styles into the engine.
+    /*
+     * Set default values for block background styles.
+     * Top-level styles are an exception as they are applied to the body.
+     */
+    if (!isRoot) {
+      blockStyles = {
+        ...blockStyles,
+        background: {
+          ...blockStyles.background,
+          ...setBackgroundStyleDefaults(blockStyles.background)
+        }
+      };
+    }
+  }
   const extraRules = (0,external_wp_styleEngine_namespaceObject.getCSSRules)(blockStyles);
   extraRules.forEach(rule => {
     // Don't output padding properties if padding variables are set or if we're not editing a full template.
@@ -34561,16 +34599,7 @@ function getStylesDeclarations(blockStyles = {}, selector = '', useRootPaddingAl
       return;
     }
     const cssProperty = rule.key.startsWith('--') ? rule.key : use_global_styles_output_kebabCase(rule.key);
-    let ruleValue = rule.value;
-    if (typeof ruleValue !== 'string' && ruleValue?.ref) {
-      const refPath = ruleValue.ref.split('.');
-      ruleValue = compileStyleValue(getValueFromObjectPath(tree, refPath));
-      // Presence of another ref indicates a reference to another dynamic value.
-      // Pointing to another dynamic value is not supported.
-      if (!ruleValue || ruleValue?.ref) {
-        return;
-      }
-    }
+    let ruleValue = getResolvedValue(rule.value, tree, null);
 
     // Calculate fluid typography rules where available.
     if (cssProperty === 'font-size') {
@@ -35233,7 +35262,6 @@ function processCSSNesting(css, blockSelector) {
  */
 function useGlobalStylesOutputWithConfig(mergedConfig = {}, disableRootPadding) {
   const [blockGap] = useGlobalSetting('spacing.blockGap');
-  mergedConfig = setThemeFileUris(mergedConfig, mergedConfig?._links?.['wp:theme-file']);
   const hasBlockGapSupport = blockGap !== null;
   const hasFallbackGapSupport = !hasBlockGapSupport; // This setting isn't useful yet: it exists as a placeholder for a future explicit fallback styles support.
   const disableLayoutStyles = (0,external_wp_data_namespaceObject.useSelect)(select => {
