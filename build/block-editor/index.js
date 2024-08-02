@@ -48216,7 +48216,7 @@ function Iframe({
       return;
     }
     iframeDocument.documentElement.classList.add('is-zoomed-out');
-    const maxWidth = 800;
+    const maxWidth = 750;
     iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scale', scale === 'default' ? Math.min(containerWidth, maxWidth) / prevContainerWidth.current : scale);
     iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-frame-size', typeof frameSize === 'number' ? `${frameSize}px` : frameSize);
     iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-content-height', `${contentHeight}px`);
@@ -48241,10 +48241,8 @@ function Iframe({
     children: [shouldRenderFocusCaptureElements && before, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("iframe", {
       ...props,
       style: {
-        border: 0,
         ...props.style,
-        height: props.style?.height,
-        transition: 'all .3s'
+        height: props.style?.height
       },
       ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([ref, setRef]),
       tabIndex: tabIndex
@@ -72166,7 +72164,7 @@ function useResizeCanvas(deviceType) {
     }
     return deviceWidth < actualWidth ? deviceWidth : actualWidth;
   };
-  const marginValue = () => window.innerHeight < 800 ? 36 : 72;
+  const marginValue = () => window.innerHeight < 800 ? 36 : 64;
   const contentInlineStyles = device => {
     const height = device === 'Mobile' ? '768px' : '1024px';
     const marginVertical = marginValue() + 'px';
@@ -72183,8 +72181,6 @@ function useResizeCanvas(deviceType) {
           marginLeft: marginHorizontal,
           marginRight: marginHorizontal,
           height,
-          borderRadius: '2px 2px 2px 2px',
-          border: '1px solid #ddd',
           overflowY: 'auto'
         };
       default:
