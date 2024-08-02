@@ -6237,16 +6237,6 @@ function useSupportedStyles(name, element) {
   return supportedPanels;
 }
 
-;// CONCATENATED MODULE: ./packages/edit-site/build-module/utils/clone-deep.js
-/**
- * Makes a copy of an object without storing any references to the original object.
- * @param {Object} object
- * @return {Object} The cloned object.
- */
-function cloneDeep(object) {
-  return !object ? {} : JSON.parse(JSON.stringify(object));
-}
-
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/utils/set-nested-value.js
 /**
  * Sets the value at path of object.
@@ -6306,7 +6296,6 @@ const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -6535,8 +6524,8 @@ function PushChangesToGlobalStylesControl({
       const {
         style: blockStyles
       } = attributes;
-      const newBlockStyles = cloneDeep(blockStyles);
-      const newUserConfig = cloneDeep(userConfig);
+      const newBlockStyles = structuredClone(blockStyles);
+      const newUserConfig = structuredClone(userConfig);
       for (const {
         path,
         value
@@ -17886,7 +17875,6 @@ function FontLibraryProvider({
  * Internal dependencies
  */
 
-
 const {
   GlobalStylesContext: use_theme_style_variations_by_property_GlobalStylesContext,
   areGlobalStyleConfigsEqual
@@ -17959,7 +17947,7 @@ function useCurrentMergeThemeStyleVariationsWithUserConfig(properties = []) {
   } = (0,external_wp_element_namespaceObject.useContext)(use_theme_style_variations_by_property_GlobalStylesContext);
   const propertiesAsString = properties.toString();
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const clonedUserVariation = cloneDeep(userVariation);
+    const clonedUserVariation = structuredClone(userVariation);
 
     // Get user variation and remove the settings for the given property.
     const userVariationWithoutProperties = removePropertiesFromObject(clonedUserVariation, properties);
@@ -18015,7 +18003,7 @@ const filterObjectByProperties = (object, properties) => {
  * @return {boolean} Whether the variation contains only the specified properties.
  */
 function isVariationWithProperties(variation, properties) {
-  const variationWithProperties = filterObjectByProperties(cloneDeep(variation), properties);
+  const variationWithProperties = filterObjectByProperties(structuredClone(variation), properties);
   return areGlobalStyleConfigsEqual(variationWithProperties, variation);
 }
 
