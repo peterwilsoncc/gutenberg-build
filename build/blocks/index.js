@@ -8248,7 +8248,12 @@ const groupingBlockName = createBlockNameSetterReducer('SET_GROUPING_BLOCK_NAME'
 function categories(state = DEFAULT_CATEGORIES, action) {
   switch (action.type) {
     case 'SET_CATEGORIES':
-      return action.categories || [];
+      // Ensure, that categories are unique by slug.
+      const uniqueCategories = new Map();
+      (action.categories || []).forEach(category => {
+        uniqueCategories.set(category.slug, category);
+      });
+      return [...uniqueCategories.values()];
     case 'UPDATE_CATEGORY':
       {
         if (!action.category || !Object.keys(action.category).length) {
