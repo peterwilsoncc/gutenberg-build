@@ -38016,87 +38016,87 @@ function useDefaultViews({
     return getPostType(postType)?.labels;
   }, [postType]);
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return {
-      [postType]: [{
-        title: labels?.all_items || (0,external_wp_i18n_namespaceObject.__)('All items'),
-        slug: 'all',
-        icon: library_pages,
-        view: DEFAULT_POST_BASE
-      }, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Published'),
-        slug: 'published',
-        icon: library_published,
-        view: {
-          ...DEFAULT_POST_BASE,
-          filters: [{
-            field: 'status',
-            operator: OPERATOR_IS_ANY,
-            value: 'publish'
-          }]
-        }
-      }, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Scheduled'),
-        slug: 'future',
-        icon: library_scheduled,
-        view: {
-          ...DEFAULT_POST_BASE,
-          filters: [{
-            field: 'status',
-            operator: OPERATOR_IS_ANY,
-            value: 'future'
-          }]
-        }
-      }, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Drafts'),
-        slug: 'drafts',
-        icon: library_drafts,
-        view: {
-          ...DEFAULT_POST_BASE,
-          filters: [{
-            field: 'status',
-            operator: OPERATOR_IS_ANY,
-            value: 'draft'
-          }]
-        }
-      }, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Pending'),
-        slug: 'pending',
-        icon: library_pending,
-        view: {
-          ...DEFAULT_POST_BASE,
-          filters: [{
-            field: 'status',
-            operator: OPERATOR_IS_ANY,
-            value: 'pending'
-          }]
-        }
-      }, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Private'),
-        slug: 'private',
-        icon: not_allowed,
-        view: {
-          ...DEFAULT_POST_BASE,
-          filters: [{
-            field: 'status',
-            operator: OPERATOR_IS_ANY,
-            value: 'private'
-          }]
-        }
-      }, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Trash'),
-        slug: 'trash',
-        icon: library_trash,
-        view: {
-          ...DEFAULT_POST_BASE,
-          filters: [{
-            field: 'status',
-            operator: OPERATOR_IS_ANY,
-            value: 'trash'
-          }]
-        }
-      }]
-    };
-  }, [labels, postType]);
+    return [{
+      title: labels?.all_items || (0,external_wp_i18n_namespaceObject.__)('All items'),
+      slug: 'all',
+      icon: library_pages,
+      view: DEFAULT_POST_BASE
+    }, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Published'),
+      slug: 'published',
+      icon: library_published,
+      view: {
+        ...DEFAULT_POST_BASE,
+        filters: [{
+          field: 'status',
+          operator: OPERATOR_IS_ANY,
+          value: 'publish'
+        }]
+      }
+    }, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Scheduled'),
+      slug: 'future',
+      icon: library_scheduled,
+      view: {
+        ...DEFAULT_POST_BASE,
+        filters: [{
+          field: 'status',
+          operator: OPERATOR_IS_ANY,
+          value: 'future'
+        }]
+      }
+    }, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Drafts'),
+      slug: 'drafts',
+      icon: library_drafts,
+      view: {
+        ...DEFAULT_POST_BASE,
+        filters: [{
+          field: 'status',
+          operator: OPERATOR_IS_ANY,
+          value: 'draft'
+        }]
+      }
+    }, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Pending'),
+      slug: 'pending',
+      icon: library_pending,
+      view: {
+        ...DEFAULT_POST_BASE,
+        filters: [{
+          field: 'status',
+          operator: OPERATOR_IS_ANY,
+          value: 'pending'
+        }]
+      }
+    }, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Private'),
+      slug: 'private',
+      icon: not_allowed,
+      view: {
+        ...DEFAULT_POST_BASE,
+        filters: [{
+          field: 'status',
+          operator: OPERATOR_IS_ANY,
+          value: 'private'
+        }]
+      }
+    }, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Trash'),
+      slug: 'trash',
+      icon: library_trash,
+      view: {
+        ...DEFAULT_POST_BASE,
+        type: LAYOUT_TABLE,
+        layout: defaultLayouts[LAYOUT_TABLE].layout,
+        filters: [{
+          field: 'status',
+          operator: OPERATOR_IS_ANY,
+          value: 'trash'
+        }]
+      }
+    }];
+  }, [labels]);
 }
 
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/add-new-post/index.js
@@ -38659,6 +38659,35 @@ const {
   useEntityRecordsWithPermissions
 } = lock_unlock_unlock(external_wp_coreData_namespaceObject.privateApis);
 const post_list_EMPTY_ARRAY = [];
+const getDefaultView = (defaultViews, activeView) => {
+  return defaultViews.find(({
+    slug
+  }) => slug === activeView)?.view;
+};
+const getCustomView = editedEntityRecord => {
+  if (!editedEntityRecord?.content) {
+    return undefined;
+  }
+  const content = JSON.parse(editedEntityRecord.content);
+  if (!content) {
+    return undefined;
+  }
+  return {
+    ...content,
+    layout: defaultLayouts[content.type]?.layout
+  };
+};
+
+/**
+ * This function abstracts working with default & custom views by
+ * providing a [ state, setState ] tuple based on the URL parameters.
+ *
+ * Consumers use the provided tuple to work with state
+ * and don't have to deal with the specifics of default & custom views.
+ *
+ * @param {string} postType Post type to retrieve default views for.
+ * @return {Array} The [ state, setState ] tuple.
+ */
 function useView(postType) {
   const {
     params: {
@@ -38668,75 +38697,77 @@ function useView(postType) {
     }
   } = post_list_useLocation();
   const history = post_list_useHistory();
-  const DEFAULT_VIEWS = useDefaultViews({
+  const defaultViews = useDefaultViews({
     postType
   });
-  const selectedDefaultView = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const defaultView = isCustom === 'false' && DEFAULT_VIEWS[postType].find(({
-      slug
-    }) => slug === activeView)?.view;
-    if (isCustom === 'false' && layout) {
-      return {
-        ...defaultView,
-        type: layout,
-        layout: defaultLayouts[layout]?.layout
-      };
-    }
-    return defaultView;
-  }, [isCustom, activeView, layout, postType, DEFAULT_VIEWS]);
-  const [view, setView] = (0,external_wp_element_namespaceObject.useState)(selectedDefaultView);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (selectedDefaultView) {
-      setView(selectedDefaultView);
-    }
-  }, [selectedDefaultView]);
-  const editedViewRecord = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const {
+    editEntityRecord
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
+  const editedEntityRecord = (0,external_wp_data_namespaceObject.useSelect)(select => {
     if (isCustom !== 'true') {
-      return;
+      return undefined;
     }
     const {
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const dataviewRecord = getEditedEntityRecord('postType', 'wp_dataviews', Number(activeView));
-    return dataviewRecord;
+    return getEditedEntityRecord('postType', 'wp_dataviews', Number(activeView));
   }, [activeView, isCustom]);
-  const {
-    editEntityRecord
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  const customView = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const storedView = editedViewRecord?.content && JSON.parse(editedViewRecord?.content);
-    if (!storedView) {
-      return storedView;
+  const [view, setView] = (0,external_wp_element_namespaceObject.useState)(() => {
+    var _getDefaultView;
+    if (isCustom === 'true') {
+      var _getCustomView;
+      return (_getCustomView = getCustomView(editedEntityRecord)) !== null && _getCustomView !== void 0 ? _getCustomView : {
+        type: layout !== null && layout !== void 0 ? layout : LAYOUT_LIST
+      };
     }
-    return {
-      ...storedView,
-      layout: defaultLayouts[storedView?.type]?.layout
+    return (_getDefaultView = getDefaultView(defaultViews, activeView)) !== null && _getDefaultView !== void 0 ? _getDefaultView : {
+      type: layout !== null && layout !== void 0 ? layout : LAYOUT_LIST
     };
-  }, [editedViewRecord?.content]);
-  const setCustomView = (0,external_wp_element_namespaceObject.useCallback)(viewToSet => {
-    editEntityRecord('postType', 'wp_dataviews', editedViewRecord?.id, {
-      content: JSON.stringify(viewToSet)
-    });
-  }, [editEntityRecord, editedViewRecord?.id]);
-  const setDefaultViewAndUpdateUrl = (0,external_wp_element_namespaceObject.useCallback)(viewToSet => {
-    if (viewToSet.type !== view?.type) {
-      const {
-        params
-      } = history.getLocationWithParams();
+  });
+  const setViewWithUrlUpdate = (0,external_wp_element_namespaceObject.useCallback)(newView => {
+    const {
+      params
+    } = history.getLocationWithParams();
+    if (newView.type === LAYOUT_LIST && !params?.layout) {
+      // Skip updating the layout URL param if
+      // it is not present and the newView.type is LAYOUT_LIST.
+    } else if (newView.type !== params?.layout) {
       history.push({
         ...params,
-        layout: viewToSet.type
+        layout: newView.type
       });
     }
-    setView(viewToSet);
-  }, [history, view?.type]);
-  if (isCustom === 'false') {
-    return [view, setDefaultViewAndUpdateUrl];
-  } else if (isCustom === 'true' && customView) {
-    return [customView, setCustomView];
-  }
-  // Loading state where no the view was not found on custom views or default views.
-  return [DEFAULT_VIEWS[postType][0].view, setDefaultViewAndUpdateUrl];
+    setView(newView);
+    if (isCustom === 'true' && editedEntityRecord?.id) {
+      editEntityRecord('postType', 'wp_dataviews', editedEntityRecord?.id, {
+        content: JSON.stringify(newView)
+      });
+    }
+  }, [history, isCustom, editEntityRecord, editedEntityRecord?.id]);
+
+  // When layout URL param changes, update the view type
+  // without affecting any other config.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    setView(prevView => ({
+      ...prevView,
+      type: layout !== null && layout !== void 0 ? layout : LAYOUT_LIST
+    }));
+  }, [layout]);
+
+  // When activeView or isCustom URL parameters change,
+  // reset the view & update the layout URL param to match the view's type.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    let newView;
+    if (isCustom === 'true') {
+      newView = getCustomView(editedEntityRecord);
+    } else {
+      newView = getDefaultView(defaultViews, activeView);
+    }
+    if (newView) {
+      setViewWithUrlUpdate(newView);
+    }
+  }, [activeView, isCustom, defaultViews, editedEntityRecord]);
+  return [view, setViewWithUrlUpdate, setViewWithUrlUpdate];
 }
 const DEFAULT_STATUSES = 'draft,future,pending,private,publish'; // All but 'trash'.
 
@@ -38774,7 +38805,7 @@ function PostList({
   } = post_fields(view.type);
   const queryArgs = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const filters = {};
-    view.filters.forEach(filter => {
+    view.filters?.forEach(filter => {
       if (filter.field === 'status' && filter.operator === OPERATOR_IS_ANY) {
         filters.status = filter.value;
       }
@@ -44755,7 +44786,7 @@ function AddNewItemModalContent({
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
   const [title, setTitle] = (0,external_wp_element_namespaceObject.useState)('');
   const [isSaving, setIsSaving] = (0,external_wp_element_namespaceObject.useState)(false);
-  const DEFAULT_VIEWS = useDefaultViews({
+  const defaultViews = useDefaultViews({
     postType: type
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
@@ -44783,7 +44814,7 @@ function AddNewItemModalContent({
         title,
         status: 'publish',
         wp_dataviews_type: dataViewTaxonomyId,
-        content: JSON.stringify(DEFAULT_VIEWS[type][0].view)
+        content: JSON.stringify(defaultViews[0].view)
       });
       const {
         params: {
@@ -45064,8 +45095,6 @@ function CustomDataViewsList({
 
 
 
-
-
 /**
  * Internal dependencies
  */
@@ -45077,44 +45106,8 @@ function CustomDataViewsList({
 
 
 const {
-  useLocation: sidebar_dataviews_useLocation,
-  useHistory: sidebar_dataviews_useHistory
+  useLocation: sidebar_dataviews_useLocation
 } = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
-
-/**
- * Hook to switch to table layout when switching to the trash view.
- * When going out of the trash view, it switches back to the previous layout if
- * there was an automatic switch to table layout.
- */
-function useSwitchToTableOnTrash() {
-  const {
-    params: {
-      activeView,
-      layout,
-      ...restParams
-    }
-  } = sidebar_dataviews_useLocation();
-  const history = sidebar_dataviews_useHistory();
-  const viewToSwitchOutOfTrash = (0,external_wp_element_namespaceObject.useRef)(undefined);
-  const previousActiveView = (0,external_wp_compose_namespaceObject.usePrevious)(activeView);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (activeView === 'trash' && previousActiveView !== 'trash') {
-      viewToSwitchOutOfTrash.current = layout || 'list';
-      history.push({
-        ...restParams,
-        layout: 'table',
-        activeView
-      });
-    } else if (previousActiveView === 'trash' && activeView !== 'trash' && viewToSwitchOutOfTrash.current) {
-      history.push({
-        ...restParams,
-        layout: viewToSwitchOutOfTrash.current,
-        activeView
-      });
-      viewToSwitchOutOfTrash.current = undefined;
-    }
-  }, [previousActiveView, activeView, layout, history, restParams]);
-}
 function DataViewsSidebarContent() {
   const {
     params: {
@@ -45123,8 +45116,7 @@ function DataViewsSidebarContent() {
       isCustom = 'false'
     }
   } = sidebar_dataviews_useLocation();
-  useSwitchToTableOnTrash();
-  const DEFAULT_VIEWS = useDefaultViews({
+  const defaultViews = useDefaultViews({
     postType
   });
   if (!postType) {
@@ -45133,7 +45125,7 @@ function DataViewsSidebarContent() {
   const isCustomBoolean = isCustom === 'true';
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
-      children: DEFAULT_VIEWS[postType].map(dataview => {
+      children: defaultViews.map(dataview => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewItem, {
           slug: dataview.slug,
           title: dataview.title,
