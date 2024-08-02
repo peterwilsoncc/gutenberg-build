@@ -11373,6 +11373,7 @@ const AUTHORS_QUERY = {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -11416,13 +11417,19 @@ function useAuthorsQuery(search) {
     const foundAuthor = fetchedAuthors.findIndex(({
       value
     }) => postAuthor?.id === value);
+    let currentAuthor = [];
     if (foundAuthor < 0 && postAuthor) {
-      return [{
+      currentAuthor = [{
         value: postAuthor.id,
         label: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(postAuthor.name)
-      }, ...fetchedAuthors];
+      }];
+    } else if (foundAuthor < 0 && !postAuthor) {
+      currentAuthor = [{
+        value: 0,
+        label: (0,external_wp_i18n_namespaceObject.__)('(No author)')
+      }];
     }
-    return fetchedAuthors;
+    return [...currentAuthor, ...fetchedAuthors];
   }, [authors, postAuthor]);
   return {
     authorId,
@@ -11622,6 +11629,7 @@ function PostAuthorCheck({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -11638,7 +11646,7 @@ function PostAuthorToggle({
   const {
     postAuthor
   } = useAuthorsQuery();
-  const authorName = postAuthor?.name || '';
+  const authorName = (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(postAuthor?.name) || (0,external_wp_i18n_namespaceObject.__)('(No author)');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     size: "compact",
     className: "editor-post-author__panel-toggle",
