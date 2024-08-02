@@ -18759,10 +18759,7 @@ const sidesBottom = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
       opacity: 0.25
     }
   }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m16.5 19.5h-9v-1.5h9z",
-    style: {
-      fill: '#1e1e1e'
-    }
+    d: "m16.5 19.5h-9v-1.5h9z"
   })]
 });
 /* harmony default export */ const sides_bottom = (sidesBottom);
