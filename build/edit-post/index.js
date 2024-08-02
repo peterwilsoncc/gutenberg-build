@@ -3251,7 +3251,6 @@ function __experimentalPluginPostExcerpt() {
 
 const {
   BackButton: __experimentalMainDashboardButton,
-  registerDefaultActions,
   registerCoreBlockBindingsSources,
   bootstrapBlockBindingsSourcesFromServer
 } = unlock(external_wp_editor_namespaceObject.privateApis);
@@ -3311,7 +3310,6 @@ function initializeEditor(id, postType, postId, settings, initialEdits) {
       enableFSEBlocks: settings.__unstableEnableFullSiteEditingBlocks
     });
   }
-  registerDefaultActions();
 
   // Show a console log warning if the browser is not in Standards rendering mode.
   const documentMode = document.compatMode === 'CSS1Compat' ? 'Standards' : 'Quirks';

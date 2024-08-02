@@ -45898,7 +45898,6 @@ function initializePostsDashboard(id, settings) {
 
 
 const {
-  registerDefaultActions,
   registerCoreBlockBindingsSources,
   bootstrapBlockBindingsSourcesFromServer
 } = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
@@ -45931,7 +45930,6 @@ function initializeEditor(id, settings) {
       enableFSEBlocks: true
     });
   }
-  registerDefaultActions();
 
   // We dispatch actions and update the store synchronously before rendering
   // so that we won't trigger unnecessary re-renders with useEffect.
