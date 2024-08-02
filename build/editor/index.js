@@ -4400,8 +4400,22 @@ const savePost = (options = {}) => async ({
     type: 'REQUEST_POST_UPDATE_START',
     options
   });
-  await registry.dispatch(external_wp_coreData_namespaceObject.store).saveEntityRecord('postType', previousRecord.type, edits, options);
-  let error = registry.select(external_wp_coreData_namespaceObject.store).getLastEntitySaveError('postType', previousRecord.type, previousRecord.id);
+  let error = false;
+  try {
+    error = await (0,external_wp_hooks_namespaceObject.applyFilters)('editor.__unstablePreSavePost', Promise.resolve(false), options);
+  } catch (err) {
+    error = err;
+  }
+  if (!error) {
+    try {
+      await registry.dispatch(external_wp_coreData_namespaceObject.store).saveEntityRecord('postType', previousRecord.type, edits, options);
+    } catch (err) {
+      error = err.message && err.code !== 'unknown_error' ? err.message : (0,external_wp_i18n_namespaceObject.__)('An error occurred while updating.');
+    }
+  }
+  if (!error) {
+    error = registry.select(external_wp_coreData_namespaceObject.store).getLastEntitySaveError('postType', previousRecord.type, previousRecord.id);
+  }
   if (!error) {
     await (0,external_wp_hooks_namespaceObject.applyFilters)('editor.__unstableSavePost', Promise.resolve(), options).catch(err => {
       error = err;
