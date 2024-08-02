@@ -8041,12 +8041,15 @@ const SiteHub = (0,external_wp_element_namespaceObject.memo)((0,external_wp_elem
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "edit-site-site-hub__title",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
             variant: "link",
             href: homeUrl,
             target: "_blank",
-            label: (0,external_wp_i18n_namespaceObject.__)('View site (opens in a new tab)'),
-            children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(siteTitle)
+            children: [(0,external_wp_htmlEntities_namespaceObject.decodeEntities)(siteTitle), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
+              as: "span",
+              children: /* translators: accessibility text */
+              (0,external_wp_i18n_namespaceObject.__)('(opens in a new tab)')
+            })]
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
           spacing: 0,
