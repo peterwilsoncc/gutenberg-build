@@ -11134,6 +11134,7 @@ function CreateNewTemplateModal({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
         spacing: "3",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+          __next40pxDefaultSize: true,
           __nextHasNoMarginBottom: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Name'),
           value: title,
@@ -11144,10 +11145,12 @@ function CreateNewTemplateModal({
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
           justify: "right",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
             variant: "tertiary",
             onClick: cancel,
             children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
             variant: "primary",
             type: "submit",
             isBusy: isBusy,
