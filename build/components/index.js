@@ -36656,6 +36656,23 @@ function select_control_useUniqueId(idProp) {
   const id = `inspector-select-control-${instanceId}`;
   return idProp || id;
 }
+function SelectOptions({
+  options
+}) {
+  return options.map(({
+    id,
+    label,
+    value,
+    ...optionProps
+  }, index) => {
+    const key = id || `${label}-${value}-${index}`;
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("option", {
+      value: value,
+      ...optionProps,
+      children: label
+    }, key);
+  });
+}
 function UnforwardedSelectControl(props, ref) {
   const {
     className,
@@ -36734,14 +36751,8 @@ function UnforwardedSelectControl(props, ref) {
         selectSize: size,
         value: valueProp,
         variant: variant,
-        children: children || options.map((option, index) => {
-          const key = option.id || `${option.label}-${option.value}-${index}`;
-          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("option", {
-            value: option.value,
-            disabled: option.disabled,
-            hidden: option.hidden,
-            children: option.label
-          }, key);
+        children: children || /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SelectOptions, {
+          options: options
         })
       })
     })
