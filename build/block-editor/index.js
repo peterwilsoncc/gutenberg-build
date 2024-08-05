@@ -48163,10 +48163,8 @@ function Iframe({
   }, []);
   const isZoomedOut = scale !== 1;
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!isZoomedOut) {
-      prevContainerWidth.current = containerWidth;
-    }
-  }, [containerWidth, isZoomedOut]);
+    prevContainerWidth.current = containerWidth;
+  }, [containerWidth]);
   const disabledRef = (0,external_wp_compose_namespaceObject.useDisabled)({
     isDisabled: !readonly
   });
@@ -52156,7 +52154,7 @@ function useZoomOut(zoomOut = true) {
     } else if (!zoomOut && __unstableGetEditorMode() === 'zoom-out' && originalEditingMode.current !== mode) {
       __unstableSetEditorMode(originalEditingMode.current);
     }
-  }, [__unstableSetEditorMode, zoomOut, mode]);
+  }, [__unstableGetEditorMode, __unstableSetEditorMode, zoomOut]); // Mode is deliberately excluded from the dependencies so that the effect does not run when mode changes.
 }
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inserter/menu.js
@@ -62011,7 +62009,7 @@ function BlockTools({
         }), children, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Popover.Slot, {
           name: "__unstable-block-tools-after",
           ref: blockToolbarAfterRef
-        }), window.__experimentalEnableZoomedOutPatternsTab && isZoomOutMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_mode_inserters, {
+        }), isZoomOutMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_mode_inserters, {
           __unstableContentRef: __unstableContentRef
         })]
       })

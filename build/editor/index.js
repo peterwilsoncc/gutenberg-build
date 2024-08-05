@@ -24381,6 +24381,21 @@ function PostViewLink() {
   });
 }
 
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/desktop.js
+/**
+ * WordPress dependencies
+ */
+
+
+const desktop = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M20.5 16h-.7V8c0-1.1-.9-2-2-2H6.2c-1.1 0-2 .9-2 2v8h-.7c-.8 0-1.5.7-1.5 1.5h20c0-.8-.7-1.5-1.5-1.5zM5.7 8c0-.3.2-.5.5-.5h11.6c.3 0 .5.2.5.5v7.6H5.7V8z"
+  })
+});
+/* harmony default export */ const library_desktop = (desktop);
+
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/mobile.js
 /**
  * WordPress dependencies
@@ -24411,25 +24426,17 @@ const tablet = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 });
 /* harmony default export */ const library_tablet = (tablet);
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/desktop.js
-/**
- * WordPress dependencies
- */
-
-
-const desktop = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M20.5 16h-.7V8c0-1.1-.9-2-2-2H6.2c-1.1 0-2 .9-2 2v8h-.7c-.8 0-1.5.7-1.5 1.5h20c0-.8-.7-1.5-1.5-1.5zM5.7 8c0-.3.2-.5.5-.5h11.6c.3 0 .5.2.5.5v7.6H5.7V8z"
-  })
-});
-/* harmony default export */ const library_desktop = (desktop);
-
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/preview-dropdown/index.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
+
+
 
 
 
@@ -24452,6 +24459,7 @@ function PreviewDropdown({
 }) {
   const {
     deviceType,
+    editorMode,
     homeUrl,
     isTemplate,
     isViewable,
@@ -24469,9 +24477,13 @@ function PreviewDropdown({
     const {
       get
     } = select(external_wp_preferences_namespaceObject.store);
+    const {
+      __unstableGetEditorMode
+    } = select(external_wp_blockEditor_namespaceObject.store);
     const _currentPostType = getCurrentPostType();
     return {
       deviceType: getDeviceType(),
+      editorMode: __unstableGetEditorMode(),
       homeUrl: getUnstableBase()?.home,
       isTemplate: _currentPostType === 'wp_template',
       isViewable: (_getPostType$viewable = getPostType(_currentPostType)?.viewable) !== null && _getPostType$viewable !== void 0 ? _getPostType$viewable : false,
@@ -24481,6 +24493,24 @@ function PreviewDropdown({
   const {
     setDeviceType
   } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
+  const {
+    __unstableSetEditorMode
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+
+  /**
+   * Save the original editing mode in a ref to restore it when we exit zoom out.
+   */
+  const originalEditingMode = (0,external_wp_element_namespaceObject.useRef)(editorMode);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (editorMode !== 'zoom-out') {
+      originalEditingMode.current = editorMode;
+    }
+    return () => {
+      if (editorMode === 'zoom-out' && editorMode !== originalEditingMode.current) {
+        __unstableSetEditorMode(originalEditingMode.current);
+      }
+    };
+  }, [editorMode, __unstableSetEditorMode]);
   const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   if (isMobile) {
     return null;
@@ -24490,6 +24520,7 @@ function PreviewDropdown({
   };
   const toggleProps = {
     className: 'editor-preview-dropdown__toggle',
+    iconPosition: 'right',
     size: 'compact',
     showTooltip: !showIconLabels,
     disabled,
@@ -24499,9 +24530,9 @@ function PreviewDropdown({
     'aria-label': (0,external_wp_i18n_namespaceObject.__)('View options')
   };
   const deviceIcons = {
+    desktop: library_desktop,
     mobile: library_mobile,
-    tablet: library_tablet,
-    desktop: library_desktop
+    tablet: library_tablet
   };
 
   /**
@@ -24514,6 +24545,10 @@ function PreviewDropdown({
     label: (0,external_wp_i18n_namespaceObject.__)('Desktop'),
     icon: library_desktop
   }, {
+    value: 'ZoomOut',
+    label: (0,external_wp_i18n_namespaceObject.__)('Desktop (50%)'),
+    icon: library_desktop
+  }, {
     value: 'Tablet',
     label: (0,external_wp_i18n_namespaceObject.__)('Tablet'),
     icon: library_tablet
@@ -24522,26 +24557,30 @@ function PreviewDropdown({
     label: (0,external_wp_i18n_namespaceObject.__)('Mobile'),
     icon: library_mobile
   }];
+  const previewValue = editorMode === 'zoom-out' ? 'ZoomOut' : deviceType;
 
   /**
-   * The selected choice.
+   * Handles the selection of a device type.
    *
-   * @type {Object}
+   * @param {string} value The device type.
    */
-  let selectedChoice = choices.find(choice => choice.value === deviceType);
-
-  /**
-   * If no selected choice is found, default to the first
-   */
-  if (!selectedChoice) {
-    selectedChoice = choices[0];
-  }
+  const onSelect = value => {
+    let newEditorMode = originalEditingMode.current;
+    if (value === 'ZoomOut') {
+      newEditorMode = 'zoom-out';
+      setDeviceType('Desktop');
+    } else {
+      setDeviceType(value);
+    }
+    __unstableSetEditorMode(newEditorMode);
+  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
-    className: "editor-preview-dropdown",
+    className: dist_clsx('editor-preview-dropdown', `editor-preview-dropdown--${deviceType.toLowerCase()}`),
     popoverProps: popoverProps,
     toggleProps: toggleProps,
     menuProps: menuProps,
     icon: deviceIcons[deviceType.toLowerCase()],
+    text: editorMode === 'zoom-out' ? (0,external_wp_i18n_namespaceObject.__)('50%') : undefined,
     label: (0,external_wp_i18n_namespaceObject.__)('View'),
     disableOpenOnArrowDown: disabled,
     children: ({
@@ -24550,8 +24589,8 @@ function PreviewDropdown({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItemsChoice, {
           choices: choices,
-          value: selectedChoice.value,
-          onSelect: setDeviceType
+          value: previewValue,
+          onSelect: onSelect
         })
       }), isTemplate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuItem, {
@@ -24661,8 +24700,7 @@ function Header({
     isPublishSidebarOpened,
     showIconLabels,
     hasFixedToolbar,
-    isNestedEntity,
-    isZoomedOutView
+    isNestedEntity
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       get: getPreference
@@ -24738,7 +24776,7 @@ function Header({
         forceIsDirty: forceIsDirty
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreviewDropdown, {
         forceIsAutosaveable: forceIsDirty,
-        disabled: isNestedEntity || isZoomedOutView
+        disabled: isNestedEntity
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostPreviewButton, {
         className: "editor-header__post-preview-button",
         forceIsAutosaveable: forceIsDirty
@@ -25608,6 +25646,7 @@ function VisualEditor({
 }) {
   const [resizeObserver, sizes] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
   const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('small', '<');
+  const isTabletViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   const {
     renderingMode,
     postContentAttributes,
@@ -25784,7 +25823,7 @@ function VisualEditor({
   }), useSelectNearestEditableBlock({
     isEnabled: renderingMode === 'template-locked'
   })]);
-  const zoomOutProps = isZoomOutMode ? {
+  const zoomOutProps = isZoomOutMode && !isTabletViewport ? {
     scale: 'default',
     frameSize: '48px'
   } : {};
