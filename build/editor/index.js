@@ -6172,7 +6172,7 @@ const trash_post_trashPost = {
           isBusy: isBusy,
           disabled: isBusy,
           accessibleWhenDisabled: true,
-          children: (0,external_wp_i18n_namespaceObject.__)('Trash')
+          children: (0,external_wp_i18n_namespaceObject._x)('Trash', 'verb')
         })]
       })]
     });
