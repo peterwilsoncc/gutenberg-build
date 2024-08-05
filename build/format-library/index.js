@@ -1893,7 +1893,9 @@ function InlineLanguageUI({
     className: "block-editor-format-toolbar__language-popover",
     anchor: popoverAnchor,
     onClose: onClose,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("form", {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      as: "form",
+      spacing: 4,
       className: "block-editor-format-toolbar__language-container-content",
       onSubmit: event => {
         event.preventDefault();
@@ -1907,11 +1909,15 @@ function InlineLanguageUI({
         onClose();
       },
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
         label: language_title,
         value: lang,
         onChange: val => setLang(val),
         help: (0,external_wp_i18n_namespaceObject.__)('A valid language attribute, like "en" or "fr".')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Text direction'),
         value: dir,
         options: [{
@@ -1925,6 +1931,7 @@ function InlineLanguageUI({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
         alignment: "right",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           variant: "primary",
           type: "submit",
           text: (0,external_wp_i18n_namespaceObject.__)('Apply')

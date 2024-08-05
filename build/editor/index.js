@@ -26193,7 +26193,9 @@ function Edit({
       label: label,
       value: value,
       options: elements,
-      onChange: onChangeControl
+      onChange: onChangeControl,
+      __next40pxDefaultSize: true,
+      __nextHasNoMarginBottom: true
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
@@ -26276,7 +26278,8 @@ function text_Edit({
     placeholder: placeholder,
     value: value !== null && value !== void 0 ? value : '',
     onChange: onChangeControl,
-    __next40pxDefaultSize: true
+    __next40pxDefaultSize: true,
+    __nextHasNoMarginBottom: true
   });
 }
 /* harmony default export */ const field_types_text = ({
@@ -26395,6 +26398,7 @@ function isItemValid(item, fields, form) {
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -26409,12 +26413,15 @@ function DataForm({
   const visibleFields = (0,external_wp_element_namespaceObject.useMemo)(() => normalizeFields(fields.filter(({
     id
   }) => !!form.visibleFields?.includes(id))), [fields, form.visibleFields]);
-  return visibleFields.map(field => {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.Edit, {
-      data: data,
-      field: field,
-      onChange: onChange
-    }, field.id);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: 4,
+    children: visibleFields.map(field => {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.Edit, {
+        data: data,
+        field: field,
+        onChange: onChange
+      }, field.id);
+    })
   });
 }
 

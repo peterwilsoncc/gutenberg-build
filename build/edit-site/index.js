@@ -28845,7 +28845,9 @@ function Edit({
       label: label,
       value: value,
       options: elements,
-      onChange: onChangeControl
+      onChange: onChangeControl,
+      __next40pxDefaultSize: true,
+      __nextHasNoMarginBottom: true
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
@@ -28928,7 +28930,8 @@ function text_Edit({
     placeholder: placeholder,
     value: value !== null && value !== void 0 ? value : '',
     onChange: onChangeControl,
-    __next40pxDefaultSize: true
+    __next40pxDefaultSize: true,
+    __nextHasNoMarginBottom: true
   });
 }
 /* harmony default export */ const field_types_text = ({
@@ -38277,9 +38280,10 @@ function AddNewPostModal({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
       onSubmit: createPost,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-        spacing: 3,
+        spacing: 4,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
           __next40pxDefaultSize: true,
+          __nextHasNoMarginBottom: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Title'),
           onChange: setTitle,
           placeholder: (0,external_wp_i18n_namespaceObject.__)('No title'),
@@ -45276,6 +45280,7 @@ function isItemValid(item, fields, form) {
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -45290,12 +45295,15 @@ function DataForm({
   const visibleFields = (0,external_wp_element_namespaceObject.useMemo)(() => normalizeFields(fields.filter(({
     id
   }) => !!form.visibleFields?.includes(id))), [fields, form.visibleFields]);
-  return visibleFields.map(field => {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.Edit, {
-      data: data,
-      field: field,
-      onChange: onChange
-    }, field.id);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: 4,
+    children: visibleFields.map(field => {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.Edit, {
+        data: data,
+        field: field,
+        onChange: onChange
+      }, field.id);
+    })
   });
 }
 
@@ -45370,19 +45378,24 @@ function PostEditForm({
     setEdits({});
   };
   const isUpdateDisabled = !isItemValid(itemWithEdits, fields, form);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("form", {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    as: "form",
     onSubmit: onSubmit,
+    spacing: 4,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
       data: itemWithEdits,
       fields: fields,
       form: form,
       onChange: setEdits
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      variant: "primary",
-      type: "submit",
-      accessibleWhenDisabled: true,
-      disabled: isUpdateDisabled,
-      children: (0,external_wp_i18n_namespaceObject.__)('Update')
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        variant: "primary",
+        type: "submit",
+        accessibleWhenDisabled: true,
+        disabled: isUpdateDisabled,
+        __next40pxDefaultSize: true,
+        children: (0,external_wp_i18n_namespaceObject.__)('Update')
+      })
     })]
   });
 }
