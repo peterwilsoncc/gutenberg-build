@@ -30256,10 +30256,6 @@ const settings_settings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
 
 
 
-
-const {
-  CustomSelectControlV2Legacy: CustomSelectControl
-} = unlock(external_wp_components_namespaceObject.privateApis);
 const CUSTOM_VALUE_SETTINGS = {
   px: {
     max: 300,
@@ -30540,7 +30536,7 @@ function SpacingInputControl({
       __nextHasNoMarginBottom: true,
       onFocus: onMouseOver,
       onBlur: onMouseOut
-    }), !showRangeControl && !showCustomValueControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CustomSelectControl, {
+    }), !showRangeControl && !showCustomValueControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CustomSelectControl, {
       className: "spacing-sizes-control__custom-select-control",
       value:
       // passing empty string as a fallback to continue using the
