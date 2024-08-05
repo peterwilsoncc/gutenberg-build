@@ -57804,7 +57804,6 @@ function BlockMover({
       children: draggableProps => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         icon: drag_handle,
         className: "block-editor-block-mover__drag-handle",
-        "aria-hidden": "true",
         label: (0,external_wp_i18n_namespaceObject.__)('Drag')
         // Should not be able to tab to drag handle as this
         // button can only be used with a pointer device.
@@ -61331,7 +61330,6 @@ function BlockSelectionButton({
           children: draggableProps => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
             icon: drag_handle,
             className: "block-selection-button_drag-handle",
-            "aria-hidden": "true",
             label: dragHandleLabel
             // Should not be able to tab to drag handle as this
             // button can only be used with a pointer device.
@@ -61527,7 +61525,6 @@ function ZoomOutToolbar({
       children: draggableProps => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         icon: drag_handle,
         className: "block-selection-button_drag-handle zoom-out-toolbar-button",
-        "aria-hidden": "true",
         label: (0,external_wp_i18n_namespaceObject.__)('Drag'),
         iconSize: 24,
         size: "compact"
