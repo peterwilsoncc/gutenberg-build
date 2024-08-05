@@ -26217,6 +26217,7 @@ function Edit({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -26250,6 +26251,26 @@ function text_Edit({
     ...prevItem,
     [id]: newValue
   })), [id, onChange]);
+  if (field.elements) {
+    const elements = [
+    /*
+     * Value can be undefined when:
+     *
+     * - the field is not required
+     * - in bulk editing
+     *
+     */
+    {
+      label: (0,external_wp_i18n_namespaceObject.__)('Select item'),
+      value: ''
+    }, ...field.elements];
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+      label: label,
+      value: value,
+      options: elements,
+      onChange: onChangeControl
+    });
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
     label: label,
     placeholder: placeholder,
