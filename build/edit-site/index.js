@@ -36549,17 +36549,17 @@ function GridItem({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "dataviews-view-grid__media",
       children: renderedMediaField
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSelectionCheckbox, {
+      item: item,
+      selection: selection,
+      onChangeSelection: onChangeSelection,
+      getItemId: getItemId,
+      primaryField: primaryField,
+      disabled: !hasBulkAction
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       justify: "space-between",
       className: "dataviews-view-grid__title-actions",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSelectionCheckbox, {
-        item: item,
-        selection: selection,
-        onChangeSelection: onChangeSelection,
-        getItemId: getItemId,
-        primaryField: primaryField,
-        disabled: !hasBulkAction
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
         className: "dataviews-view-grid__primary-field",
         children: renderedPrimaryField
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemActions, {
