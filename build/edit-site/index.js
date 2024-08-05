@@ -29782,6 +29782,21 @@ function BulkActionsToolbar() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(_BulkActionsToolbar, {});
 }
 
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/funnel.js
+/**
+ * WordPress dependencies
+ */
+
+
+const funnel = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M10 17.5H14V16H10V17.5ZM6 6V7.5H18V6H6ZM8 12.5H16V11H8V12.5Z"
+  })
+});
+/* harmony default export */ const library_funnel = (funnel);
+
 ;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/core/esm/__chunks/I2NJJ3XW.js
 "use client";
 
@@ -35586,28 +35601,16 @@ const {
   DropdownMenuItemV2: add_filter_DropdownMenuItem,
   DropdownMenuItemLabelV2: add_filter_DropdownMenuItemLabel
 } = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
-function AddFilter({
+function AddFilterDropdownMenu({
   filters,
   view,
   onChangeView,
-  setOpenedFilter
-}, ref) {
-  if (!filters.length || filters.every(({
-    isPrimary
-  }) => isPrimary)) {
-    return null;
-  }
+  setOpenedFilter,
+  trigger
+}) {
   const inactiveFilters = filters.filter(filter => !filter.isVisible);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_DropdownMenu, {
-    trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      accessibleWhenDisabled: true,
-      size: "compact",
-      className: "dataviews-filters__button",
-      variant: "tertiary",
-      disabled: !inactiveFilters.length,
-      ref: ref,
-      children: (0,external_wp_i18n_namespaceObject.__)('Add filter')
-    }),
+    trigger: trigger,
     children: inactiveFilters.map(filter => {
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_DropdownMenuItem, {
         onClick: () => {
@@ -35627,6 +35630,34 @@ function AddFilter({
         })
       }, filter.field);
     })
+  });
+}
+function AddFilter({
+  filters,
+  view,
+  onChangeView,
+  setOpenedFilter
+}, ref) {
+  if (!filters.length || filters.every(({
+    isPrimary
+  }) => isPrimary)) {
+    return null;
+  }
+  const inactiveFilters = filters.filter(filter => !filter.isVisible);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddFilterDropdownMenu, {
+    trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      accessibleWhenDisabled: true,
+      size: "compact",
+      className: "dataviews-filters-button",
+      variant: "tertiary",
+      disabled: !inactiveFilters.length,
+      ref: ref,
+      children: (0,external_wp_i18n_namespaceObject.__)('Add filter')
+    }),
+    filters,
+    view,
+    onChangeView,
+    setOpenedFilter
   });
 }
 /* harmony default export */ const add_filter = ((0,external_wp_element_namespaceObject.forwardRef)(AddFilter));
@@ -35698,6 +35729,8 @@ function sanitizeOperators(field) {
 
 
 
+
+
 /**
  * Internal dependencies
  */
@@ -35708,6 +35741,94 @@ function sanitizeOperators(field) {
 
 
 
+
+function useFilters(fields, view) {
+  return (0,external_wp_element_namespaceObject.useMemo)(() => {
+    const filters = [];
+    fields.forEach(field => {
+      if (!field.elements?.length) {
+        return;
+      }
+      const operators = sanitizeOperators(field);
+      if (operators.length === 0) {
+        return;
+      }
+      const isPrimary = !!field.filterBy?.isPrimary;
+      filters.push({
+        field: field.id,
+        name: field.label,
+        elements: field.elements,
+        singleSelection: operators.some(op => [constants_OPERATOR_IS, constants_OPERATOR_IS_NOT].includes(op)),
+        operators,
+        isVisible: isPrimary || !!view.filters?.some(f => f.field === field.id && ALL_OPERATORS.includes(f.operator)),
+        isPrimary
+      });
+    });
+    // Sort filters by primary property. We need the primary filters to be first.
+    // Then we sort by name.
+    filters.sort((a, b) => {
+      if (a.isPrimary && !b.isPrimary) {
+        return -1;
+      }
+      if (!a.isPrimary && b.isPrimary) {
+        return 1;
+      }
+      return a.name.localeCompare(b.name);
+    });
+    return filters;
+  }, [fields, view]);
+}
+function FilterVisibilityToggle({
+  filters,
+  view,
+  onChangeView,
+  setOpenedFilter,
+  isShowingFilter,
+  setIsShowingFilter
+}) {
+  const onChangeViewWithFilterVisibility = (0,external_wp_element_namespaceObject.useCallback)(_view => {
+    onChangeView(_view);
+    setIsShowingFilter(true);
+  }, [onChangeView, setIsShowingFilter]);
+  const visibleFilters = filters.filter(filter => filter.isVisible);
+  const hasVisibleFilters = !!visibleFilters.length;
+  if (!hasVisibleFilters) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddFilterDropdownMenu, {
+      filters: filters,
+      view: view,
+      onChangeView: onChangeViewWithFilterVisibility,
+      setOpenedFilter: setOpenedFilter,
+      trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        className: "dataviews-filters__visibility-toggle",
+        size: "compact",
+        icon: library_funnel,
+        label: (0,external_wp_i18n_namespaceObject.__)('Add filter'),
+        isPressed: false,
+        "aria-expanded": false
+      })
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    className: "dataviews-filters__container-visibility-toggle",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      className: "dataviews-filters__visibility-toggle",
+      size: "compact",
+      icon: library_funnel,
+      label: (0,external_wp_i18n_namespaceObject.__)('Toggle filter display'),
+      onClick: () => {
+        if (!isShowingFilter) {
+          setOpenedFilter(null);
+        }
+        setIsShowingFilter(!isShowingFilter);
+      },
+      isPressed: isShowingFilter,
+      "aria-expanded": isShowingFilter
+    }), hasVisibleFilters && !!view.filters?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "dataviews-filters-toggle__count",
+      children: view.filters?.length
+    })]
+  });
+}
 function Filters() {
   const {
     fields,
@@ -35717,37 +35838,7 @@ function Filters() {
     setOpenedFilter
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const addFilterRef = (0,external_wp_element_namespaceObject.useRef)(null);
-  const filters = [];
-  fields.forEach(field => {
-    if (!field.elements?.length) {
-      return;
-    }
-    const operators = sanitizeOperators(field);
-    if (operators.length === 0) {
-      return;
-    }
-    const isPrimary = !!field.filterBy?.isPrimary;
-    filters.push({
-      field: field.id,
-      name: field.label,
-      elements: field.elements,
-      singleSelection: operators.some(op => [constants_OPERATOR_IS, constants_OPERATOR_IS_NOT].includes(op)),
-      operators,
-      isVisible: isPrimary || !!view.filters?.some(f => f.field === field.id && ALL_OPERATORS.includes(f.operator)),
-      isPrimary
-    });
-  });
-  // Sort filters by primary property. We need the primary filters to be first.
-  // Then we sort by name.
-  filters.sort((a, b) => {
-    if (a.isPrimary && !b.isPrimary) {
-      return -1;
-    }
-    if (!a.isPrimary && b.isPrimary) {
-      return 1;
-    }
-    return a.name.localeCompare(b.name);
-  });
+  const filters = useFilters(fields, view);
   const addFilter = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter, {
     filters: filters,
     view: view,
@@ -35755,10 +35846,11 @@ function Filters() {
     ref: addFilterRef,
     setOpenedFilter: setOpenedFilter
   }, "add-filter");
-  const filterComponents = [...filters.map(filter => {
-    if (!filter.isVisible) {
-      return null;
-    }
+  const visibleFilters = filters.filter(filter => filter.isVisible);
+  if (visibleFilters.length === 0) {
+    return null;
+  }
+  const filterComponents = [...visibleFilters.map(filter => {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FilterSummary, {
       filter: filter,
       view: view,
@@ -35767,18 +35859,17 @@ function Filters() {
       openedFilter: openedFilter
     }, filter.field);
   }), addFilter];
-  if (filterComponents.length > 1) {
-    filterComponents.push( /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResetFilter, {
-      filters: filters,
-      view: view,
-      onChangeView: onChangeView
-    }, "reset-filters"));
-  }
+  filterComponents.push( /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResetFilter, {
+    filters: filters,
+    view: view,
+    onChangeView: onChangeView
+  }, "reset-filters"));
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
     justify: "flex-start",
     style: {
       width: 'fit-content'
     },
+    className: "dataviews-filters__container",
     wrap: true,
     children: filterComponents
   });
@@ -35892,21 +35983,6 @@ function DataViewsSelectionCheckbox({
     }
   });
 }
-
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/funnel.js
-/**
- * WordPress dependencies
- */
-
-
-const funnel = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M10 17.5H14V16H10V17.5ZM6 6V7.5H18V6H6ZM8 12.5H16V11H8V12.5Z"
-  })
-});
-/* harmony default export */ const library_funnel = (funnel);
 
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/arrow-left.js
 /**
@@ -37192,14 +37268,17 @@ const DataViewsSearch = (0,external_wp_element_namespaceObject.memo)(function Se
     viewRef.current = view;
   }, [onChangeView, view]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    onChangeViewRef.current({
-      ...viewRef.current,
-      page: 1,
-      search: debouncedSearch
-    });
+    if (debouncedSearch !== viewRef.current?.search) {
+      onChangeViewRef.current({
+        ...viewRef.current,
+        page: 1,
+        search: debouncedSearch
+      });
+    }
   }, [debouncedSearch]);
   const searchLabel = label || (0,external_wp_i18n_namespaceObject.__)('Search');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SearchControl, {
+    className: "dataviews-search",
     __nextHasNoMarginBottom: true,
     onChange: setSearch,
     value: search,
@@ -37670,6 +37749,7 @@ function DataViews({
 }) {
   const [selectionState, setSelectionState] = (0,external_wp_element_namespaceObject.useState)([]);
   const [density, setDensity] = (0,external_wp_element_namespaceObject.useState)(0);
+  const [isShowingFilter, setIsShowingFilter] = (0,external_wp_element_namespaceObject.useState)(false);
   const isUncontrolled = selectionProperty === undefined || onChangeSelection === undefined;
   const selection = isUncontrolled ? selectionState : selectionProperty;
   const [openedFilter, setOpenedFilter] = (0,external_wp_element_namespaceObject.useState)(null);
@@ -37686,6 +37766,7 @@ function DataViews({
   const _selection = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return selection.filter(id => data.some(item => getItemId(item) === id));
   }, [selection, data, getItemId]);
+  const filters = useFilters(_fields, view);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_context.Provider, {
     value: {
       view,
@@ -37708,13 +37789,20 @@ function DataViews({
         alignment: "top",
         justify: "start",
         className: "dataviews__view-actions",
+        spacing: 1,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
           justify: "start",
-          className: "dataviews-filters__container",
           wrap: true,
           children: [search && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_search, {
             label: searchLabel
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_filters, {})]
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FilterVisibilityToggle, {
+            filters: filters,
+            view: view,
+            onChangeView: onChangeView,
+            setOpenedFilter: setOpenedFilter,
+            setIsShowingFilter: setIsShowingFilter,
+            isShowingFilter: isShowingFilter
+          })]
         }), view.type === constants_LAYOUT_GRID && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DensityPicker, {
           density: density,
           setDensity: setDensity
@@ -37728,7 +37816,7 @@ function DataViews({
             defaultLayouts: defaultLayouts
           }), header]
         })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsLayout, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_pagination, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BulkActionsToolbar, {})]
+      }), isShowingFilter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_filters, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsLayout, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_pagination, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BulkActionsToolbar, {})]
     })
   });
 }
@@ -38774,7 +38862,9 @@ function PostList({
   const location = post_list_useLocation();
   const {
     postId,
-    quickEdit = false
+    quickEdit = false,
+    isCustom,
+    activeView = 'all'
   } = location.params;
   const [selection, setSelection] = (0,external_wp_element_namespaceObject.useState)((_postId$split = postId?.split(',')) !== null && _postId$split !== void 0 ? _postId$split : []);
   const onChangeSelection = (0,external_wp_element_namespaceObject.useCallback)(items => {
@@ -38929,7 +39019,7 @@ function PostList({
           });
         }
       })
-    })
+    }, activeView + isCustom)
   });
 }
 
@@ -40571,7 +40661,7 @@ function DataviewsPatterns() {
         view: view,
         onChangeView: setView,
         defaultLayouts: page_patterns_defaultLayouts
-      })]
+      }, categoryId + postType)]
     })
   });
 }
@@ -42750,7 +42840,7 @@ function PageTemplates() {
       onChangeSelection: onChangeSelection,
       selection: selection,
       defaultLayouts: page_templates_defaultLayouts
-    })
+    }, activeView)
   });
 }
 
