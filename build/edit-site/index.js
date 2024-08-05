@@ -14440,6 +14440,11 @@ function useResolveEditedEntityAndContext({
     if (postTypesWithoutParentTemplate.includes(postType) && postId) {
       return undefined;
     }
+
+    // Don't trigger resolution for multi-selected posts.
+    if (postId && postId.includes(',')) {
+      return undefined;
+    }
     const {
       getEditedEntityRecord,
       getEntityRecords,
