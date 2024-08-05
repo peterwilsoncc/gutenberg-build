@@ -55310,6 +55310,7 @@ function useGridLayoutSync({
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const selectedBlockRect = (0,external_wp_element_namespaceObject.useMemo)(() => selectedBlockLayout ? new GridRect(selectedBlockLayout) : null, [selectedBlockLayout]);
   const previouslySelectedBlockRect = (0,external_wp_compose_namespaceObject.usePrevious)(selectedBlockRect);
+  const previousIsManualPlacement = (0,external_wp_compose_namespaceObject.usePrevious)(gridLayout.isManualPlacement);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     const updates = {};
     if (gridLayout.isManualPlacement) {
@@ -55378,23 +55379,26 @@ function useGridLayoutSync({
         };
       }
     } else {
-      // When in auto mode, remove all of the columnStart and rowStart values.
-      for (const clientId of blockOrder) {
-        var _attributes$style$lay2;
-        const attributes = getBlockAttributes(clientId);
-        const {
-          columnStart,
-          rowStart,
-          ...layout
-        } = (_attributes$style$lay2 = attributes.style?.layout) !== null && _attributes$style$lay2 !== void 0 ? _attributes$style$lay2 : {};
-        // Only update attributes if columnStart or rowStart are set.
-        if (columnStart || rowStart) {
-          updates[clientId] = {
-            style: {
-              ...attributes.style,
-              layout
-            }
-          };
+      // Remove all of the columnStart and rowStart values
+      // when switching from manual to auto mode,
+      if (previousIsManualPlacement === true) {
+        for (const clientId of blockOrder) {
+          var _attributes$style$lay2;
+          const attributes = getBlockAttributes(clientId);
+          const {
+            columnStart,
+            rowStart,
+            ...layout
+          } = (_attributes$style$lay2 = attributes.style?.layout) !== null && _attributes$style$lay2 !== void 0 ? _attributes$style$lay2 : {};
+          // Only update attributes if columnStart or rowStart are set.
+          if (columnStart || rowStart) {
+            updates[clientId] = {
+              style: {
+                ...attributes.style,
+                layout
+              }
+            };
+          }
         }
       }
 
@@ -55414,7 +55418,7 @@ function useGridLayoutSync({
     }
   }, [
   // Actual deps to sync:
-  gridClientId, gridLayout, blockOrder, previouslySelectedBlockRect,
+  gridClientId, gridLayout, blockOrder, previouslySelectedBlockRect, previousIsManualPlacement,
   // These won't change, but the linter thinks they might:
   __unstableMarkNextChangeAsNotPersistent, getBlockAttributes, updateBlockAttributes]);
 }
