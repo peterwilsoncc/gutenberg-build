@@ -35419,6 +35419,7 @@ function Navigation({
     })]
   });
   const accessibleDescriptionId = `${clientId}-desc`;
+  const isHiddenByDefault = 'always' === overlayMenu;
   const isManageMenusButtonDisabled = !hasManagePermissions || !hasResolvedNavigationMenus;
   if (hasUnsavedBlocks && !isCreatingNavigationMenu) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(TagName, {
@@ -35446,7 +35447,7 @@ function Navigation({
         hasIcon: hasIcon,
         icon: icon,
         isResponsive: isResponsive,
-        isHiddenByDefault: 'always' === overlayMenu,
+        isHiddenByDefault: isHiddenByDefault,
         overlayBackgroundColor: overlayBackgroundColor,
         overlayTextColor: overlayTextColor,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(UnsavedInnerBlocks, {
@@ -35547,12 +35548,12 @@ function Navigation({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(TagName, {
         ...blockProps,
         "aria-describedby": !isPlaceholder && !isLoading ? accessibleDescriptionId : undefined,
-        children: [isLoading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        children: [isLoading && !isHiddenByDefault && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "wp-block-navigation__loading-indicator-container",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {
             className: "wp-block-navigation__loading-indicator"
           })
-        }), !isLoading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+        }), (!isLoading || isHiddenByDefault) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AccessibleMenuDescription, {
             id: accessibleDescriptionId
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResponsiveWrapper, {
@@ -35562,7 +35563,7 @@ function Navigation({
             icon: icon,
             isOpen: isResponsiveMenuOpen,
             isResponsive: isResponsive,
-            isHiddenByDefault: 'always' === overlayMenu,
+            isHiddenByDefault: isHiddenByDefault,
             overlayBackgroundColor: overlayBackgroundColor,
             overlayTextColor: overlayTextColor,
             children: isEntityAvailable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationInnerBlocks, {
