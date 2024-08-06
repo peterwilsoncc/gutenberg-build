@@ -44946,8 +44946,7 @@ function useOnBlockDrop(targetRootClientId, targetBlockIndex, options = {}) {
     getBlockOrder,
     getBlocksByClientId,
     getSettings,
-    getBlock,
-    isGroupable
+    getBlock
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const {
     getGroupingBlockName
@@ -44967,11 +44966,9 @@ function useOnBlockDrop(targetRootClientId, targetBlockIndex, options = {}) {
     }
     const clientIds = getBlockOrder(targetRootClientId);
     const clientId = clientIds[targetBlockIndex];
-    const blocksClientIds = blocks.map(block => block.clientId);
-    const areGroupableBlocks = isGroupable([...blocksClientIds, clientId]);
     if (operation === 'replace') {
       replaceBlocks(clientId, blocks, undefined, initialPosition);
-    } else if (operation === 'group' && areGroupableBlocks) {
+    } else if (operation === 'group') {
       const targetBlock = getBlock(clientId);
       if (nearestSide === 'left') {
         blocks.push(targetBlock);
@@ -44997,7 +44994,7 @@ function useOnBlockDrop(targetRootClientId, targetBlockIndex, options = {}) {
     } else {
       insertBlocks(blocks, targetBlockIndex, targetRootClientId, updateSelection, initialPosition);
     }
-  }, [getBlockOrder, targetRootClientId, targetBlockIndex, isGroupable, operation, replaceBlocks, getBlock, nearestSide, canInsertBlockType, getGroupingBlockName, insertBlocks]);
+  }, [getBlockOrder, targetRootClientId, targetBlockIndex, operation, replaceBlocks, getBlock, nearestSide, canInsertBlockType, getGroupingBlockName, insertBlocks]);
   const moveBlocks = (0,external_wp_element_namespaceObject.useCallback)((sourceClientIds, sourceRootClientId, insertIndex) => {
     if (operation === 'replace') {
       const sourceBlocks = getBlocksByClientId(sourceClientIds);
@@ -45353,16 +45350,20 @@ function useBlockDropZone({
     operation: 'insert'
   });
   const {
-    getBlockType
+    getBlockType,
+    getBlockVariations,
+    getGroupingBlockName
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blocks_namespaceObject.store);
   const {
+    canInsertBlockType,
     getBlockListSettings,
     getBlocks,
     getBlockIndex,
     getDraggedBlockClientIds,
     getBlockNamesByClientId,
     getAllowedBlocks,
-    isDragging
+    isDragging,
+    isGroupable
   } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const {
     showInsertionPoint,
@@ -45411,7 +45412,7 @@ function useBlockDropZone({
         blockOrientation: getBlockListSettings(clientId)?.orientation
       };
     });
-    const [targetIndex, operation, nearestSide] = getDropTargetPosition(blocksData, {
+    const dropTargetPosition = getDropTargetPosition(blocksData, {
       x: event.clientX,
       y: event.clientY
     }, getBlockListSettings(targetRootClientId)?.orientation, {
@@ -45420,6 +45421,28 @@ function useBlockDropZone({
       parentBlockOrientation: parentBlockClientId ? getBlockListSettings(parentBlockClientId)?.orientation : undefined,
       rootBlockIndex: getBlockIndex(targetRootClientId)
     });
+    const [targetIndex, operation, nearestSide] = dropTargetPosition;
+    if (operation === 'group') {
+      const targetBlock = blocks[targetIndex];
+      const areAllImages = [targetBlock.name, ...draggedBlockNames].every(name => name === 'core/image');
+      const canInsertGalleryBlock = canInsertBlockType('core/gallery', targetRootClientId);
+      const areGroupableBlocks = isGroupable([targetBlock.clientId, getDraggedBlockClientIds()]);
+      const groupBlockVariations = getBlockVariations(getGroupingBlockName(), 'block');
+      const canInsertRow = groupBlockVariations && groupBlockVariations.find(({
+        name
+      }) => name === 'group-row');
+
+      // If the dragged blocks and the target block are all images,
+      // check if it is creatable either a Row variation or a Gallery block.
+      if (areAllImages && !canInsertGalleryBlock && (!areGroupableBlocks || !canInsertRow)) {
+        return;
+      }
+      // If the dragged blocks and the target block are not all images,
+      // check if it is creatable a Row variation.
+      if (!areAllImages && (!areGroupableBlocks || !canInsertRow)) {
+        return;
+      }
+    }
     registry.batch(() => {
       setDropTarget({
         index: targetIndex,
@@ -45432,7 +45455,7 @@ function useBlockDropZone({
         nearestSide
       });
     });
-  }, [getAllowedBlocks, targetRootClientId, getBlockNamesByClientId, getDraggedBlockClientIds, getBlockType, getBlocks, getBlockListSettings, dropZoneElement, parentBlockClientId, getBlockIndex, registry, showInsertionPoint, isDragging, startDragging]), 200);
+  }, [getAllowedBlocks, targetRootClientId, getBlockNamesByClientId, getDraggedBlockClientIds, getBlockType, getBlocks, getBlockListSettings, dropZoneElement, parentBlockClientId, getBlockIndex, registry, showInsertionPoint, isDragging, startDragging, canInsertBlockType, getBlockVariations, getGroupingBlockName, isGroupable]), 200);
   return (0,external_wp_compose_namespaceObject.__experimentalUseDropZone)({
     dropZoneElement,
     isDisabled,
