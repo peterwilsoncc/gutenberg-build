@@ -54895,6 +54895,7 @@ function BlockHooksControlPure({
           }), groupedHookedBlocks[vendor].map(block => {
             const checked = (block.name in hookedBlockClientIds);
             return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+              __nextHasNoMarginBottom: true,
               checked: checked,
               label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
                 justify: "flex-start",
@@ -73866,6 +73867,7 @@ function ImageSettingsPanel({
         isShownByDefault: true,
         panelId: panelId,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          __nextHasNoMarginBottom: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Expand on click'),
           checked: lightboxChecked,
           onChange: onChangeLightbox
