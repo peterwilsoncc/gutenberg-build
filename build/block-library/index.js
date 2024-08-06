@@ -45652,24 +45652,6 @@ const loop = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
 });
 /* harmony default export */ const library_loop = (loop);
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/settings.js
-/**
- * WordPress dependencies
- */
-
-
-
-const settings_settings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m19 7.5h-7.628c-.3089-.87389-1.1423-1.5-2.122-1.5-.97966 0-1.81309.62611-2.12197 1.5h-2.12803v1.5h2.12803c.30888.87389 1.14231 1.5 2.12197 1.5.9797 0 1.8131-.62611 2.122-1.5h7.628z"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m19 15h-2.128c-.3089-.8739-1.1423-1.5-2.122-1.5s-1.8131.6261-2.122 1.5h-7.628v1.5h7.628c.3089.8739 1.1423 1.5 2.122 1.5s1.8131-.6261 2.122-1.5h2.128z"
-  })]
-});
-/* harmony default export */ const library_settings = (settings_settings);
-
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/query/utils.js
 /**
  * WordPress dependencies
@@ -46071,100 +46053,26 @@ const useUnsupportedBlocks = clientId => {
 
 
 
-
 /**
  * Internal dependencies
  */
 
 
 
-
 function QueryToolbar({
-  attributes: {
-    query
-  },
-  setQuery,
   openPatternSelectionModal,
   name,
   clientId
 }) {
   const hasPatterns = !!usePatterns(clientId, name).length;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [!query.inherit && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
-        contentClassName: "block-library-query-toolbar__popover",
-        renderToggle: ({
-          onToggle
-        }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-          icon: library_settings,
-          label: (0,external_wp_i18n_namespaceObject.__)('Display settings'),
-          onClick: onToggle
-        }),
-        renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
-            __unstableInputWidth: "60px",
-            className: "block-library-query-toolbar__popover-number-control",
-            label: (0,external_wp_i18n_namespaceObject.__)('Items per Page'),
-            labelPosition: "edge",
-            min: 1,
-            max: 100,
-            onChange: value => {
-              if (isNaN(value) || value < 1 || value > 100) {
-                return;
-              }
-              setQuery({
-                perPage: value
-              });
-            },
-            step: "1",
-            value: query.perPage,
-            isDragEnabled: false
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
-            __unstableInputWidth: "60px",
-            className: "block-library-query-toolbar__popover-number-control",
-            label: (0,external_wp_i18n_namespaceObject.__)('Offset'),
-            labelPosition: "edge",
-            min: 0,
-            max: 100,
-            onChange: value => {
-              if (isNaN(value) || value < 0 || value > 100) {
-                return;
-              }
-              setQuery({
-                offset: value
-              });
-            },
-            step: "1",
-            value: query.offset,
-            isDragEnabled: false
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
-            __unstableInputWidth: "60px",
-            className: "block-library-query-toolbar__popover-number-control",
-            label: (0,external_wp_i18n_namespaceObject.__)('Max pages to show'),
-            labelPosition: "edge",
-            min: 0,
-            onChange: value => {
-              if (isNaN(value) || value < 0) {
-                return;
-              }
-              setQuery({
-                pages: value
-              });
-            },
-            step: "1",
-            value: query.pages,
-            isDragEnabled: false,
-            help: (0,external_wp_i18n_namespaceObject.__)('Limit the pages you want to show, even if the query has more results. To show all pages use 0 (zero).')
-          })]
-        })
-      })
-    }), hasPatterns && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: hasPatterns && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
       className: "wp-block-template-part__block-control-group",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
         onClick: openPatternSelectionModal,
         children: (0,external_wp_i18n_namespaceObject.__)('Replace')
       })
-    })]
+    })
   });
 }
 
@@ -46196,7 +46104,6 @@ function OrderControl({
   onChange
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-    __nextHasNoMarginBottom: true,
     __next40pxDefaultSize: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Order by'),
     value: `${orderBy}/${order}`,
@@ -46736,6 +46643,99 @@ const CreateNewPostLink = ({
 };
 /* harmony default export */ const create_new_post_link = (CreateNewPostLink);
 
+;// CONCATENATED MODULE: ./packages/block-library/build-module/query/edit/inspector-controls/per-page-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+const MIN_POSTS_PER_PAGE = 1;
+const MAX_POSTS_PER_PAGE = 100;
+const PerPageControl = ({
+  perPage,
+  offset = 0,
+  onChange
+}) => {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+    __next40pxDefaultSize: true,
+    __nextHasNoMarginBottom: true,
+    label: (0,external_wp_i18n_namespaceObject.__)('Posts per page'),
+    min: MIN_POSTS_PER_PAGE,
+    max: MAX_POSTS_PER_PAGE,
+    onChange: newPerPage => {
+      if (isNaN(newPerPage) || newPerPage < MIN_POSTS_PER_PAGE || newPerPage > MAX_POSTS_PER_PAGE) {
+        return;
+      }
+      onChange({
+        perPage: newPerPage,
+        offset
+      });
+    },
+    value: parseInt(perPage, 10)
+  });
+};
+/* harmony default export */ const per_page_control = (PerPageControl);
+
+;// CONCATENATED MODULE: ./packages/block-library/build-module/query/edit/inspector-controls/offset-controls.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+const MIN_OFFSET = 0;
+const MAX_OFFSET = 100;
+const OffsetControl = ({
+  offset = 0,
+  onChange
+}) => {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+    __next40pxDefaultSize: true,
+    label: (0,external_wp_i18n_namespaceObject.__)('Offset'),
+    value: offset,
+    min: MIN_OFFSET,
+    onChange: newOffset => {
+      if (isNaN(newOffset) || newOffset < MIN_OFFSET || newOffset > MAX_OFFSET) {
+        return;
+      }
+      onChange({
+        offset: newOffset
+      });
+    }
+  });
+};
+/* harmony default export */ const offset_controls = (OffsetControl);
+
+;// CONCATENATED MODULE: ./packages/block-library/build-module/query/edit/inspector-controls/pages-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+const PagesControl = ({
+  pages,
+  onChange
+}) => {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+    __next40pxDefaultSize: true,
+    label: (0,external_wp_i18n_namespaceObject.__)('Max pages'),
+    value: pages,
+    min: 0,
+    onChange: newPages => {
+      if (isNaN(newPages) || newPages < 0) {
+        return;
+      }
+      onChange({
+        pages: newPages
+      });
+    },
+    help: (0,external_wp_i18n_namespaceObject.__)('Limit the pages you want to show, even if the query has more results. To show all pages use 0 (zero).')
+  });
+};
+/* harmony default export */ const pages_control = (PagesControl);
+
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/query/edit/inspector-controls/index.js
 /**
  * WordPress dependencies
@@ -46749,6 +46749,9 @@ const CreateNewPostLink = ({
 /**
  * Internal dependencies
  */
+
+
+
 
 
 
@@ -46782,7 +46785,10 @@ function QueryInspectorControls(props) {
     order,
     orderBy,
     author: authorIds,
+    pages,
     postType,
+    perPage,
+    offset,
     sticky,
     inherit,
     taxQuery,
@@ -46846,6 +46852,10 @@ function QueryInspectorControls(props) {
   const showParentControl = isControlAllowed(allowedControls, 'parents') && isPostTypeHierarchical;
   const showFiltersPanel = showTaxControl || showAuthorControl || showSearchControl || showParentControl;
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  const showPostCountControl = isControlAllowed(allowedControls, 'postCount');
+  const showOffSetControl = isControlAllowed(allowedControls, 'offset');
+  const showPagesControl = isControlAllowed(allowedControls, 'pages');
+  const showDisplayPanel = showPostCountControl || showOffSetControl || showPagesControl;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [!!postType && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockInfo, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(create_new_post_link, {
@@ -46921,6 +46931,45 @@ function QueryInspectorControls(props) {
         enhancedPagination: enhancedPagination,
         setAttributes: setAttributes,
         clientId: clientId
+      })]
+    }), !inherit && showDisplayPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+      className: "block-library-query-toolspanel__display",
+      label: (0,external_wp_i18n_namespaceObject.__)('Display'),
+      resetAll: () => {
+        setQuery({
+          offset: 0,
+          pages: 0
+        });
+      },
+      dropdownMenuProps: dropdownMenuProps,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Items'),
+        hasValue: () => perPage > 0,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(per_page_control, {
+          perPage: perPage,
+          offset: offset,
+          onChange: setQuery
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Offset'),
+        hasValue: () => offset > 0,
+        onDeselect: () => setQuery({
+          offset: 0
+        }),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(offset_controls, {
+          offset: offset,
+          onChange: setQuery
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Max Pages to Show'),
+        hasValue: () => pages > 0,
+        onDeselect: () => setQuery({
+          pages: 0
+        }),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pages_control, {
+          pages: pages,
+          onChange: setQuery
+        })
       })]
     }), !inherit && showFiltersPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
       className: "block-library-query-toolspanel__filters" // unused but kept for backward compatibility
