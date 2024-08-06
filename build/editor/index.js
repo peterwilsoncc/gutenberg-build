@@ -6063,7 +6063,7 @@ const reset_post_resetPost = {
 
 const trash_post_trashPost = {
   id: 'move-to-trash',
-  label: (0,external_wp_i18n_namespaceObject.__)('Move to Trash'),
+  label: (0,external_wp_i18n_namespaceObject.__)('Move to trash'),
   isPrimary: true,
   icon: library_trash,
   isEligible(item) {
@@ -6092,9 +6092,9 @@ const trash_post_trashPost = {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
         children: items.length === 1 ? (0,external_wp_i18n_namespaceObject.sprintf)(
         // translators: %s: The item's title.
-        (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to move to trash "%s"?'), getItemTitle(items[0])) : (0,external_wp_i18n_namespaceObject.sprintf)(
+        (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to move "%s" to the trash?'), getItemTitle(items[0])) : (0,external_wp_i18n_namespaceObject.sprintf)(
         // translators: %d: The number of items (2 or more).
-        (0,external_wp_i18n_namespaceObject._n)('Are you sure you want to move to trash %d item?', 'Are you sure you want to move to trash %d items?', items.length), items.length)
+        (0,external_wp_i18n_namespaceObject._n)('Are you sure you want to move %d item to the trash ?', 'Are you sure you want to move %d items to the trash ?', items.length), items.length)
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         justify: "right",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -6117,10 +6117,10 @@ const trash_post_trashPost = {
               let successMessage;
               if (promiseResult.length === 1) {
                 successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The item's title. */
-                (0,external_wp_i18n_namespaceObject.__)('"%s" moved to trash.'), getItemTitle(items[0]));
+                (0,external_wp_i18n_namespaceObject.__)('"%s" moved to the trash.'), getItemTitle(items[0]));
               } else {
                 successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of items. */
-                (0,external_wp_i18n_namespaceObject._n)('%s item moved to trash.', '%s items moved to trash.', items.length), items.length);
+                (0,external_wp_i18n_namespaceObject._n)('%s item moved to the trash.', '%s items moved to the trash.', items.length), items.length);
               }
               createSuccessNotice(successMessage, {
                 type: 'snackbar',
@@ -6135,7 +6135,7 @@ const trash_post_trashPost = {
                 if (typedError.reason?.message) {
                   errorMessage = typedError.reason.message;
                 } else {
-                  errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while moving to trash the item.');
+                  errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while moving the item to the trash.');
                 }
                 // If we were trying to delete multiple items.
               } else {
@@ -6150,13 +6150,13 @@ const trash_post_trashPost = {
                   }
                 }
                 if (errorMessages.size === 0) {
-                  errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while moving to trash the items.');
+                  errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while moving the items to the trash.');
                 } else if (errorMessages.size === 1) {
                   errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
-                  (0,external_wp_i18n_namespaceObject.__)('An error occurred while moving to trash the item: %s'), [...errorMessages][0]);
+                  (0,external_wp_i18n_namespaceObject.__)('An error occurred while moving the item to the trash: %s'), [...errorMessages][0]);
                 } else {
                   errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
-                  (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while moving to trash the items: %s'), [...errorMessages].join(','));
+                  (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while moving the items to the trash: %s'), [...errorMessages].join(','));
                 }
               }
               createErrorNotice(errorMessage, {
@@ -6232,7 +6232,7 @@ const permanentlyDeletePost = {
         successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The posts's title. */
         (0,external_wp_i18n_namespaceObject.__)('"%s" permanently deleted.'), getItemTitle(posts[0]));
       } else {
-        successMessage = (0,external_wp_i18n_namespaceObject.__)('The posts were permanently deleted.');
+        successMessage = (0,external_wp_i18n_namespaceObject.__)('The items were permanently deleted.');
       }
       createSuccessNotice(successMessage, {
         type: 'snackbar',
@@ -6248,7 +6248,7 @@ const permanentlyDeletePost = {
         if (typedError.reason?.message) {
           errorMessage = typedError.reason.message;
         } else {
-          errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the post.');
+          errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the item.');
         }
         // If we were trying to permanently delete multiple posts
       } else {
@@ -6263,13 +6263,13 @@ const permanentlyDeletePost = {
           }
         }
         if (errorMessages.size === 0) {
-          errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the posts.');
+          errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the items.');
         } else if (errorMessages.size === 1) {
           errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
-          (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the posts: %s'), [...errorMessages][0]);
+          (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the items: %s'), [...errorMessages][0]);
         } else {
           errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
-          (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while permanently deleting the posts: %s'), [...errorMessages].join(','));
+          (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while permanently deleting the items: %s'), [...errorMessages].join(','));
         }
       }
       createErrorNotice(errorMessage, {
