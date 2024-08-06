@@ -28111,12 +28111,15 @@ function color_addTransforms(result, source, index, results) {
 
 
 
+
 /**
  * Internal dependencies
  */
 
 
 function FontFamilyControl({
+  /** Start opting into the new margin-free styles that will become the default in a future version. */
+  __nextHasNoMarginBottom = false,
   value = '',
   onChange,
   fontFamilies,
@@ -28141,7 +28144,15 @@ function FontFamilyControl({
       label: name || fontFamily
     };
   })];
+  if (!__nextHasNoMarginBottom) {
+    external_wp_deprecated_default()('Bottom margin styles for wp.blockEditor.FontFamilyControl', {
+      since: '6.7',
+      version: '7.0',
+      hint: 'Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version'
+    });
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+    __nextHasNoMarginBottom: __nextHasNoMarginBottom,
     label: (0,external_wp_i18n_namespaceObject.__)('Font'),
     options: options,
     value: value,
