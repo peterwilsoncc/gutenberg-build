@@ -6721,7 +6721,14 @@ const removeTemplates = items => async ({
     if (items.length === 1) {
       // Depending on how the entity was retrieved its title might be
       // an object or simple string.
-      const title = typeof items[0].title === 'string' ? items[0].title : items[0].title?.rendered;
+      let title;
+      if (typeof items[0].title === 'string') {
+        title = items[0].title;
+      } else if (typeof items[0].title?.rendered === 'string') {
+        title = items[0].title?.rendered;
+      } else if (typeof items[0].title?.raw === 'string') {
+        title = items[0].title?.raw;
+      }
       successMessage = isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The template/part's name. */
       (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title)) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The template/part's name. */
       (0,external_wp_i18n_namespaceObject.__)('"%s" deleted.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title));
