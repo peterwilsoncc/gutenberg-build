@@ -28361,7 +28361,6 @@ function isLineHeightDefined(lineHeight) {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -28370,8 +28369,6 @@ function isLineHeightDefined(lineHeight) {
 const line_height_control_LineHeightControl = ({
   value: lineHeight,
   onChange,
-  /** Start opting into the new margin-free styles that will become the default in a future version. */
-  __nextHasNoMarginBottom = false,
   __unstableInputWidth = '60px',
   ...otherProps
 }) => {
@@ -28425,16 +28422,6 @@ const line_height_control_LineHeightControl = ({
     };
   };
   const value = isDefined ? lineHeight : RESET_VALUE;
-  if (!__nextHasNoMarginBottom) {
-    external_wp_deprecated_default()('Bottom margin styles for wp.blockEditor.LineHeightControl', {
-      since: '6.0',
-      version: '6.4',
-      hint: 'Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version'
-    });
-  }
-  const deprecatedStyles = __nextHasNoMarginBottom ? undefined : {
-    marginBottom: 24
-  };
   const handleOnChange = (nextValue, {
     event
   }) => {
@@ -28450,7 +28437,6 @@ const line_height_control_LineHeightControl = ({
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "block-editor-line-height-control",
-    style: deprecatedStyles,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
       ...otherProps,
       __unstableInputWidth: __unstableInputWidth,
@@ -29338,7 +29324,6 @@ function TypographyPanel({
       isShownByDefault: defaultControls.lineHeight,
       panelId: panelId,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(line_height_control, {
-        __nextHasNoMarginBottom: true,
         __unstableInputWidth: "auto",
         value: lineHeight,
         onChange: setLineHeight,
@@ -29473,7 +29458,6 @@ function LineHeightEdit(props) {
   };
   return /*#__PURE__*/_jsx(LineHeightControl, {
     __unstableInputWidth: "100%",
-    __nextHasNoMarginBottom: true,
     value: style?.typography?.lineHeight,
     onChange: onChange,
     size: "__unstable-large"
