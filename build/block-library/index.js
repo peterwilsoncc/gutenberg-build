@@ -54860,7 +54860,6 @@ const SocialLinkURLPopover = ({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "block-editor-url-input",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.URLInput, {
-          __nextHasNoMarginBottom: true,
           value: url,
           onChange: nextURL => setAttributes({
             url: nextURL

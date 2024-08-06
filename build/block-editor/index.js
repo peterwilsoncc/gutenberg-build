@@ -21891,7 +21891,6 @@ var external_React_ = __webpack_require__(9196);
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -22223,8 +22222,6 @@ class URLInput extends external_wp_element_namespaceObject.Component {
   }
   renderControl() {
     const {
-      /** Start opting into the new margin-free styles that will become the default in a future version. */
-      __nextHasNoMarginBottom = false,
       label = null,
       className,
       isFullWidth,
@@ -22273,15 +22270,8 @@ class URLInput extends external_wp_element_namespaceObject.Component {
     if (renderControl) {
       return renderControl(controlProps, inputProps, loading);
     }
-    if (!__nextHasNoMarginBottom) {
-      external_wp_deprecated_default()('Bottom margin styles for wp.blockEditor.URLInput', {
-        since: '6.2',
-        version: '6.5',
-        hint: 'Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version'
-      });
-    }
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.BaseControl, {
-      __nextHasNoMarginBottom: __nextHasNoMarginBottom,
+      __nextHasNoMarginBottom: true,
       ...controlProps,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
         ...inputProps
@@ -23056,7 +23046,6 @@ const LinkControlSearchInput = (0,external_wp_element_namespaceObject.forwardRef
     className: "block-editor-link-control__search-input-container",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(url_input, {
       disableSuggestions: currentLink?.url === value,
-      __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Link'),
       hideLabelFromVision: hideLabelFromVision,
       className: className,
@@ -69040,7 +69029,6 @@ function LinkEditor({
     className: dist_clsx('block-editor-url-popover__link-editor', className),
     ...props,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(url_input, {
-      __nextHasNoMarginBottom: true,
       value: value,
       onChange: onChangeInputValue,
       autocompleteRef: autocompleteRef
@@ -71825,7 +71813,6 @@ class URLInputButton extends external_wp_element_namespaceObject.Component {
             label: (0,external_wp_i18n_namespaceObject.__)('Close'),
             onClick: this.toggle
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(url_input, {
-            __nextHasNoMarginBottom: true,
             value: url || '',
             onChange: onChange
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
