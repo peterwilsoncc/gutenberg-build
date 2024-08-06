@@ -52862,7 +52862,7 @@ function LogoEdit({
           variant: "primary",
           label: (0,external_wp_i18n_namespaceObject.__)('Choose logo'),
           showTooltip: true,
-          tooltipPosition: "bottom center",
+          tooltipPosition: "middle right",
           onClick: () => {
             open();
           }
