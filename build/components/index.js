@@ -54897,6 +54897,43 @@ function TimePicker({
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     setDate(currentTime ? startOfMinute(inputToDate(currentTime)) : new Date());
   }, [currentTime]);
+  const monthOptions = [{
+    value: '01',
+    label: (0,external_wp_i18n_namespaceObject.__)('January')
+  }, {
+    value: '02',
+    label: (0,external_wp_i18n_namespaceObject.__)('February')
+  }, {
+    value: '03',
+    label: (0,external_wp_i18n_namespaceObject.__)('March')
+  }, {
+    value: '04',
+    label: (0,external_wp_i18n_namespaceObject.__)('April')
+  }, {
+    value: '05',
+    label: (0,external_wp_i18n_namespaceObject.__)('May')
+  }, {
+    value: '06',
+    label: (0,external_wp_i18n_namespaceObject.__)('June')
+  }, {
+    value: '07',
+    label: (0,external_wp_i18n_namespaceObject.__)('July')
+  }, {
+    value: '08',
+    label: (0,external_wp_i18n_namespaceObject.__)('August')
+  }, {
+    value: '09',
+    label: (0,external_wp_i18n_namespaceObject.__)('September')
+  }, {
+    value: '10',
+    label: (0,external_wp_i18n_namespaceObject.__)('October')
+  }, {
+    value: '11',
+    label: (0,external_wp_i18n_namespaceObject.__)('November')
+  }, {
+    value: '12',
+    label: (0,external_wp_i18n_namespaceObject.__)('December')
+  }];
   const {
     day,
     month,
@@ -54966,43 +55003,7 @@ function TimePicker({
       __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
       value: month,
-      options: [{
-        value: '01',
-        label: (0,external_wp_i18n_namespaceObject.__)('January')
-      }, {
-        value: '02',
-        label: (0,external_wp_i18n_namespaceObject.__)('February')
-      }, {
-        value: '03',
-        label: (0,external_wp_i18n_namespaceObject.__)('March')
-      }, {
-        value: '04',
-        label: (0,external_wp_i18n_namespaceObject.__)('April')
-      }, {
-        value: '05',
-        label: (0,external_wp_i18n_namespaceObject.__)('May')
-      }, {
-        value: '06',
-        label: (0,external_wp_i18n_namespaceObject.__)('June')
-      }, {
-        value: '07',
-        label: (0,external_wp_i18n_namespaceObject.__)('July')
-      }, {
-        value: '08',
-        label: (0,external_wp_i18n_namespaceObject.__)('August')
-      }, {
-        value: '09',
-        label: (0,external_wp_i18n_namespaceObject.__)('September')
-      }, {
-        value: '10',
-        label: (0,external_wp_i18n_namespaceObject.__)('October')
-      }, {
-        value: '11',
-        label: (0,external_wp_i18n_namespaceObject.__)('November')
-      }, {
-        value: '12',
-        label: (0,external_wp_i18n_namespaceObject.__)('December')
-      }],
+      options: monthOptions,
       onChange: value => {
         const newDate = setMonth_setMonth(date, Number(value) - 1);
         setDate(newDate);
@@ -62565,7 +62566,7 @@ function QueryControls({
       __nextHasNoMarginBottom: true,
       __next40pxDefaultSize: __next40pxDefaultSize,
       label: (0,external_wp_i18n_namespaceObject.__)('Order by'),
-      value: `${orderBy}/${order}`,
+      value: orderBy === undefined || order === undefined ? undefined : `${orderBy}/${order}`,
       options: [{
         label: (0,external_wp_i18n_namespaceObject.__)('Newest to oldest'),
         value: 'date/desc'
