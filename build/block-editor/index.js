@@ -24465,8 +24465,8 @@ function BackgroundImageControls({
       onUploadError((0,external_wp_i18n_namespaceObject.__)('Only images can be used as a background image.'));
       return;
     }
-    const sizeValue = style?.background?.backgroundSize;
-    const positionValue = style?.background?.backgroundPosition;
+    const sizeValue = style?.background?.backgroundSize || inheritedValue?.background?.backgroundSize;
+    const positionValue = style?.background?.backgroundPosition || inheritedValue?.background?.backgroundPosition;
     onChange(setImmutably(style, ['background'], {
       ...style?.background,
       backgroundImage: {
@@ -24475,7 +24475,8 @@ function BackgroundImageControls({
         source: 'file',
         title: media.title || undefined
       },
-      backgroundPosition: !positionValue && ('auto' === sizeValue || !sizeValue) ? '50% 0' : positionValue
+      backgroundPosition: !positionValue && ('auto' === sizeValue || !sizeValue) ? '50% 0' : positionValue,
+      backgroundSize: sizeValue
     }));
   };
   const onFilesDrop = filesList => {
@@ -24553,17 +24554,17 @@ function BackgroundSizeControls({
   const sizeValue = style?.background?.backgroundSize || inheritedValue?.background?.backgroundSize;
   const repeatValue = style?.background?.backgroundRepeat || inheritedValue?.background?.backgroundRepeat;
   const imageValue = style?.background?.backgroundImage?.url || inheritedValue?.background?.backgroundImage?.url;
+  const isUploadedImage = style?.background?.backgroundImage?.id || inheritedValue?.background?.backgroundImage?.id;
   const positionValue = style?.background?.backgroundPosition || inheritedValue?.background?.backgroundPosition;
   const attachmentValue = style?.background?.backgroundAttachment || inheritedValue?.background?.backgroundAttachment;
 
   /*
-   * An `undefined` value is replaced with any supplied
-   * default control value for the toggle group control.
-   * An empty string is treated as `auto` - this allows a user
-   * to select "Size" and then enter a custom value, with an
-   * empty value being treated as `auto`.
+   * Set default values for uploaded images.
+   * The default values are passed by the consumer.
+   * Block-level controls may have different defaults to root-level controls.
+   * A falsy value is treated by default as `auto` (Tile).
    */
-  const currentValueForToggle = sizeValue !== undefined && sizeValue !== 'cover' && sizeValue !== 'contain' || sizeValue === '' ? 'auto' : sizeValue || defaultValues?.backgroundSize;
+  const currentValueForToggle = !sizeValue && isUploadedImage ? defaultValues?.backgroundSize : sizeValue || 'auto';
 
   /*
    * If the current value is `cover` and the repeat value is `undefined`, then
@@ -34570,7 +34571,7 @@ function getStylesDeclarations(blockStyles = {}, selector = '', useRootPaddingAl
      * Set default values for block background styles.
      * Top-level styles are an exception as they are applied to the body.
      */
-    if (!isRoot) {
+    if (!isRoot && !!blockStyles.background?.backgroundImage?.id) {
       blockStyles = {
         ...blockStyles,
         background: {
