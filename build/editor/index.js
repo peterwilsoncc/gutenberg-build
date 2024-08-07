@@ -26379,11 +26379,25 @@ function normalizeFields(fields) {
       }), context);
     };
     const Edit = field.Edit || fieldTypeDefinition.Edit;
+    const renderFromElements = ({
+      item
+    }) => {
+      const value = getValue({
+        item
+      });
+      const label = field?.elements?.find(element => {
+        // Intentionally using == here to allow for type coercion.
+        // eslint-disable-next-line eqeqeq
+        return element.value == value;
+      })?.label;
+      return label || value;
+    };
+    const render = field.render || (field.elements ? renderFromElements : getValue);
     return {
       ...field,
       label: field.label || field.id,
       getValue,
-      render: field.render || getValue,
+      render,
       sort,
       isValid,
       Edit
