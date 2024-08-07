@@ -35706,7 +35706,12 @@ function UnconnectedToggleGroupControl(props, forwardedRef) {
  *
  * function Example() {
  *   return (
- *     <ToggleGroupControl label="my label" value="vertical" isBlock>
+ *     <ToggleGroupControl
+ *       label="my label"
+ *       value="vertical"
+ *       isBlock
+ *       __nextHasNoMarginBottom
+ *     >
  *       <ToggleGroupControlOption value="horizontal" label="Horizontal" />
  *       <ToggleGroupControlOption value="vertical" label="Vertical" />
  *     </ToggleGroupControl>
@@ -36121,20 +36126,20 @@ function UnforwardedToggleGroupControlOptionIcon(props, ref) {
  * import { formatLowercase, formatUppercase } from '@wordpress/icons';
  *
  * function Example() {
- *	return (
- *		<ToggleGroupControl>
- *			<ToggleGroupControlOptionIcon
- *				value="uppercase"
- *				label="Uppercase"
- *				icon={ formatUppercase }
- *			/>
- *			<ToggleGroupControlOptionIcon
- *				value="lowercase"
- *				label="Lowercase"
- *				icon={ formatLowercase }
- *			/>
- *		</ToggleGroupControl>
- *	);
+ *  return (
+ *    <ToggleGroupControl __nextHasNoMarginBottom>
+ *      <ToggleGroupControlOptionIcon
+ *        value="uppercase"
+ *        label="Uppercase"
+ *        icon={ formatUppercase }
+ *      />
+ *      <ToggleGroupControlOptionIcon
+ *        value="lowercase"
+ *        label="Lowercase"
+ *        icon={ formatLowercase }
+ *      />
+ *    </ToggleGroupControl>
+ *  );
  * }
  * ```
  */
@@ -57224,7 +57229,12 @@ function UnforwardedToggleGroupControlOption(props, ref) {
  *
  * function Example() {
  *   return (
- *     <ToggleGroupControl label="my label" value="vertical" isBlock>
+ *     <ToggleGroupControl
+ *       label="my label"
+ *       value="vertical"
+ *       isBlock
+ *       __nextHasNoMarginBottom
+ *     >
  *       <ToggleGroupControlOption value="horizontal" label="Horizontal" />
  *       <ToggleGroupControlOption value="vertical" label="Vertical" />
  *     </ToggleGroupControl>
@@ -65688,6 +65698,7 @@ function UnforwardedTextControl(props, ref) {
  *
  *   return (
  *     <TextControl
+ *       __nextHasNoMarginBottom
  *       label="Additional CSS Class"
  *       value={ className }
  *       onChange={ ( value ) => setClassName( value ) }
