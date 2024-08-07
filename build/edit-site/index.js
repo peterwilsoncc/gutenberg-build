@@ -28924,7 +28924,9 @@ function text_Edit({
       label: label,
       value: value,
       options: elements,
-      onChange: onChangeControl
+      onChange: onChangeControl,
+      __next40pxDefaultSize: true,
+      __nextHasNoMarginBottom: true
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
