@@ -38829,15 +38829,22 @@ function useView(postType) {
     return getEditedEntityRecord('postType', 'wp_dataviews', Number(activeView));
   }, [activeView, isCustom]);
   const [view, setView] = (0,external_wp_element_namespaceObject.useState)(() => {
-    var _getDefaultView;
+    let initialView;
     if (isCustom === 'true') {
       var _getCustomView;
-      return (_getCustomView = getCustomView(editedEntityRecord)) !== null && _getCustomView !== void 0 ? _getCustomView : {
+      initialView = (_getCustomView = getCustomView(editedEntityRecord)) !== null && _getCustomView !== void 0 ? _getCustomView : {
+        type: layout !== null && layout !== void 0 ? layout : LAYOUT_LIST
+      };
+    } else {
+      var _getDefaultView;
+      initialView = (_getDefaultView = getDefaultView(defaultViews, activeView)) !== null && _getDefaultView !== void 0 ? _getDefaultView : {
         type: layout !== null && layout !== void 0 ? layout : LAYOUT_LIST
       };
     }
-    return (_getDefaultView = getDefaultView(defaultViews, activeView)) !== null && _getDefaultView !== void 0 ? _getDefaultView : {
-      type: layout !== null && layout !== void 0 ? layout : LAYOUT_LIST
+    const type = layout !== null && layout !== void 0 ? layout : initialView.type;
+    return {
+      ...initialView,
+      type
     };
   });
   const setViewWithUrlUpdate = (0,external_wp_element_namespaceObject.useCallback)(newView => {
@@ -38870,8 +38877,7 @@ function useView(postType) {
     }));
   }, [layout]);
 
-  // When activeView or isCustom URL parameters change,
-  // reset the view & update the layout URL param to match the view's type.
+  // When activeView or isCustom URL parameters change, reset the view.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     let newView;
     if (isCustom === 'true') {
@@ -38880,9 +38886,13 @@ function useView(postType) {
       newView = getDefaultView(defaultViews, activeView);
     }
     if (newView) {
-      setViewWithUrlUpdate(newView);
+      const type = layout !== null && layout !== void 0 ? layout : newView.type;
+      setView({
+        ...newView,
+        type
+      });
     }
-  }, [activeView, isCustom, defaultViews, editedEntityRecord]);
+  }, [activeView, isCustom, layout, defaultViews, editedEntityRecord]);
   return [view, setViewWithUrlUpdate, setViewWithUrlUpdate];
 }
 const DEFAULT_STATUSES = 'draft,future,pending,private,publish'; // All but 'trash'.
@@ -44517,8 +44527,7 @@ function DataViewItem({
 }) {
   const {
     params: {
-      postType,
-      layout
+      postType
     }
   } = dataview_item_useLocation();
   const iconToUse = icon || VIEW_LAYOUTS.find(v => v.type === type).icon;
@@ -44528,7 +44537,7 @@ function DataViewItem({
   }
   const linkInfo = useLink({
     postType,
-    layout,
+    layout: type,
     activeView,
     isCustom: isCustom ? 'true' : undefined
   });
