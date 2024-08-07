@@ -34343,8 +34343,10 @@ function ListBox({
       accessibleWhenDisabled: true,
       disabled: option.isDisabled,
       className: dist_clsx('components-autocomplete__result', className, {
+        // Unused, for backwards compatibility.
         'is-selected': index === selectedIndex
       }),
+      variant: index === selectedIndex ? 'primary' : undefined,
       onClick: () => onSelect(option),
       children: option.label
     }, option.key))
