@@ -41072,6 +41072,18 @@ const post_comments_form_metadata = {
       __experimentalDefaultControls: {
         fontSize: true
       }
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true,
+      __experimentalDefaultControls: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
+      }
     }
   },
   editorStyle: "wp-block-post-comments-form-editor",
