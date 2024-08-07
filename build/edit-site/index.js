@@ -28718,10 +28718,41 @@ function EditSiteEditor({
 // EXTERNAL MODULE: ./node_modules/remove-accents/index.js
 var remove_accents = __webpack_require__(4793);
 var remove_accents_default = /*#__PURE__*/__webpack_require__.n(remove_accents);
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/arrow-up.js
+/**
+ * WordPress dependencies
+ */
+
+
+const arrowUp = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M12 3.9 6.5 9.5l1 1 3.8-3.7V20h1.5V6.8l3.7 3.7 1-1z"
+  })
+});
+/* harmony default export */ const arrow_up = (arrowUp);
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/arrow-down.js
+/**
+ * WordPress dependencies
+ */
+
+
+const arrowDown = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "m16.5 13.5-3.7 3.7V4h-1.5v13.2l-3.8-3.7-1 1 5.5 5.6 5.5-5.6z"
+  })
+});
+/* harmony default export */ const arrow_down = (arrowDown);
+
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/constants.js
 /**
  * WordPress dependencies
  */
+
 
 
 /**
@@ -28774,6 +28805,10 @@ const sortValues = {
 const sortLabels = {
   asc: (0,external_wp_i18n_namespaceObject.__)('Sort ascending'),
   desc: (0,external_wp_i18n_namespaceObject.__)('Sort descending')
+};
+const sortIcons = {
+  asc: arrow_up,
+  desc: arrow_down
 };
 
 // View layouts.
@@ -37362,6 +37397,8 @@ const cog = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(extern
 });
 /* harmony default export */ const library_cog = (cog);
 
+;// CONCATENATED MODULE: external ["wp","warning"]
+const external_wp_warning_namespaceObject = window["wp"]["warning"];
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/components/dataviews-view-config/index.js
 /**
  * External dependencies
@@ -37370,6 +37407,7 @@ const cog = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(extern
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -37387,234 +37425,268 @@ const cog = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(extern
 
 const {
   DropdownMenuV2: dataviews_view_config_DropdownMenu,
-  DropdownMenuGroupV2: dataviews_view_config_DropdownMenuGroup,
-  DropdownMenuItemV2: dataviews_view_config_DropdownMenuItem,
   DropdownMenuRadioItemV2: dataviews_view_config_DropdownMenuRadioItem,
-  DropdownMenuCheckboxItemV2: DropdownMenuCheckboxItem,
   DropdownMenuItemLabelV2: dataviews_view_config_DropdownMenuItemLabel
 } = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function ViewTypeMenu({
-  view,
-  onChangeView,
   defaultLayouts = {
     list: {},
     grid: {},
     table: {}
   }
 }) {
+  const {
+    view,
+    onChangeView
+  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const availableLayouts = Object.keys(defaultLayouts);
   if (availableLayouts.length <= 1) {
     return null;
   }
-  return availableLayouts.map(layout => {
-    const config = VIEW_LAYOUTS.find(v => v.type === layout);
-    if (!config) {
-      return null;
-    }
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuRadioItem, {
-      value: layout,
-      name: "view-actions-available-view",
-      checked: layout === view.type,
-      hideOnClick: true,
-      onChange: e => {
-        switch (e.target.value) {
-          case 'list':
-          case 'grid':
-          case 'table':
-            return onChangeView({
-              ...view,
-              type: e.target.value,
-              ...defaultLayouts[e.target.value]
-            });
-        }
-        throw new Error('Invalid dataview');
-      },
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItemLabel, {
-        children: config.label
-      })
-    }, layout);
-  });
-}
-const PAGE_SIZE_VALUES = [10, 20, 50, 100];
-function PageSizeMenu({
-  view,
-  onChangeView
-}) {
+  const activeView = VIEW_LAYOUTS.find(v => view.type === v.type);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenu, {
-    trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItem, {
-      suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        "aria-hidden": "true",
-        children: view.perPage
-      }),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItemLabel, {
-        children: (0,external_wp_i18n_namespaceObject.__)('Items per page')
-      })
+    trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      size: "compact",
+      icon: activeView?.icon,
+      label: (0,external_wp_i18n_namespaceObject.__)('Layout')
     }),
-    children: PAGE_SIZE_VALUES.map(size => {
+    children: availableLayouts.map(layout => {
+      const config = VIEW_LAYOUTS.find(v => v.type === layout);
+      if (!config) {
+        return null;
+      }
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuRadioItem, {
-        value: size,
-        name: "view-actions-page-size",
-        checked: view.perPage === size,
-        onChange: () => {
-          onChangeView({
-            ...view,
-            // `e.target.value` holds the same value as `size` but as a string,
-            // so we use `size` directly to avoid parsing to int.
-            perPage: size,
-            page: 1
-          });
+        value: layout,
+        name: "view-actions-available-view",
+        checked: layout === view.type,
+        hideOnClick: true,
+        onChange: e => {
+          switch (e.target.value) {
+            case 'list':
+            case 'grid':
+            case 'table':
+              return onChangeView({
+                ...view,
+                type: e.target.value,
+                ...defaultLayouts[e.target.value]
+              });
+          }
+           false ? 0 : void 0;
         },
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItemLabel, {
-          children: size
+          children: config.label
         })
-      }, size);
+      }, layout);
     })
   });
 }
-function FieldsVisibilityMenu({
-  view,
-  onChangeView,
-  fields
-}) {
+function SortFieldControl() {
+  const {
+    view,
+    fields,
+    onChangeView
+  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
+  const orderOptions = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    const sortableFields = fields.filter(field => field.enableSorting !== false);
+    return sortableFields.map(field => {
+      return {
+        label: field.label,
+        value: field.id
+      };
+    });
+  }, [fields]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
+    label: (0,external_wp_i18n_namespaceObject.__)('Sort by'),
+    value: view.sort?.field,
+    options: orderOptions,
+    onChange: value => {
+      onChangeView({
+        ...view,
+        sort: {
+          direction: view?.sort?.direction || 'desc',
+          field: value
+        }
+      });
+    }
+  });
+}
+function SortDirectionControl() {
+  const {
+    view,
+    onChangeView
+  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+    className: "dataviews-view-config__sort-direction",
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
+    isBlock: true,
+    label: (0,external_wp_i18n_namespaceObject.__)('Order'),
+    value: view.sort?.direction || 'desc',
+    disabled: !view?.sort?.field,
+    onChange: newDirection => {
+      if (!view?.sort?.field) {
+        return;
+      }
+      if (newDirection === 'asc' || newDirection === 'desc') {
+        onChangeView({
+          ...view,
+          sort: {
+            direction: newDirection,
+            field: view.sort.field
+          }
+        });
+        return;
+      }
+       false ? 0 : void 0;
+    },
+    children: SORTING_DIRECTIONS.map(direction => {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOptionIcon, {
+        value: direction,
+        icon: sortIcons[direction],
+        label: sortLabels[direction]
+      }, direction);
+    })
+  });
+}
+const PAGE_SIZE_VALUES = [10, 20, 50, 100];
+function ItemsPerPageControl() {
+  const {
+    view,
+    onChangeView
+  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
+    isBlock: true,
+    label: (0,external_wp_i18n_namespaceObject.__)('Items per page'),
+    value: view.perPage || 10,
+    disabled: !view?.sort?.field,
+    onChange: newItemsPerPage => {
+      const newItemsPerPageNumber = typeof newItemsPerPage === 'number' || newItemsPerPage === undefined ? newItemsPerPage : parseInt(newItemsPerPage, 10);
+      onChangeView({
+        ...view,
+        perPage: newItemsPerPageNumber,
+        page: 1
+      });
+    },
+    children: PAGE_SIZE_VALUES.map(value => {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+        value: value,
+        label: value.toString()
+      }, value);
+    })
+  });
+}
+function FieldControl() {
+  const {
+    view,
+    fields,
+    onChangeView
+  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const mandatoryFields = getMandatoryFields(view);
   const hidableFields = fields.filter(field => field.enableHiding !== false && !mandatoryFields.includes(field.id));
   const viewFields = view.fields || fields.map(field => field.id);
   if (!hidableFields?.length) {
     return null;
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenu, {
-    trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItem, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItemLabel, {
-        children: (0,external_wp_i18n_namespaceObject.__)('Fields')
-      })
-    }),
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+    isBordered: true,
+    isSeparated: true,
     children: hidableFields?.map(field => {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuCheckboxItem, {
-        value: field.id,
-        checked: viewFields.includes(field.id),
-        onChange: () => {
-          onChangeView({
-            ...view,
-            fields: viewFields.includes(field.id) ? viewFields.filter(id => id !== field.id) : [...viewFields, field.id]
-          });
-        },
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItemLabel, {
-          children: field.label
+      const isVisible = viewFields.includes(field.id);
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+          expanded: true,
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            children: field.label
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            className: "'dataviews-view-config__field-control-button",
+            size: "compact",
+            onClick: () => onChangeView({
+              ...view,
+              fields: isVisible ? viewFields.filter(id => id !== field.id) : [...viewFields, field.id]
+            }),
+            icon: isVisible ? library_seen : library_unseen,
+            label: isVisible ? (0,external_wp_i18n_namespaceObject.__)('Hide field') : (0,external_wp_i18n_namespaceObject.__)('Show field')
+          })]
         })
       }, field.id);
     })
   });
 }
-function SortMenu({
-  fields,
-  view,
-  onChangeView
+function SettingsSection({
+  title,
+  description,
+  children
 }) {
-  const sortableFields = fields.filter(field => field.enableSorting !== false);
-  if (!sortableFields?.length) {
-    return null;
-  }
-  const currentSortedField = fields.find(field => field.id === view.sort?.field);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenu, {
-    trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItem, {
-      suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        "aria-hidden": "true",
-        children: currentSortedField?.label
-      }),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItemLabel, {
-        children: (0,external_wp_i18n_namespaceObject.__)('Sort by')
-      })
-    }),
-    children: sortableFields?.map(field => {
-      const sortedDirection = view.sort?.direction;
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenu, {
-        trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItem, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItemLabel, {
-            children: field.label
-          })
-        }),
-        style: {
-          minWidth: '220px'
-        },
-        children: SORTING_DIRECTIONS.map(direction => {
-          const isChecked = currentSortedField !== undefined && sortedDirection === direction && field.id === currentSortedField.id;
-          const value = `${field.id}-${direction}`;
-          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuRadioItem, {
-            // All sorting radio items share the same name, so that
-            // selecting a sorting option automatically deselects the
-            // previously selected one, even if it is displayed in
-            // another submenu. The field and direction are passed via
-            // the `value` prop.
-            name: "view-actions-sorting",
-            value: value,
-            checked: isChecked,
-            onChange: () => {
-              onChangeView({
-                ...view,
-                sort: {
-                  field: field.id,
-                  direction
-                }
-              });
-            },
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItemLabel, {
-              children: sortLabels[direction]
-            })
-          }, value);
-        })
-      }, field.id);
-    })
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalGrid, {
+    columns: 12,
+    className: "dataviews-settings-section",
+    gap: 4,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      className: "dataviews-settings-section__sidebar",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHeading, {
+        level: 2,
+        className: "dataviews-settings-section__title",
+        children: title
+      }), description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+        variant: "muted",
+        className: "dataviews-settings-section__description",
+        children: description
+      })]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalGrid, {
+      columns: 8,
+      gap: 4,
+      className: "dataviews-settings-section__content",
+      children: children
+    })]
+  });
+}
+function DataviewsViewConfigContent() {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    className: "dataviews-view-config",
+    spacing: 6,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(SettingsSection, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Appearance'),
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        expanded: true,
+        className: "is-divided-in-two",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SortFieldControl, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SortDirectionControl, {})]
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemsPerPageControl, {})]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SettingsSection, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Properties'),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldControl, {})
+    })]
   });
 }
 function _DataViewsViewConfig({
-  defaultLayouts
+  defaultLayouts = {
+    list: {},
+    grid: {},
+    table: {}
+  }
 }) {
-  const {
-    view,
-    fields,
-    onChangeView
-  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
-  const activeView = VIEW_LAYOUTS.find(v => view.type === v.type);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-      spacing: 1,
-      expanded: false,
-      style: {
-        flexShrink: 0
-      },
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenu, {
-        trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          size: "compact",
-          icon: activeView?.icon,
-          label: (0,external_wp_i18n_namespaceObject.__)('Layout')
-        }),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewTypeMenu, {
-          view: view,
-          onChangeView: onChangeView,
-          defaultLayouts: defaultLayouts
-        })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenu, {
-        trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          size: "compact",
-          icon: library_cog,
-          label: (0,external_wp_i18n_namespaceObject._x)('View options', 'View is used as a noun')
-        }),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(dataviews_view_config_DropdownMenuGroup, {
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SortMenu, {
-            fields: fields,
-            view: view,
-            onChangeView: onChangeView
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldsVisibilityMenu, {
-            fields: fields,
-            view: view,
-            onChangeView: onChangeView
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageSizeMenu, {
-            view: view,
-            onChangeView: onChangeView
-          })]
-        })
+  const [isShowingViewPopover, setIsShowingViewPopover] = (0,external_wp_element_namespaceObject.useState)(false);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewTypeMenu, {
+      defaultLayouts: defaultLayouts
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        size: "compact",
+        icon: library_cog,
+        label: (0,external_wp_i18n_namespaceObject._x)('View options', 'View is used as a noun'),
+        onClick: () => setIsShowingViewPopover(true)
+      }), isShowingViewPopover && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Popover, {
+        placement: "bottom-end",
+        onClose: () => {
+          setIsShowingViewPopover(false);
+        },
+        focusOnMount: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsViewConfigContent, {})
       })]
-    })
+    })]
   });
 }
 const DataViewsViewConfig = (0,external_wp_element_namespaceObject.memo)(_DataViewsViewConfig);
