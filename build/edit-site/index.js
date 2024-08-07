@@ -19081,6 +19081,8 @@ function FontCollection({
               })
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
               children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+                __nextHasNoMarginBottom: true,
+                __next40pxDefaultSize: true,
                 label: (0,external_wp_i18n_namespaceObject.__)('Category'),
                 value: filters.category,
                 onChange: handleCategoryFilter,

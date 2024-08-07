@@ -36779,6 +36779,7 @@ function UnforwardedSelectControl(props, ref) {
  *
  *   return (
  *     <SelectControl
+ *       __nextHasNoMarginBottom
  *       label="Size"
  *       value={ size }
  *       options={ [
@@ -62375,7 +62376,7 @@ function getSelectOptions(tree, level = 0) {
  *
  * 	return (
  * 		<TreeSelect
- *      __nextHasNoMarginBottom
+ * 			__nextHasNoMarginBottom
  * 			label="Parent page"
  * 			noOptionLabel="No parent page"
  * 			onChange={ ( newPage ) => setPage( newPage ) }
@@ -62411,7 +62412,6 @@ function getSelectOptions(tree, level = 0) {
  * }
  * ```
  */
-
 function TreeSelect(props) {
   const {
     label,

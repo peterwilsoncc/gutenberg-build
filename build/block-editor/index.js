@@ -77109,6 +77109,7 @@ function ResolutionTool({
     isShownByDefault: isShownByDefault,
     panelId: panelId,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+      __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Resolution'),
       value: displayValue,
       options: options,
