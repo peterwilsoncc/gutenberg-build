@@ -29264,6 +29264,9 @@ function ActionWithModal({
   const onCloseModal = (0,external_wp_element_namespaceObject.useCallback)(() => {
     setActionWithModal(undefined);
   }, [setActionWithModal]);
+  if (!eligibleItems.length) {
+    return null;
+  }
   const label = typeof action.label === 'string' ? action.label : action.label(selectedItems);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
     title: !hideModalHeader ? label : undefined,
