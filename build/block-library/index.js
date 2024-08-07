@@ -29827,6 +29827,7 @@ const list_item_metadata = {
     }
   },
   supports: {
+    anchor: true,
     className: false,
     splitting: true,
     color: {
