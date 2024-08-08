@@ -53202,7 +53202,9 @@ function GridVisualizerCell({
 function useGridVisualizerDropZone(column, row, gridClientId, gridInfo, setHighlightedRect) {
   const {
     getBlockAttributes,
-    getBlockRootClientId
+    getBlockRootClientId,
+    canInsertBlockType,
+    getBlockName
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const {
     updateBlockAttributes,
@@ -53212,6 +53214,10 @@ function useGridVisualizerDropZone(column, row, gridClientId, gridInfo, setHighl
   const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(gridClientId, gridInfo.numColumns);
   return useDropZoneWithValidation({
     validateDrag(srcClientId) {
+      const blockName = getBlockName(srcClientId);
+      if (!canInsertBlockType(blockName, gridClientId)) {
+        return false;
+      }
       const attributes = getBlockAttributes(srcClientId);
       const rect = new GridRect({
         columnStart: column,
