@@ -6493,7 +6493,7 @@ function Edit({
   })) !== null && _field$getValue !== void 0 ? _field$getValue : '';
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
     ...prevItem,
-    [id]: newValue
+    [id]: Number(newValue)
   })), [id, onChange]);
   if (field.elements) {
     const elements = [
@@ -6850,12 +6850,9 @@ function normalizeFields(fields) {
       const value = getValue({
         item
       });
-      const label = field?.elements?.find(element => {
-        // Intentionally using == here to allow for type coercion.
-        // eslint-disable-next-line eqeqeq
-        return element.value == value;
-      })?.label;
-      return label || value;
+      return field?.elements?.find(element => element.value === value)?.label || getValue({
+        item
+      });
     };
     const render = field.render || (field.elements ? renderFromElements : getValue);
     return {
