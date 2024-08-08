@@ -30436,8 +30436,8 @@ function SpacingInputControl({
     key: index,
     name: size.name
   }));
-  const marks = spacingSizes.map((_newValue, index) => ({
-    value: index,
+  const marks = spacingSizes.slice(1, spacingSizes.length - 1).map((_newValue, index) => ({
+    value: index + 1,
     label: undefined
   }));
   const sideLabel = ALL_SIDES.includes(side) && showSideInLabel ? LABELS[side] : '';
