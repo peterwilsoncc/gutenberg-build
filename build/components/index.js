@@ -54868,6 +54868,7 @@ function TimeInput({
 
 
 
+
 const VALID_DATE_ORDERS = ['dmy', 'mdy', 'ymd'];
 
 /**
@@ -54894,7 +54895,8 @@ function TimePicker({
   is12Hour,
   currentTime,
   onChange,
-  dateOrder: dateOrderProp
+  dateOrder: dateOrderProp,
+  hideLabelFromVision = false
 }) {
   const [date, setDate] = (0,external_wp_element_namespaceObject.useState)(() =>
   // Truncate the date at the minutes, see: #15495.
@@ -55055,7 +55057,10 @@ function TimePicker({
     className: "components-datetime__time" // Unused, for backwards compatibility.
     ,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Fieldset, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control.VisualLabel, {
+      children: [hideLabelFromVision ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(visually_hidden_component, {
+        as: "legend",
+        children: (0,external_wp_i18n_namespaceObject.__)('Time')
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control.VisualLabel, {
         as: "legend",
         className: "components-datetime__time-legend" // Unused, for backwards compatibility.
         ,
@@ -55073,7 +55078,10 @@ function TimePicker({
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(timezone, {})]
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Fieldset, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control.VisualLabel, {
+      children: [hideLabelFromVision ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(visually_hidden_component, {
+        as: "legend",
+        children: (0,external_wp_i18n_namespaceObject.__)('Date')
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control.VisualLabel, {
         as: "legend",
         className: "components-datetime__time-legend" // Unused, for backwards compatibility.
         ,

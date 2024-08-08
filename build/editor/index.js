@@ -6614,10 +6614,93 @@ function text_Edit({
   Edit: text_Edit
 });
 
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/datetime.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+function datetime_sort(a, b, direction) {
+  const timeA = new Date(a).getTime();
+  const timeB = new Date(b).getTime();
+  return direction === 'asc' ? timeA - timeB : timeB - timeA;
+}
+function datetime_isValid(value, context) {
+  if (context?.elements) {
+    const validValues = context?.elements.map(f => f.value);
+    if (!validValues.includes(value)) {
+      return false;
+    }
+  }
+  return true;
+}
+function datetime_Edit({
+  data,
+  field,
+  onChange
+}) {
+  const {
+    id,
+    label
+  } = field;
+  const value = field.getValue({
+    item: data
+  });
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
+    ...prevItem,
+    [id]: newValue
+  })), [id, onChange]);
+  if (field.elements) {
+    const elements = [
+    /*
+     * Value can be undefined when:
+     *
+     * - the field is not required
+     * - in bulk editing
+     *
+     */
+    {
+      label: (0,external_wp_i18n_namespaceObject.__)('Select item'),
+      value: ''
+    }, ...field.elements];
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+      label: label,
+      value: value,
+      options: elements,
+      onChange: onChangeControl,
+      __next40pxDefaultSize: true,
+      __nextHasNoMarginBottom: true
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
+      as: "legend",
+      children: label
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TimePicker, {
+      currentTime: value,
+      onChange: onChangeControl,
+      hideLabelFromVision: true
+    })]
+  });
+}
+/* harmony default export */ const datetime = ({
+  sort: datetime_sort,
+  isValid: datetime_isValid,
+  Edit: datetime_Edit
+});
+
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/index.js
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -6634,6 +6717,9 @@ function getFieldTypeDefinition(type) {
   }
   if ('text' === type) {
     return field_types_text;
+  }
+  if ('datetime' === type) {
+    return datetime;
   }
   return {
     sort: (a, b, direction) => {
