@@ -44035,7 +44035,8 @@ function InbetweenInsertionPointPopover({
     rootClientId,
     isInserterShown,
     isDistractionFree,
-    isNavigationMode
+    isNavigationMode,
+    isZoomOutMode
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockOrder,
@@ -44045,7 +44046,8 @@ function InbetweenInsertionPointPopover({
       getPreviousBlockClientId,
       getNextBlockClientId,
       getSettings,
-      isNavigationMode: _isNavigationMode
+      isNavigationMode: _isNavigationMode,
+      __unstableGetEditorMode
     } = select(store);
     const insertionPoint = getBlockInsertionPoint();
     const order = getBlockOrder(insertionPoint.rootClientId);
@@ -44068,7 +44070,8 @@ function InbetweenInsertionPointPopover({
       rootClientId: insertionPoint.rootClientId,
       isNavigationMode: _isNavigationMode(),
       isDistractionFree: settings.isDistractionFree,
-      isInserterShown: insertionPoint?.__unstableWithInserter
+      isInserterShown: insertionPoint?.__unstableWithInserter,
+      isZoomOutMode: __unstableGetEditorMode() === 'zoom-out'
     };
   }, []);
   const {
@@ -44132,6 +44135,14 @@ function InbetweenInsertionPointPopover({
     }
   };
   if (isDistractionFree && !isNavigationMode) {
+    return null;
+  }
+
+  // Zoom out mode should only show the insertion point for the insert operation.
+  // Other operations such as "group" are when the editor tries to create a row
+  // block by grouping the block being dragged with the block it's being dropped
+  // onto.
+  if (isZoomOutMode && operation !== 'insert') {
     return null;
   }
   const orientationClassname = orientation === 'horizontal' || operation === 'group' ? 'is-horizontal' : 'is-vertical';
@@ -45640,15 +45651,6 @@ function useInnerBlocksProps(props = {}, options = {}) {
       getSettings
     } = unlock(select(store));
     let _isDropZoneDisabled;
-    // In zoom out mode, we want to disable the drop zone for the sections.
-    // The inner blocks belonging to the section drop zone is
-    // already disabled by the blocks themselves being disabled.
-    if (__unstableGetEditorMode() === 'zoom-out') {
-      const {
-        sectionRootClientId
-      } = unlock(getSettings());
-      _isDropZoneDisabled = clientId !== sectionRootClientId;
-    }
     if (!clientId) {
       return {
         isDropZoneDisabled: _isDropZoneDisabled
@@ -45663,8 +45665,15 @@ function useInnerBlocksProps(props = {}, options = {}) {
     const blockEditingMode = getBlockEditingMode(clientId);
     const parentClientId = getBlockRootClientId(clientId);
     const [defaultLayout] = getBlockSettings(clientId, 'layout');
-    if (_isDropZoneDisabled !== undefined) {
-      _isDropZoneDisabled = blockEditingMode === 'disabled';
+    _isDropZoneDisabled = blockEditingMode === 'disabled';
+    if (__unstableGetEditorMode() === 'zoom-out') {
+      // In zoom out mode, we want to disable the drop zone for the sections.
+      // The inner blocks belonging to the section drop zone is
+      // already disabled by the blocks themselves being disabled.
+      const {
+        sectionRootClientId
+      } = unlock(getSettings());
+      _isDropZoneDisabled = clientId !== sectionRootClientId;
     }
     return {
       __experimentalCaptureToolbars: hasBlockSupport(blockName, '__experimentalExposeControlsToChildren', false),
