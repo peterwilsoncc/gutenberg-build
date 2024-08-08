@@ -5264,6 +5264,12 @@ const external_wp_patterns_namespaceObject = window["wp"]["patterns"];
  * Internal dependencies
  */
 
+function isTemplate(post) {
+  return post.type === TEMPLATE_POST_TYPE;
+}
+function isTemplatePart(post) {
+  return post.type === TEMPLATE_PART_POST_TYPE;
+}
 function isTemplateOrTemplatePart(p) {
   return p.type === TEMPLATE_POST_TYPE || p.type === TEMPLATE_PART_POST_TYPE;
 }
@@ -6280,10 +6286,15 @@ const permanentlyDeletePost = {
 };
 /* harmony default export */ const permanently_delete_post = (permanentlyDeletePost);
 
-;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/restore-post.js
+;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/rename-post.js
 /**
  * WordPress dependencies
  */
+
+
+
+
+// @ts-ignore
 
 
 
@@ -6292,98 +6303,107 @@ const permanentlyDeletePost = {
  * Internal dependencies
  */
 
-const restorePost = {
-  id: 'restore',
-  label: (0,external_wp_i18n_namespaceObject.__)('Restore'),
-  isPrimary: true,
-  icon: library_backup,
-  supportsBulk: true,
-  isEligible(item) {
-    return !isTemplateOrTemplatePart(item) && item.type !== 'wp_block' && item.status === 'trash' && item.permissions?.update;
+
+
+
+
+// Patterns.
+const {
+  PATTERN_TYPES: rename_post_PATTERN_TYPES
+} = unlock(external_wp_patterns_namespaceObject.privateApis);
+const renamePost = {
+  id: 'rename-post',
+  label: (0,external_wp_i18n_namespaceObject.__)('Rename'),
+  isEligible(post) {
+    if (post.status === 'trash') {
+      return false;
+    }
+    // Templates, template parts and patterns have special checks for renaming.
+    if (![TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE, ...Object.values(rename_post_PATTERN_TYPES)].includes(post.type)) {
+      return post.permissions?.update;
+    }
+
+    // In the case of templates, we can only rename custom templates.
+    if (isTemplate(post)) {
+      return isTemplateRemovable(post) && post.is_custom && post.permissions?.update;
+    }
+    if (isTemplatePart(post)) {
+      return post.source === TEMPLATE_ORIGINS.custom && !post?.has_theme_file && post.permissions?.update;
+    }
+    return post.type === rename_post_PATTERN_TYPES.user && post.permissions?.update;
   },
-  async callback(posts, {
-    registry,
+  RenderModal: ({
+    items,
+    closeModal,
     onActionPerformed
-  }) {
-    const {
-      createSuccessNotice,
-      createErrorNotice
-    } = registry.dispatch(external_wp_notices_namespaceObject.store);
+  }) => {
+    const [item] = items;
+    const [title, setTitle] = (0,external_wp_element_namespaceObject.useState)(() => getItemTitle(item));
     const {
       editEntityRecord,
       saveEditedEntityRecord
-    } = registry.dispatch(external_wp_coreData_namespaceObject.store);
-    await Promise.allSettled(posts.map(post => {
-      return editEntityRecord('postType', post.type, post.id, {
-        status: 'draft'
-      });
-    }));
-    const promiseResult = await Promise.allSettled(posts.map(post => {
-      return saveEditedEntityRecord('postType', post.type, post.id, {
-        throwOnError: true
-      });
-    }));
-    if (promiseResult.every(({
-      status
-    }) => status === 'fulfilled')) {
-      let successMessage;
-      if (posts.length === 1) {
-        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of posts. */
-        (0,external_wp_i18n_namespaceObject.__)('"%s" has been restored.'), getItemTitle(posts[0]));
-      } else if (posts[0].type === 'page') {
-        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of posts. */
-        (0,external_wp_i18n_namespaceObject.__)('%d pages have been restored.'), posts.length);
-      } else {
-        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of posts. */
-        (0,external_wp_i18n_namespaceObject.__)('%d posts have been restored.'), posts.length);
+    } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
+    const {
+      createSuccessNotice,
+      createErrorNotice
+    } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
+    async function onRename(event) {
+      event.preventDefault();
+      try {
+        await editEntityRecord('postType', item.type, item.id, {
+          title
+        });
+        // Update state before saving rerenders the list.
+        setTitle('');
+        closeModal?.();
+        // Persist edited entity.
+        await saveEditedEntityRecord('postType', item.type, item.id, {
+          throwOnError: true
+        });
+        createSuccessNotice((0,external_wp_i18n_namespaceObject.__)('Name updated'), {
+          type: 'snackbar'
+        });
+        onActionPerformed?.(items);
+      } catch (error) {
+        const typedError = error;
+        const errorMessage = typedError.message && typedError.code !== 'unknown_error' ? typedError.message : (0,external_wp_i18n_namespaceObject.__)('An error occurred while updating the name');
+        createErrorNotice(errorMessage, {
+          type: 'snackbar'
+        });
       }
-      createSuccessNotice(successMessage, {
-        type: 'snackbar',
-        id: 'restore-post-action'
-      });
-      if (onActionPerformed) {
-        onActionPerformed(posts);
-      }
-    } else {
-      // If there was at lease one failure.
-      let errorMessage;
-      // If we were trying to move a single post to the trash.
-      if (promiseResult.length === 1) {
-        const typedError = promiseResult[0];
-        if (typedError.reason?.message) {
-          errorMessage = typedError.reason.message;
-        } else {
-          errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while restoring the post.');
-        }
-        // If we were trying to move multiple posts to the trash
-      } else {
-        const errorMessages = new Set();
-        const failedPromises = promiseResult.filter(({
-          status
-        }) => status === 'rejected');
-        for (const failedPromise of failedPromises) {
-          const typedError = failedPromise;
-          if (typedError.reason?.message) {
-            errorMessages.add(typedError.reason.message);
-          }
-        }
-        if (errorMessages.size === 0) {
-          errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while restoring the posts.');
-        } else if (errorMessages.size === 1) {
-          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
-          (0,external_wp_i18n_namespaceObject.__)('An error occurred while restoring the posts: %s'), [...errorMessages][0]);
-        } else {
-          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
-          (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while restoring the posts: %s'), [...errorMessages].join(','));
-        }
-      }
-      createErrorNotice(errorMessage, {
-        type: 'snackbar'
-      });
     }
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
+      onSubmit: onRename,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        spacing: "5",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+          __nextHasNoMarginBottom: true,
+          __next40pxDefaultSize: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Name'),
+          value: title,
+          onChange: setTitle,
+          required: true
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+          justify: "right",
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
+            variant: "tertiary",
+            onClick: () => {
+              closeModal?.();
+            },
+            children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
+            variant: "primary",
+            type: "submit",
+            children: (0,external_wp_i18n_namespaceObject.__)('Save')
+          })]
+        })]
+      })
+    });
   }
 };
-/* harmony default export */ const restore_post = (restorePost);
+/* harmony default export */ const rename_post = (renamePost);
 
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/integer.js
 /**
@@ -7021,6 +7041,111 @@ const reorderPage = {
 };
 /* harmony default export */ const reorder_page = (reorderPage);
 
+;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/restore-post.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+const restorePost = {
+  id: 'restore',
+  label: (0,external_wp_i18n_namespaceObject.__)('Restore'),
+  isPrimary: true,
+  icon: library_backup,
+  supportsBulk: true,
+  isEligible(item) {
+    return !isTemplateOrTemplatePart(item) && item.type !== 'wp_block' && item.status === 'trash' && item.permissions?.update;
+  },
+  async callback(posts, {
+    registry,
+    onActionPerformed
+  }) {
+    const {
+      createSuccessNotice,
+      createErrorNotice
+    } = registry.dispatch(external_wp_notices_namespaceObject.store);
+    const {
+      editEntityRecord,
+      saveEditedEntityRecord
+    } = registry.dispatch(external_wp_coreData_namespaceObject.store);
+    await Promise.allSettled(posts.map(post => {
+      return editEntityRecord('postType', post.type, post.id, {
+        status: 'draft'
+      });
+    }));
+    const promiseResult = await Promise.allSettled(posts.map(post => {
+      return saveEditedEntityRecord('postType', post.type, post.id, {
+        throwOnError: true
+      });
+    }));
+    if (promiseResult.every(({
+      status
+    }) => status === 'fulfilled')) {
+      let successMessage;
+      if (posts.length === 1) {
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of posts. */
+        (0,external_wp_i18n_namespaceObject.__)('"%s" has been restored.'), getItemTitle(posts[0]));
+      } else if (posts[0].type === 'page') {
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of posts. */
+        (0,external_wp_i18n_namespaceObject.__)('%d pages have been restored.'), posts.length);
+      } else {
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of posts. */
+        (0,external_wp_i18n_namespaceObject.__)('%d posts have been restored.'), posts.length);
+      }
+      createSuccessNotice(successMessage, {
+        type: 'snackbar',
+        id: 'restore-post-action'
+      });
+      if (onActionPerformed) {
+        onActionPerformed(posts);
+      }
+    } else {
+      // If there was at lease one failure.
+      let errorMessage;
+      // If we were trying to move a single post to the trash.
+      if (promiseResult.length === 1) {
+        const typedError = promiseResult[0];
+        if (typedError.reason?.message) {
+          errorMessage = typedError.reason.message;
+        } else {
+          errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while restoring the post.');
+        }
+        // If we were trying to move multiple posts to the trash
+      } else {
+        const errorMessages = new Set();
+        const failedPromises = promiseResult.filter(({
+          status
+        }) => status === 'rejected');
+        for (const failedPromise of failedPromises) {
+          const typedError = failedPromise;
+          if (typedError.reason?.message) {
+            errorMessages.add(typedError.reason.message);
+          }
+        }
+        if (errorMessages.size === 0) {
+          errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while restoring the posts.');
+        } else if (errorMessages.size === 1) {
+          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
+          (0,external_wp_i18n_namespaceObject.__)('An error occurred while restoring the posts: %s'), [...errorMessages][0]);
+        } else {
+          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
+          (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while restoring the posts: %s'), [...errorMessages].join(','));
+        }
+      }
+      createErrorNotice(errorMessage, {
+        type: 'snackbar'
+      });
+    }
+  }
+};
+/* harmony default export */ const restore_post = (restorePost);
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/store/private-actions.js
 /**
  * WordPress dependencies
@@ -7031,6 +7156,7 @@ const reorderPage = {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -7072,7 +7198,7 @@ const registerPostTypeActions = postType => async ({
   }
   unlock(registry.dispatch(store_store)).setIsReady('postType', postType);
   const postTypeConfig = await registry.resolveSelect(external_wp_coreData_namespaceObject.store).getPostType(postType);
-  const actions = [postTypeConfig?.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, reset_post, restore_post, delete_post, trash_post, permanently_delete_post];
+  const actions = [postTypeConfig.supports?.title ? rename_post : undefined, postTypeConfig?.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, reset_post, restore_post, delete_post, trash_post, permanently_delete_post];
   registry.batch(() => {
     actions.forEach(action => {
       if (action === undefined) {
@@ -26790,7 +26916,6 @@ function PatternOverridesPanel() {
 
 
 const {
-  PATTERN_TYPES: actions_PATTERN_TYPES,
   CreatePatternModalContents,
   useDuplicatePatternProps
 } = unlock(external_wp_patterns_namespaceObject.privateApis);
@@ -26813,22 +26938,6 @@ const actions_fields = [{
 const formDuplicateAction = {
   fields: ['title']
 };
-
-/**
- * Check if a template is removable.
- *
- * @param {Object} template The template entity to check.
- * @return {boolean} Whether the template is removable.
- */
-function actions_isTemplateRemovable(template) {
-  if (!template) {
-    return false;
-  }
-  // In patterns list page we map the templates parts to a different object
-  // than the one returned from the endpoint. This is why we need to check for
-  // two props whether is custom or has a theme file.
-  return template?.source === TEMPLATE_ORIGINS.custom && !template?.has_theme_file;
-}
 const viewPostAction = {
   id: 'view-post',
   label: (0,external_wp_i18n_namespaceObject.__)('View'),
@@ -26876,101 +26985,6 @@ const postRevisionsAction = {
     if (onActionPerformed) {
       onActionPerformed(posts);
     }
-  }
-};
-const renamePostAction = {
-  id: 'rename-post',
-  label: (0,external_wp_i18n_namespaceObject.__)('Rename'),
-  isEligible(post) {
-    if (post.status === 'trash') {
-      return false;
-    }
-    // Templates, template parts and patterns have special checks for renaming.
-    if (![TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE, ...Object.values(actions_PATTERN_TYPES)].includes(post.type)) {
-      return post.permissions?.update;
-    }
-    // In the case of templates, we can only rename custom templates.
-    if (post.type === TEMPLATE_POST_TYPE) {
-      return actions_isTemplateRemovable(post) && post.is_custom && post.permissions?.update;
-    }
-    // Make necessary checks for template parts and patterns.
-    const isTemplatePart = post.type === TEMPLATE_PART_POST_TYPE;
-    const isUserPattern = post.type === actions_PATTERN_TYPES.user;
-    // In patterns list page we map the templates parts to a different object
-    // than the one returned from the endpoint. This is why we need to check for
-    // two props whether is custom or has a theme file.
-    const isCustomPattern = isUserPattern || isTemplatePart && post.source === TEMPLATE_ORIGINS.custom;
-    const hasThemeFile = post?.has_theme_file;
-    return isCustomPattern && !hasThemeFile && post.permissions?.update;
-  },
-  RenderModal: ({
-    items,
-    closeModal,
-    onActionPerformed
-  }) => {
-    const [item] = items;
-    const [title, setTitle] = (0,external_wp_element_namespaceObject.useState)(() => getItemTitle(item));
-    const {
-      editEntityRecord,
-      saveEditedEntityRecord
-    } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-    const {
-      createSuccessNotice,
-      createErrorNotice
-    } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
-    async function onRename(event) {
-      event.preventDefault();
-      try {
-        await editEntityRecord('postType', item.type, item.id, {
-          title
-        });
-        // Update state before saving rerenders the list.
-        setTitle('');
-        closeModal();
-        // Persist edited entity.
-        await saveEditedEntityRecord('postType', item.type, item.id, {
-          throwOnError: true
-        });
-        createSuccessNotice((0,external_wp_i18n_namespaceObject.__)('Name updated'), {
-          type: 'snackbar'
-        });
-        onActionPerformed?.(items);
-      } catch (error) {
-        const errorMessage = error.message && error.code !== 'unknown_error' ? error.message : (0,external_wp_i18n_namespaceObject.__)('An error occurred while updating the name');
-        createErrorNotice(errorMessage, {
-          type: 'snackbar'
-        });
-      }
-    }
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
-      onSubmit: onRename,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-        spacing: "5",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-          __nextHasNoMarginBottom: true,
-          __next40pxDefaultSize: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Name'),
-          value: title,
-          onChange: setTitle,
-          required: true
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-          justify: "right",
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            __next40pxDefaultSize: true,
-            variant: "tertiary",
-            onClick: () => {
-              closeModal();
-            },
-            children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            __next40pxDefaultSize: true,
-            variant: "primary",
-            type: "submit",
-            children: (0,external_wp_i18n_namespaceObject.__)('Save')
-          })]
-        })]
-      })
-    });
   }
 };
 const useDuplicatePostAction = postType => {
@@ -27188,12 +27202,11 @@ function usePostActions({
   const isPattern = postType === PATTERN_POST_TYPE;
   const isLoaded = !!postTypeObject;
   const supportsRevisions = !!postTypeObject?.supports?.revisions;
-  const supportsTitle = !!postTypeObject?.supports?.title;
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (!isLoaded) {
       return [];
     }
-    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && duplicateTemplatePartAction, isPattern && userCanCreatePostType && duplicatePatternAction, supportsTitle && renamePostAction, ...defaultActions].filter(Boolean);
+    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && duplicateTemplatePartAction, isPattern && userCanCreatePostType && duplicatePatternAction, ...defaultActions].filter(Boolean);
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
     // and the consumer should provide the context to filter the actions, if needed.
@@ -27245,7 +27258,7 @@ function usePostActions({
       }
     }
     return actions;
-  }, [defaultActions, userCanCreatePostType, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, duplicatePostAction, onActionPerformed, isLoaded, supportsRevisions, supportsTitle, context]);
+  }, [defaultActions, userCanCreatePostType, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, duplicatePostAction, onActionPerformed, isLoaded, supportsRevisions, context]);
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-actions/index.js
