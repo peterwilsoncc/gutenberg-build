@@ -29043,9 +29043,7 @@ function normalizeFields(fields) {
   return fields.map(field => {
     var _field$sort, _field$isValid;
     const fieldTypeDefinition = getFieldTypeDefinition(field.type);
-    const getValue = field.getValue || (
-    // @ts-ignore
-    ({
+    const getValue = field.getValue || (({
       item
     }) => item[field.id]);
     const sort = (_field$sort = field.sort) !== null && _field$sort !== void 0 ? _field$sort : function sort(a, b, direction) {
