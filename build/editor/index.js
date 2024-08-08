@@ -6741,10 +6741,82 @@ function getFieldTypeDefinition(type) {
   };
 }
 
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/components/dataform-controls/radio.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+function radio_Edit({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  const {
+    id,
+    label
+  } = field;
+  const value = field.getValue({
+    item: data
+  });
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
+    ...prevItem,
+    [id]: newValue
+  })), [id, onChange]);
+  if (field.elements) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
+      label: label,
+      onChange: onChangeControl,
+      options: field.elements,
+      selected: value,
+      hideLabelFromVision: hideLabelFromVision
+    });
+  }
+  return null;
+}
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/components/dataform-controls/index.js
+/**
+ * External dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+const FORM_CONTROLS = {
+  radio: radio_Edit
+};
+function getControl(field, fieldTypeDefinition) {
+  if (typeof field.Edit === 'function') {
+    return field.Edit;
+  }
+  let control;
+  if (typeof field.Edit === 'string') {
+    control = getControlByType(field.Edit);
+  }
+  return control || fieldTypeDefinition.Edit;
+}
+function getControlByType(type) {
+  if (Object.keys(FORM_CONTROLS).includes(type)) {
+    return FORM_CONTROLS[type];
+  }
+  return null;
+}
+
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/normalize-fields.js
 /**
  * Internal dependencies
  */
+
+
 
 /**
  * Apply default values and normalize the fields config.
@@ -6771,7 +6843,7 @@ function normalizeFields(fields) {
         item
       }), context);
     };
-    const Edit = field.Edit || fieldTypeDefinition.Edit;
+    const Edit = getControl(field, fieldTypeDefinition);
     const renderFromElements = ({
       item
     }) => {
