@@ -61816,6 +61816,7 @@ function useShowBlockTools() {
       getSelectedBlockClientId,
       getFirstMultiSelectedBlockClientId,
       getBlock,
+      getBlockMode,
       getSettings,
       hasMultiSelection,
       __unstableGetEditorMode,
@@ -61825,7 +61826,7 @@ function useShowBlockTools() {
     const block = getBlock(clientId);
     const editorMode = __unstableGetEditorMode();
     const hasSelectedBlock = !!clientId && !!block;
-    const isEmptyDefaultBlock = hasSelectedBlock && (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(block);
+    const isEmptyDefaultBlock = hasSelectedBlock && (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(block) && getBlockMode(clientId) !== 'html';
     const _showEmptyBlockSideInserter = clientId && !isTyping() && editorMode === 'edit' && isEmptyDefaultBlock;
     const maybeShowBreadcrumb = hasSelectedBlock && !hasMultiSelection() && editorMode === 'navigation';
     const isZoomOut = editorMode === 'zoom-out';
