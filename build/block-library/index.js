@@ -20710,8 +20710,6 @@ const gallery_deprecated_v1 = {
 };
 /* harmony default export */ const gallery_deprecated = ([deprecated_v7, deprecated_v6, deprecated_v5, deprecated_v4, gallery_deprecated_v3, gallery_deprecated_v2, gallery_deprecated_v1]);
 
-;// CONCATENATED MODULE: external ["wp","viewport"]
-const external_wp_viewport_namespaceObject = window["wp"]["viewport"];
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/custom-link.js
 /**
  * WordPress dependencies
@@ -21143,8 +21141,6 @@ function GapStyles({
 /**
  * WordPress dependencies
  */
-
-
 
 
 
@@ -21624,9 +21620,6 @@ function GalleryEdit(props) {
     })]
   });
 }
-/* harmony default export */ const gallery_edit = ((0,external_wp_compose_namespaceObject.compose)([external_wp_components_namespaceObject.withNotices, (0,external_wp_viewport_namespaceObject.withViewportMatch)({
-  isNarrow: '< small'
-})])(GalleryEdit));
 
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/gallery/save.js
 /**
@@ -22082,7 +22075,7 @@ const gallery_settings = {
     }]
   },
   transforms: gallery_transforms,
-  edit: gallery_edit,
+  edit: GalleryEdit,
   save: saveWithInnerBlocks,
   deprecated: gallery_deprecated
 };
