@@ -6491,10 +6491,9 @@ function Edit({
   const value = (_field$getValue = field.getValue({
     item: data
   })) !== null && _field$getValue !== void 0 ? _field$getValue : '';
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
-    ...prevItem,
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: Number(newValue)
-  })), [id, onChange]);
+  }), [id, onChange]);
   if (field.elements) {
     const elements = [
     /*
@@ -6571,10 +6570,9 @@ function text_Edit({
   const value = field.getValue({
     item: data
   });
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
-    ...prevItem,
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: newValue
-  })), [id, onChange]);
+  }), [id, onChange]);
   if (field.elements) {
     const elements = [
     /*
@@ -6653,10 +6651,9 @@ function datetime_Edit({
   const value = field.getValue({
     item: data
   });
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
-    ...prevItem,
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: newValue
-  })), [id, onChange]);
+  }), [id, onChange]);
   if (field.elements) {
     const elements = [
     /*
@@ -7202,7 +7199,10 @@ function ReorderModal({
         data: item,
         fields: fields,
         form: formOrderAction,
-        onChange: setItem
+        onChange: changes => setItem({
+          ...item,
+          ...changes
+        })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         justify: "right",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -27275,7 +27275,10 @@ const useDuplicatePostAction = postType => {
             data: item,
             fields: actions_fields,
             form: formDuplicateAction,
-            onChange: setItem
+            onChange: changes => setItem({
+              ...item,
+              ...changes
+            })
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
             spacing: 2,
             justify: "end",

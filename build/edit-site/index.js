@@ -28865,10 +28865,9 @@ function Edit({
   const value = (_field$getValue = field.getValue({
     item: data
   })) !== null && _field$getValue !== void 0 ? _field$getValue : '';
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
-    ...prevItem,
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: Number(newValue)
-  })), [id, onChange]);
+  }), [id, onChange]);
   if (field.elements) {
     const elements = [
     /*
@@ -28945,10 +28944,9 @@ function text_Edit({
   const value = field.getValue({
     item: data
   });
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
-    ...prevItem,
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: newValue
-  })), [id, onChange]);
+  }), [id, onChange]);
   if (field.elements) {
     const elements = [
     /*
@@ -29027,10 +29025,9 @@ function datetime_Edit({
   const value = field.getValue({
     item: data
   });
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
-    ...prevItem,
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: newValue
-  })), [id, onChange]);
+  }), [id, onChange]);
   if (field.elements) {
     const elements = [
     /*
@@ -45541,22 +45538,6 @@ function DataViewsSidebarContent() {
   });
 }
 
-;// CONCATENATED MODULE: ./packages/dataviews/build-module/validation.js
-/**
- * Internal dependencies
- */
-
-function isItemValid(item, fields, form) {
-  const _fields = normalizeFields(fields.filter(({
-    id
-  }) => !!form.fields?.includes(id)));
-  return _fields.every(field => {
-    return field.isValid(item, {
-      elements: field.elements
-    });
-  });
-}
-
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/dataforms-layouts/regular/index.js
 /**
  * WordPress dependencies
@@ -45794,16 +45775,15 @@ function PostEditForm({
 }) {
   const ids = (0,external_wp_element_namespaceObject.useMemo)(() => postId.split(','), [postId]);
   const {
-    initialEdits
+    record
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    if (ids.length !== 1) {}
     return {
-      initialEdits: ids.length === 1 ? select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', postType, ids[0]) : null
+      record: ids.length === 1 ? select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', postType, ids[0]) : null
     };
   }, [postType, ids]);
-  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
+  const [multiEdits, setMultiEdits] = (0,external_wp_element_namespaceObject.useState)({});
   const {
-    saveEntityRecord
+    editEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
   const {
     fields
@@ -45812,51 +45792,30 @@ function PostEditForm({
     type: 'panel',
     fields: ['title', 'author', 'date', 'comment_status']
   };
-  const [edits, setEdits] = (0,external_wp_element_namespaceObject.useState)(initialEdits);
-  const itemWithEdits = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return {
-      ...initialEdits,
-      ...edits
-    };
-  }, [initialEdits, edits]);
-  const onSubmit = async event => {
-    event.preventDefault();
-    if (!isItemValid(itemWithEdits, fields, form)) {
-      return;
-    }
-    const {
-      getEntityRecord
-    } = registry.resolveSelect(external_wp_coreData_namespaceObject.store);
+  const onChange = edits => {
     for (const id of ids) {
-      const item = await getEntityRecord('postType', postType, id);
-      saveEntityRecord('postType', postType, {
-        ...item,
-        ...edits
-      });
+      editEntityRecord('postType', postType, id, edits);
+      if (ids.length > 1) {
+        setMultiEdits(prev => ({
+          ...prev,
+          ...edits
+        }));
+      }
     }
   };
-  const isUpdateDisabled = !isItemValid(itemWithEdits, fields, form);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    setMultiEdits({});
+  }, [ids]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-    as: "form",
-    onSubmit: onSubmit,
     spacing: 4,
     children: [ids.length === 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostCardPanel, {
       postType: postType,
       postId: ids[0]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
-      data: itemWithEdits,
+      data: ids.length === 1 ? record : multiEdits,
       fields: fields,
       form: form,
-      onChange: setEdits
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        variant: "primary",
-        type: "submit",
-        accessibleWhenDisabled: true,
-        disabled: isUpdateDisabled,
-        __next40pxDefaultSize: true,
-        children: (0,external_wp_i18n_namespaceObject.__)('Update')
-      })
+      onChange: onChange
     })]
   });
 }
