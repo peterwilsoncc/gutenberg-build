@@ -27456,7 +27456,6 @@ function usePostActions({
 
 
 
-
 const {
   DropdownMenuV2: DropdownMenu,
   DropdownMenuGroupV2: DropdownMenuGroup,
@@ -27465,31 +27464,24 @@ const {
   kebabCase
 } = unlock(external_wp_components_namespaceObject.privateApis);
 function PostActions({
-  onActionPerformed,
-  buttonProps
+  postType,
+  postId,
+  onActionPerformed
 }) {
   const [isActionsMenuOpen, setIsActionsMenuOpen] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
     item,
-    permissions,
-    postType
+    permissions
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getCurrentPostType,
-      getCurrentPostId
-    } = select(store_store);
     const {
       getEditedEntityRecord,
       getEntityRecordPermissions
     } = unlock(select(external_wp_coreData_namespaceObject.store));
-    const _postType = getCurrentPostType();
-    const _id = getCurrentPostId();
     return {
-      item: getEditedEntityRecord('postType', _postType, _id),
-      permissions: getEntityRecordPermissions('postType', _postType, _id),
-      postType: _postType
+      item: getEditedEntityRecord('postType', postType, postId),
+      permissions: getEntityRecordPermissions('postType', postType, postId)
     };
-  }, []);
+  }, [postId, postType]);
   const itemWithPermissions = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return {
       ...item,
@@ -27514,8 +27506,7 @@ function PostActions({
       disabled: !actions.length,
       accessibleWhenDisabled: true,
       className: "editor-all-actions-button",
-      onClick: () => setIsActionsMenuOpen(!isActionsMenuOpen),
-      ...buttonProps
+      onClick: () => setIsActionsMenuOpen(!isActionsMenuOpen)
     }),
     onOpenChange: setIsActionsMenuOpen,
     placement: "bottom-end",
@@ -27639,10 +27630,11 @@ function ActionsDropdownMenuGroup({
 
 
 
+
 function PostCardPanel({
   postType,
   postId,
-  actions
+  onActionPerformed
 }) {
   const {
     isFrontPage,
@@ -27709,7 +27701,11 @@ function PostCardPanel({
           className: "editor-post-card-panel__title-badge",
           children: (0,external_wp_i18n_namespaceObject.__)('Posts Page')
         })]
-      }), actions]
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostActions, {
+        postType: postType,
+        postId: postId,
+        onActionPerformed: onActionPerformed
+      })]
     })
   });
 }
@@ -28302,7 +28298,6 @@ function SiteDiscussion() {
 
 
 
-
 /**
  * Module Constants
  */
@@ -28340,9 +28335,7 @@ function PostSummary({
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostCardPanel, {
             postType: postType,
             postId: postId,
-            actions: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostActions, {
-              onActionPerformed: onActionPerformed
-            })
+            onActionPerformed: onActionPerformed
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostFeaturedImagePanel, {
             withPanelBody: false
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrivatePostExcerptPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
