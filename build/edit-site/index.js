@@ -37011,6 +37011,7 @@ function ViewGrid({
  * External dependencies
  */
 
+// TODO: use the @wordpress/components one once public
 // Import CompositeStore type, which is not exported from @wordpress/components.
 // eslint-disable-next-line no-restricted-imports
 
