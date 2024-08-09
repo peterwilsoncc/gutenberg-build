@@ -52273,6 +52273,7 @@ function InserterMenu({
     });
   }, [onInsertBlocks, onSelect, shouldFocusBlock]);
   const onInsertPattern = (0,external_wp_element_namespaceObject.useCallback)((blocks, patternName) => {
+    onToggleInsertionPoint(false);
     onInsertBlocks(blocks, {
       patternName
     });
@@ -52282,9 +52283,6 @@ function InserterMenu({
     onToggleInsertionPoint(item);
     setHoveredItem(item);
   }, [onToggleInsertionPoint, setHoveredItem]);
-  const onHoverPattern = (0,external_wp_element_namespaceObject.useCallback)(item => {
-    onToggleInsertionPoint(!!item);
-  }, [onToggleInsertionPoint]);
   const onClickPatternCategory = (0,external_wp_element_namespaceObject.useCallback)((patternCategory, filter) => {
     setSelectedPatternCategory(patternCategory);
     setPatternFilter(filter);
@@ -52315,7 +52313,6 @@ function InserterMenu({
         filterValue: delayedFilterValue,
         onSelect: onSelect,
         onHover: onHover,
-        onHoverPattern: onHoverPattern,
         rootClientId: rootClientId,
         clientId: clientId,
         isAppender: isAppender,
@@ -52325,7 +52322,7 @@ function InserterMenu({
         prioritizePatterns: selectedTab === 'patterns'
       })]
     });
-  }, [selectedTab, hoveredItem, setHoveredItem, setFilterValue, filterValue, delayedFilterValue, onSelect, onHover, onHoverPattern, shouldFocusBlock, clientId, rootClientId, __experimentalInsertionIndex, isAppender]);
+  }, [selectedTab, hoveredItem, setHoveredItem, setFilterValue, filterValue, delayedFilterValue, onSelect, onHover, shouldFocusBlock, clientId, rootClientId, __experimentalInsertionIndex, isAppender]);
   const blocksTab = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -52355,13 +52352,12 @@ function InserterMenu({
       children: showPatternPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternCategoryPreviews, {
         rootClientId: destinationRootClientId,
         onInsert: onInsertPattern,
-        onHover: onHoverPattern,
         category: selectedPatternCategory,
         patternFilter: patternFilter,
         showTitlesAsTooltip: true
       })
     });
-  }, [destinationRootClientId, onHoverPattern, onInsertPattern, onClickPatternCategory, patternFilter, selectedPatternCategory, showPatternPanel]);
+  }, [destinationRootClientId, onInsertPattern, onClickPatternCategory, patternFilter, selectedPatternCategory, showPatternPanel]);
   const mediaTab = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(media_tab, {
       rootClientId: destinationRootClientId,
