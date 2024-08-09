@@ -27683,7 +27683,7 @@ function PostCardPanel({
       isFrontPage: siteSettings?.page_on_front === postId,
       isPostsPage: siteSettings?.page_for_posts === postId
     };
-  }, []);
+  }, [postId, postType]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "editor-post-card-panel",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
