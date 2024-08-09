@@ -37758,7 +37758,6 @@ function FieldControl() {
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: field.label
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            className: "'dataviews-view-config__field-control-button",
             size: "compact",
             onClick: () => onChangeView({
               ...view,
