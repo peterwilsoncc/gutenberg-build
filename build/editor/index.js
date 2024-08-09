@@ -27571,6 +27571,8 @@ function ActionsDropdownMenuGroup({
 
 
 function PostCardPanel({
+  postType,
+  postId,
   actions
 }) {
   const {
@@ -27581,43 +27583,36 @@ function PostCardPanel({
     isSync
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getEditedPostAttribute,
-      getCurrentPostType,
-      getCurrentPostId,
       __experimentalGetTemplateInfo
     } = select(store_store);
     const {
-      canUser
-    } = select(external_wp_coreData_namespaceObject.store);
-    const {
+      canUser,
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
     const siteSettings = canUser('read', {
       kind: 'root',
       name: 'site'
     }) ? getEditedEntityRecord('root', 'site') : undefined;
-    const _type = getCurrentPostType();
-    const _id = getCurrentPostId();
-    const _record = getEditedEntityRecord('postType', _type, _id);
-    const _templateInfo = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE].includes(_type) && __experimentalGetTemplateInfo(_record);
+    const _record = getEditedEntityRecord('postType', postType, postId);
+    const _templateInfo = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE].includes(postType) && __experimentalGetTemplateInfo(_record);
     let _isSync = false;
-    if (GLOBAL_POST_TYPES.includes(_type)) {
-      if (PATTERN_POST_TYPE === _type) {
+    if (GLOBAL_POST_TYPES.includes(postType)) {
+      if (PATTERN_POST_TYPE === postType) {
         // When the post is first created, the top level wp_pattern_sync_status is not set so get meta value instead.
-        const currentSyncStatus = getEditedPostAttribute('meta')?.wp_pattern_sync_status === 'unsynced' ? 'unsynced' : getEditedPostAttribute('wp_pattern_sync_status');
+        const currentSyncStatus = _record?.meta?.wp_pattern_sync_status === 'unsynced' ? 'unsynced' : _record?.wp_pattern_sync_status;
         _isSync = currentSyncStatus !== 'unsynced';
       } else {
         _isSync = true;
       }
     }
     return {
-      title: _templateInfo?.title || getEditedPostAttribute('title'),
-      icon: unlock(select(store_store)).getPostIcon(_type, {
+      title: _templateInfo?.title || _record?.title,
+      icon: unlock(select(store_store)).getPostIcon(postType, {
         area: _record?.area
       }),
       isSync: _isSync,
-      isFrontPage: siteSettings?.page_on_front === _id,
-      isPostsPage: siteSettings?.page_for_posts === _id
+      isFrontPage: siteSettings?.page_on_front === postId,
+      isPostsPage: siteSettings?.page_for_posts === postId
     };
   }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -28250,17 +28245,21 @@ function PostSummary({
   onActionPerformed
 }) {
   const {
-    isRemovedPostStatusPanel
+    isRemovedPostStatusPanel,
+    postType,
+    postId
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     // We use isEditorPanelRemoved to hide the panel if it was programatically removed. We do
     // not use isEditorPanelEnabled since this panel should not be disabled through the UI.
     const {
       isEditorPanelRemoved,
-      getCurrentPostType
+      getCurrentPostType,
+      getCurrentPostId
     } = select(store_store);
     return {
       isRemovedPostStatusPanel: isEditorPanelRemoved(post_summary_PANEL_NAME),
-      postType: getCurrentPostType()
+      postType: getCurrentPostType(),
+      postId: getCurrentPostId()
     };
   }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_panel_section, {
@@ -28270,6 +28269,8 @@ function PostSummary({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
           spacing: 4,
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostCardPanel, {
+            postType: postType,
+            postId: postId,
             actions: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostActions, {
               onActionPerformed: onActionPerformed
             })
@@ -29686,6 +29687,7 @@ function bootstrapBlockBindingsSourcesFromServer(sources) {
 
 
 
+
 const {
   store: interfaceStore,
   ...remainingInterfaceApis
@@ -29700,6 +29702,7 @@ lock(privateApis, {
   GlobalStylesProvider: GlobalStylesProvider,
   mergeBaseAndUserConfigs: mergeBaseAndUserConfigs,
   PluginPostExcerpt: post_excerpt_plugin,
+  PostCardPanel: PostCardPanel,
   PreferencesModal: EditorPreferencesModal,
   usePostActions: usePostActions,
   ToolsMoreMenuGroup: tools_more_menu_group,

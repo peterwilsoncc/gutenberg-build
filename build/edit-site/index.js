@@ -45688,6 +45688,7 @@ function DataForm({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -45695,6 +45696,10 @@ function DataForm({
 
 
 
+
+const {
+  PostCardPanel
+} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
 function PostEditForm({
   postType,
   postId
@@ -45747,7 +45752,10 @@ function PostEditForm({
     as: "form",
     onSubmit: onSubmit,
     spacing: 4,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
+    children: [ids.length === 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostCardPanel, {
+      postType: postType,
+      postId: ids[0]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
       data: itemWithEdits,
       fields: fields,
       form: form,
