@@ -24430,8 +24430,10 @@ function BackgroundImageControls({
   style,
   inheritedValue,
   onRemoveImage = background_panel_noop,
+  onResetImage = background_panel_noop,
   displayInPanel,
-  themeFileURIs
+  themeFileURIs,
+  defaultValues
 }) {
   const mediaUpload = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getSettings().mediaUpload, []);
   const {
@@ -24465,8 +24467,8 @@ function BackgroundImageControls({
       onUploadError((0,external_wp_i18n_namespaceObject.__)('Only images can be used as a background image.'));
       return;
     }
-    const sizeValue = style?.background?.backgroundSize || inheritedValue?.background?.backgroundSize;
-    const positionValue = style?.background?.backgroundPosition || inheritedValue?.background?.backgroundPosition;
+    const sizeValue = style?.background?.backgroundSize || defaultValues?.backgroundSize;
+    const positionValue = style?.background?.backgroundPosition;
     onChange(setImmutably(style, ['background'], {
       ...style?.background,
       backgroundImage: {
@@ -24475,7 +24477,14 @@ function BackgroundImageControls({
         source: 'file',
         title: media.title || undefined
       },
-      backgroundPosition: !positionValue && ('auto' === sizeValue || !sizeValue) ? '50% 0' : positionValue,
+      backgroundPosition:
+      /*
+       * A background image uploaded and set in the editor receives a default background position of '50% 0',
+       * when the background image size is the equivalent of "Tile".
+       * This is to increase the chance that the image's focus point is visible.
+       * This is in-editor only to assist with the user experience.
+       */
+      !positionValue && ('auto' === sizeValue || !sizeValue) ? '50% 0' : positionValue,
       backgroundSize: sizeValue
     }));
   };
@@ -24501,7 +24510,9 @@ function BackgroundImageControls({
     toggleButton?.focus();
     toggleButton?.click();
   };
-  const onRemove = () => onChange(setImmutably(style, ['background', 'backgroundImage'], 'none'));
+  const onRemove = () => onChange(setImmutably(style, ['background'], {
+    backgroundImage: 'none'
+  }));
   const canRemove = !hasValue && hasBackgroundImageValue(inheritedValue);
   const imgLabel = title || (0,external_wp_url_namespaceObject.getFilename)(url) || (0,external_wp_i18n_namespaceObject.__)('Add background image');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
@@ -24529,12 +24540,13 @@ function BackgroundImageControls({
         onClick: () => {
           closeAndFocus();
           onRemove();
+          onRemoveImage();
         },
         children: (0,external_wp_i18n_namespaceObject.__)('Remove')
       }), hasValue && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
         onClick: () => {
           closeAndFocus();
-          onRemoveImage();
+          onResetImage();
         },
         children: (0,external_wp_i18n_namespaceObject.__)('Reset ')
       })]
@@ -24554,7 +24566,7 @@ function BackgroundSizeControls({
   const sizeValue = style?.background?.backgroundSize || inheritedValue?.background?.backgroundSize;
   const repeatValue = style?.background?.backgroundRepeat || inheritedValue?.background?.backgroundRepeat;
   const imageValue = style?.background?.backgroundImage?.url || inheritedValue?.background?.backgroundImage?.url;
-  const isUploadedImage = style?.background?.backgroundImage?.id || inheritedValue?.background?.backgroundImage?.id;
+  const isUploadedImage = style?.background?.backgroundImage?.id;
   const positionValue = style?.background?.backgroundPosition || inheritedValue?.background?.backgroundPosition;
   const attachmentValue = style?.background?.backgroundAttachment || inheritedValue?.background?.backgroundAttachment;
 
@@ -24564,8 +24576,12 @@ function BackgroundSizeControls({
    * Block-level controls may have different defaults to root-level controls.
    * A falsy value is treated by default as `auto` (Tile).
    */
-  const currentValueForToggle = !sizeValue && isUploadedImage ? defaultValues?.backgroundSize : sizeValue || 'auto';
-
+  let currentValueForToggle = !sizeValue && isUploadedImage ? defaultValues?.backgroundSize : sizeValue || 'auto';
+  /*
+   * The incoming value could be a value + unit, e.g. '20px'.
+   * In this case set the value to 'tile'.
+   */
+  currentValueForToggle = !['cover', 'contain', 'auto'].includes(currentValueForToggle) ? 'auto' : currentValueForToggle;
   /*
    * If the current value is `cover` and the repeat value is `undefined`, then
    * the toggle should be unchecked as the default state. Otherwise, the toggle
@@ -24591,6 +24607,7 @@ function BackgroundSizeControls({
        * receives a default background position of '50% 0',
        * when the toggle switches to "Tile". This is to increase the chance that
        * the image's focus point is visible.
+       * This is in-editor only to assist with the user experience.
        */
       if (!!style?.background?.backgroundImage?.id) {
         nextPosition = '50% 0';
@@ -24616,22 +24633,24 @@ function BackgroundSizeControls({
   };
   const toggleIsRepeated = () => onChange(setImmutably(style, ['background', 'backgroundRepeat'], repeatCheckedValue === true ? 'no-repeat' : 'repeat'));
   const toggleScrollWithPage = () => onChange(setImmutably(style, ['background', 'backgroundAttachment'], attachmentValue === 'fixed' ? 'scroll' : 'fixed'));
+
+  // Set a default background position for non-site-wide, uploaded images with a size of 'contain'.
+  const backgroundPositionValue = !positionValue && isUploadedImage && 'contain' === sizeValue ? defaultValues?.backgroundPosition : positionValue;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-    spacing: 4,
+    spacing: 3,
     className: "single-column",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FocalPointPicker, {
       __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Focal point'),
       url: theme_file_uri_utils_getResolvedThemeFilePath(imageValue, themeFileURIs),
-      value: backgroundPositionToCoords(positionValue),
+      value: backgroundPositionToCoords(backgroundPositionValue),
       onChange: updateBackgroundPosition
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
       __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Fixed background'),
       checked: attachmentValue === 'fixed',
-      onChange: toggleScrollWithPage,
-      help: (0,external_wp_i18n_namespaceObject.__)('Whether your image should scroll with the page or stay fixed in place.')
+      onChange: toggleScrollWithPage
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
       __nextHasNoMarginBottom: true,
       size: "__unstable-large",
@@ -24688,7 +24707,7 @@ function BackgroundToolsPanel({
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
     as: external_wp_components_namespaceObject.__experimentalToolsPanel,
-    spacing: 4,
+    spacing: 2,
     label: headerLabel,
     resetAll: resetAll,
     panelId: panelId,
@@ -24722,7 +24741,8 @@ function BackgroundPanel({
     ...inheritedValue?.background?.backgroundImage
   };
   const hasImageValue = hasBackgroundImageValue(value) || hasBackgroundImageValue(inheritedValue);
-  const shouldShowBackgroundImageControls = hasImageValue && (settings?.background?.backgroundSize || settings?.background?.backgroundPosition || settings?.background?.backgroundRepeat);
+  const imageValue = value?.background?.backgroundImage || inheritedValue?.background?.backgroundImage;
+  const shouldShowBackgroundImageControls = hasImageValue && 'none' !== imageValue && (settings?.background?.backgroundSize || settings?.background?.backgroundPosition || settings?.background?.backgroundRepeat);
   const [isDropDownOpen, setIsDropDownOpen] = (0,external_wp_element_namespaceObject.useState)(false);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Wrapper, {
     resetAllFilter: resetAllFilter,
@@ -24735,7 +24755,7 @@ function BackgroundPanel({
         'is-open': isDropDownOpen
       }),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-        hasValue: () => hasImageValue,
+        hasValue: () => !!value?.background,
         label: (0,external_wp_i18n_namespaceObject.__)('Image'),
         onDeselect: resetBackground,
         isShownByDefault: defaultControls.backgroundImage,
@@ -24755,10 +24775,12 @@ function BackgroundPanel({
               inheritedValue: inheritedValue,
               themeFileURIs: themeFileURIs,
               displayInPanel: true,
-              onRemoveImage: () => {
+              onResetImage: () => {
                 setIsDropDownOpen(false);
                 resetBackground();
-              }
+              },
+              onRemoveImage: () => setIsDropDownOpen(false),
+              defaultValues: defaultValues
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundSizeControls, {
               onChange: onChange,
               panelId: panelId,
@@ -24772,7 +24794,13 @@ function BackgroundPanel({
           onChange: onChange,
           style: value,
           inheritedValue: inheritedValue,
-          themeFileURIs: themeFileURIs
+          themeFileURIs: themeFileURIs,
+          defaultValues: defaultValues,
+          onResetImage: () => {
+            setIsDropDownOpen(false);
+            resetBackground();
+          },
+          onRemoveImage: () => setIsDropDownOpen(false)
         })
       })
     })
@@ -24798,9 +24826,10 @@ function BackgroundPanel({
 
 const BACKGROUND_SUPPORT_KEY = 'background';
 
-// Initial control values where no block style is set.
-const BACKGROUND_DEFAULT_VALUES = {
-  backgroundSize: 'cover'
+// Initial control values.
+const BACKGROUND_BLOCK_DEFAULT_VALUES = {
+  backgroundSize: 'cover',
+  backgroundPosition: '50% 50%' // used only when backgroundSize is 'contain'.
 };
 
 /**
@@ -24822,24 +24851,21 @@ function hasBackgroundSupport(blockName, feature = 'any') {
   return !!support?.[feature];
 }
 function setBackgroundStyleDefaults(backgroundStyle) {
-  if (!backgroundStyle) {
+  if (!backgroundStyle || !backgroundStyle?.backgroundImage?.url) {
     return;
   }
-  const backgroundImage = backgroundStyle?.backgroundImage;
   let backgroundStylesWithDefaults;
 
   // Set block background defaults.
-  if (!!backgroundImage?.url) {
-    if (!backgroundStyle?.backgroundSize) {
-      backgroundStylesWithDefaults = {
-        backgroundSize: 'cover'
-      };
-    }
-    if ('contain' === backgroundStyle?.backgroundSize && !backgroundStyle?.backgroundPosition) {
-      backgroundStylesWithDefaults = {
-        backgroundPosition: 'center'
-      };
-    }
+  if (!backgroundStyle?.backgroundSize) {
+    backgroundStylesWithDefaults = {
+      backgroundSize: BACKGROUND_BLOCK_DEFAULT_VALUES.backgroundSize
+    };
+  }
+  if ('contain' === backgroundStyle?.backgroundSize && !backgroundStyle?.backgroundPosition) {
+    backgroundStylesWithDefaults = {
+      backgroundPosition: BACKGROUND_BLOCK_DEFAULT_VALUES.backgroundPosition
+    };
   }
   return backgroundStylesWithDefaults;
 }
@@ -24909,6 +24935,7 @@ function BackgroundImagePanel({
       style: getBlockAttributes(clientId)?.style,
       _links: _settings[globalStylesLinksDataKey],
       /*
+       * To ensure we pass down the right inherited values:
        * @TODO 1. Pass inherited value down to all block style controls,
        *   See: packages/block-editor/src/hooks/style.js
        * @TODO 2. Add support for block style variations,
@@ -24936,7 +24963,7 @@ function BackgroundImagePanel({
     inheritedValue: inheritedValue,
     as: BackgroundInspectorControl,
     panelId: clientId,
-    defaultValues: BACKGROUND_DEFAULT_VALUES,
+    defaultValues: BACKGROUND_BLOCK_DEFAULT_VALUES,
     settings: updatedSettings,
     onChange: onChange,
     value: style,
