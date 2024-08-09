@@ -55527,6 +55527,7 @@ const findSizeBySlug = (sizes, slug) => sizes.find(size => slug === size.slug);
  *
  * 	return (
  * 		<DimensionControl
+ * 			__nextHasNoMarginBottom
  * 			label={ 'Padding' }
  * 			icon={ 'desktop' }
  * 			onChange={ ( value ) => setPaddingSize( value ) }
@@ -55539,6 +55540,7 @@ const findSizeBySlug = (sizes, slug) => sizes.find(size => slug === size.slug);
 function DimensionControl(props) {
   const {
     __next40pxDefaultSize = false,
+    __nextHasNoMarginBottom = false,
     label,
     value,
     sizes = dimension_control_sizes,
@@ -55574,6 +55576,7 @@ function DimensionControl(props) {
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(select_control, {
     __next40pxDefaultSize: __next40pxDefaultSize,
+    __nextHasNoMarginBottom: __nextHasNoMarginBottom,
     className: dist_clsx(className, 'block-editor-dimension-control'),
     label: selectLabel,
     hideLabelFromVision: false,
