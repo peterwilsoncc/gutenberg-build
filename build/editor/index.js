@@ -27178,7 +27178,8 @@ const duplicateTemplatePartAction = {
       (0,external_wp_i18n_namespaceObject.__)('%s (Copy)'), getItemTitle(item)),
       onCreate: onTemplatePartSuccess,
       onError: closeModal,
-      confirmLabel: (0,external_wp_i18n_namespaceObject._x)('Duplicate', 'action label')
+      confirmLabel: (0,external_wp_i18n_namespaceObject._x)('Duplicate', 'action label'),
+      closeModal: closeModal
     });
   }
 };
