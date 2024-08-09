@@ -27190,11 +27190,13 @@ function usePostActions({
   const {
     defaultActions,
     postTypeObject,
-    userCanCreatePostType
+    userCanCreatePostType,
+    isBlockBasedTheme
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getPostType,
-      canUser
+      canUser,
+      getCurrentTheme
     } = select(external_wp_coreData_namespaceObject.store);
     const {
       getEntityActions
@@ -27205,7 +27207,8 @@ function usePostActions({
       userCanCreatePostType: canUser('create', {
         kind: 'postType',
         name: postType
-      })
+      }),
+      isBlockBasedTheme: getCurrentTheme()?.is_block_theme
     };
   }, [postType]);
   const {
@@ -27223,7 +27226,7 @@ function usePostActions({
     if (!isLoaded) {
       return [];
     }
-    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && duplicateTemplatePartAction, ...defaultActions].filter(Boolean);
+    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, isTemplateOrTemplatePart && userCanCreatePostType && isBlockBasedTheme && duplicateTemplatePartAction, ...defaultActions].filter(Boolean);
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
     // and the consumer should provide the context to filter the actions, if needed.
