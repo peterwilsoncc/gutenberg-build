@@ -28957,7 +28957,8 @@ function getFieldTypeDefinition(type) {
 function DateTime({
   data,
   field,
-  onChange
+  onChange,
+  hideLabelFromVision
 }) {
   const {
     id,
@@ -28970,7 +28971,11 @@ function DateTime({
     [id]: newValue
   }), [id, onChange]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
+    className: "dataviews-controls__datetime",
+    children: [!hideLabelFromVision && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
+      as: "legend",
+      children: label
+    }), hideLabelFromVision && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
       as: "legend",
       children: label
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TimePicker, {
