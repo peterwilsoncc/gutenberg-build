@@ -54337,7 +54337,6 @@ function BlockLockMenuItem({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -54345,45 +54344,41 @@ function BlockLockMenuItem({
 
 const block_mode_toggle_noop = () => {};
 function BlockModeToggle({
-  blockType,
-  mode,
-  onToggleMode,
-  small = false,
-  isCodeEditingEnabled = true
+  clientId,
+  onToggle = block_mode_toggle_noop
 }) {
+  const {
+    blockType,
+    mode,
+    isCodeEditingEnabled
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlock,
+      getBlockMode,
+      getSettings
+    } = select(store);
+    const block = getBlock(clientId);
+    return {
+      mode: getBlockMode(clientId),
+      blockType: block ? (0,external_wp_blocks_namespaceObject.getBlockType)(block.name) : null,
+      isCodeEditingEnabled: getSettings().codeEditingEnabled
+    };
+  }, [clientId]);
+  const {
+    toggleBlockMode
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   if (!blockType || !(0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockType, 'html', true) || !isCodeEditingEnabled) {
     return null;
   }
   const label = mode === 'visual' ? (0,external_wp_i18n_namespaceObject.__)('Edit as HTML') : (0,external_wp_i18n_namespaceObject.__)('Edit visually');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-    onClick: onToggleMode,
-    children: !small && label
+    onClick: () => {
+      toggleBlockMode(clientId);
+      onToggle();
+    },
+    children: label
   });
 }
-/* harmony default export */ const block_mode_toggle = ((0,external_wp_compose_namespaceObject.compose)([(0,external_wp_data_namespaceObject.withSelect)((select, {
-  clientId
-}) => {
-  const {
-    getBlock,
-    getBlockMode,
-    getSettings
-  } = select(store);
-  const block = getBlock(clientId);
-  const isCodeEditingEnabled = getSettings().codeEditingEnabled;
-  return {
-    mode: getBlockMode(clientId),
-    blockType: block ? (0,external_wp_blocks_namespaceObject.getBlockType)(block.name) : null,
-    isCodeEditingEnabled
-  };
-}), (0,external_wp_data_namespaceObject.withDispatch)((dispatch, {
-  onToggle = block_mode_toggle_noop,
-  clientId
-}) => ({
-  onToggleMode() {
-    dispatch(store).toggleBlockMode(clientId);
-    onToggle();
-  }
-}))])(BlockModeToggle));
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-rename/use-block-rename.js
 /**
@@ -54644,7 +54639,7 @@ const BlockSettingsMenuControlsSlot = ({
         }), fills, fillProps?.canMove && !fillProps?.onlyBlock && !isContentOnly && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
           onClick: (0,external_wp_compose_namespaceObject.pipe)(fillProps?.onClose, fillProps?.onMoveTo),
           children: (0,external_wp_i18n_namespaceObject.__)('Move to')
-        }), fillProps?.count === 1 && !isContentOnly && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_mode_toggle, {
+        }), fillProps?.count === 1 && !isContentOnly && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockModeToggle, {
           clientId: fillProps?.firstBlockClientId,
           onToggle: fillProps?.onClose
         })]
