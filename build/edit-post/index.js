@@ -1083,9 +1083,11 @@ const getEditedPostTemplateId = (0,external_wp_data_namespaceObject.createRegist
   } else {
     slugToCheck = postType === 'page' ? 'page' : `single-${postType}`;
   }
-  return select(external_wp_coreData_namespaceObject.store).getDefaultTemplateId({
-    slug: slugToCheck
-  });
+  if (postType) {
+    return select(external_wp_coreData_namespaceObject.store).getDefaultTemplateId({
+      slug: slugToCheck
+    });
+  }
 });
 
 ;// CONCATENATED MODULE: ./packages/edit-post/build-module/store/selectors.js
