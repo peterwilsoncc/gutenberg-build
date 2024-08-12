@@ -6089,6 +6089,7 @@ function CreateTemplatePartModalContents({
         onChange: setTitle,
         required: true
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
+        __nextHasNoMarginBottom: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Area'),
         id: `editor-create-template-part-modal__area-selection-${instanceId}`,
         className: "editor-create-template-part-modal__area-base-control",

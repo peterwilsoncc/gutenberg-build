@@ -21557,6 +21557,7 @@ function GalleryEdit(props) {
           onChange: toggleOpenInNewTab
         }), external_wp_element_namespaceObject.Platform.isWeb && !imageSizeOptions && hasImageIds && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.BaseControl, {
           className: "gallery-image-sizes",
+          __nextHasNoMarginBottom: true,
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
             children: (0,external_wp_i18n_namespaceObject.__)('Resolution')
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.View, {
@@ -51691,11 +51692,14 @@ function SearchEdit({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
         title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.BaseControl, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Width'),
-          id: unitControlInputId,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+          className: "wp-block-search__inspector-controls",
+          spacing: 4,
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
-            id: unitControlInputId,
+            __next40pxDefaultSize: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Width'),
+            id: unitControlInputId // unused, kept for backwards compatibility
+            ,
             min: utils_isPercentageUnit(widthUnit) ? 0 : MIN_WIDTH,
             max: utils_isPercentageUnit(widthUnit) ? 100 : undefined,
             step: 1,
@@ -51715,7 +51719,8 @@ function SearchEdit({
             value: `${width}${widthUnit}`,
             units: units
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ButtonGroup, {
-            className: "wp-block-search__components-button-group",
+            className: "wp-block-search__components-button-group" // unused, kept for backwards compatibility
+            ,
             "aria-label": (0,external_wp_i18n_namespaceObject.__)('Percentage Width'),
             children: [25, 50, 75, 100].map(widthValue => {
               return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
@@ -59152,19 +59157,21 @@ function TagCloudEdit({
     }
   };
   const inspectorControls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
       title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Taxonomy'),
-        options: getTaxonomyOptions(),
-        value: taxonomy,
-        onChange: selectedTaxonomy => setAttributes({
-          taxonomy: selectedTaxonomy
-        })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        spacing: 4,
+        className: "wp-block-tag-cloud__inspector-settings",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+          __nextHasNoMarginBottom: true,
+          __next40pxDefaultSize: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Taxonomy'),
+          options: getTaxonomyOptions(),
+          value: taxonomy,
+          onChange: selectedTaxonomy => setAttributes({
+            taxonomy: selectedTaxonomy
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
           gap: 4,
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
             isBlock: true,
@@ -59193,26 +59200,26 @@ function TagCloudEdit({
               size: "__unstable-large"
             })
           })]
-        })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Number of tags'),
-        value: numberOfTags,
-        onChange: value => setAttributes({
-          numberOfTags: value
-        }),
-        min: MIN_TAGS,
-        max: MAX_TAGS,
-        required: true
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-        __nextHasNoMarginBottom: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Show tag counts'),
-        checked: showTagCounts,
-        onChange: () => setAttributes({
-          showTagCounts: !showTagCounts
-        })
-      })]
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+          __nextHasNoMarginBottom: true,
+          __next40pxDefaultSize: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Number of tags'),
+          value: numberOfTags,
+          onChange: value => setAttributes({
+            numberOfTags: value
+          }),
+          min: MIN_TAGS,
+          max: MAX_TAGS,
+          required: true
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Show tag counts'),
+          checked: showTagCounts,
+          onChange: () => setAttributes({
+            showTagCounts: !showTagCounts
+          })
+        })]
+      })
     })
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -62146,6 +62153,7 @@ const VideoSettings = ({
       checked: !!playsInline,
       help: (0,external_wp_i18n_namespaceObject.__)('When enabled, videos will play directly within the webpage on mobile browsers, instead of opening in a fullscreen player.')
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+      __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Preload'),
       value: preload,
@@ -62639,7 +62647,7 @@ function VideoEdit({
           setAttributes: setAttributes,
           attributes: attributes
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUploadCheck, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.BaseControl, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
             className: "editor-video-poster-control",
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
               children: (0,external_wp_i18n_namespaceObject.__)('Poster image')

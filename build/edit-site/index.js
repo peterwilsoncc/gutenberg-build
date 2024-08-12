@@ -6570,6 +6570,7 @@ function PushChangesToGlobalStylesControl({
     }
   }, [__unstableMarkNextChangeAsNotPersistent, attributes, changes, createSuccessNotice, name, setAttributes, setUserConfig, userConfig]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.BaseControl, {
+    __nextHasNoMarginBottom: true,
     className: "edit-site-push-changes-to-global-styles-control",
     help: (0,external_wp_i18n_namespaceObject.sprintf)(
     // translators: %s: Title of the block e.g. 'Heading'.
@@ -24196,7 +24197,11 @@ function RenameFontSizeDialog({
 
 
 const DEFAULT_UNITS = ['px', 'em', 'rem', 'vw', 'vh'];
-function SizeControl(props) {
+function SizeControl({
+  // Do not allow manipulation of margin bottom
+  __nextHasNoMarginBottom,
+  ...props
+}) {
   const {
     baseControlProps
   } = (0,external_wp_components_namespaceObject.useBaseControlProps)(props);
@@ -24223,6 +24228,7 @@ function SizeControl(props) {
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
     ...baseControlProps,
+    __nextHasNoMarginBottom: true,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
         isBlock: true,
