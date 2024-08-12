@@ -7417,6 +7417,7 @@ function DataForm({
  * Internal dependencies
  */
 
+
 const titleField = {
   type: 'text',
   id: 'title',
@@ -7424,7 +7425,7 @@ const titleField = {
   placeholder: (0,external_wp_i18n_namespaceObject.__)('No title'),
   getValue: ({
     item
-  }) => item.title
+  }) => getItemTitle(item)
 };
 const orderField = {
   type: 'integer',
@@ -7650,6 +7651,146 @@ const restorePost = {
 };
 /* harmony default export */ const restore_post = (restorePost);
 
+;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/duplicate-post.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+const duplicate_post_fields = [titleField];
+const formDuplicateAction = {
+  fields: ['title']
+};
+const duplicatePost = {
+  id: 'duplicate-post',
+  label: (0,external_wp_i18n_namespaceObject._x)('Duplicate', 'action label'),
+  isEligible({
+    status
+  }) {
+    return status !== 'trash';
+  },
+  RenderModal: ({
+    items,
+    closeModal,
+    onActionPerformed
+  }) => {
+    const [item, setItem] = (0,external_wp_element_namespaceObject.useState)({
+      ...items[0],
+      title: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Existing template title */
+      (0,external_wp_i18n_namespaceObject.__)('%s (Copy)'), getItemTitle(items[0]))
+    });
+    const [isCreatingPage, setIsCreatingPage] = (0,external_wp_element_namespaceObject.useState)(false);
+    const {
+      saveEntityRecord
+    } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
+    const {
+      createSuccessNotice,
+      createErrorNotice
+    } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
+    async function createPage(event) {
+      event.preventDefault();
+      if (isCreatingPage) {
+        return;
+      }
+      const newItemOject = {
+        status: 'draft',
+        title: item.title,
+        slug: item.title || (0,external_wp_i18n_namespaceObject.__)('No title'),
+        comment_status: item.comment_status,
+        content: typeof item.content === 'string' ? item.content : item.content.raw,
+        excerpt: typeof item.excerpt === 'string' ? item.excerpt : item.excerpt?.raw,
+        meta: item.meta,
+        parent: item.parent,
+        password: item.password,
+        template: item.template,
+        format: item.format,
+        featured_media: item.featured_media,
+        menu_order: item.menu_order,
+        ping_status: item.ping_status
+      };
+      const assignablePropertiesPrefix = 'wp:action-assign-';
+      // Get all the properties that the current user is able to assign normally author, categories, tags,
+      // and custom taxonomies.
+      const assignableProperties = Object.keys(item?._links || {}).filter(property => property.startsWith(assignablePropertiesPrefix)).map(property => property.slice(assignablePropertiesPrefix.length));
+      assignableProperties.forEach(property => {
+        if (item.hasOwnProperty(property)) {
+          // @ts-ignore
+          newItemOject[property] = item[property];
+        }
+      });
+      setIsCreatingPage(true);
+      try {
+        const newItem = await saveEntityRecord('postType', item.type, newItemOject, {
+          throwOnError: true
+        });
+        createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
+        // translators: %s: Title of the created template e.g: "Category".
+        (0,external_wp_i18n_namespaceObject.__)('"%s" successfully created.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(newItem.title?.rendered || item.title)), {
+          id: 'duplicate-post-action',
+          type: 'snackbar'
+        });
+        if (onActionPerformed) {
+          onActionPerformed([newItem]);
+        }
+      } catch (error) {
+        const typedError = error;
+        const errorMessage = typedError.message && typedError.code !== 'unknown_error' ? typedError.message : (0,external_wp_i18n_namespaceObject.__)('An error occurred while duplicating the page.');
+        createErrorNotice(errorMessage, {
+          type: 'snackbar'
+        });
+      } finally {
+        setIsCreatingPage(false);
+        closeModal?.();
+      }
+    }
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
+      onSubmit: createPage,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        spacing: 3,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
+          data: item,
+          fields: duplicate_post_fields,
+          form: formDuplicateAction,
+          onChange: changes => setItem(prev => ({
+            ...prev,
+            ...changes
+          }))
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+          spacing: 2,
+          justify: "end",
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            variant: "tertiary",
+            onClick: closeModal,
+            __next40pxDefaultSize: true,
+            children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            variant: "primary",
+            type: "submit",
+            isBusy: isCreatingPage,
+            "aria-disabled": isCreatingPage,
+            __next40pxDefaultSize: true,
+            children: (0,external_wp_i18n_namespaceObject._x)('Duplicate', 'action label')
+          })]
+        })]
+      })
+    });
+  }
+};
+/* harmony default export */ const duplicate_post = (duplicatePost);
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/store/private-actions.js
 /**
  * WordPress dependencies
@@ -7660,6 +7801,7 @@ const restorePost = {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -7709,7 +7851,9 @@ const registerPostTypeActions = postType => async ({
     name: postType
   });
   const currentTheme = await registry.resolveSelect(external_wp_coreData_namespaceObject.store).getCurrentTheme();
-  const actions = [postTypeConfig.slug === 'wp_template_part' && canCreate && currentTheme?.is_block_theme && duplicate_template_part, canCreate && postTypeConfig.slug === 'wp_block' ? duplicate_pattern : undefined, postTypeConfig.supports?.title ? rename_post : undefined, postTypeConfig?.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, reset_post, restore_post, delete_post, trash_post, permanently_delete_post];
+  const actions = [
+  // @ts-ignore
+   true ? !['wp_template', 'wp_block', 'wp_template_part'].includes(postTypeConfig.slug) && canCreate && duplicate_post : 0, postTypeConfig.slug === 'wp_template_part' && canCreate && currentTheme?.is_block_theme && duplicate_template_part, canCreate && postTypeConfig.slug === 'wp_block' ? duplicate_pattern : undefined, postTypeConfig.supports?.title ? rename_post : undefined, postTypeConfig?.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, reset_post, restore_post, delete_post, trash_post, permanently_delete_post];
   registry.batch(() => {
     actions.forEach(action => {
       if (action === undefined) {
@@ -27178,38 +27322,12 @@ function PatternOverridesPanel() {
 
 
 
-
-
-
-
 /**
  * Internal dependencies
  */
 
 
 
-
-
-// TODO: this should be shared with other components (see post-fields in edit-site).
-
-
-const actions_fields = [{
-  type: 'text',
-  id: 'title',
-  label: (0,external_wp_i18n_namespaceObject.__)('Title'),
-  placeholder: (0,external_wp_i18n_namespaceObject.__)('No title'),
-  getValue: ({
-    item
-  }) => item.title
-}, {
-  type: 'integer',
-  id: 'menu_order',
-  label: (0,external_wp_i18n_namespaceObject.__)('Order'),
-  description: (0,external_wp_i18n_namespaceObject.__)('Determines the order of pages.')
-}];
-const formDuplicateAction = {
-  fields: ['title']
-};
 const viewPostAction = {
   id: 'view-post',
   label: (0,external_wp_i18n_namespaceObject.__)('View'),
@@ -27259,127 +27377,6 @@ const postRevisionsAction = {
     }
   }
 };
-const useDuplicatePostAction = postType => {
-  const userCanCreatePost = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    return select(external_wp_coreData_namespaceObject.store).canUser('create', {
-      kind: 'postType',
-      name: postType
-    });
-  }, [postType]);
-  return (0,external_wp_element_namespaceObject.useMemo)(() => userCanCreatePost && {
-    id: 'duplicate-post',
-    label: (0,external_wp_i18n_namespaceObject._x)('Duplicate', 'action label'),
-    isEligible({
-      status
-    }) {
-      return status !== 'trash';
-    },
-    RenderModal: ({
-      items,
-      closeModal,
-      onActionPerformed
-    }) => {
-      const [item, setItem] = (0,external_wp_element_namespaceObject.useState)({
-        ...items[0],
-        title: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Existing template title */
-        (0,external_wp_i18n_namespaceObject.__)('%s (Copy)'), getItemTitle(items[0]))
-      });
-      const [isCreatingPage, setIsCreatingPage] = (0,external_wp_element_namespaceObject.useState)(false);
-      const {
-        saveEntityRecord
-      } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-      const {
-        createSuccessNotice,
-        createErrorNotice
-      } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
-      async function createPage(event) {
-        event.preventDefault();
-        if (isCreatingPage) {
-          return;
-        }
-        const newItemOject = {
-          status: 'draft',
-          title: item.title,
-          slug: item.title || (0,external_wp_i18n_namespaceObject.__)('No title'),
-          comment_status: item.comment_status,
-          content: typeof item.content === 'string' ? item.content : item.content.raw,
-          excerpt: item.excerpt.raw,
-          meta: item.meta,
-          parent: item.parent,
-          password: item.password,
-          template: item.template,
-          format: item.format,
-          featured_media: item.featured_media,
-          menu_order: item.menu_order,
-          ping_status: item.ping_status
-        };
-        const assignablePropertiesPrefix = 'wp:action-assign-';
-        // Get all the properties that the current user is able to assign normally author, categories, tags,
-        // and custom taxonomies.
-        const assignableProperties = Object.keys(item?._links || {}).filter(property => property.startsWith(assignablePropertiesPrefix)).map(property => property.slice(assignablePropertiesPrefix.length));
-        assignableProperties.forEach(property => {
-          if (item[property]) {
-            newItemOject[property] = item[property];
-          }
-        });
-        setIsCreatingPage(true);
-        try {
-          const newItem = await saveEntityRecord('postType', item.type, newItemOject, {
-            throwOnError: true
-          });
-          createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
-          // translators: %s: Title of the created template e.g: "Category".
-          (0,external_wp_i18n_namespaceObject.__)('"%s" successfully created.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(newItem.title?.rendered || item.title)), {
-            id: 'duplicate-post-action',
-            type: 'snackbar'
-          });
-          if (onActionPerformed) {
-            onActionPerformed([newItem]);
-          }
-        } catch (error) {
-          const errorMessage = error.message && error.code !== 'unknown_error' ? error.message : (0,external_wp_i18n_namespaceObject.__)('An error occurred while duplicating the page.');
-          createErrorNotice(errorMessage, {
-            type: 'snackbar'
-          });
-        } finally {
-          setIsCreatingPage(false);
-          closeModal();
-        }
-      }
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
-        onSubmit: createPage,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-          spacing: 3,
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
-            data: item,
-            fields: actions_fields,
-            form: formDuplicateAction,
-            onChange: changes => setItem({
-              ...item,
-              ...changes
-            })
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-            spacing: 2,
-            justify: "end",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-              variant: "tertiary",
-              onClick: closeModal,
-              __next40pxDefaultSize: true,
-              children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-              variant: "primary",
-              type: "submit",
-              isBusy: isCreatingPage,
-              "aria-disabled": isCreatingPage,
-              __next40pxDefaultSize: true,
-              children: (0,external_wp_i18n_namespaceObject._x)('Duplicate', 'action label')
-            })]
-          })]
-        })
-      });
-    }
-  }, [userCanCreatePost]);
-};
 function usePostActions({
   postType,
   onActionPerformed,
@@ -27406,16 +27403,13 @@ function usePostActions({
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     registerPostTypeActions(postType);
   }, [registerPostTypeActions, postType]);
-  const duplicatePostAction = useDuplicatePostAction(postType);
-  const isTemplateOrTemplatePart = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE].includes(postType);
-  const isPattern = postType === PATTERN_POST_TYPE;
   const isLoaded = !!postTypeObject;
   const supportsRevisions = !!postTypeObject?.supports?.revisions;
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (!isLoaded) {
       return [];
     }
-    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction,  true ? !isTemplateOrTemplatePart && !isPattern && duplicatePostAction : 0, ...defaultActions].filter(Boolean);
+    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction, ...defaultActions].filter(Boolean);
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
     // and the consumer should provide the context to filter the actions, if needed.
@@ -27467,7 +27461,7 @@ function usePostActions({
       }
     }
     return actions;
-  }, [defaultActions, isTemplateOrTemplatePart, isPattern, postTypeObject?.viewable, duplicatePostAction, onActionPerformed, isLoaded, supportsRevisions, context]);
+  }, [defaultActions, postTypeObject?.viewable, onActionPerformed, isLoaded, supportsRevisions, context]);
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-actions/index.js
