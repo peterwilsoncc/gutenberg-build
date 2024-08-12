@@ -9922,6 +9922,8 @@ function insertionPoint(state = null, action) {
         return es6_default()(state, nextState) ? state : nextState;
       }
     case 'HIDE_INSERTION_POINT':
+    case 'CLEAR_SELECTED_BLOCK':
+    case 'SELECT_BLOCK':
       return null;
   }
   return state;
@@ -52515,6 +52517,9 @@ function QuickInserter({
       setInserterIsOpened(false);
     }
   }, [setInserterIsOpened]);
+  const {
+    showInsertionPoint
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
 
   // When clicking Browse All select the appropriate block so as
   // the insertion point can work as expected.
@@ -52525,6 +52530,7 @@ function QuickInserter({
       filterValue,
       onSelect
     });
+    showInsertionPoint(rootClientId, insertionIndex);
   };
   let maxBlockPatterns = 0;
   if (showPatterns) {

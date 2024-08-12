@@ -25853,6 +25853,7 @@ const {
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function InserterSidebar() {
   const {
+    blockInsertionPoint,
     blockSectionRootClientId,
     inserterSidebarToggleRef,
     insertionPoint,
@@ -25865,6 +25866,7 @@ function InserterSidebar() {
       isPublishSidebarOpened
     } = unlock(select(store_store));
     const {
+      getBlockInsertionPoint,
       getBlockRootClientId,
       __unstableGetEditorMode,
       getSettings
@@ -25887,6 +25889,7 @@ function InserterSidebar() {
       return getBlockRootClientId();
     };
     return {
+      blockInsertionPoint: getBlockInsertionPoint(),
       inserterSidebarToggleRef: getInserterSidebarToggleRef(),
       insertionPoint: getInsertionPoint(),
       showMostUsedBlocks: get('core', 'mostUsedBlocks'),
@@ -25920,8 +25923,8 @@ function InserterSidebar() {
       showMostUsedBlocks: showMostUsedBlocks,
       showInserterHelpPanel: true,
       shouldFocusBlock: isMobileViewport,
-      rootClientId: blockSectionRootClientId !== null && blockSectionRootClientId !== void 0 ? blockSectionRootClientId : insertionPoint.rootClientId,
-      __experimentalInsertionIndex: insertionPoint.insertionIndex,
+      rootClientId: blockSectionRootClientId !== null && blockSectionRootClientId !== void 0 ? blockSectionRootClientId : blockInsertionPoint.rootClientId,
+      __experimentalInsertionIndex: blockInsertionPoint.index,
       onSelect: insertionPoint.onSelect,
       __experimentalInitialTab: insertionPoint.tab,
       __experimentalInitialCategory: insertionPoint.category,
