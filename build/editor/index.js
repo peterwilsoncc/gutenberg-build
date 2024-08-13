@@ -7791,6 +7791,50 @@ const duplicatePost = {
 };
 /* harmony default export */ const duplicate_post = (duplicatePost);
 
+;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/view-post-revisions.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+const viewPostRevisions = {
+  id: 'view-post-revisions',
+  context: 'list',
+  label(items) {
+    var _items$0$_links$versi;
+    const revisionsCount = (_items$0$_links$versi = items[0]._links?.['version-history']?.[0]?.count) !== null && _items$0$_links$versi !== void 0 ? _items$0$_links$versi : 0;
+    return (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: number of revisions */
+    (0,external_wp_i18n_namespaceObject.__)('View revisions (%s)'), revisionsCount);
+  },
+  isEligible(post) {
+    var _post$_links$predeces, _post$_links$version;
+    if (post.status === 'trash') {
+      return false;
+    }
+    const lastRevisionId = (_post$_links$predeces = post?._links?.['predecessor-version']?.[0]?.id) !== null && _post$_links$predeces !== void 0 ? _post$_links$predeces : null;
+    const revisionsCount = (_post$_links$version = post?._links?.['version-history']?.[0]?.count) !== null && _post$_links$version !== void 0 ? _post$_links$version : 0;
+    return !!lastRevisionId && revisionsCount > 1;
+  },
+  callback(posts, {
+    onActionPerformed
+  }) {
+    const post = posts[0];
+    const href = (0,external_wp_url_namespaceObject.addQueryArgs)('revision.php', {
+      revision: post?._links?.['predecessor-version']?.[0]?.id
+    });
+    document.location.href = href;
+    if (onActionPerformed) {
+      onActionPerformed(posts);
+    }
+  }
+};
+/* harmony default export */ const view_post_revisions = (viewPostRevisions);
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/store/private-actions.js
 /**
  * WordPress dependencies
@@ -7801,6 +7845,7 @@ const duplicatePost = {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -7851,7 +7896,7 @@ const registerPostTypeActions = postType => async ({
     name: postType
   });
   const currentTheme = await registry.resolveSelect(external_wp_coreData_namespaceObject.store).getCurrentTheme();
-  const actions = [
+  const actions = [!!postTypeConfig?.supports?.revisions ? view_post_revisions : undefined,
   // @ts-ignore
    true ? !['wp_template', 'wp_block', 'wp_template_part'].includes(postTypeConfig.slug) && canCreate && duplicate_post : 0, postTypeConfig.slug === 'wp_template_part' && canCreate && currentTheme?.is_block_theme && duplicate_template_part, canCreate && postTypeConfig.slug === 'wp_block' ? duplicate_pattern : undefined, postTypeConfig.supports?.title ? rename_post : undefined, postTypeConfig?.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, reset_post, restore_post, delete_post, trash_post, permanently_delete_post];
   registry.batch(() => {
@@ -27321,7 +27366,6 @@ function PatternOverridesPanel() {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -27341,37 +27385,6 @@ const viewPostAction = {
   }) {
     const post = posts[0];
     window.open(post.link, '_blank');
-    if (onActionPerformed) {
-      onActionPerformed(posts);
-    }
-  }
-};
-const postRevisionsAction = {
-  id: 'view-post-revisions',
-  context: 'list',
-  label(items) {
-    var _items$0$_links$versi;
-    const revisionsCount = (_items$0$_links$versi = items[0]._links?.['version-history']?.[0]?.count) !== null && _items$0$_links$versi !== void 0 ? _items$0$_links$versi : 0;
-    return (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: number of revisions */
-    (0,external_wp_i18n_namespaceObject.__)('View revisions (%s)'), revisionsCount);
-  },
-  isEligible: post => {
-    var _post$_links$predeces, _post$_links$version;
-    if (post.status === 'trash') {
-      return false;
-    }
-    const lastRevisionId = (_post$_links$predeces = post?._links?.['predecessor-version']?.[0]?.id) !== null && _post$_links$predeces !== void 0 ? _post$_links$predeces : null;
-    const revisionsCount = (_post$_links$version = post?._links?.['version-history']?.[0]?.count) !== null && _post$_links$version !== void 0 ? _post$_links$version : 0;
-    return lastRevisionId && revisionsCount > 1;
-  },
-  callback(posts, {
-    onActionPerformed
-  }) {
-    const post = posts[0];
-    const href = (0,external_wp_url_namespaceObject.addQueryArgs)('revision.php', {
-      revision: post?._links?.['predecessor-version']?.[0]?.id
-    });
-    document.location.href = href;
     if (onActionPerformed) {
       onActionPerformed(posts);
     }
@@ -27404,12 +27417,11 @@ function usePostActions({
     registerPostTypeActions(postType);
   }, [registerPostTypeActions, postType]);
   const isLoaded = !!postTypeObject;
-  const supportsRevisions = !!postTypeObject?.supports?.revisions;
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (!isLoaded) {
       return [];
     }
-    let actions = [postTypeObject?.viewable && viewPostAction, supportsRevisions && postRevisionsAction, ...defaultActions].filter(Boolean);
+    let actions = [postTypeObject?.viewable && viewPostAction, ...defaultActions].filter(Boolean);
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
     // and the consumer should provide the context to filter the actions, if needed.
@@ -27461,7 +27473,7 @@ function usePostActions({
       }
     }
     return actions;
-  }, [defaultActions, postTypeObject?.viewable, onActionPerformed, isLoaded, supportsRevisions, context]);
+  }, [defaultActions, postTypeObject?.viewable, onActionPerformed, isLoaded, context]);
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-actions/index.js
