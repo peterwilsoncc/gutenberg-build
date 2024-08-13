@@ -1788,7 +1788,7 @@ __webpack_require__.d(__webpack_exports__, {
   ColorPalette: () => (/* reexport */ color_palette),
   ColorPicker: () => (/* reexport */ LegacyAdapter),
   ComboboxControl: () => (/* reexport */ combobox_control),
-  Composite: () => (/* reexport */ composite_Composite),
+  Composite: () => (/* reexport */ Composite),
   CustomGradientPicker: () => (/* reexport */ custom_gradient_picker),
   CustomSelectControl: () => (/* reexport */ custom_select_control),
   Dashicon: () => (/* reexport */ dashicon),
@@ -1948,6 +1948,7 @@ __webpack_require__.d(__webpack_exports__, {
   navigateRegions: () => (/* reexport */ navigate_regions),
   privateApis: () => (/* reexport */ privateApis),
   useBaseControlProps: () => (/* reexport */ useBaseControlProps),
+  useCompositeStore: () => (/* reexport */ composite_useCompositeStore),
   withConstrainedTabbing: () => (/* reexport */ with_constrained_tabbing),
   withFallbackStyles: () => (/* reexport */ with_fallback_styles),
   withFilters: () => (/* reexport */ withFilters),
@@ -5875,7 +5876,7 @@ var useComposite = createHook(
     return props;
   }
 );
-var Composite = forwardRef2(function Composite2(props) {
+var QMBMAMY2_Composite = forwardRef2(function Composite2(props) {
   const htmlProps = useComposite(props);
   return YIF72NQG_createElement(QMBMAMY2_TagName, htmlProps);
 });
@@ -6002,8 +6003,12 @@ Typeahead.displayName = 'Composite.Typeahead';
  * </Composite>
  * ```
  */
-const composite_Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRef)(function CompositeRow(props, ref) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Composite, {
+const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRef)(function Composite({
+  disabled = false,
+  ...props
+}, ref) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QMBMAMY2_Composite, {
+    disabled: disabled,
     ...props,
     ref: ref
   });
@@ -16088,7 +16093,7 @@ function cell_Cell({
   const tooltipText = ALIGNMENT_LABEL[value];
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tooltip, {
     text: tooltipText,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(composite_Composite.Item, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Composite.Item, {
       id: id,
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Cell, {
         ...props,
@@ -16265,7 +16270,7 @@ function AlignmentMatrixControl({
   });
   const activeId = compositeStore.useState('activeId');
   const classes = dist_clsx('component-alignment-matrix-control', className);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(composite_Composite, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Composite, {
     store: compositeStore,
     render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Root, {
       ...props,
@@ -16275,7 +16280,7 @@ function AlignmentMatrixControl({
       role: "grid",
       size: width
     }),
-    children: GRID.map((cells, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(composite_Composite.Row, {
+    children: GRID.map((cells, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Composite.Row, {
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(alignment_matrix_control_styles_Row, {
         role: "row"
       }),
@@ -39067,7 +39072,7 @@ function UnforwardedOptionAsOption(props, forwardedRef) {
   if (isSelected && !activeId) {
     compositeStore.setActiveId(id);
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(composite_Composite.Item, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Composite.Item, {
     render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
       ...additionalProps,
       role: "option",
@@ -39276,7 +39281,7 @@ function ListboxCircularOptionPicker(props) {
     className: className,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(CircularOptionPickerContext.Provider, {
       value: compositeContext,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(composite_Composite, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Composite, {
         ...additionalProps,
         id: baseId,
         store: compositeStore,
@@ -47406,18 +47411,18 @@ const unproxiedCompositeGroup = (0,external_wp_element_namespaceObject.forwardRe
   role,
   ...props
 }, ref) => {
-  const Component = role === 'row' ? composite_Composite.Row : composite_Composite.Group;
+  const Component = role === 'row' ? Composite.Row : Composite.Group;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Component, {
     ref: ref,
     role: role,
     ...props
   });
 });
-const legacy_Composite = proxyComposite(composite_Composite, {
+const legacy_Composite = proxyComposite(Composite, {
   baseId: 'id'
 });
 const CompositeGroup = proxyComposite(unproxiedCompositeGroup);
-const CompositeItem = proxyComposite(composite_Composite.Item, {
+const CompositeItem = proxyComposite(Composite.Item, {
   focusable: 'accessibleWhenDisabled'
 });
 function useCompositeState(legacyStateOptions = {}) {
@@ -71848,10 +71853,10 @@ const {
 
 const privateApis = {};
 lock(privateApis, {
-  CompositeV2: composite_Composite,
-  CompositeGroupV2: composite_Composite.Group,
-  CompositeItemV2: composite_Composite.Item,
-  CompositeRowV2: composite_Composite.Row,
+  CompositeV2: Composite,
+  CompositeGroupV2: Composite.Group,
+  CompositeItemV2: Composite.Item,
+  CompositeRowV2: Composite.Row,
   useCompositeStoreV2: composite_useCompositeStore,
   __experimentalPopoverLegacyPositionToPlacement: positionToPlacement,
   createPrivateSlotFill: createPrivateSlotFill,
