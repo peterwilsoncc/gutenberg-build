@@ -1083,11 +1083,9 @@ const getEditedPostTemplateId = (0,external_wp_data_namespaceObject.createRegist
   } else {
     slugToCheck = postType === 'page' ? 'page' : `single-${postType}`;
   }
-  if (postType) {
-    return select(external_wp_coreData_namespaceObject.store).getDefaultTemplateId({
-      slug: slugToCheck
-    });
-  }
+  return select(external_wp_coreData_namespaceObject.store).getDefaultTemplateId({
+    slug: slugToCheck
+  });
 });
 
 ;// CONCATENATED MODULE: ./packages/edit-post/build-module/store/selectors.js
@@ -2667,7 +2665,6 @@ function usePaddingAppender() {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -2678,16 +2675,12 @@ function useShouldIframe() {
     isBlockBasedTheme,
     hasV3BlocksOnly,
     isEditingTemplate,
-    hasMetaBoxes,
-    isZoomOutMode
+    hasMetaBoxes
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEditorSettings,
       getCurrentPostType
     } = select(external_wp_editor_namespaceObject.store);
-    const {
-      __unstableGetEditorMode
-    } = select(external_wp_blockEditor_namespaceObject.store);
     const {
       getBlockTypes
     } = select(external_wp_blocks_namespaceObject.store);
@@ -2698,11 +2691,10 @@ function useShouldIframe() {
         return type.apiVersion >= 3;
       }),
       isEditingTemplate: getCurrentPostType() === 'wp_template',
-      hasMetaBoxes: select(store).hasMetaBoxes(),
-      isZoomOutMode: __unstableGetEditorMode() === 'zoom-out'
+      hasMetaBoxes: select(store).hasMetaBoxes()
     };
   }, []);
-  return (hasV3BlocksOnly || isGutenbergPlugin && isBlockBasedTheme) && !hasMetaBoxes || isEditingTemplate || isZoomOutMode;
+  return (hasV3BlocksOnly || isGutenbergPlugin && isBlockBasedTheme) && !hasMetaBoxes || isEditingTemplate;
 }
 
 ;// CONCATENATED MODULE: ./packages/edit-post/build-module/hooks/use-navigate-to-entity-record.js
