@@ -56360,7 +56360,7 @@ function createBlockCompleter() {
           prioritizedBlocks: getBlockListSettings(_rootClientId)?.prioritizedInserterBlocks
         };
       }, []);
-      const [items, categories, collections] = use_block_types_state(rootClientId, block_noop);
+      const [items, categories, collections] = use_block_types_state(rootClientId, block_noop, true);
       const filteredItems = (0,external_wp_element_namespaceObject.useMemo)(() => {
         const initialFilteredItems = !!filterValue.trim() ? searchBlockItems(items, categories, collections, filterValue) : orderInserterBlockItems(orderBy(items, 'frecency', 'desc'), prioritizedBlocks);
         return initialFilteredItems.filter(item => item.name !== selectedBlockName).slice(0, block_SHOWN_BLOCK_TYPES);
