@@ -38727,23 +38727,28 @@ function Media({
 const STATUSES = [{
   value: 'draft',
   label: (0,external_wp_i18n_namespaceObject.__)('Draft'),
-  icon: library_drafts
+  icon: library_drafts,
+  description: (0,external_wp_i18n_namespaceObject.__)('Not ready to publish.')
 }, {
   value: 'future',
   label: (0,external_wp_i18n_namespaceObject.__)('Scheduled'),
-  icon: library_scheduled
+  icon: library_scheduled,
+  description: (0,external_wp_i18n_namespaceObject.__)('Publish automatically on a chosen date.')
 }, {
   value: 'pending',
   label: (0,external_wp_i18n_namespaceObject.__)('Pending Review'),
-  icon: library_pending
+  icon: library_pending,
+  description: (0,external_wp_i18n_namespaceObject.__)('Waiting for review before publishing.')
 }, {
   value: 'private',
   label: (0,external_wp_i18n_namespaceObject.__)('Private'),
-  icon: not_allowed
+  icon: not_allowed,
+  description: (0,external_wp_i18n_namespaceObject.__)('Only visible to site admins and editors.')
 }, {
   value: 'publish',
   label: (0,external_wp_i18n_namespaceObject.__)('Published'),
-  icon: library_published
+  icon: library_published,
+  description: (0,external_wp_i18n_namespaceObject.__)('Visible to everyone.')
 }, {
   value: 'trash',
   label: (0,external_wp_i18n_namespaceObject.__)('Trash'),
@@ -38937,16 +38942,10 @@ function usePostFields(viewType) {
   }, {
     label: (0,external_wp_i18n_namespaceObject.__)('Status'),
     id: 'status',
-    getValue: ({
-      item
-    }) => {
-      var _STATUSES$find$label;
-      return (_STATUSES$find$label = STATUSES.find(({
-        value
-      }) => value === item.status)?.label) !== null && _STATUSES$find$label !== void 0 ? _STATUSES$find$label : item.status;
-    },
+    type: 'text',
     elements: STATUSES,
     render: PostStatusField,
+    Edit: 'radio',
     enableSorting: false,
     filterBy: {
       operators: [OPERATOR_IS_ANY]
@@ -45807,14 +45806,29 @@ function PostEditForm({
     editEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
   const {
-    fields
+    fields: _fields
   } = post_fields();
+  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => _fields?.map(field => {
+    if (field.id === 'status') {
+      return {
+        ...field,
+        elements: field.elements.filter(element => element.value !== 'trash')
+      };
+    }
+    return field;
+  }), [_fields]);
   const form = {
     type: 'panel',
-    fields: ['title', 'author', 'date', 'comment_status']
+    fields: ['title', 'status', 'date', 'author', 'comment_status']
   };
   const onChange = edits => {
     for (const id of ids) {
+      if (edits.status !== 'future' && record.status === 'future' && new Date(record.date) > new Date()) {
+        edits.date = null;
+      }
+      if (edits.status === 'private' && record.password) {
+        edits.password = '';
+      }
       editEntityRecord('postType', postType, id, edits);
       if (ids.length > 1) {
         setMultiEdits(prev => ({
