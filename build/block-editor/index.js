@@ -52288,7 +52288,15 @@ function InserterMenu({
   const [selectedPatternCategory, setSelectedPatternCategory] = (0,external_wp_element_namespaceObject.useState)(__experimentalInitialCategory);
   const [patternFilter, setPatternFilter] = (0,external_wp_element_namespaceObject.useState)('all');
   const [selectedMediaCategory, setSelectedMediaCategory] = (0,external_wp_element_namespaceObject.useState)(null);
-  const [selectedTab, setSelectedTab] = (0,external_wp_element_namespaceObject.useState)(__experimentalInitialTab);
+  function getInitialTab() {
+    if (__experimentalInitialTab) {
+      return __experimentalInitialTab;
+    }
+    if (isZoomOutMode) {
+      return 'patterns';
+    }
+  }
+  const [selectedTab, setSelectedTab] = (0,external_wp_element_namespaceObject.useState)(getInitialTab());
   const [destinationRootClientId, onInsertBlocks, onToggleInsertionPoint] = use_insertion_point({
     rootClientId,
     clientId,
