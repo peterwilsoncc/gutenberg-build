@@ -7835,6 +7835,52 @@ const viewPostRevisions = {
 };
 /* harmony default export */ const view_post_revisions = (viewPostRevisions);
 
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/external.js
+/**
+ * WordPress dependencies
+ */
+
+
+const external = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M19.5 4.5h-7V6h4.44l-5.97 5.97 1.06 1.06L18 7.06v4.44h1.5v-7Zm-13 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3H17v3a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h3V5.5h-3Z"
+  })
+});
+/* harmony default export */ const library_external = (external);
+
+;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/actions/view-post.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+const viewPost = {
+  id: 'view-post',
+  label: (0,external_wp_i18n_namespaceObject.__)('View'),
+  isPrimary: true,
+  icon: library_external,
+  isEligible(post) {
+    return post.status !== 'trash';
+  },
+  callback(posts, {
+    onActionPerformed
+  }) {
+    const post = posts[0];
+    window.open(post?.link, '_blank');
+    if (onActionPerformed) {
+      onActionPerformed(posts);
+    }
+  }
+};
+/* harmony default export */ const view_post = (viewPost);
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/dataviews/store/private-actions.js
 /**
  * WordPress dependencies
@@ -7845,6 +7891,7 @@ const viewPostRevisions = {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -7896,12 +7943,12 @@ const registerPostTypeActions = postType => async ({
     name: postType
   });
   const currentTheme = await registry.resolveSelect(external_wp_coreData_namespaceObject.store).getCurrentTheme();
-  const actions = [!!postTypeConfig?.supports?.revisions ? view_post_revisions : undefined,
+  const actions = [postTypeConfig.viewable ? view_post : undefined, !!postTypeConfig?.supports?.revisions ? view_post_revisions : undefined,
   // @ts-ignore
-   true ? !['wp_template', 'wp_block', 'wp_template_part'].includes(postTypeConfig.slug) && canCreate && duplicate_post : 0, postTypeConfig.slug === 'wp_template_part' && canCreate && currentTheme?.is_block_theme && duplicate_template_part, canCreate && postTypeConfig.slug === 'wp_block' ? duplicate_pattern : undefined, postTypeConfig.supports?.title ? rename_post : undefined, postTypeConfig?.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, reset_post, restore_post, delete_post, trash_post, permanently_delete_post];
+   true ? !['wp_template', 'wp_block', 'wp_template_part'].includes(postTypeConfig.slug) && canCreate && duplicate_post : 0, postTypeConfig.slug === 'wp_template_part' && canCreate && currentTheme?.is_block_theme ? duplicate_template_part : undefined, canCreate && postTypeConfig.slug === 'wp_block' ? duplicate_pattern : undefined, postTypeConfig.supports?.title ? rename_post : undefined, postTypeConfig?.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, reset_post, restore_post, delete_post, trash_post, permanently_delete_post];
   registry.batch(() => {
     actions.forEach(action => {
-      if (action === undefined) {
+      if (!action) {
         return;
       }
       unlock(registry.dispatch(store_store)).registerEntityAction('postType', postType, action);
@@ -22626,21 +22673,6 @@ const formatListBullets = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
 });
 /* harmony default export */ const format_list_bullets = (formatListBullets);
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/external.js
-/**
- * WordPress dependencies
- */
-
-
-const external = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19.5 4.5h-7V6h4.44l-5.97 5.97 1.06 1.06L18 7.06v4.44h1.5v-7Zm-13 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3H17v3a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h3V5.5h-3Z"
-  })
-});
-/* harmony default export */ const library_external = (external);
-
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/pencil.js
 /**
  * WordPress dependencies
@@ -27363,50 +27395,24 @@ function PatternOverridesPanel() {
 
 
 
-
-
-
 /**
  * Internal dependencies
  */
 
 
 
-const viewPostAction = {
-  id: 'view-post',
-  label: (0,external_wp_i18n_namespaceObject.__)('View'),
-  isPrimary: true,
-  icon: library_external,
-  isEligible(post) {
-    return post.status !== 'trash';
-  },
-  callback(posts, {
-    onActionPerformed
-  }) {
-    const post = posts[0];
-    window.open(post.link, '_blank');
-    if (onActionPerformed) {
-      onActionPerformed(posts);
-    }
-  }
-};
 function usePostActions({
   postType,
   onActionPerformed,
   context
 }) {
   const {
-    defaultActions,
-    postTypeObject
+    defaultActions
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getPostType
-    } = select(external_wp_coreData_namespaceObject.store);
     const {
       getEntityActions
     } = unlock(select(store_store));
     return {
-      postTypeObject: getPostType(postType),
       defaultActions: getEntityActions('postType', postType)
     };
   }, [postType]);
@@ -27416,19 +27422,14 @@ function usePostActions({
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     registerPostTypeActions(postType);
   }, [registerPostTypeActions, postType]);
-  const isLoaded = !!postTypeObject;
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (!isLoaded) {
-      return [];
-    }
-    let actions = [postTypeObject?.viewable && viewPostAction, ...defaultActions].filter(Boolean);
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
     // and the consumer should provide the context to filter the actions, if needed.
     // Actions should also provide the `context` they support, if it's specific, to
     // compare with the provided context to get all the actions.
     // Right now the only supported context is `list`.
-    actions = actions.filter(action => {
+    const actions = defaultActions.filter(action => {
       if (!action.context) {
         return true;
       }
@@ -27473,7 +27474,7 @@ function usePostActions({
       }
     }
     return actions;
-  }, [defaultActions, postTypeObject?.viewable, onActionPerformed, isLoaded, context]);
+  }, [defaultActions, onActionPerformed, context]);
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-actions/index.js
