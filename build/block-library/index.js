@@ -57602,7 +57602,7 @@ function TableEdit({
   attributes,
   setAttributes,
   insertBlocksAfter,
-  isSelected
+  isSelected: isSingleSelected
 }) {
   const {
     hasFixedLayout,
@@ -57837,10 +57837,10 @@ function TableEdit({
     }));
   }
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!isSelected) {
+    if (!isSingleSelected) {
       setSelectedCell();
     }
-  }, [isSelected]);
+  }, [isSingleSelected]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (hasTableCreated) {
       tableRef?.current?.querySelector('td div[contentEditable="true"]')?.focus();
@@ -58012,9 +58012,10 @@ function TableEdit({
     }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Caption, {
       attributes: attributes,
       setAttributes: setAttributes,
-      isSelected: isSelected,
+      isSelected: isSingleSelected,
       insertBlocksAfter: insertBlocksAfter,
-      label: (0,external_wp_i18n_namespaceObject.__)('Table caption text')
+      label: (0,external_wp_i18n_namespaceObject.__)('Table caption text'),
+      showToolbarButton: isSingleSelected
     })]
   });
 }
