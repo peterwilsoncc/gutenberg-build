@@ -62878,7 +62878,6 @@ function isMultipleCategorySelection(props) {
  * ```
  */
 function QueryControls({
-  __next40pxDefaultSize = false,
   authorList,
   selectedAuthorId,
   numberOfItems,
@@ -62899,7 +62898,7 @@ function QueryControls({
     className: "components-query-controls",
     children: [onOrderChange && onOrderByChange && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(select_control, {
       __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: __next40pxDefaultSize,
+      __next40pxDefaultSize: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Order by'),
       value: orderBy === undefined || order === undefined ? undefined : `${orderBy}/${order}`,
       options: [{
@@ -62930,14 +62929,14 @@ function QueryControls({
         }
       }
     }, "query-controls-order-select"), isSingleCategorySelection(props) && props.categoriesList && props.onCategoryChange && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CategorySelect, {
-      __next40pxDefaultSize: __next40pxDefaultSize,
+      __next40pxDefaultSize: true,
       categoriesList: props.categoriesList,
       label: (0,external_wp_i18n_namespaceObject.__)('Category'),
       noOptionLabel: (0,external_wp_i18n_namespaceObject._x)('All', 'categories'),
       selectedCategoryId: props.selectedCategoryId,
       onChange: props.onCategoryChange
     }, "query-controls-category-select"), isMultipleCategorySelection(props) && props.categorySuggestions && props.onCategoryChange && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(form_token_field, {
-      __next40pxDefaultSize: __next40pxDefaultSize,
+      __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Categories'),
       value: props.selectedCategories && props.selectedCategories.map(item => ({
@@ -62952,7 +62951,7 @@ function QueryControls({
       onChange: props.onCategoryChange,
       maxSuggestions: MAX_CATEGORIES_SUGGESTIONS
     }, "query-controls-categories-select"), onAuthorChange && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AuthorSelect, {
-      __next40pxDefaultSize: __next40pxDefaultSize,
+      __next40pxDefaultSize: true,
       authorList: authorList,
       label: (0,external_wp_i18n_namespaceObject.__)('Author'),
       noOptionLabel: (0,external_wp_i18n_namespaceObject._x)('All', 'authors'),
@@ -62960,7 +62959,7 @@ function QueryControls({
       onChange: onAuthorChange
     }, "query-controls-author-select"), onNumberOfItemsChange && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(range_control, {
       __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: __next40pxDefaultSize,
+      __next40pxDefaultSize: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Number of items'),
       value: numberOfItems,
       onChange: onNumberOfItemsChange,
