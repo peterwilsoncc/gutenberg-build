@@ -37438,6 +37438,16 @@ function DataViewsPagination() {
     return null;
   }
   const currentPage = (_view$page = view.page) !== null && _view$page !== void 0 ? _view$page : 1;
+  const pageSelectOptions = Array.from(Array(totalPages)).map((_, i) => {
+    const page = i + 1;
+    return {
+      value: page.toString(),
+      label: page.toString(),
+      'aria-label': currentPage === page ? (0,external_wp_i18n_namespaceObject.sprintf)(
+      // translators: Current page number in total number of pages
+      (0,external_wp_i18n_namespaceObject.__)('Page %1$s of %2$s'), currentPage, totalPages) : page.toString()
+    };
+  });
   return !!totalItems && totalPages !== 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
     expanded: false,
     spacing: 6,
@@ -37446,29 +37456,27 @@ function DataViewsPagination() {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
       justify: "flex-start",
       expanded: false,
-      spacing: 2,
-      className: "dataviews-pagination__page-selection",
+      spacing: 1,
+      className: "dataviews-pagination__page-select",
       children: (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(
-      // translators: %s: Total number of pages.
-      (0,external_wp_i18n_namespaceObject._x)('Page <CurrentPageControl /> of %s', 'paging'), totalPages), {
-        CurrentPageControl: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+      // translators: 1: Current page number, 2: Total number of pages.
+      (0,external_wp_i18n_namespaceObject._x)('<div>Page</div>%1$s<div>of %2$s</div>', 'paging'), '<CurrentPage />', totalPages), {
+        div: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          "aria-hidden": true
+        }),
+        CurrentPage: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
           "aria-label": (0,external_wp_i18n_namespaceObject.__)('Current page'),
-          value: view.page?.toString(),
-          options: Array.from(Array(totalPages)).map((_, i) => {
-            const page = i + 1;
-            return {
-              value: page.toString(),
-              label: page.toString()
-            };
-          }),
+          value: currentPage.toString(),
+          options: pageSelectOptions,
           onChange: newValue => {
             onChangeView({
               ...view,
               page: +newValue
             });
           },
-          size: "compact",
-          __nextHasNoMarginBottom: true
+          size: "small",
+          __nextHasNoMarginBottom: true,
+          variant: "minimal"
         })
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
