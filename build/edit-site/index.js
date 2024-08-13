@@ -14116,13 +14116,13 @@ const trash = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
  * Check if a template is removable.
  *
  * @param {Object} template The template entity to check.
- * @return {boolean} Whether the template is revertable.
+ * @return {boolean} Whether the template is removable.
  */
 function isTemplateRemovable(template) {
   if (!template) {
     return false;
   }
-  return template.source === TEMPLATE_ORIGINS.custom && !template.has_theme_file;
+  return template.source === TEMPLATE_ORIGINS.custom && !Boolean(template.plugin) && !template.has_theme_file;
 }
 
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/utils/is-template-revertable.js
@@ -14142,7 +14142,7 @@ function isTemplateRevertable(template) {
     return false;
   }
   /* eslint-disable camelcase */
-  return template?.source === TEMPLATE_ORIGINS.custom && template?.has_theme_file;
+  return template?.source === TEMPLATE_ORIGINS.custom && (Boolean(template?.plugin) || template?.has_theme_file);
   /* eslint-enable camelcase */
 }
 

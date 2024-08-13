@@ -5230,7 +5230,7 @@ function isTemplateRevertable(templateOrTemplatePart) {
   if (!templateOrTemplatePart) {
     return false;
   }
-  return templateOrTemplatePart.source === TEMPLATE_ORIGINS.custom && templateOrTemplatePart.has_theme_file;
+  return templateOrTemplatePart.source === TEMPLATE_ORIGINS.custom && (Boolean(templateOrTemplatePart?.plugin) || templateOrTemplatePart?.has_theme_file);
 }
 
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/trash.js
@@ -5299,7 +5299,7 @@ function isTemplateRemovable(template) {
   // In patterns list page we map the templates parts to a different object
   // than the one returned from the endpoint. This is why we need to check for
   // two props whether is custom or has a theme file.
-  return [template.source, template.source].includes(TEMPLATE_ORIGINS.custom) && !template.has_theme_file;
+  return [template.source, template.source].includes(TEMPLATE_ORIGINS.custom) && !Boolean(template.type === 'wp_template' && template?.plugin) && !template.has_theme_file;
 }
 
 ;// CONCATENATED MODULE: external ["wp","privateApis"]
@@ -6302,7 +6302,7 @@ const reset_post_resetPost = {
   id: 'reset-post',
   label: (0,external_wp_i18n_namespaceObject.__)('Reset'),
   isEligible: item => {
-    return isTemplateOrTemplatePart(item) && item?.source === TEMPLATE_ORIGINS.custom && item?.has_theme_file;
+    return isTemplateOrTemplatePart(item) && item?.source === TEMPLATE_ORIGINS.custom && (Boolean(item.type === 'wp_template' && item?.plugin) || item?.has_theme_file);
   },
   icon: library_backup,
   supportsBulk: true,
@@ -8056,7 +8056,7 @@ const revertTemplate = (template, {
     }
     const fileTemplatePath = (0,external_wp_url_namespaceObject.addQueryArgs)(`${templateEntityConfig.baseURL}/${template.id}`, {
       context: 'edit',
-      source: 'theme'
+      source: template.origin
     });
     const fileTemplate = await external_wp_apiFetch_default()({
       path: fileTemplatePath
