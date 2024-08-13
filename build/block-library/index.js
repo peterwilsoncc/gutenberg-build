@@ -16308,7 +16308,6 @@ function WpEmbedPreview({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -16350,13 +16349,9 @@ class EmbedPreview extends external_wp_element_namespaceObject.Component {
       previewable,
       url,
       type,
-      caption,
-      onCaptionChange,
-      isSelected,
       className,
       icon,
-      label,
-      insertBlocksAfter
+      label
     } = this.props;
     const {
       scripts
@@ -16392,11 +16387,11 @@ class EmbedPreview extends external_wp_element_namespaceObject.Component {
     });
     /* eslint-enable jsx-a11y/no-static-element-interactions */
 
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("figure", {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("figure", {
       className: dist_clsx(className, 'wp-block-embed', {
         'is-type-video': 'video' === type
       }),
-      children: [previewable ? embedWrapper : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Placeholder, {
+      children: previewable ? embedWrapper : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Placeholder, {
         icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
           icon: icon,
           showColors: true
@@ -16413,16 +16408,7 @@ class EmbedPreview extends external_wp_element_namespaceObject.Component {
           children: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: host providing embed content e.g: www.youtube.com */
           (0,external_wp_i18n_namespaceObject.__)("Embedded content from %s can't be previewed in the editor."), embedSourceUrl)
         })]
-      }), (!external_wp_blockEditor_namespaceObject.RichText.isEmpty(caption) || isSelected) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
-        identifier: "caption",
-        tagName: "figcaption",
-        className: (0,external_wp_blockEditor_namespaceObject.__experimentalGetElementClassName)('caption'),
-        placeholder: (0,external_wp_i18n_namespaceObject.__)('Add caption'),
-        value: caption,
-        onChange: onCaptionChange,
-        inlineToolbar: true,
-        __unstableOnSplitAtEnd: () => insertBlocksAfter((0,external_wp_blocks_namespaceObject.createBlock)((0,external_wp_blocks_namespaceObject.getDefaultBlockName)()))
-      })]
+      })
     });
   }
 }
@@ -16432,6 +16418,7 @@ class EmbedPreview extends external_wp_element_namespaceObject.Component {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -16658,9 +16645,9 @@ const EmbedEdit = props => {
       allowResponsive: allowResponsive,
       toggleResponsive: toggleResponsive,
       switchBackToURLInput: () => setIsEditingURL(true)
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.View, {
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.View, {
       ...blockProps,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(embed_preview, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(embed_preview, {
         preview: preview,
         previewable: previewable,
         className: className,
@@ -16674,7 +16661,14 @@ const EmbedEdit = props => {
         icon: icon,
         label: label,
         insertBlocksAfter: insertBlocksAfter
-      })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Caption, {
+        attributes: attributes,
+        setAttributes: setAttributes,
+        isSelected: isSelected,
+        insertBlocksAfter: insertBlocksAfter,
+        label: (0,external_wp_i18n_namespaceObject.__)('Embed caption text'),
+        showToolbarButton: isSelected
+      })]
     })]
   });
 };
