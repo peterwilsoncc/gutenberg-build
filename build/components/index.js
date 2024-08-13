@@ -31783,6 +31783,7 @@ const StyledVisualLabel = /*#__PURE__*/emotion_styled_base_browser_esm("span",  
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -31795,6 +31796,7 @@ const StyledVisualLabel = /*#__PURE__*/emotion_styled_base_browser_esm("span",  
 const UnconnectedBaseControl = props => {
   const {
     __nextHasNoMarginBottom = false,
+    __associatedWPComponentName = 'BaseControl',
     id,
     label,
     hideLabelFromVision = false,
@@ -31802,6 +31804,13 @@ const UnconnectedBaseControl = props => {
     className,
     children
   } = useContextSystem(props, 'BaseControl');
+  if (!__nextHasNoMarginBottom) {
+    external_wp_deprecated_default()(`Bottom margin styles for wp.components.${__associatedWPComponentName}`, {
+      since: '6.7',
+      version: '7.0',
+      hint: 'Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version.'
+    });
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(base_control_styles_Wrapper, {
     className: className,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(StyledField, {
@@ -36274,6 +36283,7 @@ function UnconnectedToggleGroupControl(props, forwardedRef) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(base_control, {
     help: help,
     __nextHasNoMarginBottom: __nextHasNoMarginBottom,
+    __associatedWPComponentName: "ToggleGroupControl",
     children: [!hideLabelFromVision && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(VisualLabelWrapper, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control.VisualLabel, {
         children: label
@@ -37339,6 +37349,7 @@ function UnforwardedSelectControl(props, ref) {
     help: help,
     id: id,
     __nextHasNoMarginBottom: __nextHasNoMarginBottom,
+    __associatedWPComponentName: "SelectControl",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledInputBase, {
       className: classes,
       disabled: disabled,
@@ -38153,6 +38164,7 @@ function UnforwardedRangeControl(props, forwardedRef) {
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control, {
     __nextHasNoMarginBottom: __nextHasNoMarginBottom,
+    __associatedWPComponentName: "RangeControl",
     className: classes,
     label: label,
     hideLabelFromVision: hideLabelFromVision,
@@ -44297,6 +44309,7 @@ function CheckboxControl(props) {
   const onChangeValue = event => onChange(event.target.checked);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control, {
     __nextHasNoMarginBottom: __nextHasNoMarginBottom,
+    __associatedWPComponentName: "CheckboxControl",
     label: heading,
     id: id,
     help: help && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
@@ -47262,6 +47275,7 @@ function ComboboxControl(props) {
     onFocusOutside: onFocusOutside,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control, {
       __nextHasNoMarginBottom: __nextHasNoMarginBottom,
+      __associatedWPComponentName: "ComboboxControl",
       className: dist_clsx(className, 'components-combobox-control'),
       label: label,
       id: `components-form-token-input-${instanceId}`,
@@ -55605,6 +55619,17 @@ const findSizeBySlug = (sizes, slug) => sizes.find(size => slug === size.slug);
 
 
 
+
+const dimension_control_CONTEXT_VALUE = {
+  BaseControl: {
+    // Temporary during deprecation grace period: Overrides the underlying `__associatedWPComponentName`
+    // via the context system to override the value set by SelectControl.
+    _overrides: {
+      __associatedWPComponentName: 'DimensionControl'
+    }
+  }
+};
+
 /**
  * `DimensionControl` is a component designed to provide a UI to control spacing and/or dimensions.
  *
@@ -55666,15 +55691,18 @@ function DimensionControl(props) {
       icon: icon
     }), label]
   });
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(select_control, {
-    __next40pxDefaultSize: __next40pxDefaultSize,
-    __nextHasNoMarginBottom: __nextHasNoMarginBottom,
-    className: dist_clsx(className, 'block-editor-dimension-control'),
-    label: selectLabel,
-    hideLabelFromVision: false,
-    value: value,
-    onChange: onChangeSpacingSize,
-    options: formatSizesAsOptions(sizes)
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ContextSystemProvider, {
+    value: dimension_control_CONTEXT_VALUE,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(select_control, {
+      __next40pxDefaultSize: __next40pxDefaultSize,
+      __nextHasNoMarginBottom: __nextHasNoMarginBottom,
+      className: dist_clsx(className, 'block-editor-dimension-control'),
+      label: selectLabel,
+      hideLabelFromVision: false,
+      value: value,
+      onChange: onChangeSpacingSize,
+      options: formatSizesAsOptions(sizes)
+    })
   });
 }
 /* harmony default export */ const dimension_control = (DimensionControl);
@@ -57269,6 +57297,7 @@ function FocalPointPicker({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(base_control, {
     ...restProps,
     __nextHasNoMarginBottom: __nextHasNoMarginBottom,
+    __associatedWPComponentName: "FocalPointPicker",
     label: label,
     id: id,
     help: help,
@@ -60392,13 +60421,14 @@ function UnforwardedSearchControl({
   const searchRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(SearchControl, 'components-search-control');
   const contextValue = (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    // Overrides the underlying BaseControl `__nextHasNoMarginBottom` via the context system
-    // to provide backwards compatibile margin for SearchControl.
-    // (In a standard InputControl, the BaseControl `__nextHasNoMarginBottom` is always set to true.)
     BaseControl: {
+      // Overrides the underlying BaseControl `__nextHasNoMarginBottom` via the context system
+      // to provide backwards compatibile margin for SearchControl.
+      // (In a standard InputControl, the BaseControl `__nextHasNoMarginBottom` is always set to true.)
       _overrides: {
         __nextHasNoMarginBottom
-      }
+      },
+      __associatedWPComponentName: 'SearchControl'
     },
     // `isBorderless` is still experimental and not a public prop for InputControl yet.
     InputBase: {
@@ -62680,6 +62710,16 @@ const external_wp_htmlEntities_namespaceObject = window["wp"]["htmlEntities"];
 
 
 
+
+const tree_select_CONTEXT_VALUE = {
+  BaseControl: {
+    // Temporary during deprecation grace period: Overrides the underlying `__associatedWPComponentName`
+    // via the context system to override the value set by SelectControl.
+    _overrides: {
+      __associatedWPComponentName: 'TreeSelect'
+    }
+  }
+};
 function getSelectOptions(tree, level = 0) {
   return tree.flatMap(treeNode => [{
     value: treeNode.id,
@@ -62750,12 +62790,15 @@ function TreeSelect(props) {
       label: noOptionLabel
     }, ...getSelectOptions(tree)].filter(option => !!option);
   }, [noOptionLabel, tree]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SelectControl, {
-    label,
-    options,
-    onChange,
-    value: selectedId,
-    ...restProps
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ContextSystemProvider, {
+    value: tree_select_CONTEXT_VALUE,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SelectControl, {
+      label,
+      options,
+      onChange,
+      value: selectedId,
+      ...restProps
+    })
   });
 }
 /* harmony default export */ const tree_select = (TreeSelect);
@@ -65990,6 +66033,7 @@ function UnforwardedTextControl(props, ref) {
   const onChangeValue = event => onChange(event.target.value);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control, {
     __nextHasNoMarginBottom: __nextHasNoMarginBottom,
+    __associatedWPComponentName: "TextControl",
     label: label,
     hideLabelFromVision: hideLabelFromVision,
     id: id,
@@ -66133,6 +66177,7 @@ function UnforwardedTextareaControl(props, ref) {
   const onChangeValue = event => onChange(event.target.value);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control, {
     __nextHasNoMarginBottom: __nextHasNoMarginBottom,
+    __associatedWPComponentName: "TextareaControl",
     label: label,
     hideLabelFromVision: hideLabelFromVision,
     id: id,
@@ -66278,6 +66323,7 @@ function Tip(props) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -66307,6 +66353,13 @@ function UnforwardedToggleControl({
   const classes = cx('components-toggle-control', className, !__nextHasNoMarginBottom && /*#__PURE__*/emotion_react_browser_esm_css({
     marginBottom: space(3)
   },  true ? "" : 0,  true ? "" : 0));
+  if (!__nextHasNoMarginBottom) {
+    external_wp_deprecated_default()('Bottom margin styles for wp.components.ToggleControl', {
+      since: '6.7',
+      version: '7.0',
+      hint: 'Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version.'
+    });
+  }
   let describedBy, helpLabel;
   if (help) {
     if (typeof help === 'function') {
