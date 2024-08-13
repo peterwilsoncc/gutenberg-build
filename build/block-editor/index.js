@@ -1537,307 +1537,6 @@ module.exports.createColors = create;
 
 /***/ }),
 
-/***/ 6807:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-
-/***/ }),
-
-/***/ 5959:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-__webpack_require__(6807);
-const postcss_1 = __importDefault(__webpack_require__(4743));
-const PostCSSPlugin_1 = __importDefault(__webpack_require__(6764));
-module.exports = (0, PostCSSPlugin_1.default)(postcss_1.default);
-
-
-/***/ }),
-
-/***/ 3626:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.prefixWrapCSSSelector = exports.prefixWrapCSSRule = void 0;
-const CSSSelector_1 = __webpack_require__(1146);
-const prefixWrapCSSRule = (cssRule, nested, ignoredSelectors, prefixSelector, prefixRootTags) => {
-    // Check each rule to see if it exactly matches our prefix selector, when
-    // this happens, don't try to prefix that selector.
-    const rules = cssRule.selector
-        .split(",")
-        .filter((selector) => !(0, CSSSelector_1.cssRuleMatchesPrefixSelector)({ selector: selector }, prefixSelector));
-    if (rules.length === 0) {
-        return;
-    }
-    cssRule.selector = rules
-        .map((cssSelector) => (0, exports.prefixWrapCSSSelector)(cssSelector, cssRule, nested, ignoredSelectors, prefixSelector, prefixRootTags))
-        .filter(CSSSelector_1.isValidCSSSelector)
-        .join(", ");
-};
-exports.prefixWrapCSSRule = prefixWrapCSSRule;
-const prefixWrapCSSSelector = (cssSelector, cssRule, nested, ignoredSelectors, prefixSelector, prefixRootTags) => {
-    const cleanedSelector = (0, CSSSelector_1.cleanSelector)(cssSelector);
-    if (cleanedSelector === "") {
-        return null;
-    }
-    // Don't prefix nested selected.
-    if (nested !== null && cleanedSelector.startsWith(nested, 0)) {
-        return cleanedSelector;
-    }
-    // Do not prefix keyframes rules.
-    if ((0, CSSSelector_1.isKeyframes)(cssRule)) {
-        return cleanedSelector;
-    }
-    // Check for matching ignored selectors
-    if (ignoredSelectors.some((currentValue) => cleanedSelector.match(currentValue))) {
-        return cleanedSelector;
-    }
-    // Anything other than a root tag is always prefixed.
-    if ((0, CSSSelector_1.isNotRootTag)(cleanedSelector)) {
-        return prefixSelector + " " + cleanedSelector;
-    }
-    // Handle special case where root tags should be converted into classes
-    // rather than being replaced.
-    if (prefixRootTags) {
-        return prefixSelector + " ." + cleanedSelector;
-    }
-    // HTML and Body elements cannot be contained within our container so lets
-    // extract their styles.
-    return cleanedSelector.replace(/^(body|html|:root)/, prefixSelector);
-};
-exports.prefixWrapCSSSelector = prefixWrapCSSSelector;
-
-
-/***/ }),
-
-/***/ 1146:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.cssRuleMatchesPrefixSelector = exports.isNotRootTag = exports.isKeyframes = exports.cleanSelector = exports.isValidCSSSelector = void 0;
-const ANY_WHITESPACE_AT_BEGINNING_OR_END = /(^\s*|\s*$)/g;
-const IS_ROOT_TAG = /^(body|html|:root).*$/;
-const isValidCSSSelector = (cssSelector) => {
-    return cssSelector !== null;
-};
-exports.isValidCSSSelector = isValidCSSSelector;
-const cleanSelector = (cssSelector) => {
-    return cssSelector.replace(ANY_WHITESPACE_AT_BEGINNING_OR_END, "");
-};
-exports.cleanSelector = cleanSelector;
-const isKeyframes = (cssRule) => {
-    const { parent } = cssRule;
-    const parentReal = parent;
-    // @see https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule
-    return (parent !== undefined &&
-        parentReal.type === "atrule" &&
-        parentReal.name !== undefined &&
-        parentReal.name.match(/keyframes$/) !== null);
-};
-exports.isKeyframes = isKeyframes;
-const isNotRootTag = (cleanSelector) => {
-    return !cleanSelector.match(IS_ROOT_TAG);
-};
-exports.isNotRootTag = isNotRootTag;
-const cssRuleMatchesPrefixSelector = (cssRule, prefixSelector) => {
-    const escapedPrefixSelector = prefixSelector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    // eslint-disable-next-line security-node/non-literal-reg-expr
-    const isPrefixSelector = new RegExp(`^${escapedPrefixSelector}$`);
-    return isPrefixSelector.test(cssRule.selector);
-};
-exports.cssRuleMatchesPrefixSelector = cssRuleMatchesPrefixSelector;
-
-
-/***/ }),
-
-/***/ 5318:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.shouldIncludeFilePath = void 0;
-const shouldIncludeFilePath = (filePath, whitelist, blacklist) => {
-    // If whitelist exists, check if rule is contained within it.
-    if (whitelist.length > 0) {
-        return (filePath != undefined &&
-            whitelist.some((currentValue) => filePath.match(currentValue)));
-    }
-    // If blacklist exists, check if rule is not contained within it.
-    if (blacklist.length > 0) {
-        return !(filePath != undefined &&
-            blacklist.some((currentValue) => filePath.match(currentValue)));
-    }
-    // In all other cases, presume rule should be prefixed.
-    return true;
-};
-exports.shouldIncludeFilePath = shouldIncludeFilePath;
-
-
-/***/ }),
-
-/***/ 504:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.asPostCSSv7PluginGenerator = void 0;
-const PostCSSPrefixWrap_1 = __importStar(__webpack_require__(6483));
-const asPostCSSv7PluginGenerator = (postcss) => {
-    return postcss.plugin(PostCSSPrefixWrap_1.PLUGIN_NAME, (prefixSelector, options) => {
-        return new PostCSSPrefixWrap_1.default(prefixSelector, options).prefix();
-    });
-};
-exports.asPostCSSv7PluginGenerator = asPostCSSv7PluginGenerator;
-
-
-/***/ }),
-
-/***/ 2210:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.asPostCSSv8PluginGenerator = exports.isPostCSSv8 = void 0;
-const PostCSSPrefixWrap_1 = __importStar(__webpack_require__(6483));
-const isPostCSSv8 = (postcss) => postcss.Root !== undefined;
-exports.isPostCSSv8 = isPostCSSv8;
-const asPostCSSv8PluginGenerator = () => {
-    return (prefixSelector, options) => {
-        const plugin = new PostCSSPrefixWrap_1.default(prefixSelector, options);
-        return {
-            postcssPlugin: PostCSSPrefixWrap_1.PLUGIN_NAME,
-            Once(root) {
-                plugin.prefixRoot(root);
-            },
-        };
-    };
-};
-exports.asPostCSSv8PluginGenerator = asPostCSSv8PluginGenerator;
-
-
-/***/ }),
-
-/***/ 6764:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-const PostCSS8Plugin_1 = __webpack_require__(2210);
-const PostCSS7Plugin_1 = __webpack_require__(504);
-module.exports = (postcss) => {
-    if ((0, PostCSS8Plugin_1.isPostCSSv8)(postcss)) {
-        return (0, PostCSS8Plugin_1.asPostCSSv8PluginGenerator)();
-    }
-    else {
-        return (0, PostCSS7Plugin_1.asPostCSSv7PluginGenerator)(postcss);
-    }
-};
-
-
-/***/ }),
-
-/***/ 6483:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.PLUGIN_NAME = void 0;
-const CSSRuleWrapper_1 = __webpack_require__(3626);
-const FileIncludeList_1 = __webpack_require__(5318);
-exports.PLUGIN_NAME = "postcss-prefixwrap";
-class PostCSSPrefixWrap {
-    constructor(prefixSelector, options = {}) {
-        this.blacklist = options.blacklist ?? [];
-        this.ignoredSelectors = options.ignoredSelectors ?? [];
-        this.isPrefixSelector = new RegExp(
-        // eslint-disable-next-line security-node/non-literal-reg-expr
-        `^${prefixSelector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`);
-        this.prefixRootTags = options.prefixRootTags ?? false;
-        this.prefixSelector = prefixSelector;
-        this.whitelist = options.whitelist ?? [];
-        this.nested = options.nested ?? null;
-    }
-    prefixRoot(css) {
-        if ((0, FileIncludeList_1.shouldIncludeFilePath)(css.source?.input?.file, this.whitelist, this.blacklist)) {
-            css.walkRules((cssRule) => {
-                (0, CSSRuleWrapper_1.prefixWrapCSSRule)(cssRule, this.nested, this.ignoredSelectors, this.prefixSelector, this.prefixRootTags);
-            });
-        }
-    }
-    prefix() {
-        return (css) => {
-            this.prefixRoot(css);
-        };
-    }
-}
-exports["default"] = PostCSSPrefixWrap;
-
-
-/***/ }),
-
 /***/ 2433:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -6945,6 +6644,312 @@ var hasAccents = function(string) {
 module.exports = removeAccents;
 module.exports.has = hasAccents;
 module.exports.remove = removeAccents;
+
+
+/***/ }),
+
+/***/ 9451:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+
+/***/ }),
+
+/***/ 9303:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+__webpack_require__(9451);
+const postcss_1 = __importDefault(__webpack_require__(4743));
+const PostCSSPlugin_1 = __importDefault(__webpack_require__(8584));
+module.exports = (0, PostCSSPlugin_1.default)(postcss_1.default);
+
+
+/***/ }),
+
+/***/ 214:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.prefixWrapCSSSelector = exports.prefixWrapCSSRule = void 0;
+const CSSSelector_1 = __webpack_require__(2445);
+const prefixWrapCSSRule = (cssRule, nested, ignoredSelectors, prefixSelector, prefixRootTags) => {
+    // Check each rule to see if it exactly matches our prefix selector, when
+    // this happens, don't try to prefix that selector.
+    const rules = cssRule.selectors.filter((selector) => !(0, CSSSelector_1.cssRuleMatchesPrefixSelector)({ selector: selector }, prefixSelector));
+    if (rules.length === 0) {
+        return;
+    }
+    cssRule.selector = rules
+        .map((cssSelector) => (0, exports.prefixWrapCSSSelector)(cssSelector, cssRule, nested, ignoredSelectors, prefixSelector, prefixRootTags))
+        .filter(CSSSelector_1.isValidCSSSelector)
+        .join(", ");
+};
+exports.prefixWrapCSSRule = prefixWrapCSSRule;
+const prefixWrapCSSSelector = (cssSelector, cssRule, nested, ignoredSelectors, prefixSelector, prefixRootTags) => {
+    const cleanedSelector = (0, CSSSelector_1.cleanSelector)(cssSelector);
+    if (cleanedSelector === "") {
+        return null;
+    }
+    // Don't prefix nested selected.
+    if (nested !== null && cleanedSelector.startsWith(nested, 0)) {
+        return cleanedSelector;
+    }
+    // Do not prefix keyframes rules.
+    if ((0, CSSSelector_1.isKeyframes)(cssRule)) {
+        return cleanedSelector;
+    }
+    // Check for matching ignored selectors
+    if (ignoredSelectors.some((currentValue) => cleanedSelector.match(currentValue))) {
+        return cleanedSelector;
+    }
+    // Anything other than a root tag is always prefixed.
+    if ((0, CSSSelector_1.isNotRootTag)(cleanedSelector)) {
+        return prefixSelector + " " + cleanedSelector;
+    }
+    // Handle special case where root tags should be converted into classes
+    // rather than being replaced.
+    if (prefixRootTags) {
+        return prefixSelector + " ." + cleanedSelector;
+    }
+    // HTML and Body elements cannot be contained within our container so lets
+    // extract their styles.
+    return cleanedSelector.replace(/^(body|html|:root)/, prefixSelector);
+};
+exports.prefixWrapCSSSelector = prefixWrapCSSSelector;
+
+
+/***/ }),
+
+/***/ 2445:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.cssRuleMatchesPrefixSelector = exports.isNotRootTag = exports.isKeyframes = exports.cleanSelector = exports.isValidCSSSelector = void 0;
+const ANY_WHITESPACE_AT_BEGINNING_OR_END = /(^\s*|\s*$)/g;
+const IS_ROOT_TAG = /^(body|html|:root).*$/;
+const isValidCSSSelector = (cssSelector) => {
+    return cssSelector !== null;
+};
+exports.isValidCSSSelector = isValidCSSSelector;
+const cleanSelector = (cssSelector) => {
+    return cssSelector.replace(ANY_WHITESPACE_AT_BEGINNING_OR_END, "");
+};
+exports.cleanSelector = cleanSelector;
+const isKeyframes = (cssRule) => {
+    const { parent } = cssRule;
+    const parentReal = parent;
+    // @see https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule
+    return (parent !== undefined &&
+        parentReal.type === "atrule" &&
+        parentReal.name !== undefined &&
+        parentReal.name.match(/keyframes$/) !== null);
+};
+exports.isKeyframes = isKeyframes;
+const isNotRootTag = (cleanSelector) => {
+    return !cleanSelector.match(IS_ROOT_TAG);
+};
+exports.isNotRootTag = isNotRootTag;
+const cssRuleMatchesPrefixSelector = (cssRule, prefixSelector) => {
+    const escapedPrefixSelector = prefixSelector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    // eslint-disable-next-line security-node/non-literal-reg-expr
+    const isPrefixSelector = new RegExp(`^${escapedPrefixSelector}$`);
+    return isPrefixSelector.test(cssRule.selector);
+};
+exports.cssRuleMatchesPrefixSelector = cssRuleMatchesPrefixSelector;
+
+
+/***/ }),
+
+/***/ 5547:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.shouldIncludeFilePath = void 0;
+const shouldIncludeFilePath = (filePath, whitelist, blacklist) => {
+    // If whitelist exists, check if rule is contained within it.
+    if (whitelist.length > 0) {
+        return (filePath != undefined &&
+            whitelist.some((currentValue) => filePath.match(currentValue)));
+    }
+    // If blacklist exists, check if rule is not contained within it.
+    if (blacklist.length > 0) {
+        return !(filePath != undefined &&
+            blacklist.some((currentValue) => filePath.match(currentValue)));
+    }
+    // In all other cases, presume rule should be prefixed.
+    return true;
+};
+exports.shouldIncludeFilePath = shouldIncludeFilePath;
+
+
+/***/ }),
+
+/***/ 1596:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.asPostCSSv7PluginGenerator = void 0;
+const PostCSSPrefixWrap_1 = __importStar(__webpack_require__(762));
+const asPostCSSv7PluginGenerator = (postcss) => {
+    return postcss.plugin(PostCSSPrefixWrap_1.PLUGIN_NAME, (prefixSelector, options) => {
+        return new PostCSSPrefixWrap_1.default(prefixSelector, options).prefix();
+    });
+};
+exports.asPostCSSv7PluginGenerator = asPostCSSv7PluginGenerator;
+
+
+/***/ }),
+
+/***/ 9240:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.asPostCSSv8PluginGenerator = exports.isPostCSSv8 = void 0;
+const PostCSSPrefixWrap_1 = __importStar(__webpack_require__(762));
+const isPostCSSv8 = (postcss) => postcss.Root !== undefined;
+exports.isPostCSSv8 = isPostCSSv8;
+const asPostCSSv8PluginGenerator = () => {
+    return (prefixSelector, options) => {
+        const plugin = new PostCSSPrefixWrap_1.default(prefixSelector, options);
+        return {
+            postcssPlugin: PostCSSPrefixWrap_1.PLUGIN_NAME,
+            Once(root) {
+                plugin.prefixRoot(root);
+            },
+        };
+    };
+};
+exports.asPostCSSv8PluginGenerator = asPostCSSv8PluginGenerator;
+
+
+/***/ }),
+
+/***/ 8584:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+const PostCSS8Plugin_1 = __webpack_require__(9240);
+const PostCSS7Plugin_1 = __webpack_require__(1596);
+module.exports = (postcss) => {
+    if ((0, PostCSS8Plugin_1.isPostCSSv8)(postcss)) {
+        return (0, PostCSS8Plugin_1.asPostCSSv8PluginGenerator)();
+    }
+    else {
+        return (0, PostCSS7Plugin_1.asPostCSSv7PluginGenerator)(postcss);
+    }
+};
+
+
+/***/ }),
+
+/***/ 762:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PLUGIN_NAME = void 0;
+const CSSRuleWrapper_1 = __webpack_require__(214);
+const FileIncludeList_1 = __webpack_require__(5547);
+exports.PLUGIN_NAME = "postcss-prefixwrap";
+class PostCSSPrefixWrap {
+    blacklist;
+    ignoredSelectors;
+    isPrefixSelector;
+    prefixRootTags;
+    prefixSelector;
+    whitelist;
+    nested;
+    constructor(prefixSelector, options = {}) {
+        this.blacklist = options.blacklist ?? [];
+        this.ignoredSelectors = options.ignoredSelectors ?? [];
+        this.isPrefixSelector = new RegExp(
+        // eslint-disable-next-line security-node/non-literal-reg-expr
+        `^${prefixSelector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`);
+        this.prefixRootTags = options.prefixRootTags ?? false;
+        this.prefixSelector = prefixSelector;
+        this.whitelist = options.whitelist ?? [];
+        this.nested = options.nested ?? null;
+    }
+    prefixRoot(css) {
+        if ((0, FileIncludeList_1.shouldIncludeFilePath)(css.source?.input?.file, this.whitelist, this.blacklist)) {
+            css.walkRules((cssRule) => {
+                (0, CSSRuleWrapper_1.prefixWrapCSSRule)(cssRule, this.nested, this.ignoredSelectors, this.prefixSelector, this.prefixRootTags);
+            });
+        }
+    }
+    prefix() {
+        return (css) => {
+            this.prefixRoot(css);
+        };
+    }
+}
+exports["default"] = PostCSSPrefixWrap;
 
 
 /***/ }),
@@ -48414,8 +48419,8 @@ const Rule = postcss.Rule
 const postcss_Root = postcss.Root
 const Node = postcss.Node
 
-// EXTERNAL MODULE: ./node_modules/postcss-prefixwrap/build/index.js
-var build = __webpack_require__(5959);
+// EXTERNAL MODULE: ./packages/block-editor/node_modules/postcss-prefixwrap/build/index.js
+var build = __webpack_require__(9303);
 var build_default = /*#__PURE__*/__webpack_require__.n(build);
 // EXTERNAL MODULE: ./packages/block-editor/node_modules/postcss-urlrebase/index.js
 var postcss_urlrebase = __webpack_require__(4833);
