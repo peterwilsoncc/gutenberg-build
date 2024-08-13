@@ -39346,7 +39346,7 @@ function PostList({
         size: "compact",
         isPressed: quickEdit,
         icon: drawer_right,
-        label: !quickEdit ? (0,external_wp_i18n_namespaceObject.__)('Show quick edit sidebar') : (0,external_wp_i18n_namespaceObject.__)('Close quick edit sidebar'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Toggle details panel'),
         onClick: () => {
           history.push({
             ...location.params,
