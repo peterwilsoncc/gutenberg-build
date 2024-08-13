@@ -7763,7 +7763,7 @@ __webpack_require__.d(__webpack_exports__, {
   BlockTools: () => (/* reexport */ BlockTools),
   BlockVerticalAlignmentControl: () => (/* reexport */ BlockVerticalAlignmentControl),
   BlockVerticalAlignmentToolbar: () => (/* reexport */ BlockVerticalAlignmentToolbar),
-  ButtonBlockAppender: () => (/* reexport */ components_button_block_appender),
+  ButtonBlockAppender: () => (/* reexport */ button_block_appender),
   ButtonBlockerAppender: () => (/* reexport */ ButtonBlockerAppender),
   ColorPalette: () => (/* reexport */ color_palette),
   ColorPaletteControl: () => (/* reexport */ ColorPaletteControl),
@@ -43719,7 +43719,7 @@ function DefaultAppender({
   }
 
   // Fallback in case the default block can't be inserted.
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(components_button_block_appender, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(button_block_appender, {
     rootClientId: rootClientId,
     className: "block-list-appender__toggle"
   });
@@ -44464,28 +44464,6 @@ function BlockSelectionClearer(props) {
   });
 }
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inner-blocks/with-client-id.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-const withClientId = (0,external_wp_compose_namespaceObject.createHigherOrderComponent)(WrappedComponent => props => {
-  const {
-    clientId
-  } = useBlockEditContext();
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WrappedComponent, {
-    ...props,
-    clientId: clientId
-  });
-}, 'withClientId');
-/* harmony default export */ const with_client_id = (withClientId);
-
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inner-blocks/button-block-appender.js
 /**
  * External dependencies
@@ -44498,14 +44476,16 @@ const withClientId = (0,external_wp_compose_namespaceObject.createHigherOrderCom
 
 
 
-const ButtonBlockAppender = ({
-  clientId,
+function ButtonBlockAppender({
   showSeparator,
   isFloating,
   onAddBlock,
   isToggle
-}) => {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(components_button_block_appender, {
+}) {
+  const {
+    clientId
+  } = useBlockEditContext();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(button_block_appender, {
     className: dist_clsx({
       'block-list-appender__toggle': isToggle
     }),
@@ -44514,41 +44494,23 @@ const ButtonBlockAppender = ({
     isFloating: isFloating,
     onAddBlock: onAddBlock
   });
-};
-/* harmony default export */ const button_block_appender = (with_client_id(ButtonBlockAppender));
+}
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inner-blocks/default-block-appender.js
-/**
- * WordPress dependencies
- */
-
-
-
 /**
  * Internal dependencies
  */
 
 
 
-
-const default_block_appender_DefaultBlockAppender = ({
-  clientId
-}) => {
+function default_block_appender_DefaultBlockAppender() {
+  const {
+    clientId
+  } = useBlockEditContext();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DefaultBlockAppender, {
     rootClientId: clientId
   });
-};
-/* harmony default export */ const default_block_appender = ((0,external_wp_compose_namespaceObject.compose)([with_client_id, (0,external_wp_data_namespaceObject.withSelect)((select, {
-  clientId
-}) => {
-  const {
-    getBlockOrder
-  } = select(store);
-  const blockClientIds = getBlockOrder(clientId);
-  return {
-    lastBlockClientId: blockClientIds[blockClientIds.length - 1]
-  };
-})])(default_block_appender_DefaultBlockAppender));
+}
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inner-blocks/use-nested-settings-update.js
 /**
@@ -45780,8 +45742,8 @@ function useInnerBlocksProps(props = {}, options = {}) {
 useInnerBlocksProps.save = external_wp_blocks_namespaceObject.__unstableGetInnerBlocksProps;
 
 // Expose default appender placeholders as components.
-ForwardedInnerBlocks.DefaultBlockAppender = default_block_appender;
-ForwardedInnerBlocks.ButtonBlockAppender = button_block_appender;
+ForwardedInnerBlocks.DefaultBlockAppender = default_block_appender_DefaultBlockAppender;
+ForwardedInnerBlocks.ButtonBlockAppender = ButtonBlockAppender;
 ForwardedInnerBlocks.Content = () => useInnerBlocksProps.save().children;
 
 /**
@@ -53081,7 +53043,7 @@ const ButtonBlockerAppender = (0,external_wp_element_namespaceObject.forwardRef)
 /**
  * @see https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/button-block-appender/README.md
  */
-/* harmony default export */ const components_button_block_appender = ((0,external_wp_element_namespaceObject.forwardRef)(button_block_appender_ButtonBlockAppender));
+/* harmony default export */ const button_block_appender = ((0,external_wp_element_namespaceObject.forwardRef)(button_block_appender_ButtonBlockAppender));
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/grid/grid-visualizer.js
 /**
@@ -53335,7 +53297,7 @@ function GridVisualizerAppender({
     __unstableMarkNextChangeAsNotPersistent
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(gridClientId, gridInfo.numColumns);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(components_button_block_appender, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(button_block_appender, {
     rootClientId: gridClientId,
     className: "block-editor-grid-visualizer__appender",
     ref: useGridVisualizerDropZone(column, row, gridClientId, gridInfo, setHighlightedRect),
