@@ -40,7 +40,8 @@ __webpack_require__.r(__webpack_exports__);
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
   compileCSS: () => (/* binding */ compileCSS),
-  getCSSRules: () => (/* binding */ getCSSRules)
+  getCSSRules: () => (/* binding */ getCSSRules),
+  getCSSValueFromRawStyle: () => (/* reexport */ getCSSValueFromRawStyle)
 });
 
 ;// CONCATENATED MODULE: ./node_modules/tslib/tslib.es6.mjs
@@ -563,7 +564,7 @@ function generateRule(style, options, path, ruleKey) {
   return styleValue ? [{
     selector: options?.selector,
     key: ruleKey,
-    value: getCSSVarFromStyleValue(styleValue)
+    value: getCSSValueFromRawStyle(styleValue)
   }] : [];
 }
 
@@ -592,7 +593,7 @@ function generateBoxRules(style, options, path, ruleKeys, individualProperties =
     });
   } else {
     const sideRules = individualProperties.reduce((acc, side) => {
-      const value = getCSSVarFromStyleValue(getStyleValueByPath(boxStyle, [side]));
+      const value = getCSSValueFromRawStyle(getStyleValueByPath(boxStyle, [side]));
       if (value) {
         acc.push({
           selector: options?.selector,
@@ -608,13 +609,19 @@ function generateBoxRules(style, options, path, ruleKeys, individualProperties =
 }
 
 /**
- * Returns a CSS var value from incoming style value following the pattern `var:description|context|slug`.
+ * Returns a WordPress CSS custom var value from incoming style preset value.
+ * The preset value follows the pattern `var:description|context|slug`.
+ *
+ * Example:
+ *
+ * `getCSSValueFromRawStyle( 'var:preset|color|heavenlyBlue' )` // returns 'var(--wp--preset--color--heavenly-blue)'
  *
  * @param styleValue A raw style value.
  *
- * @return string A CSS var value.
+ * @return A CSS var value.
  */
-function getCSSVarFromStyleValue(styleValue) {
+
+function getCSSValueFromRawStyle(styleValue) {
   if (typeof styleValue === 'string' && styleValue.startsWith(VARIABLE_REFERENCE_PREFIX)) {
     const variable = styleValue.slice(VARIABLE_REFERENCE_PREFIX.length).split(VARIABLE_PATH_SEPARATOR_TOKEN_ATTRIBUTE).map(presetVariable => paramCase(presetVariable, {
       splitRegexp: [/([a-z0-9])([A-Z])/g,
@@ -1116,6 +1123,9 @@ function getCSSRules(style, options = {}) {
   });
   return rules;
 }
+
+// Export style utils.
+
 
 (window.wp = window.wp || {}).styleEngine = __webpack_exports__;
 /******/ })()

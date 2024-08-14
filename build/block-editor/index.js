@@ -16237,6 +16237,8 @@ function useSetting(path) {
   return value;
 }
 
+;// CONCATENATED MODULE: external ["wp","styleEngine"]
+const external_wp_styleEngine_namespaceObject = window["wp"]["styleEngine"];
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/font-sizes/fluid-utils.js
 /**
  * The fluid utilities must match the backend equivalent.
@@ -16978,6 +16980,7 @@ function findNearestStyleAndWeight(fontFamilyFaces, fontStyle, fontWeight) {
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -17381,28 +17384,6 @@ function getBlockStyleVariationSelector(variation, blockSelector) {
 }
 
 /**
- * Converts style preset values `var:` to CSS custom var values.
- * TODO: Export and use the style engine util: getCSSVarFromStyleValue().
- *
- * Example:
- *
- * compileStyleValue( 'var:preset|color|primary' ) // returns 'var(--wp--color-primary)'
- *
- * @param {string} uncompiledValue A block style value.
- * @return {string} The compiled, or original value.
- */
-function compileStyleValue(uncompiledValue) {
-  const VARIABLE_REFERENCE_PREFIX = 'var:';
-  if ('string' === typeof uncompiledValue && uncompiledValue?.startsWith?.(VARIABLE_REFERENCE_PREFIX)) {
-    const VARIABLE_PATH_SEPARATOR_TOKEN_ATTRIBUTE = '|';
-    const VARIABLE_PATH_SEPARATOR_TOKEN_STYLE = '--';
-    const variable = uncompiledValue.slice(VARIABLE_REFERENCE_PREFIX.length).split(VARIABLE_PATH_SEPARATOR_TOKEN_ATTRIBUTE).join(VARIABLE_PATH_SEPARATOR_TOKEN_STYLE);
-    return `var(--wp--${variable})`;
-  }
-  return uncompiledValue;
-}
-
-/**
  * Looks up a theme file URI based on a relative path.
  *
  * @param {string}        file          A relative path.
@@ -17433,7 +17414,7 @@ function getResolvedRefValue(ruleValue, tree) {
   }
   if (typeof ruleValue !== 'string' && ruleValue?.ref) {
     const refPath = ruleValue.ref.split('.');
-    const resolvedRuleValue = compileStyleValue(getValueFromObjectPath(tree, refPath));
+    const resolvedRuleValue = (0,external_wp_styleEngine_namespaceObject.getCSSValueFromRawStyle)(getValueFromObjectPath(tree, refPath));
 
     /*
      * Presence of another ref indicates a reference to another dynamic value.
@@ -20053,8 +20034,6 @@ const stretchWide = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
 });
 /* harmony default export */ const stretch_wide = (stretchWide);
 
-;// CONCATENATED MODULE: external ["wp","styleEngine"]
-const external_wp_styleEngine_namespaceObject = window["wp"]["styleEngine"];
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/layouts/constrained.js
 /**
  * WordPress dependencies
@@ -34584,11 +34563,11 @@ function getStylesDeclarations(blockStyles = {}, selector = '', useRootPaddingAl
           return;
         }
         const cssProperty = name.startsWith('--') ? name : use_global_styles_output_kebabCase(name);
-        declarations.push(`${cssProperty}: ${compileStyleValue(getValueFromObjectPath(styleValue, [prop]))}`);
+        declarations.push(`${cssProperty}: ${(0,external_wp_styleEngine_namespaceObject.getCSSValueFromRawStyle)(getValueFromObjectPath(styleValue, [prop]))}`);
       });
     } else if (getValueFromObjectPath(blockStyles, pathToValue, false)) {
       const cssProperty = key.startsWith('--') ? key : use_global_styles_output_kebabCase(key);
-      declarations.push(`${cssProperty}: ${compileStyleValue(getValueFromObjectPath(blockStyles, pathToValue))}`);
+      declarations.push(`${cssProperty}: ${(0,external_wp_styleEngine_namespaceObject.getCSSValueFromRawStyle)(getValueFromObjectPath(blockStyles, pathToValue))}`);
     }
     return declarations;
   }, []);
