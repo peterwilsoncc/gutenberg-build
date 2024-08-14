@@ -24657,7 +24657,6 @@ function BackgroundSizeControls({
     spacing: 3,
     className: "single-column",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FocalPointPicker, {
-      __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Focal point'),
       url: theme_file_uri_utils_getResolvedThemeFilePath(imageValue, themeFileURIs),

@@ -56919,7 +56919,6 @@ const TEXTCONTROL_MAX = 100;
 const controls_noop = () => {};
 function FocalPointPickerControls({
   __nextHasNoMarginBottom,
-  __next40pxDefaultSize,
   hasHelpText,
   onChange = controls_noop,
   point = {
@@ -56947,14 +56946,12 @@ function FocalPointPickerControls({
     hasHelpText: hasHelpText,
     gap: 4,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FocalPointUnitControl, {
-      __next40pxDefaultSize: __next40pxDefaultSize,
       label: (0,external_wp_i18n_namespaceObject.__)('Left'),
       "aria-label": (0,external_wp_i18n_namespaceObject.__)('Focal point left position'),
       value: [valueX, '%'].join(''),
       onChange: next => handleChange(next, 'x'),
       dragDirection: "e"
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FocalPointUnitControl, {
-      __next40pxDefaultSize: __next40pxDefaultSize,
       label: (0,external_wp_i18n_namespaceObject.__)('Top'),
       "aria-label": (0,external_wp_i18n_namespaceObject.__)('Focal point top position'),
       value: [valueY, '%'].join(''),
@@ -56965,6 +56962,7 @@ function FocalPointPickerControls({
 }
 function FocalPointUnitControl(props) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(focal_point_picker_style_StyledUnitControl, {
+    __next40pxDefaultSize: true,
     className: "focal-point-picker__controls-position-unit-control",
     labelPosition: "top",
     max: TEXTCONTROL_MAX,
@@ -57182,7 +57180,6 @@ const GRID_OVERLAY_TIMEOUT = 600;
  */
 function FocalPointPicker({
   __nextHasNoMarginBottom,
-  __next40pxDefaultSize = false,
   autoPlay = true,
   className,
   help,
@@ -57381,7 +57378,6 @@ function FocalPointPicker({
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FocalPointPickerControls, {
       __nextHasNoMarginBottom: __nextHasNoMarginBottom,
-      __next40pxDefaultSize: __next40pxDefaultSize,
       hasHelpText: !!help,
       point: {
         x,
