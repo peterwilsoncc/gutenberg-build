@@ -1788,7 +1788,6 @@ __webpack_require__.d(__webpack_exports__, {
   ColorPalette: () => (/* reexport */ color_palette),
   ColorPicker: () => (/* reexport */ LegacyAdapter),
   ComboboxControl: () => (/* reexport */ combobox_control),
-  Composite: () => (/* reexport */ Composite),
   CustomGradientPicker: () => (/* reexport */ custom_gradient_picker),
   CustomSelectControl: () => (/* reexport */ custom_select_control),
   Dashicon: () => (/* reexport */ dashicon),
@@ -1948,7 +1947,6 @@ __webpack_require__.d(__webpack_exports__, {
   navigateRegions: () => (/* reexport */ navigate_regions),
   privateApis: () => (/* reexport */ privateApis),
   useBaseControlProps: () => (/* reexport */ useBaseControlProps),
-  useCompositeStore: () => (/* reexport */ composite_useCompositeStore),
   withConstrainedTabbing: () => (/* reexport */ with_constrained_tabbing),
   withFallbackStyles: () => (/* reexport */ with_fallback_styles),
   withFilters: () => (/* reexport */ withFilters),
@@ -71983,7 +71981,6 @@ lock(privateApis, {
 
 
 // Components.
-
 
 
 
