@@ -7930,7 +7930,8 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   isBlockInterfaceHidden: () => (private_selectors_isBlockInterfaceHidden),
   isBlockSubtreeDisabled: () => (isBlockSubtreeDisabled),
   isDragging: () => (private_selectors_isDragging),
-  isResolvingPatterns: () => (isResolvingPatterns)
+  isResolvingPatterns: () => (isResolvingPatterns),
+  isZoomOutMode: () => (isZoomOutMode)
 });
 
 // NAMESPACE OBJECT: ./packages/block-editor/build-module/store/selectors.js
@@ -11250,6 +11251,17 @@ const getBlockStyles = (0,external_wp_data_namespaceObject.createSelector)((stat
   styles[clientId] = state.blocks.attributes.get(clientId)?.style;
   return styles;
 }, {}), (state, clientIds) => [...clientIds.map(clientId => state.blocks.attributes.get(clientId)?.style)]);
+
+/**
+ * Returns whether zoom out mode is enabled.
+ *
+ * @param {Object} state Editor state.
+ *
+ * @return {boolean} Is zoom out mode enabled.
+ */
+function isZoomOutMode(state) {
+  return state.editorMode === 'zoom-out';
+}
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/store/selectors.js
 /**
