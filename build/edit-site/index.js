@@ -24189,7 +24189,6 @@ function RenameFontSizeDialog({
  * WordPress dependencies
  */
 
-
 /**
  * Internal dependencies
  */
@@ -24209,7 +24208,8 @@ function SizeControl({
     value,
     onChange,
     fallbackValue,
-    disabled
+    disabled,
+    label
   } = props;
   const units = (0,external_wp_components_namespaceObject.__experimentalUseCustomUnits)({
     availableUnits: DEFAULT_UNITS
@@ -24235,7 +24235,7 @@ function SizeControl({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
           __next40pxDefaultSize: true,
           __nextHasNoMarginBottom: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Custom'),
+          label: label,
           hideLabelFromVision: true,
           value: value,
           onChange: handleUnitControlChange,
@@ -24251,7 +24251,7 @@ function SizeControl({
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
             __next40pxDefaultSize: true,
             __nextHasNoMarginBottom: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Custom Size'),
+            label: label,
             hideLabelFromVision: true,
             value: valueQuantity,
             initialPosition: fallbackValue,
