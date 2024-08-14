@@ -5885,6 +5885,19 @@ var QMBMAMY2_Composite = forwardRef2(function Composite2(props) {
 
 ;// CONCATENATED MODULE: external ["wp","element"]
 const external_wp_element_namespaceObject = window["wp"]["element"];
+;// CONCATENATED MODULE: ./packages/components/build-module/composite/context.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+const CompositeContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
+const context_useCompositeContext = () => (0,external_wp_element_namespaceObject.useContext)(CompositeContext);
+
 ;// CONCATENATED MODULE: ./packages/components/build-module/composite/index.js
 /**
  * Composite is a component that may contain navigable items represented by
@@ -5909,6 +5922,8 @@ const external_wp_element_namespaceObject = window["wp"]["element"];
 /**
  * Internal dependencies
  */
+
+
 
 /**
  * Creates a composite store.
@@ -5945,42 +5960,54 @@ function composite_useCompositeStore({
   });
 }
 const composite_Group = (0,external_wp_element_namespaceObject.forwardRef)(function CompositeGroup(props, ref) {
+  const context = context_useCompositeContext();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PGA74ZJ4_CompositeGroup, {
+    store: context?.store,
     ...props,
     ref: ref
   });
 });
 composite_Group.displayName = 'Composite.Group';
 const composite_GroupLabel = (0,external_wp_element_namespaceObject.forwardRef)(function CompositeGroupLabel(props, ref) {
+  const context = context_useCompositeContext();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FPZBL2HG_CompositeGroupLabel, {
+    store: context?.store,
     ...props,
     ref: ref
   });
 });
 composite_GroupLabel.displayName = 'Composite.GroupLabel';
 const Item = (0,external_wp_element_namespaceObject.forwardRef)(function CompositeItem(props, ref) {
+  const context = context_useCompositeContext();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(UN4MKOLN_CompositeItem, {
+    store: context?.store,
     ...props,
     ref: ref
   });
 });
 Item.displayName = 'Composite.Item';
 const Row = (0,external_wp_element_namespaceObject.forwardRef)(function CompositeRow(props, ref) {
+  const context = context_useCompositeContext();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(_67ZQCY2E_CompositeRow, {
+    store: context?.store,
     ...props,
     ref: ref
   });
 });
 Row.displayName = 'Composite.Row';
 const Hover = (0,external_wp_element_namespaceObject.forwardRef)(function CompositeHover(props, ref) {
+  const context = context_useCompositeContext();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CBOSGWHO_CompositeHover, {
+    store: context?.store,
     ...props,
     ref: ref
   });
 });
 Hover.displayName = 'Composite.Hover';
 const Typeahead = (0,external_wp_element_namespaceObject.forwardRef)(function CompositeTypeahead(props, ref) {
+  const context = context_useCompositeContext();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(O7HGX5PA_CompositeTypeahead, {
+    store: context?.store,
     ...props,
     ref: ref
   });
@@ -6004,13 +6031,23 @@ Typeahead.displayName = 'Composite.Typeahead';
  * ```
  */
 const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRef)(function Composite({
+  children,
+  store,
   disabled = false,
   ...props
 }, ref) {
+  const contextValue = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    store
+  }), [store]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QMBMAMY2_Composite, {
     disabled: disabled,
+    store: store,
     ...props,
-    ref: ref
+    ref: ref,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CompositeContext.Provider, {
+      value: contextValue,
+      children: children
+    })
   });
 }), {
   displayName: 'Composite',
@@ -6130,7 +6167,22 @@ const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRe
    * </Composite>
    * ```
    */
-  Typeahead
+  Typeahead,
+  /**
+   * The React context used by the composite components. It can be used by
+   * to access the composite store, and to forward the context when composite
+   * sub-components are rendered across portals (ie. `SlotFill` components)
+   * that would not otherwise forward the context to the `Fill` children.
+   *
+   * @example
+   * ```jsx
+   * import { Composite } from '@wordpress/components';
+   * import { useContext } from '@wordpress/element';
+   *
+   * const compositeContext = useContext( Composite.Context );
+   * ```
+   */
+  Context: CompositeContext
 });
 
 ;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/core/esm/__chunks/KDSZSVV5.js
