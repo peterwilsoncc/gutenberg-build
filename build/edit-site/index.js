@@ -6570,6 +6570,7 @@ function PushChangesToGlobalStylesControl({
     }
   }, [__unstableMarkNextChangeAsNotPersistent, attributes, changes, createSuccessNotice, name, setAttributes, setUserConfig, userConfig]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.BaseControl, {
+    __nextHasNoMarginBottom: true,
     className: "edit-site-push-changes-to-global-styles-control",
     help: (0,external_wp_i18n_namespaceObject.sprintf)(
     // translators: %s: Title of the block e.g. 'Heading'.
@@ -14115,13 +14116,13 @@ const trash = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
  * Check if a template is removable.
  *
  * @param {Object} template The template entity to check.
- * @return {boolean} Whether the template is revertable.
+ * @return {boolean} Whether the template is removable.
  */
 function isTemplateRemovable(template) {
   if (!template) {
     return false;
   }
-  return template.source === TEMPLATE_ORIGINS.custom && !template.has_theme_file;
+  return template.source === TEMPLATE_ORIGINS.custom && !Boolean(template.plugin) && !template.has_theme_file;
 }
 
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/utils/is-template-revertable.js
@@ -14141,7 +14142,7 @@ function isTemplateRevertable(template) {
     return false;
   }
   /* eslint-disable camelcase */
-  return template?.source === TEMPLATE_ORIGINS.custom && template?.has_theme_file;
+  return template?.source === TEMPLATE_ORIGINS.custom && (Boolean(template?.plugin) || template?.has_theme_file);
   /* eslint-enable camelcase */
 }
 
@@ -24188,7 +24189,6 @@ function RenameFontSizeDialog({
  * WordPress dependencies
  */
 
-
 /**
  * Internal dependencies
  */
@@ -24196,7 +24196,11 @@ function RenameFontSizeDialog({
 
 
 const DEFAULT_UNITS = ['px', 'em', 'rem', 'vw', 'vh'];
-function SizeControl(props) {
+function SizeControl({
+  // Do not allow manipulation of margin bottom
+  __nextHasNoMarginBottom,
+  ...props
+}) {
   const {
     baseControlProps
   } = (0,external_wp_components_namespaceObject.useBaseControlProps)(props);
@@ -24204,7 +24208,8 @@ function SizeControl(props) {
     value,
     onChange,
     fallbackValue,
-    disabled
+    disabled,
+    label
   } = props;
   const units = (0,external_wp_components_namespaceObject.__experimentalUseCustomUnits)({
     availableUnits: DEFAULT_UNITS
@@ -24223,13 +24228,14 @@ function SizeControl(props) {
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
     ...baseControlProps,
+    __nextHasNoMarginBottom: true,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
         isBlock: true,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
           __next40pxDefaultSize: true,
           __nextHasNoMarginBottom: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Custom'),
+          label: label,
           hideLabelFromVision: true,
           value: value,
           onChange: handleUnitControlChange,
@@ -24245,7 +24251,7 @@ function SizeControl(props) {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
             __next40pxDefaultSize: true,
             __nextHasNoMarginBottom: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Custom Size'),
+            label: label,
             hideLabelFromVision: true,
             value: valueQuantity,
             initialPosition: fallbackValue,
@@ -28821,13 +28827,6 @@ const constants_LAYOUT_LIST = 'list';
 
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/integer.js
 /**
- * WordPress dependencies
- */
-
-
-
-
-/**
  * Internal dependencies
  */
 
@@ -28850,71 +28849,13 @@ function isValid(value, context) {
   }
   return true;
 }
-function Edit({
-  data,
-  field,
-  onChange,
-  hideLabelFromVision
-}) {
-  var _field$getValue;
-  const {
-    id,
-    label,
-    description
-  } = field;
-  const value = (_field$getValue = field.getValue({
-    item: data
-  })) !== null && _field$getValue !== void 0 ? _field$getValue : '';
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
-    ...prevItem,
-    [id]: newValue
-  })), [id, onChange]);
-  if (field.elements) {
-    const elements = [
-    /*
-     * Value can be undefined when:
-     *
-     * - the field is not required
-     * - in bulk editing
-     *
-     */
-    {
-      label: (0,external_wp_i18n_namespaceObject.__)('Select item'),
-      value: ''
-    }, ...field.elements];
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-      label: label,
-      value: value,
-      options: elements,
-      onChange: onChangeControl,
-      __next40pxDefaultSize: true,
-      __nextHasNoMarginBottom: true,
-      hideLabelFromVision: hideLabelFromVision
-    });
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
-    label: label,
-    help: description,
-    value: value,
-    onChange: onChangeControl,
-    __next40pxDefaultSize: true,
-    hideLabelFromVision: hideLabelFromVision
-  });
-}
 /* harmony default export */ const integer = ({
   sort,
   isValid,
-  Edit
+  Edit: 'integer'
 });
 
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/text.js
-/**
- * WordPress dependencies
- */
-
-
-
-
 /**
  * Internal dependencies
  */
@@ -28931,67 +28872,42 @@ function text_isValid(value, context) {
   }
   return true;
 }
-function text_Edit({
-  data,
-  field,
-  onChange,
-  hideLabelFromVision
-}) {
-  const {
-    id,
-    label,
-    placeholder
-  } = field;
-  const value = field.getValue({
-    item: data
-  });
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(prevItem => ({
-    ...prevItem,
-    [id]: newValue
-  })), [id, onChange]);
-  if (field.elements) {
-    const elements = [
-    /*
-     * Value can be undefined when:
-     *
-     * - the field is not required
-     * - in bulk editing
-     *
-     */
-    {
-      label: (0,external_wp_i18n_namespaceObject.__)('Select item'),
-      value: ''
-    }, ...field.elements];
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-      label: label,
-      value: value,
-      options: elements,
-      onChange: onChangeControl,
-      __next40pxDefaultSize: true,
-      __nextHasNoMarginBottom: true,
-      hideLabelFromVision: hideLabelFromVision
-    });
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-    label: label,
-    placeholder: placeholder,
-    value: value !== null && value !== void 0 ? value : '',
-    onChange: onChangeControl,
-    __next40pxDefaultSize: true,
-    __nextHasNoMarginBottom: true,
-    hideLabelFromVision: hideLabelFromVision
-  });
-}
 /* harmony default export */ const field_types_text = ({
   sort: text_sort,
   isValid: text_isValid,
-  Edit: text_Edit
+  Edit: 'text'
+});
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/datetime.js
+/**
+ * Internal dependencies
+ */
+
+function datetime_sort(a, b, direction) {
+  const timeA = new Date(a).getTime();
+  const timeB = new Date(b).getTime();
+  return direction === 'asc' ? timeA - timeB : timeB - timeA;
+}
+function datetime_isValid(value, context) {
+  if (context?.elements) {
+    const validValues = context?.elements.map(f => f.value);
+    if (!validValues.includes(value)) {
+      return false;
+    }
+  }
+  return true;
+}
+/* harmony default export */ const datetime = ({
+  sort: datetime_sort,
+  isValid: datetime_isValid,
+  Edit: 'datetime'
 });
 
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/field-types/index.js
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -29008,6 +28924,9 @@ function getFieldTypeDefinition(type) {
   }
   if ('text' === type) {
     return field_types_text;
+  }
+  if ('datetime' === type) {
+    return datetime;
   }
   return {
     sort: (a, b, direction) => {
@@ -29029,10 +28948,268 @@ function getFieldTypeDefinition(type) {
   };
 }
 
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/dataform-controls/datetime.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+function DateTime({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  const {
+    id,
+    label
+  } = field;
+  const value = field.getValue({
+    item: data
+  });
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: newValue
+  }), [id, onChange]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
+    className: "dataviews-controls__datetime",
+    children: [!hideLabelFromVision && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
+      as: "legend",
+      children: label
+    }), hideLabelFromVision && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
+      as: "legend",
+      children: label
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TimePicker, {
+      currentTime: value,
+      onChange: onChangeControl,
+      hideLabelFromVision: true
+    })]
+  });
+}
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/dataform-controls/integer.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+function Integer({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  var _field$getValue;
+  const {
+    id,
+    label,
+    description
+  } = field;
+  const value = (_field$getValue = field.getValue({
+    item: data
+  })) !== null && _field$getValue !== void 0 ? _field$getValue : '';
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: Number(newValue)
+  }), [id, onChange]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+    label: label,
+    help: description,
+    value: value,
+    onChange: onChangeControl,
+    __next40pxDefaultSize: true,
+    hideLabelFromVision: hideLabelFromVision
+  });
+}
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/dataform-controls/radio.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+function Radio({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  const {
+    id,
+    label
+  } = field;
+  const value = field.getValue({
+    item: data
+  });
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: newValue
+  }), [id, onChange]);
+  if (field.elements) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
+      label: label,
+      onChange: onChangeControl,
+      options: field.elements,
+      selected: value,
+      hideLabelFromVision: hideLabelFromVision
+    });
+  }
+  return null;
+}
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/dataform-controls/select.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+function Select({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  var _field$getValue, _field$elements;
+  const {
+    id,
+    label
+  } = field;
+  const value = (_field$getValue = field.getValue({
+    item: data
+  })) !== null && _field$getValue !== void 0 ? _field$getValue : '';
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: newValue
+  }), [id, onChange]);
+  const elements = [
+  /*
+   * Value can be undefined when:
+   *
+   * - the field is not required
+   * - in bulk editing
+   *
+   */
+  {
+    label: (0,external_wp_i18n_namespaceObject.__)('Select item'),
+    value: ''
+  }, ...((_field$elements = field?.elements) !== null && _field$elements !== void 0 ? _field$elements : [])];
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+    label: label,
+    value: value,
+    options: elements,
+    onChange: onChangeControl,
+    __next40pxDefaultSize: true,
+    __nextHasNoMarginBottom: true,
+    hideLabelFromVision: hideLabelFromVision
+  });
+}
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/dataform-controls/text.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+function Text({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  const {
+    id,
+    label,
+    placeholder
+  } = field;
+  const value = field.getValue({
+    item: data
+  });
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: newValue
+  }), [id, onChange]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+    label: label,
+    placeholder: placeholder,
+    value: value !== null && value !== void 0 ? value : '',
+    onChange: onChangeControl,
+    __next40pxDefaultSize: true,
+    __nextHasNoMarginBottom: true,
+    hideLabelFromVision: hideLabelFromVision
+  });
+}
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/dataform-controls/index.js
+/**
+ * External dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+const FORM_CONTROLS = {
+  datetime: DateTime,
+  integer: Integer,
+  radio: Radio,
+  select: Select,
+  text: Text
+};
+function getControl(field, fieldTypeDefinition) {
+  if (typeof field.Edit === 'function') {
+    return field.Edit;
+  }
+  if (typeof field.Edit === 'string') {
+    return getControlByType(field.Edit);
+  }
+  if (field.elements) {
+    return getControlByType('select');
+  }
+  if (typeof fieldTypeDefinition.Edit === 'string') {
+    return getControlByType(fieldTypeDefinition.Edit);
+  }
+  return fieldTypeDefinition.Edit;
+}
+function getControlByType(type) {
+  if (Object.keys(FORM_CONTROLS).includes(type)) {
+    return FORM_CONTROLS[type];
+  }
+  throw 'Control ' + type + ' not found';
+}
+
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/normalize-fields.js
 /**
  * Internal dependencies
  */
+
+
 
 /**
  * Apply default values and normalize the fields config.
@@ -29059,19 +29236,16 @@ function normalizeFields(fields) {
         item
       }), context);
     };
-    const Edit = field.Edit || fieldTypeDefinition.Edit;
+    const Edit = getControl(field, fieldTypeDefinition);
     const renderFromElements = ({
       item
     }) => {
       const value = getValue({
         item
       });
-      const label = field?.elements?.find(element => {
-        // Intentionally using == here to allow for type coercion.
-        // eslint-disable-next-line eqeqeq
-        return element.value == value;
-      })?.label;
-      return label || value;
+      return field?.elements?.find(element => element.value === value)?.label || getValue({
+        item
+      });
     };
     const render = field.render || (field.elements ? renderFromElements : getValue);
     return {
@@ -36856,6 +37030,7 @@ function ViewGrid({
  * External dependencies
  */
 
+// TODO: use the @wordpress/components one once public
 // Import CompositeStore type, which is not exported from @wordpress/components.
 // eslint-disable-next-line no-restricted-imports
 
@@ -37263,6 +37438,16 @@ function DataViewsPagination() {
     return null;
   }
   const currentPage = (_view$page = view.page) !== null && _view$page !== void 0 ? _view$page : 1;
+  const pageSelectOptions = Array.from(Array(totalPages)).map((_, i) => {
+    const page = i + 1;
+    return {
+      value: page.toString(),
+      label: page.toString(),
+      'aria-label': currentPage === page ? (0,external_wp_i18n_namespaceObject.sprintf)(
+      // translators: Current page number in total number of pages
+      (0,external_wp_i18n_namespaceObject.__)('Page %1$s of %2$s'), currentPage, totalPages) : page.toString()
+    };
+  });
   return !!totalItems && totalPages !== 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
     expanded: false,
     spacing: 6,
@@ -37271,29 +37456,27 @@ function DataViewsPagination() {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
       justify: "flex-start",
       expanded: false,
-      spacing: 2,
-      className: "dataviews-pagination__page-selection",
+      spacing: 1,
+      className: "dataviews-pagination__page-select",
       children: (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(
-      // translators: %s: Total number of pages.
-      (0,external_wp_i18n_namespaceObject._x)('Page <CurrentPageControl /> of %s', 'paging'), totalPages), {
-        CurrentPageControl: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+      // translators: 1: Current page number, 2: Total number of pages.
+      (0,external_wp_i18n_namespaceObject._x)('<div>Page</div>%1$s<div>of %2$s</div>', 'paging'), '<CurrentPage />', totalPages), {
+        div: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          "aria-hidden": true
+        }),
+        CurrentPage: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
           "aria-label": (0,external_wp_i18n_namespaceObject.__)('Current page'),
-          value: view.page?.toString(),
-          options: Array.from(Array(totalPages)).map((_, i) => {
-            const page = i + 1;
-            return {
-              value: page.toString(),
-              label: page.toString()
-            };
-          }),
+          value: currentPage.toString(),
+          options: pageSelectOptions,
           onChange: newValue => {
             onChangeView({
               ...view,
               page: +newValue
             });
           },
-          size: "compact",
-          __nextHasNoMarginBottom: true
+          size: "small",
+          __nextHasNoMarginBottom: true,
+          variant: "minimal"
         })
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -37605,7 +37788,6 @@ function FieldControl() {
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: field.label
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            className: "'dataviews-view-config__field-control-button",
             size: "compact",
             onClick: () => onChangeView({
               ...view,
@@ -38553,23 +38735,28 @@ function Media({
 const STATUSES = [{
   value: 'draft',
   label: (0,external_wp_i18n_namespaceObject.__)('Draft'),
-  icon: library_drafts
+  icon: library_drafts,
+  description: (0,external_wp_i18n_namespaceObject.__)('Not ready to publish.')
 }, {
   value: 'future',
   label: (0,external_wp_i18n_namespaceObject.__)('Scheduled'),
-  icon: library_scheduled
+  icon: library_scheduled,
+  description: (0,external_wp_i18n_namespaceObject.__)('Publish automatically on a chosen date.')
 }, {
   value: 'pending',
   label: (0,external_wp_i18n_namespaceObject.__)('Pending Review'),
-  icon: library_pending
+  icon: library_pending,
+  description: (0,external_wp_i18n_namespaceObject.__)('Waiting for review before publishing.')
 }, {
   value: 'private',
   label: (0,external_wp_i18n_namespaceObject.__)('Private'),
-  icon: not_allowed
+  icon: not_allowed,
+  description: (0,external_wp_i18n_namespaceObject.__)('Only visible to site admins and editors.')
 }, {
   value: 'publish',
   label: (0,external_wp_i18n_namespaceObject.__)('Published'),
-  icon: library_published
+  icon: library_published,
+  description: (0,external_wp_i18n_namespaceObject.__)('Visible to everyone.')
 }, {
   value: 'trash',
   label: (0,external_wp_i18n_namespaceObject.__)('Trash'),
@@ -38763,16 +38950,10 @@ function usePostFields(viewType) {
   }, {
     label: (0,external_wp_i18n_namespaceObject.__)('Status'),
     id: 'status',
-    getValue: ({
-      item
-    }) => {
-      var _STATUSES$find$label;
-      return (_STATUSES$find$label = STATUSES.find(({
-        value
-      }) => value === item.status)?.label) !== null && _STATUSES$find$label !== void 0 ? _STATUSES$find$label : item.status;
-    },
+    type: 'text',
     elements: STATUSES,
     render: PostStatusField,
+    Edit: 'radio',
     enableSorting: false,
     filterBy: {
       operators: [OPERATOR_IS_ANY]
@@ -38780,6 +38961,7 @@ function usePostFields(viewType) {
   }, {
     label: (0,external_wp_i18n_namespaceObject.__)('Date'),
     id: 'date',
+    type: 'datetime',
     render: ({
       item
     }) => {
@@ -38824,6 +39006,24 @@ function usePostFields(viewType) {
         children: getFormattedDate(item.date)
       });
     }
+  }, {
+    id: 'comment_status',
+    label: (0,external_wp_i18n_namespaceObject.__)('Discussion'),
+    type: 'text',
+    Edit: 'radio',
+    enableSorting: false,
+    filterBy: {
+      operators: []
+    },
+    elements: [{
+      value: 'open',
+      label: (0,external_wp_i18n_namespaceObject.__)('Open'),
+      description: (0,external_wp_i18n_namespaceObject.__)('Visitors can add new comments and replies.')
+    }, {
+      value: 'closed',
+      label: (0,external_wp_i18n_namespaceObject.__)('Closed'),
+      description: (0,external_wp_i18n_namespaceObject.__)('Visitors cannot add new comments or replies. Existing comments remain visible.')
+    }]
   }], [authors, viewType, frontPageId, postsPageId]);
   return {
     isLoading: isLoadingAuthors,
@@ -39154,7 +39354,7 @@ function PostList({
         size: "compact",
         isPressed: quickEdit,
         icon: drawer_right,
-        label: !quickEdit ? (0,external_wp_i18n_namespaceObject.__)('Show quick edit sidebar') : (0,external_wp_i18n_namespaceObject.__)('Close quick edit sidebar'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Toggle details panel'),
         onClick: () => {
           history.push({
             ...location.params,
@@ -45054,7 +45254,10 @@ function AddNewItemModalContent({
     },
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       spacing: "5",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl
+      // TODO: Switch to `true` (40px size) if possible
+      , {
+        __next40pxDefaultSize: false,
         __nextHasNoMarginBottom: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Name'),
         value: title,
@@ -45149,7 +45352,10 @@ function RenameItemModalContent({
     },
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       spacing: "5",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl
+      // TODO: Switch to `true` (40px size) if possible
+      , {
+        __next40pxDefaultSize: false,
         __nextHasNoMarginBottom: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Name'),
         value: title,
@@ -45366,22 +45572,6 @@ function DataViewsSidebarContent() {
   });
 }
 
-;// CONCATENATED MODULE: ./packages/dataviews/build-module/validation.js
-/**
- * Internal dependencies
- */
-
-function isItemValid(item, fields, form) {
-  const _fields = normalizeFields(fields.filter(({
-    id
-  }) => !!form.fields?.includes(id)));
-  return _fields.every(field => {
-    return field.isValid(item, {
-      elements: field.elements
-    });
-  });
-}
-
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/dataforms-layouts/regular/index.js
 /**
  * WordPress dependencies
@@ -45400,9 +45590,12 @@ function FormRegular({
   form,
   onChange
 }) {
-  const visibleFields = (0,external_wp_element_namespaceObject.useMemo)(() => normalizeFields(fields.filter(({
-    id
-  }) => !!form.fields?.includes(id))), [fields, form.fields]);
+  const visibleFields = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    var _form$fields;
+    return normalizeFields(((_form$fields = form.fields) !== null && _form$fields !== void 0 ? _form$fields : []).map(fieldId => fields.find(({
+      id
+    }) => id === fieldId)).filter(field => !!field));
+  }, [fields, form.fields]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 4,
     children: visibleFields.map(field => {
@@ -45525,9 +45718,12 @@ function FormPanel({
   form,
   onChange
 }) {
-  const visibleFields = (0,external_wp_element_namespaceObject.useMemo)(() => normalizeFields(fields.filter(({
-    id
-  }) => !!form.fields?.includes(id))), [fields, form.fields]);
+  const visibleFields = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    var _form$fields;
+    return normalizeFields(((_form$fields = form.fields) !== null && _form$fields !== void 0 ? _form$fields : []).map(fieldId => fields.find(({
+      id
+    }) => id === fieldId)).filter(field => !!field));
+  }, [fields, form.fields]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 2,
     children: visibleFields.map(field => {
@@ -45595,6 +45791,7 @@ function DataForm({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -45602,73 +45799,72 @@ function DataForm({
 
 
 
+
+const {
+  PostCardPanel
+} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
 function PostEditForm({
   postType,
   postId
 }) {
   const ids = (0,external_wp_element_namespaceObject.useMemo)(() => postId.split(','), [postId]);
   const {
-    initialEdits
+    record
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    if (ids.length !== 1) {}
     return {
-      initialEdits: ids.length === 1 ? select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', postType, ids[0]) : null
+      record: ids.length === 1 ? select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', postType, ids[0]) : null
     };
   }, [postType, ids]);
-  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
+  const [multiEdits, setMultiEdits] = (0,external_wp_element_namespaceObject.useState)({});
   const {
-    saveEntityRecord
+    editEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
   const {
-    fields
+    fields: _fields
   } = post_fields();
+  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => _fields?.map(field => {
+    if (field.id === 'status') {
+      return {
+        ...field,
+        elements: field.elements.filter(element => element.value !== 'trash')
+      };
+    }
+    return field;
+  }), [_fields]);
   const form = {
     type: 'panel',
-    fields: ['title', 'author']
+    fields: ['title', 'status', 'date', 'author', 'comment_status']
   };
-  const [edits, setEdits] = (0,external_wp_element_namespaceObject.useState)({});
-  const itemWithEdits = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return {
-      ...initialEdits,
-      ...edits
-    };
-  }, [initialEdits, edits]);
-  const onSubmit = async event => {
-    event.preventDefault();
-    if (!isItemValid(itemWithEdits, fields, form)) {
-      return;
-    }
-    const {
-      getEntityRecord
-    } = registry.resolveSelect(external_wp_coreData_namespaceObject.store);
+  const onChange = edits => {
     for (const id of ids) {
-      const item = await getEntityRecord('postType', postType, id);
-      saveEntityRecord('postType', postType, {
-        ...item,
-        ...edits
-      });
+      if (edits.status !== 'future' && record.status === 'future' && new Date(record.date) > new Date()) {
+        edits.date = null;
+      }
+      if (edits.status === 'private' && record.password) {
+        edits.password = '';
+      }
+      editEntityRecord('postType', postType, id, edits);
+      if (ids.length > 1) {
+        setMultiEdits(prev => ({
+          ...prev,
+          ...edits
+        }));
+      }
     }
-    setEdits({});
   };
-  const isUpdateDisabled = !isItemValid(itemWithEdits, fields, form);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    setMultiEdits({});
+  }, [ids]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-    as: "form",
-    onSubmit: onSubmit,
     spacing: 4,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
-      data: itemWithEdits,
+    children: [ids.length === 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostCardPanel, {
+      postType: postType,
+      postId: ids[0]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
+      data: ids.length === 1 ? record : multiEdits,
       fields: fields,
       form: form,
-      onChange: setEdits
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        variant: "primary",
-        type: "submit",
-        accessibleWhenDisabled: true,
-        disabled: isUpdateDisabled,
-        __next40pxDefaultSize: true,
-        children: (0,external_wp_i18n_namespaceObject.__)('Update')
-      })
+      onChange: onChange
     })]
   });
 }

@@ -1537,307 +1537,6 @@ module.exports.createColors = create;
 
 /***/ }),
 
-/***/ 6807:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-
-/***/ }),
-
-/***/ 5959:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-__webpack_require__(6807);
-const postcss_1 = __importDefault(__webpack_require__(4743));
-const PostCSSPlugin_1 = __importDefault(__webpack_require__(6764));
-module.exports = (0, PostCSSPlugin_1.default)(postcss_1.default);
-
-
-/***/ }),
-
-/***/ 3626:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.prefixWrapCSSSelector = exports.prefixWrapCSSRule = void 0;
-const CSSSelector_1 = __webpack_require__(1146);
-const prefixWrapCSSRule = (cssRule, nested, ignoredSelectors, prefixSelector, prefixRootTags) => {
-    // Check each rule to see if it exactly matches our prefix selector, when
-    // this happens, don't try to prefix that selector.
-    const rules = cssRule.selector
-        .split(",")
-        .filter((selector) => !(0, CSSSelector_1.cssRuleMatchesPrefixSelector)({ selector: selector }, prefixSelector));
-    if (rules.length === 0) {
-        return;
-    }
-    cssRule.selector = rules
-        .map((cssSelector) => (0, exports.prefixWrapCSSSelector)(cssSelector, cssRule, nested, ignoredSelectors, prefixSelector, prefixRootTags))
-        .filter(CSSSelector_1.isValidCSSSelector)
-        .join(", ");
-};
-exports.prefixWrapCSSRule = prefixWrapCSSRule;
-const prefixWrapCSSSelector = (cssSelector, cssRule, nested, ignoredSelectors, prefixSelector, prefixRootTags) => {
-    const cleanedSelector = (0, CSSSelector_1.cleanSelector)(cssSelector);
-    if (cleanedSelector === "") {
-        return null;
-    }
-    // Don't prefix nested selected.
-    if (nested !== null && cleanedSelector.startsWith(nested, 0)) {
-        return cleanedSelector;
-    }
-    // Do not prefix keyframes rules.
-    if ((0, CSSSelector_1.isKeyframes)(cssRule)) {
-        return cleanedSelector;
-    }
-    // Check for matching ignored selectors
-    if (ignoredSelectors.some((currentValue) => cleanedSelector.match(currentValue))) {
-        return cleanedSelector;
-    }
-    // Anything other than a root tag is always prefixed.
-    if ((0, CSSSelector_1.isNotRootTag)(cleanedSelector)) {
-        return prefixSelector + " " + cleanedSelector;
-    }
-    // Handle special case where root tags should be converted into classes
-    // rather than being replaced.
-    if (prefixRootTags) {
-        return prefixSelector + " ." + cleanedSelector;
-    }
-    // HTML and Body elements cannot be contained within our container so lets
-    // extract their styles.
-    return cleanedSelector.replace(/^(body|html|:root)/, prefixSelector);
-};
-exports.prefixWrapCSSSelector = prefixWrapCSSSelector;
-
-
-/***/ }),
-
-/***/ 1146:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.cssRuleMatchesPrefixSelector = exports.isNotRootTag = exports.isKeyframes = exports.cleanSelector = exports.isValidCSSSelector = void 0;
-const ANY_WHITESPACE_AT_BEGINNING_OR_END = /(^\s*|\s*$)/g;
-const IS_ROOT_TAG = /^(body|html|:root).*$/;
-const isValidCSSSelector = (cssSelector) => {
-    return cssSelector !== null;
-};
-exports.isValidCSSSelector = isValidCSSSelector;
-const cleanSelector = (cssSelector) => {
-    return cssSelector.replace(ANY_WHITESPACE_AT_BEGINNING_OR_END, "");
-};
-exports.cleanSelector = cleanSelector;
-const isKeyframes = (cssRule) => {
-    const { parent } = cssRule;
-    const parentReal = parent;
-    // @see https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule
-    return (parent !== undefined &&
-        parentReal.type === "atrule" &&
-        parentReal.name !== undefined &&
-        parentReal.name.match(/keyframes$/) !== null);
-};
-exports.isKeyframes = isKeyframes;
-const isNotRootTag = (cleanSelector) => {
-    return !cleanSelector.match(IS_ROOT_TAG);
-};
-exports.isNotRootTag = isNotRootTag;
-const cssRuleMatchesPrefixSelector = (cssRule, prefixSelector) => {
-    const escapedPrefixSelector = prefixSelector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    // eslint-disable-next-line security-node/non-literal-reg-expr
-    const isPrefixSelector = new RegExp(`^${escapedPrefixSelector}$`);
-    return isPrefixSelector.test(cssRule.selector);
-};
-exports.cssRuleMatchesPrefixSelector = cssRuleMatchesPrefixSelector;
-
-
-/***/ }),
-
-/***/ 5318:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.shouldIncludeFilePath = void 0;
-const shouldIncludeFilePath = (filePath, whitelist, blacklist) => {
-    // If whitelist exists, check if rule is contained within it.
-    if (whitelist.length > 0) {
-        return (filePath != undefined &&
-            whitelist.some((currentValue) => filePath.match(currentValue)));
-    }
-    // If blacklist exists, check if rule is not contained within it.
-    if (blacklist.length > 0) {
-        return !(filePath != undefined &&
-            blacklist.some((currentValue) => filePath.match(currentValue)));
-    }
-    // In all other cases, presume rule should be prefixed.
-    return true;
-};
-exports.shouldIncludeFilePath = shouldIncludeFilePath;
-
-
-/***/ }),
-
-/***/ 504:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.asPostCSSv7PluginGenerator = void 0;
-const PostCSSPrefixWrap_1 = __importStar(__webpack_require__(6483));
-const asPostCSSv7PluginGenerator = (postcss) => {
-    return postcss.plugin(PostCSSPrefixWrap_1.PLUGIN_NAME, (prefixSelector, options) => {
-        return new PostCSSPrefixWrap_1.default(prefixSelector, options).prefix();
-    });
-};
-exports.asPostCSSv7PluginGenerator = asPostCSSv7PluginGenerator;
-
-
-/***/ }),
-
-/***/ 2210:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.asPostCSSv8PluginGenerator = exports.isPostCSSv8 = void 0;
-const PostCSSPrefixWrap_1 = __importStar(__webpack_require__(6483));
-const isPostCSSv8 = (postcss) => postcss.Root !== undefined;
-exports.isPostCSSv8 = isPostCSSv8;
-const asPostCSSv8PluginGenerator = () => {
-    return (prefixSelector, options) => {
-        const plugin = new PostCSSPrefixWrap_1.default(prefixSelector, options);
-        return {
-            postcssPlugin: PostCSSPrefixWrap_1.PLUGIN_NAME,
-            Once(root) {
-                plugin.prefixRoot(root);
-            },
-        };
-    };
-};
-exports.asPostCSSv8PluginGenerator = asPostCSSv8PluginGenerator;
-
-
-/***/ }),
-
-/***/ 6764:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-const PostCSS8Plugin_1 = __webpack_require__(2210);
-const PostCSS7Plugin_1 = __webpack_require__(504);
-module.exports = (postcss) => {
-    if ((0, PostCSS8Plugin_1.isPostCSSv8)(postcss)) {
-        return (0, PostCSS8Plugin_1.asPostCSSv8PluginGenerator)();
-    }
-    else {
-        return (0, PostCSS7Plugin_1.asPostCSSv7PluginGenerator)(postcss);
-    }
-};
-
-
-/***/ }),
-
-/***/ 6483:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.PLUGIN_NAME = void 0;
-const CSSRuleWrapper_1 = __webpack_require__(3626);
-const FileIncludeList_1 = __webpack_require__(5318);
-exports.PLUGIN_NAME = "postcss-prefixwrap";
-class PostCSSPrefixWrap {
-    constructor(prefixSelector, options = {}) {
-        this.blacklist = options.blacklist ?? [];
-        this.ignoredSelectors = options.ignoredSelectors ?? [];
-        this.isPrefixSelector = new RegExp(
-        // eslint-disable-next-line security-node/non-literal-reg-expr
-        `^${prefixSelector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`);
-        this.prefixRootTags = options.prefixRootTags ?? false;
-        this.prefixSelector = prefixSelector;
-        this.whitelist = options.whitelist ?? [];
-        this.nested = options.nested ?? null;
-    }
-    prefixRoot(css) {
-        if ((0, FileIncludeList_1.shouldIncludeFilePath)(css.source?.input?.file, this.whitelist, this.blacklist)) {
-            css.walkRules((cssRule) => {
-                (0, CSSRuleWrapper_1.prefixWrapCSSRule)(cssRule, this.nested, this.ignoredSelectors, this.prefixSelector, this.prefixRootTags);
-            });
-        }
-    }
-    prefix() {
-        return (css) => {
-            this.prefixRoot(css);
-        };
-    }
-}
-exports["default"] = PostCSSPrefixWrap;
-
-
-/***/ }),
-
 /***/ 2433:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -6949,6 +6648,312 @@ module.exports.remove = removeAccents;
 
 /***/ }),
 
+/***/ 9451:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+
+/***/ }),
+
+/***/ 9303:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+__webpack_require__(9451);
+const postcss_1 = __importDefault(__webpack_require__(4743));
+const PostCSSPlugin_1 = __importDefault(__webpack_require__(8584));
+module.exports = (0, PostCSSPlugin_1.default)(postcss_1.default);
+
+
+/***/ }),
+
+/***/ 214:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.prefixWrapCSSSelector = exports.prefixWrapCSSRule = void 0;
+const CSSSelector_1 = __webpack_require__(2445);
+const prefixWrapCSSRule = (cssRule, nested, ignoredSelectors, prefixSelector, prefixRootTags) => {
+    // Check each rule to see if it exactly matches our prefix selector, when
+    // this happens, don't try to prefix that selector.
+    const rules = cssRule.selectors.filter((selector) => !(0, CSSSelector_1.cssRuleMatchesPrefixSelector)({ selector: selector }, prefixSelector));
+    if (rules.length === 0) {
+        return;
+    }
+    cssRule.selector = rules
+        .map((cssSelector) => (0, exports.prefixWrapCSSSelector)(cssSelector, cssRule, nested, ignoredSelectors, prefixSelector, prefixRootTags))
+        .filter(CSSSelector_1.isValidCSSSelector)
+        .join(", ");
+};
+exports.prefixWrapCSSRule = prefixWrapCSSRule;
+const prefixWrapCSSSelector = (cssSelector, cssRule, nested, ignoredSelectors, prefixSelector, prefixRootTags) => {
+    const cleanedSelector = (0, CSSSelector_1.cleanSelector)(cssSelector);
+    if (cleanedSelector === "") {
+        return null;
+    }
+    // Don't prefix nested selected.
+    if (nested !== null && cleanedSelector.startsWith(nested, 0)) {
+        return cleanedSelector;
+    }
+    // Do not prefix keyframes rules.
+    if ((0, CSSSelector_1.isKeyframes)(cssRule)) {
+        return cleanedSelector;
+    }
+    // Check for matching ignored selectors
+    if (ignoredSelectors.some((currentValue) => cleanedSelector.match(currentValue))) {
+        return cleanedSelector;
+    }
+    // Anything other than a root tag is always prefixed.
+    if ((0, CSSSelector_1.isNotRootTag)(cleanedSelector)) {
+        return prefixSelector + " " + cleanedSelector;
+    }
+    // Handle special case where root tags should be converted into classes
+    // rather than being replaced.
+    if (prefixRootTags) {
+        return prefixSelector + " ." + cleanedSelector;
+    }
+    // HTML and Body elements cannot be contained within our container so lets
+    // extract their styles.
+    return cleanedSelector.replace(/^(body|html|:root)/, prefixSelector);
+};
+exports.prefixWrapCSSSelector = prefixWrapCSSSelector;
+
+
+/***/ }),
+
+/***/ 2445:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.cssRuleMatchesPrefixSelector = exports.isNotRootTag = exports.isKeyframes = exports.cleanSelector = exports.isValidCSSSelector = void 0;
+const ANY_WHITESPACE_AT_BEGINNING_OR_END = /(^\s*|\s*$)/g;
+const IS_ROOT_TAG = /^(body|html|:root).*$/;
+const isValidCSSSelector = (cssSelector) => {
+    return cssSelector !== null;
+};
+exports.isValidCSSSelector = isValidCSSSelector;
+const cleanSelector = (cssSelector) => {
+    return cssSelector.replace(ANY_WHITESPACE_AT_BEGINNING_OR_END, "");
+};
+exports.cleanSelector = cleanSelector;
+const isKeyframes = (cssRule) => {
+    const { parent } = cssRule;
+    const parentReal = parent;
+    // @see https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule
+    return (parent !== undefined &&
+        parentReal.type === "atrule" &&
+        parentReal.name !== undefined &&
+        parentReal.name.match(/keyframes$/) !== null);
+};
+exports.isKeyframes = isKeyframes;
+const isNotRootTag = (cleanSelector) => {
+    return !cleanSelector.match(IS_ROOT_TAG);
+};
+exports.isNotRootTag = isNotRootTag;
+const cssRuleMatchesPrefixSelector = (cssRule, prefixSelector) => {
+    const escapedPrefixSelector = prefixSelector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    // eslint-disable-next-line security-node/non-literal-reg-expr
+    const isPrefixSelector = new RegExp(`^${escapedPrefixSelector}$`);
+    return isPrefixSelector.test(cssRule.selector);
+};
+exports.cssRuleMatchesPrefixSelector = cssRuleMatchesPrefixSelector;
+
+
+/***/ }),
+
+/***/ 5547:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.shouldIncludeFilePath = void 0;
+const shouldIncludeFilePath = (filePath, whitelist, blacklist) => {
+    // If whitelist exists, check if rule is contained within it.
+    if (whitelist.length > 0) {
+        return (filePath != undefined &&
+            whitelist.some((currentValue) => filePath.match(currentValue)));
+    }
+    // If blacklist exists, check if rule is not contained within it.
+    if (blacklist.length > 0) {
+        return !(filePath != undefined &&
+            blacklist.some((currentValue) => filePath.match(currentValue)));
+    }
+    // In all other cases, presume rule should be prefixed.
+    return true;
+};
+exports.shouldIncludeFilePath = shouldIncludeFilePath;
+
+
+/***/ }),
+
+/***/ 1596:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.asPostCSSv7PluginGenerator = void 0;
+const PostCSSPrefixWrap_1 = __importStar(__webpack_require__(762));
+const asPostCSSv7PluginGenerator = (postcss) => {
+    return postcss.plugin(PostCSSPrefixWrap_1.PLUGIN_NAME, (prefixSelector, options) => {
+        return new PostCSSPrefixWrap_1.default(prefixSelector, options).prefix();
+    });
+};
+exports.asPostCSSv7PluginGenerator = asPostCSSv7PluginGenerator;
+
+
+/***/ }),
+
+/***/ 9240:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.asPostCSSv8PluginGenerator = exports.isPostCSSv8 = void 0;
+const PostCSSPrefixWrap_1 = __importStar(__webpack_require__(762));
+const isPostCSSv8 = (postcss) => postcss.Root !== undefined;
+exports.isPostCSSv8 = isPostCSSv8;
+const asPostCSSv8PluginGenerator = () => {
+    return (prefixSelector, options) => {
+        const plugin = new PostCSSPrefixWrap_1.default(prefixSelector, options);
+        return {
+            postcssPlugin: PostCSSPrefixWrap_1.PLUGIN_NAME,
+            Once(root) {
+                plugin.prefixRoot(root);
+            },
+        };
+    };
+};
+exports.asPostCSSv8PluginGenerator = asPostCSSv8PluginGenerator;
+
+
+/***/ }),
+
+/***/ 8584:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+const PostCSS8Plugin_1 = __webpack_require__(9240);
+const PostCSS7Plugin_1 = __webpack_require__(1596);
+module.exports = (postcss) => {
+    if ((0, PostCSS8Plugin_1.isPostCSSv8)(postcss)) {
+        return (0, PostCSS8Plugin_1.asPostCSSv8PluginGenerator)();
+    }
+    else {
+        return (0, PostCSS7Plugin_1.asPostCSSv7PluginGenerator)(postcss);
+    }
+};
+
+
+/***/ }),
+
+/***/ 762:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PLUGIN_NAME = void 0;
+const CSSRuleWrapper_1 = __webpack_require__(214);
+const FileIncludeList_1 = __webpack_require__(5547);
+exports.PLUGIN_NAME = "postcss-prefixwrap";
+class PostCSSPrefixWrap {
+    blacklist;
+    ignoredSelectors;
+    isPrefixSelector;
+    prefixRootTags;
+    prefixSelector;
+    whitelist;
+    nested;
+    constructor(prefixSelector, options = {}) {
+        this.blacklist = options.blacklist ?? [];
+        this.ignoredSelectors = options.ignoredSelectors ?? [];
+        this.isPrefixSelector = new RegExp(
+        // eslint-disable-next-line security-node/non-literal-reg-expr
+        `^${prefixSelector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`);
+        this.prefixRootTags = options.prefixRootTags ?? false;
+        this.prefixSelector = prefixSelector;
+        this.whitelist = options.whitelist ?? [];
+        this.nested = options.nested ?? null;
+    }
+    prefixRoot(css) {
+        if ((0, FileIncludeList_1.shouldIncludeFilePath)(css.source?.input?.file, this.whitelist, this.blacklist)) {
+            css.walkRules((cssRule) => {
+                (0, CSSRuleWrapper_1.prefixWrapCSSRule)(cssRule, this.nested, this.ignoredSelectors, this.prefixSelector, this.prefixRootTags);
+            });
+        }
+    }
+    prefix() {
+        return (css) => {
+            this.prefixRoot(css);
+        };
+    }
+}
+exports["default"] = PostCSSPrefixWrap;
+
+
+/***/ }),
+
 /***/ 4833:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -7758,7 +7763,7 @@ __webpack_require__.d(__webpack_exports__, {
   BlockTools: () => (/* reexport */ BlockTools),
   BlockVerticalAlignmentControl: () => (/* reexport */ BlockVerticalAlignmentControl),
   BlockVerticalAlignmentToolbar: () => (/* reexport */ BlockVerticalAlignmentToolbar),
-  ButtonBlockAppender: () => (/* reexport */ components_button_block_appender),
+  ButtonBlockAppender: () => (/* reexport */ button_block_appender),
   ButtonBlockerAppender: () => (/* reexport */ ButtonBlockerAppender),
   ColorPalette: () => (/* reexport */ color_palette),
   ColorPaletteControl: () => (/* reexport */ ColorPaletteControl),
@@ -7909,6 +7914,7 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   getEnabledClientIdsTree: () => (getEnabledClientIdsTree),
   getExpandedBlock: () => (getExpandedBlock),
   getInserterMediaCategories: () => (getInserterMediaCategories),
+  getInserterSearchInputRef: () => (getInserterSearchInputRef),
   getLastFocus: () => (getLastFocus),
   getLastInsertedBlocksClientIds: () => (getLastInsertedBlocksClientIds),
   getOpenedBlockSettingsMenu: () => (getOpenedBlockSettingsMenu),
@@ -9922,6 +9928,8 @@ function insertionPoint(state = null, action) {
         return es6_default()(state, nextState) ? state : nextState;
       }
     case 'HIDE_INSERTION_POINT':
+    case 'CLEAR_SELECTED_BLOCK':
+    case 'SELECT_BLOCK':
       return null;
   }
   return state;
@@ -10356,6 +10364,11 @@ function hoveredBlockClientId(state = false, action) {
   }
   return state;
 }
+function inserterSearchInputRef(state = {
+  current: null
+}) {
+  return state;
+}
 const combinedReducers = (0,external_wp_data_namespaceObject.combineReducers)({
   blocks,
   isDragging,
@@ -10388,7 +10401,8 @@ const combinedReducers = (0,external_wp_data_namespaceObject.combineReducers)({
   blockRemovalRules,
   openedBlockSettingsMenu,
   registeredInserterMediaCategories,
-  hoveredBlockClientId
+  hoveredBlockClientId,
+  inserterSearchInputRef
 });
 function withAutomaticChangeReset(reducer) {
   return (state, action) => {
@@ -11219,6 +11233,9 @@ function getTemporarilyEditingAsBlocks(state) {
  */
 function getTemporarilyEditingFocusModeToRevert(state) {
   return state.temporarilyEditingFocusModeRevert;
+}
+function getInserterSearchInputRef(state) {
+  return state.inserterSearchInputRef;
 }
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/store/selectors.js
@@ -30463,8 +30480,8 @@ function SpacingInputControl({
     key: index,
     name: size.name
   }));
-  const marks = spacingSizes.map((_newValue, index) => ({
-    value: index,
+  const marks = spacingSizes.slice(1, spacingSizes.length - 1).map((_newValue, index) => ({
+    value: index + 1,
     label: undefined
   }));
   const sideLabel = ALL_SIDES.includes(side) && showSideInLabel ? LABELS[side] : '';
@@ -34698,7 +34715,7 @@ function getLayoutStyles({
               // For fallback gap styles, use lower specificity, to ensure styles do not unintentionally override theme styles.
               combinedSelector = selector === ROOT_BLOCK_SELECTOR ? `:where(.${className}${spacingStyle?.selector || ''})` : `:where(${selector}.${className}${spacingStyle?.selector || ''})`;
             } else {
-              combinedSelector = selector === ROOT_BLOCK_SELECTOR ? `.${className}${spacingStyle?.selector || ''}` : `${selector}-${className}${spacingStyle?.selector || ''}`;
+              combinedSelector = selector === ROOT_BLOCK_SELECTOR ? `:root :where(.${className})${spacingStyle?.selector || ''}` : `:root :where(${selector}-${className})${spacingStyle?.selector || ''}`;
             }
             ruleset += `${combinedSelector} { ${declarations.join('; ')}; }`;
           }
@@ -42760,13 +42777,13 @@ function shimAttributeSource(settings, name) {
  *
  * export default function Edit() {
  *
- *   const blockProps = useBlockProps(
+ *   const blockProps = useBlockProps( {
  *     className: 'my-custom-class',
  *     style: {
  *       color: '#222222',
  *       backgroundColor: '#eeeeee'
  *     }
- *   )
+ *   } )
  *
  *   return (
  *	    <div { ...blockProps }>
@@ -43702,7 +43719,7 @@ function DefaultAppender({
   }
 
   // Fallback in case the default block can't be inserted.
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(components_button_block_appender, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(button_block_appender, {
     rootClientId: rootClientId,
     className: "block-list-appender__toggle"
   });
@@ -44062,7 +44079,8 @@ function InbetweenInsertionPointPopover({
     rootClientId,
     isInserterShown,
     isDistractionFree,
-    isNavigationMode
+    isNavigationMode,
+    isZoomOutMode
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockOrder,
@@ -44072,7 +44090,8 @@ function InbetweenInsertionPointPopover({
       getPreviousBlockClientId,
       getNextBlockClientId,
       getSettings,
-      isNavigationMode: _isNavigationMode
+      isNavigationMode: _isNavigationMode,
+      __unstableGetEditorMode
     } = select(store);
     const insertionPoint = getBlockInsertionPoint();
     const order = getBlockOrder(insertionPoint.rootClientId);
@@ -44095,7 +44114,8 @@ function InbetweenInsertionPointPopover({
       rootClientId: insertionPoint.rootClientId,
       isNavigationMode: _isNavigationMode(),
       isDistractionFree: settings.isDistractionFree,
-      isInserterShown: insertionPoint?.__unstableWithInserter
+      isInserterShown: insertionPoint?.__unstableWithInserter,
+      isZoomOutMode: __unstableGetEditorMode() === 'zoom-out'
     };
   }, []);
   const {
@@ -44159,6 +44179,14 @@ function InbetweenInsertionPointPopover({
     }
   };
   if (isDistractionFree && !isNavigationMode) {
+    return null;
+  }
+
+  // Zoom out mode should only show the insertion point for the insert operation.
+  // Other operations such as "group" are when the editor tries to create a row
+  // block by grouping the block being dragged with the block it's being dropped
+  // onto.
+  if (isZoomOutMode && operation !== 'insert') {
     return null;
   }
   const orientationClassname = orientation === 'horizontal' || operation === 'group' ? 'is-horizontal' : 'is-vertical';
@@ -44270,6 +44298,7 @@ function useInBetweenInserter() {
     getBlockIndex,
     isMultiSelecting,
     getSelectedBlockClientIds,
+    getSettings,
     getTemplateLock,
     __unstableIsWithinBlockOverlay,
     getBlockEditingMode,
@@ -44310,7 +44339,9 @@ function useInBetweenInserter() {
       if (getTemplateLock(rootClientId) || getBlockEditingMode(rootClientId) === 'disabled' || getBlockName(rootClientId) === 'core/block' || rootClientId && getBlockAttributes(rootClientId).layout?.isManualPlacement) {
         return;
       }
-      const orientation = getBlockListSettings(rootClientId)?.orientation || 'vertical';
+      const blockListSettings = getBlockListSettings(rootClientId);
+      const orientation = blockListSettings?.orientation || 'vertical';
+      const captureToolbars = !!blockListSettings?.__experimentalCaptureToolbars;
       const offsetTop = event.clientY;
       const offsetLeft = event.clientX;
       const children = Array.from(event.target.children);
@@ -44340,9 +44371,13 @@ function useInBetweenInserter() {
         return;
       }
 
-      // Don't show the inserter when hovering above (conflicts with
-      // block toolbar) or inside selected block(s).
-      if (getSelectedBlockClientIds().includes(clientId)) {
+      // Don't show the inserter if the following conditions are met,
+      // as it conflicts with the block toolbar:
+      // 1. when hovering above or inside selected block(s)
+      // 2. when the orientation is vertical
+      // 3. when the __experimentalCaptureToolbars is not enabled
+      // 4. when the Top Toolbar is not disabled
+      if (getSelectedBlockClientIds().includes(clientId) && orientation === 'vertical' && !captureToolbars && !getSettings().hasFixedToolbar) {
         return;
       }
       const elementRect = element.getBoundingClientRect();
@@ -44429,28 +44464,6 @@ function BlockSelectionClearer(props) {
   });
 }
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inner-blocks/with-client-id.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-const withClientId = (0,external_wp_compose_namespaceObject.createHigherOrderComponent)(WrappedComponent => props => {
-  const {
-    clientId
-  } = useBlockEditContext();
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WrappedComponent, {
-    ...props,
-    clientId: clientId
-  });
-}, 'withClientId');
-/* harmony default export */ const with_client_id = (withClientId);
-
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inner-blocks/button-block-appender.js
 /**
  * External dependencies
@@ -44463,14 +44476,16 @@ const withClientId = (0,external_wp_compose_namespaceObject.createHigherOrderCom
 
 
 
-const ButtonBlockAppender = ({
-  clientId,
+function ButtonBlockAppender({
   showSeparator,
   isFloating,
   onAddBlock,
   isToggle
-}) => {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(components_button_block_appender, {
+}) {
+  const {
+    clientId
+  } = useBlockEditContext();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(button_block_appender, {
     className: dist_clsx({
       'block-list-appender__toggle': isToggle
     }),
@@ -44479,41 +44494,23 @@ const ButtonBlockAppender = ({
     isFloating: isFloating,
     onAddBlock: onAddBlock
   });
-};
-/* harmony default export */ const button_block_appender = (with_client_id(ButtonBlockAppender));
+}
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inner-blocks/default-block-appender.js
-/**
- * WordPress dependencies
- */
-
-
-
 /**
  * Internal dependencies
  */
 
 
 
-
-const default_block_appender_DefaultBlockAppender = ({
-  clientId
-}) => {
+function default_block_appender_DefaultBlockAppender() {
+  const {
+    clientId
+  } = useBlockEditContext();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DefaultBlockAppender, {
     rootClientId: clientId
   });
-};
-/* harmony default export */ const default_block_appender = ((0,external_wp_compose_namespaceObject.compose)([with_client_id, (0,external_wp_data_namespaceObject.withSelect)((select, {
-  clientId
-}) => {
-  const {
-    getBlockOrder
-  } = select(store);
-  const blockClientIds = getBlockOrder(clientId);
-  return {
-    lastBlockClientId: blockClientIds[blockClientIds.length - 1]
-  };
-})])(default_block_appender_DefaultBlockAppender));
+}
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inner-blocks/use-nested-settings-update.js
 /**
@@ -45667,15 +45664,6 @@ function useInnerBlocksProps(props = {}, options = {}) {
       getSettings
     } = unlock(select(store));
     let _isDropZoneDisabled;
-    // In zoom out mode, we want to disable the drop zone for the sections.
-    // The inner blocks belonging to the section drop zone is
-    // already disabled by the blocks themselves being disabled.
-    if (__unstableGetEditorMode() === 'zoom-out') {
-      const {
-        sectionRootClientId
-      } = unlock(getSettings());
-      _isDropZoneDisabled = clientId !== sectionRootClientId;
-    }
     if (!clientId) {
       return {
         isDropZoneDisabled: _isDropZoneDisabled
@@ -45690,8 +45678,15 @@ function useInnerBlocksProps(props = {}, options = {}) {
     const blockEditingMode = getBlockEditingMode(clientId);
     const parentClientId = getBlockRootClientId(clientId);
     const [defaultLayout] = getBlockSettings(clientId, 'layout');
-    if (_isDropZoneDisabled !== undefined) {
-      _isDropZoneDisabled = blockEditingMode === 'disabled';
+    _isDropZoneDisabled = blockEditingMode === 'disabled';
+    if (__unstableGetEditorMode() === 'zoom-out') {
+      // In zoom out mode, we want to disable the drop zone for the sections.
+      // The inner blocks belonging to the section drop zone is
+      // already disabled by the blocks themselves being disabled.
+      const {
+        sectionRootClientId
+      } = unlock(getSettings());
+      _isDropZoneDisabled = clientId !== sectionRootClientId;
     }
     return {
       __experimentalCaptureToolbars: hasBlockSupport(blockName, '__experimentalExposeControlsToChildren', false),
@@ -45747,8 +45742,8 @@ function useInnerBlocksProps(props = {}, options = {}) {
 useInnerBlocksProps.save = external_wp_blocks_namespaceObject.__unstableGetInnerBlocksProps;
 
 // Expose default appender placeholders as components.
-ForwardedInnerBlocks.DefaultBlockAppender = default_block_appender;
-ForwardedInnerBlocks.ButtonBlockAppender = button_block_appender;
+ForwardedInnerBlocks.DefaultBlockAppender = default_block_appender_DefaultBlockAppender;
+ForwardedInnerBlocks.ButtonBlockAppender = ButtonBlockAppender;
 ForwardedInnerBlocks.Content = () => useInnerBlocksProps.save().children;
 
 /**
@@ -48194,8 +48189,10 @@ function Iframe({
   }, []);
   const isZoomedOut = scale !== 1;
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    prevContainerWidth.current = containerWidth;
-  }, [containerWidth]);
+    if (!isZoomedOut) {
+      prevContainerWidth.current = containerWidth;
+    }
+  }, [containerWidth, isZoomedOut]);
   const disabledRef = (0,external_wp_compose_namespaceObject.useDisabled)({
     isDisabled: !readonly
   });
@@ -48386,8 +48383,8 @@ const Rule = postcss.Rule
 const postcss_Root = postcss.Root
 const Node = postcss.Node
 
-// EXTERNAL MODULE: ./node_modules/postcss-prefixwrap/build/index.js
-var build = __webpack_require__(5959);
+// EXTERNAL MODULE: ./packages/block-editor/node_modules/postcss-prefixwrap/build/index.js
+var build = __webpack_require__(9303);
 var build_default = /*#__PURE__*/__webpack_require__.n(build);
 // EXTERNAL MODULE: ./packages/block-editor/node_modules/postcss-urlrebase/index.js
 var postcss_urlrebase = __webpack_require__(4833);
@@ -52220,6 +52217,7 @@ function useZoomOut(zoomOut = true) {
 
 
 
+
 const NOOP = () => {};
 function InserterMenu({
   rootClientId,
@@ -52236,13 +52234,33 @@ function InserterMenu({
   __experimentalInitialTab,
   __experimentalInitialCategory
 }, ref) {
-  const isZoomOutMode = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).__unstableGetEditorMode() === 'zoom-out', []);
+  const {
+    isZoomOutMode,
+    inserterSearchInputRef
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      __unstableGetEditorMode,
+      getInserterSearchInputRef
+    } = unlock(select(store));
+    return {
+      isZoomOutMode: __unstableGetEditorMode() === 'zoom-out',
+      inserterSearchInputRef: getInserterSearchInputRef()
+    };
+  }, []);
   const [filterValue, setFilterValue, delayedFilterValue] = (0,external_wp_compose_namespaceObject.useDebouncedInput)(__experimentalFilterValue);
   const [hoveredItem, setHoveredItem] = (0,external_wp_element_namespaceObject.useState)(null);
   const [selectedPatternCategory, setSelectedPatternCategory] = (0,external_wp_element_namespaceObject.useState)(__experimentalInitialCategory);
   const [patternFilter, setPatternFilter] = (0,external_wp_element_namespaceObject.useState)('all');
   const [selectedMediaCategory, setSelectedMediaCategory] = (0,external_wp_element_namespaceObject.useState)(null);
-  const [selectedTab, setSelectedTab] = (0,external_wp_element_namespaceObject.useState)(__experimentalInitialTab);
+  function getInitialTab() {
+    if (__experimentalInitialTab) {
+      return __experimentalInitialTab;
+    }
+    if (isZoomOutMode) {
+      return 'patterns';
+    }
+  }
+  const [selectedTab, setSelectedTab] = (0,external_wp_element_namespaceObject.useState)(getInitialTab());
   const [destinationRootClientId, onInsertBlocks, onToggleInsertionPoint] = use_insertion_point({
     rootClientId,
     clientId,
@@ -52262,20 +52280,18 @@ function InserterMenu({
         blockTypesTabRef?.current.querySelector('button').focus();
       }
     });
-  }, [onInsertBlocks, onSelect, shouldFocusBlock]);
+  }, [onInsertBlocks, onSelect, ref, shouldFocusBlock]);
   const onInsertPattern = (0,external_wp_element_namespaceObject.useCallback)((blocks, patternName) => {
+    onToggleInsertionPoint(false);
     onInsertBlocks(blocks, {
       patternName
     });
     onSelect();
-  }, [onInsertBlocks, onSelect]);
+  }, [onInsertBlocks, onSelect, onToggleInsertionPoint]);
   const onHover = (0,external_wp_element_namespaceObject.useCallback)(item => {
     onToggleInsertionPoint(item);
     setHoveredItem(item);
   }, [onToggleInsertionPoint, setHoveredItem]);
-  const onHoverPattern = (0,external_wp_element_namespaceObject.useCallback)(item => {
-    onToggleInsertionPoint(!!item);
-  }, [onToggleInsertionPoint]);
   const onClickPatternCategory = (0,external_wp_element_namespaceObject.useCallback)((patternCategory, filter) => {
     setSelectedPatternCategory(patternCategory);
     setPatternFilter(filter);
@@ -52301,12 +52317,12 @@ function InserterMenu({
         },
         value: filterValue,
         label: (0,external_wp_i18n_namespaceObject.__)('Search for blocks and patterns'),
-        placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
+        placeholder: (0,external_wp_i18n_namespaceObject.__)('Search'),
+        ref: inserterSearchInputRef
       }), !!delayedFilterValue && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(search_results, {
         filterValue: delayedFilterValue,
         onSelect: onSelect,
         onHover: onHover,
-        onHoverPattern: onHoverPattern,
         rootClientId: rootClientId,
         clientId: clientId,
         isAppender: isAppender,
@@ -52316,7 +52332,7 @@ function InserterMenu({
         prioritizePatterns: selectedTab === 'patterns'
       })]
     });
-  }, [selectedTab, hoveredItem, setHoveredItem, setFilterValue, filterValue, delayedFilterValue, onSelect, onHover, onHoverPattern, shouldFocusBlock, clientId, rootClientId, __experimentalInsertionIndex, isAppender]);
+  }, [selectedTab, filterValue, inserterSearchInputRef, delayedFilterValue, onSelect, onHover, rootClientId, clientId, isAppender, __experimentalInsertionIndex, shouldFocusBlock, hoveredItem, setFilterValue]);
   const blocksTab = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -52346,13 +52362,12 @@ function InserterMenu({
       children: showPatternPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternCategoryPreviews, {
         rootClientId: destinationRootClientId,
         onInsert: onInsertPattern,
-        onHover: onHoverPattern,
         category: selectedPatternCategory,
         patternFilter: patternFilter,
         showTitlesAsTooltip: true
       })
     });
-  }, [destinationRootClientId, onHoverPattern, onInsertPattern, onClickPatternCategory, patternFilter, selectedPatternCategory, showPatternPanel]);
+  }, [destinationRootClientId, onInsertPattern, onClickPatternCategory, patternFilter, selectedPatternCategory, showPatternPanel]);
   const mediaTab = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(media_tab, {
       rootClientId: destinationRootClientId,
@@ -52510,6 +52525,9 @@ function QuickInserter({
       setInserterIsOpened(false);
     }
   }, [setInserterIsOpened]);
+  const {
+    showInsertionPoint
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
 
   // When clicking Browse All select the appropriate block so as
   // the insertion point can work as expected.
@@ -52520,6 +52538,7 @@ function QuickInserter({
       filterValue,
       onSelect
     });
+    showInsertionPoint(rootClientId, insertionIndex);
   };
   let maxBlockPatterns = 0;
   if (showPatterns) {
@@ -53026,7 +53045,7 @@ const ButtonBlockerAppender = (0,external_wp_element_namespaceObject.forwardRef)
 /**
  * @see https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/button-block-appender/README.md
  */
-/* harmony default export */ const components_button_block_appender = ((0,external_wp_element_namespaceObject.forwardRef)(button_block_appender_ButtonBlockAppender));
+/* harmony default export */ const button_block_appender = ((0,external_wp_element_namespaceObject.forwardRef)(button_block_appender_ButtonBlockAppender));
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/grid/grid-visualizer.js
 /**
@@ -53193,7 +53212,9 @@ function GridVisualizerCell({
 function useGridVisualizerDropZone(column, row, gridClientId, gridInfo, setHighlightedRect) {
   const {
     getBlockAttributes,
-    getBlockRootClientId
+    getBlockRootClientId,
+    canInsertBlockType,
+    getBlockName
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const {
     updateBlockAttributes,
@@ -53203,6 +53224,10 @@ function useGridVisualizerDropZone(column, row, gridClientId, gridInfo, setHighl
   const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(gridClientId, gridInfo.numColumns);
   return useDropZoneWithValidation({
     validateDrag(srcClientId) {
+      const blockName = getBlockName(srcClientId);
+      if (!canInsertBlockType(blockName, gridClientId)) {
+        return false;
+      }
       const attributes = getBlockAttributes(srcClientId);
       const rect = new GridRect({
         columnStart: column,
@@ -53274,7 +53299,7 @@ function GridVisualizerAppender({
     __unstableMarkNextChangeAsNotPersistent
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(gridClientId, gridInfo.numColumns);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(components_button_block_appender, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(button_block_appender, {
     rootClientId: gridClientId,
     className: "block-editor-grid-visualizer__appender",
     ref: useGridVisualizerDropZone(column, row, gridClientId, gridInfo, setHighlightedRect),
@@ -54313,7 +54338,6 @@ function BlockLockMenuItem({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -54321,45 +54345,41 @@ function BlockLockMenuItem({
 
 const block_mode_toggle_noop = () => {};
 function BlockModeToggle({
-  blockType,
-  mode,
-  onToggleMode,
-  small = false,
-  isCodeEditingEnabled = true
+  clientId,
+  onToggle = block_mode_toggle_noop
 }) {
+  const {
+    blockType,
+    mode,
+    isCodeEditingEnabled
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlock,
+      getBlockMode,
+      getSettings
+    } = select(store);
+    const block = getBlock(clientId);
+    return {
+      mode: getBlockMode(clientId),
+      blockType: block ? (0,external_wp_blocks_namespaceObject.getBlockType)(block.name) : null,
+      isCodeEditingEnabled: getSettings().codeEditingEnabled
+    };
+  }, [clientId]);
+  const {
+    toggleBlockMode
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   if (!blockType || !(0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockType, 'html', true) || !isCodeEditingEnabled) {
     return null;
   }
   const label = mode === 'visual' ? (0,external_wp_i18n_namespaceObject.__)('Edit as HTML') : (0,external_wp_i18n_namespaceObject.__)('Edit visually');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-    onClick: onToggleMode,
-    children: !small && label
+    onClick: () => {
+      toggleBlockMode(clientId);
+      onToggle();
+    },
+    children: label
   });
 }
-/* harmony default export */ const block_mode_toggle = ((0,external_wp_compose_namespaceObject.compose)([(0,external_wp_data_namespaceObject.withSelect)((select, {
-  clientId
-}) => {
-  const {
-    getBlock,
-    getBlockMode,
-    getSettings
-  } = select(store);
-  const block = getBlock(clientId);
-  const isCodeEditingEnabled = getSettings().codeEditingEnabled;
-  return {
-    mode: getBlockMode(clientId),
-    blockType: block ? (0,external_wp_blocks_namespaceObject.getBlockType)(block.name) : null,
-    isCodeEditingEnabled
-  };
-}), (0,external_wp_data_namespaceObject.withDispatch)((dispatch, {
-  onToggle = block_mode_toggle_noop,
-  clientId
-}) => ({
-  onToggleMode() {
-    dispatch(store).toggleBlockMode(clientId);
-    onToggle();
-  }
-}))])(BlockModeToggle));
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-rename/use-block-rename.js
 /**
@@ -54620,7 +54640,7 @@ const BlockSettingsMenuControlsSlot = ({
         }), fills, fillProps?.canMove && !fillProps?.onlyBlock && !isContentOnly && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
           onClick: (0,external_wp_compose_namespaceObject.pipe)(fillProps?.onClose, fillProps?.onMoveTo),
           children: (0,external_wp_i18n_namespaceObject.__)('Move to')
-        }), fillProps?.count === 1 && !isContentOnly && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_mode_toggle, {
+        }), fillProps?.count === 1 && !isContentOnly && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockModeToggle, {
           clientId: fillProps?.firstBlockClientId,
           onToggle: fillProps?.onClose
         })]
@@ -56341,7 +56361,7 @@ function createBlockCompleter() {
           prioritizedBlocks: getBlockListSettings(_rootClientId)?.prioritizedInserterBlocks
         };
       }, []);
-      const [items, categories, collections] = use_block_types_state(rootClientId, block_noop);
+      const [items, categories, collections] = use_block_types_state(rootClientId, block_noop, true);
       const filteredItems = (0,external_wp_element_namespaceObject.useMemo)(() => {
         const initialFilteredItems = !!filterValue.trim() ? searchBlockItems(items, categories, collections, filterValue) : orderInserterBlockItems(orderBy(items, 'frecency', 'desc'), prioritizedBlocks);
         return initialFilteredItems.filter(item => item.name !== selectedBlockName).slice(0, block_SHOWN_BLOCK_TYPES);
@@ -61733,7 +61753,8 @@ function ZoomOutModeInserters() {
     setInserterIsOpened,
     sectionRootClientId,
     selectedBlockClientId,
-    hoveredBlockClientId
+    hoveredBlockClientId,
+    inserterSearchInputRef
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getSettings,
@@ -61742,8 +61763,9 @@ function ZoomOutModeInserters() {
       getSelectionStart,
       getSelectedBlockClientId,
       getHoveredBlockClientId,
-      isBlockInsertionPointVisible
-    } = select(store);
+      isBlockInsertionPointVisible,
+      getInserterSearchInputRef
+    } = unlock(select(store));
     const {
       sectionRootClientId: root
     } = unlock(getSettings());
@@ -61755,7 +61777,8 @@ function ZoomOutModeInserters() {
       sectionRootClientId: root,
       setInserterIsOpened: getSettings().__experimentalSetIsInserterOpened,
       selectedBlockClientId: getSelectedBlockClientId(),
-      hoveredBlockClientId: getHoveredBlockClientId()
+      hoveredBlockClientId: getHoveredBlockClientId(),
+      inserterSearchInputRef: getInserterSearchInputRef()
     };
   }, []);
   const {
@@ -61804,6 +61827,7 @@ function ZoomOutModeInserters() {
           showInsertionPoint(sectionRootClientId, index, {
             operation: 'insert'
           });
+          inserterSearchInputRef?.current?.focus();
         }
       })]
     }, index);
@@ -61834,6 +61858,7 @@ function useShowBlockTools() {
       getSelectedBlockClientId,
       getFirstMultiSelectedBlockClientId,
       getBlock,
+      getBlockMode,
       getSettings,
       hasMultiSelection,
       __unstableGetEditorMode,
@@ -61843,7 +61868,7 @@ function useShowBlockTools() {
     const block = getBlock(clientId);
     const editorMode = __unstableGetEditorMode();
     const hasSelectedBlock = !!clientId && !!block;
-    const isEmptyDefaultBlock = hasSelectedBlock && (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(block);
+    const isEmptyDefaultBlock = hasSelectedBlock && (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(block) && getBlockMode(clientId) !== 'html';
     const _showEmptyBlockSideInserter = clientId && !isTyping() && editorMode === 'edit' && isEmptyDefaultBlock;
     const maybeShowBreadcrumb = hasSelectedBlock && !hasMultiSelection() && editorMode === 'navigation';
     const isZoomOut = editorMode === 'zoom-out';
@@ -66803,7 +66828,10 @@ function NonDefaultControls({
           onChange(selectedItem.format);
         }
       }
-    }), isCustom && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+    }), isCustom && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl
+    // TODO: Switch to `true` (40px size) if possible
+    , {
+      __next40pxDefaultSize: false,
       __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Custom format'),
       hideLabelFromVision: true,
@@ -72059,12 +72087,18 @@ const ImageURLInputUI = ({
       label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
       onChange: onSetNewTab,
       checked: linkTarget === '_blank'
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl
+    // TODO: Switch to `true` (40px size) if possible
+    , {
+      __next40pxDefaultSize: false,
       __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Link rel'),
       value: rel !== null && rel !== void 0 ? rel : '',
       onChange: onSetLinkRel
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl
+    // TODO: Switch to `true` (40px size) if possible
+    , {
+      __next40pxDefaultSize: false,
       __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Link CSS class'),
       value: linkClass || '',
@@ -73204,7 +73238,8 @@ function InserterLibrary({
   onPatternCategorySelection,
   onSelect = library_noop,
   shouldFocusBlock = false,
-  onClose
+  onClose,
+  __experimentalSearchInputRef
 }, ref) {
   const {
     destinationRootClientId
@@ -73231,7 +73266,8 @@ function InserterLibrary({
     __experimentalInitialCategory: __experimentalInitialCategory,
     shouldFocusBlock: shouldFocusBlock,
     ref: ref,
-    onClose: onClose
+    onClose: onClose,
+    __experimentalSearchInputRef: __experimentalSearchInputRef
   });
 }
 const PrivateInserterLibrary = (0,external_wp_element_namespaceObject.forwardRef)(InserterLibrary);
