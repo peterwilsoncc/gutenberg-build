@@ -609,16 +609,18 @@ function generateBoxRules(style, options, path, ruleKeys, individualProperties =
 }
 
 /**
- * Returns a WordPress CSS custom var value from incoming style preset value.
- * The preset value follows the pattern `var:description|context|slug`.
+ * Returns a WordPress CSS custom var value from incoming style preset value,
+ * if one is detected.
+ *
+ * The preset value is a string and follows the pattern `var:description|context|slug`.
  *
  * Example:
  *
  * `getCSSValueFromRawStyle( 'var:preset|color|heavenlyBlue' )` // returns 'var(--wp--preset--color--heavenly-blue)'
  *
- * @param styleValue A raw style value.
+ * @param styleValue A string representing a raw CSS value. Non-strings won't be processed.
  *
- * @return A CSS var value.
+ * @return A CSS custom var value if the incoming style value is a preset value.
  */
 
 function getCSSValueFromRawStyle(styleValue) {
