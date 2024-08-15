@@ -34684,6 +34684,7 @@ const UnforwardedPopover = (props, forwardedRef) => {
     shift = false,
     inline = false,
     variant,
+    style: contentStyle,
     // Deprecated props
     __unstableForcePosition,
     anchorRef,
@@ -34852,6 +34853,7 @@ const UnforwardedPopover = (props, forwardedRef) => {
   } = (0,external_wp_element_namespaceObject.useMemo)(() => placementToMotionAnimationProps(computedPlacement), [computedPlacement]);
   const animationProps = shouldAnimate ? {
     style: {
+      ...contentStyle,
       ...motionInlineStyles,
       ...style
     },
@@ -34859,7 +34861,10 @@ const UnforwardedPopover = (props, forwardedRef) => {
     ...otherMotionProps
   } : {
     animate: false,
-    style
+    style: {
+      ...contentStyle,
+      ...style
+    }
   };
 
   // When Floating UI has finished positioning and Framer Motion has finished animating
