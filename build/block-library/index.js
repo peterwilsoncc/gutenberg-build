@@ -9816,6 +9816,18 @@ const comment_content_metadata = {
         fontSize: true
       }
     },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true,
+      __experimentalDefaultControls: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
+      }
+    },
     spacing: {
       padding: ["horizontal", "vertical"],
       __experimentalDefaultControls: {
@@ -9823,7 +9835,8 @@ const comment_content_metadata = {
       }
     },
     html: false
-  }
+  },
+  style: "wp-block-comment-content"
 };
 
 const {
