@@ -7908,6 +7908,7 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   getAllPatterns: () => (getAllPatterns),
   getBlockRemovalRules: () => (getBlockRemovalRules),
   getBlockSettings: () => (getBlockSettings),
+  getBlockStyles: () => (getBlockStyles),
   getBlockWithoutAttributes: () => (getBlockWithoutAttributes),
   getContentLockingParent: () => (getContentLockingParent),
   getEnabledBlockParents: () => (getEnabledBlockParents),
@@ -11236,6 +11237,19 @@ function getTemporarilyEditingFocusModeToRevert(state) {
 function getInserterSearchInputRef(state) {
   return state.inserterSearchInputRef;
 }
+
+/**
+ * Returns the style attributes of multiple blocks.
+ *
+ * @param {Object}   state     Global application state.
+ * @param {string[]} clientIds An array of block client IDs.
+ *
+ * @return {Object} An object where keys are client IDs and values are the corresponding block styles or undefined.
+ */
+const getBlockStyles = (0,external_wp_data_namespaceObject.createSelector)((state, clientIds) => clientIds.reduce((styles, clientId) => {
+  styles[clientId] = state.blocks.attributes.get(clientId)?.style;
+  return styles;
+}, {}), (state, clientIds) => [...clientIds.map(clientId => state.blocks.attributes.get(clientId)?.style)]);
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/store/selectors.js
 /**
@@ -53056,6 +53070,7 @@ const ButtonBlockerAppender = (0,external_wp_element_namespaceObject.forwardRef)
 
 
 
+
 function GridVisualizer({
   clientId,
   contentRef,
@@ -53136,16 +53151,24 @@ function ManualGridVisualizer({
   gridInfo
 }) {
   const [highlightedRect, setHighlightedRect] = (0,external_wp_element_namespaceObject.useState)(null);
-  const gridItems = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getBlocks(gridClientId), [gridClientId]);
+  const gridItemStyles = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockOrder,
+      getBlockStyles
+    } = unlock(select(store));
+    const blockOrder = getBlockOrder(gridClientId);
+    return getBlockStyles(blockOrder);
+  }, [gridClientId]);
   const occupiedRects = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const rects = [];
-    for (const block of gridItems) {
+    for (const style of Object.values(gridItemStyles)) {
+      var _style$layout;
       const {
         columnStart,
         rowStart,
         columnSpan = 1,
         rowSpan = 1
-      } = block.attributes.style?.layout || {};
+      } = (_style$layout = style?.layout) !== null && _style$layout !== void 0 ? _style$layout : {};
       if (!columnStart || !rowStart) {
         continue;
       }
@@ -53157,7 +53180,7 @@ function ManualGridVisualizer({
       }));
     }
     return rects;
-  }, [gridItems]);
+  }, [gridItemStyles]);
   return range(1, gridInfo.numRows).map(row => range(1, gridInfo.numColumns).map(column => {
     var _highlightedRect$cont;
     const isCellOccupied = occupiedRects.some(rect => rect.contains(column, row));
