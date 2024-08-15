@@ -37660,6 +37660,13 @@ function DensityPicker({
   }, [setDensity, viewport]);
   const breakValues = viewportBreaks[viewport || 'mobile'];
   const densityToUse = density || breakValues.default;
+  const marks = (0,external_wp_element_namespaceObject.useMemo)(() => Array.from({
+    length: breakValues.max - breakValues.min + 1
+  }, (_, i) => {
+    return {
+      value: breakValues.min + i
+    };
+  }), [breakValues]);
   if (!viewport) {
     return null;
   }
@@ -37669,6 +37676,7 @@ function DensityPicker({
     showTooltip: false,
     label: (0,external_wp_i18n_namespaceObject.__)('Preview size'),
     value: breakValues.max + breakValues.min - densityToUse,
+    marks: marks,
     min: breakValues.min,
     max: breakValues.max,
     withInputField: false,
