@@ -50205,12 +50205,14 @@ const quote_transforms_transforms = {
     blocks: ['core/pullquote'],
     transform: ({
       value,
+      align,
       citation,
       anchor,
       fontSize,
       style
     }) => {
       return (0,external_wp_blocks_namespaceObject.createBlock)('core/quote', {
+        align,
         citation,
         anchor,
         fontSize,
@@ -50270,6 +50272,7 @@ const quote_transforms_transforms = {
       }) => name === 'core/paragraph');
     },
     transform: ({
+      align,
       citation,
       anchor,
       fontSize,
@@ -50280,6 +50283,7 @@ const quote_transforms_transforms = {
       }) => `${attributes.content}`).join('<br>');
       return (0,external_wp_blocks_namespaceObject.createBlock)('core/pullquote', {
         value,
+        align,
         citation,
         anchor,
         fontSize,
@@ -50357,6 +50361,7 @@ const quote_metadata = {
   },
   supports: {
     anchor: true,
+    align: ["left", "right", "wide", "full"],
     html: false,
     background: {
       backgroundImage: true,
