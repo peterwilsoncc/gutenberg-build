@@ -37799,13 +37799,17 @@ function SortDirectionControl() {
     fields,
     onChangeView
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
+  let value = view.sort?.direction;
+  if (!value && view.sort?.field) {
+    value = 'desc';
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
     className: "dataviews-view-config__sort-direction",
     __nextHasNoMarginBottom: true,
     __next40pxDefaultSize: true,
     isBlock: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Order'),
-    value: view.sort?.direction || 'desc',
+    value: value,
     onChange: newDirection => {
       if (newDirection === 'asc' || newDirection === 'desc') {
         onChangeView({
