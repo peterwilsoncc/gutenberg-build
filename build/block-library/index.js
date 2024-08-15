@@ -29927,6 +29927,12 @@ const list_item_metadata = {
     anchor: true,
     className: false,
     splitting: true,
+    __experimentalBorder: {
+      color: true,
+      radius: true,
+      style: true,
+      width: true
+    },
     color: {
       gradients: true,
       link: true,
@@ -29961,7 +29967,8 @@ const list_item_metadata = {
     }
   },
   selectors: {
-    root: ".wp-block-list > li"
+    root: ".wp-block-list > li",
+    border: ".wp-block-list:not(.wp-block-list .wp-block-list) > li"
   }
 };
 
