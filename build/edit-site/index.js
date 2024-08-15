@@ -37695,6 +37695,7 @@ function SortFieldControl() {
 function SortDirectionControl() {
   const {
     view,
+    fields,
     onChangeView
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
@@ -37704,17 +37705,15 @@ function SortDirectionControl() {
     isBlock: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Order'),
     value: view.sort?.direction || 'desc',
-    disabled: !view?.sort?.field,
     onChange: newDirection => {
-      if (!view?.sort?.field) {
-        return;
-      }
       if (newDirection === 'asc' || newDirection === 'desc') {
         onChangeView({
           ...view,
           sort: {
             direction: newDirection,
-            field: view.sort.field
+            field: view.sort?.field ||
+            // If there is no field assigned as the sorting field assign the first sortable field.
+            fields.find(field => field.enableSorting !== false)?.id || ''
           }
         });
         return;
