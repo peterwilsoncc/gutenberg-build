@@ -11087,6 +11087,7 @@ function CommentsPaginationArrowControls({
   onChange
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+    __next40pxDefaultSize: true,
     __nextHasNoMarginBottom: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Arrow'),
     value: value,
@@ -33568,7 +33569,9 @@ function OverlayMenuPreview({
       }),
       checked: hasIcon
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+      __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
+      className: "wp-block-navigation__overlay-menu-icon-toggle-group",
       label: (0,external_wp_i18n_namespaceObject.__)('Icon'),
       value: icon,
       onChange: value => setAttributes({
@@ -35493,18 +35496,17 @@ function Navigation({
               hidden: !overlayMenuPreview
             })
           })]
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h3", {
-          children: (0,external_wp_i18n_namespaceObject.__)('Overlay Menu')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+          __next40pxDefaultSize: true,
           __nextHasNoMarginBottom: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Configure overlay menu'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Overlay Menu'),
+          "aria-label": (0,external_wp_i18n_namespaceObject.__)('Configure overlay menu'),
           value: overlayMenu,
           help: (0,external_wp_i18n_namespaceObject.__)('Collapses the navigation options in a menu icon opening an overlay.'),
           onChange: value => setAttributes({
             overlayMenu: value
           }),
           isBlock: true,
-          hideLabelFromVision: true,
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
             value: "never",
             label: (0,external_wp_i18n_namespaceObject.__)('Off')
@@ -42512,6 +42514,7 @@ const DimensionControls = ({
       isShownByDefault: true,
       panelId: clientId,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+        __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         label: scaleLabel,
         value: scale,
@@ -43228,6 +43231,7 @@ function PostNavigationLinkEdit({
             linkLabel: !linkLabel
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+          __next40pxDefaultSize: true,
           __nextHasNoMarginBottom: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Arrow'),
           value: arrow,
@@ -48608,6 +48612,7 @@ function QueryPaginationArrowControls({
   onChange
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+    __next40pxDefaultSize: true,
     __nextHasNoMarginBottom: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Arrow'),
     value: value,

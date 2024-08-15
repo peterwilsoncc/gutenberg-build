@@ -19810,6 +19810,7 @@ function FlexLayoutJustifyContentControl({
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+    __next40pxDefaultSize: true,
     __nextHasNoMarginBottom: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Justification'),
     value: justifyContent,
@@ -19857,6 +19858,7 @@ function OrientationControl({
     justifyContent
   } = layout;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+    __next40pxDefaultSize: true,
     __nextHasNoMarginBottom: true,
     className: "block-editor-hooks__flex-layout-orientation-controls",
     label: (0,external_wp_i18n_namespaceObject.__)('Orientation'),
@@ -20168,6 +20170,7 @@ const stretchWide = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
           children: (0,external_wp_i18n_namespaceObject.__)('Customize the width for all elements that are assigned to the center or wide columns.')
         })]
       }), allowJustification && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+        __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Justification'),
         value: justifyContent,
@@ -20700,6 +20703,7 @@ function GridLayoutTypeControl({
   };
   const helpText = gridPlacement === 'manual' ? (0,external_wp_i18n_namespaceObject.__)('Grid items can be manually placed in any position on the grid.') : (0,external_wp_i18n_namespaceObject.__)('Grid items are placed automatically depending on their order.');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+    __next40pxDefaultSize: true,
     __nextHasNoMarginBottom: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Grid item position'),
     value: gridPlacement,
