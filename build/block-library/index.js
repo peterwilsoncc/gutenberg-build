@@ -29229,6 +29229,12 @@ const list_metadata = {
   supports: {
     anchor: true,
     html: false,
+    __experimentalBorder: {
+      color: true,
+      radius: true,
+      style: true,
+      width: true
+    },
     typography: {
       fontSize: true,
       lineHeight: true,
@@ -29264,6 +29270,9 @@ const list_metadata = {
     interactivity: {
       clientNavigation: true
     }
+  },
+  selectors: {
+    border: ".wp-block-list:not(.wp-block-list .wp-block-list)"
   },
   editorStyle: "wp-block-list-editor",
   style: "wp-block-list"
