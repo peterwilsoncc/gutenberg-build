@@ -24434,6 +24434,12 @@ function BackgroundControlsPanel({
     })
   });
 }
+function LoadingSpinner() {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
+    className: "block-editor-global-styles-background-panel__loading",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
+  });
+}
 function BackgroundImageControls({
   onChange,
   style,
@@ -24443,6 +24449,7 @@ function BackgroundImageControls({
   displayInPanel,
   defaultValues
 }) {
+  const [isUploading, setIsUploading] = (0,external_wp_element_namespaceObject.useState)(false);
   const mediaUpload = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getSettings().mediaUpload, []);
   const {
     id,
@@ -24459,14 +24466,17 @@ function BackgroundImageControls({
     createErrorNotice(message, {
       type: 'snackbar'
     });
+    setIsUploading(false);
   };
   const resetBackgroundImage = () => onChange(setImmutably(style, ['background', 'backgroundImage'], undefined));
   const onSelectMedia = media => {
     if (!media || !media.url) {
       resetBackgroundImage();
+      setIsUploading(false);
       return;
     }
     if ((0,external_wp_blob_namespaceObject.isBlobURL)(media.url)) {
+      setIsUploading(true);
       return;
     }
 
@@ -24495,15 +24505,19 @@ function BackgroundImageControls({
       !positionValue && ('auto' === sizeValue || !sizeValue) ? '50% 0' : positionValue,
       backgroundSize: sizeValue
     }));
+    setIsUploading(false);
   };
+
+  // Drag and drop callback, restricting image to one.
   const onFilesDrop = filesList => {
+    if (filesList?.length > 1) {
+      onUploadError((0,external_wp_i18n_namespaceObject.__)('Only one image can be used as a background image.'));
+      return;
+    }
     mediaUpload({
       allowedTypes: [IMAGE_BACKGROUND_TYPE],
       filesList,
       onFileChange([image]) {
-        if ((0,external_wp_blob_namespaceObject.isBlobURL)(image?.url)) {
-          return;
-        }
         onSelectMedia(image);
       },
       onError: onUploadError
@@ -24526,7 +24540,7 @@ function BackgroundImageControls({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     ref: replaceContainerRef,
     className: "block-editor-global-styles-background-panel__image-tools-panel-item",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(media_replace_flow, {
+    children: [isUploading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LoadingSpinner, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(media_replace_flow, {
       mediaId: id,
       mediaURL: url,
       allowedTypes: [IMAGE_BACKGROUND_TYPE],
@@ -24544,6 +24558,7 @@ function BackgroundImageControls({
         label: imgLabel
       }),
       variant: "secondary",
+      onError: onUploadError,
       children: [canRemove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
         onClick: () => {
           closeAndFocus();
