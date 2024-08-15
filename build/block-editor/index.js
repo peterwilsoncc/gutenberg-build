@@ -8165,7 +8165,6 @@ __webpack_require__.d(global_styles_namespaceObject, {
   toStyles: () => (toStyles),
   useGlobalSetting: () => (useGlobalSetting),
   useGlobalStyle: () => (useGlobalStyle),
-  useGlobalStyleLinks: () => (useGlobalStyleLinks),
   useGlobalStylesOutput: () => (useGlobalStylesOutput),
   useGlobalStylesOutputWithConfig: () => (useGlobalStylesOutputWithConfig),
   useGlobalStylesReset: () => (useGlobalStylesReset),
@@ -17412,6 +17411,12 @@ function getResolvedRefValue(ruleValue, tree) {
   if (!ruleValue || !tree) {
     return ruleValue;
   }
+
+  /*
+   * Where the rule value is an object with a 'ref' property pointing
+   * to a path, this converts that path into the value at that path.
+   * For example: { "ref": "style.color.background" } => "#fff".
+   */
   if (typeof ruleValue !== 'string' && ruleValue?.ref) {
     const refPath = ruleValue.ref.split('.');
     const resolvedRuleValue = (0,external_wp_styleEngine_namespaceObject.getCSSValueFromRawStyle)(getValueFromObjectPath(tree, refPath));
@@ -17570,12 +17575,6 @@ function useGlobalStyle(path, blockName, source = 'all', {
       throw 'Unsupported source';
   }
   return [result, setStyle];
-}
-function useGlobalStyleLinks() {
-  const {
-    merged: mergedConfig
-  } = (0,external_wp_element_namespaceObject.useContext)(GlobalStylesContext);
-  return mergedConfig?._links;
 }
 
 /**
@@ -24185,22 +24184,6 @@ const MediaReplaceFlow = ({
   };
 }), (0,external_wp_components_namespaceObject.withFilters)('editor.MediaReplaceFlow')])(MediaReplaceFlow));
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/global-styles/theme-file-uri-utils.js
-/**
- * Looks up a theme file URI based on a relative path.
- *
- * @param {string}        file          A relative path.
- * @param {Array<Object>} themeFileURIs A collection of absolute theme file URIs and their corresponding file paths.
- * @return {string?} A resolved theme file URI, if one is found in the themeFileURIs collection.
- */
-function theme_file_uri_utils_getResolvedThemeFilePath(file, themeFileURIs = []) {
-  const uri = themeFileURIs.find(themeFileUri => themeFileUri.name === file);
-  if (!uri?.href) {
-    return file;
-  }
-  return uri?.href;
-}
-
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/global-styles/background-panel.js
 /**
  * External dependencies
@@ -24428,7 +24411,6 @@ function BackgroundImageControls({
   onRemoveImage = background_panel_noop,
   onResetImage = background_panel_noop,
   displayInPanel,
-  themeFileURIs,
   defaultValues
 }) {
   const mediaUpload = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getSettings().mediaUpload, []);
@@ -24527,7 +24509,7 @@ function BackgroundImageControls({
       },
       name: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorImagePreviewItem, {
         className: "block-editor-global-styles-background-panel__image-preview",
-        imgUrl: theme_file_uri_utils_getResolvedThemeFilePath(url, themeFileURIs),
+        imgUrl: url,
         filename: title,
         label: imgLabel
       }),
@@ -24556,8 +24538,7 @@ function BackgroundSizeControls({
   onChange,
   style,
   inheritedValue,
-  defaultValues,
-  themeFileURIs
+  defaultValues
 }) {
   const sizeValue = style?.background?.backgroundSize || inheritedValue?.background?.backgroundSize;
   const repeatValue = style?.background?.backgroundRepeat || inheritedValue?.background?.backgroundRepeat;
@@ -24638,7 +24619,7 @@ function BackgroundSizeControls({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FocalPointPicker, {
       __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Focal point'),
-      url: theme_file_uri_utils_getResolvedThemeFilePath(imageValue, themeFileURIs),
+      url: imageValue,
       value: backgroundPositionToCoords(backgroundPositionValue),
       onChange: updateBackgroundPosition
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
@@ -24719,9 +24700,42 @@ function BackgroundPanel({
   panelId,
   defaultControls = background_panel_DEFAULT_CONTROLS,
   defaultValues = {},
-  headerLabel = (0,external_wp_i18n_namespaceObject.__)('Background image'),
-  themeFileURIs
+  headerLabel = (0,external_wp_i18n_namespaceObject.__)('Background image')
 }) {
+  /*
+   * Resolve any inherited "ref" pointers.
+   * Should the block editor need resolved, inherited values
+   * across all controls, this could be abstracted into a hook,
+   * e.g., useResolveGlobalStyle
+   */
+  const {
+    globalStyles,
+    _links
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getSettings
+    } = select(store);
+    const _settings = getSettings();
+    return {
+      globalStyles: _settings[globalStylesDataKey],
+      _links: _settings[globalStylesLinksDataKey]
+    };
+  }, []);
+  const resolvedInheritedValue = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    const resolvedValues = {
+      background: {}
+    };
+    if (!inheritedValue?.background) {
+      return inheritedValue;
+    }
+    Object.entries(inheritedValue?.background).forEach(([key, backgroundValue]) => {
+      resolvedValues.background[key] = getResolvedValue(backgroundValue, {
+        styles: globalStyles,
+        _links
+      });
+    });
+    return resolvedValues;
+  }, [globalStyles, _links, inheritedValue]);
   const resetAllFilter = (0,external_wp_element_namespaceObject.useCallback)(previousValue => {
     return {
       ...previousValue,
@@ -24733,9 +24747,9 @@ function BackgroundPanel({
     title,
     url
   } = value?.background?.backgroundImage || {
-    ...inheritedValue?.background?.backgroundImage
+    ...resolvedInheritedValue?.background?.backgroundImage
   };
-  const hasImageValue = hasBackgroundImageValue(value) || hasBackgroundImageValue(inheritedValue);
+  const hasImageValue = hasBackgroundImageValue(value) || hasBackgroundImageValue(resolvedInheritedValue);
   const imageValue = value?.background?.backgroundImage || inheritedValue?.background?.backgroundImage;
   const shouldShowBackgroundImageControls = hasImageValue && 'none' !== imageValue && (settings?.background?.backgroundSize || settings?.background?.backgroundPosition || settings?.background?.backgroundRepeat);
   const [isDropDownOpen, setIsDropDownOpen] = (0,external_wp_element_namespaceObject.useState)(false);
@@ -24758,7 +24772,7 @@ function BackgroundPanel({
         children: shouldShowBackgroundImageControls ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundControlsPanel, {
           label: title,
           filename: title,
-          url: theme_file_uri_utils_getResolvedThemeFilePath(url, themeFileURIs),
+          url: url,
           onToggle: setIsDropDownOpen,
           hasImageValue: hasImageValue,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
@@ -24767,8 +24781,7 @@ function BackgroundPanel({
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundImageControls, {
               onChange: onChange,
               style: value,
-              inheritedValue: inheritedValue,
-              themeFileURIs: themeFileURIs,
+              inheritedValue: resolvedInheritedValue,
               displayInPanel: true,
               onResetImage: () => {
                 setIsDropDownOpen(false);
@@ -24781,15 +24794,13 @@ function BackgroundPanel({
               panelId: panelId,
               style: value,
               defaultValues: defaultValues,
-              inheritedValue: inheritedValue,
-              themeFileURIs: themeFileURIs
+              inheritedValue: resolvedInheritedValue
             })]
           })
         }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundImageControls, {
           onChange: onChange,
           style: value,
-          inheritedValue: inheritedValue,
-          themeFileURIs: themeFileURIs,
+          inheritedValue: resolvedInheritedValue,
           defaultValues: defaultValues,
           onResetImage: () => {
             setIsDropDownOpen(false);
@@ -24918,8 +24929,7 @@ function BackgroundImagePanel({
 }) {
   const {
     style,
-    inheritedValue,
-    _links
+    inheritedValue
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockAttributes,
@@ -24928,7 +24938,6 @@ function BackgroundImagePanel({
     const _settings = getSettings();
     return {
       style: getBlockAttributes(clientId)?.style,
-      _links: _settings[globalStylesLinksDataKey],
       /*
        * To ensure we pass down the right inherited values:
        * @TODO 1. Pass inherited value down to all block style controls,
@@ -24961,8 +24970,7 @@ function BackgroundImagePanel({
     defaultValues: BACKGROUND_BLOCK_DEFAULT_VALUES,
     settings: updatedSettings,
     onChange: onChange,
-    value: style,
-    themeFileURIs: _links?.['wp:theme-file']
+    value: style
   });
 }
 /* harmony default export */ const background = ({
