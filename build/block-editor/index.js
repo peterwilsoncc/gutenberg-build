@@ -28168,6 +28168,8 @@ function color_addTransforms(result, source, index, results) {
 
 
 function FontFamilyControl({
+  /** Start opting into the larger default height that will become the default size in a future version. */
+  __next40pxDefaultSize = false,
   /** Start opting into the new margin-free styles that will become the default in a future version. */
   __nextHasNoMarginBottom = false,
   value = '',
@@ -28202,6 +28204,7 @@ function FontFamilyControl({
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+    __next40pxDefaultSize: __next40pxDefaultSize,
     __nextHasNoMarginBottom: __nextHasNoMarginBottom,
     label: (0,external_wp_i18n_namespaceObject.__)('Font'),
     options: options,
