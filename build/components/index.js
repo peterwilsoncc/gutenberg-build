@@ -67172,7 +67172,7 @@ function tools_panel_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have 
 
 const toolsPanelGrid = {
   columns: columns => /*#__PURE__*/emotion_react_browser_esm_css("grid-template-columns:", `repeat( ${columns}, minmax(0, 1fr) )`, ";" + ( true ? "" : 0),  true ? "" : 0),
-  spacing: /*#__PURE__*/emotion_react_browser_esm_css("column-gap:", space(2), ";row-gap:", space(4), ";" + ( true ? "" : 0),  true ? "" : 0),
+  spacing: /*#__PURE__*/emotion_react_browser_esm_css("column-gap:", space(4), ";row-gap:", space(4), ";" + ( true ? "" : 0),  true ? "" : 0),
   item: {
     fullWidth:  true ? {
       name: "18iuzk9",
