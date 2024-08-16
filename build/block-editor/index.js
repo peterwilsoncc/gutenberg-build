@@ -28273,6 +28273,8 @@ const getFontAppearanceLabel = (hasFontStyles, hasFontWeights) => {
  */
 function FontAppearanceControl(props) {
   const {
+    /** Start opting into the larger default height that will become the default size in a future version. */
+    __next40pxDefaultSize = false,
     onChange,
     hasFontStyles = true,
     hasFontWeights = true,
@@ -28383,6 +28385,7 @@ function FontAppearanceControl(props) {
   return hasStylesOrWeights && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CustomSelectControl, {
     ...otherProps,
     className: "components-font-appearance-control",
+    __next40pxDefaultSize: __next40pxDefaultSize,
     label: label,
     describedBy: getDescribedBy(),
     options: selectOptions,
@@ -66860,6 +66863,7 @@ function NonDefaultControls({
   const [isCustom, setIsCustom] = (0,external_wp_element_namespaceObject.useState)(() => !!format && !suggestedOptions.some(option => option.format === format));
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CustomSelectControl, {
+      __next40pxDefaultSize: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Choose a format'),
       options: [...suggestedOptions, customOption],
       value: isCustom ? customOption : (_suggestedOptions$fin = suggestedOptions.find(option => option.format === format)) !== null && _suggestedOptions$fin !== void 0 ? _suggestedOptions$fin : customOption,
