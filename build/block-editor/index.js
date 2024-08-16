@@ -20571,6 +20571,7 @@ function GridLayoutMinimumWidthControl({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
         isBlock: true,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+          __next40pxDefaultSize: true,
           __nextHasNoMarginBottom: true,
           onChange: handleSliderChange,
           value: quantity || 0,
@@ -20648,6 +20649,7 @@ function GridLayoutColumnsAndRowsControl({
             min: 0,
             label: (0,external_wp_i18n_namespaceObject.__)('Rows')
           }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+            __next40pxDefaultSize: true,
             __nextHasNoMarginBottom: true,
             value: columnCount !== null && columnCount !== void 0 ? columnCount : 0,
             onChange: value => onChange({
@@ -25944,6 +25946,7 @@ function BorderRadiusControl({
           setSelectedUnits: setSelectedUnits,
           units: units
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+          __next40pxDefaultSize: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Border radius'),
           hideLabelFromVision: true,
           className: "components-border-radius-control__range-control",
@@ -30528,6 +30531,7 @@ function SpacingInputControl({
           setMinValue(minimumCustomValue);
         }
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+        __next40pxDefaultSize: true,
         onMouseOver: onMouseOver,
         onMouseOut: onMouseOut,
         onFocus: onMouseOver,
@@ -30544,6 +30548,7 @@ function SpacingInputControl({
         hideLabelFromVision: true
       })]
     }), showRangeControl && !showCustomValueControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+      __next40pxDefaultSize: true,
       onMouseOver: onMouseOver,
       onMouseOut: onMouseOut,
       className: "spacing-sizes-control__range-control",
@@ -31176,6 +31181,7 @@ function HeightControl({
           marginX: 2,
           marginBottom: 0,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+            __next40pxDefaultSize: true,
             value: customRangeValue,
             min: 0,
             max: (_RANGE_CONTROL_CUSTOM = RANGE_CONTROL_CUSTOM_SETTINGS[selectedUnit]?.max) !== null && _RANGE_CONTROL_CUSTOM !== void 0 ? _RANGE_CONTROL_CUSTOM : 100,
@@ -68707,13 +68713,17 @@ function ZoomDropdown() {
       "aria-expanded": isOpen,
       disabled: isInProgress
     }),
-    renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
-      __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Zoom'),
-      min: MIN_ZOOM,
-      max: MAX_ZOOM,
-      value: Math.round(zoom),
-      onChange: setZoom
+    renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalDropdownContentWrapper, {
+      paddingSize: "medium",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Zoom'),
+        min: MIN_ZOOM,
+        max: MAX_ZOOM,
+        value: Math.round(zoom),
+        onChange: setZoom
+      })
     })
   });
 }

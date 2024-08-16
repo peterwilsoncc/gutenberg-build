@@ -38534,6 +38534,7 @@ const InputWithSlider = ({
       size: "__unstable-large"
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_RangeControl, {
       __nextHasNoMarginBottom: true,
+      __next40pxDefaultSize: true,
       label: label,
       hideLabelFromVision: true,
       min: min,
