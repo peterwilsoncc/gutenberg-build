@@ -24450,7 +24450,9 @@ function BackgroundImageControls({
   defaultValues
 }) {
   const [isUploading, setIsUploading] = (0,external_wp_element_namespaceObject.useState)(false);
-  const mediaUpload = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getSettings().mediaUpload, []);
+  const {
+    getSettings
+  } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const {
     id,
     title,
@@ -24514,7 +24516,7 @@ function BackgroundImageControls({
       onUploadError((0,external_wp_i18n_namespaceObject.__)('Only one image can be used as a background image.'));
       return;
     }
-    mediaUpload({
+    getSettings().mediaUpload({
       allowedTypes: [IMAGE_BACKGROUND_TYPE],
       filesList,
       onFileChange([image]) {
