@@ -28440,6 +28440,8 @@ function isLineHeightDefined(lineHeight) {
 
 
 const line_height_control_LineHeightControl = ({
+  /** Start opting into the larger default height that will become the default size in a future version. */
+  __next40pxDefaultSize = false,
   value: lineHeight,
   onChange,
   __unstableInputWidth = '60px',
@@ -28512,6 +28514,7 @@ const line_height_control_LineHeightControl = ({
     className: "block-editor-line-height-control",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
       ...otherProps,
+      __next40pxDefaultSize: __next40pxDefaultSize,
       __unstableInputWidth: __unstableInputWidth,
       __unstableStateReducer: stateReducer,
       onChange: handleOnChange,
