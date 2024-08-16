@@ -15225,6 +15225,8 @@ function PostFeaturedImage({
               "aria-label": !featuredImageId ? null : (0,external_wp_i18n_namespaceObject.__)('Edit or replace the featured image'),
               "aria-describedby": !featuredImageId ? null : `editor-post-featured-image-${featuredImageId}-describedby`,
               "aria-haspopup": "dialog",
+              disabled: isLoading,
+              accessibleWhenDisabled: true,
               children: [!!featuredImageId && media && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
                 className: "editor-post-featured-image__preview-image",
                 src: mediaSourceUrl,
