@@ -61355,6 +61355,7 @@ const navigatorScreen = props => /*#__PURE__*/emotion_react_browser_esm_css("ove
 
 
 
+
 const MAX_HISTORY_LENGTH = 50;
 function addScreen({
   screens
@@ -61451,9 +61452,6 @@ function routerReducer(state, action) {
     case 'remove':
       screens = removeScreen(state, action.screen);
       break;
-    case 'goback':
-      locationHistory = goBack(state);
-      break;
     case 'goto':
       locationHistory = goTo(state, action.path, action.options);
       break;
@@ -61499,18 +61497,28 @@ function UnconnectedNavigatorProvider(props, forwardedRef) {
 
   // The methods are constant forever, create stable references to them.
   const methods = (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    goBack: () => dispatch({
-      type: 'goback'
+    // Note: calling goBack calls `goToParent` internally, as it was established
+    // that `goBack` should behave like `goToParent`, and `goToParent` should
+    // be marked as deprecated.
+    goBack: options => dispatch({
+      type: 'gotoparent',
+      options
     }),
     goTo: (path, options) => dispatch({
       type: 'goto',
       path,
       options
     }),
-    goToParent: options => dispatch({
-      type: 'gotoparent',
-      options
-    }),
+    goToParent: options => {
+      external_wp_deprecated_default()(`wp.components.useNavigator().goToParent`, {
+        since: '6.7',
+        alternative: 'wp.components.useNavigator().goBack'
+      });
+      dispatch({
+        type: 'gotoparent',
+        options
+      });
+    },
     addScreen: screen => dispatch({
       type: 'add',
       screen
@@ -61880,22 +61888,16 @@ function useNavigatorBackButton(props) {
   const {
     onClick,
     as = build_module_button,
-    goToParent: goToParentProp = false,
     ...otherProps
   } = useContextSystem(props, 'NavigatorBackButton');
   const {
-    goBack,
-    goToParent
+    goBack
   } = use_navigator();
   const handleClick = (0,external_wp_element_namespaceObject.useCallback)(e => {
     e.preventDefault();
-    if (goToParentProp) {
-      goToParent();
-    } else {
-      goBack();
-    }
+    goBack();
     onClick?.(e);
-  }, [goToParentProp, goToParent, goBack, onClick]);
+  }, [goBack, onClick]);
   return {
     as,
     onClick: handleClick,
@@ -61951,7 +61953,7 @@ function UnconnectedNavigatorBackButton(props, forwardedRef) {
  *     <NavigatorScreen path="/child">
  *       <p>This is the child screen.</p>
  *       <NavigatorBackButton>
- *         Go back
+ *         Go back (to parent)
  *       </NavigatorBackButton>
  *     </NavigatorScreen>
  *   </NavigatorProvider>
@@ -61963,8 +61965,9 @@ const NavigatorBackButton = contextConnect(UnconnectedNavigatorBackButton, 'Navi
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/navigator/navigator-to-parent-button/component.js
 /**
- * External dependencies
+ * WordPress dependencies
  */
+
 
 /**
  * Internal dependencies
@@ -61972,52 +61975,22 @@ const NavigatorBackButton = contextConnect(UnconnectedNavigatorBackButton, 'Navi
 
 
 
-
-
 function UnconnectedNavigatorToParentButton(props, forwardedRef) {
-  const navigatorToParentButtonProps = useNavigatorBackButton({
-    ...props,
-    goToParent: true
+  external_wp_deprecated_default()('wp.components.NavigatorToParentButton', {
+    since: '6.7',
+    alternative: 'wp.components.NavigatorBackButton'
   });
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(component, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(navigator_back_button_component, {
     ref: forwardedRef,
-    ...navigatorToParentButtonProps
+    ...props
   });
 }
 
-/*
- * The `NavigatorToParentButton` component can be used to navigate to a screen and
- * should be used in combination with the `NavigatorProvider`, the
- * `NavigatorScreen` and the `NavigatorButton` components (or the `useNavigator`
- * hook).
+/**
+ * _Note: this component is deprecated. Please use the `NavigatorBackButton`
+ * component instead._
  *
- * @example
- * ```jsx
- * import {
- *   __experimentalNavigatorProvider as NavigatorProvider,
- *   __experimentalNavigatorScreen as NavigatorScreen,
- *   __experimentalNavigatorButton as NavigatorButton,
- *   __experimentalNavigatorToParentButton as NavigatorToParentButton,
- * } from '@wordpress/components';
- *
- * const MyNavigation = () => (
- *   <NavigatorProvider initialPath="/">
- *     <NavigatorScreen path="/">
- *       <p>This is the home screen.</p>
- *        <NavigatorButton path="/child">
- *          Navigate to child screen.
- *       </NavigatorButton>
- *     </NavigatorScreen>
- *
- *     <NavigatorScreen path="/child">
- *       <p>This is the child screen.</p>
- *       <NavigatorToParentButton>
- *         Go to parent
- *       </NavigatorToParentButton>
- *     </NavigatorScreen>
- *   </NavigatorProvider>
- * );
- * ```
+ * @deprecated
  */
 const NavigatorToParentButton = contextConnect(UnconnectedNavigatorToParentButton, 'NavigatorToParentButton');
 /* harmony default export */ const navigator_to_parent_button_component = (NavigatorToParentButton);
