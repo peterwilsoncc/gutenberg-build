@@ -28642,65 +28642,6 @@ const alignJustify = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 });
 /* harmony default export */ const align_justify = (alignJustify);
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/segmented-text-control/index.js
-/**
- * External dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-
-/**
- * @typedef {Object} Option
- * @property {string} label The label of the option.
- * @property {string} value The value of the option.
- * @property {string} icon  The icon of the option.
- */
-
-/**
- * Control to facilitate selecting a text style from a set of options.
- *
- * @param {Object}   props           Component props.
- * @param {string}   props.label     A label for the option.
- * @param {string}   props.value     Currently selected value.
- * @param {Function} props.onChange  Callback to handle onChange.
- * @param {Option[]} props.options   Array of options to display.
- * @param {string}   props.className Additional class name to apply.
- *
- * @return {Element} Element to render.
- */
-
-
-function SegmentedTextControl({
-  label,
-  value,
-  options,
-  onChange,
-  className
-}) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
-    className: dist_clsx('block-editor-segmented-text-control', className),
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
-      as: "legend",
-      children: label
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "block-editor-segmented-text-control__buttons",
-      children: options.map(option => {
-        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          size: "compact",
-          icon: option.icon,
-          label: option.label,
-          isPressed: option.value === value,
-          onClick: () => onChange(option.value)
-        }, option.value);
-      })
-    })]
-  });
-}
-
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/text-alignment-control/index.js
 /**
  * External dependencies
@@ -28713,10 +28654,6 @@ function SegmentedTextControl({
 
 
 
-
-/**
- * Internal dependencies
- */
 
 
 const TEXT_ALIGNMENT_OPTIONS = [{
@@ -28759,14 +28696,23 @@ function TextAlignmentControl({
   if (!validOptions.length) {
     return null;
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SegmentedTextControl, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+    isDeselectable: true,
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Text alignment'),
-    options: validOptions,
     className: dist_clsx('block-editor-text-alignment-control', className),
     value: value,
     onChange: newValue => {
       onChange(newValue === value ? undefined : newValue);
-    }
+    },
+    children: validOptions.map(option => {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOptionIcon, {
+        value: option.value,
+        icon: option.icon,
+        label: option.label
+      }, option.value);
+    })
   });
 }
 
@@ -28842,10 +28788,6 @@ const formatCapitalize = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObjec
 
 
 
-/**
- * Internal dependencies
- */
-
 
 const TEXT_TRANSFORMS = [{
   label: (0,external_wp_i18n_namespaceObject.__)('None'),
@@ -28880,14 +28822,23 @@ function TextTransformControl({
   value,
   onChange
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SegmentedTextControl, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+    isDeselectable: true,
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Letter case'),
-    options: TEXT_TRANSFORMS,
     className: dist_clsx('block-editor-text-transform-control', className),
     value: value,
     onChange: newValue => {
       onChange(newValue === value ? undefined : newValue);
-    }
+    },
+    children: TEXT_TRANSFORMS.map(option => {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOptionIcon, {
+        value: option.value,
+        icon: option.icon,
+        label: option.label
+      }, option.value);
+    })
   });
 }
 
@@ -28933,10 +28884,6 @@ const formatStrikethrough = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceOb
 
 
 
-/**
- * Internal dependencies
- */
-
 
 const TEXT_DECORATIONS = [{
   label: (0,external_wp_i18n_namespaceObject.__)('None'),
@@ -28967,14 +28914,23 @@ function TextDecorationControl({
   onChange,
   className
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SegmentedTextControl, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+    isDeselectable: true,
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Decoration'),
-    options: TEXT_DECORATIONS,
     className: dist_clsx('block-editor-text-decoration-control', className),
     value: value,
     onChange: newValue => {
       onChange(newValue === value ? undefined : newValue);
-    }
+    },
+    children: TEXT_DECORATIONS.map(option => {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOptionIcon, {
+        value: option.value,
+        icon: option.icon,
+        label: option.label
+      }, option.value);
+    })
   });
 }
 
@@ -29020,10 +28976,6 @@ const textVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 
 
 
-/**
- * Internal dependencies
- */
-
 
 const WRITING_MODES = [{
   label: (0,external_wp_i18n_namespaceObject.__)('Horizontal'),
@@ -29050,14 +29002,23 @@ function WritingModeControl({
   value,
   onChange
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SegmentedTextControl, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+    isDeselectable: true,
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Orientation'),
-    options: WRITING_MODES,
     className: dist_clsx('block-editor-writing-mode-control', className),
     value: value,
     onChange: newValue => {
       onChange(newValue === value ? undefined : newValue);
-    }
+    },
+    children: WRITING_MODES.map(option => {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOptionIcon, {
+        value: option.value,
+        icon: option.icon,
+        label: option.label
+      }, option.value);
+    })
   });
 }
 
