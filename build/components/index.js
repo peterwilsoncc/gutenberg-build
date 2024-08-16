@@ -15976,6 +15976,48 @@ if (false) { var globalKey, globalContext, isJest, emotion_react_browser_esm_isB
 
 
 
+;// CONCATENATED MODULE: ./packages/components/build-module/utils/space.js
+/**
+ * The argument value for the `space()` utility function.
+ *
+ * When this is a number or a numeric string, it will be interpreted as a
+ * multiplier for the grid base value (4px). For example, `space( 2 )` will be 8px.
+ *
+ * Otherwise, it will be interpreted as a literal CSS length value. For example,
+ * `space( 'auto' )` will be 'auto', and `space( '2px' )` will be 2px.
+ */
+
+const GRID_BASE = '4px';
+
+/**
+ * A function that handles numbers, numeric strings, and unit values.
+ *
+ * When given a number or a numeric string, it will return the grid-based
+ * value as a factor of GRID_BASE, defined above.
+ *
+ * When given a unit value or one of the named CSS values like `auto`,
+ * it will simply return the value back.
+ *
+ * @param value A number, numeric string, or a unit value.
+ */
+function space(value) {
+  if (typeof value === 'undefined') {
+    return undefined;
+  }
+
+  // Handle empty strings, if it's the number 0 this still works.
+  if (!value) {
+    return '0';
+  }
+  const asInt = typeof value === 'number' ? value : Number(value);
+
+  // Test if the input has a unit, was NaN, or was one of the named CSS values (like `auto`), in which case just use that value.
+  if (typeof window !== 'undefined' && window.CSS?.supports?.('margin', value.toString()) || Number.isNaN(asInt)) {
+    return value.toString();
+  }
+  return `calc(${GRID_BASE} * ${value})`;
+}
+
 ;// CONCATENATED MODULE: ./packages/components/build-module/utils/colors-values.js
 /**
  * Internal dependencies
@@ -16064,6 +16106,96 @@ const COLORS = Object.freeze({
 });
 /* harmony default export */ const colors_values = ((/* unused pure expression or super */ null && (COLORS)));
 
+;// CONCATENATED MODULE: ./packages/components/build-module/utils/config-values.js
+/**
+ * Internal dependencies
+ */
+
+
+const CONTROL_HEIGHT = '36px';
+const CONTROL_PADDING_X = '12px';
+const CONTROL_PROPS = {
+  controlSurfaceColor: COLORS.white,
+  controlTextActiveColor: COLORS.theme.accent,
+  controlPaddingX: CONTROL_PADDING_X,
+  controlPaddingXLarge: `calc(${CONTROL_PADDING_X} * 1.3334)`,
+  controlPaddingXSmall: `calc(${CONTROL_PADDING_X} / 1.3334)`,
+  controlBackgroundColor: COLORS.white,
+  controlBoxShadow: 'transparent',
+  controlBoxShadowFocus: `0 0 0 0.5px ${COLORS.theme.accent}`,
+  controlDestructiveBorderColor: COLORS.alert.red,
+  controlHeight: CONTROL_HEIGHT,
+  controlHeightXSmall: `calc( ${CONTROL_HEIGHT} * 0.6 )`,
+  controlHeightSmall: `calc( ${CONTROL_HEIGHT} * 0.8 )`,
+  controlHeightLarge: `calc( ${CONTROL_HEIGHT} * 1.2 )`,
+  controlHeightXLarge: `calc( ${CONTROL_HEIGHT} * 1.4 )`
+};
+const TOGGLE_GROUP_CONTROL_PROPS = {
+  toggleGroupControlBackgroundColor: CONTROL_PROPS.controlBackgroundColor,
+  toggleGroupControlBorderColor: COLORS.ui.border,
+  toggleGroupControlBackdropBackgroundColor: CONTROL_PROPS.controlSurfaceColor,
+  toggleGroupControlBackdropBorderColor: COLORS.ui.border,
+  toggleGroupControlButtonColorActive: CONTROL_PROPS.controlBackgroundColor
+};
+
+// Using Object.assign to avoid creating circular references when emitting
+// TypeScript type declarations.
+/* harmony default export */ const config_values = (Object.assign({}, CONTROL_PROPS, TOGGLE_GROUP_CONTROL_PROPS, {
+  colorDivider: 'rgba(0, 0, 0, 0.1)',
+  colorScrollbarThumb: 'rgba(0, 0, 0, 0.2)',
+  colorScrollbarThumbHover: 'rgba(0, 0, 0, 0.5)',
+  colorScrollbarTrack: 'rgba(0, 0, 0, 0.04)',
+  elevationIntensity: 1,
+  radiusXSmall: '1px',
+  radiusSmall: '2px',
+  radiusMedium: '4px',
+  radiusLarge: '8px',
+  radiusFull: '9999px',
+  radiusRound: '50%',
+  borderWidth: '1px',
+  borderWidthFocus: '1.5px',
+  borderWidthTab: '4px',
+  spinnerSize: 16,
+  fontSize: '13px',
+  fontSizeH1: 'calc(2.44 * 13px)',
+  fontSizeH2: 'calc(1.95 * 13px)',
+  fontSizeH3: 'calc(1.56 * 13px)',
+  fontSizeH4: 'calc(1.25 * 13px)',
+  fontSizeH5: '13px',
+  fontSizeH6: 'calc(0.8 * 13px)',
+  fontSizeInputMobile: '16px',
+  fontSizeMobile: '15px',
+  fontSizeSmall: 'calc(0.92 * 13px)',
+  fontSizeXSmall: 'calc(0.75 * 13px)',
+  fontLineHeightBase: '1.4',
+  fontWeight: 'normal',
+  fontWeightHeading: '600',
+  gridBase: '4px',
+  cardBorderRadius: '2px',
+  cardPaddingXSmall: `${space(2)}`,
+  cardPaddingSmall: `${space(4)}`,
+  cardPaddingMedium: `${space(4)} ${space(6)}`,
+  cardPaddingLarge: `${space(6)} ${space(8)}`,
+  elevationXSmall: `0 0.7px 1px rgba(0, 0, 0, 0.1), 0 1.2px 1.7px -0.2px rgba(0, 0, 0, 0.1), 0 2.3px 3.3px -0.5px rgba(0, 0, 0, 0.1)`,
+  elevationSmall: `0 0.7px 1px 0 rgba(0, 0, 0, 0.12), 0 2.2px 3.7px -0.2px rgba(0, 0, 0, 0.12), 0 5.3px 7.3px -0.5px rgba(0, 0, 0, 0.12)`,
+  elevationMedium: `0 0.7px 1px 0 rgba(0, 0, 0, 0.14), 0 4.2px 5.7px -0.2px rgba(0, 0, 0, 0.14), 0 7.3px 9.3px -0.5px rgba(0, 0, 0, 0.14)`,
+  elevationLarge: `0 0.7px 1px rgba(0, 0, 0, 0.15), 0 2.7px 3.8px -0.2px rgba(0, 0, 0, 0.15), 0 5.5px 7.8px -0.3px rgba(0, 0, 0, 0.15), 0.1px 11.5px 16.4px -0.5px rgba(0, 0, 0, 0.15)`,
+  surfaceBackgroundColor: COLORS.white,
+  surfaceBackgroundSubtleColor: '#F3F3F3',
+  surfaceBackgroundTintColor: '#F5F5F5',
+  surfaceBorderColor: 'rgba(0, 0, 0, 0.1)',
+  surfaceBorderBoldColor: 'rgba(0, 0, 0, 0.15)',
+  surfaceBorderSubtleColor: 'rgba(0, 0, 0, 0.05)',
+  surfaceBackgroundTertiaryColor: COLORS.white,
+  surfaceColor: COLORS.white,
+  transitionDuration: '200ms',
+  transitionDurationFast: '160ms',
+  transitionDurationFaster: '120ms',
+  transitionDurationFastest: '100ms',
+  transitionTimingFunction: 'cubic-bezier(0.08, 0.52, 0.52, 1)',
+  transitionTimingFunctionControl: 'cubic-bezier(0.12, 0.8, 0.32, 1)'
+}));
+
 ;// CONCATENATED MODULE: ./packages/components/build-module/alignment-matrix-control/styles/alignment-matrix-control-styles.js
 
 function _EMOTION_STRINGIFIED_CSS_ERROR__() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
@@ -16077,12 +16209,8 @@ function _EMOTION_STRINGIFIED_CSS_ERROR__() { return "You have tried to stringif
  * Internal dependencies
  */
 
-var _ref =  true ? {
-  name: "93uojk",
-  styles: "border-radius:2px;box-sizing:border-box;direction:ltr;display:grid;grid-template-columns:repeat( 3, 1fr );outline:none"
-} : 0;
 const rootBase = () => {
-  return _ref;
+  return /*#__PURE__*/emotion_react_browser_esm_css("border-radius:", config_values.radiusMedium, ";box-sizing:border-box;direction:ltr;display:grid;grid-template-columns:repeat( 3, 1fr );outline:none;" + ( true ? "" : 0),  true ? "" : 0);
 };
 const rootSize = ({
   size = 92
@@ -27477,48 +27605,6 @@ function useResponsiveValue(values, options = {}) {
   index >= array.length ? array.length - 1 : index];
 }
 
-;// CONCATENATED MODULE: ./packages/components/build-module/utils/space.js
-/**
- * The argument value for the `space()` utility function.
- *
- * When this is a number or a numeric string, it will be interpreted as a
- * multiplier for the grid base value (4px). For example, `space( 2 )` will be 8px.
- *
- * Otherwise, it will be interpreted as a literal CSS length value. For example,
- * `space( 'auto' )` will be 'auto', and `space( '2px' )` will be 2px.
- */
-
-const GRID_BASE = '4px';
-
-/**
- * A function that handles numbers, numeric strings, and unit values.
- *
- * When given a number or a numeric string, it will return the grid-based
- * value as a factor of GRID_BASE, defined above.
- *
- * When given a unit value or one of the named CSS values like `auto`,
- * it will simply return the value back.
- *
- * @param value A number, numeric string, or a unit value.
- */
-function space(value) {
-  if (typeof value === 'undefined') {
-    return undefined;
-  }
-
-  // Handle empty strings, if it's the number 0 this still works.
-  if (!value) {
-    return '0';
-  }
-  const asInt = typeof value === 'number' ? value : Number(value);
-
-  // Test if the input has a unit, was NaN, or was one of the named CSS values (like `auto`), in which case just use that value.
-  if (typeof window !== 'undefined' && window.CSS?.supports?.('margin', value.toString()) || Number.isNaN(asInt)) {
-    return value.toString();
-  }
-  return `calc(${GRID_BASE} * ${value})`;
-}
-
 ;// CONCATENATED MODULE: ./packages/components/build-module/flex/styles.js
 function styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
 /**
@@ -28377,98 +28463,6 @@ function getOptimalTextShade(backgroundColor) {
   return result === '#000000' ? 'dark' : 'light';
 }
 
-;// CONCATENATED MODULE: ./packages/components/build-module/utils/config-values.js
-/**
- * Internal dependencies
- */
-
-
-const CONTROL_HEIGHT = '36px';
-const CONTROL_PADDING_X = '12px';
-const CONTROL_PROPS = {
-  controlSurfaceColor: COLORS.white,
-  controlTextActiveColor: COLORS.theme.accent,
-  controlPaddingX: CONTROL_PADDING_X,
-  controlPaddingXLarge: `calc(${CONTROL_PADDING_X} * 1.3334)`,
-  controlPaddingXSmall: `calc(${CONTROL_PADDING_X} / 1.3334)`,
-  controlBackgroundColor: COLORS.white,
-  controlBorderRadius: '2px',
-  controlBoxShadow: 'transparent',
-  controlBoxShadowFocus: `0 0 0 0.5px ${COLORS.theme.accent}`,
-  controlDestructiveBorderColor: COLORS.alert.red,
-  controlHeight: CONTROL_HEIGHT,
-  controlHeightXSmall: `calc( ${CONTROL_HEIGHT} * 0.6 )`,
-  controlHeightSmall: `calc( ${CONTROL_HEIGHT} * 0.8 )`,
-  controlHeightLarge: `calc( ${CONTROL_HEIGHT} * 1.2 )`,
-  controlHeightXLarge: `calc( ${CONTROL_HEIGHT} * 1.4 )`
-};
-const TOGGLE_GROUP_CONTROL_PROPS = {
-  toggleGroupControlBackgroundColor: CONTROL_PROPS.controlBackgroundColor,
-  toggleGroupControlBorderColor: COLORS.ui.border,
-  toggleGroupControlBackdropBackgroundColor: CONTROL_PROPS.controlSurfaceColor,
-  toggleGroupControlBackdropBorderColor: COLORS.ui.border,
-  toggleGroupControlButtonColorActive: CONTROL_PROPS.controlBackgroundColor
-};
-
-// Using Object.assign to avoid creating circular references when emitting
-// TypeScript type declarations.
-/* harmony default export */ const config_values = (Object.assign({}, CONTROL_PROPS, TOGGLE_GROUP_CONTROL_PROPS, {
-  colorDivider: 'rgba(0, 0, 0, 0.1)',
-  colorScrollbarThumb: 'rgba(0, 0, 0, 0.2)',
-  colorScrollbarThumbHover: 'rgba(0, 0, 0, 0.5)',
-  colorScrollbarTrack: 'rgba(0, 0, 0, 0.04)',
-  elevationIntensity: 1,
-  radiusXSmall: '1px',
-  radiusSmall: '2px',
-  radiusMedium: '4px',
-  radiusLarge: '8px',
-  radiusFull: '9999px',
-  radiusRound: '50%',
-  radiusBlockUi: '2px',
-  borderWidth: '1px',
-  borderWidthFocus: '1.5px',
-  borderWidthTab: '4px',
-  spinnerSize: 16,
-  fontSize: '13px',
-  fontSizeH1: 'calc(2.44 * 13px)',
-  fontSizeH2: 'calc(1.95 * 13px)',
-  fontSizeH3: 'calc(1.56 * 13px)',
-  fontSizeH4: 'calc(1.25 * 13px)',
-  fontSizeH5: '13px',
-  fontSizeH6: 'calc(0.8 * 13px)',
-  fontSizeInputMobile: '16px',
-  fontSizeMobile: '15px',
-  fontSizeSmall: 'calc(0.92 * 13px)',
-  fontSizeXSmall: 'calc(0.75 * 13px)',
-  fontLineHeightBase: '1.4',
-  fontWeight: 'normal',
-  fontWeightHeading: '600',
-  gridBase: '4px',
-  cardBorderRadius: '2px',
-  cardPaddingXSmall: `${space(2)}`,
-  cardPaddingSmall: `${space(4)}`,
-  cardPaddingMedium: `${space(4)} ${space(6)}`,
-  cardPaddingLarge: `${space(6)} ${space(8)}`,
-  elevationXSmall: `0 0.7px 1px rgba(0, 0, 0, 0.1), 0 1.2px 1.7px -0.2px rgba(0, 0, 0, 0.1), 0 2.3px 3.3px -0.5px rgba(0, 0, 0, 0.1)`,
-  elevationSmall: `0 0.7px 1px 0 rgba(0, 0, 0, 0.12), 0 2.2px 3.7px -0.2px rgba(0, 0, 0, 0.12), 0 5.3px 7.3px -0.5px rgba(0, 0, 0, 0.12)`,
-  elevationMedium: `0 0.7px 1px 0 rgba(0, 0, 0, 0.14), 0 4.2px 5.7px -0.2px rgba(0, 0, 0, 0.14), 0 7.3px 9.3px -0.5px rgba(0, 0, 0, 0.14)`,
-  elevationLarge: `0 0.7px 1px rgba(0, 0, 0, 0.15), 0 2.7px 3.8px -0.2px rgba(0, 0, 0, 0.15), 0 5.5px 7.8px -0.3px rgba(0, 0, 0, 0.15), 0.1px 11.5px 16.4px -0.5px rgba(0, 0, 0, 0.15)`,
-  surfaceBackgroundColor: COLORS.white,
-  surfaceBackgroundSubtleColor: '#F3F3F3',
-  surfaceBackgroundTintColor: '#F5F5F5',
-  surfaceBorderColor: 'rgba(0, 0, 0, 0.1)',
-  surfaceBorderBoldColor: 'rgba(0, 0, 0, 0.15)',
-  surfaceBorderSubtleColor: 'rgba(0, 0, 0, 0.05)',
-  surfaceBackgroundTertiaryColor: COLORS.white,
-  surfaceColor: COLORS.white,
-  transitionDuration: '200ms',
-  transitionDurationFast: '160ms',
-  transitionDurationFaster: '120ms',
-  transitionDurationFastest: '100ms',
-  transitionTimingFunction: 'cubic-bezier(0.08, 0.52, 0.52, 1)',
-  transitionTimingFunctionControl: 'cubic-bezier(0.12, 0.8, 0.32, 1)'
-}));
-
 ;// CONCATENATED MODULE: ./packages/components/build-module/text/styles.js
 function text_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
 /**
@@ -28488,7 +28482,7 @@ const styles_block =  true ? {
 const positive = /*#__PURE__*/emotion_react_browser_esm_css("color:", COLORS.alert.green, ";" + ( true ? "" : 0),  true ? "" : 0);
 const destructive = /*#__PURE__*/emotion_react_browser_esm_css("color:", COLORS.alert.red, ";" + ( true ? "" : 0),  true ? "" : 0);
 const muted = /*#__PURE__*/emotion_react_browser_esm_css("color:", COLORS.gray[700], ";" + ( true ? "" : 0),  true ? "" : 0);
-const highlighterText = /*#__PURE__*/emotion_react_browser_esm_css("mark{background:", COLORS.alert.yellow, ";border-radius:2px;box-shadow:0 0 0 1px rgba( 0, 0, 0, 0.05 ) inset,0 -1px 0 rgba( 0, 0, 0, 0.1 ) inset;}" + ( true ? "" : 0),  true ? "" : 0);
+const highlighterText = /*#__PURE__*/emotion_react_browser_esm_css("mark{background:", COLORS.alert.yellow, ";border-radius:", config_values.radiusSmall, ";box-shadow:0 0 0 1px rgba( 0, 0, 0, 0.05 ) inset,0 -1px 0 rgba( 0, 0, 0, 0.1 ) inset;}" + ( true ? "" : 0),  true ? "" : 0);
 const upperCase =  true ? {
   name: "50zrmy",
   styles: "text-transform:uppercase"
@@ -28742,7 +28736,7 @@ function hook_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to strin
 
 
 
-var hook_ref =  true ? {
+var _ref =  true ? {
   name: "50zrmy",
   styles: "text-transform:uppercase"
 } : 0;
@@ -28802,7 +28796,7 @@ function useText(props) {
       letterSpacing,
       textAlign: align
     },  true ? "" : 0,  true ? "" : 0);
-    sx.upperCase = hook_ref;
+    sx.upperCase = _ref;
     sx.optimalTextColor = null;
     if (optimizeReadabilityFor) {
       const isOptimalTextColorDark = getOptimalTextShade(optimizeReadabilityFor) === 'dark';
@@ -33022,7 +33016,7 @@ const CIRCLE_SIZE = 32;
 const INNER_CIRCLE_SIZE = 6;
 const CircleRoot = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "eln3bjz3"
-} : 0)("border-radius:50%;border:", config_values.borderWidth, " solid ", COLORS.ui.border, ";box-sizing:border-box;cursor:grab;height:", CIRCLE_SIZE, "px;overflow:hidden;width:", CIRCLE_SIZE, "px;:active{cursor:grabbing;}" + ( true ? "" : 0));
+} : 0)("border-radius:", config_values.radiusRound, ";border:", config_values.borderWidth, " solid ", COLORS.ui.border, ";box-sizing:border-box;cursor:grab;height:", CIRCLE_SIZE, "px;overflow:hidden;width:", CIRCLE_SIZE, "px;:active{cursor:grabbing;}" + ( true ? "" : 0));
 const CircleIndicatorWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "eln3bjz2"
 } : 0)( true ? {
@@ -33031,7 +33025,7 @@ const CircleIndicatorWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div
 } : 0);
 const CircleIndicator = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "eln3bjz1"
-} : 0)("background:", COLORS.theme.accent, ";border-radius:50%;box-sizing:border-box;display:block;left:50%;top:4px;transform:translateX( -50% );position:absolute;width:", INNER_CIRCLE_SIZE, "px;height:", INNER_CIRCLE_SIZE, "px;" + ( true ? "" : 0));
+} : 0)("background:", COLORS.theme.accent, ";border-radius:", config_values.radiusRound, ";box-sizing:border-box;display:block;left:50%;top:4px;transform:translateX( -50% );position:absolute;width:", INNER_CIRCLE_SIZE, "px;height:", INNER_CIRCLE_SIZE, "px;" + ( true ? "" : 0));
 const UnitText = /*#__PURE__*/emotion_styled_base_browser_esm(text_component,  true ? {
   target: "eln3bjz0"
 } : 0)("color:", COLORS.theme.accent, ";margin-right:", space(3), ";" + ( true ? "" : 0));
@@ -35899,7 +35893,7 @@ const toggleGroupControl = ({
   isBlock,
   isDeselectable,
   size
-}) => /*#__PURE__*/emotion_react_browser_esm_css("background:", COLORS.ui.background, ";border:1px solid transparent;border-radius:", config_values.controlBorderRadius, ";display:inline-flex;min-width:0;position:relative;", toggleGroupControlSize(size), " ", !isDeselectable && enclosingBorders(isBlock), ";" + ( true ? "" : 0),  true ? "" : 0);
+}) => /*#__PURE__*/emotion_react_browser_esm_css("background:", COLORS.ui.background, ";border:1px solid transparent;border-radius:", config_values.radiusSmall, ";display:inline-flex;min-width:0;position:relative;", toggleGroupControlSize(size), " ", !isDeselectable && enclosingBorders(isBlock), ";" + ( true ? "" : 0),  true ? "" : 0);
 const enclosingBorders = isBlock => {
   const enclosingBorder = /*#__PURE__*/emotion_react_browser_esm_css("border-color:", COLORS.ui.border, ";" + ( true ? "" : 0),  true ? "" : 0);
   return /*#__PURE__*/emotion_react_browser_esm_css(isBlock && enclosingBorder, " &:hover{border-color:", COLORS.ui.borderHover, ";}&:focus-within{border-color:", COLORS.ui.borderFocus, ";box-shadow:", config_values.controlBoxShadowFocus, ";z-index:1;outline:2px solid transparent;outline-offset:-2px;}" + ( true ? "" : 0),  true ? "" : 0);
@@ -36568,7 +36562,7 @@ const buttonView = ({
   isIcon,
   isPressed,
   size
-}) => /*#__PURE__*/emotion_react_browser_esm_css("align-items:center;appearance:none;background:transparent;border:none;border-radius:", config_values.controlBorderRadius, ";color:", COLORS.gray[700], ";fill:currentColor;cursor:pointer;display:flex;font-family:inherit;height:100%;justify-content:center;line-height:100%;outline:none;padding:0 12px;position:relative;text-align:center;@media not ( prefers-reduced-motion ){transition:background ", config_values.transitionDurationFast, " linear,color ", config_values.transitionDurationFast, " linear,font-weight 60ms linear;}user-select:none;width:100%;z-index:2;&::-moz-focus-inner{border:0;}&[disabled]{opacity:0.4;cursor:default;}&:active{background:", config_values.toggleGroupControlBackgroundColor, ";}", isDeselectable && deselectable, " ", isIcon && isIconStyles({
+}) => /*#__PURE__*/emotion_react_browser_esm_css("align-items:center;appearance:none;background:transparent;border:none;border-radius:", config_values.radiusXSmall, ";color:", COLORS.gray[700], ";fill:currentColor;cursor:pointer;display:flex;font-family:inherit;height:100%;justify-content:center;line-height:100%;outline:none;padding:0 12px;position:relative;text-align:center;@media not ( prefers-reduced-motion ){transition:background ", config_values.transitionDurationFast, " linear,color ", config_values.transitionDurationFast, " linear,font-weight 60ms linear;}user-select:none;width:100%;z-index:2;&::-moz-focus-inner{border:0;}&[disabled]{opacity:0.4;cursor:default;}&:active{background:", config_values.toggleGroupControlBackgroundColor, ";}", isDeselectable && deselectable, " ", isIcon && isIconStyles({
   size
 }), " ", isPressed && pressed, ";" + ( true ? "" : 0),  true ? "" : 0);
 const pressed = /*#__PURE__*/emotion_react_browser_esm_css("color:", COLORS.white, ";&:active{background:transparent;}" + ( true ? "" : 0),  true ? "" : 0);
@@ -36585,7 +36579,7 @@ const isIconStyles = ({
   };
   return /*#__PURE__*/emotion_react_browser_esm_css("color:", COLORS.gray[900], ";height:", iconButtonSizes[size], ";aspect-ratio:1;padding-left:0;padding-right:0;" + ( true ? "" : 0),  true ? "" : 0);
 };
-const backdropView = /*#__PURE__*/emotion_react_browser_esm_css("background:", COLORS.gray[900], ";border-radius:", config_values.controlBorderRadius, ";position:absolute;inset:0;z-index:1;outline:2px solid transparent;outline-offset:-3px;" + ( true ? "" : 0),  true ? "" : 0);
+const backdropView = /*#__PURE__*/emotion_react_browser_esm_css("background:", COLORS.gray[900], ";border-radius:", config_values.radiusXSmall, ";position:absolute;inset:0;z-index:1;outline:2px solid transparent;outline-offset:-3px;" + ( true ? "" : 0),  true ? "" : 0);
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/toggle-group-control/toggle-group-control-option-base/component.js
 /**
@@ -40120,7 +40114,7 @@ const unitSelectSizes = ({
 };
 const UnitSelect = /*#__PURE__*/emotion_styled_base_browser_esm("select",  true ? {
   target: "e1bagdl30"
-} : 0)("&&&{appearance:none;background:transparent;border-radius:2px;border:none;display:block;outline:none;margin:0;min-height:auto;font-family:inherit;", baseUnitLabelStyles, ";", unitSelectSizes, ";&:not( :disabled ){cursor:pointer;}}" + ( true ? "" : 0));
+} : 0)("&&&{appearance:none;background:transparent;border-radius:", config_values.radiusXSmall, ";border:none;display:block;outline:none;margin:0;min-height:auto;font-family:inherit;", baseUnitLabelStyles, ";", unitSelectSizes, ";&:not( :disabled ){cursor:pointer;}}" + ( true ? "" : 0));
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/border-control/styles.js
 /**
@@ -40165,7 +40159,7 @@ const colorIndicatorWrapper = (border, size) => {
   const {
     style
   } = border || {};
-  return /*#__PURE__*/emotion_react_browser_esm_css("border-radius:9999px;border:2px solid transparent;", style ? colorIndicatorBorder(border) : undefined, " width:", size === '__unstable-large' ? '24px' : '22px', ";height:", size === '__unstable-large' ? '24px' : '22px', ";padding:", size === '__unstable-large' ? '2px' : '1px', ";&>span{height:", space(4), ";width:", space(4), ";background:linear-gradient(\n\t\t\t\t-45deg,\n\t\t\t\ttransparent 48%,\n\t\t\t\trgb( 0 0 0 / 20% ) 48%,\n\t\t\t\trgb( 0 0 0 / 20% ) 52%,\n\t\t\t\ttransparent 52%\n\t\t\t);}" + ( true ? "" : 0),  true ? "" : 0);
+  return /*#__PURE__*/emotion_react_browser_esm_css("border-radius:", config_values.radiusFull, ";border:2px solid transparent;", style ? colorIndicatorBorder(border) : undefined, " width:", size === '__unstable-large' ? '24px' : '22px', ";height:", size === '__unstable-large' ? '24px' : '22px', ";padding:", size === '__unstable-large' ? '2px' : '1px', ";&>span{height:", space(4), ";width:", space(4), ";background:linear-gradient(\n\t\t\t\t-45deg,\n\t\t\t\ttransparent 48%,\n\t\t\t\trgb( 0 0 0 / 20% ) 48%,\n\t\t\t\trgb( 0 0 0 / 20% ) 52%,\n\t\t\t\ttransparent 52%\n\t\t\t);}" + ( true ? "" : 0),  true ? "" : 0);
 };
 
 // Must equal $color-palette-circle-size from:
@@ -44512,7 +44506,7 @@ const item =  true ? {
 } : 0;
 const bordered = /*#__PURE__*/emotion_react_browser_esm_css("border:1px solid ", config_values.surfaceBorderColor, ";" + ( true ? "" : 0),  true ? "" : 0);
 const separated = /*#__PURE__*/emotion_react_browser_esm_css(">*:not( marquee )>*{border-bottom:1px solid ", config_values.surfaceBorderColor, ";}>*:last-of-type>*:not( :focus ){border-bottom-color:transparent;}" + ( true ? "" : 0),  true ? "" : 0);
-const styles_borderRadius = config_values.controlBorderRadius;
+const styles_borderRadius = config_values.radiusSmall;
 const styles_spacedAround = /*#__PURE__*/emotion_react_browser_esm_css("border-radius:", styles_borderRadius, ";" + ( true ? "" : 0),  true ? "" : 0);
 const styles_rounded = /*#__PURE__*/emotion_react_browser_esm_css("border-radius:", styles_borderRadius, ";>*:first-of-type>*{border-top-left-radius:", styles_borderRadius, ";border-top-right-radius:", styles_borderRadius, ";}>*:last-of-type>*{border-bottom-left-radius:", styles_borderRadius, ";border-bottom-right-radius:", styles_borderRadius, ";}" + ( true ? "" : 0),  true ? "" : 0);
 const baseFontHeight = `calc(${config_values.fontSize} * ${config_values.fontLineHeightBase})`;
@@ -46386,7 +46380,7 @@ const IndicatorStyled = /*#__PURE__*/emotion_styled_base_browser_esm(color_indic
 } : 0)("&&{flex-shrink:0;width:", space(6), ";height:", space(6), ";}" + ( true ? "" : 0));
 const NameInputControl = /*#__PURE__*/emotion_styled_base_browser_esm(input_control,  true ? {
   target: "e1lpqc908"
-} : 0)(Container, "{background:", COLORS.gray[100], ";border-radius:", config_values.controlBorderRadius, ";", Input, Input, Input, Input, "{height:", space(8), ";}", BackdropUI, BackdropUI, BackdropUI, "{border-color:transparent;box-shadow:none;}}" + ( true ? "" : 0));
+} : 0)(Container, "{background:", COLORS.gray[100], ";border-radius:", config_values.radiusXSmall, ";", Input, Input, Input, Input, "{height:", space(8), ";}", BackdropUI, BackdropUI, BackdropUI, "{border-color:transparent;box-shadow:none;}}" + ( true ? "" : 0));
 const buttonStyleReset = ({
   as
 }) => {
@@ -46397,7 +46391,7 @@ const buttonStyleReset = ({
 };
 const PaletteItem = /*#__PURE__*/emotion_styled_base_browser_esm(component,  true ? {
   target: "e1lpqc907"
-} : 0)(buttonStyleReset, " padding-block:3px;padding-inline-start:", space(3), ";border:1px solid ", config_values.surfaceBorderColor, ";border-bottom-color:transparent;font-size:", font('default.fontSize'), ";&:focus-visible{border-color:transparent;box-shadow:0 0 0 var( --wp-admin-border-width-focus ) ", COLORS.theme.accent, ";outline:2px solid transparent;outline-offset:0;}border-top-left-radius:", config_values.controlBorderRadius, ";border-top-right-radius:", config_values.controlBorderRadius, ";&+&{border-top-left-radius:0;border-top-right-radius:0;}&:last-child{border-bottom-left-radius:", config_values.controlBorderRadius, ";border-bottom-right-radius:", config_values.controlBorderRadius, ";border-bottom-color:", config_values.surfaceBorderColor, ";}&.is-selected+&{border-top-color:transparent;}&.is-selected{border-color:", COLORS.theme.accent, ";}" + ( true ? "" : 0));
+} : 0)(buttonStyleReset, " padding-block:3px;padding-inline-start:", space(3), ";border:1px solid ", config_values.surfaceBorderColor, ";border-bottom-color:transparent;font-size:", font('default.fontSize'), ";&:focus-visible{border-color:transparent;box-shadow:0 0 0 var( --wp-admin-border-width-focus ) ", COLORS.theme.accent, ";outline:2px solid transparent;outline-offset:0;}border-top-left-radius:", config_values.radiusSmall, ";border-top-right-radius:", config_values.radiusSmall, ";&+&{border-top-left-radius:0;border-top-right-radius:0;}&:last-child{border-bottom-left-radius:", config_values.radiusSmall, ";border-bottom-right-radius:", config_values.radiusSmall, ";border-bottom-color:", config_values.surfaceBorderColor, ";}&.is-selected+&{border-top-color:transparent;}&.is-selected{border-color:", COLORS.theme.accent, ";}" + ( true ? "" : 0));
 const NameContainer = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "e1lpqc906"
 } : 0)("line-height:", space(8), ";margin-left:", space(2), ";margin-right:", space(2), ";white-space:nowrap;overflow:hidden;" + ( true ? "" : 0));
@@ -56851,7 +56845,7 @@ const MediaWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ?
 } : 0);
 const MediaContainer = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "eeew7dm7"
-} : 0)("align-items:center;border-radius:", config_values.radiusBlockUi, ";cursor:pointer;display:inline-flex;justify-content:center;margin:auto;position:relative;height:100%;&:after{border-radius:inherit;bottom:0;box-shadow:inset 0 0 0 1px rgba( 0, 0, 0, 0.1 );content:'';left:0;pointer-events:none;position:absolute;right:0;top:0;}img,video{border-radius:inherit;box-sizing:border-box;display:block;height:auto;margin:0;max-height:100%;max-width:100%;pointer-events:none;user-select:none;width:auto;}" + ( true ? "" : 0));
+} : 0)("align-items:center;border-radius:", config_values.radiusSmall, ";cursor:pointer;display:inline-flex;justify-content:center;margin:auto;position:relative;height:100%;&:after{border-radius:inherit;bottom:0;box-shadow:inset 0 0 0 1px rgba( 0, 0, 0, 0.1 );content:'';left:0;pointer-events:none;position:absolute;right:0;top:0;}img,video{border-radius:inherit;box-sizing:border-box;display:block;height:auto;margin:0;max-height:100%;max-width:100%;pointer-events:none;user-select:none;width:auto;}" + ( true ? "" : 0));
 const MediaPlaceholder = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "eeew7dm6"
 } : 0)("background:", COLORS.gray[100], ";border-radius:inherit;box-sizing:border-box;height:", INITIAL_BOUNDS.height, "px;max-width:280px;min-width:", INITIAL_BOUNDS.width, "px;width:100%;" + ( true ? "" : 0));
@@ -62612,14 +62606,14 @@ function animateProgressBar(isRtl = false) {
 const INDETERMINATE_TRACK_WIDTH = 50;
 const styles_Track = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "e15u147w2"
-} : 0)("position:relative;overflow:hidden;height:", config_values.borderWidthFocus, ";background-color:color-mix(\n\t\tin srgb,\n\t\t", COLORS.theme.foreground, ",\n\t\ttransparent 90%\n\t);border-radius:", config_values.radiusBlockUi, ";outline:2px solid transparent;outline-offset:2px;:where( & ){width:160px;}" + ( true ? "" : 0));
+} : 0)("position:relative;overflow:hidden;height:", config_values.borderWidthFocus, ";background-color:color-mix(\n\t\tin srgb,\n\t\t", COLORS.theme.foreground, ",\n\t\ttransparent 90%\n\t);border-radius:", config_values.radiusFull, ";outline:2px solid transparent;outline-offset:2px;:where( & ){width:160px;}" + ( true ? "" : 0));
 var progress_bar_styles_ref =  true ? {
   name: "152sa26",
   styles: "width:var(--indicator-width);transition:width 0.4s ease-in-out"
 } : 0;
 const Indicator = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "e15u147w1"
-} : 0)("display:inline-block;position:absolute;top:0;height:100%;border-radius:", config_values.radiusBlockUi, ";background-color:color-mix(\n\t\tin srgb,\n\t\t", COLORS.theme.foreground, ",\n\t\ttransparent 10%\n\t);outline:2px solid transparent;outline-offset:-2px;", ({
+} : 0)("display:inline-block;position:absolute;top:0;height:100%;border-radius:", config_values.radiusFull, ";background-color:color-mix(\n\t\tin srgb,\n\t\t", COLORS.theme.foreground, ",\n\t\ttransparent 10%\n\t);outline:2px solid transparent;outline-offset:-2px;", ({
   isIndeterminate
 }) => isIndeterminate ? /*#__PURE__*/emotion_react_browser_esm_css({
   animationDuration: '1.5s',
@@ -66140,7 +66134,7 @@ const TextControl = (0,external_wp_element_namespaceObject.forwardRef)(Unforward
  */
 
 
-const inputStyleNeutral = /*#__PURE__*/emotion_react_browser_esm_css("box-shadow:0 0 0 transparent;border-radius:", config_values.radiusBlockUi, ";border:", config_values.borderWidth, " solid ", COLORS.ui.border, ";@media not ( prefers-reduced-motion ){transition:box-shadow 0.1s linear;}" + ( true ? "" : 0),  true ? "" : 0);
+const inputStyleNeutral = /*#__PURE__*/emotion_react_browser_esm_css("box-shadow:0 0 0 transparent;border-radius:", config_values.radiusSmall, ";border:", config_values.borderWidth, " solid ", COLORS.ui.border, ";@media not ( prefers-reduced-motion ){transition:box-shadow 0.1s linear;}" + ( true ? "" : 0),  true ? "" : 0);
 const inputStyleFocus = /*#__PURE__*/emotion_react_browser_esm_css("border-color:", COLORS.theme.accent, ";box-shadow:0 0 0 calc( ", config_values.borderWidthFocus, " - ", config_values.borderWidth, " ) ", COLORS.theme.accent, ";outline:2px solid transparent;" + ( true ? "" : 0),  true ? "" : 0);
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/utils/breakpoint-values.js
@@ -70821,8 +70815,8 @@ const slideLeftAndFade = emotion_react_browser_esm_keyframes({
 });
 const dropdown_menu_v2_styles_DropdownMenu = /*#__PURE__*/emotion_styled_base_browser_esm(Menu,  true ? {
   target: "e1kdzosf12"
-} : 0)("position:relative;z-index:1000000;display:grid;grid-template-columns:", GRID_TEMPLATE_COLS, ";grid-template-rows:auto;box-sizing:border-box;min-width:160px;max-width:320px;max-height:var( --popover-available-height );padding:", CONTENT_WRAPPER_PADDING, ";background-color:", COLORS.ui.background, ";border-radius:4px;", props => /*#__PURE__*/emotion_react_browser_esm_css("box-shadow:", props.variant === 'toolbar' ? TOOLBAR_VARIANT_BOX_SHADOW : DEFAULT_BOX_SHADOW, ";" + ( true ? "" : 0),  true ? "" : 0), " overscroll-behavior:contain;overflow:auto;outline:2px solid transparent!important;&[data-open]{@media not ( prefers-reduced-motion ){animation-duration:", styles_ANIMATION_PARAMS.DURATION, ";animation-timing-function:", styles_ANIMATION_PARAMS.EASING, ";will-change:transform,opacity;animation-name:", styles_slideDownAndFade, ";&[data-side='left']{animation-name:", slideLeftAndFade, ";}&[data-side='up']{animation-name:", slideUpAndFade, ";}&[data-side='right']{animation-name:", slideRightAndFade, ";}}}" + ( true ? "" : 0));
-const baseItem = /*#__PURE__*/emotion_react_browser_esm_css("all:unset;position:relative;min-height:", space(10), ";box-sizing:border-box;grid-column:1/-1;display:grid;grid-template-columns:", GRID_TEMPLATE_COLS, ";align-items:center;@supports ( grid-template-columns: subgrid ){grid-template-columns:subgrid;}font-size:", font('default.fontSize'), ";font-family:inherit;font-weight:normal;line-height:20px;color:", COLORS.gray[900], ";border-radius:", config_values.radiusBlockUi, ";padding-block:", ITEM_PADDING_BLOCK, ";padding-inline:", ITEM_PADDING_INLINE, ";scroll-margin:", CONTENT_WRAPPER_PADDING, ";user-select:none;outline:none;&[aria-disabled='true']{color:", COLORS.ui.textDisabled, ";cursor:not-allowed;}&[data-active-item]:not( [data-focus-visible] ):not(\n\t\t\t[aria-disabled='true']\n\t\t){background-color:", COLORS.theme.accent, ";color:", COLORS.white, ";}&[data-focus-visible]{box-shadow:0 0 0 1.5px ", COLORS.theme.accent, ";outline:2px solid transparent;}&:active,&[data-active]{}", dropdown_menu_v2_styles_DropdownMenu, ":not(:focus) &:not(:focus)[aria-expanded=\"true\"]{background-color:", COLORS.gray[100], ";color:", COLORS.gray[900], ";}svg{fill:currentColor;}" + ( true ? "" : 0),  true ? "" : 0);
+} : 0)("position:relative;z-index:1000000;display:grid;grid-template-columns:", GRID_TEMPLATE_COLS, ";grid-template-rows:auto;box-sizing:border-box;min-width:160px;max-width:320px;max-height:var( --popover-available-height );padding:", CONTENT_WRAPPER_PADDING, ";background-color:", COLORS.ui.background, ";border-radius:", config_values.radiusMedium, ";", props => /*#__PURE__*/emotion_react_browser_esm_css("box-shadow:", props.variant === 'toolbar' ? TOOLBAR_VARIANT_BOX_SHADOW : DEFAULT_BOX_SHADOW, ";" + ( true ? "" : 0),  true ? "" : 0), " overscroll-behavior:contain;overflow:auto;outline:2px solid transparent!important;&[data-open]{@media not ( prefers-reduced-motion ){animation-duration:", styles_ANIMATION_PARAMS.DURATION, ";animation-timing-function:", styles_ANIMATION_PARAMS.EASING, ";will-change:transform,opacity;animation-name:", styles_slideDownAndFade, ";&[data-side='left']{animation-name:", slideLeftAndFade, ";}&[data-side='up']{animation-name:", slideUpAndFade, ";}&[data-side='right']{animation-name:", slideRightAndFade, ";}}}" + ( true ? "" : 0));
+const baseItem = /*#__PURE__*/emotion_react_browser_esm_css("all:unset;position:relative;min-height:", space(10), ";box-sizing:border-box;grid-column:1/-1;display:grid;grid-template-columns:", GRID_TEMPLATE_COLS, ";align-items:center;@supports ( grid-template-columns: subgrid ){grid-template-columns:subgrid;}font-size:", font('default.fontSize'), ";font-family:inherit;font-weight:normal;line-height:20px;color:", COLORS.gray[900], ";border-radius:", config_values.radiusSmall, ";padding-block:", ITEM_PADDING_BLOCK, ";padding-inline:", ITEM_PADDING_INLINE, ";scroll-margin:", CONTENT_WRAPPER_PADDING, ";user-select:none;outline:none;&[aria-disabled='true']{color:", COLORS.ui.textDisabled, ";cursor:not-allowed;}&[data-active-item]:not( [data-focus-visible] ):not(\n\t\t\t[aria-disabled='true']\n\t\t){background-color:", COLORS.theme.accent, ";color:", COLORS.white, ";}&[data-focus-visible]{box-shadow:0 0 0 1.5px ", COLORS.theme.accent, ";outline:2px solid transparent;}&:active,&[data-active]{}", dropdown_menu_v2_styles_DropdownMenu, ":not(:focus) &:not(:focus)[aria-expanded=\"true\"]{background-color:", COLORS.gray[100], ";color:", COLORS.gray[900], ";}svg{fill:currentColor;}" + ( true ? "" : 0),  true ? "" : 0);
 const styles_DropdownMenuItem = /*#__PURE__*/emotion_styled_base_browser_esm(_4Q67VK3V_MenuItem,  true ? {
   target: "e1kdzosf11"
 } : 0)(baseItem, ";" + ( true ? "" : 0));
