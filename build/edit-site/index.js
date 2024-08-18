@@ -25705,6 +25705,7 @@ function ShadowsEditPanel() {
           setIsRenameModalVisible(false);
         },
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
+          __next40pxDefaultSize: true,
           autoComplete: "off",
           label: (0,external_wp_i18n_namespaceObject.__)('Name'),
           placeholder: (0,external_wp_i18n_namespaceObject.__)('Shadow name'),
