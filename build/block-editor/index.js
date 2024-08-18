@@ -45381,7 +45381,9 @@ function useBlockDropZone({
     getBlockNamesByClientId,
     getAllowedBlocks,
     isDragging,
-    isGroupable
+    isGroupable,
+    getSettings,
+    isZoomOutMode
   } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const {
     showInsertionPoint,
@@ -45404,6 +45406,16 @@ function useBlockDropZone({
     const draggedBlockNames = getBlockNamesByClientId(getDraggedBlockClientIds());
     const isBlockDroppingAllowed = isDropTargetValid(getBlockType, allowedBlocks, draggedBlockNames, targetBlockName);
     if (!isBlockDroppingAllowed) {
+      return;
+    }
+    const {
+      sectionRootClientId
+    } = unlock(getSettings());
+
+    // In Zoom Out mode, if the target is not the section root provided by settings then
+    // do not allow dropping as the drop target is not within the root (that which is
+    // treated as "the content" by Zoom Out Mode).
+    if (isZoomOutMode() && sectionRootClientId !== targetRootClientId) {
       return;
     }
     const blocks = getBlocks(targetRootClientId);
@@ -45473,7 +45485,7 @@ function useBlockDropZone({
         nearestSide
       });
     });
-  }, [getAllowedBlocks, targetRootClientId, getBlockNamesByClientId, getDraggedBlockClientIds, getBlockType, getBlocks, getBlockListSettings, dropZoneElement, parentBlockClientId, getBlockIndex, registry, showInsertionPoint, isDragging, startDragging, canInsertBlockType, getBlockVariations, getGroupingBlockName, isGroupable]), 200);
+  }, [isDragging, getAllowedBlocks, targetRootClientId, getBlockNamesByClientId, getDraggedBlockClientIds, getBlockType, getBlocks, getBlockListSettings, dropZoneElement, parentBlockClientId, getBlockIndex, registry, startDragging, showInsertionPoint, canInsertBlockType, isGroupable, getBlockVariations, getGroupingBlockName, getSettings, isZoomOutMode]), 200);
   return (0,external_wp_compose_namespaceObject.__experimentalUseDropZone)({
     dropZoneElement,
     isDisabled,
