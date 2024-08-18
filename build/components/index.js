@@ -38075,6 +38075,23 @@ function useTooltipPosition({
 
 
 const range_control_noop = () => {};
+
+/**
+ * Computes the value that `RangeControl` should reset to when pressing
+ * the reset button.
+ */
+function computeResetValue({
+  resetFallbackValue,
+  initialPosition
+}) {
+  if (resetFallbackValue !== undefined) {
+    return !Number.isNaN(resetFallbackValue) ? resetFallbackValue : null;
+  }
+  if (initialPosition !== undefined) {
+    return !Number.isNaN(initialPosition) ? initialPosition : null;
+  }
+  return null;
+}
 function UnforwardedRangeControl(props, forwardedRef) {
   const {
     __nextHasNoMarginBottom = false,
@@ -38173,12 +38190,10 @@ function UnforwardedRangeControl(props, forwardedRef) {
     }
   };
   const handleOnReset = () => {
-    let resetValue = parseFloat(`${resetFallbackValue}`);
-    let onChangeResetValue = resetValue;
-    if (isNaN(resetValue)) {
-      resetValue = null;
-      onChangeResetValue = undefined;
-    }
+    // Reset to `resetFallbackValue` if defined, otherwise set internal value
+    // to `null` — which, if propagated to the `value` prop, will cause
+    // the value to be reset to the `initialPosition` prop if defined.
+    const resetValue = Number.isNaN(resetFallbackValue) ? null : resetFallbackValue !== null && resetFallbackValue !== void 0 ? resetFallbackValue : null;
     setValue(resetValue);
 
     /**
@@ -38194,7 +38209,7 @@ function UnforwardedRangeControl(props, forwardedRef) {
      * preserve the undefined callback argument, except when a
      * resetFallbackValue is defined.
      */
-    onChange(onChangeResetValue);
+    onChange(resetValue !== null && resetValue !== void 0 ? resetValue : undefined);
   };
   const handleShowTooltip = () => setShowTooltip(true);
   const handleHideTooltip = () => setShowTooltip(false);
@@ -38309,8 +38324,15 @@ function UnforwardedRangeControl(props, forwardedRef) {
           className: "components-range-control__reset"
           // If the RangeControl itself is disabled, the reset button shouldn't be in the tab sequence.
           ,
-          accessibleWhenDisabled: !disabled,
-          disabled: disabled || value === undefined,
+          accessibleWhenDisabled: !disabled
+          // The reset button should be disabled if RangeControl itself is disabled,
+          // or if the current `value` is equal to the value that would be currently
+          // assigned when clicking the button.
+          ,
+          disabled: disabled || value === computeResetValue({
+            resetFallbackValue,
+            initialPosition
+          }),
           variant: "secondary",
           size: "small",
           onClick: handleOnReset,
