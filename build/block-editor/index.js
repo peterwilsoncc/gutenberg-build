@@ -69610,12 +69610,17 @@ function MediaPlaceholder({
     if (mediaUpload) {
       const content = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [renderDropZone(), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FormFileUpload, {
-          variant: "primary",
-          className: dist_clsx('block-editor-media-placeholder__button', 'block-editor-media-placeholder__upload-button'),
+          render: ({
+            openFileDialog
+          }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            onClick: openFileDialog,
+            variant: "primary",
+            className: dist_clsx('block-editor-media-placeholder__button', 'block-editor-media-placeholder__upload-button'),
+            children: (0,external_wp_i18n_namespaceObject.__)('Upload')
+          }),
           onChange: onUpload,
           accept: accept,
-          multiple: !!multiple,
-          children: (0,external_wp_i18n_namespaceObject.__)('Upload')
+          multiple: !!multiple
         }), uploadMediaLibraryButton, renderUrlSelectionUI(), renderFeaturedImageToggle(), renderCancelLink()]
       });
       return renderPlaceholder(content);
