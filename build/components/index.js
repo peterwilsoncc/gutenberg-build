@@ -63198,6 +63198,9 @@ function generateOptionDescriptionId(radioGroupId, index) {
 function generateOptionId(radioGroupId, index) {
   return `${radioGroupId}-${index}`;
 }
+function generateHelpId(radioGroupId) {
+  return `${radioGroupId}__help`;
+}
 
 /**
  * Render a user interface to select the user type using radio inputs.
@@ -63238,27 +63241,20 @@ function RadioControl(props) {
   } = props;
   const id = (0,external_wp_compose_namespaceObject.useInstanceId)(RadioControl, 'inspector-radio-control', preferredId);
   const onChangeValue = event => onChange(event.target.value);
-
-  // Use `useBaseControlProps` to get the id of the help text.
-  const {
-    controlProps: {
-      'aria-describedby': helpTextId
-    }
-  } = useBaseControlProps({
-    id,
-    help
-  });
   if (!options?.length) {
     return null;
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control, {
-    __nextHasNoMarginBottom: true,
-    label: label,
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
     id: id,
-    hideLabelFromVision: hideLabelFromVision,
-    help: help,
     className: dist_clsx(className, 'components-radio-control'),
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(v_stack_component, {
+    "aria-describedby": !!help ? generateHelpId(id) : undefined,
+    children: [hideLabelFromVision ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(visually_hidden_component, {
+      as: "legend",
+      children: label
+    }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control.VisualLabel, {
+      as: "legend",
+      children: label
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(v_stack_component, {
       spacing: 3,
       className: dist_clsx('components-radio-control__group-wrapper', {
         'has-help': !!help
@@ -63273,7 +63269,7 @@ function RadioControl(props) {
           value: option.value,
           onChange: onChangeValue,
           checked: option.value === selected,
-          "aria-describedby": dist_clsx([!!option.description && generateOptionDescriptionId(id, index), helpTextId]) || undefined,
+          "aria-describedby": !!option.description ? generateOptionDescriptionId(id, index) : undefined,
           ...additionalProps
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("label", {
           className: "components-radio-control__label",
@@ -63286,7 +63282,12 @@ function RadioControl(props) {
           children: option.description
         }) : null]
       }, generateOptionId(id, index)))
-    })
+    }), !!help && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledHelp, {
+      __nextHasNoMarginBottom: true,
+      id: generateHelpId(id),
+      className: "components-base-control__help",
+      children: help
+    })]
   });
 }
 /* harmony default export */ const radio_control = (RadioControl);
