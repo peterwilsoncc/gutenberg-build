@@ -46581,6 +46581,7 @@ function ParentControl({
     });
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FormTokenField, {
+    __next40pxDefaultSize: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Parents'),
     value: value,
     onInputChange: debouncedSearch,
