@@ -39691,14 +39691,36 @@ const selectUserPatterns = (0,external_wp_data_namespaceObject.createSelector)((
 }), select(external_wp_coreData_namespaceObject.store).isResolving('getEntityRecords', ['postType', PATTERN_TYPES.user, {
   per_page: -1
 }]), select(external_wp_coreData_namespaceObject.store).getUserPatternCategories()]);
+function useAugmentPatternsWithPermissions(patterns) {
+  const idsAndTypes = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    var _patterns$filter$map;
+    return (_patterns$filter$map = patterns?.filter(record => record.type !== PATTERN_TYPES.theme).map(record => [record.type, record.id])) !== null && _patterns$filter$map !== void 0 ? _patterns$filter$map : [];
+  }, [patterns]);
+  const permissions = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecordPermissions
+    } = lock_unlock_unlock(select(external_wp_coreData_namespaceObject.store));
+    return idsAndTypes.reduce((acc, [type, id]) => {
+      acc[id] = getEntityRecordPermissions('postType', type, id);
+      return acc;
+    }, {});
+  }, [idsAndTypes]);
+  return (0,external_wp_element_namespaceObject.useMemo)(() => {
+    var _patterns$map;
+    return (_patterns$map = patterns?.map(record => {
+      var _permissions$record$i;
+      return {
+        ...record,
+        permissions: (_permissions$record$i = permissions?.[record.id]) !== null && _permissions$record$i !== void 0 ? _permissions$record$i : {}
+      };
+    })) !== null && _patterns$map !== void 0 ? _patterns$map : [];
+  }, [patterns, permissions]);
+}
 const usePatterns = (postType, categoryId, {
   search = '',
   syncStatus
 } = {}) => {
-  const {
-    patterns,
-    ...rest
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  return (0,external_wp_data_namespaceObject.useSelect)(select => {
     if (postType === TEMPLATE_PART_POST_TYPE) {
       return selectTemplateParts(select, categoryId, search);
     } else if (postType === PATTERN_TYPES.user && !!categoryId) {
@@ -39712,27 +39734,6 @@ const usePatterns = (postType, categoryId, {
       isResolving: false
     };
   }, [categoryId, postType, search, syncStatus]);
-  const ids = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    var _patterns$map;
-    return (_patterns$map = patterns?.map(record => record.id)) !== null && _patterns$map !== void 0 ? _patterns$map : [];
-  }, [patterns]);
-  const permissions = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEntityRecordsPermissions
-    } = lock_unlock_unlock(select(external_wp_coreData_namespaceObject.store));
-    return getEntityRecordsPermissions('postType', postType, ids);
-  }, [ids, postType]);
-  const patternsWithPermissions = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    var _patterns$map2;
-    return (_patterns$map2 = patterns?.map((record, index) => ({
-      ...record,
-      permissions: permissions[index]
-    }))) !== null && _patterns$map2 !== void 0 ? _patterns$map2 : [];
-  }, [patterns, permissions]);
-  return {
-    ...rest,
-    patterns: patternsWithPermissions
-  };
 };
 /* harmony default export */ const use_patterns = (usePatterns);
 
@@ -40939,6 +40940,7 @@ function DataviewsPatterns() {
     }
     return filterSortAndPaginate(patterns, viewWithoutFilters, fields);
   }, [patterns, view, fields, type]);
+  const dataWithPermissions = useAugmentPatternsWithPermissions(data);
   const templatePartActions = page_patterns_usePostActions({
     postType: TEMPLATE_PART_POST_TYPE,
     context: 'list'
@@ -40974,7 +40976,7 @@ function DataviewsPatterns() {
         paginationInfo: paginationInfo,
         fields: fields,
         actions: actions,
-        data: data || page_patterns_EMPTY_ARRAY,
+        data: dataWithPermissions || page_patterns_EMPTY_ARRAY,
         getItemId: item => {
           var _item$name;
           return (_item$name = item.name) !== null && _item$name !== void 0 ? _item$name : item.id;
