@@ -72375,9 +72375,17 @@ const external_wp_wordcount_namespaceObject = window["wp"]["wordcount"];
 
 
 
-function MultiSelectionInspector({
-  blocks
-}) {
+function MultiSelectionInspector() {
+  const {
+    blocks
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getMultiSelectedBlocks
+    } = select(store);
+    return {
+      blocks: getMultiSelectedBlocks()
+    };
+  }, []);
   const words = (0,external_wp_wordcount_namespaceObject.count)((0,external_wp_blocks_namespaceObject.serialize)(blocks), 'words');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "block-editor-multi-selection-inspector__card",
@@ -72398,14 +72406,6 @@ function MultiSelectionInspector({
     })]
   });
 }
-/* harmony default export */ const multi_selection_inspector = ((0,external_wp_data_namespaceObject.withSelect)(select => {
-  const {
-    getMultiSelectedBlocks
-  } = select(store);
-  return {
-    blocks: getMultiSelectedBlocks()
-  };
-})(MultiSelectionInspector));
 
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/cog.js
 /**
@@ -73049,7 +73049,7 @@ const BlockInspector = ({
   if (count > 1) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "block-editor-block-inspector",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(multi_selection_inspector, {}), showTabs ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorControlsTabs, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MultiSelectionInspector, {}), showTabs ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorControlsTabs, {
         tabs: availableTabs
       }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
