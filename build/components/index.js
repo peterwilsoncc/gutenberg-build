@@ -39734,12 +39734,24 @@ const DropdownContentWrapper = contextConnect(UnconnectedDropdownContentWrapper,
  */
 
 k([names, a11y]);
+
+/**
+ * Checks if a color value is a simple CSS color.
+ *
+ * @param value The color value to check.
+ * @return A boolean indicating whether the color value is a simple CSS color.
+ */
+const isSimpleCSSColor = value => {
+  const valueIsCssVariable = /var\(/.test(value !== null && value !== void 0 ? value : '');
+  const valueIsColorMix = /color-mix\(/.test(value !== null && value !== void 0 ? value : '');
+  return !valueIsCssVariable && !valueIsColorMix;
+};
 const extractColorNameFromCurrentValue = (currentValue, colors = [], showMultiplePalettes = false) => {
   if (!currentValue) {
     return '';
   }
-  const currentValueIsCssVariable = /^var\(/.test(currentValue);
-  const normalizedCurrentValue = currentValueIsCssVariable ? currentValue : w(currentValue).toHex();
+  const currentValueIsSimpleColor = currentValue ? isSimpleCSSColor(currentValue) : false;
+  const normalizedCurrentValue = currentValueIsSimpleColor ? w(currentValue).toHex() : currentValue;
 
   // Normalize format of `colors` to simplify the following loop
 
@@ -39753,7 +39765,7 @@ const extractColorNameFromCurrentValue = (currentValue, colors = [], showMultipl
       name: colorName,
       color: colorValue
     } of paletteColors) {
-      const normalizedColorValue = currentValueIsCssVariable ? colorValue : w(colorValue).toHex();
+      const normalizedColorValue = currentValueIsSimpleColor ? w(colorValue).toHex() : colorValue;
       if (normalizedCurrentValue === normalizedColorValue) {
         return colorName;
       }
@@ -39779,8 +39791,8 @@ const isMultiplePaletteArray = arr => {
  * @return The background color value computed from a element.
  */
 const normalizeColorValue = (value, element) => {
-  const currentValueIsCssVariable = /^var\(/.test(value !== null && value !== void 0 ? value : '');
-  if (!currentValueIsCssVariable || element === null) {
+  const valueIsSimpleColor = value ? isSimpleCSSColor(value) : false;
+  if (valueIsSimpleColor || element === null) {
     return value;
   }
   const {
