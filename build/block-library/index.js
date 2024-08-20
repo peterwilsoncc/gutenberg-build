@@ -32221,9 +32221,8 @@ const media_text_init = () => initBlock({
 
 
 
-function MissingBlockWarning({
+function MissingEdit({
   attributes,
-  convertToHTML,
   clientId
 }) {
   const {
@@ -32244,6 +32243,14 @@ function MissingBlockWarning({
       hasHTMLBlock: canInsertBlockType('core/html', getBlockRootClientId(clientId))
     };
   }, [clientId]);
+  const {
+    replaceBlock
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  function convertToHTML() {
+    replaceBlock(clientId, (0,external_wp_blocks_namespaceObject.createBlock)('core/html', {
+      content: originalUndelimitedContent
+    }));
+  }
   const actions = [];
   let messageHTML;
   const convertToHtmlButton = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -32278,22 +32285,6 @@ function MissingBlockWarning({
     })]
   });
 }
-const MissingEdit = (0,external_wp_data_namespaceObject.withDispatch)((dispatch, {
-  clientId,
-  attributes
-}) => {
-  const {
-    replaceBlock
-  } = dispatch(external_wp_blockEditor_namespaceObject.store);
-  return {
-    convertToHTML() {
-      replaceBlock(clientId, (0,external_wp_blocks_namespaceObject.createBlock)('core/html', {
-        content: attributes.originalUndelimitedContent
-      }));
-    }
-  };
-})(MissingBlockWarning);
-/* harmony default export */ const missing_edit = (MissingEdit);
 
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/missing/save.js
 /**
@@ -32373,7 +32364,7 @@ const missing_settings = {
       return '';
     }
   },
-  edit: missing_edit,
+  edit: MissingEdit,
   save: missing_save_save
 };
 const missing_init = () => initBlock({
