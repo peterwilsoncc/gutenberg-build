@@ -7164,6 +7164,7 @@ function normalizeFields(fields) {
     return {
       ...field,
       label: field.label || field.id,
+      header: field.header || field.label || field.id,
       getValue,
       render,
       sort,

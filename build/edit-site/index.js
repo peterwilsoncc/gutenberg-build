@@ -29246,6 +29246,7 @@ function normalizeFields(fields) {
     return {
       ...field,
       label: field.label || field.id,
+      header: field.header || field.label || field.id,
       getValue,
       render,
       sort,
@@ -35916,7 +35917,7 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
   const combinedField = view.layout?.combinedFields?.find(f => f.id === fieldId);
   const index = view.fields?.indexOf(fieldId);
   if (!!combinedField) {
-    return combinedField.label;
+    return combinedField.header || combinedField.label;
   }
   const field = fields.find(f => f.id === fieldId);
   if (!field) {
@@ -35938,7 +35939,7 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
       className: "dataviews-view-table-header-button",
       ref: ref,
       variant: "tertiary",
-      children: [field.label, view.sort && isSorted && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      children: [field.header, view.sort && isSorted && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         "aria-hidden": "true",
         children: sortArrows[view.sort.direction]
       })]
@@ -36510,7 +36511,7 @@ function GridItem({
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
               className: "dataviews-view-grid__field-name",
-              children: field.label
+              children: field.header
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
               className: "dataviews-view-grid__field-value",
               style: {
