@@ -37616,7 +37616,6 @@ function DataViews({
 }) {
   const [selectionState, setSelectionState] = (0,external_wp_element_namespaceObject.useState)([]);
   const [density, setDensity] = (0,external_wp_element_namespaceObject.useState)(0);
-  const [isShowingFilter, setIsShowingFilter] = (0,external_wp_element_namespaceObject.useState)(false);
   const isUncontrolled = selectionProperty === undefined || onChangeSelection === undefined;
   const selection = isUncontrolled ? selectionState : selectionProperty;
   const [openedFilter, setOpenedFilter] = (0,external_wp_element_namespaceObject.useState)(null);
@@ -37634,6 +37633,7 @@ function DataViews({
     return selection.filter(id => data.some(item => getItemId(item) === id));
   }, [selection, data, getItemId]);
   const filters = useFilters(_fields, view);
+  const [isShowingFilter, setIsShowingFilter] = (0,external_wp_element_namespaceObject.useState)(() => (filters || []).some(filter => filter.isPrimary));
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_context.Provider, {
     value: {
       view,
