@@ -35928,9 +35928,6 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
   // 2. If the field meets the type and operator requirements.
   // 3. If it's not primary. If it is, it should be already visible.
   const canAddFilter = !view.filters?.some(_filter => field.id === _filter.field) && !!field.elements?.length && !!operators.length && !field.filterBy?.isPrimary;
-  if (!isSortable && !isHidable && !canAddFilter) {
-    return field.label;
-  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenu, {
     align: "start",
     trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
