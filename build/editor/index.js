@@ -18378,7 +18378,7 @@ function HierarchicalTermSelector({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
     direction: "column",
     gap: "4",
-    children: [showFilter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+    children: [showFilter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SearchControl, {
       __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
       label: filterLabel,
