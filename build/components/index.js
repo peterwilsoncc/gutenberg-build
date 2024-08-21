@@ -1984,10 +1984,6 @@ __webpack_require__.d(toggle_group_control_option_base_styles_namespaceObject, {
 const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
 ;// CONCATENATED MODULE: ./node_modules/clsx/dist/clsx.mjs
 function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
-;// CONCATENATED MODULE: external ["wp","i18n"]
-const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
-;// CONCATENATED MODULE: external ["wp","compose"]
-const external_wp_compose_namespaceObject = window["wp"]["compose"];
 ;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/3YLGPPWQ.js
 "use client";
 var __defProp = Object.defineProperty;
@@ -3092,6 +3088,10 @@ function _2GXGCHW6_useStore(createStore, props) {
 
 
 
+;// CONCATENATED MODULE: external ["wp","i18n"]
+const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
+;// CONCATENATED MODULE: external ["wp","compose"]
+const external_wp_compose_namespaceObject = window["wp"]["compose"];
 ;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/TCAGH6BH.js
 "use client";
 
@@ -11341,6 +11341,7 @@ const computePopoverPosition = c => c === null || Number.isNaN(c) ? undefined : 
 
 
 
+
 /**
  * WordPress dependencies
  */
@@ -11409,7 +11410,7 @@ function UnforwardedTooltip(props, ref) {
     placement: computedPlacement,
     showTimeout: delay
   });
-  const mounted = tooltipStore.useState('mounted');
+  const mounted = useStoreState(tooltipStore, 'mounted');
   if (isNestedInTooltip) {
     return isOnlyChild ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Role, {
       ...restProps,
@@ -15797,6 +15798,7 @@ function AlignmentMatrixControlIcon({
  */
 
 
+
 /**
  * WordPress dependencies
  */
@@ -15854,7 +15856,7 @@ function AlignmentMatrixControl({
     },
     rtl: (0,external_wp_i18n_namespaceObject.isRTL)()
   });
-  const activeId = compositeStore.useState('activeId');
+  const activeId = useStoreState(compositeStore, 'activeId');
   const classes = dist_clsx('component-alignment-matrix-control', className);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Composite, {
     store: compositeStore,
@@ -35517,6 +35519,7 @@ function useComputeControlledOrUncontrolledValue(valueProp) {
 
 
 
+
 /**
  * WordPress dependencies
  */
@@ -35562,7 +35565,7 @@ function UnforwardedToggleGroupControlAsRadioGroup({
     value,
     setValue: wrappedOnChangeProp
   });
-  const selectedValue = radio.useState('value');
+  const selectedValue = useStoreState(radio, 'value');
   const setValue = radio.setValue;
   const groupContextValue = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     baseId,
@@ -38511,6 +38514,7 @@ const check = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
  * External dependencies
  */
 
+
 /**
  * WordPress dependencies
  */
@@ -38546,7 +38550,7 @@ function UnforwardedOptionAsOption(props, forwardedRef) {
     compositeStore,
     ...additionalProps
   } = props;
-  const activeId = compositeStore.useState('activeId');
+  const activeId = useStoreState(compositeStore, 'activeId');
   if (isSelected && !activeId) {
     compositeStore.setActiveId(id);
   }
@@ -48889,6 +48893,7 @@ const SelectedItemCheck = /*#__PURE__*/emotion_styled_base_browser_esm(SelectIte
  */
 
 
+
 /**
  * WordPress dependencies
  */
@@ -48926,7 +48931,7 @@ const CustomSelectButton = ({
 }) => {
   const {
     value: currentValue
-  } = store.useState();
+  } = useStoreState(store);
   const computedRenderSelectedValue = (0,external_wp_element_namespaceObject.useMemo)(() => renderSelectedValue !== null && renderSelectedValue !== void 0 ? renderSelectedValue : defaultRenderSelectedValue, [renderSelectedValue]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_Select, {
     ...restProps,
@@ -62445,6 +62450,7 @@ const RadioGroupContext = (0,external_wp_element_namespaceObject.createContext)(
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -62460,7 +62466,7 @@ function UnforwardedRadio({
     store,
     disabled
   } = (0,external_wp_element_namespaceObject.useContext)(RadioGroupContext);
-  const selectedValue = store?.useState('value');
+  const selectedValue = useStoreState(store, 'value');
   const isChecked = selectedValue !== undefined && selectedValue === value;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Radio, {
     disabled: disabled,
@@ -65198,6 +65204,7 @@ var TabPanel = forwardRef2(function TabPanel2(props) {
  */
 
 
+
 /**
  * WordPress dependencies
  */
@@ -65294,7 +65301,7 @@ const UnforwardedTabPanel = ({
     selectOnMove,
     defaultSelectedId: prependInstanceId(initialTabName)
   });
-  const selectedTabName = extractTabName(tabStore.useState('selectedId'));
+  const selectedTabName = extractTabName(useStoreState(tabStore, 'selectedId'));
   const setTabStoreSelectedId = (0,external_wp_element_namespaceObject.useCallback)(tabName => {
     tabStore.setState('selectedId', prependInstanceId(tabName));
   }, [prependInstanceId, tabStore]);
@@ -70102,6 +70109,7 @@ const styles_DropdownMenuItemHelpText = /*#__PURE__*/emotion_styled_base_browser
  */
 
 
+
 /**
  * WordPress dependencies
  */
@@ -70284,7 +70292,7 @@ const dropdown_menu_v2_UnconnectedDropdownMenu = (props, ref) => {
   }), [dropdownMenuStore, variant]);
 
   // Extract the side from the applied placement — useful for animations.
-  const appliedPlacementSide = dropdownMenuStore.useState('placement').split('-')[0];
+  const appliedPlacementSide = useStoreState(dropdownMenuStore, 'placement').split('-')[0];
   if (dropdownMenuStore.parent && !((0,external_wp_element_namespaceObject.isValidElement)(trigger) && DropdownMenuItem === trigger.type)) {
     // eslint-disable-next-line no-console
     console.warn('For nested DropdownMenus, the `trigger` should always be a `DropdownMenuItem`.');
@@ -70860,6 +70868,7 @@ onUpdate) {
  */
 
 
+
 /**
  * WordPress dependencies
  */
@@ -70881,13 +70890,14 @@ const TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabL
   ...otherProps
 }, ref) {
   const context = useTabsContext();
-  const selectedId = context?.store.useState('selectedId');
+  const tabStoreState = useStoreState(context?.store);
+  const selectedId = tabStoreState?.selectedId;
   const indicatorPosition = useTrackElementOffsetRect(context?.store.item(selectedId)?.element);
   const [animationEnabled, setAnimationEnabled] = (0,external_wp_element_namespaceObject.useState)(false);
   useOnValueUpdate(selectedId, ({
     previousValue
   }) => previousValue && setAnimationEnabled(true));
-  if (!context) {
+  if (!context || !tabStoreState) {
      false ? 0 : void 0;
     return null;
   }
@@ -70897,7 +70907,7 @@ const TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabL
   const {
     activeId,
     selectOnMove
-  } = store.useState();
+  } = tabStoreState;
   const {
     setActiveId
   } = store;
@@ -70940,9 +70950,13 @@ const TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabL
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/tabs/tabpanel.js
 /**
- * WordPress dependencies
+ * External dependencies
  */
 
+
+/**
+ * WordPress dependencies
+ */
 
 
 /**
@@ -70960,6 +70974,7 @@ const tabpanel_TabPanel = (0,external_wp_element_namespaceObject.forwardRef)(fun
   ...otherProps
 }, ref) {
   const context = useTabsContext();
+  const selectedId = useStoreState(context?.store, 'selectedId');
   if (!context) {
      false ? 0 : void 0;
     return null;
@@ -70969,7 +70984,6 @@ const tabpanel_TabPanel = (0,external_wp_element_namespaceObject.forwardRef)(fun
     instanceId
   } = context;
   const instancedTabId = `${instanceId}-${tabId}`;
-  const selectedId = store.useState(state => state.selectedId);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_TabPanel, {
     ref: ref,
     store: store
@@ -70989,6 +71003,7 @@ const tabpanel_TabPanel = (0,external_wp_element_namespaceObject.forwardRef)(fun
 /**
  * External dependencies
  */
+
 
 
 /**
@@ -71030,7 +71045,7 @@ function Tabs({
     items,
     selectedId,
     activeId
-  } = store.useState();
+  } = useStoreState(store);
   const {
     setSelectedId,
     setActiveId

@@ -36601,6 +36601,8 @@ function ViewGrid({
  */
 
 // TODO: use the @wordpress/components one once public
+// eslint-disable-next-line no-restricted-imports
+
 // Import CompositeStore type, which is not exported from @wordpress/components.
 // eslint-disable-next-line no-restricted-imports
 
@@ -36840,10 +36842,10 @@ function ViewList(props) {
   const getItemDomId = (0,external_wp_element_namespaceObject.useCallback)(item => item ? `${baseId}-${getItemId(item)}` : undefined, [baseId, getItemId]);
   const store = list_useCompositeStore({
     defaultActiveId: getItemDomId(selectedItem)
-  });
+  }); // TODO, remove once composite APIs are public
 
   // Manage focused item, when the active one is removed from the list.
-  const isActiveIdInList = store.useState(state => state.items.some(item => item.id === state.activeId));
+  const isActiveIdInList = useStoreState(store, state => state.items.some(item => item.id === state.activeId));
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (!isActiveIdInList) {
       // Prefer going down, except if there is no item below (last item), then go up (last item in list).
