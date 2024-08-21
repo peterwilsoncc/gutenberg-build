@@ -26062,7 +26062,11 @@ function image_Image({
         accept: "image/*",
         onSelect: onSelectImage,
         onSelectURL: onSelectURL,
-        onError: onUploadError
+        onError: onUploadError,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+          onClick: () => onSelectImage(undefined),
+          children: (0,external_wp_i18n_namespaceObject.__)('Reset')
+        })
       })
     }), isSingleSelected && externalBlob && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
