@@ -29726,8 +29726,8 @@ const CONTENT = 'content';
       return null;
     }
 
-    // Remove footnotes from the list of fields
-    return Object.fromEntries(Object.entries(metaFields).filter(([key]) => key !== 'footnotes'));
+    // Remove footnotes or private keys from the list of fields.
+    return Object.fromEntries(Object.entries(metaFields).filter(([key]) => key !== 'footnotes' && key.charAt(0) !== '_'));
   }
 });
 
