@@ -55009,6 +55009,112 @@ function BlockHooksControlPure({
   }
 });
 
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/utils/block-bindings.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+function useBlockBindingsUtils() {
+  const {
+    clientId
+  } = useBlockEditContext();
+  const {
+    updateBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const {
+    getBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useSelect)(store);
+
+  /**
+   * Updates the value of the bindings connected to block attributes.
+   * It removes the binding when the new value is `undefined`.
+   *
+   * @param {Object} bindings        Bindings including the attributes to update and the new object.
+   * @param {string} bindings.source The source name to connect to.
+   * @param {Object} [bindings.args] Object containing the arguments needed by the source.
+   *
+   * @example
+   * ```js
+   * import { useBlockBindingsUtils } from '@wordpress/block-editor'
+   *
+   * const { updateBlockBindings } = useBlockBindingsUtils();
+   * updateBlockBindings( {
+   *     url: {
+   *         source: 'core/post-meta',
+   *         args: {
+   *             key: 'url_custom_field',
+   *         },
+   * 	   },
+   *     alt: {
+   *         source: 'core/post-meta',
+   *         args: {
+   *             key: 'text_custom_field',
+   *         },
+   * 	   }
+   * } );
+   * ```
+   */
+  const updateBlockBindings = bindings => {
+    const {
+      metadata
+    } = getBlockAttributes(clientId);
+    const newBindings = {
+      ...metadata?.bindings
+    };
+    Object.entries(bindings).forEach(([attribute, binding]) => {
+      if (!binding && newBindings[attribute]) {
+        delete newBindings[attribute];
+        return;
+      }
+      newBindings[attribute] = binding;
+    });
+    const newMetadata = {
+      ...metadata,
+      bindings: newBindings
+    };
+    if (Object.keys(newMetadata.bindings).length === 0) {
+      delete newMetadata.bindings;
+    }
+    updateBlockAttributes(clientId, {
+      metadata: Object.keys(newMetadata).length === 0 ? undefined : newMetadata
+    });
+  };
+
+  /**
+   * Removes the bindings property of the `metadata` attribute.
+   *
+   * @example
+   * ```js
+   * import { useBlockBindingsUtils } from '@wordpress/block-editor'
+   *
+   * const { removeAllBlockBindings } = useBlockBindingsUtils();
+   * removeAllBlockBindings();
+   * ```
+   */
+  const removeAllBlockBindings = () => {
+    const {
+      metadata
+    } = getBlockAttributes(clientId);
+    const newMetadata = {
+      ...metadata
+    };
+    delete newMetadata.bindings;
+    updateBlockAttributes(clientId, {
+      metadata: Object.keys(newMetadata).length === 0 ? undefined : newMetadata
+    });
+  };
+  return {
+    updateBlockBindings,
+    removeAllBlockBindings
+  };
+}
+
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/hooks/block-bindings.js
 /**
  * WordPress dependencies
@@ -55051,22 +55157,35 @@ const block_bindings_useToolsPanelDropdownMenuProps = () => {
 };
 function BlockBindingsPanelDropdown({
   fieldsList,
-  addConnection,
   attribute,
   binding
 }) {
+  const {
+    getBlockBindingsSources
+  } = unlock(external_wp_blocks_namespaceObject.privateApis);
+  const registeredSources = getBlockBindingsSources();
+  const {
+    updateBlockBindings
+  } = useBlockBindingsUtils();
   const currentKey = binding?.args?.key;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: Object.entries(fieldsList).map(([label, fields], i) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_element_namespaceObject.Fragment, {
+    children: Object.entries(fieldsList).map(([name, fields], i) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_element_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenuGroup, {
         children: [Object.keys(fieldsList).length > 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
           className: "block-editor-bindings__source-label",
           upperCase: true,
           variant: "muted",
           "aria-hidden": true,
-          children: label
+          children: registeredSources[name].label
         }), Object.entries(fields).map(([key, value]) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenuRadioItem, {
-          onChange: () => addConnection(key, attribute),
+          onChange: () => updateBlockBindings({
+            [attribute]: {
+              source: name,
+              args: {
+                key
+              }
+            }
+          }),
           name: attribute + '-binding',
           value: key,
           checked: key === currentKey,
@@ -55077,7 +55196,7 @@ function BlockBindingsPanelDropdown({
           })]
         }, key))]
       }), i !== Object.keys(fieldsList).length - 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuSeparator, {})]
-    }, label))
+    }, name))
   });
 }
 function BlockBindingsAttribute({
@@ -55116,10 +55235,11 @@ function ReadOnlyBlockBindingsPanelItems({
 function EditableBlockBindingsPanelItems({
   attributes,
   bindings,
-  fieldsList,
-  addConnection,
-  removeConnection
+  fieldsList
 }) {
+  const {
+    updateBlockBindings
+  } = useBlockBindingsUtils();
   const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: attributes.map(attribute => {
@@ -55128,7 +55248,9 @@ function EditableBlockBindingsPanelItems({
         hasValue: () => !!binding,
         label: attribute,
         onDeselect: () => {
-          removeConnection(attribute);
+          updateBlockBindings({
+            [attribute]: undefined
+          });
         },
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenu, {
           placement: isMobile ? 'bottom-start' : 'left-start',
@@ -55142,7 +55264,6 @@ function EditableBlockBindingsPanelItems({
           }),
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockBindingsPanelDropdown, {
             fieldsList: fieldsList,
-            addConnection: addConnection,
             attribute: attribute,
             binding: binding
           })
@@ -55152,7 +55273,7 @@ function EditableBlockBindingsPanelItems({
   });
 }
 const BlockBindingsPanel = ({
-  name,
+  name: blockName,
   metadata
 }) => {
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
@@ -55160,86 +55281,31 @@ const BlockBindingsPanel = ({
   const {
     bindings
   } = metadata || {};
-  const bindableAttributes = getBindableAttributes(name);
+  const {
+    removeAllBlockBindings
+  } = useBlockBindingsUtils();
+  const bindableAttributes = getBindableAttributes(blockName);
   const dropdownMenuProps = block_bindings_useToolsPanelDropdownMenuProps();
   const filteredBindings = {
     ...bindings
   };
   Object.keys(filteredBindings).forEach(key => {
-    if (!canBindAttribute(name, key) || filteredBindings[key].source === 'core/pattern-overrides') {
+    if (!canBindAttribute(blockName, key) || filteredBindings[key].source === 'core/pattern-overrides') {
       delete filteredBindings[key];
     }
   });
-  const {
-    updateBlockAttributes
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const {
-    _id
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getSelectedBlockClientId
-    } = select(store);
-    return {
-      _id: getSelectedBlockClientId()
-    };
-  }, []);
   if (!bindableAttributes || bindableAttributes.length === 0) {
     return null;
   }
-  const removeAllConnections = () => {
-    const newMetadata = {
-      ...metadata
-    };
-    delete newMetadata.bindings;
-    updateBlockAttributes(_id, {
-      metadata: Object.keys(newMetadata).length === 0 ? undefined : newMetadata
-    });
-  };
-  const addConnection = (value, attribute) => {
-    // Assuming the block expects a flat structure for its metadata attribute
-    const newMetadata = {
-      ...metadata,
-      // Adjust this according to the actual structure expected by your block
-      bindings: {
-        ...metadata?.bindings,
-        [attribute]: {
-          source: 'core/post-meta',
-          args: {
-            key: value
-          }
-        }
-      }
-    };
-    // Update the block's attributes with the new metadata
-    updateBlockAttributes(_id, {
-      metadata: newMetadata
-    });
-  };
-  const removeConnection = key => {
-    const newMetadata = {
-      ...metadata
-    };
-    if (!newMetadata.bindings) {
-      return;
-    }
-    delete newMetadata.bindings[key];
-    if (Object.keys(newMetadata.bindings).length === 0) {
-      delete newMetadata.bindings;
-    }
-    updateBlockAttributes(_id, {
-      metadata: Object.keys(newMetadata).length === 0 ? undefined : newMetadata
-    });
-  };
   const fieldsList = {};
   const {
     getBlockBindingsSources
   } = unlock(external_wp_blocks_namespaceObject.privateApis);
   const registeredSources = getBlockBindingsSources();
-  Object.values(registeredSources).forEach(({
+  Object.entries(registeredSources).forEach(([sourceName, {
     getFieldsList,
-    label,
     usesContext
-  }) => {
+  }]) => {
     if (getFieldsList) {
       // Populate context.
       const context = {};
@@ -55254,7 +55320,7 @@ const BlockBindingsPanel = ({
       });
       // Only add source if the list is not empty.
       if (sourceList) {
-        fieldsList[label] = {
+        fieldsList[sourceName] = {
           ...sourceList
         };
       }
@@ -55276,7 +55342,7 @@ const BlockBindingsPanel = ({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
       label: (0,external_wp_i18n_namespaceObject.__)('Attributes'),
       resetAll: () => {
-        removeAllConnections();
+        removeAllBlockBindings();
       },
       dropdownMenuProps: dropdownMenuProps,
       className: "block-editor-bindings__panel",
@@ -55288,9 +55354,7 @@ const BlockBindingsPanel = ({
         }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditableBlockBindingsPanelItems, {
           attributes: bindableAttributes,
           bindings: filteredBindings,
-          fieldsList: fieldsList,
-          addConnection: addConnection,
-          removeConnection: removeConnection
+          fieldsList: fieldsList
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
         variant: "muted",
@@ -77254,6 +77318,7 @@ function ResolutionTool({
 
 
 
+
 /**
  * Private @wordpress/block-editor APIs.
  */
@@ -77297,7 +77362,8 @@ lock(privateApis, {
   useSpacingSizes: useSpacingSizes,
   useBlockDisplayTitle: useBlockDisplayTitle,
   __unstableBlockStyleVariationOverridesWithConfig: __unstableBlockStyleVariationOverridesWithConfig,
-  setBackgroundStyleDefaults: setBackgroundStyleDefaults
+  setBackgroundStyleDefaults: setBackgroundStyleDefaults,
+  useBlockBindingsUtils: useBlockBindingsUtils
 });
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/index.js
