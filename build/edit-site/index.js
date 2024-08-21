@@ -35629,6 +35629,9 @@ function FilterVisibilityToggle({
   }, [onChangeView, setIsShowingFilter]);
   const visibleFilters = filters.filter(filter => filter.isVisible);
   const hasVisibleFilters = !!visibleFilters.length;
+  if (filters.length === 0) {
+    return null;
+  }
   if (!hasVisibleFilters) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddFilterDropdownMenu, {
       filters: filters,
