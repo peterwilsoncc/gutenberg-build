@@ -69997,12 +69997,14 @@ const ITEM_PADDING_BLOCK = space(2);
 const ITEM_PADDING_INLINE = space(3);
 
 // TODO:
-// - those values are different from saved variables?
-// - should bring this into the config, and make themeable
-// - border color and divider color are different?
-const DEFAULT_BORDER_COLOR = COLORS.gray[300];
-const DIVIDER_COLOR = COLORS.gray[200];
-const TOOLBAR_VARIANT_BORDER_COLOR = COLORS.gray['900'];
+// - border color and divider color are different from COLORS.theme variables
+// - lighter text color is not defined in COLORS.theme, should it be?
+// - lighter background color is not defined in COLORS.theme, should it be?
+const DEFAULT_BORDER_COLOR = COLORS.theme.gray[300];
+const DIVIDER_COLOR = COLORS.theme.gray[200];
+const LIGHTER_TEXT_COLOR = COLORS.theme.gray[700];
+const LIGHT_BACKGROUND_COLOR = COLORS.theme.gray[100];
+const TOOLBAR_VARIANT_BORDER_COLOR = COLORS.theme.foreground;
 const DEFAULT_BOX_SHADOW = `0 0 0 ${config_values.borderWidth} ${DEFAULT_BORDER_COLOR}, ${config_values.elevationXSmall}`;
 const TOOLBAR_VARIANT_BOX_SHADOW = `0 0 0 ${config_values.borderWidth} ${TOOLBAR_VARIANT_BORDER_COLOR}`;
 const GRID_TEMPLATE_COLS = 'minmax( 0, max-content ) 1fr';
@@ -70049,7 +70051,7 @@ const slideLeftAndFade = emotion_react_browser_esm_keyframes({
 const dropdown_menu_v2_styles_DropdownMenu = /*#__PURE__*/emotion_styled_base_browser_esm(Menu,  true ? {
   target: "e1kdzosf12"
 } : 0)("position:relative;z-index:1000000;display:grid;grid-template-columns:", GRID_TEMPLATE_COLS, ";grid-template-rows:auto;box-sizing:border-box;min-width:160px;max-width:320px;max-height:var( --popover-available-height );padding:", CONTENT_WRAPPER_PADDING, ";background-color:", COLORS.ui.background, ";border-radius:", config_values.radiusMedium, ";", props => /*#__PURE__*/emotion_react_browser_esm_css("box-shadow:", props.variant === 'toolbar' ? TOOLBAR_VARIANT_BOX_SHADOW : DEFAULT_BOX_SHADOW, ";" + ( true ? "" : 0),  true ? "" : 0), " overscroll-behavior:contain;overflow:auto;outline:2px solid transparent!important;&[data-open]{@media not ( prefers-reduced-motion ){animation-duration:", styles_ANIMATION_PARAMS.DURATION, ";animation-timing-function:", styles_ANIMATION_PARAMS.EASING, ";will-change:transform,opacity;animation-name:", styles_slideDownAndFade, ";&[data-side='left']{animation-name:", slideLeftAndFade, ";}&[data-side='up']{animation-name:", slideUpAndFade, ";}&[data-side='right']{animation-name:", slideRightAndFade, ";}}}" + ( true ? "" : 0));
-const baseItem = /*#__PURE__*/emotion_react_browser_esm_css("all:unset;position:relative;min-height:", space(10), ";box-sizing:border-box;grid-column:1/-1;display:grid;grid-template-columns:", GRID_TEMPLATE_COLS, ";align-items:center;@supports ( grid-template-columns: subgrid ){grid-template-columns:subgrid;}font-size:", font('default.fontSize'), ";font-family:inherit;font-weight:normal;line-height:20px;color:", COLORS.gray[900], ";border-radius:", config_values.radiusSmall, ";padding-block:", ITEM_PADDING_BLOCK, ";padding-inline:", ITEM_PADDING_INLINE, ";scroll-margin:", CONTENT_WRAPPER_PADDING, ";user-select:none;outline:none;&[aria-disabled='true']{color:", COLORS.ui.textDisabled, ";cursor:not-allowed;}&[data-active-item]:not( [data-focus-visible] ):not(\n\t\t\t[aria-disabled='true']\n\t\t){background-color:", COLORS.theme.accent, ";color:", COLORS.white, ";}&[data-focus-visible]{box-shadow:0 0 0 1.5px ", COLORS.theme.accent, ";outline:2px solid transparent;}&:active,&[data-active]{}", dropdown_menu_v2_styles_DropdownMenu, ":not(:focus) &:not(:focus)[aria-expanded=\"true\"]{background-color:", COLORS.gray[100], ";color:", COLORS.gray[900], ";}svg{fill:currentColor;}" + ( true ? "" : 0),  true ? "" : 0);
+const baseItem = /*#__PURE__*/emotion_react_browser_esm_css("all:unset;position:relative;min-height:", space(10), ";box-sizing:border-box;grid-column:1/-1;display:grid;grid-template-columns:", GRID_TEMPLATE_COLS, ";align-items:center;@supports ( grid-template-columns: subgrid ){grid-template-columns:subgrid;}font-size:", font('default.fontSize'), ";font-family:inherit;font-weight:normal;line-height:20px;color:", COLORS.theme.foreground, ";border-radius:", config_values.radiusSmall, ";padding-block:", ITEM_PADDING_BLOCK, ";padding-inline:", ITEM_PADDING_INLINE, ";scroll-margin:", CONTENT_WRAPPER_PADDING, ";user-select:none;outline:none;&[aria-disabled='true']{color:", COLORS.ui.textDisabled, ";cursor:not-allowed;}&[data-active-item]:not( [data-focus-visible] ):not(\n\t\t\t[aria-disabled='true']\n\t\t){background-color:", COLORS.theme.accent, ";color:", COLORS.white, ";}&[data-focus-visible]{box-shadow:0 0 0 1.5px ", COLORS.theme.accent, ";outline:2px solid transparent;}&:active,&[data-active]{}", dropdown_menu_v2_styles_DropdownMenu, ":not(:focus) &:not(:focus)[aria-expanded=\"true\"]{background-color:", LIGHT_BACKGROUND_COLOR, ";color:", COLORS.theme.foreground, ";}svg{fill:currentColor;}" + ( true ? "" : 0),  true ? "" : 0);
 const styles_DropdownMenuItem = /*#__PURE__*/emotion_styled_base_browser_esm(B6XZVSMQ_MenuItem,  true ? {
   target: "e1kdzosf11"
 } : 0)(baseItem, ";" + ( true ? "" : 0));
@@ -70061,7 +70063,7 @@ const styles_DropdownMenuRadioItem = /*#__PURE__*/emotion_styled_base_browser_es
 } : 0)(baseItem, ";" + ( true ? "" : 0));
 const ItemPrefixWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1kdzosf8"
-} : 0)("grid-column:1;", styles_DropdownMenuCheckboxItem, ">&,", styles_DropdownMenuRadioItem, ">&{min-width:", space(6), ";}", styles_DropdownMenuCheckboxItem, ">&,", styles_DropdownMenuRadioItem, ">&,&:not( :empty ){margin-inline-end:", space(2), ";}display:flex;align-items:center;justify-content:center;color:", COLORS.gray['700'], ";[data-active-item]:not( [data-focus-visible] )>&,[aria-disabled='true']>&{color:inherit;}" + ( true ? "" : 0));
+} : 0)("grid-column:1;", styles_DropdownMenuCheckboxItem, ">&,", styles_DropdownMenuRadioItem, ">&{min-width:", space(6), ";}", styles_DropdownMenuCheckboxItem, ">&,", styles_DropdownMenuRadioItem, ">&,&:not( :empty ){margin-inline-end:", space(2), ";}display:flex;align-items:center;justify-content:center;color:", LIGHTER_TEXT_COLOR, ";[data-active-item]:not( [data-focus-visible] )>&,[aria-disabled='true']>&{color:inherit;}" + ( true ? "" : 0));
 const DropdownMenuItemContentWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "e1kdzosf7"
 } : 0)("grid-column:2;display:flex;align-items:center;justify-content:space-between;gap:", space(3), ";pointer-events:none;" + ( true ? "" : 0));
@@ -70070,7 +70072,7 @@ const DropdownMenuItemChildrenWrapper = /*#__PURE__*/emotion_styled_base_browser
 } : 0)("flex:1;display:inline-flex;flex-direction:column;gap:", space(1), ";" + ( true ? "" : 0));
 const ItemSuffixWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1kdzosf5"
-} : 0)("flex:0 1 fit-content;min-width:0;width:fit-content;display:flex;align-items:center;justify-content:center;gap:", space(3), ";color:", COLORS.gray['700'], ";[data-active-item]:not( [data-focus-visible] ) *:not(", dropdown_menu_v2_styles_DropdownMenu, ") &,[aria-disabled='true'] *:not(", dropdown_menu_v2_styles_DropdownMenu, ") &{color:inherit;}" + ( true ? "" : 0));
+} : 0)("flex:0 1 fit-content;min-width:0;width:fit-content;display:flex;align-items:center;justify-content:center;gap:", space(3), ";color:", LIGHTER_TEXT_COLOR, ";[data-active-item]:not( [data-focus-visible] ) *:not(", dropdown_menu_v2_styles_DropdownMenu, ") &,[aria-disabled='true'] *:not(", dropdown_menu_v2_styles_DropdownMenu, ") &{color:inherit;}" + ( true ? "" : 0));
 const styles_DropdownMenuGroup = /*#__PURE__*/emotion_styled_base_browser_esm(menu_group_MenuGroup,  true ? {
   target: "e1kdzosf4"
 } : 0)( true ? {
@@ -70092,7 +70094,7 @@ const styles_DropdownMenuItemLabel = /*#__PURE__*/emotion_styled_base_browser_es
 } : 0)("font-size:", font('default.fontSize'), ";line-height:20px;color:inherit;" + ( true ? "" : 0));
 const styles_DropdownMenuItemHelpText = /*#__PURE__*/emotion_styled_base_browser_esm(truncate_component,  true ? {
   target: "e1kdzosf0"
-} : 0)("font-size:", font('helpText.fontSize'), ";line-height:16px;color:", COLORS.gray['700'], ";word-break:break-all;[data-active-item]:not( [data-focus-visible] ) *:not( ", dropdown_menu_v2_styles_DropdownMenu, " ) &,[aria-disabled='true'] *:not( ", dropdown_menu_v2_styles_DropdownMenu, " ) &{color:inherit;}" + ( true ? "" : 0));
+} : 0)("font-size:", font('helpText.fontSize'), ";line-height:16px;color:", LIGHTER_TEXT_COLOR, ";word-break:break-all;[data-active-item]:not( [data-focus-visible] ) *:not( ", dropdown_menu_v2_styles_DropdownMenu, " ) &,[aria-disabled='true'] *:not( ", dropdown_menu_v2_styles_DropdownMenu, " ) &{color:inherit;}" + ( true ? "" : 0));
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/index.js
 /**
