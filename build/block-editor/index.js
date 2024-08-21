@@ -61702,7 +61702,8 @@ function ZoomOutToolbar({
     canMove
   } = selected;
   const {
-    removeBlock
+    removeBlock,
+    __unstableSetEditorMode
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const classNames = dist_clsx('zoom-out-toolbar', {
     'is-block-moving-mode': !!blockMovingMode
@@ -61740,6 +61741,13 @@ function ZoomOutToolbar({
     }), canMove && canRemove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Shuffle, {
       clientId: clientId,
       as: external_wp_components_namespaceObject.ToolbarButton
+    }), !isBlockTemplatePart && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+      className: "zoom-out-toolbar-button",
+      icon: edit,
+      label: (0,external_wp_i18n_namespaceObject.__)('Edit'),
+      onClick: () => {
+        __unstableSetEditorMode('edit');
+      }
     }), canRemove && !isBlockTemplatePart && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       className: "zoom-out-toolbar-button",
       icon: library_trash,
