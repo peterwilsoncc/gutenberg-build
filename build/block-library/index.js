@@ -40809,8 +40809,21 @@ const post_author_biography_metadata = {
     },
     interactivity: {
       clientNavigation: true
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true,
+      __experimentalDefaultControls: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
+      }
     }
-  }
+  },
+  style: "wp-block-post-author-biography"
 };
 
 const {
