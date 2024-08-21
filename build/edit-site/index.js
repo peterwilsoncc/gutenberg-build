@@ -18047,10 +18047,11 @@ const {
   mergeBaseAndUserConfigs: typeset_button_mergeBaseAndUserConfigs
 } = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
 function TypesetButton() {
+  const propertiesToFilter = ['typography'];
+  const typographyVariations = useCurrentMergeThemeStyleVariationsWithUserConfig(propertiesToFilter);
+  const hasTypographyVariations = typographyVariations?.length > 1;
   const {
-    base
-  } = (0,external_wp_element_namespaceObject.useContext)(typeset_button_GlobalStylesContext);
-  const {
+    base,
     user: userConfig
   } = (0,external_wp_element_namespaceObject.useContext)(typeset_button_GlobalStylesContext);
   const config = typeset_button_mergeBaseAndUserConfigs(base, userConfig);
@@ -18072,7 +18073,7 @@ function TypesetButton() {
     }
     return allFontFamilies.map(font => font?.name).join(', ');
   }, [allFontFamilies, userTypographyConfig, variations]);
-  return hasFonts && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+  return hasTypographyVariations && hasFonts && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 2,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
       justify: "space-between",
