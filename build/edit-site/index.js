@@ -35093,11 +35093,8 @@ function ListBox({
         }), !filter.singleSelection && currentValue.includes(element.value) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
           icon: library_check
         })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
-        children: [element.label, !!element.description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          className: "dataviews-filters__search-widget-listitem-description",
-          children: element.description
-        })]
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        children: element.label
       })]
     }, element.value))
   });
