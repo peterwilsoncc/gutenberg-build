@@ -18443,7 +18443,8 @@ function InstalledFonts() {
     } catch (error) {
       setNotice({
         type: 'error',
-        message: (0,external_wp_i18n_namespaceObject.__)('There was an error updating the font family. ') + error.message
+        message: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: error message */
+        (0,external_wp_i18n_namespaceObject.__)('There was an error updating the font family. %s'), error.message)
       });
     }
   };
@@ -18664,7 +18665,7 @@ function ConfirmDeleteDialog({
     } catch (error) {
       setNotice({
         type: 'error',
-        message: (0,external_wp_i18n_namespaceObject.__)('There was an error uninstalling the font family. ') + error.message
+        message: (0,external_wp_i18n_namespaceObject.__)('There was an error uninstalling the font family.') + error.message
       });
     }
   };

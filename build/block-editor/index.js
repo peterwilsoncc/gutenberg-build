@@ -24575,7 +24575,7 @@ function BackgroundImageControls({
           closeAndFocus();
           onResetImage();
         },
-        children: (0,external_wp_i18n_namespaceObject.__)('Reset ')
+        children: (0,external_wp_i18n_namespaceObject.__)('Reset')
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropZone, {
       onFilesDrop: onFilesDrop,
@@ -54028,7 +54028,7 @@ function ConvertToGroupButton({
         onConvertFromGroup();
         onClose();
       },
-      children: (0,external_wp_i18n_namespaceObject._x)('Ungroup', 'Ungrouping blocks from within a grouping block back into individual blocks within the Editor ')
+      children: (0,external_wp_i18n_namespaceObject._x)('Ungroup', 'Ungrouping blocks from within a grouping block back into individual blocks within the Editor')
     })]
   });
 }
@@ -74456,7 +74456,9 @@ function getGlobalStylesChanges(next, previous, options = {}) {
       return acc;
     }, {})).map(([key, changeValues]) => {
       const changeValuesLength = changeValues.length;
-      const joinedChangesValue = changeValues.join((0,external_wp_i18n_namespaceObject.__)(', '));
+      const joinedChangesValue = changeValues.join( /* translators: Used between list items, there is a space after the comma. */
+      (0,external_wp_i18n_namespaceObject.__)(', ') // eslint-disable-line @wordpress/i18n-no-flanking-whitespace
+      );
       switch (key) {
         case 'blocks':
           {

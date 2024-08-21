@@ -22624,7 +22624,7 @@ function GroupEditControls({
 }) {
   const htmlElementMessages = {
     header: (0,external_wp_i18n_namespaceObject.__)('The <header> element should represent introductory content, typically a group of introductory or navigational aids.'),
-    main: (0,external_wp_i18n_namespaceObject.__)('The <main> element should be used for the primary content of your document only. '),
+    main: (0,external_wp_i18n_namespaceObject.__)('The <main> element should be used for the primary content of your document only.'),
     section: (0,external_wp_i18n_namespaceObject.__)("The <section> element should represent a standalone portion of the document that can't be better represented by another element."),
     article: (0,external_wp_i18n_namespaceObject.__)('The <article> element should represent a self-contained, syndicatable portion of the document.'),
     aside: (0,external_wp_i18n_namespaceObject.__)("The <aside> element should represent a portion of a document whose content is only indirectly related to the document's main content."),
@@ -43234,8 +43234,10 @@ function PostNavigationLinkEdit({
   };
   const displayArrow = arrowMap[arrow];
   if (showTitle) {
-    /* translators: Label before for next and previous post. There is a space after the colon. */
-    placeholder = isNext ? (0,external_wp_i18n_namespaceObject.__)('Next: ') : (0,external_wp_i18n_namespaceObject.__)('Previous: ');
+    placeholder = isNext ? /* translators: Label before for next and previous post. There is a space after the colon. */
+    (0,external_wp_i18n_namespaceObject.__)('Next: ') // eslint-disable-line @wordpress/i18n-no-flanking-whitespace
+    : /* translators: Label before for next and previous post. There is a space after the colon. */
+    (0,external_wp_i18n_namespaceObject.__)('Previous: '); // eslint-disable-line @wordpress/i18n-no-flanking-whitespace
   }
   const ariaLabel = isNext ? (0,external_wp_i18n_namespaceObject.__)('Next post') : (0,external_wp_i18n_namespaceObject.__)('Previous post');
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
@@ -47489,7 +47491,7 @@ function QueryContent({
     }
   });
   const htmlElementMessages = {
-    main: (0,external_wp_i18n_namespaceObject.__)('The <main> element should be used for the primary content of your document only. '),
+    main: (0,external_wp_i18n_namespaceObject.__)('The <main> element should be used for the primary content of your document only.'),
     section: (0,external_wp_i18n_namespaceObject.__)("The <section> element should represent a standalone portion of the document that can't be better represented by another element."),
     aside: (0,external_wp_i18n_namespaceObject.__)("The <aside> element should represent a portion of a document whose content is only indirectly related to the document's main content.")
   };
