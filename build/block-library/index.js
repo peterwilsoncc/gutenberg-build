@@ -16188,14 +16188,17 @@ const EmbedPlaceholder = ({
     instructions: (0,external_wp_i18n_namespaceObject.__)('Paste a link to the content you want to display on your site.'),
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("form", {
       onSubmit: onSubmit,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
+        __next40pxDefaultSize: true,
         type: "url",
         value: value || '',
-        className: "components-placeholder__input",
-        "aria-label": label,
+        className: "wp-block-embed__placeholder-input",
+        label: label,
+        hideLabelFromVision: true,
         placeholder: (0,external_wp_i18n_namespaceObject.__)('Enter URL to embed here…'),
         onChange: onChange
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         variant: "primary",
         type: "submit",
         children: (0,external_wp_i18n_namespaceObject._x)('Embed', 'button label')
@@ -16643,7 +16646,7 @@ const EmbedEdit = props => {
         },
         value: url,
         cannotEmbed: cannotEmbed,
-        onChange: event => setURL(event.target.value),
+        onChange: value => setURL(value),
         fallback: () => fallback(url, onReplace),
         tryAgain: () => {
           invalidateResolution('getEmbedPreview', [url]);
