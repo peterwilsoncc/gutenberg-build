@@ -10029,10 +10029,10 @@ function InterfaceSkeleton({
           as: external_wp_components_namespaceObject.__unstableMotion.div,
           className: "interface-interface-skeleton__header",
           "aria-label": mergedLabels.header,
-          initial: isDistractionFree ? 'distractionFreeHidden' : 'hidden',
-          whileHover: isDistractionFree ? 'distractionFreeHover' : 'visible',
-          animate: isDistractionFree ? 'distractionFreeDisabled' : 'visible',
-          exit: isDistractionFree ? 'distractionFreeHidden' : 'hidden',
+          initial: isDistractionFree && !isMobileViewport ? 'distractionFreeHidden' : 'hidden',
+          whileHover: isDistractionFree && !isMobileViewport ? 'distractionFreeHover' : 'visible',
+          animate: isDistractionFree && !isMobileViewport ? 'distractionFreeDisabled' : 'visible',
+          exit: isDistractionFree && !isMobileViewport ? 'distractionFreeHidden' : 'hidden',
           variants: headerVariants,
           transition: defaultTransition,
           children: header
@@ -27312,7 +27312,6 @@ function EditorInterface({
       blockEditorMode: select(external_wp_blockEditor_namespaceObject.store).__unstableGetEditorMode()
     };
   }, []);
-  const isWideViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('large');
   const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
   const secondarySidebarLabel = isListViewOpened ? (0,external_wp_i18n_namespaceObject.__)('Document Overview') : (0,external_wp_i18n_namespaceObject.__)('Block Library');
 
@@ -27327,10 +27326,10 @@ function EditorInterface({
   }, [entitiesSavedStatesCallback]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(interface_skeleton, {
     enableRegionNavigation: enableRegionNavigation,
-    isDistractionFree: isDistractionFree && isWideViewport,
+    isDistractionFree: isDistractionFree,
     className: dist_clsx('editor-editor-interface', className, {
       'is-entity-save-view-open': !!entitiesSavedStatesCallback,
-      'is-distraction-free': isDistractionFree && isWideViewport && !isPreviewMode
+      'is-distraction-free': isDistractionFree && !isPreviewMode
     }),
     labels: {
       ...interfaceLabels,
