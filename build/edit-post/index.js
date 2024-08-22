@@ -2858,7 +2858,6 @@ function useEditorStyles() {
     hasThemeStyleSupport,
     editorSettings,
     isZoomedOutView,
-    hasMetaBoxes,
     renderingMode,
     postType
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -2874,7 +2873,6 @@ function useEditorStyles() {
       hasThemeStyleSupport: select(store).isFeatureActive('themeStyles'),
       editorSettings: select(external_wp_editor_namespaceObject.store).getEditorSettings(),
       isZoomedOutView: __unstableGetEditorMode() === 'zoom-out',
-      hasMetaBoxes: select(store).hasMetaBoxes(),
       renderingMode: getRenderingMode(),
       postType: _postType
     };
@@ -2906,11 +2904,9 @@ function useEditorStyles() {
 
     // Add a constant padding for the typewriter effect. When typing at the
     // bottom, there needs to be room to scroll up.
-    if (!isZoomedOutView && !hasMetaBoxes && renderingMode === 'post-only' && !DESIGN_POST_TYPES.includes(postType)) {
+    if (!isZoomedOutView && renderingMode === 'post-only' && !DESIGN_POST_TYPES.includes(postType)) {
       return [...baseStyles, {
-        // Should override global styles padding, so ensure 0-1-0
-        // specificity.
-        css: ':root :where(body){padding-bottom: 40vh}'
+        css: ':root :where(.editor-styles-wrapper)::after {content: ""; display: block; height: 40vh;}'
       }];
     }
     return baseStyles;
