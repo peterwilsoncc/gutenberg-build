@@ -20510,9 +20510,36 @@ function PostTitle(_, forwardedRef) {
     insertBlocks,
     insertDefaultBlock
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
-  function onChange(value) {
-    onUpdate(value.replace(REGEXP_NEWLINES, ' '));
-  }
+  const decodedPlaceholder = (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(placeholder) || (0,external_wp_i18n_namespaceObject.__)('Add title');
+  const {
+    value,
+    onChange,
+    ref: richTextRef
+  } = (0,external_wp_richText_namespaceObject.__unstableUseRichText)({
+    value: title,
+    onChange(newValue) {
+      onUpdate(newValue.replace(REGEXP_NEWLINES, ' '));
+    },
+    placeholder: decodedPlaceholder,
+    selectionStart: selection.start,
+    selectionEnd: selection.end,
+    onSelectionChange(newStart, newEnd) {
+      setSelection(sel => {
+        const {
+          start,
+          end
+        } = sel;
+        if (start === newStart && end === newEnd) {
+          return sel;
+        }
+        return {
+          start: newStart,
+          end: newEnd
+        };
+      });
+    },
+    __unstableDisableFormats: false
+  });
   function onInsertBlockAfter(blocks) {
     insertBlocks(blocks, 0);
   }
@@ -20571,55 +20598,15 @@ function PostTitle(_, forwardedRef) {
         onInsertBlockAfter(content);
       }
     } else {
-      const value = {
-        ...(0,external_wp_richText_namespaceObject.create)({
-          html: title
-        }),
-        ...selection
-      };
-
       // Strip HTML to avoid unwanted HTML being added to the title.
       // In the majority of cases it is assumed that HTML in the title
       // is undesirable.
       const contentNoHTML = (0,external_wp_dom_namespaceObject.__unstableStripHTML)(content);
-      const newValue = (0,external_wp_richText_namespaceObject.insert)(value, (0,external_wp_richText_namespaceObject.create)({
+      onChange((0,external_wp_richText_namespaceObject.insert)(value, (0,external_wp_richText_namespaceObject.create)({
         html: contentNoHTML
-      }));
-      onUpdate((0,external_wp_richText_namespaceObject.toHTMLString)({
-        value: newValue
-      }));
-      setSelection({
-        start: newValue.start,
-        end: newValue.end
-      });
+      })));
     }
   }
-  const decodedPlaceholder = (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(placeholder) || (0,external_wp_i18n_namespaceObject.__)('Add title');
-  const {
-    ref: richTextRef
-  } = (0,external_wp_richText_namespaceObject.__unstableUseRichText)({
-    value: title,
-    onChange,
-    placeholder: decodedPlaceholder,
-    selectionStart: selection.start,
-    selectionEnd: selection.end,
-    onSelectionChange(newStart, newEnd) {
-      setSelection(sel => {
-        const {
-          start,
-          end
-        } = sel;
-        if (start === newStart && end === newEnd) {
-          return sel;
-        }
-        return {
-          start: newStart,
-          end: newEnd
-        };
-      });
-    },
-    __unstableDisableFormats: false
-  });
 
   // The wp-block className is important for editor styles.
   // This same block is used in both the visual and the code editor.
