@@ -3054,12 +3054,23 @@ function useBoundaryStyle({
 /* harmony default export */ const copy_handler = (props => element => {
   function onCopy(event) {
     const {
-      record
+      record,
+      createRecord,
+      handleChange
     } = props.current;
     const {
       ownerDocument
     } = element;
-    if (isCollapsed(record.current) || !element.contains(ownerDocument.activeElement)) {
+    const {
+      defaultView
+    } = ownerDocument;
+    const {
+      anchorNode,
+      focusNode,
+      isCollapsed
+    } = defaultView.getSelection();
+    const containsSelection = element.contains(anchorNode) && element.contains(focusNode);
+    if (isCollapsed || !containsSelection) {
       return;
     }
     const selectedRecord = slice(record.current);
@@ -3072,7 +3083,7 @@ function useBoundaryStyle({
     event.clipboardData.setData('rich-text', 'true');
     event.preventDefault();
     if (event.type === 'cut') {
-      ownerDocument.execCommand('delete');
+      handleChange(remove_remove(createRecord()));
     }
   }
   const {
@@ -3444,12 +3455,12 @@ function fixPlaceholderSelection(defaultView) {
     if (element.contentEditable !== 'true') {
       return;
     }
-
-    // Ensure the active element is the rich text element.
-    if (ownerDocument.activeElement !== element) {
-      // If it is not, we can stop listening for selection changes. We
-      // resume listening when the element is focused.
-      ownerDocument.removeEventListener('selectionchange', handleSelectionChange);
+    const {
+      anchorNode,
+      focusNode
+    } = defaultView.getSelection();
+    const containsSelection = element.contains(anchorNode) && element.contains(focusNode) && ownerDocument.activeElement.contains(element);
+    if (!containsSelection) {
       return;
     }
 
@@ -3571,6 +3582,7 @@ function fixPlaceholderSelection(defaultView) {
     element.removeEventListener('compositionstart', onCompositionStart);
     element.removeEventListener('compositionend', onCompositionEnd);
     element.removeEventListener('focus', onFocus);
+    ownerDocument.removeEventListener('selectionchange', handleSelectionChange);
   };
 });
 

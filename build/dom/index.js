@@ -1313,13 +1313,6 @@ function placeCaretAtEdge(container, isReverse, x) {
     }
     return;
   }
-  if (!container.isContentEditable) {
-    return;
-  }
-  const range = scrollIfNoRange(container, isReverse, () => getRange(container, isReverse, x));
-  if (!range) {
-    return;
-  }
   const {
     ownerDocument
   } = container;
@@ -1329,6 +1322,14 @@ function placeCaretAtEdge(container, isReverse, x) {
   assertIsDefined(defaultView, 'defaultView');
   const selection = defaultView.getSelection();
   assertIsDefined(selection, 'selection');
+  if (!container.isContentEditable) {
+    selection.removeAllRanges();
+    return;
+  }
+  const range = scrollIfNoRange(container, isReverse, () => getRange(container, isReverse, x));
+  if (!range) {
+    return;
+  }
   selection.removeAllRanges();
   selection.addRange(range);
 }
