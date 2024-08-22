@@ -15089,13 +15089,15 @@ const COLORS = Object.freeze({
 
 
 const CONTROL_HEIGHT = '36px';
-const CONTROL_PADDING_X = '12px';
 const CONTROL_PROPS = {
   controlSurfaceColor: COLORS.white,
   controlTextActiveColor: COLORS.theme.accent,
-  controlPaddingX: CONTROL_PADDING_X,
-  controlPaddingXLarge: `calc(${CONTROL_PADDING_X} * 1.3334)`,
-  controlPaddingXSmall: `calc(${CONTROL_PADDING_X} / 1.3334)`,
+  // These values should be shared with TextControl.
+  controlPaddingX: 12,
+  controlPaddingXSmall: 8,
+  controlPaddingXLarge: 12 * 1.3334,
+  // TODO: Deprecate
+
   controlBackgroundColor: COLORS.white,
   controlBoxShadow: 'transparent',
   controlBoxShadowFocus: `0 0 0 0.5px ${COLORS.theme.accent}`,
@@ -28453,7 +28455,6 @@ function input_control_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You hav
 
 
 
-
 const Prefix = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "em5sgkm7"
 } : 0)( true ? {
@@ -28556,29 +28557,29 @@ const getSizeConfig = ({
       height: 40,
       lineHeight: 1,
       minHeight: 40,
-      paddingLeft: space(4),
-      paddingRight: space(4)
+      paddingLeft: config_values.controlPaddingX,
+      paddingRight: config_values.controlPaddingX
     },
     small: {
       height: 24,
       lineHeight: 1,
       minHeight: 24,
-      paddingLeft: space(2),
-      paddingRight: space(2)
+      paddingLeft: config_values.controlPaddingXSmall,
+      paddingRight: config_values.controlPaddingXSmall
     },
     compact: {
       height: 32,
       lineHeight: 1,
       minHeight: 32,
-      paddingLeft: space(2),
-      paddingRight: space(2)
+      paddingLeft: config_values.controlPaddingXSmall,
+      paddingRight: config_values.controlPaddingXSmall
     },
     '__unstable-large': {
       height: 40,
       lineHeight: 1,
       minHeight: 40,
-      paddingLeft: space(4),
-      paddingRight: space(4)
+      paddingLeft: config_values.controlPaddingX,
+      paddingRight: config_values.controlPaddingX
     }
   };
   if (!__next40pxDefaultSize) {
@@ -28778,10 +28779,10 @@ function InputBase(props, ref) {
   const prefixSuffixContextValue = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return {
       InputControlPrefixWrapper: {
-        paddingLeft
+        paddingLeft: `${paddingLeft}px`
       },
       InputControlSuffixWrapper: {
-        paddingRight
+        paddingRight: `${paddingRight}px`
       }
     };
   }, [paddingLeft, paddingRight]);
@@ -36705,10 +36706,10 @@ const sizePaddings = ({
   selectSize = 'default'
 }) => {
   const padding = {
-    default: 16,
-    small: 8,
-    compact: 8,
-    '__unstable-large': 16
+    default: config_values.controlPaddingX,
+    small: config_values.controlPaddingXSmall,
+    compact: config_values.controlPaddingXSmall,
+    '__unstable-large': config_values.controlPaddingX
   };
   if (!__next40pxDefaultSize) {
     padding.default = padding.compact;
@@ -38028,11 +38029,48 @@ const ColorCopyButton = props => {
   });
 };
 
-;// CONCATENATED MODULE: ./packages/components/build-module/color-picker/input-with-slider.js
+;// CONCATENATED MODULE: ./packages/components/build-module/input-control/input-prefix-wrapper.js
+/**
+ * External dependencies
+ */
+
 /**
  * Internal dependencies
  */
 
+
+
+function UnconnectedInputControlPrefixWrapper(props, forwardedRef) {
+  const derivedProps = useContextSystem(props, 'InputControlPrefixWrapper');
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {
+    marginBottom: 0,
+    ...derivedProps,
+    ref: forwardedRef
+  });
+}
+
+/**
+ * A convenience wrapper for the `prefix` when you want to apply
+ * standard padding in accordance with the size variant.
+ *
+ * ```jsx
+ * import {
+ *   __experimentalInputControl as InputControl,
+ *   __experimentalInputControlPrefixWrapper as InputControlPrefixWrapper,
+ * } from '@wordpress/components';
+ *
+ * <InputControl
+ *   prefix={<InputControlPrefixWrapper>@</InputControlPrefixWrapper>}
+ * />
+ * ```
+ */
+const InputControlPrefixWrapper = contextConnect(UnconnectedInputControlPrefixWrapper, 'InputControlPrefixWrapper');
+/* harmony default export */ const input_prefix_wrapper = (InputControlPrefixWrapper);
+
+;// CONCATENATED MODULE: ./packages/components/build-module/color-picker/input-with-slider.js
+/**
+ * Internal dependencies
+ */
 
 
 
@@ -38068,12 +38106,12 @@ const InputWithSlider = ({
       hideLabelFromVision: true,
       value: value,
       onChange: onNumberControlChange,
-      prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {
-        as: text_component,
-        paddingLeft: space(4),
-        color: COLORS.theme.accent,
-        lineHeight: 1,
-        children: abbreviation
+      prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(input_prefix_wrapper, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(text_component, {
+          color: COLORS.theme.accent,
+          lineHeight: 1,
+          children: abbreviation
+        })
       }),
       spinControls: "none",
       size: "__unstable-large"
@@ -38297,7 +38335,6 @@ const HslInput = ({
 
 
 
-
 const HexInput = ({
   color,
   onChange,
@@ -38324,12 +38361,12 @@ const HexInput = ({
     };
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InputControl, {
-    prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {
-      as: text_component,
-      marginLeft: space(4),
-      color: COLORS.theme.accent,
-      lineHeight: 1,
-      children: "#"
+    prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(input_prefix_wrapper, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(text_component, {
+        color: COLORS.theme.accent,
+        lineHeight: 1,
+        children: "#"
+      })
     }),
     value: color.toHex().slice(1).toUpperCase(),
     onChange: handleChange,
@@ -44082,9 +44119,9 @@ const paddingY = `calc((${config_values.controlHeight} - ${baseFontHeight} - 2px
 const paddingYSmall = `calc((${config_values.controlHeightSmall} - ${baseFontHeight} - 2px) / 2)`;
 const paddingYLarge = `calc((${config_values.controlHeightLarge} - ${baseFontHeight} - 2px) / 2)`;
 const itemSizes = {
-  small: /*#__PURE__*/emotion_react_browser_esm_css("padding:", paddingYSmall, " ", config_values.controlPaddingXSmall, ";" + ( true ? "" : 0),  true ? "" : 0),
-  medium: /*#__PURE__*/emotion_react_browser_esm_css("padding:", paddingY, " ", config_values.controlPaddingX, ";" + ( true ? "" : 0),  true ? "" : 0),
-  large: /*#__PURE__*/emotion_react_browser_esm_css("padding:", paddingYLarge, " ", config_values.controlPaddingXLarge, ";" + ( true ? "" : 0),  true ? "" : 0)
+  small: /*#__PURE__*/emotion_react_browser_esm_css("padding:", paddingYSmall, " ", config_values.controlPaddingXSmall, "px;" + ( true ? "" : 0),  true ? "" : 0),
+  medium: /*#__PURE__*/emotion_react_browser_esm_css("padding:", paddingY, " ", config_values.controlPaddingX, "px;" + ( true ? "" : 0),  true ? "" : 0),
+  large: /*#__PURE__*/emotion_react_browser_esm_css("padding:", paddingYLarge, " ", config_values.controlPaddingXLarge, "px;" + ( true ? "" : 0),  true ? "" : 0)
 };
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/item-group/item-group/hook.js
@@ -48922,11 +48959,9 @@ const ANIMATION_PARAMS = {
   EASING: 'cubic-bezier( 0.16, 1, 0.3, 1 )'
 };
 const INLINE_PADDING = {
-  compact: 8,
-  // space(2)
-  small: 8,
-  // space(2)
-  default: 16 // space(4)
+  compact: config_values.controlPaddingXSmall,
+  small: config_values.controlPaddingXSmall,
+  default: config_values.controlPaddingX
 };
 const getSelectSize = (size, heightProperty) => {
   const sizes = {
@@ -58602,44 +58637,6 @@ function UnconnectedItem(props, forwardedRef) {
  */
 const component_Item = contextConnect(UnconnectedItem, 'Item');
 /* harmony default export */ const item_component = (component_Item);
-
-;// CONCATENATED MODULE: ./packages/components/build-module/input-control/input-prefix-wrapper.js
-/**
- * External dependencies
- */
-
-/**
- * Internal dependencies
- */
-
-
-
-function UnconnectedInputControlPrefixWrapper(props, forwardedRef) {
-  const derivedProps = useContextSystem(props, 'InputControlPrefixWrapper');
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {
-    marginBottom: 0,
-    ...derivedProps,
-    ref: forwardedRef
-  });
-}
-
-/**
- * A convenience wrapper for the `prefix` when you want to apply
- * standard padding in accordance with the size variant.
- *
- * ```jsx
- * import {
- *   __experimentalInputControl as InputControl,
- *   __experimentalInputControlPrefixWrapper as InputControlPrefixWrapper,
- * } from '@wordpress/components';
- *
- * <InputControl
- *   prefix={<InputControlPrefixWrapper>@</InputControlPrefixWrapper>}
- * />
- * ```
- */
-const InputControlPrefixWrapper = contextConnect(UnconnectedInputControlPrefixWrapper, 'InputControlPrefixWrapper');
-/* harmony default export */ const input_prefix_wrapper = (InputControlPrefixWrapper);
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/keyboard-shortcuts/index.js
 /**
