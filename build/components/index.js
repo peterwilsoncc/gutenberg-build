@@ -68676,41 +68676,6 @@ var MenuItemCheckedContext = (0,external_React_.createContext)(
 
 
 
-;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/menu/menu-item-check.js
-"use client";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// src/menu/menu-item-check.tsx
-
-var menu_item_check_TagName = "span";
-var useMenuItemCheck = createHook(
-  function useMenuItemCheck2(_a) {
-    var _b = _a, { store, checked } = _b, props = __objRest(_b, ["store", "checked"]);
-    const context = (0,external_React_.useContext)(MenuItemCheckedContext);
-    checked = checked != null ? checked : context;
-    props = useCheckboxCheck(_3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props), { checked }));
-    return props;
-  }
-);
-var MenuItemCheck = forwardRef2(function MenuItemCheck2(props) {
-  const htmlProps = useMenuItemCheck(props);
-  return HKOOKEDE_createElement(menu_item_check_TagName, htmlProps);
-});
-
-
 ;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/WSQNIDGC.js
 "use client";
 
@@ -70231,19 +70196,23 @@ const styles_DropdownMenuItemHelpText = /*#__PURE__*/emotion_styled_base_browser
   target: "e1kdzosf0"
 } : 0)("font-size:", font('helpText.fontSize'), ";line-height:16px;color:", LIGHTER_TEXT_COLOR, ";word-break:break-all;[data-active-item]:not( [data-focus-visible] ) *:not( ", dropdown_menu_v2_styles_DropdownMenu, " ) &,[aria-disabled='true'] *:not( ", dropdown_menu_v2_styles_DropdownMenu, " ) &{color:inherit;}" + ( true ? "" : 0));
 
-;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/index.js
-/**
- * External dependencies
- */
-
-
-
+;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/context.js
 /**
  * WordPress dependencies
  */
 
 
+/**
+ * Internal dependencies
+ */
 
+const DropdownMenuContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
+DropdownMenuContext.displayName = 'DropdownMenuV2.Context';
+
+;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/item.js
+/**
+ * WordPress dependencies
+ */
 
 
 /**
@@ -70254,8 +70223,6 @@ const styles_DropdownMenuItemHelpText = /*#__PURE__*/emotion_styled_base_browser
 
 
 
-
-const DropdownMenuContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
 const DropdownMenuItem = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuItem({
   prefix,
   suffix,
@@ -70281,6 +70248,63 @@ const DropdownMenuItem = (0,external_wp_element_namespaceObject.forwardRef)(func
     })]
   });
 });
+DropdownMenuItem.displayName = 'DropdownMenuV2.Item';
+
+;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/menu/menu-item-check.js
+"use client";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// src/menu/menu-item-check.tsx
+
+var menu_item_check_TagName = "span";
+var useMenuItemCheck = createHook(
+  function useMenuItemCheck2(_a) {
+    var _b = _a, { store, checked } = _b, props = __objRest(_b, ["store", "checked"]);
+    const context = (0,external_React_.useContext)(MenuItemCheckedContext);
+    checked = checked != null ? checked : context;
+    props = useCheckboxCheck(_3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props), { checked }));
+    return props;
+  }
+);
+var MenuItemCheck = forwardRef2(function MenuItemCheck2(props) {
+  const htmlProps = useMenuItemCheck(props);
+  return HKOOKEDE_createElement(menu_item_check_TagName, htmlProps);
+});
+
+
+;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/checkbox-item.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
 const DropdownMenuCheckboxItem = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuCheckboxItem({
   suffix,
   children,
@@ -70303,7 +70327,7 @@ const DropdownMenuCheckboxItem = (0,external_wp_element_namespaceObject.forwardR
         width: 'auto',
         height: 'auto'
       },
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icons_build_module_icon, {
         icon: library_check,
         size: 24
       })
@@ -70316,6 +70340,29 @@ const DropdownMenuCheckboxItem = (0,external_wp_element_namespaceObject.forwardR
     })]
   });
 });
+DropdownMenuCheckboxItem.displayName = 'DropdownMenuV2.CheckboxItem';
+
+;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/radio-item.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
 const radioCheck = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
@@ -70347,7 +70394,7 @@ const DropdownMenuRadioItem = (0,external_wp_element_namespaceObject.forwardRef)
         width: 'auto',
         height: 'auto'
       },
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icons_build_module_icon, {
         icon: radioCheck,
         size: 24
       })
@@ -70360,6 +70407,21 @@ const DropdownMenuRadioItem = (0,external_wp_element_namespaceObject.forwardRef)
     })]
   });
 });
+DropdownMenuRadioItem.displayName = 'DropdownMenuV2.RadioItem';
+
+;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/group.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
 const DropdownMenuGroup = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuGroup(props, ref) {
   const dropdownMenuContext = (0,external_wp_element_namespaceObject.useContext)(DropdownMenuContext);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_DropdownMenuGroup, {
@@ -70368,6 +70430,104 @@ const DropdownMenuGroup = (0,external_wp_element_namespaceObject.forwardRef)(fun
     store: dropdownMenuContext?.store
   });
 });
+DropdownMenuGroup.displayName = 'DropdownMenuV2.Group';
+
+;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/separator.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+const DropdownMenuSeparator = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuSeparator(props, ref) {
+  const dropdownMenuContext = (0,external_wp_element_namespaceObject.useContext)(DropdownMenuContext);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_DropdownMenuSeparator, {
+    ref: ref,
+    ...props,
+    store: dropdownMenuContext?.store,
+    variant: dropdownMenuContext?.variant
+  });
+});
+DropdownMenuSeparator.displayName = 'DropdownMenuV2.Separator';
+
+;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/item-label.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const DropdownMenuItemLabel = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuItemLabel(props, ref) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_DropdownMenuItemLabel, {
+    numberOfLines: 1,
+    ref: ref,
+    ...props
+  });
+});
+DropdownMenuItemLabel.displayName = 'DropdownMenuV2.ItemLabel';
+
+;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/item-help-text.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const DropdownMenuItemHelpText = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuItemHelpText(props, ref) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_DropdownMenuItemHelpText, {
+    numberOfLines: 2,
+    ref: ref,
+    ...props
+  });
+});
+DropdownMenuItemHelpText.displayName = 'DropdownMenuV2.ItemHelpText';
+
+;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/index.js
+/**
+ * External dependencies
+ */
+
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
 const dropdown_menu_v2_UnconnectedDropdownMenu = (props, ref) => {
   var _props$placement;
   const {
@@ -70478,30 +70638,17 @@ const dropdown_menu_v2_UnconnectedDropdownMenu = (props, ref) => {
     })]
   });
 };
-const dropdown_menu_v2_DropdownMenu = contextConnect(dropdown_menu_v2_UnconnectedDropdownMenu, 'DropdownMenu');
-const DropdownMenuSeparator = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuSeparator(props, ref) {
-  const dropdownMenuContext = (0,external_wp_element_namespaceObject.useContext)(DropdownMenuContext);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_DropdownMenuSeparator, {
-    ref: ref,
-    ...props,
-    store: dropdownMenuContext?.store,
-    variant: dropdownMenuContext?.variant
-  });
+const DropdownMenuV2 = Object.assign(contextConnect(dropdown_menu_v2_UnconnectedDropdownMenu, 'DropdownMenu'), {
+  Context: DropdownMenuContext,
+  Item: DropdownMenuItem,
+  RadioItem: DropdownMenuRadioItem,
+  CheckboxItem: DropdownMenuCheckboxItem,
+  Group: DropdownMenuGroup,
+  Separator: DropdownMenuSeparator,
+  ItemLabel: DropdownMenuItemLabel,
+  ItemHelpText: DropdownMenuItemHelpText
 });
-const DropdownMenuItemLabel = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuItemLabel(props, ref) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_DropdownMenuItemLabel, {
-    numberOfLines: 1,
-    ref: ref,
-    ...props
-  });
-});
-const DropdownMenuItemHelpText = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuItemHelpText(props, ref) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_DropdownMenuItemHelpText, {
-    numberOfLines: 2,
-    ref: ref,
-    ...props
-  });
-});
+/* harmony default export */ const dropdown_menu_v2 = ((/* unused pure expression or super */ null && (DropdownMenuV2)));
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/theme/styles.js
 
@@ -71339,14 +71486,7 @@ lock(privateApis, {
   ComponentsContext: ComponentsContext,
   Tabs: tabs,
   Theme: theme,
-  DropdownMenuV2: dropdown_menu_v2_DropdownMenu,
-  DropdownMenuGroupV2: DropdownMenuGroup,
-  DropdownMenuItemV2: DropdownMenuItem,
-  DropdownMenuCheckboxItemV2: DropdownMenuCheckboxItem,
-  DropdownMenuRadioItemV2: DropdownMenuRadioItem,
-  DropdownMenuSeparatorV2: DropdownMenuSeparator,
-  DropdownMenuItemLabelV2: DropdownMenuItemLabel,
-  DropdownMenuItemHelpTextV2: DropdownMenuItemHelpText,
+  DropdownMenuV2: DropdownMenuV2,
   kebabCase: kebabCase
 });
 

@@ -24281,22 +24281,20 @@ function SizeControl({
  * Internal dependencies
  */
 
+
+
+
+
+
+
+
+
 const {
-  DropdownMenuV2: DropdownMenu,
-  DropdownMenuItemV2: DropdownMenuItem,
-  DropdownMenuItemLabelV2: DropdownMenuItemLabel
+  DropdownMenuV2
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 const {
   useGlobalSetting: font_size_useGlobalSetting
 } = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
-
-
-
-
-
-
-
-
 function FontSize() {
   var _fontSizes$origin, _fontSize$fluid;
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = (0,external_wp_element_namespaceObject.useState)(false);
@@ -24410,20 +24408,20 @@ function FontSize() {
             marginTop: 3,
             marginBottom: 0,
             paddingX: 4,
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenu, {
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenuV2, {
               trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
                 size: "small",
                 icon: more_vertical,
                 label: (0,external_wp_i18n_namespaceObject.__)('Font size options')
               }),
-              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItem, {
+              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuV2.Item, {
                 onClick: toggleRenameDialog,
-                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItemLabel, {
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuV2.ItemLabel, {
                   children: (0,external_wp_i18n_namespaceObject.__)('Rename')
                 })
-              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItem, {
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuV2.Item, {
                 onClick: toggleDeleteConfirm,
-                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItemLabel, {
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuV2.ItemLabel, {
                   children: (0,external_wp_i18n_namespaceObject.__)('Delete')
                 })
               })]
@@ -24538,9 +24536,7 @@ function ConfirmResetFontSizesDialog({
  */
 
 const {
-  DropdownMenuV2: font_sizes_DropdownMenu,
-  DropdownMenuItemV2: font_sizes_DropdownMenuItem,
-  DropdownMenuItemLabelV2: font_sizes_DropdownMenuItemLabel
+  DropdownMenuV2: font_sizes_DropdownMenuV2
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 const {
   useGlobalSetting: font_sizes_useGlobalSetting
@@ -24584,15 +24580,15 @@ function FontSizeGroup({
             icon: library_plus,
             size: "small",
             onClick: handleAddFontSize
-          }), !!handleResetFontSizes && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_DropdownMenu, {
+          }), !!handleResetFontSizes && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_DropdownMenuV2, {
             trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
               size: "small",
               icon: more_vertical,
               label: (0,external_wp_i18n_namespaceObject.__)('Font size presets options')
             }),
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_DropdownMenuItem, {
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_DropdownMenuV2.Item, {
               onClick: toggleResetDialog,
-              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_DropdownMenuItemLabel, {
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_DropdownMenuV2.ItemLabel, {
                 children: origin === 'custom' ? (0,external_wp_i18n_namespaceObject.__)('Remove font size presets') : (0,external_wp_i18n_namespaceObject.__)('Reset font size presets')
               })
             })
@@ -25574,9 +25570,7 @@ const {
   useGlobalSetting: shadows_edit_panel_useGlobalSetting
 } = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
-  DropdownMenuV2: shadows_edit_panel_DropdownMenu,
-  DropdownMenuItemV2: shadows_edit_panel_DropdownMenuItem,
-  DropdownMenuItemLabelV2: shadows_edit_panel_DropdownMenuItemLabel
+  DropdownMenuV2: shadows_edit_panel_DropdownMenuV2
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 const customShadowMenuItems = [{
   label: (0,external_wp_i18n_namespaceObject.__)('Rename'),
@@ -25657,16 +25651,16 @@ function ShadowsEditPanel() {
           marginTop: 2,
           marginBottom: 0,
           paddingX: 4,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_edit_panel_DropdownMenu, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_edit_panel_DropdownMenuV2, {
             trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
               size: "small",
               icon: more_vertical,
               label: (0,external_wp_i18n_namespaceObject.__)('Menu')
             }),
-            children: (category === 'custom' ? customShadowMenuItems : presetShadowMenuItems).map(item => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_edit_panel_DropdownMenuItem, {
+            children: (category === 'custom' ? customShadowMenuItems : presetShadowMenuItems).map(item => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_edit_panel_DropdownMenuV2.Item, {
               onClick: () => onMenuClick(item.action),
               disabled: item.action === 'reset' && selectedShadow.shadow === baseSelectedShadow.shadow,
-              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_edit_panel_DropdownMenuItemLabel, {
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_edit_panel_DropdownMenuV2.ItemLabel, {
                 children: item.label
               })
             }, item.action))
@@ -29458,10 +29452,7 @@ const {
 
 
 const {
-  DropdownMenuV2: dataviews_bulk_actions_DropdownMenu,
-  DropdownMenuGroupV2: DropdownMenuGroup,
-  DropdownMenuItemV2: dataviews_bulk_actions_DropdownMenuItem,
-  DropdownMenuSeparatorV2: DropdownMenuSeparator
+  DropdownMenuV2: dataviews_bulk_actions_DropdownMenuV2
 } = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function useHasAPossibleBulkAction(actions, item) {
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
@@ -29521,7 +29512,7 @@ function BulkActionItem({
     return selectedItems.filter(item => !action.isEligible || action.isEligible(item));
   }, [action, selectedItems]);
   const shouldShowModal = ('RenderModal' in action);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_bulk_actions_DropdownMenuItem, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_bulk_actions_DropdownMenuV2.Item, {
     hideOnClick: !shouldShowModal,
     onClick: async () => {
       if (shouldShowModal) {
@@ -29550,13 +29541,13 @@ function ActionsMenuGroup({
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuGroup, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_bulk_actions_DropdownMenuV2.Group, {
       children: elligibleActions.map(action => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BulkActionItem, {
         action: action,
         selectedItems: selectedItems,
         setActionWithModal: setActionWithModal
       }, action.id))
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuSeparator, {})]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_bulk_actions_DropdownMenuV2.Separator, {})]
   });
 }
 function _BulkActions() {
@@ -29584,7 +29575,7 @@ function _BulkActions() {
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(dataviews_bulk_actions_DropdownMenu, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(dataviews_bulk_actions_DropdownMenuV2, {
       open: isMenuOpen,
       onOpenChange: onMenuOpenChange,
       label: (0,external_wp_i18n_namespaceObject.__)('Bulk actions'),
@@ -29603,8 +29594,8 @@ function _BulkActions() {
         actions: bulkActions,
         setActionWithModal: setActionWithModal,
         selectedItems: selectedItems
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenuGroup, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_bulk_actions_DropdownMenuItem, {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(dataviews_bulk_actions_DropdownMenuV2.Group, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_bulk_actions_DropdownMenuV2.Item, {
           disabled: areAllSelected,
           hideOnClick: false,
           onClick: () => {
@@ -29612,7 +29603,7 @@ function _BulkActions() {
           },
           suffix: numberSelectableItems,
           children: (0,external_wp_i18n_namespaceObject.__)('Select all')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_bulk_actions_DropdownMenuItem, {
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_bulk_actions_DropdownMenuV2.Item, {
           disabled: selection.length === 0,
           hideOnClick: false,
           onClick: () => {
@@ -29664,10 +29655,7 @@ function BulkActions() {
 
 
 const {
-  DropdownMenuV2: dataviews_item_actions_DropdownMenu,
-  DropdownMenuGroupV2: dataviews_item_actions_DropdownMenuGroup,
-  DropdownMenuItemV2: dataviews_item_actions_DropdownMenuItem,
-  DropdownMenuItemLabelV2: dataviews_item_actions_DropdownMenuItemLabel,
+  DropdownMenuV2: dataviews_item_actions_DropdownMenuV2,
   kebabCase: dataviews_item_actions_kebabCase
 } = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function ButtonTrigger({
@@ -29690,10 +29678,10 @@ function DropdownMenuItemTrigger({
   items
 }) {
   const label = typeof action.label === 'string' ? action.label : action.label(items);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_DropdownMenuItem, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_DropdownMenuV2.Item, {
     onClick: onClick,
     hideOnClick: !('RenderModal' in action),
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_DropdownMenuItemLabel, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_DropdownMenuV2.ItemLabel, {
       children: label
     })
   });
@@ -29747,7 +29735,7 @@ function ActionsDropdownMenuGroup({
   item
 }) {
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_DropdownMenuGroup, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_DropdownMenuV2.Group, {
     children: actions.map(action => {
       if ('RenderModal' in action) {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_ActionWithModal, {
@@ -29828,7 +29816,7 @@ function CompactItemActions({
   item,
   actions
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_DropdownMenu, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_DropdownMenuV2, {
     trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       size: "compact",
       icon: more_vertical,
@@ -35433,9 +35421,7 @@ function FilterSummary({
 
 
 const {
-  DropdownMenuV2: add_filter_DropdownMenu,
-  DropdownMenuItemV2: add_filter_DropdownMenuItem,
-  DropdownMenuItemLabelV2: add_filter_DropdownMenuItemLabel
+  DropdownMenuV2: add_filter_DropdownMenuV2
 } = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function AddFilterDropdownMenu({
   filters,
@@ -35445,10 +35431,10 @@ function AddFilterDropdownMenu({
   trigger
 }) {
   const inactiveFilters = filters.filter(filter => !filter.isVisible);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_DropdownMenu, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_DropdownMenuV2, {
     trigger: trigger,
     children: inactiveFilters.map(filter => {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_DropdownMenuItem, {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_DropdownMenuV2.Item, {
         onClick: () => {
           setOpenedFilter(filter.field);
           onChangeView({
@@ -35461,7 +35447,7 @@ function AddFilterDropdownMenu({
             }]
           });
         },
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_DropdownMenuItemLabel, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_DropdownMenuV2.ItemLabel, {
           children: filter.name
         })
       }, filter.field);
@@ -35890,18 +35876,13 @@ const unseen = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 const {
-  DropdownMenuV2: column_header_menu_DropdownMenu,
-  DropdownMenuGroupV2: column_header_menu_DropdownMenuGroup,
-  DropdownMenuItemV2: column_header_menu_DropdownMenuItem,
-  DropdownMenuRadioItemV2: DropdownMenuRadioItem,
-  DropdownMenuItemLabelV2: column_header_menu_DropdownMenuItemLabel,
-  DropdownMenuSeparatorV2: column_header_menu_DropdownMenuSeparator
+  DropdownMenuV2: column_header_menu_DropdownMenuV2
 } = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function WithDropDownMenuSeparators({
   children
 }) {
   return external_wp_element_namespaceObject.Children.toArray(children).filter(Boolean).map((child, i) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_element_namespaceObject.Fragment, {
-    children: [i > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuSeparator, {}), child]
+    children: [i > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.Separator, {}), child]
   }, i));
 }
 const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function HeaderMenu({
@@ -35930,7 +35911,7 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
   // 2. If the field meets the type and operator requirements.
   // 3. If it's not primary. If it is, it should be already visible.
   const canAddFilter = !view.filters?.some(_filter => field.id === _filter.field) && !!field.elements?.length && !!operators.length && !field.filterBy?.isPrimary;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenu, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2, {
     align: "start",
     trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
       size: "compact",
@@ -35946,11 +35927,11 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
       minWidth: '240px'
     },
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(WithDropDownMenuSeparators, {
-      children: [isSortable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuGroup, {
+      children: [isSortable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.Group, {
         children: SORTING_DIRECTIONS.map(direction => {
           const isChecked = view.sort && isSorted && view.sort.direction === direction;
           const value = `${field.id}-${direction}`;
-          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuRadioItem, {
+          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.RadioItem, {
             // All sorting radio items share the same name, so that
             // selecting a sorting option automatically deselects the
             // previously selected one, even if it is displayed in
@@ -35968,13 +35949,13 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
                 }
               });
             },
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuItemLabel, {
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.ItemLabel, {
               children: sortLabels[direction]
             })
           }, value);
         })
-      }), canAddFilter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuGroup, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuItem, {
+      }), canAddFilter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.Group, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.Item, {
           prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
             icon: library_funnel
           }),
@@ -35990,12 +35971,12 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
               }]
             });
           },
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuItemLabel, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.ItemLabel, {
             children: (0,external_wp_i18n_namespaceObject.__)('Add filter')
           })
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(column_header_menu_DropdownMenuGroup, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuItem, {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(column_header_menu_DropdownMenuV2.Group, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.Item, {
           prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
             icon: arrow_left
           }),
@@ -36010,10 +35991,10 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
               fields: [...((_view$fields$slice = view.fields.slice(0, index - 1)) !== null && _view$fields$slice !== void 0 ? _view$fields$slice : []), field.id, view.fields[index - 1], ...view.fields.slice(index + 1)]
             });
           },
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuItemLabel, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.ItemLabel, {
             children: (0,external_wp_i18n_namespaceObject.__)('Move left')
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuItem, {
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.Item, {
           prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
             icon: arrow_right
           }),
@@ -36028,10 +36009,10 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
               fields: [...((_view$fields$slice2 = view.fields.slice(0, index)) !== null && _view$fields$slice2 !== void 0 ? _view$fields$slice2 : []), view.fields[index + 1], field.id, ...view.fields.slice(index + 2)]
             });
           },
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuItemLabel, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.ItemLabel, {
             children: (0,external_wp_i18n_namespaceObject.__)('Move right')
           })
-        }), isHidable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuItem, {
+        }), isHidable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.Item, {
           prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
             icon: library_unseen
           }),
@@ -36043,7 +36024,7 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
               fields: viewFields.filter(id => id !== field.id)
             });
           },
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuItemLabel, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.ItemLabel, {
             children: (0,external_wp_i18n_namespaceObject.__)('Hide column')
           })
         })]
@@ -36626,7 +36607,7 @@ const {
   CompositeV2: list_Composite,
   CompositeItemV2: list_CompositeItem,
   CompositeRowV2: CompositeRow,
-  DropdownMenuV2: list_DropdownMenu
+  DropdownMenuV2: DropdownMenu
 } = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function ListItem({
   actions,
@@ -36785,7 +36766,7 @@ function ListItem({
           })
         }, primaryAction.id), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           role: "gridcell",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_DropdownMenu, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenu, {
             trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_CompositeItem, {
               store: store,
               render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -37289,9 +37270,7 @@ function DensityPicker({
 
 
 const {
-  DropdownMenuV2: dataviews_view_config_DropdownMenu,
-  DropdownMenuRadioItemV2: dataviews_view_config_DropdownMenuRadioItem,
-  DropdownMenuItemLabelV2: dataviews_view_config_DropdownMenuItemLabel
+  DropdownMenuV2: dataviews_view_config_DropdownMenuV2
 } = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function ViewTypeMenu({
   defaultLayouts = {
@@ -37309,7 +37288,7 @@ function ViewTypeMenu({
     return null;
   }
   const activeView = VIEW_LAYOUTS.find(v => view.type === v.type);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenu, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuV2, {
     trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       size: "compact",
       icon: activeView?.icon,
@@ -37320,7 +37299,7 @@ function ViewTypeMenu({
       if (!config) {
         return null;
       }
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuRadioItem, {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuV2.RadioItem, {
         value: layout,
         name: "view-actions-available-view",
         checked: layout === view.type,
@@ -37338,7 +37317,7 @@ function ViewTypeMenu({
           }
            false ? 0 : void 0;
         },
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuItemLabel, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_DropdownMenuV2.ItemLabel, {
           children: config.label
         })
       }, layout);
