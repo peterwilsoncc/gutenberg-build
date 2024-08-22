@@ -13520,13 +13520,13 @@ function CoverHeightInput({
   }, [unit, value]);
   const min = isPx ? COVER_MIN_HEIGHT : 0;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
-    label: (0,external_wp_i18n_namespaceObject.__)('Minimum height of cover'),
+    __next40pxDefaultSize: true,
+    label: (0,external_wp_i18n_namespaceObject.__)('Minimum height'),
     id: inputId,
     isResetValueOnUnitChange: true,
     min: min,
     onChange: handleOnChange,
     onUnitChange: onUnitChange,
-    __unstableInputWidth: "80px",
     units: units,
     value: computedValue
   });
@@ -13690,6 +13690,7 @@ function CoverInspectorControls({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       group: "dimensions",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        className: "single-column",
         hasValue: () => !!minHeight,
         label: (0,external_wp_i18n_namespaceObject.__)('Minimum height'),
         onDeselect: () => setAttributes({
@@ -42505,10 +42506,8 @@ const DimensionControls = ({
       }),
       isShownByDefault: true,
       panelId: clientId,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+        __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Aspect ratio'),
         value: aspectRatio,
@@ -42530,6 +42529,7 @@ const DimensionControls = ({
       isShownByDefault: true,
       panelId: clientId,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+        __next40pxDefaultSize: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Height'),
         labelPosition: "top",
         value: height || '',
@@ -42550,6 +42550,7 @@ const DimensionControls = ({
       isShownByDefault: true,
       panelId: clientId,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+        __next40pxDefaultSize: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Width'),
         labelPosition: "top",
         value: width || '',

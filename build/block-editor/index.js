@@ -20128,7 +20128,10 @@ const stretchWide = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
           className: "block-editor-hooks__layout-controls",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
             className: "block-editor-hooks__layout-controls-unit",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl
+            // TODO: Switch to `true` (40px size) if possible (https://github.com/WordPress/gutenberg/pull/64520#discussion_r1717314262)
+            , {
+              __next40pxDefaultSize: false,
               className: "block-editor-hooks__layout-controls-unit-input",
               label: (0,external_wp_i18n_namespaceObject.__)('Content'),
               labelPosition: "top",
@@ -20147,7 +20150,10 @@ const stretchWide = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
             })]
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
             className: "block-editor-hooks__layout-controls-unit",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl
+            // TODO: Switch to `true` (40px size) if possible
+            , {
+              __next40pxDefaultSize: false,
               className: "block-editor-hooks__layout-controls-unit-input",
               label: (0,external_wp_i18n_namespaceObject.__)('Wide'),
               labelPosition: "top",
@@ -28552,15 +28558,17 @@ const line_height_control_LineHeightControl = ({
 /**
  * Control for letter-spacing.
  *
- * @param {Object}                  props                      Component props.
- * @param {string}                  props.value                Currently selected letter-spacing.
- * @param {Function}                props.onChange             Handles change in letter-spacing selection.
- * @param {string|number|undefined} props.__unstableInputWidth Input width to pass through to inner UnitControl. Should be a valid CSS value.
+ * @param {Object}                  props                       Component props.
+ * @param {boolean}                 props.__next40pxDefaultSize Start opting into the larger default height that will become the default size in a future version.
+ * @param {string}                  props.value                 Currently selected letter-spacing.
+ * @param {Function}                props.onChange              Handles change in letter-spacing selection.
+ * @param {string|number|undefined} props.__unstableInputWidth  Input width to pass through to inner UnitControl. Should be a valid CSS value.
  *
  * @return {Element} Letter-spacing control.
  */
 
 function LetterSpacingControl({
+  __next40pxDefaultSize = false,
   value,
   onChange,
   __unstableInputWidth = '60px',
@@ -28576,6 +28584,7 @@ function LetterSpacingControl({
     }
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+    __next40pxDefaultSize: __next40pxDefaultSize,
     ...otherProps,
     label: (0,external_wp_i18n_namespaceObject.__)('Letter spacing'),
     value: value,
@@ -31985,7 +31994,10 @@ function DimensionsPanel({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         alignment: "flex-end",
         justify: "flex-start",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl
+        // TODO: Switch to `true` (40px size) if possible (https://github.com/WordPress/gutenberg/pull/64520#discussion_r1717314262)
+        , {
+          __next40pxDefaultSize: false,
           label: (0,external_wp_i18n_namespaceObject.__)('Content'),
           labelPosition: "top",
           __unstableInputWidth: "80px",
@@ -32010,7 +32022,10 @@ function DimensionsPanel({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         alignment: "flex-end",
         justify: "flex-start",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl
+        // TODO: Switch to `true` (40px size) if possible
+        , {
+          __next40pxDefaultSize: false,
           label: (0,external_wp_i18n_namespaceObject.__)('Wide'),
           labelPosition: "top",
           __unstableInputWidth: "80px",
@@ -32091,7 +32106,10 @@ function DimensionsPanel({
       onDeselect: resetGapValue,
       isShownByDefault: (_defaultControls$bloc = defaultControls.blockGap) !== null && _defaultControls$bloc !== void 0 ? _defaultControls$bloc : dimensions_panel_DEFAULT_CONTROLS.blockGap,
       className: dist_clsx({
-        'tools-panel-item-spacing': showSpacingPresetsControl
+        'tools-panel-item-spacing': showSpacingPresetsControl,
+        'single-column':
+        // If UnitControl is used, should be single-column.
+        !showSpacingPresetsControl && !isAxialGap
       }),
       panelId: panelId,
       children: [!showSpacingPresetsControl && (isAxialGap ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalBoxControl, {
@@ -32104,8 +32122,8 @@ function DimensionsPanel({
         allowReset: false,
         splitOnAxis: isAxialGap
       }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+        __next40pxDefaultSize: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Block spacing'),
-        __unstableInputWidth: "80px",
         min: 0,
         onChange: setGapValue,
         units: units,
