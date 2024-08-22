@@ -11079,12 +11079,12 @@ function isPlainObject(o) {
  * @param {import('react').DependencyList} deps
  */
 function use_update_effect_useUpdateEffect(effect, deps) {
-  const mounted = (0,external_wp_element_namespaceObject.useRef)(false);
+  const mountedRef = (0,external_wp_element_namespaceObject.useRef)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (mounted.current) {
+    if (mountedRef.current) {
       return effect();
     }
-    mounted.current = true;
+    mountedRef.current = true;
     return undefined;
     // Disable reasons:
     // 1. This hook needs to pass a dep list that isn't an array literal
@@ -11093,7 +11093,7 @@ function use_update_effect_useUpdateEffect(effect, deps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
   (0,external_wp_element_namespaceObject.useEffect)(() => () => {
-    mounted.current = false;
+    mountedRef.current = false;
   }, []);
 }
 /* harmony default export */ const use_update_effect = (use_update_effect_useUpdateEffect);
@@ -30732,7 +30732,7 @@ function useDragCursor(isDragging, dragDirection) {
   return dragCursor;
 }
 function useDraft(props) {
-  const refPreviousValue = (0,external_wp_element_namespaceObject.useRef)(props.value);
+  const previousValueRef = (0,external_wp_element_namespaceObject.useRef)(props.value);
   const [draft, setDraft] = (0,external_wp_element_namespaceObject.useState)({});
   const value = draft.value !== undefined ? draft.value : props.value;
 
@@ -30742,8 +30742,8 @@ function useDraft(props) {
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     const {
       current: previousValue
-    } = refPreviousValue;
-    refPreviousValue.current = props.value;
+    } = previousValueRef;
+    previousValueRef.current = props.value;
     if (draft.value !== undefined && !draft.isStale) {
       setDraft({
         ...draft,
@@ -30990,8 +30990,8 @@ function useInputControlStateReducer(stateReducer = initialStateReducer, initial
   const pressUp = createKeyEvent(PRESS_UP);
   const pressDown = createKeyEvent(PRESS_DOWN);
   const pressEnter = createKeyEvent(PRESS_ENTER);
-  const currentState = (0,external_wp_element_namespaceObject.useRef)(state);
-  const refProps = (0,external_wp_element_namespaceObject.useRef)({
+  const currentStateRef = (0,external_wp_element_namespaceObject.useRef)(state);
+  const refPropsRef = (0,external_wp_element_namespaceObject.useRef)({
     value: initialState.value,
     onChangeHandler
   });
@@ -30999,8 +30999,8 @@ function useInputControlStateReducer(stateReducer = initialStateReducer, initial
   // Freshens refs to props and state so that subsequent effects have access
   // to their latest values without their changes causing effect runs.
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    currentState.current = state;
-    refProps.current = {
+    currentStateRef.current = state;
+    refPropsRef.current = {
       value: initialState.value,
       onChangeHandler
     };
@@ -31008,17 +31008,17 @@ function useInputControlStateReducer(stateReducer = initialStateReducer, initial
 
   // Propagates the latest state through onChange.
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    if (currentState.current._event !== undefined && state.value !== refProps.current.value && !state.isDirty) {
+    if (currentStateRef.current._event !== undefined && state.value !== refPropsRef.current.value && !state.isDirty) {
       var _state$value;
-      refProps.current.onChangeHandler((_state$value = state.value) !== null && _state$value !== void 0 ? _state$value : '', {
-        event: currentState.current._event
+      refPropsRef.current.onChangeHandler((_state$value = state.value) !== null && _state$value !== void 0 ? _state$value : '', {
+        event: currentStateRef.current._event
       });
     }
   }, [state.value, state.isDirty]);
 
   // Updates the state from props.
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    if (initialState.value !== currentState.current.value && !currentState.current.isDirty) {
+    if (initialState.value !== currentStateRef.current.value && !currentStateRef.current.isDirty) {
       var _initialState$value;
       dispatch({
         type: CONTROL,
@@ -32585,14 +32585,14 @@ function AngleCircle({
   ...props
 }) {
   const angleCircleRef = (0,external_wp_element_namespaceObject.useRef)(null);
-  const angleCircleCenter = (0,external_wp_element_namespaceObject.useRef)();
-  const previousCursorValue = (0,external_wp_element_namespaceObject.useRef)();
+  const angleCircleCenterRef = (0,external_wp_element_namespaceObject.useRef)();
+  const previousCursorValueRef = (0,external_wp_element_namespaceObject.useRef)();
   const setAngleCircleCenter = () => {
     if (angleCircleRef.current === null) {
       return;
     }
     const rect = angleCircleRef.current.getBoundingClientRect();
-    angleCircleCenter.current = {
+    angleCircleCenterRef.current = {
       x: rect.x + rect.width / 2,
       y: rect.y + rect.height / 2
     };
@@ -32607,11 +32607,11 @@ function AngleCircle({
     event.preventDefault();
     // Input control needs to lose focus and by preventDefault above, it doesn't.
     event.target?.focus();
-    if (angleCircleCenter.current !== undefined && onChange !== undefined) {
+    if (angleCircleCenterRef.current !== undefined && onChange !== undefined) {
       const {
         x: centerX,
         y: centerY
-      } = angleCircleCenter.current;
+      } = angleCircleCenterRef.current;
       onChange(getAngle(centerX, centerY, event.clientX, event.clientY));
     }
   };
@@ -32628,13 +32628,13 @@ function AngleCircle({
   });
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (isDragging) {
-      if (previousCursorValue.current === undefined) {
-        previousCursorValue.current = document.body.style.cursor;
+      if (previousCursorValueRef.current === undefined) {
+        previousCursorValueRef.current = document.body.style.cursor;
       }
       document.body.style.cursor = 'grabbing';
     } else {
-      document.body.style.cursor = previousCursorValue.current || '';
-      previousCursorValue.current = undefined;
+      document.body.style.cursor = previousCursorValueRef.current || '';
+      previousCursorValueRef.current = undefined;
     }
   }, [isDragging]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CircleRoot, {
@@ -33703,15 +33703,15 @@ function StyleProvider(props) {
 
 function fill_useForceUpdate() {
   const [, setState] = (0,external_wp_element_namespaceObject.useState)({});
-  const mounted = (0,external_wp_element_namespaceObject.useRef)(true);
+  const mountedRef = (0,external_wp_element_namespaceObject.useRef)(true);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    mounted.current = true;
+    mountedRef.current = true;
     return () => {
-      mounted.current = false;
+      mountedRef.current = false;
     };
   }, []);
   return () => {
-    if (mounted.current) {
+    if (mountedRef.current) {
       setState({});
     }
   };
@@ -35609,20 +35609,20 @@ const useToggleGroupControlContext = () => (0,external_wp_element_namespaceObjec
  * @param valueProp The received `value`
  */
 function useComputeControlledOrUncontrolledValue(valueProp) {
-  const isInitialRender = (0,external_wp_element_namespaceObject.useRef)(true);
+  const isInitialRenderRef = (0,external_wp_element_namespaceObject.useRef)(true);
   const prevValueProp = (0,external_wp_compose_namespaceObject.usePrevious)(valueProp);
-  const prevIsControlled = (0,external_wp_element_namespaceObject.useRef)(false);
+  const prevIsControlledRef = (0,external_wp_element_namespaceObject.useRef)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (isInitialRender.current) {
-      isInitialRender.current = false;
+    if (isInitialRenderRef.current) {
+      isInitialRenderRef.current = false;
     }
   }, []);
 
   // Assume the component is being used in controlled mode on the first re-render
   // that has a different `valueProp` from the previous render.
-  const isControlled = prevIsControlled.current || !isInitialRender.current && prevValueProp !== valueProp;
+  const isControlled = prevIsControlledRef.current || !isInitialRenderRef.current && prevValueProp !== valueProp;
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    prevIsControlled.current = isControlled;
+    prevIsControlledRef.current = isControlled;
   }, [isControlled]);
   if (isControlled) {
     // When in controlled mode, use `''` instead of `undefined`
@@ -37981,7 +37981,7 @@ const ColorCopyButton = props => {
     colorType
   } = props;
   const [copiedColor, setCopiedColor] = (0,external_wp_element_namespaceObject.useState)(null);
-  const copyTimer = (0,external_wp_element_namespaceObject.useRef)();
+  const copyTimerRef = (0,external_wp_element_namespaceObject.useRef)();
   const copyRef = (0,external_wp_compose_namespaceObject.useCopyToClipboard)(() => {
     switch (colorType) {
       case 'hsl':
@@ -37999,20 +37999,20 @@ const ColorCopyButton = props => {
         }
     }
   }, () => {
-    if (copyTimer.current) {
-      clearTimeout(copyTimer.current);
+    if (copyTimerRef.current) {
+      clearTimeout(copyTimerRef.current);
     }
     setCopiedColor(color.toHex());
-    copyTimer.current = setTimeout(() => {
+    copyTimerRef.current = setTimeout(() => {
       setCopiedColor(null);
-      copyTimer.current = undefined;
+      copyTimerRef.current = undefined;
     }, 3000);
   });
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    // Clear copyTimer on component unmount.
+    // Clear copyTimerRef on component unmount.
     return () => {
-      if (copyTimer.current) {
-        clearTimeout(copyTimer.current);
+      if (copyTimerRef.current) {
+        clearTimeout(copyTimerRef.current);
       }
     };
   }, []);
@@ -44029,19 +44029,19 @@ function ClipboardButton({
     since: '5.8',
     alternative: 'wp.compose.useCopyToClipboard'
   });
-  const timeoutId = (0,external_wp_element_namespaceObject.useRef)();
+  const timeoutIdRef = (0,external_wp_element_namespaceObject.useRef)();
   const ref = (0,external_wp_compose_namespaceObject.useCopyToClipboard)(text, () => {
     onCopy();
-    if (timeoutId.current) {
-      clearTimeout(timeoutId.current);
+    if (timeoutIdRef.current) {
+      clearTimeout(timeoutIdRef.current);
     }
     if (onFinishCopy) {
-      timeoutId.current = setTimeout(() => onFinishCopy(), TIMEOUT);
+      timeoutIdRef.current = setTimeout(() => onFinishCopy(), TIMEOUT);
     }
   });
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (timeoutId.current) {
-      clearTimeout(timeoutId.current);
+    if (timeoutIdRef.current) {
+      clearTimeout(timeoutIdRef.current);
     }
   }, []);
   const classes = dist_clsx('components-clipboard-button', className);
@@ -44487,9 +44487,9 @@ function ControlPoints({
   onStopControlPointChange,
   __experimentalIsRenderedInSidebar
 }) {
-  const controlPointMoveState = (0,external_wp_element_namespaceObject.useRef)();
+  const controlPointMoveStateRef = (0,external_wp_element_namespaceObject.useRef)();
   const onMouseMove = event => {
-    if (controlPointMoveState.current === undefined || gradientPickerDomRef.current === null) {
+    if (controlPointMoveStateRef.current === undefined || gradientPickerDomRef.current === null) {
       return;
     }
     const relativePosition = getHorizontalRelativeGradientPosition(event.clientX, gradientPickerDomRef.current);
@@ -44497,18 +44497,18 @@ function ControlPoints({
       initialPosition,
       index,
       significantMoveHappened
-    } = controlPointMoveState.current;
+    } = controlPointMoveStateRef.current;
     if (!significantMoveHappened && Math.abs(initialPosition - relativePosition) >= MINIMUM_SIGNIFICANT_MOVE) {
-      controlPointMoveState.current.significantMoveHappened = true;
+      controlPointMoveStateRef.current.significantMoveHappened = true;
     }
     onChange(updateControlPointPosition(controlPoints, index, relativePosition));
   };
   const cleanEventListeners = () => {
-    if (window && window.removeEventListener && controlPointMoveState.current && controlPointMoveState.current.listenersActivated) {
+    if (window && window.removeEventListener && controlPointMoveStateRef.current && controlPointMoveStateRef.current.listenersActivated) {
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseup', cleanEventListeners);
       onStopControlPointChange();
-      controlPointMoveState.current.listenersActivated = false;
+      controlPointMoveStateRef.current.listenersActivated = false;
     }
   };
 
@@ -44533,7 +44533,7 @@ function ControlPoints({
           onToggle
         }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ControlPointButton, {
           onClick: () => {
-            if (controlPointMoveState.current && controlPointMoveState.current.significantMoveHappened) {
+            if (controlPointMoveStateRef.current && controlPointMoveStateRef.current.significantMoveHappened) {
               return;
             }
             if (isOpen) {
@@ -44545,7 +44545,7 @@ function ControlPoints({
           },
           onMouseDown: () => {
             if (window && window.addEventListener) {
-              controlPointMoveState.current = {
+              controlPointMoveStateRef.current = {
                 initialPosition,
                 index,
                 significantMoveHappened: false,
@@ -46219,9 +46219,9 @@ function PaletteEditListView({
   addColorRef
 }) {
   // When unmounting the component if there are empty elements (the user did not complete the insertion) clean them.
-  const elementsReference = (0,external_wp_element_namespaceObject.useRef)();
+  const elementsReferenceRef = (0,external_wp_element_namespaceObject.useRef)();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    elementsReference.current = elements;
+    elementsReferenceRef.current = elements;
   }, [elements]);
   const debounceOnChange = (0,external_wp_compose_namespaceObject.useDebounce)(onChange, 100);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(v_stack_component, {
@@ -47271,9 +47271,9 @@ function UnforwardedModal(props, forwardedRef) {
   }, []);
 
   // Keeps a fresh ref for the subsequent effect.
-  const refOnRequestClose = (0,external_wp_element_namespaceObject.useRef)();
+  const onRequestCloseRef = (0,external_wp_element_namespaceObject.useRef)();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    refOnRequestClose.current = onRequestClose;
+    onRequestCloseRef.current = onRequestClose;
   }, [onRequestClose]);
 
   // The list of `onRequestClose` callbacks of open (non-nested) Modals. Only
@@ -47286,10 +47286,10 @@ function UnforwardedModal(props, forwardedRef) {
   // onRequestClose for any prior and/or nested modals as applicable.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     // add this modal instance to the dismissers set
-    dismissers.add(refOnRequestClose);
+    dismissers.add(onRequestCloseRef);
     // request that all the other modals close themselves
     for (const dismisser of dismissers) {
-      if (dismisser !== refOnRequestClose) {
+      if (dismisser !== onRequestCloseRef) {
         dismisser.current?.();
       }
     }
@@ -47299,7 +47299,7 @@ function UnforwardedModal(props, forwardedRef) {
         dismisser.current?.();
       }
       // remove this modal instance from the dismissers set
-      dismissers.delete(refOnRequestClose);
+      dismissers.delete(onRequestCloseRef);
     };
   }, [dismissers, nestedDismissers]);
 
@@ -55511,7 +55511,7 @@ function Draggable({
   __experimentalDragComponent: dragComponent
 }) {
   const dragComponentRef = (0,external_wp_element_namespaceObject.useRef)(null);
-  const cleanup = (0,external_wp_element_namespaceObject.useRef)(() => {});
+  const cleanupRef = (0,external_wp_element_namespaceObject.useRef)(() => {});
 
   /**
    * Removes the element clone, resets cursor, and removes drag listener.
@@ -55520,7 +55520,7 @@ function Draggable({
    */
   function end(event) {
     event.preventDefault();
-    cleanup.current();
+    cleanupRef.current();
     if (onDragEnd) {
       onDragEnd(event);
     }
@@ -55634,7 +55634,7 @@ function Draggable({
     if (onDragStart) {
       onDragStart(event);
     }
-    cleanup.current = () => {
+    cleanupRef.current = () => {
       // Remove drag clone.
       if (cloneWrapper && cloneWrapper.parentNode) {
         cloneWrapper.parentNode.removeChild(cloneWrapper);
@@ -55649,7 +55649,7 @@ function Draggable({
     };
   }
   (0,external_wp_element_namespaceObject.useEffect)(() => () => {
-    cleanup.current();
+    cleanupRef.current();
   }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [children({
@@ -59377,10 +59377,10 @@ function Navigation({
   };
 
   // Used to prevent the sliding animation on mount
-  const isMounted = (0,external_wp_element_namespaceObject.useRef)(false);
+  const isMountedRef = (0,external_wp_element_namespaceObject.useRef)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!isMounted.current) {
-      isMounted.current = true;
+    if (!isMountedRef.current) {
+      isMountedRef.current = true;
     }
   }, []);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -59406,7 +59406,7 @@ function Navigation({
     className: classes,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: animateClassName ? dist_clsx({
-        [animateClassName]: isMounted.current && slideOrigin
+        [animateClassName]: isMountedRef.current && slideOrigin
       }) : undefined,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationContext.Provider, {
         value: context,
@@ -64491,12 +64491,12 @@ function UnforwardedSnackbar({
 
   // The `onDismiss/onRemove` can have unstable references,
   // trigger side-effect cleanup, and reset timers.
-  const callbackRefs = (0,external_wp_element_namespaceObject.useRef)({
+  const callbacksRef = (0,external_wp_element_namespaceObject.useRef)({
     onDismiss,
     onRemove
   });
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    callbackRefs.current = {
+    callbacksRef.current = {
       onDismiss,
       onRemove
     };
@@ -64505,8 +64505,8 @@ function UnforwardedSnackbar({
     // Only set up the timeout dismiss if we're not explicitly dismissing.
     const timeoutHandle = setTimeout(() => {
       if (!explicitDismiss) {
-        callbackRefs.current.onDismiss?.();
-        callbackRefs.current.onRemove?.();
+        callbacksRef.current.onDismiss?.();
+        callbacksRef.current.onRemove?.();
       }
     }, NOTICE_TIMEOUT);
     return () => clearTimeout(timeoutHandle);
@@ -67000,16 +67000,16 @@ function useToolsPanel(props) {
     __experimentalLastVisibleItemClass,
     ...otherProps
   } = useContextSystem(props, 'ToolsPanel');
-  const isResetting = (0,external_wp_element_namespaceObject.useRef)(false);
-  const wasResetting = isResetting.current;
+  const isResettingRef = (0,external_wp_element_namespaceObject.useRef)(false);
+  const wasResetting = isResettingRef.current;
 
-  // `isResetting` is cleared via this hook to effectively batch together
+  // `isResettingRef` is cleared via this hook to effectively batch together
   // the resetAll task. Without this, the flag is cleared after the first
   // control updates and forces a rerender with subsequent controls then
   // believing they need to reset, unfortunately using stale data.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (wasResetting) {
-      isResetting.current = false;
+      isResettingRef.current = false;
     }
   }, [wasResetting]);
 
@@ -67142,7 +67142,7 @@ function useToolsPanel(props) {
   // Resets display of children and executes resetAll callback if available.
   const resetAllItems = (0,external_wp_element_namespaceObject.useCallback)(() => {
     if (typeof resetAll === 'function') {
-      isResetting.current = true;
+      isResettingRef.current = true;
       resetAll(resetAllFilters);
     }
 
@@ -67171,7 +67171,7 @@ function useToolsPanel(props) {
     firstDisplayedItem,
     flagItemCustomization,
     hasMenuItems: !!panelItems.length,
-    isResetting: isResetting.current,
+    isResetting: isResettingRef.current,
     lastDisplayedItem,
     menuItems,
     panelId,
@@ -71326,9 +71326,9 @@ function Tabs({
   // Keep track of whether tabs have been populated. This is used to prevent
   // certain effects from firing too early while tab data and relevant
   // variables are undefined during the initial render.
-  const tabsHavePopulated = (0,external_wp_element_namespaceObject.useRef)(false);
+  const tabsHavePopulatedRef = (0,external_wp_element_namespaceObject.useRef)(false);
   if (items.length > 0) {
-    tabsHavePopulated.current = true;
+    tabsHavePopulatedRef.current = true;
   }
   const selectedTab = items.find(item => item.id === selectedId);
   const firstEnabledTab = items.find(item => {
@@ -71361,7 +71361,7 @@ function Tabs({
       }
       if (firstEnabledTab) {
         setSelectedId(firstEnabledTab.id);
-      } else if (tabsHavePopulated.current) {
+      } else if (tabsHavePopulatedRef.current) {
         setSelectedId(null);
       }
     }
@@ -71400,7 +71400,7 @@ function Tabs({
 
     // Once the tabs have populated, if the `selectedTabId` still can't be
     // found, clear the selection.
-    if (tabsHavePopulated.current && !!selectedTabId && !selectedTab) {
+    if (tabsHavePopulatedRef.current && !!selectedTabId && !selectedTab) {
       setSelectedId(null);
     }
   }, [isControlled, selectedTab, selectedTabId, setSelectedId]);

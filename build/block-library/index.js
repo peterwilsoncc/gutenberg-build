@@ -3052,24 +3052,24 @@ function useCanEditEntity(kind, name, recordId) {
  * @param {Function} args.onError      Function called when an error happens.
  */
 function useUploadMediaFromBlobURL(args = {}) {
-  const latestArgs = (0,external_wp_element_namespaceObject.useRef)(args);
-  const hasUploadStarted = (0,external_wp_element_namespaceObject.useRef)(false);
+  const latestArgsRef = (0,external_wp_element_namespaceObject.useRef)(args);
+  const hasUploadStartedRef = (0,external_wp_element_namespaceObject.useRef)(false);
   const {
     getSettings
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    latestArgs.current = args;
+    latestArgsRef.current = args;
   });
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     // Uploading is a special effect that can't be canceled via the cleanup method.
     // The extra check avoids duplicate uploads in development mode (React.StrictMode).
-    if (hasUploadStarted.current) {
+    if (hasUploadStartedRef.current) {
       return;
     }
-    if (!latestArgs.current.url || !(0,external_wp_blob_namespaceObject.isBlobURL)(latestArgs.current.url)) {
+    if (!latestArgsRef.current.url || !(0,external_wp_blob_namespaceObject.isBlobURL)(latestArgsRef.current.url)) {
       return;
     }
-    const file = (0,external_wp_blob_namespaceObject.getBlobByURL)(latestArgs.current.url);
+    const file = (0,external_wp_blob_namespaceObject.getBlobByURL)(latestArgsRef.current.url);
     if (!file) {
       return;
     }
@@ -3078,11 +3078,11 @@ function useUploadMediaFromBlobURL(args = {}) {
       allowedTypes,
       onChange,
       onError
-    } = latestArgs.current;
+    } = latestArgsRef.current;
     const {
       mediaUpload
     } = getSettings();
-    hasUploadStarted.current = true;
+    hasUploadStartedRef.current = true;
     mediaUpload({
       filesList: [file],
       allowedTypes,
@@ -3092,12 +3092,12 @@ function useUploadMediaFromBlobURL(args = {}) {
         }
         (0,external_wp_blob_namespaceObject.revokeBlobURL)(url);
         onChange(media);
-        hasUploadStarted.current = false;
+        hasUploadStartedRef.current = false;
       },
       onError: message => {
         (0,external_wp_blob_namespaceObject.revokeBlobURL)(url);
         onError(message);
-        hasUploadStarted.current = false;
+        hasUploadStartedRef.current = false;
       }
     });
   }, [getSettings]);
@@ -6703,9 +6703,9 @@ function edit_ClassicEdit({
   const {
     getMultiSelectedBlockClientIds
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
-  const didMount = (0,external_wp_element_namespaceObject.useRef)(false);
+  const didMountRef = (0,external_wp_element_namespaceObject.useRef)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!didMount.current) {
+    if (!didMountRef.current) {
       return;
     }
     const editor = window.tinymce.get(`editor-${clientId}`);
@@ -6722,7 +6722,7 @@ function edit_ClassicEdit({
       baseURL,
       suffix
     } = window.wpEditorL10n.tinymce;
-    didMount.current = true;
+    didMountRef.current = true;
     window.tinymce.EditorManager.overrideDefaults({
       base_url: baseURL,
       suffix
@@ -6834,7 +6834,7 @@ function edit_ClassicEdit({
     return () => {
       document.removeEventListener('readystatechange', onReadyStateChange);
       wp.oldEditor.remove(`editor-${clientId}`);
-      didMount.current = false;
+      didMountRef.current = false;
     };
   }, []);
   function focus() {
@@ -33406,12 +33406,12 @@ function UnsavedInnerBlocks({
   createNavigationMenu,
   hasSelection
 }) {
-  const originalBlocks = (0,external_wp_element_namespaceObject.useRef)();
+  const originalBlocksRef = (0,external_wp_element_namespaceObject.useRef)();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     // Initially store the uncontrolled inner blocks for
     // dirty state comparison.
-    if (!originalBlocks?.current) {
-      originalBlocks.current = blocks;
+    if (!originalBlocksRef?.current) {
+      originalBlocksRef.current = blocks;
     }
   }, [blocks]);
 
@@ -33422,7 +33422,7 @@ function UnsavedInnerBlocks({
   // of the page list are controlled and may be updated async due to syncing with
   // entity records. As a result we need to perform a deep equality check skipping
   // the page list's inner blocks.
-  const innerBlocksAreDirty = areBlocksDirty(originalBlocks?.current, blocks);
+  const innerBlocksAreDirty = areBlocksDirty(originalBlocksRef?.current, blocks);
 
   // The block will be disabled in a block preview, use this as a way of
   // avoiding the side-effects of this component for block previews.
@@ -55525,10 +55525,10 @@ function SocialLinksEdit(props) {
 
   // Remove icon background color when logos only style is selected or
   // restore it when any other style is selected.
-  const backgroundBackup = (0,external_wp_element_namespaceObject.useRef)({});
+  const backgroundBackupRef = (0,external_wp_element_namespaceObject.useRef)({});
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (logosOnly) {
-      backgroundBackup.current = {
+      backgroundBackupRef.current = {
         iconBackgroundColor,
         iconBackgroundColorValue,
         customIconBackgroundColor
@@ -55540,7 +55540,7 @@ function SocialLinksEdit(props) {
       });
     } else {
       setAttributes({
-        ...backgroundBackup.current
+        ...backgroundBackupRef.current
       });
     }
   }, [logosOnly]);

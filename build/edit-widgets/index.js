@@ -1151,8 +1151,8 @@ function ComplementaryAreaFill({
   });
 }
 function useAdjustComplementaryListener(scope, identifier, activeArea, isActive, isSmall) {
-  const previousIsSmall = (0,external_wp_element_namespaceObject.useRef)(false);
-  const shouldOpenWhenNotSmall = (0,external_wp_element_namespaceObject.useRef)(false);
+  const previousIsSmallRef = (0,external_wp_element_namespaceObject.useRef)(false);
+  const shouldOpenWhenNotSmallRef = (0,external_wp_element_namespaceObject.useRef)(false);
   const {
     enableComplementaryArea,
     disableComplementaryArea
@@ -1160,29 +1160,29 @@ function useAdjustComplementaryListener(scope, identifier, activeArea, isActive,
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     // If the complementary area is active and the editor is switching from
     // a big to a small window size.
-    if (isActive && isSmall && !previousIsSmall.current) {
+    if (isActive && isSmall && !previousIsSmallRef.current) {
       disableComplementaryArea(scope);
       // Flag the complementary area to be reopened when the window size
       // goes from small to big.
-      shouldOpenWhenNotSmall.current = true;
+      shouldOpenWhenNotSmallRef.current = true;
     } else if (
     // If there is a flag indicating the complementary area should be
     // enabled when we go from small to big window size and we are going
     // from a small to big window size.
-    shouldOpenWhenNotSmall.current && !isSmall && previousIsSmall.current) {
+    shouldOpenWhenNotSmallRef.current && !isSmall && previousIsSmallRef.current) {
       // Remove the flag indicating the complementary area should be
       // enabled.
-      shouldOpenWhenNotSmall.current = false;
+      shouldOpenWhenNotSmallRef.current = false;
       enableComplementaryArea(scope, identifier);
     } else if (
     // If the flag is indicating the current complementary should be
     // reopened but another complementary area becomes active, remove
     // the flag.
-    shouldOpenWhenNotSmall.current && activeArea && activeArea !== identifier) {
-      shouldOpenWhenNotSmall.current = false;
+    shouldOpenWhenNotSmallRef.current && activeArea && activeArea !== identifier) {
+      shouldOpenWhenNotSmallRef.current = false;
     }
-    if (isSmall !== previousIsSmall.current) {
-      previousIsSmall.current = isSmall;
+    if (isSmall !== previousIsSmallRef.current) {
+      previousIsSmallRef.current = isSmall;
     }
   }, [isActive, isSmall, scope, identifier, activeArea, disableComplementaryArea, enableComplementaryArea]);
 }

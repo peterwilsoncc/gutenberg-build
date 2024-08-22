@@ -3510,12 +3510,12 @@ const external_wp_dom_namespaceObject = window["wp"]["dom"];
  * @return Ref callback.
  */
 function useRefEffect(callback, dependencies) {
-  const cleanup = (0,external_wp_element_namespaceObject.useRef)();
+  const cleanupRef = (0,external_wp_element_namespaceObject.useRef)();
   return (0,external_wp_element_namespaceObject.useCallback)(node => {
     if (node) {
-      cleanup.current = callback(node);
-    } else if (cleanup.current) {
-      cleanup.current();
+      cleanupRef.current = callback(node);
+    } else if (cleanupRef.current) {
+      cleanupRef.current();
     }
   }, dependencies);
 }
@@ -3646,7 +3646,7 @@ function useCopyOnClick(ref, text, timeout = 4000) {
   });
 
   /** @type {import('react').MutableRefObject<Clipboard | undefined>} */
-  const clipboard = (0,external_wp_element_namespaceObject.useRef)();
+  const clipboardRef = (0,external_wp_element_namespaceObject.useRef)();
   const [hasCopied, setHasCopied] = (0,external_wp_element_namespaceObject.useState)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     /** @type {number | undefined} */
@@ -3656,10 +3656,10 @@ function useCopyOnClick(ref, text, timeout = 4000) {
     }
 
     // Clipboard listens to click events.
-    clipboard.current = new (clipboard_default())(ref.current, {
+    clipboardRef.current = new (clipboard_default())(ref.current, {
       text: () => typeof text === 'function' ? text() : text
     });
-    clipboard.current.on('success', ({
+    clipboardRef.current.on('success', ({
       clearSelection,
       trigger
     }) => {
@@ -3679,8 +3679,8 @@ function useCopyOnClick(ref, text, timeout = 4000) {
       }
     });
     return () => {
-      if (clipboard.current) {
-        clipboard.current.destroy();
+      if (clipboardRef.current) {
+        clipboardRef.current.destroy();
       }
       clearTimeout(timeoutId);
     };
@@ -3808,7 +3808,7 @@ function useFocusOnMount(focusOnMount = 'firstElement') {
   };
 
   /** @type {import('react').MutableRefObject<ReturnType<setTimeout> | undefined>} */
-  const timerId = (0,external_wp_element_namespaceObject.useRef)();
+  const timerIdRef = (0,external_wp_element_namespaceObject.useRef)();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     focusOnMountRef.current = focusOnMount;
   }, [focusOnMount]);
@@ -3821,7 +3821,7 @@ function useFocusOnMount(focusOnMount = 'firstElement') {
       return;
     }
     if (focusOnMountRef.current === 'firstElement') {
-      timerId.current = setTimeout(() => {
+      timerIdRef.current = setTimeout(() => {
         const firstTabbable = external_wp_dom_namespaceObject.focus.tabbable.find(node)[0];
         if (firstTabbable) {
           setFocus(firstTabbable);
@@ -3831,8 +3831,8 @@ function useFocusOnMount(focusOnMount = 'firstElement') {
     }
     setFocus(node);
     return () => {
-      if (timerId.current) {
-        clearTimeout(timerId.current);
+      if (timerIdRef.current) {
+        clearTimeout(timerIdRef.current);
       }
     };
   }, []);
@@ -3963,18 +3963,18 @@ function isFocusNormalizedButton(eventTarget) {
  * wrapping element element to capture when focus moves outside that element.
  */
 function useFocusOutside(onFocusOutside) {
-  const currentOnFocusOutside = (0,external_wp_element_namespaceObject.useRef)(onFocusOutside);
+  const currentOnFocusOutsideRef = (0,external_wp_element_namespaceObject.useRef)(onFocusOutside);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    currentOnFocusOutside.current = onFocusOutside;
+    currentOnFocusOutsideRef.current = onFocusOutside;
   }, [onFocusOutside]);
-  const preventBlurCheck = (0,external_wp_element_namespaceObject.useRef)(false);
-  const blurCheckTimeoutId = (0,external_wp_element_namespaceObject.useRef)();
+  const preventBlurCheckRef = (0,external_wp_element_namespaceObject.useRef)(false);
+  const blurCheckTimeoutIdRef = (0,external_wp_element_namespaceObject.useRef)();
 
   /**
    * Cancel a blur check timeout.
    */
   const cancelBlurCheck = (0,external_wp_element_namespaceObject.useCallback)(() => {
-    clearTimeout(blurCheckTimeoutId.current);
+    clearTimeout(blurCheckTimeoutIdRef.current);
   }, []);
 
   // Cancel blur checks on unmount.
@@ -4006,9 +4006,9 @@ function useFocusOutside(onFocusOutside) {
     } = event;
     const isInteractionEnd = ['mouseup', 'touchend'].includes(type);
     if (isInteractionEnd) {
-      preventBlurCheck.current = false;
+      preventBlurCheckRef.current = false;
     } else if (isFocusNormalizedButton(target)) {
-      preventBlurCheck.current = true;
+      preventBlurCheckRef.current = true;
     }
   }, []);
 
@@ -4025,7 +4025,7 @@ function useFocusOutside(onFocusOutside) {
     event.persist();
 
     // Skip blur check if clicking button. See `normalizeButtonFocus`.
-    if (preventBlurCheck.current) {
+    if (preventBlurCheckRef.current) {
       return;
     }
 
@@ -4040,7 +4040,7 @@ function useFocusOutside(onFocusOutside) {
     if (ignoreForRelatedTarget && event.relatedTarget?.closest(ignoreForRelatedTarget)) {
       return;
     }
-    blurCheckTimeoutId.current = setTimeout(() => {
+    blurCheckTimeoutIdRef.current = setTimeout(() => {
       // If document is not focused then focus should remain
       // inside the wrapped component and therefore we cancel
       // this blur event thereby leaving focus in place.
@@ -4049,8 +4049,8 @@ function useFocusOutside(onFocusOutside) {
         event.preventDefault();
         return;
       }
-      if ('function' === typeof currentOnFocusOutside.current) {
-        currentOnFocusOutside.current(event);
+      if ('function' === typeof currentOnFocusOutsideRef.current) {
+        currentOnFocusOutsideRef.current(event);
       }
     }, 0);
   }, []);
@@ -4137,38 +4137,38 @@ function assignRef(ref, value) {
  */
 function useMergeRefs(refs) {
   const element = (0,external_wp_element_namespaceObject.useRef)();
-  const isAttached = (0,external_wp_element_namespaceObject.useRef)(false);
-  const didElementChange = (0,external_wp_element_namespaceObject.useRef)(false);
+  const isAttachedRef = (0,external_wp_element_namespaceObject.useRef)(false);
+  const didElementChangeRef = (0,external_wp_element_namespaceObject.useRef)(false);
   /* eslint-disable jsdoc/no-undefined-types */
   /** @type {import('react').MutableRefObject<TRef[]>} */
   /* eslint-enable jsdoc/no-undefined-types */
-  const previousRefs = (0,external_wp_element_namespaceObject.useRef)([]);
-  const currentRefs = (0,external_wp_element_namespaceObject.useRef)(refs);
+  const previousRefsRef = (0,external_wp_element_namespaceObject.useRef)([]);
+  const currentRefsRef = (0,external_wp_element_namespaceObject.useRef)(refs);
 
   // Update on render before the ref callback is called, so the ref callback
   // always has access to the current refs.
-  currentRefs.current = refs;
+  currentRefsRef.current = refs;
 
   // If any of the refs change, call the previous ref with `null` and the new
   // ref with the node, except when the element changes in the same cycle, in
   // which case the ref callbacks will already have been called.
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    if (didElementChange.current === false && isAttached.current === true) {
+    if (didElementChangeRef.current === false && isAttachedRef.current === true) {
       refs.forEach((ref, index) => {
-        const previousRef = previousRefs.current[index];
+        const previousRef = previousRefsRef.current[index];
         if (ref !== previousRef) {
           assignRef(previousRef, null);
           assignRef(ref, element.current);
         }
       });
     }
-    previousRefs.current = refs;
+    previousRefsRef.current = refs;
   }, refs);
 
   // No dependencies, must be reset after every render so ref callbacks are
   // correctly called after a ref change.
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    didElementChange.current = false;
+    didElementChangeRef.current = false;
   });
 
   // There should be no dependencies so that `callback` is only called when
@@ -4177,12 +4177,12 @@ function useMergeRefs(refs) {
     // Update the element so it can be used when calling ref callbacks on a
     // dependency change.
     assignRef(element, value);
-    didElementChange.current = true;
-    isAttached.current = value !== null;
+    didElementChangeRef.current = true;
+    isAttachedRef.current = value !== null;
 
     // When an element changes, the current ref callback should be called
     // with the new element and the previous one with `null`.
-    const refsToAssign = value ? currentRefs.current : previousRefs.current;
+    const refsToAssign = value ? currentRefsRef.current : previousRefsRef.current;
 
     // Update the latest refs.
     for (const ref of refsToAssign) {
@@ -4475,9 +4475,9 @@ shortcuts, callback, {
   // This is important for performance considerations.
   target
 } = {}) {
-  const currentCallback = (0,external_wp_element_namespaceObject.useRef)(callback);
+  const currentCallbackRef = (0,external_wp_element_namespaceObject.useRef)(callback);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    currentCallback.current = callback;
+    currentCallbackRef.current = callback;
   }, [callback]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (isDisabled) {
@@ -4507,7 +4507,7 @@ shortcuts, callback, {
       // @ts-ignore `bindGlobal` is an undocumented property
       mousetrap[bindFn](shortcut, ( /* eslint-disable jsdoc/valid-types */
       /** @type {[e: import('mousetrap').ExtendedKeyboardEvent, combo: string]} */...args) => /* eslint-enable jsdoc/valid-types */
-      currentCallback.current(...args), eventName);
+      currentCallbackRef.current(...args), eventName);
     });
     return () => {
       mousetrap.reset();
@@ -4976,13 +4976,13 @@ useViewportMatch.__experimentalWidthProvider = ViewportMatchWidthContext.Provide
 // This could've been exported to its own module, but the current build doesn't
 // seem to work with module imports and I had no more time to spend on this...
 function useResolvedElement(subscriber, refOrElement) {
-  const callbackRefElement = (0,external_wp_element_namespaceObject.useRef)(null);
+  const callbackElementRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const lastReportRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const cleanupRef = (0,external_wp_element_namespaceObject.useRef)();
   const callSubscriber = (0,external_wp_element_namespaceObject.useCallback)(() => {
     let element = null;
-    if (callbackRefElement.current) {
-      element = callbackRefElement.current;
+    if (callbackElementRef.current) {
+      element = callbackElementRef.current;
     } else if (refOrElement) {
       if (refOrElement instanceof HTMLElement) {
         element = refOrElement;
@@ -5019,7 +5019,7 @@ function useResolvedElement(subscriber, refOrElement) {
     callSubscriber();
   }, [callSubscriber]);
   return (0,external_wp_element_namespaceObject.useCallback)(element => {
-    callbackRefElement.current = element;
+    callbackElementRef.current = element;
     callSubscriber();
   }, [callSubscriber]);
 }
@@ -5090,16 +5090,16 @@ function useResizeObserver(opts = {}) {
 
   // In certain edge cases the RO might want to report a size change just after
   // the component unmounted.
-  const didUnmount = (0,external_wp_element_namespaceObject.useRef)(false);
+  const didUnmountRef = (0,external_wp_element_namespaceObject.useRef)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    didUnmount.current = false;
+    didUnmountRef.current = false;
     return () => {
-      didUnmount.current = true;
+      didUnmountRef.current = true;
     };
   }, []);
 
   // Using a ref to track the previous width / height to avoid unnecessary renders.
-  const previous = (0,external_wp_element_namespaceObject.useRef)({
+  const previousRef = (0,external_wp_element_namespaceObject.useRef)({
     width: undefined,
     height: undefined
   });
@@ -5126,16 +5126,16 @@ function useResizeObserver(opts = {}) {
           const reportedHeight = extractSize(entry, boxProp, 'blockSize');
           const newWidth = reportedWidth ? round(reportedWidth) : undefined;
           const newHeight = reportedHeight ? round(reportedHeight) : undefined;
-          if (previous.current.width !== newWidth || previous.current.height !== newHeight) {
+          if (previousRef.current.width !== newWidth || previousRef.current.height !== newHeight) {
             const newSize = {
               width: newWidth,
               height: newHeight
             };
-            previous.current.width = newWidth;
-            previous.current.height = newHeight;
+            previousRef.current.width = newWidth;
+            previousRef.current.height = newHeight;
             if (onResizeRef.current) {
               onResizeRef.current(newSize);
-            } else if (!didUnmount.current) {
+            } else if (!didUnmountRef.current) {
               setSize(newSize);
             }
           }

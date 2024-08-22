@@ -412,15 +412,15 @@ const useUpdatePostLinkListener = () => {
   } = (0,external_wp_data_namespaceObject.useSelect)(select => ({
     newPermalink: select(external_wp_editor_namespaceObject.store).getCurrentPost().link
   }), []);
-  const nodeToUpdate = (0,external_wp_element_namespaceObject.useRef)();
+  const nodeToUpdateRef = (0,external_wp_element_namespaceObject.useRef)();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    nodeToUpdate.current = document.querySelector(VIEW_AS_PREVIEW_LINK_SELECTOR) || document.querySelector(VIEW_AS_LINK_SELECTOR);
+    nodeToUpdateRef.current = document.querySelector(VIEW_AS_PREVIEW_LINK_SELECTOR) || document.querySelector(VIEW_AS_LINK_SELECTOR);
   }, []);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!newPermalink || !nodeToUpdate.current) {
+    if (!newPermalink || !nodeToUpdateRef.current) {
       return;
     }
-    nodeToUpdate.current.setAttribute('href', newPermalink);
+    nodeToUpdateRef.current.setAttribute('href', newPermalink);
   }, [newPermalink]);
 };
 

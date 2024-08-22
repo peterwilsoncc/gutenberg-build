@@ -9672,8 +9672,8 @@ function ComplementaryAreaFill({
   });
 }
 function useAdjustComplementaryListener(scope, identifier, activeArea, isActive, isSmall) {
-  const previousIsSmall = (0,external_wp_element_namespaceObject.useRef)(false);
-  const shouldOpenWhenNotSmall = (0,external_wp_element_namespaceObject.useRef)(false);
+  const previousIsSmallRef = (0,external_wp_element_namespaceObject.useRef)(false);
+  const shouldOpenWhenNotSmallRef = (0,external_wp_element_namespaceObject.useRef)(false);
   const {
     enableComplementaryArea,
     disableComplementaryArea
@@ -9681,29 +9681,29 @@ function useAdjustComplementaryListener(scope, identifier, activeArea, isActive,
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     // If the complementary area is active and the editor is switching from
     // a big to a small window size.
-    if (isActive && isSmall && !previousIsSmall.current) {
+    if (isActive && isSmall && !previousIsSmallRef.current) {
       disableComplementaryArea(scope);
       // Flag the complementary area to be reopened when the window size
       // goes from small to big.
-      shouldOpenWhenNotSmall.current = true;
+      shouldOpenWhenNotSmallRef.current = true;
     } else if (
     // If there is a flag indicating the complementary area should be
     // enabled when we go from small to big window size and we are going
     // from a small to big window size.
-    shouldOpenWhenNotSmall.current && !isSmall && previousIsSmall.current) {
+    shouldOpenWhenNotSmallRef.current && !isSmall && previousIsSmallRef.current) {
       // Remove the flag indicating the complementary area should be
       // enabled.
-      shouldOpenWhenNotSmall.current = false;
+      shouldOpenWhenNotSmallRef.current = false;
       enableComplementaryArea(scope, identifier);
     } else if (
     // If the flag is indicating the current complementary should be
     // reopened but another complementary area becomes active, remove
     // the flag.
-    shouldOpenWhenNotSmall.current && activeArea && activeArea !== identifier) {
-      shouldOpenWhenNotSmall.current = false;
+    shouldOpenWhenNotSmallRef.current && activeArea && activeArea !== identifier) {
+      shouldOpenWhenNotSmallRef.current = false;
     }
-    if (isSmall !== previousIsSmall.current) {
-      previousIsSmall.current = isSmall;
+    if (isSmall !== previousIsSmallRef.current) {
+      previousIsSmallRef.current = isSmall;
     }
   }, [isActive, isSmall, scope, identifier, activeArea, disableComplementaryArea, enableComplementaryArea]);
 }
@@ -10490,9 +10490,9 @@ function DocumentBar(props) {
   const entityTitle = isTemplate ? templateTitle : documentTitle;
   const title = props.title || entityTitle;
   const icon = props.icon || templateIcon;
-  const mounted = (0,external_wp_element_namespaceObject.useRef)(false);
+  const mountedRef = (0,external_wp_element_namespaceObject.useRef)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    mounted.current = true;
+    mountedRef.current = true;
   }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: dist_clsx('editor-document-bar', {
@@ -10508,7 +10508,7 @@ function DocumentBar(props) {
           onNavigateToPreviousEntityRecord();
         },
         size: "compact",
-        initial: mounted.current ? {
+        initial: mountedRef.current ? {
           opacity: 0,
           transform: 'translateX(15%)'
         } : false // Don't show entry animation when DocumentBar mounts.
@@ -10537,7 +10537,7 @@ function DocumentBar(props) {
         // Force entry animation when the back button is added or removed.
         ,
 
-        initial: mounted.current ? {
+        initial: mountedRef.current ? {
           opacity: 0,
           transform: hasBackButton ? 'translateX(15%)' : 'translateX(-15%)'
         } : false // Don't show entry animation when DocumentBar mounts.
@@ -11898,14 +11898,14 @@ function useAutosavePurge() {
     isAutosaving: select(store_store).isAutosavingPost(),
     didError: select(store_store).didPostSaveRequestFail()
   }), []);
-  const lastIsDirty = (0,external_wp_element_namespaceObject.useRef)(isDirty);
-  const lastIsAutosaving = (0,external_wp_element_namespaceObject.useRef)(isAutosaving);
+  const lastIsDirtyRef = (0,external_wp_element_namespaceObject.useRef)(isDirty);
+  const lastIsAutosavingRef = (0,external_wp_element_namespaceObject.useRef)(isAutosaving);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!didError && (lastIsAutosaving.current && !isAutosaving || lastIsDirty.current && !isDirty)) {
+    if (!didError && (lastIsAutosavingRef.current && !isAutosaving || lastIsDirtyRef.current && !isDirty)) {
       localAutosaveClear(postId, isEditedPostNew);
     }
-    lastIsDirty.current = isDirty;
-    lastIsAutosaving.current = isAutosaving;
+    lastIsDirtyRef.current = isDirty;
+    lastIsAutosavingRef.current = isAutosaving;
   }, [isDirty, isAutosaving, didError]);
 
   // Once the isEditedPostNew changes from true to false, let's clear the auto-draft autosave.
@@ -25784,14 +25784,14 @@ function PreviewDropdown({
   /**
    * Save the original editing mode in a ref to restore it when we exit zoom out.
    */
-  const originalEditingMode = (0,external_wp_element_namespaceObject.useRef)(editorMode);
+  const originalEditingModeRef = (0,external_wp_element_namespaceObject.useRef)(editorMode);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (editorMode !== 'zoom-out') {
-      originalEditingMode.current = editorMode;
+      originalEditingModeRef.current = editorMode;
     }
     return () => {
-      if (editorMode === 'zoom-out' && editorMode !== originalEditingMode.current) {
-        __unstableSetEditorMode(originalEditingMode.current);
+      if (editorMode === 'zoom-out' && editorMode !== originalEditingModeRef.current) {
+        __unstableSetEditorMode(originalEditingModeRef.current);
       }
     };
   }, [editorMode, __unstableSetEditorMode]);
@@ -25849,7 +25849,7 @@ function PreviewDropdown({
    * @param {string} value The device type.
    */
   const onSelect = value => {
-    let newEditorMode = originalEditingMode.current;
+    let newEditorMode = originalEditingModeRef.current;
     if (value === 'ZoomOut') {
       newEditorMode = 'zoom-out';
       setDeviceType('Desktop');

@@ -13416,38 +13416,38 @@ function useSyncCanvasModeWithURL() {
   const {
     setCanvasMode
   } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
-  const currentCanvasMode = (0,external_wp_element_namespaceObject.useRef)(canvasMode);
+  const currentCanvasModeRef = (0,external_wp_element_namespaceObject.useRef)(canvasMode);
   const {
     canvas: canvasInUrl
   } = params;
-  const currentCanvasInUrl = (0,external_wp_element_namespaceObject.useRef)(canvasInUrl);
-  const currentUrlParams = (0,external_wp_element_namespaceObject.useRef)(params);
+  const currentCanvasInUrlRef = (0,external_wp_element_namespaceObject.useRef)(canvasInUrl);
+  const currentUrlParamsRef = (0,external_wp_element_namespaceObject.useRef)(params);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    currentUrlParams.current = params;
+    currentUrlParamsRef.current = params;
   }, [params]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    currentCanvasMode.current = canvasMode;
+    currentCanvasModeRef.current = canvasMode;
     if (canvasMode === 'init') {
       return;
     }
-    if (canvasMode === 'edit' && currentCanvasInUrl.current !== canvasMode) {
+    if (canvasMode === 'edit' && currentCanvasInUrlRef.current !== canvasMode) {
       history.push({
-        ...currentUrlParams.current,
+        ...currentUrlParamsRef.current,
         canvas: 'edit'
       });
     }
-    if (canvasMode === 'view' && currentCanvasInUrl.current !== undefined) {
+    if (canvasMode === 'view' && currentCanvasInUrlRef.current !== undefined) {
       history.push({
-        ...currentUrlParams.current,
+        ...currentUrlParamsRef.current,
         canvas: undefined
       });
     }
   }, [canvasMode, history]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    currentCanvasInUrl.current = canvasInUrl;
-    if (canvasInUrl !== 'edit' && currentCanvasMode.current !== 'view') {
+    currentCanvasInUrlRef.current = canvasInUrl;
+    if (canvasInUrl !== 'edit' && currentCanvasModeRef.current !== 'view') {
       setCanvasMode('view');
-    } else if (canvasInUrl === 'edit' && currentCanvasMode.current !== 'edit') {
+    } else if (canvasInUrl === 'edit' && currentCanvasModeRef.current !== 'edit') {
       setCanvasMode('edit');
     }
   }, [canvasInUrl, setCanvasMode]);
@@ -29970,16 +29970,16 @@ function ToolbarContent({
   onChangeSelection
 }) {
   const [actionInProgress, setActionInProgress] = (0,external_wp_element_namespaceObject.useState)(null);
-  const buttons = (0,external_wp_element_namespaceObject.useRef)(null);
+  const buttonsRef = (0,external_wp_element_namespaceObject.useRef)(null);
   if (!actionInProgress) {
-    if (buttons.current) {
-      buttons.current = null;
+    if (buttonsRef.current) {
+      buttonsRef.current = null;
     }
     return renderToolbarContent(selection, actionsToShow, selectedItems, actionInProgress, setActionInProgress, onChangeSelection);
-  } else if (!buttons.current) {
-    buttons.current = renderToolbarContent(selection, actionsToShow, selectedItems, actionInProgress, setActionInProgress, onChangeSelection);
+  } else if (!buttonsRef.current) {
+    buttonsRef.current = renderToolbarContent(selection, actionsToShow, selectedItems, actionInProgress, setActionInProgress, onChangeSelection);
   }
-  return buttons.current;
+  return buttonsRef.current;
 }
 function _BulkActionsToolbar() {
   const {
@@ -36173,7 +36173,7 @@ function TableRow({
   // Will be set to true if `onTouchStart` fires. This happens before
   // `onClick` and can be used to exclude touchscreen devices from certain
   // behaviours.
-  const isTouchDevice = (0,external_wp_element_namespaceObject.useRef)(false);
+  const isTouchDeviceRef = (0,external_wp_element_namespaceObject.useRef)(false);
   const columns = view.fields || fields.map(f => f.id);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("tr", {
     className: dist_clsx('dataviews-view-table__row', {
@@ -36184,13 +36184,13 @@ function TableRow({
     onMouseEnter: handleMouseEnter,
     onMouseLeave: handleMouseLeave,
     onTouchStart: () => {
-      isTouchDevice.current = true;
+      isTouchDeviceRef.current = true;
     },
     onClick: () => {
       if (!hasPossibleBulkAction) {
         return;
       }
-      if (!isTouchDevice.current && document.getSelection()?.type !== 'Range') {
+      if (!isTouchDeviceRef.current && document.getSelection()?.type !== 'Range') {
         onChangeSelection(selection.includes(id) ? selection.filter(itemId => id !== itemId) : [id]);
       }
     },

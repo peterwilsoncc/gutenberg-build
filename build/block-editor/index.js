@@ -23776,10 +23776,10 @@ function LinkControl({
   // which may not have these preferences setup.
   // Therefore a local state is used as a fallback.
   const isSettingsOpen = advancedSettingsPreference || settingsOpen;
-  const isMounting = (0,external_wp_element_namespaceObject.useRef)(true);
+  const isMountingRef = (0,external_wp_element_namespaceObject.useRef)(true);
   const wrapperNode = (0,external_wp_element_namespaceObject.useRef)();
   const textInputRef = (0,external_wp_element_namespaceObject.useRef)();
-  const isEndingEditWithFocus = (0,external_wp_element_namespaceObject.useRef)(false);
+  const isEndingEditWithFocusRef = (0,external_wp_element_namespaceObject.useRef)(false);
   const settingsKeys = settings.map(({
     id
   }) => id);
@@ -23801,7 +23801,7 @@ function LinkControl({
     // We don't auto focus into the Link UI on mount
     // because otherwise using the keyboard to select text
     // *within* the link format is not possible.
-    if (isMounting.current) {
+    if (isMountingRef.current) {
       return;
     }
 
@@ -23812,15 +23812,15 @@ function LinkControl({
     // and to ensure focus is *within* the Link UI.
     const nextFocusTarget = external_wp_dom_namespaceObject.focus.focusable.find(wrapperNode.current)[0] || wrapperNode.current;
     nextFocusTarget.focus();
-    isEndingEditWithFocus.current = false;
+    isEndingEditWithFocusRef.current = false;
   }, [isEditingLink, isCreatingPage]);
 
   // The component mounting reference is maintained separately
   // to correctly reset values in `StrictMode`.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    isMounting.current = false;
+    isMountingRef.current = false;
     return () => {
-      isMounting.current = true;
+      isMountingRef.current = true;
     };
   }, []);
   const hasLinkValue = value?.url?.trim()?.length > 0;
@@ -23830,7 +23830,7 @@ function LinkControl({
    * the next render, if focus was within the wrapper when editing finished.
    */
   const stopEditing = () => {
-    isEndingEditWithFocus.current = !!wrapperNode.current?.contains(wrapperNode.current.ownerDocument.activeElement);
+    isEndingEditWithFocusRef.current = !!wrapperNode.current?.contains(wrapperNode.current.ownerDocument.activeElement);
     setIsEditingLink(false);
   };
   const handleSelectSuggestion = updatedValue => {
@@ -32431,14 +32431,14 @@ function SpacingVisualizer({
     // See https://github.com/WordPress/gutenberg/pull/59227.
     window.requestAnimationFrame(() => window.requestAnimationFrame(updateStyle));
   }, [blockElement, value]);
-  const previousValue = (0,external_wp_element_namespaceObject.useRef)(value);
+  const previousValueRef = (0,external_wp_element_namespaceObject.useRef)(value);
   const [isActive, setIsActive] = (0,external_wp_element_namespaceObject.useState)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (external_wp_isShallowEqual_default()(value, previousValue.current) || forceShow) {
+    if (external_wp_isShallowEqual_default()(value, previousValueRef.current) || forceShow) {
       return;
     }
     setIsActive(true);
-    previousValue.current = value;
+    previousValueRef.current = value;
     const timeout = setTimeout(() => {
       setIsActive(false);
     }, 400);
@@ -36576,11 +36576,11 @@ function useBlockSync({
   const isControlled = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return !clientId || select(store).areInnerBlocksControlled(clientId);
   }, [clientId]);
-  const pendingChanges = (0,external_wp_element_namespaceObject.useRef)({
+  const pendingChangesRef = (0,external_wp_element_namespaceObject.useRef)({
     incoming: null,
     outgoing: []
   });
-  const subscribed = (0,external_wp_element_namespaceObject.useRef)(false);
+  const subscribedRef = (0,external_wp_element_namespaceObject.useRef)(false);
   const setControlledBlocks = () => {
     if (!controlledBlocks) {
       return;
@@ -36598,15 +36598,15 @@ function useBlockSync({
       registry.batch(() => {
         setHasControlledInnerBlocks(clientId, true);
         const storeBlocks = controlledBlocks.map(block => (0,external_wp_blocks_namespaceObject.cloneBlock)(block));
-        if (subscribed.current) {
-          pendingChanges.current.incoming = storeBlocks;
+        if (subscribedRef.current) {
+          pendingChangesRef.current.incoming = storeBlocks;
         }
         __unstableMarkNextChangeAsNotPersistent();
         replaceInnerBlocks(clientId, storeBlocks);
       });
     } else {
-      if (subscribed.current) {
-        pendingChanges.current.incoming = controlledBlocks;
+      if (subscribedRef.current) {
+        pendingChangesRef.current.incoming = controlledBlocks;
       }
       resetBlocks(controlledBlocks);
     }
@@ -36638,40 +36638,40 @@ function useBlockSync({
 
   // Determine if blocks need to be reset when they change.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (pendingChanges.current.outgoing.includes(controlledBlocks)) {
+    if (pendingChangesRef.current.outgoing.includes(controlledBlocks)) {
       // Skip block reset if the value matches expected outbound sync
       // triggered by this component by a preceding change detection.
       // Only skip if the value matches expectation, since a reset should
       // still occur if the value is modified (not equal by reference),
       // to allow that the consumer may apply modifications to reflect
       // back on the editor.
-      if (pendingChanges.current.outgoing[pendingChanges.current.outgoing.length - 1] === controlledBlocks) {
-        pendingChanges.current.outgoing = [];
+      if (pendingChangesRef.current.outgoing[pendingChangesRef.current.outgoing.length - 1] === controlledBlocks) {
+        pendingChangesRef.current.outgoing = [];
       }
     } else if (getBlocks(clientId) !== controlledBlocks) {
       // Reset changing value in all other cases than the sync described
       // above. Since this can be reached in an update following an out-
       // bound sync, unset the outbound value to avoid considering it in
       // subsequent renders.
-      pendingChanges.current.outgoing = [];
+      pendingChangesRef.current.outgoing = [];
       setControlledBlocks();
       if (controlledSelection) {
         resetSelection(controlledSelection.selectionStart, controlledSelection.selectionEnd, controlledSelection.initialPosition);
       }
     }
   }, [controlledBlocks, clientId]);
-  const isMounted = (0,external_wp_element_namespaceObject.useRef)(false);
+  const isMountedRef = (0,external_wp_element_namespaceObject.useRef)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     // On mount, controlled blocks are already set in the effect above.
-    if (!isMounted.current) {
-      isMounted.current = true;
+    if (!isMountedRef.current) {
+      isMountedRef.current = true;
       return;
     }
 
     // When the block becomes uncontrolled, it means its inner state has been reset
     // we need to take the blocks again from the external value property.
     if (!isControlled) {
-      pendingChanges.current.outgoing = [];
+      pendingChangesRef.current.outgoing = [];
       setControlledBlocks();
     }
   }, [isControlled]);
@@ -36685,7 +36685,7 @@ function useBlockSync({
     let blocks = getBlocks(clientId);
     let isPersistent = isLastBlockChangePersistent();
     let previousAreBlocksDifferent = false;
-    subscribed.current = true;
+    subscribedRef.current = true;
     const unsubscribe = registry.subscribe(() => {
       // Sometimes, when changing block lists, lingering subscriptions
       // might trigger before they are cleaned up. If the block for which
@@ -36710,8 +36710,8 @@ function useBlockSync({
       const newBlocks = getBlocks(clientId);
       const areBlocksDifferent = newBlocks !== blocks;
       blocks = newBlocks;
-      if (areBlocksDifferent && (pendingChanges.current.incoming || __unstableIsLastBlockChangeIgnored())) {
-        pendingChanges.current.incoming = null;
+      if (areBlocksDifferent && (pendingChangesRef.current.incoming || __unstableIsLastBlockChangeIgnored())) {
+        pendingChangesRef.current.incoming = null;
         isPersistent = newIsPersistent;
         return;
       }
@@ -36726,7 +36726,7 @@ function useBlockSync({
         // We need to be aware that it was caused by an outgoing change
         // so that we do not treat it as an incoming change later on,
         // which would cause a block reset.
-        pendingChanges.current.outgoing.push(blocks);
+        pendingChangesRef.current.outgoing.push(blocks);
 
         // Inform the controlling entity that changes have been made to
         // the block-editor store they should be aware about.
@@ -36742,7 +36742,7 @@ function useBlockSync({
       previousAreBlocksDifferent = areBlocksDifferent;
     }, store);
     return () => {
-      subscribed.current = false;
+      subscribedRef.current = false;
       unsubscribe();
     };
   }, [registry, clientId]);
@@ -44734,7 +44734,7 @@ function useInnerBlockTemplateSync(clientId, template, templateLock, templateIns
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
 
   // Maintain a reference to the previous value so we can do a deep equality check.
-  const existingTemplate = (0,external_wp_element_namespaceObject.useRef)(null);
+  const existingTemplateRef = (0,external_wp_element_namespaceObject.useRef)(null);
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     let isCancelled = false;
 
@@ -44751,11 +44751,11 @@ function useInnerBlockTemplateSync(clientId, template, templateLock, templateIns
       // or a locking "all" or "contentOnly" exists directly on the block.
       const currentInnerBlocks = getBlocks(clientId);
       const shouldApplyTemplate = currentInnerBlocks.length === 0 || templateLock === 'all' || templateLock === 'contentOnly';
-      const hasTemplateChanged = !es6_default()(template, existingTemplate.current);
+      const hasTemplateChanged = !es6_default()(template, existingTemplateRef.current);
       if (!shouldApplyTemplate || !hasTemplateChanged) {
         return;
       }
-      existingTemplate.current = template;
+      existingTemplateRef.current = template;
       const nextBlocks = (0,external_wp_blocks_namespaceObject.synchronizeBlocksWithTemplate)(currentInnerBlocks, template);
       if (!es6_default()(nextBlocks, currentInnerBlocks)) {
         __unstableMarkNextChangeAsNotPersistent();
@@ -46350,11 +46350,11 @@ function useTabNav() {
 
   // Reference that holds the a flag for enabling or disabling
   // capturing on the focus capture elements.
-  const noCapture = (0,external_wp_element_namespaceObject.useRef)();
+  const noCaptureRef = (0,external_wp_element_namespaceObject.useRef)();
   function onFocusCapture(event) {
     // Do not capture incoming focus if set by us in WritingFlow.
-    if (noCapture.current) {
-      noCapture.current = null;
+    if (noCaptureRef.current) {
+      noCaptureRef.current = null;
     } else if (hasMultiSelection()) {
       container.current.focus();
     } else if (getSelectedBlockClientId()) {
@@ -46445,7 +46445,7 @@ function useTabNav() {
       // Disable focus capturing on the focus capture element, so it
       // doesn't refocus this block and so it allows default behaviour
       // (moving focus to the next tabbable element).
-      noCapture.current = true;
+      noCaptureRef.current = true;
 
       // Focusing the focus capture element, which is located above and
       // below the editor, should not scroll the page all the way up or
@@ -48145,7 +48145,7 @@ function Iframe({
     scripts = ''
   } = resolvedAssets;
   const [iframeDocument, setIframeDocument] = (0,external_wp_element_namespaceObject.useState)();
-  const prevContainerWidth = (0,external_wp_element_namespaceObject.useRef)();
+  const prevContainerWidthRef = (0,external_wp_element_namespaceObject.useRef)();
   const [bodyClasses, setBodyClasses] = (0,external_wp_element_namespaceObject.useState)([]);
   const clearerRef = useBlockSelectionClearer();
   const [before, writingFlowRef, after] = useWritingFlow();
@@ -48229,7 +48229,7 @@ function Iframe({
   const isZoomedOut = scale !== 1;
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (!isZoomedOut) {
-      prevContainerWidth.current = containerWidth;
+      prevContainerWidthRef.current = containerWidth;
     }
   }, [containerWidth, isZoomedOut]);
   const disabledRef = (0,external_wp_compose_namespaceObject.useDisabled)({
@@ -48282,12 +48282,12 @@ function Iframe({
     }
     iframeDocument.documentElement.classList.add('is-zoomed-out');
     const maxWidth = 750;
-    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scale', scale === 'default' ? Math.min(containerWidth, maxWidth) / prevContainerWidth.current : scale);
+    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scale', scale === 'default' ? Math.min(containerWidth, maxWidth) / prevContainerWidthRef.current : scale);
     iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-frame-size', typeof frameSize === 'number' ? `${frameSize}px` : frameSize);
     iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-content-height', `${contentHeight}px`);
     iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-inner-height', `${iframeWindowInnerHeight}px`);
     iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-container-width', `${containerWidth}px`);
-    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-prev-container-width', `${prevContainerWidth.current}px`);
+    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-prev-container-width', `${prevContainerWidthRef.current}px`);
     return () => {
       iframeDocument.documentElement.classList.remove('is-zoomed-out');
       iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-scale');
@@ -48364,7 +48364,7 @@ function Iframe({
       className: dist_clsx('block-editor-iframe__scale-container', isZoomedOut && 'is-zoomed-out'),
       style: {
         '--wp-block-editor-iframe-zoom-out-container-width': isZoomedOut && `${containerWidth}px`,
-        '--wp-block-editor-iframe-zoom-out-prev-container-width': isZoomedOut && `${prevContainerWidth.current}px`
+        '--wp-block-editor-iframe-zoom-out-prev-container-width': isZoomedOut && `${prevContainerWidthRef.current}px`
       },
       children: iframe
     })]
@@ -49178,7 +49178,7 @@ function InserterListItem({
   isDraggable,
   ...props
 }) {
-  const isDragging = (0,external_wp_element_namespaceObject.useRef)(false);
+  const isDraggingRef = (0,external_wp_element_namespaceObject.useRef)(false);
   const itemIconStyle = item.icon ? {
     backgroundColor: item.icon.background,
     color: item.icon.foreground
@@ -49199,14 +49199,14 @@ function InserterListItem({
       }),
       draggable: draggable,
       onDragStart: event => {
-        isDragging.current = true;
+        isDraggingRef.current = true;
         if (onDragStart) {
           onHover(null);
           onDragStart(event);
         }
       },
       onDragEnd: event => {
-        isDragging.current = false;
+        isDraggingRef.current = false;
         if (onDragEnd) {
           onDragEnd(event);
         }
@@ -49231,7 +49231,7 @@ function InserterListItem({
           }
         },
         onMouseEnter: () => {
-          if (isDragging.current) {
+          if (isDraggingRef.current) {
             return;
           }
           onHover(item);
@@ -51656,18 +51656,18 @@ function useMediaResults(category, query = {}) {
   // In the future we could use AbortController to cancel previous
   // requests, but we don't for now as it involves adding support
   // for this to `core-data` package.
-  const lastRequest = (0,external_wp_element_namespaceObject.useRef)();
+  const lastRequestRef = (0,external_wp_element_namespaceObject.useRef)();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     (async () => {
       const key = JSON.stringify({
         category: category.name,
         ...query
       });
-      lastRequest.current = key;
+      lastRequestRef.current = key;
       setIsLoading(true);
       setMediaList([]); // Empty the previous results.
       const _media = await category.fetch?.(query);
-      if (key === lastRequest.current) {
+      if (key === lastRequestRef.current) {
         setMediaList(_media);
         setIsLoading(false);
       }
@@ -52199,17 +52199,17 @@ function useZoomOut(zoomOut = true) {
   const {
     __unstableGetEditorMode
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
-  const originalEditingMode = (0,external_wp_element_namespaceObject.useRef)(null);
+  const originalEditingModeRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const mode = __unstableGetEditorMode();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     // Only set this on mount so we know what to return to when we unmount.
-    if (!originalEditingMode.current) {
-      originalEditingMode.current = mode;
+    if (!originalEditingModeRef.current) {
+      originalEditingModeRef.current = mode;
     }
     return () => {
       // We need to use  __unstableGetEditorMode() here and not `mode`, as mode may not update on unmount
-      if (__unstableGetEditorMode() === 'zoom-out' && __unstableGetEditorMode() !== originalEditingMode.current) {
-        __unstableSetEditorMode(originalEditingMode.current);
+      if (__unstableGetEditorMode() === 'zoom-out' && __unstableGetEditorMode() !== originalEditingModeRef.current) {
+        __unstableSetEditorMode(originalEditingModeRef.current);
       }
     };
   }, []);
@@ -52218,8 +52218,8 @@ function useZoomOut(zoomOut = true) {
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (zoomOut && mode !== 'zoom-out') {
       __unstableSetEditorMode('zoom-out');
-    } else if (!zoomOut && __unstableGetEditorMode() === 'zoom-out' && originalEditingMode.current !== mode) {
-      __unstableSetEditorMode(originalEditingMode.current);
+    } else if (!zoomOut && __unstableGetEditorMode() === 'zoom-out' && originalEditingModeRef.current !== mode) {
+      __unstableSetEditorMode(originalEditingModeRef.current);
     }
   }, [__unstableGetEditorMode, __unstableSetEditorMode, zoomOut]); // Mode is deliberately excluded from the dependencies so that the effect does not run when mode changes.
 }
@@ -57306,64 +57306,64 @@ const VELOCITY_MULTIPLIER = PIXELS_PER_SECOND_PER_PERCENTAGE * (SCROLL_INTERVAL_
  *                      and `onDragEnd` events respectively.
  */
 function useScrollWhenDragging() {
-  const dragStartY = (0,external_wp_element_namespaceObject.useRef)(null);
-  const velocityY = (0,external_wp_element_namespaceObject.useRef)(null);
-  const scrollParentY = (0,external_wp_element_namespaceObject.useRef)(null);
-  const scrollEditorInterval = (0,external_wp_element_namespaceObject.useRef)(null);
+  const dragStartYRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const velocityYRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const scrollParentYRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const scrollEditorIntervalRef = (0,external_wp_element_namespaceObject.useRef)(null);
 
   // Clear interval when unmounting.
   (0,external_wp_element_namespaceObject.useEffect)(() => () => {
-    if (scrollEditorInterval.current) {
-      clearInterval(scrollEditorInterval.current);
-      scrollEditorInterval.current = null;
+    if (scrollEditorIntervalRef.current) {
+      clearInterval(scrollEditorIntervalRef.current);
+      scrollEditorIntervalRef.current = null;
     }
   }, []);
   const startScrolling = (0,external_wp_element_namespaceObject.useCallback)(event => {
-    dragStartY.current = event.clientY;
+    dragStartYRef.current = event.clientY;
 
     // Find nearest parent(s) to scroll.
-    scrollParentY.current = (0,external_wp_dom_namespaceObject.getScrollContainer)(event.target);
-    scrollEditorInterval.current = setInterval(() => {
-      if (scrollParentY.current && velocityY.current) {
-        const newTop = scrollParentY.current.scrollTop + velocityY.current;
+    scrollParentYRef.current = (0,external_wp_dom_namespaceObject.getScrollContainer)(event.target);
+    scrollEditorIntervalRef.current = setInterval(() => {
+      if (scrollParentYRef.current && velocityYRef.current) {
+        const newTop = scrollParentYRef.current.scrollTop + velocityYRef.current;
 
         // Setting `behavior: 'smooth'` as a scroll property seems to hurt performance.
         // Better to use a small scroll interval.
-        scrollParentY.current.scroll({
+        scrollParentYRef.current.scroll({
           top: newTop
         });
       }
     }, SCROLL_INTERVAL_MS);
   }, []);
   const scrollOnDragOver = (0,external_wp_element_namespaceObject.useCallback)(event => {
-    if (!scrollParentY.current) {
+    if (!scrollParentYRef.current) {
       return;
     }
-    const scrollParentHeight = scrollParentY.current.offsetHeight;
-    const offsetDragStartPosition = dragStartY.current - scrollParentY.current.offsetTop;
-    const offsetDragPosition = event.clientY - scrollParentY.current.offsetTop;
+    const scrollParentHeight = scrollParentYRef.current.offsetHeight;
+    const offsetDragStartPosition = dragStartYRef.current - scrollParentYRef.current.offsetTop;
+    const offsetDragPosition = event.clientY - scrollParentYRef.current.offsetTop;
     if (event.clientY > offsetDragStartPosition) {
       // User is dragging downwards.
       const moveableDistance = Math.max(scrollParentHeight - offsetDragStartPosition - SCROLL_INACTIVE_DISTANCE_PX, 0);
       const dragDistance = Math.max(offsetDragPosition - offsetDragStartPosition - SCROLL_INACTIVE_DISTANCE_PX, 0);
       const distancePercentage = moveableDistance === 0 || dragDistance === 0 ? 0 : dragDistance / moveableDistance;
-      velocityY.current = VELOCITY_MULTIPLIER * distancePercentage;
+      velocityYRef.current = VELOCITY_MULTIPLIER * distancePercentage;
     } else if (event.clientY < offsetDragStartPosition) {
       // User is dragging upwards.
       const moveableDistance = Math.max(offsetDragStartPosition - SCROLL_INACTIVE_DISTANCE_PX, 0);
       const dragDistance = Math.max(offsetDragStartPosition - offsetDragPosition - SCROLL_INACTIVE_DISTANCE_PX, 0);
       const distancePercentage = moveableDistance === 0 || dragDistance === 0 ? 0 : dragDistance / moveableDistance;
-      velocityY.current = -VELOCITY_MULTIPLIER * distancePercentage;
+      velocityYRef.current = -VELOCITY_MULTIPLIER * distancePercentage;
     } else {
-      velocityY.current = 0;
+      velocityYRef.current = 0;
     }
   }, []);
   const stopScrolling = () => {
-    dragStartY.current = null;
-    scrollParentY.current = null;
-    if (scrollEditorInterval.current) {
-      clearInterval(scrollEditorInterval.current);
-      scrollEditorInterval.current = null;
+    dragStartYRef.current = null;
+    scrollParentYRef.current = null;
+    if (scrollEditorIntervalRef.current) {
+      clearInterval(scrollEditorIntervalRef.current);
+      scrollEditorIntervalRef.current = null;
     }
   };
   return [startScrolling, scrollOnDragOver, stopScrolling];
@@ -57428,7 +57428,7 @@ const BlockDraggable = ({
       getBlockType: _getBlockType
     };
   }, [clientIds]);
-  const isDragging = (0,external_wp_element_namespaceObject.useRef)(false);
+  const isDraggingRef = (0,external_wp_element_namespaceObject.useRef)(false);
   const [startScrolling, scrollOnDragOver, stopScrolling] = useScrollWhenDragging();
   const {
     getAllowedBlocks,
@@ -57443,7 +57443,7 @@ const BlockDraggable = ({
   // Stop dragging blocks if the block draggable is unmounted.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     return () => {
-      if (isDragging.current) {
+      if (isDraggingRef.current) {
         stopDraggingBlocks();
       }
     };
@@ -57523,7 +57523,7 @@ const BlockDraggable = ({
       // frame to enable dragging.
       window.requestAnimationFrame(() => {
         startDraggingBlocks(clientIds);
-        isDragging.current = true;
+        isDraggingRef.current = true;
         startScrolling(event);
         if (onDragStart) {
           onDragStart();
@@ -57533,7 +57533,7 @@ const BlockDraggable = ({
     onDragOver: scrollOnDragOver,
     onDragEnd: () => {
       stopDraggingBlocks();
-      isDragging.current = false;
+      isDraggingRef.current = false;
       stopScrolling();
       if (onDragEnd) {
         onDragEnd();
@@ -60351,7 +60351,7 @@ function BlockLockToolbar({
     isLocked
   } = useBlockLock(clientId);
   const [isModalOpen, toggleModal] = (0,external_wp_element_namespaceObject.useReducer)(isActive => !isActive, false);
-  const hasLockButtonShown = (0,external_wp_element_namespaceObject.useRef)(false);
+  const hasLockButtonShownRef = (0,external_wp_element_namespaceObject.useRef)(false);
 
   // If the block lock button has been shown, we don't want to remove it
   // from the toolbar until the toolbar is rendered again without it.
@@ -60360,10 +60360,10 @@ function BlockLockToolbar({
   // whence it came, and to do that, we need to leave the button in the toolbar.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (isLocked) {
-      hasLockButtonShown.current = true;
+      hasLockButtonShownRef.current = true;
     }
   }, [isLocked]);
-  if (!isLocked && !hasLockButtonShown.current) {
+  if (!isLocked && !hasLockButtonShownRef.current) {
     return null;
   }
   let label = isLocked ? (0,external_wp_i18n_namespaceObject.__)('Unlock') : (0,external_wp_i18n_namespaceObject.__)('Lock');
@@ -61265,13 +61265,13 @@ function BlockToolbarPopover({
   const {
     stopTyping
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const isToolbarForced = (0,external_wp_element_namespaceObject.useRef)(false);
+  const isToolbarForcedRef = (0,external_wp_element_namespaceObject.useRef)(false);
   (0,external_wp_keyboardShortcuts_namespaceObject.useShortcut)('core/block-editor/focus-toolbar', () => {
-    isToolbarForced.current = true;
+    isToolbarForcedRef.current = true;
     stopTyping(true);
   });
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    isToolbarForced.current = false;
+    isToolbarForcedRef.current = false;
   });
   const popoverProps = useBlockToolbarPopoverProps({
     contentElement: __unstableContentRef?.current,
@@ -61289,7 +61289,7 @@ function BlockToolbarPopover({
     // If the toolbar is being shown because of being forced
     // it should focus the toolbar right after the mount.
     , {
-      focusOnMount: isToolbarForced.current,
+      focusOnMount: isToolbarForcedRef.current,
       __experimentalInitialIndex: initialToolbarItemIndexRef.current,
       __experimentalOnIndexChange: index => {
         initialToolbarItemIndexRef.current = index;
@@ -69901,7 +69901,7 @@ function useMarkPersistent({
   html,
   value
 }) {
-  const previousText = (0,external_wp_element_namespaceObject.useRef)();
+  const previousTextRef = (0,external_wp_element_namespaceObject.useRef)();
   const hasActiveFormats = !!value.activeFormats?.length;
   const {
     __unstableMarkLastChangeAsPersistent
@@ -69910,18 +69910,18 @@ function useMarkPersistent({
   // Must be set synchronously to make sure it applies to the last change.
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     // Ignore mount.
-    if (!previousText.current) {
-      previousText.current = value.text;
+    if (!previousTextRef.current) {
+      previousTextRef.current = value.text;
       return;
     }
 
     // Text input, so don't create an undo level for every character.
     // Create an undo level after 1 second of no input.
-    if (previousText.current !== value.text) {
+    if (previousTextRef.current !== value.text) {
       const timeout = window.setTimeout(() => {
         __unstableMarkLastChangeAsPersistent();
       }, 1000);
-      previousText.current = value.text;
+      previousTextRef.current = value.text;
       return () => {
         window.clearTimeout(timeout);
       };
