@@ -24852,7 +24852,7 @@ function PresetColors() {
   const {
     paletteColors
   } = useStylesPreviewColors();
-  return paletteColors.slice(0, 5).map(({
+  return paletteColors.slice(0, 4).map(({
     slug,
     color
   }, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
