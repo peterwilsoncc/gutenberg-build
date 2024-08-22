@@ -61785,7 +61785,8 @@ const trash = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 
 function ZoomOutToolbar({
   clientId,
-  rootClientId
+  rootClientId,
+  __unstableContentRef
 }) {
   const selected = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
@@ -61885,6 +61886,7 @@ function ZoomOutToolbar({
       label: (0,external_wp_i18n_namespaceObject.__)('Edit'),
       onClick: () => {
         __unstableSetEditorMode('edit');
+        __unstableContentRef.current?.focus();
       }
     }), canRemove && !isBlockTemplatePart && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       className: "zoom-out-toolbar-button",
@@ -61941,6 +61943,7 @@ function ZoomOutPopover({
     resize: false,
     ...props,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ZoomOutToolbar, {
+      __unstableContentRef: __unstableContentRef,
       clientId: clientId,
       rootClientId: rootClientId
     })
