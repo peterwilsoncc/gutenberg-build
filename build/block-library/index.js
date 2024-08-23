@@ -5095,7 +5095,7 @@ function ButtonEdit(props) {
         args: metadata?.bindings?.url?.args
       })
     };
-  }, [isSelected, metadata?.bindings?.url]);
+  }, [context, isSelected, metadata?.bindings?.url]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
@@ -26675,7 +26675,7 @@ function ImageEdit({
       lockUrlControlsMessage: blockBindingsSource?.label ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Label of the bindings source. */
       (0,external_wp_i18n_namespaceObject.__)('Connected to %s'), blockBindingsSource.label) : (0,external_wp_i18n_namespaceObject.__)('Connected to dynamic data')
     };
-  }, [isSingleSelected, metadata?.bindings?.url]);
+  }, [context, isSingleSelected, metadata?.bindings?.url]);
   const placeholder = content => {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
       className: dist_clsx('block-editor-media-placeholder', {
