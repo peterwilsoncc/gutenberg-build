@@ -7915,7 +7915,6 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   getEnabledClientIdsTree: () => (getEnabledClientIdsTree),
   getExpandedBlock: () => (getExpandedBlock),
   getInserterMediaCategories: () => (getInserterMediaCategories),
-  getInserterSearchInputRef: () => (getInserterSearchInputRef),
   getLastFocus: () => (getLastFocus),
   getLastInsertedBlocksClientIds: () => (getLastInsertedBlocksClientIds),
   getOpenedBlockSettingsMenu: () => (getOpenedBlockSettingsMenu),
@@ -10365,11 +10364,6 @@ function hoveredBlockClientId(state = false, action) {
   }
   return state;
 }
-function inserterSearchInputRef(state = {
-  current: null
-}) {
-  return state;
-}
 const combinedReducers = (0,external_wp_data_namespaceObject.combineReducers)({
   blocks,
   isDragging,
@@ -10402,8 +10396,7 @@ const combinedReducers = (0,external_wp_data_namespaceObject.combineReducers)({
   blockRemovalRules,
   openedBlockSettingsMenu,
   registeredInserterMediaCategories,
-  hoveredBlockClientId,
-  inserterSearchInputRef
+  hoveredBlockClientId
 });
 function withAutomaticChangeReset(reducer) {
   return (state, action) => {
@@ -11234,9 +11227,6 @@ function getTemporarilyEditingAsBlocks(state) {
  */
 function getTemporarilyEditingFocusModeToRevert(state) {
   return state.temporarilyEditingFocusModeRevert;
-}
-function getInserterSearchInputRef(state) {
-  return state.inserterSearchInputRef;
 }
 
 /**
@@ -52395,7 +52385,6 @@ function useZoomOut(zoomOut = true) {
 
 
 
-
 const NOOP = () => {};
 function InserterMenu({
   rootClientId,
@@ -52412,19 +52401,7 @@ function InserterMenu({
   __experimentalInitialTab,
   __experimentalInitialCategory
 }, ref) {
-  const {
-    isZoomOutMode,
-    inserterSearchInputRef
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      __unstableGetEditorMode,
-      getInserterSearchInputRef
-    } = unlock(select(store));
-    return {
-      isZoomOutMode: __unstableGetEditorMode() === 'zoom-out',
-      inserterSearchInputRef: getInserterSearchInputRef()
-    };
-  }, []);
+  const isZoomOutMode = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).__unstableGetEditorMode() === 'zoom-out', []);
   const [filterValue, setFilterValue, delayedFilterValue] = (0,external_wp_compose_namespaceObject.useDebouncedInput)(__experimentalFilterValue);
   const [hoveredItem, setHoveredItem] = (0,external_wp_element_namespaceObject.useState)(null);
   const [selectedPatternCategory, setSelectedPatternCategory] = (0,external_wp_element_namespaceObject.useState)(__experimentalInitialCategory);
@@ -52458,14 +52435,14 @@ function InserterMenu({
         blockTypesTabRef?.current.querySelector('button').focus();
       }
     });
-  }, [onInsertBlocks, onSelect, ref, shouldFocusBlock]);
+  }, [onInsertBlocks, onSelect, shouldFocusBlock]);
   const onInsertPattern = (0,external_wp_element_namespaceObject.useCallback)((blocks, patternName) => {
     onToggleInsertionPoint(false);
     onInsertBlocks(blocks, {
       patternName
     });
     onSelect();
-  }, [onInsertBlocks, onSelect, onToggleInsertionPoint]);
+  }, [onInsertBlocks, onSelect]);
   const onHover = (0,external_wp_element_namespaceObject.useCallback)(item => {
     onToggleInsertionPoint(item);
     setHoveredItem(item);
@@ -52495,8 +52472,7 @@ function InserterMenu({
         },
         value: filterValue,
         label: (0,external_wp_i18n_namespaceObject.__)('Search for blocks and patterns'),
-        placeholder: (0,external_wp_i18n_namespaceObject.__)('Search'),
-        ref: inserterSearchInputRef
+        placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
       }), !!delayedFilterValue && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(search_results, {
         filterValue: delayedFilterValue,
         onSelect: onSelect,
@@ -52510,7 +52486,7 @@ function InserterMenu({
         prioritizePatterns: selectedTab === 'patterns'
       })]
     });
-  }, [selectedTab, filterValue, inserterSearchInputRef, delayedFilterValue, onSelect, onHover, rootClientId, clientId, isAppender, __experimentalInsertionIndex, shouldFocusBlock, hoveredItem, setFilterValue]);
+  }, [selectedTab, hoveredItem, setHoveredItem, setFilterValue, filterValue, delayedFilterValue, onSelect, onHover, shouldFocusBlock, clientId, rootClientId, __experimentalInsertionIndex, isAppender]);
   const blocksTab = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -62014,8 +61990,7 @@ function ZoomOutModeInserters() {
     setInserterIsOpened,
     sectionRootClientId,
     selectedBlockClientId,
-    hoveredBlockClientId,
-    inserterSearchInputRef
+    hoveredBlockClientId
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getSettings,
@@ -62024,9 +61999,8 @@ function ZoomOutModeInserters() {
       getSelectionStart,
       getSelectedBlockClientId,
       getHoveredBlockClientId,
-      isBlockInsertionPointVisible,
-      getInserterSearchInputRef
-    } = unlock(select(store));
+      isBlockInsertionPointVisible
+    } = select(store);
     const {
       sectionRootClientId: root
     } = unlock(getSettings());
@@ -62038,8 +62012,7 @@ function ZoomOutModeInserters() {
       sectionRootClientId: root,
       setInserterIsOpened: getSettings().__experimentalSetIsInserterOpened,
       selectedBlockClientId: getSelectedBlockClientId(),
-      hoveredBlockClientId: getHoveredBlockClientId(),
-      inserterSearchInputRef: getInserterSearchInputRef()
+      hoveredBlockClientId: getHoveredBlockClientId()
     };
   }, []);
   const {
@@ -62088,7 +62061,6 @@ function ZoomOutModeInserters() {
           showInsertionPoint(sectionRootClientId, index, {
             operation: 'insert'
           });
-          inserterSearchInputRef?.current?.focus();
         }
       })]
     }, index);
@@ -73524,8 +73496,7 @@ function InserterLibrary({
   onPatternCategorySelection,
   onSelect = library_noop,
   shouldFocusBlock = false,
-  onClose,
-  __experimentalSearchInputRef
+  onClose
 }, ref) {
   const {
     destinationRootClientId
@@ -73552,8 +73523,7 @@ function InserterLibrary({
     __experimentalInitialCategory: __experimentalInitialCategory,
     shouldFocusBlock: shouldFocusBlock,
     ref: ref,
-    onClose: onClose,
-    __experimentalSearchInputRef: __experimentalSearchInputRef
+    onClose: onClose
   });
 }
 const PrivateInserterLibrary = (0,external_wp_element_namespaceObject.forwardRef)(InserterLibrary);
