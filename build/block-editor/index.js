@@ -61011,7 +61011,11 @@ function Shuffle({
     const _categories = attributes?.metadata?.categories || shuffle_EMPTY_ARRAY;
     const _patternName = attributes?.metadata?.patternName;
     const rootBlock = getBlockRootClientId(clientId);
-    const _patterns = __experimentalGetAllowedPatterns(rootBlock);
+
+    // Calling `__experimentalGetAllowedPatterns` is expensive.
+    // Checking if the block can be shuffled prevents unnecessary selector calls.
+    // See: https://github.com/WordPress/gutenberg/pull/64736.
+    const _patterns = _categories.length > 0 ? __experimentalGetAllowedPatterns(rootBlock) : shuffle_EMPTY_ARRAY;
     return {
       categories: _categories,
       patterns: _patterns,
@@ -61022,7 +61026,7 @@ function Shuffle({
     replaceBlocks
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const sameCategoryPatternsWithSingleWrapper = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (!categories || categories.length === 0 || !patterns || patterns.length === 0) {
+    if (categories.length === 0 || !patterns || patterns.length === 0) {
       return shuffle_EMPTY_ARRAY;
     }
     return patterns.filter(pattern => {
