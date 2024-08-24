@@ -13538,8 +13538,7 @@ function CoverInspectorControls({
   setOverlayColor,
   coverRef,
   currentSettings,
-  updateDimRatio,
-  onClearMedia
+  updateDimRatio
 }) {
   const {
     useFeaturedImage,
@@ -13630,14 +13629,6 @@ function CoverInspectorControls({
               (0,external_wp_i18n_namespaceObject.__)('https://www.w3.org/WAI/tutorials/images/decision-tree/'),
               children: (0,external_wp_i18n_namespaceObject.__)('Describe the purpose of the image.')
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("br", {}), (0,external_wp_i18n_namespaceObject.__)('Leave empty if decorative.')]
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelRow, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            variant: "secondary",
-            size: "small",
-            className: "block-library-cover__reset-button",
-            onClick: onClearMedia,
-            children: (0,external_wp_i18n_namespaceObject.__)('Clear Media')
           })
         })]
       })
@@ -13767,6 +13758,7 @@ function CoverInspectorControls({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -13783,7 +13775,8 @@ function CoverBlockControls({
   setAttributes,
   onSelectMedia,
   currentSettings,
-  toggleUseFeaturedImage
+  toggleUseFeaturedImage,
+  onClearMedia
 }) {
   const {
     contentPosition,
@@ -13856,7 +13849,12 @@ function CoverBlockControls({
         onSelect: onSelectMedia,
         onToggleFeaturedImage: toggleUseFeaturedImage,
         useFeaturedImage: useFeaturedImage,
-        name: !url ? (0,external_wp_i18n_namespaceObject.__)('Add Media') : (0,external_wp_i18n_namespaceObject.__)('Replace')
+        name: !url ? (0,external_wp_i18n_namespaceObject.__)('Add Media') : (0,external_wp_i18n_namespaceObject.__)('Replace'),
+        children: !!url && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+          className: "block-library-cover__reset-button",
+          onClick: onClearMedia,
+          children: (0,external_wp_i18n_namespaceObject.__)('Reset')
+        })
       })
     })]
   });
@@ -14905,7 +14903,8 @@ function CoverEdit({
     setAttributes: setAttributes,
     onSelectMedia: onSelectMedia,
     currentSettings: currentSettings,
-    toggleUseFeaturedImage: toggleUseFeaturedImage
+    toggleUseFeaturedImage: toggleUseFeaturedImage,
+    onClearMedia: onClearMedia
   });
   const inspectorControls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CoverInspectorControls, {
     attributes: attributes,
