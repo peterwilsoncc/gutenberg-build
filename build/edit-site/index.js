@@ -15374,7 +15374,7 @@ function NavigationButtonAsItem(props) {
   });
 }
 function NavigationBackButtonAsItem(props) {
-  return /*#__PURE__*/_jsx(NavigatorToParentButton, {
+  return /*#__PURE__*/_jsx(NavigatorBackButton, {
     as: GenericNavigationButton,
     ...props
   });
@@ -16291,14 +16291,7 @@ function ScreenHeader({
         paddingY: 3,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
           spacing: 2,
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorToParentButton, {
-            style:
-            // TODO: This style override is also used in ToolsPanelHeader.
-            // It should be supported out-of-the-box by Button.
-            {
-              minWidth: 24,
-              padding: 0
-            },
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorBackButton, {
             icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right : chevron_left,
             size: "small",
             label: (0,external_wp_i18n_namespaceObject.__)('Back'),
@@ -18577,7 +18570,7 @@ function InstalledFonts() {
             handleSetLibraryFontSelected: handleSetLibraryFontSelected
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
             justify: "flex-start",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorToParentButton, {
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorBackButton, {
               icon: chevron_left,
               size: "small",
               onClick: () => {
@@ -19118,7 +19111,7 @@ function FontCollection({
           path: "/fontFamily",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
             justify: "flex-start",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorToParentButton, {
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorBackButton, {
               icon: chevron_left,
               size: "small",
               onClick: () => {
