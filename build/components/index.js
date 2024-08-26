@@ -60865,6 +60865,7 @@ const navigatorScreen = props => /*#__PURE__*/emotion_react_browser_esm_css("ove
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -60881,9 +60882,7 @@ function addScreen({
   screens
 }, screen) {
   if (screens.some(s => s.path === screen.path)) {
-    // eslint-disable-next-line no-console
-    console.warn(`Navigator: a screen with path ${screen.path} already exists.
-The screen with id ${screen.id} will not be added.`);
+     false ? 0 : void 0;
     return screens;
   }
   return [...screens, screen];
@@ -60894,11 +60893,14 @@ function removeScreen({
   return screens.filter(s => s.id !== screen.id);
 }
 function goTo(state, path, options = {}) {
-  var _focusSelectorsCopy;
+  var _focusSelectorsCopy2;
   const {
-    currentLocation,
     focusSelectors
   } = state;
+  const currentLocation = {
+    ...state.currentLocation,
+    isInitial: false
+  };
   const {
     // Default assignments
     isBack = false,
@@ -60909,31 +60911,35 @@ function goTo(state, path, options = {}) {
     // Rest
     ...restOptions
   } = options;
-  if (currentLocation?.path === path) {
+  if (currentLocation.path === path) {
     return {
       currentLocation,
       focusSelectors
     };
   }
   let focusSelectorsCopy;
+  function getFocusSelectorsCopy() {
+    var _focusSelectorsCopy;
+    focusSelectorsCopy = (_focusSelectorsCopy = focusSelectorsCopy) !== null && _focusSelectorsCopy !== void 0 ? _focusSelectorsCopy : new Map(state.focusSelectors);
+    return focusSelectorsCopy;
+  }
 
   // Set a focus selector that will be used when navigating
   // back to the current location.
-  if (focusTargetSelector && currentLocation?.path) {
-    if (!focusSelectorsCopy) {
-      focusSelectorsCopy = new Map(state.focusSelectors);
-    }
-    focusSelectorsCopy.set(currentLocation.path, focusTargetSelector);
+  if (focusTargetSelector && currentLocation.path) {
+    getFocusSelectorsCopy().set(currentLocation.path, focusTargetSelector);
   }
 
   // Get the focus selector for the new location.
   let currentFocusSelector;
-  if (isBack) {
-    if (!focusSelectorsCopy) {
-      focusSelectorsCopy = new Map(state.focusSelectors);
+  if (focusSelectors.get(path)) {
+    if (isBack) {
+      // Use the found focus selector only when navigating back.
+      currentFocusSelector = focusSelectors.get(path);
     }
-    currentFocusSelector = focusSelectorsCopy.get(path);
-    focusSelectorsCopy.delete(path);
+    // Make a copy of the focusSelectors map to remove the focus selector
+    // only if necessary (ie. a focus selector was found).
+    getFocusSelectorsCopy().delete(path);
   }
   return {
     currentLocation: {
@@ -60944,16 +60950,19 @@ function goTo(state, path, options = {}) {
       focusTargetSelector: currentFocusSelector,
       skipFocus
     },
-    focusSelectors: (_focusSelectorsCopy = focusSelectorsCopy) !== null && _focusSelectorsCopy !== void 0 ? _focusSelectorsCopy : focusSelectors
+    focusSelectors: (_focusSelectorsCopy2 = focusSelectorsCopy) !== null && _focusSelectorsCopy2 !== void 0 ? _focusSelectorsCopy2 : focusSelectors
   };
 }
 function goToParent(state, options = {}) {
   const {
-    currentLocation,
     screens,
     focusSelectors
   } = state;
-  const currentPath = currentLocation?.path;
+  const currentLocation = {
+    ...state.currentLocation,
+    isInitial: false
+  };
+  const currentPath = currentLocation.path;
   if (currentPath === undefined) {
     return {
       currentLocation,
@@ -60988,21 +60997,17 @@ function routerReducer(state, action) {
       screens = removeScreen(state, action.screen);
       break;
     case 'goto':
-      const goToNewState = goTo(state, action.path, action.options);
-      currentLocation = goToNewState.currentLocation;
-      focusSelectors = goToNewState.focusSelectors;
+      ({
+        currentLocation,
+        focusSelectors
+      } = goTo(state, action.path, action.options));
       break;
     case 'gotoparent':
-      const goToParentNewState = goToParent(state, action.options);
-      currentLocation = goToParentNewState.currentLocation;
-      focusSelectors = goToParentNewState.focusSelectors;
+      ({
+        currentLocation,
+        focusSelectors
+      } = goToParent(state, action.options));
       break;
-  }
-  if (currentLocation?.path === state.initialPath) {
-    currentLocation = {
-      ...currentLocation,
-      isInitial: true
-    };
   }
 
   // Return early in case there is no change
@@ -61011,7 +61016,7 @@ function routerReducer(state, action) {
   }
 
   // Compute the matchedPath
-  const currentPath = currentLocation?.path;
+  const currentPath = currentLocation.path;
   matchedPath = currentPath !== undefined ? patternMatch(currentPath, screens) : undefined;
 
   // If the new match is the same as the previous match,
@@ -61037,7 +61042,8 @@ function UnconnectedNavigatorProvider(props, forwardedRef) {
   const [routerState, dispatch] = (0,external_wp_element_namespaceObject.useReducer)(routerReducer, initialPathProp, path => ({
     screens: [],
     currentLocation: {
-      path
+      path,
+      isInitial: true
     },
     matchedPath: undefined,
     focusSelectors: new Map(),
