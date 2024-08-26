@@ -4241,7 +4241,6 @@ const CompositeGroup = (0,external_wp_element_namespaceObject.forwardRef)(functi
     ref: ref
   });
 });
-CompositeGroup.displayName = 'Composite.Group';
 
 ;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/IGFP5YPG.js
 "use client";
@@ -4321,7 +4320,6 @@ const CompositeGroupLabel = (0,external_wp_element_namespaceObject.forwardRef)(f
     ref: ref
   });
 });
-CompositeGroupLabel.displayName = 'Composite.GroupLabel';
 
 ;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/OBZMLI6J.js
 "use client";
@@ -4451,7 +4449,6 @@ const CompositeHover = (0,external_wp_element_namespaceObject.forwardRef)(functi
     ref: ref
   });
 });
-CompositeHover.displayName = 'Composite.Hover';
 
 ;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/PLQDTVXM.js
 "use client";
@@ -4955,7 +4952,6 @@ const CompositeItem = (0,external_wp_element_namespaceObject.forwardRef)(functio
     ref: ref
   });
 });
-CompositeItem.displayName = 'Composite.Item';
 
 ;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/6BE7QOX5.js
 "use client";
@@ -5035,7 +5031,6 @@ const CompositeRow = (0,external_wp_element_namespaceObject.forwardRef)(function
     ref: ref
   });
 });
-CompositeRow.displayName = 'Composite.Row';
 
 ;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/DS36B3MQ.js
 "use client";
@@ -5166,7 +5161,6 @@ const CompositeTypeahead = (0,external_wp_element_namespaceObject.forwardRef)(fu
     ref: ref
   });
 });
-CompositeTypeahead.displayName = 'Composite.Typeahead';
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/composite/index.js
 /**
@@ -5254,7 +5248,9 @@ const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRe
    * </Composite>
    * ```
    */
-  Group: CompositeGroup,
+  Group: Object.assign(CompositeGroup, {
+    displayName: 'Composite.Group'
+  }),
   /**
    * Renders a label in a composite group. This component must be wrapped with
    * `Composite.Group` so the `aria-labelledby` prop is properly set on the
@@ -5274,7 +5270,9 @@ const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRe
    * </Composite>
    * ```
    */
-  GroupLabel: CompositeGroupLabel,
+  GroupLabel: Object.assign(CompositeGroupLabel, {
+    displayName: 'Composite.GroupLabel'
+  }),
   /**
    * Renders a composite item.
    *
@@ -5290,7 +5288,9 @@ const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRe
    * </Composite>
    * ```
    */
-  Item: CompositeItem,
+  Item: Object.assign(CompositeItem, {
+    displayName: 'Composite.Item'
+  }),
   /**
    * Renders a composite row. Wrapping `Composite.Item` elements within
    * `Composite.Row` will create a two-dimensional composite widget, such as a
@@ -5315,7 +5315,9 @@ const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRe
    * </Composite>
    * ```
    */
-  Row: CompositeRow,
+  Row: Object.assign(CompositeRow, {
+    displayName: 'Composite.Row'
+  }),
   /**
    * Renders an element in a composite widget that receives focus on mouse move
    * and loses focus to the composite base element on mouse leave. This should
@@ -5336,7 +5338,9 @@ const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRe
    * </Composite>
    * ```
    */
-  Hover: CompositeHover,
+  Hover: Object.assign(CompositeHover, {
+    displayName: 'Composite.Hover'
+  }),
   /**
    * Renders a component that adds typeahead functionality to composite
    * components. Hitting printable character keys will move focus to the next
@@ -5353,7 +5357,9 @@ const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRe
    * </Composite>
    * ```
    */
-  Typeahead: CompositeTypeahead,
+  Typeahead: Object.assign(CompositeTypeahead, {
+    displayName: 'Composite.Typeahead'
+  }),
   /**
    * The React context used by the composite components. It can be used by
    * to access the composite store, and to forward the context when composite
@@ -5368,7 +5374,9 @@ const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRe
    * const compositeContext = useContext( Composite.Context );
    * ```
    */
-  Context: CompositeContext
+  Context: Object.assign(CompositeContext, {
+    displayName: 'Composite.Context'
+  })
 });
 
 ;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/6E4KKOSB.js
@@ -70238,7 +70246,6 @@ const styles_DropdownMenuItemHelpText = /*#__PURE__*/emotion_styled_base_browser
  */
 
 const DropdownMenuContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
-DropdownMenuContext.displayName = 'DropdownMenuV2.Context';
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/item.js
 /**
@@ -70279,7 +70286,6 @@ const DropdownMenuItem = (0,external_wp_element_namespaceObject.forwardRef)(func
     })]
   });
 });
-DropdownMenuItem.displayName = 'DropdownMenuV2.Item';
 
 ;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/menu/menu-item-check.js
 "use client";
@@ -70371,7 +70377,6 @@ const DropdownMenuCheckboxItem = (0,external_wp_element_namespaceObject.forwardR
     })]
   });
 });
-DropdownMenuCheckboxItem.displayName = 'DropdownMenuV2.CheckboxItem';
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/radio-item.js
 /**
@@ -70438,7 +70443,6 @@ const DropdownMenuRadioItem = (0,external_wp_element_namespaceObject.forwardRef)
     })]
   });
 });
-DropdownMenuRadioItem.displayName = 'DropdownMenuV2.RadioItem';
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/group.js
 /**
@@ -70461,7 +70465,6 @@ const DropdownMenuGroup = (0,external_wp_element_namespaceObject.forwardRef)(fun
     store: dropdownMenuContext?.store
   });
 });
-DropdownMenuGroup.displayName = 'DropdownMenuV2.Group';
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/separator.js
 /**
@@ -70485,7 +70488,6 @@ const DropdownMenuSeparator = (0,external_wp_element_namespaceObject.forwardRef)
     variant: dropdownMenuContext?.variant
   });
 });
-DropdownMenuSeparator.displayName = 'DropdownMenuV2.Separator';
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/item-label.js
 /**
@@ -70506,7 +70508,6 @@ const DropdownMenuItemLabel = (0,external_wp_element_namespaceObject.forwardRef)
     ...props
   });
 });
-DropdownMenuItemLabel.displayName = 'DropdownMenuV2.ItemLabel';
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/item-help-text.js
 /**
@@ -70527,7 +70528,6 @@ const DropdownMenuItemHelpText = (0,external_wp_element_namespaceObject.forwardR
     ...props
   });
 });
-DropdownMenuItemHelpText.displayName = 'DropdownMenuV2.ItemHelpText';
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/index.js
 /**
@@ -70670,14 +70670,30 @@ const dropdown_menu_v2_UnconnectedDropdownMenu = (props, ref) => {
   });
 };
 const DropdownMenuV2 = Object.assign(contextConnect(dropdown_menu_v2_UnconnectedDropdownMenu, 'DropdownMenu'), {
-  Context: DropdownMenuContext,
-  Item: DropdownMenuItem,
-  RadioItem: DropdownMenuRadioItem,
-  CheckboxItem: DropdownMenuCheckboxItem,
-  Group: DropdownMenuGroup,
-  Separator: DropdownMenuSeparator,
-  ItemLabel: DropdownMenuItemLabel,
-  ItemHelpText: DropdownMenuItemHelpText
+  Context: Object.assign(DropdownMenuContext, {
+    displayName: 'DropdownMenuV2.Context'
+  }),
+  Item: Object.assign(DropdownMenuItem, {
+    displayName: 'DropdownMenuV2.Item'
+  }),
+  RadioItem: Object.assign(DropdownMenuRadioItem, {
+    displayName: 'DropdownMenuV2.RadioItem'
+  }),
+  CheckboxItem: Object.assign(DropdownMenuCheckboxItem, {
+    displayName: 'DropdownMenuV2.CheckboxItem'
+  }),
+  Group: Object.assign(DropdownMenuGroup, {
+    displayName: 'DropdownMenuV2.Group'
+  }),
+  Separator: Object.assign(DropdownMenuSeparator, {
+    displayName: 'DropdownMenuV2.Separator'
+  }),
+  ItemLabel: Object.assign(DropdownMenuItemLabel, {
+    displayName: 'DropdownMenuV2.ItemLabel'
+  }),
+  ItemHelpText: Object.assign(DropdownMenuItemHelpText, {
+    displayName: 'DropdownMenuV2.ItemHelpText'
+  })
 });
 /* harmony default export */ const dropdown_menu_v2 = ((/* unused pure expression or super */ null && (DropdownMenuV2)));
 
