@@ -18924,17 +18924,17 @@ function receiveEmbedPreview(url, preview) {
 /**
  * Action triggered to delete an entity record.
  *
- * @param {string}   kind                         Kind of the deleted entity.
- * @param {string}   name                         Name of the deleted entity.
- * @param {string}   recordId                     Record ID of the deleted entity.
- * @param {?Object}  query                        Special query parameters for the
- *                                                DELETE API call.
- * @param {Object}   [options]                    Delete options.
- * @param {Function} [options.__unstableFetch]    Internal use only. Function to
- *                                                call instead of `apiFetch()`.
- *                                                Must return a promise.
- * @param {boolean}  [options.throwOnError=false] If false, this action suppresses all
- *                                                the exceptions. Defaults to false.
+ * @param {string}        kind                         Kind of the deleted entity.
+ * @param {string}        name                         Name of the deleted entity.
+ * @param {number|string} recordId                     Record ID of the deleted entity.
+ * @param {?Object}       query                        Special query parameters for the
+ *                                                     DELETE API call.
+ * @param {Object}        [options]                    Delete options.
+ * @param {Function}      [options.__unstableFetch]    Internal use only. Function to
+ *                                                     call instead of `apiFetch()`.
+ *                                                     Must return a promise.
+ * @param {boolean}       [options.throwOnError=false] If false, this action suppresses all
+ *                                                     the exceptions. Defaults to false.
  */
 const deleteEntityRecord = (kind, name, recordId, query, {
   __unstableFetch = (external_wp_apiFetch_default()),
@@ -19350,11 +19350,11 @@ const saveEditedEntityRecord = (kind, name, recordId, options) => async ({
 /**
  * Action triggered to save only specified properties for the entity.
  *
- * @param {string} kind        Kind of the entity.
- * @param {string} name        Name of the entity.
- * @param {Object} recordId    ID of the record.
- * @param {Array}  itemsToSave List of entity properties or property paths to save.
- * @param {Object} options     Saving options.
+ * @param {string}        kind        Kind of the entity.
+ * @param {string}        name        Name of the entity.
+ * @param {number|string} recordId    ID of the record.
+ * @param {Array}         itemsToSave List of entity properties or property paths to save.
+ * @param {Object}        options     Saving options.
  */
 const __experimentalSaveSpecifiedEntityEdits = (kind, name, recordId, itemsToSave, options) => async ({
   select,
@@ -22985,9 +22985,9 @@ const resolvers_canUser = (requestedAction, resource, id) => async ({
  * Checks whether the current user can perform the given action on the given
  * REST resource.
  *
- * @param {string} kind     Entity kind.
- * @param {string} name     Entity name.
- * @param {string} recordId Record's id.
+ * @param {string}        kind     Entity kind.
+ * @param {string}        name     Entity name.
+ * @param {number|string} recordId Record's id.
  */
 const resolvers_canUserEditEntityRecord = (kind, name, recordId) => async ({
   dispatch
@@ -24759,10 +24759,10 @@ function useEntityBlockEditor(kind, name, {
  * specified property of the nearest provided
  * entity of the specified type.
  *
- * @param {string} kind  The entity kind.
- * @param {string} name  The entity name.
- * @param {string} prop  The property name.
- * @param {string} [_id] An entity ID to use instead of the context-provided one.
+ * @param {string}        kind  The entity kind.
+ * @param {string}        name  The entity name.
+ * @param {string}        prop  The property name.
+ * @param {number|string} [_id] An entity ID to use instead of the context-provided one.
  *
  * @return {[*, Function, *]} An array where the first item is the
  *                            property value, the second is the
