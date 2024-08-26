@@ -21145,13 +21145,11 @@ function isRawAttribute(entity, attribute) {
 
 ;// CONCATENATED MODULE: ./packages/core-data/build-module/utils/user-permissions.js
 const ALLOWED_RESOURCE_ACTIONS = ['create', 'read', 'update', 'delete'];
-function getUserPermissionsFromResponse(response) {
+function getUserPermissionsFromAllowHeader(allowedMethods) {
   const permissions = {};
-
-  // Optional chaining operator is used here because the API requests don't
-  // return the expected result in the React native version. Instead, API requests
-  // only return the result, without including response properties like the headers.
-  const allowedMethods = response.headers?.get('allow') || '';
+  if (!allowedMethods) {
+    return permissions;
+  }
   const methods = {
     create: 'POST',
     read: 'GET',
@@ -22753,7 +22751,7 @@ const resolvers_getEntityRecord = (kind, name, key = '', query) => async ({
         parse: false
       });
       const record = await response.json();
-      const permissions = getUserPermissionsFromResponse(response);
+      const permissions = getUserPermissionsFromAllowHeader(response.headers?.get('allow'));
       registry.batch(() => {
         dispatch.receiveEntityRecords(kind, name, record, query);
         for (const action of ALLOWED_RESOURCE_ACTIONS) {
@@ -22853,13 +22851,34 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
     registry.batch(() => {
       dispatch.receiveEntityRecords(kind, name, records, query, false, undefined, meta);
 
-      // When requesting all fields, the list of results can be used to
-      // resolve the `getEntityRecord` selector in addition to `getEntityRecords`.
+      // When requesting all fields, the list of results can be used to resolve
+      // the `getEntityRecord` and `canUser` selectors in addition to `getEntityRecords`.
       // See https://github.com/WordPress/gutenberg/pull/26575
+      // See https://github.com/WordPress/gutenberg/pull/64504
       if (!query?._fields && !query.context) {
         const key = entityConfig.key || DEFAULT_ENTITY_KEY;
         const resolutionsArgs = records.filter(record => record?.[key]).map(record => [kind, name, record[key]]);
+        const targetHints = records.filter(record => record?.[key]).map(record => ({
+          id: record[key],
+          permissions: getUserPermissionsFromAllowHeader(record?._links?.self?.[0].targetHints.allow)
+        }));
+        const canUserResolutionsArgs = [];
+        for (const targetHint of targetHints) {
+          for (const action of ALLOWED_RESOURCE_ACTIONS) {
+            canUserResolutionsArgs.push([action, {
+              kind,
+              name,
+              id: targetHint.id
+            }]);
+            dispatch.receiveUserPermission(getUserPermissionCacheKey(action, {
+              kind,
+              name,
+              id: targetHint.id
+            }), targetHint.permissions[action]);
+          }
+        }
         dispatch.finishResolutions('getEntityRecord', resolutionsArgs);
+        dispatch.finishResolutions('canUser', canUserResolutionsArgs);
       }
       dispatch.__unstableReleaseStoreLock(lock);
     });
@@ -22967,7 +22986,11 @@ const resolvers_canUser = (requestedAction, resource, id) => async ({
     // 5xx). The previously determined isAllowed value will remain in the store.
     return;
   }
-  const permissions = getUserPermissionsFromResponse(response);
+
+  // Optional chaining operator is used here because the API requests don't
+  // return the expected result in the React native version. Instead, API requests
+  // only return the result, without including response properties like the headers.
+  const permissions = getUserPermissionsFromAllowHeader(response.headers?.get('allow'));
   registry.batch(() => {
     for (const action of ALLOWED_RESOURCE_ACTIONS) {
       const key = getUserPermissionCacheKey(action, resource, id);
