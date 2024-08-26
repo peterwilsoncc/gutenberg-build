@@ -14212,6 +14212,7 @@ const modifyContentLockBlock = clientId => ({
   select,
   dispatch
 }) => {
+  dispatch.selectBlock(clientId);
   dispatch.__unstableMarkNextChangeAsNotPersistent();
   dispatch.updateBlockAttributes(clientId, {
     templateLock: undefined
@@ -54115,804 +54116,6 @@ function ChildLayoutControlsPure({
   }
 });
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/convert-to-group-buttons/use-convert-to-group-button-props.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-/**
- * Contains the properties `ConvertToGroupButton` component needs.
- *
- * @typedef {Object} ConvertToGroupButtonProps
- * @property {string[]}  clientIds         An array of the selected client ids.
- * @property {boolean}   isGroupable       Indicates if the selected blocks can be grouped.
- * @property {boolean}   isUngroupable     Indicates if the selected blocks can be ungrouped.
- * @property {WPBlock[]} blocksSelection   An array of the selected blocks.
- * @property {string}    groupingBlockName The name of block used for handling grouping interactions.
- */
-
-/**
- * Returns the properties `ConvertToGroupButton` component needs to work properly.
- * It is used in `BlockSettingsMenuControls` to know if `ConvertToGroupButton`
- * should be rendered, to avoid ending up with an empty MenuGroup.
- *
- * @param {?string[]} selectedClientIds An optional array of clientIds to group. The selected blocks
- *                                      from the block editor store are used if this is not provided.
- *
- * @return {ConvertToGroupButtonProps} Returns the properties needed by `ConvertToGroupButton`.
- */
-function useConvertToGroupButtonProps(selectedClientIds) {
-  return (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getBlocksByClientId,
-      getSelectedBlockClientIds,
-      isUngroupable,
-      isGroupable
-    } = select(store);
-    const {
-      getGroupingBlockName,
-      getBlockType
-    } = select(external_wp_blocks_namespaceObject.store);
-    const clientIds = selectedClientIds?.length ? selectedClientIds : getSelectedBlockClientIds();
-    const blocksSelection = getBlocksByClientId(clientIds);
-    const [firstSelectedBlock] = blocksSelection;
-    const _isUngroupable = clientIds.length === 1 && isUngroupable(clientIds[0]);
-    return {
-      clientIds,
-      isGroupable: isGroupable(clientIds),
-      isUngroupable: _isUngroupable,
-      blocksSelection,
-      groupingBlockName: getGroupingBlockName(),
-      onUngroup: _isUngroupable && getBlockType(firstSelectedBlock.name)?.transforms?.ungroup
-    };
-  }, [selectedClientIds]);
-}
-
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/convert-to-group-buttons/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-function ConvertToGroupButton({
-  clientIds,
-  isGroupable,
-  isUngroupable,
-  onUngroup,
-  blocksSelection,
-  groupingBlockName,
-  onClose = () => {}
-}) {
-  const {
-    getSelectedBlockClientIds
-  } = (0,external_wp_data_namespaceObject.useSelect)(store);
-  const {
-    replaceBlocks
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const onConvertToGroup = () => {
-    // Activate the `transform` on the Grouping Block which does the conversion.
-    const newBlocks = (0,external_wp_blocks_namespaceObject.switchToBlockType)(blocksSelection, groupingBlockName);
-    if (newBlocks) {
-      replaceBlocks(clientIds, newBlocks);
-    }
-  };
-  const onConvertFromGroup = () => {
-    let innerBlocks = blocksSelection[0].innerBlocks;
-    if (!innerBlocks.length) {
-      return;
-    }
-    if (onUngroup) {
-      innerBlocks = onUngroup(blocksSelection[0].attributes, blocksSelection[0].innerBlocks);
-    }
-    replaceBlocks(clientIds, innerBlocks);
-  };
-  if (!isGroupable && !isUngroupable) {
-    return null;
-  }
-  const selectedBlockClientIds = getSelectedBlockClientIds();
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [isGroupable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-      shortcut: selectedBlockClientIds.length > 1 ? external_wp_keycodes_namespaceObject.displayShortcut.primary('g') : undefined,
-      onClick: () => {
-        onConvertToGroup();
-        onClose();
-      },
-      children: (0,external_wp_i18n_namespaceObject._x)('Group', 'verb')
-    }), isUngroupable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-      onClick: () => {
-        onConvertFromGroup();
-        onClose();
-      },
-      children: (0,external_wp_i18n_namespaceObject._x)('Ungroup', 'Ungrouping blocks from within a grouping block back into individual blocks within the Editor')
-    })]
-  });
-}
-
-
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-lock/use-block-lock.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-/**
- * Return details about the block lock status.
- *
- * @param {string} clientId The block client Id.
- *
- * @return {Object} Block lock status
- */
-function useBlockLock(clientId) {
-  return (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      canEditBlock,
-      canMoveBlock,
-      canRemoveBlock,
-      canLockBlockType,
-      getBlockName,
-      getTemplateLock
-    } = select(store);
-    const canEdit = canEditBlock(clientId);
-    const canMove = canMoveBlock(clientId);
-    const canRemove = canRemoveBlock(clientId);
-    return {
-      canEdit,
-      canMove,
-      canRemove,
-      canLock: canLockBlockType(getBlockName(clientId)),
-      isContentLocked: getTemplateLock(clientId) === 'contentOnly',
-      isLocked: !canEdit || !canMove || !canRemove
-    };
-  }, [clientId]);
-}
-
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/unlock.js
-/**
- * WordPress dependencies
- */
-
-
-const unlock_unlock = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M17 10h-1.2V7c0-2.1-1.7-3.8-3.8-3.8-2.1 0-3.8 1.7-3.8 3.8h1.5c0-1.2 1-2.2 2.2-2.2s2.2 1 2.2 2.2v3H7c-.6 0-1 .4-1 1v8c0 .6.4 1 1 1h10c.6 0 1-.4 1-1v-8c0-.6-.4-1-1-1z"
-  })
-});
-/* harmony default export */ const library_unlock = (unlock_unlock);
-
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/lock-outline.js
-/**
- * WordPress dependencies
- */
-
-
-const lockOutline = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M17 10h-1.2V7c0-2.1-1.7-3.8-3.8-3.8-2.1 0-3.8 1.7-3.8 3.8v3H7c-.6 0-1 .4-1 1v8c0 .6.4 1 1 1h10c.6 0 1-.4 1-1v-8c0-.6-.4-1-1-1zM9.8 7c0-1.2 1-2.2 2.2-2.2 1.2 0 2.2 1 2.2 2.2v3H9.8V7zm6.7 11.5h-9v-7h9v7z"
-  })
-});
-/* harmony default export */ const lock_outline = (lockOutline);
-
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/lock.js
-/**
- * WordPress dependencies
- */
-
-
-const lock_lock = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M17 10h-1.2V7c0-2.1-1.7-3.8-3.8-3.8-2.1 0-3.8 1.7-3.8 3.8v3H7c-.6 0-1 .4-1 1v8c0 .6.4 1 1 1h10c.6 0 1-.4 1-1v-8c0-.6-.4-1-1-1zm-2.8 0H9.8V7c0-1.2 1-2.2 2.2-2.2s2.2 1 2.2 2.2v3z"
-  })
-});
-/* harmony default export */ const library_lock = (lock_lock);
-
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-lock/modal.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-// Entity based blocks which allow edit locking
-
-
-const ALLOWS_EDIT_LOCKING = ['core/block', 'core/navigation'];
-function getTemplateLockValue(lock) {
-  // Prevents all operations.
-  if (lock.remove && lock.move) {
-    return 'all';
-  }
-
-  // Prevents inserting or removing blocks, but allows moving existing blocks.
-  if (lock.remove && !lock.move) {
-    return 'insert';
-  }
-  return false;
-}
-function BlockLockModal({
-  clientId,
-  onClose
-}) {
-  const [lock, setLock] = (0,external_wp_element_namespaceObject.useState)({
-    move: false,
-    remove: false
-  });
-  const {
-    canEdit,
-    canMove,
-    canRemove
-  } = useBlockLock(clientId);
-  const {
-    allowsEditLocking,
-    templateLock,
-    hasTemplateLock
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getBlockName,
-      getBlockAttributes
-    } = select(store);
-    const blockName = getBlockName(clientId);
-    const blockType = (0,external_wp_blocks_namespaceObject.getBlockType)(blockName);
-    return {
-      allowsEditLocking: ALLOWS_EDIT_LOCKING.includes(blockName),
-      templateLock: getBlockAttributes(clientId)?.templateLock,
-      hasTemplateLock: !!blockType?.attributes?.templateLock
-    };
-  }, [clientId]);
-  const [applyTemplateLock, setApplyTemplateLock] = (0,external_wp_element_namespaceObject.useState)(!!templateLock);
-  const {
-    updateBlockAttributes
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const blockInformation = useBlockDisplayInformation(clientId);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    setLock({
-      move: !canMove,
-      remove: !canRemove,
-      ...(allowsEditLocking ? {
-        edit: !canEdit
-      } : {})
-    });
-  }, [canEdit, canMove, canRemove, allowsEditLocking]);
-  const isAllChecked = Object.values(lock).every(Boolean);
-  const isMixed = Object.values(lock).some(Boolean) && !isAllChecked;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
-    title: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Name of the block. */
-    (0,external_wp_i18n_namespaceObject.__)('Lock %s'), blockInformation.title),
-    overlayClassName: "block-editor-block-lock-modal",
-    onRequestClose: onClose,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("form", {
-      onSubmit: event => {
-        event.preventDefault();
-        updateBlockAttributes([clientId], {
-          lock,
-          templateLock: applyTemplateLock ? getTemplateLockValue(lock) : undefined
-        });
-        onClose();
-      },
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
-        className: "block-editor-block-lock-modal__options",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("legend", {
-          children: (0,external_wp_i18n_namespaceObject.__)('Choose specific attributes to restrict or lock all available options.')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
-          role: "list",
-          className: "block-editor-block-lock-modal__checklist",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-              __nextHasNoMarginBottom: true,
-              className: "block-editor-block-lock-modal__options-all",
-              label: (0,external_wp_i18n_namespaceObject.__)('Lock all'),
-              checked: isAllChecked,
-              indeterminate: isMixed,
-              onChange: newValue => setLock({
-                move: newValue,
-                remove: newValue,
-                ...(allowsEditLocking ? {
-                  edit: newValue
-                } : {})
-              })
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("ul", {
-              role: "list",
-              className: "block-editor-block-lock-modal__checklist",
-              children: [allowsEditLocking && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
-                className: "block-editor-block-lock-modal__checklist-item",
-                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-                  __nextHasNoMarginBottom: true,
-                  label: (0,external_wp_i18n_namespaceObject.__)('Restrict editing'),
-                  checked: !!lock.edit,
-                  onChange: edit => setLock(prevLock => ({
-                    ...prevLock,
-                    edit
-                  }))
-                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-                  className: "block-editor-block-lock-modal__lock-icon",
-                  icon: lock.edit ? library_lock : library_unlock
-                })]
-              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
-                className: "block-editor-block-lock-modal__checklist-item",
-                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-                  __nextHasNoMarginBottom: true,
-                  label: (0,external_wp_i18n_namespaceObject.__)('Disable movement'),
-                  checked: lock.move,
-                  onChange: move => setLock(prevLock => ({
-                    ...prevLock,
-                    move
-                  }))
-                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-                  className: "block-editor-block-lock-modal__lock-icon",
-                  icon: lock.move ? library_lock : library_unlock
-                })]
-              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
-                className: "block-editor-block-lock-modal__checklist-item",
-                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-                  __nextHasNoMarginBottom: true,
-                  label: (0,external_wp_i18n_namespaceObject.__)('Prevent removal'),
-                  checked: lock.remove,
-                  onChange: remove => setLock(prevLock => ({
-                    ...prevLock,
-                    remove
-                  }))
-                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-                  className: "block-editor-block-lock-modal__lock-icon",
-                  icon: lock.remove ? library_lock : library_unlock
-                })]
-              })]
-            })]
-          })
-        }), hasTemplateLock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
-          className: "block-editor-block-lock-modal__template-lock",
-          label: (0,external_wp_i18n_namespaceObject.__)('Apply to all blocks inside'),
-          checked: applyTemplateLock,
-          disabled: lock.move && !lock.remove,
-          onChange: () => setApplyTemplateLock(!applyTemplateLock)
-        })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
-        className: "block-editor-block-lock-modal__actions",
-        justify: "flex-end",
-        expanded: false,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            variant: "tertiary",
-            onClick: onClose,
-            __next40pxDefaultSize: true,
-            children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            variant: "primary",
-            type: "submit",
-            __next40pxDefaultSize: true,
-            children: (0,external_wp_i18n_namespaceObject.__)('Apply')
-          })
-        })]
-      })]
-    })
-  });
-}
-
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-lock/menu-item.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-function BlockLockMenuItem({
-  clientId
-}) {
-  const {
-    canLock,
-    isLocked
-  } = useBlockLock(clientId);
-  const [isModalOpen, toggleModal] = (0,external_wp_element_namespaceObject.useReducer)(isActive => !isActive, false);
-  if (!canLock) {
-    return null;
-  }
-  const label = isLocked ? (0,external_wp_i18n_namespaceObject.__)('Unlock') : (0,external_wp_i18n_namespaceObject.__)('Lock');
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-      icon: isLocked ? library_unlock : lock_outline,
-      onClick: toggleModal,
-      "aria-expanded": isModalOpen,
-      "aria-haspopup": "dialog",
-      children: label
-    }), isModalOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockLockModal, {
-      clientId: clientId,
-      onClose: toggleModal
-    })]
-  });
-}
-
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-settings-menu/block-mode-toggle.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-const block_mode_toggle_noop = () => {};
-function BlockModeToggle({
-  clientId,
-  onToggle = block_mode_toggle_noop
-}) {
-  const {
-    blockType,
-    mode,
-    isCodeEditingEnabled
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getBlock,
-      getBlockMode,
-      getSettings
-    } = select(store);
-    const block = getBlock(clientId);
-    return {
-      mode: getBlockMode(clientId),
-      blockType: block ? (0,external_wp_blocks_namespaceObject.getBlockType)(block.name) : null,
-      isCodeEditingEnabled: getSettings().codeEditingEnabled
-    };
-  }, [clientId]);
-  const {
-    toggleBlockMode
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  if (!blockType || !(0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockType, 'html', true) || !isCodeEditingEnabled) {
-    return null;
-  }
-  const label = mode === 'visual' ? (0,external_wp_i18n_namespaceObject.__)('Edit as HTML') : (0,external_wp_i18n_namespaceObject.__)('Edit visually');
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-    onClick: () => {
-      toggleBlockMode(clientId);
-      onToggle();
-    },
-    children: label
-  });
-}
-
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-rename/use-block-rename.js
-/**
- * WordPress dependencies
- */
-
-function useBlockRename(name) {
-  return {
-    canRename: (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, 'renaming', true)
-  };
-}
-
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-rename/is-empty-string.js
-function isEmptyString(testString) {
-  return testString?.trim()?.length === 0;
-}
-
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-rename/modal.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-function BlockRenameModal({
-  blockName,
-  originalBlockName,
-  onClose,
-  onSave,
-  // Pattern Overrides is a WordPress-only feature but it also uses the Block Binding API.
-  // Ideally this should not be inside the block editor package, but we keep it here for simplicity.
-  hasOverridesWarning
-}) {
-  const [editedBlockName, setEditedBlockName] = (0,external_wp_element_namespaceObject.useState)(blockName);
-  const nameHasChanged = editedBlockName !== blockName;
-  const nameIsOriginal = editedBlockName === originalBlockName;
-  const nameIsEmpty = isEmptyString(editedBlockName);
-  const isNameValid = nameHasChanged || nameIsOriginal;
-  const autoSelectInputText = event => event.target.select();
-  const handleSubmit = () => {
-    const message = nameIsOriginal || nameIsEmpty ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: new name/label for the block */
-    (0,external_wp_i18n_namespaceObject.__)('Block name reset to: "%s".'), editedBlockName) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: new name/label for the block */
-    (0,external_wp_i18n_namespaceObject.__)('Block name changed to: "%s".'), editedBlockName);
-
-    // Must be assertive to immediately announce change.
-    (0,external_wp_a11y_namespaceObject.speak)(message, 'assertive');
-    onSave(editedBlockName);
-
-    // Immediate close avoids ability to hit save multiple times.
-    onClose();
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
-    title: (0,external_wp_i18n_namespaceObject.__)('Rename'),
-    onRequestClose: onClose,
-    overlayClassName: "block-editor-block-rename-modal",
-    focusOnMount: "firstContentElement",
-    size: "small",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
-      onSubmit: e => {
-        e.preventDefault();
-        if (!isNameValid) {
-          return;
-        }
-        handleSubmit();
-      },
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-        spacing: "3",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-          __nextHasNoMarginBottom: true,
-          __next40pxDefaultSize: true,
-          value: editedBlockName,
-          label: (0,external_wp_i18n_namespaceObject.__)('Name'),
-          help: hasOverridesWarning ? (0,external_wp_i18n_namespaceObject.__)('This block allows overrides. Changing the name can cause problems with content entered into instances of this pattern.') : undefined,
-          placeholder: originalBlockName,
-          onChange: setEditedBlockName,
-          onFocus: autoSelectInputText
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-          justify: "right",
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            __next40pxDefaultSize: true,
-            variant: "tertiary",
-            onClick: onClose,
-            children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            __next40pxDefaultSize: true,
-            "aria-disabled": !isNameValid,
-            variant: "primary",
-            type: "submit",
-            children: (0,external_wp_i18n_namespaceObject.__)('Save')
-          })]
-        })]
-      })
-    })
-  });
-}
-
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-rename/rename-control.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-
-function BlockRenameControl({
-  clientId
-}) {
-  const [renamingBlock, setRenamingBlock] = (0,external_wp_element_namespaceObject.useState)(false);
-  const {
-    metadata
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getBlockAttributes
-    } = select(store);
-    const _metadata = getBlockAttributes(clientId)?.metadata;
-    return {
-      metadata: _metadata
-    };
-  }, [clientId]);
-  const {
-    updateBlockAttributes
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const customName = metadata?.name;
-  const hasPatternOverrides = !!customName && !!metadata?.bindings && Object.values(metadata.bindings).some(binding => binding.source === 'core/pattern-overrides');
-  function onChange(newName) {
-    updateBlockAttributes([clientId], {
-      metadata: {
-        ...metadata,
-        name: newName
-      }
-    });
-  }
-  const blockInformation = useBlockDisplayInformation(clientId);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-      onClick: () => {
-        setRenamingBlock(true);
-      },
-      "aria-expanded": renamingBlock,
-      "aria-haspopup": "dialog",
-      children: (0,external_wp_i18n_namespaceObject.__)('Rename')
-    }), renamingBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockRenameModal, {
-      blockName: customName || '',
-      originalBlockName: blockInformation?.title,
-      hasOverridesWarning: hasPatternOverrides,
-      onClose: () => setRenamingBlock(false),
-      onSave: newName => {
-        // If the new value is the block's original name (e.g. `Group`)
-        // or it is an empty string then assume the intent is to reset
-        // the value. Therefore reset the metadata.
-        if (newName === blockInformation?.title || isEmptyString(newName)) {
-          newName = undefined;
-        }
-        onChange(newName);
-      }
-    })]
-  });
-}
-
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-settings-menu-controls/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-
-const {
-  Fill,
-  Slot: block_settings_menu_controls_Slot
-} = (0,external_wp_components_namespaceObject.createSlotFill)('BlockSettingsMenuControls');
-const BlockSettingsMenuControlsSlot = ({
-  fillProps,
-  clientIds = null
-}) => {
-  const {
-    selectedBlocks,
-    selectedClientIds,
-    isContentOnly
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getBlockNamesByClientId,
-      getSelectedBlockClientIds,
-      getBlockEditingMode
-    } = select(store);
-    const ids = clientIds !== null ? clientIds : getSelectedBlockClientIds();
-    return {
-      selectedBlocks: getBlockNamesByClientId(ids),
-      selectedClientIds: ids,
-      isContentOnly: getBlockEditingMode(ids[0]) === 'contentOnly'
-    };
-  }, [clientIds]);
-  const {
-    canLock
-  } = useBlockLock(selectedClientIds[0]);
-  const {
-    canRename
-  } = useBlockRename(selectedBlocks[0]);
-  const showLockButton = selectedClientIds.length === 1 && canLock && !isContentOnly;
-  const showRenameButton = selectedClientIds.length === 1 && canRename && !isContentOnly;
-
-  // Check if current selection of blocks is Groupable or Ungroupable
-  // and pass this props down to ConvertToGroupButton.
-  const convertToGroupButtonProps = useConvertToGroupButtonProps(selectedClientIds);
-  const {
-    isGroupable,
-    isUngroupable
-  } = convertToGroupButtonProps;
-  const showConvertToGroupButton = isGroupable || isUngroupable;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_settings_menu_controls_Slot, {
-    fillProps: {
-      ...fillProps,
-      selectedBlocks,
-      selectedClientIds
-    },
-    children: fills => {
-      if (!fills?.length > 0 && !showConvertToGroupButton && !showLockButton) {
-        return null;
-      }
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuGroup, {
-        children: [showConvertToGroupButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ConvertToGroupButton, {
-          ...convertToGroupButtonProps,
-          onClose: fillProps?.onClose
-        }), showLockButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockLockMenuItem, {
-          clientId: selectedClientIds[0]
-        }), showRenameButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockRenameControl, {
-          clientId: selectedClientIds[0]
-        }), fills, fillProps?.canMove && !fillProps?.onlyBlock && !isContentOnly && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-          onClick: (0,external_wp_compose_namespaceObject.pipe)(fillProps?.onClose, fillProps?.onMoveTo),
-          children: (0,external_wp_i18n_namespaceObject.__)('Move to')
-        }), fillProps?.count === 1 && !isContentOnly && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockModeToggle, {
-          clientId: fillProps?.firstBlockClientId,
-          onToggle: fillProps?.onClose
-        })]
-      });
-    }
-  });
-};
-
-/**
- * @see https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/block-settings-menu-controls/README.md
- *
- * @param {Object} props Fill props.
- * @return {Element} Element.
- */
-function BlockSettingsMenuControls({
-  ...props
-}) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalStyleProvider, {
-    document: document,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Fill, {
-      ...props
-    })
-  });
-}
-BlockSettingsMenuControls.Slot = BlockSettingsMenuControlsSlot;
-/* harmony default export */ const block_settings_menu_controls = (BlockSettingsMenuControls);
-
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/hooks/content-lock-ui.js
 /**
  * WordPress dependencies
@@ -54935,11 +54138,8 @@ BlockSettingsMenuControls.Slot = BlockSettingsMenuControlsSlot;
 // Besides the components on this file and the file referenced above the implementation
 // also includes artifacts on the store (actions, reducers, and selector).
 
-
-
 function ContentLockControlsPure({
-  clientId,
-  isSelected
+  clientId
 }) {
   const {
     templateLock,
@@ -54958,8 +54158,7 @@ function ContentLockControlsPure({
     };
   }, [clientId]);
   const {
-    stopEditingAsBlocks,
-    modifyContentLockBlock
+    stopEditingAsBlocks
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const isContentLocked = !isLockedByParent && templateLock === 'contentOnly';
   const stopEditingAsBlockCallback = (0,external_wp_element_namespaceObject.useCallback)(() => {
@@ -54969,28 +54168,12 @@ function ContentLockControlsPure({
     return null;
   }
   const showStopEditingAsBlocks = isEditingAsBlocks && !isContentLocked;
-  const showStartEditingAsBlocks = !isEditingAsBlocks && isContentLocked && isSelected;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [showStopEditingAsBlocks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_controls, {
-        group: "other",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-          onClick: stopEditingAsBlockCallback,
-          children: (0,external_wp_i18n_namespaceObject.__)('Done')
-        })
-      })
-    }), showStartEditingAsBlocks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_settings_menu_controls, {
-      children: ({
-        selectedClientIds,
-        onClose
-      }) => selectedClientIds.length === 1 && selectedClientIds[0] === clientId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-        onClick: () => {
-          modifyContentLockBlock(clientId);
-          onClose();
-        },
-        children: (0,external_wp_i18n_namespaceObject.__)('Modify')
-      })
-    })]
+  return showStopEditingAsBlocks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_controls, {
+    group: "other",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+      onClick: stopEditingAsBlockCallback,
+      children: (0,external_wp_i18n_namespaceObject.__)('Done')
+    })
   });
 }
 /* harmony default export */ const content_lock_ui = ({
@@ -60199,6 +59382,866 @@ const {
 } = (0,external_wp_components_namespaceObject.createSlotFill)('__unstableBlockSettingsMenuFirstItem');
 __unstableBlockSettingsMenuFirstItem.Slot = block_settings_menu_first_item_Slot;
 /* harmony default export */ const block_settings_menu_first_item = (__unstableBlockSettingsMenuFirstItem);
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/convert-to-group-buttons/use-convert-to-group-button-props.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Contains the properties `ConvertToGroupButton` component needs.
+ *
+ * @typedef {Object} ConvertToGroupButtonProps
+ * @property {string[]}  clientIds         An array of the selected client ids.
+ * @property {boolean}   isGroupable       Indicates if the selected blocks can be grouped.
+ * @property {boolean}   isUngroupable     Indicates if the selected blocks can be ungrouped.
+ * @property {WPBlock[]} blocksSelection   An array of the selected blocks.
+ * @property {string}    groupingBlockName The name of block used for handling grouping interactions.
+ */
+
+/**
+ * Returns the properties `ConvertToGroupButton` component needs to work properly.
+ * It is used in `BlockSettingsMenuControls` to know if `ConvertToGroupButton`
+ * should be rendered, to avoid ending up with an empty MenuGroup.
+ *
+ * @param {?string[]} selectedClientIds An optional array of clientIds to group. The selected blocks
+ *                                      from the block editor store are used if this is not provided.
+ *
+ * @return {ConvertToGroupButtonProps} Returns the properties needed by `ConvertToGroupButton`.
+ */
+function useConvertToGroupButtonProps(selectedClientIds) {
+  return (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlocksByClientId,
+      getSelectedBlockClientIds,
+      isUngroupable,
+      isGroupable
+    } = select(store);
+    const {
+      getGroupingBlockName,
+      getBlockType
+    } = select(external_wp_blocks_namespaceObject.store);
+    const clientIds = selectedClientIds?.length ? selectedClientIds : getSelectedBlockClientIds();
+    const blocksSelection = getBlocksByClientId(clientIds);
+    const [firstSelectedBlock] = blocksSelection;
+    const _isUngroupable = clientIds.length === 1 && isUngroupable(clientIds[0]);
+    return {
+      clientIds,
+      isGroupable: isGroupable(clientIds),
+      isUngroupable: _isUngroupable,
+      blocksSelection,
+      groupingBlockName: getGroupingBlockName(),
+      onUngroup: _isUngroupable && getBlockType(firstSelectedBlock.name)?.transforms?.ungroup
+    };
+  }, [selectedClientIds]);
+}
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/convert-to-group-buttons/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+function ConvertToGroupButton({
+  clientIds,
+  isGroupable,
+  isUngroupable,
+  onUngroup,
+  blocksSelection,
+  groupingBlockName,
+  onClose = () => {}
+}) {
+  const {
+    getSelectedBlockClientIds
+  } = (0,external_wp_data_namespaceObject.useSelect)(store);
+  const {
+    replaceBlocks
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const onConvertToGroup = () => {
+    // Activate the `transform` on the Grouping Block which does the conversion.
+    const newBlocks = (0,external_wp_blocks_namespaceObject.switchToBlockType)(blocksSelection, groupingBlockName);
+    if (newBlocks) {
+      replaceBlocks(clientIds, newBlocks);
+    }
+  };
+  const onConvertFromGroup = () => {
+    let innerBlocks = blocksSelection[0].innerBlocks;
+    if (!innerBlocks.length) {
+      return;
+    }
+    if (onUngroup) {
+      innerBlocks = onUngroup(blocksSelection[0].attributes, blocksSelection[0].innerBlocks);
+    }
+    replaceBlocks(clientIds, innerBlocks);
+  };
+  if (!isGroupable && !isUngroupable) {
+    return null;
+  }
+  const selectedBlockClientIds = getSelectedBlockClientIds();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [isGroupable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+      shortcut: selectedBlockClientIds.length > 1 ? external_wp_keycodes_namespaceObject.displayShortcut.primary('g') : undefined,
+      onClick: () => {
+        onConvertToGroup();
+        onClose();
+      },
+      children: (0,external_wp_i18n_namespaceObject._x)('Group', 'verb')
+    }), isUngroupable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+      onClick: () => {
+        onConvertFromGroup();
+        onClose();
+      },
+      children: (0,external_wp_i18n_namespaceObject._x)('Ungroup', 'Ungrouping blocks from within a grouping block back into individual blocks within the Editor')
+    })]
+  });
+}
+
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-lock/use-block-lock.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Return details about the block lock status.
+ *
+ * @param {string} clientId The block client Id.
+ *
+ * @return {Object} Block lock status
+ */
+function useBlockLock(clientId) {
+  return (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      canEditBlock,
+      canMoveBlock,
+      canRemoveBlock,
+      canLockBlockType,
+      getBlockName,
+      getTemplateLock
+    } = select(store);
+    const canEdit = canEditBlock(clientId);
+    const canMove = canMoveBlock(clientId);
+    const canRemove = canRemoveBlock(clientId);
+    return {
+      canEdit,
+      canMove,
+      canRemove,
+      canLock: canLockBlockType(getBlockName(clientId)),
+      isContentLocked: getTemplateLock(clientId) === 'contentOnly',
+      isLocked: !canEdit || !canMove || !canRemove
+    };
+  }, [clientId]);
+}
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/unlock.js
+/**
+ * WordPress dependencies
+ */
+
+
+const unlock_unlock = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M17 10h-1.2V7c0-2.1-1.7-3.8-3.8-3.8-2.1 0-3.8 1.7-3.8 3.8h1.5c0-1.2 1-2.2 2.2-2.2s2.2 1 2.2 2.2v3H7c-.6 0-1 .4-1 1v8c0 .6.4 1 1 1h10c.6 0 1-.4 1-1v-8c0-.6-.4-1-1-1z"
+  })
+});
+/* harmony default export */ const library_unlock = (unlock_unlock);
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/lock-outline.js
+/**
+ * WordPress dependencies
+ */
+
+
+const lockOutline = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M17 10h-1.2V7c0-2.1-1.7-3.8-3.8-3.8-2.1 0-3.8 1.7-3.8 3.8v3H7c-.6 0-1 .4-1 1v8c0 .6.4 1 1 1h10c.6 0 1-.4 1-1v-8c0-.6-.4-1-1-1zM9.8 7c0-1.2 1-2.2 2.2-2.2 1.2 0 2.2 1 2.2 2.2v3H9.8V7zm6.7 11.5h-9v-7h9v7z"
+  })
+});
+/* harmony default export */ const lock_outline = (lockOutline);
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/lock.js
+/**
+ * WordPress dependencies
+ */
+
+
+const lock_lock = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M17 10h-1.2V7c0-2.1-1.7-3.8-3.8-3.8-2.1 0-3.8 1.7-3.8 3.8v3H7c-.6 0-1 .4-1 1v8c0 .6.4 1 1 1h10c.6 0 1-.4 1-1v-8c0-.6-.4-1-1-1zm-2.8 0H9.8V7c0-1.2 1-2.2 2.2-2.2s2.2 1 2.2 2.2v3z"
+  })
+});
+/* harmony default export */ const library_lock = (lock_lock);
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-lock/modal.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+// Entity based blocks which allow edit locking
+
+
+const ALLOWS_EDIT_LOCKING = ['core/block', 'core/navigation'];
+function getTemplateLockValue(lock) {
+  // Prevents all operations.
+  if (lock.remove && lock.move) {
+    return 'all';
+  }
+
+  // Prevents inserting or removing blocks, but allows moving existing blocks.
+  if (lock.remove && !lock.move) {
+    return 'insert';
+  }
+  return false;
+}
+function BlockLockModal({
+  clientId,
+  onClose
+}) {
+  const [lock, setLock] = (0,external_wp_element_namespaceObject.useState)({
+    move: false,
+    remove: false
+  });
+  const {
+    canEdit,
+    canMove,
+    canRemove
+  } = useBlockLock(clientId);
+  const {
+    allowsEditLocking,
+    templateLock,
+    hasTemplateLock
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockName,
+      getBlockAttributes
+    } = select(store);
+    const blockName = getBlockName(clientId);
+    const blockType = (0,external_wp_blocks_namespaceObject.getBlockType)(blockName);
+    return {
+      allowsEditLocking: ALLOWS_EDIT_LOCKING.includes(blockName),
+      templateLock: getBlockAttributes(clientId)?.templateLock,
+      hasTemplateLock: !!blockType?.attributes?.templateLock
+    };
+  }, [clientId]);
+  const [applyTemplateLock, setApplyTemplateLock] = (0,external_wp_element_namespaceObject.useState)(!!templateLock);
+  const {
+    updateBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const blockInformation = useBlockDisplayInformation(clientId);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    setLock({
+      move: !canMove,
+      remove: !canRemove,
+      ...(allowsEditLocking ? {
+        edit: !canEdit
+      } : {})
+    });
+  }, [canEdit, canMove, canRemove, allowsEditLocking]);
+  const isAllChecked = Object.values(lock).every(Boolean);
+  const isMixed = Object.values(lock).some(Boolean) && !isAllChecked;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
+    title: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Name of the block. */
+    (0,external_wp_i18n_namespaceObject.__)('Lock %s'), blockInformation.title),
+    overlayClassName: "block-editor-block-lock-modal",
+    onRequestClose: onClose,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("form", {
+      onSubmit: event => {
+        event.preventDefault();
+        updateBlockAttributes([clientId], {
+          lock,
+          templateLock: applyTemplateLock ? getTemplateLockValue(lock) : undefined
+        });
+        onClose();
+      },
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
+        className: "block-editor-block-lock-modal__options",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("legend", {
+          children: (0,external_wp_i18n_namespaceObject.__)('Choose specific attributes to restrict or lock all available options.')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
+          role: "list",
+          className: "block-editor-block-lock-modal__checklist",
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+              __nextHasNoMarginBottom: true,
+              className: "block-editor-block-lock-modal__options-all",
+              label: (0,external_wp_i18n_namespaceObject.__)('Lock all'),
+              checked: isAllChecked,
+              indeterminate: isMixed,
+              onChange: newValue => setLock({
+                move: newValue,
+                remove: newValue,
+                ...(allowsEditLocking ? {
+                  edit: newValue
+                } : {})
+              })
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("ul", {
+              role: "list",
+              className: "block-editor-block-lock-modal__checklist",
+              children: [allowsEditLocking && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
+                className: "block-editor-block-lock-modal__checklist-item",
+                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+                  __nextHasNoMarginBottom: true,
+                  label: (0,external_wp_i18n_namespaceObject.__)('Restrict editing'),
+                  checked: !!lock.edit,
+                  onChange: edit => setLock(prevLock => ({
+                    ...prevLock,
+                    edit
+                  }))
+                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+                  className: "block-editor-block-lock-modal__lock-icon",
+                  icon: lock.edit ? library_lock : library_unlock
+                })]
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
+                className: "block-editor-block-lock-modal__checklist-item",
+                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+                  __nextHasNoMarginBottom: true,
+                  label: (0,external_wp_i18n_namespaceObject.__)('Disable movement'),
+                  checked: lock.move,
+                  onChange: move => setLock(prevLock => ({
+                    ...prevLock,
+                    move
+                  }))
+                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+                  className: "block-editor-block-lock-modal__lock-icon",
+                  icon: lock.move ? library_lock : library_unlock
+                })]
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
+                className: "block-editor-block-lock-modal__checklist-item",
+                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+                  __nextHasNoMarginBottom: true,
+                  label: (0,external_wp_i18n_namespaceObject.__)('Prevent removal'),
+                  checked: lock.remove,
+                  onChange: remove => setLock(prevLock => ({
+                    ...prevLock,
+                    remove
+                  }))
+                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+                  className: "block-editor-block-lock-modal__lock-icon",
+                  icon: lock.remove ? library_lock : library_unlock
+                })]
+              })]
+            })]
+          })
+        }), hasTemplateLock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          __nextHasNoMarginBottom: true,
+          className: "block-editor-block-lock-modal__template-lock",
+          label: (0,external_wp_i18n_namespaceObject.__)('Apply to all blocks inside'),
+          checked: applyTemplateLock,
+          disabled: lock.move && !lock.remove,
+          onChange: () => setApplyTemplateLock(!applyTemplateLock)
+        })]
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
+        className: "block-editor-block-lock-modal__actions",
+        justify: "flex-end",
+        expanded: false,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            variant: "tertiary",
+            onClick: onClose,
+            __next40pxDefaultSize: true,
+            children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            variant: "primary",
+            type: "submit",
+            __next40pxDefaultSize: true,
+            children: (0,external_wp_i18n_namespaceObject.__)('Apply')
+          })
+        })]
+      })]
+    })
+  });
+}
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-lock/menu-item.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+function BlockLockMenuItem({
+  clientId
+}) {
+  const {
+    canLock,
+    isLocked
+  } = useBlockLock(clientId);
+  const [isModalOpen, toggleModal] = (0,external_wp_element_namespaceObject.useReducer)(isActive => !isActive, false);
+  if (!canLock) {
+    return null;
+  }
+  const label = isLocked ? (0,external_wp_i18n_namespaceObject.__)('Unlock') : (0,external_wp_i18n_namespaceObject.__)('Lock');
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+      icon: isLocked ? library_unlock : lock_outline,
+      onClick: toggleModal,
+      "aria-expanded": isModalOpen,
+      "aria-haspopup": "dialog",
+      children: label
+    }), isModalOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockLockModal, {
+      clientId: clientId,
+      onClose: toggleModal
+    })]
+  });
+}
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-settings-menu/block-mode-toggle.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const block_mode_toggle_noop = () => {};
+function BlockModeToggle({
+  clientId,
+  onToggle = block_mode_toggle_noop
+}) {
+  const {
+    blockType,
+    mode,
+    isCodeEditingEnabled
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlock,
+      getBlockMode,
+      getSettings
+    } = select(store);
+    const block = getBlock(clientId);
+    return {
+      mode: getBlockMode(clientId),
+      blockType: block ? (0,external_wp_blocks_namespaceObject.getBlockType)(block.name) : null,
+      isCodeEditingEnabled: getSettings().codeEditingEnabled
+    };
+  }, [clientId]);
+  const {
+    toggleBlockMode
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  if (!blockType || !(0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockType, 'html', true) || !isCodeEditingEnabled) {
+    return null;
+  }
+  const label = mode === 'visual' ? (0,external_wp_i18n_namespaceObject.__)('Edit as HTML') : (0,external_wp_i18n_namespaceObject.__)('Edit visually');
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+    onClick: () => {
+      toggleBlockMode(clientId);
+      onToggle();
+    },
+    children: label
+  });
+}
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/content-lock/modify-content-lock-menu-item.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+// The implementation of content locking is mainly in this file, although the mechanism
+// to stop temporarily editing as blocks when an outside block is selected is on component StopEditingAsBlocksOnOutsideSelect
+// at block-editor/src/components/block-list/index.js.
+// Besides the components on this file and the file referenced above the implementation
+// also includes artifacts on the store (actions, reducers, and selector).
+
+function ModifyContentLockMenuItem({
+  clientId,
+  onClose
+}) {
+  const {
+    templateLock,
+    isLockedByParent,
+    isEditingAsBlocks
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getContentLockingParent,
+      getTemplateLock,
+      getTemporarilyEditingAsBlocks
+    } = unlock(select(store));
+    return {
+      templateLock: getTemplateLock(clientId),
+      isLockedByParent: !!getContentLockingParent(clientId),
+      isEditingAsBlocks: getTemporarilyEditingAsBlocks() === clientId
+    };
+  }, [clientId]);
+  const blockEditorActions = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const isContentLocked = !isLockedByParent && templateLock === 'contentOnly';
+  if (!isContentLocked && !isEditingAsBlocks) {
+    return null;
+  }
+  const {
+    modifyContentLockBlock
+  } = unlock(blockEditorActions);
+  const showStartEditingAsBlocks = !isEditingAsBlocks && isContentLocked;
+  return showStartEditingAsBlocks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+    onClick: () => {
+      modifyContentLockBlock(clientId);
+      onClose();
+    },
+    children: (0,external_wp_i18n_namespaceObject._x)('Modify', 'Unlock content locked blocks')
+  });
+}
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-rename/use-block-rename.js
+/**
+ * WordPress dependencies
+ */
+
+function useBlockRename(name) {
+  return {
+    canRename: (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, 'renaming', true)
+  };
+}
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-rename/is-empty-string.js
+function isEmptyString(testString) {
+  return testString?.trim()?.length === 0;
+}
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-rename/modal.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function BlockRenameModal({
+  blockName,
+  originalBlockName,
+  onClose,
+  onSave,
+  // Pattern Overrides is a WordPress-only feature but it also uses the Block Binding API.
+  // Ideally this should not be inside the block editor package, but we keep it here for simplicity.
+  hasOverridesWarning
+}) {
+  const [editedBlockName, setEditedBlockName] = (0,external_wp_element_namespaceObject.useState)(blockName);
+  const nameHasChanged = editedBlockName !== blockName;
+  const nameIsOriginal = editedBlockName === originalBlockName;
+  const nameIsEmpty = isEmptyString(editedBlockName);
+  const isNameValid = nameHasChanged || nameIsOriginal;
+  const autoSelectInputText = event => event.target.select();
+  const handleSubmit = () => {
+    const message = nameIsOriginal || nameIsEmpty ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: new name/label for the block */
+    (0,external_wp_i18n_namespaceObject.__)('Block name reset to: "%s".'), editedBlockName) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: new name/label for the block */
+    (0,external_wp_i18n_namespaceObject.__)('Block name changed to: "%s".'), editedBlockName);
+
+    // Must be assertive to immediately announce change.
+    (0,external_wp_a11y_namespaceObject.speak)(message, 'assertive');
+    onSave(editedBlockName);
+
+    // Immediate close avoids ability to hit save multiple times.
+    onClose();
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
+    title: (0,external_wp_i18n_namespaceObject.__)('Rename'),
+    onRequestClose: onClose,
+    overlayClassName: "block-editor-block-rename-modal",
+    focusOnMount: "firstContentElement",
+    size: "small",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
+      onSubmit: e => {
+        e.preventDefault();
+        if (!isNameValid) {
+          return;
+        }
+        handleSubmit();
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        spacing: "3",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+          __nextHasNoMarginBottom: true,
+          __next40pxDefaultSize: true,
+          value: editedBlockName,
+          label: (0,external_wp_i18n_namespaceObject.__)('Name'),
+          help: hasOverridesWarning ? (0,external_wp_i18n_namespaceObject.__)('This block allows overrides. Changing the name can cause problems with content entered into instances of this pattern.') : undefined,
+          placeholder: originalBlockName,
+          onChange: setEditedBlockName,
+          onFocus: autoSelectInputText
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+          justify: "right",
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
+            variant: "tertiary",
+            onClick: onClose,
+            children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
+            "aria-disabled": !isNameValid,
+            variant: "primary",
+            type: "submit",
+            children: (0,external_wp_i18n_namespaceObject.__)('Save')
+          })]
+        })]
+      })
+    })
+  });
+}
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-rename/rename-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+function BlockRenameControl({
+  clientId
+}) {
+  const [renamingBlock, setRenamingBlock] = (0,external_wp_element_namespaceObject.useState)(false);
+  const {
+    metadata
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockAttributes
+    } = select(store);
+    const _metadata = getBlockAttributes(clientId)?.metadata;
+    return {
+      metadata: _metadata
+    };
+  }, [clientId]);
+  const {
+    updateBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const customName = metadata?.name;
+  const hasPatternOverrides = !!customName && !!metadata?.bindings && Object.values(metadata.bindings).some(binding => binding.source === 'core/pattern-overrides');
+  function onChange(newName) {
+    updateBlockAttributes([clientId], {
+      metadata: {
+        ...metadata,
+        name: newName
+      }
+    });
+  }
+  const blockInformation = useBlockDisplayInformation(clientId);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+      onClick: () => {
+        setRenamingBlock(true);
+      },
+      "aria-expanded": renamingBlock,
+      "aria-haspopup": "dialog",
+      children: (0,external_wp_i18n_namespaceObject.__)('Rename')
+    }), renamingBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockRenameModal, {
+      blockName: customName || '',
+      originalBlockName: blockInformation?.title,
+      hasOverridesWarning: hasPatternOverrides,
+      onClose: () => setRenamingBlock(false),
+      onSave: newName => {
+        // If the new value is the block's original name (e.g. `Group`)
+        // or it is an empty string then assume the intent is to reset
+        // the value. Therefore reset the metadata.
+        if (newName === blockInformation?.title || isEmptyString(newName)) {
+          newName = undefined;
+        }
+        onChange(newName);
+      }
+    })]
+  });
+}
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-settings-menu-controls/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+
+const {
+  Fill,
+  Slot: block_settings_menu_controls_Slot
+} = (0,external_wp_components_namespaceObject.createSlotFill)('BlockSettingsMenuControls');
+const BlockSettingsMenuControlsSlot = ({
+  fillProps,
+  clientIds = null
+}) => {
+  const {
+    selectedBlocks,
+    selectedClientIds,
+    isContentOnly
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockNamesByClientId,
+      getSelectedBlockClientIds,
+      getBlockEditingMode
+    } = select(store);
+    const ids = clientIds !== null ? clientIds : getSelectedBlockClientIds();
+    return {
+      selectedBlocks: getBlockNamesByClientId(ids),
+      selectedClientIds: ids,
+      isContentOnly: getBlockEditingMode(ids[0]) === 'contentOnly'
+    };
+  }, [clientIds]);
+  const {
+    canLock
+  } = useBlockLock(selectedClientIds[0]);
+  const {
+    canRename
+  } = useBlockRename(selectedBlocks[0]);
+  const showLockButton = selectedClientIds.length === 1 && canLock && !isContentOnly;
+  const showRenameButton = selectedClientIds.length === 1 && canRename && !isContentOnly;
+
+  // Check if current selection of blocks is Groupable or Ungroupable
+  // and pass this props down to ConvertToGroupButton.
+  const convertToGroupButtonProps = useConvertToGroupButtonProps(selectedClientIds);
+  const {
+    isGroupable,
+    isUngroupable
+  } = convertToGroupButtonProps;
+  const showConvertToGroupButton = isGroupable || isUngroupable;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_settings_menu_controls_Slot, {
+    fillProps: {
+      ...fillProps,
+      selectedBlocks,
+      selectedClientIds
+    },
+    children: fills => {
+      if (!fills?.length > 0 && !showConvertToGroupButton && !showLockButton) {
+        return null;
+      }
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuGroup, {
+        children: [showConvertToGroupButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ConvertToGroupButton, {
+          ...convertToGroupButtonProps,
+          onClose: fillProps?.onClose
+        }), showLockButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockLockMenuItem, {
+          clientId: selectedClientIds[0]
+        }), showRenameButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockRenameControl, {
+          clientId: selectedClientIds[0]
+        }), fills, fillProps?.canMove && !fillProps?.onlyBlock && !isContentOnly && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+          onClick: (0,external_wp_compose_namespaceObject.pipe)(fillProps?.onClose, fillProps?.onMoveTo),
+          children: (0,external_wp_i18n_namespaceObject.__)('Move to')
+        }), selectedClientIds.length === 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ModifyContentLockMenuItem, {
+          clientId: selectedClientIds[0],
+          onClose: fillProps?.onClose
+        }), fillProps?.count === 1 && !isContentOnly && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockModeToggle, {
+          clientId: fillProps?.firstBlockClientId,
+          onToggle: fillProps?.onClose
+        })]
+      });
+    }
+  });
+};
+
+/**
+ * @see https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/block-settings-menu-controls/README.md
+ *
+ * @param {Object} props Fill props.
+ * @return {Element} Element.
+ */
+function BlockSettingsMenuControls({
+  ...props
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalStyleProvider, {
+    document: document,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Fill, {
+      ...props
+    })
+  });
+}
+BlockSettingsMenuControls.Slot = BlockSettingsMenuControlsSlot;
+/* harmony default export */ const block_settings_menu_controls = (BlockSettingsMenuControls);
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-settings-menu/block-parent-selector-menu-item.js
 /**

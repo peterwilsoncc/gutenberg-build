@@ -23752,24 +23752,21 @@ function TemplateLockContentOnlyMenuItems({
     };
   }, [clientId]);
   const blockDisplayInformation = (0,external_wp_blockEditor_namespaceObject.useBlockDisplayInformation)(contentLockingParent);
-  // Disable reason: We're using a hook here so it has to be on top-level.
-  // eslint-disable-next-line @wordpress/no-unused-vars-before-return
-  const {
-    modifyContentLockBlock,
-    selectBlock
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store));
+  const blockEditorActions = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   if (!blockDisplayInformation?.title) {
     return null;
   }
+  const {
+    modifyContentLockBlock
+  } = unlock(blockEditorActions);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__unstableBlockSettingsMenuFirstItem, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
         onClick: () => {
-          selectBlock(contentLockingParent);
           modifyContentLockBlock(contentLockingParent);
           onClose();
         },
-        children: (0,external_wp_i18n_namespaceObject.__)('Unlock')
+        children: (0,external_wp_i18n_namespaceObject._x)('Unlock', 'Unlock content locked blocks')
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
       variant: "muted",
