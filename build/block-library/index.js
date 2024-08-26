@@ -38878,7 +38878,9 @@ function PageListEdit({
         label:
         // translators: displayed when a page has an empty title.
         page.title?.rendered?.trim() !== '' ? page.title?.rendered : (0,external_wp_i18n_namespaceObject.__)('(no title)'),
-        title: page.title?.rendered,
+        title:
+        // translators: displayed when a page has an empty title.
+        page.title?.rendered?.trim() !== '' ? page.title?.rendered : (0,external_wp_i18n_namespaceObject.__)('(no title)'),
         link: page.url,
         hasChildren
       };
