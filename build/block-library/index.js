@@ -25653,7 +25653,8 @@ function image_Image({
   context,
   clientId,
   blockEditingMode,
-  parentLayoutType
+  parentLayoutType,
+  containerWidth
 }) {
   const {
     url = '',
@@ -26308,6 +26309,7 @@ function image_Image({
     // @todo It would be good to revisit this once a content-width variable
     // becomes available.
     const maxWidthBuffer = maxWidth * 2.5;
+    const maxContentWidth = containerWidth || maxWidthBuffer;
     let showRightHandle = false;
     let showLeftHandle = false;
 
@@ -26348,9 +26350,9 @@ function image_Image({
       },
       showHandle: isSingleSelected,
       minWidth: minWidth,
-      maxWidth: maxWidthBuffer,
+      maxWidth: maxContentWidth,
       minHeight: minHeight,
-      maxHeight: maxWidthBuffer / ratio,
+      maxHeight: maxContentWidth / ratio,
       lockAspectRatio: ratio,
       enable: {
         top: false,
@@ -26361,6 +26363,19 @@ function image_Image({
       onResizeStart: onResizeStart,
       onResizeStop: (event, direction, elt) => {
         onResizeStop();
+
+        // Clear hardcoded width if the resized width is close to the max-content width.
+        if (
+        // Only do this if the image is bigger than the container to prevent it from being squished.
+        // TODO: Remove this check if the image support setting 100% width.
+        naturalWidth >= maxContentWidth && Math.abs(elt.offsetWidth - maxContentWidth) < 10) {
+          setAttributes({
+            width: undefined,
+            height: undefined
+          });
+          return;
+        }
+
         // Since the aspect ratio is locked when resizing, we can
         // use the width of the resized element to calculate the
         // height in CSS to prevent stretching when the max-width
@@ -26414,6 +26429,7 @@ function image_Image({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -26424,6 +26440,7 @@ function image_Image({
 /**
  * Module constants
  */
+
 
 
 
@@ -26482,6 +26499,9 @@ function ImageEdit({
     metadata
   } = attributes;
   const [temporaryURL, setTemporaryURL] = (0,external_wp_element_namespaceObject.useState)(attributes.blob);
+  const [contentResizeListener, {
+    width: containerWidth
+  }] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
   const altRef = (0,external_wp_element_namespaceObject.useRef)();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     altRef.current = alt;
@@ -26698,39 +26718,45 @@ function ImageEdit({
       }) : content
     });
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("figure", {
-    ...blockProps,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(image_Image, {
-      temporaryURL: temporaryURL,
-      attributes: attributes,
-      setAttributes: setAttributes,
-      isSingleSelected: isSingleSelected,
-      insertBlocksAfter: insertBlocksAfter,
-      onReplace: onReplace,
-      onSelectImage: onSelectImage,
-      onSelectURL: onSelectURL,
-      onUploadError: onUploadError,
-      context: context,
-      clientId: clientId,
-      blockEditingMode: blockEditingMode,
-      parentLayoutType: parentLayout?.type
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
-      icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-        icon: library_image
-      }),
-      onSelect: onSelectImage,
-      onSelectURL: onSelectURL,
-      onError: onUploadError,
-      placeholder: placeholder,
-      accept: "image/*",
-      allowedTypes: constants_ALLOWED_MEDIA_TYPES,
-      value: {
-        id,
-        src
-      },
-      mediaPreview: mediaPreview,
-      disableMediaButtons: temporaryURL || url
-    })]
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("figure", {
+      ...blockProps,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(image_Image, {
+        temporaryURL: temporaryURL,
+        attributes: attributes,
+        setAttributes: setAttributes,
+        isSingleSelected: isSingleSelected,
+        insertBlocksAfter: insertBlocksAfter,
+        onReplace: onReplace,
+        onSelectImage: onSelectImage,
+        onSelectURL: onSelectURL,
+        onUploadError: onUploadError,
+        context: context,
+        clientId: clientId,
+        blockEditingMode: blockEditingMode,
+        parentLayoutType: parentLayout?.type,
+        containerWidth: containerWidth
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
+        icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
+          icon: library_image
+        }),
+        onSelect: onSelectImage,
+        onSelectURL: onSelectURL,
+        onError: onUploadError,
+        placeholder: placeholder,
+        accept: "image/*",
+        allowedTypes: constants_ALLOWED_MEDIA_TYPES,
+        value: {
+          id,
+          src
+        },
+        mediaPreview: mediaPreview,
+        disableMediaButtons: temporaryURL || url
+      })]
+    }),
+    // The listener cannot be placed as the first element as it will break the in-between inserter.
+    // See https://github.com/WordPress/gutenberg/blob/71134165868298fc15e22896d0c28b41b3755ff7/packages/block-editor/src/components/block-list/use-in-between-inserter.js#L120
+    contentResizeListener]
   });
 }
 /* harmony default export */ const image_edit = (ImageEdit);
