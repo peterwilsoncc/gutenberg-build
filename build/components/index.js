@@ -54628,6 +54628,64 @@ const timezone_TimeZone = () => {
 };
 /* harmony default export */ const timezone = (timezone_TimeZone);
 
+;// CONCATENATED MODULE: ./packages/components/build-module/toggle-group-control/toggle-group-control-option/component.js
+/**
+ * External dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function UnforwardedToggleGroupControlOption(props, ref) {
+  const {
+    label,
+    ...restProps
+  } = props;
+  const optionLabel = restProps['aria-label'] || label;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(toggle_group_control_option_base_component, {
+    ...restProps,
+    "aria-label": optionLabel,
+    ref: ref,
+    children: label
+  });
+}
+
+/**
+ * `ToggleGroupControlOption` is a form component and is meant to be used as a
+ * child of `ToggleGroupControl`.
+ *
+ * ```jsx
+ * import {
+ *   __experimentalToggleGroupControl as ToggleGroupControl,
+ *   __experimentalToggleGroupControlOption as ToggleGroupControlOption,
+ * } from '@wordpress/components';
+ *
+ * function Example() {
+ *   return (
+ *     <ToggleGroupControl
+ *       label="my label"
+ *       value="vertical"
+ *       isBlock
+ *       __nextHasNoMarginBottom
+ *     >
+ *       <ToggleGroupControlOption value="horizontal" label="Horizontal" />
+ *       <ToggleGroupControlOption value="vertical" label="Vertical" />
+ *     </ToggleGroupControl>
+ *   );
+ * }
+ * ```
+ */
+const ToggleGroupControlOption = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedToggleGroupControlOption);
+/* harmony default export */ const toggle_group_control_option_component = (ToggleGroupControlOption);
+
 ;// CONCATENATED MODULE: ./packages/components/build-module/date-time/time/time-input/index.js
 /**
  * External dependencies
@@ -54643,7 +54701,6 @@ const timezone_TimeZone = () => {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -54756,23 +54813,22 @@ function TimeInput({
           __unstableStateReducer: buildPadInputStateReducer(2),
           ...minutesProps
         })]
-      }), is12Hour && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(button_group, {
-        className: "components-datetime__time-field components-datetime__time-field-am-pm" // Unused, for backwards compatibility.
-        ,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-          className: "components-datetime__time-am-button" // Unused, for backwards compatibility.
-          ,
-          variant: dayPeriod === 'AM' ? 'primary' : 'secondary',
-          __next40pxDefaultSize: true,
-          onClick: buildAmPmChangeCallback('AM'),
-          children: (0,external_wp_i18n_namespaceObject.__)('AM')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-          className: "components-datetime__time-pm-button" // Unused, for backwards compatibility.
-          ,
-          variant: dayPeriod === 'PM' ? 'primary' : 'secondary',
-          __next40pxDefaultSize: true,
-          onClick: buildAmPmChangeCallback('PM'),
-          children: (0,external_wp_i18n_namespaceObject.__)('PM')
+      }), is12Hour && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(toggle_group_control_component, {
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        isBlock: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Select AM or PM'),
+        hideLabelFromVision: true,
+        value: dayPeriod,
+        onChange: newValue => {
+          buildAmPmChangeCallback(newValue)();
+        },
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(toggle_group_control_option_component, {
+          value: "AM",
+          label: (0,external_wp_i18n_namespaceObject.__)('AM')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(toggle_group_control_option_component, {
+          value: "PM",
+          label: (0,external_wp_i18n_namespaceObject.__)('PM')
         })]
       })]
     })]
@@ -57153,64 +57209,6 @@ const FontSizePickerSelect = props => {
   });
 };
 /* harmony default export */ const font_size_picker_select = (FontSizePickerSelect);
-
-;// CONCATENATED MODULE: ./packages/components/build-module/toggle-group-control/toggle-group-control-option/component.js
-/**
- * External dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-function UnforwardedToggleGroupControlOption(props, ref) {
-  const {
-    label,
-    ...restProps
-  } = props;
-  const optionLabel = restProps['aria-label'] || label;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(toggle_group_control_option_base_component, {
-    ...restProps,
-    "aria-label": optionLabel,
-    ref: ref,
-    children: label
-  });
-}
-
-/**
- * `ToggleGroupControlOption` is a form component and is meant to be used as a
- * child of `ToggleGroupControl`.
- *
- * ```jsx
- * import {
- *   __experimentalToggleGroupControl as ToggleGroupControl,
- *   __experimentalToggleGroupControlOption as ToggleGroupControlOption,
- * } from '@wordpress/components';
- *
- * function Example() {
- *   return (
- *     <ToggleGroupControl
- *       label="my label"
- *       value="vertical"
- *       isBlock
- *       __nextHasNoMarginBottom
- *     >
- *       <ToggleGroupControlOption value="horizontal" label="Horizontal" />
- *       <ToggleGroupControlOption value="vertical" label="Vertical" />
- *     </ToggleGroupControl>
- *   );
- * }
- * ```
- */
-const ToggleGroupControlOption = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedToggleGroupControlOption);
-/* harmony default export */ const toggle_group_control_option_component = (ToggleGroupControlOption);
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/font-size-picker/constants.js
 /**
