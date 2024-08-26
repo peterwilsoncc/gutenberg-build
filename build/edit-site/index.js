@@ -24290,7 +24290,7 @@ const {
   useGlobalSetting: font_size_useGlobalSetting
 } = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function FontSize() {
-  var _fontSizes$origin, _fontSize$fluid;
+  var _fontSizes$origin;
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = (0,external_wp_element_namespaceObject.useState)(false);
   const [isRenameDialogOpen, setIsRenameDialogOpen] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
@@ -24302,6 +24302,7 @@ function FontSize() {
     goTo
   } = (0,external_wp_components_namespaceObject.__experimentalUseNavigator)();
   const [fontSizes, setFontSizes] = font_size_useGlobalSetting('typography.fontSizes');
+  const [globalFluid] = font_size_useGlobalSetting('typography.fluid');
 
   // Get the font sizes from the origin, default to empty array.
   const sizes = (_fontSizes$origin = fontSizes[origin]) !== null && _fontSizes$origin !== void 0 ? _fontSizes$origin : [];
@@ -24309,8 +24310,8 @@ function FontSize() {
   // Get the font size by slug.
   const fontSize = sizes.find(size => size.slug === slug);
 
-  // Whether fluid is true or an object, set it to true, otherwise false.
-  const isFluid = (_fontSize$fluid = !!fontSize.fluid) !== null && _fontSize$fluid !== void 0 ? _fontSize$fluid : false;
+  // Whether the font size is fluid. If not defined, use the global fluid value of the theme.
+  const isFluid = fontSize.fluid !== undefined ? !!fontSize.fluid : globalFluid;
 
   // Whether custom fluid values are used.
   const isCustomFluid = typeof fontSize.fluid === 'object';
