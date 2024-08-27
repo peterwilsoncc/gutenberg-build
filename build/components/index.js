@@ -28464,13 +28464,13 @@ function input_control_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You hav
 
 
 const Prefix = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
-  target: "em5sgkm7"
+  target: "em5sgkm8"
 } : 0)( true ? {
   name: "pvvbxf",
   styles: "box-sizing:border-box;display:block"
 } : 0);
 const Suffix = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
-  target: "em5sgkm6"
+  target: "em5sgkm7"
 } : 0)( true ? {
   name: "jgf79h",
   styles: "align-items:center;align-self:stretch;box-sizing:border-box;display:flex"
@@ -28488,12 +28488,12 @@ const backdropBorderColor = ({
   return COLORS.ui.border;
 };
 const BackdropUI = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
-  target: "em5sgkm5"
+  target: "em5sgkm6"
 } : 0)("&&&{box-sizing:border-box;border-color:", backdropBorderColor, ";border-radius:inherit;border-style:solid;border-width:1px;bottom:0;left:0;margin:0;padding:0;pointer-events:none;position:absolute;right:0;top:0;", rtl({
   paddingLeft: 2
 }), ";}" + ( true ? "" : 0));
 const input_control_styles_Root = /*#__PURE__*/emotion_styled_base_browser_esm(flex_component,  true ? {
-  target: "em5sgkm4"
+  target: "em5sgkm5"
 } : 0)("box-sizing:border-box;position:relative;border-radius:", config_values.radiusSmall, ";padding-top:0;&:focus-within:not( :has( :is( ", Prefix, ", ", Suffix, " ):focus-within ) ){", BackdropUI, "{border-color:", COLORS.ui.borderFocus, ";box-shadow:", config_values.controlBoxShadowFocus, ";outline:2px solid transparent;outline-offset:-2px;}}" + ( true ? "" : 0));
 const containerDisabledStyles = ({
   disabled
@@ -28527,7 +28527,7 @@ const containerWidthStyles = ({
   },  true ? "" : 0,  true ? "" : 0);
 };
 const Container = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
-  target: "em5sgkm3"
+  target: "em5sgkm4"
 } : 0)("align-items:center;box-sizing:border-box;border-radius:inherit;display:flex;flex:1;position:relative;", containerDisabledStyles, " ", containerWidthStyles, ";" + ( true ? "" : 0));
 const disabledStyles = ({
   disabled
@@ -28626,21 +28626,49 @@ const dragStyles = ({
 // https://github.com/WordPress/gutenberg/issues/18483
 
 const Input = /*#__PURE__*/emotion_styled_base_browser_esm("input",  true ? {
-  target: "em5sgkm2"
+  target: "em5sgkm3"
 } : 0)("&&&{background-color:transparent;box-sizing:border-box;border:none;box-shadow:none!important;color:", COLORS.theme.foreground, ";display:block;font-family:inherit;margin:0;outline:none;width:100%;", dragStyles, " ", disabledStyles, " ", fontSizeStyles, " ", sizeStyles, " ", customPaddings, " &::-webkit-input-placeholder{line-height:normal;}}" + ( true ? "" : 0));
 const BaseLabel = /*#__PURE__*/emotion_styled_base_browser_esm(text_component,  true ? {
-  target: "em5sgkm1"
+  target: "em5sgkm2"
 } : 0)("&&&{", baseLabelTypography, ";box-sizing:border-box;display:block;padding-top:0;padding-bottom:0;max-width:100%;z-index:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}" + ( true ? "" : 0));
 const Label = props => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BaseLabel, {
   ...props,
   as: "label"
 });
 const LabelWrapper = /*#__PURE__*/emotion_styled_base_browser_esm(flex_item_component,  true ? {
-  target: "em5sgkm0"
+  target: "em5sgkm1"
 } : 0)( true ? {
   name: "1b6uupn",
   styles: "max-width:calc( 100% - 10px )"
 } : 0);
+const prefixSuffixWrapperStyles = ({
+  variant = 'default',
+  size,
+  __next40pxDefaultSize,
+  isPrefix
+}) => {
+  const {
+    paddingLeft: padding
+  } = getSizeConfig({
+    inputSize: size,
+    __next40pxDefaultSize
+  });
+  const paddingProperty = isPrefix ? 'paddingInlineStart' : 'paddingInlineEnd';
+  if (variant === 'default') {
+    return /*#__PURE__*/emotion_react_browser_esm_css({
+      [paddingProperty]: padding
+    },  true ? "" : 0,  true ? "" : 0);
+  }
+
+  // If variant is 'icon' or 'control'
+  return /*#__PURE__*/emotion_react_browser_esm_css({
+    display: 'flex',
+    [paddingProperty]: padding - 4
+  },  true ? "" : 0,  true ? "" : 0);
+};
+const PrefixSuffixWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
+  target: "em5sgkm0"
+} : 0)(prefixSuffixWrapperStyles, ";" + ( true ? "" : 0));
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/input-control/backdrop.js
 /**
@@ -28777,23 +28805,18 @@ function InputBase(props, ref) {
   } = useDeprecated36pxDefaultSizeProp(useContextSystem(props, 'InputBase'));
   const id = useUniqueId(idProp);
   const hideLabel = hideLabelFromVision || !label;
-  const {
-    paddingLeft,
-    paddingRight
-  } = getSizeConfig({
-    inputSize: size,
-    __next40pxDefaultSize
-  });
   const prefixSuffixContextValue = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return {
       InputControlPrefixWrapper: {
-        paddingLeft: `${paddingLeft}px`
+        __next40pxDefaultSize,
+        size
       },
       InputControlSuffixWrapper: {
-        paddingRight: `${paddingRight}px`
+        __next40pxDefaultSize,
+        size
       }
     };
-  }, [paddingLeft, paddingRight]);
+  }, [__next40pxDefaultSize, size]);
   return (
     /*#__PURE__*/
     // @ts-expect-error The `direction` prop from Flex (FlexDirection) conflicts with legacy SVGAttributes `direction` (string) that come from React intrinsic prop definitions.
@@ -36600,10 +36623,10 @@ const Dropdown = contextConnect(UnconnectedDropdown, 'Dropdown');
 
 
 
+
 function UnconnectedInputControlSuffixWrapper(props, forwardedRef) {
   const derivedProps = useContextSystem(props, 'InputControlSuffixWrapper');
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {
-    marginBottom: 0,
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrefixSuffixWrapper, {
     ...derivedProps,
     ref: forwardedRef
   });
@@ -38048,11 +38071,12 @@ const ColorCopyButton = props => {
 
 
 
+
 function UnconnectedInputControlPrefixWrapper(props, forwardedRef) {
   const derivedProps = useContextSystem(props, 'InputControlPrefixWrapper');
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {
-    marginBottom: 0,
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrefixSuffixWrapper, {
     ...derivedProps,
+    isPrefix: true,
     ref: forwardedRef
   });
 }
