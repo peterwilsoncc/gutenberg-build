@@ -18513,11 +18513,6 @@ function MaybeCategoryPanel() {
 
 
 
-/**
- * Internal dependencies
- */
-
-
 
 function flattenBlocks(blocks) {
   const result = [];
@@ -18567,11 +18562,12 @@ function Image(block) {
 }
 function maybe_upload_media_PostFormatPanel() {
   const [isUploading, setIsUploading] = (0,external_wp_element_namespaceObject.useState)(false);
+  const [isAnimating, setIsAnimating] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
     editorBlocks,
     mediaUpload
   } = (0,external_wp_data_namespaceObject.useSelect)(select => ({
-    editorBlocks: select(store_store).getEditorBlocks(),
+    editorBlocks: select(external_wp_blockEditor_namespaceObject.store).getBlocks(),
     mediaUpload: select(external_wp_blockEditor_namespaceObject.store).getSettings().mediaUpload
   }), []);
   const externalImages = flattenBlocks(editorBlocks).filter(block => block.name === 'core/image' && block.attributes.url && !block.attributes.id);
@@ -18604,7 +18600,7 @@ function maybe_upload_media_PostFormatPanel() {
           reject();
         }
       });
-    })))).finally(() => {
+    }).then(() => setIsAnimating(true))))).finally(() => {
       setIsUploading(false);
     });
   }
@@ -18620,12 +18616,13 @@ function maybe_upload_media_PostFormatPanel() {
         gap: '8px'
       },
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableAnimatePresence, {
+        onExitComplete: () => setIsAnimating(false),
         children: externalImages.map(image => {
           return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Image, {
             ...image
           }, image.clientId);
         })
-      }), isUploading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      }), isUploading || isAnimating ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         variant: "primary",
         onClick: uploadImages,
         children: (0,external_wp_i18n_namespaceObject.__)('Upload')
