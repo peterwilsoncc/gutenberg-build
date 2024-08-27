@@ -1984,6 +1984,257 @@ __webpack_require__.d(toggle_group_control_option_base_styles_namespaceObject, {
 const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
 ;// CONCATENATED MODULE: ./node_modules/clsx/dist/clsx.mjs
 function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
+;// CONCATENATED MODULE: external ["wp","i18n"]
+const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
+;// CONCATENATED MODULE: external ["wp","compose"]
+const external_wp_compose_namespaceObject = window["wp"]["compose"];
+;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/HWOIWM4O.js
+"use client";
+
+// src/utils/dom.ts
+var canUseDOM = checkIsBrowser();
+function checkIsBrowser() {
+  var _a;
+  return typeof window !== "undefined" && !!((_a = window.document) == null ? void 0 : _a.createElement);
+}
+function getDocument(node) {
+  return node ? node.ownerDocument || node : document;
+}
+function getWindow(node) {
+  return getDocument(node).defaultView || window;
+}
+function getActiveElement(node, activeDescendant = false) {
+  const { activeElement } = getDocument(node);
+  if (!(activeElement == null ? void 0 : activeElement.nodeName)) {
+    return null;
+  }
+  if (isFrame(activeElement) && activeElement.contentDocument) {
+    return getActiveElement(
+      activeElement.contentDocument.body,
+      activeDescendant
+    );
+  }
+  if (activeDescendant) {
+    const id = activeElement.getAttribute("aria-activedescendant");
+    if (id) {
+      const element = getDocument(activeElement).getElementById(id);
+      if (element) {
+        return element;
+      }
+    }
+  }
+  return activeElement;
+}
+function contains(parent, child) {
+  return parent === child || parent.contains(child);
+}
+function isFrame(element) {
+  return element.tagName === "IFRAME";
+}
+function isButton(element) {
+  const tagName = element.tagName.toLowerCase();
+  if (tagName === "button") return true;
+  if (tagName === "input" && element.type) {
+    return buttonInputTypes.indexOf(element.type) !== -1;
+  }
+  return false;
+}
+var buttonInputTypes = [
+  "button",
+  "color",
+  "file",
+  "image",
+  "reset",
+  "submit"
+];
+function isVisible(element) {
+  if (typeof element.checkVisibility === "function") {
+    return element.checkVisibility();
+  }
+  const htmlElement = element;
+  return htmlElement.offsetWidth > 0 || htmlElement.offsetHeight > 0 || element.getClientRects().length > 0;
+}
+function isTextField(element) {
+  try {
+    const isTextInput = element instanceof HTMLInputElement && element.selectionStart !== null;
+    const isTextArea = element.tagName === "TEXTAREA";
+    return isTextInput || isTextArea || false;
+  } catch (error) {
+    return false;
+  }
+}
+function isTextbox(element) {
+  return element.isContentEditable || isTextField(element);
+}
+function getTextboxValue(element) {
+  if (isTextField(element)) {
+    return element.value;
+  }
+  if (element.isContentEditable) {
+    const range = getDocument(element).createRange();
+    range.selectNodeContents(element);
+    return range.toString();
+  }
+  return "";
+}
+function getTextboxSelection(element) {
+  let start = 0;
+  let end = 0;
+  if (isTextField(element)) {
+    start = element.selectionStart || 0;
+    end = element.selectionEnd || 0;
+  } else if (element.isContentEditable) {
+    const selection = getDocument(element).getSelection();
+    if ((selection == null ? void 0 : selection.rangeCount) && selection.anchorNode && contains(element, selection.anchorNode) && selection.focusNode && contains(element, selection.focusNode)) {
+      const range = selection.getRangeAt(0);
+      const nextRange = range.cloneRange();
+      nextRange.selectNodeContents(element);
+      nextRange.setEnd(range.startContainer, range.startOffset);
+      start = nextRange.toString().length;
+      nextRange.setEnd(range.endContainer, range.endOffset);
+      end = nextRange.toString().length;
+    }
+  }
+  return { start, end };
+}
+function getPopupRole(element, fallback) {
+  const allowedPopupRoles = ["dialog", "menu", "listbox", "tree", "grid"];
+  const role = element == null ? void 0 : element.getAttribute("role");
+  if (role && allowedPopupRoles.indexOf(role) !== -1) {
+    return role;
+  }
+  return fallback;
+}
+function getPopupItemRole(element, fallback) {
+  var _a;
+  const itemRoleByPopupRole = {
+    menu: "menuitem",
+    listbox: "option",
+    tree: "treeitem"
+  };
+  const popupRole = getPopupRole(element);
+  if (!popupRole) return fallback;
+  const key = popupRole;
+  return (_a = itemRoleByPopupRole[key]) != null ? _a : fallback;
+}
+function scrollIntoViewIfNeeded(element, arg) {
+  if (isPartiallyHidden(element) && "scrollIntoView" in element) {
+    element.scrollIntoView(arg);
+  }
+}
+function getScrollingElement(element) {
+  if (!element) return null;
+  if (element.clientHeight && element.scrollHeight > element.clientHeight) {
+    const { overflowY } = getComputedStyle(element);
+    const isScrollable = overflowY !== "visible" && overflowY !== "hidden";
+    if (isScrollable) return element;
+  } else if (element.clientWidth && element.scrollWidth > element.clientWidth) {
+    const { overflowX } = getComputedStyle(element);
+    const isScrollable = overflowX !== "visible" && overflowX !== "hidden";
+    if (isScrollable) return element;
+  }
+  return getScrollingElement(element.parentElement) || document.scrollingElement || document.body;
+}
+function isPartiallyHidden(element) {
+  const elementRect = element.getBoundingClientRect();
+  const scroller = getScrollingElement(element);
+  if (!scroller) return false;
+  const scrollerRect = scroller.getBoundingClientRect();
+  const isHTML = scroller.tagName === "HTML";
+  const scrollerTop = isHTML ? scrollerRect.top + scroller.scrollTop : scrollerRect.top;
+  const scrollerBottom = isHTML ? scroller.clientHeight : scrollerRect.bottom;
+  const scrollerLeft = isHTML ? scrollerRect.left + scroller.scrollLeft : scrollerRect.left;
+  const scrollerRight = isHTML ? scroller.clientWidth : scrollerRect.right;
+  const top = elementRect.top < scrollerTop;
+  const left = elementRect.left < scrollerLeft;
+  const bottom = elementRect.bottom > scrollerBottom;
+  const right = elementRect.right > scrollerRight;
+  return top || left || bottom || right;
+}
+function setSelectionRange(element, ...args) {
+  if (/text|search|password|tel|url/i.test(element.type)) {
+    element.setSelectionRange(...args);
+  }
+}
+
+
+
+;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/5VQZOHHZ.js
+"use client";
+
+// src/composite/utils.ts
+
+var NULL_ITEM = { id: null };
+function flipItems(items, activeId, shouldInsertNullItem = false) {
+  const index = items.findIndex((item) => item.id === activeId);
+  return [
+    ...items.slice(index + 1),
+    ...shouldInsertNullItem ? [NULL_ITEM] : [],
+    ...items.slice(0, index)
+  ];
+}
+function findFirstEnabledItem(items, excludeId) {
+  return items.find((item) => {
+    if (excludeId) {
+      return !item.disabled && item.id !== excludeId;
+    }
+    return !item.disabled;
+  });
+}
+function getEnabledItem(store, id) {
+  if (!id) return null;
+  return store.item(id) || null;
+}
+function groupItemsByRows(items) {
+  const rows = [];
+  for (const item of items) {
+    const row = rows.find((currentRow) => {
+      var _a;
+      return ((_a = currentRow[0]) == null ? void 0 : _a.rowId) === item.rowId;
+    });
+    if (row) {
+      row.push(item);
+    } else {
+      rows.push([item]);
+    }
+  }
+  return rows;
+}
+function selectTextField(element, collapseToEnd = false) {
+  if (isTextField(element)) {
+    element.setSelectionRange(
+      collapseToEnd ? element.value.length : 0,
+      element.value.length
+    );
+  } else if (element.isContentEditable) {
+    const selection = getDocument(element).getSelection();
+    selection == null ? void 0 : selection.selectAllChildren(element);
+    if (collapseToEnd) {
+      selection == null ? void 0 : selection.collapseToEnd();
+    }
+  }
+}
+var FOCUS_SILENTLY = Symbol("FOCUS_SILENTLY");
+function focusSilently(element) {
+  element[FOCUS_SILENTLY] = true;
+  element.focus({ preventScroll: true });
+}
+function silentlyFocused(element) {
+  const isSilentlyFocused = element[FOCUS_SILENTLY];
+  delete element[FOCUS_SILENTLY];
+  return isSilentlyFocused;
+}
+function isItem(store, element, exclude) {
+  if (!element) return false;
+  if (element === exclude) return false;
+  const item = store.item(element.id);
+  if (!item) return false;
+  if (exclude && item.element === exclude) return false;
+  return true;
+}
+
+
+
 ;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/3YLGPPWQ.js
 "use client";
 var __defProp = Object.defineProperty;
@@ -2253,177 +2504,6 @@ function mergeProps(base, overrides) {
     props[key] = overrideValue;
   }
   return props;
-}
-
-
-
-;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/HWOIWM4O.js
-"use client";
-
-// src/utils/dom.ts
-var canUseDOM = checkIsBrowser();
-function checkIsBrowser() {
-  var _a;
-  return typeof window !== "undefined" && !!((_a = window.document) == null ? void 0 : _a.createElement);
-}
-function getDocument(node) {
-  return node ? node.ownerDocument || node : document;
-}
-function getWindow(node) {
-  return getDocument(node).defaultView || window;
-}
-function getActiveElement(node, activeDescendant = false) {
-  const { activeElement } = getDocument(node);
-  if (!(activeElement == null ? void 0 : activeElement.nodeName)) {
-    return null;
-  }
-  if (isFrame(activeElement) && activeElement.contentDocument) {
-    return getActiveElement(
-      activeElement.contentDocument.body,
-      activeDescendant
-    );
-  }
-  if (activeDescendant) {
-    const id = activeElement.getAttribute("aria-activedescendant");
-    if (id) {
-      const element = getDocument(activeElement).getElementById(id);
-      if (element) {
-        return element;
-      }
-    }
-  }
-  return activeElement;
-}
-function contains(parent, child) {
-  return parent === child || parent.contains(child);
-}
-function isFrame(element) {
-  return element.tagName === "IFRAME";
-}
-function isButton(element) {
-  const tagName = element.tagName.toLowerCase();
-  if (tagName === "button") return true;
-  if (tagName === "input" && element.type) {
-    return buttonInputTypes.indexOf(element.type) !== -1;
-  }
-  return false;
-}
-var buttonInputTypes = [
-  "button",
-  "color",
-  "file",
-  "image",
-  "reset",
-  "submit"
-];
-function isVisible(element) {
-  if (typeof element.checkVisibility === "function") {
-    return element.checkVisibility();
-  }
-  const htmlElement = element;
-  return htmlElement.offsetWidth > 0 || htmlElement.offsetHeight > 0 || element.getClientRects().length > 0;
-}
-function isTextField(element) {
-  try {
-    const isTextInput = element instanceof HTMLInputElement && element.selectionStart !== null;
-    const isTextArea = element.tagName === "TEXTAREA";
-    return isTextInput || isTextArea || false;
-  } catch (error) {
-    return false;
-  }
-}
-function isTextbox(element) {
-  return element.isContentEditable || isTextField(element);
-}
-function getTextboxValue(element) {
-  if (isTextField(element)) {
-    return element.value;
-  }
-  if (element.isContentEditable) {
-    const range = getDocument(element).createRange();
-    range.selectNodeContents(element);
-    return range.toString();
-  }
-  return "";
-}
-function getTextboxSelection(element) {
-  let start = 0;
-  let end = 0;
-  if (isTextField(element)) {
-    start = element.selectionStart || 0;
-    end = element.selectionEnd || 0;
-  } else if (element.isContentEditable) {
-    const selection = getDocument(element).getSelection();
-    if ((selection == null ? void 0 : selection.rangeCount) && selection.anchorNode && contains(element, selection.anchorNode) && selection.focusNode && contains(element, selection.focusNode)) {
-      const range = selection.getRangeAt(0);
-      const nextRange = range.cloneRange();
-      nextRange.selectNodeContents(element);
-      nextRange.setEnd(range.startContainer, range.startOffset);
-      start = nextRange.toString().length;
-      nextRange.setEnd(range.endContainer, range.endOffset);
-      end = nextRange.toString().length;
-    }
-  }
-  return { start, end };
-}
-function getPopupRole(element, fallback) {
-  const allowedPopupRoles = ["dialog", "menu", "listbox", "tree", "grid"];
-  const role = element == null ? void 0 : element.getAttribute("role");
-  if (role && allowedPopupRoles.indexOf(role) !== -1) {
-    return role;
-  }
-  return fallback;
-}
-function getPopupItemRole(element, fallback) {
-  var _a;
-  const itemRoleByPopupRole = {
-    menu: "menuitem",
-    listbox: "option",
-    tree: "treeitem"
-  };
-  const popupRole = getPopupRole(element);
-  if (!popupRole) return fallback;
-  const key = popupRole;
-  return (_a = itemRoleByPopupRole[key]) != null ? _a : fallback;
-}
-function scrollIntoViewIfNeeded(element, arg) {
-  if (isPartiallyHidden(element) && "scrollIntoView" in element) {
-    element.scrollIntoView(arg);
-  }
-}
-function getScrollingElement(element) {
-  if (!element) return null;
-  if (element.clientHeight && element.scrollHeight > element.clientHeight) {
-    const { overflowY } = getComputedStyle(element);
-    const isScrollable = overflowY !== "visible" && overflowY !== "hidden";
-    if (isScrollable) return element;
-  } else if (element.clientWidth && element.scrollWidth > element.clientWidth) {
-    const { overflowX } = getComputedStyle(element);
-    const isScrollable = overflowX !== "visible" && overflowX !== "hidden";
-    if (isScrollable) return element;
-  }
-  return getScrollingElement(element.parentElement) || document.scrollingElement || document.body;
-}
-function isPartiallyHidden(element) {
-  const elementRect = element.getBoundingClientRect();
-  const scroller = getScrollingElement(element);
-  if (!scroller) return false;
-  const scrollerRect = scroller.getBoundingClientRect();
-  const isHTML = scroller.tagName === "HTML";
-  const scrollerTop = isHTML ? scrollerRect.top + scroller.scrollTop : scrollerRect.top;
-  const scrollerBottom = isHTML ? scroller.clientHeight : scrollerRect.bottom;
-  const scrollerLeft = isHTML ? scrollerRect.left + scroller.scrollLeft : scrollerRect.left;
-  const scrollerRight = isHTML ? scroller.clientWidth : scrollerRect.right;
-  const top = elementRect.top < scrollerTop;
-  const left = elementRect.left < scrollerLeft;
-  const bottom = elementRect.bottom > scrollerBottom;
-  const right = elementRect.right > scrollerRight;
-  return top || left || bottom || right;
-}
-function setSelectionRange(element, ...args) {
-  if (/text|search|password|tel|url/i.test(element.type)) {
-    element.setSelectionRange(...args);
-  }
 }
 
 
@@ -2796,374 +2876,6 @@ function setMouseMoving(event) {
 }
 function resetMouseMoving() {
   mouseMoving = false;
-}
-
-
-
-;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/EQQLU3CG.js
-"use client";
-
-
-
-// src/utils/store.ts
-function getInternal(store, key) {
-  const internals = store.__unstableInternals;
-  invariant(internals, "Invalid store");
-  return internals[key];
-}
-function createStore(initialState, ...stores) {
-  let state = initialState;
-  let prevStateBatch = state;
-  let lastUpdate = Symbol();
-  let destroy = noop;
-  const instances = /* @__PURE__ */ new Set();
-  const updatedKeys = /* @__PURE__ */ new Set();
-  const setups = /* @__PURE__ */ new Set();
-  const listeners = /* @__PURE__ */ new Set();
-  const batchListeners = /* @__PURE__ */ new Set();
-  const disposables = /* @__PURE__ */ new WeakMap();
-  const listenerKeys = /* @__PURE__ */ new WeakMap();
-  const storeSetup = (callback) => {
-    setups.add(callback);
-    return () => setups.delete(callback);
-  };
-  const storeInit = () => {
-    const initialized = instances.size;
-    const instance = Symbol();
-    instances.add(instance);
-    const maybeDestroy = () => {
-      instances.delete(instance);
-      if (instances.size) return;
-      destroy();
-    };
-    if (initialized) return maybeDestroy;
-    const desyncs = getKeys(state).map(
-      (key) => chain(
-        ...stores.map((store) => {
-          var _a;
-          const storeState = (_a = store == null ? void 0 : store.getState) == null ? void 0 : _a.call(store);
-          if (!storeState) return;
-          if (!PBFD2E7P_hasOwnProperty(storeState, key)) return;
-          return sync(store, [key], (state2) => {
-            setState(
-              key,
-              state2[key],
-              // @ts-expect-error - Not public API. This is just to prevent
-              // infinite loops.
-              true
-            );
-          });
-        })
-      )
-    );
-    const teardowns = [];
-    for (const setup2 of setups) {
-      teardowns.push(setup2());
-    }
-    const cleanups = stores.map(init);
-    destroy = chain(...desyncs, ...teardowns, ...cleanups);
-    return maybeDestroy;
-  };
-  const sub = (keys, listener, set = listeners) => {
-    set.add(listener);
-    listenerKeys.set(listener, keys);
-    return () => {
-      var _a;
-      (_a = disposables.get(listener)) == null ? void 0 : _a();
-      disposables.delete(listener);
-      listenerKeys.delete(listener);
-      set.delete(listener);
-    };
-  };
-  const storeSubscribe = (keys, listener) => sub(keys, listener);
-  const storeSync = (keys, listener) => {
-    disposables.set(listener, listener(state, state));
-    return sub(keys, listener);
-  };
-  const storeBatch = (keys, listener) => {
-    disposables.set(listener, listener(state, prevStateBatch));
-    return sub(keys, listener, batchListeners);
-  };
-  const storePick = (keys) => createStore(pick(state, keys), finalStore);
-  const storeOmit = (keys) => createStore(omit(state, keys), finalStore);
-  const getState = () => state;
-  const setState = (key, value, fromStores = false) => {
-    var _a;
-    if (!PBFD2E7P_hasOwnProperty(state, key)) return;
-    const nextValue = applyState(value, state[key]);
-    if (nextValue === state[key]) return;
-    if (!fromStores) {
-      for (const store of stores) {
-        (_a = store == null ? void 0 : store.setState) == null ? void 0 : _a.call(store, key, nextValue);
-      }
-    }
-    const prevState = state;
-    state = _chunks_3YLGPPWQ_spreadProps(_chunks_3YLGPPWQ_spreadValues({}, state), { [key]: nextValue });
-    const thisUpdate = Symbol();
-    lastUpdate = thisUpdate;
-    updatedKeys.add(key);
-    const run = (listener, prev, uKeys) => {
-      var _a2;
-      const keys = listenerKeys.get(listener);
-      const updated = (k) => uKeys ? uKeys.has(k) : k === key;
-      if (!keys || keys.some(updated)) {
-        (_a2 = disposables.get(listener)) == null ? void 0 : _a2();
-        disposables.set(listener, listener(state, prev));
-      }
-    };
-    for (const listener of listeners) {
-      run(listener, prevState);
-    }
-    queueMicrotask(() => {
-      if (lastUpdate !== thisUpdate) return;
-      const snapshot = state;
-      for (const listener of batchListeners) {
-        run(listener, prevStateBatch, updatedKeys);
-      }
-      prevStateBatch = snapshot;
-      updatedKeys.clear();
-    });
-  };
-  const finalStore = {
-    getState,
-    setState,
-    __unstableInternals: {
-      setup: storeSetup,
-      init: storeInit,
-      subscribe: storeSubscribe,
-      sync: storeSync,
-      batch: storeBatch,
-      pick: storePick,
-      omit: storeOmit
-    }
-  };
-  return finalStore;
-}
-function setup(store, ...args) {
-  if (!store) return;
-  return getInternal(store, "setup")(...args);
-}
-function init(store, ...args) {
-  if (!store) return;
-  return getInternal(store, "init")(...args);
-}
-function subscribe(store, ...args) {
-  if (!store) return;
-  return getInternal(store, "subscribe")(...args);
-}
-function sync(store, ...args) {
-  if (!store) return;
-  return getInternal(store, "sync")(...args);
-}
-function batch(store, ...args) {
-  if (!store) return;
-  return getInternal(store, "batch")(...args);
-}
-function omit2(store, ...args) {
-  if (!store) return;
-  return getInternal(store, "omit")(...args);
-}
-function pick2(store, ...args) {
-  if (!store) return;
-  return getInternal(store, "pick")(...args);
-}
-function mergeStore(...stores) {
-  const initialState = stores.reduce((state, store2) => {
-    var _a;
-    const nextState = (_a = store2 == null ? void 0 : store2.getState) == null ? void 0 : _a.call(store2);
-    if (!nextState) return state;
-    return Object.assign(state, nextState);
-  }, {});
-  const store = createStore(initialState, ...stores);
-  return store;
-}
-function throwOnConflictingProps(props, store) {
-  if (true) return;
-  if (!store) return;
-  const defaultKeys = Object.entries(props).filter(([key, value]) => key.startsWith("default") && value !== void 0).map(([key]) => {
-    var _a;
-    const stateKey = key.replace("default", "");
-    return `${((_a = stateKey[0]) == null ? void 0 : _a.toLowerCase()) || ""}${stateKey.slice(1)}`;
-  });
-  if (!defaultKeys.length) return;
-  const storeState = store.getState();
-  const conflictingProps = defaultKeys.filter(
-    (key) => PBFD2E7P_hasOwnProperty(storeState, key)
-  );
-  if (!conflictingProps.length) return;
-  throw new Error(
-    `Passing a store prop in conjunction with a default state is not supported.
-
-const store = useSelectStore();
-<SelectProvider store={store} defaultValue="Apple" />
-                ^             ^
-
-Instead, pass the default state to the topmost store:
-
-const store = useSelectStore({ defaultValue: "Apple" });
-<SelectProvider store={store} />
-
-See https://github.com/ariakit/ariakit/pull/2745 for more details.
-
-If there's a particular need for this, please submit a feature request at https://github.com/ariakit/ariakit
-`
-  );
-}
-
-
-
-// EXTERNAL MODULE: ./node_modules/use-sync-external-store/shim/index.js
-var shim = __webpack_require__(635);
-;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/2GXGCHW6.js
-"use client";
-
-
-
-// src/utils/store.tsx
-
-
-
-
-var { useSyncExternalStore } = shim;
-var noopSubscribe = () => () => {
-};
-function useStoreState(store, keyOrSelector = identity) {
-  const storeSubscribe = external_React_.useCallback(
-    (callback) => {
-      if (!store) return noopSubscribe();
-      return subscribe(store, null, callback);
-    },
-    [store]
-  );
-  const getSnapshot = () => {
-    const key = typeof keyOrSelector === "string" ? keyOrSelector : null;
-    const selector = typeof keyOrSelector === "function" ? keyOrSelector : null;
-    const state = store == null ? void 0 : store.getState();
-    if (selector) return selector(state);
-    if (!state) return;
-    if (!key) return;
-    if (!PBFD2E7P_hasOwnProperty(state, key)) return;
-    return state[key];
-  };
-  return useSyncExternalStore(storeSubscribe, getSnapshot, getSnapshot);
-}
-function useStoreProps(store, props, key, setKey) {
-  const value = PBFD2E7P_hasOwnProperty(props, key) ? props[key] : void 0;
-  const setValue = setKey ? props[setKey] : void 0;
-  const propsRef = useLiveRef({ value, setValue });
-  useSafeLayoutEffect(() => {
-    return sync(store, [key], (state, prev) => {
-      const { value: value2, setValue: setValue2 } = propsRef.current;
-      if (!setValue2) return;
-      if (state[key] === prev[key]) return;
-      if (state[key] === value2) return;
-      setValue2(state[key]);
-    });
-  }, [store, key]);
-  useSafeLayoutEffect(() => {
-    if (value === void 0) return;
-    store.setState(key, value);
-    return batch(store, [key], () => {
-      if (value === void 0) return;
-      store.setState(key, value);
-    });
-  });
-}
-function _2GXGCHW6_useStore(createStore, props) {
-  const [store, setStore] = external_React_.useState(() => createStore(props));
-  useSafeLayoutEffect(() => init(store), [store]);
-  const useState2 = external_React_.useCallback(
-    (keyOrSelector) => useStoreState(store, keyOrSelector),
-    [store]
-  );
-  const memoizedStore = external_React_.useMemo(
-    () => _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, store), { useState: useState2 }),
-    [store, useState2]
-  );
-  const updateStore = useEvent(() => {
-    setStore((store2) => createStore(_3YLGPPWQ_spreadValues(_3YLGPPWQ_spreadValues({}, props), store2.getState())));
-  });
-  return [memoizedStore, updateStore];
-}
-
-
-
-;// CONCATENATED MODULE: external ["wp","i18n"]
-const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
-;// CONCATENATED MODULE: external ["wp","compose"]
-const external_wp_compose_namespaceObject = window["wp"]["compose"];
-;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/5VQZOHHZ.js
-"use client";
-
-// src/composite/utils.ts
-
-var NULL_ITEM = { id: null };
-function flipItems(items, activeId, shouldInsertNullItem = false) {
-  const index = items.findIndex((item) => item.id === activeId);
-  return [
-    ...items.slice(index + 1),
-    ...shouldInsertNullItem ? [NULL_ITEM] : [],
-    ...items.slice(0, index)
-  ];
-}
-function findFirstEnabledItem(items, excludeId) {
-  return items.find((item) => {
-    if (excludeId) {
-      return !item.disabled && item.id !== excludeId;
-    }
-    return !item.disabled;
-  });
-}
-function getEnabledItem(store, id) {
-  if (!id) return null;
-  return store.item(id) || null;
-}
-function groupItemsByRows(items) {
-  const rows = [];
-  for (const item of items) {
-    const row = rows.find((currentRow) => {
-      var _a;
-      return ((_a = currentRow[0]) == null ? void 0 : _a.rowId) === item.rowId;
-    });
-    if (row) {
-      row.push(item);
-    } else {
-      rows.push([item]);
-    }
-  }
-  return rows;
-}
-function selectTextField(element, collapseToEnd = false) {
-  if (isTextField(element)) {
-    element.setSelectionRange(
-      collapseToEnd ? element.value.length : 0,
-      element.value.length
-    );
-  } else if (element.isContentEditable) {
-    const selection = getDocument(element).getSelection();
-    selection == null ? void 0 : selection.selectAllChildren(element);
-    if (collapseToEnd) {
-      selection == null ? void 0 : selection.collapseToEnd();
-    }
-  }
-}
-var FOCUS_SILENTLY = Symbol("FOCUS_SILENTLY");
-function focusSilently(element) {
-  element[FOCUS_SILENTLY] = true;
-  element.focus({ preventScroll: true });
-}
-function silentlyFocused(element) {
-  const isSilentlyFocused = element[FOCUS_SILENTLY];
-  delete element[FOCUS_SILENTLY];
-  return isSilentlyFocused;
-}
-function isItem(store, element, exclude) {
-  if (!element) return false;
-  if (element === exclude) return false;
-  const item = store.item(element.id);
-  if (!item) return false;
-  if (exclude && item.element === exclude) return false;
-  return true;
 }
 
 
@@ -4618,6 +4330,294 @@ var Command = forwardRef2(function Command2(props) {
   const htmlProps = useCommand(props);
   return HKOOKEDE_createElement(NAXN2XAB_TagName, htmlProps);
 });
+
+
+
+;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/EQQLU3CG.js
+"use client";
+
+
+
+// src/utils/store.ts
+function getInternal(store, key) {
+  const internals = store.__unstableInternals;
+  invariant(internals, "Invalid store");
+  return internals[key];
+}
+function createStore(initialState, ...stores) {
+  let state = initialState;
+  let prevStateBatch = state;
+  let lastUpdate = Symbol();
+  let destroy = noop;
+  const instances = /* @__PURE__ */ new Set();
+  const updatedKeys = /* @__PURE__ */ new Set();
+  const setups = /* @__PURE__ */ new Set();
+  const listeners = /* @__PURE__ */ new Set();
+  const batchListeners = /* @__PURE__ */ new Set();
+  const disposables = /* @__PURE__ */ new WeakMap();
+  const listenerKeys = /* @__PURE__ */ new WeakMap();
+  const storeSetup = (callback) => {
+    setups.add(callback);
+    return () => setups.delete(callback);
+  };
+  const storeInit = () => {
+    const initialized = instances.size;
+    const instance = Symbol();
+    instances.add(instance);
+    const maybeDestroy = () => {
+      instances.delete(instance);
+      if (instances.size) return;
+      destroy();
+    };
+    if (initialized) return maybeDestroy;
+    const desyncs = getKeys(state).map(
+      (key) => chain(
+        ...stores.map((store) => {
+          var _a;
+          const storeState = (_a = store == null ? void 0 : store.getState) == null ? void 0 : _a.call(store);
+          if (!storeState) return;
+          if (!PBFD2E7P_hasOwnProperty(storeState, key)) return;
+          return sync(store, [key], (state2) => {
+            setState(
+              key,
+              state2[key],
+              // @ts-expect-error - Not public API. This is just to prevent
+              // infinite loops.
+              true
+            );
+          });
+        })
+      )
+    );
+    const teardowns = [];
+    for (const setup2 of setups) {
+      teardowns.push(setup2());
+    }
+    const cleanups = stores.map(init);
+    destroy = chain(...desyncs, ...teardowns, ...cleanups);
+    return maybeDestroy;
+  };
+  const sub = (keys, listener, set = listeners) => {
+    set.add(listener);
+    listenerKeys.set(listener, keys);
+    return () => {
+      var _a;
+      (_a = disposables.get(listener)) == null ? void 0 : _a();
+      disposables.delete(listener);
+      listenerKeys.delete(listener);
+      set.delete(listener);
+    };
+  };
+  const storeSubscribe = (keys, listener) => sub(keys, listener);
+  const storeSync = (keys, listener) => {
+    disposables.set(listener, listener(state, state));
+    return sub(keys, listener);
+  };
+  const storeBatch = (keys, listener) => {
+    disposables.set(listener, listener(state, prevStateBatch));
+    return sub(keys, listener, batchListeners);
+  };
+  const storePick = (keys) => createStore(pick(state, keys), finalStore);
+  const storeOmit = (keys) => createStore(omit(state, keys), finalStore);
+  const getState = () => state;
+  const setState = (key, value, fromStores = false) => {
+    var _a;
+    if (!PBFD2E7P_hasOwnProperty(state, key)) return;
+    const nextValue = applyState(value, state[key]);
+    if (nextValue === state[key]) return;
+    if (!fromStores) {
+      for (const store of stores) {
+        (_a = store == null ? void 0 : store.setState) == null ? void 0 : _a.call(store, key, nextValue);
+      }
+    }
+    const prevState = state;
+    state = _chunks_3YLGPPWQ_spreadProps(_chunks_3YLGPPWQ_spreadValues({}, state), { [key]: nextValue });
+    const thisUpdate = Symbol();
+    lastUpdate = thisUpdate;
+    updatedKeys.add(key);
+    const run = (listener, prev, uKeys) => {
+      var _a2;
+      const keys = listenerKeys.get(listener);
+      const updated = (k) => uKeys ? uKeys.has(k) : k === key;
+      if (!keys || keys.some(updated)) {
+        (_a2 = disposables.get(listener)) == null ? void 0 : _a2();
+        disposables.set(listener, listener(state, prev));
+      }
+    };
+    for (const listener of listeners) {
+      run(listener, prevState);
+    }
+    queueMicrotask(() => {
+      if (lastUpdate !== thisUpdate) return;
+      const snapshot = state;
+      for (const listener of batchListeners) {
+        run(listener, prevStateBatch, updatedKeys);
+      }
+      prevStateBatch = snapshot;
+      updatedKeys.clear();
+    });
+  };
+  const finalStore = {
+    getState,
+    setState,
+    __unstableInternals: {
+      setup: storeSetup,
+      init: storeInit,
+      subscribe: storeSubscribe,
+      sync: storeSync,
+      batch: storeBatch,
+      pick: storePick,
+      omit: storeOmit
+    }
+  };
+  return finalStore;
+}
+function setup(store, ...args) {
+  if (!store) return;
+  return getInternal(store, "setup")(...args);
+}
+function init(store, ...args) {
+  if (!store) return;
+  return getInternal(store, "init")(...args);
+}
+function subscribe(store, ...args) {
+  if (!store) return;
+  return getInternal(store, "subscribe")(...args);
+}
+function sync(store, ...args) {
+  if (!store) return;
+  return getInternal(store, "sync")(...args);
+}
+function batch(store, ...args) {
+  if (!store) return;
+  return getInternal(store, "batch")(...args);
+}
+function omit2(store, ...args) {
+  if (!store) return;
+  return getInternal(store, "omit")(...args);
+}
+function pick2(store, ...args) {
+  if (!store) return;
+  return getInternal(store, "pick")(...args);
+}
+function mergeStore(...stores) {
+  const initialState = stores.reduce((state, store2) => {
+    var _a;
+    const nextState = (_a = store2 == null ? void 0 : store2.getState) == null ? void 0 : _a.call(store2);
+    if (!nextState) return state;
+    return Object.assign(state, nextState);
+  }, {});
+  const store = createStore(initialState, ...stores);
+  return store;
+}
+function throwOnConflictingProps(props, store) {
+  if (true) return;
+  if (!store) return;
+  const defaultKeys = Object.entries(props).filter(([key, value]) => key.startsWith("default") && value !== void 0).map(([key]) => {
+    var _a;
+    const stateKey = key.replace("default", "");
+    return `${((_a = stateKey[0]) == null ? void 0 : _a.toLowerCase()) || ""}${stateKey.slice(1)}`;
+  });
+  if (!defaultKeys.length) return;
+  const storeState = store.getState();
+  const conflictingProps = defaultKeys.filter(
+    (key) => PBFD2E7P_hasOwnProperty(storeState, key)
+  );
+  if (!conflictingProps.length) return;
+  throw new Error(
+    `Passing a store prop in conjunction with a default state is not supported.
+
+const store = useSelectStore();
+<SelectProvider store={store} defaultValue="Apple" />
+                ^             ^
+
+Instead, pass the default state to the topmost store:
+
+const store = useSelectStore({ defaultValue: "Apple" });
+<SelectProvider store={store} />
+
+See https://github.com/ariakit/ariakit/pull/2745 for more details.
+
+If there's a particular need for this, please submit a feature request at https://github.com/ariakit/ariakit
+`
+  );
+}
+
+
+
+// EXTERNAL MODULE: ./node_modules/use-sync-external-store/shim/index.js
+var shim = __webpack_require__(635);
+;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/2GXGCHW6.js
+"use client";
+
+
+
+// src/utils/store.tsx
+
+
+
+
+var { useSyncExternalStore } = shim;
+var noopSubscribe = () => () => {
+};
+function useStoreState(store, keyOrSelector = identity) {
+  const storeSubscribe = external_React_.useCallback(
+    (callback) => {
+      if (!store) return noopSubscribe();
+      return subscribe(store, null, callback);
+    },
+    [store]
+  );
+  const getSnapshot = () => {
+    const key = typeof keyOrSelector === "string" ? keyOrSelector : null;
+    const selector = typeof keyOrSelector === "function" ? keyOrSelector : null;
+    const state = store == null ? void 0 : store.getState();
+    if (selector) return selector(state);
+    if (!state) return;
+    if (!key) return;
+    if (!PBFD2E7P_hasOwnProperty(state, key)) return;
+    return state[key];
+  };
+  return useSyncExternalStore(storeSubscribe, getSnapshot, getSnapshot);
+}
+function useStoreProps(store, props, key, setKey) {
+  const value = PBFD2E7P_hasOwnProperty(props, key) ? props[key] : void 0;
+  const setValue = setKey ? props[setKey] : void 0;
+  const propsRef = useLiveRef({ value, setValue });
+  useSafeLayoutEffect(() => {
+    return sync(store, [key], (state, prev) => {
+      const { value: value2, setValue: setValue2 } = propsRef.current;
+      if (!setValue2) return;
+      if (state[key] === prev[key]) return;
+      if (state[key] === value2) return;
+      setValue2(state[key]);
+    });
+  }, [store, key]);
+  useSafeLayoutEffect(() => {
+    if (value === void 0) return;
+    store.setState(key, value);
+    return batch(store, [key], () => {
+      if (value === void 0) return;
+      store.setState(key, value);
+    });
+  });
+}
+function _2GXGCHW6_useStore(createStore, props) {
+  const [store, setStore] = external_React_.useState(() => createStore(props));
+  useSafeLayoutEffect(() => init(store), [store]);
+  const useState2 = external_React_.useCallback(
+    (keyOrSelector) => useStoreState(store, keyOrSelector),
+    [store]
+  );
+  const memoizedStore = external_React_.useMemo(
+    () => _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, store), { useState: useState2 }),
+    [store, useState2]
+  );
+  const updateStore = useEvent(() => {
+    setStore((store2) => createStore(_3YLGPPWQ_spreadValues(_3YLGPPWQ_spreadValues({}, props), store2.getState())));
+  });
+  return [memoizedStore, updateStore];
+}
 
 
 
@@ -15182,7 +15182,7 @@ const TOGGLE_GROUP_CONTROL_PROPS = {
   transitionTimingFunctionControl: 'cubic-bezier(0.12, 0.8, 0.32, 1)'
 }));
 
-;// CONCATENATED MODULE: ./packages/components/build-module/alignment-matrix-control/styles/alignment-matrix-control-styles.js
+;// CONCATENATED MODULE: ./packages/components/build-module/alignment-matrix-control/styles.js
 
 function _EMOTION_STRINGIFIED_CSS_ERROR__() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
 /**
@@ -15195,43 +15195,36 @@ function _EMOTION_STRINGIFIED_CSS_ERROR__() { return "You have tried to stringif
  * Internal dependencies
  */
 
-const rootBase = () => {
-  return /*#__PURE__*/emotion_react_browser_esm_css("border-radius:", config_values.radiusMedium, ";box-sizing:border-box;direction:ltr;display:grid;grid-template-columns:repeat( 3, 1fr );outline:none;" + ( true ? "" : 0),  true ? "" : 0);
-};
-const rootSize = ({
+// Grid structure
+
+const rootBase = ({
   size = 92
-}) => {
-  return /*#__PURE__*/emotion_react_browser_esm_css("grid-template-rows:repeat( 3, calc( ", size, "px / 3 ) );width:", size, "px;" + ( true ? "" : 0),  true ? "" : 0);
-};
-const Root = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
-  target: "ecapk1j3"
-} : 0)(rootBase, ";border:1px solid transparent;cursor:pointer;grid-template-columns:auto;", rootSize, ";" + ( true ? "" : 0));
-const Row = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
-  target: "ecapk1j2"
+}) => /*#__PURE__*/emotion_react_browser_esm_css("direction:ltr;display:grid;grid-template-columns:repeat( 3, 1fr );grid-template-rows:repeat( 3, 1fr );box-sizing:border-box;width:", size, "px;aspect-ratio:1;border-radius:", config_values.radiusMedium, ";outline:none;" + ( true ? "" : 0),  true ? "" : 0);
+var _ref =  true ? {
+  name: "e0dnmk",
+  styles: "cursor:pointer"
+} : 0;
+const GridContainer = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
+  target: "e1r95csn3"
+} : 0)(rootBase, " border:1px solid transparent;", props => props.disablePointerEvents ? /*#__PURE__*/emotion_react_browser_esm_css( true ? "" : 0,  true ? "" : 0) : _ref, ";" + ( true ? "" : 0));
+const GridRow = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
+  target: "e1r95csn2"
 } : 0)( true ? {
-  name: "1x5gbbj",
-  styles: "box-sizing:border-box;display:grid;grid-template-columns:repeat( 3, 1fr )"
+  name: "1fbxn64",
+  styles: "grid-column:1/-1;box-sizing:border-box;display:grid;grid-template-columns:repeat( 3, 1fr )"
 } : 0);
-const pointActive = ({
-  isActive
-}) => {
-  const boxShadow = isActive ? `0 0 0 2px ${COLORS.gray[900]}` : null;
-  const pointColor = isActive ? COLORS.gray[900] : COLORS.gray[400];
-  const pointColorHover = isActive ? COLORS.gray[900] : COLORS.theme.accent;
-  return /*#__PURE__*/emotion_react_browser_esm_css("box-shadow:", boxShadow, ";color:", pointColor, ";*:hover>&{color:", pointColorHover, ";}" + ( true ? "" : 0),  true ? "" : 0);
-};
-const pointBase = props => {
-  return /*#__PURE__*/emotion_react_browser_esm_css("background:currentColor;box-sizing:border-box;display:grid;margin:auto;@media not ( prefers-reduced-motion ){transition:all 120ms linear;}", pointActive(props), ";" + ( true ? "" : 0),  true ? "" : 0);
-};
-const Point = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
-  target: "ecapk1j1"
-} : 0)("height:6px;width:6px;", pointBase, ";" + ( true ? "" : 0));
+
+// Cell
 const Cell = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
-  target: "ecapk1j0"
+  target: "e1r95csn1"
 } : 0)( true ? {
-  name: "rjf3ub",
-  styles: "appearance:none;border:none;box-sizing:border-box;margin:0;display:flex;position:relative;outline:none;align-items:center;justify-content:center;padding:0"
+  name: "e2kws5",
+  styles: "position:relative;display:flex;align-items:center;justify-content:center;box-sizing:border-box;margin:0;padding:0;appearance:none;border:none;outline:none"
 } : 0);
+const POINT_SIZE = 6;
+const Point = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
+  target: "e1r95csn0"
+} : 0)("display:block;contain:strict;box-sizing:border-box;width:", POINT_SIZE, "px;aspect-ratio:1;margin:auto;color:", COLORS.theme.gray[400], ";border:", POINT_SIZE / 2, "px solid currentColor;", Cell, "[data-active-item] &{color:", COLORS.gray[900], ";transform:scale( calc( 5 / 3 ) );}", Cell, ":not([data-active-item]):hover &{color:", COLORS.theme.accent, ";}", Cell, "[data-focus-visible] &{outline:1px solid ", COLORS.theme.accent, ";outline-offset:1px;}@media not ( prefers-reduced-motion ){transition-property:color,transform;transition-duration:120ms;transition-timing-function:linear;}" + ( true ? "" : 0));
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/alignment-matrix-control/cell.js
 /**
@@ -15250,13 +15243,11 @@ const Cell = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
 
 function cell_Cell({
   id,
-  isActive = false,
   value,
   ...props
 }) {
-  const tooltipText = ALIGNMENT_LABEL[value];
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tooltip, {
-    text: tooltipText,
+    text: ALIGNMENT_LABEL[value],
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Composite.Item, {
       id: id,
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Cell, {
@@ -15266,7 +15257,6 @@ function cell_Cell({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(visually_hidden_component, {
         children: value
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Point, {
-        isActive: isActive,
         role: "presentation"
       })]
     })
@@ -15831,56 +15821,6 @@ function store_useCompositeStore({
   });
 }
 
-;// CONCATENATED MODULE: ./packages/components/build-module/alignment-matrix-control/styles/alignment-matrix-control-icon-styles.js
-
-function alignment_matrix_control_icon_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
-/**
- * External dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-const alignment_matrix_control_icon_styles_rootSize = () => {
-  const padding = 1.5;
-  const size = 24;
-  return /*#__PURE__*/emotion_react_browser_esm_css({
-    gridTemplateRows: `repeat( 3, calc( ${size - padding * 2}px / 3))`,
-    padding,
-    maxHeight: size,
-    maxWidth: size
-  },  true ? "" : 0,  true ? "" : 0);
-};
-const rootPointerEvents = ({
-  disablePointerEvents
-}) => {
-  return /*#__PURE__*/emotion_react_browser_esm_css({
-    pointerEvents: disablePointerEvents ? 'none' : undefined
-  },  true ? "" : 0,  true ? "" : 0);
-};
-const Wrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
-  target: "erowt52"
-} : 0)( true ? {
-  name: "ogl07i",
-  styles: "box-sizing:border-box;padding:2px"
-} : 0);
-const alignment_matrix_control_icon_styles_Root = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
-  target: "erowt51"
-} : 0)("transform-origin:top left;height:100%;width:100%;", rootBase, ";", alignment_matrix_control_icon_styles_rootSize, ";", rootPointerEvents, ";" + ( true ? "" : 0));
-const alignment_matrix_control_icon_styles_pointActive = ({
-  isActive
-}) => {
-  const boxShadow = isActive ? `0 0 0 1px currentColor` : null;
-  return /*#__PURE__*/emotion_react_browser_esm_css("box-shadow:", boxShadow, ";color:currentColor;*:hover>&{color:currentColor;}" + ( true ? "" : 0),  true ? "" : 0);
-};
-const alignment_matrix_control_icon_styles_Point = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
-  target: "erowt50"
-} : 0)("height:2px;width:2px;", pointBase, ";", alignment_matrix_control_icon_styles_pointActive, ";" + ( true ? "" : 0));
-const alignment_matrix_control_icon_styles_Cell = Cell;
-
 ;// CONCATENATED MODULE: ./packages/components/build-module/alignment-matrix-control/icon.js
 /**
  * External dependencies
@@ -15888,39 +15828,51 @@ const alignment_matrix_control_icon_styles_Cell = Cell;
 
 
 /**
+ * WordPress dependencies
+ */
+
+
+/**
  * Internal dependencies
  */
 
 
-
 const BASE_SIZE = 24;
+const GRID_CELL_SIZE = 7;
+const GRID_PADDING = (BASE_SIZE - 3 * GRID_CELL_SIZE) / 2;
+const DOT_SIZE = 2;
+const DOT_SIZE_SELECTED = 4;
 function AlignmentMatrixControlIcon({
   className,
   disablePointerEvents = true,
-  size = BASE_SIZE,
+  size,
+  width,
+  height,
   style = {},
   value = 'center',
   ...props
 }) {
-  const alignIndex = getAlignmentIndex(value);
-  const scale = (size / BASE_SIZE).toFixed(2);
-  const classes = dist_clsx('component-alignment-matrix-control-icon', className);
-  const styles = {
-    ...style,
-    transform: `scale(${scale})`
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(alignment_matrix_control_icon_styles_Root, {
-    ...props,
-    className: classes,
-    disablePointerEvents: disablePointerEvents,
+  var _ref, _ref2;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: `0 0 ${BASE_SIZE} ${BASE_SIZE}`,
+    width: (_ref = size !== null && size !== void 0 ? size : width) !== null && _ref !== void 0 ? _ref : BASE_SIZE,
+    height: (_ref2 = size !== null && size !== void 0 ? size : height) !== null && _ref2 !== void 0 ? _ref2 : BASE_SIZE,
     role: "presentation",
-    style: styles,
+    className: dist_clsx('component-alignment-matrix-control-icon', className),
+    style: {
+      pointerEvents: disablePointerEvents ? 'none' : undefined,
+      ...style
+    },
+    ...props,
     children: ALIGNMENTS.map((align, index) => {
-      const isActive = alignIndex === index;
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(alignment_matrix_control_icon_styles_Cell, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(alignment_matrix_control_icon_styles_Point, {
-          isActive: isActive
-        })
+      const dotSize = getAlignmentIndex(value) === index ? DOT_SIZE_SELECTED : DOT_SIZE;
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Rect, {
+        x: GRID_PADDING + index % 3 * GRID_CELL_SIZE + (GRID_CELL_SIZE - dotSize) / 2,
+        y: GRID_PADDING + Math.floor(index / 3) * GRID_CELL_SIZE + (GRID_CELL_SIZE - dotSize) / 2,
+        width: dotSize,
+        height: dotSize,
+        fill: "currentColor"
       }, align);
     })
   });
@@ -15931,7 +15883,6 @@ function AlignmentMatrixControlIcon({
 /**
  * External dependencies
  */
-
 
 
 /**
@@ -15992,11 +15943,10 @@ function AlignmentMatrixControl({
     },
     rtl: (0,external_wp_i18n_namespaceObject.isRTL)()
   });
-  const activeId = useStoreState(compositeStore, 'activeId');
   const classes = dist_clsx('component-alignment-matrix-control', className);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Composite, {
     store: compositeStore,
-    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Root, {
+    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridContainer, {
       ...props,
       "aria-label": label,
       className: classes,
@@ -16005,18 +15955,13 @@ function AlignmentMatrixControl({
       size: width
     }),
     children: GRID.map((cells, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Composite.Row, {
-      render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Row, {
+      render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridRow, {
         role: "row"
       }),
-      children: cells.map(cell => {
-        const cellId = getItemId(baseId, cell);
-        const isActive = cellId === activeId;
-        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(cell_Cell, {
-          id: cellId,
-          isActive: isActive,
-          value: cell
-        }, cell);
-      })
+      children: cells.map(cell => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(cell_Cell, {
+        id: getItemId(baseId, cell),
+        value: cell
+      }, cell))
     }, index))
   });
 }
@@ -28282,7 +28227,7 @@ function hook_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to strin
 
 
 
-var _ref =  true ? {
+var hook_ref =  true ? {
   name: "50zrmy",
   styles: "text-transform:uppercase"
 } : 0;
@@ -28342,7 +28287,7 @@ function useText(props) {
       letterSpacing,
       textAlign: align
     },  true ? "" : 0,  true ? "" : 0);
-    sx.upperCase = _ref;
+    sx.upperCase = hook_ref;
     sx.optimalTextColor = null;
     if (optimizeReadabilityFor) {
       const isOptimalTextColorDark = getOptimalTextShade(optimizeReadabilityFor) === 'dark';
@@ -28492,7 +28437,7 @@ const BackdropUI = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
 } : 0)("&&&{box-sizing:border-box;border-color:", backdropBorderColor, ";border-radius:inherit;border-style:solid;border-width:1px;bottom:0;left:0;margin:0;padding:0;pointer-events:none;position:absolute;right:0;top:0;", rtl({
   paddingLeft: 2
 }), ";}" + ( true ? "" : 0));
-const input_control_styles_Root = /*#__PURE__*/emotion_styled_base_browser_esm(flex_component,  true ? {
+const Root = /*#__PURE__*/emotion_styled_base_browser_esm(flex_component,  true ? {
   target: "em5sgkm5"
 } : 0)("box-sizing:border-box;position:relative;border-radius:", config_values.radiusSmall, ";padding-top:0;&:focus-within:not( :has( :is( ", Prefix, ", ", Suffix, " ):focus-within ) ){", BackdropUI, "{border-color:", COLORS.ui.borderFocus, ";box-shadow:", config_values.controlBoxShadowFocus, ";outline:2px solid transparent;outline-offset:-2px;}}" + ( true ? "" : 0));
 const containerDisabledStyles = ({
@@ -28820,7 +28765,7 @@ function InputBase(props, ref) {
   return (
     /*#__PURE__*/
     // @ts-expect-error The `direction` prop from Flex (FlexDirection) conflicts with legacy SVGAttributes `direction` (string) that come from React intrinsic prop definitions.
-    (0,external_ReactJSXRuntime_namespaceObject.jsxs)(input_control_styles_Root, {
+    (0,external_ReactJSXRuntime_namespaceObject.jsxs)(Root, {
       ...restProps,
       ...getUIFlexProps(labelPosition),
       className: className,
@@ -31354,7 +31299,7 @@ function base_control_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have
  */
 
 
-const base_control_styles_Wrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
+const Wrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "ej5x27r4"
 } : 0)("font-family:", font('default.fontFamily'), ";font-size:", font('default.fontSize'), ";", boxSizingReset, ";" + ( true ? "" : 0));
 const deprecatedMarginField = ({
@@ -31423,7 +31368,7 @@ const UnconnectedBaseControl = props => {
       hint: 'Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version.'
     });
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(base_control_styles_Wrapper, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Wrapper, {
     className: className,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(StyledField, {
       className: "components-base-control__field"
@@ -66709,7 +66654,7 @@ const ToolsPanelHeading =  true ? {
   name: "1pmxm02",
   styles: "font-size:inherit;font-weight:500;line-height:normal;&&{margin:0;}"
 } : 0;
-const ToolsPanelItem = /*#__PURE__*/emotion_react_browser_esm_css(toolsPanelGrid.item.fullWidth, "&>div,&>fieldset{padding-bottom:0;margin-bottom:0;max-width:100%;}&& ", base_control_styles_Wrapper, "{margin-bottom:0;", StyledField, ":last-child{margin-bottom:0;}}", StyledHelp, "{margin-bottom:0;}&& ", LabelWrapper, "{label{line-height:1.4em;}}" + ( true ? "" : 0),  true ? "" : 0);
+const ToolsPanelItem = /*#__PURE__*/emotion_react_browser_esm_css(toolsPanelGrid.item.fullWidth, "&>div,&>fieldset{padding-bottom:0;margin-bottom:0;max-width:100%;}&& ", Wrapper, "{margin-bottom:0;", StyledField, ":last-child{margin-bottom:0;}}", StyledHelp, "{margin-bottom:0;}&& ", LabelWrapper, "{label{line-height:1.4em;}}" + ( true ? "" : 0),  true ? "" : 0);
 const ToolsPanelItemPlaceholder =  true ? {
   name: "eivff4",
   styles: "display:none"
