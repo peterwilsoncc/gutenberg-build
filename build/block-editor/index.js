@@ -17228,9 +17228,8 @@ function getValueFromCustomVariable(features, blockName, variable, path) {
  */
 function getValueFromVariable(features, blockName, variable) {
   if (!variable || typeof variable !== 'string') {
-    if (variable?.ref && typeof variable?.ref === 'string') {
-      const refPath = variable.ref.split('.');
-      variable = getValueFromObjectPath(features, refPath);
+    if (typeof variable?.ref === 'string') {
+      variable = getValueFromObjectPath(features, variable.ref);
       // Presence of another ref indicates a reference to another dynamic value.
       // Pointing to another dynamic value is not supported.
       if (!variable || !!variable?.ref) {
@@ -17445,8 +17444,7 @@ function getResolvedRefValue(ruleValue, tree) {
    * For example: { "ref": "style.color.background" } => "#fff".
    */
   if (typeof ruleValue !== 'string' && ruleValue?.ref) {
-    const refPath = ruleValue.ref.split('.');
-    const resolvedRuleValue = (0,external_wp_styleEngine_namespaceObject.getCSSValueFromRawStyle)(getValueFromObjectPath(tree, refPath));
+    const resolvedRuleValue = (0,external_wp_styleEngine_namespaceObject.getCSSValueFromRawStyle)(getValueFromObjectPath(tree, ruleValue.ref));
 
     /*
      * Presence of another ref indicates a reference to another dynamic value.
@@ -17455,7 +17453,7 @@ function getResolvedRefValue(ruleValue, tree) {
     if (resolvedRuleValue?.ref) {
       return undefined;
     }
-    if (!resolvedRuleValue) {
+    if (resolvedRuleValue === undefined) {
       return ruleValue;
     }
     return resolvedRuleValue;
