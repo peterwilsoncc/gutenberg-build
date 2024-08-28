@@ -18623,6 +18623,7 @@ function Image(block) {
 function maybe_upload_media_PostFormatPanel() {
   const [isUploading, setIsUploading] = (0,external_wp_element_namespaceObject.useState)(false);
   const [isAnimating, setIsAnimating] = (0,external_wp_element_namespaceObject.useState)(false);
+  const [hadUploadError, setHadUploadError] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
     editorBlocks,
     mediaUpload
@@ -18643,6 +18644,7 @@ function maybe_upload_media_PostFormatPanel() {
   }, "label")];
   function uploadImages() {
     setIsUploading(true);
+    setHadUploadError(false);
     Promise.all(externalImages.map(image => window.fetch(image.attributes.url.includes('?') ? image.attributes.url : image.attributes.url + '?').then(response => response.blob()).then(blob => new Promise((resolve, reject) => {
       mediaUpload({
         filesList: [blob],
@@ -18660,7 +18662,9 @@ function maybe_upload_media_PostFormatPanel() {
           reject();
         }
       });
-    }).then(() => setIsAnimating(true))))).finally(() => {
+    }).then(() => setIsAnimating(true))).catch(() => {
+      setHadUploadError(true);
+    }))).finally(() => {
       setIsUploading(false);
     });
   }
@@ -18690,6 +18694,8 @@ function maybe_upload_media_PostFormatPanel() {
         onClick: uploadImages,
         children: (0,external_wp_i18n_namespaceObject.__)('Upload')
       })]
+    }), hadUploadError && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+      children: (0,external_wp_i18n_namespaceObject.__)('Upload failed, try again.')
     })]
   });
 }
