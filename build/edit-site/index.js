@@ -34551,7 +34551,6 @@ function search_widget_ComboboxList({
     return filter.elements.filter(item => search_widget_normalizeSearchInput(item.label).includes(normalizedSearch));
   }, [filter.elements, deferredSearchValue]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ComboboxProvider, {
-    resetValueOnSelect: false,
     selectedValue: currentValue,
     setSelectedValue: value => {
       var _view$filters3, _view$filters4;
@@ -34598,6 +34597,7 @@ function search_widget_ComboboxList({
       alwaysVisible: true,
       children: [matches.map(element => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ComboboxItem, {
+          resetValueOnSelect: false,
           value: element.value,
           className: "dataviews-filters__search-widget-listitem",
           hideOnClick: false,
