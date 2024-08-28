@@ -15952,7 +15952,10 @@ function PostLockedModal() {
     focusOnMount: true,
     shouldCloseOnClickOutside: false,
     shouldCloseOnEsc: false,
-    isDismissible: false,
+    isDismissible: false
+    // Do not remove this class, as this class is used by third party plugins.
+    ,
+    className: "editor-post-locked-modal",
     size: "medium",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       alignment: "top",
