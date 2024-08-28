@@ -10262,12 +10262,47 @@ const STORE_NAME = 'core/block-editor';
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/store/utils.js
 /**
+ * WordPress dependencies
+ */
+
+
+/**
  * Internal dependencies
  */
 
 
 
 const withRootClientIdOptionKey = Symbol('withRootClientId');
+const parsedPatternCache = new WeakMap();
+function parsePattern(pattern) {
+  const blocks = (0,external_wp_blocks_namespaceObject.parse)(pattern.content, {
+    __unstableSkipMigrationLogs: true
+  });
+  if (blocks.length === 1) {
+    blocks[0].attributes = {
+      ...blocks[0].attributes,
+      metadata: {
+        ...(blocks[0].attributes.metadata || {}),
+        categories: pattern.categories,
+        patternName: pattern.name,
+        name: blocks[0].attributes.metadata?.name || pattern.title
+      }
+    };
+  }
+  return {
+    ...pattern,
+    blocks
+  };
+}
+function getParsedPattern(pattern) {
+  let parsedPattern = parsedPatternCache.get(pattern);
+  if (parsedPattern) {
+    return parsedPattern;
+  }
+  parsedPattern = parsePattern(pattern);
+  parsedPatternCache.set(pattern, parsedPattern);
+  return parsedPattern;
+}
 const checkAllowList = (list, item, defaultResult = null) => {
   if (typeof list === 'boolean') {
     return list;
@@ -10852,23 +10887,22 @@ const getInserterMediaCategories = (0,external_wp_data_namespaceObject.createSel
  */
 const hasAllowedPatterns = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)((state, rootClientId = null) => {
   const {
-    getAllPatterns,
-    __experimentalGetParsedPattern
+    getAllPatterns
   } = unlock(select(STORE_NAME));
   const patterns = getAllPatterns();
   const {
     allowedBlockTypes
   } = getSettings(state);
-  return patterns.some(({
-    name,
-    inserter = true
-  }) => {
+  return patterns.some(pattern => {
+    const {
+      inserter = true
+    } = pattern;
     if (!inserter) {
       return false;
     }
     const {
       blocks
-    } = __experimentalGetParsedPattern(name);
+    } = getParsedPattern(pattern);
     return checkAllowListRecursive(blocks, allowedBlockTypes) && blocks.every(({
       name: blockName
     }) => canInsertBlockType(state, blockName, rootClientId));
@@ -12999,30 +13033,10 @@ function __experimentalGetDirectInsertBlock(state, rootClientId = null) {
   });
   return getDirectInsertBlock(state, rootClientId);
 }
-const __experimentalGetParsedPattern = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)((state, patternName) => {
+const __experimentalGetParsedPattern = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (state, patternName) => {
   const pattern = unlock(select(STORE_NAME)).getPatternBySlug(patternName);
-  if (!pattern) {
-    return null;
-  }
-  const blocks = (0,external_wp_blocks_namespaceObject.parse)(pattern.content, {
-    __unstableSkipMigrationLogs: true
-  });
-  if (blocks.length === 1) {
-    blocks[0].attributes = {
-      ...blocks[0].attributes,
-      metadata: {
-        ...(blocks[0].attributes.metadata || {}),
-        categories: pattern.categories,
-        patternName: pattern.name,
-        name: blocks[0].attributes.metadata?.name || pattern.title
-      }
-    };
-  }
-  return {
-    ...pattern,
-    blocks
-  };
-}, (state, patternName) => [unlock(select(STORE_NAME)).getPatternBySlug(patternName)]));
+  return pattern ? getParsedPattern(pattern) : null;
+});
 const getAllowedPatternsDependants = select => (state, rootClientId) => [...getAllPatternsDependants(select)(state), ...getInsertBlockTypeDependants(state, rootClientId)];
 
 /**
@@ -13036,8 +13050,7 @@ const getAllowedPatternsDependants = select => (state, rootClientId) => [...getA
 const __experimentalGetAllowedPatterns = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => {
   return (0,external_wp_data_namespaceObject.createSelector)((state, rootClientId = null) => {
     const {
-      getAllPatterns,
-      __experimentalGetParsedPattern: getParsedPattern
+      getAllPatterns
     } = unlock(select(STORE_NAME));
     const patterns = getAllPatterns();
     const {
@@ -13045,9 +13058,7 @@ const __experimentalGetAllowedPatterns = (0,external_wp_data_namespaceObject.cre
     } = getSettings(state);
     const parsedPatterns = patterns.filter(({
       inserter = true
-    }) => !!inserter).map(({
-      name
-    }) => getParsedPattern(name));
+    }) => !!inserter).map(getParsedPattern);
     const availableParsedPatterns = parsedPatterns.filter(({
       blocks
     }) => checkAllowListRecursive(blocks, allowedBlockTypes));
