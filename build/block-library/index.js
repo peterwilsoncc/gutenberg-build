@@ -26125,7 +26125,7 @@ function image_Image({
               onToggle();
             }
           },
-          children: (0,external_wp_i18n_namespaceObject._x)('Alt', 'Alternative text for an image. Block toolbar label, a low character count is preferred.')
+          children: (0,external_wp_i18n_namespaceObject._x)('Alternative text', 'Alternative text for an image. Block toolbar label, a low character count is preferred.')
         }),
         renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextareaControl, {
           className: "wp-block-image__toolbar_content_textarea",
