@@ -37383,6 +37383,10 @@ function SortDirectionControl() {
     fields,
     onChangeView
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
+  const sortableFields = fields.filter(field => field.enableSorting !== false);
+  if (sortableFields.length === 0) {
+    return null;
+  }
   let value = view.sort?.direction;
   if (!value && view.sort?.field) {
     value = 'desc';

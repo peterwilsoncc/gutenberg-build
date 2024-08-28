@@ -55020,6 +55020,9 @@ function BlockHooksControlPure({
  */
 
 
+function isObjectEmpty(object) {
+  return !object || Object.keys(object).length === 0;
+}
 function useBlockBindingsUtils() {
   const {
     clientId
@@ -55029,7 +55032,7 @@ function useBlockBindingsUtils() {
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const {
     getBlockAttributes
-  } = (0,external_wp_data_namespaceObject.useSelect)(store);
+  } = (0,external_wp_data_namespaceObject.useRegistry)().select(store);
 
   /**
    * Updates the value of the bindings connected to block attributes.
@@ -55062,10 +55065,13 @@ function useBlockBindingsUtils() {
    */
   const updateBlockBindings = bindings => {
     const {
-      metadata
+      metadata: {
+        bindings: currentBindings,
+        ...metadata
+      } = {}
     } = getBlockAttributes(clientId);
     const newBindings = {
-      ...metadata?.bindings
+      ...currentBindings
     };
     Object.entries(bindings).forEach(([attribute, binding]) => {
       if (!binding && newBindings[attribute]) {
@@ -55078,11 +55084,11 @@ function useBlockBindingsUtils() {
       ...metadata,
       bindings: newBindings
     };
-    if (Object.keys(newMetadata.bindings).length === 0) {
+    if (isObjectEmpty(newMetadata.bindings)) {
       delete newMetadata.bindings;
     }
     updateBlockAttributes(clientId, {
-      metadata: Object.keys(newMetadata).length === 0 ? undefined : newMetadata
+      metadata: isObjectEmpty(newMetadata) ? undefined : newMetadata
     });
   };
 
@@ -55099,14 +55105,13 @@ function useBlockBindingsUtils() {
    */
   const removeAllBlockBindings = () => {
     const {
-      metadata
+      metadata: {
+        bindings,
+        ...metadata
+      } = {}
     } = getBlockAttributes(clientId);
-    const newMetadata = {
-      ...metadata
-    };
-    delete newMetadata.bindings;
     updateBlockAttributes(clientId, {
-      metadata: Object.keys(newMetadata).length === 0 ? undefined : newMetadata
+      metadata: isObjectEmpty(metadata) ? undefined : metadata
     });
   };
   return {
@@ -60859,7 +60864,11 @@ function Shuffle({
     const _categories = attributes?.metadata?.categories || shuffle_EMPTY_ARRAY;
     const _patternName = attributes?.metadata?.patternName;
     const rootBlock = getBlockRootClientId(clientId);
-    const _patterns = __experimentalGetAllowedPatterns(rootBlock);
+
+    // Calling `__experimentalGetAllowedPatterns` is expensive.
+    // Checking if the block can be shuffled prevents unnecessary selector calls.
+    // See: https://github.com/WordPress/gutenberg/pull/64736.
+    const _patterns = _categories.length > 0 ? __experimentalGetAllowedPatterns(rootBlock) : shuffle_EMPTY_ARRAY;
     return {
       categories: _categories,
       patterns: _patterns,
@@ -60870,7 +60879,7 @@ function Shuffle({
     replaceBlocks
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const sameCategoryPatternsWithSingleWrapper = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (!categories || categories.length === 0 || !patterns || patterns.length === 0) {
+    if (categories.length === 0 || !patterns || patterns.length === 0) {
       return shuffle_EMPTY_ARRAY;
     }
     return patterns.filter(pattern => {
