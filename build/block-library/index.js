@@ -26145,7 +26145,7 @@ function image_Image({
           }),
           __nextHasNoMarginBottom: true
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
+      }), title && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
         popoverProps: {
           position: 'bottom right'
         },
