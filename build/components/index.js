@@ -1897,11 +1897,11 @@ __webpack_require__.d(__webpack_exports__, {
   __experimentalNavigationGroup: () => (/* reexport */ group),
   __experimentalNavigationItem: () => (/* reexport */ navigation_item),
   __experimentalNavigationMenu: () => (/* reexport */ navigation_menu),
-  __experimentalNavigatorBackButton: () => (/* reexport */ navigator_back_button_component),
-  __experimentalNavigatorButton: () => (/* reexport */ navigator_button_component),
-  __experimentalNavigatorProvider: () => (/* reexport */ navigator_provider_component),
-  __experimentalNavigatorScreen: () => (/* reexport */ navigator_screen_component),
-  __experimentalNavigatorToParentButton: () => (/* reexport */ navigator_to_parent_button_component),
+  __experimentalNavigatorBackButton: () => (/* reexport */ NavigatorBackButton),
+  __experimentalNavigatorButton: () => (/* reexport */ NavigatorButton),
+  __experimentalNavigatorProvider: () => (/* reexport */ NavigatorProvider),
+  __experimentalNavigatorScreen: () => (/* reexport */ NavigatorScreen),
+  __experimentalNavigatorToParentButton: () => (/* reexport */ NavigatorToParentButton),
   __experimentalNumberControl: () => (/* reexport */ number_control),
   __experimentalPaletteEdit: () => (/* reexport */ palette_edit),
   __experimentalParseQuantityAndUnitFromRawValue: () => (/* reexport */ parseQuantityAndUnitFromRawValue),
@@ -1926,7 +1926,7 @@ __webpack_require__.d(__webpack_exports__, {
   __experimentalTruncate: () => (/* reexport */ truncate_component),
   __experimentalUnitControl: () => (/* reexport */ unit_control),
   __experimentalUseCustomUnits: () => (/* reexport */ useCustomUnits),
-  __experimentalUseNavigator: () => (/* reexport */ use_navigator),
+  __experimentalUseNavigator: () => (/* reexport */ useNavigator),
   __experimentalUseSlot: () => (/* reexport */ useSlot),
   __experimentalUseSlotFills: () => (/* reexport */ useSlotFills),
   __experimentalVStack: () => (/* reexport */ v_stack_component),
@@ -61118,7 +61118,7 @@ function UnconnectedNavigatorProvider(props, forwardedRef) {
  * ```
  */
 const NavigatorProvider = contextConnect(UnconnectedNavigatorProvider, 'NavigatorProvider');
-/* harmony default export */ const navigator_provider_component = (NavigatorProvider);
+/* harmony default export */ const navigator_provider_component = ((/* unused pure expression or super */ null && (NavigatorProvider)));
 
 ;// CONCATENATED MODULE: external ["wp","escapeHtml"]
 const external_wp_escapeHtml_namespaceObject = window["wp"]["escapeHtml"];
@@ -61266,7 +61266,7 @@ function UnconnectedNavigatorScreen(props, forwardedRef) {
  * ```
  */
 const NavigatorScreen = contextConnect(UnconnectedNavigatorScreen, 'NavigatorScreen');
-/* harmony default export */ const navigator_screen_component = (NavigatorScreen);
+/* harmony default export */ const navigator_screen_component = ((/* unused pure expression or super */ null && (NavigatorScreen)));
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/navigator/use-navigator.js
 /**
@@ -61297,7 +61297,6 @@ function useNavigator() {
     params
   };
 }
-/* harmony default export */ const use_navigator = (useNavigator);
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/navigator/navigator-button/hook.js
 /**
@@ -61325,7 +61324,7 @@ function useNavigatorButton(props) {
   const escapedPath = (0,external_wp_escapeHtml_namespaceObject.escapeAttribute)(path);
   const {
     goTo
-  } = use_navigator();
+  } = useNavigator();
   const handleClick = (0,external_wp_element_namespaceObject.useCallback)(e => {
     e.preventDefault();
     goTo(escapedPath, {
@@ -61396,7 +61395,7 @@ function UnconnectedNavigatorButton(props, forwardedRef) {
  * ```
  */
 const NavigatorButton = contextConnect(UnconnectedNavigatorButton, 'NavigatorButton');
-/* harmony default export */ const navigator_button_component = (NavigatorButton);
+/* harmony default export */ const navigator_button_component = ((/* unused pure expression or super */ null && (NavigatorButton)));
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/navigator/navigator-back-button/hook.js
 /**
@@ -61419,7 +61418,7 @@ function useNavigatorBackButton(props) {
   } = useContextSystem(props, 'NavigatorBackButton');
   const {
     goBack
-  } = use_navigator();
+  } = useNavigator();
   const handleClick = (0,external_wp_element_namespaceObject.useCallback)(e => {
     e.preventDefault();
     goBack();
@@ -61488,7 +61487,7 @@ function UnconnectedNavigatorBackButton(props, forwardedRef) {
  * ```
  */
 const NavigatorBackButton = contextConnect(UnconnectedNavigatorBackButton, 'NavigatorBackButton');
-/* harmony default export */ const navigator_back_button_component = (NavigatorBackButton);
+/* harmony default export */ const navigator_back_button_component = ((/* unused pure expression or super */ null && (NavigatorBackButton)));
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/navigator/navigator-to-parent-button/component.js
 /**
@@ -61507,7 +61506,7 @@ function UnconnectedNavigatorToParentButton(props, forwardedRef) {
     since: '6.7',
     alternative: 'wp.components.NavigatorBackButton'
   });
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(navigator_back_button_component, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigatorBackButton, {
     ref: forwardedRef,
     ...props
   });
@@ -61520,7 +61519,7 @@ function UnconnectedNavigatorToParentButton(props, forwardedRef) {
  * @deprecated
  */
 const NavigatorToParentButton = contextConnect(UnconnectedNavigatorToParentButton, 'NavigatorToParentButton');
-/* harmony default export */ const navigator_to_parent_button_component = (NavigatorToParentButton);
+/* harmony default export */ const navigator_to_parent_button_component = ((/* unused pure expression or super */ null && (NavigatorToParentButton)));
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/notice/index.js
 /**
