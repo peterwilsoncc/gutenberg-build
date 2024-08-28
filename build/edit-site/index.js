@@ -8007,13 +8007,12 @@ const SiteHub = (0,external_wp_element_namespaceObject.memo)((0,external_wp_elem
       getSettings
     } = lock_unlock_unlock(select(store));
     const {
-      getSite,
-      getUnstableBase // Site index.
+      getEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const _site = getSite();
+    const _site = getEntityRecord('root', 'site');
     return {
       dashboardLink: getSettings().__experimentalDashboardLink || 'index.php',
-      homeUrl: getUnstableBase()?.home,
+      homeUrl: getEntityRecord('root', '__unstableBase')?.home,
       siteTitle: !_site?.title && !!_site?.url ? (0,external_wp_url_namespaceObject.filterURLForDisplay)(_site?.url) : _site?.title
     };
   }, []);
@@ -8093,12 +8092,11 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
     siteTitle
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getSite,
-      getUnstableBase // Site index.
+      getEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const _site = getSite();
+    const _site = getEntityRecord('root', 'site');
     return {
-      homeUrl: getUnstableBase()?.home,
+      homeUrl: getEntityRecord('root', '__unstableBase')?.home,
       siteTitle: !_site?.title && !!_site?.url ? (0,external_wp_url_namespaceObject.filterURLForDisplay)(_site?.url) : _site?.title
     };
   }, []);
@@ -14041,10 +14039,8 @@ function useGlobalStylesOpenRevisionsCommands() {
 }
 function useCommonCommands() {
   const homeUrl = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getUnstableBase // Site index.
-    } = select(external_wp_coreData_namespaceObject.store);
-    return getUnstableBase()?.home;
+    // Site index.
+    return select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.home;
   }, []);
   (0,external_wp_commands_namespaceObject.useCommand)({
     name: 'core/edit-site/view-site',
@@ -14428,12 +14424,11 @@ function useResolveEditedEntityAndContext({
     frontPageTemplateId
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getSite,
-      getUnstableBase,
+      getEntityRecord,
       getEntityRecords
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteData = getSite();
-    const base = getUnstableBase();
+    const siteData = getEntityRecord('root', 'site');
+    const base = getEntityRecord('root', '__unstableBase');
     const templates = getEntityRecords('postType', TEMPLATE_POST_TYPE, {
       per_page: -1
     });
@@ -42049,15 +42044,9 @@ function NewTemplateModal({
     createSuccessNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
-  const {
-    homeUrl
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getUnstableBase // Site index.
-    } = select(external_wp_coreData_namespaceObject.store);
-    return {
-      homeUrl: getUnstableBase()?.home
-    };
+  const homeUrl = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    // Site index.
+    return select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.home;
   }, []);
   const TEMPLATE_SHORT_DESCRIPTIONS = {
     'front-page': homeUrl,

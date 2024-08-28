@@ -1051,14 +1051,14 @@ const getEditedPostTemplateId = (0,external_wp_data_namespaceObject.createRegist
     slug
   } = select(external_wp_editor_namespaceObject.store).getCurrentPost();
   const {
-    getSite,
+    getEntityRecord,
     getEntityRecords,
     canUser
   } = select(external_wp_coreData_namespaceObject.store);
   const siteSettings = canUser('read', {
     kind: 'root',
     name: 'site'
-  }) ? getSite() : undefined;
+  }) ? getEntityRecord('root', 'site') : undefined;
   // First check if the current page is set as the posts page.
   const isPostsPage = +postId === siteSettings?.page_for_posts;
   if (isPostsPage) {

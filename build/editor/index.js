@@ -8101,7 +8101,7 @@ const saveDirtyEntities = ({
     name: 'wp_navigation'
   }];
   const saveNoticeId = 'site-editor-save-success';
-  const homeUrl = registry.select(external_wp_coreData_namespaceObject.store).getUnstableBase()?.home;
+  const homeUrl = registry.select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.home;
   registry.dispatch(external_wp_notices_namespaceObject.store).removeNotice(saveNoticeId);
   const entitiesToSave = dirtyEntityRecords.filter(({
     kind,
@@ -12463,7 +12463,10 @@ function PostParentToggle({
   });
 }
 function ParentRow() {
-  const homeUrl = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getUnstableBase()?.home, []);
+  const homeUrl = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    // Site index.
+    return select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.home;
+  }, []);
   // Use internal state instead of a ref to make sure that the component
   // re-renders when the popover's anchor updates.
   const [popoverAnchor, setPopoverAnchor] = (0,external_wp_element_namespaceObject.useState)(null);
@@ -25840,7 +25843,7 @@ function PreviewDropdown({
       getCurrentPostType
     } = select(store_store);
     const {
-      getUnstableBase,
+      getEntityRecord,
       getPostType
     } = select(external_wp_coreData_namespaceObject.store);
     const {
@@ -25853,7 +25856,7 @@ function PreviewDropdown({
     return {
       deviceType: getDeviceType(),
       editorMode: __unstableGetEditorMode(),
-      homeUrl: getUnstableBase()?.home,
+      homeUrl: getEntityRecord('root', '__unstableBase')?.home,
       isTemplate: _currentPostType === 'wp_template',
       isViewable: (_getPostType$viewable = getPostType(_currentPostType)?.viewable) !== null && _getPostType$viewable !== void 0 ? _getPostType$viewable : false,
       showIconLabels: get('core', 'showIconLabels')
