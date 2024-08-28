@@ -61699,7 +61699,8 @@ function PrivateBlockToolbar({
     toolbarKey,
     shouldShowVisualToolbar,
     showParentSelector,
-    isUsingBindings
+    isUsingBindings,
+    canRemove
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockName,
@@ -61709,7 +61710,8 @@ function PrivateBlockToolbar({
       isBlockValid,
       getBlockRootClientId,
       getBlockEditingMode,
-      getBlockAttributes
+      getBlockAttributes,
+      canRemoveBlock
     } = select(store);
     const selectedBlockClientIds = getSelectedBlockClientIds();
     const selectedBlockClientId = selectedBlockClientIds[0];
@@ -61732,7 +61734,8 @@ function PrivateBlockToolbar({
       rootClientId: blockRootClientId,
       toolbarKey: `${selectedBlockClientId}${firstParentClientId}`,
       showParentSelector: parentBlockType && getBlockEditingMode(firstParentClientId) === 'default' && (0,external_wp_blocks_namespaceObject.hasBlockSupport)(parentBlockType, '__experimentalParentSelector', true) && selectedBlockClientIds.length === 1 && _isDefaultEditingMode,
-      isUsingBindings: _isUsingBindings
+      isUsingBindings: _isUsingBindings,
+      canRemove: canRemoveBlock(selectedBlockClientId)
     };
   }, []);
   const toolbarWrapperRef = (0,external_wp_element_namespaceObject.useRef)(null);
@@ -61794,7 +61797,7 @@ function PrivateBlockToolbar({
             })]
           })]
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Shuffle, {
+      }), !isMultiToolbar && canRemove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Shuffle, {
         clientId: blockClientId
       }), shouldShowVisualToolbar && isMultiToolbar && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(toolbar, {}), shouldShowVisualToolbar && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_controls.Slot, {
