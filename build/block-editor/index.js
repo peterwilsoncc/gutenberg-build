@@ -1537,6 +1537,90 @@ module.exports.createColors = create;
 
 /***/ }),
 
+/***/ 784:
+/***/ ((module) => {
+
+module.exports = function postcssPrefixSelector(options) {
+  const prefix = options.prefix;
+  const prefixWithSpace = /\s+$/.test(prefix) ? prefix : `${prefix} `;
+  const ignoreFiles = options.ignoreFiles ? [].concat(options.ignoreFiles) : [];
+  const includeFiles = options.includeFiles
+    ? [].concat(options.includeFiles)
+    : [];
+
+  return function (root) {
+    if (
+      ignoreFiles.length &&
+      root.source.input.file &&
+      isFileInArray(root.source.input.file, ignoreFiles)
+    ) {
+      return;
+    }
+    if (
+      includeFiles.length &&
+      root.source.input.file &&
+      !isFileInArray(root.source.input.file, includeFiles)
+    ) {
+      return;
+    }
+
+    root.walkRules((rule) => {
+      const keyframeRules = [
+        'keyframes',
+        '-webkit-keyframes',
+        '-moz-keyframes',
+        '-o-keyframes',
+        '-ms-keyframes',
+      ];
+
+      if (rule.parent && keyframeRules.includes(rule.parent.name)) {
+        return;
+      }
+
+      rule.selectors = rule.selectors.map((selector) => {
+        if (options.exclude && excludeSelector(selector, options.exclude)) {
+          return selector;
+        }
+
+        if (options.transform) {
+          return options.transform(
+            prefix,
+            selector,
+            prefixWithSpace + selector,
+            root.source.input.file,
+            rule
+          );
+        }
+
+        return prefixWithSpace + selector;
+      });
+    });
+  };
+};
+
+function isFileInArray(file, arr) {
+  return arr.some((ruleOrString) => {
+    if (ruleOrString instanceof RegExp) {
+      return ruleOrString.test(file);
+    }
+
+    return file.includes(ruleOrString);
+  });
+}
+
+function excludeSelector(selector, excludeArr) {
+  return excludeArr.some((excludeRule) => {
+    if (excludeRule instanceof RegExp) {
+      return excludeRule.test(selector);
+    }
+
+    return selector === excludeRule;
+  });
+}
+
+
+/***/ }),
+
 /***/ 2433:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -6644,312 +6728,6 @@ var hasAccents = function(string) {
 module.exports = removeAccents;
 module.exports.has = hasAccents;
 module.exports.remove = removeAccents;
-
-
-/***/ }),
-
-/***/ 9451:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-
-
-/***/ }),
-
-/***/ 9303:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-__webpack_require__(9451);
-const postcss_1 = __importDefault(__webpack_require__(4743));
-const PostCSSPlugin_1 = __importDefault(__webpack_require__(8584));
-module.exports = (0, PostCSSPlugin_1.default)(postcss_1.default);
-
-
-/***/ }),
-
-/***/ 214:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.prefixWrapCSSSelector = exports.prefixWrapCSSRule = void 0;
-const CSSSelector_1 = __webpack_require__(2445);
-const prefixWrapCSSRule = (cssRule, nested, ignoredSelectors, prefixSelector, prefixRootTags) => {
-    // Check each rule to see if it exactly matches our prefix selector, when
-    // this happens, don't try to prefix that selector.
-    const rules = cssRule.selectors.filter((selector) => !(0, CSSSelector_1.cssRuleMatchesPrefixSelector)({ selector: selector }, prefixSelector));
-    if (rules.length === 0) {
-        return;
-    }
-    cssRule.selector = rules
-        .map((cssSelector) => (0, exports.prefixWrapCSSSelector)(cssSelector, cssRule, nested, ignoredSelectors, prefixSelector, prefixRootTags))
-        .filter(CSSSelector_1.isValidCSSSelector)
-        .join(", ");
-};
-exports.prefixWrapCSSRule = prefixWrapCSSRule;
-const prefixWrapCSSSelector = (cssSelector, cssRule, nested, ignoredSelectors, prefixSelector, prefixRootTags) => {
-    const cleanedSelector = (0, CSSSelector_1.cleanSelector)(cssSelector);
-    if (cleanedSelector === "") {
-        return null;
-    }
-    // Don't prefix nested selected.
-    if (nested !== null && cleanedSelector.startsWith(nested, 0)) {
-        return cleanedSelector;
-    }
-    // Do not prefix keyframes rules.
-    if ((0, CSSSelector_1.isKeyframes)(cssRule)) {
-        return cleanedSelector;
-    }
-    // Check for matching ignored selectors
-    if (ignoredSelectors.some((currentValue) => cleanedSelector.match(currentValue))) {
-        return cleanedSelector;
-    }
-    // Anything other than a root tag is always prefixed.
-    if ((0, CSSSelector_1.isNotRootTag)(cleanedSelector)) {
-        return prefixSelector + " " + cleanedSelector;
-    }
-    // Handle special case where root tags should be converted into classes
-    // rather than being replaced.
-    if (prefixRootTags) {
-        return prefixSelector + " ." + cleanedSelector;
-    }
-    // HTML and Body elements cannot be contained within our container so lets
-    // extract their styles.
-    return cleanedSelector.replace(/^(body|html|:root)/, prefixSelector);
-};
-exports.prefixWrapCSSSelector = prefixWrapCSSSelector;
-
-
-/***/ }),
-
-/***/ 2445:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.cssRuleMatchesPrefixSelector = exports.isNotRootTag = exports.isKeyframes = exports.cleanSelector = exports.isValidCSSSelector = void 0;
-const ANY_WHITESPACE_AT_BEGINNING_OR_END = /(^\s*|\s*$)/g;
-const IS_ROOT_TAG = /^(body|html|:root).*$/;
-const isValidCSSSelector = (cssSelector) => {
-    return cssSelector !== null;
-};
-exports.isValidCSSSelector = isValidCSSSelector;
-const cleanSelector = (cssSelector) => {
-    return cssSelector.replace(ANY_WHITESPACE_AT_BEGINNING_OR_END, "");
-};
-exports.cleanSelector = cleanSelector;
-const isKeyframes = (cssRule) => {
-    const { parent } = cssRule;
-    const parentReal = parent;
-    // @see https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule
-    return (parent !== undefined &&
-        parentReal.type === "atrule" &&
-        parentReal.name !== undefined &&
-        parentReal.name.match(/keyframes$/) !== null);
-};
-exports.isKeyframes = isKeyframes;
-const isNotRootTag = (cleanSelector) => {
-    return !cleanSelector.match(IS_ROOT_TAG);
-};
-exports.isNotRootTag = isNotRootTag;
-const cssRuleMatchesPrefixSelector = (cssRule, prefixSelector) => {
-    const escapedPrefixSelector = prefixSelector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    // eslint-disable-next-line security-node/non-literal-reg-expr
-    const isPrefixSelector = new RegExp(`^${escapedPrefixSelector}$`);
-    return isPrefixSelector.test(cssRule.selector);
-};
-exports.cssRuleMatchesPrefixSelector = cssRuleMatchesPrefixSelector;
-
-
-/***/ }),
-
-/***/ 5547:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.shouldIncludeFilePath = void 0;
-const shouldIncludeFilePath = (filePath, whitelist, blacklist) => {
-    // If whitelist exists, check if rule is contained within it.
-    if (whitelist.length > 0) {
-        return (filePath != undefined &&
-            whitelist.some((currentValue) => filePath.match(currentValue)));
-    }
-    // If blacklist exists, check if rule is not contained within it.
-    if (blacklist.length > 0) {
-        return !(filePath != undefined &&
-            blacklist.some((currentValue) => filePath.match(currentValue)));
-    }
-    // In all other cases, presume rule should be prefixed.
-    return true;
-};
-exports.shouldIncludeFilePath = shouldIncludeFilePath;
-
-
-/***/ }),
-
-/***/ 1596:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.asPostCSSv7PluginGenerator = void 0;
-const PostCSSPrefixWrap_1 = __importStar(__webpack_require__(762));
-const asPostCSSv7PluginGenerator = (postcss) => {
-    return postcss.plugin(PostCSSPrefixWrap_1.PLUGIN_NAME, (prefixSelector, options) => {
-        return new PostCSSPrefixWrap_1.default(prefixSelector, options).prefix();
-    });
-};
-exports.asPostCSSv7PluginGenerator = asPostCSSv7PluginGenerator;
-
-
-/***/ }),
-
-/***/ 9240:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.asPostCSSv8PluginGenerator = exports.isPostCSSv8 = void 0;
-const PostCSSPrefixWrap_1 = __importStar(__webpack_require__(762));
-const isPostCSSv8 = (postcss) => postcss.Root !== undefined;
-exports.isPostCSSv8 = isPostCSSv8;
-const asPostCSSv8PluginGenerator = () => {
-    return (prefixSelector, options) => {
-        const plugin = new PostCSSPrefixWrap_1.default(prefixSelector, options);
-        return {
-            postcssPlugin: PostCSSPrefixWrap_1.PLUGIN_NAME,
-            Once(root) {
-                plugin.prefixRoot(root);
-            },
-        };
-    };
-};
-exports.asPostCSSv8PluginGenerator = asPostCSSv8PluginGenerator;
-
-
-/***/ }),
-
-/***/ 8584:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-const PostCSS8Plugin_1 = __webpack_require__(9240);
-const PostCSS7Plugin_1 = __webpack_require__(1596);
-module.exports = (postcss) => {
-    if ((0, PostCSS8Plugin_1.isPostCSSv8)(postcss)) {
-        return (0, PostCSS8Plugin_1.asPostCSSv8PluginGenerator)();
-    }
-    else {
-        return (0, PostCSS7Plugin_1.asPostCSSv7PluginGenerator)(postcss);
-    }
-};
-
-
-/***/ }),
-
-/***/ 762:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.PLUGIN_NAME = void 0;
-const CSSRuleWrapper_1 = __webpack_require__(214);
-const FileIncludeList_1 = __webpack_require__(5547);
-exports.PLUGIN_NAME = "postcss-prefixwrap";
-class PostCSSPrefixWrap {
-    blacklist;
-    ignoredSelectors;
-    isPrefixSelector;
-    prefixRootTags;
-    prefixSelector;
-    whitelist;
-    nested;
-    constructor(prefixSelector, options = {}) {
-        this.blacklist = options.blacklist ?? [];
-        this.ignoredSelectors = options.ignoredSelectors ?? [];
-        this.isPrefixSelector = new RegExp(
-        // eslint-disable-next-line security-node/non-literal-reg-expr
-        `^${prefixSelector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`);
-        this.prefixRootTags = options.prefixRootTags ?? false;
-        this.prefixSelector = prefixSelector;
-        this.whitelist = options.whitelist ?? [];
-        this.nested = options.nested ?? null;
-    }
-    prefixRoot(css) {
-        if ((0, FileIncludeList_1.shouldIncludeFilePath)(css.source?.input?.file, this.whitelist, this.blacklist)) {
-            css.walkRules((cssRule) => {
-                (0, CSSRuleWrapper_1.prefixWrapCSSRule)(cssRule, this.nested, this.ignoredSelectors, this.prefixSelector, this.prefixRootTags);
-            });
-        }
-    }
-    prefix() {
-        return (css) => {
-            this.prefixRoot(css);
-        };
-    }
-}
-exports["default"] = PostCSSPrefixWrap;
 
 
 /***/ }),
@@ -18697,13 +18475,7 @@ const LAYOUT_DEFINITIONS = {
  * @return {string} - CSS selector.
  */
 function appendSelectors(selectors, append = '') {
-  // Ideally we shouldn't need the `.editor-styles-wrapper` increased specificity here
-  // The problem though is that we have a `.editor-styles-wrapper p { margin: reset; }` style
-  // it's used to reset the default margin added by wp-admin to paragraphs
-  // so we need this to be higher speficity otherwise, it won't be applied to paragraphs inside containers
-  // When the post editor is fully iframed, this extra classname could be removed.
-
-  return selectors.split(',').map(subselector => `.editor-styles-wrapper ${subselector}${append ? ` ${append}` : ''}`).join(',');
+  return selectors.split(',').map(subselector => `${subselector}${append ? ` ${append}` : ''}`).join(',');
 }
 
 /**
@@ -33188,11 +32960,7 @@ function style_useBlockProps({
   style
 }) {
   const blockElementsContainerIdentifier = `wp-elements-${(0,external_wp_compose_namespaceObject.useInstanceId)(style_useBlockProps)}`;
-
-  // The .editor-styles-wrapper selector is required on elements styles. As it is
-  // added to all other editor styles, not providing it causes reset and global
-  // styles to override element styles because of higher specificity.
-  const baseElementSelector = `.editor-styles-wrapper .${blockElementsContainerIdentifier}`;
+  const baseElementSelector = `.${blockElementsContainerIdentifier}`;
   const blockElementStyles = style?.elements;
   const styles = (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (!blockElementStyles) {
@@ -33983,10 +33751,6 @@ function useDuotoneStyles({
   // Build the CSS selectors to which the filter will be applied.
   const selectors = duotoneSelector.split(',');
   const selectorsScoped = selectors.map(selectorPart => {
-    // Extra .editor-styles-wrapper specificity is needed in the editor
-    // since we're not using inline styles to apply the filter. We need to
-    // override duotone applied by global styles and theme.json.
-
     // Assuming the selector part is a subclass selector (not a tag name)
     // so we can prepend the filter id class. If we want to support elements
     // such as `img` or namespaces, we'll need to add a case for that here.
@@ -48656,6 +48420,400 @@ function IframeIfReady(props, ref) {
 }
 /* harmony default export */ const iframe = ((0,external_wp_element_namespaceObject.forwardRef)(IframeIfReady));
 
+;// CONCATENATED MODULE: ./node_modules/parsel-js/dist/parsel.js
+const TOKENS = {
+    attribute: /\[\s*(?:(?<namespace>\*|[-\w\P{ASCII}]*)\|)?(?<name>[-\w\P{ASCII}]+)\s*(?:(?<operator>\W?=)\s*(?<value>.+?)\s*(\s(?<caseSensitive>[iIsS]))?\s*)?\]/gu,
+    id: /#(?<name>[-\w\P{ASCII}]+)/gu,
+    class: /\.(?<name>[-\w\P{ASCII}]+)/gu,
+    comma: /\s*,\s*/g,
+    combinator: /\s*[\s>+~]\s*/g,
+    'pseudo-element': /::(?<name>[-\w\P{ASCII}]+)(?:\((?<argument>¶*)\))?/gu,
+    'pseudo-class': /:(?<name>[-\w\P{ASCII}]+)(?:\((?<argument>¶*)\))?/gu,
+    universal: /(?:(?<namespace>\*|[-\w\P{ASCII}]*)\|)?\*/gu,
+    type: /(?:(?<namespace>\*|[-\w\P{ASCII}]*)\|)?(?<name>[-\w\P{ASCII}]+)/gu, // this must be last
+};
+const TRIM_TOKENS = new Set(['combinator', 'comma']);
+const RECURSIVE_PSEUDO_CLASSES = new Set([
+    'not',
+    'is',
+    'where',
+    'has',
+    'matches',
+    '-moz-any',
+    '-webkit-any',
+    'nth-child',
+    'nth-last-child',
+]);
+const nthChildRegExp = /(?<index>[\dn+-]+)\s+of\s+(?<subtree>.+)/;
+const RECURSIVE_PSEUDO_CLASSES_ARGS = {
+    'nth-child': nthChildRegExp,
+    'nth-last-child': nthChildRegExp,
+};
+const getArgumentPatternByType = (type) => {
+    switch (type) {
+        case 'pseudo-element':
+        case 'pseudo-class':
+            return new RegExp(TOKENS[type].source.replace('(?<argument>¶*)', '(?<argument>.*)'), 'gu');
+        default:
+            return TOKENS[type];
+    }
+};
+function gobbleParens(text, offset) {
+    let nesting = 0;
+    let result = '';
+    for (; offset < text.length; offset++) {
+        const char = text[offset];
+        switch (char) {
+            case '(':
+                ++nesting;
+                break;
+            case ')':
+                --nesting;
+                break;
+        }
+        result += char;
+        if (nesting === 0) {
+            return result;
+        }
+    }
+    return result;
+}
+function tokenizeBy(text, grammar = TOKENS) {
+    if (!text) {
+        return [];
+    }
+    const tokens = [text];
+    for (const [type, pattern] of Object.entries(grammar)) {
+        for (let i = 0; i < tokens.length; i++) {
+            const token = tokens[i];
+            if (typeof token !== 'string') {
+                continue;
+            }
+            pattern.lastIndex = 0;
+            const match = pattern.exec(token);
+            if (!match) {
+                continue;
+            }
+            const from = match.index - 1;
+            const args = [];
+            const content = match[0];
+            const before = token.slice(0, from + 1);
+            if (before) {
+                args.push(before);
+            }
+            args.push({
+                ...match.groups,
+                type,
+                content,
+            });
+            const after = token.slice(from + content.length + 1);
+            if (after) {
+                args.push(after);
+            }
+            tokens.splice(i, 1, ...args);
+        }
+    }
+    let offset = 0;
+    for (const token of tokens) {
+        switch (typeof token) {
+            case 'string':
+                throw new Error(`Unexpected sequence ${token} found at index ${offset}`);
+            case 'object':
+                offset += token.content.length;
+                token.pos = [offset - token.content.length, offset];
+                if (TRIM_TOKENS.has(token.type)) {
+                    token.content = token.content.trim() || ' ';
+                }
+                break;
+        }
+    }
+    return tokens;
+}
+const STRING_PATTERN = /(['"])([^\\\n]+?)\1/g;
+const ESCAPE_PATTERN = /\\./g;
+function parsel_tokenize(selector, grammar = TOKENS) {
+    // Prevent leading/trailing whitespaces from being interpreted as combinators
+    selector = selector.trim();
+    if (selector === '') {
+        return [];
+    }
+    const replacements = [];
+    // Replace escapes with placeholders.
+    selector = selector.replace(ESCAPE_PATTERN, (value, offset) => {
+        replacements.push({ value, offset });
+        return '\uE000'.repeat(value.length);
+    });
+    // Replace strings with placeholders.
+    selector = selector.replace(STRING_PATTERN, (value, quote, content, offset) => {
+        replacements.push({ value, offset });
+        return `${quote}${'\uE001'.repeat(content.length)}${quote}`;
+    });
+    // Replace parentheses with placeholders.
+    {
+        let pos = 0;
+        let offset;
+        while ((offset = selector.indexOf('(', pos)) > -1) {
+            const value = gobbleParens(selector, offset);
+            replacements.push({ value, offset });
+            selector = `${selector.substring(0, offset)}(${'¶'.repeat(value.length - 2)})${selector.substring(offset + value.length)}`;
+            pos = offset + value.length;
+        }
+    }
+    // Now we have no nested structures and we can parse with regexes
+    const tokens = tokenizeBy(selector, grammar);
+    // Replace placeholders in reverse order.
+    const changedTokens = new Set();
+    for (const replacement of replacements.reverse()) {
+        for (const token of tokens) {
+            const { offset, value } = replacement;
+            if (!(token.pos[0] <= offset &&
+                offset + value.length <= token.pos[1])) {
+                continue;
+            }
+            const { content } = token;
+            const tokenOffset = offset - token.pos[0];
+            token.content =
+                content.slice(0, tokenOffset) +
+                    value +
+                    content.slice(tokenOffset + value.length);
+            if (token.content !== content) {
+                changedTokens.add(token);
+            }
+        }
+    }
+    // Update changed tokens.
+    for (const token of changedTokens) {
+        const pattern = getArgumentPatternByType(token.type);
+        if (!pattern) {
+            throw new Error(`Unknown token type: ${token.type}`);
+        }
+        pattern.lastIndex = 0;
+        const match = pattern.exec(token.content);
+        if (!match) {
+            throw new Error(`Unable to parse content for ${token.type}: ${token.content}`);
+        }
+        Object.assign(token, match.groups);
+    }
+    return tokens;
+}
+/**
+ *  Convert a flat list of tokens into a tree of complex & compound selectors
+ */
+function nestTokens(tokens, { list = true } = {}) {
+    if (list && tokens.find((t) => t.type === 'comma')) {
+        const selectors = [];
+        const temp = [];
+        for (let i = 0; i < tokens.length; i++) {
+            if (tokens[i].type === 'comma') {
+                if (temp.length === 0) {
+                    throw new Error('Incorrect comma at ' + i);
+                }
+                selectors.push(nestTokens(temp, { list: false }));
+                temp.length = 0;
+            }
+            else {
+                temp.push(tokens[i]);
+            }
+        }
+        if (temp.length === 0) {
+            throw new Error('Trailing comma');
+        }
+        else {
+            selectors.push(nestTokens(temp, { list: false }));
+        }
+        return { type: 'list', list: selectors };
+    }
+    for (let i = tokens.length - 1; i >= 0; i--) {
+        let token = tokens[i];
+        if (token.type === 'combinator') {
+            let left = tokens.slice(0, i);
+            let right = tokens.slice(i + 1);
+            return {
+                type: 'complex',
+                combinator: token.content,
+                left: nestTokens(left),
+                right: nestTokens(right),
+            };
+        }
+    }
+    switch (tokens.length) {
+        case 0:
+            throw new Error('Could not build AST.');
+        case 1:
+            // If we're here, there are no combinators, so it's just a list.
+            return tokens[0];
+        default:
+            return {
+                type: 'compound',
+                list: [...tokens], // clone to avoid pointers messing up the AST
+            };
+    }
+}
+/**
+ * Traverse an AST in depth-first order
+ */
+function* flatten(node, 
+/**
+ * @internal
+ */
+parent) {
+    switch (node.type) {
+        case 'list':
+            for (let child of node.list) {
+                yield* flatten(child, node);
+            }
+            break;
+        case 'complex':
+            yield* flatten(node.left, node);
+            yield* flatten(node.right, node);
+            break;
+        case 'compound':
+            yield* node.list.map((token) => [token, node]);
+            break;
+        default:
+            yield [node, parent];
+    }
+}
+/**
+ * Traverse an AST (or part thereof), in depth-first order
+ */
+function walk(node, visit, 
+/**
+ * @internal
+ */
+parent) {
+    if (!node) {
+        return;
+    }
+    for (const [token, ast] of flatten(node, parent)) {
+        visit(token, ast);
+    }
+}
+/**
+ * Parse a CSS selector
+ *
+ * @param selector - The selector to parse
+ * @param options.recursive - Whether to parse the arguments of pseudo-classes like :is(), :has() etc. Defaults to true.
+ * @param options.list - Whether this can be a selector list (A, B, C etc). Defaults to true.
+ */
+function parse(selector, { recursive = true, list = true } = {}) {
+    const tokens = parsel_tokenize(selector);
+    if (!tokens) {
+        return;
+    }
+    const ast = nestTokens(tokens, { list });
+    if (!recursive) {
+        return ast;
+    }
+    for (const [token] of flatten(ast)) {
+        if (token.type !== 'pseudo-class' || !token.argument) {
+            continue;
+        }
+        if (!RECURSIVE_PSEUDO_CLASSES.has(token.name)) {
+            continue;
+        }
+        let argument = token.argument;
+        const childArg = RECURSIVE_PSEUDO_CLASSES_ARGS[token.name];
+        if (childArg) {
+            const match = childArg.exec(argument);
+            if (!match) {
+                continue;
+            }
+            Object.assign(token, match.groups);
+            argument = match.groups['subtree'];
+        }
+        if (!argument) {
+            continue;
+        }
+        Object.assign(token, {
+            subtree: parse(argument, {
+                recursive: true,
+                list: true,
+            }),
+        });
+    }
+    return ast;
+}
+/**
+ * Converts the given list or (sub)tree to a string.
+ */
+function stringify(listOrNode) {
+    let tokens;
+    if (Array.isArray(listOrNode)) {
+        tokens = listOrNode;
+    }
+    else {
+        tokens = [...flatten(listOrNode)].map(([token]) => token);
+    }
+    return tokens.map(token => token.content).join('');
+}
+/**
+ * To convert the specificity array to a number
+ */
+function specificityToNumber(specificity, base) {
+    base = base || Math.max(...specificity) + 1;
+    return (specificity[0] * (base << 1) + specificity[1] * base + specificity[2]);
+}
+/**
+ * Calculate specificity of a selector.
+ *
+ * If the selector is a list, the max specificity is returned.
+ */
+function specificity(selector) {
+    let ast = selector;
+    if (typeof ast === 'string') {
+        ast = parse(ast, { recursive: true });
+    }
+    if (!ast) {
+        return [];
+    }
+    if (ast.type === 'list' && 'list' in ast) {
+        let base = 10;
+        const specificities = ast.list.map((ast) => {
+            const sp = specificity(ast);
+            base = Math.max(base, ...specificity(ast));
+            return sp;
+        });
+        const numbers = specificities.map((ast) => specificityToNumber(ast, base));
+        return specificities[numbers.indexOf(Math.max(...numbers))];
+    }
+    const ret = [0, 0, 0];
+    for (const [token] of flatten(ast)) {
+        switch (token.type) {
+            case 'id':
+                ret[0]++;
+                break;
+            case 'class':
+            case 'attribute':
+                ret[1]++;
+                break;
+            case 'pseudo-element':
+            case 'type':
+                ret[2]++;
+                break;
+            case 'pseudo-class':
+                if (token.name === 'where') {
+                    break;
+                }
+                if (!RECURSIVE_PSEUDO_CLASSES.has(token.name) ||
+                    !token.subtree) {
+                    ret[1]++;
+                    break;
+                }
+                const sub = specificity(token.subtree);
+                sub.forEach((s, i) => (ret[i] += s));
+                // :nth-child() & :nth-last-child() add (0, 1, 0) to the specificity of their most complex selector
+                if (token.name === 'nth-child' ||
+                    token.name === 'nth-last-child') {
+                    ret[1]++;
+                }
+        }
+    }
+    return ret;
+}
+
+
+
 // EXTERNAL MODULE: ./node_modules/postcss/lib/postcss.js
 var postcss = __webpack_require__(4743);
 ;// CONCATENATED MODULE: ./node_modules/postcss/lib/postcss.mjs
@@ -48663,10 +48821,10 @@ var postcss = __webpack_require__(4743);
 
 /* harmony default export */ const lib_postcss = (postcss);
 
-const stringify = postcss.stringify
+const postcss_stringify = postcss.stringify
 const fromJSON = postcss.fromJSON
 const postcss_plugin = postcss.plugin
-const parse = postcss.parse
+const postcss_parse = postcss.parse
 const list = postcss.list
 
 const postcss_document = postcss.document
@@ -48690,9 +48848,9 @@ const Rule = postcss.Rule
 const postcss_Root = postcss.Root
 const Node = postcss.Node
 
-// EXTERNAL MODULE: ./packages/block-editor/node_modules/postcss-prefixwrap/build/index.js
-var build = __webpack_require__(9303);
-var build_default = /*#__PURE__*/__webpack_require__.n(build);
+// EXTERNAL MODULE: ./node_modules/postcss-prefix-selector/index.js
+var postcss_prefix_selector = __webpack_require__(784);
+var postcss_prefix_selector_default = /*#__PURE__*/__webpack_require__.n(postcss_prefix_selector);
 // EXTERNAL MODULE: ./packages/block-editor/node_modules/postcss-urlrebase/index.js
 var postcss_urlrebase = __webpack_require__(4833);
 var postcss_urlrebase_default = /*#__PURE__*/__webpack_require__.n(postcss_urlrebase);
@@ -48703,26 +48861,122 @@ var postcss_urlrebase_default = /*#__PURE__*/__webpack_require__.n(postcss_urlre
 
 
 
+
 const cacheByWrapperSelector = new Map();
+const ROOT_SELECTOR_TOKENS = [{
+  type: 'type',
+  content: 'body'
+}, {
+  type: 'type',
+  content: 'html'
+}, {
+  type: 'pseudo-class',
+  content: ':root'
+}, {
+  type: 'pseudo-class',
+  content: ':where(body)'
+}, {
+  type: 'pseudo-class',
+  content: ':where(:root)'
+}, {
+  type: 'pseudo-class',
+  content: ':where(html)'
+}];
+
+/**
+ * Prefixes root selectors in a way that ensures consistent specificity.
+ * This requires special handling, since prefixing a classname before
+ * html, body, or :root will generally result in an invalid selector.
+ *
+ * Some libraries will simply replace the root selector with the prefix
+ * instead, but this results in inconsistent specificity.
+ *
+ * This function instead inserts the prefix after the root tags but before
+ * any other part of the selector. This results in consistent specificity:
+ * - If a `:where()` selector is used for the prefix, all selectors output
+ *   by `transformStyles` will have no specificity increase.
+ * - If a classname, id, or something else is used as the prefix, all selectors
+ *   will have the same specificity bump when transformed.
+ *
+ * @param {string} prefix   The prefix.
+ * @param {string} selector The selector.
+ *
+ * @return {string} The prefixed root selector.
+ */
+function prefixRootSelector(prefix, selector) {
+  // Use a tokenizer, since regular expressions are unreliable.
+  const tokenized = parsel_tokenize(selector);
+
+  // Find the last token that contains a root selector by walking back
+  // through the tokens.
+  const lastRootIndex = tokenized.findLastIndex(({
+    content,
+    type
+  }) => {
+    return ROOT_SELECTOR_TOKENS.some(rootSelector => content === rootSelector.content && type === rootSelector.type);
+  });
+
+  // Walk forwards to find the combinator after the last root.
+  // This is where the root ends and the rest of the selector begins,
+  // and the index to insert before.
+  // Doing it this way takes into account that a root selector like
+  // 'body' may have additional id/class/pseudo-class/attribute-selector
+  // parts chained to it, which is difficult to quantify using a regex.
+  let insertionPoint = -1;
+  for (let i = lastRootIndex + 1; i < tokenized.length; i++) {
+    if (tokenized[i].type === 'combinator') {
+      insertionPoint = i;
+      break;
+    }
+  }
+
+  // Tokenize and insert the prefix with a ' ' combinator before it.
+  const tokenizedPrefix = parsel_tokenize(prefix);
+  tokenized.splice(
+  // Insert at the insertion point, or the end.
+  insertionPoint === -1 ? tokenized.length : insertionPoint, 0, {
+    type: 'combinator',
+    content: ' '
+  }, ...tokenizedPrefix);
+  return stringify(tokenized);
+}
 function transformStyle({
   css,
   ignoredSelectors = [],
   baseURL
-}, wrapperSelector = '') {
-  // When there is no wrapper selector or base URL, there is no need
+}, wrapperSelector = '', transformOptions) {
+  // When there is no wrapper selector and no base URL, there is no need
   // to transform the CSS. This is most cases because in the default
   // iframed editor, no wrapping is needed, and not many styles
   // provide a base URL.
   if (!wrapperSelector && !baseURL) {
     return css;
   }
-  const postcssFriendlyCSS = css.replace(/:root :where\(body\)/g, 'body').replace(/:where\(body\)/g, 'body');
   try {
-    return lib_postcss([wrapperSelector && build_default()(wrapperSelector, {
-      ignoredSelectors: [...ignoredSelectors, wrapperSelector]
+    var _transformOptions$ign;
+    const excludedSelectors = [...ignoredSelectors, ...((_transformOptions$ign = transformOptions?.ignoredSelectors) !== null && _transformOptions$ign !== void 0 ? _transformOptions$ign : []), wrapperSelector];
+    return lib_postcss([wrapperSelector && postcss_prefix_selector_default()({
+      prefix: wrapperSelector,
+      transform(prefix, selector, prefixedSelector) {
+        // For backwards compatibility, don't use the `exclude` option
+        // of postcss-prefix-selector, instead handle it here to match
+        // the behavior of the old library (postcss-prefix-wrap) that
+        // `transformStyle` previously used.
+        if (excludedSelectors.some(excludedSelector => excludedSelector instanceof RegExp ? selector.match(excludedSelector) : selector.includes(excludedSelector))) {
+          return selector;
+        }
+        const hasRootSelector = ROOT_SELECTOR_TOKENS.some(rootSelector => selector.startsWith(rootSelector.content));
+
+        // Reorganize root selectors such that the root part comes before the prefix,
+        // but the prefix still comes before the remaining part of the selector.
+        if (hasRootSelector) {
+          return prefixRootSelector(prefix, selector);
+        }
+        return prefixedSelector;
+      }
     }), baseURL && postcss_urlrebase_default()({
       rootUrl: baseURL
-    })].filter(Boolean)).process(postcssFriendlyCSS, {}).css; // use sync PostCSS API
+    })].filter(Boolean)).process(css, {}).css; // use sync PostCSS API
   } catch (error) {
     if (error instanceof CssSyntaxError) {
       // eslint-disable-next-line no-console
@@ -48736,18 +48990,26 @@ function transformStyle({
 }
 
 /**
+ * @typedef {Object} EditorStyle
+ * @property {string}    css              the CSS block(s), as a single string.
+ * @property {?string}   baseURL          the base URL to be used as the reference when rewritting urls.
+ * @property {?string[]} ignoredSelectors the selectors not to wrap.
+ */
+
+/**
+ * @typedef {Object} TransformOptions
+ * @property {?string[]} ignoredSelectors the selectors not to wrap.
+ */
+
+/**
  * Applies a series of CSS rule transforms to wrap selectors inside a given class and/or rewrite URLs depending on the parameters passed.
  *
- * @typedef {Object} EditorStyle
- * @property {string}        css              the CSS block(s), as a single string.
- * @property {?string}       baseURL          the base URL to be used as the reference when rewritting urls.
- * @property {?string[]}     ignoredSelectors the selectors not to wrap.
- *
- * @param    {EditorStyle[]} styles           CSS rules.
- * @param    {string}        wrapperSelector  Wrapper selector.
+ * @param {EditorStyle[]}    styles           CSS rules.
+ * @param {string}           wrapperSelector  Wrapper selector.
+ * @param {TransformOptions} transformOptions Additional options for style transformation.
  * @return {Array} converted rules.
  */
-const transform_styles_transformStyles = (styles, wrapperSelector = '') => {
+const transform_styles_transformStyles = (styles, wrapperSelector = '', transformOptions) => {
   let cache = cacheByWrapperSelector.get(wrapperSelector);
   if (!cache) {
     cache = new WeakMap();
@@ -48756,7 +49018,7 @@ const transform_styles_transformStyles = (styles, wrapperSelector = '') => {
   return styles.map(style => {
     let css = cache.get(style);
     if (!css) {
-      css = transformStyle(style, wrapperSelector);
+      css = transformStyle(style, wrapperSelector, transformOptions);
       cache.set(style, css);
     }
     return css;
@@ -48826,7 +49088,8 @@ function useDarkThemeBodyClassName(styles, scope) {
 }
 function EditorStyles({
   styles,
-  scope
+  scope,
+  transformOptions
 }) {
   const overrides = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).getStyleOverrides(), []);
   const [transformedStyles, transformedSvgs] = (0,external_wp_element_namespaceObject.useMemo)(() => {
@@ -48845,8 +49108,8 @@ function EditorStyles({
         _styles[index] = overrideWithId;
       }
     }
-    return [transform_styles(_styles.filter(style => style?.css), scope), _styles.filter(style => style.__unstableType === 'svgs').map(style => style.assets).join('')];
-  }, [styles, overrides, scope]);
+    return [transform_styles(_styles.filter(style => style?.css), scope, transformOptions), _styles.filter(style => style.__unstableType === 'svgs').map(style => style.assets).join('')];
+  }, [styles, overrides, scope, transformOptions]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("style", {
       ref: useDarkThemeBodyClassName(transformedStyles, scope)
@@ -62953,7 +63216,14 @@ const useBlockCommands = () => {
 
 
 
+// EditorStyles is a memoized component, so avoid passing a new
+// object reference on each render.
 
+
+const EDITOR_STYLE_TRANSFORM_OPTIONS = {
+  // Don't transform selectors that already specify `.editor-styles-wrapper`.
+  ignoredSelectors: [/\.editor-styles-wrapper/gi]
+};
 function ExperimentalBlockCanvas({
   shouldIframe = true,
   height = '300px',
@@ -62976,7 +63246,8 @@ function ExperimentalBlockCanvas({
       },
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(editor_styles, {
         styles: styles,
-        scope: ".editor-styles-wrapper"
+        scope: ":where(.editor-styles-wrapper)",
+        transformOptions: EDITOR_STYLE_TRANSFORM_OPTIONS
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(writing_flow, {
         ref: contentRef,
         className: "editor-styles-wrapper",
