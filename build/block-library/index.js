@@ -62740,20 +62740,8 @@ function TracksEditor({
 
 
 
-// Much of this description is duplicated from MediaPlaceholder.
 
 
-
-const video_edit_placeholder = content => {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
-    className: "block-editor-media-placeholder",
-    withIllustration: true,
-    icon: library_video,
-    label: (0,external_wp_i18n_namespaceObject.__)('Video'),
-    instructions: (0,external_wp_i18n_namespaceObject.__)('Upload a video file, pick one from your media library, or add one with a URL.'),
-    children: content
-  });
-};
 const video_edit_ALLOWED_MEDIA_TYPES = ['video'];
 const VIDEO_POSTER_ALLOWED_MEDIA_TYPES = ['image'];
 function VideoEdit({
@@ -62847,6 +62835,18 @@ function VideoEdit({
       type: 'snackbar'
     });
   }
+
+  // Much of this description is duplicated from MediaPlaceholder.
+  const placeholder = content => {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
+      className: "block-editor-media-placeholder",
+      withIllustration: !isSingleSelected,
+      icon: library_video,
+      label: (0,external_wp_i18n_namespaceObject.__)('Video'),
+      instructions: (0,external_wp_i18n_namespaceObject.__)('Upload a video file, pick one from your media library, or add one with a URL.'),
+      children: content
+    });
+  };
   const classes = dist_clsx(className, {
     'is-transient': !!temporaryURL
   });
@@ -62866,7 +62866,7 @@ function VideoEdit({
         allowedTypes: video_edit_ALLOWED_MEDIA_TYPES,
         value: attributes,
         onError: onUploadError,
-        placeholder: video_edit_placeholder
+        placeholder: placeholder
       })
     });
   }
