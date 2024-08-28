@@ -561,7 +561,7 @@ const deepMerge = (target, source, override = true) => {
 /**
  * Identifier for property computeds not associated to any scope.
  */
-const NO_SCOPE = Symbol();
+const NO_SCOPE = {};
 
 /**
  * Structure that manages reactivity for a property in a state object. It uses
