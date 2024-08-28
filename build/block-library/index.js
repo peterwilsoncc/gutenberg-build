@@ -25912,7 +25912,7 @@ function image_Image({
     }
   }, [isSingleSelected]);
   const canEditImage = id && naturalWidth && naturalHeight && imageEditing;
-  const allowCrop = isSingleSelected && canEditImage && !isEditingImage;
+  const allowCrop = isSingleSelected && canEditImage && !isEditingImage && !isContentOnlyMode;
   function switchToCover() {
     replaceBlocks(clientId, (0,external_wp_blocks_namespaceObject.switchToBlockType)(getBlock(clientId), 'core/cover'));
   }
