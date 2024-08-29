@@ -12567,7 +12567,7 @@ function canRemoveBlocks(state, clientIds) {
  * @param {Object} state    Editor state.
  * @param {string} clientId The block client Id.
  *
- * @return {boolean | undefined} Whether the given block is allowed to be moved.
+ * @return {boolean} Whether the given block is allowed to be moved.
  */
 function canMoveBlock(state, clientId) {
   const attributes = getBlockAttributes(state, clientId);
@@ -62278,7 +62278,6 @@ const trash = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 
 function ZoomOutToolbar({
   clientId,
-  rootClientId,
   __unstableContentRef
 }) {
   const selected = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -62321,10 +62320,10 @@ function ZoomOutToolbar({
       isBlockTemplatePart,
       isNextBlockTemplatePart,
       isPrevBlockTemplatePart,
-      canRemove: canRemoveBlock(clientId, rootClientId),
-      canMove: canMoveBlock(clientId, rootClientId)
+      canRemove: canRemoveBlock(clientId),
+      canMove: canMoveBlock(clientId)
     };
-  }, [clientId, rootClientId]);
+  }, [clientId]);
   const {
     blockMovingMode,
     isBlockTemplatePart,
@@ -62412,8 +62411,7 @@ function ZoomOutPopover({
   const {
     capturingClientId,
     isInsertionPointVisible,
-    lastClientId,
-    rootClientId
+    lastClientId
   } = useSelectedBlockToolProps(clientId);
   const popoverProps = useBlockToolbarPopoverProps({
     contentElement: __unstableContentRef?.current,
@@ -62437,8 +62435,7 @@ function ZoomOutPopover({
     ...props,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ZoomOutToolbar, {
       __unstableContentRef: __unstableContentRef,
-      clientId: clientId,
-      rootClientId: rootClientId
+      clientId: clientId
     })
   });
 }
