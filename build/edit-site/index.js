@@ -36959,6 +36959,36 @@ const DataViewsSearch = (0,external_wp_element_namespaceObject.memo)(function Se
 });
 /* harmony default export */ const dataviews_search = (DataViewsSearch);
 
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/chevron-up.js
+/**
+ * WordPress dependencies
+ */
+
+
+const chevronUp = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z"
+  })
+});
+/* harmony default export */ const chevron_up = (chevronUp);
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/chevron-down.js
+/**
+ * WordPress dependencies
+ */
+
+
+const chevronDown = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"
+  })
+});
+/* harmony default export */ const chevron_down = (chevronDown);
+
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/cog.js
 /**
  * WordPress dependencies
@@ -37272,40 +37302,180 @@ function ItemsPerPageControl() {
     })
   });
 }
+function FieldItem({
+  fields,
+  fieldId,
+  mandatoryFields,
+  viewFields,
+  view,
+  onChangeView
+}) {
+  let fieldLabel;
+  let fieldIsHidable;
+  const fieldObject = fields.find(f => f.id === fieldId);
+  if (fieldObject) {
+    fieldLabel = fieldObject.label;
+    fieldIsHidable = fieldObject.enableHiding !== false && !mandatoryFields.includes(fieldId);
+  } else if (view.type === constants_LAYOUT_TABLE) {
+    const combinedFieldObject = view.layout?.combinedFields?.find(f => f.id === fieldId);
+    if (combinedFieldObject) {
+      fieldLabel = combinedFieldObject.label;
+      fieldIsHidable = !mandatoryFields.includes(fieldId);
+    }
+  }
+  const index = view.fields?.indexOf(fieldId);
+  const isVisible = viewFields.includes(fieldId);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+      expanded: true,
+      className: `dataviews-field-control__field dataviews-field-control__field-${fieldId}`,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        children: fieldLabel
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        justify: "flex-end",
+        expanded: false,
+        className: "dataviews-field-control__actions",
+        children: [view.type === constants_LAYOUT_TABLE && isVisible && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            disabled: !isVisible || index < 1,
+            accessibleWhenDisabled: true,
+            size: "compact",
+            onClick: () => {
+              var _view$fields$slice;
+              if (!view.fields || index < 1) {
+                return;
+              }
+              onChangeView({
+                ...view,
+                fields: [...((_view$fields$slice = view.fields.slice(0, index - 1)) !== null && _view$fields$slice !== void 0 ? _view$fields$slice : []), fieldId, view.fields[index - 1], ...view.fields.slice(index + 1)]
+              });
+            },
+            icon: chevron_up,
+            label: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: field label */
+            (0,external_wp_i18n_namespaceObject.__)('Move %s up'), fieldLabel)
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            disabled: !isVisible || !view.fields || index >= view.fields.length - 1,
+            accessibleWhenDisabled: true,
+            size: "compact",
+            onClick: () => {
+              var _view$fields$slice2;
+              if (!view.fields || index >= view.fields.length - 1) {
+                return;
+              }
+              onChangeView({
+                ...view,
+                fields: [...((_view$fields$slice2 = view.fields.slice(0, index)) !== null && _view$fields$slice2 !== void 0 ? _view$fields$slice2 : []), view.fields[index + 1], fieldId, ...view.fields.slice(index + 2)]
+              });
+            },
+            icon: chevron_down,
+            label: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: field label */
+            (0,external_wp_i18n_namespaceObject.__)('Move %s down'), fieldLabel)
+          }), ' ']
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          className: "dataviews-field-control__field-visibility-button",
+          disabled: !fieldIsHidable,
+          accessibleWhenDisabled: true,
+          size: "compact",
+          onClick: () => {
+            onChangeView({
+              ...view,
+              fields: isVisible ? viewFields.filter(id => id !== fieldId) : [...viewFields, fieldId]
+            });
+            // Focus the visibility button to avoid focus loss.
+            // Our code is safe against the component being unmounted, so we don't need to worry about cleaning the timeout.
+            // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+            setTimeout(() => {
+              const element = document.querySelector(`.dataviews-field-control__field-${fieldId} .dataviews-field-control__field-visibility-button`);
+              if (element instanceof HTMLElement) {
+                element.focus();
+              }
+            }, 50);
+          },
+          icon: isVisible ? library_seen : library_unseen,
+          label: isVisible ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: field label */
+          (0,external_wp_i18n_namespaceObject.__)('Hide %s'), fieldLabel) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: field label */
+          (0,external_wp_i18n_namespaceObject.__)('Show %s'), fieldLabel)
+        })]
+      })]
+    })
+  }, fieldId);
+}
+function FieldList({
+  fields,
+  fieldIds,
+  mandatoryFields,
+  viewFields,
+  view,
+  onChangeView
+}) {
+  return fieldIds.map(fieldId => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldItem, {
+    fields: fields,
+    fieldId: fieldId,
+    mandatoryFields: mandatoryFields,
+    viewFields: viewFields,
+    view: view,
+    onChangeView: onChangeView
+  }, fieldId));
+}
 function FieldControl() {
   const {
     view,
     fields,
     onChangeView
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
-  const mandatoryFields = getMandatoryFields(view);
-  const hidableFields = fields.filter(field => field.enableHiding !== false && !mandatoryFields.includes(field.id));
+  const mandatoryFields = (0,external_wp_element_namespaceObject.useMemo)(() => getMandatoryFields(view), [view]);
   const viewFields = view.fields || fields.map(field => field.id);
-  if (!hidableFields?.length) {
+  const visibleFields = view.fields;
+  const hiddenFields = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    const nonViewFieldsList = fields.filter(field => !viewFields.includes(field.id) && !mandatoryFields?.includes(field.id)).map(field => field.id);
+    if (view.type !== constants_LAYOUT_TABLE) {
+      return nonViewFieldsList;
+    }
+    const nonViewFieldsAndNonCombinedList = nonViewFieldsList.filter(fieldId => {
+      return !view.layout?.combinedFields?.some(combinedField => combinedField.children.includes(fieldId));
+    });
+    const nonViewFieldsCombinedFieldsList = view.layout?.combinedFields?.filter(combinedField => !viewFields.includes(combinedField.id)).map(combinedField => combinedField.id) || [];
+    return [...nonViewFieldsAndNonCombinedList, ...nonViewFieldsCombinedFieldsList];
+  }, [view, mandatoryFields, fields, viewFields]);
+  if (!visibleFields?.length && !hiddenFields?.length) {
     return null;
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
-    isBordered: true,
-    isSeparated: true,
-    children: hidableFields?.map(field => {
-      const isVisible = viewFields.includes(field.id);
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-          expanded: true,
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-            children: field.label
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            size: "compact",
-            onClick: () => onChangeView({
-              ...view,
-              fields: isVisible ? viewFields.filter(id => id !== field.id) : [...viewFields, field.id]
-            }),
-            icon: isVisible ? library_seen : library_unseen,
-            label: isVisible ? (0,external_wp_i18n_namespaceObject.__)('Hide field') : (0,external_wp_i18n_namespaceObject.__)('Show field')
-          })]
-        })
-      }, field.id);
-    })
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: 6,
+    className: "dataviews-field-control",
+    children: [!!visibleFields?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+      isBordered: true,
+      isSeparated: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldList, {
+        fields: fields,
+        fieldIds: visibleFields,
+        mandatoryFields: mandatoryFields,
+        viewFields: viewFields,
+        view: view,
+        onChangeView: onChangeView
+      })
+    }), !!hiddenFields?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        spacing: 4,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
+          style: {
+            margin: 0
+          },
+          children: (0,external_wp_i18n_namespaceObject.__)('Hidden')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+          isBordered: true,
+          isSeparated: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldList, {
+            fields: fields,
+            fieldIds: hiddenFields,
+            mandatoryFields: mandatoryFields,
+            viewFields: viewFields,
+            view: view,
+            onChangeView: onChangeView
+          })
+        })]
+      })
+    })]
   });
 }
 function SettingsSection({
@@ -43422,36 +43592,6 @@ function ScreenNavigationMoreMenu(props) {
     })]
   });
 }
-
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/chevron-up.js
-/**
- * WordPress dependencies
- */
-
-
-const chevronUp = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z"
-  })
-});
-/* harmony default export */ const chevron_up = (chevronUp);
-
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/chevron-down.js
-/**
- * WordPress dependencies
- */
-
-
-const chevronDown = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"
-  })
-});
-/* harmony default export */ const chevron_down = (chevronDown);
 
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/sidebar-navigation-screen-navigation-menus/leaf-more-menu.js
 /**
