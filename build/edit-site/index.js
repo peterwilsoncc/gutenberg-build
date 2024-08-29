@@ -6151,7 +6151,7 @@ const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
 
 const {
   lock,
-  unlock: lock_unlock_unlock
+  unlock
 } = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/edit-site');
 
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/hooks.js
@@ -6175,7 +6175,7 @@ const {
 const {
   useGlobalSetting,
   useGlobalStyle
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
 // Enable colord's a11y plugin.
 k([a11y]);
@@ -6231,7 +6231,7 @@ function useSupportedStyles(name, element) {
     supportedPanels
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return {
-      supportedPanels: lock_unlock_unlock(select(external_wp_blocks_namespaceObject.store)).getSupportedStyles(name, element)
+      supportedPanels: unlock(select(external_wp_blocks_namespaceObject.store)).getSupportedStyles(name, element)
     };
   }, [name, element]);
   return supportedPanels;
@@ -6305,7 +6305,7 @@ const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
 const {
   cleanEmptyObject,
   GlobalStylesContext
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
 // Block Gap is a special case and isn't defined within the blocks
 // style properties config. We'll add it here to allow it to be pushed
@@ -6755,7 +6755,7 @@ const {
   PATTERN_USER_CATEGORY,
   EXCLUDED_PATTERN_SOURCES,
   PATTERN_SYNC_TYPES
-} = lock_unlock_unlock(external_wp_patterns_namespaceObject.privateApis);
+} = unlock(external_wp_patterns_namespaceObject.privateApis);
 
 // Entities that are editable in focus mode.
 const FOCUSABLE_ENTITIES = [TEMPLATE_PART_POST_TYPE, NAVIGATION_POST_TYPE, PATTERN_TYPES.user];
@@ -6793,7 +6793,7 @@ const OPERATOR_IS_NONE = 'isNone';
 
 const {
   interfaceStore
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 
 /**
  * Dispatches an action that toggles a feature flag.
@@ -6889,7 +6889,7 @@ const addTemplate = template => async ({
 const removeTemplate = template => ({
   registry
 }) => {
-  return lock_unlock_unlock(registry.dispatch(external_wp_editor_namespaceObject.store)).removeTemplates([template]);
+  return unlock(registry.dispatch(external_wp_editor_namespaceObject.store)).removeTemplates([template]);
 };
 
 /**
@@ -7105,7 +7105,7 @@ function setIsSaveViewOpened(isOpen) {
 const revertTemplate = (template, options) => ({
   registry
 }) => {
-  return lock_unlock_unlock(registry.dispatch(external_wp_editor_namespaceObject.store)).revertTemplate(template, options);
+  return unlock(registry.dispatch(external_wp_editor_namespaceObject.store)).revertTemplate(template, options);
 };
 
 /**
@@ -7512,7 +7512,7 @@ const __experimentalGetInsertionPoint = (0,external_wp_data_namespaceObject.crea
     since: '6.5',
     version: '6.7'
   });
-  return lock_unlock_unlock(select(external_wp_editor_namespaceObject.store)).getInsertionPoint();
+  return unlock(select(external_wp_editor_namespaceObject.store)).getInsertionPoint();
 });
 
 /**
@@ -7691,8 +7691,8 @@ const storeConfig = {
 };
 const store = (0,external_wp_data_namespaceObject.createReduxStore)(STORE_NAME, storeConfig);
 (0,external_wp_data_namespaceObject.register)(store);
-lock_unlock_unlock(store).registerPrivateSelectors(private_selectors_namespaceObject);
-lock_unlock_unlock(store).registerPrivateActions(private_actions_namespaceObject);
+unlock(store).registerPrivateSelectors(private_selectors_namespaceObject);
+unlock(store).registerPrivateActions(private_actions_namespaceObject);
 
 ;// CONCATENATED MODULE: external ["wp","plugins"]
 const external_wp_plugins_namespaceObject = window["wp"]["plugins"];
@@ -7991,7 +7991,7 @@ function SidebarContent({
 
 const {
   useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 
 
 
@@ -8005,7 +8005,7 @@ const SiteHub = (0,external_wp_element_namespaceObject.memo)((0,external_wp_elem
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getSettings
-    } = lock_unlock_unlock(select(store));
+    } = unlock(select(store));
     const {
       getEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
@@ -8246,10 +8246,10 @@ function ResizableFrame({
   const [isResizing, setIsResizing] = (0,external_wp_element_namespaceObject.useState)(false);
   const [shouldShowHandle, setShouldShowHandle] = (0,external_wp_element_namespaceObject.useState)(false);
   const [resizeRatio, setResizeRatio] = (0,external_wp_element_namespaceObject.useState)(1);
-  const canvasMode = (0,external_wp_data_namespaceObject.useSelect)(select => lock_unlock_unlock(select(store)).getCanvasMode(), []);
+  const canvasMode = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).getCanvasMode(), []);
   const {
     setCanvasMode
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const FRAME_TRANSITION = {
     type: 'tween',
     duration: isResizing ? 0 : 0.5
@@ -8492,7 +8492,7 @@ function KeyboardShortcutsGlobal() {
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_editor_namespaceObject.store);
   const {
     getCanvasMode
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useSelect)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const {
     setIsSaveViewOpened
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
@@ -13029,7 +13029,7 @@ function currentlyPreviewingTheme() {
 
 const {
   useLocation
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function SaveButton({
   className = 'edit-site-save-button__button',
   variant = 'primary',
@@ -13047,7 +13047,7 @@ function SaveButton({
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const {
     saveDirtyEntities
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_editor_namespaceObject.store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_editor_namespaceObject.store));
   const {
     dirtyEntityRecords
   } = (0,external_wp_editor_namespaceObject.useEntitiesSavedStatesIsDirty)();
@@ -13205,7 +13205,7 @@ function SaveHub() {
 
 const {
   useHistory: use_activate_theme_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 
 /**
  * This should be refactored to use the REST API, once the REST API can activate themes.
@@ -13293,7 +13293,7 @@ function useActualCurrentTheme() {
 const {
   EntitiesSavedStatesExtensible,
   NavigableRegion
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 const EntitiesSavedStatesForPreview = ({
   onClose
 }) => {
@@ -13356,7 +13356,7 @@ function SavePanel() {
     const {
       isSaveViewOpened,
       getCanvasMode
-    } = lock_unlock_unlock(select(store));
+    } = unlock(select(store));
 
     // The currently selected entity to display.
     // Typically template or template part in the site editor.
@@ -13428,16 +13428,16 @@ function SavePanel() {
 const {
   useLocation: use_sync_canvas_mode_with_url_useLocation,
   useHistory: use_sync_canvas_mode_with_url_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function useSyncCanvasModeWithURL() {
   const history = use_sync_canvas_mode_with_url_useHistory();
   const {
     params
   } = use_sync_canvas_mode_with_url_useLocation();
-  const canvasMode = (0,external_wp_data_namespaceObject.useSelect)(select => lock_unlock_unlock(select(store)).getCanvasMode(), []);
+  const canvasMode = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).getCanvasMode(), []);
   const {
     setCanvasMode
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const currentCanvasModeRef = (0,external_wp_element_namespaceObject.useRef)(canvasMode);
   const {
     canvas: canvasInUrl
@@ -13516,13 +13516,13 @@ function useSyncCanvasModeWithURL() {
 
 const {
   useCommands
-} = lock_unlock_unlock(external_wp_coreCommands_namespaceObject.privateApis);
+} = unlock(external_wp_coreCommands_namespaceObject.privateApis);
 const {
   useGlobalStyle: layout_useGlobalStyle
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
   NavigableRegion: layout_NavigableRegion
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 const layout_ANIMATION_DURATION = 0.3;
 function Layout({
   route
@@ -13541,7 +13541,7 @@ function Layout({
     } = select(external_wp_keyboardShortcuts_namespaceObject.store);
     const {
       getCanvasMode
-    } = lock_unlock_unlock(select(store));
+    } = unlock(select(store));
     return {
       canvasMode: getCanvasMode(),
       previousShortcut: getAllShortcutKeyCombinations('core/editor/previous-region'),
@@ -13800,22 +13800,22 @@ const external = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(e
 
 const {
   useGlobalStylesReset
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
   useHistory: use_common_commands_useHistory,
   useLocation: use_common_commands_useLocation
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function useGlobalStylesOpenStylesCommands() {
   const {
     openGeneralSidebar,
     setCanvasMode
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const {
     params
   } = use_common_commands_useLocation();
   const {
     getCanvasMode
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useSelect)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const history = use_common_commands_useHistory();
   const isBlockBasedTheme = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return select(external_wp_coreData_namespaceObject.store).getCurrentTheme().is_block_theme;
@@ -13854,13 +13854,13 @@ function useGlobalStylesToggleWelcomeGuideCommands() {
   const {
     openGeneralSidebar,
     setCanvasMode
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const {
     params
   } = use_common_commands_useLocation();
   const {
     getCanvasMode
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useSelect)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const {
     set
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_preferences_namespaceObject.store);
@@ -13932,7 +13932,7 @@ function useGlobalStylesOpenCssCommands() {
     openGeneralSidebar,
     setEditorCanvasContainerView,
     setCanvasMode
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const {
     params
   } = use_common_commands_useLocation();
@@ -13952,7 +13952,7 @@ function useGlobalStylesOpenCssCommands() {
   }, []);
   const {
     getCanvasMode
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useSelect)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const commands = (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (!canEditCSS) {
       return [];
@@ -13989,10 +13989,10 @@ function useGlobalStylesOpenRevisionsCommands() {
     openGeneralSidebar,
     setEditorCanvasContainerView,
     setCanvasMode
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const {
     getCanvasMode
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useSelect)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const {
     params
   } = use_common_commands_useLocation();
@@ -14180,7 +14180,7 @@ function isTemplateRevertable(template) {
 
 const {
   useHistory: link_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function useLink(params, state, shouldReplace = false) {
   const history = link_useHistory();
   function onClick(event) {
@@ -14248,7 +14248,7 @@ function Link({
 
 const {
   useHistory: use_edit_mode_commands_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function usePageContentFocusCommands() {
   const {
     record: template
@@ -14262,7 +14262,7 @@ function usePageContentFocusCommands() {
     const {
       isPage: _isPage,
       getCanvasMode
-    } = lock_unlock_unlock(select(store));
+    } = unlock(select(store));
     const {
       getCurrentPostType,
       getCurrentTemplateId
@@ -14409,7 +14409,7 @@ function useEditModeCommands() {
 
 const {
   useLocation: use_init_edited_entity_from_url_useLocation
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 const postTypesWithoutParentTemplate = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE, NAVIGATION_POST_TYPE, PATTERN_TYPES.user];
 const authorizedPostTypes = ['page', 'post'];
 function useResolveEditedEntityAndContext({
@@ -14755,7 +14755,7 @@ function WelcomeGuideEditor() {
 
 const {
   interfaceStore: styles_interfaceStore
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 function WelcomeGuideStyles() {
   const {
     toggle
@@ -15005,7 +15005,7 @@ function WelcomeGuide() {
 
 const {
   useGlobalStylesOutput
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function useGlobalStylesRenderer() {
   const postType = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return select(store).getEditedPostType();
@@ -15053,10 +15053,10 @@ function GlobalStylesRenderer() {
 
 const {
   Theme
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = unlock(external_wp_components_namespaceObject.privateApis);
 const {
   useGlobalStyle: canvas_loader_useGlobalStyle
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function CanvasLoader({
   id
 }) {
@@ -15107,7 +15107,7 @@ function CanvasLoader({
 
 const {
   useHistory: use_navigate_to_entity_record_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function useNavigateToEntityRecord() {
   const history = use_navigate_to_entity_record_useHistory();
   const onNavigateToEntityRecord = (0,external_wp_element_namespaceObject.useCallback)(params => {
@@ -15129,7 +15129,6 @@ function useNavigateToEntityRecord() {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -15138,12 +15137,9 @@ function useNavigateToEntityRecord() {
 
 
 const {
-  useBlockEditorSettings
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
-const {
   useLocation: use_site_editor_settings_useLocation,
   useHistory: use_site_editor_settings_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function useNavigateToPreviousEntityRecord() {
   const location = use_site_editor_settings_useLocation();
   const previousLocation = (0,external_wp_compose_namespaceObject.usePrevious)(location);
@@ -15171,7 +15167,7 @@ function useSpecificEditorSettings() {
       getEditedPostContext,
       getCanvasMode,
       getSettings
-    } = lock_unlock_unlock(select(store));
+    } = unlock(select(store));
     const _context = getEditedPostContext();
     return {
       canvasMode: getCanvasMode(),
@@ -15196,25 +15192,6 @@ function useSpecificEditorSettings() {
     };
   }, [settings, canvasMode, defaultRenderingMode, onNavigateToEntityRecord, onNavigateToPreviousEntityRecord]);
   return defaultEditorSettings;
-}
-function useSiteEditorSettings() {
-  const defaultEditorSettings = useSpecificEditorSettings();
-  const {
-    postType,
-    postId
-  } = useSelect(select => {
-    const {
-      getEditedPostType,
-      getEditedPostId
-    } = unlock(select(editSiteStore));
-    const usedPostType = getEditedPostType();
-    const usedPostId = getEditedPostId();
-    return {
-      postType: usedPostType,
-      postId: usedPostId
-    };
-  }, []);
-  return useBlockEditorSettings(defaultEditorSettings, postType, postId);
 }
 
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/plugin-template-setting-panel/index.js
@@ -15467,7 +15444,7 @@ const {
   useHasColorPanel,
   useGlobalSetting: root_menu_useGlobalSetting,
   useSettingsForBlockElement
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function RootMenu() {
   const [rawSettings] = root_menu_useGlobalSetting('');
   const settings = useSettingsForBlockElement(rawSettings);
@@ -15723,10 +15700,10 @@ function getFontFamilies(themeJson) {
 
 const {
   GlobalStylesContext: typography_example_GlobalStylesContext
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
   mergeBaseAndUserConfigs
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 function PreviewTypography({
   fontSize,
   variation
@@ -15833,7 +15810,7 @@ function HighlightedColors({
 const {
   useGlobalStyle: preview_iframe_useGlobalStyle,
   useGlobalStylesOutput: preview_iframe_useGlobalStylesOutput
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const normalizedWidth = 248;
 const normalizedHeight = 152;
 
@@ -15964,7 +15941,7 @@ function PreviewIframe({
 
 const {
   useGlobalStyle: preview_styles_useGlobalStyle
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const firstFrameVariants = {
   start: {
     scale: 1,
@@ -16131,7 +16108,7 @@ const PreviewStyles = ({
 
 const {
   useGlobalStyle: screen_root_useGlobalStyle
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function ScreenRoot() {
   const [customCSS] = screen_root_useGlobalStyle('css');
   const {
@@ -16248,7 +16225,7 @@ const external_wp_a11y_namespaceObject = window["wp"]["a11y"];
 
 const {
   useGlobalStyle: variations_panel_useGlobalStyle
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
 // Only core block styles (source === block) or block styles with a matching
 // theme.json style variation will be configurable via Global Styles.
@@ -16362,7 +16339,7 @@ const {
   useGlobalSetting: screen_block_list_useGlobalSetting,
   useSettingsForBlockElement: screen_block_list_useSettingsForBlockElement,
   useHasColorPanel: screen_block_list_useHasColorPanel
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function useSortedBlockTypes() {
   const blockItems = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blocks_namespaceObject.store).getBlockTypes(), []);
   // Ensure core blocks are prioritized in the returned results,
@@ -16655,7 +16632,7 @@ const {
   FiltersPanel: StylesFiltersPanel,
   ImageSettingsPanel,
   AdvancedPanel: StylesAdvancedPanel
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function ScreenBlock({
   name,
   variation
@@ -16891,7 +16868,7 @@ function ScreenBlock({
 
 const {
   useGlobalStyle: typography_elements_useGlobalStyle
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function ElementItem({
   parentMenu,
   element,
@@ -17128,7 +17105,7 @@ const {
 } = window;
 const {
   kebabCase
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = unlock(external_wp_components_namespaceObject.privateApis);
 function setUIValuesNeeded(font, extraValues = {}) {
   if (!font.name && (font.fontFamily || font.slug)) {
     font.name = font.fontFamily || font.slug;
@@ -17504,7 +17481,7 @@ function toggleFont(font, face, initialfonts) {
 
 const {
   useGlobalSetting: context_useGlobalSetting
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
 
 
@@ -17898,10 +17875,10 @@ function FontLibraryProvider({
 const {
   GlobalStylesContext: use_theme_style_variations_by_property_GlobalStylesContext,
   areGlobalStyleConfigsEqual
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
   mergeBaseAndUserConfigs: use_theme_style_variations_by_property_mergeBaseAndUserConfigs
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 
 /**
  * Removes all instances of properties from an object.
@@ -18053,10 +18030,10 @@ function isVariationWithProperties(variation, properties) {
 
 const {
   GlobalStylesContext: typeset_button_GlobalStylesContext
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
   mergeBaseAndUserConfigs: typeset_button_mergeBaseAndUserConfigs
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 function TypesetButton() {
   const propertiesToFilter = ['typography'];
   const typographyVariations = useCurrentMergeThemeStyleVariationsWithUserConfig(propertiesToFilter);
@@ -18295,7 +18272,7 @@ function FontCard({
 
 const {
   kebabCase: library_font_variant_kebabCase
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = unlock(external_wp_components_namespaceObject.privateApis);
 function LibraryFontVariant({
   face,
   font
@@ -18399,7 +18376,7 @@ function sortFontFaces(faces) {
 
 const {
   useGlobalSetting: installed_fonts_useGlobalSetting
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function InstalledFonts() {
   var _libraryFontSelected$;
   const {
@@ -18815,7 +18792,7 @@ function GoogleFontsConfirmDialog() {
 
 const {
   kebabCase: collection_font_variant_kebabCase
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = unlock(external_wp_components_namespaceObject.privateApis);
 function CollectionFontVariant({
   face,
   font,
@@ -23136,7 +23113,7 @@ var vmtx$1 = Object.freeze( { __proto__: null, vmtx: vmtx } );
 
 const {
   kebabCase: make_families_from_faces_kebabCase
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = unlock(external_wp_components_namespaceObject.privateApis);
 function makeFamiliesFromFaces(fontFaces) {
   const fontFamiliesObject = fontFaces.reduce((acc, item) => {
     if (!acc[item.fontFamily]) {
@@ -23388,7 +23365,7 @@ function UploadFonts() {
 
 const {
   Tabs
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = unlock(external_wp_components_namespaceObject.privateApis);
 const DEFAULT_TAB = {
   id: 'installed-fonts',
   title: (0,external_wp_i18n_namespaceObject._x)('Library', 'Font library')
@@ -23535,7 +23512,7 @@ function FontFamilyItem({
 
 const {
   useGlobalSetting: font_families_useGlobalSetting
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function FontFamilies() {
   const {
     baseCustomFonts,
@@ -23713,11 +23690,11 @@ const StylesPreviewTypography = ({
 
 const {
   mergeBaseAndUserConfigs: variation_mergeBaseAndUserConfigs
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 const {
   GlobalStylesContext: variation_GlobalStylesContext,
   areGlobalStyleConfigsEqual: variation_areGlobalStyleConfigsEqual
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function Variation({
   variation,
   children,
@@ -23884,7 +23861,7 @@ const {
   useGlobalSetting: typography_panel_useGlobalSetting,
   useSettingsForBlockElement: typography_panel_useSettingsForBlockElement,
   TypographyPanel: typography_panel_StylesTypographyPanel
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function TypographyPanel({
   element,
   headingLevel
@@ -23926,7 +23903,7 @@ function TypographyPanel({
 
 const {
   useGlobalStyle: typography_preview_useGlobalStyle
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function TypographyPreview({
   name,
   element,
@@ -24090,7 +24067,7 @@ function ScreenTypographyElement({
 
 const {
   useGlobalStyle: font_size_preview_useGlobalStyle
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function FontSizePreview({
   fontSize
 }) {
@@ -24318,10 +24295,10 @@ function SizeControl({
 
 const {
   DropdownMenuV2
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = unlock(external_wp_components_namespaceObject.privateApis);
 const {
   useGlobalSetting: font_size_useGlobalSetting
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function FontSize() {
   var _fontSizes$origin;
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = (0,external_wp_element_namespaceObject.useState)(false);
@@ -24565,10 +24542,10 @@ function ConfirmResetFontSizesDialog({
 
 const {
   DropdownMenuV2: font_sizes_DropdownMenuV2
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = unlock(external_wp_components_namespaceObject.privateApis);
 const {
   useGlobalSetting: font_sizes_useGlobalSetting
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
 
 
@@ -24764,7 +24741,7 @@ function ColorIndicatorWrapper({
 
 const {
   useGlobalSetting: palette_useGlobalSetting
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const EMPTY_COLORS = [];
 function Palette({
   name
@@ -24842,7 +24819,7 @@ const {
   useGlobalSetting: screen_colors_useGlobalSetting,
   useSettingsForBlockElement: screen_colors_useSettingsForBlockElement,
   ColorPanel: screen_colors_StylesColorPanel
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function ScreenColors() {
   const [style] = screen_colors_useGlobalStyle('', undefined, 'user', {
     shouldDecodeEncode: false
@@ -25009,7 +24986,7 @@ function ColorVariations({
 
 const {
   useGlobalSetting: color_palette_panel_useGlobalSetting
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const mobilePopoverProps = {
   placement: 'bottom-start',
   offset: 8
@@ -25075,7 +25052,7 @@ function ColorPalettePanel({
 
 const {
   useGlobalSetting: gradients_palette_panel_useGlobalSetting
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const gradients_palette_panel_mobilePopoverProps = {
   placement: 'bottom-start',
   offset: 8
@@ -25159,7 +25136,7 @@ function GradientPalettePanel({
 
 const {
   Tabs: screen_color_palette_Tabs
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = unlock(external_wp_components_namespaceObject.privateApis);
 function ScreenColorPalette({
   name
 }) {
@@ -25216,7 +25193,7 @@ function ScreenColorPalette({
 
 const {
   useGlobalSetting: shadows_panel_useGlobalSetting
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const defaultShadow = '6px 6px 9px rgba(0, 0, 0, 0.2)';
 function ShadowsPanel() {
   const [defaultShadows] = shadows_panel_useGlobalSetting('shadow.presets.default');
@@ -25599,10 +25576,10 @@ function shadowObjectToString(shadowObj) {
 
 const {
   useGlobalSetting: shadows_edit_panel_useGlobalSetting
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
   DropdownMenuV2: shadows_edit_panel_DropdownMenuV2
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = unlock(external_wp_components_namespaceObject.privateApis);
 const customShadowMenuItems = [{
   label: (0,external_wp_i18n_namespaceObject.__)('Rename'),
   action: 'rename'
@@ -26057,7 +26034,7 @@ const {
   useGlobalSetting: dimensions_panel_useGlobalSetting,
   useSettingsForBlockElement: dimensions_panel_useSettingsForBlockElement,
   DimensionsPanel: dimensions_panel_StylesDimensionsPanel
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const DEFAULT_CONTROLS = {
   contentSize: true,
   wideSize: true,
@@ -26141,7 +26118,7 @@ const {
   useGlobalStyle: background_panel_useGlobalStyle,
   useGlobalSetting: background_panel_useGlobalSetting,
   BackgroundPanel: background_panel_StylesBackgroundPanel
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
 /**
  * Checks if there is a current value in the background image block support
@@ -26192,7 +26169,7 @@ const {
   useHasDimensionsPanel: screen_layout_useHasDimensionsPanel,
   useGlobalSetting: screen_layout_useGlobalSetting,
   useSettingsForBlockElement: screen_layout_useSettingsForBlockElement
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function ScreenLayout() {
   const [rawSettings] = screen_layout_useGlobalSetting('');
   const settings = screen_layout_useSettingsForBlockElement(rawSettings);
@@ -26231,7 +26208,7 @@ function ScreenLayout() {
 
 const {
   GlobalStylesContext: style_variations_container_GlobalStylesContext
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function StyleVariationsContainer({
   gap = 2
 }) {
@@ -26345,7 +26322,7 @@ function SidebarNavigationScreenGlobalStylesContent() {
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getSettings
-    } = lock_unlock_unlock(select(store));
+    } = unlock(select(store));
     return {
       storedSettings: getSettings()
     };
@@ -26452,7 +26429,7 @@ const closeSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 const {
   EditorContentSlotFill,
   ResizableEditor
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 
 /**
  * Returns a translated string for the title of the editor canvas container.
@@ -26491,7 +26468,7 @@ function EditorCanvasContainer({
     editorCanvasContainerView,
     showListViewByDefault
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const _editorCanvasContainerView = lock_unlock_unlock(select(store)).getEditorCanvasContainerView();
+    const _editorCanvasContainerView = unlock(select(store)).getEditorCanvasContainerView();
     const _showListViewByDefault = select(external_wp_preferences_namespaceObject.store).get('core', 'showListViewByDefault');
     return {
       editorCanvasContainerView: _editorCanvasContainerView,
@@ -26501,7 +26478,7 @@ function EditorCanvasContainer({
   const [isClosed, setIsClosed] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
     setEditorCanvasContainerView
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const {
     setIsListViewOpened
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_editor_namespaceObject.store);
@@ -26595,16 +26572,16 @@ const {
   useGlobalStyle: style_book_useGlobalStyle,
   GlobalStylesContext: style_book_GlobalStylesContext,
   useGlobalStylesOutputWithConfig
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
   mergeBaseAndUserConfigs: style_book_mergeBaseAndUserConfigs
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 const {
   CompositeV2: Composite,
   CompositeItemV2: CompositeItem,
   useCompositeStoreV2: useCompositeStore,
   Tabs: style_book_Tabs
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = unlock(external_wp_components_namespaceObject.privateApis);
 
 // The content area of the Style Book is rendered within an iframe so that global styles
 // are applied to elements within the entire content area. To support elements that are
@@ -26973,7 +26950,7 @@ const Example = ({
 const {
   useGlobalStyle: screen_css_useGlobalStyle,
   AdvancedPanel: screen_css_StylesAdvancedPanel
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function ScreenCSS() {
   const description = (0,external_wp_i18n_namespaceObject.__)('Add your own CSS to customize the appearance and layout of your site.');
   const [style] = screen_css_useGlobalStyle('', undefined, 'user', {
@@ -27028,10 +27005,10 @@ const {
   GlobalStylesContext: revisions_GlobalStylesContext,
   useGlobalStylesOutputWithConfig: revisions_useGlobalStylesOutputWithConfig,
   __unstableBlockStyleVariationOverridesWithConfig
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
   mergeBaseAndUserConfigs: revisions_mergeBaseAndUserConfigs
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 function revisions_isObjectEmpty(object) {
   return !object || Object.keys(object).length === 0;
 }
@@ -27114,7 +27091,7 @@ const DEFAULT_QUERY = {
 const use_global_styles_revisions_EMPTY_ARRAY = [];
 const {
   GlobalStylesContext: use_global_styles_revisions_GlobalStylesContext
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function useGlobalStylesRevisions({
   query
 } = {}) {
@@ -27245,7 +27222,7 @@ const external_wp_date_namespaceObject = window["wp"]["date"];
 const DAY_IN_MILLISECONDS = 60 * 60 * 1000 * 24;
 const {
   getGlobalStylesChanges
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function ChangesSummary({
   revision,
   previousRevision
@@ -27552,7 +27529,7 @@ function Pagination({
 const {
   GlobalStylesContext: screen_revisions_GlobalStylesContext,
   areGlobalStyleConfigsEqual: screen_revisions_areGlobalStyleConfigsEqual
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const PAGE_SIZE = 10;
 function ScreenRevisions() {
   const {
@@ -27566,7 +27543,7 @@ function ScreenRevisions() {
     blocks,
     editorCanvasContainerView
   } = (0,external_wp_data_namespaceObject.useSelect)(select => ({
-    editorCanvasContainerView: lock_unlock_unlock(select(store)).getEditorCanvasContainerView(),
+    editorCanvasContainerView: unlock(select(store)).getEditorCanvasContainerView(),
     blocks: select(external_wp_blockEditor_namespaceObject.store).getBlocks()
   }), []);
   const [currentPage, setCurrentPage] = (0,external_wp_element_namespaceObject.useState)(1);
@@ -27587,7 +27564,7 @@ function ScreenRevisions() {
   const [isLoadingRevisionWithUnsavedChanges, setIsLoadingRevisionWithUnsavedChanges] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
     setEditorCanvasContainerView
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const selectedRevisionMatchesEditorStyles = screen_revisions_areGlobalStyleConfigsEqual(currentlySelectedRevision, currentEditorGlobalStyles);
   const onCloseRevisions = () => {
     goTo('/'); // Return to global styles main panel.
@@ -27718,7 +27695,7 @@ function ScreenRevisions() {
 const SLOT_FILL_NAME = 'GlobalStylesMenu';
 const {
   useGlobalStylesReset: ui_useGlobalStylesReset
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
   Slot: GlobalStylesMenuSlot,
   Fill: GlobalStylesMenuFill
@@ -27743,7 +27720,7 @@ function GlobalStylesActionMenu() {
   }, []);
   const {
     setEditorCanvasContainerView
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const {
     goTo
   } = (0,external_wp_components_namespaceObject.__experimentalUseNavigator)();
@@ -27889,7 +27866,7 @@ function GlobalStylesEditorCanvasContainerLink() {
     goTo,
     location
   } = (0,external_wp_components_namespaceObject.__experimentalUseNavigator)();
-  const editorCanvasContainerView = (0,external_wp_data_namespaceObject.useSelect)(select => lock_unlock_unlock(select(store)).getEditorCanvasContainerView(), []);
+  const editorCanvasContainerView = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).getEditorCanvasContainerView(), []);
   const path = location?.path;
   const isRevisionsOpen = path === '/revisions';
 
@@ -27935,7 +27912,7 @@ function GlobalStylesEditorCanvasContainerLink() {
 }
 function GlobalStylesUI() {
   const blocks = (0,external_wp_blocks_namespaceObject.getBlockTypes)();
-  const editorCanvasContainerView = (0,external_wp_data_namespaceObject.useSelect)(select => lock_unlock_unlock(select(store)).getEditorCanvasContainerView(), []);
+  const editorCanvasContainerView = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).getEditorCanvasContainerView(), []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalNavigatorProvider, {
     className: "edit-site-global-styles-sidebar__navigator-provider",
     initialPath: "/",
@@ -28036,7 +28013,7 @@ function GlobalStylesUI() {
 const {
   ComplementaryArea,
   ComplementaryAreaMoreMenuItem
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 function DefaultSidebar({
   className,
   identifier,
@@ -28097,7 +28074,7 @@ function DefaultSidebar({
 
 const {
   interfaceStore: global_styles_sidebar_interfaceStore
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 function GlobalStylesSidebar() {
   const {
     shouldClearCanvasContainerView,
@@ -28113,7 +28090,7 @@ function GlobalStylesSidebar() {
     const {
       getEditorCanvasContainerView,
       getCanvasMode
-    } = lock_unlock_unlock(select(store));
+    } = unlock(select(store));
     const canvasContainerView = getEditorCanvasContainerView();
     const _isVisualEditorMode = 'visual' === select(external_wp_editor_namespaceObject.store).getEditorMode();
     const _isEditCanvasMode = 'edit' === getCanvasMode();
@@ -28135,7 +28112,7 @@ function GlobalStylesSidebar() {
   }, []);
   const {
     setEditorCanvasContainerView
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (shouldClearCanvasContainerView) {
       setEditorCanvasContainerView(undefined);
@@ -28328,7 +28305,7 @@ function WelcomeGuideMenuItem() {
 const {
   ToolsMoreMenuGroup,
   PreferencesModal
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 function MoreMenu() {
   const isBlockBasedTheme = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return select(external_wp_coreData_namespaceObject.store).getCurrentTheme().is_block_theme;
@@ -28367,7 +28344,7 @@ function useEditorIframeProps() {
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getCanvasMode
-    } = lock_unlock_unlock(select(store));
+    } = unlock(select(store));
     return {
       canvasMode: getCanvasMode(),
       currentPostIsTrashed: select(external_wp_editor_namespaceObject.store).getCurrentPostAttribute('status') === 'trash'
@@ -28375,7 +28352,7 @@ function useEditorIframeProps() {
   }, []);
   const {
     setCanvasMode
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const [isFocused, setIsFocused] = (0,external_wp_element_namespaceObject.useState)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (canvasMode === 'edit') {
@@ -28439,7 +28416,7 @@ function useEditorIframeProps() {
 
 const {
   useLocation: use_title_useLocation
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function useTitle(title) {
   const location = use_title_useLocation();
   const siteTitle = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', 'site')?.title, []);
@@ -28545,14 +28522,14 @@ function useEditorTitle() {
 const {
   Editor,
   BackButton
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 const {
   useHistory: editor_useHistory,
   useLocation: editor_useLocation
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 const {
   BlockKeyboardShortcuts
-} = lock_unlock_unlock(external_wp_blockLibrary_namespaceObject.privateApis);
+} = unlock(external_wp_blockLibrary_namespaceObject.privateApis);
 const toggleHomeIconVariants = {
   edit: {
     opacity: 0,
@@ -28603,7 +28580,7 @@ function EditSiteEditor({
       isPage,
       getEditedPostType,
       getEditedPostId
-    } = lock_unlock_unlock(select(store));
+    } = unlock(select(store));
     const {
       get
     } = select(external_wp_preferences_namespaceObject.store);
@@ -28645,7 +28622,7 @@ function EditSiteEditor({
   }], [settings.styles, canvasMode, currentPostIsTrashed]);
   const {
     setCanvasMode
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const {
     createSuccessNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
@@ -34399,7 +34376,7 @@ var ComboboxItemValue = forwardRef2(function ComboboxItemValue2(props) {
 
 const {
   lock: lock_unlock_lock,
-  unlock: build_module_lock_unlock_unlock
+  unlock: lock_unlock_unlock
 } = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/dataviews');
 
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/components/dataviews-filters/search-widget.js
@@ -34429,7 +34406,7 @@ const {
   CompositeV2: search_widget_Composite,
   CompositeItemV2: search_widget_CompositeItem,
   useCompositeStoreV2: search_widget_useCompositeStore
-} = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 const radioCheck = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
@@ -34872,7 +34849,7 @@ function FilterSummary({
 
 const {
   DropdownMenuV2: add_filter_DropdownMenuV2
-} = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function AddFilterDropdownMenu({
   filters,
   view,
@@ -35283,7 +35260,7 @@ function DataViewsSelectionCheckbox({
 const {
   DropdownMenuV2: dataviews_item_actions_DropdownMenuV2,
   kebabCase: dataviews_item_actions_kebabCase
-} = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function ButtonTrigger({
   action,
   onClick,
@@ -35732,7 +35709,7 @@ const unseen = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 const {
   DropdownMenuV2: column_header_menu_DropdownMenuV2
-} = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function WithDropDownMenuSeparators({
   children
 }) {
@@ -36434,7 +36411,7 @@ const {
   CompositeItemV2: list_CompositeItem,
   CompositeRowV2: CompositeRow,
   DropdownMenuV2: DropdownMenu
-} = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function ListItem({
   actions,
   id,
@@ -37136,7 +37113,7 @@ function DensityPicker({
 
 const {
   DropdownMenuV2: dataviews_view_config_DropdownMenuV2
-} = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function ViewTypeMenu({
   defaultLayouts = {
     list: {},
@@ -37616,7 +37593,7 @@ function Header({
 
 const {
   NavigableRegion: page_NavigableRegion
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 function Page({
   title,
   subTitle,
@@ -38034,7 +38011,7 @@ const pencil = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 const {
   useHistory: dataviews_actions_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 const useEditPostAction = () => {
   const history = dataviews_actions_useHistory();
   return (0,external_wp_element_namespaceObject.useMemo)(() => ({
@@ -38463,14 +38440,14 @@ function usePostFields(viewType) {
 
 const {
   usePostActions
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 const {
   useLocation: post_list_useLocation,
   useHistory: post_list_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 const {
   useEntityRecordsWithPermissions
-} = lock_unlock_unlock(external_wp_coreData_namespaceObject.privateApis);
+} = unlock(external_wp_coreData_namespaceObject.privateApis);
 const post_list_EMPTY_ARRAY = [];
 const getDefaultView = (defaultViews, activeView) => {
   return defaultViews.find(({
@@ -38789,7 +38766,7 @@ function usePatternSettings() {
   const storedSettings = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getSettings
-    } = lock_unlock_unlock(select(store));
+    } = unlock(select(store));
     return getSettings();
   }, []);
   const settingsBlockPatterns = (_storedSettings$__exp = storedSettings.__experimentalAdditionalBlockPatterns) !== null && _storedSettings$__exp !== void 0 ? _storedSettings$__exp :
@@ -38826,7 +38803,7 @@ const {
   extractWords,
   getNormalizedSearchTerms,
   normalizeString: search_items_normalizeString
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
 /**
  * Internal dependencies
@@ -39016,7 +38993,7 @@ const selectThemePatterns = (0,external_wp_data_namespaceObject.createSelector)(
   var _settings$__experimen;
   const {
     getSettings
-  } = lock_unlock_unlock(select(store));
+  } = unlock(select(store));
   const {
     isResolving: isResolvingSelector
   } = select(external_wp_coreData_namespaceObject.store);
@@ -39035,7 +39012,7 @@ const selectThemePatterns = (0,external_wp_data_namespaceObject.createSelector)(
     patterns,
     isResolving: isResolvingSelector('getBlockPatterns')
   };
-}, select => [select(external_wp_coreData_namespaceObject.store).getBlockPatterns(), select(external_wp_coreData_namespaceObject.store).isResolving('getBlockPatterns'), lock_unlock_unlock(select(store)).getSettings()]);
+}, select => [select(external_wp_coreData_namespaceObject.store).getBlockPatterns(), select(external_wp_coreData_namespaceObject.store).isResolving('getBlockPatterns'), unlock(select(store)).getSettings()]);
 const selectPatterns = (0,external_wp_data_namespaceObject.createSelector)((select, categoryId, syncStatus, search = '') => {
   const {
     patterns: themePatterns,
@@ -39121,7 +39098,7 @@ function useAugmentPatternsWithPermissions(patterns) {
   const permissions = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEntityRecordPermissions
-    } = lock_unlock_unlock(select(external_wp_coreData_namespaceObject.store));
+    } = unlock(select(external_wp_coreData_namespaceObject.store));
     return idsAndTypes.reduce((acc, [type, id]) => {
       acc[id] = getEntityRecordPermissions('postType', type, id);
       return acc;
@@ -39229,14 +39206,14 @@ const upload = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 const {
   useHistory: add_new_pattern_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 const {
   CreatePatternModal,
   useAddPatternCategory
-} = lock_unlock_unlock(external_wp_patterns_namespaceObject.privateApis);
+} = unlock(external_wp_patterns_namespaceObject.privateApis);
 const {
   CreateTemplatePartModal
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 function AddNewPattern() {
   const history = add_new_pattern_useHistory();
   const [showPatternModal, setShowPatternModal] = (0,external_wp_element_namespaceObject.useState)(false);
@@ -39244,7 +39221,7 @@ function AddNewPattern() {
   // eslint-disable-next-line @wordpress/no-unused-vars-before-return
   const {
     createPatternFromFile
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_patterns_namespaceObject.store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_patterns_namespaceObject.store));
   const {
     createSuccessNotice,
     createErrorNotice
@@ -39430,7 +39407,7 @@ function useDefaultPatternCategories() {
     var _settings$__experimen;
     const {
       getSettings
-    } = lock_unlock_unlock(select(store));
+    } = unlock(select(store));
     const settings = getSettings();
     return (_settings$__experimen = settings.__experimentalAdditionalBlockPatternCategories) !== null && _settings$__experimen !== void 0 ? _settings$__experimen : settings.__experimentalBlockPatternCategories;
   });
@@ -39458,7 +39435,7 @@ function useThemePatterns() {
     var _getSettings$__experi;
     const {
       getSettings
-    } = lock_unlock_unlock(select(store));
+    } = unlock(select(store));
     return (_getSettings$__experi = getSettings().__experimentalAdditionalBlockPatterns) !== null && _getSettings$__experi !== void 0 ? _getSettings$__experi : getSettings().__experimentalBlockPatterns;
   });
   const restBlockPatterns = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getBlockPatterns());
@@ -39588,7 +39565,7 @@ function usePatternCategories() {
 
 const {
   RenamePatternCategoryModal
-} = lock_unlock_unlock(external_wp_patterns_namespaceObject.privateApis);
+} = unlock(external_wp_patterns_namespaceObject.privateApis);
 function RenameCategoryMenuItem({
   category,
   onClose
@@ -39655,7 +39632,7 @@ function RenameModal({
 
 const {
   useHistory: delete_category_menu_item_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function DeleteCategoryMenuItem({
   category,
   onClose
@@ -40025,7 +40002,7 @@ function useAddedBy(postType, postId) {
 
 const {
   useGlobalStyle: fields_useGlobalStyle
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function PreviewWrapper({
   item,
   onClick,
@@ -40250,13 +40227,13 @@ const templatePartAuthorField = {
 
 const {
   ExperimentalBlockEditorProvider: page_patterns_ExperimentalBlockEditorProvider
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
   usePostActions: page_patterns_usePostActions
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 const {
   useLocation: page_patterns_useLocation
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 const page_patterns_EMPTY_ARRAY = [];
 const page_patterns_defaultLayouts = {
   [LAYOUT_TABLE]: {
@@ -41183,7 +41160,7 @@ const {
   CompositeV2: add_custom_template_modal_content_Composite,
   CompositeItemV2: add_custom_template_modal_content_CompositeItem,
   useCompositeStoreV2: add_custom_template_modal_content_useCompositeStore
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = unlock(external_wp_components_namespaceObject.privateApis);
 const add_custom_template_modal_content_EMPTY_ARRAY = [];
 function SuggestionListItem({
   suggestion,
@@ -41959,7 +41936,7 @@ function AddCustomGenericTemplateModalContent({
 
 const {
   useHistory: add_new_template_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 const DEFAULT_TEMPLATE_SLUGS = ['front-page', 'home', 'single', 'page', 'index', 'archive', 'author', 'category', 'date', 'tag', 'search', '404'];
 const TEMPLATE_ICONS = {
   'front-page': library_home,
@@ -42267,7 +42244,7 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
 
 const {
   useGlobalStyle: page_templates_fields_useGlobalStyle
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function fields_PreviewField({
   item
 }) {
@@ -42422,14 +42399,14 @@ const authorField = {
 
 const {
   usePostActions: page_templates_usePostActions
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 const {
   useHistory: page_templates_useHistory,
   useLocation: page_templates_useLocation
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 const {
   useEntityRecordsWithPermissions: page_templates_useEntityRecordsWithPermissions
-} = lock_unlock_unlock(external_wp_coreData_namespaceObject.privateApis);
+} = unlock(external_wp_coreData_namespaceObject.privateApis);
 const page_templates_EMPTY_ARRAY = [];
 const page_templates_defaultLayouts = {
   [LAYOUT_TABLE]: {
@@ -42645,7 +42622,7 @@ function SidebarButton(props) {
 const {
   useHistory: sidebar_navigation_screen_useHistory,
   useLocation: sidebar_navigation_screen_useLocation
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function SidebarNavigationScreen({
   isRoot,
   title,
@@ -42663,7 +42640,7 @@ function SidebarNavigationScreen({
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getSettings
-    } = lock_unlock_unlock(select(store));
+    } = unlock(select(store));
     const currentlyPreviewingThemeId = currentlyPreviewingTheme();
     return {
       dashboardLink: getSettings().__experimentalDashboardLink,
@@ -42786,7 +42763,7 @@ const chevronRightSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
 
 const {
   useHistory: sidebar_navigation_item_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function SidebarNavigationItem({
   className,
   icon,
@@ -43025,7 +43002,7 @@ function SidebarNavigationItemGlobalStyles(props) {
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const {
     setCanvasMode
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const hasGlobalStyleVariations = (0,external_wp_data_namespaceObject.useSelect)(select => !!select(external_wp_coreData_namespaceObject.store).__experimentalGetCurrentThemeGlobalStylesVariations()?.length, []);
   if (hasGlobalStyleVariations) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItem, {
@@ -43063,7 +43040,7 @@ function SidebarNavigationScreenGlobalStyles({
   const {
     setCanvasMode,
     setEditorCanvasContainerView
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const {
     isViewMode,
     isStyleBookOpened,
@@ -43073,7 +43050,7 @@ function SidebarNavigationScreenGlobalStyles({
     const {
       getCanvasMode,
       getEditorCanvasContainerView
-    } = lock_unlock_unlock(select(store));
+    } = unlock(select(store));
     const {
       getEntityRecord,
       __experimentalGetCurrentGlobalStylesId
@@ -43186,7 +43163,7 @@ const navigation = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 function SidebarNavigationScreenMain() {
   const {
     setEditorCanvasContainerView
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
 
   // Clear the editor canvas container view when accessing the main navigation screen.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -43370,7 +43347,7 @@ function DeleteConfirmDialog({
 
 const {
   useHistory: more_menu_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 const POPOVER_PROPS = {
   position: 'bottom right'
 };
@@ -43502,7 +43479,7 @@ const leaf_more_menu_POPOVER_PROPS = {
 
 const {
   useHistory: leaf_more_menu_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function LeafMoreMenu(props) {
   const history = leaf_more_menu_useHistory();
   const {
@@ -43627,7 +43604,7 @@ function LeafMoreMenu(props) {
 
 const {
   PrivateListView
-} = lock_unlock_unlock(external_wp_blockEditor_namespaceObject.privateApis);
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
 // Needs to be kept in sync with the query used at packages/block-library/src/page-list/edit.js.
 const MAX_PAGE_COUNT = 100;
@@ -43718,7 +43695,7 @@ function NavigationMenuEditor({
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getSettings
-    } = lock_unlock_unlock(select(store));
+    } = unlock(select(store));
     return {
       storedSettings: getSettings()
     };
@@ -43834,7 +43811,7 @@ function SingleNavigationMenu({
 
 const {
   useLocation: sidebar_navigation_screen_navigation_menu_useLocation
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 const postType = `wp_navigation`;
 function SidebarNavigationScreenNavigationMenu({
   backPath
@@ -43927,7 +43904,7 @@ function SidebarNavigationScreenNavigationMenu({
 
 const {
   useHistory: use_navigation_menu_handlers_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function useDeleteNavigationMenu() {
   const {
     deleteEntityRecord
@@ -44107,7 +44084,7 @@ function SidebarNavigationScreenNavigationMenus({
   const isLoading = isResolvingNavigationMenus && !hasResolvedNavigationMenus;
   const {
     getNavigationFallbackId
-  } = lock_unlock_unlock((0,external_wp_data_namespaceObject.useSelect)(external_wp_coreData_namespaceObject.store));
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(external_wp_coreData_namespaceObject.store));
   const firstNavigationMenu = navigationMenus?.[0];
 
   // Save a boolean to prevent us creating a fallback more than once per session.
@@ -44219,7 +44196,7 @@ const NavMenuItem = ({
 
 const {
   useLocation: dataview_item_useLocation
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function DataViewItem({
   title,
   slug,
@@ -44346,7 +44323,7 @@ function DataviewsTemplatesSidebarContent({
 
 const {
   useLocation: sidebar_navigation_screen_templates_browse_useLocation
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function SidebarNavigationScreenTemplatesBrowse({
   backPath
 }) {
@@ -44492,7 +44469,7 @@ function useTemplatePartAreas() {
 
 const {
   useLocation: sidebar_navigation_screen_patterns_useLocation
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function CategoriesGroup({
   templatePartAreas,
   patternCategories,
@@ -44607,7 +44584,7 @@ function SidebarNavigationScreenPatterns({
 
 const {
   useHistory: add_new_view_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function AddNewItemModalContent({
   type,
   setIsAdding
@@ -44744,7 +44721,7 @@ function AddNewItem({
 
 const {
   useHistory: custom_dataviews_list_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 const custom_dataviews_list_EMPTY_ARRAY = [];
 function RenameItemModalContent({
   dataviewId,
@@ -44947,7 +44924,7 @@ function CustomDataViewsList({
 
 const {
   useLocation: sidebar_dataviews_useLocation
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function DataViewsSidebarContent() {
   const {
     params: {
@@ -45216,7 +45193,7 @@ function DataForm({
 
 const {
   PostCardPanel
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 function PostEditForm({
   postType,
   postId
@@ -45329,7 +45306,7 @@ function PostEdit({
 const {
   useLocation: router_useLocation,
   useHistory: router_useHistory
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function useRedirectOldPaths() {
   const history = router_useHistory();
   const {
@@ -45523,7 +45500,7 @@ function useLayoutAreas() {
 
 const {
   useCommandContext
-} = lock_unlock_unlock(external_wp_commands_namespaceObject.privateApis);
+} = unlock(external_wp_commands_namespaceObject.privateApis);
 
 /**
  * React hook used to set the correct command context based on the current state.
@@ -45535,7 +45512,7 @@ function useSetCommandContext() {
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getCanvasMode
-    } = lock_unlock_unlock(select(store));
+    } = unlock(select(store));
     const {
       getBlockSelectionStart
     } = select(external_wp_blockEditor_namespaceObject.store);
@@ -45591,10 +45568,10 @@ function useSetCommandContext() {
 
 const {
   RouterProvider
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 const {
   GlobalStylesProvider
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 function AppLayout() {
   // This ensures the edited entity id and type are initialized properly.
   useInitEditedEntityFromURL();
@@ -45702,7 +45679,7 @@ function PluginSidebarMoreMenuItem(props) {
 
 const {
   useLocation: posts_app_router_useLocation
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function router_useLayoutAreas() {
   const {
     params = {}
@@ -45778,10 +45755,10 @@ function router_useLayoutAreas() {
 
 const {
   RouterProvider: posts_app_RouterProvider
-} = lock_unlock_unlock(external_wp_router_namespaceObject.privateApis);
+} = unlock(external_wp_router_namespaceObject.privateApis);
 const {
   GlobalStylesProvider: posts_app_GlobalStylesProvider
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 function PostsLayout() {
   // This ensures the edited entity id and type are initialized properly.
   useInitEditedEntityFromURL();
@@ -45903,7 +45880,7 @@ function initializePostsDashboard(id, settings) {
 const {
   registerCoreBlockBindingsSources,
   bootstrapBlockBindingsSourcesFromServer
-} = lock_unlock_unlock(external_wp_editor_namespaceObject.privateApis);
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 
 /**
  * Initializes the site editor screen.

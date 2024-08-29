@@ -14,7 +14,7 @@
 
 ### BEGIN AUTO-GENERATED DEFINES
 define( 'GUTENBERG_VERSION', '19.1.0' );
-define( 'GUTENBERG_GIT_COMMIT', '6986b13f2d759ced09bd4f06fcad297bd406cf1d' );
+define( 'GUTENBERG_GIT_COMMIT', '99e8faa1328e17ccc9a1354e192d008ce67afb4d' );
 ### END AUTO-GENERATED DEFINES
 
 gutenberg_pre_init();

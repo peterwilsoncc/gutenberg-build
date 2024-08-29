@@ -29909,7 +29909,6 @@ function bootstrapBlockBindingsSourcesFromServer(sources) {
 
 
 
-
 const {
   store: interfaceStore,
   ...remainingInterfaceApis
@@ -29933,7 +29932,6 @@ lock(privateApis, {
   registerCoreBlockBindingsSources: registerCoreBlockBindingsSources,
   bootstrapBlockBindingsSourcesFromServer: bootstrapBlockBindingsSourcesFromServer,
   // This is a temporary private API while we're updating the site editor to use EditorProvider.
-  useBlockEditorSettings: use_block_editor_settings,
   interfaceStore,
   ...remainingInterfaceApis
 });
