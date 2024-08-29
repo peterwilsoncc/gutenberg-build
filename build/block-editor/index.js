@@ -23843,6 +23843,7 @@ const MediaReplaceFlow = ({
   onError,
   onSelect,
   onSelectURL,
+  onReset,
   onToggleFeaturedImage,
   useFeaturedImage,
   onFilesUpload = media_replace_flow_noop,
@@ -23869,7 +23870,7 @@ const MediaReplaceFlow = ({
     }
     // We need to set a timeout for showing the notice
     // so that VoiceOver and possibly other screen readers
-    // can announce the error afer the toolbar button
+    // can announce the error after the toolbar button
     // regains focus once the upload dialog closes.
     // Otherwise VO simply skips over the notice and announces
     // the focused element and the open menu.
@@ -23977,6 +23978,12 @@ const MediaReplaceFlow = ({
           onClick: onToggleFeaturedImage,
           isPressed: useFeaturedImage,
           children: (0,external_wp_i18n_namespaceObject.__)('Use featured image')
+        }), mediaURL && onReset && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+          onClick: () => {
+            onReset();
+            onClose();
+          },
+          children: (0,external_wp_i18n_namespaceObject.__)('Reset')
         }), typeof children === 'function' ? children({
           onClose
         }) : children]
@@ -24350,7 +24357,7 @@ function BackgroundImageControls({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     ref: replaceContainerRef,
     className: "block-editor-global-styles-background-panel__image-tools-panel-item",
-    children: [isUploading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LoadingSpinner, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(media_replace_flow, {
+    children: [isUploading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LoadingSpinner, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(media_replace_flow, {
       mediaId: id,
       mediaURL: url,
       allowedTypes: [IMAGE_BACKGROUND_TYPE],
@@ -24369,20 +24376,18 @@ function BackgroundImageControls({
       }),
       variant: "secondary",
       onError: onUploadError,
-      children: [canRemove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+      onReset: () => {
+        closeAndFocus();
+        onResetImage();
+      },
+      children: canRemove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
         onClick: () => {
           closeAndFocus();
           onRemove();
           onRemoveImage();
         },
         children: (0,external_wp_i18n_namespaceObject.__)('Remove')
-      }), hasValue && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-        onClick: () => {
-          closeAndFocus();
-          onResetImage();
-        },
-        children: (0,external_wp_i18n_namespaceObject.__)('Reset')
-      })]
+      })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropZone, {
       onFilesDrop: onFilesDrop,
       label: (0,external_wp_i18n_namespaceObject.__)('Drop to upload')

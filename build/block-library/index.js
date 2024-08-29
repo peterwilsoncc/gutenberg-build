@@ -3385,7 +3385,8 @@ function AudioEdit({
         accept: "audio/*",
         onSelect: onSelectAudio,
         onSelectURL: onSelectURL,
-        onError: onUploadError
+        onError: onUploadError,
+        onReset: () => onSelectAudio(undefined)
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
@@ -13773,7 +13774,6 @@ function CoverInspectorControls({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -13865,11 +13865,7 @@ function CoverBlockControls({
         onToggleFeaturedImage: toggleUseFeaturedImage,
         useFeaturedImage: useFeaturedImage,
         name: !url ? (0,external_wp_i18n_namespaceObject.__)('Add Media') : (0,external_wp_i18n_namespaceObject.__)('Replace'),
-        children: !!url && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-          className: "block-library-cover__reset-button",
-          onClick: onClearMedia,
-          children: (0,external_wp_i18n_namespaceObject.__)('Reset')
-        })
+        onReset: onClearMedia
       })
     })]
   });
@@ -18078,6 +18074,16 @@ function FileEdit({
   }, []);
   function onSelectFile(newMedia) {
     if (!newMedia || !newMedia.url) {
+      // Reset attributes.
+      setAttributes({
+        href: undefined,
+        fileName: undefined,
+        textLinkHref: undefined,
+        id: undefined,
+        fileId: undefined,
+        displayPreview: undefined,
+        previewHeight: undefined
+      });
       setTemporaryURL();
       return;
     }
@@ -18189,7 +18195,8 @@ function FileEdit({
         mediaURL: href,
         accept: "*",
         onSelect: onSelectFile,
-        onError: onUploadError
+        onError: onUploadError,
+        onReset: () => onSelectFile(undefined)
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ClipboardToolbarButton, {
         text: href,
         disabled: (0,external_wp_blob_namespaceObject.isBlobURL)(href)
@@ -26082,10 +26089,7 @@ function image_Image({
         onSelect: onSelectImage,
         onSelectURL: onSelectURL,
         onError: onUploadError,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-          onClick: () => onSelectImage(undefined),
-          children: (0,external_wp_i18n_namespaceObject.__)('Reset')
-        })
+        onReset: () => onSelectImage(undefined)
       })
     }), isSingleSelected && externalBlob && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
@@ -31189,19 +31193,19 @@ function ToolbarEditButton({
   mediaUrl,
   onSelectMedia,
   toggleUseFeaturedImage,
-  useFeaturedImage,
-  featuredImageURL
+  useFeaturedImage
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
     group: "other",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaReplaceFlow, {
       mediaId: mediaId,
-      mediaUrl: useFeaturedImage && featuredImageURL ? featuredImageURL : mediaUrl,
+      mediaURL: mediaUrl,
       allowedTypes: media_container_ALLOWED_MEDIA_TYPES,
       accept: "image/*,video/*",
       onSelect: onSelectMedia,
       onToggleFeaturedImage: toggleUseFeaturedImage,
-      useFeaturedImage: useFeaturedImage
+      useFeaturedImage: useFeaturedImage,
+      onReset: () => onSelectMedia(undefined)
     })
   });
 }
@@ -31313,8 +31317,7 @@ function MediaContainer(props, ref) {
         onSelectMedia: onSelectMedia,
         mediaUrl: useFeaturedImage && featuredImageURL ? featuredImageURL : mediaUrl,
         mediaId: mediaId,
-        toggleUseFeaturedImage: toggleUseFeaturedImage,
-        useFeaturedImage: useFeaturedImage
+        toggleUseFeaturedImage: toggleUseFeaturedImage
       }), (mediaTypeRenderers[mediaType] || media_container_noop)(), isTemporaryMedia && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}), !useFeaturedImage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PlaceholderContainer, {
         ...props
       }), !featuredImageURL && useFeaturedImage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
@@ -43119,10 +43122,7 @@ function PostFeaturedImageEdit({
         accept: "image/*",
         onSelect: onSelectImage,
         onError: onUploadError,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-          onClick: () => setFeaturedImage(0),
-          children: (0,external_wp_i18n_namespaceObject.__)('Reset')
-        })
+        onReset: () => setFeaturedImage(0)
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("figure", {
       ...blockProps,
@@ -52997,17 +52997,10 @@ function SiteLogoReplaceFlow({
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaReplaceFlow, {
     ...mediaReplaceProps,
+    mediaURL: mediaURL,
     allowedTypes: site_logo_edit_ALLOWED_MEDIA_TYPES,
     accept: ACCEPT_MEDIA_STRING,
-    children: ({
-      onClose
-    }) => mediaURL && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-      onClick: () => {
-        onRemoveLogo();
-        onClose();
-      },
-      children: (0,external_wp_i18n_namespaceObject.__)('Reset')
-    })
+    onReset: onRemoveLogo
   });
 }
 const InspectorLogoPreview = ({
@@ -62898,7 +62891,8 @@ function VideoEdit({
           accept: "video/*",
           onSelect: onSelectVideo,
           onSelectURL: onSelectURL,
-          onError: onUploadError
+          onError: onUploadError,
+          onReset: () => onSelectVideo(undefined)
         })
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
