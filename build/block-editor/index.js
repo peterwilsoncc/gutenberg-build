@@ -53569,6 +53569,7 @@ const Inserter = (0,external_wp_element_namespaceObject.forwardRef)((props, ref)
 
 
 
+
 function button_block_appender_ButtonBlockAppender({
   rootClientId,
   className,
@@ -53576,11 +53577,18 @@ function button_block_appender_ButtonBlockAppender({
   tabIndex,
   onSelect
 }, ref) {
+  const inserterButtonRef = (0,external_wp_element_namespaceObject.useRef)();
+  const mergedInserterButtonRef = (0,external_wp_compose_namespaceObject.useMergeRefs)([inserterButtonRef, ref]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inserter, {
     position: "bottom center",
     rootClientId: rootClientId,
     __experimentalIsQuick: true,
-    onSelectOrClose: onSelect,
+    onSelectOrClose: (...args) => {
+      if (onSelect && typeof onSelect === 'function') {
+        onSelect(...args);
+      }
+      inserterButtonRef.current?.focus();
+    },
     renderToggle: ({
       onToggle,
       disabled,
@@ -53601,7 +53609,7 @@ function button_block_appender_ButtonBlockAppender({
       // TODO: Switch to `true` (40px size) if possible
       , {
         __next40pxDefaultSize: false,
-        ref: ref,
+        ref: mergedInserterButtonRef,
         onFocus: onFocus,
         tabIndex: tabIndex,
         className: dist_clsx(className, 'block-editor-button-block-appender'),

@@ -55575,6 +55575,7 @@ const check = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 
 
 
+
 const sizeOptions = [{
   name: (0,external_wp_i18n_namespaceObject.__)('Small'),
   value: 'has-small-icon-size'
@@ -55608,6 +55609,8 @@ function SocialLinksEdit(props) {
     showLabels,
     size
   } = attributes;
+  const hasSelectedChild = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).hasSelectedInnerBlock(clientId), [clientId]);
+  const hasAnySelected = isSelected || hasSelectedChild;
   const logosOnly = attributes.className?.includes('is-style-logos-only');
 
   // Remove icon background color when logos only style is selected or
@@ -55630,6 +55633,7 @@ function SocialLinksEdit(props) {
         ...backgroundBackupRef.current
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [logosOnly]);
   const SocialPlaceholder = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
     className: "wp-block-social-links__social-placeholder",
@@ -55644,10 +55648,6 @@ function SocialLinksEdit(props) {
       })]
     })
   });
-  const SelectedSocialPlaceholder = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
-    className: "wp-block-social-links__social-prompt",
-    children: (0,external_wp_i18n_namespaceObject.__)('Click plus to add')
-  });
 
   // Fallback color values are used maintain selections in case switching
   // themes and named colors in palette do not match.
@@ -55660,10 +55660,11 @@ function SocialLinksEdit(props) {
     className
   });
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
-    placeholder: isSelected ? SelectedSocialPlaceholder : SocialPlaceholder,
+    placeholder: !isSelected && SocialPlaceholder,
     templateLock: false,
     orientation: (_attributes$layout$or = attributes.layout?.orientation) !== null && _attributes$layout$or !== void 0 ? _attributes$layout$or : 'horizontal',
-    __experimentalAppenderTagName: 'li'
+    __experimentalAppenderTagName: 'li',
+    renderAppender: hasAnySelected && external_wp_blockEditor_namespaceObject.InnerBlocks.ButtonBlockAppender
   });
   const POPOVER_PROPS = {
     position: 'bottom right'
