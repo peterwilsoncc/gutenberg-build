@@ -27053,7 +27053,6 @@ function VisualEditor({
     } = select(store_store);
     const {
       getPostType,
-      canUser,
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
     const postTypeSlug = getCurrentPostType();
@@ -27067,10 +27066,6 @@ function VisualEditor({
     const editorSettings = getEditorSettings();
     const supportsTemplateMode = editorSettings.supportsTemplateMode;
     const postTypeObject = getPostType(postTypeSlug);
-    const canEditTemplate = canUser('create', {
-      kind: 'postType',
-      name: 'wp_template'
-    });
     const currentTemplateId = getCurrentTemplateId();
     const template = currentTemplateId ? getEditedEntityRecord('postType', TEMPLATE_POST_TYPE, currentTemplateId) : undefined;
     return {
@@ -27079,7 +27074,7 @@ function VisualEditor({
       isDesignPostType: visual_editor_DESIGN_POST_TYPES.includes(postTypeSlug),
       // Post template fetch returns a 404 on classic themes, which
       // messes with e2e tests, so check it's a block theme first.
-      editedPostTemplate: postTypeObject?.viewable && supportsTemplateMode && canEditTemplate ? template : undefined,
+      editedPostTemplate: postTypeObject?.viewable && supportsTemplateMode ? template : undefined,
       wrapperBlockName: _wrapperBlockName,
       wrapperUniqueId: getCurrentPostId(),
       deviceType: getDeviceType(),
