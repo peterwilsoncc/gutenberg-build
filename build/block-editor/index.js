@@ -24536,9 +24536,7 @@ function BackgroundToolsPanel({
     const updatedValue = resetAllFilter(value);
     onChange(updatedValue);
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
-    as: external_wp_components_namespaceObject.__experimentalToolsPanel,
-    spacing: 2,
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
     label: headerLabel,
     resetAll: resetAll,
     panelId: panelId,
