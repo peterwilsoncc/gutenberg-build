@@ -59020,6 +59020,20 @@ function BlockSwitcherDropdownMenuContents({
     })]
   });
 }
+const BlockIndicator = ({
+  icon,
+  showTitle,
+  blockTitle
+}) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
+    className: "block-editor-block-switcher__toggle",
+    icon: icon,
+    showColors: true
+  }), showTitle && blockTitle && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+    className: "block-editor-block-switcher__toggle-text",
+    children: blockTitle
+  })]
+});
 const BlockSwitcher = ({
   clientIds,
   disabled,
@@ -59091,14 +59105,10 @@ const BlockSwitcher = ({
         disabled: true,
         className: "block-editor-block-switcher__no-switcher-icon",
         title: blockSwitcherLabel,
-        icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
-            icon: icon,
-            showColors: true
-          }), (isReusable || isTemplate) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-            className: "block-editor-block-switcher__toggle-text",
-            children: blockTitle
-          })]
+        icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockIndicator, {
+          icon: icon,
+          showTitle: isReusable || isTemplate,
+          blockTitle: blockTitle
         })
       })
     });
@@ -59114,15 +59124,10 @@ const BlockSwitcher = ({
           placement: 'bottom-start',
           className: 'block-editor-block-switcher__popover'
         },
-        icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
-            icon: icon,
-            className: "block-editor-block-switcher__toggle",
-            showColors: true
-          }), (isReusable || isTemplate) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-            className: "block-editor-block-switcher__toggle-text",
-            children: blockTitle
-          })]
+        icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockIndicator, {
+          icon: icon,
+          showTitle: isReusable || isTemplate,
+          blockTitle: blockTitle
         }),
         toggleProps: {
           description: blockSwitcherDescription,
@@ -61707,6 +61712,7 @@ function PrivateBlockToolbar({
   const {
     blockClientId,
     blockClientIds,
+    isContentOnlyEditingMode,
     isDefaultEditingMode,
     blockType,
     toolbarKey,
@@ -61733,7 +61739,8 @@ function PrivateBlockToolbar({
     const firstParentClientId = parents[parents.length - 1];
     const parentBlockName = getBlockName(firstParentClientId);
     const parentBlockType = (0,external_wp_blocks_namespaceObject.getBlockType)(parentBlockName);
-    const _isDefaultEditingMode = getBlockEditingMode(selectedBlockClientId) === 'default';
+    const editingMode = getBlockEditingMode(selectedBlockClientId);
+    const _isDefaultEditingMode = editingMode === 'default';
     const _blockName = getBlockName(selectedBlockClientId);
     const isValid = selectedBlockClientIds.every(id => isBlockValid(id));
     const isVisual = selectedBlockClientIds.every(id => getBlockMode(id) === 'visual');
@@ -61741,6 +61748,7 @@ function PrivateBlockToolbar({
     return {
       blockClientId: selectedBlockClientId,
       blockClientIds: selectedBlockClientIds,
+      isContentOnlyEditingMode: editingMode === 'contentOnly',
       isDefaultEditingMode: _isDefaultEditingMode,
       blockType: selectedBlockClientId && (0,external_wp_blocks_namespaceObject.getBlockType)(_blockName),
       shouldShowVisualToolbar: isValid && isVisual,
@@ -61792,7 +61800,7 @@ function PrivateBlockToolbar({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       ref: toolbarWrapperRef,
       className: innerClasses,
-      children: [!isMultiToolbar && isLargeViewport && isDefaultEditingMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockParentSelector, {}), (shouldShowVisualToolbar || isMultiToolbar) && (isDefaultEditingMode || isSynced) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      children: [!isMultiToolbar && isLargeViewport && isDefaultEditingMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockParentSelector, {}), (shouldShowVisualToolbar || isMultiToolbar) && (isDefaultEditingMode || isContentOnlyEditingMode || isSynced) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         ref: nodeRef,
         ...showHoveredOrFocusedGestures,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
