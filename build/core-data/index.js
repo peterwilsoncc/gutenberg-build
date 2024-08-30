@@ -24610,6 +24610,7 @@ function updateFootnotesFromMeta(blocks, meta) {
         continue;
       }
       const richTextValue = typeof value === 'string' ? external_wp_richText_namespaceObject.RichTextData.fromHTMLString(value) : new external_wp_richText_namespaceObject.RichTextData(value);
+      let hasFootnotes = false;
       richTextValue.replacements.forEach(replacement => {
         if (replacement.type === 'core/footnote') {
           const id = replacement.attributes['data-fn'];
@@ -24628,9 +24629,12 @@ function updateFootnotesFromMeta(blocks, meta) {
           replacement.innerHTML = (0,external_wp_richText_namespaceObject.toHTMLString)({
             value: countValue
           });
+          hasFootnotes = true;
         }
       });
-      attributes[key] = typeof value === 'string' ? richTextValue.toHTMLString() : richTextValue;
+      if (hasFootnotes) {
+        attributes[key] = typeof value === 'string' ? richTextValue.toHTMLString() : richTextValue;
+      }
     }
     return attributes;
   }
