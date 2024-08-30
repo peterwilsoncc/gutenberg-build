@@ -539,6 +539,7 @@ __webpack_require__.d(build_module_actions_namespaceObject, {
   receiveThemeSupports: () => (receiveThemeSupports),
   receiveUploadPermissions: () => (receiveUploadPermissions),
   receiveUserPermission: () => (receiveUserPermission),
+  receiveUserPermissions: () => (receiveUserPermissions),
   receiveUserQuery: () => (receiveUserQuery),
   redo: () => (redo),
   saveEditedEntityRecord: () => (saveEditedEntityRecord),
@@ -19420,6 +19421,28 @@ function receiveUserPermission(key, isAllowed) {
 }
 
 /**
+ * Returns an action object used in signalling that the current user has
+ * permission to perform an action on a REST resource. Ignored from
+ * documentation as it's internal to the data store.
+ *
+ * @ignore
+ *
+ * @param {Object<string, boolean>} permissions An object where keys represent
+ *                                              actions and REST resources, and
+ *                                              values indicate whether the user
+ *                                              is allowed to perform the
+ *                                              action.
+ *
+ * @return {Object} Action object.
+ */
+function receiveUserPermissions(permissions) {
+  return {
+    type: 'RECEIVE_USER_PERMISSIONS',
+    permissions
+  };
+}
+
+/**
  * Returns an action object used in signalling that the autosaves for a
  * post have been received.
  * Ignored from documentation as it's internal to the data store.
@@ -20864,6 +20887,11 @@ function userPermissions(state = {}, action) {
       return {
         ...state,
         [action.key]: action.isAllowed
+      };
+    case 'RECEIVE_USER_PERMISSIONS':
+      return {
+        ...state,
+        ...action.permissions
       };
   }
   return state;
@@ -22867,6 +22895,7 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
           permissions: getUserPermissionsFromAllowHeader(record?._links?.self?.[0].targetHints.allow)
         }));
         const canUserResolutionsArgs = [];
+        const receiveUserPermissionArgs = {};
         for (const targetHint of targetHints) {
           for (const action of ALLOWED_RESOURCE_ACTIONS) {
             canUserResolutionsArgs.push([action, {
@@ -22874,13 +22903,14 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
               name,
               id: targetHint.id
             }]);
-            dispatch.receiveUserPermission(getUserPermissionCacheKey(action, {
+            receiveUserPermissionArgs[getUserPermissionCacheKey(action, {
               kind,
               name,
               id: targetHint.id
-            }), targetHint.permissions[action]);
+            })] = targetHint.permissions[action];
           }
         }
+        dispatch.receiveUserPermissions(receiveUserPermissionArgs);
         dispatch.finishResolutions('getEntityRecord', resolutionsArgs);
         dispatch.finishResolutions('canUser', canUserResolutionsArgs);
       }
