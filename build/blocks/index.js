@@ -14198,7 +14198,7 @@ function figureContentReducer(node, doc, schema) {
     } else if (node.classList.contains('alignright') || node.classList.contains('alignleft') || node.classList.contains('aligncenter') || !wrapper.textContent.trim()) {
       wrapFigureContent(nodeToInsert, wrapper);
     }
-  } else if (nodeToInsert.parentNode.nodeName === 'BODY') {
+  } else {
     wrapFigureContent(nodeToInsert);
   }
 }
