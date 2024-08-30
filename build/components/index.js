@@ -31550,8 +31550,8 @@ function UnforwardedInputControl(props, ref) {
         isPressEnterToChange: isPressEnterToChange,
         onKeyDown: onKeyDown,
         onValidate: onValidate,
-        paddingInlineStart: prefix ? space(2) : undefined,
-        paddingInlineEnd: suffix ? space(2) : undefined,
+        paddingInlineStart: prefix ? space(1) : undefined,
+        paddingInlineEnd: suffix ? space(1) : undefined,
         ref: ref,
         size: size,
         stateReducer: stateReducer,
@@ -40828,6 +40828,7 @@ function useBorderControl(props) {
 
 
 
+
 const BorderLabel = props => {
   const {
     label,
@@ -40884,19 +40885,23 @@ const UnconnectedBorderControl = (props, forwardedRef) => {
       spacing: 4,
       className: innerWrapperClassName,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(unit_control, {
-        prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(border_control_dropdown_component, {
-          border: border,
-          colors: colors,
-          __unstablePopoverProps: __unstablePopoverProps,
-          disableCustomColors: disableCustomColors,
-          enableAlpha: enableAlpha,
-          enableStyle: enableStyle,
-          isStyleSettable: isStyleSettable,
-          onChange: onBorderChange,
-          previousStyleSelection: previousStyleSelection,
-          showDropdownHeader: showDropdownHeader,
-          __experimentalIsRenderedInSidebar: __experimentalIsRenderedInSidebar,
-          size: size
+        prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {
+          marginRight: 1,
+          marginBottom: 0,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(border_control_dropdown_component, {
+            border: border,
+            colors: colors,
+            __unstablePopoverProps: __unstablePopoverProps,
+            disableCustomColors: disableCustomColors,
+            enableAlpha: enableAlpha,
+            enableStyle: enableStyle,
+            isStyleSettable: isStyleSettable,
+            onChange: onBorderChange,
+            previousStyleSelection: previousStyleSelection,
+            showDropdownHeader: showDropdownHeader,
+            __experimentalIsRenderedInSidebar: __experimentalIsRenderedInSidebar,
+            size: size
+          })
         }),
         label: (0,external_wp_i18n_namespaceObject.__)('Border width'),
         hideLabelFromVision: true,
