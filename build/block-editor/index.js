@@ -10239,6 +10239,8 @@ const symbol = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 ;// CONCATENATED MODULE: external ["wp","richText"]
 const external_wp_richText_namespaceObject = window["wp"]["richText"];
+;// CONCATENATED MODULE: external ["wp","blockSerializationDefaultParser"]
+const external_wp_blockSerializationDefaultParser_namespaceObject = window["wp"]["blockSerializationDefaultParser"];
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/store/private-keys.js
 const globalStylesDataKey = Symbol('globalStylesDataKey');
 const globalStylesLinksDataKey = Symbol('globalStylesLinks');
@@ -10266,6 +10268,7 @@ const STORE_NAME = 'core/block-editor';
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -10274,6 +10277,7 @@ const STORE_NAME = 'core/block-editor';
 
 const withRootClientIdOptionKey = Symbol('withRootClientId');
 const parsedPatternCache = new WeakMap();
+const grammarMapCache = new WeakMap();
 function parsePattern(pattern) {
   const blocks = (0,external_wp_blocks_namespaceObject.parse)(pattern.content, {
     __unstableSkipMigrationLogs: true
@@ -10296,12 +10300,21 @@ function parsePattern(pattern) {
 }
 function getParsedPattern(pattern) {
   let parsedPattern = parsedPatternCache.get(pattern);
-  if (parsedPattern) {
-    return parsedPattern;
+  if (!parsedPattern) {
+    parsedPattern = parsePattern(pattern);
+    parsedPatternCache.set(pattern, parsedPattern);
   }
-  parsedPattern = parsePattern(pattern);
-  parsedPatternCache.set(pattern, parsedPattern);
   return parsedPattern;
+}
+function getGrammar(pattern) {
+  let grammarMap = grammarMapCache.get(pattern);
+  if (!grammarMap) {
+    grammarMap = (0,external_wp_blockSerializationDefaultParser_namespaceObject.parse)(pattern.content);
+    // Block names are null only at the top level for whitespace.
+    grammarMap = grammarMap.filter(block => block.blockName !== null);
+    grammarMapCache.set(pattern, grammarMap);
+  }
+  return grammarMap;
 }
 const checkAllowList = (list, item, defaultResult = null) => {
   if (typeof list === 'boolean') {
@@ -10900,10 +10913,8 @@ const hasAllowedPatterns = (0,external_wp_data_namespaceObject.createRegistrySel
     if (!inserter) {
       return false;
     }
-    const {
-      blocks
-    } = getParsedPattern(pattern);
-    return checkAllowListRecursive(blocks, allowedBlockTypes) && blocks.every(({
+    const grammar = getGrammar(pattern);
+    return checkAllowListRecursive(grammar, allowedBlockTypes) && grammar.every(({
       name: blockName
     }) => canInsertBlockType(state, blockName, rootClientId));
   });
@@ -13058,14 +13069,17 @@ const __experimentalGetAllowedPatterns = (0,external_wp_data_namespaceObject.cre
     } = getSettings(state);
     const parsedPatterns = patterns.filter(({
       inserter = true
-    }) => !!inserter).map(getParsedPattern);
-    const availableParsedPatterns = parsedPatterns.filter(({
-      blocks
-    }) => checkAllowListRecursive(blocks, allowedBlockTypes));
-    const patternsAllowed = availableParsedPatterns.filter(({
-      blocks
-    }) => blocks.every(({
-      name
+    }) => !!inserter).map(pattern => {
+      return {
+        ...pattern,
+        get blocks() {
+          return getParsedPattern(pattern).blocks;
+        }
+      };
+    });
+    const availableParsedPatterns = parsedPatterns.filter(pattern => checkAllowListRecursive(getGrammar(pattern), allowedBlockTypes));
+    const patternsAllowed = availableParsedPatterns.filter(pattern => getGrammar(pattern).every(({
+      blockName: name
     }) => canInsertBlockType(state, name, rootClientId)));
     return patternsAllowed;
   }, getAllowedPatternsDependants(select));
