@@ -29741,11 +29741,6 @@ const CONTENT = 'content';
 
 /* harmony default export */ const post_meta = ({
   name: 'core/post-meta',
-  getPlaceholder({
-    args
-  }) {
-    return args.key;
-  },
   getValues({
     registry,
     context,
@@ -29754,7 +29749,8 @@ const CONTENT = 'content';
     const meta = registry.select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', context?.postType, context?.postId)?.meta;
     const newValues = {};
     for (const [attributeName, source] of Object.entries(bindings)) {
-      newValues[attributeName] = meta?.[source.args.key];
+      // Use the key if the value is not set.
+      newValues[attributeName] = meta?.[source.args.key] || source.args.key;
     }
     return newValues;
   },

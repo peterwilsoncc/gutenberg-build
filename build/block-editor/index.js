@@ -42419,6 +42419,7 @@ function useFlashEditableBlocks({
 
 
 
+
 /** @typedef {import('@wordpress/compose').WPHigherOrderComponent} WPHigherOrderComponent */
 /** @typedef {import('@wordpress/blocks').WPBlockSettings} WPBlockSettings */
 
@@ -42520,7 +42521,7 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
         args: sourceArgs
       } = binding;
       const source = sources[sourceName];
-      if (!source?.getValues || !canBindAttribute(name, attributeName)) {
+      if (!source || !canBindAttribute(name, attributeName)) {
         continue;
       }
       blockBindingsBySource.set(source, {
@@ -42541,26 +42542,24 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
         }
 
         // Get values in batch if the source supports it.
-        const values = source.getValues({
-          registry,
-          context,
-          clientId,
-          bindings
-        });
+        let values = {};
+        if (!source.getValues) {
+          Object.keys(bindings).forEach(attr => {
+            // Default to the `key` or the source label when `getValues` doesn't exist
+            values[attr] = bindings[attr].args?.key || source.label;
+          });
+        } else {
+          values = source.getValues({
+            registry,
+            context,
+            clientId,
+            bindings
+          });
+        }
         for (const [attributeName, value] of Object.entries(values)) {
-          // Use placeholder when value is undefined.
-          if (value === undefined) {
-            if (attributeName === 'url') {
-              attributes[attributeName] = null;
-            } else {
-              attributes[attributeName] = source.getPlaceholder?.({
-                registry,
-                context,
-                clientId,
-                attributeName,
-                args: bindings[attributeName].args
-              });
-            }
+          if (attributeName === 'url' && (!value || !isURLLike(value))) {
+            // Return null if value is not a valid URL.
+            attributes[attributeName] = null;
           } else {
             attributes[attributeName] = value;
           }
