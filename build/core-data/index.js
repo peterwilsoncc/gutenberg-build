@@ -22833,6 +22833,10 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
       records = Object.values(await external_wp_apiFetch_default()({
         path
       }));
+      meta = {
+        totalItems: records.length,
+        totalPages: 1
+      };
     }
 
     // If we request fields but the result doesn't contain the fields,
