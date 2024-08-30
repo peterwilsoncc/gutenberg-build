@@ -2120,7 +2120,7 @@ __webpack_require__.d(__webpack_exports__, {
   usePrevious: () => (/* reexport */ usePrevious),
   useReducedMotion: () => (/* reexport */ use_reduced_motion),
   useRefEffect: () => (/* reexport */ useRefEffect),
-  useResizeObserver: () => (/* reexport */ useResizeAware),
+  useResizeObserver: () => (/* reexport */ useResizeObserver),
   useStateWithHistory: () => (/* reexport */ useStateWithHistory),
   useThrottle: () => (/* reexport */ useThrottle),
   useViewportMatch: () => (/* reexport */ use_viewport_match),
@@ -4971,62 +4971,6 @@ useViewportMatch.__experimentalWidthProvider = ViewportMatchWidthContext.Provide
  */
 
 
-// This of course could've been more streamlined with internal state instead of
-// refs, but then host hooks / components could not opt out of renders.
-// This could've been exported to its own module, but the current build doesn't
-// seem to work with module imports and I had no more time to spend on this...
-function useResolvedElement(subscriber, refOrElement) {
-  const callbackElementRef = (0,external_wp_element_namespaceObject.useRef)(null);
-  const lastReportRef = (0,external_wp_element_namespaceObject.useRef)(null);
-  const cleanupRef = (0,external_wp_element_namespaceObject.useRef)();
-  const callSubscriber = (0,external_wp_element_namespaceObject.useCallback)(() => {
-    let element = null;
-    if (callbackElementRef.current) {
-      element = callbackElementRef.current;
-    } else if (refOrElement) {
-      if (refOrElement instanceof HTMLElement) {
-        element = refOrElement;
-      } else {
-        element = refOrElement.current;
-      }
-    }
-    if (lastReportRef.current && lastReportRef.current.element === element && lastReportRef.current.reporter === callSubscriber) {
-      return;
-    }
-    if (cleanupRef.current) {
-      cleanupRef.current();
-      // Making sure the cleanup is not called accidentally multiple times.
-      cleanupRef.current = null;
-    }
-    lastReportRef.current = {
-      reporter: callSubscriber,
-      element
-    };
-
-    // Only calling the subscriber, if there's an actual element to report.
-    if (element) {
-      cleanupRef.current = subscriber(element);
-    }
-  }, [refOrElement, subscriber]);
-
-  // On each render, we check whether a ref changed, or if we got a new raw
-  // element.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    // With this we're *technically* supporting cases where ref objects' current value changes, but only if there's a
-    // render accompanying that change as well.
-    // To guarantee we always have the right element, one must use the ref callback provided instead, but we support
-    // RefObjects to make the hook API more convenient in certain cases.
-    callSubscriber();
-  }, [callSubscriber]);
-  return (0,external_wp_element_namespaceObject.useCallback)(element => {
-    callbackElementRef.current = element;
-    callSubscriber();
-  }, [callSubscriber]);
-}
-
-// Declaring my own type here instead of using the one provided by TS (available since 4.2.2), because this way I'm not
-// forcing consumers to use a specific TS version.
-
 // We're only using the first element of the size sequences, until future versions of the spec solidify on how
 // exactly it'll be used for fragments in multi-column scenarios:
 // From the spec:
@@ -5052,115 +4996,79 @@ function useResolvedElement(subscriber, refOrElement) {
 // even though it seems we have access to results for all box types.
 // This also means that we get to keep the current api, being able to return a simple { width, height } pair,
 // regardless of box option.
-const extractSize = (entry, boxProp, sizeType) => {
-  if (!entry[boxProp]) {
-    if (boxProp === 'contentBoxSize') {
-      // The dimensions in `contentBoxSize` and `contentRect` are equivalent according to the spec.
-      // See the 6th step in the description for the RO algorithm:
-      // https://drafts.csswg.org/resize-observer/#create-and-populate-resizeobserverentry-h
-      // > Set this.contentRect to logical this.contentBoxSize given target and observedBox of "content-box".
-      // In real browser implementations of course these objects differ, but the width/height values should be equivalent.
-      return entry.contentRect[sizeType === 'inlineSize' ? 'width' : 'height'];
-    }
-    return undefined;
+const extractSize = entry => {
+  let entrySize;
+  if (!entry.contentBoxSize) {
+    // The dimensions in `contentBoxSize` and `contentRect` are equivalent according to the spec.
+    // See the 6th step in the description for the RO algorithm:
+    // https://drafts.csswg.org/resize-observer/#create-and-populate-resizeobserverentry-h
+    // > Set this.contentRect to logical this.contentBoxSize given target and observedBox of "content-box".
+    // In real browser implementations of course these objects differ, but the width/height values should be equivalent.
+    entrySize = [entry.contentRect.width, entry.contentRect.height];
+  } else if (entry.contentBoxSize[0]) {
+    const contentBoxSize = entry.contentBoxSize[0];
+    entrySize = [contentBoxSize.inlineSize, contentBoxSize.blockSize];
+  } else {
+    // TS complains about this, because the RO entry type follows the spec and does not reflect Firefox's buggy
+    // behaviour of returning objects instead of arrays for `borderBoxSize` and `contentBoxSize`.
+    const contentBoxSize = entry.contentBoxSize;
+    entrySize = [contentBoxSize.inlineSize, contentBoxSize.blockSize];
   }
-
-  // A couple bytes smaller than calling Array.isArray() and just as effective here.
-  return entry[boxProp][0] ? entry[boxProp][0][sizeType] :
-  // TS complains about this, because the RO entry type follows the spec and does not reflect Firefox's current
-  // behaviour of returning objects instead of arrays for `borderBoxSize` and `contentBoxSize`.
-  // @ts-ignore
-  entry[boxProp][sizeType];
+  const [width, height] = entrySize.map(d => Math.round(d));
+  return {
+    width,
+    height
+  };
 };
-function useResizeObserver(opts = {}) {
-  // Saving the callback as a ref. With this, I don't need to put onResize in the
-  // effect dep array, and just passing in an anonymous function without memoising
-  // will not reinstantiate the hook's ResizeObserver.
-  const onResize = opts.onResize;
-  const onResizeRef = (0,external_wp_element_namespaceObject.useRef)(undefined);
-  onResizeRef.current = onResize;
-  const round = opts.round || Math.round;
-
-  // Using a single instance throughout the hook's lifetime
-  const resizeObserverRef = (0,external_wp_element_namespaceObject.useRef)();
-  const [size, setSize] = (0,external_wp_element_namespaceObject.useState)({
-    width: undefined,
-    height: undefined
-  });
-
-  // In certain edge cases the RO might want to report a size change just after
-  // the component unmounted.
-  const didUnmountRef = (0,external_wp_element_namespaceObject.useRef)(false);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    didUnmountRef.current = false;
+const RESIZE_ELEMENT_STYLES = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  pointerEvents: 'none',
+  opacity: 0,
+  overflow: 'hidden',
+  zIndex: -1
+};
+function ResizeElement({
+  onResize
+}) {
+  const resizeElementRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const resizeCallbackRef = (0,external_wp_element_namespaceObject.useRef)(onResize);
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    resizeCallbackRef.current = onResize;
+  }, [onResize]);
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    const resizeElement = resizeElementRef.current;
+    const resizeObserver = new ResizeObserver(entries => {
+      for (const entry of entries) {
+        const newSize = extractSize(entry);
+        resizeCallbackRef.current(newSize);
+      }
+    });
+    resizeObserver.observe(resizeElement);
     return () => {
-      didUnmountRef.current = true;
+      resizeObserver.unobserve(resizeElement);
     };
   }, []);
-
-  // Using a ref to track the previous width / height to avoid unnecessary renders.
-  const previousRef = (0,external_wp_element_namespaceObject.useRef)({
-    width: undefined,
-    height: undefined
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    ref: resizeElementRef,
+    style: RESIZE_ELEMENT_STYLES,
+    "aria-hidden": "true"
   });
-
-  // This block is kinda like a useEffect, only it's called whenever a new
-  // element could be resolved based on the ref option. It also has a cleanup
-  // function.
-  const refCallback = useResolvedElement((0,external_wp_element_namespaceObject.useCallback)(element => {
-    // We only use a single Resize Observer instance, and we're instantiating it on demand, only once there's something to observe.
-    // This instance is also recreated when the `box` option changes, so that a new observation is fired if there was a previously observed element with a different box option.
-    if (!resizeObserverRef.current || resizeObserverRef.current.box !== opts.box || resizeObserverRef.current.round !== round) {
-      resizeObserverRef.current = {
-        box: opts.box,
-        round,
-        instance: new ResizeObserver(entries => {
-          const entry = entries[0];
-          let boxProp = 'borderBoxSize';
-          if (opts.box === 'border-box') {
-            boxProp = 'borderBoxSize';
-          } else {
-            boxProp = opts.box === 'device-pixel-content-box' ? 'devicePixelContentBoxSize' : 'contentBoxSize';
-          }
-          const reportedWidth = extractSize(entry, boxProp, 'inlineSize');
-          const reportedHeight = extractSize(entry, boxProp, 'blockSize');
-          const newWidth = reportedWidth ? round(reportedWidth) : undefined;
-          const newHeight = reportedHeight ? round(reportedHeight) : undefined;
-          if (previousRef.current.width !== newWidth || previousRef.current.height !== newHeight) {
-            const newSize = {
-              width: newWidth,
-              height: newHeight
-            };
-            previousRef.current.width = newWidth;
-            previousRef.current.height = newHeight;
-            if (onResizeRef.current) {
-              onResizeRef.current(newSize);
-            } else if (!didUnmountRef.current) {
-              setSize(newSize);
-            }
-          }
-        })
-      };
-    }
-    resizeObserverRef.current.instance.observe(element, {
-      box: opts.box
-    });
-    return () => {
-      if (resizeObserverRef.current) {
-        resizeObserverRef.current.instance.unobserve(element);
-      }
-    };
-  }, [opts.box, round]), opts.ref);
-  return (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    ref: refCallback,
-    width: size.width,
-    height: size.height
-  }), [refCallback, size ? size.width : null, size ? size.height : null]);
 }
+function sizeEquals(a, b) {
+  return a.width === b.width && a.height === b.height;
+}
+const NULL_SIZE = {
+  width: null,
+  height: null
+};
 
 /**
- * Hook which allows to listen the resize event of any target element when it changes sizes.
- * _Note: `useResizeObserver` will report `null` until after first render.
+ * Hook which allows to listen to the resize event of any target element when it changes size.
+ * _Note: `useResizeObserver` will report `null` sizes until after first render.
  *
  * @example
  *
@@ -5177,34 +5085,21 @@ function useResizeObserver(opts = {}) {
  * };
  * ```
  */
-function useResizeAware() {
-  const {
-    ref,
-    width,
-    height
-  } = useResizeObserver();
-  const sizes = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return {
-      width: width !== null && width !== void 0 ? width : null,
-      height: height !== null && height !== void 0 ? height : null
-    };
-  }, [width, height]);
-  const resizeListener = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    style: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      pointerEvents: 'none',
-      opacity: 0,
-      overflow: 'hidden',
-      zIndex: -1
-    },
-    "aria-hidden": "true",
-    ref: ref
+function useResizeObserver() {
+  const [size, setSize] = (0,external_wp_element_namespaceObject.useState)(NULL_SIZE);
+
+  // Using a ref to track the previous width / height to avoid unnecessary renders.
+  const previousSizeRef = (0,external_wp_element_namespaceObject.useRef)(NULL_SIZE);
+  const handleResize = (0,external_wp_element_namespaceObject.useCallback)(newSize => {
+    if (!sizeEquals(previousSizeRef.current, newSize)) {
+      previousSizeRef.current = newSize;
+      setSize(newSize);
+    }
+  }, []);
+  const resizeElement = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResizeElement, {
+    onResize: handleResize
   });
-  return [resizeListener, sizes];
+  return [resizeElement, size];
 }
 
 ;// CONCATENATED MODULE: external ["wp","priorityQueue"]
