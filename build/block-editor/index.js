@@ -47146,6 +47146,7 @@ function useDragSelection() {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -47193,6 +47194,15 @@ function extractSelectionEndNode(selection) {
   }
   if (focusOffset === focusNode.childNodes.length) {
     return focusNode;
+  }
+
+  // When the selection is forward (the selection ends with the focus node),
+  // the selection may extend into the next element with an offset of 0. This
+  // may trigger multi selection even though the selection does not visually
+  // end in the next block.
+  if (focusOffset === 0 && (0,external_wp_dom_namespaceObject.isSelectionForward)(selection)) {
+    var _focusNode$previousSi;
+    return (_focusNode$previousSi = focusNode.previousSibling) !== null && _focusNode$previousSi !== void 0 ? _focusNode$previousSi : focusNode.parentElement;
   }
   return focusNode.childNodes[focusOffset];
 }

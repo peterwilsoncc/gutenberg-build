@@ -70,6 +70,7 @@ __webpack_require__.d(__webpack_exports__, {
   isNumberInput: () => (/* reexport */ isNumberInput),
   isPhrasingContent: () => (/* reexport */ isPhrasingContent),
   isRTL: () => (/* reexport */ isRTL),
+  isSelectionForward: () => (/* reexport */ isSelectionForward),
   isTextContent: () => (/* reexport */ isTextContent),
   isTextField: () => (/* reexport */ isTextField),
   isVerticalEdge: () => (/* reexport */ isVerticalEdge),
@@ -1941,6 +1942,7 @@ function removeInvalidHTML(HTML, schema, inline) {
 }
 
 ;// CONCATENATED MODULE: ./packages/dom/build-module/dom/index.js
+
 
 
 
