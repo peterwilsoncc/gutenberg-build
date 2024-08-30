@@ -1768,6 +1768,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
+  AlignmentMatrixControl: () => (/* reexport */ alignment_matrix_control),
   AnglePickerControl: () => (/* reexport */ angle_picker_control),
   Animate: () => (/* reexport */ animate),
   Autocomplete: () => (/* reexport */ Autocomplete),
@@ -15901,27 +15902,7 @@ function AlignmentMatrixControlIcon({
 
 
 
-/**
- *
- * AlignmentMatrixControl components enable adjustments to horizontal and vertical alignments for UI.
- *
- * ```jsx
- * import { __experimentalAlignmentMatrixControl as AlignmentMatrixControl } from '@wordpress/components';
- * import { useState } from '@wordpress/element';
- *
- * const Example = () => {
- * 	const [ alignment, setAlignment ] = useState( 'center center' );
- *
- * 	return (
- * 		<AlignmentMatrixControl
- * 			value={ alignment }
- * 			onChange={ setAlignment }
- * 		/>
- * 	);
- * };
- * ```
- */
-function AlignmentMatrixControl({
+function UnforwardedAlignmentMatrixControl({
   className,
   id,
   label = (0,external_wp_i18n_namespaceObject.__)('Alignment Matrix Control'),
@@ -15931,7 +15912,7 @@ function AlignmentMatrixControl({
   width = 92,
   ...props
 }) {
-  const baseId = (0,external_wp_compose_namespaceObject.useInstanceId)(AlignmentMatrixControl, 'alignment-matrix-control', id);
+  const baseId = (0,external_wp_compose_namespaceObject.useInstanceId)(UnforwardedAlignmentMatrixControl, 'alignment-matrix-control', id);
   const compositeStore = store_useCompositeStore({
     defaultActiveId: getItemId(baseId, defaultValue),
     activeId: getItemId(baseId, value),
@@ -15965,7 +15946,40 @@ function AlignmentMatrixControl({
     }, index))
   });
 }
-AlignmentMatrixControl.Icon = icon;
+
+/**
+ * AlignmentMatrixControl components enable adjustments to horizontal and vertical alignments for UI.
+ *
+ * ```jsx
+ * import { AlignmentMatrixControl } from '@wordpress/components';
+ * import { useState } from '@wordpress/element';
+ *
+ * const Example = () => {
+ * 	const [ alignment, setAlignment ] = useState( 'center center' );
+ *
+ * 	return (
+ * 		<AlignmentMatrixControl
+ * 			value={ alignment }
+ * 			onChange={ setAlignment }
+ * 		/>
+ * 	);
+ * };
+ * ```
+ */
+const AlignmentMatrixControl = Object.assign(UnforwardedAlignmentMatrixControl, {
+  /**
+   * Render an alignment matrix as an icon.
+   *
+   * ```jsx
+   * import { AlignmentMatrixControl } from '@wordpress/components';
+   *
+   * <Icon icon={<AlignmentMatrixControl.Icon value="top left" />} />
+   * ```
+   */
+  Icon: Object.assign(icon, {
+    displayName: 'AlignmentMatrixControl.Icon'
+  })
+});
 /* harmony default export */ const alignment_matrix_control = (AlignmentMatrixControl);
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/animate/index.js

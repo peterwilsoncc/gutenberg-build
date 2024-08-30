@@ -56508,7 +56508,7 @@ function BlockAlignmentMatrixControl(props) {
     value = 'center',
     isDisabled
   } = props;
-  const icon = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalAlignmentMatrixControl.Icon, {
+  const icon = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.AlignmentMatrixControl.Icon, {
     value: value
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
@@ -56536,7 +56536,7 @@ function BlockAlignmentMatrixControl(props) {
         disabled: isDisabled
       });
     },
-    renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalAlignmentMatrixControl, {
+    renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.AlignmentMatrixControl, {
       hasFocusBorder: false,
       onChange: onChange,
       value: value
