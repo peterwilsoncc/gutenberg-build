@@ -15771,6 +15771,25 @@ function details_save_save({
   });
 }
 
+;// CONCATENATED MODULE: ./packages/block-library/build-module/details/transforms.js
+/**
+ * WordPress dependencies
+ */
+
+/* harmony default export */ const details_transforms = ({
+  from: [{
+    type: 'block',
+    isMultiBlock: true,
+    blocks: ['*'],
+    isMatch({}, blocks) {
+      return !(blocks.length === 1 && blocks[0].name === 'core/details');
+    },
+    __experimentalConvert(blocks) {
+      return (0,external_wp_blocks_namespaceObject.createBlock)('core/details', {}, blocks.map(block => (0,external_wp_blocks_namespaceObject.cloneBlock)(block)));
+    }
+  }]
+});
+
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/details/index.js
 /**
  * WordPress dependencies
@@ -15853,6 +15872,7 @@ const details_metadata = {
 };
 
 
+
 const {
   name: details_name
 } = details_metadata;
@@ -15872,7 +15892,8 @@ const details_settings = {
     }]
   },
   save: details_save_save,
-  edit: details_edit
+  edit: details_edit,
+  transforms: details_transforms
 };
 const details_init = () => initBlock({
   name: details_name,
