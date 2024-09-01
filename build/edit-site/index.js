@@ -18609,10 +18609,17 @@ function InstalledFonts() {
               __nextHasNoMarginBottom: true
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
               margin: 8
-            }), getFontFacesToDisplay(libraryFontSelected).map((face, i) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(library_font_variant, {
-              font: libraryFontSelected,
-              face: face
-            }, `face${i}`))]
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
+              role: "list",
+              className: "font-library-modal__fonts-list",
+              children: getFontFacesToDisplay(libraryFontSelected).map((face, i) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
+                className: "font-library-modal__fonts-list-item",
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(library_font_variant, {
+                  font: libraryFontSelected,
+                  face: face
+                }, `face${i}`)
+              }, `face${i}`))
+            })]
           })]
         })]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -19094,9 +19101,9 @@ function FontCollection({
             margin: 4
           }), !!selectedCollection?.font_families?.length && !fonts.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
             children: (0,external_wp_i18n_namespaceObject.__)('No fonts found. Try with a different search term')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
             className: "font-library-modal__fonts-grid__main",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
               role: "list",
               className: "font-library-modal__fonts-list",
               children: items.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
@@ -19109,7 +19116,7 @@ function FontCollection({
                   }
                 })
               }, font.font_family_settings.slug))
-            }), ' ']
+            })
           })]
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalNavigatorScreen, {
           path: "/fontFamily",
@@ -19152,18 +19159,23 @@ function FontCollection({
             onChange: toggleSelectAll,
             indeterminate: isIndeterminate,
             __nextHasNoMarginBottom: true
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
             spacing: 0,
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
-              margin: 8
-            }), getSortedFontFaces(selectedFont).map((face, i) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(collection_font_variant, {
-              font: selectedFont,
-              face: face,
-              handleToggleVariant: handleToggleVariant,
-              selected: isFontFontFaceInOutline(selectedFont.slug, selectedFont.fontFace ? face : null,
-              // If the font has no fontFace, we want to check if the font is in the outline
-              fontToInstallOutline)
-            }, `face${i}`))]
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
+              role: "list",
+              className: "font-library-modal__fonts-list",
+              children: getSortedFontFaces(selectedFont).map((face, i) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
+                className: "font-library-modal__fonts-list-item",
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(collection_font_variant, {
+                  font: selectedFont,
+                  face: face,
+                  handleToggleVariant: handleToggleVariant,
+                  selected: isFontFontFaceInOutline(selectedFont.slug, selectedFont.fontFace ? face : null,
+                  // If the font has no fontFace, we want to check if the font is in the outline
+                  fontToInstallOutline)
+                })
+              }, `face${i}`))
+            })
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
             margin: 16
           })]
