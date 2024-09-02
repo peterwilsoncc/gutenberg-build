@@ -70223,7 +70223,7 @@ const slideLeftAndFade = emotion_react_browser_esm_keyframes({
 const dropdown_menu_v2_styles_DropdownMenu = /*#__PURE__*/emotion_styled_base_browser_esm(Menu,  true ? {
   target: "e1kdzosf13"
 } : 0)("position:relative;z-index:1000000;display:grid;grid-template-columns:", GRID_TEMPLATE_COLS, ";grid-template-rows:auto;box-sizing:border-box;min-width:160px;max-width:320px;max-height:var( --popover-available-height );padding:", CONTENT_WRAPPER_PADDING, ";background-color:", COLORS.ui.background, ";border-radius:", config_values.radiusMedium, ";", props => /*#__PURE__*/emotion_react_browser_esm_css("box-shadow:", props.variant === 'toolbar' ? TOOLBAR_VARIANT_BOX_SHADOW : DEFAULT_BOX_SHADOW, ";" + ( true ? "" : 0),  true ? "" : 0), " overscroll-behavior:contain;overflow:auto;outline:2px solid transparent!important;&[data-open]{@media not ( prefers-reduced-motion ){animation-duration:", styles_ANIMATION_PARAMS.DURATION, ";animation-timing-function:", styles_ANIMATION_PARAMS.EASING, ";will-change:transform,opacity;animation-name:", styles_slideDownAndFade, ";&[data-side='left']{animation-name:", slideLeftAndFade, ";}&[data-side='up']{animation-name:", slideUpAndFade, ";}&[data-side='right']{animation-name:", slideRightAndFade, ";}}}" + ( true ? "" : 0));
-const baseItem = /*#__PURE__*/emotion_react_browser_esm_css("all:unset;position:relative;min-height:", space(10), ";box-sizing:border-box;grid-column:1/-1;display:grid;grid-template-columns:", GRID_TEMPLATE_COLS, ";align-items:center;@supports ( grid-template-columns: subgrid ){grid-template-columns:subgrid;}font-size:", font('default.fontSize'), ";font-family:inherit;font-weight:normal;line-height:20px;color:", COLORS.theme.foreground, ";border-radius:", config_values.radiusSmall, ";padding-block:", ITEM_PADDING_BLOCK, ";padding-inline:", ITEM_PADDING_INLINE, ";scroll-margin:", CONTENT_WRAPPER_PADDING, ";user-select:none;outline:none;&[aria-disabled='true']{color:", COLORS.ui.textDisabled, ";cursor:not-allowed;}&[data-active-item]:not( [data-focus-visible] ):not( :focus-visible ):not(\n\t\t\t[aria-disabled='true']\n\t\t){background-color:", COLORS.theme.accent, ";color:", COLORS.white, ";}&[data-focus-visible],&:focus-visible{box-shadow:0 0 0 1.5px ", COLORS.theme.accent, ";outline:2px solid transparent;}&:active,&[data-active]{}", dropdown_menu_v2_styles_DropdownMenu, ":not(:focus) &:not(:focus)[aria-expanded=\"true\"]{background-color:", LIGHT_BACKGROUND_COLOR, ";color:", COLORS.theme.foreground, ";}svg{fill:currentColor;}" + ( true ? "" : 0),  true ? "" : 0);
+const baseItem = /*#__PURE__*/emotion_react_browser_esm_css("all:unset;position:relative;min-height:", space(10), ";box-sizing:border-box;grid-column:1/-1;display:grid;grid-template-columns:", GRID_TEMPLATE_COLS, ";align-items:center;@supports ( grid-template-columns: subgrid ){grid-template-columns:subgrid;}font-size:", font('default.fontSize'), ";font-family:inherit;font-weight:normal;line-height:20px;color:", COLORS.theme.foreground, ";border-radius:", config_values.radiusSmall, ";padding-block:", ITEM_PADDING_BLOCK, ";padding-inline:", ITEM_PADDING_INLINE, ";scroll-margin:", CONTENT_WRAPPER_PADDING, ";user-select:none;outline:none;&[aria-disabled='true']{color:", COLORS.ui.textDisabled, ";cursor:not-allowed;}&[data-active-item]:not( [data-focus-visible] ):not(\n\t\t\t[aria-disabled='true']\n\t\t){background-color:", COLORS.theme.accent, ";color:", COLORS.white, ";}&[data-focus-visible]{box-shadow:0 0 0 1.5px ", COLORS.theme.accent, ";outline:2px solid transparent;}&:active,&[data-active]{}", dropdown_menu_v2_styles_DropdownMenu, ":not(:focus) &:not(:focus)[aria-expanded=\"true\"]{background-color:", LIGHT_BACKGROUND_COLOR, ";color:", COLORS.theme.foreground, ";}svg{fill:currentColor;}" + ( true ? "" : 0),  true ? "" : 0);
 const styles_DropdownMenuItem = /*#__PURE__*/emotion_styled_base_browser_esm(B6XZVSMQ_MenuItem,  true ? {
   target: "e1kdzosf12"
 } : 0)(baseItem, ";" + ( true ? "" : 0));
@@ -70283,6 +70283,27 @@ const styles_DropdownMenuItemHelpText = /*#__PURE__*/emotion_styled_base_browser
 
 const DropdownMenuContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
 
+;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/use-temporary-focus-visible-fix.js
+/**
+ * WordPress dependencies
+ */
+
+function useTemporaryFocusVisibleFix({
+  onBlur: onBlurProp
+}) {
+  const [focusVisible, setFocusVisible] = (0,external_wp_element_namespaceObject.useState)(false);
+  return {
+    'data-focus-visible': focusVisible || undefined,
+    onFocusVisible: () => {
+      (0,external_wp_element_namespaceObject.flushSync)(() => setFocusVisible(true));
+    },
+    onBlur: event => {
+      onBlurProp?.(event);
+      setFocusVisible(false);
+    }
+  };
+}
+
 ;// CONCATENATED MODULE: ./packages/components/build-module/dropdown-menu-v2/item.js
 /**
  * WordPress dependencies
@@ -70297,17 +70318,24 @@ const DropdownMenuContext = (0,external_wp_element_namespaceObject.createContext
 
 
 
+
 const DropdownMenuItem = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuItem({
   prefix,
   suffix,
   children,
+  onBlur,
   hideOnClick = true,
   ...props
 }, ref) {
+  // TODO: Remove when https://github.com/ariakit/ariakit/issues/4083 is fixed
+  const focusVisibleFixProps = useTemporaryFocusVisibleFix({
+    onBlur
+  });
   const dropdownMenuContext = (0,external_wp_element_namespaceObject.useContext)(DropdownMenuContext);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_DropdownMenuItem, {
     ref: ref,
     ...props,
+    ...focusVisibleFixProps,
     accessibleWhenDisabled: true,
     hideOnClick: hideOnClick,
     store: dropdownMenuContext?.store,
@@ -70378,16 +70406,23 @@ var MenuItemCheck = forwardRef2(function MenuItemCheck2(props) {
 
 
 
+
 const DropdownMenuCheckboxItem = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuCheckboxItem({
   suffix,
   children,
+  onBlur,
   hideOnClick = false,
   ...props
 }, ref) {
+  // TODO: Remove when https://github.com/ariakit/ariakit/issues/4083 is fixed
+  const focusVisibleFixProps = useTemporaryFocusVisibleFix({
+    onBlur
+  });
   const dropdownMenuContext = (0,external_wp_element_namespaceObject.useContext)(DropdownMenuContext);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_DropdownMenuCheckboxItem, {
     ref: ref,
     ...props,
+    ...focusVisibleFixProps,
     accessibleWhenDisabled: true,
     hideOnClick: hideOnClick,
     store: dropdownMenuContext?.store,
@@ -70435,6 +70470,7 @@ const DropdownMenuCheckboxItem = (0,external_wp_element_namespaceObject.forwardR
 
 
 
+
 const radioCheck = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
@@ -70447,13 +70483,19 @@ const radioCheck = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 const DropdownMenuRadioItem = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuRadioItem({
   suffix,
   children,
+  onBlur,
   hideOnClick = false,
   ...props
 }, ref) {
+  // TODO: Remove when https://github.com/ariakit/ariakit/issues/4083 is fixed
+  const focusVisibleFixProps = useTemporaryFocusVisibleFix({
+    onBlur
+  });
   const dropdownMenuContext = (0,external_wp_element_namespaceObject.useContext)(DropdownMenuContext);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_DropdownMenuRadioItem, {
     ref: ref,
     ...props,
+    ...focusVisibleFixProps,
     accessibleWhenDisabled: true,
     hideOnClick: hideOnClick,
     store: dropdownMenuContext?.store,
