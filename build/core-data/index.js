@@ -22780,21 +22780,24 @@ const resolvers_getEntityRecord = (kind, name, key = '', query) => async ({
       });
       const record = await response.json();
       const permissions = getUserPermissionsFromAllowHeader(response.headers?.get('allow'));
+      const canUserResolutionsArgs = [];
+      const receiveUserPermissionArgs = {};
+      for (const action of ALLOWED_RESOURCE_ACTIONS) {
+        receiveUserPermissionArgs[getUserPermissionCacheKey(action, {
+          kind,
+          name,
+          id: key
+        })] = permissions[action];
+        canUserResolutionsArgs.push([action, {
+          kind,
+          name,
+          id: key
+        }]);
+      }
       registry.batch(() => {
         dispatch.receiveEntityRecords(kind, name, record, query);
-        for (const action of ALLOWED_RESOURCE_ACTIONS) {
-          const permissionKey = getUserPermissionCacheKey(action, {
-            kind,
-            name,
-            id: key
-          });
-          dispatch.receiveUserPermission(permissionKey, permissions[action]);
-          dispatch.finishResolution('canUser', [action, {
-            kind,
-            name,
-            id: key
-          }]);
-        }
+        dispatch.receiveUserPermissions(receiveUserPermissionArgs);
+        dispatch.finishResolutions('canUser', canUserResolutionsArgs);
       });
     }
   } finally {
