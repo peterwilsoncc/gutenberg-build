@@ -40271,7 +40271,7 @@ function TitleField({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Flex, {
       as: "div",
       gap: 0,
-      justify: "left",
+      justify: "flex-start",
       className: "edit-site-patterns__pattern-title",
       children: item.type === PATTERN_TYPES.theme ? title : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
       // TODO: Switch to `true` (40px size) if possible
