@@ -39344,8 +39344,7 @@ const isMultiplePaletteArray = arr => {
  * @return The background color value computed from a element.
  */
 const normalizeColorValue = (value, element) => {
-  const valueIsSimpleColor = value ? isSimpleCSSColor(value) : false;
-  if (valueIsSimpleColor || element === null) {
+  if (!value || !element || isSimpleCSSColor(value)) {
     return value;
   }
   const {
