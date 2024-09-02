@@ -1989,6 +1989,8 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
 const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
 ;// CONCATENATED MODULE: external ["wp","compose"]
 const external_wp_compose_namespaceObject = window["wp"]["compose"];
+;// CONCATENATED MODULE: external ["wp","element"]
+const external_wp_element_namespaceObject = window["wp"]["element"];
 ;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/3YLGPPWQ.js
 "use client";
 var __defProp = Object.defineProperty;
@@ -4648,8 +4650,6 @@ var TW35PKTK_Composite = forwardRef2(function Composite2(props) {
 
 
 
-;// CONCATENATED MODULE: external ["wp","element"]
-const external_wp_element_namespaceObject = window["wp"]["element"];
 ;// CONCATENATED MODULE: ./packages/components/build-module/composite/context.js
 /**
  * WordPress dependencies
@@ -15800,53 +15800,6 @@ function cell_Cell({
   });
 }
 
-;// CONCATENATED MODULE: ./packages/components/build-module/composite/store.js
-/**
- * External dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-// Props are already documented in TypeScript types.
-// eslint-disable-next-line jsdoc/require-param
-/**
- * Creates a composite store.
- *
- * @example
- * ```jsx
- * import { Composite, useCompositeStore } from '@wordpress/components';
- *
- * const store = useCompositeStore();
- * <Composite store={store}>
- *   <Composite.Item>Item</Composite.Item>
- *   <Composite.Item>Item</Composite.Item>
- *   <Composite.Item>Item</Composite.Item>
- * </Composite>
- * ```
- */
-function store_useCompositeStore({
-  focusLoop = false,
-  focusWrap = false,
-  focusShift = false,
-  virtualFocus = false,
-  orientation = 'both',
-  rtl = false,
-  ...props
-} = {}) {
-  return useCompositeStore({
-    focusLoop,
-    focusWrap,
-    focusShift,
-    virtualFocus,
-    orientation,
-    rtl,
-    ...props
-  });
-}
-
 ;// CONCATENATED MODULE: ./packages/components/build-module/alignment-matrix-control/icon.js
 /**
  * External dependencies
@@ -15917,10 +15870,10 @@ function AlignmentMatrixControlIcon({
 
 
 
+
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -15938,20 +15891,18 @@ function UnforwardedAlignmentMatrixControl({
   ...props
 }) {
   const baseId = (0,external_wp_compose_namespaceObject.useInstanceId)(UnforwardedAlignmentMatrixControl, 'alignment-matrix-control', id);
-  const compositeStore = store_useCompositeStore({
-    defaultActiveId: getItemId(baseId, defaultValue),
-    activeId: getItemId(baseId, value),
-    setActiveId: nextActiveId => {
-      const nextValue = getItemValue(baseId, nextActiveId);
-      if (nextValue) {
-        onChange?.(nextValue);
-      }
-    },
-    rtl: (0,external_wp_i18n_namespaceObject.isRTL)()
-  });
+  const setActiveId = (0,external_wp_element_namespaceObject.useCallback)(nextActiveId => {
+    const nextValue = getItemValue(baseId, nextActiveId);
+    if (nextValue) {
+      onChange?.(nextValue);
+    }
+  }, [baseId, onChange]);
   const classes = dist_clsx('component-alignment-matrix-control', className);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Composite, {
-    store: compositeStore,
+    defaultActiveId: getItemId(baseId, defaultValue),
+    activeId: getItemId(baseId, value),
+    setActiveId: setActiveId,
+    rtl: (0,external_wp_i18n_namespaceObject.isRTL)(),
     render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridContainer, {
       ...props,
       "aria-label": label,
@@ -38672,6 +38623,53 @@ const LegacyAdapter = props => {
  */
 
 const CircularOptionPickerContext = (0,external_wp_element_namespaceObject.createContext)({});
+
+;// CONCATENATED MODULE: ./packages/components/build-module/composite/store.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+// Props are already documented in TypeScript types.
+// eslint-disable-next-line jsdoc/require-param
+/**
+ * Creates a composite store.
+ *
+ * @example
+ * ```jsx
+ * import { Composite, useCompositeStore } from '@wordpress/components';
+ *
+ * const store = useCompositeStore();
+ * <Composite store={store}>
+ *   <Composite.Item>Item</Composite.Item>
+ *   <Composite.Item>Item</Composite.Item>
+ *   <Composite.Item>Item</Composite.Item>
+ * </Composite>
+ * ```
+ */
+function store_useCompositeStore({
+  focusLoop = false,
+  focusWrap = false,
+  focusShift = false,
+  virtualFocus = false,
+  orientation = 'both',
+  rtl = false,
+  ...props
+} = {}) {
+  return useCompositeStore({
+    focusLoop,
+    focusWrap,
+    focusShift,
+    virtualFocus,
+    orientation,
+    rtl,
+    ...props
+  });
+}
 
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/check.js
 /**
