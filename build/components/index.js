@@ -1989,253 +1989,6 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
 const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
 ;// CONCATENATED MODULE: external ["wp","compose"]
 const external_wp_compose_namespaceObject = window["wp"]["compose"];
-;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/HWOIWM4O.js
-"use client";
-
-// src/utils/dom.ts
-var canUseDOM = checkIsBrowser();
-function checkIsBrowser() {
-  var _a;
-  return typeof window !== "undefined" && !!((_a = window.document) == null ? void 0 : _a.createElement);
-}
-function getDocument(node) {
-  return node ? node.ownerDocument || node : document;
-}
-function getWindow(node) {
-  return getDocument(node).defaultView || window;
-}
-function getActiveElement(node, activeDescendant = false) {
-  const { activeElement } = getDocument(node);
-  if (!(activeElement == null ? void 0 : activeElement.nodeName)) {
-    return null;
-  }
-  if (isFrame(activeElement) && activeElement.contentDocument) {
-    return getActiveElement(
-      activeElement.contentDocument.body,
-      activeDescendant
-    );
-  }
-  if (activeDescendant) {
-    const id = activeElement.getAttribute("aria-activedescendant");
-    if (id) {
-      const element = getDocument(activeElement).getElementById(id);
-      if (element) {
-        return element;
-      }
-    }
-  }
-  return activeElement;
-}
-function contains(parent, child) {
-  return parent === child || parent.contains(child);
-}
-function isFrame(element) {
-  return element.tagName === "IFRAME";
-}
-function isButton(element) {
-  const tagName = element.tagName.toLowerCase();
-  if (tagName === "button") return true;
-  if (tagName === "input" && element.type) {
-    return buttonInputTypes.indexOf(element.type) !== -1;
-  }
-  return false;
-}
-var buttonInputTypes = [
-  "button",
-  "color",
-  "file",
-  "image",
-  "reset",
-  "submit"
-];
-function isVisible(element) {
-  if (typeof element.checkVisibility === "function") {
-    return element.checkVisibility();
-  }
-  const htmlElement = element;
-  return htmlElement.offsetWidth > 0 || htmlElement.offsetHeight > 0 || element.getClientRects().length > 0;
-}
-function isTextField(element) {
-  try {
-    const isTextInput = element instanceof HTMLInputElement && element.selectionStart !== null;
-    const isTextArea = element.tagName === "TEXTAREA";
-    return isTextInput || isTextArea || false;
-  } catch (error) {
-    return false;
-  }
-}
-function isTextbox(element) {
-  return element.isContentEditable || isTextField(element);
-}
-function getTextboxValue(element) {
-  if (isTextField(element)) {
-    return element.value;
-  }
-  if (element.isContentEditable) {
-    const range = getDocument(element).createRange();
-    range.selectNodeContents(element);
-    return range.toString();
-  }
-  return "";
-}
-function getTextboxSelection(element) {
-  let start = 0;
-  let end = 0;
-  if (isTextField(element)) {
-    start = element.selectionStart || 0;
-    end = element.selectionEnd || 0;
-  } else if (element.isContentEditable) {
-    const selection = getDocument(element).getSelection();
-    if ((selection == null ? void 0 : selection.rangeCount) && selection.anchorNode && contains(element, selection.anchorNode) && selection.focusNode && contains(element, selection.focusNode)) {
-      const range = selection.getRangeAt(0);
-      const nextRange = range.cloneRange();
-      nextRange.selectNodeContents(element);
-      nextRange.setEnd(range.startContainer, range.startOffset);
-      start = nextRange.toString().length;
-      nextRange.setEnd(range.endContainer, range.endOffset);
-      end = nextRange.toString().length;
-    }
-  }
-  return { start, end };
-}
-function getPopupRole(element, fallback) {
-  const allowedPopupRoles = ["dialog", "menu", "listbox", "tree", "grid"];
-  const role = element == null ? void 0 : element.getAttribute("role");
-  if (role && allowedPopupRoles.indexOf(role) !== -1) {
-    return role;
-  }
-  return fallback;
-}
-function getPopupItemRole(element, fallback) {
-  var _a;
-  const itemRoleByPopupRole = {
-    menu: "menuitem",
-    listbox: "option",
-    tree: "treeitem"
-  };
-  const popupRole = getPopupRole(element);
-  if (!popupRole) return fallback;
-  const key = popupRole;
-  return (_a = itemRoleByPopupRole[key]) != null ? _a : fallback;
-}
-function scrollIntoViewIfNeeded(element, arg) {
-  if (isPartiallyHidden(element) && "scrollIntoView" in element) {
-    element.scrollIntoView(arg);
-  }
-}
-function getScrollingElement(element) {
-  if (!element) return null;
-  if (element.clientHeight && element.scrollHeight > element.clientHeight) {
-    const { overflowY } = getComputedStyle(element);
-    const isScrollable = overflowY !== "visible" && overflowY !== "hidden";
-    if (isScrollable) return element;
-  } else if (element.clientWidth && element.scrollWidth > element.clientWidth) {
-    const { overflowX } = getComputedStyle(element);
-    const isScrollable = overflowX !== "visible" && overflowX !== "hidden";
-    if (isScrollable) return element;
-  }
-  return getScrollingElement(element.parentElement) || document.scrollingElement || document.body;
-}
-function isPartiallyHidden(element) {
-  const elementRect = element.getBoundingClientRect();
-  const scroller = getScrollingElement(element);
-  if (!scroller) return false;
-  const scrollerRect = scroller.getBoundingClientRect();
-  const isHTML = scroller.tagName === "HTML";
-  const scrollerTop = isHTML ? scrollerRect.top + scroller.scrollTop : scrollerRect.top;
-  const scrollerBottom = isHTML ? scroller.clientHeight : scrollerRect.bottom;
-  const scrollerLeft = isHTML ? scrollerRect.left + scroller.scrollLeft : scrollerRect.left;
-  const scrollerRight = isHTML ? scroller.clientWidth : scrollerRect.right;
-  const top = elementRect.top < scrollerTop;
-  const left = elementRect.left < scrollerLeft;
-  const bottom = elementRect.bottom > scrollerBottom;
-  const right = elementRect.right > scrollerRight;
-  return top || left || bottom || right;
-}
-function setSelectionRange(element, ...args) {
-  if (/text|search|password|tel|url/i.test(element.type)) {
-    element.setSelectionRange(...args);
-  }
-}
-
-
-
-;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/5VQZOHHZ.js
-"use client";
-
-// src/composite/utils.ts
-
-var NULL_ITEM = { id: null };
-function flipItems(items, activeId, shouldInsertNullItem = false) {
-  const index = items.findIndex((item) => item.id === activeId);
-  return [
-    ...items.slice(index + 1),
-    ...shouldInsertNullItem ? [NULL_ITEM] : [],
-    ...items.slice(0, index)
-  ];
-}
-function findFirstEnabledItem(items, excludeId) {
-  return items.find((item) => {
-    if (excludeId) {
-      return !item.disabled && item.id !== excludeId;
-    }
-    return !item.disabled;
-  });
-}
-function getEnabledItem(store, id) {
-  if (!id) return null;
-  return store.item(id) || null;
-}
-function groupItemsByRows(items) {
-  const rows = [];
-  for (const item of items) {
-    const row = rows.find((currentRow) => {
-      var _a;
-      return ((_a = currentRow[0]) == null ? void 0 : _a.rowId) === item.rowId;
-    });
-    if (row) {
-      row.push(item);
-    } else {
-      rows.push([item]);
-    }
-  }
-  return rows;
-}
-function selectTextField(element, collapseToEnd = false) {
-  if (isTextField(element)) {
-    element.setSelectionRange(
-      collapseToEnd ? element.value.length : 0,
-      element.value.length
-    );
-  } else if (element.isContentEditable) {
-    const selection = getDocument(element).getSelection();
-    selection == null ? void 0 : selection.selectAllChildren(element);
-    if (collapseToEnd) {
-      selection == null ? void 0 : selection.collapseToEnd();
-    }
-  }
-}
-var FOCUS_SILENTLY = Symbol("FOCUS_SILENTLY");
-function focusSilently(element) {
-  element[FOCUS_SILENTLY] = true;
-  element.focus({ preventScroll: true });
-}
-function silentlyFocused(element) {
-  const isSilentlyFocused = element[FOCUS_SILENTLY];
-  delete element[FOCUS_SILENTLY];
-  return isSilentlyFocused;
-}
-function isItem(store, element, exclude) {
-  if (!element) return false;
-  if (element === exclude) return false;
-  const item = store.item(element.id);
-  if (!item) return false;
-  if (exclude && item.element === exclude) return false;
-  return true;
-}
-
-
-
 ;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/3YLGPPWQ.js
 "use client";
 var __defProp = Object.defineProperty;
@@ -2505,6 +2258,177 @@ function mergeProps(base, overrides) {
     props[key] = overrideValue;
   }
   return props;
+}
+
+
+
+;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/HWOIWM4O.js
+"use client";
+
+// src/utils/dom.ts
+var canUseDOM = checkIsBrowser();
+function checkIsBrowser() {
+  var _a;
+  return typeof window !== "undefined" && !!((_a = window.document) == null ? void 0 : _a.createElement);
+}
+function getDocument(node) {
+  return node ? node.ownerDocument || node : document;
+}
+function getWindow(node) {
+  return getDocument(node).defaultView || window;
+}
+function getActiveElement(node, activeDescendant = false) {
+  const { activeElement } = getDocument(node);
+  if (!(activeElement == null ? void 0 : activeElement.nodeName)) {
+    return null;
+  }
+  if (isFrame(activeElement) && activeElement.contentDocument) {
+    return getActiveElement(
+      activeElement.contentDocument.body,
+      activeDescendant
+    );
+  }
+  if (activeDescendant) {
+    const id = activeElement.getAttribute("aria-activedescendant");
+    if (id) {
+      const element = getDocument(activeElement).getElementById(id);
+      if (element) {
+        return element;
+      }
+    }
+  }
+  return activeElement;
+}
+function contains(parent, child) {
+  return parent === child || parent.contains(child);
+}
+function isFrame(element) {
+  return element.tagName === "IFRAME";
+}
+function isButton(element) {
+  const tagName = element.tagName.toLowerCase();
+  if (tagName === "button") return true;
+  if (tagName === "input" && element.type) {
+    return buttonInputTypes.indexOf(element.type) !== -1;
+  }
+  return false;
+}
+var buttonInputTypes = [
+  "button",
+  "color",
+  "file",
+  "image",
+  "reset",
+  "submit"
+];
+function isVisible(element) {
+  if (typeof element.checkVisibility === "function") {
+    return element.checkVisibility();
+  }
+  const htmlElement = element;
+  return htmlElement.offsetWidth > 0 || htmlElement.offsetHeight > 0 || element.getClientRects().length > 0;
+}
+function isTextField(element) {
+  try {
+    const isTextInput = element instanceof HTMLInputElement && element.selectionStart !== null;
+    const isTextArea = element.tagName === "TEXTAREA";
+    return isTextInput || isTextArea || false;
+  } catch (error) {
+    return false;
+  }
+}
+function isTextbox(element) {
+  return element.isContentEditable || isTextField(element);
+}
+function getTextboxValue(element) {
+  if (isTextField(element)) {
+    return element.value;
+  }
+  if (element.isContentEditable) {
+    const range = getDocument(element).createRange();
+    range.selectNodeContents(element);
+    return range.toString();
+  }
+  return "";
+}
+function getTextboxSelection(element) {
+  let start = 0;
+  let end = 0;
+  if (isTextField(element)) {
+    start = element.selectionStart || 0;
+    end = element.selectionEnd || 0;
+  } else if (element.isContentEditable) {
+    const selection = getDocument(element).getSelection();
+    if ((selection == null ? void 0 : selection.rangeCount) && selection.anchorNode && contains(element, selection.anchorNode) && selection.focusNode && contains(element, selection.focusNode)) {
+      const range = selection.getRangeAt(0);
+      const nextRange = range.cloneRange();
+      nextRange.selectNodeContents(element);
+      nextRange.setEnd(range.startContainer, range.startOffset);
+      start = nextRange.toString().length;
+      nextRange.setEnd(range.endContainer, range.endOffset);
+      end = nextRange.toString().length;
+    }
+  }
+  return { start, end };
+}
+function getPopupRole(element, fallback) {
+  const allowedPopupRoles = ["dialog", "menu", "listbox", "tree", "grid"];
+  const role = element == null ? void 0 : element.getAttribute("role");
+  if (role && allowedPopupRoles.indexOf(role) !== -1) {
+    return role;
+  }
+  return fallback;
+}
+function getPopupItemRole(element, fallback) {
+  var _a;
+  const itemRoleByPopupRole = {
+    menu: "menuitem",
+    listbox: "option",
+    tree: "treeitem"
+  };
+  const popupRole = getPopupRole(element);
+  if (!popupRole) return fallback;
+  const key = popupRole;
+  return (_a = itemRoleByPopupRole[key]) != null ? _a : fallback;
+}
+function scrollIntoViewIfNeeded(element, arg) {
+  if (isPartiallyHidden(element) && "scrollIntoView" in element) {
+    element.scrollIntoView(arg);
+  }
+}
+function getScrollingElement(element) {
+  if (!element) return null;
+  if (element.clientHeight && element.scrollHeight > element.clientHeight) {
+    const { overflowY } = getComputedStyle(element);
+    const isScrollable = overflowY !== "visible" && overflowY !== "hidden";
+    if (isScrollable) return element;
+  } else if (element.clientWidth && element.scrollWidth > element.clientWidth) {
+    const { overflowX } = getComputedStyle(element);
+    const isScrollable = overflowX !== "visible" && overflowX !== "hidden";
+    if (isScrollable) return element;
+  }
+  return getScrollingElement(element.parentElement) || document.scrollingElement || document.body;
+}
+function isPartiallyHidden(element) {
+  const elementRect = element.getBoundingClientRect();
+  const scroller = getScrollingElement(element);
+  if (!scroller) return false;
+  const scrollerRect = scroller.getBoundingClientRect();
+  const isHTML = scroller.tagName === "HTML";
+  const scrollerTop = isHTML ? scrollerRect.top + scroller.scrollTop : scrollerRect.top;
+  const scrollerBottom = isHTML ? scroller.clientHeight : scrollerRect.bottom;
+  const scrollerLeft = isHTML ? scrollerRect.left + scroller.scrollLeft : scrollerRect.left;
+  const scrollerRight = isHTML ? scroller.clientWidth : scrollerRect.right;
+  const top = elementRect.top < scrollerTop;
+  const left = elementRect.left < scrollerLeft;
+  const bottom = elementRect.bottom > scrollerBottom;
+  const right = elementRect.right > scrollerRight;
+  return top || left || bottom || right;
+}
+function setSelectionRange(element, ...args) {
+  if (/text|search|password|tel|url/i.test(element.type)) {
+    element.setSelectionRange(...args);
+  }
 }
 
 
@@ -2877,6 +2801,910 @@ function setMouseMoving(event) {
 }
 function resetMouseMoving() {
   mouseMoving = false;
+}
+
+
+
+;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/EQQLU3CG.js
+"use client";
+
+
+
+// src/utils/store.ts
+function getInternal(store, key) {
+  const internals = store.__unstableInternals;
+  invariant(internals, "Invalid store");
+  return internals[key];
+}
+function createStore(initialState, ...stores) {
+  let state = initialState;
+  let prevStateBatch = state;
+  let lastUpdate = Symbol();
+  let destroy = noop;
+  const instances = /* @__PURE__ */ new Set();
+  const updatedKeys = /* @__PURE__ */ new Set();
+  const setups = /* @__PURE__ */ new Set();
+  const listeners = /* @__PURE__ */ new Set();
+  const batchListeners = /* @__PURE__ */ new Set();
+  const disposables = /* @__PURE__ */ new WeakMap();
+  const listenerKeys = /* @__PURE__ */ new WeakMap();
+  const storeSetup = (callback) => {
+    setups.add(callback);
+    return () => setups.delete(callback);
+  };
+  const storeInit = () => {
+    const initialized = instances.size;
+    const instance = Symbol();
+    instances.add(instance);
+    const maybeDestroy = () => {
+      instances.delete(instance);
+      if (instances.size) return;
+      destroy();
+    };
+    if (initialized) return maybeDestroy;
+    const desyncs = getKeys(state).map(
+      (key) => chain(
+        ...stores.map((store) => {
+          var _a;
+          const storeState = (_a = store == null ? void 0 : store.getState) == null ? void 0 : _a.call(store);
+          if (!storeState) return;
+          if (!PBFD2E7P_hasOwnProperty(storeState, key)) return;
+          return sync(store, [key], (state2) => {
+            setState(
+              key,
+              state2[key],
+              // @ts-expect-error - Not public API. This is just to prevent
+              // infinite loops.
+              true
+            );
+          });
+        })
+      )
+    );
+    const teardowns = [];
+    for (const setup2 of setups) {
+      teardowns.push(setup2());
+    }
+    const cleanups = stores.map(init);
+    destroy = chain(...desyncs, ...teardowns, ...cleanups);
+    return maybeDestroy;
+  };
+  const sub = (keys, listener, set = listeners) => {
+    set.add(listener);
+    listenerKeys.set(listener, keys);
+    return () => {
+      var _a;
+      (_a = disposables.get(listener)) == null ? void 0 : _a();
+      disposables.delete(listener);
+      listenerKeys.delete(listener);
+      set.delete(listener);
+    };
+  };
+  const storeSubscribe = (keys, listener) => sub(keys, listener);
+  const storeSync = (keys, listener) => {
+    disposables.set(listener, listener(state, state));
+    return sub(keys, listener);
+  };
+  const storeBatch = (keys, listener) => {
+    disposables.set(listener, listener(state, prevStateBatch));
+    return sub(keys, listener, batchListeners);
+  };
+  const storePick = (keys) => createStore(pick(state, keys), finalStore);
+  const storeOmit = (keys) => createStore(omit(state, keys), finalStore);
+  const getState = () => state;
+  const setState = (key, value, fromStores = false) => {
+    var _a;
+    if (!PBFD2E7P_hasOwnProperty(state, key)) return;
+    const nextValue = applyState(value, state[key]);
+    if (nextValue === state[key]) return;
+    if (!fromStores) {
+      for (const store of stores) {
+        (_a = store == null ? void 0 : store.setState) == null ? void 0 : _a.call(store, key, nextValue);
+      }
+    }
+    const prevState = state;
+    state = _chunks_3YLGPPWQ_spreadProps(_chunks_3YLGPPWQ_spreadValues({}, state), { [key]: nextValue });
+    const thisUpdate = Symbol();
+    lastUpdate = thisUpdate;
+    updatedKeys.add(key);
+    const run = (listener, prev, uKeys) => {
+      var _a2;
+      const keys = listenerKeys.get(listener);
+      const updated = (k) => uKeys ? uKeys.has(k) : k === key;
+      if (!keys || keys.some(updated)) {
+        (_a2 = disposables.get(listener)) == null ? void 0 : _a2();
+        disposables.set(listener, listener(state, prev));
+      }
+    };
+    for (const listener of listeners) {
+      run(listener, prevState);
+    }
+    queueMicrotask(() => {
+      if (lastUpdate !== thisUpdate) return;
+      const snapshot = state;
+      for (const listener of batchListeners) {
+        run(listener, prevStateBatch, updatedKeys);
+      }
+      prevStateBatch = snapshot;
+      updatedKeys.clear();
+    });
+  };
+  const finalStore = {
+    getState,
+    setState,
+    __unstableInternals: {
+      setup: storeSetup,
+      init: storeInit,
+      subscribe: storeSubscribe,
+      sync: storeSync,
+      batch: storeBatch,
+      pick: storePick,
+      omit: storeOmit
+    }
+  };
+  return finalStore;
+}
+function setup(store, ...args) {
+  if (!store) return;
+  return getInternal(store, "setup")(...args);
+}
+function init(store, ...args) {
+  if (!store) return;
+  return getInternal(store, "init")(...args);
+}
+function subscribe(store, ...args) {
+  if (!store) return;
+  return getInternal(store, "subscribe")(...args);
+}
+function sync(store, ...args) {
+  if (!store) return;
+  return getInternal(store, "sync")(...args);
+}
+function batch(store, ...args) {
+  if (!store) return;
+  return getInternal(store, "batch")(...args);
+}
+function omit2(store, ...args) {
+  if (!store) return;
+  return getInternal(store, "omit")(...args);
+}
+function pick2(store, ...args) {
+  if (!store) return;
+  return getInternal(store, "pick")(...args);
+}
+function mergeStore(...stores) {
+  const initialState = stores.reduce((state, store2) => {
+    var _a;
+    const nextState = (_a = store2 == null ? void 0 : store2.getState) == null ? void 0 : _a.call(store2);
+    if (!nextState) return state;
+    return Object.assign(state, nextState);
+  }, {});
+  const store = createStore(initialState, ...stores);
+  return store;
+}
+function throwOnConflictingProps(props, store) {
+  if (true) return;
+  if (!store) return;
+  const defaultKeys = Object.entries(props).filter(([key, value]) => key.startsWith("default") && value !== void 0).map(([key]) => {
+    var _a;
+    const stateKey = key.replace("default", "");
+    return `${((_a = stateKey[0]) == null ? void 0 : _a.toLowerCase()) || ""}${stateKey.slice(1)}`;
+  });
+  if (!defaultKeys.length) return;
+  const storeState = store.getState();
+  const conflictingProps = defaultKeys.filter(
+    (key) => PBFD2E7P_hasOwnProperty(storeState, key)
+  );
+  if (!conflictingProps.length) return;
+  throw new Error(
+    `Passing a store prop in conjunction with a default state is not supported.
+
+const store = useSelectStore();
+<SelectProvider store={store} defaultValue="Apple" />
+                ^             ^
+
+Instead, pass the default state to the topmost store:
+
+const store = useSelectStore({ defaultValue: "Apple" });
+<SelectProvider store={store} />
+
+See https://github.com/ariakit/ariakit/pull/2745 for more details.
+
+If there's a particular need for this, please submit a feature request at https://github.com/ariakit/ariakit
+`
+  );
+}
+
+
+
+// EXTERNAL MODULE: ./node_modules/use-sync-external-store/shim/index.js
+var shim = __webpack_require__(635);
+;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/2GXGCHW6.js
+"use client";
+
+
+
+// src/utils/store.tsx
+
+
+
+
+var { useSyncExternalStore } = shim;
+var noopSubscribe = () => () => {
+};
+function useStoreState(store, keyOrSelector = identity) {
+  const storeSubscribe = external_React_.useCallback(
+    (callback) => {
+      if (!store) return noopSubscribe();
+      return subscribe(store, null, callback);
+    },
+    [store]
+  );
+  const getSnapshot = () => {
+    const key = typeof keyOrSelector === "string" ? keyOrSelector : null;
+    const selector = typeof keyOrSelector === "function" ? keyOrSelector : null;
+    const state = store == null ? void 0 : store.getState();
+    if (selector) return selector(state);
+    if (!state) return;
+    if (!key) return;
+    if (!PBFD2E7P_hasOwnProperty(state, key)) return;
+    return state[key];
+  };
+  return useSyncExternalStore(storeSubscribe, getSnapshot, getSnapshot);
+}
+function useStoreProps(store, props, key, setKey) {
+  const value = PBFD2E7P_hasOwnProperty(props, key) ? props[key] : void 0;
+  const setValue = setKey ? props[setKey] : void 0;
+  const propsRef = useLiveRef({ value, setValue });
+  useSafeLayoutEffect(() => {
+    return sync(store, [key], (state, prev) => {
+      const { value: value2, setValue: setValue2 } = propsRef.current;
+      if (!setValue2) return;
+      if (state[key] === prev[key]) return;
+      if (state[key] === value2) return;
+      setValue2(state[key]);
+    });
+  }, [store, key]);
+  useSafeLayoutEffect(() => {
+    if (value === void 0) return;
+    store.setState(key, value);
+    return batch(store, [key], () => {
+      if (value === void 0) return;
+      store.setState(key, value);
+    });
+  });
+}
+function _2GXGCHW6_useStore(createStore, props) {
+  const [store, setStore] = external_React_.useState(() => createStore(props));
+  useSafeLayoutEffect(() => init(store), [store]);
+  const useState2 = external_React_.useCallback(
+    (keyOrSelector) => useStoreState(store, keyOrSelector),
+    [store]
+  );
+  const memoizedStore = external_React_.useMemo(
+    () => _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, store), { useState: useState2 }),
+    [store, useState2]
+  );
+  const updateStore = useEvent(() => {
+    setStore((store2) => createStore(_3YLGPPWQ_spreadValues(_3YLGPPWQ_spreadValues({}, props), store2.getState())));
+  });
+  return [memoizedStore, updateStore];
+}
+
+
+
+;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/TCAGH6BH.js
+"use client";
+
+
+
+// src/collection/collection-store.ts
+
+function useCollectionStoreProps(store, update, props) {
+  useUpdateEffect(update, [props.store]);
+  useStoreProps(store, props, "items", "setItems");
+  return store;
+}
+function useCollectionStore(props = {}) {
+  const [store, update] = useStore(Core.createCollectionStore, props);
+  return useCollectionStoreProps(store, update, props);
+}
+
+
+
+;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/6DHTHWXD.js
+"use client";
+
+
+
+
+
+// src/collection/collection-store.ts
+function isElementPreceding(a, b) {
+  return Boolean(
+    b.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_PRECEDING
+  );
+}
+function sortBasedOnDOMPosition(items) {
+  const pairs = items.map((item, index) => [index, item]);
+  let isOrderDifferent = false;
+  pairs.sort(([indexA, a], [indexB, b]) => {
+    const elementA = a.element;
+    const elementB = b.element;
+    if (elementA === elementB) return 0;
+    if (!elementA || !elementB) return 0;
+    if (isElementPreceding(elementA, elementB)) {
+      if (indexA > indexB) {
+        isOrderDifferent = true;
+      }
+      return -1;
+    }
+    if (indexA < indexB) {
+      isOrderDifferent = true;
+    }
+    return 1;
+  });
+  if (isOrderDifferent) {
+    return pairs.map(([_, item]) => item);
+  }
+  return items;
+}
+function getCommonParent(items) {
+  var _a;
+  const firstItem = items.find((item) => !!item.element);
+  const lastItem = [...items].reverse().find((item) => !!item.element);
+  let parentElement = (_a = firstItem == null ? void 0 : firstItem.element) == null ? void 0 : _a.parentElement;
+  while (parentElement && (lastItem == null ? void 0 : lastItem.element)) {
+    const parent = parentElement;
+    if (lastItem && parent.contains(lastItem.element)) {
+      return parentElement;
+    }
+    parentElement = parentElement.parentElement;
+  }
+  return getDocument(parentElement).body;
+}
+function getPrivateStore(store) {
+  return store == null ? void 0 : store.__unstablePrivateStore;
+}
+function createCollectionStore(props = {}) {
+  var _a;
+  throwOnConflictingProps(props, props.store);
+  const syncState = (_a = props.store) == null ? void 0 : _a.getState();
+  const items = defaultValue(
+    props.items,
+    syncState == null ? void 0 : syncState.items,
+    props.defaultItems,
+    []
+  );
+  const itemsMap = new Map(items.map((item) => [item.id, item]));
+  const initialState = {
+    items,
+    renderedItems: defaultValue(syncState == null ? void 0 : syncState.renderedItems, [])
+  };
+  const syncPrivateStore = getPrivateStore(props.store);
+  const privateStore = createStore(
+    { items, renderedItems: initialState.renderedItems },
+    syncPrivateStore
+  );
+  const collection = createStore(initialState, props.store);
+  const sortItems = (renderedItems) => {
+    const sortedItems = sortBasedOnDOMPosition(renderedItems);
+    privateStore.setState("renderedItems", sortedItems);
+    collection.setState("renderedItems", sortedItems);
+  };
+  setup(collection, () => init(privateStore));
+  setup(privateStore, () => {
+    return batch(privateStore, ["items"], (state) => {
+      collection.setState("items", state.items);
+    });
+  });
+  setup(privateStore, () => {
+    return batch(privateStore, ["renderedItems"], (state) => {
+      let firstRun = true;
+      let raf = requestAnimationFrame(() => {
+        const { renderedItems } = collection.getState();
+        if (state.renderedItems === renderedItems) return;
+        sortItems(state.renderedItems);
+      });
+      if (typeof IntersectionObserver !== "function") {
+        return () => cancelAnimationFrame(raf);
+      }
+      const ioCallback = () => {
+        if (firstRun) {
+          firstRun = false;
+          return;
+        }
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => sortItems(state.renderedItems));
+      };
+      const root = getCommonParent(state.renderedItems);
+      const observer = new IntersectionObserver(ioCallback, { root });
+      for (const item of state.renderedItems) {
+        if (!item.element) continue;
+        observer.observe(item.element);
+      }
+      return () => {
+        cancelAnimationFrame(raf);
+        observer.disconnect();
+      };
+    });
+  });
+  const mergeItem = (item, setItems, canDeleteFromMap = false) => {
+    let prevItem;
+    setItems((items2) => {
+      const index = items2.findIndex(({ id }) => id === item.id);
+      const nextItems = items2.slice();
+      if (index !== -1) {
+        prevItem = items2[index];
+        const nextItem = _chunks_3YLGPPWQ_spreadValues(_chunks_3YLGPPWQ_spreadValues({}, prevItem), item);
+        nextItems[index] = nextItem;
+        itemsMap.set(item.id, nextItem);
+      } else {
+        nextItems.push(item);
+        itemsMap.set(item.id, item);
+      }
+      return nextItems;
+    });
+    const unmergeItem = () => {
+      setItems((items2) => {
+        if (!prevItem) {
+          if (canDeleteFromMap) {
+            itemsMap.delete(item.id);
+          }
+          return items2.filter(({ id }) => id !== item.id);
+        }
+        const index = items2.findIndex(({ id }) => id === item.id);
+        if (index === -1) return items2;
+        const nextItems = items2.slice();
+        nextItems[index] = prevItem;
+        itemsMap.set(item.id, prevItem);
+        return nextItems;
+      });
+    };
+    return unmergeItem;
+  };
+  const registerItem = (item) => mergeItem(
+    item,
+    (getItems) => privateStore.setState("items", getItems),
+    true
+  );
+  return _chunks_3YLGPPWQ_spreadProps(_chunks_3YLGPPWQ_spreadValues({}, collection), {
+    registerItem,
+    renderItem: (item) => chain(
+      registerItem(item),
+      mergeItem(
+        item,
+        (getItems) => privateStore.setState("renderedItems", getItems)
+      )
+    ),
+    item: (id) => {
+      if (!id) return null;
+      let item = itemsMap.get(id);
+      if (!item) {
+        const { items: items2 } = collection.getState();
+        item = items2.find((item2) => item2.id === id);
+        if (item) {
+          itemsMap.set(id, item);
+        }
+      }
+      return item || null;
+    },
+    // @ts-expect-error Internal
+    __unstablePrivateStore: privateStore
+  });
+}
+
+
+
+;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/7PRQYBBV.js
+"use client";
+
+// src/utils/array.ts
+function toArray(arg) {
+  if (Array.isArray(arg)) {
+    return arg;
+  }
+  return typeof arg !== "undefined" ? [arg] : [];
+}
+function addItemToArray(array, item, index = -1) {
+  if (!(index in array)) {
+    return [...array, item];
+  }
+  return [...array.slice(0, index), item, ...array.slice(index)];
+}
+function flatten2DArray(array) {
+  const flattened = [];
+  for (const row of array) {
+    flattened.push(...row);
+  }
+  return flattened;
+}
+function reverseArray(array) {
+  return array.slice().reverse();
+}
+
+
+
+;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/D7EIQZAU.js
+"use client";
+
+
+
+
+
+
+// src/composite/composite-store.ts
+var NULL_ITEM = { id: null };
+function findFirstEnabledItem(items, excludeId) {
+  return items.find((item) => {
+    if (excludeId) {
+      return !item.disabled && item.id !== excludeId;
+    }
+    return !item.disabled;
+  });
+}
+function getEnabledItems(items, excludeId) {
+  return items.filter((item) => {
+    if (excludeId) {
+      return !item.disabled && item.id !== excludeId;
+    }
+    return !item.disabled;
+  });
+}
+function getOppositeOrientation(orientation) {
+  if (orientation === "vertical") return "horizontal";
+  if (orientation === "horizontal") return "vertical";
+  return;
+}
+function getItemsInRow(items, rowId) {
+  return items.filter((item) => item.rowId === rowId);
+}
+function flipItems(items, activeId, shouldInsertNullItem = false) {
+  const index = items.findIndex((item) => item.id === activeId);
+  return [
+    ...items.slice(index + 1),
+    ...shouldInsertNullItem ? [NULL_ITEM] : [],
+    ...items.slice(0, index)
+  ];
+}
+function groupItemsByRows(items) {
+  const rows = [];
+  for (const item of items) {
+    const row = rows.find((currentRow) => {
+      var _a;
+      return ((_a = currentRow[0]) == null ? void 0 : _a.rowId) === item.rowId;
+    });
+    if (row) {
+      row.push(item);
+    } else {
+      rows.push([item]);
+    }
+  }
+  return rows;
+}
+function getMaxRowLength(array) {
+  let maxLength = 0;
+  for (const { length } of array) {
+    if (length > maxLength) {
+      maxLength = length;
+    }
+  }
+  return maxLength;
+}
+function createEmptyItem(rowId) {
+  return {
+    id: "__EMPTY_ITEM__",
+    disabled: true,
+    rowId
+  };
+}
+function normalizeRows(rows, activeId, focusShift) {
+  const maxLength = getMaxRowLength(rows);
+  for (const row of rows) {
+    for (let i = 0; i < maxLength; i += 1) {
+      const item = row[i];
+      if (!item || focusShift && item.disabled) {
+        const isFirst = i === 0;
+        const previousItem = isFirst && focusShift ? findFirstEnabledItem(row) : row[i - 1];
+        row[i] = previousItem && activeId !== previousItem.id && focusShift ? previousItem : createEmptyItem(previousItem == null ? void 0 : previousItem.rowId);
+      }
+    }
+  }
+  return rows;
+}
+function verticalizeItems(items) {
+  const rows = groupItemsByRows(items);
+  const maxLength = getMaxRowLength(rows);
+  const verticalized = [];
+  for (let i = 0; i < maxLength; i += 1) {
+    for (const row of rows) {
+      const item = row[i];
+      if (item) {
+        verticalized.push(_chunks_3YLGPPWQ_spreadProps(_chunks_3YLGPPWQ_spreadValues({}, item), {
+          // If there's no rowId, it means that it's not a grid composite, but
+          // a single row instead. So, instead of verticalizing it, that is,
+          // assigning a different rowId based on the column index, we keep it
+          // undefined so they will be part of the same row. This is useful
+          // when using up/down on one-dimensional composites.
+          rowId: item.rowId ? `${i}` : void 0
+        }));
+      }
+    }
+  }
+  return verticalized;
+}
+function createCompositeStore(props = {}) {
+  var _a;
+  const syncState = (_a = props.store) == null ? void 0 : _a.getState();
+  const collection = createCollectionStore(props);
+  const activeId = defaultValue(
+    props.activeId,
+    syncState == null ? void 0 : syncState.activeId,
+    props.defaultActiveId
+  );
+  const initialState = _chunks_3YLGPPWQ_spreadProps(_chunks_3YLGPPWQ_spreadValues({}, collection.getState()), {
+    activeId,
+    baseElement: defaultValue(syncState == null ? void 0 : syncState.baseElement, null),
+    includesBaseElement: defaultValue(
+      props.includesBaseElement,
+      syncState == null ? void 0 : syncState.includesBaseElement,
+      activeId === null
+    ),
+    moves: defaultValue(syncState == null ? void 0 : syncState.moves, 0),
+    orientation: defaultValue(
+      props.orientation,
+      syncState == null ? void 0 : syncState.orientation,
+      "both"
+    ),
+    rtl: defaultValue(props.rtl, syncState == null ? void 0 : syncState.rtl, false),
+    virtualFocus: defaultValue(
+      props.virtualFocus,
+      syncState == null ? void 0 : syncState.virtualFocus,
+      false
+    ),
+    focusLoop: defaultValue(props.focusLoop, syncState == null ? void 0 : syncState.focusLoop, false),
+    focusWrap: defaultValue(props.focusWrap, syncState == null ? void 0 : syncState.focusWrap, false),
+    focusShift: defaultValue(props.focusShift, syncState == null ? void 0 : syncState.focusShift, false)
+  });
+  const composite = createStore(initialState, collection, props.store);
+  setup(
+    composite,
+    () => sync(composite, ["renderedItems", "activeId"], (state) => {
+      composite.setState("activeId", (activeId2) => {
+        var _a2;
+        if (activeId2 !== void 0) return activeId2;
+        return (_a2 = findFirstEnabledItem(state.renderedItems)) == null ? void 0 : _a2.id;
+      });
+    })
+  );
+  const getNextId = (items, orientation, hasNullItem, skip) => {
+    var _a2, _b;
+    const { activeId: activeId2, rtl, focusLoop, focusWrap, includesBaseElement } = composite.getState();
+    const isHorizontal = orientation !== "vertical";
+    const isRTL = rtl && isHorizontal;
+    const allItems = isRTL ? reverseArray(items) : items;
+    if (activeId2 == null) {
+      return (_a2 = findFirstEnabledItem(allItems)) == null ? void 0 : _a2.id;
+    }
+    const activeItem = allItems.find((item) => item.id === activeId2);
+    if (!activeItem) {
+      return (_b = findFirstEnabledItem(allItems)) == null ? void 0 : _b.id;
+    }
+    const isGrid = !!activeItem.rowId;
+    const activeIndex = allItems.indexOf(activeItem);
+    const nextItems = allItems.slice(activeIndex + 1);
+    const nextItemsInRow = getItemsInRow(nextItems, activeItem.rowId);
+    if (skip !== void 0) {
+      const nextEnabledItemsInRow = getEnabledItems(nextItemsInRow, activeId2);
+      const nextItem2 = nextEnabledItemsInRow.slice(skip)[0] || // If we can't find an item, just return the last one.
+      nextEnabledItemsInRow[nextEnabledItemsInRow.length - 1];
+      return nextItem2 == null ? void 0 : nextItem2.id;
+    }
+    const oppositeOrientation = getOppositeOrientation(
+      // If it's a grid and orientation is not set, it's a next/previous call,
+      // which is inherently horizontal. up/down will call next with orientation
+      // set to vertical by default (see below on up/down methods).
+      isGrid ? orientation || "horizontal" : orientation
+    );
+    const canLoop = focusLoop && focusLoop !== oppositeOrientation;
+    const canWrap = isGrid && focusWrap && focusWrap !== oppositeOrientation;
+    hasNullItem = hasNullItem || !isGrid && canLoop && includesBaseElement;
+    if (canLoop) {
+      const loopItems = canWrap && !hasNullItem ? allItems : getItemsInRow(allItems, activeItem.rowId);
+      const sortedItems = flipItems(loopItems, activeId2, hasNullItem);
+      const nextItem2 = findFirstEnabledItem(sortedItems, activeId2);
+      return nextItem2 == null ? void 0 : nextItem2.id;
+    }
+    if (canWrap) {
+      const nextItem2 = findFirstEnabledItem(
+        // We can use nextItems, which contains all the next items, including
+        // items from other rows, to wrap between rows. However, if there is a
+        // null item (the composite container), we'll only use the next items in
+        // the row. So moving next from the last item will focus on the
+        // composite container. On grid composites, horizontal navigation never
+        // focuses on the composite container, only vertical.
+        hasNullItem ? nextItemsInRow : nextItems,
+        activeId2
+      );
+      const nextId = hasNullItem ? (nextItem2 == null ? void 0 : nextItem2.id) || null : nextItem2 == null ? void 0 : nextItem2.id;
+      return nextId;
+    }
+    const nextItem = findFirstEnabledItem(nextItemsInRow, activeId2);
+    if (!nextItem && hasNullItem) {
+      return null;
+    }
+    return nextItem == null ? void 0 : nextItem.id;
+  };
+  return _chunks_3YLGPPWQ_spreadProps(_chunks_3YLGPPWQ_spreadValues(_chunks_3YLGPPWQ_spreadValues({}, collection), composite), {
+    setBaseElement: (element) => composite.setState("baseElement", element),
+    setActiveId: (id) => composite.setState("activeId", id),
+    move: (id) => {
+      if (id === void 0) return;
+      composite.setState("activeId", id);
+      composite.setState("moves", (moves) => moves + 1);
+    },
+    first: () => {
+      var _a2;
+      return (_a2 = findFirstEnabledItem(composite.getState().renderedItems)) == null ? void 0 : _a2.id;
+    },
+    last: () => {
+      var _a2;
+      return (_a2 = findFirstEnabledItem(reverseArray(composite.getState().renderedItems))) == null ? void 0 : _a2.id;
+    },
+    next: (skip) => {
+      const { renderedItems, orientation } = composite.getState();
+      return getNextId(renderedItems, orientation, false, skip);
+    },
+    previous: (skip) => {
+      var _a2;
+      const { renderedItems, orientation, includesBaseElement } = composite.getState();
+      const isGrid = !!((_a2 = findFirstEnabledItem(renderedItems)) == null ? void 0 : _a2.rowId);
+      const hasNullItem = !isGrid && includesBaseElement;
+      return getNextId(
+        reverseArray(renderedItems),
+        orientation,
+        hasNullItem,
+        skip
+      );
+    },
+    down: (skip) => {
+      const {
+        activeId: activeId2,
+        renderedItems,
+        focusShift,
+        focusLoop,
+        includesBaseElement
+      } = composite.getState();
+      const shouldShift = focusShift && !skip;
+      const verticalItems = verticalizeItems(
+        flatten2DArray(
+          normalizeRows(groupItemsByRows(renderedItems), activeId2, shouldShift)
+        )
+      );
+      const canLoop = focusLoop && focusLoop !== "horizontal";
+      const hasNullItem = canLoop && includesBaseElement;
+      return getNextId(verticalItems, "vertical", hasNullItem, skip);
+    },
+    up: (skip) => {
+      const { activeId: activeId2, renderedItems, focusShift, includesBaseElement } = composite.getState();
+      const shouldShift = focusShift && !skip;
+      const verticalItems = verticalizeItems(
+        reverseArray(
+          flatten2DArray(
+            normalizeRows(
+              groupItemsByRows(renderedItems),
+              activeId2,
+              shouldShift
+            )
+          )
+        )
+      );
+      const hasNullItem = includesBaseElement;
+      return getNextId(verticalItems, "vertical", hasNullItem, skip);
+    }
+  });
+}
+
+
+
+;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/UVQLZ7T5.js
+"use client";
+
+
+
+// src/composite/composite-store.ts
+
+function useCompositeStoreProps(store, update, props) {
+  store = useCollectionStoreProps(store, update, props);
+  useStoreProps(store, props, "activeId", "setActiveId");
+  useStoreProps(store, props, "includesBaseElement");
+  useStoreProps(store, props, "virtualFocus");
+  useStoreProps(store, props, "orientation");
+  useStoreProps(store, props, "rtl");
+  useStoreProps(store, props, "focusLoop");
+  useStoreProps(store, props, "focusWrap");
+  useStoreProps(store, props, "focusShift");
+  return store;
+}
+function useCompositeStore(props = {}) {
+  const [store, update] = _2GXGCHW6_useStore(createCompositeStore, props);
+  return useCompositeStoreProps(store, update, props);
+}
+
+
+
+;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/5VQZOHHZ.js
+"use client";
+
+// src/composite/utils.ts
+
+var _5VQZOHHZ_NULL_ITEM = { id: null };
+function _5VQZOHHZ_flipItems(items, activeId, shouldInsertNullItem = false) {
+  const index = items.findIndex((item) => item.id === activeId);
+  return [
+    ...items.slice(index + 1),
+    ...shouldInsertNullItem ? [_5VQZOHHZ_NULL_ITEM] : [],
+    ...items.slice(0, index)
+  ];
+}
+function _5VQZOHHZ_findFirstEnabledItem(items, excludeId) {
+  return items.find((item) => {
+    if (excludeId) {
+      return !item.disabled && item.id !== excludeId;
+    }
+    return !item.disabled;
+  });
+}
+function getEnabledItem(store, id) {
+  if (!id) return null;
+  return store.item(id) || null;
+}
+function _5VQZOHHZ_groupItemsByRows(items) {
+  const rows = [];
+  for (const item of items) {
+    const row = rows.find((currentRow) => {
+      var _a;
+      return ((_a = currentRow[0]) == null ? void 0 : _a.rowId) === item.rowId;
+    });
+    if (row) {
+      row.push(item);
+    } else {
+      rows.push([item]);
+    }
+  }
+  return rows;
+}
+function selectTextField(element, collapseToEnd = false) {
+  if (isTextField(element)) {
+    element.setSelectionRange(
+      collapseToEnd ? element.value.length : 0,
+      element.value.length
+    );
+  } else if (element.isContentEditable) {
+    const selection = getDocument(element).getSelection();
+    selection == null ? void 0 : selection.selectAllChildren(element);
+    if (collapseToEnd) {
+      selection == null ? void 0 : selection.collapseToEnd();
+    }
+  }
+}
+var FOCUS_SILENTLY = Symbol("FOCUS_SILENTLY");
+function focusSilently(element) {
+  element[FOCUS_SILENTLY] = true;
+  element.focus({ preventScroll: true });
+}
+function silentlyFocused(element) {
+  const isSilentlyFocused = element[FOCUS_SILENTLY];
+  delete element[FOCUS_SILENTLY];
+  return isSilentlyFocused;
+}
+function isItem(store, element, exclude) {
+  if (!element) return false;
+  if (element === exclude) return false;
+  const item = store.item(element.id);
+  if (!item) return false;
+  if (exclude && item.element === exclude) return false;
+  return true;
 }
 
 
@@ -3526,35 +4354,6 @@ var Focusable = forwardRef2(function Focusable2(props) {
 
 
 
-;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/7PRQYBBV.js
-"use client";
-
-// src/utils/array.ts
-function toArray(arg) {
-  if (Array.isArray(arg)) {
-    return arg;
-  }
-  return typeof arg !== "undefined" ? [arg] : [];
-}
-function addItemToArray(array, item, index = -1) {
-  if (!(index in array)) {
-    return [...array, item];
-  }
-  return [...array.slice(0, index), item, ...array.slice(index)];
-}
-function flatten2DArray(array) {
-  const flattened = [];
-  for (const row of array) {
-    flattened.push(...row);
-  }
-  return flattened;
-}
-function reverseArray(array) {
-  return array.slice().reverse();
-}
-
-
-
 ;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/TW35PKTK.js
 "use client";
 
@@ -3610,8 +4409,8 @@ function useKeyboardEventProxy(store, onKeyboardEvent, previousElementRef) {
   });
 }
 function findFirstEnabledItemInTheLastRow(items) {
-  return findFirstEnabledItem(
-    flatten2DArray(reverseArray(groupItemsByRows(items)))
+  return _5VQZOHHZ_findFirstEnabledItem(
+    flatten2DArray(reverseArray(_5VQZOHHZ_groupItemsByRows(items)))
   );
 }
 function useScheduleFocus(store) {
@@ -4334,294 +5133,6 @@ var Command = forwardRef2(function Command2(props) {
 
 
 
-;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/EQQLU3CG.js
-"use client";
-
-
-
-// src/utils/store.ts
-function getInternal(store, key) {
-  const internals = store.__unstableInternals;
-  invariant(internals, "Invalid store");
-  return internals[key];
-}
-function createStore(initialState, ...stores) {
-  let state = initialState;
-  let prevStateBatch = state;
-  let lastUpdate = Symbol();
-  let destroy = noop;
-  const instances = /* @__PURE__ */ new Set();
-  const updatedKeys = /* @__PURE__ */ new Set();
-  const setups = /* @__PURE__ */ new Set();
-  const listeners = /* @__PURE__ */ new Set();
-  const batchListeners = /* @__PURE__ */ new Set();
-  const disposables = /* @__PURE__ */ new WeakMap();
-  const listenerKeys = /* @__PURE__ */ new WeakMap();
-  const storeSetup = (callback) => {
-    setups.add(callback);
-    return () => setups.delete(callback);
-  };
-  const storeInit = () => {
-    const initialized = instances.size;
-    const instance = Symbol();
-    instances.add(instance);
-    const maybeDestroy = () => {
-      instances.delete(instance);
-      if (instances.size) return;
-      destroy();
-    };
-    if (initialized) return maybeDestroy;
-    const desyncs = getKeys(state).map(
-      (key) => chain(
-        ...stores.map((store) => {
-          var _a;
-          const storeState = (_a = store == null ? void 0 : store.getState) == null ? void 0 : _a.call(store);
-          if (!storeState) return;
-          if (!PBFD2E7P_hasOwnProperty(storeState, key)) return;
-          return sync(store, [key], (state2) => {
-            setState(
-              key,
-              state2[key],
-              // @ts-expect-error - Not public API. This is just to prevent
-              // infinite loops.
-              true
-            );
-          });
-        })
-      )
-    );
-    const teardowns = [];
-    for (const setup2 of setups) {
-      teardowns.push(setup2());
-    }
-    const cleanups = stores.map(init);
-    destroy = chain(...desyncs, ...teardowns, ...cleanups);
-    return maybeDestroy;
-  };
-  const sub = (keys, listener, set = listeners) => {
-    set.add(listener);
-    listenerKeys.set(listener, keys);
-    return () => {
-      var _a;
-      (_a = disposables.get(listener)) == null ? void 0 : _a();
-      disposables.delete(listener);
-      listenerKeys.delete(listener);
-      set.delete(listener);
-    };
-  };
-  const storeSubscribe = (keys, listener) => sub(keys, listener);
-  const storeSync = (keys, listener) => {
-    disposables.set(listener, listener(state, state));
-    return sub(keys, listener);
-  };
-  const storeBatch = (keys, listener) => {
-    disposables.set(listener, listener(state, prevStateBatch));
-    return sub(keys, listener, batchListeners);
-  };
-  const storePick = (keys) => createStore(pick(state, keys), finalStore);
-  const storeOmit = (keys) => createStore(omit(state, keys), finalStore);
-  const getState = () => state;
-  const setState = (key, value, fromStores = false) => {
-    var _a;
-    if (!PBFD2E7P_hasOwnProperty(state, key)) return;
-    const nextValue = applyState(value, state[key]);
-    if (nextValue === state[key]) return;
-    if (!fromStores) {
-      for (const store of stores) {
-        (_a = store == null ? void 0 : store.setState) == null ? void 0 : _a.call(store, key, nextValue);
-      }
-    }
-    const prevState = state;
-    state = _chunks_3YLGPPWQ_spreadProps(_chunks_3YLGPPWQ_spreadValues({}, state), { [key]: nextValue });
-    const thisUpdate = Symbol();
-    lastUpdate = thisUpdate;
-    updatedKeys.add(key);
-    const run = (listener, prev, uKeys) => {
-      var _a2;
-      const keys = listenerKeys.get(listener);
-      const updated = (k) => uKeys ? uKeys.has(k) : k === key;
-      if (!keys || keys.some(updated)) {
-        (_a2 = disposables.get(listener)) == null ? void 0 : _a2();
-        disposables.set(listener, listener(state, prev));
-      }
-    };
-    for (const listener of listeners) {
-      run(listener, prevState);
-    }
-    queueMicrotask(() => {
-      if (lastUpdate !== thisUpdate) return;
-      const snapshot = state;
-      for (const listener of batchListeners) {
-        run(listener, prevStateBatch, updatedKeys);
-      }
-      prevStateBatch = snapshot;
-      updatedKeys.clear();
-    });
-  };
-  const finalStore = {
-    getState,
-    setState,
-    __unstableInternals: {
-      setup: storeSetup,
-      init: storeInit,
-      subscribe: storeSubscribe,
-      sync: storeSync,
-      batch: storeBatch,
-      pick: storePick,
-      omit: storeOmit
-    }
-  };
-  return finalStore;
-}
-function setup(store, ...args) {
-  if (!store) return;
-  return getInternal(store, "setup")(...args);
-}
-function init(store, ...args) {
-  if (!store) return;
-  return getInternal(store, "init")(...args);
-}
-function subscribe(store, ...args) {
-  if (!store) return;
-  return getInternal(store, "subscribe")(...args);
-}
-function sync(store, ...args) {
-  if (!store) return;
-  return getInternal(store, "sync")(...args);
-}
-function batch(store, ...args) {
-  if (!store) return;
-  return getInternal(store, "batch")(...args);
-}
-function omit2(store, ...args) {
-  if (!store) return;
-  return getInternal(store, "omit")(...args);
-}
-function pick2(store, ...args) {
-  if (!store) return;
-  return getInternal(store, "pick")(...args);
-}
-function mergeStore(...stores) {
-  const initialState = stores.reduce((state, store2) => {
-    var _a;
-    const nextState = (_a = store2 == null ? void 0 : store2.getState) == null ? void 0 : _a.call(store2);
-    if (!nextState) return state;
-    return Object.assign(state, nextState);
-  }, {});
-  const store = createStore(initialState, ...stores);
-  return store;
-}
-function throwOnConflictingProps(props, store) {
-  if (true) return;
-  if (!store) return;
-  const defaultKeys = Object.entries(props).filter(([key, value]) => key.startsWith("default") && value !== void 0).map(([key]) => {
-    var _a;
-    const stateKey = key.replace("default", "");
-    return `${((_a = stateKey[0]) == null ? void 0 : _a.toLowerCase()) || ""}${stateKey.slice(1)}`;
-  });
-  if (!defaultKeys.length) return;
-  const storeState = store.getState();
-  const conflictingProps = defaultKeys.filter(
-    (key) => PBFD2E7P_hasOwnProperty(storeState, key)
-  );
-  if (!conflictingProps.length) return;
-  throw new Error(
-    `Passing a store prop in conjunction with a default state is not supported.
-
-const store = useSelectStore();
-<SelectProvider store={store} defaultValue="Apple" />
-                ^             ^
-
-Instead, pass the default state to the topmost store:
-
-const store = useSelectStore({ defaultValue: "Apple" });
-<SelectProvider store={store} />
-
-See https://github.com/ariakit/ariakit/pull/2745 for more details.
-
-If there's a particular need for this, please submit a feature request at https://github.com/ariakit/ariakit
-`
-  );
-}
-
-
-
-// EXTERNAL MODULE: ./node_modules/use-sync-external-store/shim/index.js
-var shim = __webpack_require__(635);
-;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/2GXGCHW6.js
-"use client";
-
-
-
-// src/utils/store.tsx
-
-
-
-
-var { useSyncExternalStore } = shim;
-var noopSubscribe = () => () => {
-};
-function useStoreState(store, keyOrSelector = identity) {
-  const storeSubscribe = external_React_.useCallback(
-    (callback) => {
-      if (!store) return noopSubscribe();
-      return subscribe(store, null, callback);
-    },
-    [store]
-  );
-  const getSnapshot = () => {
-    const key = typeof keyOrSelector === "string" ? keyOrSelector : null;
-    const selector = typeof keyOrSelector === "function" ? keyOrSelector : null;
-    const state = store == null ? void 0 : store.getState();
-    if (selector) return selector(state);
-    if (!state) return;
-    if (!key) return;
-    if (!PBFD2E7P_hasOwnProperty(state, key)) return;
-    return state[key];
-  };
-  return useSyncExternalStore(storeSubscribe, getSnapshot, getSnapshot);
-}
-function useStoreProps(store, props, key, setKey) {
-  const value = PBFD2E7P_hasOwnProperty(props, key) ? props[key] : void 0;
-  const setValue = setKey ? props[setKey] : void 0;
-  const propsRef = useLiveRef({ value, setValue });
-  useSafeLayoutEffect(() => {
-    return sync(store, [key], (state, prev) => {
-      const { value: value2, setValue: setValue2 } = propsRef.current;
-      if (!setValue2) return;
-      if (state[key] === prev[key]) return;
-      if (state[key] === value2) return;
-      setValue2(state[key]);
-    });
-  }, [store, key]);
-  useSafeLayoutEffect(() => {
-    if (value === void 0) return;
-    store.setState(key, value);
-    return batch(store, [key], () => {
-      if (value === void 0) return;
-      store.setState(key, value);
-    });
-  });
-}
-function _2GXGCHW6_useStore(createStore, props) {
-  const [store, setStore] = external_React_.useState(() => createStore(props));
-  useSafeLayoutEffect(() => init(store), [store]);
-  const useState2 = external_React_.useCallback(
-    (keyOrSelector) => useStoreState(store, keyOrSelector),
-    [store]
-  );
-  const memoizedStore = external_React_.useMemo(
-    () => _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, store), { useState: useState2 }),
-    [store, useState2]
-  );
-  const updateStore = useEvent(() => {
-    setStore((store2) => createStore(_3YLGPPWQ_spreadValues(_3YLGPPWQ_spreadValues({}, props), store2.getState())));
-  });
-  return [memoizedStore, updateStore];
-}
-
-
-
 ;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/3CCTMYB6.js
 "use client";
 
@@ -5064,7 +5575,7 @@ function isSelfTargetOrItem(event, items) {
   const isItem = items.some((item) => item.element === target);
   return isItem;
 }
-function getEnabledItems(items) {
+function DS36B3MQ_getEnabledItems(items) {
   return items.filter((item) => !item.disabled);
 }
 function itemTextStartsWith(item, text) {
@@ -5084,7 +5595,7 @@ function getSameInitialItems(items, char, activeId) {
   if (!itemTextStartsWith(activeItem, char)) return items;
   if (chars !== char && itemTextStartsWith(activeItem, chars)) return items;
   chars = char;
-  return flipItems(
+  return _5VQZOHHZ_flipItems(
     items.filter((item) => itemTextStartsWith(item, chars)),
     activeId
   ).filter((item) => item.id !== activeId);
@@ -5106,7 +5617,7 @@ var useCompositeTypeahead = createHook(function useCompositeTypeahead2(_a) {
     if (!store) return;
     const { renderedItems, items, activeId } = store.getState();
     if (!isValidTypeaheadEvent(event)) return clearChars();
-    let enabledItems = getEnabledItems(
+    let enabledItems = DS36B3MQ_getEnabledItems(
       renderedItems.length ? renderedItems : items
     );
     if (!isSelfTargetOrItem(event, enabledItems)) return clearChars();
@@ -5213,11 +5724,36 @@ const CompositeTypeahead = (0,external_wp_element_namespaceObject.forwardRef)(fu
  * ```
  */
 const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRef)(function Composite({
+  // Composite store props
+  activeId,
+  defaultActiveId,
+  setActiveId,
+  focusLoop = false,
+  focusWrap = false,
+  focusShift = false,
+  virtualFocus = false,
+  orientation = 'both',
+  rtl = false,
+  // Composite component props
   children,
-  store,
   disabled = false,
+  // To be removed
+  store: storeProp,
+  // Rest props
   ...props
 }, ref) {
+  const newStore = useCompositeStore({
+    activeId,
+    defaultActiveId,
+    setActiveId,
+    focusLoop,
+    focusWrap,
+    focusShift,
+    virtualFocus,
+    orientation,
+    rtl
+  });
+  const store = storeProp || newStore;
   const contextValue = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     store
   }), [store]);
@@ -15263,517 +15799,6 @@ function cell_Cell({
     })
   });
 }
-
-;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/TCAGH6BH.js
-"use client";
-
-
-
-// src/collection/collection-store.ts
-
-function useCollectionStoreProps(store, update, props) {
-  useUpdateEffect(update, [props.store]);
-  useStoreProps(store, props, "items", "setItems");
-  return store;
-}
-function useCollectionStore(props = {}) {
-  const [store, update] = useStore(Core.createCollectionStore, props);
-  return useCollectionStoreProps(store, update, props);
-}
-
-
-
-;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/6DHTHWXD.js
-"use client";
-
-
-
-
-
-// src/collection/collection-store.ts
-function isElementPreceding(a, b) {
-  return Boolean(
-    b.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_PRECEDING
-  );
-}
-function sortBasedOnDOMPosition(items) {
-  const pairs = items.map((item, index) => [index, item]);
-  let isOrderDifferent = false;
-  pairs.sort(([indexA, a], [indexB, b]) => {
-    const elementA = a.element;
-    const elementB = b.element;
-    if (elementA === elementB) return 0;
-    if (!elementA || !elementB) return 0;
-    if (isElementPreceding(elementA, elementB)) {
-      if (indexA > indexB) {
-        isOrderDifferent = true;
-      }
-      return -1;
-    }
-    if (indexA < indexB) {
-      isOrderDifferent = true;
-    }
-    return 1;
-  });
-  if (isOrderDifferent) {
-    return pairs.map(([_, item]) => item);
-  }
-  return items;
-}
-function getCommonParent(items) {
-  var _a;
-  const firstItem = items.find((item) => !!item.element);
-  const lastItem = [...items].reverse().find((item) => !!item.element);
-  let parentElement = (_a = firstItem == null ? void 0 : firstItem.element) == null ? void 0 : _a.parentElement;
-  while (parentElement && (lastItem == null ? void 0 : lastItem.element)) {
-    const parent = parentElement;
-    if (lastItem && parent.contains(lastItem.element)) {
-      return parentElement;
-    }
-    parentElement = parentElement.parentElement;
-  }
-  return getDocument(parentElement).body;
-}
-function getPrivateStore(store) {
-  return store == null ? void 0 : store.__unstablePrivateStore;
-}
-function createCollectionStore(props = {}) {
-  var _a;
-  throwOnConflictingProps(props, props.store);
-  const syncState = (_a = props.store) == null ? void 0 : _a.getState();
-  const items = defaultValue(
-    props.items,
-    syncState == null ? void 0 : syncState.items,
-    props.defaultItems,
-    []
-  );
-  const itemsMap = new Map(items.map((item) => [item.id, item]));
-  const initialState = {
-    items,
-    renderedItems: defaultValue(syncState == null ? void 0 : syncState.renderedItems, [])
-  };
-  const syncPrivateStore = getPrivateStore(props.store);
-  const privateStore = createStore(
-    { items, renderedItems: initialState.renderedItems },
-    syncPrivateStore
-  );
-  const collection = createStore(initialState, props.store);
-  const sortItems = (renderedItems) => {
-    const sortedItems = sortBasedOnDOMPosition(renderedItems);
-    privateStore.setState("renderedItems", sortedItems);
-    collection.setState("renderedItems", sortedItems);
-  };
-  setup(collection, () => init(privateStore));
-  setup(privateStore, () => {
-    return batch(privateStore, ["items"], (state) => {
-      collection.setState("items", state.items);
-    });
-  });
-  setup(privateStore, () => {
-    return batch(privateStore, ["renderedItems"], (state) => {
-      let firstRun = true;
-      let raf = requestAnimationFrame(() => {
-        const { renderedItems } = collection.getState();
-        if (state.renderedItems === renderedItems) return;
-        sortItems(state.renderedItems);
-      });
-      if (typeof IntersectionObserver !== "function") {
-        return () => cancelAnimationFrame(raf);
-      }
-      const ioCallback = () => {
-        if (firstRun) {
-          firstRun = false;
-          return;
-        }
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => sortItems(state.renderedItems));
-      };
-      const root = getCommonParent(state.renderedItems);
-      const observer = new IntersectionObserver(ioCallback, { root });
-      for (const item of state.renderedItems) {
-        if (!item.element) continue;
-        observer.observe(item.element);
-      }
-      return () => {
-        cancelAnimationFrame(raf);
-        observer.disconnect();
-      };
-    });
-  });
-  const mergeItem = (item, setItems, canDeleteFromMap = false) => {
-    let prevItem;
-    setItems((items2) => {
-      const index = items2.findIndex(({ id }) => id === item.id);
-      const nextItems = items2.slice();
-      if (index !== -1) {
-        prevItem = items2[index];
-        const nextItem = _chunks_3YLGPPWQ_spreadValues(_chunks_3YLGPPWQ_spreadValues({}, prevItem), item);
-        nextItems[index] = nextItem;
-        itemsMap.set(item.id, nextItem);
-      } else {
-        nextItems.push(item);
-        itemsMap.set(item.id, item);
-      }
-      return nextItems;
-    });
-    const unmergeItem = () => {
-      setItems((items2) => {
-        if (!prevItem) {
-          if (canDeleteFromMap) {
-            itemsMap.delete(item.id);
-          }
-          return items2.filter(({ id }) => id !== item.id);
-        }
-        const index = items2.findIndex(({ id }) => id === item.id);
-        if (index === -1) return items2;
-        const nextItems = items2.slice();
-        nextItems[index] = prevItem;
-        itemsMap.set(item.id, prevItem);
-        return nextItems;
-      });
-    };
-    return unmergeItem;
-  };
-  const registerItem = (item) => mergeItem(
-    item,
-    (getItems) => privateStore.setState("items", getItems),
-    true
-  );
-  return _chunks_3YLGPPWQ_spreadProps(_chunks_3YLGPPWQ_spreadValues({}, collection), {
-    registerItem,
-    renderItem: (item) => chain(
-      registerItem(item),
-      mergeItem(
-        item,
-        (getItems) => privateStore.setState("renderedItems", getItems)
-      )
-    ),
-    item: (id) => {
-      if (!id) return null;
-      let item = itemsMap.get(id);
-      if (!item) {
-        const { items: items2 } = collection.getState();
-        item = items2.find((item2) => item2.id === id);
-        if (item) {
-          itemsMap.set(id, item);
-        }
-      }
-      return item || null;
-    },
-    // @ts-expect-error Internal
-    __unstablePrivateStore: privateStore
-  });
-}
-
-
-
-;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/D7EIQZAU.js
-"use client";
-
-
-
-
-
-
-// src/composite/composite-store.ts
-var D7EIQZAU_NULL_ITEM = { id: null };
-function D7EIQZAU_findFirstEnabledItem(items, excludeId) {
-  return items.find((item) => {
-    if (excludeId) {
-      return !item.disabled && item.id !== excludeId;
-    }
-    return !item.disabled;
-  });
-}
-function D7EIQZAU_getEnabledItems(items, excludeId) {
-  return items.filter((item) => {
-    if (excludeId) {
-      return !item.disabled && item.id !== excludeId;
-    }
-    return !item.disabled;
-  });
-}
-function getOppositeOrientation(orientation) {
-  if (orientation === "vertical") return "horizontal";
-  if (orientation === "horizontal") return "vertical";
-  return;
-}
-function getItemsInRow(items, rowId) {
-  return items.filter((item) => item.rowId === rowId);
-}
-function D7EIQZAU_flipItems(items, activeId, shouldInsertNullItem = false) {
-  const index = items.findIndex((item) => item.id === activeId);
-  return [
-    ...items.slice(index + 1),
-    ...shouldInsertNullItem ? [D7EIQZAU_NULL_ITEM] : [],
-    ...items.slice(0, index)
-  ];
-}
-function D7EIQZAU_groupItemsByRows(items) {
-  const rows = [];
-  for (const item of items) {
-    const row = rows.find((currentRow) => {
-      var _a;
-      return ((_a = currentRow[0]) == null ? void 0 : _a.rowId) === item.rowId;
-    });
-    if (row) {
-      row.push(item);
-    } else {
-      rows.push([item]);
-    }
-  }
-  return rows;
-}
-function getMaxRowLength(array) {
-  let maxLength = 0;
-  for (const { length } of array) {
-    if (length > maxLength) {
-      maxLength = length;
-    }
-  }
-  return maxLength;
-}
-function createEmptyItem(rowId) {
-  return {
-    id: "__EMPTY_ITEM__",
-    disabled: true,
-    rowId
-  };
-}
-function normalizeRows(rows, activeId, focusShift) {
-  const maxLength = getMaxRowLength(rows);
-  for (const row of rows) {
-    for (let i = 0; i < maxLength; i += 1) {
-      const item = row[i];
-      if (!item || focusShift && item.disabled) {
-        const isFirst = i === 0;
-        const previousItem = isFirst && focusShift ? D7EIQZAU_findFirstEnabledItem(row) : row[i - 1];
-        row[i] = previousItem && activeId !== previousItem.id && focusShift ? previousItem : createEmptyItem(previousItem == null ? void 0 : previousItem.rowId);
-      }
-    }
-  }
-  return rows;
-}
-function verticalizeItems(items) {
-  const rows = D7EIQZAU_groupItemsByRows(items);
-  const maxLength = getMaxRowLength(rows);
-  const verticalized = [];
-  for (let i = 0; i < maxLength; i += 1) {
-    for (const row of rows) {
-      const item = row[i];
-      if (item) {
-        verticalized.push(_chunks_3YLGPPWQ_spreadProps(_chunks_3YLGPPWQ_spreadValues({}, item), {
-          // If there's no rowId, it means that it's not a grid composite, but
-          // a single row instead. So, instead of verticalizing it, that is,
-          // assigning a different rowId based on the column index, we keep it
-          // undefined so they will be part of the same row. This is useful
-          // when using up/down on one-dimensional composites.
-          rowId: item.rowId ? `${i}` : void 0
-        }));
-      }
-    }
-  }
-  return verticalized;
-}
-function createCompositeStore(props = {}) {
-  var _a;
-  const syncState = (_a = props.store) == null ? void 0 : _a.getState();
-  const collection = createCollectionStore(props);
-  const activeId = defaultValue(
-    props.activeId,
-    syncState == null ? void 0 : syncState.activeId,
-    props.defaultActiveId
-  );
-  const initialState = _chunks_3YLGPPWQ_spreadProps(_chunks_3YLGPPWQ_spreadValues({}, collection.getState()), {
-    activeId,
-    baseElement: defaultValue(syncState == null ? void 0 : syncState.baseElement, null),
-    includesBaseElement: defaultValue(
-      props.includesBaseElement,
-      syncState == null ? void 0 : syncState.includesBaseElement,
-      activeId === null
-    ),
-    moves: defaultValue(syncState == null ? void 0 : syncState.moves, 0),
-    orientation: defaultValue(
-      props.orientation,
-      syncState == null ? void 0 : syncState.orientation,
-      "both"
-    ),
-    rtl: defaultValue(props.rtl, syncState == null ? void 0 : syncState.rtl, false),
-    virtualFocus: defaultValue(
-      props.virtualFocus,
-      syncState == null ? void 0 : syncState.virtualFocus,
-      false
-    ),
-    focusLoop: defaultValue(props.focusLoop, syncState == null ? void 0 : syncState.focusLoop, false),
-    focusWrap: defaultValue(props.focusWrap, syncState == null ? void 0 : syncState.focusWrap, false),
-    focusShift: defaultValue(props.focusShift, syncState == null ? void 0 : syncState.focusShift, false)
-  });
-  const composite = createStore(initialState, collection, props.store);
-  setup(
-    composite,
-    () => sync(composite, ["renderedItems", "activeId"], (state) => {
-      composite.setState("activeId", (activeId2) => {
-        var _a2;
-        if (activeId2 !== void 0) return activeId2;
-        return (_a2 = D7EIQZAU_findFirstEnabledItem(state.renderedItems)) == null ? void 0 : _a2.id;
-      });
-    })
-  );
-  const getNextId = (items, orientation, hasNullItem, skip) => {
-    var _a2, _b;
-    const { activeId: activeId2, rtl, focusLoop, focusWrap, includesBaseElement } = composite.getState();
-    const isHorizontal = orientation !== "vertical";
-    const isRTL = rtl && isHorizontal;
-    const allItems = isRTL ? reverseArray(items) : items;
-    if (activeId2 == null) {
-      return (_a2 = D7EIQZAU_findFirstEnabledItem(allItems)) == null ? void 0 : _a2.id;
-    }
-    const activeItem = allItems.find((item) => item.id === activeId2);
-    if (!activeItem) {
-      return (_b = D7EIQZAU_findFirstEnabledItem(allItems)) == null ? void 0 : _b.id;
-    }
-    const isGrid = !!activeItem.rowId;
-    const activeIndex = allItems.indexOf(activeItem);
-    const nextItems = allItems.slice(activeIndex + 1);
-    const nextItemsInRow = getItemsInRow(nextItems, activeItem.rowId);
-    if (skip !== void 0) {
-      const nextEnabledItemsInRow = D7EIQZAU_getEnabledItems(nextItemsInRow, activeId2);
-      const nextItem2 = nextEnabledItemsInRow.slice(skip)[0] || // If we can't find an item, just return the last one.
-      nextEnabledItemsInRow[nextEnabledItemsInRow.length - 1];
-      return nextItem2 == null ? void 0 : nextItem2.id;
-    }
-    const oppositeOrientation = getOppositeOrientation(
-      // If it's a grid and orientation is not set, it's a next/previous call,
-      // which is inherently horizontal. up/down will call next with orientation
-      // set to vertical by default (see below on up/down methods).
-      isGrid ? orientation || "horizontal" : orientation
-    );
-    const canLoop = focusLoop && focusLoop !== oppositeOrientation;
-    const canWrap = isGrid && focusWrap && focusWrap !== oppositeOrientation;
-    hasNullItem = hasNullItem || !isGrid && canLoop && includesBaseElement;
-    if (canLoop) {
-      const loopItems = canWrap && !hasNullItem ? allItems : getItemsInRow(allItems, activeItem.rowId);
-      const sortedItems = D7EIQZAU_flipItems(loopItems, activeId2, hasNullItem);
-      const nextItem2 = D7EIQZAU_findFirstEnabledItem(sortedItems, activeId2);
-      return nextItem2 == null ? void 0 : nextItem2.id;
-    }
-    if (canWrap) {
-      const nextItem2 = D7EIQZAU_findFirstEnabledItem(
-        // We can use nextItems, which contains all the next items, including
-        // items from other rows, to wrap between rows. However, if there is a
-        // null item (the composite container), we'll only use the next items in
-        // the row. So moving next from the last item will focus on the
-        // composite container. On grid composites, horizontal navigation never
-        // focuses on the composite container, only vertical.
-        hasNullItem ? nextItemsInRow : nextItems,
-        activeId2
-      );
-      const nextId = hasNullItem ? (nextItem2 == null ? void 0 : nextItem2.id) || null : nextItem2 == null ? void 0 : nextItem2.id;
-      return nextId;
-    }
-    const nextItem = D7EIQZAU_findFirstEnabledItem(nextItemsInRow, activeId2);
-    if (!nextItem && hasNullItem) {
-      return null;
-    }
-    return nextItem == null ? void 0 : nextItem.id;
-  };
-  return _chunks_3YLGPPWQ_spreadProps(_chunks_3YLGPPWQ_spreadValues(_chunks_3YLGPPWQ_spreadValues({}, collection), composite), {
-    setBaseElement: (element) => composite.setState("baseElement", element),
-    setActiveId: (id) => composite.setState("activeId", id),
-    move: (id) => {
-      if (id === void 0) return;
-      composite.setState("activeId", id);
-      composite.setState("moves", (moves) => moves + 1);
-    },
-    first: () => {
-      var _a2;
-      return (_a2 = D7EIQZAU_findFirstEnabledItem(composite.getState().renderedItems)) == null ? void 0 : _a2.id;
-    },
-    last: () => {
-      var _a2;
-      return (_a2 = D7EIQZAU_findFirstEnabledItem(reverseArray(composite.getState().renderedItems))) == null ? void 0 : _a2.id;
-    },
-    next: (skip) => {
-      const { renderedItems, orientation } = composite.getState();
-      return getNextId(renderedItems, orientation, false, skip);
-    },
-    previous: (skip) => {
-      var _a2;
-      const { renderedItems, orientation, includesBaseElement } = composite.getState();
-      const isGrid = !!((_a2 = D7EIQZAU_findFirstEnabledItem(renderedItems)) == null ? void 0 : _a2.rowId);
-      const hasNullItem = !isGrid && includesBaseElement;
-      return getNextId(
-        reverseArray(renderedItems),
-        orientation,
-        hasNullItem,
-        skip
-      );
-    },
-    down: (skip) => {
-      const {
-        activeId: activeId2,
-        renderedItems,
-        focusShift,
-        focusLoop,
-        includesBaseElement
-      } = composite.getState();
-      const shouldShift = focusShift && !skip;
-      const verticalItems = verticalizeItems(
-        flatten2DArray(
-          normalizeRows(D7EIQZAU_groupItemsByRows(renderedItems), activeId2, shouldShift)
-        )
-      );
-      const canLoop = focusLoop && focusLoop !== "horizontal";
-      const hasNullItem = canLoop && includesBaseElement;
-      return getNextId(verticalItems, "vertical", hasNullItem, skip);
-    },
-    up: (skip) => {
-      const { activeId: activeId2, renderedItems, focusShift, includesBaseElement } = composite.getState();
-      const shouldShift = focusShift && !skip;
-      const verticalItems = verticalizeItems(
-        reverseArray(
-          flatten2DArray(
-            normalizeRows(
-              D7EIQZAU_groupItemsByRows(renderedItems),
-              activeId2,
-              shouldShift
-            )
-          )
-        )
-      );
-      const hasNullItem = includesBaseElement;
-      return getNextId(verticalItems, "vertical", hasNullItem, skip);
-    }
-  });
-}
-
-
-
-;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/UVQLZ7T5.js
-"use client";
-
-
-
-// src/composite/composite-store.ts
-
-function useCompositeStoreProps(store, update, props) {
-  store = useCollectionStoreProps(store, update, props);
-  useStoreProps(store, props, "activeId", "setActiveId");
-  useStoreProps(store, props, "includesBaseElement");
-  useStoreProps(store, props, "virtualFocus");
-  useStoreProps(store, props, "orientation");
-  useStoreProps(store, props, "rtl");
-  useStoreProps(store, props, "focusLoop");
-  useStoreProps(store, props, "focusWrap");
-  useStoreProps(store, props, "focusShift");
-  return store;
-}
-function useCompositeStore(props = {}) {
-  const [store, update] = _2GXGCHW6_useStore(createCompositeStore, props);
-  return useCompositeStoreProps(store, update, props);
-}
-
-
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/composite/store.js
 /**
