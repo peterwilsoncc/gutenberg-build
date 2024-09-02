@@ -38624,53 +38624,6 @@ const LegacyAdapter = props => {
 
 const CircularOptionPickerContext = (0,external_wp_element_namespaceObject.createContext)({});
 
-;// CONCATENATED MODULE: ./packages/components/build-module/composite/store.js
-/**
- * External dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-// Props are already documented in TypeScript types.
-// eslint-disable-next-line jsdoc/require-param
-/**
- * Creates a composite store.
- *
- * @example
- * ```jsx
- * import { Composite, useCompositeStore } from '@wordpress/components';
- *
- * const store = useCompositeStore();
- * <Composite store={store}>
- *   <Composite.Item>Item</Composite.Item>
- *   <Composite.Item>Item</Composite.Item>
- *   <Composite.Item>Item</Composite.Item>
- * </Composite>
- * ```
- */
-function store_useCompositeStore({
-  focusLoop = false,
-  focusWrap = false,
-  focusShift = false,
-  virtualFocus = false,
-  orientation = 'both',
-  rtl = false,
-  ...props
-} = {}) {
-  return useCompositeStore({
-    focusLoop,
-    focusWrap,
-    focusShift,
-    virtualFocus,
-    orientation,
-    rtl,
-    ...props
-  });
-}
-
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/check.js
 /**
  * WordPress dependencies
@@ -38690,7 +38643,6 @@ const check = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 /**
  * External dependencies
  */
-
 
 /**
  * WordPress dependencies
@@ -38724,13 +38676,20 @@ function UnforwardedOptionAsOption(props, forwardedRef) {
   const {
     id,
     isSelected,
-    compositeStore,
     ...additionalProps
   } = props;
-  const activeId = useStoreState(compositeStore, 'activeId');
-  if (isSelected && !activeId) {
-    compositeStore.setActiveId(id);
-  }
+  const {
+    setActiveId,
+    activeId
+  } = (0,external_wp_element_namespaceObject.useContext)(CircularOptionPickerContext);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (isSelected && !activeId) {
+      // The setTimeout call is necessary to make sure that this update
+      // doesn't get overridden by `Composite`'s internal logic, which picks
+      // an initial active item if one is not specifically set.
+      window.setTimeout(() => setActiveId?.(id), 0);
+    }
+  }, [isSelected, setActiveId, activeId, id]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Composite.Item, {
     render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
       ...additionalProps,
@@ -38751,7 +38710,7 @@ function Option({
 }) {
   const {
     baseId,
-    compositeStore
+    setActiveId
   } = (0,external_wp_element_namespaceObject.useContext)(CircularOptionPickerContext);
   const id = (0,external_wp_compose_namespaceObject.useInstanceId)(Option, baseId || 'components-circular-option-picker__option');
   const commonProps = {
@@ -38759,9 +38718,9 @@ function Option({
     className: 'components-circular-option-picker__option',
     ...additionalProps
   };
-  const optionControl = compositeStore ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OptionAsOption, {
+  const isListbox = setActiveId !== undefined;
+  const optionControl = isListbox ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OptionAsOption, {
     ...commonProps,
-    compositeStore: compositeStore,
     isSelected: isSelected
   }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OptionAsButton, {
     ...commonProps,
@@ -38862,10 +38821,10 @@ function ButtonAction({
 
 
 
+
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -38929,23 +38888,24 @@ function ListboxCircularOptionPicker(props) {
     children,
     ...additionalProps
   } = props;
-  const compositeStore = store_useCompositeStore({
-    focusLoop: loop,
-    rtl: (0,external_wp_i18n_namespaceObject.isRTL)()
-  });
-  const compositeContext = {
+  const [activeId, setActiveId] = (0,external_wp_element_namespaceObject.useState)(undefined);
+  const contextValue = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     baseId,
-    compositeStore
-  };
+    activeId,
+    setActiveId
+  }), [baseId, activeId, setActiveId]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: className,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(CircularOptionPickerContext.Provider, {
-      value: compositeContext,
+      value: contextValue,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Composite, {
         ...additionalProps,
         id: baseId,
-        store: compositeStore,
+        focusLoop: loop,
+        rtl: (0,external_wp_i18n_namespaceObject.isRTL)(),
         role: "listbox",
+        activeId: activeId,
+        setActiveId: setActiveId,
         children: options
       }), children, actions]
     })
@@ -38959,13 +38919,14 @@ function ButtonsCircularOptionPicker(props) {
     baseId,
     ...additionalProps
   } = props;
+  const contextValue = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    baseId
+  }), [baseId]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ...additionalProps,
     id: baseId,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(CircularOptionPickerContext.Provider, {
-      value: {
-        baseId
-      },
+      value: contextValue,
       children: [options, children, actions]
     })
   });
@@ -47001,6 +46962,53 @@ function ComboboxControl(props) {
   /* eslint-enable jsx-a11y/no-static-element-interactions */
 }
 /* harmony default export */ const combobox_control = (ComboboxControl);
+
+;// CONCATENATED MODULE: ./packages/components/build-module/composite/store.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+// Props are already documented in TypeScript types.
+// eslint-disable-next-line jsdoc/require-param
+/**
+ * Creates a composite store.
+ *
+ * @example
+ * ```jsx
+ * import { Composite, useCompositeStore } from '@wordpress/components';
+ *
+ * const store = useCompositeStore();
+ * <Composite store={store}>
+ *   <Composite.Item>Item</Composite.Item>
+ *   <Composite.Item>Item</Composite.Item>
+ *   <Composite.Item>Item</Composite.Item>
+ * </Composite>
+ * ```
+ */
+function store_useCompositeStore({
+  focusLoop = false,
+  focusWrap = false,
+  focusShift = false,
+  virtualFocus = false,
+  orientation = 'both',
+  rtl = false,
+  ...props
+} = {}) {
+  return useCompositeStore({
+    focusLoop,
+    focusWrap,
+    focusShift,
+    virtualFocus,
+    orientation,
+    rtl,
+    ...props
+  });
+}
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/composite/legacy/index.js
 /**
