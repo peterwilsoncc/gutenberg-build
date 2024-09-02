@@ -18245,7 +18245,7 @@ function FontCard({
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-            icon: chevron_right
+            icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_left : chevron_right
           })
         })]
       })]
@@ -18569,7 +18569,7 @@ function InstalledFonts() {
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
             justify: "flex-start",
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorBackButton, {
-              icon: chevron_left,
+              icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right : chevron_left,
               size: "small",
               onClick: () => {
                 handleSetLibraryFontSelected(null);
@@ -19123,7 +19123,7 @@ function FontCollection({
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
             justify: "flex-start",
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorBackButton, {
-              icon: chevron_left,
+              icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right : chevron_left,
               size: "small",
               onClick: () => {
                 setSelectedFont(null);
@@ -19205,7 +19205,7 @@ function FontCollection({
           disabled: page === 1,
           showTooltip: true,
           accessibleWhenDisabled: true,
-          icon: chevron_left,
+          icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right : chevron_left,
           tooltipPosition: "top"
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
           justify: "flex-start",
@@ -19235,7 +19235,7 @@ function FontCollection({
           onClick: () => setPage(page + 1),
           disabled: page === totalPages,
           accessibleWhenDisabled: true,
-          icon: chevron_right,
+          icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_left : chevron_right,
           tooltipPosition: "top"
         })]
       })]
@@ -27396,21 +27396,6 @@ function RevisionsButtons({
 }
 /* harmony default export */ const revisions_buttons = (RevisionsButtons);
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/previous.js
-/**
- * WordPress dependencies
- */
-
-
-const previous = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M11.6 7l-1.1-1L5 12l5.5 6 1.1-1L7 12l4.6-5zm6 0l-1.1-1-5.5 6 5.5 6 1.1-1-4.6-5 4.6-5z"
-  })
-});
-/* harmony default export */ const library_previous = (previous);
-
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/next.js
 /**
  * WordPress dependencies
@@ -27425,6 +27410,21 @@ const next = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
   })
 });
 /* harmony default export */ const library_next = (next);
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/previous.js
+/**
+ * WordPress dependencies
+ */
+
+
+const previous = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M11.6 7l-1.1-1L5 12l5.5 6 1.1-1L7 12l4.6-5zm6 0l-1.1-1-5.5 6 5.5 6 1.1-1-4.6-5 4.6-5z"
+  })
+});
+/* harmony default export */ const library_previous = (previous);
 
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/pagination/index.js
 /**
@@ -27474,7 +27474,7 @@ function Pagination({
         accessibleWhenDisabled: true,
         disabled: disabled || currentPage === 1,
         label: (0,external_wp_i18n_namespaceObject.__)('First page'),
-        icon: library_previous,
+        icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? library_next : library_previous,
         size: "compact"
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         variant: buttonVariant,
@@ -27482,7 +27482,7 @@ function Pagination({
         accessibleWhenDisabled: true,
         disabled: disabled || currentPage === 1,
         label: (0,external_wp_i18n_namespaceObject.__)('Previous page'),
-        icon: chevron_left,
+        icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right : chevron_left,
         size: "compact"
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
@@ -27499,7 +27499,7 @@ function Pagination({
         accessibleWhenDisabled: true,
         disabled: disabled || currentPage === numPages,
         label: (0,external_wp_i18n_namespaceObject.__)('Next page'),
-        icon: chevron_right,
+        icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_left : chevron_right,
         size: "compact"
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         variant: buttonVariant,
@@ -27507,7 +27507,7 @@ function Pagination({
         accessibleWhenDisabled: true,
         disabled: disabled || currentPage === numPages,
         label: (0,external_wp_i18n_namespaceObject.__)('Last page'),
-        icon: library_next,
+        icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? library_previous : library_next,
         size: "compact"
       })]
     })]
@@ -36856,7 +36856,7 @@ function DataViewsPagination() {
         disabled: currentPage === 1,
         accessibleWhenDisabled: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Previous page'),
-        icon: library_previous,
+        icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? library_next : library_previous,
         showTooltip: true,
         size: "compact",
         tooltipPosition: "top"
@@ -36868,7 +36868,7 @@ function DataViewsPagination() {
         disabled: currentPage >= totalPages,
         accessibleWhenDisabled: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Next page'),
-        icon: library_next,
+        icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? library_previous : library_next,
         showTooltip: true,
         size: "compact",
         tooltipPosition: "top"

@@ -54225,7 +54225,7 @@ function GridItemMovers({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "block-editor-grid-item-mover__move-horizontal-button-container is-left",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItemMover, {
-          icon: chevron_left,
+          icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right : chevron_left,
           label: (0,external_wp_i18n_namespaceObject.__)('Move left'),
           description: (0,external_wp_i18n_namespaceObject.__)('Move left'),
           isDisabled: columnStart <= 1,
@@ -54269,7 +54269,7 @@ function GridItemMovers({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "block-editor-grid-item-mover__move-horizontal-button-container is-right",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItemMover, {
-          icon: chevron_right,
+          icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_left : chevron_right,
           label: (0,external_wp_i18n_namespaceObject.__)('Move right'),
           description: (0,external_wp_i18n_namespaceObject.__)('Move right'),
           isDisabled: columnCount && columnEnd >= columnCount,
@@ -67024,7 +67024,7 @@ const CarouselNavigation = ({
   // TODO: Switch to `true` (40px size) if possible
   , {
     __next40pxDefaultSize: false,
-    icon: chevron_left,
+    icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right : chevron_left,
     label: (0,external_wp_i18n_namespaceObject.__)('Previous pattern'),
     onClick: handlePrevious,
     disabled: activeSlide === 0,
@@ -67033,7 +67033,7 @@ const CarouselNavigation = ({
   // TODO: Switch to `true` (40px size) if possible
   , {
     __next40pxDefaultSize: false,
-    icon: chevron_right,
+    icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_left : chevron_right,
     label: (0,external_wp_i18n_namespaceObject.__)('Next pattern'),
     onClick: handleNext,
     disabled: activeSlide === totalSlides - 1,
