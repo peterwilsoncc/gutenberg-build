@@ -50441,8 +50441,7 @@ function Pagination({
 
 const {
   CompositeV2: block_patterns_list_Composite,
-  CompositeItemV2: block_patterns_list_CompositeItem,
-  useCompositeStoreV2: block_patterns_list_useCompositeStore
+  CompositeItemV2: block_patterns_list_CompositeItem
 } = unlock(external_wp_components_namespaceObject.privateApis);
 const WithToolTip = ({
   showTooltip,
@@ -50584,20 +50583,18 @@ function BlockPatternsList({
   showTitlesAsTooltip,
   pagingProps
 }, ref) {
-  const compositeStore = block_patterns_list_useCompositeStore({
-    orientation
-  });
-  const {
-    setActiveId
-  } = compositeStore;
+  const [activeCompositeId, setActiveCompositeId] = (0,external_wp_element_namespaceObject.useState)(undefined);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    // We reset the active composite item whenever the
-    // available patterns change, to make sure that
-    // focus is put back to the start.
-    setActiveId(undefined);
-  }, [setActiveId, shownPatterns, blockPatterns]);
+    // Reset the active composite item whenever the available patterns change,
+    // to make sure that Composite widget can receive focus correctly when its
+    // composite items change. The first composite item will receive focus.
+    const firstCompositeItemId = blockPatterns.find(pattern => shownPatterns.includes(pattern))?.name;
+    setActiveCompositeId(firstCompositeItemId);
+  }, [shownPatterns, blockPatterns]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(block_patterns_list_Composite, {
-    store: compositeStore,
+    orientation: orientation,
+    activeId: activeCompositeId,
+    setActiveId: setActiveCompositeId,
     role: "listbox",
     className: "block-editor-block-patterns-list",
     "aria-label": label,
