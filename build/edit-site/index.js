@@ -14926,17 +14926,27 @@ function WelcomeGuideTemplate() {
   const {
     toggle
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_preferences_namespaceObject.store);
-  const isVisible = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const isTemplateActive = !!select(external_wp_preferences_namespaceObject.store).get('core/edit-site', 'welcomeGuideTemplate');
-    const isEditorActive = !!select(external_wp_preferences_namespaceObject.store).get('core/edit-site', 'welcomeGuide');
+  const {
+    isLoaded,
+    record
+  } = useEditedEntityRecord();
+  const isPostTypeTemplate = isLoaded && record.type === 'wp_template';
+  const {
+    isActive,
+    hasPreviousEntity
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      isPage
-    } = select(store);
-    const {
-      getCurrentPostType
+      getEditorSettings
     } = select(external_wp_editor_namespaceObject.store);
-    return isTemplateActive && !isEditorActive && isPage() && getCurrentPostType() === 'wp_template';
+    const {
+      get
+    } = select(external_wp_preferences_namespaceObject.store);
+    return {
+      isActive: get('core/edit-site', 'welcomeGuideTemplate'),
+      hasPreviousEntity: !!getEditorSettings().onNavigateToPreviousEntityRecord
+    };
   }, []);
+  const isVisible = isActive && isPostTypeTemplate && hasPreviousEntity;
   if (!isVisible) {
     return null;
   }

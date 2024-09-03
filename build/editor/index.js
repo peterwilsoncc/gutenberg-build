@@ -13973,6 +13973,7 @@ function CreateNewTemplate({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -14010,6 +14011,9 @@ function BlockThemeControl({
     };
   }, []);
   const {
+    get: getPreference
+  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_preferences_namespaceObject.store);
+  const {
     editedRecord: template,
     hasResolved
   } = (0,external_wp_coreData_namespaceObject.useEntityRecord)('postType', 'wp_template', id);
@@ -14033,6 +14037,14 @@ function BlockThemeControl({
     label: (0,external_wp_i18n_namespaceObject.__)('Go back'),
     onClick: () => getEditorSettings().onNavigateToPreviousEntityRecord()
   }] : undefined;
+  const mayShowTemplateEditNotice = () => {
+    if (!getPreference('core/edit-site', 'welcomeGuideTemplate')) {
+      createSuccessNotice((0,external_wp_i18n_namespaceObject.__)('Editing template. Changes made here affect all posts and pages that use the template.'), {
+        type: 'snackbar',
+        actions: notificationAction
+      });
+    }
+  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
     popoverProps: block_theme_POPOVER_PROPS,
     focusOnMount: true,
@@ -14055,10 +14067,7 @@ function BlockThemeControl({
               postType: 'wp_template'
             });
             onClose();
-            createSuccessNotice((0,external_wp_i18n_namespaceObject.__)('Editing template. Changes made here affect all posts and pages that use the template.'), {
-              type: 'snackbar',
-              actions: notificationAction
-            });
+            mayShowTemplateEditNotice();
           },
           children: (0,external_wp_i18n_namespaceObject.__)('Edit template')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SwapTemplateButton, {
