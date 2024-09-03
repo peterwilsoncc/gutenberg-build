@@ -71628,6 +71628,8 @@ lock(privateApis, {
   CompositeGroupV2: Composite.Group,
   CompositeItemV2: Composite.Item,
   CompositeRowV2: Composite.Row,
+  CompositeTypeaheadV2: Composite.Typeahead,
+  CompositeHoverV2: Composite.Hover,
   useCompositeStoreV2: store_useCompositeStore,
   __experimentalPopoverLegacyPositionToPlacement: positionToPlacement,
   createPrivateSlotFill: createPrivateSlotFill,

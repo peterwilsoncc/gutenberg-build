@@ -29479,253 +29479,6 @@ const funnel = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 });
 /* harmony default export */ const library_funnel = (funnel);
 
-;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/HWOIWM4O.js
-"use client";
-
-// src/utils/dom.ts
-var HWOIWM4O_canUseDOM = checkIsBrowser();
-function checkIsBrowser() {
-  var _a;
-  return typeof window !== "undefined" && !!((_a = window.document) == null ? void 0 : _a.createElement);
-}
-function getDocument(node) {
-  return node ? node.ownerDocument || node : document;
-}
-function getWindow(node) {
-  return getDocument(node).defaultView || window;
-}
-function HWOIWM4O_getActiveElement(node, activeDescendant = false) {
-  const { activeElement } = getDocument(node);
-  if (!(activeElement == null ? void 0 : activeElement.nodeName)) {
-    return null;
-  }
-  if (HWOIWM4O_isFrame(activeElement) && activeElement.contentDocument) {
-    return HWOIWM4O_getActiveElement(
-      activeElement.contentDocument.body,
-      activeDescendant
-    );
-  }
-  if (activeDescendant) {
-    const id = activeElement.getAttribute("aria-activedescendant");
-    if (id) {
-      const element = getDocument(activeElement).getElementById(id);
-      if (element) {
-        return element;
-      }
-    }
-  }
-  return activeElement;
-}
-function contains(parent, child) {
-  return parent === child || parent.contains(child);
-}
-function HWOIWM4O_isFrame(element) {
-  return element.tagName === "IFRAME";
-}
-function isButton(element) {
-  const tagName = element.tagName.toLowerCase();
-  if (tagName === "button") return true;
-  if (tagName === "input" && element.type) {
-    return buttonInputTypes.indexOf(element.type) !== -1;
-  }
-  return false;
-}
-var buttonInputTypes = [
-  "button",
-  "color",
-  "file",
-  "image",
-  "reset",
-  "submit"
-];
-function isVisible(element) {
-  if (typeof element.checkVisibility === "function") {
-    return element.checkVisibility();
-  }
-  const htmlElement = element;
-  return htmlElement.offsetWidth > 0 || htmlElement.offsetHeight > 0 || element.getClientRects().length > 0;
-}
-function isTextField(element) {
-  try {
-    const isTextInput = element instanceof HTMLInputElement && element.selectionStart !== null;
-    const isTextArea = element.tagName === "TEXTAREA";
-    return isTextInput || isTextArea || false;
-  } catch (error) {
-    return false;
-  }
-}
-function isTextbox(element) {
-  return element.isContentEditable || isTextField(element);
-}
-function getTextboxValue(element) {
-  if (isTextField(element)) {
-    return element.value;
-  }
-  if (element.isContentEditable) {
-    const range = getDocument(element).createRange();
-    range.selectNodeContents(element);
-    return range.toString();
-  }
-  return "";
-}
-function getTextboxSelection(element) {
-  let start = 0;
-  let end = 0;
-  if (isTextField(element)) {
-    start = element.selectionStart || 0;
-    end = element.selectionEnd || 0;
-  } else if (element.isContentEditable) {
-    const selection = getDocument(element).getSelection();
-    if ((selection == null ? void 0 : selection.rangeCount) && selection.anchorNode && contains(element, selection.anchorNode) && selection.focusNode && contains(element, selection.focusNode)) {
-      const range = selection.getRangeAt(0);
-      const nextRange = range.cloneRange();
-      nextRange.selectNodeContents(element);
-      nextRange.setEnd(range.startContainer, range.startOffset);
-      start = nextRange.toString().length;
-      nextRange.setEnd(range.endContainer, range.endOffset);
-      end = nextRange.toString().length;
-    }
-  }
-  return { start, end };
-}
-function getPopupRole(element, fallback) {
-  const allowedPopupRoles = ["dialog", "menu", "listbox", "tree", "grid"];
-  const role = element == null ? void 0 : element.getAttribute("role");
-  if (role && allowedPopupRoles.indexOf(role) !== -1) {
-    return role;
-  }
-  return fallback;
-}
-function getPopupItemRole(element, fallback) {
-  var _a;
-  const itemRoleByPopupRole = {
-    menu: "menuitem",
-    listbox: "option",
-    tree: "treeitem"
-  };
-  const popupRole = getPopupRole(element);
-  if (!popupRole) return fallback;
-  const key = popupRole;
-  return (_a = itemRoleByPopupRole[key]) != null ? _a : fallback;
-}
-function scrollIntoViewIfNeeded(element, arg) {
-  if (isPartiallyHidden(element) && "scrollIntoView" in element) {
-    element.scrollIntoView(arg);
-  }
-}
-function getScrollingElement(element) {
-  if (!element) return null;
-  if (element.clientHeight && element.scrollHeight > element.clientHeight) {
-    const { overflowY } = getComputedStyle(element);
-    const isScrollable = overflowY !== "visible" && overflowY !== "hidden";
-    if (isScrollable) return element;
-  } else if (element.clientWidth && element.scrollWidth > element.clientWidth) {
-    const { overflowX } = getComputedStyle(element);
-    const isScrollable = overflowX !== "visible" && overflowX !== "hidden";
-    if (isScrollable) return element;
-  }
-  return getScrollingElement(element.parentElement) || document.scrollingElement || document.body;
-}
-function isPartiallyHidden(element) {
-  const elementRect = element.getBoundingClientRect();
-  const scroller = getScrollingElement(element);
-  if (!scroller) return false;
-  const scrollerRect = scroller.getBoundingClientRect();
-  const isHTML = scroller.tagName === "HTML";
-  const scrollerTop = isHTML ? scrollerRect.top + scroller.scrollTop : scrollerRect.top;
-  const scrollerBottom = isHTML ? scroller.clientHeight : scrollerRect.bottom;
-  const scrollerLeft = isHTML ? scrollerRect.left + scroller.scrollLeft : scrollerRect.left;
-  const scrollerRight = isHTML ? scroller.clientWidth : scrollerRect.right;
-  const top = elementRect.top < scrollerTop;
-  const left = elementRect.left < scrollerLeft;
-  const bottom = elementRect.bottom > scrollerBottom;
-  const right = elementRect.right > scrollerRight;
-  return top || left || bottom || right;
-}
-function setSelectionRange(element, ...args) {
-  if (/text|search|password|tel|url/i.test(element.type)) {
-    element.setSelectionRange(...args);
-  }
-}
-
-
-
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/5VQZOHHZ.js
-"use client";
-
-// src/composite/utils.ts
-
-var NULL_ITEM = { id: null };
-function flipItems(items, activeId, shouldInsertNullItem = false) {
-  const index = items.findIndex((item) => item.id === activeId);
-  return [
-    ...items.slice(index + 1),
-    ...shouldInsertNullItem ? [NULL_ITEM] : [],
-    ...items.slice(0, index)
-  ];
-}
-function findFirstEnabledItem(items, excludeId) {
-  return items.find((item) => {
-    if (excludeId) {
-      return !item.disabled && item.id !== excludeId;
-    }
-    return !item.disabled;
-  });
-}
-function getEnabledItem(store, id) {
-  if (!id) return null;
-  return store.item(id) || null;
-}
-function groupItemsByRows(items) {
-  const rows = [];
-  for (const item of items) {
-    const row = rows.find((currentRow) => {
-      var _a;
-      return ((_a = currentRow[0]) == null ? void 0 : _a.rowId) === item.rowId;
-    });
-    if (row) {
-      row.push(item);
-    } else {
-      rows.push([item]);
-    }
-  }
-  return rows;
-}
-function selectTextField(element, collapseToEnd = false) {
-  if (isTextField(element)) {
-    element.setSelectionRange(
-      collapseToEnd ? element.value.length : 0,
-      element.value.length
-    );
-  } else if (element.isContentEditable) {
-    const selection = getDocument(element).getSelection();
-    selection == null ? void 0 : selection.selectAllChildren(element);
-    if (collapseToEnd) {
-      selection == null ? void 0 : selection.collapseToEnd();
-    }
-  }
-}
-var FOCUS_SILENTLY = Symbol("FOCUS_SILENTLY");
-function focusSilently(element) {
-  element[FOCUS_SILENTLY] = true;
-  element.focus({ preventScroll: true });
-}
-function silentlyFocused(element) {
-  const isSilentlyFocused = element[FOCUS_SILENTLY];
-  delete element[FOCUS_SILENTLY];
-  return isSilentlyFocused;
-}
-function isItem(store, element, exclude) {
-  if (!element) return false;
-  if (element === exclude) return false;
-  const item = store.item(element.id);
-  if (!item) return false;
-  if (exclude && item.element === exclude) return false;
-  return true;
-}
-
-
-
 ;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/3YLGPPWQ.js
 "use client";
 var __defProp = Object.defineProperty;
@@ -29991,6 +29744,177 @@ function mergeProps(base, overrides) {
     props[key] = overrideValue;
   }
   return props;
+}
+
+
+
+;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/__chunks/HWOIWM4O.js
+"use client";
+
+// src/utils/dom.ts
+var HWOIWM4O_canUseDOM = checkIsBrowser();
+function checkIsBrowser() {
+  var _a;
+  return typeof window !== "undefined" && !!((_a = window.document) == null ? void 0 : _a.createElement);
+}
+function getDocument(node) {
+  return node ? node.ownerDocument || node : document;
+}
+function getWindow(node) {
+  return getDocument(node).defaultView || window;
+}
+function HWOIWM4O_getActiveElement(node, activeDescendant = false) {
+  const { activeElement } = getDocument(node);
+  if (!(activeElement == null ? void 0 : activeElement.nodeName)) {
+    return null;
+  }
+  if (HWOIWM4O_isFrame(activeElement) && activeElement.contentDocument) {
+    return HWOIWM4O_getActiveElement(
+      activeElement.contentDocument.body,
+      activeDescendant
+    );
+  }
+  if (activeDescendant) {
+    const id = activeElement.getAttribute("aria-activedescendant");
+    if (id) {
+      const element = getDocument(activeElement).getElementById(id);
+      if (element) {
+        return element;
+      }
+    }
+  }
+  return activeElement;
+}
+function contains(parent, child) {
+  return parent === child || parent.contains(child);
+}
+function HWOIWM4O_isFrame(element) {
+  return element.tagName === "IFRAME";
+}
+function isButton(element) {
+  const tagName = element.tagName.toLowerCase();
+  if (tagName === "button") return true;
+  if (tagName === "input" && element.type) {
+    return buttonInputTypes.indexOf(element.type) !== -1;
+  }
+  return false;
+}
+var buttonInputTypes = [
+  "button",
+  "color",
+  "file",
+  "image",
+  "reset",
+  "submit"
+];
+function isVisible(element) {
+  if (typeof element.checkVisibility === "function") {
+    return element.checkVisibility();
+  }
+  const htmlElement = element;
+  return htmlElement.offsetWidth > 0 || htmlElement.offsetHeight > 0 || element.getClientRects().length > 0;
+}
+function isTextField(element) {
+  try {
+    const isTextInput = element instanceof HTMLInputElement && element.selectionStart !== null;
+    const isTextArea = element.tagName === "TEXTAREA";
+    return isTextInput || isTextArea || false;
+  } catch (error) {
+    return false;
+  }
+}
+function isTextbox(element) {
+  return element.isContentEditable || isTextField(element);
+}
+function getTextboxValue(element) {
+  if (isTextField(element)) {
+    return element.value;
+  }
+  if (element.isContentEditable) {
+    const range = getDocument(element).createRange();
+    range.selectNodeContents(element);
+    return range.toString();
+  }
+  return "";
+}
+function getTextboxSelection(element) {
+  let start = 0;
+  let end = 0;
+  if (isTextField(element)) {
+    start = element.selectionStart || 0;
+    end = element.selectionEnd || 0;
+  } else if (element.isContentEditable) {
+    const selection = getDocument(element).getSelection();
+    if ((selection == null ? void 0 : selection.rangeCount) && selection.anchorNode && contains(element, selection.anchorNode) && selection.focusNode && contains(element, selection.focusNode)) {
+      const range = selection.getRangeAt(0);
+      const nextRange = range.cloneRange();
+      nextRange.selectNodeContents(element);
+      nextRange.setEnd(range.startContainer, range.startOffset);
+      start = nextRange.toString().length;
+      nextRange.setEnd(range.endContainer, range.endOffset);
+      end = nextRange.toString().length;
+    }
+  }
+  return { start, end };
+}
+function getPopupRole(element, fallback) {
+  const allowedPopupRoles = ["dialog", "menu", "listbox", "tree", "grid"];
+  const role = element == null ? void 0 : element.getAttribute("role");
+  if (role && allowedPopupRoles.indexOf(role) !== -1) {
+    return role;
+  }
+  return fallback;
+}
+function getPopupItemRole(element, fallback) {
+  var _a;
+  const itemRoleByPopupRole = {
+    menu: "menuitem",
+    listbox: "option",
+    tree: "treeitem"
+  };
+  const popupRole = getPopupRole(element);
+  if (!popupRole) return fallback;
+  const key = popupRole;
+  return (_a = itemRoleByPopupRole[key]) != null ? _a : fallback;
+}
+function scrollIntoViewIfNeeded(element, arg) {
+  if (isPartiallyHidden(element) && "scrollIntoView" in element) {
+    element.scrollIntoView(arg);
+  }
+}
+function getScrollingElement(element) {
+  if (!element) return null;
+  if (element.clientHeight && element.scrollHeight > element.clientHeight) {
+    const { overflowY } = getComputedStyle(element);
+    const isScrollable = overflowY !== "visible" && overflowY !== "hidden";
+    if (isScrollable) return element;
+  } else if (element.clientWidth && element.scrollWidth > element.clientWidth) {
+    const { overflowX } = getComputedStyle(element);
+    const isScrollable = overflowX !== "visible" && overflowX !== "hidden";
+    if (isScrollable) return element;
+  }
+  return getScrollingElement(element.parentElement) || document.scrollingElement || document.body;
+}
+function isPartiallyHidden(element) {
+  const elementRect = element.getBoundingClientRect();
+  const scroller = getScrollingElement(element);
+  if (!scroller) return false;
+  const scrollerRect = scroller.getBoundingClientRect();
+  const isHTML = scroller.tagName === "HTML";
+  const scrollerTop = isHTML ? scrollerRect.top + scroller.scrollTop : scrollerRect.top;
+  const scrollerBottom = isHTML ? scroller.clientHeight : scrollerRect.bottom;
+  const scrollerLeft = isHTML ? scrollerRect.left + scroller.scrollLeft : scrollerRect.left;
+  const scrollerRight = isHTML ? scroller.clientWidth : scrollerRect.right;
+  const top = elementRect.top < scrollerTop;
+  const left = elementRect.left < scrollerLeft;
+  const bottom = elementRect.bottom > scrollerBottom;
+  const right = elementRect.right > scrollerRight;
+  return top || left || bottom || right;
+}
+function setSelectionRange(element, ...args) {
+  if (/text|search|password|tel|url/i.test(element.type)) {
+    element.setSelectionRange(...args);
+  }
 }
 
 
@@ -30484,422 +30408,6 @@ var CompositeItemContext = (0,external_React_.createContext)(
 );
 var CompositeRowContext = (0,external_React_.createContext)(
   void 0
-);
-
-
-
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/DS36B3MQ.js
-"use client";
-
-
-
-
-
-
-// src/composite/composite-typeahead.tsx
-
-
-
-
-var TagName = "div";
-var chars = "";
-function clearChars() {
-  chars = "";
-}
-function isValidTypeaheadEvent(event) {
-  const target = event.target;
-  if (target && isTextField(target)) return false;
-  if (event.key === " " && chars.length) return true;
-  return event.key.length === 1 && !event.ctrlKey && !event.altKey && !event.metaKey && /^[\p{Letter}\p{Number}]$/u.test(event.key);
-}
-function isSelfTargetOrItem(event, items) {
-  if (isSelfTarget(event)) return true;
-  const target = event.target;
-  if (!target) return false;
-  const isItem = items.some((item) => item.element === target);
-  return isItem;
-}
-function getEnabledItems(items) {
-  return items.filter((item) => !item.disabled);
-}
-function itemTextStartsWith(item, text) {
-  var _a;
-  const itemText = ((_a = item.element) == null ? void 0 : _a.textContent) || item.children || // The composite item object itself doesn't include a value property, but
-  // other components like Select do. Since CompositeTypeahead is a generic
-  // component that can be used with those as well, we also consider the value
-  // property as a fallback for the typeahead text content.
-  "value" in item && item.value;
-  if (!itemText) return false;
-  return normalizeString(itemText).trim().toLowerCase().startsWith(text.toLowerCase());
-}
-function getSameInitialItems(items, char, activeId) {
-  if (!activeId) return items;
-  const activeItem = items.find((item) => item.id === activeId);
-  if (!activeItem) return items;
-  if (!itemTextStartsWith(activeItem, char)) return items;
-  if (chars !== char && itemTextStartsWith(activeItem, chars)) return items;
-  chars = char;
-  return flipItems(
-    items.filter((item) => itemTextStartsWith(item, chars)),
-    activeId
-  ).filter((item) => item.id !== activeId);
-}
-var useCompositeTypeahead = createHook(function useCompositeTypeahead2(_a) {
-  var _b = _a, { store, typeahead = true } = _b, props = __objRest(_b, ["store", "typeahead"]);
-  const context = useCompositeContext();
-  store = store || context;
-  invariant(
-    store,
-     false && 0
-  );
-  const onKeyDownCaptureProp = props.onKeyDownCapture;
-  const cleanupTimeoutRef = (0,external_React_.useRef)(0);
-  const onKeyDownCapture = useEvent((event) => {
-    onKeyDownCaptureProp == null ? void 0 : onKeyDownCaptureProp(event);
-    if (event.defaultPrevented) return;
-    if (!typeahead) return;
-    if (!store) return;
-    const { renderedItems, items, activeId } = store.getState();
-    if (!isValidTypeaheadEvent(event)) return clearChars();
-    let enabledItems = getEnabledItems(
-      renderedItems.length ? renderedItems : items
-    );
-    if (!isSelfTargetOrItem(event, enabledItems)) return clearChars();
-    event.preventDefault();
-    window.clearTimeout(cleanupTimeoutRef.current);
-    cleanupTimeoutRef.current = window.setTimeout(() => {
-      chars = "";
-    }, 500);
-    const char = event.key.toLowerCase();
-    chars += char;
-    enabledItems = getSameInitialItems(enabledItems, char, activeId);
-    const item = enabledItems.find((item2) => itemTextStartsWith(item2, chars));
-    if (item) {
-      store.move(item.id);
-    } else {
-      clearChars();
-    }
-  });
-  props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props), {
-    onKeyDownCapture
-  });
-  return removeUndefinedValues(props);
-});
-var CompositeTypeahead = forwardRef2(function CompositeTypeahead2(props) {
-  const htmlProps = useCompositeTypeahead(props);
-  return createElement(TagName, htmlProps);
-});
-
-
-
-;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/utils/focus.js
-"use client";
-
-
-
-// src/utils/focus.ts
-var selector = "input:not([type='hidden']):not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], button:not([disabled]), [tabindex], summary, iframe, object, embed, area[href], audio[controls], video[controls], [contenteditable]:not([contenteditable='false'])";
-function hasNegativeTabIndex(element) {
-  const tabIndex = Number.parseInt(element.getAttribute("tabindex") || "0", 10);
-  return tabIndex < 0;
-}
-function isFocusable(element) {
-  if (!element.matches(selector)) return false;
-  if (!isVisible(element)) return false;
-  if (element.closest("[inert]")) return false;
-  return true;
-}
-function isTabbable(element) {
-  if (!isFocusable(element)) return false;
-  if (hasNegativeTabIndex(element)) return false;
-  if (!("form" in element)) return true;
-  if (!element.form) return true;
-  if (element.checked) return true;
-  if (element.type !== "radio") return true;
-  const radioGroup = element.form.elements.namedItem(element.name);
-  if (!radioGroup) return true;
-  if (!("length" in radioGroup)) return true;
-  const activeElement = getActiveElement(element);
-  if (!activeElement) return true;
-  if (activeElement === element) return true;
-  if (!("form" in activeElement)) return true;
-  if (activeElement.form !== element.form) return true;
-  if (activeElement.name !== element.name) return true;
-  return false;
-}
-function getAllFocusableIn(container, includeContainer) {
-  const elements = Array.from(
-    container.querySelectorAll(selector)
-  );
-  if (includeContainer) {
-    elements.unshift(container);
-  }
-  const focusableElements = elements.filter(isFocusable);
-  focusableElements.forEach((element, i) => {
-    if (isFrame(element) && element.contentDocument) {
-      const frameBody = element.contentDocument.body;
-      focusableElements.splice(i, 1, ...getAllFocusableIn(frameBody));
-    }
-  });
-  return focusableElements;
-}
-function getAllFocusable(includeBody) {
-  return getAllFocusableIn(document.body, includeBody);
-}
-function getFirstFocusableIn(container, includeContainer) {
-  const [first] = getAllFocusableIn(container, includeContainer);
-  return first || null;
-}
-function getFirstFocusable(includeBody) {
-  return getFirstFocusableIn(document.body, includeBody);
-}
-function getAllTabbableIn(container, includeContainer, fallbackToFocusable) {
-  const elements = Array.from(
-    container.querySelectorAll(selector)
-  );
-  const tabbableElements = elements.filter(isTabbable);
-  if (includeContainer && isTabbable(container)) {
-    tabbableElements.unshift(container);
-  }
-  tabbableElements.forEach((element, i) => {
-    if (isFrame(element) && element.contentDocument) {
-      const frameBody = element.contentDocument.body;
-      const allFrameTabbable = getAllTabbableIn(
-        frameBody,
-        false,
-        fallbackToFocusable
-      );
-      tabbableElements.splice(i, 1, ...allFrameTabbable);
-    }
-  });
-  if (!tabbableElements.length && fallbackToFocusable) {
-    return elements;
-  }
-  return tabbableElements;
-}
-function getAllTabbable(fallbackToFocusable) {
-  return getAllTabbableIn(document.body, false, fallbackToFocusable);
-}
-function getFirstTabbableIn(container, includeContainer, fallbackToFocusable) {
-  const [first] = getAllTabbableIn(
-    container,
-    includeContainer,
-    fallbackToFocusable
-  );
-  return first || null;
-}
-function getFirstTabbable(fallbackToFocusable) {
-  return getFirstTabbableIn(document.body, false, fallbackToFocusable);
-}
-function getLastTabbableIn(container, includeContainer, fallbackToFocusable) {
-  const allTabbable = getAllTabbableIn(
-    container,
-    includeContainer,
-    fallbackToFocusable
-  );
-  return allTabbable[allTabbable.length - 1] || null;
-}
-function getLastTabbable(fallbackToFocusable) {
-  return getLastTabbableIn(document.body, false, fallbackToFocusable);
-}
-function getNextTabbableIn(container, includeContainer, fallbackToFirst, fallbackToFocusable) {
-  const activeElement = getActiveElement(container);
-  const allFocusable = getAllFocusableIn(container, includeContainer);
-  const activeIndex = allFocusable.indexOf(activeElement);
-  const nextFocusableElements = allFocusable.slice(activeIndex + 1);
-  return nextFocusableElements.find(isTabbable) || (fallbackToFirst ? allFocusable.find(isTabbable) : null) || (fallbackToFocusable ? nextFocusableElements[0] : null) || null;
-}
-function getNextTabbable(fallbackToFirst, fallbackToFocusable) {
-  return getNextTabbableIn(
-    document.body,
-    false,
-    fallbackToFirst,
-    fallbackToFocusable
-  );
-}
-function getPreviousTabbableIn(container, includeContainer, fallbackToLast, fallbackToFocusable) {
-  const activeElement = getActiveElement(container);
-  const allFocusable = getAllFocusableIn(container, includeContainer).reverse();
-  const activeIndex = allFocusable.indexOf(activeElement);
-  const previousFocusableElements = allFocusable.slice(activeIndex + 1);
-  return previousFocusableElements.find(isTabbable) || (fallbackToLast ? allFocusable.find(isTabbable) : null) || (fallbackToFocusable ? previousFocusableElements[0] : null) || null;
-}
-function getPreviousTabbable(fallbackToFirst, fallbackToFocusable) {
-  return getPreviousTabbableIn(
-    document.body,
-    false,
-    fallbackToFirst,
-    fallbackToFocusable
-  );
-}
-function getClosestFocusable(element) {
-  while (element && !isFocusable(element)) {
-    element = element.closest(selector);
-  }
-  return element || null;
-}
-function hasFocus(element) {
-  const activeElement = HWOIWM4O_getActiveElement(element);
-  if (!activeElement) return false;
-  if (activeElement === element) return true;
-  const activeDescendant = activeElement.getAttribute("aria-activedescendant");
-  if (!activeDescendant) return false;
-  return activeDescendant === element.id;
-}
-function hasFocusWithin(element) {
-  const activeElement = HWOIWM4O_getActiveElement(element);
-  if (!activeElement) return false;
-  if (contains(element, activeElement)) return true;
-  const activeDescendant = activeElement.getAttribute("aria-activedescendant");
-  if (!activeDescendant) return false;
-  if (!("id" in element)) return false;
-  if (activeDescendant === element.id) return true;
-  return !!element.querySelector(`#${CSS.escape(activeDescendant)}`);
-}
-function focusIfNeeded(element) {
-  if (!hasFocusWithin(element) && isFocusable(element)) {
-    element.focus();
-  }
-}
-function disableFocus(element) {
-  var _a;
-  const currentTabindex = (_a = element.getAttribute("tabindex")) != null ? _a : "";
-  element.setAttribute("data-tabindex", currentTabindex);
-  element.setAttribute("tabindex", "-1");
-}
-function disableFocusIn(container, includeContainer) {
-  const tabbableElements = getAllTabbableIn(container, includeContainer);
-  for (const element of tabbableElements) {
-    disableFocus(element);
-  }
-}
-function restoreFocusIn(container) {
-  const elements = container.querySelectorAll("[data-tabindex]");
-  const restoreTabIndex = (element) => {
-    const tabindex = element.getAttribute("data-tabindex");
-    element.removeAttribute("data-tabindex");
-    if (tabindex) {
-      element.setAttribute("tabindex", tabindex);
-    } else {
-      element.removeAttribute("tabindex");
-    }
-  };
-  if (container.hasAttribute("data-tabindex")) {
-    restoreTabIndex(container);
-  }
-  for (const element of elements) {
-    restoreTabIndex(element);
-  }
-}
-function focusIntoView(element, options) {
-  if (!("scrollIntoView" in element)) {
-    element.focus();
-  } else {
-    element.focus({ preventScroll: true });
-    element.scrollIntoView(_chunks_3YLGPPWQ_spreadValues({ block: "nearest", inline: "nearest" }, options));
-  }
-}
-
-
-;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/OBZMLI6J.js
-"use client";
-
-
-
-
-
-// src/composite/composite-hover.tsx
-
-
-
-
-var OBZMLI6J_TagName = "div";
-function getMouseDestination(event) {
-  const relatedTarget = event.relatedTarget;
-  if ((relatedTarget == null ? void 0 : relatedTarget.nodeType) === Node.ELEMENT_NODE) {
-    return relatedTarget;
-  }
-  return null;
-}
-function hoveringInside(event) {
-  const nextElement = getMouseDestination(event);
-  if (!nextElement) return false;
-  return contains(event.currentTarget, nextElement);
-}
-var symbol = Symbol("composite-hover");
-function movingToAnotherItem(event) {
-  let dest = getMouseDestination(event);
-  if (!dest) return false;
-  do {
-    if (PBFD2E7P_hasOwnProperty(dest, symbol) && dest[symbol]) return true;
-    dest = dest.parentElement;
-  } while (dest);
-  return false;
-}
-var useCompositeHover = createHook(
-  function useCompositeHover2(_a) {
-    var _b = _a, {
-      store,
-      focusOnHover = true,
-      blurOnHoverEnd = !!focusOnHover
-    } = _b, props = __objRest(_b, [
-      "store",
-      "focusOnHover",
-      "blurOnHoverEnd"
-    ]);
-    const context = useCompositeContext();
-    store = store || context;
-    invariant(
-      store,
-       false && 0
-    );
-    const isMouseMoving = useIsMouseMoving();
-    const onMouseMoveProp = props.onMouseMove;
-    const focusOnHoverProp = useBooleanEvent(focusOnHover);
-    const onMouseMove = useEvent((event) => {
-      onMouseMoveProp == null ? void 0 : onMouseMoveProp(event);
-      if (event.defaultPrevented) return;
-      if (!isMouseMoving()) return;
-      if (!focusOnHoverProp(event)) return;
-      if (!hasFocusWithin(event.currentTarget)) {
-        const baseElement = store == null ? void 0 : store.getState().baseElement;
-        if (baseElement && !hasFocus(baseElement)) {
-          baseElement.focus();
-        }
-      }
-      store == null ? void 0 : store.setActiveId(event.currentTarget.id);
-    });
-    const onMouseLeaveProp = props.onMouseLeave;
-    const blurOnHoverEndProp = useBooleanEvent(blurOnHoverEnd);
-    const onMouseLeave = useEvent((event) => {
-      var _a2;
-      onMouseLeaveProp == null ? void 0 : onMouseLeaveProp(event);
-      if (event.defaultPrevented) return;
-      if (!isMouseMoving()) return;
-      if (hoveringInside(event)) return;
-      if (movingToAnotherItem(event)) return;
-      if (!focusOnHoverProp(event)) return;
-      if (!blurOnHoverEndProp(event)) return;
-      store == null ? void 0 : store.setActiveId(null);
-      (_a2 = store == null ? void 0 : store.getState().baseElement) == null ? void 0 : _a2.focus();
-    });
-    const ref = (0,external_React_.useCallback)((element) => {
-      if (!element) return;
-      element[symbol] = true;
-    }, []);
-    props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props), {
-      ref: useMergeRefs(ref, props.ref),
-      onMouseMove,
-      onMouseLeave
-    });
-    return removeUndefinedValues(props);
-  }
-);
-var CompositeHover = memo2(
-  forwardRef2(function CompositeHover2(props) {
-    const htmlProps = useCompositeHover(props);
-    return createElement(OBZMLI6J_TagName, htmlProps);
-  })
 );
 
 
@@ -31540,8 +31048,8 @@ function reverseArray(array) {
 
 
 // src/composite/composite-store.ts
-var D7EIQZAU_NULL_ITEM = { id: null };
-function D7EIQZAU_findFirstEnabledItem(items, excludeId) {
+var NULL_ITEM = { id: null };
+function findFirstEnabledItem(items, excludeId) {
   return items.find((item) => {
     if (excludeId) {
       return !item.disabled && item.id !== excludeId;
@@ -31549,7 +31057,7 @@ function D7EIQZAU_findFirstEnabledItem(items, excludeId) {
     return !item.disabled;
   });
 }
-function D7EIQZAU_getEnabledItems(items, excludeId) {
+function getEnabledItems(items, excludeId) {
   return items.filter((item) => {
     if (excludeId) {
       return !item.disabled && item.id !== excludeId;
@@ -31565,15 +31073,15 @@ function getOppositeOrientation(orientation) {
 function getItemsInRow(items, rowId) {
   return items.filter((item) => item.rowId === rowId);
 }
-function D7EIQZAU_flipItems(items, activeId, shouldInsertNullItem = false) {
+function flipItems(items, activeId, shouldInsertNullItem = false) {
   const index = items.findIndex((item) => item.id === activeId);
   return [
     ...items.slice(index + 1),
-    ...shouldInsertNullItem ? [D7EIQZAU_NULL_ITEM] : [],
+    ...shouldInsertNullItem ? [NULL_ITEM] : [],
     ...items.slice(0, index)
   ];
 }
-function D7EIQZAU_groupItemsByRows(items) {
+function groupItemsByRows(items) {
   const rows = [];
   for (const item of items) {
     const row = rows.find((currentRow) => {
@@ -31611,7 +31119,7 @@ function normalizeRows(rows, activeId, focusShift) {
       const item = row[i];
       if (!item || focusShift && item.disabled) {
         const isFirst = i === 0;
-        const previousItem = isFirst && focusShift ? D7EIQZAU_findFirstEnabledItem(row) : row[i - 1];
+        const previousItem = isFirst && focusShift ? findFirstEnabledItem(row) : row[i - 1];
         row[i] = previousItem && activeId !== previousItem.id && focusShift ? previousItem : createEmptyItem(previousItem == null ? void 0 : previousItem.rowId);
       }
     }
@@ -31619,7 +31127,7 @@ function normalizeRows(rows, activeId, focusShift) {
   return rows;
 }
 function verticalizeItems(items) {
-  const rows = D7EIQZAU_groupItemsByRows(items);
+  const rows = groupItemsByRows(items);
   const maxLength = getMaxRowLength(rows);
   const verticalized = [];
   for (let i = 0; i < maxLength; i += 1) {
@@ -31679,7 +31187,7 @@ function createCompositeStore(props = {}) {
       composite.setState("activeId", (activeId2) => {
         var _a2;
         if (activeId2 !== void 0) return activeId2;
-        return (_a2 = D7EIQZAU_findFirstEnabledItem(state.renderedItems)) == null ? void 0 : _a2.id;
+        return (_a2 = findFirstEnabledItem(state.renderedItems)) == null ? void 0 : _a2.id;
       });
     })
   );
@@ -31690,18 +31198,18 @@ function createCompositeStore(props = {}) {
     const isRTL = rtl && isHorizontal;
     const allItems = isRTL ? reverseArray(items) : items;
     if (activeId2 == null) {
-      return (_a2 = D7EIQZAU_findFirstEnabledItem(allItems)) == null ? void 0 : _a2.id;
+      return (_a2 = findFirstEnabledItem(allItems)) == null ? void 0 : _a2.id;
     }
     const activeItem = allItems.find((item) => item.id === activeId2);
     if (!activeItem) {
-      return (_b = D7EIQZAU_findFirstEnabledItem(allItems)) == null ? void 0 : _b.id;
+      return (_b = findFirstEnabledItem(allItems)) == null ? void 0 : _b.id;
     }
     const isGrid = !!activeItem.rowId;
     const activeIndex = allItems.indexOf(activeItem);
     const nextItems = allItems.slice(activeIndex + 1);
     const nextItemsInRow = getItemsInRow(nextItems, activeItem.rowId);
     if (skip !== void 0) {
-      const nextEnabledItemsInRow = D7EIQZAU_getEnabledItems(nextItemsInRow, activeId2);
+      const nextEnabledItemsInRow = getEnabledItems(nextItemsInRow, activeId2);
       const nextItem2 = nextEnabledItemsInRow.slice(skip)[0] || // If we can't find an item, just return the last one.
       nextEnabledItemsInRow[nextEnabledItemsInRow.length - 1];
       return nextItem2 == null ? void 0 : nextItem2.id;
@@ -31717,12 +31225,12 @@ function createCompositeStore(props = {}) {
     hasNullItem = hasNullItem || !isGrid && canLoop && includesBaseElement;
     if (canLoop) {
       const loopItems = canWrap && !hasNullItem ? allItems : getItemsInRow(allItems, activeItem.rowId);
-      const sortedItems = D7EIQZAU_flipItems(loopItems, activeId2, hasNullItem);
-      const nextItem2 = D7EIQZAU_findFirstEnabledItem(sortedItems, activeId2);
+      const sortedItems = flipItems(loopItems, activeId2, hasNullItem);
+      const nextItem2 = findFirstEnabledItem(sortedItems, activeId2);
       return nextItem2 == null ? void 0 : nextItem2.id;
     }
     if (canWrap) {
-      const nextItem2 = D7EIQZAU_findFirstEnabledItem(
+      const nextItem2 = findFirstEnabledItem(
         // We can use nextItems, which contains all the next items, including
         // items from other rows, to wrap between rows. However, if there is a
         // null item (the composite container), we'll only use the next items in
@@ -31735,7 +31243,7 @@ function createCompositeStore(props = {}) {
       const nextId = hasNullItem ? (nextItem2 == null ? void 0 : nextItem2.id) || null : nextItem2 == null ? void 0 : nextItem2.id;
       return nextId;
     }
-    const nextItem = D7EIQZAU_findFirstEnabledItem(nextItemsInRow, activeId2);
+    const nextItem = findFirstEnabledItem(nextItemsInRow, activeId2);
     if (!nextItem && hasNullItem) {
       return null;
     }
@@ -31751,11 +31259,11 @@ function createCompositeStore(props = {}) {
     },
     first: () => {
       var _a2;
-      return (_a2 = D7EIQZAU_findFirstEnabledItem(composite.getState().renderedItems)) == null ? void 0 : _a2.id;
+      return (_a2 = findFirstEnabledItem(composite.getState().renderedItems)) == null ? void 0 : _a2.id;
     },
     last: () => {
       var _a2;
-      return (_a2 = D7EIQZAU_findFirstEnabledItem(reverseArray(composite.getState().renderedItems))) == null ? void 0 : _a2.id;
+      return (_a2 = findFirstEnabledItem(reverseArray(composite.getState().renderedItems))) == null ? void 0 : _a2.id;
     },
     next: (skip) => {
       const { renderedItems, orientation } = composite.getState();
@@ -31764,7 +31272,7 @@ function createCompositeStore(props = {}) {
     previous: (skip) => {
       var _a2;
       const { renderedItems, orientation, includesBaseElement } = composite.getState();
-      const isGrid = !!((_a2 = D7EIQZAU_findFirstEnabledItem(renderedItems)) == null ? void 0 : _a2.rowId);
+      const isGrid = !!((_a2 = findFirstEnabledItem(renderedItems)) == null ? void 0 : _a2.rowId);
       const hasNullItem = !isGrid && includesBaseElement;
       return getNextId(
         reverseArray(renderedItems),
@@ -31784,7 +31292,7 @@ function createCompositeStore(props = {}) {
       const shouldShift = focusShift && !skip;
       const verticalItems = verticalizeItems(
         flatten2DArray(
-          normalizeRows(D7EIQZAU_groupItemsByRows(renderedItems), activeId2, shouldShift)
+          normalizeRows(groupItemsByRows(renderedItems), activeId2, shouldShift)
         )
       );
       const canLoop = focusLoop && focusLoop !== "horizontal";
@@ -31798,7 +31306,7 @@ function createCompositeStore(props = {}) {
         reverseArray(
           flatten2DArray(
             normalizeRows(
-              D7EIQZAU_groupItemsByRows(renderedItems),
+              groupItemsByRows(renderedItems),
               activeId2,
               shouldShift
             )
@@ -32251,7 +31759,7 @@ function ComboboxProvider(props = {}) {
 
 // src/combobox/combobox-label.tsx
 
-var combobox_label_TagName = "label";
+var TagName = "label";
 var useComboboxLabel = createHook(
   function useComboboxLabel2(_a) {
     var _b = _a, { store } = _b, props = __objRest(_b, ["store"]);
@@ -32274,7 +31782,7 @@ var useComboboxLabel = createHook(
 var ComboboxLabel = memo2(
   forwardRef2(function ComboboxLabel2(props) {
     const htmlProps = useComboboxLabel(props);
-    return createElement(combobox_label_TagName, htmlProps);
+    return createElement(TagName, htmlProps);
   })
 );
 
@@ -32306,6 +31814,82 @@ var PopoverAnchor = forwardRef2(function PopoverAnchor2(props) {
 
 
 
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/5VQZOHHZ.js
+"use client";
+
+// src/composite/utils.ts
+
+var _5VQZOHHZ_NULL_ITEM = { id: null };
+function _5VQZOHHZ_flipItems(items, activeId, shouldInsertNullItem = false) {
+  const index = items.findIndex((item) => item.id === activeId);
+  return [
+    ...items.slice(index + 1),
+    ...shouldInsertNullItem ? [_5VQZOHHZ_NULL_ITEM] : [],
+    ...items.slice(0, index)
+  ];
+}
+function _5VQZOHHZ_findFirstEnabledItem(items, excludeId) {
+  return items.find((item) => {
+    if (excludeId) {
+      return !item.disabled && item.id !== excludeId;
+    }
+    return !item.disabled;
+  });
+}
+function getEnabledItem(store, id) {
+  if (!id) return null;
+  return store.item(id) || null;
+}
+function _5VQZOHHZ_groupItemsByRows(items) {
+  const rows = [];
+  for (const item of items) {
+    const row = rows.find((currentRow) => {
+      var _a;
+      return ((_a = currentRow[0]) == null ? void 0 : _a.rowId) === item.rowId;
+    });
+    if (row) {
+      row.push(item);
+    } else {
+      rows.push([item]);
+    }
+  }
+  return rows;
+}
+function selectTextField(element, collapseToEnd = false) {
+  if (isTextField(element)) {
+    element.setSelectionRange(
+      collapseToEnd ? element.value.length : 0,
+      element.value.length
+    );
+  } else if (element.isContentEditable) {
+    const selection = getDocument(element).getSelection();
+    selection == null ? void 0 : selection.selectAllChildren(element);
+    if (collapseToEnd) {
+      selection == null ? void 0 : selection.collapseToEnd();
+    }
+  }
+}
+var FOCUS_SILENTLY = Symbol("FOCUS_SILENTLY");
+function focusSilently(element) {
+  element[FOCUS_SILENTLY] = true;
+  element.focus({ preventScroll: true });
+}
+function silentlyFocused(element) {
+  const isSilentlyFocused = element[FOCUS_SILENTLY];
+  delete element[FOCUS_SILENTLY];
+  return isSilentlyFocused;
+}
+function isItem(store, element, exclude) {
+  if (!element) return false;
+  if (element === exclude) return false;
+  const item = store.item(element.id);
+  if (!item) return false;
+  if (exclude && item.element === exclude) return false;
+  return true;
+}
+
+
+
 ;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/SWN3JYXT.js
 "use client";
 
@@ -32313,6 +31897,215 @@ var PopoverAnchor = forwardRef2(function PopoverAnchor2(props) {
 
 var FocusableContext = (0,external_React_.createContext)(true);
 
+
+
+;// CONCATENATED MODULE: ./node_modules/@ariakit/core/esm/utils/focus.js
+"use client";
+
+
+
+// src/utils/focus.ts
+var selector = "input:not([type='hidden']):not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], button:not([disabled]), [tabindex], summary, iframe, object, embed, area[href], audio[controls], video[controls], [contenteditable]:not([contenteditable='false'])";
+function hasNegativeTabIndex(element) {
+  const tabIndex = Number.parseInt(element.getAttribute("tabindex") || "0", 10);
+  return tabIndex < 0;
+}
+function isFocusable(element) {
+  if (!element.matches(selector)) return false;
+  if (!isVisible(element)) return false;
+  if (element.closest("[inert]")) return false;
+  return true;
+}
+function isTabbable(element) {
+  if (!isFocusable(element)) return false;
+  if (hasNegativeTabIndex(element)) return false;
+  if (!("form" in element)) return true;
+  if (!element.form) return true;
+  if (element.checked) return true;
+  if (element.type !== "radio") return true;
+  const radioGroup = element.form.elements.namedItem(element.name);
+  if (!radioGroup) return true;
+  if (!("length" in radioGroup)) return true;
+  const activeElement = getActiveElement(element);
+  if (!activeElement) return true;
+  if (activeElement === element) return true;
+  if (!("form" in activeElement)) return true;
+  if (activeElement.form !== element.form) return true;
+  if (activeElement.name !== element.name) return true;
+  return false;
+}
+function getAllFocusableIn(container, includeContainer) {
+  const elements = Array.from(
+    container.querySelectorAll(selector)
+  );
+  if (includeContainer) {
+    elements.unshift(container);
+  }
+  const focusableElements = elements.filter(isFocusable);
+  focusableElements.forEach((element, i) => {
+    if (isFrame(element) && element.contentDocument) {
+      const frameBody = element.contentDocument.body;
+      focusableElements.splice(i, 1, ...getAllFocusableIn(frameBody));
+    }
+  });
+  return focusableElements;
+}
+function getAllFocusable(includeBody) {
+  return getAllFocusableIn(document.body, includeBody);
+}
+function getFirstFocusableIn(container, includeContainer) {
+  const [first] = getAllFocusableIn(container, includeContainer);
+  return first || null;
+}
+function getFirstFocusable(includeBody) {
+  return getFirstFocusableIn(document.body, includeBody);
+}
+function getAllTabbableIn(container, includeContainer, fallbackToFocusable) {
+  const elements = Array.from(
+    container.querySelectorAll(selector)
+  );
+  const tabbableElements = elements.filter(isTabbable);
+  if (includeContainer && isTabbable(container)) {
+    tabbableElements.unshift(container);
+  }
+  tabbableElements.forEach((element, i) => {
+    if (isFrame(element) && element.contentDocument) {
+      const frameBody = element.contentDocument.body;
+      const allFrameTabbable = getAllTabbableIn(
+        frameBody,
+        false,
+        fallbackToFocusable
+      );
+      tabbableElements.splice(i, 1, ...allFrameTabbable);
+    }
+  });
+  if (!tabbableElements.length && fallbackToFocusable) {
+    return elements;
+  }
+  return tabbableElements;
+}
+function getAllTabbable(fallbackToFocusable) {
+  return getAllTabbableIn(document.body, false, fallbackToFocusable);
+}
+function getFirstTabbableIn(container, includeContainer, fallbackToFocusable) {
+  const [first] = getAllTabbableIn(
+    container,
+    includeContainer,
+    fallbackToFocusable
+  );
+  return first || null;
+}
+function getFirstTabbable(fallbackToFocusable) {
+  return getFirstTabbableIn(document.body, false, fallbackToFocusable);
+}
+function getLastTabbableIn(container, includeContainer, fallbackToFocusable) {
+  const allTabbable = getAllTabbableIn(
+    container,
+    includeContainer,
+    fallbackToFocusable
+  );
+  return allTabbable[allTabbable.length - 1] || null;
+}
+function getLastTabbable(fallbackToFocusable) {
+  return getLastTabbableIn(document.body, false, fallbackToFocusable);
+}
+function getNextTabbableIn(container, includeContainer, fallbackToFirst, fallbackToFocusable) {
+  const activeElement = getActiveElement(container);
+  const allFocusable = getAllFocusableIn(container, includeContainer);
+  const activeIndex = allFocusable.indexOf(activeElement);
+  const nextFocusableElements = allFocusable.slice(activeIndex + 1);
+  return nextFocusableElements.find(isTabbable) || (fallbackToFirst ? allFocusable.find(isTabbable) : null) || (fallbackToFocusable ? nextFocusableElements[0] : null) || null;
+}
+function getNextTabbable(fallbackToFirst, fallbackToFocusable) {
+  return getNextTabbableIn(
+    document.body,
+    false,
+    fallbackToFirst,
+    fallbackToFocusable
+  );
+}
+function getPreviousTabbableIn(container, includeContainer, fallbackToLast, fallbackToFocusable) {
+  const activeElement = getActiveElement(container);
+  const allFocusable = getAllFocusableIn(container, includeContainer).reverse();
+  const activeIndex = allFocusable.indexOf(activeElement);
+  const previousFocusableElements = allFocusable.slice(activeIndex + 1);
+  return previousFocusableElements.find(isTabbable) || (fallbackToLast ? allFocusable.find(isTabbable) : null) || (fallbackToFocusable ? previousFocusableElements[0] : null) || null;
+}
+function getPreviousTabbable(fallbackToFirst, fallbackToFocusable) {
+  return getPreviousTabbableIn(
+    document.body,
+    false,
+    fallbackToFirst,
+    fallbackToFocusable
+  );
+}
+function getClosestFocusable(element) {
+  while (element && !isFocusable(element)) {
+    element = element.closest(selector);
+  }
+  return element || null;
+}
+function hasFocus(element) {
+  const activeElement = HWOIWM4O_getActiveElement(element);
+  if (!activeElement) return false;
+  if (activeElement === element) return true;
+  const activeDescendant = activeElement.getAttribute("aria-activedescendant");
+  if (!activeDescendant) return false;
+  return activeDescendant === element.id;
+}
+function hasFocusWithin(element) {
+  const activeElement = HWOIWM4O_getActiveElement(element);
+  if (!activeElement) return false;
+  if (contains(element, activeElement)) return true;
+  const activeDescendant = activeElement.getAttribute("aria-activedescendant");
+  if (!activeDescendant) return false;
+  if (!("id" in element)) return false;
+  if (activeDescendant === element.id) return true;
+  return !!element.querySelector(`#${CSS.escape(activeDescendant)}`);
+}
+function focusIfNeeded(element) {
+  if (!hasFocusWithin(element) && isFocusable(element)) {
+    element.focus();
+  }
+}
+function disableFocus(element) {
+  var _a;
+  const currentTabindex = (_a = element.getAttribute("tabindex")) != null ? _a : "";
+  element.setAttribute("data-tabindex", currentTabindex);
+  element.setAttribute("tabindex", "-1");
+}
+function disableFocusIn(container, includeContainer) {
+  const tabbableElements = getAllTabbableIn(container, includeContainer);
+  for (const element of tabbableElements) {
+    disableFocus(element);
+  }
+}
+function restoreFocusIn(container) {
+  const elements = container.querySelectorAll("[data-tabindex]");
+  const restoreTabIndex = (element) => {
+    const tabindex = element.getAttribute("data-tabindex");
+    element.removeAttribute("data-tabindex");
+    if (tabindex) {
+      element.setAttribute("tabindex", tabindex);
+    } else {
+      element.removeAttribute("tabindex");
+    }
+  };
+  if (container.hasAttribute("data-tabindex")) {
+    restoreTabIndex(container);
+  }
+  for (const element of elements) {
+    restoreTabIndex(element);
+  }
+}
+function focusIntoView(element, options) {
+  if (!("scrollIntoView" in element)) {
+    element.focus();
+  } else {
+    element.focus({ preventScroll: true });
+    element.scrollIntoView(_chunks_3YLGPPWQ_spreadValues({ block: "nearest", inline: "nearest" }, options));
+  }
+}
 
 
 ;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/HGZKAGPL.js
@@ -32674,8 +32467,8 @@ function useKeyboardEventProxy(store, onKeyboardEvent, previousElementRef) {
   });
 }
 function findFirstEnabledItemInTheLastRow(items) {
-  return findFirstEnabledItem(
-    flatten2DArray(reverseArray(groupItemsByRows(items)))
+  return _5VQZOHHZ_findFirstEnabledItem(
+    flatten2DArray(reverseArray(_5VQZOHHZ_groupItemsByRows(items)))
   );
 }
 function useScheduleFocus(store) {
@@ -33602,6 +33395,109 @@ var ComboboxList = forwardRef2(function ComboboxList2(props) {
 
 
 
+;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/OBZMLI6J.js
+"use client";
+
+
+
+
+
+// src/composite/composite-hover.tsx
+
+
+
+
+var OBZMLI6J_TagName = "div";
+function getMouseDestination(event) {
+  const relatedTarget = event.relatedTarget;
+  if ((relatedTarget == null ? void 0 : relatedTarget.nodeType) === Node.ELEMENT_NODE) {
+    return relatedTarget;
+  }
+  return null;
+}
+function hoveringInside(event) {
+  const nextElement = getMouseDestination(event);
+  if (!nextElement) return false;
+  return contains(event.currentTarget, nextElement);
+}
+var symbol = Symbol("composite-hover");
+function movingToAnotherItem(event) {
+  let dest = getMouseDestination(event);
+  if (!dest) return false;
+  do {
+    if (PBFD2E7P_hasOwnProperty(dest, symbol) && dest[symbol]) return true;
+    dest = dest.parentElement;
+  } while (dest);
+  return false;
+}
+var useCompositeHover = createHook(
+  function useCompositeHover2(_a) {
+    var _b = _a, {
+      store,
+      focusOnHover = true,
+      blurOnHoverEnd = !!focusOnHover
+    } = _b, props = __objRest(_b, [
+      "store",
+      "focusOnHover",
+      "blurOnHoverEnd"
+    ]);
+    const context = useCompositeContext();
+    store = store || context;
+    invariant(
+      store,
+       false && 0
+    );
+    const isMouseMoving = useIsMouseMoving();
+    const onMouseMoveProp = props.onMouseMove;
+    const focusOnHoverProp = useBooleanEvent(focusOnHover);
+    const onMouseMove = useEvent((event) => {
+      onMouseMoveProp == null ? void 0 : onMouseMoveProp(event);
+      if (event.defaultPrevented) return;
+      if (!isMouseMoving()) return;
+      if (!focusOnHoverProp(event)) return;
+      if (!hasFocusWithin(event.currentTarget)) {
+        const baseElement = store == null ? void 0 : store.getState().baseElement;
+        if (baseElement && !hasFocus(baseElement)) {
+          baseElement.focus();
+        }
+      }
+      store == null ? void 0 : store.setActiveId(event.currentTarget.id);
+    });
+    const onMouseLeaveProp = props.onMouseLeave;
+    const blurOnHoverEndProp = useBooleanEvent(blurOnHoverEnd);
+    const onMouseLeave = useEvent((event) => {
+      var _a2;
+      onMouseLeaveProp == null ? void 0 : onMouseLeaveProp(event);
+      if (event.defaultPrevented) return;
+      if (!isMouseMoving()) return;
+      if (hoveringInside(event)) return;
+      if (movingToAnotherItem(event)) return;
+      if (!focusOnHoverProp(event)) return;
+      if (!blurOnHoverEndProp(event)) return;
+      store == null ? void 0 : store.setActiveId(null);
+      (_a2 = store == null ? void 0 : store.getState().baseElement) == null ? void 0 : _a2.focus();
+    });
+    const ref = (0,external_React_.useCallback)((element) => {
+      if (!element) return;
+      element[symbol] = true;
+    }, []);
+    props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props), {
+      ref: useMergeRefs(ref, props.ref),
+      onMouseMove,
+      onMouseLeave
+    });
+    return removeUndefinedValues(props);
+  }
+);
+var CompositeHover = memo2(
+  forwardRef2(function CompositeHover2(props) {
+    const htmlProps = useCompositeHover(props);
+    return createElement(OBZMLI6J_TagName, htmlProps);
+  })
+);
+
+
+
 ;// CONCATENATED MODULE: ./packages/dataviews/node_modules/@ariakit/react-core/esm/__chunks/PLQDTVXM.js
 "use client";
 
@@ -34408,6 +34304,7 @@ const {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -34417,7 +34314,8 @@ const {
 const {
   CompositeV2: search_widget_Composite,
   CompositeItemV2: search_widget_CompositeItem,
-  useCompositeStoreV2: search_widget_useCompositeStore
+  CompositeHoverV2: search_widget_CompositeHover,
+  CompositeTypeaheadV2: CompositeTypeahead
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 const radioCheck = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
@@ -34453,38 +34351,46 @@ const getNewValue = (filterDefinition, currentFilter, value) => {
   }
   return [value];
 };
+function generateFilterElementCompositeItemId(prefix, filterElementValue) {
+  return `${prefix}-${filterElementValue}`;
+}
 function ListBox({
   view,
   filter,
   onChangeView
 }) {
-  const compositeStore = search_widget_useCompositeStore({
-    virtualFocus: true,
-    focusLoop: true,
-    // When we have no or just one operator, we can set the first item as active.
-    // We do that by passing `undefined` to `defaultActiveId`. Otherwise, we set it to `null`,
-    // so the first item is not selected, since the focus is on the operators control.
-    defaultActiveId: filter.operators?.length === 1 ? undefined : null
-  });
+  const baseId = (0,external_wp_compose_namespaceObject.useInstanceId)(ListBox, 'dataviews-filter-list-box');
+  const [activeCompositeId, setActiveCompositeId] = (0,external_wp_element_namespaceObject.useState)(
+  // When there are one or less operators, the first item is set as active
+  // (by setting the initial `activeId` to `undefined`).
+  // With 2 or more operators, the focus is moved on the operators control
+  // (by setting the initial `activeId` to `null`), meaning that there won't
+  // be an active item initially. Focus is then managed via the
+  // `onFocusVisible` callback.
+  filter.operators?.length === 1 ? undefined : null);
   const currentFilter = view.filters?.find(f => f.field === filter.field);
   const currentValue = getCurrentValue(filter, currentFilter);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(search_widget_Composite, {
-    store: compositeStore,
+    virtualFocus: true,
+    focusLoop: true,
+    activeId: activeCompositeId,
+    setActiveId: setActiveCompositeId,
     role: "listbox",
     className: "dataviews-filters__search-widget-listbox",
     "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: List of items for a filter. 1: Filter name. e.g.: "List of: Author". */
     (0,external_wp_i18n_namespaceObject.__)('List of: %1$s'), filter.name),
     onFocusVisible: () => {
-      if (!compositeStore.getState().activeId) {
-        compositeStore.move(compositeStore.first());
+      // `onFocusVisible` needs the `Composite` component to be focusable,
+      // which is implicitly achieved via the `virtualFocus: true` option
+      // in the `useCompositeStore` hook.
+      if (!activeCompositeId && filter.elements.length) {
+        setActiveCompositeId(generateFilterElementCompositeItemId(baseId, filter.elements[0].value));
       }
     },
-    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CompositeTypeahead, {
-      store: compositeStore
-    }),
-    children: filter.elements.map(element => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(CompositeHover, {
-      store: compositeStore,
+    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CompositeTypeahead, {}),
+    children: filter.elements.map(element => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(search_widget_CompositeHover, {
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(search_widget_CompositeItem, {
+        id: generateFilterElementCompositeItemId(baseId, element.value),
         render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           "aria-label": element.label,
           role: "option",
