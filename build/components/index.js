@@ -55306,6 +55306,7 @@ const findSizeBySlug = (sizes, slug) => sizes.find(size => slug === size.slug);
 
 
 
+
 const dimension_control_CONTEXT_VALUE = {
   BaseControl: {
     // Temporary during deprecation grace period: Overrides the underlying `__associatedWPComponentName`
@@ -55319,7 +55320,7 @@ const dimension_control_CONTEXT_VALUE = {
 /**
  * `DimensionControl` is a component designed to provide a UI to control spacing and/or dimensions.
  *
- * This feature is still experimental. “Experimental” means this is an early implementation subject to drastic and breaking changes.
+ * @deprecated
  *
  * ```jsx
  * import { __experimentalDimensionControl as DimensionControl } from '@wordpress/components';
@@ -55351,6 +55352,10 @@ function DimensionControl(props) {
     onChange,
     className = ''
   } = props;
+  external_wp_deprecated_default()('wp.components.DimensionControl', {
+    since: '6.7',
+    version: '7.0'
+  });
   const onChangeSpacingSize = val => {
     const theSize = findSizeBySlug(sizes, val);
     if (!theSize || value === theSize.slug) {
