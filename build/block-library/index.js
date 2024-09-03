@@ -10249,7 +10249,11 @@ const comment_edit_link_metadata = {
     },
     spacing: {
       margin: true,
-      padding: true
+      padding: true,
+      __experimentalDefaultControls: {
+        margin: false,
+        padding: false
+      }
     },
     typography: {
       fontSize: true,
@@ -10266,8 +10270,15 @@ const comment_edit_link_metadata = {
     },
     interactivity: {
       clientNavigation: true
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true
     }
-  }
+  },
+  style: "wp-block-comment-edit-link"
 };
 
 const {
