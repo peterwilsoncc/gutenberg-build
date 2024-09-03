@@ -1514,6 +1514,7 @@ __webpack_require__.d(__webpack_exports__, {
   PluginPostPublishPanel: () => (/* reexport */ plugin_post_publish_panel),
   PluginPostStatusInfo: () => (/* reexport */ plugin_post_status_info),
   PluginPrePublishPanel: () => (/* reexport */ plugin_pre_publish_panel),
+  PluginPreviewMenuItem: () => (/* reexport */ plugin_preview_menu_item),
   PluginSidebar: () => (/* reexport */ PluginSidebar),
   PluginSidebarMoreMenuItem: () => (/* reexport */ PluginSidebarMoreMenuItem),
   PostAuthor: () => (/* reexport */ post_author),
@@ -13554,6 +13555,59 @@ const PluginPrePublishPanel = ({
 PluginPrePublishPanel.Slot = plugin_pre_publish_panel_Slot;
 /* harmony default export */ const plugin_pre_publish_panel = (PluginPrePublishPanel);
 
+;// CONCATENATED MODULE: ./packages/editor/build-module/components/plugin-preview-menu-item/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Renders a menu item in the Preview dropdown, which can be used as a button or link depending on the props provided.
+ * The text within the component appears as the menu item label.
+ *
+ * @param {Object}                props                                 Component properties.
+ * @param {string}                [props.href]                          When `href` is provided, the menu item is rendered as an anchor instead of a button. It corresponds to the `href` attribute of the anchor.
+ * @param {WPBlockTypeIconRender} [props.icon=inherits from the plugin] The icon to be rendered to the left of the menu item label. Can be a Dashicon slug or an SVG WP element.
+ * @param {Function}              [props.onClick]                       The callback function to be executed when the user clicks the menu item.
+ * @param {...*}                  [props.other]                         Any additional props are passed through to the underlying MenuItem component.
+ *
+ * @example
+ * ```jsx
+ * import { __ } from '@wordpress/i18n';
+ * import { PluginPreviewMenuItem } from '@wordpress/editor';
+ * import { external } from '@wordpress/icons';
+ *
+ * function onPreviewClick() {
+ *   // Handle preview action
+ * }
+ *
+ * const ExternalPreviewMenuItem = () => (
+ *   <PreviewDropdownMenuItem
+ *     icon={ external }
+ *     onClick={ onPreviewClick }
+ *   >
+ *     { __( 'Preview in new tab' ) }
+ *   </PreviewDropdownMenuItem>
+ * );
+ * registerPlugin( 'external-preview-menu-item', {
+ *     render: ExternalPreviewMenuItem,
+ * } );
+ * ```
+ *
+ * @return {Component} The rendered menu item component.
+ */
+/* harmony default export */ const plugin_preview_menu_item = ((0,external_wp_compose_namespaceObject.compose)((0,external_wp_plugins_namespaceObject.withPluginContext)((context, ownProps) => {
+  var _ownProps$as;
+  return {
+    as: (_ownProps$as = ownProps.as) !== null && _ownProps$as !== void 0 ? _ownProps$as : external_wp_components_namespaceObject.MenuItem,
+    icon: ownProps.icon || context.icon,
+    name: 'core/plugin-preview-menu'
+  };
+}))(action_item));
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/plugin-sidebar/index.js
 /**
  * WordPress dependencies
@@ -24906,6 +24960,7 @@ const withFontSizes = deprecateFunction('withFontSizes', external_wp_blockEditor
 
 
 
+
 // State Related Components.
 
 
@@ -25819,6 +25874,7 @@ const tablet = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -25991,6 +26047,12 @@ function PreviewDropdown({
           }),
           onPreview: onClose
         })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(action_item.Slot, {
+        name: "core/plugin-preview-menu",
+        as: external_wp_components_namespaceObject.MenuGroup,
+        fillProps: {
+          onClick: onClose
+        }
       })]
     })
   });
