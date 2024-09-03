@@ -53305,13 +53305,14 @@ function LogoEdit({
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     ...blockProps,
-    children: [controls, mediaInspectorPanel, (!!logoUrl || !!temporaryURL) && logoImage, !temporaryURL && !logoUrl && !canUserEdit && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
+    children: [controls, mediaInspectorPanel, (!!logoUrl || !!temporaryURL) && logoImage, (isLoading || !temporaryURL && !logoUrl && !canUserEdit) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
       className: "site-logo_placeholder",
-      children: !!isLoading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      withIllustration: true,
+      children: isLoading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "components-placeholder__preview",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
       })
-    }), !temporaryURL && !logoUrl && canUserEdit && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
+    }), !isLoading && !temporaryURL && !logoUrl && canUserEdit && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
       onSelect: onInitialSelectLogo,
       accept: ACCEPT_MEDIA_STRING,
       allowedTypes: site_logo_edit_ALLOWED_MEDIA_TYPES,
