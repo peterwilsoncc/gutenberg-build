@@ -19585,7 +19585,8 @@ function PostStatus() {
       popoverProps: popoverProps,
       focusOnMount: true,
       renderToggle: ({
-        onToggle
+        onToggle,
+        isOpen
       }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         variant: "tertiary",
         size: "compact",
@@ -19593,7 +19594,8 @@ function PostStatus() {
         icon: postStatusesInfo[status]?.icon,
         "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(
         // translators: %s: Current post status.
-        (0,external_wp_i18n_namespaceObject.__)('Change post status: %s'), postStatusesInfo[status]?.label),
+        (0,external_wp_i18n_namespaceObject.__)('Change status: %s'), postStatusesInfo[status]?.label),
+        "aria-expanded": isOpen,
         children: postStatusesInfo[status]?.label
       }),
       renderContent: ({
