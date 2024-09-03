@@ -19830,20 +19830,20 @@ function Icon({
 }
 /* harmony default export */ const build_module_icon = ((0,external_wp_element_namespaceObject.forwardRef)(Icon));
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/position-center.js
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/align-none.js
 /**
  * WordPress dependencies
  */
 
 
-const positionCenter = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+const alignNone = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 5.5H5V4h14v1.5ZM19 20H5v-1.5h14V20ZM7 9h10v6H7V9Z"
+    d: "M19 5.5H5V4h14v1.5ZM19 20H5v-1.5h14V20ZM5 9h14v6H5V9Z"
   })
 });
-/* harmony default export */ const position_center = (positionCenter);
+/* harmony default export */ const align_none = (alignNone);
 
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/stretch-wide.js
 /**
@@ -19922,54 +19922,48 @@ const stretchWide = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
       availableUnits: availableUnits || ['%', 'px', 'em', 'rem', 'vw']
     });
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [allowCustomContentAndWideSize && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-          className: "block-editor-hooks__layout-controls",
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-            className: "block-editor-hooks__layout-controls-unit",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl
-            // TODO: Switch to `true` (40px size) if possible (https://github.com/WordPress/gutenberg/pull/64520#discussion_r1717314262)
-            , {
-              __next40pxDefaultSize: false,
-              className: "block-editor-hooks__layout-controls-unit-input",
-              label: (0,external_wp_i18n_namespaceObject.__)('Content'),
-              labelPosition: "top",
-              __unstableInputWidth: "80px",
-              value: contentSize || wideSize || '',
-              onChange: nextWidth => {
-                nextWidth = 0 > parseFloat(nextWidth) ? '0' : nextWidth;
-                onChange({
-                  ...layout,
-                  contentSize: nextWidth
-                });
-              },
-              units: units
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-              icon: position_center
-            })]
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-            className: "block-editor-hooks__layout-controls-unit",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl
-            // TODO: Switch to `true` (40px size) if possible
-            , {
-              __next40pxDefaultSize: false,
-              className: "block-editor-hooks__layout-controls-unit-input",
-              label: (0,external_wp_i18n_namespaceObject.__)('Wide'),
-              labelPosition: "top",
-              __unstableInputWidth: "80px",
-              value: wideSize || contentSize || '',
-              onChange: nextWidth => {
-                nextWidth = 0 > parseFloat(nextWidth) ? '0' : nextWidth;
-                onChange({
-                  ...layout,
-                  wideSize: nextWidth
-                });
-              },
-              units: units
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+      children: [allowCustomContentAndWideSize && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+        className: "block-editor-hooks__layout-controls-units",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+          __next40pxDefaultSize: true,
+          className: "block-editor-hooks__layout-controls-unit-input",
+          label: (0,external_wp_i18n_namespaceObject.__)('Content width'),
+          labelPosition: "top",
+          value: contentSize || wideSize || '',
+          onChange: nextWidth => {
+            nextWidth = 0 > parseFloat(nextWidth) ? '0' : nextWidth;
+            onChange({
+              ...layout,
+              contentSize: nextWidth
+            });
+          },
+          units: units,
+          prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlPrefixWrapper, {
+            variant: "icon",
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+              icon: align_none
+            })
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+          __next40pxDefaultSize: true,
+          className: "block-editor-hooks__layout-controls-unit-input",
+          label: (0,external_wp_i18n_namespaceObject.__)('Wide width'),
+          labelPosition: "top",
+          value: wideSize || contentSize || '',
+          onChange: nextWidth => {
+            nextWidth = 0 > parseFloat(nextWidth) ? '0' : nextWidth;
+            onChange({
+              ...layout,
+              wideSize: nextWidth
+            });
+          },
+          units: units,
+          prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlPrefixWrapper, {
+            variant: "icon",
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
               icon: stretch_wide
-            })]
-          })]
+            })
+          })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
           className: "block-editor-hooks__layout-controls-helptext",
           children: (0,external_wp_i18n_namespaceObject.__)('Customize the width for all elements that are assigned to the center or wide columns.')
@@ -20685,21 +20679,6 @@ function useAvailableAlignments(controls = use_available_alignments_DEFAULT_CONT
   return alignments;
 }
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/align-none.js
-/**
- * WordPress dependencies
- */
-
-
-const alignNone = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19 5.5H5V4h14v1.5ZM19 20H5v-1.5h14V20ZM5 9h14v6H5V9Z"
-  })
-});
-/* harmony default export */ const align_none = (alignNone);
-
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/position-left.js
 /**
  * WordPress dependencies
@@ -20714,6 +20693,21 @@ const positionLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
   })
 });
 /* harmony default export */ const position_left = (positionLeft);
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/position-center.js
+/**
+ * WordPress dependencies
+ */
+
+
+const positionCenter = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M19 5.5H5V4h14v1.5ZM19 20H5v-1.5h14V20ZM7 9h10v6H7V9Z"
+  })
+});
+/* harmony default export */ const position_center = (positionCenter);
 
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/position-right.js
 /**
@@ -31661,7 +31655,7 @@ function DimensionsPanel({
   const minimumMargin = -Infinity;
   const [minMarginValue, setMinMarginValue] = (0,external_wp_element_namespaceObject.useState)(minimumMargin);
 
-  // Content Size
+  // Content Width
   const showContentSizeControl = useHasContentSize(settings) && includeLayoutControls;
   const contentSizeValue = decodeValue(inheritedValue?.layout?.contentSize);
   const setContentSizeValue = newValue => {
@@ -31670,7 +31664,7 @@ function DimensionsPanel({
   const hasUserSetContentSizeValue = () => !!value?.layout?.contentSize;
   const resetContentSizeValue = () => setContentSizeValue(undefined);
 
-  // Wide Size
+  // Wide Width
   const showWideSizeControl = useHasWideSize(settings) && includeLayoutControls;
   const wideSizeValue = decodeValue(inheritedValue?.layout?.wideSize);
   const setWideSizeValue = newValue => {
@@ -31814,60 +31808,48 @@ function DimensionsPanel({
       className: "span-columns",
       children: (0,external_wp_i18n_namespaceObject.__)('Set the width of the main content area.')
     }), showContentSizeControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-      className: "single-column",
-      label: (0,external_wp_i18n_namespaceObject.__)('Content size'),
+      label: (0,external_wp_i18n_namespaceObject.__)('Content width'),
       hasValue: hasUserSetContentSizeValue,
       onDeselect: resetContentSizeValue,
       isShownByDefault: (_defaultControls$cont = defaultControls.contentSize) !== null && _defaultControls$cont !== void 0 ? _defaultControls$cont : dimensions_panel_DEFAULT_CONTROLS.contentSize,
       panelId: panelId,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        alignment: "flex-end",
-        justify: "flex-start",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl
-        // TODO: Switch to `true` (40px size) if possible (https://github.com/WordPress/gutenberg/pull/64520#discussion_r1717314262)
-        , {
-          __next40pxDefaultSize: false,
-          label: (0,external_wp_i18n_namespaceObject.__)('Content'),
-          labelPosition: "top",
-          __unstableInputWidth: "80px",
-          value: contentSizeValue || '',
-          onChange: nextContentSize => {
-            setContentSizeValue(nextContentSize);
-          },
-          units: units
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalView, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+        __next40pxDefaultSize: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Content width'),
+        labelPosition: "top",
+        value: contentSizeValue || '',
+        onChange: nextContentSize => {
+          setContentSizeValue(nextContentSize);
+        },
+        units: units,
+        prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlPrefixWrapper, {
+          variant: "icon",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-            icon: position_center
+            icon: align_none
           })
-        })]
+        })
       })
     }), showWideSizeControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-      className: "single-column",
-      label: (0,external_wp_i18n_namespaceObject.__)('Wide size'),
+      label: (0,external_wp_i18n_namespaceObject.__)('Wide width'),
       hasValue: hasUserSetWideSizeValue,
       onDeselect: resetWideSizeValue,
       isShownByDefault: (_defaultControls$wide = defaultControls.wideSize) !== null && _defaultControls$wide !== void 0 ? _defaultControls$wide : dimensions_panel_DEFAULT_CONTROLS.wideSize,
       panelId: panelId,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        alignment: "flex-end",
-        justify: "flex-start",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
-          label: (0,external_wp_i18n_namespaceObject.__)('Wide'),
-          labelPosition: "top",
-          __unstableInputWidth: "80px",
-          value: wideSizeValue || '',
-          onChange: nextWideSize => {
-            setWideSizeValue(nextWideSize);
-          },
-          units: units
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalView, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+        __next40pxDefaultSize: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Wide width'),
+        labelPosition: "top",
+        value: wideSizeValue || '',
+        onChange: nextWideSize => {
+          setWideSizeValue(nextWideSize);
+        },
+        units: units,
+        prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlPrefixWrapper, {
+          variant: "icon",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
             icon: stretch_wide
           })
-        })]
+        })
       })
     }), showPaddingControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       hasValue: hasPaddingValue,
