@@ -37445,10 +37445,10 @@ function BlockInvalidWarning({
         __next40pxDefaultSize: false,
         onClick: convert.toRecoveredBlock,
         variant: "primary",
-        children: (0,external_wp_i18n_namespaceObject.__)('Attempt Block Recovery')
+        children: (0,external_wp_i18n_namespaceObject.__)('Attempt recovery')
       }, "recover")],
       secondaryActions: secondaryActions,
-      children: (0,external_wp_i18n_namespaceObject.__)('This block contains unexpected or invalid content.')
+      children: (0,external_wp_i18n_namespaceObject.__)('Block contains unexpected or invalid content.')
     }), compare && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
       title:
       // translators: Dialog title to fix block content
