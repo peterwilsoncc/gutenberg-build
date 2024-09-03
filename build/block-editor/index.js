@@ -26931,7 +26931,7 @@ function ColorGradientControl(props) {
 
 function useHasColorPanel(settings) {
   const hasTextPanel = useHasTextPanel(settings);
-  const hasBackgroundPanel = color_panel_useHasBackgroundPanel(settings);
+  const hasBackgroundPanel = useHasBackgroundColorPanel(settings);
   const hasLinkPanel = useHasLinkPanel(settings);
   const hasHeadingPanel = useHasHeadingPanel(settings);
   const hasButtonPanel = useHasButtonPanel(settings);
@@ -26960,7 +26960,7 @@ function useHasButtonPanel(settings) {
   const gradients = useGradientsPerOrigin(settings);
   return settings?.color?.button && (colors?.length > 0 || settings?.color?.custom || gradients?.length > 0 || settings?.color?.customGradient);
 }
-function color_panel_useHasBackgroundPanel(settings) {
+function useHasBackgroundColorPanel(settings) {
   const colors = useColorsPerOrigin(settings);
   const gradients = useGradientsPerOrigin(settings);
   return settings?.color?.background && (colors?.length > 0 || settings?.color?.custom || gradients?.length > 0 || settings?.color?.customGradient);
@@ -27172,7 +27172,7 @@ function ColorPanel({
   };
 
   // BackgroundColor
-  const showBackgroundPanel = color_panel_useHasBackgroundPanel(settings);
+  const showBackgroundPanel = useHasBackgroundColorPanel(settings);
   const backgroundColor = decodeValue(inheritedValue?.color?.background);
   const userBackgroundColor = decodeValue(value?.color?.background);
   const gradient = decodeValue(inheritedValue?.color?.gradient);
