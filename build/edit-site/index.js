@@ -29250,7 +29250,7 @@ function getControlByType(type) {
  */
 function normalizeFields(fields) {
   return fields.map(field => {
-    var _field$sort, _field$isValid;
+    var _field$sort, _field$isValid, _field$enableHiding, _field$enableSorting;
     const fieldTypeDefinition = getFieldTypeDefinition(field.type);
     const getValue = field.getValue || (({
       item
@@ -29287,7 +29287,9 @@ function normalizeFields(fields) {
       render,
       sort,
       isValid,
-      Edit
+      Edit,
+      enableHiding: (_field$enableHiding = field.enableHiding) !== null && _field$enableHiding !== void 0 ? _field$enableHiding : true,
+      enableSorting: (_field$enableSorting = field.enableSorting) !== null && _field$enableSorting !== void 0 ? _field$enableSorting : true
     };
   });
 }
@@ -35625,6 +35627,7 @@ const unseen = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 
+
 const {
   DropdownMenuV2: column_header_menu_DropdownMenuV2
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
@@ -35643,24 +35646,33 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
   onHide,
   setOpenedFilter
 }, ref) {
+  const visibleFieldIds = getVisibleFieldIds(view, fields);
+  const index = visibleFieldIds?.indexOf(fieldId);
+  const isSorted = view.sort?.field === fieldId;
+  let isHidable = false;
+  let isSortable = false;
+  let canAddFilter = false;
+  let header;
+  let operators = [];
   const combinedField = view.layout?.combinedFields?.find(f => f.id === fieldId);
-  const index = view.fields?.indexOf(fieldId);
-  if (!!combinedField) {
-    return combinedField.header || combinedField.label;
-  }
   const field = fields.find(f => f.id === fieldId);
-  if (!field) {
-    return null;
+  if (!combinedField) {
+    if (!field) {
+      // No combined or regular field found.
+      return null;
+    }
+    isHidable = field.enableHiding !== false;
+    isSortable = field.enableSorting !== false;
+    header = field.header;
+    operators = sanitizeOperators(field);
+    // Filter can be added:
+    // 1. If the field is not already part of a view's filters.
+    // 2. If the field meets the type and operator requirements.
+    // 3. If it's not primary. If it is, it should be already visible.
+    canAddFilter = !view.filters?.some(_filter => fieldId === _filter.field) && !!field.elements?.length && !!operators.length && !field.filterBy?.isPrimary;
+  } else {
+    header = combinedField.header || combinedField.label;
   }
-  const isHidable = field.enableHiding !== false;
-  const isSortable = field.enableSorting !== false;
-  const isSorted = view.sort?.field === field.id;
-  const operators = sanitizeOperators(field);
-  // Filter can be added:
-  // 1. If the field is not already part of a view's filters.
-  // 2. If the field meets the type and operator requirements.
-  // 3. If it's not primary. If it is, it should be already visible.
-  const canAddFilter = !view.filters?.some(_filter => field.id === _filter.field) && !!field.elements?.length && !!operators.length && !field.filterBy?.isPrimary;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2, {
     align: "start",
     trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
@@ -35668,7 +35680,7 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
       className: "dataviews-view-table-header-button",
       ref: ref,
       variant: "tertiary",
-      children: [field.header, view.sort && isSorted && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      children: [header, view.sort && isSorted && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         "aria-hidden": "true",
         children: sortArrows[view.sort.direction]
       })]
@@ -35680,7 +35692,7 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
       children: [isSortable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.Group, {
         children: SORTING_DIRECTIONS.map(direction => {
           const isChecked = view.sort && isSorted && view.sort.direction === direction;
-          const value = `${field.id}-${direction}`;
+          const value = `${fieldId}-${direction}`;
           return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.RadioItem, {
             // All sorting radio items share the same name, so that
             // selecting a sorting option automatically deselects the
@@ -35694,7 +35706,7 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
               onChangeView({
                 ...view,
                 sort: {
-                  field: field.id,
+                  field: fieldId,
                   direction
                 }
               });
@@ -35710,12 +35722,12 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
             icon: library_funnel
           }),
           onClick: () => {
-            setOpenedFilter(field.id);
+            setOpenedFilter(fieldId);
             onChangeView({
               ...view,
               page: 1,
               filters: [...(view.filters || []), {
-                field: field.id,
+                field: fieldId,
                 value: undefined,
                 operator: operators[0]
               }]
@@ -35732,13 +35744,10 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
           }),
           disabled: index < 1,
           onClick: () => {
-            var _view$fields$slice;
-            if (!view.fields || index < 1) {
-              return;
-            }
+            var _visibleFieldIds$slic;
             onChangeView({
               ...view,
-              fields: [...((_view$fields$slice = view.fields.slice(0, index - 1)) !== null && _view$fields$slice !== void 0 ? _view$fields$slice : []), field.id, view.fields[index - 1], ...view.fields.slice(index + 1)]
+              fields: [...((_visibleFieldIds$slic = visibleFieldIds.slice(0, index - 1)) !== null && _visibleFieldIds$slic !== void 0 ? _visibleFieldIds$slic : []), fieldId, visibleFieldIds[index - 1], ...visibleFieldIds.slice(index + 1)]
             });
           },
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.ItemLabel, {
@@ -35748,30 +35757,26 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
           prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
             icon: arrow_right
           }),
-          disabled: !view.fields || index >= view.fields.length - 1,
+          disabled: index >= visibleFieldIds.length - 1,
           onClick: () => {
-            var _view$fields$slice2;
-            if (!view.fields || index >= view.fields.length - 1) {
-              return;
-            }
+            var _visibleFieldIds$slic2;
             onChangeView({
               ...view,
-              fields: [...((_view$fields$slice2 = view.fields.slice(0, index)) !== null && _view$fields$slice2 !== void 0 ? _view$fields$slice2 : []), view.fields[index + 1], field.id, ...view.fields.slice(index + 2)]
+              fields: [...((_visibleFieldIds$slic2 = visibleFieldIds.slice(0, index)) !== null && _visibleFieldIds$slic2 !== void 0 ? _visibleFieldIds$slic2 : []), visibleFieldIds[index + 1], fieldId, ...visibleFieldIds.slice(index + 2)]
             });
           },
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.ItemLabel, {
             children: (0,external_wp_i18n_namespaceObject.__)('Move right')
           })
-        }), isHidable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.Item, {
+        }), isHidable && field && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.Item, {
           prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
             icon: library_unseen
           }),
           onClick: () => {
-            const viewFields = view.fields || fields.map(f => f.id);
             onHide(field);
             onChangeView({
               ...view,
-              fields: viewFields.filter(id => id !== field.id)
+              fields: visibleFieldIds.filter(id => id !== fieldId)
             });
           },
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_DropdownMenuV2.ItemLabel, {
@@ -35803,6 +35808,7 @@ const ColumnHeaderMenu = _HeaderMenu;
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -35894,7 +35900,7 @@ function TableRow({
   // `onClick` and can be used to exclude touchscreen devices from certain
   // behaviours.
   const isTouchDeviceRef = (0,external_wp_element_namespaceObject.useRef)(false);
-  const columns = view.fields || fields.map(f => f.id);
+  const columns = getVisibleFieldIds(view, fields);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("tr", {
     className: dist_clsx('dataviews-view-table__row', {
       'is-selected': hasPossibleBulkAction && isSelected,
@@ -36008,7 +36014,7 @@ function ViewTable({
     const fallback = hidden ? headerMenuRefs.current.get(hidden.fallback) : undefined;
     setNextHeaderMenuToFocus(fallback?.node);
   };
-  const columns = view.fields || fields.map(f => f.id);
+  const columns = getVisibleFieldIds(view, fields);
   const hasData = !!data?.length;
   const primaryField = fields.find(field => field.id === view.layout?.primaryField);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -36621,7 +36627,7 @@ const VIEW_LAYOUTS = [{
   component: ViewList,
   icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_list_bullets_rtl : format_list_bullets
 }];
-function getMandatoryFields(view) {
+function getNotHidableFieldIds(view) {
   if (view.type === 'table') {
     var _view$layout$combined;
     return [view.layout?.primaryField].concat((_view$layout$combined = view.layout?.combinedFields?.flatMap(field => field.children)) !== null && _view$layout$combined !== void 0 ? _view$layout$combined : []).filter(item => !!item);
@@ -36633,6 +36639,50 @@ function getMandatoryFields(view) {
     return [view.layout?.primaryField, view.layout?.mediaField].filter(item => !!item);
   }
   return [];
+}
+function getCombinedFieldIds(view) {
+  const combinedFields = [];
+  if (view.type === constants_LAYOUT_TABLE && view.layout?.combinedFields) {
+    view.layout.combinedFields.forEach(combination => {
+      combinedFields.push(...combination.children);
+    });
+  }
+  return combinedFields;
+}
+function getVisibleFieldIds(view, fields) {
+  const fieldsToExclude = getCombinedFieldIds(view);
+  if (view.fields) {
+    return view.fields.filter(id => !fieldsToExclude.includes(id));
+  }
+  const visibleFields = [];
+  if (view.type === constants_LAYOUT_TABLE && view.layout?.combinedFields) {
+    visibleFields.push(...view.layout.combinedFields.map(({
+      id
+    }) => id));
+  }
+  visibleFields.push(...fields.filter(({
+    id
+  }) => !fieldsToExclude.includes(id)).map(({
+    id
+  }) => id));
+  return visibleFields;
+}
+function getHiddenFieldIds(view, fields) {
+  const fieldsToExclude = [...getCombinedFieldIds(view), ...getVisibleFieldIds(view, fields)];
+
+  // The media field does not need to be in the view.fields to be displayed.
+  if (view.type === constants_LAYOUT_GRID && view.layout?.mediaField) {
+    fieldsToExclude.push(view.layout?.mediaField);
+  }
+  if (view.type === constants_LAYOUT_LIST && view.layout?.mediaField) {
+    fieldsToExclude.push(view.layout?.mediaField);
+  }
+  return fields.filter(({
+    id,
+    enableHiding
+  }) => !fieldsToExclude.includes(id) && enableHiding).map(({
+    id
+  }) => id);
 }
 
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/components/dataviews-layout/index.js
@@ -37221,89 +37271,73 @@ function ItemsPerPageControl() {
   });
 }
 function FieldItem({
+  field: {
+    id,
+    label,
+    index,
+    isVisible,
+    isHidable
+  },
   fields,
-  fieldId,
-  mandatoryFields,
-  viewFields,
   view,
   onChangeView
 }) {
-  let fieldLabel;
-  let fieldIsHidable;
-  const fieldObject = fields.find(f => f.id === fieldId);
-  if (fieldObject) {
-    fieldLabel = fieldObject.label;
-    fieldIsHidable = fieldObject.enableHiding !== false && !mandatoryFields.includes(fieldId);
-  } else if (view.type === constants_LAYOUT_TABLE) {
-    const combinedFieldObject = view.layout?.combinedFields?.find(f => f.id === fieldId);
-    if (combinedFieldObject) {
-      fieldLabel = combinedFieldObject.label;
-      fieldIsHidable = !mandatoryFields.includes(fieldId);
-    }
-  }
-  const index = view.fields?.indexOf(fieldId);
-  const isVisible = viewFields.includes(fieldId);
+  const visibleFieldIds = getVisibleFieldIds(view, fields);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       expanded: true,
-      className: `dataviews-field-control__field dataviews-field-control__field-${fieldId}`,
+      className: `dataviews-field-control__field dataviews-field-control__field-${id}`,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        children: fieldLabel
+        children: label
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         justify: "flex-end",
         expanded: false,
         className: "dataviews-field-control__actions",
         children: [view.type === constants_LAYOUT_TABLE && isVisible && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            disabled: !isVisible || index < 1,
+            disabled: index < 1,
             accessibleWhenDisabled: true,
             size: "compact",
             onClick: () => {
-              var _view$fields$slice;
-              if (!view.fields || index < 1) {
-                return;
-              }
+              var _visibleFieldIds$slic;
               onChangeView({
                 ...view,
-                fields: [...((_view$fields$slice = view.fields.slice(0, index - 1)) !== null && _view$fields$slice !== void 0 ? _view$fields$slice : []), fieldId, view.fields[index - 1], ...view.fields.slice(index + 1)]
+                fields: [...((_visibleFieldIds$slic = visibleFieldIds.slice(0, index - 1)) !== null && _visibleFieldIds$slic !== void 0 ? _visibleFieldIds$slic : []), id, visibleFieldIds[index - 1], ...visibleFieldIds.slice(index + 1)]
               });
             },
             icon: chevron_up,
             label: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: field label */
-            (0,external_wp_i18n_namespaceObject.__)('Move %s up'), fieldLabel)
+            (0,external_wp_i18n_namespaceObject.__)('Move %s up'), label)
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            disabled: !isVisible || !view.fields || index >= view.fields.length - 1,
+            disabled: index >= visibleFieldIds.length - 1,
             accessibleWhenDisabled: true,
             size: "compact",
             onClick: () => {
-              var _view$fields$slice2;
-              if (!view.fields || index >= view.fields.length - 1) {
-                return;
-              }
+              var _visibleFieldIds$slic2;
               onChangeView({
                 ...view,
-                fields: [...((_view$fields$slice2 = view.fields.slice(0, index)) !== null && _view$fields$slice2 !== void 0 ? _view$fields$slice2 : []), view.fields[index + 1], fieldId, ...view.fields.slice(index + 2)]
+                fields: [...((_visibleFieldIds$slic2 = visibleFieldIds.slice(0, index)) !== null && _visibleFieldIds$slic2 !== void 0 ? _visibleFieldIds$slic2 : []), visibleFieldIds[index + 1], id, ...visibleFieldIds.slice(index + 2)]
               });
             },
             icon: chevron_down,
             label: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: field label */
-            (0,external_wp_i18n_namespaceObject.__)('Move %s down'), fieldLabel)
+            (0,external_wp_i18n_namespaceObject.__)('Move %s down'), label)
           }), ' ']
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           className: "dataviews-field-control__field-visibility-button",
-          disabled: !fieldIsHidable,
+          disabled: !isHidable,
           accessibleWhenDisabled: true,
           size: "compact",
           onClick: () => {
             onChangeView({
               ...view,
-              fields: isVisible ? viewFields.filter(id => id !== fieldId) : [...viewFields, fieldId]
+              fields: isVisible ? visibleFieldIds.filter(fieldId => fieldId !== id) : [...visibleFieldIds, id]
             });
             // Focus the visibility button to avoid focus loss.
             // Our code is safe against the component being unmounted, so we don't need to worry about cleaning the timeout.
             // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
             setTimeout(() => {
-              const element = document.querySelector(`.dataviews-field-control__field-${fieldId} .dataviews-field-control__field-visibility-button`);
+              const element = document.querySelector(`.dataviews-field-control__field-${id} .dataviews-field-control__field-visibility-button`);
               if (element instanceof HTMLElement) {
                 element.focus();
               }
@@ -37311,29 +37345,12 @@ function FieldItem({
           },
           icon: isVisible ? library_seen : library_unseen,
           label: isVisible ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: field label */
-          (0,external_wp_i18n_namespaceObject.__)('Hide %s'), fieldLabel) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: field label */
-          (0,external_wp_i18n_namespaceObject.__)('Show %s'), fieldLabel)
+          (0,external_wp_i18n_namespaceObject.__)('Hide %s'), label) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: field label */
+          (0,external_wp_i18n_namespaceObject.__)('Show %s'), label)
         })]
       })]
     })
-  }, fieldId);
-}
-function FieldList({
-  fields,
-  fieldIds,
-  mandatoryFields,
-  viewFields,
-  view,
-  onChangeView
-}) {
-  return fieldIds.map(fieldId => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldItem, {
-    fields: fields,
-    fieldId: fieldId,
-    mandatoryFields: mandatoryFields,
-    viewFields: viewFields,
-    view: view,
-    onChangeView: onChangeView
-  }, fieldId));
+  }, id);
 }
 function FieldControl() {
   const {
@@ -37341,20 +37358,54 @@ function FieldControl() {
     fields,
     onChangeView
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
-  const mandatoryFields = (0,external_wp_element_namespaceObject.useMemo)(() => getMandatoryFields(view), [view]);
-  const viewFields = view.fields || fields.map(field => field.id);
-  const visibleFields = view.fields;
-  const hiddenFields = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const nonViewFieldsList = fields.filter(field => !viewFields.includes(field.id) && !mandatoryFields?.includes(field.id)).map(field => field.id);
-    if (view.type !== constants_LAYOUT_TABLE) {
-      return nonViewFieldsList;
-    }
-    const nonViewFieldsAndNonCombinedList = nonViewFieldsList.filter(fieldId => {
-      return !view.layout?.combinedFields?.some(combinedField => combinedField.children.includes(fieldId));
+  const visibleFieldIds = (0,external_wp_element_namespaceObject.useMemo)(() => getVisibleFieldIds(view, fields), [view, fields]);
+  const hiddenFieldIds = (0,external_wp_element_namespaceObject.useMemo)(() => getHiddenFieldIds(view, fields), [view, fields]);
+  const notHidableFieldIds = (0,external_wp_element_namespaceObject.useMemo)(() => getNotHidableFieldIds(view), [view]);
+  const visibleFields = fields.filter(({
+    id
+  }) => visibleFieldIds.includes(id)).map(({
+    id,
+    label,
+    enableHiding
+  }) => {
+    return {
+      id,
+      label,
+      index: visibleFieldIds.indexOf(id),
+      isVisible: true,
+      isHidable: notHidableFieldIds.includes(id) ? false : enableHiding
+    };
+  });
+  if (view.type === constants_LAYOUT_TABLE && view.layout?.combinedFields) {
+    view.layout.combinedFields.forEach(({
+      id,
+      label
+    }) => {
+      visibleFields.push({
+        id,
+        label,
+        index: visibleFieldIds.indexOf(id),
+        isVisible: true,
+        isHidable: notHidableFieldIds.includes(id)
+      });
     });
-    const nonViewFieldsCombinedFieldsList = view.layout?.combinedFields?.filter(combinedField => !viewFields.includes(combinedField.id)).map(combinedField => combinedField.id) || [];
-    return [...nonViewFieldsAndNonCombinedList, ...nonViewFieldsCombinedFieldsList];
-  }, [view, mandatoryFields, fields, viewFields]);
+  }
+  visibleFields.sort((a, b) => a.index - b.index);
+  const hiddenFields = fields.filter(({
+    id
+  }) => hiddenFieldIds.includes(id)).map(({
+    id,
+    label,
+    enableHiding
+  }, index) => {
+    return {
+      id,
+      label,
+      index,
+      isVisible: false,
+      isHidable: enableHiding
+    };
+  });
   if (!visibleFields?.length && !hiddenFields?.length) {
     return null;
   }
@@ -37364,14 +37415,12 @@ function FieldControl() {
     children: [!!visibleFields?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
       isBordered: true,
       isSeparated: true,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldList, {
+      children: visibleFields.map(field => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldItem, {
+        field: field,
         fields: fields,
-        fieldIds: visibleFields,
-        mandatoryFields: mandatoryFields,
-        viewFields: viewFields,
         view: view,
         onChangeView: onChangeView
-      })
+      }, field.id))
     }), !!hiddenFields?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
         spacing: 4,
@@ -37383,14 +37432,12 @@ function FieldControl() {
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
           isBordered: true,
           isSeparated: true,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldList, {
+          children: hiddenFields.map(field => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldItem, {
+            field: field,
             fields: fields,
-            fieldIds: hiddenFields,
-            mandatoryFields: mandatoryFields,
-            viewFields: viewFields,
             view: view,
             onChangeView: onChangeView
-          })
+          }, field.id))
         })]
       })
     })]

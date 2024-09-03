@@ -7165,7 +7165,7 @@ function getControlByType(type) {
  */
 function normalizeFields(fields) {
   return fields.map(field => {
-    var _field$sort, _field$isValid;
+    var _field$sort, _field$isValid, _field$enableHiding, _field$enableSorting;
     const fieldTypeDefinition = getFieldTypeDefinition(field.type);
     const getValue = field.getValue || (({
       item
@@ -7202,7 +7202,9 @@ function normalizeFields(fields) {
       render,
       sort,
       isValid,
-      Edit
+      Edit,
+      enableHiding: (_field$enableHiding = field.enableHiding) !== null && _field$enableHiding !== void 0 ? _field$enableHiding : true,
+      enableSorting: (_field$enableSorting = field.enableSorting) !== null && _field$enableSorting !== void 0 ? _field$enableSorting : true
     };
   });
 }
