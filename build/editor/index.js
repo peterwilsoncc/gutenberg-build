@@ -29864,6 +29864,11 @@ const CONTENT = 'content';
     if (fieldValue === undefined) {
       return false;
     }
+    // Check that custom fields metabox is not enabled.
+    const areCustomFieldsEnabled = select(store_store).getEditorSettings().enableCustomFields;
+    if (areCustomFieldsEnabled) {
+      return false;
+    }
 
     // Check that the user has the capability to edit post meta.
     const canUserEdit = select(external_wp_coreData_namespaceObject.store).canUser('update', {
