@@ -10246,6 +10246,7 @@ const globalStylesDataKey = Symbol('globalStylesDataKey');
 const globalStylesLinksDataKey = Symbol('globalStylesLinks');
 const selectBlockPatternsKey = Symbol('selectBlockPatternsKey');
 const reusableBlocksSelectKey = Symbol('reusableBlocksSelect');
+const sectionRootClientIdKey = Symbol('sectionRootClientIdKey');
 
 ;// CONCATENATED MODULE: external ["wp","privateApis"]
 const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
@@ -11091,6 +11092,7 @@ function isZoomOutMode(state) {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -12857,7 +12859,7 @@ const getInserterItems = (0,external_wp_data_namespaceObject.createRegistrySelec
         if (!item.rootClientId) {
           let sectionRootClientId;
           try {
-            sectionRootClientId = unlock(getSettings(state)).sectionRootClientId;
+            sectionRootClientId = getSettings(state)[sectionRootClientIdKey];
           } catch (e) {}
           if (sectionRootClientId && canInsertBlockTypeUnmemoized(state, item.name, sectionRootClientId)) {
             item.rootClientId = sectionRootClientId;
@@ -13440,8 +13442,8 @@ function __unstableHasActiveBlockOverlayActive(state, clientId) {
   // In zoom-out mode, the block overlay is always active for section level blocks.
   if (editorMode === 'zoom-out') {
     const {
-      sectionRootClientId
-    } = unlock(getSettings(state));
+      [sectionRootClientIdKey]: sectionRootClientId
+    } = getSettings(state);
     if (sectionRootClientId) {
       const sectionClientIds = getBlockOrder(state, sectionRootClientId);
       if (sectionClientIds?.includes(clientId)) {
@@ -13516,8 +13518,8 @@ const getBlockEditingMode = (0,external_wp_data_namespaceObject.createRegistrySe
   const editorMode = __unstableGetEditorMode(state);
   if (editorMode === 'zoom-out') {
     const {
-      sectionRootClientId
-    } = unlock(getSettings(state));
+      [sectionRootClientIdKey]: sectionRootClientId
+    } = getSettings(state);
     if (clientId === '' /* ROOT_CONTAINER_CLIENT_ID */) {
       return sectionRootClientId ? 'disabled' : 'contentOnly';
     }
@@ -15487,8 +15489,8 @@ const __unstableSetEditorMode = mode => ({
   if (mode === 'zoom-out') {
     const firstSelectedClientId = select.getBlockSelectionStart();
     const {
-      sectionRootClientId
-    } = unlock(registry.select(STORE_NAME).getSettings());
+      [sectionRootClientIdKey]: sectionRootClientId
+    } = registry.select(STORE_NAME).getSettings();
     if (firstSelectedClientId) {
       let sectionClientId;
       if (sectionRootClientId) {
@@ -45088,6 +45090,7 @@ function isPointWithinTopAndBottomBoundariesOfRect(point, rect) {
 
 
 
+
 const THRESHOLD_DISTANCE = 30;
 const MINIMUM_HEIGHT_FOR_THRESHOLD = 120;
 const MINIMUM_WIDTH_FOR_THRESHOLD = 120;
@@ -45325,8 +45328,8 @@ function useBlockDropZone({
       return;
     }
     const {
-      sectionRootClientId
-    } = unlock(getSettings());
+      [sectionRootClientIdKey]: sectionRootClientId
+    } = getSettings();
 
     // In Zoom Out mode, if the target is not the section root provided by settings then
     // do not allow dropping as the drop target is not within the root (that which is
@@ -45441,6 +45444,7 @@ function useBlockDropZone({
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -45621,8 +45625,8 @@ function useInnerBlocksProps(props = {}, options = {}) {
       // The inner blocks belonging to the section drop zone is
       // already disabled by the blocks themselves being disabled.
       const {
-        sectionRootClientId
-      } = unlock(getSettings());
+        [sectionRootClientIdKey]: sectionRootClientId
+      } = getSettings();
       _isDropZoneDisabled = clientId !== sectionRootClientId;
     }
     return {
@@ -62522,8 +62526,8 @@ function ZoomOutModeInserters() {
       isBlockInsertionPointVisible
     } = select(store);
     const {
-      sectionRootClientId: root
-    } = unlock(getSettings());
+      [sectionRootClientIdKey]: root
+    } = getSettings();
     return {
       hasSelection: !!getSelectionStart().clientId,
       blockInsertionPoint: getBlockInsertionPoint(),
@@ -78143,7 +78147,8 @@ lock(privateApis, {
   useBlockDisplayTitle: useBlockDisplayTitle,
   __unstableBlockStyleVariationOverridesWithConfig: __unstableBlockStyleVariationOverridesWithConfig,
   setBackgroundStyleDefaults: setBackgroundStyleDefaults,
-  useBlockBindingsUtils: useBlockBindingsUtils
+  useBlockBindingsUtils: useBlockBindingsUtils,
+  sectionRootClientIdKey: sectionRootClientIdKey
 });
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/index.js
