@@ -36306,11 +36306,6 @@ function ViewGrid({
  * External dependencies
  */
 
-// TODO: use the @wordpress/components one once public
-// eslint-disable-next-line no-restricted-imports
-
-// Import CompositeStore type, which is not exported from @wordpress/components.
-// eslint-disable-next-line no-restricted-imports
 
 /**
  * WordPress dependencies
@@ -36330,27 +36325,78 @@ function ViewGrid({
 
 
 const {
-  useCompositeStoreV2: list_useCompositeStore,
   CompositeV2: list_Composite,
   CompositeItemV2: list_CompositeItem,
   CompositeRowV2: CompositeRow,
   DropdownMenuV2: DropdownMenu
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+function generateItemWrapperCompositeId(idPrefix) {
+  return `${idPrefix}-item-wrapper`;
+}
+function generatePrimaryActionCompositeId(idPrefix, primaryActionId) {
+  return `${idPrefix}-primary-action-${primaryActionId}`;
+}
+function generateDropdownTriggerCompositeId(idPrefix) {
+  return `${idPrefix}-dropdown`;
+}
+function PrimaryActionGridCell({
+  idPrefix,
+  primaryAction,
+  item
+}) {
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
+  const [isModalOpen, setIsModalOpen] = (0,external_wp_element_namespaceObject.useState)(false);
+  const compositeItemId = generatePrimaryActionCompositeId(idPrefix, primaryAction.id);
+  const label = typeof primaryAction.label === 'string' ? primaryAction.label : primaryAction.label([item]);
+  return 'RenderModal' in primaryAction ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    role: "gridcell",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_CompositeItem, {
+      id: compositeItemId,
+      render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        label: label,
+        icon: primaryAction.icon,
+        isDestructive: primaryAction.isDestructive,
+        size: "small",
+        onClick: () => setIsModalOpen(true)
+      }),
+      children: isModalOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionModal, {
+        action: primaryAction,
+        items: [item],
+        closeModal: () => setIsModalOpen(false)
+      })
+    })
+  }, primaryAction.id) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    role: "gridcell",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_CompositeItem, {
+      id: compositeItemId,
+      render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        label: label,
+        icon: primaryAction.icon,
+        isDestructive: primaryAction.isDestructive,
+        size: "small",
+        onClick: () => {
+          primaryAction.callback([item], {
+            registry
+          });
+        }
+      })
+    })
+  }, primaryAction.id);
+}
 function ListItem({
   actions,
-  id,
+  idPrefix,
   isSelected,
   item,
   mediaField,
   onSelect,
   primaryField,
-  store,
-  visibleFields
+  visibleFields,
+  onDropdownTriggerKeyDown
 }) {
-  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const itemRef = (0,external_wp_element_namespaceObject.useRef)(null);
-  const labelId = `${id}-label`;
-  const descriptionId = `${id}-description`;
+  const labelId = `${idPrefix}-label`;
+  const descriptionId = `${idPrefix}-description`;
   const [isHovered, setIsHovered] = (0,external_wp_element_namespaceObject.useState)(false);
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -36380,8 +36426,6 @@ function ListItem({
       eligibleActions: _eligibleActions
     };
   }, [actions, item]);
-  const [isModalOpen, setIsModalOpen] = (0,external_wp_element_namespaceObject.useState)(false);
-  const primaryActionLabel = primaryAction && (typeof primaryAction.label === 'string' ? primaryAction.label : primaryAction.label([item]));
   const renderedMediaField = mediaField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(mediaField.render, {
     item: item
   }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -36407,10 +36451,9 @@ function ListItem({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         role: "gridcell",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_CompositeItem, {
-          store: store,
           render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {}),
           role: "button",
-          id: id,
+          id: generateItemWrapperCompositeId(idPrefix),
           "aria-pressed": isSelected,
           "aria-labelledby": labelId,
           "aria-describedby": descriptionId,
@@ -36458,62 +36501,22 @@ function ListItem({
           flexShrink: '0',
           width: 'auto'
         },
-        children: [primaryAction && 'RenderModal' in primaryAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-          role: "gridcell",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_CompositeItem, {
-            store: store,
-            render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-              label: primaryActionLabel,
-              icon: primaryAction.icon,
-              isDestructive: primaryAction.isDestructive,
-              size: "small",
-              onClick: () => setIsModalOpen(true)
-            }),
-            children: isModalOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionModal, {
-              action: primaryAction,
-              items: [item],
-              closeModal: () => setIsModalOpen(false)
-            })
-          })
-        }), primaryAction && !('RenderModal' in primaryAction) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-          role: "gridcell",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_CompositeItem, {
-            store: store,
-            render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-              label: primaryActionLabel,
-              icon: primaryAction.icon,
-              isDestructive: primaryAction.isDestructive,
-              size: "small",
-              onClick: () => {
-                primaryAction.callback([item], {
-                  registry
-                });
-              }
-            })
-          })
-        }, primaryAction.id), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        children: [primaryAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrimaryActionGridCell, {
+          idPrefix: idPrefix,
+          primaryAction: primaryAction,
+          item: item
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           role: "gridcell",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenu, {
             trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_CompositeItem, {
-              store: store,
+              id: generateDropdownTriggerCompositeId(idPrefix),
               render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
                 size: "small",
                 icon: more_vertical,
                 label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
                 accessibleWhenDisabled: true,
                 disabled: !actions.length,
-                onKeyDown: event => {
-                  if (event.key === 'ArrowDown') {
-                    // Prevent the default behaviour (open dropdown menu) and go down.
-                    event.preventDefault();
-                    store.move(store.down());
-                  }
-                  if (event.key === 'ArrowUp') {
-                    // Prevent the default behavior (open dropdown menu) and go up.
-                    event.preventDefault();
-                    store.move(store.up());
-                  }
-                }
+                onKeyDown: onDropdownTriggerKeyDown
               })
             }),
             placement: "bottom-end",
@@ -36545,23 +36548,61 @@ function ViewList(props) {
   const viewFields = view.fields || fields.map(field => field.id);
   const visibleFields = fields.filter(field => viewFields.includes(field.id) && ![view.layout?.primaryField, view.layout?.mediaField].includes(field.id));
   const onSelect = item => onChangeSelection([getItemId(item)]);
-  const getItemDomId = (0,external_wp_element_namespaceObject.useCallback)(item => item ? `${baseId}-${getItemId(item)}` : undefined, [baseId, getItemId]);
-  const store = list_useCompositeStore({
-    defaultActiveId: getItemDomId(selectedItem)
-  }); // TODO, remove once composite APIs are public
+  const generateCompositeItemIdPrefix = (0,external_wp_element_namespaceObject.useCallback)(item => `${baseId}-${getItemId(item)}`, [baseId, getItemId]);
+  const isActiveCompositeItem = (0,external_wp_element_namespaceObject.useCallback)((item, idToCheck) => {
+    // All composite items use the same prefix in their IDs.
+    return idToCheck.startsWith(generateCompositeItemIdPrefix(item));
+  }, [generateCompositeItemIdPrefix]);
 
-  // Manage focused item, when the active one is removed from the list.
-  const isActiveIdInList = useStoreState(store, state => state.items.some(item => item.id === state.activeId));
+  // Controlled state for the active composite item.
+  const [activeCompositeId, setActiveCompositeId] = (0,external_wp_element_namespaceObject.useState)(undefined);
+
+  // Update the active composite item when the selected item changes.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!isActiveIdInList) {
-      // Prefer going down, except if there is no item below (last item), then go up (last item in list).
-      if (store.down()) {
-        store.move(store.down());
-      } else if (store.up()) {
-        store.move(store.up());
-      }
+    if (selectedItem) {
+      setActiveCompositeId(generateItemWrapperCompositeId(generateCompositeItemIdPrefix(selectedItem)));
     }
-  }, [isActiveIdInList]);
+  }, [selectedItem, generateCompositeItemIdPrefix]);
+  const activeItemIndex = data.findIndex(item => isActiveCompositeItem(item, activeCompositeId !== null && activeCompositeId !== void 0 ? activeCompositeId : ''));
+  const previousActiveItemIndex = (0,external_wp_compose_namespaceObject.usePrevious)(activeItemIndex);
+  const isActiveIdInList = activeItemIndex !== -1;
+  const selectCompositeItem = (0,external_wp_element_namespaceObject.useCallback)((targetIndex, generateCompositeId) => {
+    // Clamping between 0 and data.length - 1 to avoid out of bounds.
+    const clampedIndex = Math.min(data.length - 1, Math.max(0, targetIndex));
+    const itemIdPrefix = generateCompositeItemIdPrefix(data[clampedIndex]);
+    const targetCompositeItemId = generateCompositeId(itemIdPrefix);
+    setActiveCompositeId(targetCompositeItemId);
+    document.getElementById(targetCompositeItemId)?.focus();
+  }, [data, generateCompositeItemIdPrefix]);
+
+  // Select a new active composite item when the current active item
+  // is removed from the list.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    const wasActiveIdInList = previousActiveItemIndex !== undefined && previousActiveItemIndex !== -1;
+    if (!isActiveIdInList && wasActiveIdInList) {
+      // By picking `previousActiveItemIndex` as the next item index, we are
+      // basically picking the item that would have been after the deleted one.
+      // If the previously active (and removed) item was the last of the list,
+      // we will select the item before it — which is the new last item.
+      selectCompositeItem(previousActiveItemIndex, generateItemWrapperCompositeId);
+    }
+  }, [isActiveIdInList, selectCompositeItem, previousActiveItemIndex]);
+
+  // Prevent the default behavior (open dropdown menu) and instead select the
+  // dropdown menu trigger on the previous/next row.
+  // https://github.com/ariakit/ariakit/issues/3768
+  const onDropdownTriggerKeyDown = (0,external_wp_element_namespaceObject.useCallback)(event => {
+    if (event.key === 'ArrowDown') {
+      // Select the dropdown menu trigger item in the next row.
+      event.preventDefault();
+      selectCompositeItem(activeItemIndex + 1, generateDropdownTriggerCompositeId);
+    }
+    if (event.key === 'ArrowUp') {
+      // Select the dropdown menu trigger item in the previous row.
+      event.preventDefault();
+      selectCompositeItem(activeItemIndex - 1, generateDropdownTriggerCompositeId);
+    }
+  }, [selectCompositeItem, activeItemIndex]);
   const hasData = data?.length;
   if (!hasData) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -36579,19 +36620,20 @@ function ViewList(props) {
     render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {}),
     className: "dataviews-view-list",
     role: "grid",
-    store: store,
+    activeId: activeCompositeId,
+    setActiveId: setActiveCompositeId,
     children: data.map(item => {
-      const id = getItemDomId(item);
+      const id = generateCompositeItemIdPrefix(item);
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ListItem, {
-        id: id,
+        idPrefix: id,
         actions: actions,
         item: item,
         isSelected: item === selectedItem,
         onSelect: onSelect,
         mediaField: mediaField,
         primaryField: primaryField,
-        store: store,
-        visibleFields: visibleFields
+        visibleFields: visibleFields,
+        onDropdownTriggerKeyDown: onDropdownTriggerKeyDown
       }, id);
     })
   });
