@@ -54979,15 +54979,15 @@ function BlockBindingsAttribute({
   const sourceProps = unlock(external_wp_blocks_namespaceObject.privateApis).getBlockBindingsSource(sourceName);
   const isSourceInvalid = !sourceProps;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalTruncate, {
+    className: "block-editor-bindings__item",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+      truncate: true,
       children: attribute
     }), !!binding && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+      truncate: true,
       variant: !isSourceInvalid && 'muted',
-      className: "block-editor-bindings__item-explanation",
       isDestructive: isSourceInvalid,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalTruncate, {
-        children: isSourceInvalid ? (0,external_wp_i18n_namespaceObject.__)('Invalid source') : args?.key || sourceProps?.label || sourceName
-      })
+      children: isSourceInvalid ? (0,external_wp_i18n_namespaceObject.__)('Invalid source') : args?.key || sourceProps?.label || sourceName
     })]
   });
 }
