@@ -7902,7 +7902,7 @@ const external = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(e
 
 const viewPost = {
   id: 'view-post',
-  label: (0,external_wp_i18n_namespaceObject.__)('View'),
+  label: (0,external_wp_i18n_namespaceObject._x)('View', 'verb'),
   isPrimary: true,
   icon: library_external,
   isEligible(post) {
