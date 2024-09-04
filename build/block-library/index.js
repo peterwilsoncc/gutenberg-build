@@ -6379,6 +6379,7 @@ const categories_metadata = {
       "default": true
     }
   },
+  usesContext: ["enhancedPagination"],
   supports: {
     align: true,
     html: false,
