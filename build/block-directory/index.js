@@ -1579,7 +1579,6 @@ function getDownloadableBlockLabel({
   (0,external_wp_i18n_namespaceObject._n)('Install %1$s. %2$s stars with %3$s review.', 'Install %1$s. %2$s stars with %3$s reviews.', ratingCount), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title), stars, ratingCount);
 }
 function DownloadableBlockListItem({
-  composite,
   item,
   onClick
 }) {
@@ -1637,7 +1636,6 @@ function DownloadableBlockListItem({
       showTooltip: true,
       tooltipPosition: "top center"
     }),
-    store: composite,
     disabled: isInstalling || !isInstallable,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "block-directory-downloadable-block-list-item__icon",
@@ -1692,8 +1690,7 @@ function DownloadableBlockListItem({
 
 
 const {
-  CompositeV2: Composite,
-  useCompositeStoreV2: useCompositeStore
+  CompositeV2: Composite
 } = unlock(external_wp_components_namespaceObject.privateApis);
 const noop = () => {};
 function DownloadableBlocksList({
@@ -1701,7 +1698,6 @@ function DownloadableBlocksList({
   onHover = noop,
   onSelect
 }) {
-  const composite = useCompositeStore();
   const {
     installBlockType
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
@@ -1709,13 +1705,11 @@ function DownloadableBlocksList({
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Composite, {
-    store: composite,
     role: "listbox",
     className: "block-directory-downloadable-blocks-list",
     "aria-label": (0,external_wp_i18n_namespaceObject.__)('Blocks available for install'),
     children: items.map(item => {
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(downloadable_block_list_item, {
-        composite: composite,
         onClick: () => {
           // Check if the block is registered (`getBlockType`
           // will return an object). If so, insert the block.
