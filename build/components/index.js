@@ -54006,6 +54006,7 @@ const DayButton = /*#__PURE__*/emotion_styled_base_browser_esm(build_module_butt
 			`, ";}", props => props.hasEvents && `
 		::before {
 			background: ${props.isSelected ? COLORS.white : COLORS.theme.accent};
+			border-radius: ${config_values.radiusRound};
 			bottom: 2px;
 			content: " ";
 			height: 4px;
