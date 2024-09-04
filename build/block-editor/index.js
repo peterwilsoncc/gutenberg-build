@@ -67090,8 +67090,7 @@ function usePatternsSetup(clientId, blockName, filterPatternsFn) {
 
 const {
   CompositeV2: block_pattern_setup_Composite,
-  CompositeItemV2: block_pattern_setup_CompositeItem,
-  useCompositeStoreV2: block_pattern_setup_useCompositeStore
+  CompositeItemV2: block_pattern_setup_CompositeItem
 } = unlock(external_wp_components_namespaceObject.privateApis);
 const SetupContent = ({
   viewMode,
@@ -67100,7 +67099,6 @@ const SetupContent = ({
   onBlockPatternSelect,
   showTitles
 }) => {
-  const compositeStore = block_pattern_setup_useCompositeStore();
   const containerClass = 'block-editor-block-pattern-setup__container';
   if (viewMode === VIEWMODES.carousel) {
     const slideClass = new Map([[activeSlide, 'active-slide'], [activeSlide - 1, 'previous-slide'], [activeSlide + 1, 'next-slide']]);
@@ -67122,7 +67120,6 @@ const SetupContent = ({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "block-editor-block-pattern-setup__grid",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_pattern_setup_Composite, {
-      store: compositeStore,
       role: "listbox",
       className: containerClass,
       "aria-label": (0,external_wp_i18n_namespaceObject.__)('Patterns list'),
