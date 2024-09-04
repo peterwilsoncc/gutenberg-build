@@ -25847,8 +25847,7 @@ const shadow = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 const shadow_panel_components_EMPTY_ARRAY = [];
 const {
   CompositeItemV2: CompositeItem,
-  CompositeV2: Composite,
-  useCompositeStoreV2: useCompositeStore
+  CompositeV2: Composite
 } = unlock(external_wp_components_namespaceObject.privateApis);
 function ShadowPopoverContainer({
   shadow,
@@ -25886,9 +25885,7 @@ function ShadowPresets({
   activeShadow,
   onSelect
 }) {
-  const compositeStore = useCompositeStore();
   return !presets ? null : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Composite, {
-    store: compositeStore,
     role: "listbox",
     className: "block-editor-global-styles__shadow__list",
     "aria-label": (0,external_wp_i18n_namespaceObject.__)('Drop shadows'),
@@ -50002,12 +49999,12 @@ const useBlockTypesState = (rootClientId, onInsert, isQuick) => {
 
 const {
   CompositeV2: inserter_listbox_Composite,
-  useCompositeStoreV2: inserter_listbox_useCompositeStore
+  useCompositeStoreV2: useCompositeStore
 } = unlock(external_wp_components_namespaceObject.privateApis);
 function InserterListbox({
   children
 }) {
-  const store = inserter_listbox_useCompositeStore({
+  const store = useCompositeStore({
     focusShift: true,
     focusWrap: 'horizontal'
   });
