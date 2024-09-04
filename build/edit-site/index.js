@@ -34389,8 +34389,7 @@ function ListBox({
     (0,external_wp_i18n_namespaceObject.__)('List of: %1$s'), filter.name),
     onFocusVisible: () => {
       // `onFocusVisible` needs the `Composite` component to be focusable,
-      // which is implicitly achieved via the `virtualFocus: true` option
-      // in the `useCompositeStore` hook.
+      // which is implicitly achieved via the `virtualFocus` prop.
       if (!activeCompositeId && filter.elements.length) {
         setActiveCompositeId(generateFilterElementCompositeItemId(baseId, filter.elements[0].value));
       }

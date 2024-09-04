@@ -4660,7 +4660,7 @@ var TW35PKTK_Composite = forwardRef2(function Composite2(props) {
  * Internal dependencies
  */
 
-const CompositeContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
+const CompositeContext = (0,external_wp_element_namespaceObject.createContext)({});
 const context_useCompositeContext = () => (0,external_wp_element_namespaceObject.useContext)(CompositeContext);
 
 ;// CONCATENATED MODULE: ./packages/components/node_modules/@ariakit/react-core/esm/__chunks/7HVFURXT.js
@@ -4748,7 +4748,7 @@ var IEKMDIUY_CompositeGroup = forwardRef2(function CompositeGroup2(props) {
 const CompositeGroup = (0,external_wp_element_namespaceObject.forwardRef)(function CompositeGroup(props, ref) {
   const context = context_useCompositeContext();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(IEKMDIUY_CompositeGroup, {
-    store: context?.store,
+    store: context.store,
     ...props,
     ref: ref
   });
@@ -4827,7 +4827,7 @@ var Y2MAXF6C_CompositeGroupLabel = forwardRef2(function CompositeGroupLabel2(pro
 const CompositeGroupLabel = (0,external_wp_element_namespaceObject.forwardRef)(function CompositeGroupLabel(props, ref) {
   const context = context_useCompositeContext();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Y2MAXF6C_CompositeGroupLabel, {
-    store: context?.store,
+    store: context.store,
     ...props,
     ref: ref
   });
@@ -4956,7 +4956,7 @@ var OBZMLI6J_CompositeHover = memo2(
 const CompositeHover = (0,external_wp_element_namespaceObject.forwardRef)(function CompositeHover(props, ref) {
   const context = context_useCompositeContext();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OBZMLI6J_CompositeHover, {
-    store: context?.store,
+    store: context.store,
     ...props,
     ref: ref
   });
@@ -5459,7 +5459,7 @@ var _3CCTMYB6_CompositeItem = memo2(
 const CompositeItem = (0,external_wp_element_namespaceObject.forwardRef)(function CompositeItem(props, ref) {
   const context = context_useCompositeContext();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(_3CCTMYB6_CompositeItem, {
-    store: context?.store,
+    store: context.store,
     ...props,
     ref: ref
   });
@@ -5538,7 +5538,7 @@ var _6BE7QOX5_CompositeRow = forwardRef2(function CompositeRow2(props) {
 const CompositeRow = (0,external_wp_element_namespaceObject.forwardRef)(function CompositeRow(props, ref) {
   const context = context_useCompositeContext();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(_6BE7QOX5_CompositeRow, {
-    store: context?.store,
+    store: context.store,
     ...props,
     ref: ref
   });
@@ -5668,7 +5668,7 @@ var DS36B3MQ_CompositeTypeahead = forwardRef2(function CompositeTypeahead2(props
 const CompositeTypeahead = (0,external_wp_element_namespaceObject.forwardRef)(function CompositeTypeahead(props, ref) {
   const context = context_useCompositeContext();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DS36B3MQ_CompositeTypeahead, {
-    store: context?.store,
+    store: context.store,
     ...props,
     ref: ref
   });
@@ -5695,6 +5695,7 @@ const CompositeTypeahead = (0,external_wp_element_namespaceObject.forwardRef)(fu
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -5714,10 +5715,9 @@ const CompositeTypeahead = (0,external_wp_element_namespaceObject.forwardRef)(fu
  *
  * @example
  * ```jsx
- * import { Composite, useCompositeStore } from '@wordpress/components';
+ * import { Composite } from '@wordpress/components';
  *
- * const store = useCompositeStore();
- * <Composite store={store}>
+ * <Composite>
  *   <Composite.Item>Item 1</Composite.Item>
  *   <Composite.Item>Item 2</Composite.Item>
  * </Composite>
@@ -5733,16 +5733,14 @@ const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRe
   focusShift = false,
   virtualFocus = false,
   orientation = 'both',
-  rtl = false,
+  rtl = (0,external_wp_i18n_namespaceObject.isRTL)(),
   // Composite component props
   children,
   disabled = false,
-  // To be removed
-  store: storeProp,
   // Rest props
   ...props
 }, ref) {
-  const newStore = useCompositeStore({
+  const store = useCompositeStore({
     activeId,
     defaultActiveId,
     setActiveId,
@@ -5753,7 +5751,6 @@ const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRe
     orientation,
     rtl
   });
-  const store = storeProp || newStore;
   const contextValue = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     store
   }), [store]);
@@ -5773,10 +5770,9 @@ const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRe
    *
    * @example
    * ```jsx
-   * import { Composite, useCompositeStore } from '@wordpress/components';
+   * import { Composite } from '@wordpress/components';
    *
-   * const store = useCompositeStore();
-   * <Composite store={store}>
+   * <Composite>
    *   <Composite.Group>
    *     <Composite.GroupLabel>Label</Composite.GroupLabel>
    *     <Composite.Item>Item 1</Composite.Item>
@@ -5795,10 +5791,9 @@ const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRe
    *
    * @example
    * ```jsx
-   * import { Composite, useCompositeStore } from '@wordpress/components';
+   * import { Composite } from '@wordpress/components';
    *
-   * const store = useCompositeStore();
-   * <Composite store={store}>
+   * <Composite>
    *   <Composite.Group>
    *     <Composite.GroupLabel>Label</Composite.GroupLabel>
    *     <Composite.Item>Item 1</Composite.Item>
@@ -5815,10 +5810,9 @@ const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRe
    *
    * @example
    * ```jsx
-   * import { Composite, useCompositeStore } from '@wordpress/components';
+   * import { Composite } from '@wordpress/components';
    *
-   * const store = useCompositeStore();
-   * <Composite store={store}>
+   * <Composite>
    *   <Composite.Item>Item 1</Composite.Item>
    *   <Composite.Item>Item 2</Composite.Item>
    *   <Composite.Item>Item 3</Composite.Item>
@@ -5835,10 +5829,9 @@ const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRe
    *
    * @example
    * ```jsx
-   * import { Composite, useCompositeStore } from '@wordpress/components';
+   * import { Composite } from '@wordpress/components';
    *
-   * const store = useCompositeStore();
-   * <Composite store={store}>
+   * <Composite>
    *   <Composite.Row>
    *     <Composite.Item>Item 1.1</Composite.Item>
    *     <Composite.Item>Item 1.2</Composite.Item>
@@ -5862,10 +5855,9 @@ const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRe
    *
    * @example
    * ```jsx
-   * import { Composite, useCompositeStore } from '@wordpress/components';
+   * import { Composite } from '@wordpress/components';
    *
-   * const store = useCompositeStore();
-   * <Composite store={store}>
+   * <Composite>
    *   <Composite.Hover render={ <Composite.Item /> }>
    *     Item 1
    *   </Composite.Hover>
@@ -5885,10 +5877,9 @@ const Composite = Object.assign((0,external_wp_element_namespaceObject.forwardRe
    *
    * @example
    * ```jsx
-   * import { Composite, useCompositeStore } from '@wordpress/components';
+   * import { Composite } from '@wordpress/components';
    *
-   * const store = useCompositeStore();
-   * <Composite store={store} render={ <CompositeTypeahead /> }>
+   * <Composite render={ <CompositeTypeahead /> }>
    *   <Composite.Item>Item 1</Composite.Item>
    *   <Composite.Item>Item 2</Composite.Item>
    * </Composite>
@@ -34026,6 +34017,7 @@ function Provider({
     })
   });
 }
+Provider.displayName = 'SlotFillProvider';
 function createSlotFill(key) {
   const baseName = typeof key === 'symbol' ? key.description : key;
   const FillComponent = props => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(slot_fill_Fill, {
@@ -46963,53 +46955,6 @@ function ComboboxControl(props) {
 }
 /* harmony default export */ const combobox_control = (ComboboxControl);
 
-;// CONCATENATED MODULE: ./packages/components/build-module/composite/store.js
-/**
- * External dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-// Props are already documented in TypeScript types.
-// eslint-disable-next-line jsdoc/require-param
-/**
- * Creates a composite store.
- *
- * @example
- * ```jsx
- * import { Composite, useCompositeStore } from '@wordpress/components';
- *
- * const store = useCompositeStore();
- * <Composite store={store}>
- *   <Composite.Item>Item</Composite.Item>
- *   <Composite.Item>Item</Composite.Item>
- *   <Composite.Item>Item</Composite.Item>
- * </Composite>
- * ```
- */
-function store_useCompositeStore({
-  focusLoop = false,
-  focusWrap = false,
-  focusShift = false,
-  virtualFocus = false,
-  orientation = 'both',
-  rtl = false,
-  ...props
-} = {}) {
-  return useCompositeStore({
-    focusLoop,
-    focusWrap,
-    focusShift,
-    virtualFocus,
-    orientation,
-    rtl,
-    ...props
-  });
-}
-
 ;// CONCATENATED MODULE: ./packages/components/build-module/composite/legacy/index.js
 /**
  * Composite is a component that may contain navigable items represented by
@@ -47027,6 +46972,11 @@ function store_useCompositeStore({
  */
 
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
 
@@ -47034,7 +46984,6 @@ function store_useCompositeStore({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -47126,7 +47075,7 @@ function useCompositeState(legacyStateOptions = {}) {
   } = legacyStateOptions;
   return {
     baseId: (0,external_wp_compose_namespaceObject.useInstanceId)(legacy_Composite, 'composite', baseId),
-    store: store_useCompositeStore({
+    store: useCompositeStore({
       defaultActiveId,
       rtl,
       orientation,
@@ -71627,7 +71576,6 @@ const {
 
 
 
-
 const privateApis = {};
 lock(privateApis, {
   CompositeV2: Composite,
@@ -71636,7 +71584,6 @@ lock(privateApis, {
   CompositeRowV2: Composite.Row,
   CompositeTypeaheadV2: Composite.Typeahead,
   CompositeHoverV2: Composite.Hover,
-  useCompositeStoreV2: store_useCompositeStore,
   __experimentalPopoverLegacyPositionToPlacement: positionToPlacement,
   createPrivateSlotFill: createPrivateSlotFill,
   ComponentsContext: ComponentsContext,
