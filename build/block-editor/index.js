@@ -58773,8 +58773,7 @@ const useTransformedPatterns = (patterns, selectedBlocks) => {
 
 const {
   CompositeV2: pattern_transformations_menu_Composite,
-  CompositeItemV2: pattern_transformations_menu_CompositeItem,
-  useCompositeStoreV2: pattern_transformations_menu_useCompositeStore
+  CompositeItemV2: pattern_transformations_menu_CompositeItem
 } = unlock(external_wp_components_namespaceObject.privateApis);
 function PatternTransformationsMenu({
   blocks,
@@ -58826,9 +58825,7 @@ function pattern_transformations_menu_BlockPatternsList({
   patterns,
   onSelect
 }) {
-  const composite = pattern_transformations_menu_useCompositeStore();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pattern_transformations_menu_Composite, {
-    store: composite,
     role: "listbox",
     className: "block-editor-block-switcher__preview-patterns-container",
     "aria-label": (0,external_wp_i18n_namespaceObject.__)('Patterns list'),
