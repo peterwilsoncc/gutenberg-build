@@ -10408,7 +10408,11 @@ const comment_reply_link_metadata = {
     },
     spacing: {
       margin: true,
-      padding: true
+      padding: true,
+      __experimentalDefaultControls: {
+        margin: false,
+        padding: false
+      }
     },
     typography: {
       fontSize: true,
@@ -10423,8 +10427,15 @@ const comment_reply_link_metadata = {
         fontSize: true
       }
     },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true
+    },
     html: false
-  }
+  },
+  style: "wp-block-comment-reply-link"
 };
 
 const {
