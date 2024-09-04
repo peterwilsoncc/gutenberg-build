@@ -53115,7 +53115,7 @@ function LogoEdit({
     const mediaItem = _siteLogoId && select(external_wp_coreData_namespaceObject.store).getMedia(_siteLogoId, {
       context: 'view'
     });
-    const _isRequestingMediaItem = _siteLogoId && !select(external_wp_coreData_namespaceObject.store).hasFinishedResolution('getMedia', [_siteLogoId, {
+    const _isRequestingMediaItem = !!_siteLogoId && !select(external_wp_coreData_namespaceObject.store).hasFinishedResolution('getMedia', [_siteLogoId, {
       context: 'view'
     }]);
     return {
