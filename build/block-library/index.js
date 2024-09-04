@@ -30338,7 +30338,7 @@ const v1ToV5ImageFillStyles = (url, focalPoint) => {
     backgroundPosition: focalPoint ? `${focalPoint.x * 100}% ${focalPoint.y * 100}%` : `50% 50%`
   } : {};
 };
-const v6ImageFillStyles = (url, focalPoint) => {
+const v6ToV7ImageFillStyles = (url, focalPoint) => {
   return url ? {
     backgroundImage: `url(${url})`,
     backgroundPosition: focalPoint ? `${Math.round(focalPoint.x * 100)}% ${Math.round(focalPoint.y * 100)}%` : `50% 50%`
@@ -30496,6 +30496,19 @@ const v6Attributes = {
     __experimentalRole: 'content'
   }
 };
+const v7Attributes = {
+  ...v6Attributes,
+  align: {
+    type: 'string',
+    // v7 changed the default for the `align` attribute.
+    default: 'none'
+  },
+  // New attribute.
+  useFeaturedImage: {
+    type: 'boolean',
+    default: false
+  }
+};
 const v4ToV5Supports = {
   anchor: true,
   align: ['wide', 'full'],
@@ -30531,6 +30544,134 @@ const v6Supports = {
     __experimentalDefaultControls: {
       fontSize: true
     }
+  }
+};
+const v7Supports = {
+  ...v6Supports,
+  __experimentalBorder: {
+    color: true,
+    radius: true,
+    style: true,
+    width: true,
+    __experimentalDefaultControls: {
+      color: true,
+      radius: true,
+      style: true,
+      width: true
+    }
+  },
+  color: {
+    gradients: true,
+    heading: true,
+    link: true,
+    __experimentalDefaultControls: {
+      background: true,
+      text: true
+    }
+  },
+  interactivity: {
+    clientNavigation: true
+  }
+};
+
+// Version with 'none' as the default alignment.
+// See: https://github.com/WordPress/gutenberg/pull/64981
+const media_text_deprecated_v7 = {
+  attributes: v7Attributes,
+  supports: v7Supports,
+  usesContext: ['postId', 'postType'],
+  save({
+    attributes
+  }) {
+    const {
+      isStackedOnMobile,
+      mediaAlt,
+      mediaPosition,
+      mediaType,
+      mediaUrl,
+      mediaWidth,
+      mediaId,
+      verticalAlignment,
+      imageFill,
+      focalPoint,
+      linkClass,
+      href,
+      linkTarget,
+      rel
+    } = attributes;
+    const mediaSizeSlug = attributes.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG;
+    const newRel = !rel ? undefined : rel;
+    const imageClasses = dist_clsx({
+      [`wp-image-${mediaId}`]: mediaId && mediaType === 'image',
+      [`size-${mediaSizeSlug}`]: mediaId && mediaType === 'image'
+    });
+    let image = mediaUrl ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+      src: mediaUrl,
+      alt: mediaAlt,
+      className: imageClasses || null
+    }) : null;
+    if (href) {
+      image = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
+        className: linkClass,
+        href: href,
+        target: linkTarget,
+        rel: newRel,
+        children: image
+      });
+    }
+    const mediaTypeRenders = {
+      image: () => image,
+      video: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("video", {
+        controls: true,
+        src: mediaUrl
+      })
+    };
+    const className = dist_clsx({
+      'has-media-on-the-right': 'right' === mediaPosition,
+      'is-stacked-on-mobile': isStackedOnMobile,
+      [`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
+      'is-image-fill': imageFill
+    });
+    const backgroundStyles = imageFill ? v6ToV7ImageFillStyles(mediaUrl, focalPoint) : {};
+    let gridTemplateColumns;
+    if (mediaWidth !== DEFAULT_MEDIA_WIDTH) {
+      gridTemplateColumns = 'right' === mediaPosition ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
+    }
+    const style = {
+      gridTemplateColumns
+    };
+    if ('right' === mediaPosition) {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+        ...external_wp_blockEditor_namespaceObject.useBlockProps.save({
+          className,
+          style
+        }),
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          ...external_wp_blockEditor_namespaceObject.useInnerBlocksProps.save({
+            className: 'wp-block-media-text__content'
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("figure", {
+          className: "wp-block-media-text__media",
+          style: backgroundStyles,
+          children: (mediaTypeRenders[mediaType] || noop)()
+        })]
+      });
+    }
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      ...external_wp_blockEditor_namespaceObject.useBlockProps.save({
+        className,
+        style
+      }),
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("figure", {
+        className: "wp-block-media-text__media",
+        style: backgroundStyles,
+        children: (mediaTypeRenders[mediaType] || noop)()
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        ...external_wp_blockEditor_namespaceObject.useInnerBlocksProps.save({
+          className: 'wp-block-media-text__content'
+        })
+      })]
+    });
   }
 };
 
@@ -30591,7 +30732,7 @@ const media_text_deprecated_v6 = {
       [`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
       'is-image-fill': imageFill
     });
-    const backgroundStyles = imageFill ? v6ImageFillStyles(mediaUrl, focalPoint) : {};
+    const backgroundStyles = imageFill ? v6ToV7ImageFillStyles(mediaUrl, focalPoint) : {};
     let gridTemplateColumns;
     if (mediaWidth !== DEFAULT_MEDIA_WIDTH) {
       gridTemplateColumns = 'right' === mediaPosition ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
@@ -31125,7 +31266,7 @@ const media_text_deprecated_v1 = {
     });
   }
 };
-/* harmony default export */ const media_text_deprecated = ([media_text_deprecated_v6, media_text_deprecated_v5, media_text_deprecated_v4, media_text_deprecated_v3, media_text_deprecated_v2, media_text_deprecated_v1]);
+/* harmony default export */ const media_text_deprecated = ([media_text_deprecated_v7, media_text_deprecated_v6, media_text_deprecated_v5, media_text_deprecated_v4, media_text_deprecated_v3, media_text_deprecated_v2, media_text_deprecated_v1]);
 
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/pull-left.js
 /**
@@ -31177,6 +31318,13 @@ const media = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ext
 });
 /* harmony default export */ const library_media = (media);
 
+;// CONCATENATED MODULE: ./packages/block-library/build-module/media-text/image-fill.js
+function imageFillStyles(url, focalPoint) {
+  return url ? {
+    objectPosition: focalPoint ? `${Math.round(focalPoint.x * 100)}% ${Math.round(focalPoint.y * 100)}%` : `50% 50%`
+  } : {};
+}
+
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/media-text/media-container.js
 /**
  * External dependencies
@@ -31197,18 +31345,17 @@ const media = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ext
 
 
 /**
+ * Internal dependencies
+ */
+
+
+/**
  * Constants
  */
 
 
 const media_container_ALLOWED_MEDIA_TYPES = ['image', 'video'];
 const media_container_noop = () => {};
-function imageFillStyles(url, focalPoint) {
-  return url ? {
-    backgroundImage: `url(${url})`,
-    backgroundPosition: focalPoint ? `${Math.round(focalPoint.x * 100)}% ${Math.round(focalPoint.y * 100)}%` : `50% 50%`
-  } : {};
-}
 const ResizableBoxContainer = (0,external_wp_element_namespaceObject.forwardRef)(({
   isSelected,
   isStackedOnMobile,
@@ -31292,7 +31439,8 @@ function MediaContainer(props, ref) {
     toggleUseFeaturedImage,
     useFeaturedImage,
     featuredImageURL,
-    featuredImageAlt
+    featuredImageAlt,
+    refMedia
   } = props;
   const isTemporaryMedia = !mediaId && (0,external_wp_blob_namespaceObject.isBlobURL)(mediaUrl);
   const {
@@ -31313,17 +31461,22 @@ function MediaContainer(props, ref) {
       right: enableResize && mediaPosition === 'left',
       left: enableResize && mediaPosition === 'right'
     };
-    const backgroundStyles = mediaType === 'image' && imageFill ? imageFillStyles(mediaUrl || featuredImageURL, focalPoint) : {};
+    const positionStyles = mediaType === 'image' && imageFill ? imageFillStyles(mediaUrl || featuredImageURL, focalPoint) : {};
     const mediaTypeRenderers = {
       image: () => useFeaturedImage && featuredImageURL ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+        ref: refMedia,
         src: featuredImageURL,
-        alt: featuredImageAlt
+        alt: featuredImageAlt,
+        style: positionStyles
       }) : mediaUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+        ref: refMedia,
         src: mediaUrl,
-        alt: mediaAlt
+        alt: mediaAlt,
+        style: positionStyles
       }),
       video: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("video", {
         controls: true,
+        ref: refMedia,
         src: mediaUrl
       })
     };
@@ -31332,7 +31485,6 @@ function MediaContainer(props, ref) {
       className: dist_clsx(className, 'editor-media-container__resizer', {
         'is-transient': isTemporaryMedia
       }),
-      style: backgroundStyles,
       size: {
         width: mediaWidth + '%'
       },
@@ -31355,6 +31507,7 @@ function MediaContainer(props, ref) {
         ...props
       }), !featuredImageURL && useFeaturedImage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
         className: "wp-block-media-text--placeholder-image",
+        style: positionStyles,
         withIllustration: true
       })]
     });
@@ -31534,16 +31687,16 @@ function MediaTextEdit({
       imageSizes: getSettings()?.imageSizes
     };
   }, [isSelected, mediaId]);
-  const refMediaContainer = (0,external_wp_element_namespaceObject.useRef)();
+  const refMedia = (0,external_wp_element_namespaceObject.useRef)();
   const imperativeFocalPointPreview = value => {
     const {
       style
-    } = refMediaContainer.current.resizable;
+    } = refMedia.current;
     const {
       x,
       y
     } = value;
-    style.backgroundPosition = `${x * 100}% ${y * 100}%`;
+    style.objectPosition = `${x * 100}% ${y * 100}%`;
   };
   const [temporaryMediaWidth, setTemporaryMediaWidth] = (0,external_wp_element_namespaceObject.useState)(null);
   const onSelectMedia = edit_attributesFromMedia({
@@ -31567,7 +31720,7 @@ function MediaTextEdit({
     'is-selected': isSelected,
     'is-stacked-on-mobile': isStackedOnMobile,
     [`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
-    'is-image-fill': imageFill
+    'is-image-fill-element': imageFill
   });
   const widthString = `${temporaryMediaWidth || mediaWidth}%`;
   const gridTemplateColumns = 'right' === mediaPosition ? `1fr ${widthString}` : `${widthString} 1fr`;
@@ -31764,7 +31917,7 @@ function MediaTextEdit({
         onSelectMedia: onSelectMedia,
         onWidthChange: onWidthChange,
         commitWidthChange: commitWidthChange,
-        ref: refMediaContainer,
+        refMedia: refMedia,
         enableResize: blockEditingMode === 'default',
         toggleUseFeaturedImage: toggleUseFeaturedImage,
         focalPoint,
@@ -31833,10 +31986,12 @@ function media_text_save_save({
     [`wp-image-${mediaId}`]: mediaId && mediaType === 'image',
     [`size-${mediaSizeSlug}`]: mediaId && mediaType === 'image'
   });
+  const positionStyles = imageFill ? imageFillStyles(mediaUrl, focalPoint) : {};
   let image = mediaUrl ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
     src: mediaUrl,
     alt: mediaAlt,
-    className: imageClasses || null
+    className: imageClasses || null,
+    style: positionStyles
   }) : null;
   if (href) {
     image = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
@@ -31858,9 +32013,8 @@ function media_text_save_save({
     'has-media-on-the-right': 'right' === mediaPosition,
     'is-stacked-on-mobile': isStackedOnMobile,
     [`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
-    'is-image-fill': imageFill
+    'is-image-fill-element': imageFill
   });
-  const backgroundStyles = imageFill ? imageFillStyles(mediaUrl, focalPoint) : {};
   let gridTemplateColumns;
   if (mediaWidth !== save_DEFAULT_MEDIA_WIDTH) {
     gridTemplateColumns = 'right' === mediaPosition ? `auto ${mediaWidth}%` : `${mediaWidth}% auto`;
@@ -31880,7 +32034,6 @@ function media_text_save_save({
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("figure", {
         className: "wp-block-media-text__media",
-        style: backgroundStyles,
         children: (mediaTypeRenders[mediaType] || save_noop)()
       })]
     });
@@ -31892,7 +32045,6 @@ function media_text_save_save({
     }),
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("figure", {
       className: "wp-block-media-text__media",
-      style: backgroundStyles,
       children: (mediaTypeRenders[mediaType] || save_noop)()
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...external_wp_blockEditor_namespaceObject.useInnerBlocksProps.save({
