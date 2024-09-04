@@ -21156,6 +21156,7 @@ function addAssignedAlign(props, blockType, attributes) {
 
 const InspectorControlsDefault = (0,external_wp_components_namespaceObject.createSlotFill)('InspectorControls');
 const InspectorControlsAdvanced = (0,external_wp_components_namespaceObject.createSlotFill)('InspectorAdvancedControls');
+const InspectorControlsBindings = (0,external_wp_components_namespaceObject.createSlotFill)('InspectorControlsBindings');
 const InspectorControlsBackground = (0,external_wp_components_namespaceObject.createSlotFill)('InspectorControlsBackground');
 const InspectorControlsBorder = (0,external_wp_components_namespaceObject.createSlotFill)('InspectorControlsBorder');
 const InspectorControlsColor = (0,external_wp_components_namespaceObject.createSlotFill)('InspectorControlsColor');
@@ -21170,6 +21171,7 @@ const groups_groups = {
   default: InspectorControlsDefault,
   advanced: InspectorControlsAdvanced,
   background: InspectorControlsBackground,
+  bindings: InspectorControlsBindings,
   border: InspectorControlsBorder,
   color: InspectorControlsColor,
   dimensions: InspectorControlsDimensions,
@@ -54890,6 +54892,7 @@ function useBlockBindingsUtils() {
 
 
 
+
 const {
   DropdownMenuV2
 } = unlock(external_wp_components_namespaceObject.privateApis);
@@ -55039,6 +55042,13 @@ const BlockBindingsPanel = ({
       delete filteredBindings[key];
     }
   });
+  const {
+    canUpdateBlockBindings
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return {
+      canUpdateBlockBindings: select(store).getSettings().canUpdateBlockBindings
+    };
+  }, []);
   if (!bindableAttributes || bindableAttributes.length === 0) {
     return null;
   }
@@ -55078,12 +55088,13 @@ const BlockBindingsPanel = ({
     }
   });
 
-  // Lock the UI when the experiment is not enabled or there are no fields to connect to.
-  const readOnly = !window.__experimentalBlockBindingsUI || !Object.keys(fieldsList).length;
+  // Lock the UI when the user can't update bindings or there are no fields to connect to.
+  const readOnly = !canUpdateBlockBindings || !Object.keys(fieldsList).length;
   if (readOnly && Object.keys(filteredBindings).length === 0) {
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls, {
+    group: "bindings",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
       label: (0,external_wp_i18n_namespaceObject.__)('Attributes'),
       resetAll: () => {
@@ -55101,9 +55112,11 @@ const BlockBindingsPanel = ({
           bindings: filteredBindings,
           fieldsList: fieldsList
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-        variant: "muted",
-        children: (0,external_wp_i18n_namespaceObject.__)('Attributes connected to various sources.')
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+          variant: "muted",
+          children: (0,external_wp_i18n_namespaceObject.__)('Attributes connected to custom fields or other dynamic data.')
+        })
       })]
     })
   });
@@ -73412,7 +73425,9 @@ const PositionControls = () => {
 const SettingsTab = ({
   showAdvancedControls = false
 }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(position_controls_panel, {}), showAdvancedControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(position_controls_panel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
+    group: "bindings"
+  }), showAdvancedControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(advanced_controls_panel, {})
   })]
 });
@@ -73595,6 +73610,7 @@ function getShowTabs(blockName, tabSettings = {}) {
 function useInspectorControlsTabs(blockName) {
   const tabs = [];
   const {
+    bindings: bindingsGroup,
     border: borderGroup,
     color: colorGroup,
     default: defaultGroup,
@@ -73620,7 +73636,7 @@ function useInspectorControlsTabs(blockName) {
   // (i.e. both list view and styles), check only the default and position
   // InspectorControls slots. If we have multiple tabs, we'll need to check
   // the advanced controls slot as well to ensure they are rendered.
-  const advancedFills = (0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(InspectorAdvancedControls.slotName) || [];
+  const advancedFills = [...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(InspectorAdvancedControls.slotName) || []), ...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(bindingsGroup.Slot.__unstableName) || [])];
   const settingsFills = [...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(defaultGroup.Slot.__unstableName) || []), ...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(positionGroup.Slot.__unstableName) || []), ...(hasListFills && hasStyleFills > 1 ? advancedFills : [])];
 
   // Add the tabs in the order that they will default to if available.
@@ -74056,7 +74072,9 @@ const BlockInspectorSingleBlock = ({
         label: borderPanelLabel
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
         group: "styles"
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(position_controls_panel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(position_controls_panel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
+        group: "bindings"
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(advanced_controls_panel, {})
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SkipToSelectedBlock, {}, "back")]
