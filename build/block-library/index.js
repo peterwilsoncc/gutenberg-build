@@ -50875,12 +50875,10 @@ function ReusableBlockEdit({
       [`align${alignment}`]: alignment
     })
   });
-
-  // Use `blocks` variable until `innerBlocks` is populated, which has the proper clientIds.
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
     templateLock: 'all',
     layout,
-    value: innerBlocks.length > 0 ? innerBlocks : blocks,
+    value: blocks,
     onInput: edit_NOOP,
     onChange: edit_NOOP,
     renderAppender: blocks?.length ? undefined : external_wp_blockEditor_namespaceObject.InnerBlocks.ButtonBlockAppender
