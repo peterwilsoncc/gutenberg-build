@@ -52149,8 +52149,7 @@ function MediaPreview({
 
 
 const {
-  CompositeV2: media_list_Composite,
-  useCompositeStoreV2: useCompositeStore
+  CompositeV2: media_list_Composite
 } = unlock(external_wp_components_namespaceObject.privateApis);
 function MediaList({
   mediaList,
@@ -52158,9 +52157,7 @@ function MediaList({
   onClick,
   label = (0,external_wp_i18n_namespaceObject.__)('Media List')
 }) {
-  const compositeStore = useCompositeStore();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(media_list_Composite, {
-    store: compositeStore,
     role: "listbox",
     className: "block-editor-inserter__media-list",
     "aria-label": label,
