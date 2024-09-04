@@ -26601,7 +26601,6 @@ const {
 const {
   CompositeV2: Composite,
   CompositeItemV2: CompositeItem,
-  useCompositeStoreV2: useCompositeStore,
   Tabs: style_book_Tabs
 } = unlock(external_wp_components_namespaceObject.privateApis);
 
@@ -26879,11 +26878,8 @@ const Examples = (0,external_wp_element_namespaceObject.memo)(({
   isSelected,
   onSelect
 }) => {
-  const compositeStore = useCompositeStore({
-    orientation: 'vertical'
-  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Composite, {
-    store: compositeStore,
+    orientation: "vertical",
     className: className,
     "aria-label": label,
     role: "grid",
@@ -30773,7 +30769,7 @@ function useCompositeStoreProps(store, update, props) {
   useStoreProps(store, props, "focusShift");
   return store;
 }
-function UVQLZ7T5_useCompositeStore(props = {}) {
+function useCompositeStore(props = {}) {
   const [store, update] = useStore(Core.createCompositeStore, props);
   return useCompositeStoreProps(store, update, props);
 }
