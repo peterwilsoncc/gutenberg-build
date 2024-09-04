@@ -26256,8 +26256,7 @@ function Header({
 
 
 const {
-  PrivateInserterLibrary,
-  sectionRootClientIdKey: inserter_sidebar_sectionRootClientIdKey
+  PrivateInserterLibrary
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function InserterSidebar() {
   const {
@@ -26277,8 +26276,8 @@ function InserterSidebar() {
       getBlockInsertionPoint,
       getBlockRootClientId,
       __unstableGetEditorMode,
-      getSettings
-    } = select(external_wp_blockEditor_namespaceObject.store);
+      getSectionRootClientId
+    } = unlock(select(external_wp_blockEditor_namespaceObject.store));
     const {
       get
     } = select(external_wp_preferences_namespaceObject.store);
@@ -26287,9 +26286,7 @@ function InserterSidebar() {
     } = select(store);
     const getBlockSectionRootClientId = () => {
       if (__unstableGetEditorMode() === 'zoom-out') {
-        const {
-          [inserter_sidebar_sectionRootClientIdKey]: sectionRootClientId
-        } = getSettings();
+        const sectionRootClientId = getSectionRootClientId();
         if (sectionRootClientId) {
           return sectionRootClientId;
         }

@@ -7700,6 +7700,7 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   getRegisteredInserterMediaCategories: () => (getRegisteredInserterMediaCategories),
   getRemovalPromptData: () => (getRemovalPromptData),
   getReusableBlocks: () => (getReusableBlocks),
+  getSectionRootClientId: () => (getSectionRootClientId),
   getStyleOverrides: () => (getStyleOverrides),
   getTemporarilyEditingAsBlocks: () => (getTemporarilyEditingAsBlocks),
   getTemporarilyEditingFocusModeToRevert: () => (getTemporarilyEditingFocusModeToRevert),
@@ -11076,6 +11077,9 @@ const getBlockStyles = (0,external_wp_data_namespaceObject.createSelector)((stat
 function isZoomOutMode(state) {
   return state.editorMode === 'zoom-out';
 }
+function getSectionRootClientId(state) {
+  return state.settings?.[sectionRootClientIdKey];
+}
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/store/selectors.js
 /**
@@ -11092,7 +11096,6 @@ function isZoomOutMode(state) {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -12859,7 +12862,7 @@ const getInserterItems = (0,external_wp_data_namespaceObject.createRegistrySelec
         if (!item.rootClientId) {
           let sectionRootClientId;
           try {
-            sectionRootClientId = getSettings(state)[sectionRootClientIdKey];
+            sectionRootClientId = getSectionRootClientId(state);
           } catch (e) {}
           if (sectionRootClientId && canInsertBlockTypeUnmemoized(state, item.name, sectionRootClientId)) {
             item.rootClientId = sectionRootClientId;
@@ -13441,9 +13444,7 @@ function __unstableHasActiveBlockOverlayActive(state, clientId) {
 
   // In zoom-out mode, the block overlay is always active for section level blocks.
   if (editorMode === 'zoom-out') {
-    const {
-      [sectionRootClientIdKey]: sectionRootClientId
-    } = getSettings(state);
+    const sectionRootClientId = getSectionRootClientId(state);
     if (sectionRootClientId) {
       const sectionClientIds = getBlockOrder(state, sectionRootClientId);
       if (sectionClientIds?.includes(clientId)) {
@@ -13517,9 +13518,7 @@ const getBlockEditingMode = (0,external_wp_data_namespaceObject.createRegistrySe
   // sections.
   const editorMode = __unstableGetEditorMode(state);
   if (editorMode === 'zoom-out') {
-    const {
-      [sectionRootClientIdKey]: sectionRootClientId
-    } = getSettings(state);
+    const sectionRootClientId = getSectionRootClientId(state);
     if (clientId === '' /* ROOT_CONTAINER_CLIENT_ID */) {
       return sectionRootClientId ? 'disabled' : 'contentOnly';
     }
@@ -14091,8 +14090,6 @@ function findRichTextAttributeKey(blockType) {
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -15482,15 +15479,12 @@ const setNavigationMode = (isNavigationMode = true) => ({
  */
 const __unstableSetEditorMode = mode => ({
   dispatch,
-  select,
-  registry
+  select
 }) => {
   // When switching to zoom-out mode, we need to select the parent section
   if (mode === 'zoom-out') {
     const firstSelectedClientId = select.getBlockSelectionStart();
-    const {
-      [sectionRootClientIdKey]: sectionRootClientId
-    } = registry.select(STORE_NAME).getSettings();
+    const sectionRootClientId = select.getSectionRootClientId();
     if (firstSelectedClientId) {
       let sectionClientId;
       if (sectionRootClientId) {
@@ -45090,7 +45084,6 @@ function isPointWithinTopAndBottomBoundariesOfRect(point, rect) {
 
 
 
-
 const THRESHOLD_DISTANCE = 30;
 const MINIMUM_HEIGHT_FOR_THRESHOLD = 120;
 const MINIMUM_WIDTH_FOR_THRESHOLD = 120;
@@ -45301,8 +45294,8 @@ function useBlockDropZone({
     getAllowedBlocks,
     isDragging,
     isGroupable,
-    getSettings,
-    isZoomOutMode
+    isZoomOutMode,
+    getSectionRootClientId
   } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const {
     showInsertionPoint,
@@ -45327,9 +45320,7 @@ function useBlockDropZone({
     if (!isBlockDroppingAllowed) {
       return;
     }
-    const {
-      [sectionRootClientIdKey]: sectionRootClientId
-    } = getSettings();
+    const sectionRootClientId = getSectionRootClientId();
 
     // In Zoom Out mode, if the target is not the section root provided by settings then
     // do not allow dropping as the drop target is not within the root (that which is
@@ -45404,7 +45395,7 @@ function useBlockDropZone({
         nearestSide
       });
     });
-  }, [isDragging, getAllowedBlocks, targetRootClientId, getBlockNamesByClientId, getDraggedBlockClientIds, getBlockType, getBlocks, getBlockListSettings, dropZoneElement, parentBlockClientId, getBlockIndex, registry, startDragging, showInsertionPoint, canInsertBlockType, isGroupable, getBlockVariations, getGroupingBlockName, getSettings, isZoomOutMode]), 200);
+  }, [isDragging, getAllowedBlocks, targetRootClientId, getBlockNamesByClientId, getDraggedBlockClientIds, getBlockType, getSectionRootClientId, isZoomOutMode, getBlocks, getBlockListSettings, dropZoneElement, parentBlockClientId, getBlockIndex, registry, startDragging, showInsertionPoint, canInsertBlockType, isGroupable, getBlockVariations, getGroupingBlockName]), 200);
   return (0,external_wp_compose_namespaceObject.__experimentalUseDropZone)({
     dropZoneElement,
     isDisabled,
@@ -45444,7 +45435,6 @@ function useBlockDropZone({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -45602,7 +45592,7 @@ function useInnerBlocksProps(props = {}, options = {}) {
       getBlockEditingMode,
       getBlockSettings,
       isDragging,
-      getSettings
+      getSectionRootClientId
     } = unlock(select(store));
     let _isDropZoneDisabled;
     if (!clientId) {
@@ -45624,9 +45614,7 @@ function useInnerBlocksProps(props = {}, options = {}) {
       // In zoom out mode, we want to disable the drop zone for the sections.
       // The inner blocks belonging to the section drop zone is
       // already disabled by the blocks themselves being disabled.
-      const {
-        [sectionRootClientIdKey]: sectionRootClientId
-      } = getSettings();
+      const sectionRootClientId = getSectionRootClientId();
       _isDropZoneDisabled = clientId !== sectionRootClientId;
     }
     return {
@@ -62523,11 +62511,10 @@ function ZoomOutModeInserters() {
       getSelectionStart,
       getSelectedBlockClientId,
       getHoveredBlockClientId,
-      isBlockInsertionPointVisible
-    } = select(store);
-    const {
-      [sectionRootClientIdKey]: root
-    } = getSettings();
+      isBlockInsertionPointVisible,
+      getSectionRootClientId
+    } = unlock(select(store));
+    const root = getSectionRootClientId();
     return {
       hasSelection: !!getSelectionStart().clientId,
       blockInsertionPoint: getBlockInsertionPoint(),
