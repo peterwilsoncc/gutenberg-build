@@ -25984,19 +25984,24 @@ function PreviewDropdown({
     value: 'Desktop',
     label: (0,external_wp_i18n_namespaceObject.__)('Desktop'),
     icon: library_desktop
-  }, {
-    value: 'ZoomOut',
-    label: (0,external_wp_i18n_namespaceObject.__)('Desktop (50%)'),
-    icon: library_desktop
-  }, {
+  }];
+  if (window.__experimentalEnableZoomOutExperiment) {
+    choices.push({
+      value: 'ZoomOut',
+      label: (0,external_wp_i18n_namespaceObject.__)('Desktop (50%)'),
+      icon: library_desktop
+    });
+  }
+  choices.push({
     value: 'Tablet',
     label: (0,external_wp_i18n_namespaceObject.__)('Tablet'),
     icon: library_tablet
-  }, {
+  });
+  choices.push({
     value: 'Mobile',
     label: (0,external_wp_i18n_namespaceObject.__)('Mobile'),
     icon: library_mobile
-  }];
+  });
   const previewValue = editorMode === 'zoom-out' ? 'ZoomOut' : deviceType;
 
   /**
