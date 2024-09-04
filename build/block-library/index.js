@@ -50883,7 +50883,7 @@ function ReusableBlockEdit({
     value: innerBlocks.length > 0 ? innerBlocks : blocks,
     onInput: edit_NOOP,
     onChange: edit_NOOP,
-    renderAppender: blocks?.length ? undefined : blocks.ButtonBlockAppender
+    renderAppender: blocks?.length ? undefined : external_wp_blockEditor_namespaceObject.InnerBlocks.ButtonBlockAppender
   });
   const handleEditOriginal = () => {
     onNavigateToEntityRecord({
@@ -50912,7 +50912,7 @@ function ReusableBlockEdit({
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [hasResolved && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ReusableBlockControl, {
+    children: [hasResolved && !isMissing && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ReusableBlockControl, {
       recordId: ref,
       canOverrideBlocks: canOverrideBlocks,
       hasContent: !!content,
