@@ -16468,7 +16468,7 @@ function getFontStylesAndWeights(fontFamilyFaces) {
   let isVariableFont = false;
   fontFamilyFaces?.forEach(face => {
     // Check for variable font by looking for a space in the font weight value. e.g. "100 900"
-    if (/\s/.test(face.fontWeight.trim())) {
+    if ('string' === typeof face.fontWeight && /\s/.test(face.fontWeight.trim())) {
       isVariableFont = true;
 
       // Find font weight start and end values.
@@ -16490,16 +16490,16 @@ function getFontStylesAndWeights(fontFamilyFaces) {
     }
 
     // Format font style and weight values.
-    const fontWeight = formatFontWeight(face.fontWeight);
+    const fontWeight = formatFontWeight('number' === typeof face.fontWeight ? face.fontWeight.toString() : face.fontWeight);
     const fontStyle = formatFontStyle(face.fontStyle);
 
     // Create font style and font weight lists without duplicates.
-    if (fontStyle) {
+    if (fontStyle && Object.keys(fontStyle).length) {
       if (!fontStyles.some(style => style.value === fontStyle.value)) {
         fontStyles.push(fontStyle);
       }
     }
-    if (fontWeight) {
+    if (fontWeight && Object.keys(fontWeight).length) {
       if (!fontWeights.some(weight => weight.value === fontWeight.value)) {
         if (!isVariableFont) {
           fontWeights.push(fontWeight);
@@ -16709,6 +16709,7 @@ function getMergedFontFamiliesAndFontFamilyFaces(settings, selectedFontFamily) {
  * @return {string} Nearest font weight.
  */
 function findNearestFontWeight(availableFontWeights, newFontWeightValue) {
+  newFontWeightValue = 'number' === typeof newFontWeightValue ? newFontWeightValue.toString() : newFontWeightValue;
   if (!newFontWeightValue || typeof newFontWeightValue !== 'string') {
     return '';
   }
@@ -16773,7 +16774,7 @@ function findNearestStyleAndWeight(fontFamilyFaces, fontStyle, fontWeight) {
   }) => fs === fontStyle);
   const hasFontWeight = fontWeights?.some(({
     value: fw
-  }) => fw === fontWeight);
+  }) => fw?.toString() === fontWeight?.toString());
   if (!hasFontStyle) {
     /*
      * Default to italic if oblique is not available.
