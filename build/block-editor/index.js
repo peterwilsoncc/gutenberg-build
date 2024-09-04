@@ -49998,18 +49998,14 @@ const useBlockTypesState = (rootClientId, onInsert, isQuick) => {
 
 
 const {
-  CompositeV2: inserter_listbox_Composite,
-  useCompositeStoreV2: useCompositeStore
+  CompositeV2: inserter_listbox_Composite
 } = unlock(external_wp_components_namespaceObject.privateApis);
 function InserterListbox({
   children
 }) {
-  const store = useCompositeStore({
-    focusShift: true,
-    focusWrap: 'horizontal'
-  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inserter_listbox_Composite, {
-    store: store,
+    focusShift: true,
+    focusWrap: "horizontal",
     render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {}),
     children: children
   });
@@ -52154,7 +52150,7 @@ function MediaPreview({
 
 const {
   CompositeV2: media_list_Composite,
-  useCompositeStoreV2: media_list_useCompositeStore
+  useCompositeStoreV2: useCompositeStore
 } = unlock(external_wp_components_namespaceObject.privateApis);
 function MediaList({
   mediaList,
@@ -52162,7 +52158,7 @@ function MediaList({
   onClick,
   label = (0,external_wp_i18n_namespaceObject.__)('Media List')
 }) {
-  const compositeStore = media_list_useCompositeStore();
+  const compositeStore = useCompositeStore();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(media_list_Composite, {
     store: compositeStore,
     role: "listbox",
