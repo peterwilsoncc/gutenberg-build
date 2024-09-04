@@ -51005,7 +51005,7 @@ function ReusableBlockEdit({
     const {
       getBlocks,
       getSettings,
-      getBlockEditingMode: _getBlockEditingMode
+      getBlockEditingMode
     } = select(external_wp_blockEditor_namespaceObject.store);
     const {
       getBlockBindingsSource
@@ -51013,9 +51013,8 @@ function ReusableBlockEdit({
     // For editing link to the site editor if the theme and user permissions support it.
     return {
       innerBlocks: getBlocks(patternClientId),
-      getBlockEditingMode: _getBlockEditingMode,
       onNavigateToEntityRecord: getSettings().onNavigateToEntityRecord,
-      editingMode: _getBlockEditingMode(patternClientId),
+      editingMode: getBlockEditingMode(patternClientId),
       hasPatternOverridesSource: !!getBlockBindingsSource('core/pattern-overrides')
     };
   }, [patternClientId]);
