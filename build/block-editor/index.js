@@ -52802,9 +52802,9 @@ function InserterMenu({
 
     // Check for focus loss due to filtering blocks by selected block type
     window.requestAnimationFrame(() => {
-      if (!shouldFocusBlock && !blockTypesTabRef?.current.contains(ref.current.ownerDocument.activeElement)) {
+      if (!shouldFocusBlock && !blockTypesTabRef.current?.contains(ref.current.ownerDocument.activeElement)) {
         // There has been a focus loss, so focus the first button in the block types tab
-        blockTypesTabRef?.current.querySelector('button').focus();
+        blockTypesTabRef.current?.querySelector('button').focus();
       }
     });
   }, [onInsertBlocks, onSelect, shouldFocusBlock]);
