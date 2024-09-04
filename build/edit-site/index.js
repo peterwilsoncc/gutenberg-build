@@ -41345,8 +41345,7 @@ const useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters
 
 const {
   CompositeV2: add_custom_template_modal_content_Composite,
-  CompositeItemV2: add_custom_template_modal_content_CompositeItem,
-  useCompositeStoreV2: add_custom_template_modal_content_useCompositeStore
+  CompositeItemV2: add_custom_template_modal_content_CompositeItem
 } = unlock(external_wp_components_namespaceObject.privateApis);
 const add_custom_template_modal_content_EMPTY_ARRAY = [];
 function SuggestionListItem({
@@ -41421,9 +41420,6 @@ function SuggestionList({
   entityForSuggestions,
   onSelect
 }) {
-  const composite = add_custom_template_modal_content_useCompositeStore({
-    orientation: 'vertical'
-  });
   const [search, setSearch, debouncedSearch] = (0,external_wp_compose_namespaceObject.useDebouncedInput)();
   const suggestions = useSearchSuggestions(entityForSuggestions, debouncedSearch);
   const {
@@ -41441,7 +41437,7 @@ function SuggestionList({
       label: labels.search_items,
       placeholder: labels.search_items
     }), !!suggestions?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_custom_template_modal_content_Composite, {
-      store: composite,
+      orientation: "vertical",
       role: "listbox",
       className: "edit-site-custom-template-modal__suggestions_list",
       "aria-label": (0,external_wp_i18n_namespaceObject.__)('Suggestions list'),
