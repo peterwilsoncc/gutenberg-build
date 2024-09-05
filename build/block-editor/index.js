@@ -25835,11 +25835,6 @@ const shadow = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 /**
- * Internal dependencies
- */
-
-
-/**
  * Shared reference to an empty array for cases where it is important to avoid
  * returning a new array reference on every invocation.
  *
@@ -25848,10 +25843,6 @@ const shadow = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 const shadow_panel_components_EMPTY_ARRAY = [];
-const {
-  CompositeItemV2: CompositeItem,
-  CompositeV2: Composite
-} = unlock(external_wp_components_namespaceObject.privateApis);
 function ShadowPopoverContainer({
   shadow,
   onShadowChange,
@@ -25888,7 +25879,7 @@ function ShadowPresets({
   activeShadow,
   onSelect
 }) {
-  return !presets ? null : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Composite, {
+  return !presets ? null : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
     role: "listbox",
     className: "block-editor-global-styles__shadow__list",
     "aria-label": (0,external_wp_i18n_namespaceObject.__)('Drop shadows'),
@@ -25912,7 +25903,7 @@ function ShadowIndicator({
   onSelect,
   shadow
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CompositeItem, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
     role: "option",
     "aria-label": label,
     "aria-selected": isActive,
@@ -49554,24 +49545,16 @@ function InserterPreviewPanel({
 
 
 
-/**
- * Internal dependencies
- */
-
-
-const {
-  CompositeItemV2: item_CompositeItem
-} = unlock(external_wp_components_namespaceObject.privateApis);
 function InserterListboxItem({
   isFirst,
   as: Component,
   children,
   ...props
 }, ref) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(item_CompositeItem, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
     ref: ref,
     role: "option"
-    // Use the CompositeItem `accessibleWhenDisabled` prop
+    // Use the Composite.Item `accessibleWhenDisabled` prop
     // over Button's `isFocusable`. The latter was shown to
     // cause an issue with tab order in the inserter list.
     ,
@@ -49896,16 +49879,8 @@ function InserterListboxGroup(props, ref) {
 
 
 
-/**
- * Internal dependencies
- */
-
-
-const {
-  CompositeGroupV2: CompositeGroup
-} = unlock(external_wp_components_namespaceObject.privateApis);
 function InserterListboxRow(props, ref) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CompositeGroup, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Group, {
     role: "presentation",
     ref: ref,
     ...props
@@ -50057,14 +50032,10 @@ const useBlockTypesState = (rootClientId, onInsert, isQuick) => {
 
 
 
-
-const {
-  CompositeV2: inserter_listbox_Composite
-} = unlock(external_wp_components_namespaceObject.privateApis);
 function InserterListbox({
   children
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inserter_listbox_Composite, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
     focusShift: true,
     focusWrap: "horizontal",
     render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {}),
@@ -50466,11 +50437,6 @@ function Pagination({
 
 
 
-
-const {
-  CompositeV2: block_patterns_list_Composite,
-  CompositeItemV2: block_patterns_list_CompositeItem
-} = unlock(external_wp_components_namespaceObject.privateApis);
 const WithToolTip = ({
   showTooltip,
   title,
@@ -50547,7 +50513,7 @@ function BlockPattern({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WithToolTip, {
         showTooltip: showTooltip && !pattern.type !== INSERTER_PATTERN_TYPES.user,
         title: pattern.title,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(block_patterns_list_CompositeItem, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite.Item, {
           render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
             role: "option",
             "aria-label": pattern.title,
@@ -50619,7 +50585,7 @@ function BlockPatternsList({
     const firstCompositeItemId = blockPatterns.find(pattern => shownPatterns.includes(pattern))?.name;
     setActiveCompositeId(firstCompositeItemId);
   }, [shownPatterns, blockPatterns]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(block_patterns_list_Composite, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite, {
     orientation: orientation,
     activeId: activeCompositeId,
     setActiveId: setActiveCompositeId,
@@ -51978,16 +51944,12 @@ function getBlockAndPreviewFromMedia(media, mediaType) {
 
 
 
-
 const ALLOWED_MEDIA_TYPES = ['image'];
 const MAXIMUM_TITLE_LENGTH = 25;
 const MEDIA_OPTIONS_POPOVER_PROPS = {
   position: 'bottom left',
   className: 'block-editor-inserter__media-list__item-preview-options__popover'
 };
-const {
-  CompositeItemV2: media_preview_CompositeItem
-} = unlock(external_wp_components_namespaceObject.privateApis);
 function MediaPreviewOptions({
   category,
   media
@@ -52162,7 +52124,7 @@ function MediaPreview({
           onMouseLeave: onMouseLeave,
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
             text: truncatedTitle || title,
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(media_preview_CompositeItem, {
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
               render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
                 "aria-label": title,
                 role: "option",
@@ -52208,17 +52170,13 @@ function MediaPreview({
  */
 
 
-
-const {
-  CompositeV2: media_list_Composite
-} = unlock(external_wp_components_namespaceObject.privateApis);
 function MediaList({
   mediaList,
   category,
   onClick,
   label = (0,external_wp_i18n_namespaceObject.__)('Media List')
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(media_list_Composite, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
     role: "listbox",
     className: "block-editor-inserter__media-list",
     "aria-label": label,
@@ -58832,11 +58790,6 @@ const useTransformedPatterns = (patterns, selectedBlocks) => {
 
 
 
-
-const {
-  CompositeV2: pattern_transformations_menu_Composite,
-  CompositeItemV2: pattern_transformations_menu_CompositeItem
-} = unlock(external_wp_components_namespaceObject.privateApis);
 function PatternTransformationsMenu({
   blocks,
   patterns: statePatterns,
@@ -58887,7 +58840,7 @@ function pattern_transformations_menu_BlockPatternsList({
   patterns,
   onSelect
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pattern_transformations_menu_Composite, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
     role: "listbox",
     className: "block-editor-block-switcher__preview-patterns-container",
     "aria-label": (0,external_wp_i18n_namespaceObject.__)('Patterns list'),
@@ -58906,7 +58859,7 @@ function pattern_transformations_menu_BlockPattern({
   const descriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(pattern_transformations_menu_BlockPattern, `${baseClassName}-list__item-description`);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: `${baseClassName}-list__list-item`,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(pattern_transformations_menu_CompositeItem, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite.Item, {
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         role: "option",
         "aria-label": pattern.title,
@@ -67150,11 +67103,6 @@ function usePatternsSetup(clientId, blockName, filterPatternsFn) {
 
 
 
-
-const {
-  CompositeV2: block_pattern_setup_Composite,
-  CompositeItemV2: block_pattern_setup_CompositeItem
-} = unlock(external_wp_components_namespaceObject.privateApis);
 const SetupContent = ({
   viewMode,
   activeSlide,
@@ -67182,7 +67130,7 @@ const SetupContent = ({
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "block-editor-block-pattern-setup__grid",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_pattern_setup_Composite, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
       role: "listbox",
       className: containerClass,
       "aria-label": (0,external_wp_i18n_namespaceObject.__)('Patterns list'),
@@ -67208,7 +67156,7 @@ function block_pattern_setup_BlockPattern({
   const descriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(block_pattern_setup_BlockPattern, `${baseClassName}__item-description`);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: `${baseClassName}__list-item`,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(block_pattern_setup_CompositeItem, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite.Item, {
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         "aria-describedby": description ? descriptionId : undefined,
         "aria-label": pattern.title,

@@ -1789,6 +1789,7 @@ __webpack_require__.d(__webpack_exports__, {
   ColorPalette: () => (/* reexport */ color_palette),
   ColorPicker: () => (/* reexport */ LegacyAdapter),
   ComboboxControl: () => (/* reexport */ combobox_control),
+  Composite: () => (/* reexport */ Composite),
   CustomGradientPicker: () => (/* reexport */ custom_gradient_picker),
   CustomSelectControl: () => (/* reexport */ custom_select_control),
   Dashicon: () => (/* reexport */ dashicon),
@@ -71575,15 +71576,8 @@ const {
 
 
 
-
 const privateApis = {};
 lock(privateApis, {
-  CompositeV2: Composite,
-  CompositeGroupV2: Composite.Group,
-  CompositeItemV2: Composite.Item,
-  CompositeRowV2: Composite.Row,
-  CompositeTypeaheadV2: Composite.Typeahead,
-  CompositeHoverV2: Composite.Hover,
   __experimentalPopoverLegacyPositionToPlacement: positionToPlacement,
   createPrivateSlotFill: createPrivateSlotFill,
   ComponentsContext: ComponentsContext,
@@ -71598,6 +71592,7 @@ lock(privateApis, {
 
 
 // Components.
+
 
 
 
