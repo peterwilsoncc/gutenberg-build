@@ -29701,7 +29701,27 @@ function EditorPreferencesModal({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_manager, {})
       })]
     })
-  }], [showBlockBreadcrumbsOption, extraSections, setIsInserterOpened, setIsListViewOpened, setPreference, isLargeViewport]);
+  }, window.__experimentalMediaProcessing && {
+    name: 'media',
+    tabLabel: (0,external_wp_i18n_namespaceObject.__)('Media'),
+    content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(PreferencesModalSection, {
+        title: (0,external_wp_i18n_namespaceObject.__)('General'),
+        description: (0,external_wp_i18n_namespaceObject.__)('Customize options related to the media upload flow.'),
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreferenceToggleControl, {
+          scope: "core/media",
+          featureName: "optimizeOnUpload",
+          help: (0,external_wp_i18n_namespaceObject.__)('Compress media items before uploading to the server.'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Pre-upload compression')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreferenceToggleControl, {
+          scope: "core/media",
+          featureName: "requireApproval",
+          help: (0,external_wp_i18n_namespaceObject.__)('Require approval step when optimizing existing media.'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Approval step')
+        })]
+      })
+    })
+  }].filter(Boolean), [showBlockBreadcrumbsOption, extraSections, setIsInserterOpened, setIsListViewOpened, setPreference, isLargeViewport]);
   if (!isActive) {
     return null;
   }

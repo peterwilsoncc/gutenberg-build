@@ -46062,6 +46062,12 @@ function initializeEditor(id, settings) {
     showBlockBreadcrumbs: true,
     showListViewByDefault: false
   });
+  if (window.__experimentalMediaProcessing) {
+    (0,external_wp_data_namespaceObject.dispatch)(external_wp_preferences_namespaceObject.store).setDefaults('core/media', {
+      requireApproval: true,
+      optimizeOnUpload: true
+    });
+  }
   (0,external_wp_data_namespaceObject.dispatch)(store).updateSettings(settings);
 
   // Keep the defaultTemplateTypes in the core/editor settings too,

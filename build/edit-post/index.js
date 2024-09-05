@@ -3298,6 +3298,12 @@ function initializeEditor(id, postType, postId, settings, initialEdits) {
     showListViewByDefault: false,
     isPublishSidebarEnabled: true
   });
+  if (window.__experimentalMediaProcessing) {
+    (0,external_wp_data_namespaceObject.dispatch)(external_wp_preferences_namespaceObject.store).setDefaults('core/media', {
+      requireApproval: true,
+      optimizeOnUpload: true
+    });
+  }
   (0,external_wp_data_namespaceObject.dispatch)(external_wp_blocks_namespaceObject.store).reapplyBlockTypeFilters();
 
   // Check if the block list view should be open by default.
