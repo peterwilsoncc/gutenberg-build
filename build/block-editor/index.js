@@ -32100,11 +32100,20 @@ function isElementVisible(element) {
   if (bounds.width === 0 || bounds.height === 0) {
     return false;
   }
-  return element.checkVisibility({
-    opacityProperty: true,
-    contentVisibilityAuto: true,
-    visibilityProperty: true
-  });
+
+  // Older browsers, e.g. Safari < 17.4 may not support the `checkVisibility` method.
+  if (element.checkVisibility) {
+    return element.checkVisibility?.({
+      opacityProperty: true,
+      contentVisibilityAuto: true,
+      visibilityProperty: true
+    });
+  }
+  const style = viewport.getComputedStyle(element);
+  if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') {
+    return false;
+  }
+  return true;
 }
 
 /**
