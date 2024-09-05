@@ -46982,10 +46982,11 @@ function ComboboxControl(props) {
  */
 
 
+
+
 /**
  * Internal dependencies
  */
-
 
 
 // Legacy composite components can either provide state through a
@@ -47013,9 +47014,20 @@ function mapLegacyStatePropsToComponentProps(legacyProps) {
   }
   return legacyProps;
 }
+const LEGACY_TO_NEW_DISPLAY_NAME = {
+  __unstableComposite: 'Composite',
+  __unstableCompositeGroup: 'Composite.Group or Composite.Row',
+  __unstableCompositeItem: 'Composite.Item',
+  __unstableUseCompositeState: 'Composite'
+};
 function proxyComposite(ProxiedComponent, propMap = {}) {
-  const displayName = ProxiedComponent.displayName;
+  var _ProxiedComponent$dis;
+  const displayName = (_ProxiedComponent$dis = ProxiedComponent.displayName) !== null && _ProxiedComponent$dis !== void 0 ? _ProxiedComponent$dis : '';
   const Component = legacyProps => {
+    external_wp_deprecated_default()(`wp.components.${displayName}`, {
+      since: '6.7',
+      alternative: LEGACY_TO_NEW_DISPLAY_NAME.hasOwnProperty(displayName) ? LEGACY_TO_NEW_DISPLAY_NAME[displayName] : undefined
+    });
     const {
       store,
       ...rest
@@ -47044,7 +47056,7 @@ function proxyComposite(ProxiedComponent, propMap = {}) {
 // `CompositeRow`, but this has been split into two different
 // components. We handle that difference by checking on the
 // provided role, and returning the appropriate component.
-const unproxiedCompositeGroup = (0,external_wp_element_namespaceObject.forwardRef)(({
+const UnproxiedCompositeGroup = (0,external_wp_element_namespaceObject.forwardRef)(({
   role,
   ...props
 }, ref) => {
@@ -47055,14 +47067,46 @@ const unproxiedCompositeGroup = (0,external_wp_element_namespaceObject.forwardRe
     ...props
   });
 });
-const legacy_Composite = proxyComposite(Composite, {
+
+/**
+ * _Note: please use the `Composite` component instead._
+ *
+ * @deprecated
+ */
+const legacy_Composite = proxyComposite(Object.assign(Composite, {
+  displayName: '__unstableComposite'
+}), {
   baseId: 'id'
 });
-const legacy_CompositeGroup = proxyComposite(unproxiedCompositeGroup);
-const legacy_CompositeItem = proxyComposite(Composite.Item, {
+/**
+ * _Note: please use the `Composite.Row` or `Composite.Group` components instead._
+ *
+ * @deprecated
+ */
+const legacy_CompositeGroup = proxyComposite(Object.assign(UnproxiedCompositeGroup, {
+  displayName: '__unstableCompositeGroup'
+}));
+/**
+ * _Note: please use the `Composite.Item` component instead._
+ *
+ * @deprecated
+ */
+const legacy_CompositeItem = proxyComposite(Object.assign(Composite.Item, {
+  displayName: '__unstableCompositeItem'
+}), {
   focusable: 'accessibleWhenDisabled'
 });
+
+/**
+ * _Note: please use the `Composite` component instead._
+ *
+ * @deprecated
+ */
 function useCompositeState(legacyStateOptions = {}) {
+  external_wp_deprecated_default()(`wp.components.__unstableUseCompositeState`, {
+    since: '6.7',
+    alternative: LEGACY_TO_NEW_DISPLAY_NAME.__unstableUseCompositeState
+  });
   const {
     baseId,
     currentId: defaultActiveId,
