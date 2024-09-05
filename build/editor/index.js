@@ -29826,8 +29826,9 @@ const CONTENT = 'content';
     const meta = registry.select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', context?.postType, context?.postId)?.meta;
     const newValues = {};
     for (const [attributeName, source] of Object.entries(bindings)) {
+      var _meta$source$args$key;
       // Use the key if the value is not set.
-      newValues[attributeName] = meta?.[source.args.key] || source.args.key;
+      newValues[attributeName] = (_meta$source$args$key = meta?.[source.args.key]) !== null && _meta$source$args$key !== void 0 ? _meta$source$args$key : source.args.key;
     }
     return newValues;
   },
