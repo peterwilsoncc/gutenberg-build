@@ -3619,9 +3619,13 @@ function getRenderingMode(state) {
  *
  * @return {string} Device type.
  */
-function getDeviceType(state) {
+const getDeviceType = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => state => {
+  const editorMode = select(external_wp_blockEditor_namespaceObject.store).__unstableGetEditorMode();
+  if (editorMode === 'zoom-out') {
+    return 'Desktop';
+  }
   return state.deviceType;
-}
+});
 
 /**
  * Returns true if the list view is opened.
