@@ -70196,7 +70196,7 @@ function MediaPlaceholder({
     setSrc(event.target.value);
   };
   const onFilesUpload = files => {
-    if (!handleUpload) {
+    if (!handleUpload || typeof handleUpload === 'function' && !handleUpload(files)) {
       return onSelect(files);
     }
     onFilesPreUpload(files);

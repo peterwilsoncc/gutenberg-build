@@ -21016,6 +21016,16 @@ function getImageSizeAttributes(image, size) {
   return {};
 }
 
+/**
+ * Checks if the file has a valid file type.
+ *
+ * @param {File} file - The file to check.
+ * @return {boolean} - Returns true if the file has a valid file type, otherwise false.
+ */
+function isValidFileType(file) {
+  return constants_ALLOWED_MEDIA_TYPES.some(mediaType => file.type.indexOf(mediaType) === 0);
+}
+
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/gallery/gallery.js
 /**
  * External dependencies
@@ -26500,6 +26510,7 @@ function image_Image({
 
 
 
+
 /**
  * Module constants
  */
@@ -26562,6 +26573,7 @@ function ImageEdit({
     metadata
   } = attributes;
   const [temporaryURL, setTemporaryURL] = (0,external_wp_element_namespaceObject.useState)(attributes.blob);
+  const figureRef = (0,external_wp_element_namespaceObject.useRef)();
   const [contentResizeListener, {
     width: containerWidth
   }] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
@@ -26574,7 +26586,8 @@ function ImageEdit({
     captionRef.current = caption;
   }, [caption]);
   const {
-    __unstableMarkNextChangeAsNotPersistent
+    __unstableMarkNextChangeAsNotPersistent,
+    replaceBlock
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (['wide', 'full'].includes(align)) {
@@ -26588,7 +26601,10 @@ function ImageEdit({
     }
   }, [__unstableMarkNextChangeAsNotPersistent, align, setAttributes]);
   const {
-    getSettings
+    getSettings,
+    getBlockRootClientId,
+    getBlockName,
+    canInsertBlockType
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
   const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
   const {
@@ -26605,7 +26621,35 @@ function ImageEdit({
       blob: undefined
     });
   }
+  function onSelectImagesList(images) {
+    const win = figureRef.current?.ownerDocument.defaultView;
+    if (images.every(file => file instanceof win.File)) {
+      /** @type {File[]} */
+      const files = images;
+      const rootClientId = getBlockRootClientId(clientId);
+      if (files.some(file => !isValidFileType(file))) {
+        // Copied from the same notice in the gallery block.
+        createErrorNotice((0,external_wp_i18n_namespaceObject.__)('If uploading to a gallery all files need to be image formats'), {
+          id: 'gallery-upload-invalid-file',
+          type: 'snackbar'
+        });
+      }
+      const imageBlocks = files.filter(file => isValidFileType(file)).map(file => (0,external_wp_blocks_namespaceObject.createBlock)('core/image', {
+        blob: (0,external_wp_blob_namespaceObject.createBlobURL)(file)
+      }));
+      if (getBlockName(rootClientId) === 'core/gallery') {
+        replaceBlock(clientId, imageBlocks);
+      } else if (canInsertBlockType('core/gallery', rootClientId)) {
+        const galleryBlock = (0,external_wp_blocks_namespaceObject.createBlock)('core/gallery', {}, imageBlocks);
+        replaceBlock(clientId, galleryBlock);
+      }
+    }
+  }
   function onSelectImage(media) {
+    if (Array.isArray(media)) {
+      onSelectImagesList(media);
+      return;
+    }
     if (!media || !media.url) {
       setAttributes({
         url: undefined,
@@ -26736,6 +26780,7 @@ function ImageEdit({
     'has-custom-border': !!borderProps.className || borderProps.style && Object.keys(borderProps.style).length > 0
   });
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
+    ref: figureRef,
     className: classes
   });
 
@@ -26809,6 +26854,7 @@ function ImageEdit({
         placeholder: placeholder,
         accept: "image/*",
         allowedTypes: constants_ALLOWED_MEDIA_TYPES,
+        handleUpload: files => files.length === 1,
         value: {
           id,
           src
