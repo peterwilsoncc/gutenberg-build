@@ -45295,6 +45295,20 @@ function isDropTargetValid(getBlockType, allowedBlocks, draggedBlockNames, targe
 }
 
 /**
+ * Checks if the given element is an insertion point.
+ *
+ * @param {EventTarget|null} targetToCheck - The element to check.
+ * @param {Document}         ownerDocument - The owner document of the element.
+ * @return {boolean} True if the element is a insertion point, false otherwise.
+ */
+function isInsertionPoint(targetToCheck, ownerDocument) {
+  const {
+    defaultView
+  } = ownerDocument;
+  return !!(defaultView && targetToCheck instanceof defaultView.HTMLElement && targetToCheck.dataset.isInsertionPoint);
+}
+
+/**
  * @typedef  {Object} WPBlockDropZoneConfig
  * @property {?HTMLElement} dropZoneElement Optional element to be used as the drop zone.
  * @property {string}       rootClientId    The root client id for the block list.
@@ -45403,6 +45417,9 @@ function useBlockDropZone({
       rootBlockIndex: getBlockIndex(targetRootClientId)
     });
     const [targetIndex, operation, nearestSide] = dropTargetPosition;
+    if (isZoomOutMode() && operation !== 'insert') {
+      return;
+    }
     if (operation === 'group') {
       const targetBlock = blocks[targetIndex];
       const areAllImages = [targetBlock.name, ...draggedBlockNames].every(name => name === 'core/image');
@@ -45447,7 +45464,16 @@ function useBlockDropZone({
       // https://developer.mozilla.org/en-US/docs/Web/API/Event/currentTarget
       throttled(event, event.currentTarget.ownerDocument);
     },
-    onDragLeave() {
+    onDragLeave(event) {
+      const {
+        ownerDocument
+      } = event.currentTarget;
+
+      // If the drag event is leaving the drop zone and entering an insertion point,
+      // do not hide the insertion point as it is conceptually within the dropzone.
+      if (isInsertionPoint(event.relatedTarget, ownerDocument) || isInsertionPoint(event.target, ownerDocument)) {
+        return;
+      }
       throttled.cancel();
       hideInsertionPoint();
     },
@@ -45950,6 +45976,97 @@ function ObserveTyping({
  */
 /* harmony default export */ const observe_typing = (ObserveTyping);
 
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-list/zoom-out-separator.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function ZoomOutSeparator({
+  clientId,
+  rootClientId = '',
+  position = 'top'
+}) {
+  const [isDraggedOver, setIsDraggedOver] = (0,external_wp_element_namespaceObject.useState)(false);
+  const {
+    sectionRootClientId,
+    sectionClientIds,
+    blockInsertionPoint,
+    blockInsertionPointVisible
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockInsertionPoint,
+      getBlockOrder,
+      isBlockInsertionPointVisible,
+      getSectionRootClientId
+    } = unlock(select(store));
+    const root = getSectionRootClientId();
+    const sectionRootClientIds = getBlockOrder(root);
+    return {
+      sectionRootClientId: root,
+      sectionClientIds: sectionRootClientIds,
+      blockOrder: getBlockOrder(root),
+      blockInsertionPoint: getBlockInsertionPoint(),
+      blockInsertionPointVisible: isBlockInsertionPointVisible()
+    };
+  }, []);
+  const isReducedMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
+  if (!clientId) {
+    return;
+  }
+  let isVisible = false;
+  const isSectionBlock = rootClientId === sectionRootClientId && sectionClientIds && sectionClientIds.includes(clientId);
+  if (!isSectionBlock) {
+    return null;
+  }
+  if (position === 'top') {
+    isVisible = blockInsertionPointVisible && blockInsertionPoint.index === 0 && clientId === sectionClientIds[blockInsertionPoint.index];
+  }
+  if (position === 'bottom') {
+    isVisible = blockInsertionPointVisible && clientId === sectionClientIds[blockInsertionPoint.index - 1];
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableAnimatePresence, {
+    children: isVisible && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
+      as: "button",
+      layout: !isReducedMotion,
+      initial: {
+        height: 0
+      },
+      animate: {
+        height: '120px'
+      },
+      exit: {
+        height: 0
+      },
+      transition: {
+        type: 'tween',
+        duration: 0.2,
+        ease: [0.6, 0, 0.4, 1]
+      },
+      className: dist_clsx('block-editor-block-list__zoom-out-separator', {
+        'is-dragged-over': isDraggedOver
+      }),
+      "data-is-insertion-point": "true",
+      onDragOver: () => setIsDraggedOver(true),
+      onDragLeave: () => setIsDraggedOver(false)
+    })
+  });
+}
+
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-list/index.js
 /**
  * External dependencies
@@ -45966,6 +46083,7 @@ function ObserveTyping({
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -46099,6 +46217,7 @@ function Items({
   const hasCustomAppender = !!CustomAppender;
   const {
     order,
+    isZoomOut,
     selectedBlocks,
     visibleBlocks,
     shouldRenderAppender
@@ -46126,20 +46245,29 @@ function Items({
       order: _order,
       selectedBlocks: getSelectedBlockClientIds(),
       visibleBlocks: __unstableGetVisibleBlocks(),
+      isZoomOut: __unstableGetEditorMode() === 'zoom-out',
       shouldRenderAppender: hasAppender && __unstableGetEditorMode() !== 'zoom-out' && (hasCustomAppender ? !getTemplateLock(rootClientId) && getBlockEditingMode(rootClientId) !== 'disabled' : rootClientId === selectedBlockClientId || !rootClientId && !selectedBlockClientId && !_order.length)
     };
   }, [rootClientId, hasAppender, hasCustomAppender]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(LayoutProvider, {
     value: layout,
-    children: [order.map(clientId => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_data_namespaceObject.AsyncModeProvider, {
+    children: [order.map(clientId => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_data_namespaceObject.AsyncModeProvider, {
       value:
       // Only provide data asynchronously if the block is
       // not visible and not selected.
       !visibleBlocks.has(clientId) && !selectedBlocks.includes(clientId),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block, {
+      children: [isZoomOut && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ZoomOutSeparator, {
+        clientId: clientId,
+        rootClientId: rootClientId,
+        position: "top"
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block, {
         rootClientId: rootClientId,
         clientId: clientId
-      })
+      }), isZoomOut && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ZoomOutSeparator, {
+        clientId: clientId,
+        rootClientId: rootClientId,
+        position: "bottom"
+      })]
     }, clientId)), order.length < 1 && placeholder, shouldRenderAppender && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockListAppender, {
       tagName: __experimentalAppenderTagName,
       rootClientId: rootClientId,
@@ -62464,7 +62592,6 @@ function ZoomOutModeInserterButton({
 
 
 
-
 function ZoomOutModeInserters() {
   const [isReady, setIsReady] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
@@ -62521,19 +62648,10 @@ function ZoomOutModeInserters() {
     const nextClientId = blockOrder[index];
     const isSelected = hasSelection && (selectedBlockClientId === previousClientId || selectedBlockClientId === nextClientId);
     const isHovered = hoveredBlockClientId === previousClientId || hoveredBlockClientId === nextClientId;
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(inbetween, {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inbetween, {
       previousClientId: previousClientId,
       nextClientId: nextClientId,
-      children: [shouldRenderInsertionPoint && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        style: {
-          borderRadius: '0',
-          height: '12px',
-          opacity: 1,
-          transform: 'translateY(-50%)',
-          width: '100%'
-        },
-        className: "block-editor-block-list__insertion-point-indicator"
-      }), !shouldRenderInsertionPoint && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_mode_inserter_button, {
+      children: !shouldRenderInsertionPoint && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_mode_inserter_button, {
         isVisible: isSelected || isHovered,
         onClick: () => {
           setInserterIsOpened({
@@ -62546,7 +62664,7 @@ function ZoomOutModeInserters() {
             operation: 'insert'
           });
         }
-      })]
+      })
     }, index);
   });
 }
@@ -62790,7 +62908,7 @@ function BlockTools({
       onKeyDown: onKeyDown,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(insertion_point_InsertionPointOpenRef.Provider, {
         value: (0,external_wp_element_namespaceObject.useRef)(false),
-        children: [!isTyping && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InsertionPoint, {
+        children: [!isTyping && !isZoomOutMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InsertionPoint, {
           __unstableContentRef: __unstableContentRef
         }), showEmptyBlockSideInserter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EmptyBlockInserter, {
           __unstableContentRef: __unstableContentRef,
