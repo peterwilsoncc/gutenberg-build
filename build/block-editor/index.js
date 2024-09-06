@@ -53500,7 +53500,6 @@ class Inserter extends external_wp_element_namespaceObject.Component {
 
 
 
-
 function button_block_appender_ButtonBlockAppender({
   rootClientId,
   className,
@@ -53527,16 +53526,11 @@ function button_block_appender_ButtonBlockAppender({
       blockTitle,
       hasSingleBlockType
     }) => {
-      let label;
-      if (hasSingleBlockType) {
-        label = (0,external_wp_i18n_namespaceObject.sprintf)(
-        // translators: %s: the name of the block when there is only one
-        (0,external_wp_i18n_namespaceObject._x)('Add %s', 'directly add the only allowed block'), blockTitle);
-      } else {
-        label = (0,external_wp_i18n_namespaceObject._x)('Add block', 'Generic label for block inserter button');
-      }
       const isToggleButton = !hasSingleBlockType;
-      let inserterButton = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button
+      const label = hasSingleBlockType ? (0,external_wp_i18n_namespaceObject.sprintf)(
+      // translators: %s: the name of the block when there is only one
+      (0,external_wp_i18n_namespaceObject._x)('Add %s', 'directly add the only allowed block'), blockTitle) : (0,external_wp_i18n_namespaceObject._x)('Add block', 'Generic label for block inserter button');
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
       // TODO: Switch to `true` (40px size) if possible
       , {
         __next40pxDefaultSize: false,
@@ -53552,20 +53546,11 @@ function button_block_appender_ButtonBlockAppender({
         ,
         disabled: disabled,
         label: label,
-        children: [!hasSingleBlockType && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
-          as: "span",
-          children: label
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+        showTooltip: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
           icon: library_plus
-        })]
+        })
       });
-      if (isToggleButton || hasSingleBlockType) {
-        inserterButton = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
-          text: label,
-          children: inserterButton
-        });
-      }
-      return inserterButton;
     },
     isAppender: true
   });
