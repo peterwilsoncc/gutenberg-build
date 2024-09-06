@@ -37121,17 +37121,13 @@ function MultipleUsageWarning({
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const blockType = (0,external_wp_blocks_namespaceObject.getBlockType)(name);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(warning, {
-    actions: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
+    actions: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
       variant: "secondary",
       onClick: () => selectBlock(originalBlockClientId),
       children: (0,external_wp_i18n_namespaceObject.__)('Find original')
-    }, "find-original"), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
+    }, "find-original"), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
       variant: "secondary",
       onClick: () => onReplace([]),
       children: (0,external_wp_i18n_namespaceObject.__)('Remove')
@@ -37268,10 +37264,8 @@ function BlockView({
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "block-editor-block-compare__action",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         variant: "secondary",
         tabIndex: "0",
         onClick: action,
@@ -37435,10 +37429,8 @@ function BlockInvalidWarning({
   }].filter(Boolean), [canInsertHTMLBlock, canInsertClassicBlock, convert]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(warning, {
-      actions: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      actions: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         onClick: convert.toRecoveredBlock,
         variant: "primary",
         children: (0,external_wp_i18n_namespaceObject.__)('Attempt recovery')
@@ -56729,12 +56721,9 @@ function BlockBreadcrumb({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
       className: !hasSelection ? 'block-editor-block-breadcrumb__current' : undefined,
       "aria-current": !hasSelection ? 'true' : undefined,
-      children: [hasSelection && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      children: [hasSelection && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        size: "small",
         className: "block-editor-block-breadcrumb__button",
-        variant: "tertiary",
         onClick: () => {
           // Find the block editor wrapper for the selected block
           const blockEditor = blockRef.current?.closest('.editor-styles-wrapper');
@@ -56747,12 +56736,9 @@ function BlockBreadcrumb({
         className: "block-editor-block-breadcrumb__separator"
       })]
     }), parents.map(parentClientId => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        size: "small",
         className: "block-editor-block-breadcrumb__button",
-        variant: "tertiary",
         onClick: () => selectBlock(parentClientId),
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockTitle, {
           clientId: parentClientId,
@@ -57649,10 +57635,8 @@ const BlockMoverButton = (0,external_wp_element_namespaceObject.forwardRef)(({
   };
   const descriptionId = `block-editor-block-mover-button__description-${instanceId}`;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
       ref: ref,
       className: dist_clsx('block-editor-block-mover-button', `is-${direction}-button`),
       icon: getArrowIcon(direction, orientation),
@@ -57757,10 +57741,8 @@ function BlockMover({
     children: [!hideDragHandle && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_draggable, {
       clientIds: clientIds,
       fadeWhenDisabled: true,
-      children: draggableProps => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      children: draggableProps => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         icon: drag_handle,
         className: "block-editor-block-mover__drag-handle",
         label: (0,external_wp_i18n_namespaceObject.__)('Drag')
