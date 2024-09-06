@@ -49395,9 +49395,7 @@ function CustomSelectControl(props) {
 }
 /* harmony default export */ const custom_select_control = (CustomSelectControl);
 
-;// CONCATENATED MODULE: ./node_modules/use-lilius/build/index.es.js
-
-
+;// CONCATENATED MODULE: ./node_modules/date-fns/toDate.mjs
 /**
  * @name toDate
  * @category Common Helpers
@@ -49454,6 +49452,42 @@ function toDate(argument) {
   }
 }
 
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_toDate = ((/* unused pure expression or super */ null && (toDate)));
+
+;// CONCATENATED MODULE: ./node_modules/date-fns/startOfDay.mjs
+
+
+/**
+ * @name startOfDay
+ * @category Day Helpers
+ * @summary Return the start of a day for the given date.
+ *
+ * @description
+ * Return the start of a day for the given date.
+ * The result will be in the local timezone.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The start of a day
+ *
+ * @example
+ * // The start of a day for 2 September 2014 11:55:00:
+ * const result = startOfDay(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Tue Sep 02 2014 00:00:00
+ */
+function startOfDay(date) {
+  const _date = toDate(date);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_startOfDay = ((/* unused pure expression or super */ null && (startOfDay)));
+
+;// CONCATENATED MODULE: ./node_modules/date-fns/constructFrom.mjs
 /**
  * @name constructFrom
  * @category Generic Helpers
@@ -49492,36 +49526,12 @@ function constructFrom(date, value) {
   }
 }
 
-/**
- * @name addDays
- * @category Day Helpers
- * @summary Add the specified number of days to the given date.
- *
- * @description
- * Add the specified number of days to the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The date to be changed
- * @param amount - The amount of days to be added.
- *
- * @returns The new date with the days added
- *
- * @example
- * // Add 10 days to 1 September 2014:
- * const result = addDays(new Date(2014, 8, 1), 10)
- * //=> Thu Sep 11 2014 00:00:00
- */
-function addDays(date, amount) {
-  const _date = toDate(date);
-  if (isNaN(amount)) return constructFrom(date, NaN);
-  if (!amount) {
-    // If 0 days, no-op to avoid changing times in the hour before end of DST
-    return _date;
-  }
-  _date.setDate(_date.getDate() + amount);
-  return _date;
-}
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_constructFrom = ((/* unused pure expression or super */ null && (constructFrom)));
+
+;// CONCATENATED MODULE: ./node_modules/date-fns/addMonths.mjs
+
+
 
 /**
  * @name addMonths
@@ -49588,701 +49598,11 @@ function addMonths(date, amount) {
   }
 }
 
-let index_es_defaultOptions = {};
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_addMonths = ((/* unused pure expression or super */ null && (addMonths)));
 
-function getDefaultOptions() {
-  return index_es_defaultOptions;
-}
+;// CONCATENATED MODULE: ./node_modules/date-fns/subMonths.mjs
 
-/**
- * The {@link startOfWeek} function options.
- */
-
-/**
- * @name startOfWeek
- * @category Week Helpers
- * @summary Return the start of a week for the given date.
- *
- * @description
- * Return the start of a week for the given date.
- * The result will be in the local timezone.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The original date
- * @param options - An object with options
- *
- * @returns The start of a week
- *
- * @example
- * // The start of a week for 2 September 2014 11:55:00:
- * const result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0))
- * //=> Sun Aug 31 2014 00:00:00
- *
- * @example
- * // If the week starts on Monday, the start of the week for 2 September 2014 11:55:00:
- * const result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0), { weekStartsOn: 1 })
- * //=> Mon Sep 01 2014 00:00:00
- */
-function startOfWeek(date, options) {
-  const defaultOptions = getDefaultOptions();
-  const weekStartsOn =
-    options?.weekStartsOn ??
-    options?.locale?.options?.weekStartsOn ??
-    defaultOptions.weekStartsOn ??
-    defaultOptions.locale?.options?.weekStartsOn ??
-    0;
-
-  const _date = toDate(date);
-  const day = _date.getDay();
-  const diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
-
-  _date.setDate(_date.getDate() - diff);
-  _date.setHours(0, 0, 0, 0);
-  return _date;
-}
-
-/**
- * @name startOfDay
- * @category Day Helpers
- * @summary Return the start of a day for the given date.
- *
- * @description
- * Return the start of a day for the given date.
- * The result will be in the local timezone.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The original date
- *
- * @returns The start of a day
- *
- * @example
- * // The start of a day for 2 September 2014 11:55:00:
- * const result = startOfDay(new Date(2014, 8, 2, 11, 55, 0))
- * //=> Tue Sep 02 2014 00:00:00
- */
-function startOfDay(date) {
-  const _date = toDate(date);
-  _date.setHours(0, 0, 0, 0);
-  return _date;
-}
-
-/**
- * @name addWeeks
- * @category Week Helpers
- * @summary Add the specified number of weeks to the given date.
- *
- * @description
- * Add the specified number of week to the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The date to be changed
- * @param amount - The amount of weeks to be added.
- *
- * @returns The new date with the weeks added
- *
- * @example
- * // Add 4 weeks to 1 September 2014:
- * const result = addWeeks(new Date(2014, 8, 1), 4)
- * //=> Mon Sep 29 2014 00:00:00
- */
-function addWeeks(date, amount) {
-  const days = amount * 7;
-  return addDays(date, days);
-}
-
-/**
- * @name addYears
- * @category Year Helpers
- * @summary Add the specified number of years to the given date.
- *
- * @description
- * Add the specified number of years to the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The date to be changed
- * @param amount - The amount of years to be added.
- *
- * @returns The new date with the years added
- *
- * @example
- * // Add 5 years to 1 September 2014:
- * const result = addYears(new Date(2014, 8, 1), 5)
- * //=> Sun Sep 01 2019 00:00:00
- */
-function addYears(date, amount) {
-  return addMonths(date, amount * 12);
-}
-
-/**
- * @name endOfMonth
- * @category Month Helpers
- * @summary Return the end of a month for the given date.
- *
- * @description
- * Return the end of a month for the given date.
- * The result will be in the local timezone.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The original date
- *
- * @returns The end of a month
- *
- * @example
- * // The end of a month for 2 September 2014 11:55:00:
- * const result = endOfMonth(new Date(2014, 8, 2, 11, 55, 0))
- * //=> Tue Sep 30 2014 23:59:59.999
- */
-function endOfMonth(date) {
-  const _date = toDate(date);
-  const month = _date.getMonth();
-  _date.setFullYear(_date.getFullYear(), month + 1, 0);
-  _date.setHours(23, 59, 59, 999);
-  return _date;
-}
-
-/**
- * The {@link eachDayOfInterval} function options.
- */
-
-/**
- * @name eachDayOfInterval
- * @category Interval Helpers
- * @summary Return the array of dates within the specified time interval.
- *
- * @description
- * Return the array of dates within the specified time interval.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param interval - The interval.
- * @param options - An object with options.
- *
- * @returns The array with starts of days from the day of the interval start to the day of the interval end
- *
- * @example
- * // Each day between 6 October 2014 and 10 October 2014:
- * const result = eachDayOfInterval({
- *   start: new Date(2014, 9, 6),
- *   end: new Date(2014, 9, 10)
- * })
- * //=> [
- * //   Mon Oct 06 2014 00:00:00,
- * //   Tue Oct 07 2014 00:00:00,
- * //   Wed Oct 08 2014 00:00:00,
- * //   Thu Oct 09 2014 00:00:00,
- * //   Fri Oct 10 2014 00:00:00
- * // ]
- */
-function eachDayOfInterval(interval, options) {
-  const startDate = toDate(interval.start);
-  const endDate = toDate(interval.end);
-
-  let reversed = +startDate > +endDate;
-  const endTime = reversed ? +startDate : +endDate;
-  const currentDate = reversed ? endDate : startDate;
-  currentDate.setHours(0, 0, 0, 0);
-
-  let step = options?.step ?? 1;
-  if (!step) return [];
-  if (step < 0) {
-    step = -step;
-    reversed = !reversed;
-  }
-
-  const dates = [];
-
-  while (+currentDate <= endTime) {
-    dates.push(toDate(currentDate));
-    currentDate.setDate(currentDate.getDate() + step);
-    currentDate.setHours(0, 0, 0, 0);
-  }
-
-  return reversed ? dates.reverse() : dates;
-}
-
-/**
- * The {@link eachMonthOfInterval} function options.
- */
-
-/**
- * @name eachMonthOfInterval
- * @category Interval Helpers
- * @summary Return the array of months within the specified time interval.
- *
- * @description
- * Return the array of months within the specified time interval.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param interval - The interval
- *
- * @returns The array with starts of months from the month of the interval start to the month of the interval end
- *
- * @example
- * // Each month between 6 February 2014 and 10 August 2014:
- * const result = eachMonthOfInterval({
- *   start: new Date(2014, 1, 6),
- *   end: new Date(2014, 7, 10)
- * })
- * //=> [
- * //   Sat Feb 01 2014 00:00:00,
- * //   Sat Mar 01 2014 00:00:00,
- * //   Tue Apr 01 2014 00:00:00,
- * //   Thu May 01 2014 00:00:00,
- * //   Sun Jun 01 2014 00:00:00,
- * //   Tue Jul 01 2014 00:00:00,
- * //   Fri Aug 01 2014 00:00:00
- * // ]
- */
-function eachMonthOfInterval(interval, options) {
-  const startDate = toDate(interval.start);
-  const endDate = toDate(interval.end);
-
-  let reversed = +startDate > +endDate;
-  const endTime = reversed ? +startDate : +endDate;
-  const currentDate = reversed ? endDate : startDate;
-  currentDate.setHours(0, 0, 0, 0);
-  currentDate.setDate(1);
-
-  let step = options?.step ?? 1;
-  if (!step) return [];
-  if (step < 0) {
-    step = -step;
-    reversed = !reversed;
-  }
-
-  const dates = [];
-
-  while (+currentDate <= endTime) {
-    dates.push(toDate(currentDate));
-    currentDate.setMonth(currentDate.getMonth() + step);
-  }
-
-  return reversed ? dates.reverse() : dates;
-}
-
-/**
- * The {@link eachWeekOfInterval} function options.
- */
-
-/**
- * @name eachWeekOfInterval
- * @category Interval Helpers
- * @summary Return the array of weeks within the specified time interval.
- *
- * @description
- * Return the array of weeks within the specified time interval.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param interval - The interval.
- * @param options - An object with options.
- *
- * @returns The array with starts of weeks from the week of the interval start to the week of the interval end
- *
- * @example
- * // Each week within interval 6 October 2014 - 23 November 2014:
- * const result = eachWeekOfInterval({
- *   start: new Date(2014, 9, 6),
- *   end: new Date(2014, 10, 23)
- * })
- * //=> [
- * //   Sun Oct 05 2014 00:00:00,
- * //   Sun Oct 12 2014 00:00:00,
- * //   Sun Oct 19 2014 00:00:00,
- * //   Sun Oct 26 2014 00:00:00,
- * //   Sun Nov 02 2014 00:00:00,
- * //   Sun Nov 09 2014 00:00:00,
- * //   Sun Nov 16 2014 00:00:00,
- * //   Sun Nov 23 2014 00:00:00
- * // ]
- */
-function eachWeekOfInterval(interval, options) {
-  const startDate = toDate(interval.start);
-  const endDate = toDate(interval.end);
-
-  let reversed = +startDate > +endDate;
-  const startDateWeek = reversed
-    ? startOfWeek(endDate, options)
-    : startOfWeek(startDate, options);
-  const endDateWeek = reversed
-    ? startOfWeek(startDate, options)
-    : startOfWeek(endDate, options);
-
-  // Some timezones switch DST at midnight, making start of day unreliable in these timezones, 3pm is a safe bet
-  startDateWeek.setHours(15);
-  endDateWeek.setHours(15);
-
-  const endTime = +endDateWeek.getTime();
-  let currentDate = startDateWeek;
-
-  let step = options?.step ?? 1;
-  if (!step) return [];
-  if (step < 0) {
-    step = -step;
-    reversed = !reversed;
-  }
-
-  const dates = [];
-
-  while (+currentDate <= endTime) {
-    currentDate.setHours(0);
-    dates.push(toDate(currentDate));
-    currentDate = addWeeks(currentDate, step);
-    currentDate.setHours(15);
-  }
-
-  return reversed ? dates.reverse() : dates;
-}
-
-/**
- * @name startOfMonth
- * @category Month Helpers
- * @summary Return the start of a month for the given date.
- *
- * @description
- * Return the start of a month for the given date.
- * The result will be in the local timezone.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The original date
- *
- * @returns The start of a month
- *
- * @example
- * // The start of a month for 2 September 2014 11:55:00:
- * const result = startOfMonth(new Date(2014, 8, 2, 11, 55, 0))
- * //=> Mon Sep 01 2014 00:00:00
- */
-function startOfMonth(date) {
-  const _date = toDate(date);
-  _date.setDate(1);
-  _date.setHours(0, 0, 0, 0);
-  return _date;
-}
-
-/**
- * The {@link endOfWeek} function options.
- */
-
-/**
- * @name endOfWeek
- * @category Week Helpers
- * @summary Return the end of a week for the given date.
- *
- * @description
- * Return the end of a week for the given date.
- * The result will be in the local timezone.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The original date
- * @param options - An object with options
- *
- * @returns The end of a week
- *
- * @example
- * // The end of a week for 2 September 2014 11:55:00:
- * const result = endOfWeek(new Date(2014, 8, 2, 11, 55, 0))
- * //=> Sat Sep 06 2014 23:59:59.999
- *
- * @example
- * // If the week starts on Monday, the end of the week for 2 September 2014 11:55:00:
- * const result = endOfWeek(new Date(2014, 8, 2, 11, 55, 0), { weekStartsOn: 1 })
- * //=> Sun Sep 07 2014 23:59:59.999
- */
-function endOfWeek(date, options) {
-  const defaultOptions = getDefaultOptions();
-  const weekStartsOn =
-    options?.weekStartsOn ??
-    options?.locale?.options?.weekStartsOn ??
-    defaultOptions.weekStartsOn ??
-    defaultOptions.locale?.options?.weekStartsOn ??
-    0;
-
-  const _date = toDate(date);
-  const day = _date.getDay();
-  const diff = (day < weekStartsOn ? -7 : 0) + 6 - (day - weekStartsOn);
-
-  _date.setDate(_date.getDate() + diff);
-  _date.setHours(23, 59, 59, 999);
-  return _date;
-}
-
-/**
- * @name getDaysInMonth
- * @category Month Helpers
- * @summary Get the number of days in a month of the given date.
- *
- * @description
- * Get the number of days in a month of the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The given date
- *
- * @returns The number of days in a month
- *
- * @example
- * // How many days are in February 2000?
- * const result = getDaysInMonth(new Date(2000, 1))
- * //=> 29
- */
-function getDaysInMonth(date) {
-  const _date = toDate(date);
-  const year = _date.getFullYear();
-  const monthIndex = _date.getMonth();
-  const lastDayOfMonth = constructFrom(date, 0);
-  lastDayOfMonth.setFullYear(year, monthIndex + 1, 0);
-  lastDayOfMonth.setHours(0, 0, 0, 0);
-  return lastDayOfMonth.getDate();
-}
-
-/**
- * @name isAfter
- * @category Common Helpers
- * @summary Is the first date after the second one?
- *
- * @description
- * Is the first date after the second one?
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The date that should be after the other one to return true
- * @param dateToCompare - The date to compare with
- *
- * @returns The first date is after the second date
- *
- * @example
- * // Is 10 July 1989 after 11 February 1987?
- * const result = isAfter(new Date(1989, 6, 10), new Date(1987, 1, 11))
- * //=> true
- */
-function isAfter(date, dateToCompare) {
-  const _date = toDate(date);
-  const _dateToCompare = toDate(dateToCompare);
-  return _date.getTime() > _dateToCompare.getTime();
-}
-
-/**
- * @name isBefore
- * @category Common Helpers
- * @summary Is the first date before the second one?
- *
- * @description
- * Is the first date before the second one?
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The date that should be before the other one to return true
- * @param dateToCompare - The date to compare with
- *
- * @returns The first date is before the second date
- *
- * @example
- * // Is 10 July 1989 before 11 February 1987?
- * const result = isBefore(new Date(1989, 6, 10), new Date(1987, 1, 11))
- * //=> false
- */
-function isBefore(date, dateToCompare) {
-  const _date = toDate(date);
-  const _dateToCompare = toDate(dateToCompare);
-  return +_date < +_dateToCompare;
-}
-
-/**
- * @name isEqual
- * @category Common Helpers
- * @summary Are the given dates equal?
- *
- * @description
- * Are the given dates equal?
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param dateLeft - The first date to compare
- * @param dateRight - The second date to compare
- *
- * @returns The dates are equal
- *
- * @example
- * // Are 2 July 2014 06:30:45.000 and 2 July 2014 06:30:45.500 equal?
- * const result = isEqual(
- *   new Date(2014, 6, 2, 6, 30, 45, 0),
- *   new Date(2014, 6, 2, 6, 30, 45, 500)
- * )
- * //=> false
- */
-function isEqual(leftDate, rightDate) {
-  const _dateLeft = toDate(leftDate);
-  const _dateRight = toDate(rightDate);
-  return +_dateLeft === +_dateRight;
-}
-
-/**
- * @name setMonth
- * @category Month Helpers
- * @summary Set the month to the given date.
- *
- * @description
- * Set the month to the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The date to be changed
- * @param month - The month index to set (0-11)
- *
- * @returns The new date with the month set
- *
- * @example
- * // Set February to 1 September 2014:
- * const result = setMonth(new Date(2014, 8, 1), 1)
- * //=> Sat Feb 01 2014 00:00:00
- */
-function setMonth(date, month) {
-  const _date = toDate(date);
-  const year = _date.getFullYear();
-  const day = _date.getDate();
-
-  const dateWithDesiredMonth = constructFrom(date, 0);
-  dateWithDesiredMonth.setFullYear(year, month, 15);
-  dateWithDesiredMonth.setHours(0, 0, 0, 0);
-  const daysInMonth = getDaysInMonth(dateWithDesiredMonth);
-  // Set the last day of the new month
-  // if the original date was the last day of the longer month
-  _date.setMonth(month, Math.min(day, daysInMonth));
-  return _date;
-}
-
-/**
- * @name set
- * @category Common Helpers
- * @summary Set date values to a given date.
- *
- * @description
- * Set date values to a given date.
- *
- * Sets time values to date from object `values`.
- * A value is not set if it is undefined or null or doesn't exist in `values`.
- *
- * Note about bundle size: `set` does not internally use `setX` functions from date-fns but instead opts
- * to use native `Date#setX` methods. If you use this function, you may not want to include the
- * other `setX` functions that date-fns provides if you are concerned about the bundle size.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The date to be changed
- * @param values - The date values to be set
- *
- * @returns The new date with options set
- *
- * @example
- * // Transform 1 September 2014 into 20 October 2015 in a single line:
- * const result = set(new Date(2014, 8, 20), { year: 2015, month: 9, date: 20 })
- * //=> Tue Oct 20 2015 00:00:00
- *
- * @example
- * // Set 12 PM to 1 September 2014 01:23:45 to 1 September 2014 12:00:00:
- * const result = set(new Date(2014, 8, 1, 1, 23, 45), { hours: 12 })
- * //=> Mon Sep 01 2014 12:23:45
- */
-
-function set(date, values) {
-  let _date = toDate(date);
-
-  // Check if date is Invalid Date because Date.prototype.setFullYear ignores the value of Invalid Date
-  if (isNaN(+_date)) {
-    return constructFrom(date, NaN);
-  }
-
-  if (values.year != null) {
-    _date.setFullYear(values.year);
-  }
-
-  if (values.month != null) {
-    _date = setMonth(_date, values.month);
-  }
-
-  if (values.date != null) {
-    _date.setDate(values.date);
-  }
-
-  if (values.hours != null) {
-    _date.setHours(values.hours);
-  }
-
-  if (values.minutes != null) {
-    _date.setMinutes(values.minutes);
-  }
-
-  if (values.seconds != null) {
-    _date.setSeconds(values.seconds);
-  }
-
-  if (values.milliseconds != null) {
-    _date.setMilliseconds(values.milliseconds);
-  }
-
-  return _date;
-}
-
-/**
- * @name setYear
- * @category Year Helpers
- * @summary Set the year to the given date.
- *
- * @description
- * Set the year to the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The date to be changed
- * @param year - The year of the new date
- *
- * @returns The new date with the year set
- *
- * @example
- * // Set year 2013 to 1 September 2014:
- * const result = setYear(new Date(2014, 8, 1), 2013)
- * //=> Sun Sep 01 2013 00:00:00
- */
-function setYear(date, year) {
-  const _date = toDate(date);
-
-  // Check if date is Invalid Date because Date.prototype.setFullYear ignores the value of Invalid Date
-  if (isNaN(+_date)) {
-    return constructFrom(date, NaN);
-  }
-
-  _date.setFullYear(year);
-  return _date;
-}
-
-/**
- * @name startOfToday
- * @category Day Helpers
- * @summary Return the start of today.
- * @pure false
- *
- * @description
- * Return the start of today.
- *
- * @returns The start of today
- *
- * @example
- * // If today is 6 October 2014:
- * const result = startOfToday()
- * //=> Mon Oct 6 2014 00:00:00
- */
-function startOfToday() {
-  return startOfDay(Date.now());
-}
 
 /**
  * @name subMonths
@@ -50308,383 +49628,8 @@ function subMonths(date, amount) {
   return addMonths(date, -amount);
 }
 
-/**
- * @name subYears
- * @category Year Helpers
- * @summary Subtract the specified number of years from the given date.
- *
- * @description
- * Subtract the specified number of years from the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The date to be changed
- * @param amount - The amount of years to be subtracted.
- *
- * @returns The new date with the years subtracted
- *
- * @example
- * // Subtract 5 years from 1 September 2014:
- * const result = subYears(new Date(2014, 8, 1), 5)
- * //=> Tue Sep 01 2009 00:00:00
- */
-function subYears(date, amount) {
-  return addYears(date, -amount);
-}
-
-var Month;
-(function (Month) {
-    Month[Month["JANUARY"] = 0] = "JANUARY";
-    Month[Month["FEBRUARY"] = 1] = "FEBRUARY";
-    Month[Month["MARCH"] = 2] = "MARCH";
-    Month[Month["APRIL"] = 3] = "APRIL";
-    Month[Month["MAY"] = 4] = "MAY";
-    Month[Month["JUNE"] = 5] = "JUNE";
-    Month[Month["JULY"] = 6] = "JULY";
-    Month[Month["AUGUST"] = 7] = "AUGUST";
-    Month[Month["SEPTEMBER"] = 8] = "SEPTEMBER";
-    Month[Month["OCTOBER"] = 9] = "OCTOBER";
-    Month[Month["NOVEMBER"] = 10] = "NOVEMBER";
-    Month[Month["DECEMBER"] = 11] = "DECEMBER";
-})(Month || (Month = {}));
-var Day;
-(function (Day) {
-    Day[Day["SUNDAY"] = 0] = "SUNDAY";
-    Day[Day["MONDAY"] = 1] = "MONDAY";
-    Day[Day["TUESDAY"] = 2] = "TUESDAY";
-    Day[Day["WEDNESDAY"] = 3] = "WEDNESDAY";
-    Day[Day["THURSDAY"] = 4] = "THURSDAY";
-    Day[Day["FRIDAY"] = 5] = "FRIDAY";
-    Day[Day["SATURDAY"] = 6] = "SATURDAY";
-})(Day || (Day = {}));
-var inRange = function (date, min, max) {
-    return (isEqual(date, min) || isAfter(date, min)) && (isEqual(date, max) || isBefore(date, max));
-};
-var index_es_clearTime = function (date) { return set(date, { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }); };
-var useLilius = function (_a) {
-    var _b = _a === void 0 ? {} : _a, _c = _b.weekStartsOn, weekStartsOn = _c === void 0 ? Day.SUNDAY : _c, _d = _b.viewing, initialViewing = _d === void 0 ? new Date() : _d, _e = _b.selected, initialSelected = _e === void 0 ? [] : _e, _f = _b.numberOfMonths, numberOfMonths = _f === void 0 ? 1 : _f;
-    var _g = (0,external_React_.useState)(initialViewing), viewing = _g[0], setViewing = _g[1];
-    var viewToday = (0,external_React_.useCallback)(function () { return setViewing(startOfToday()); }, [setViewing]);
-    var viewMonth = (0,external_React_.useCallback)(function (month) { return setViewing(function (v) { return setMonth(v, month); }); }, []);
-    var viewPreviousMonth = (0,external_React_.useCallback)(function () { return setViewing(function (v) { return subMonths(v, 1); }); }, []);
-    var viewNextMonth = (0,external_React_.useCallback)(function () { return setViewing(function (v) { return addMonths(v, 1); }); }, []);
-    var viewYear = (0,external_React_.useCallback)(function (year) { return setViewing(function (v) { return setYear(v, year); }); }, []);
-    var viewPreviousYear = (0,external_React_.useCallback)(function () { return setViewing(function (v) { return subYears(v, 1); }); }, []);
-    var viewNextYear = (0,external_React_.useCallback)(function () { return setViewing(function (v) { return addYears(v, 1); }); }, []);
-    var _h = (0,external_React_.useState)(initialSelected.map(index_es_clearTime)), selected = _h[0], setSelected = _h[1];
-    var clearSelected = function () { return setSelected([]); };
-    var isSelected = (0,external_React_.useCallback)(function (date) { return selected.findIndex(function (s) { return isEqual(s, date); }) > -1; }, [selected]);
-    var select = (0,external_React_.useCallback)(function (date, replaceExisting) {
-        if (replaceExisting) {
-            setSelected(Array.isArray(date) ? date : [date]);
-        }
-        else {
-            setSelected(function (selectedItems) { return selectedItems.concat(Array.isArray(date) ? date : [date]); });
-        }
-    }, []);
-    var deselect = (0,external_React_.useCallback)(function (date) {
-        return setSelected(function (selectedItems) {
-            return Array.isArray(date)
-                ? selectedItems.filter(function (s) { return !date.map(function (d) { return d.getTime(); }).includes(s.getTime()); })
-                : selectedItems.filter(function (s) { return !isEqual(s, date); });
-        });
-    }, []);
-    var toggle = (0,external_React_.useCallback)(function (date, replaceExisting) { return (isSelected(date) ? deselect(date) : select(date, replaceExisting)); }, [deselect, isSelected, select]);
-    var selectRange = (0,external_React_.useCallback)(function (start, end, replaceExisting) {
-        if (replaceExisting) {
-            setSelected(eachDayOfInterval({ start: start, end: end }));
-        }
-        else {
-            setSelected(function (selectedItems) { return selectedItems.concat(eachDayOfInterval({ start: start, end: end })); });
-        }
-    }, []);
-    var deselectRange = (0,external_React_.useCallback)(function (start, end) {
-        setSelected(function (selectedItems) {
-            return selectedItems.filter(function (s) {
-                return !eachDayOfInterval({ start: start, end: end })
-                    .map(function (d) { return d.getTime(); })
-                    .includes(s.getTime());
-            });
-        });
-    }, []);
-    var calendar = (0,external_React_.useMemo)(function () {
-        return eachMonthOfInterval({
-            start: startOfMonth(viewing),
-            end: endOfMonth(addMonths(viewing, numberOfMonths - 1)),
-        }).map(function (month) {
-            return eachWeekOfInterval({
-                start: startOfMonth(month),
-                end: endOfMonth(month),
-            }, { weekStartsOn: weekStartsOn }).map(function (week) {
-                return eachDayOfInterval({
-                    start: startOfWeek(week, { weekStartsOn: weekStartsOn }),
-                    end: endOfWeek(week, { weekStartsOn: weekStartsOn }),
-                });
-            });
-        });
-    }, [viewing, weekStartsOn, numberOfMonths]);
-    return {
-        clearTime: index_es_clearTime,
-        inRange: inRange,
-        viewing: viewing,
-        setViewing: setViewing,
-        viewToday: viewToday,
-        viewMonth: viewMonth,
-        viewPreviousMonth: viewPreviousMonth,
-        viewNextMonth: viewNextMonth,
-        viewYear: viewYear,
-        viewPreviousYear: viewPreviousYear,
-        viewNextYear: viewNextYear,
-        selected: selected,
-        setSelected: setSelected,
-        clearSelected: clearSelected,
-        isSelected: isSelected,
-        select: select,
-        deselect: deselect,
-        toggle: toggle,
-        selectRange: selectRange,
-        deselectRange: deselectRange,
-        calendar: calendar,
-    };
-};
-
-
-
-;// CONCATENATED MODULE: ./node_modules/date-fns/toDate.mjs
-/**
- * @name toDate
- * @category Common Helpers
- * @summary Convert the given argument to an instance of Date.
- *
- * @description
- * Convert the given argument to an instance of Date.
- *
- * If the argument is an instance of Date, the function returns its clone.
- *
- * If the argument is a number, it is treated as a timestamp.
- *
- * If the argument is none of the above, the function returns Invalid Date.
- *
- * **Note**: *all* Date arguments passed to any *date-fns* function is processed by `toDate`.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param argument - The value to convert
- *
- * @returns The parsed date in the local time zone
- *
- * @example
- * // Clone the date:
- * const result = toDate(new Date(2014, 1, 11, 11, 30, 30))
- * //=> Tue Feb 11 2014 11:30:30
- *
- * @example
- * // Convert the timestamp to date:
- * const result = toDate(1392098430000)
- * //=> Tue Feb 11 2014 11:30:30
- */
-function toDate_toDate(argument) {
-  const argStr = Object.prototype.toString.call(argument);
-
-  // Clone the date
-  if (
-    argument instanceof Date ||
-    (typeof argument === "object" && argStr === "[object Date]")
-  ) {
-    // Prevent the date to lose the milliseconds when passed to new Date() in IE10
-    return new argument.constructor(+argument);
-  } else if (
-    typeof argument === "number" ||
-    argStr === "[object Number]" ||
-    typeof argument === "string" ||
-    argStr === "[object String]"
-  ) {
-    // TODO: Can we get rid of as?
-    return new Date(argument);
-  } else {
-    // TODO: Can we get rid of as?
-    return new Date(NaN);
-  }
-}
-
 // Fallback for modularized imports:
-/* harmony default export */ const date_fns_toDate = ((/* unused pure expression or super */ null && (toDate_toDate)));
-
-;// CONCATENATED MODULE: ./node_modules/date-fns/startOfDay.mjs
-
-
-/**
- * @name startOfDay
- * @category Day Helpers
- * @summary Return the start of a day for the given date.
- *
- * @description
- * Return the start of a day for the given date.
- * The result will be in the local timezone.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The original date
- *
- * @returns The start of a day
- *
- * @example
- * // The start of a day for 2 September 2014 11:55:00:
- * const result = startOfDay(new Date(2014, 8, 2, 11, 55, 0))
- * //=> Tue Sep 02 2014 00:00:00
- */
-function startOfDay_startOfDay(date) {
-  const _date = toDate_toDate(date);
-  _date.setHours(0, 0, 0, 0);
-  return _date;
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_startOfDay = ((/* unused pure expression or super */ null && (startOfDay_startOfDay)));
-
-;// CONCATENATED MODULE: ./node_modules/date-fns/constructFrom.mjs
-/**
- * @name constructFrom
- * @category Generic Helpers
- * @summary Constructs a date using the reference date and the value
- *
- * @description
- * The function constructs a new date using the constructor from the reference
- * date and the given value. It helps to build generic functions that accept
- * date extensions.
- *
- * It defaults to `Date` if the passed reference date is a number or a string.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The reference date to take constructor from
- * @param value - The value to create the date
- *
- * @returns Date initialized using the given date and value
- *
- * @example
- * import { constructFrom } from 'date-fns'
- *
- * // A function that clones a date preserving the original type
- * function cloneDate<DateType extends Date(date: DateType): DateType {
- *   return constructFrom(
- *     date, // Use contrustor from the given date
- *     date.getTime() // Use the date value to create a new date
- *   )
- * }
- */
-function constructFrom_constructFrom(date, value) {
-  if (date instanceof Date) {
-    return new date.constructor(value);
-  } else {
-    return new Date(value);
-  }
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_constructFrom = ((/* unused pure expression or super */ null && (constructFrom_constructFrom)));
-
-;// CONCATENATED MODULE: ./node_modules/date-fns/addMonths.mjs
-
-
-
-/**
- * @name addMonths
- * @category Month Helpers
- * @summary Add the specified number of months to the given date.
- *
- * @description
- * Add the specified number of months to the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The date to be changed
- * @param amount - The amount of months to be added.
- *
- * @returns The new date with the months added
- *
- * @example
- * // Add 5 months to 1 September 2014:
- * const result = addMonths(new Date(2014, 8, 1), 5)
- * //=> Sun Feb 01 2015 00:00:00
- *
- * // Add one month to 30 January 2023:
- * const result = addMonths(new Date(2023, 0, 30), 1)
- * //=> Tue Feb 28 2023 00:00:00
- */
-function addMonths_addMonths(date, amount) {
-  const _date = toDate_toDate(date);
-  if (isNaN(amount)) return constructFrom_constructFrom(date, NaN);
-  if (!amount) {
-    // If 0 months, no-op to avoid changing times in the hour before end of DST
-    return _date;
-  }
-  const dayOfMonth = _date.getDate();
-
-  // The JS Date object supports date math by accepting out-of-bounds values for
-  // month, day, etc. For example, new Date(2020, 0, 0) returns 31 Dec 2019 and
-  // new Date(2020, 13, 1) returns 1 Feb 2021.  This is *almost* the behavior we
-  // want except that dates will wrap around the end of a month, meaning that
-  // new Date(2020, 13, 31) will return 3 Mar 2021 not 28 Feb 2021 as desired. So
-  // we'll default to the end of the desired month by adding 1 to the desired
-  // month and using a date of 0 to back up one day to the end of the desired
-  // month.
-  const endOfDesiredMonth = constructFrom_constructFrom(date, _date.getTime());
-  endOfDesiredMonth.setMonth(_date.getMonth() + amount + 1, 0);
-  const daysInMonth = endOfDesiredMonth.getDate();
-  if (dayOfMonth >= daysInMonth) {
-    // If we're already at the end of the month, then this is the correct date
-    // and we're done.
-    return endOfDesiredMonth;
-  } else {
-    // Otherwise, we now know that setting the original day-of-month value won't
-    // cause an overflow, so set the desired day-of-month. Note that we can't
-    // just set the date of `endOfDesiredMonth` because that object may have had
-    // its time changed in the unusual case where where a DST transition was on
-    // the last day of the month and its local time was in the hour skipped or
-    // repeated next to a DST transition.  So we use `date` instead which is
-    // guaranteed to still have the original time.
-    _date.setFullYear(
-      endOfDesiredMonth.getFullYear(),
-      endOfDesiredMonth.getMonth(),
-      dayOfMonth,
-    );
-    return _date;
-  }
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_addMonths = ((/* unused pure expression or super */ null && (addMonths_addMonths)));
-
-;// CONCATENATED MODULE: ./node_modules/date-fns/subMonths.mjs
-
-
-/**
- * @name subMonths
- * @category Month Helpers
- * @summary Subtract the specified number of months from the given date.
- *
- * @description
- * Subtract the specified number of months from the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The date to be changed
- * @param amount - The amount of months to be subtracted.
- *
- * @returns The new date with the months subtracted
- *
- * @example
- * // Subtract 5 months from 1 February 2015:
- * const result = subMonths(new Date(2015, 1, 1), 5)
- * //=> Mon Sep 01 2014 00:00:00
- */
-function subMonths_subMonths(date, amount) {
-  return addMonths_addMonths(date, -amount);
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_subMonths = ((/* unused pure expression or super */ null && (subMonths_subMonths)));
+/* harmony default export */ const date_fns_subMonths = ((/* unused pure expression or super */ null && (subMonths)));
 
 ;// CONCATENATED MODULE: ./node_modules/date-fns/locale/en-US/_lib/formatDistance.mjs
 const formatDistanceLocale = {
@@ -51357,7 +50302,7 @@ const enUS = {
 ;// CONCATENATED MODULE: ./node_modules/date-fns/_lib/defaultOptions.mjs
 let defaultOptions_defaultOptions = {};
 
-function defaultOptions_getDefaultOptions() {
+function getDefaultOptions() {
   return defaultOptions_defaultOptions;
 }
 
@@ -51585,7 +50530,7 @@ const secondsInQuarter = secondsInMonth * 3;
  * This function returns the timezone offset in milliseconds that takes seconds in account.
  */
 function getTimezoneOffsetInMilliseconds(date) {
-  const _date = toDate_toDate(date);
+  const _date = toDate(date);
   const utcDate = new Date(
     Date.UTC(
       _date.getFullYear(),
@@ -51639,8 +50584,8 @@ function getTimezoneOffsetInMilliseconds(date) {
  * //=> 1
  */
 function differenceInCalendarDays(dateLeft, dateRight) {
-  const startOfDayLeft = startOfDay_startOfDay(dateLeft);
-  const startOfDayRight = startOfDay_startOfDay(dateRight);
+  const startOfDayLeft = startOfDay(dateLeft);
+  const startOfDayRight = startOfDay(dateRight);
 
   const timestampLeft =
     +startOfDayLeft - getTimezoneOffsetInMilliseconds(startOfDayLeft);
@@ -51681,8 +50626,8 @@ function differenceInCalendarDays(dateLeft, dateRight) {
  * //=> Wed Jan 01 2014 00:00:00
  */
 function startOfYear(date) {
-  const cleanDate = toDate_toDate(date);
-  const _date = constructFrom_constructFrom(date, 0);
+  const cleanDate = toDate(date);
+  const _date = constructFrom(date, 0);
   _date.setFullYear(cleanDate.getFullYear(), 0, 1);
   _date.setHours(0, 0, 0, 0);
   return _date;
@@ -51716,7 +50661,7 @@ function startOfYear(date) {
  * //=> 183
  */
 function getDayOfYear(date) {
-  const _date = toDate_toDate(date);
+  const _date = toDate(date);
   const diff = differenceInCalendarDays(_date, startOfYear(_date));
   const dayOfYear = diff + 1;
   return dayOfYear;
@@ -51759,8 +50704,8 @@ function getDayOfYear(date) {
  * const result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0), { weekStartsOn: 1 })
  * //=> Mon Sep 01 2014 00:00:00
  */
-function startOfWeek_startOfWeek(date, options) {
-  const defaultOptions = defaultOptions_getDefaultOptions();
+function startOfWeek(date, options) {
+  const defaultOptions = getDefaultOptions();
   const weekStartsOn =
     options?.weekStartsOn ??
     options?.locale?.options?.weekStartsOn ??
@@ -51768,7 +50713,7 @@ function startOfWeek_startOfWeek(date, options) {
     defaultOptions.locale?.options?.weekStartsOn ??
     0;
 
-  const _date = toDate_toDate(date);
+  const _date = toDate(date);
   const day = _date.getDay();
   const diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
 
@@ -51778,7 +50723,7 @@ function startOfWeek_startOfWeek(date, options) {
 }
 
 // Fallback for modularized imports:
-/* harmony default export */ const date_fns_startOfWeek = ((/* unused pure expression or super */ null && (startOfWeek_startOfWeek)));
+/* harmony default export */ const date_fns_startOfWeek = ((/* unused pure expression or super */ null && (startOfWeek)));
 
 ;// CONCATENATED MODULE: ./node_modules/date-fns/startOfISOWeek.mjs
 
@@ -51806,7 +50751,7 @@ function startOfWeek_startOfWeek(date, options) {
  * //=> Mon Sep 01 2014 00:00:00
  */
 function startOfISOWeek(date) {
-  return startOfWeek_startOfWeek(date, { weekStartsOn: 1 });
+  return startOfWeek(date, { weekStartsOn: 1 });
 }
 
 // Fallback for modularized imports:
@@ -51840,15 +50785,15 @@ function startOfISOWeek(date) {
  * //=> 2004
  */
 function getISOWeekYear(date) {
-  const _date = toDate_toDate(date);
+  const _date = toDate(date);
   const year = _date.getFullYear();
 
-  const fourthOfJanuaryOfNextYear = constructFrom_constructFrom(date, 0);
+  const fourthOfJanuaryOfNextYear = constructFrom(date, 0);
   fourthOfJanuaryOfNextYear.setFullYear(year + 1, 0, 4);
   fourthOfJanuaryOfNextYear.setHours(0, 0, 0, 0);
   const startOfNextYear = startOfISOWeek(fourthOfJanuaryOfNextYear);
 
-  const fourthOfJanuaryOfThisYear = constructFrom_constructFrom(date, 0);
+  const fourthOfJanuaryOfThisYear = constructFrom(date, 0);
   fourthOfJanuaryOfThisYear.setFullYear(year, 0, 4);
   fourthOfJanuaryOfThisYear.setHours(0, 0, 0, 0);
   const startOfThisYear = startOfISOWeek(fourthOfJanuaryOfThisYear);
@@ -51895,7 +50840,7 @@ function getISOWeekYear(date) {
  */
 function startOfISOWeekYear(date) {
   const year = getISOWeekYear(date);
-  const fourthOfJanuary = constructFrom_constructFrom(date, 0);
+  const fourthOfJanuary = constructFrom(date, 0);
   fourthOfJanuary.setFullYear(year, 0, 4);
   fourthOfJanuary.setHours(0, 0, 0, 0);
   return startOfISOWeek(fourthOfJanuary);
@@ -51932,7 +50877,7 @@ function startOfISOWeekYear(date) {
  * //=> 53
  */
 function getISOWeek(date) {
-  const _date = toDate_toDate(date);
+  const _date = toDate(date);
   const diff = +startOfISOWeek(_date) - +startOfISOWeekYear(_date);
 
   // Round the number of weeks to the nearest integer because the number of
@@ -51991,10 +50936,10 @@ function getISOWeek(date) {
  * //=> 2004
  */
 function getWeekYear(date, options) {
-  const _date = toDate_toDate(date);
+  const _date = toDate(date);
   const year = _date.getFullYear();
 
-  const defaultOptions = defaultOptions_getDefaultOptions();
+  const defaultOptions = getDefaultOptions();
   const firstWeekContainsDate =
     options?.firstWeekContainsDate ??
     options?.locale?.options?.firstWeekContainsDate ??
@@ -52002,15 +50947,15 @@ function getWeekYear(date, options) {
     defaultOptions.locale?.options?.firstWeekContainsDate ??
     1;
 
-  const firstWeekOfNextYear = constructFrom_constructFrom(date, 0);
+  const firstWeekOfNextYear = constructFrom(date, 0);
   firstWeekOfNextYear.setFullYear(year + 1, 0, firstWeekContainsDate);
   firstWeekOfNextYear.setHours(0, 0, 0, 0);
-  const startOfNextYear = startOfWeek_startOfWeek(firstWeekOfNextYear, options);
+  const startOfNextYear = startOfWeek(firstWeekOfNextYear, options);
 
-  const firstWeekOfThisYear = constructFrom_constructFrom(date, 0);
+  const firstWeekOfThisYear = constructFrom(date, 0);
   firstWeekOfThisYear.setFullYear(year, 0, firstWeekContainsDate);
   firstWeekOfThisYear.setHours(0, 0, 0, 0);
-  const startOfThisYear = startOfWeek_startOfWeek(firstWeekOfThisYear, options);
+  const startOfThisYear = startOfWeek(firstWeekOfThisYear, options);
 
   if (_date.getTime() >= startOfNextYear.getTime()) {
     return year + 1;
@@ -52071,7 +51016,7 @@ function getWeekYear(date, options) {
  * //=> Mon Jan 03 2005 00:00:00
  */
 function startOfWeekYear(date, options) {
-  const defaultOptions = defaultOptions_getDefaultOptions();
+  const defaultOptions = getDefaultOptions();
   const firstWeekContainsDate =
     options?.firstWeekContainsDate ??
     options?.locale?.options?.firstWeekContainsDate ??
@@ -52080,10 +51025,10 @@ function startOfWeekYear(date, options) {
     1;
 
   const year = getWeekYear(date, options);
-  const firstWeek = constructFrom_constructFrom(date, 0);
+  const firstWeek = constructFrom(date, 0);
   firstWeek.setFullYear(year, 0, firstWeekContainsDate);
   firstWeek.setHours(0, 0, 0, 0);
-  const _date = startOfWeek_startOfWeek(firstWeek, options);
+  const _date = startOfWeek(firstWeek, options);
   return _date;
 }
 
@@ -52138,8 +51083,8 @@ function startOfWeekYear(date, options) {
  */
 
 function getWeek(date, options) {
-  const _date = toDate_toDate(date);
-  const diff = +startOfWeek_startOfWeek(_date, options) - +startOfWeekYear(_date, options);
+  const _date = toDate(date);
+  const diff = +startOfWeek(_date, options) - +startOfWeekYear(_date, options);
 
   // Round the number of weeks to the nearest integer because the number of
   // milliseconds in a week is not constant (e.g. it's different in the week of
@@ -53205,7 +52150,7 @@ function isValid(date) {
   if (!isDate(date) && typeof date !== "number") {
     return false;
   }
-  const _date = toDate_toDate(date);
+  const _date = toDate(date);
   return !isNaN(Number(_date));
 }
 
@@ -53540,7 +52485,7 @@ const unescapedLatinCharacterRegExp = /[a-zA-Z]/;
  * //=> "3 o'clock"
  */
 function format(date, formatStr, options) {
-  const defaultOptions = defaultOptions_getDefaultOptions();
+  const defaultOptions = getDefaultOptions();
   const locale = options?.locale ?? defaultOptions.locale ?? enUS;
 
   const firstWeekContainsDate =
@@ -53557,7 +52502,7 @@ function format(date, formatStr, options) {
     defaultOptions.locale?.options?.weekStartsOn ??
     0;
 
-  const originalDate = toDate_toDate(date);
+  const originalDate = toDate(date);
 
   if (!isValid(originalDate)) {
     throw new RangeError("Invalid time value");
@@ -53675,8 +52620,8 @@ function cleanEscapedString(input) {
  * //=> false
  */
 function isSameMonth(dateLeft, dateRight) {
-  const _dateLeft = toDate_toDate(dateLeft);
-  const _dateRight = toDate_toDate(dateRight);
+  const _dateLeft = toDate(dateLeft);
+  const _dateRight = toDate(dateRight);
   return (
     _dateLeft.getFullYear() === _dateRight.getFullYear() &&
     _dateLeft.getMonth() === _dateRight.getMonth()
@@ -53712,14 +52657,14 @@ function isSameMonth(dateLeft, dateRight) {
  * )
  * //=> false
  */
-function isEqual_isEqual(leftDate, rightDate) {
-  const _dateLeft = toDate_toDate(leftDate);
-  const _dateRight = toDate_toDate(rightDate);
+function isEqual(leftDate, rightDate) {
+  const _dateLeft = toDate(leftDate);
+  const _dateRight = toDate(rightDate);
   return +_dateLeft === +_dateRight;
 }
 
 // Fallback for modularized imports:
-/* harmony default export */ const date_fns_isEqual = ((/* unused pure expression or super */ null && (isEqual_isEqual)));
+/* harmony default export */ const date_fns_isEqual = ((/* unused pure expression or super */ null && (isEqual)));
 
 ;// CONCATENATED MODULE: ./node_modules/date-fns/isSameDay.mjs
 
@@ -53755,8 +52700,8 @@ function isEqual_isEqual(leftDate, rightDate) {
  * //=> false
  */
 function isSameDay(dateLeft, dateRight) {
-  const dateLeftStartOfDay = startOfDay_startOfDay(dateLeft);
-  const dateRightStartOfDay = startOfDay_startOfDay(dateRight);
+  const dateLeftStartOfDay = startOfDay(dateLeft);
+  const dateRightStartOfDay = startOfDay(dateRight);
 
   return +dateLeftStartOfDay === +dateRightStartOfDay;
 }
@@ -53788,9 +52733,9 @@ function isSameDay(dateLeft, dateRight) {
  * const result = addDays(new Date(2014, 8, 1), 10)
  * //=> Thu Sep 11 2014 00:00:00
  */
-function addDays_addDays(date, amount) {
-  const _date = toDate_toDate(date);
-  if (isNaN(amount)) return constructFrom_constructFrom(date, NaN);
+function addDays(date, amount) {
+  const _date = toDate(date);
+  if (isNaN(amount)) return constructFrom(date, NaN);
   if (!amount) {
     // If 0 days, no-op to avoid changing times in the hour before end of DST
     return _date;
@@ -53800,7 +52745,7 @@ function addDays_addDays(date, amount) {
 }
 
 // Fallback for modularized imports:
-/* harmony default export */ const date_fns_addDays = ((/* unused pure expression or super */ null && (addDays_addDays)));
+/* harmony default export */ const date_fns_addDays = ((/* unused pure expression or super */ null && (addDays)));
 
 ;// CONCATENATED MODULE: ./node_modules/date-fns/addWeeks.mjs
 
@@ -53825,13 +52770,13 @@ function addDays_addDays(date, amount) {
  * const result = addWeeks(new Date(2014, 8, 1), 4)
  * //=> Mon Sep 29 2014 00:00:00
  */
-function addWeeks_addWeeks(date, amount) {
+function addWeeks(date, amount) {
   const days = amount * 7;
-  return addDays_addDays(date, days);
+  return addDays(date, days);
 }
 
 // Fallback for modularized imports:
-/* harmony default export */ const date_fns_addWeeks = ((/* unused pure expression or super */ null && (addWeeks_addWeeks)));
+/* harmony default export */ const date_fns_addWeeks = ((/* unused pure expression or super */ null && (addWeeks)));
 
 ;// CONCATENATED MODULE: ./node_modules/date-fns/subWeeks.mjs
 
@@ -53857,7 +52802,7 @@ function addWeeks_addWeeks(date, amount) {
  * //=> Mon Aug 04 2014 00:00:00
  */
 function subWeeks(date, amount) {
-  return addWeeks_addWeeks(date, -amount);
+  return addWeeks(date, -amount);
 }
 
 // Fallback for modularized imports:
@@ -53897,8 +52842,8 @@ function subWeeks(date, amount) {
  * const result = endOfWeek(new Date(2014, 8, 2, 11, 55, 0), { weekStartsOn: 1 })
  * //=> Sun Sep 07 2014 23:59:59.999
  */
-function endOfWeek_endOfWeek(date, options) {
-  const defaultOptions = defaultOptions_getDefaultOptions();
+function endOfWeek(date, options) {
+  const defaultOptions = getDefaultOptions();
   const weekStartsOn =
     options?.weekStartsOn ??
     options?.locale?.options?.weekStartsOn ??
@@ -53906,7 +52851,7 @@ function endOfWeek_endOfWeek(date, options) {
     defaultOptions.locale?.options?.weekStartsOn ??
     0;
 
-  const _date = toDate_toDate(date);
+  const _date = toDate(date);
   const day = _date.getDay();
   const diff = (day < weekStartsOn ? -7 : 0) + 6 - (day - weekStartsOn);
 
@@ -53916,7 +52861,7 @@ function endOfWeek_endOfWeek(date, options) {
 }
 
 // Fallback for modularized imports:
-/* harmony default export */ const date_fns_endOfWeek = ((/* unused pure expression or super */ null && (endOfWeek_endOfWeek)));
+/* harmony default export */ const date_fns_endOfWeek = ((/* unused pure expression or super */ null && (endOfWeek)));
 
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/arrow-right.js
 /**
@@ -53950,6 +52895,795 @@ const arrowLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 
 ;// CONCATENATED MODULE: external ["wp","date"]
 const external_wp_date_namespaceObject = window["wp"]["date"];
+;// CONCATENATED MODULE: ./node_modules/date-fns/isAfter.mjs
+
+
+/**
+ * @name isAfter
+ * @category Common Helpers
+ * @summary Is the first date after the second one?
+ *
+ * @description
+ * Is the first date after the second one?
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date that should be after the other one to return true
+ * @param dateToCompare - The date to compare with
+ *
+ * @returns The first date is after the second date
+ *
+ * @example
+ * // Is 10 July 1989 after 11 February 1987?
+ * const result = isAfter(new Date(1989, 6, 10), new Date(1987, 1, 11))
+ * //=> true
+ */
+function isAfter(date, dateToCompare) {
+  const _date = toDate(date);
+  const _dateToCompare = toDate(dateToCompare);
+  return _date.getTime() > _dateToCompare.getTime();
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_isAfter = ((/* unused pure expression or super */ null && (isAfter)));
+
+;// CONCATENATED MODULE: ./node_modules/date-fns/isBefore.mjs
+
+
+/**
+ * @name isBefore
+ * @category Common Helpers
+ * @summary Is the first date before the second one?
+ *
+ * @description
+ * Is the first date before the second one?
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date that should be before the other one to return true
+ * @param dateToCompare - The date to compare with
+ *
+ * @returns The first date is before the second date
+ *
+ * @example
+ * // Is 10 July 1989 before 11 February 1987?
+ * const result = isBefore(new Date(1989, 6, 10), new Date(1987, 1, 11))
+ * //=> false
+ */
+function isBefore(date, dateToCompare) {
+  const _date = toDate(date);
+  const _dateToCompare = toDate(dateToCompare);
+  return +_date < +_dateToCompare;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_isBefore = ((/* unused pure expression or super */ null && (isBefore)));
+
+;// CONCATENATED MODULE: ./node_modules/date-fns/getDaysInMonth.mjs
+
+
+
+/**
+ * @name getDaysInMonth
+ * @category Month Helpers
+ * @summary Get the number of days in a month of the given date.
+ *
+ * @description
+ * Get the number of days in a month of the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The number of days in a month
+ *
+ * @example
+ * // How many days are in February 2000?
+ * const result = getDaysInMonth(new Date(2000, 1))
+ * //=> 29
+ */
+function getDaysInMonth(date) {
+  const _date = toDate(date);
+  const year = _date.getFullYear();
+  const monthIndex = _date.getMonth();
+  const lastDayOfMonth = constructFrom(date, 0);
+  lastDayOfMonth.setFullYear(year, monthIndex + 1, 0);
+  lastDayOfMonth.setHours(0, 0, 0, 0);
+  return lastDayOfMonth.getDate();
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_getDaysInMonth = ((/* unused pure expression or super */ null && (getDaysInMonth)));
+
+;// CONCATENATED MODULE: ./node_modules/date-fns/setMonth.mjs
+
+
+
+
+/**
+ * @name setMonth
+ * @category Month Helpers
+ * @summary Set the month to the given date.
+ *
+ * @description
+ * Set the month to the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param month - The month index to set (0-11)
+ *
+ * @returns The new date with the month set
+ *
+ * @example
+ * // Set February to 1 September 2014:
+ * const result = setMonth(new Date(2014, 8, 1), 1)
+ * //=> Sat Feb 01 2014 00:00:00
+ */
+function setMonth(date, month) {
+  const _date = toDate(date);
+  const year = _date.getFullYear();
+  const day = _date.getDate();
+
+  const dateWithDesiredMonth = constructFrom(date, 0);
+  dateWithDesiredMonth.setFullYear(year, month, 15);
+  dateWithDesiredMonth.setHours(0, 0, 0, 0);
+  const daysInMonth = getDaysInMonth(dateWithDesiredMonth);
+  // Set the last day of the new month
+  // if the original date was the last day of the longer month
+  _date.setMonth(month, Math.min(day, daysInMonth));
+  return _date;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_setMonth = ((/* unused pure expression or super */ null && (setMonth)));
+
+;// CONCATENATED MODULE: ./node_modules/date-fns/set.mjs
+
+
+
+
+/**
+ * @name set
+ * @category Common Helpers
+ * @summary Set date values to a given date.
+ *
+ * @description
+ * Set date values to a given date.
+ *
+ * Sets time values to date from object `values`.
+ * A value is not set if it is undefined or null or doesn't exist in `values`.
+ *
+ * Note about bundle size: `set` does not internally use `setX` functions from date-fns but instead opts
+ * to use native `Date#setX` methods. If you use this function, you may not want to include the
+ * other `setX` functions that date-fns provides if you are concerned about the bundle size.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param values - The date values to be set
+ *
+ * @returns The new date with options set
+ *
+ * @example
+ * // Transform 1 September 2014 into 20 October 2015 in a single line:
+ * const result = set(new Date(2014, 8, 20), { year: 2015, month: 9, date: 20 })
+ * //=> Tue Oct 20 2015 00:00:00
+ *
+ * @example
+ * // Set 12 PM to 1 September 2014 01:23:45 to 1 September 2014 12:00:00:
+ * const result = set(new Date(2014, 8, 1, 1, 23, 45), { hours: 12 })
+ * //=> Mon Sep 01 2014 12:23:45
+ */
+
+function set(date, values) {
+  let _date = toDate(date);
+
+  // Check if date is Invalid Date because Date.prototype.setFullYear ignores the value of Invalid Date
+  if (isNaN(+_date)) {
+    return constructFrom(date, NaN);
+  }
+
+  if (values.year != null) {
+    _date.setFullYear(values.year);
+  }
+
+  if (values.month != null) {
+    _date = setMonth(_date, values.month);
+  }
+
+  if (values.date != null) {
+    _date.setDate(values.date);
+  }
+
+  if (values.hours != null) {
+    _date.setHours(values.hours);
+  }
+
+  if (values.minutes != null) {
+    _date.setMinutes(values.minutes);
+  }
+
+  if (values.seconds != null) {
+    _date.setSeconds(values.seconds);
+  }
+
+  if (values.milliseconds != null) {
+    _date.setMilliseconds(values.milliseconds);
+  }
+
+  return _date;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_set = ((/* unused pure expression or super */ null && (set)));
+
+;// CONCATENATED MODULE: ./node_modules/date-fns/startOfToday.mjs
+
+
+/**
+ * @name startOfToday
+ * @category Day Helpers
+ * @summary Return the start of today.
+ * @pure false
+ *
+ * @description
+ * Return the start of today.
+ *
+ * @returns The start of today
+ *
+ * @example
+ * // If today is 6 October 2014:
+ * const result = startOfToday()
+ * //=> Mon Oct 6 2014 00:00:00
+ */
+function startOfToday() {
+  return startOfDay(Date.now());
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_startOfToday = ((/* unused pure expression or super */ null && (startOfToday)));
+
+;// CONCATENATED MODULE: ./node_modules/date-fns/setYear.mjs
+
+
+
+/**
+ * @name setYear
+ * @category Year Helpers
+ * @summary Set the year to the given date.
+ *
+ * @description
+ * Set the year to the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param year - The year of the new date
+ *
+ * @returns The new date with the year set
+ *
+ * @example
+ * // Set year 2013 to 1 September 2014:
+ * const result = setYear(new Date(2014, 8, 1), 2013)
+ * //=> Sun Sep 01 2013 00:00:00
+ */
+function setYear(date, year) {
+  const _date = toDate(date);
+
+  // Check if date is Invalid Date because Date.prototype.setFullYear ignores the value of Invalid Date
+  if (isNaN(+_date)) {
+    return constructFrom(date, NaN);
+  }
+
+  _date.setFullYear(year);
+  return _date;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_setYear = ((/* unused pure expression or super */ null && (setYear)));
+
+;// CONCATENATED MODULE: ./node_modules/date-fns/addYears.mjs
+
+
+/**
+ * @name addYears
+ * @category Year Helpers
+ * @summary Add the specified number of years to the given date.
+ *
+ * @description
+ * Add the specified number of years to the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of years to be added.
+ *
+ * @returns The new date with the years added
+ *
+ * @example
+ * // Add 5 years to 1 September 2014:
+ * const result = addYears(new Date(2014, 8, 1), 5)
+ * //=> Sun Sep 01 2019 00:00:00
+ */
+function addYears(date, amount) {
+  return addMonths(date, amount * 12);
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_addYears = ((/* unused pure expression or super */ null && (addYears)));
+
+;// CONCATENATED MODULE: ./node_modules/date-fns/subYears.mjs
+
+
+/**
+ * @name subYears
+ * @category Year Helpers
+ * @summary Subtract the specified number of years from the given date.
+ *
+ * @description
+ * Subtract the specified number of years from the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of years to be subtracted.
+ *
+ * @returns The new date with the years subtracted
+ *
+ * @example
+ * // Subtract 5 years from 1 September 2014:
+ * const result = subYears(new Date(2014, 8, 1), 5)
+ * //=> Tue Sep 01 2009 00:00:00
+ */
+function subYears(date, amount) {
+  return addYears(date, -amount);
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_subYears = ((/* unused pure expression or super */ null && (subYears)));
+
+;// CONCATENATED MODULE: ./node_modules/date-fns/eachDayOfInterval.mjs
+
+
+/**
+ * The {@link eachDayOfInterval} function options.
+ */
+
+/**
+ * @name eachDayOfInterval
+ * @category Interval Helpers
+ * @summary Return the array of dates within the specified time interval.
+ *
+ * @description
+ * Return the array of dates within the specified time interval.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param interval - The interval.
+ * @param options - An object with options.
+ *
+ * @returns The array with starts of days from the day of the interval start to the day of the interval end
+ *
+ * @example
+ * // Each day between 6 October 2014 and 10 October 2014:
+ * const result = eachDayOfInterval({
+ *   start: new Date(2014, 9, 6),
+ *   end: new Date(2014, 9, 10)
+ * })
+ * //=> [
+ * //   Mon Oct 06 2014 00:00:00,
+ * //   Tue Oct 07 2014 00:00:00,
+ * //   Wed Oct 08 2014 00:00:00,
+ * //   Thu Oct 09 2014 00:00:00,
+ * //   Fri Oct 10 2014 00:00:00
+ * // ]
+ */
+function eachDayOfInterval(interval, options) {
+  const startDate = toDate(interval.start);
+  const endDate = toDate(interval.end);
+
+  let reversed = +startDate > +endDate;
+  const endTime = reversed ? +startDate : +endDate;
+  const currentDate = reversed ? endDate : startDate;
+  currentDate.setHours(0, 0, 0, 0);
+
+  let step = options?.step ?? 1;
+  if (!step) return [];
+  if (step < 0) {
+    step = -step;
+    reversed = !reversed;
+  }
+
+  const dates = [];
+
+  while (+currentDate <= endTime) {
+    dates.push(toDate(currentDate));
+    currentDate.setDate(currentDate.getDate() + step);
+    currentDate.setHours(0, 0, 0, 0);
+  }
+
+  return reversed ? dates.reverse() : dates;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_eachDayOfInterval = ((/* unused pure expression or super */ null && (eachDayOfInterval)));
+
+;// CONCATENATED MODULE: ./node_modules/date-fns/eachMonthOfInterval.mjs
+
+
+/**
+ * The {@link eachMonthOfInterval} function options.
+ */
+
+/**
+ * @name eachMonthOfInterval
+ * @category Interval Helpers
+ * @summary Return the array of months within the specified time interval.
+ *
+ * @description
+ * Return the array of months within the specified time interval.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param interval - The interval
+ *
+ * @returns The array with starts of months from the month of the interval start to the month of the interval end
+ *
+ * @example
+ * // Each month between 6 February 2014 and 10 August 2014:
+ * const result = eachMonthOfInterval({
+ *   start: new Date(2014, 1, 6),
+ *   end: new Date(2014, 7, 10)
+ * })
+ * //=> [
+ * //   Sat Feb 01 2014 00:00:00,
+ * //   Sat Mar 01 2014 00:00:00,
+ * //   Tue Apr 01 2014 00:00:00,
+ * //   Thu May 01 2014 00:00:00,
+ * //   Sun Jun 01 2014 00:00:00,
+ * //   Tue Jul 01 2014 00:00:00,
+ * //   Fri Aug 01 2014 00:00:00
+ * // ]
+ */
+function eachMonthOfInterval(interval, options) {
+  const startDate = toDate(interval.start);
+  const endDate = toDate(interval.end);
+
+  let reversed = +startDate > +endDate;
+  const endTime = reversed ? +startDate : +endDate;
+  const currentDate = reversed ? endDate : startDate;
+  currentDate.setHours(0, 0, 0, 0);
+  currentDate.setDate(1);
+
+  let step = options?.step ?? 1;
+  if (!step) return [];
+  if (step < 0) {
+    step = -step;
+    reversed = !reversed;
+  }
+
+  const dates = [];
+
+  while (+currentDate <= endTime) {
+    dates.push(toDate(currentDate));
+    currentDate.setMonth(currentDate.getMonth() + step);
+  }
+
+  return reversed ? dates.reverse() : dates;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_eachMonthOfInterval = ((/* unused pure expression or super */ null && (eachMonthOfInterval)));
+
+;// CONCATENATED MODULE: ./node_modules/date-fns/startOfMonth.mjs
+
+
+/**
+ * @name startOfMonth
+ * @category Month Helpers
+ * @summary Return the start of a month for the given date.
+ *
+ * @description
+ * Return the start of a month for the given date.
+ * The result will be in the local timezone.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The start of a month
+ *
+ * @example
+ * // The start of a month for 2 September 2014 11:55:00:
+ * const result = startOfMonth(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Mon Sep 01 2014 00:00:00
+ */
+function startOfMonth(date) {
+  const _date = toDate(date);
+  _date.setDate(1);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_startOfMonth = ((/* unused pure expression or super */ null && (startOfMonth)));
+
+;// CONCATENATED MODULE: ./node_modules/date-fns/endOfMonth.mjs
+
+
+/**
+ * @name endOfMonth
+ * @category Month Helpers
+ * @summary Return the end of a month for the given date.
+ *
+ * @description
+ * Return the end of a month for the given date.
+ * The result will be in the local timezone.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The end of a month
+ *
+ * @example
+ * // The end of a month for 2 September 2014 11:55:00:
+ * const result = endOfMonth(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Tue Sep 30 2014 23:59:59.999
+ */
+function endOfMonth(date) {
+  const _date = toDate(date);
+  const month = _date.getMonth();
+  _date.setFullYear(_date.getFullYear(), month + 1, 0);
+  _date.setHours(23, 59, 59, 999);
+  return _date;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_endOfMonth = ((/* unused pure expression or super */ null && (endOfMonth)));
+
+;// CONCATENATED MODULE: ./node_modules/date-fns/eachWeekOfInterval.mjs
+
+
+
+
+/**
+ * The {@link eachWeekOfInterval} function options.
+ */
+
+/**
+ * @name eachWeekOfInterval
+ * @category Interval Helpers
+ * @summary Return the array of weeks within the specified time interval.
+ *
+ * @description
+ * Return the array of weeks within the specified time interval.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param interval - The interval.
+ * @param options - An object with options.
+ *
+ * @returns The array with starts of weeks from the week of the interval start to the week of the interval end
+ *
+ * @example
+ * // Each week within interval 6 October 2014 - 23 November 2014:
+ * const result = eachWeekOfInterval({
+ *   start: new Date(2014, 9, 6),
+ *   end: new Date(2014, 10, 23)
+ * })
+ * //=> [
+ * //   Sun Oct 05 2014 00:00:00,
+ * //   Sun Oct 12 2014 00:00:00,
+ * //   Sun Oct 19 2014 00:00:00,
+ * //   Sun Oct 26 2014 00:00:00,
+ * //   Sun Nov 02 2014 00:00:00,
+ * //   Sun Nov 09 2014 00:00:00,
+ * //   Sun Nov 16 2014 00:00:00,
+ * //   Sun Nov 23 2014 00:00:00
+ * // ]
+ */
+function eachWeekOfInterval(interval, options) {
+  const startDate = toDate(interval.start);
+  const endDate = toDate(interval.end);
+
+  let reversed = +startDate > +endDate;
+  const startDateWeek = reversed
+    ? startOfWeek(endDate, options)
+    : startOfWeek(startDate, options);
+  const endDateWeek = reversed
+    ? startOfWeek(startDate, options)
+    : startOfWeek(endDate, options);
+
+  // Some timezones switch DST at midnight, making start of day unreliable in these timezones, 3pm is a safe bet
+  startDateWeek.setHours(15);
+  endDateWeek.setHours(15);
+
+  const endTime = +endDateWeek.getTime();
+  let currentDate = startDateWeek;
+
+  let step = options?.step ?? 1;
+  if (!step) return [];
+  if (step < 0) {
+    step = -step;
+    reversed = !reversed;
+  }
+
+  const dates = [];
+
+  while (+currentDate <= endTime) {
+    currentDate.setHours(0);
+    dates.push(toDate(currentDate));
+    currentDate = addWeeks(currentDate, step);
+    currentDate.setHours(15);
+  }
+
+  return reversed ? dates.reverse() : dates;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_eachWeekOfInterval = ((/* unused pure expression or super */ null && (eachWeekOfInterval)));
+
+;// CONCATENATED MODULE: ./packages/components/build-module/date-time/date/use-lilius/index.js
+/**
+ * This source is a local copy of the use-lilius library, since the original
+ * library is not actively maintained.
+ * @see https://github.com/WordPress/gutenberg/discussions/64968
+ *
+ * use-lilius@2.0.5
+ * https://github.com/Avarios/use-lilius
+ *
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2021-Present Danny Tatom
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+let Month = /*#__PURE__*/function (Month) {
+  Month[Month["JANUARY"] = 0] = "JANUARY";
+  Month[Month["FEBRUARY"] = 1] = "FEBRUARY";
+  Month[Month["MARCH"] = 2] = "MARCH";
+  Month[Month["APRIL"] = 3] = "APRIL";
+  Month[Month["MAY"] = 4] = "MAY";
+  Month[Month["JUNE"] = 5] = "JUNE";
+  Month[Month["JULY"] = 6] = "JULY";
+  Month[Month["AUGUST"] = 7] = "AUGUST";
+  Month[Month["SEPTEMBER"] = 8] = "SEPTEMBER";
+  Month[Month["OCTOBER"] = 9] = "OCTOBER";
+  Month[Month["NOVEMBER"] = 10] = "NOVEMBER";
+  Month[Month["DECEMBER"] = 11] = "DECEMBER";
+  return Month;
+}({});
+let Day = /*#__PURE__*/function (Day) {
+  Day[Day["SUNDAY"] = 0] = "SUNDAY";
+  Day[Day["MONDAY"] = 1] = "MONDAY";
+  Day[Day["TUESDAY"] = 2] = "TUESDAY";
+  Day[Day["WEDNESDAY"] = 3] = "WEDNESDAY";
+  Day[Day["THURSDAY"] = 4] = "THURSDAY";
+  Day[Day["FRIDAY"] = 5] = "FRIDAY";
+  Day[Day["SATURDAY"] = 6] = "SATURDAY";
+  return Day;
+}({});
+const inRange = (date, min, max) => (isEqual(date, min) || isAfter(date, min)) && (isEqual(date, max) || isBefore(date, max));
+const use_lilius_clearTime = date => set(date, {
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+  milliseconds: 0
+});
+const useLilius = ({
+  weekStartsOn = Day.SUNDAY,
+  viewing: initialViewing = new Date(),
+  selected: initialSelected = [],
+  numberOfMonths = 1
+} = {}) => {
+  const [viewing, setViewing] = (0,external_wp_element_namespaceObject.useState)(initialViewing);
+  const viewToday = (0,external_wp_element_namespaceObject.useCallback)(() => setViewing(startOfToday()), [setViewing]);
+  const viewMonth = (0,external_wp_element_namespaceObject.useCallback)(month => setViewing(v => setMonth(v, month)), []);
+  const viewPreviousMonth = (0,external_wp_element_namespaceObject.useCallback)(() => setViewing(v => subMonths(v, 1)), []);
+  const viewNextMonth = (0,external_wp_element_namespaceObject.useCallback)(() => setViewing(v => addMonths(v, 1)), []);
+  const viewYear = (0,external_wp_element_namespaceObject.useCallback)(year => setViewing(v => setYear(v, year)), []);
+  const viewPreviousYear = (0,external_wp_element_namespaceObject.useCallback)(() => setViewing(v => subYears(v, 1)), []);
+  const viewNextYear = (0,external_wp_element_namespaceObject.useCallback)(() => setViewing(v => addYears(v, 1)), []);
+  const [selected, setSelected] = (0,external_wp_element_namespaceObject.useState)(initialSelected.map(use_lilius_clearTime));
+  const clearSelected = () => setSelected([]);
+  const isSelected = (0,external_wp_element_namespaceObject.useCallback)(date => selected.findIndex(s => isEqual(s, date)) > -1, [selected]);
+  const select = (0,external_wp_element_namespaceObject.useCallback)((date, replaceExisting) => {
+    if (replaceExisting) {
+      setSelected(Array.isArray(date) ? date : [date]);
+    } else {
+      setSelected(selectedItems => selectedItems.concat(Array.isArray(date) ? date : [date]));
+    }
+  }, []);
+  const deselect = (0,external_wp_element_namespaceObject.useCallback)(date => setSelected(selectedItems => Array.isArray(date) ? selectedItems.filter(s => !date.map(d => d.getTime()).includes(s.getTime())) : selectedItems.filter(s => !isEqual(s, date))), []);
+  const toggle = (0,external_wp_element_namespaceObject.useCallback)((date, replaceExisting) => isSelected(date) ? deselect(date) : select(date, replaceExisting), [deselect, isSelected, select]);
+  const selectRange = (0,external_wp_element_namespaceObject.useCallback)((start, end, replaceExisting) => {
+    if (replaceExisting) {
+      setSelected(eachDayOfInterval({
+        start,
+        end
+      }));
+    } else {
+      setSelected(selectedItems => selectedItems.concat(eachDayOfInterval({
+        start,
+        end
+      })));
+    }
+  }, []);
+  const deselectRange = (0,external_wp_element_namespaceObject.useCallback)((start, end) => {
+    setSelected(selectedItems => selectedItems.filter(s => !eachDayOfInterval({
+      start,
+      end
+    }).map(d => d.getTime()).includes(s.getTime())));
+  }, []);
+  const calendar = (0,external_wp_element_namespaceObject.useMemo)(() => eachMonthOfInterval({
+    start: startOfMonth(viewing),
+    end: endOfMonth(addMonths(viewing, numberOfMonths - 1))
+  }).map(month => eachWeekOfInterval({
+    start: startOfMonth(month),
+    end: endOfMonth(month)
+  }, {
+    weekStartsOn
+  }).map(week => eachDayOfInterval({
+    start: startOfWeek(week, {
+      weekStartsOn
+    }),
+    end: endOfWeek(week, {
+      weekStartsOn
+    })
+  }))), [viewing, weekStartsOn, numberOfMonths]);
+  return {
+    clearTime: use_lilius_clearTime,
+    inRange,
+    viewing,
+    setViewing,
+    viewToday,
+    viewMonth,
+    viewPreviousMonth,
+    viewNextMonth,
+    viewYear,
+    viewPreviousYear,
+    viewNextYear,
+    selected,
+    setSelected,
+    clearSelected,
+    isSelected,
+    select,
+    deselect,
+    toggle,
+    selectRange,
+    deselectRange,
+    calendar
+  };
+};
+
 ;// CONCATENATED MODULE: ./packages/components/build-module/date-time/date/styles.js
 
 function date_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
@@ -54033,7 +53767,7 @@ function inputToDate(input) {
   if (typeof input === 'string') {
     return new Date(input);
   }
-  return toDate_toDate(input);
+  return toDate(input);
 }
 
 /**
@@ -54099,7 +53833,6 @@ const TIMEZONELESS_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
  * External dependencies
  */
 
-
 /**
  * WordPress dependencies
  */
@@ -54156,14 +53889,14 @@ function DatePicker({
     viewPreviousMonth,
     viewNextMonth
   } = useLilius({
-    selected: [startOfDay_startOfDay(date)],
-    viewing: startOfDay_startOfDay(date),
+    selected: [startOfDay(date)],
+    viewing: startOfDay(date),
     weekStartsOn
   });
 
   // Used to implement a roving tab index. Tracks the day that receives focus
   // when the user tabs into the calendar.
-  const [focusable, setFocusable] = (0,external_wp_element_namespaceObject.useState)(startOfDay_startOfDay(date));
+  const [focusable, setFocusable] = (0,external_wp_element_namespaceObject.useState)(startOfDay(date));
 
   // Allows us to only programmatically focus() a day when focus was already
   // within the calendar. This stops us stealing focus from e.g. a TimePicker
@@ -54174,9 +53907,9 @@ function DatePicker({
   const [prevCurrentDate, setPrevCurrentDate] = (0,external_wp_element_namespaceObject.useState)(currentDate);
   if (currentDate !== prevCurrentDate) {
     setPrevCurrentDate(currentDate);
-    setSelected([startOfDay_startOfDay(date)]);
-    setViewing(startOfDay_startOfDay(date));
-    setFocusable(startOfDay_startOfDay(date));
+    setSelected([startOfDay(date)]);
+    setViewing(startOfDay(date));
+    setFocusable(startOfDay(date));
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_Wrapper, {
     className: "components-datetime__date",
@@ -54189,8 +53922,8 @@ function DatePicker({
         "aria-label": (0,external_wp_i18n_namespaceObject.__)('View previous month'),
         onClick: () => {
           viewPreviousMonth();
-          setFocusable(subMonths_subMonths(focusable, 1));
-          onMonthPreviewed?.(format(subMonths_subMonths(viewing, 1), TIMEZONELESS_FORMAT));
+          setFocusable(subMonths(focusable, 1));
+          onMonthPreviewed?.(format(subMonths(viewing, 1), TIMEZONELESS_FORMAT));
         }
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(NavigatorHeading, {
         level: 3,
@@ -54203,8 +53936,8 @@ function DatePicker({
         "aria-label": (0,external_wp_i18n_namespaceObject.__)('View next month'),
         onClick: () => {
           viewNextMonth();
-          setFocusable(addMonths_addMonths(focusable, 1));
-          onMonthPreviewed?.(format(addMonths_addMonths(viewing, 1), TIMEZONELESS_FORMAT));
+          setFocusable(addMonths(focusable, 1));
+          onMonthPreviewed?.(format(addMonths(viewing, 1), TIMEZONELESS_FORMAT));
         }
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Calendar, {
@@ -54220,7 +53953,7 @@ function DatePicker({
           day: day,
           column: index + 1,
           isSelected: isSelected(day),
-          isFocusable: isEqual_isEqual(day, focusable),
+          isFocusable: isEqual(day, focusable),
           isFocusAllowed: isFocusWithinCalendar,
           isToday: isSameDay(day, new Date()),
           isInvalid: isInvalidDate ? isInvalidDate(day) : false,
@@ -54235,28 +53968,28 @@ function DatePicker({
           onKeyDown: event => {
             let nextFocusable;
             if (event.key === 'ArrowLeft') {
-              nextFocusable = addDays_addDays(day, (0,external_wp_i18n_namespaceObject.isRTL)() ? 1 : -1);
+              nextFocusable = addDays(day, (0,external_wp_i18n_namespaceObject.isRTL)() ? 1 : -1);
             }
             if (event.key === 'ArrowRight') {
-              nextFocusable = addDays_addDays(day, (0,external_wp_i18n_namespaceObject.isRTL)() ? -1 : 1);
+              nextFocusable = addDays(day, (0,external_wp_i18n_namespaceObject.isRTL)() ? -1 : 1);
             }
             if (event.key === 'ArrowUp') {
               nextFocusable = subWeeks(day, 1);
             }
             if (event.key === 'ArrowDown') {
-              nextFocusable = addWeeks_addWeeks(day, 1);
+              nextFocusable = addWeeks(day, 1);
             }
             if (event.key === 'PageUp') {
-              nextFocusable = subMonths_subMonths(day, 1);
+              nextFocusable = subMonths(day, 1);
             }
             if (event.key === 'PageDown') {
-              nextFocusable = addMonths_addMonths(day, 1);
+              nextFocusable = addMonths(day, 1);
             }
             if (event.key === 'Home') {
-              nextFocusable = startOfWeek_startOfWeek(day);
+              nextFocusable = startOfWeek(day);
             }
             if (event.key === 'End') {
-              nextFocusable = startOfDay_startOfDay(endOfWeek_endOfWeek(day));
+              nextFocusable = startOfDay(endOfWeek(day));
             }
             if (nextFocusable) {
               event.preventDefault();
@@ -54359,172 +54092,13 @@ function getDayLabel(date, isSelected, numEvents) {
  * //=> Mon Dec 01 2014 22:15:00
  */
 function startOfMinute(date) {
-  const _date = toDate_toDate(date);
+  const _date = toDate(date);
   _date.setSeconds(0, 0);
   return _date;
 }
 
 // Fallback for modularized imports:
 /* harmony default export */ const date_fns_startOfMinute = ((/* unused pure expression or super */ null && (startOfMinute)));
-
-;// CONCATENATED MODULE: ./node_modules/date-fns/getDaysInMonth.mjs
-
-
-
-/**
- * @name getDaysInMonth
- * @category Month Helpers
- * @summary Get the number of days in a month of the given date.
- *
- * @description
- * Get the number of days in a month of the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The given date
- *
- * @returns The number of days in a month
- *
- * @example
- * // How many days are in February 2000?
- * const result = getDaysInMonth(new Date(2000, 1))
- * //=> 29
- */
-function getDaysInMonth_getDaysInMonth(date) {
-  const _date = toDate_toDate(date);
-  const year = _date.getFullYear();
-  const monthIndex = _date.getMonth();
-  const lastDayOfMonth = constructFrom_constructFrom(date, 0);
-  lastDayOfMonth.setFullYear(year, monthIndex + 1, 0);
-  lastDayOfMonth.setHours(0, 0, 0, 0);
-  return lastDayOfMonth.getDate();
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_getDaysInMonth = ((/* unused pure expression or super */ null && (getDaysInMonth_getDaysInMonth)));
-
-;// CONCATENATED MODULE: ./node_modules/date-fns/setMonth.mjs
-
-
-
-
-/**
- * @name setMonth
- * @category Month Helpers
- * @summary Set the month to the given date.
- *
- * @description
- * Set the month to the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The date to be changed
- * @param month - The month index to set (0-11)
- *
- * @returns The new date with the month set
- *
- * @example
- * // Set February to 1 September 2014:
- * const result = setMonth(new Date(2014, 8, 1), 1)
- * //=> Sat Feb 01 2014 00:00:00
- */
-function setMonth_setMonth(date, month) {
-  const _date = toDate_toDate(date);
-  const year = _date.getFullYear();
-  const day = _date.getDate();
-
-  const dateWithDesiredMonth = constructFrom_constructFrom(date, 0);
-  dateWithDesiredMonth.setFullYear(year, month, 15);
-  dateWithDesiredMonth.setHours(0, 0, 0, 0);
-  const daysInMonth = getDaysInMonth_getDaysInMonth(dateWithDesiredMonth);
-  // Set the last day of the new month
-  // if the original date was the last day of the longer month
-  _date.setMonth(month, Math.min(day, daysInMonth));
-  return _date;
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_setMonth = ((/* unused pure expression or super */ null && (setMonth_setMonth)));
-
-;// CONCATENATED MODULE: ./node_modules/date-fns/set.mjs
-
-
-
-
-/**
- * @name set
- * @category Common Helpers
- * @summary Set date values to a given date.
- *
- * @description
- * Set date values to a given date.
- *
- * Sets time values to date from object `values`.
- * A value is not set if it is undefined or null or doesn't exist in `values`.
- *
- * Note about bundle size: `set` does not internally use `setX` functions from date-fns but instead opts
- * to use native `Date#setX` methods. If you use this function, you may not want to include the
- * other `setX` functions that date-fns provides if you are concerned about the bundle size.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- *
- * @param date - The date to be changed
- * @param values - The date values to be set
- *
- * @returns The new date with options set
- *
- * @example
- * // Transform 1 September 2014 into 20 October 2015 in a single line:
- * const result = set(new Date(2014, 8, 20), { year: 2015, month: 9, date: 20 })
- * //=> Tue Oct 20 2015 00:00:00
- *
- * @example
- * // Set 12 PM to 1 September 2014 01:23:45 to 1 September 2014 12:00:00:
- * const result = set(new Date(2014, 8, 1, 1, 23, 45), { hours: 12 })
- * //=> Mon Sep 01 2014 12:23:45
- */
-
-function set_set(date, values) {
-  let _date = toDate_toDate(date);
-
-  // Check if date is Invalid Date because Date.prototype.setFullYear ignores the value of Invalid Date
-  if (isNaN(+_date)) {
-    return constructFrom_constructFrom(date, NaN);
-  }
-
-  if (values.year != null) {
-    _date.setFullYear(values.year);
-  }
-
-  if (values.month != null) {
-    _date = setMonth_setMonth(_date, values.month);
-  }
-
-  if (values.date != null) {
-    _date.setDate(values.date);
-  }
-
-  if (values.hours != null) {
-    _date.setHours(values.hours);
-  }
-
-  if (values.minutes != null) {
-    _date.setMinutes(values.minutes);
-  }
-
-  if (values.seconds != null) {
-    _date.setSeconds(values.seconds);
-  }
-
-  if (values.milliseconds != null) {
-    _date.setMilliseconds(values.milliseconds);
-  }
-
-  return _date;
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_set = ((/* unused pure expression or super */ null && (set_set)));
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/date-time/time/styles.js
 
@@ -54975,7 +54549,7 @@ function TimePicker({
 
       // We can safely assume value is a number if target is valid.
       const numberValue = Number(value);
-      const newDate = set_set(date, {
+      const newDate = set(date, {
         [method]: numberValue
       });
       setDate(newDate);
@@ -54987,7 +54561,7 @@ function TimePicker({
     hours: newHours,
     minutes: newMinutes
   }) => {
-    const newDate = set_set(date, {
+    const newDate = set(date, {
       hours: newHours,
       minutes: newMinutes
     });
@@ -55022,7 +54596,7 @@ function TimePicker({
       value: month,
       options: monthOptions,
       onChange: value => {
-        const newDate = setMonth_setMonth(date, Number(value) - 1);
+        const newDate = setMonth(date, Number(value) - 1);
         setDate(newDate);
         onChange?.(format(newDate, TIMEZONELESS_FORMAT));
       }
