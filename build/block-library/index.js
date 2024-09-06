@@ -12416,7 +12416,7 @@ const v12 = {
   attributes: v12BlockAttributes,
   supports: v12BlockSupports,
   isEligible(attributes) {
-    return attributes.customOverlayColor !== undefined || attributes.overlayColor !== undefined;
+    return (attributes.customOverlayColor !== undefined || attributes.overlayColor !== undefined) && attributes.isUserOverlayColor === undefined;
   },
   migrate(attributes) {
     return {
@@ -14753,7 +14753,8 @@ function CoverEdit({
       const newIsDark = compositeIsDark(dimRatio, newOverlayColor, averageBackgroundColor);
       __unstableMarkNextChangeAsNotPersistent();
       setAttributes({
-        isDark: newIsDark
+        isDark: newIsDark,
+        isUserOverlayColor: isUserOverlayColor || false
       });
     })();
     // Disable reason: Update the block only when the featured image changes.
@@ -14798,7 +14799,8 @@ function CoverEdit({
       focalPoint: undefined,
       useFeaturedImage: undefined,
       dimRatio: newDimRatio,
-      isDark: newIsDark
+      isDark: newIsDark,
+      isUserOverlayColor: isUserOverlayColor || false
     });
   };
   const onClearMedia = () => {
