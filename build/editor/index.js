@@ -20900,73 +20900,6 @@ function PostTitleRaw(_, forwardedRef) {
 }
 /* harmony default export */ const post_title_raw = ((0,external_wp_element_namespaceObject.forwardRef)(PostTitleRaw));
 
-;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-trash/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-/**
- * Displays the Post Trash Button and Confirm Dialog in the Editor.
- *
- * @return {JSX.Element|null} The rendered PostTrash component.
- */
-
-
-
-function PostTrash() {
-  const {
-    isNew,
-    isDeleting,
-    postId
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const store = select(store_store);
-    return {
-      isNew: store.isEditedPostNew(),
-      isDeleting: store.isDeletingPost(),
-      postId: store.getCurrentPostId()
-    };
-  }, []);
-  const {
-    trashPost
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
-  const [showConfirmDialog, setShowConfirmDialog] = (0,external_wp_element_namespaceObject.useState)(false);
-  if (isNew || !postId) {
-    return null;
-  }
-  const handleConfirm = () => {
-    setShowConfirmDialog(false);
-    trashPost();
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      __next40pxDefaultSize: true,
-      className: "editor-post-trash",
-      isDestructive: true,
-      variant: "secondary",
-      isBusy: isDeleting,
-      "aria-disabled": isDeleting,
-      onClick: isDeleting ? undefined : () => setShowConfirmDialog(true),
-      children: (0,external_wp_i18n_namespaceObject.__)('Move to trash')
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalConfirmDialog, {
-      isOpen: showConfirmDialog,
-      onConfirm: handleConfirm,
-      onCancel: () => setShowConfirmDialog(false),
-      confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Move to trash'),
-      size: "medium",
-      children: (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to move this post to the trash?')
-    })]
-  });
-}
-
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-trash/check.js
 /**
  * WordPress dependencies
@@ -20977,6 +20910,7 @@ function PostTrash() {
 /**
  * Internal dependencies
  */
+
 
 
 /**
@@ -21010,13 +20944,84 @@ function PostTrashCheck({
       id: postId
     }) : false;
     return {
-      canTrashPost: (!isNew || postId) && canUserDelete
+      canTrashPost: (!isNew || postId) && canUserDelete && !GLOBAL_POST_TYPES.includes(postType)
     };
   }, []);
   if (!canTrashPost) {
     return null;
   }
   return children;
+}
+
+;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-trash/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+/**
+ * Displays the Post Trash Button and Confirm Dialog in the Editor.
+ *
+ * @return {JSX.Element|null} The rendered PostTrash component.
+ */
+
+
+function PostTrash() {
+  const {
+    isNew,
+    isDeleting,
+    postId,
+    title
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const store = select(store_store);
+    return {
+      isNew: store.isEditedPostNew(),
+      isDeleting: store.isDeletingPost(),
+      postId: store.getCurrentPostId(),
+      title: store.getCurrentPostAttribute('title')
+    };
+  }, []);
+  const {
+    trashPost
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
+  const [showConfirmDialog, setShowConfirmDialog] = (0,external_wp_element_namespaceObject.useState)(false);
+  if (isNew || !postId) {
+    return null;
+  }
+  const handleConfirm = () => {
+    setShowConfirmDialog(false);
+    trashPost();
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(PostTrashCheck, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
+      className: "editor-post-trash",
+      isDestructive: true,
+      variant: "secondary",
+      isBusy: isDeleting,
+      "aria-disabled": isDeleting,
+      onClick: isDeleting ? undefined : () => setShowConfirmDialog(true),
+      children: (0,external_wp_i18n_namespaceObject.__)('Move to trash')
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalConfirmDialog, {
+      isOpen: showConfirmDialog,
+      onConfirm: handleConfirm,
+      onCancel: () => setShowConfirmDialog(false),
+      confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Move to trash'),
+      size: "small",
+      children: (0,external_wp_i18n_namespaceObject.sprintf)(
+      // translators: %s: The item's title.
+      (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to move "%s" to the trash?'), title)
+    })]
+  });
 }
 
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/copy-small.js
@@ -28530,6 +28535,7 @@ function SiteDiscussion() {
 
 
 
+
 /**
  * Module Constants
  */
@@ -28578,7 +28584,7 @@ function PostSummary({
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
               spacing: 1,
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostStatus, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSchedulePanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostURLPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(panel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTemplatePanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostDiscussionPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrivatePostLastRevision, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageAttributesPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSyncStatus, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlogTitle, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostsPerPage, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SiteDiscussion, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_format_panel, {})]
-            }), fills]
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTrash, {}), fills]
           })]
         })
       })
