@@ -53200,7 +53200,7 @@ const defaultRenderToggle = ({
     ...rest
   });
 };
-class PrivateInserter extends external_wp_element_namespaceObject.Component {
+class Inserter extends external_wp_element_namespaceObject.Component {
   constructor() {
     super(...arguments);
     this.onToggle = this.onToggle.bind(this);
@@ -53336,7 +53336,7 @@ class PrivateInserter extends external_wp_element_namespaceObject.Component {
     });
   }
 }
-const ComposedPrivateInserter = (0,external_wp_compose_namespaceObject.compose)([(0,external_wp_data_namespaceObject.withSelect)((select, {
+/* harmony default export */ const inserter = ((0,external_wp_compose_namespaceObject.compose)([(0,external_wp_data_namespaceObject.withSelect)((select, {
   clientId,
   rootClientId,
   shouldDirectInsert = true
@@ -53485,14 +53485,7 @@ const ComposedPrivateInserter = (0,external_wp_compose_namespaceObject.compose)(
   isAppender,
   rootClientId,
   clientId
-}) => hasItems || !isAppender && !rootClientId && !clientId)])(PrivateInserter);
-const Inserter = (0,external_wp_element_namespaceObject.forwardRef)((props, ref) => {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ComposedPrivateInserter, {
-    ref: ref,
-    ...props
-  });
-});
-/* harmony default export */ const inserter = (Inserter);
+}) => hasItems || !isAppender && !rootClientId && !clientId)])(Inserter));
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/button-block-appender/index.js
 /**
@@ -78099,7 +78092,6 @@ function ResolutionTool({
 
 
 
-
 /**
  * Private @wordpress/block-editor APIs.
  */
@@ -78110,7 +78102,6 @@ lock(privateApis, {
   ExperimentalBlockEditorProvider: ExperimentalBlockEditorProvider,
   getDuotoneFilter: getDuotoneFilter,
   getRichTextValues: getRichTextValues,
-  PrivateInserter: ComposedPrivateInserter,
   PrivateQuickInserter: QuickInserter,
   extractWords: extractWords,
   getNormalizedSearchTerms: getNormalizedSearchTerms,
