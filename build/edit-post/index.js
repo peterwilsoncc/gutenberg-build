@@ -3296,6 +3296,7 @@ function initializeEditor(id, postType, postId, settings, initialEdits) {
     showBlockBreadcrumbs: true,
     showIconLabels: false,
     showListViewByDefault: false,
+    enableChoosePatternModal: true,
     isPublishSidebarEnabled: true
   });
   if (window.__experimentalMediaProcessing) {

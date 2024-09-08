@@ -45974,7 +45974,8 @@ function initializePostsDashboard(id, settings) {
     keepCaretInsideBlock: false,
     openPanels: ['post-status'],
     showBlockBreadcrumbs: true,
-    showListViewByDefault: false
+    showListViewByDefault: false,
+    enableChoosePatternModal: true
   });
   (0,external_wp_data_namespaceObject.dispatch)(store).updateSettings(settings);
 
@@ -46060,7 +46061,8 @@ function initializeEditor(id, settings) {
     keepCaretInsideBlock: false,
     openPanels: ['post-status'],
     showBlockBreadcrumbs: true,
-    showListViewByDefault: false
+    showListViewByDefault: false,
+    enableChoosePatternModal: true
   });
   if (window.__experimentalMediaProcessing) {
     (0,external_wp_data_namespaceObject.dispatch)(external_wp_preferences_namespaceObject.store).setDefaults('core/media', {

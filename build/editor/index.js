@@ -23397,6 +23397,8 @@ function BlockRemovalWarnings() {
 
 
 
+
+
 /**
  * Internal dependencies
  */
@@ -23426,8 +23428,14 @@ function useStartPatterns() {
     };
   }, []);
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
-    // filter patterns without postTypes declared if the current postType is page
-    // or patterns that declare the current postType in its post type array.
+    if (!blockPatternsWithPostContentBlockType?.length) {
+      return [];
+    }
+
+    /*
+     * Filter patterns without postTypes declared if the current postType is page
+     * or patterns that declare the current postType in its post type array.
+     */
     return blockPatternsWithPostContentBlockType.filter(pattern => {
       return postType === 'page' && !pattern.postTypes || Array.isArray(pattern.postTypes) && pattern.postTypes.includes(postType);
     });
@@ -23491,28 +23499,16 @@ function StartPageOptionsModal({
 }
 function StartPageOptions() {
   const [isClosed, setIsClosed] = (0,external_wp_element_namespaceObject.useState)(false);
-  const {
-    shouldEnableModal,
-    postType,
-    postId
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const shouldEnableModal = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       isEditedPostDirty,
       isEditedPostEmpty,
-      getCurrentPostType,
-      getCurrentPostId
+      getCurrentPostType
     } = select(store_store);
-    const _postType = getCurrentPostType();
-    return {
-      shouldEnableModal: !isEditedPostDirty() && isEditedPostEmpty() && TEMPLATE_POST_TYPE !== _postType,
-      postType: _postType,
-      postId: getCurrentPostId()
-    };
+    const preferencesModalActive = select(store).isModalActive('editor/preferences');
+    const choosePatternModalEnabled = select(external_wp_preferences_namespaceObject.store).get('core', 'enableChoosePatternModal');
+    return choosePatternModalEnabled && !preferencesModalActive && !isEditedPostDirty() && isEditedPostEmpty() && TEMPLATE_POST_TYPE !== getCurrentPostType();
   }, []);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    // Should reset the modal state when navigating to a new page/post.
-    setIsClosed(false);
-  }, [postType, postId]);
   if (!shouldEnableModal || isClosed) {
     return null;
   }
@@ -29541,6 +29537,7 @@ function BlockManager({
 
 
 
+
 const {
   PreferencesModal,
   PreferencesModalTabs,
@@ -29581,6 +29578,7 @@ function EditorPreferencesModal({
   const {
     set: setPreference
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_preferences_namespaceObject.store);
+  const hasStarterPatterns = !!useStartPatterns().length;
   const sections = (0,external_wp_element_namespaceObject.useMemo)(() => [{
     name: 'general',
     tabLabel: (0,external_wp_i18n_namespaceObject.__)('General'),
@@ -29602,6 +29600,11 @@ function EditorPreferencesModal({
           featureName: "allowRightClickOverrides",
           help: (0,external_wp_i18n_namespaceObject.__)('Allows contextual List View menus via right-click, overriding browser defaults.'),
           label: (0,external_wp_i18n_namespaceObject.__)('Allow right-click contextual menus')
+        }), hasStarterPatterns && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreferenceToggleControl, {
+          scope: "core",
+          featureName: "enableChoosePatternModal",
+          help: (0,external_wp_i18n_namespaceObject.__)('Shows starter patterns when creating a new page.'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Show starter patterns')
         })]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(PreferencesModalSection, {
         title: (0,external_wp_i18n_namespaceObject.__)('Document settings'),
@@ -29731,7 +29734,7 @@ function EditorPreferencesModal({
         })]
       })
     })
-  }].filter(Boolean), [showBlockBreadcrumbsOption, extraSections, setIsInserterOpened, setIsListViewOpened, setPreference, isLargeViewport]);
+  }].filter(Boolean), [showBlockBreadcrumbsOption, extraSections, setIsInserterOpened, setIsListViewOpened, setPreference, isLargeViewport, hasStarterPatterns]);
   if (!isActive) {
     return null;
   }
