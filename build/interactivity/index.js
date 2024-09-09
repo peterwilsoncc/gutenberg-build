@@ -887,10 +887,13 @@ const peek = (obj, key) => {
  */
 const deepMergeRecursive = (target, source, override = true) => {
   if (isPlainObject(target) && isPlainObject(source)) {
+    let hasNewKeys = false;
     for (const key in source) {
+      const isNew = !(key in target);
+      hasNewKeys = hasNewKeys || isNew;
       const desc = Object.getOwnPropertyDescriptor(source, key);
       if (typeof desc?.get === 'function' || typeof desc?.set === 'function') {
-        if (override || !(key in target)) {
+        if (override || isNew) {
           Object.defineProperty(target, key, {
             ...desc,
             configurable: true,
@@ -903,11 +906,11 @@ const deepMergeRecursive = (target, source, override = true) => {
           }
         }
       } else if (isPlainObject(source[key])) {
-        if (!(key in target)) {
+        if (isNew) {
           target[key] = {};
         }
         deepMergeRecursive(target[key], source[key], override);
-      } else if (override || !(key in target)) {
+      } else if (override || isNew) {
         Object.defineProperty(target, key, desc);
         const proxy = getProxyFromObject(target);
         if (desc?.value && proxy && hasPropSignal(proxy, key)) {
@@ -915,6 +918,9 @@ const deepMergeRecursive = (target, source, override = true) => {
           propSignal.setValue(desc.value);
         }
       }
+    }
+    if (hasNewKeys && objToIterable.has(target)) {
+      objToIterable.get(target).value++;
     }
   }
 };
