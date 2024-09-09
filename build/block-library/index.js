@@ -8838,10 +8838,8 @@ const CommentsForm = ({
   const postTypeSupportsComments = (0,external_wp_data_namespaceObject.useSelect)(select => postType ? !!select(external_wp_coreData_namespaceObject.store).getPostType(postType)?.supports.comments : false);
   if (!isSiteEditor && 'open' !== commentStatus) {
     if ('closed' === commentStatus) {
-      const actions = [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      const actions = [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         onClick: () => setCommentStatus('open'),
         variant: "primary",
         children: (0,external_wp_i18n_namespaceObject._x)('Enable comments', 'action that affects the current post')
@@ -38949,17 +38947,13 @@ function ConvertToLinksModal({
       children: convertDescription
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "wp-block-page-list-modal-buttons",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         variant: "tertiary",
         onClick: onClose,
         children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         variant: "primary",
         accessibleWhenDisabled: true,
         disabled: disabled,
@@ -39241,10 +39235,8 @@ function PageListEdit({
         title: (0,external_wp_i18n_namespaceObject.__)('Edit this menu'),
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
           children: convertDescription
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           variant: "primary",
           accessibleWhenDisabled: true,
           disabled: !hasResolvedPages,
@@ -43310,10 +43302,8 @@ function PostFeaturedImageEdit({
       mediaLibraryButton: ({
         open
       }) => {
-        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           icon: library_upload,
           variant: "primary",
           label: label,
@@ -53482,10 +53472,8 @@ function LogoEdit({
               open
             }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
               className: "block-library-site-logo__inspector-upload-container",
-              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-              // TODO: Switch to `true` (40px size) if possible
-              , {
-                __next40pxDefaultSize: false,
+              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+                __next40pxDefaultSize: true,
                 onClick: open,
                 variant: "secondary",
                 children: isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : (0,external_wp_i18n_namespaceObject.__)('Choose logo')
@@ -53516,10 +53504,8 @@ function LogoEdit({
       mediaLibraryButton: ({
         open
       }) => {
-        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           icon: library_upload,
           variant: "primary",
           label: (0,external_wp_i18n_namespaceObject.__)('Choose logo'),
@@ -55491,7 +55477,7 @@ const SocialLinkURLPopover = ({
           }
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
+      // TODO: Switch to `true` (40px size) if possible.
       , {
         __next40pxDefaultSize: false,
         icon: keyboard_return,
