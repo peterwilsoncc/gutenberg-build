@@ -51698,9 +51698,11 @@ function PatternsFilter({
 
 
 
+
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -51718,6 +51720,7 @@ function PatternCategoryPreviews({
   category,
   showTitlesAsTooltip
 }) {
+  const isZoomOutMode = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).__unstableGetEditorMode() === 'zoom-out', []);
   const [allPatterns,, onClickPattern] = use_patterns_state(onInsert, rootClientId, category?.name);
   const [patternSyncFilter, setPatternSyncFilter] = (0,external_wp_element_namespaceObject.useState)('all');
   const [patternSourceFilter, setPatternSourceFilter] = (0,external_wp_element_namespaceObject.useState)('all');
@@ -51786,19 +51789,29 @@ function PatternCategoryPreviews({
         className: "block-editor-inserter__patterns-category-no-results",
         children: (0,external_wp_i18n_namespaceObject.__)('No results found')
       })]
-    }), currentCategoryPatterns.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_list, {
-      ref: scrollContainerRef,
-      shownPatterns: pagingProps.categoryPatternsAsyncList,
-      blockPatterns: pagingProps.categoryPatterns,
-      onClickPattern: onClickPattern,
-      onHover: onHover,
-      label: category.label,
-      orientation: "vertical",
-      category: category.name,
-      isDraggable: true,
-      showTitlesAsTooltip: showTitlesAsTooltip,
-      patternFilter: patternSourceFilter,
-      pagingProps: pagingProps
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+      spacing: 4,
+      children: currentCategoryPatterns.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+        children: [isZoomOutMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+          size: "12",
+          as: "p",
+          className: "block-editor-inserter__help-text",
+          children: (0,external_wp_i18n_namespaceObject.__)('Drag and drop patterns into the canvas.')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_list, {
+          ref: scrollContainerRef,
+          shownPatterns: pagingProps.categoryPatternsAsyncList,
+          blockPatterns: pagingProps.categoryPatterns,
+          onClickPattern: onClickPattern,
+          onHover: onHover,
+          label: category.label,
+          orientation: "vertical",
+          category: category.name,
+          isDraggable: true,
+          showTitlesAsTooltip: showTitlesAsTooltip,
+          patternFilter: patternSourceFilter,
+          pagingProps: pagingProps
+        })]
+      })
     })]
   });
 }
