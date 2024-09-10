@@ -10970,9 +10970,9 @@ const isResolvingPatterns = (0,external_wp_data_namespaceObject.createRegistrySe
 }, getAllPatternsDependants(select)));
 const EMPTY_ARRAY = [];
 const getReusableBlocks = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => state => {
-  var _state$settings$__exp3;
+  var _ref;
   const reusableBlocksSelect = state.settings[reusableBlocksSelectKey];
-  return reusableBlocksSelect ? reusableBlocksSelect(select) : (_state$settings$__exp3 = state.settings.__experimentalReusableBlocks) !== null && _state$settings$__exp3 !== void 0 ? _state$settings$__exp3 : EMPTY_ARRAY;
+  return (_ref = reusableBlocksSelect ? reusableBlocksSelect(select) : state.settings.__experimentalReusableBlocks) !== null && _ref !== void 0 ? _ref : EMPTY_ARRAY;
 });
 
 /**

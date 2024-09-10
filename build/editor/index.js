@@ -22576,13 +22576,18 @@ function GlobalStylesProvider({
 
 
 
-const EMPTY_BLOCKS_LIST = [];
 const use_block_editor_settings_EMPTY_OBJECT = {};
 function __experimentalReusableBlocksSelect(select) {
-  var _select$getEntityReco;
-  return (_select$getEntityReco = select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_block', {
+  const {
+    getEntityRecords,
+    hasFinishedResolution
+  } = select(external_wp_coreData_namespaceObject.store);
+  const reusableBlocks = getEntityRecords('postType', 'wp_block', {
     per_page: -1
-  })) !== null && _select$getEntityReco !== void 0 ? _select$getEntityReco : EMPTY_BLOCKS_LIST;
+  });
+  return hasFinishedResolution('getEntityRecords', ['postType', 'wp_block', {
+    per_page: -1
+  }]) ? reusableBlocks : undefined;
 }
 const BLOCK_EDITOR_SETTINGS = ['__experimentalBlockDirectory', '__experimentalDiscussionSettings', '__experimentalFeatures', '__experimentalGlobalStylesBaseStyles', 'alignWide', 'blockInspectorTabs', 'allowedMimeTypes', 'bodyPlaceholder', 'canLockBlocks', 'canUpdateBlockBindings', 'capabilities', 'clearBlockSelection', 'codeEditingEnabled', 'colors', 'disableCustomColors', 'disableCustomFontSizes', 'disableCustomSpacingSizes', 'disableCustomGradients', 'disableLayoutStyles', 'enableCustomLineHeight', 'enableCustomSpacing', 'enableCustomUnits', 'enableOpenverseMediaCategory', 'fontSizes', 'gradients', 'generateAnchors', 'onNavigateToEntityRecord', 'imageDefaultSize', 'imageDimensions', 'imageEditing', 'imageSizes', 'isRTL', 'locale', 'maxWidth', 'postContentAttributes', 'postsPerPage', 'readOnly', 'styles', 'titlePlaceholder', 'supportsLayout', 'widgetTypesToHideFromLegacyWidgetBlock', '__unstableHasCustomAppender', '__unstableIsPreviewMode', '__unstableResolvedAssets', '__unstableIsBlockBasedTheme'];
 const {
