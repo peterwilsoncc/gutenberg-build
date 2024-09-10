@@ -22513,12 +22513,11 @@ function useGlobalStylesBaseConfig() {
   const baseConfig = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       __experimentalGetCurrentThemeBaseGlobalStyles,
+      getCurrentTheme,
       canUser
     } = select(external_wp_coreData_namespaceObject.store);
-    return canUser('read', {
-      kind: 'root',
-      name: 'theme'
-    }) && __experimentalGetCurrentThemeBaseGlobalStyles();
+    const currentTheme = getCurrentTheme();
+    return currentTheme && canUser('read', 'global-styles/themes', currentTheme.stylesheet) ? __experimentalGetCurrentThemeBaseGlobalStyles() : undefined;
   }, []);
   return [!!baseConfig, baseConfig];
 }
