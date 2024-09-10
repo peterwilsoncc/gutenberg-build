@@ -53694,7 +53694,6 @@ const useLilius = ({
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/date-time/date/styles.js
 
-function date_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
 /**
  * External dependencies
  */
@@ -53709,10 +53708,7 @@ function date_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried t
 
 const styles_Wrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "e105ri6r5"
-} : 0)( true ? {
-  name: "1khn195",
-  styles: "box-sizing:border-box"
-} : 0);
+} : 0)(boxSizingReset, ";" + ( true ? "" : 0));
 const Navigator = /*#__PURE__*/emotion_styled_base_browser_esm(h_stack_component,  true ? {
   target: "e105ri6r4"
 } : 0)("margin-bottom:", space(4), ";" + ( true ? "" : 0));
@@ -53724,7 +53720,7 @@ const Calendar = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
 } : 0)("column-gap:", space(2), ";display:grid;grid-template-columns:0.5fr repeat( 5, 1fr ) 0.5fr;justify-items:center;row-gap:", space(2), ";" + ( true ? "" : 0));
 const DayOfWeek = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "e105ri6r1"
-} : 0)("color:", COLORS.gray[700], ";font-size:", config_values.fontSize, ";line-height:", config_values.fontLineHeightBase, ";&:nth-of-type( 1 ){justify-self:start;}&:nth-of-type( 7 ){justify-self:end;}" + ( true ? "" : 0));
+} : 0)("color:", COLORS.theme.gray[700], ";font-size:", config_values.fontSize, ";line-height:", config_values.fontLineHeightBase, ";&:nth-of-type( 1 ){justify-self:start;}&:nth-of-type( 7 ){justify-self:end;}" + ( true ? "" : 0));
 const DayButton = /*#__PURE__*/emotion_styled_base_browser_esm(build_module_button,  true ? {
   shouldForwardProp: prop => !['column', 'isSelected', 'isToday', 'hasEvents'].includes(prop),
   target: "e105ri6r0"
@@ -53735,21 +53731,37 @@ const DayButton = /*#__PURE__*/emotion_styled_base_browser_esm(build_module_butt
 		`, " ", props => props.disabled && `
 		pointer-events: none;
 		`, " &&&{border-radius:", config_values.radiusRound, ";height:", space(7), ";width:", space(7), ";", props => props.isSelected && `
-			background: ${COLORS.theme.accent};
-			color: ${COLORS.white};
+				background: ${COLORS.theme.accent};
+
+				&,
+				&:hover:not(:disabled, [aria-disabled=true]) {
+					color: ${COLORS.theme.accentInverted};
+				}
+
+				&:focus:not(:disabled),
+				&:focus:not(:disabled) {
+					border: ${config_values.borderWidthFocus} solid currentColor;
+				}
+
+				/* Highlight the selected day for high-contrast mode */
+				&::after {
+					content: '';
+					position: absolute;
+					pointer-events: none;
+					inset: 0;
+					border-radius: inherit;
+					border: 1px solid transparent;
+				}
 			`, " ", props => !props.isSelected && props.isToday && `
-			background: ${COLORS.gray[200]};
+			background: ${COLORS.theme.gray[200]};
 			`, ";}", props => props.hasEvents && `
 		::before {
-			background: ${props.isSelected ? COLORS.white : COLORS.theme.accent};
+			border: 2px solid ${props.isSelected ? COLORS.theme.accentInverted : COLORS.theme.accent};
 			border-radius: ${config_values.radiusRound};
-			bottom: 2px;
 			content: " ";
-			height: 4px;
 			left: 50%;
-			margin-left: -2px;
 			position: absolute;
-			width: 4px;
+			transform: translate(-50%, 9px);
 		}
 		`, ";" + ( true ? "" : 0));
 
