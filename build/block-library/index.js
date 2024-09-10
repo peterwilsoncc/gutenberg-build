@@ -47664,10 +47664,8 @@ function EnhancedPaginationModal({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         id: modalDescriptionId,
         children: notice
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         variant: "primary",
         onClick: closeModal,
         children: (0,external_wp_i18n_namespaceObject.__)('OK')
@@ -47917,17 +47915,13 @@ function QueryPlaceholder({
       icon: icon,
       label: label,
       instructions: (0,external_wp_i18n_namespaceObject.__)('Choose a pattern for the query loop or start blank.'),
-      children: [!!hasPatterns && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      children: [!!hasPatterns && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         variant: "primary",
         onClick: openPatternSelectionModal,
         children: (0,external_wp_i18n_namespaceObject.__)('Choose')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         variant: "secondary",
         onClick: () => {
           setIsStartingBlank(true);
@@ -60557,17 +60551,13 @@ function TemplatePartPlaceholder({
     (0,external_wp_i18n_namespaceObject.__)('Choose an existing %s or create a new one.'), areaObject.label.toLowerCase()) : (0,external_wp_i18n_namespaceObject.sprintf)(
     // Translators: %s as template part area title ("Header", "Footer", etc.).
     (0,external_wp_i18n_namespaceObject.__)('Choose an existing %s.'), areaObject.label.toLowerCase()),
-    children: [isResolving && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}), !isResolving && !!(templateParts.length || blockPatterns.length) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
+    children: [isResolving && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}), !isResolving && !!(templateParts.length || blockPatterns.length) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
       variant: "primary",
       onClick: onOpenSelectionModal,
       children: (0,external_wp_i18n_namespaceObject.__)('Choose')
-    }), !isResolving && isBlockBasedTheme && canCreateTemplatePart && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
+    }), !isResolving && isBlockBasedTheme && canCreateTemplatePart && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
       variant: "secondary",
       onClick: () => {
         setShowTitleModal(true);
@@ -62690,10 +62680,8 @@ function TrackList({
         className: "block-library-video-tracks-editor__track-list-track",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
           children: [track.label, " "]
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           variant: "tertiary",
           onClick: () => onEditPress(index),
           "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Label of the video text track e.g: "French subtitles" */
@@ -62777,10 +62765,8 @@ function SingleTrackEditor({
           }
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
           className: "block-library-video-tracks-editor__single-track-editor-buttons-container",
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-          // TODO: Switch to `true` (40px size) if possible
-          , {
-            __next40pxDefaultSize: false,
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
             variant: "secondary",
             onClick: () => {
               const changes = {};
@@ -62806,10 +62792,8 @@ function SingleTrackEditor({
               onClose();
             },
             children: (0,external_wp_i18n_namespaceObject.__)('Close')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-          // TODO: Switch to `true` (40px size) if possible
-          , {
-            __next40pxDefaultSize: false,
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
             isDestructive: true,
             variant: "link",
             onClick: onRemove,
@@ -63147,10 +63131,8 @@ function VideoEdit({
               allowedTypes: VIDEO_POSTER_ALLOWED_MEDIA_TYPES,
               render: ({
                 open
-              }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-              // TODO: Switch to `true` (40px size) if possible
-              , {
-                __next40pxDefaultSize: false,
+              }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+                __next40pxDefaultSize: true,
                 variant: "primary",
                 onClick: open,
                 ref: posterImageButton,
@@ -63162,10 +63144,8 @@ function VideoEdit({
               hidden: true,
               children: poster ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: poster image URL. */
               (0,external_wp_i18n_namespaceObject.__)('The current poster image url is %s'), poster) : (0,external_wp_i18n_namespaceObject.__)('There is no poster image currently selected')
-            }), !!poster && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-            // TODO: Switch to `true` (40px size) if possible
-            , {
-              __next40pxDefaultSize: false,
+            }), !!poster && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              __next40pxDefaultSize: true,
               onClick: onRemovePoster,
               variant: "tertiary",
               children: (0,external_wp_i18n_namespaceObject.__)('Remove')
