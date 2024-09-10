@@ -3821,16 +3821,16 @@ function useFocusOnMount(focusOnMount = 'firstElement') {
     if (node.contains((_node$ownerDocument$a = node.ownerDocument?.activeElement) !== null && _node$ownerDocument$a !== void 0 ? _node$ownerDocument$a : null)) {
       return;
     }
-    if (focusOnMountRef.current === 'firstElement') {
-      timerIdRef.current = setTimeout(() => {
-        const firstTabbable = external_wp_dom_namespaceObject.focus.tabbable.find(node)[0];
-        if (firstTabbable) {
-          setFocus(firstTabbable);
-        }
-      }, 0);
+    if (focusOnMountRef.current !== 'firstElement') {
+      setFocus(node);
       return;
     }
-    setFocus(node);
+    timerIdRef.current = setTimeout(() => {
+      const firstTabbable = external_wp_dom_namespaceObject.focus.tabbable.find(node)[0];
+      if (firstTabbable) {
+        setFocus(firstTabbable);
+      }
+    }, 0);
     return () => {
       if (timerIdRef.current) {
         clearTimeout(timerIdRef.current);
