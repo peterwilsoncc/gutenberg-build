@@ -47210,7 +47210,9 @@ function unmodalize() {
 
 
 
+
 // Used to track and dismiss the prior modal when another opens unless nested.
+
 
 
 const ModalContext = (0,external_wp_element_namespaceObject.createContext)(new Set());
@@ -47440,10 +47442,16 @@ function UnforwardedModal(props, forwardedRef) {
                 className: "components-modal__header-heading",
                 children: title
               })]
-            }), headerActions, isDismissible && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-              onClick: onRequestClose,
-              icon: library_close,
-              label: closeButtonLabel || (0,external_wp_i18n_namespaceObject.__)('Close')
+            }), headerActions, isDismissible && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {
+                marginBottom: 0,
+                marginLeft: 3
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+                size: "small",
+                onClick: onRequestClose,
+                icon: library_close,
+                label: closeButtonLabel || (0,external_wp_i18n_namespaceObject.__)('Close')
+              })]
             })]
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
             ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([childrenContainerRef, focusOnMount === 'firstContentElement' ? focusOnMountRef : null]),

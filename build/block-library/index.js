@@ -6520,10 +6520,8 @@ function ModalAuxiliaryActions({
   if (isMobileViewport) {
     return null;
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-  // TODO: Switch to `true` (40px size) if possible
-  , {
-    __next40pxDefaultSize: false,
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    size: "small",
     onClick: onClick,
     icon: library_fullscreen,
     isPressed: isModalFullScreen,
