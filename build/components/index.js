@@ -60779,6 +60779,7 @@ const external_wp_escapeHtml_namespaceObject = window["wp"]["escapeHtml"];
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -60790,6 +60791,9 @@ const external_wp_escapeHtml_namespaceObject = window["wp"]["escapeHtml"];
 
 
 function UnconnectedNavigatorScreen(props, forwardedRef) {
+  if (!/^\//.test(props.path)) {
+     false ? 0 : void 0;
+  }
   const screenId = (0,external_wp_element_namespaceObject.useId)();
   const {
     children,
