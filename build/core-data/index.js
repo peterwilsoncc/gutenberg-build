@@ -23235,7 +23235,8 @@ const resolvers_getUserPatternCategories = () => async ({
 };
 const resolvers_getNavigationFallbackId = () => async ({
   dispatch,
-  select
+  select,
+  registry
 }) => {
   const fallback = await external_wp_apiFetch_default()({
     path: (0,external_wp_url_namespaceObject.addQueryArgs)('/wp-block-editor/v1/navigation-fallback', {
@@ -23243,8 +23244,12 @@ const resolvers_getNavigationFallbackId = () => async ({
     })
   });
   const record = fallback?._embedded?.self;
-  dispatch.receiveNavigationFallbackId(fallback?.id);
-  if (record) {
+  registry.batch(() => {
+    dispatch.receiveNavigationFallbackId(fallback?.id);
+    if (!record) {
+      return;
+    }
+
     // If the fallback is already in the store, don't invalidate navigation queries.
     // Otherwise, invalidate the cache for the scenario where there were no Navigation
     // posts in the state and the fallback created one.
@@ -23254,7 +23259,7 @@ const resolvers_getNavigationFallbackId = () => async ({
 
     // Resolve to avoid further network requests.
     dispatch.finishResolution('getEntityRecord', ['postType', 'wp_navigation', fallback.id]);
-  }
+  });
 };
 const resolvers_getDefaultTemplateId = query => async ({
   dispatch
@@ -23279,7 +23284,8 @@ const resolvers_getDefaultTemplateId = query => async ({
  *                                     fields, fields must always include the ID.
  */
 const resolvers_getRevisions = (kind, name, recordKey, query = {}) => async ({
-  dispatch
+  dispatch,
+  registry
 }) => {
   const configs = await dispatch(getOrLoadEntitiesConfig(kind, name));
   const entityConfig = configs.find(config => config.name === name && config.kind === kind);
@@ -23329,16 +23335,17 @@ const resolvers_getRevisions = (kind, name, recordKey, query = {}) => async ({
         return record;
       });
     }
-    dispatch.receiveRevisions(kind, name, recordKey, records, query, false, meta);
+    registry.batch(() => {
+      dispatch.receiveRevisions(kind, name, recordKey, records, query, false, meta);
 
-    // When requesting all fields, the list of results can be used to
-    // resolve the `getRevision` selector in addition to `getRevisions`.
-    if (!query?._fields && !query.context) {
-      const key = entityConfig.key || DEFAULT_ENTITY_KEY;
-      const resolutionsArgs = records.filter(record => record[key]).map(record => [kind, name, recordKey, record[key]]);
-      dispatch.startResolutions('getRevision', resolutionsArgs);
-      dispatch.finishResolutions('getRevision', resolutionsArgs);
-    }
+      // When requesting all fields, the list of results can be used to
+      // resolve the `getRevision` selector in addition to `getRevisions`.
+      if (!query?._fields && !query.context) {
+        const key = entityConfig.key || DEFAULT_ENTITY_KEY;
+        const resolutionsArgs = records.filter(record => record[key]).map(record => [kind, name, recordKey, record[key]]);
+        dispatch.finishResolutions('getRevision', resolutionsArgs);
+      }
+    });
   }
 };
 
