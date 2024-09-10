@@ -72156,7 +72156,7 @@ function RichTextWrapper({
     selectionStart,
     selectionEnd,
     onSelectionChange,
-    placeholder: bindingsPlaceholder || placeholder,
+    placeholder: placeholder || bindingsPlaceholder,
     __unstableIsSelected: isSelected,
     __unstableDisableFormats: disableFormats,
     preserveWhiteSpace,
@@ -72222,7 +72222,7 @@ function RichTextWrapper({
       "aria-multiline": !disableLineBreaks,
       "aria-readonly": shouldDisableEditing,
       ...props,
-      "aria-label": bindingsPlaceholder || props['aria-label'] || placeholder,
+      "aria-label": props['aria-label'] || placeholder || bindingsPlaceholder,
       ...autocompleteProps,
       ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([
       // Rich text ref must be first because its focus listener
