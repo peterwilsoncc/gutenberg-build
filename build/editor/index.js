@@ -21251,11 +21251,15 @@ function PostTrashCheck({
 /**
  * Displays the Post Trash Button and Confirm Dialog in the Editor.
  *
+ * @param {?{onActionPerformed: Object}} An object containing the onActionPerformed function.
  * @return {JSX.Element|null} The rendered PostTrash component.
  */
 
 
-function PostTrash() {
+function PostTrash({
+  onActionPerformed
+}) {
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const {
     isNew,
     isDeleting,
@@ -21277,9 +21281,13 @@ function PostTrash() {
   if (isNew || !postId) {
     return null;
   }
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     setShowConfirmDialog(false);
-    trashPost();
+    await trashPost();
+    const item = await registry.resolveSelect(store_store).getCurrentPost();
+    // After the post is trashed, we want to trigger the onActionPerformed callback, so the user is redirect
+    // to the post view depending on if the user is on post editor or site editor.
+    onActionPerformed?.('move-to-trash', [item]);
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(PostTrashCheck, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -28773,7 +28781,9 @@ function PostSummary({
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
               spacing: 1,
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostStatus, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSchedulePanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostURLPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(panel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTemplatePanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostDiscussionPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrivatePostLastRevision, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageAttributesPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSyncStatus, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlogTitle, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostsPerPage, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SiteDiscussion, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_format_panel, {})]
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTrash, {}), fills]
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTrash, {
+              onActionPerformed: onActionPerformed
+            }), fills]
           })]
         })
       })
