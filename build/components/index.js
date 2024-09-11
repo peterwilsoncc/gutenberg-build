@@ -70608,7 +70608,7 @@ const useTabsContext = () => (0,external_wp_element_namespaceObject.useContext)(
 
 const TabListWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "enfox0g2"
-} : 0)("position:relative;display:flex;align-items:stretch;flex-direction:row;text-align:center;&[aria-orientation='vertical']{flex-direction:column;text-align:start;}@media not ( prefers-reduced-motion: reduce ){&.is-animation-enabled::after{transition-property:left,top,width,height;transition-duration:0.2s;transition-timing-function:ease-out;}}&::after{content:'';position:absolute;pointer-events:none;outline:2px solid transparent;outline-offset:-1px;}&:not( [aria-orientation='vertical'] )::after{bottom:0;left:var( --indicator-left );width:var( --indicator-width );height:0;border-bottom:var( --wp-admin-border-width-focus ) solid ", COLORS.theme.accent, ";}&[aria-orientation='vertical']::after{z-index:-1;left:0;width:100%;top:var( --indicator-top );height:var( --indicator-height );background-color:", COLORS.theme.gray[100], ";}" + ( true ? "" : 0));
+} : 0)("position:relative;display:flex;align-items:stretch;flex-direction:row;text-align:center;&[aria-orientation='vertical']{flex-direction:column;text-align:start;}@media not ( prefers-reduced-motion ){&.is-animation-enabled::after{transition-property:transform;transition-duration:0.2s;transition-timing-function:ease-out;}}--direction-factor:1;--direction-origin-x:left;--indicator-start:var( --indicator-left );&:dir( rtl ){--direction-factor:-1;--direction-origin-x:right;--indicator-start:var( --indicator-right );}&::after{content:'';position:absolute;pointer-events:none;transform-origin:var( --direction-origin-x ) top;outline:2px solid transparent;outline-offset:-1px;}--antialiasing-factor:100;&:not( [aria-orientation='vertical'] ){&::after{bottom:0;height:0;width:calc( var( --antialiasing-factor ) * 1px );transform:translateX(\n\t\t\t\t\tcalc(\n\t\t\t\t\t\tvar( --indicator-start ) * var( --direction-factor ) *\n\t\t\t\t\t\t\t1px\n\t\t\t\t\t)\n\t\t\t\t) scaleX(\n\t\t\t\t\tcalc(\n\t\t\t\t\t\tvar( --indicator-width ) / var( --antialiasing-factor )\n\t\t\t\t\t)\n\t\t\t\t);border-bottom:var( --wp-admin-border-width-focus ) solid ", COLORS.theme.accent, ";}}&[aria-orientation='vertical']::after{z-index:-1;top:0;left:0;width:100%;width:calc( var( --antialiasing-factor ) * 1px );transform:translateY( calc( var( --indicator-top ) * 1px ) ) scaleY(\n\t\t\t\tcalc( var( --indicator-height ) / var( --antialiasing-factor ) )\n\t\t\t);background-color:", COLORS.theme.gray[100], ";}" + ( true ? "" : 0));
 const styles_Tab = /*#__PURE__*/emotion_styled_base_browser_esm(Tab,  true ? {
   target: "enfox0g1"
 } : 0)("&{display:inline-flex;align-items:center;position:relative;border-radius:0;min-height:", space(12), ";height:auto;background:transparent;border:none;box-shadow:none;cursor:pointer;line-height:1.2;padding:", space(4), ";margin-left:0;font-weight:500;text-align:inherit;hyphens:auto;color:", COLORS.theme.foreground, ";&[aria-disabled='true']{cursor:default;color:", COLORS.ui.textDisabled, ";}&:not( [aria-disabled='true'] ):hover{color:", COLORS.theme.accent, ";}&:focus:not( :disabled ){position:relative;box-shadow:none;outline:none;}&::before{content:'';position:absolute;top:", space(3), ";right:", space(3), ";bottom:", space(3), ";left:", space(3), ";pointer-events:none;outline:var( --wp-admin-border-width-focus ) solid ", COLORS.theme.accent, ";border-radius:", config_values.radiusSmall, ";opacity:0;@media not ( prefers-reduced-motion ){transition:opacity 0.1s linear;}}&:focus-visible::before{opacity:1;}}[aria-orientation='vertical'] &{min-height:", space(10), ";}" + ( true ? "" : 0));
@@ -70701,96 +70701,11 @@ function use_event_useEvent(callback) {
  * WordPress dependencies
  */
 
+
 /**
  * Internal dependencies
  */
 
-
-/**
- * `useTrackElementRectUpdates` options.
- */
-
-/**
- * Tracks an element's "rect" (size and position) and fires `onRect` for all
- * of its discrete values. The element can be changed dynamically and **it
- * must not be stored in a ref**. Instead, it should be stored in a React
- * state or equivalent.
- *
- * By default, `onRect` is called initially for the target element (including
- * when the target element changes), not only on size or position updates.
- * This allows consumers of the hook to always be in sync with all rect values
- * of the target element throughout its lifetime. This behavior can be
- * disabled by setting the `fireOnElementInit` option to `false`.
- *
- * Under the hood, it sets up a `ResizeObserver` that tracks the element. The
- * target element can be changed dynamically, and the observer will be
- * updated accordingly.
- *
- * @example
- *
- * ```tsx
- * const [ targetElement, setTargetElement ] = useState< HTMLElement | null >();
- *
- * useTrackElementRectUpdates( targetElement, ( element ) => {
- *   console.log( 'Element resized:', element );
- * } );
- *
- * <div ref={ setTargetElement } />;
- * ```
- */
-function useTrackElementRectUpdates(
-/**
- * The target element to observe. It can be changed dynamically.
- */
-targetElement,
-/**
- * Callback to fire when the element is resized. It will also be
- * called when the observer is set up, unless `fireOnElementInit` is
- * set to `false`.
- */
-onRect, {
-  fireOnElementInit = true
-} = {}) {
-  const onRectEvent = use_event_useEvent(onRect);
-  const observedElementRef = (0,external_wp_element_namespaceObject.useRef)();
-  const resizeObserverRef = (0,external_wp_element_namespaceObject.useRef)();
-
-  // TODO: could this be a layout effect?
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (targetElement === observedElementRef.current) {
-      return;
-    }
-    observedElementRef.current = targetElement;
-
-    // Set up a ResizeObserver.
-    if (!resizeObserverRef.current) {
-      resizeObserverRef.current = new ResizeObserver(entries => {
-        if (observedElementRef.current) {
-          onRectEvent(observedElementRef.current, entries);
-        }
-      });
-    }
-    const {
-      current: resizeObserver
-    } = resizeObserverRef;
-
-    // Observe new element.
-    if (targetElement) {
-      if (fireOnElementInit) {
-        // TODO: investigate if this can be removed,
-        // see: https://stackoverflow.com/a/60026394
-        onRectEvent(targetElement);
-      }
-      resizeObserver.observe(targetElement);
-    }
-    return () => {
-      // Unobserve previous element.
-      if (observedElementRef.current) {
-        resizeObserver.unobserve(observedElementRef.current);
-      }
-    };
-  }, [fireOnElementInit, onRectEvent, targetElement]);
-}
 
 /**
  * The position and dimensions of an element, relative to its offset parent.
@@ -70800,44 +70715,98 @@ onRect, {
  * An `ElementOffsetRect` object with all values set to zero.
  */
 const NULL_ELEMENT_OFFSET_RECT = {
-  left: 0,
   top: 0,
+  right: 0,
+  bottom: 0,
+  left: 0,
   width: 0,
   height: 0
 };
 
 /**
  * Returns the position and dimensions of an element, relative to its offset
- * parent. This is useful in contexts where `getBoundingClientRect` is not
- * suitable, such as when the element is transformed.
+ * parent, with subpixel precision. Values reflect the real measures before any
+ * potential scaling distortions along the X and Y axes.
  *
- * **Note:** the `left` and `right` values are adjusted due to a limitation
- * in the way the browser calculates the offset position of the element,
- * which can cause unwanted scrollbars to appear. This adjustment makes the
- * values potentially inaccurate within a range of 1 pixel.
+ * Useful in contexts where plain `getBoundingClientRect` calls or `ResizeObserver`
+ * entries are not suitable, such as when the element is transformed, and when
+ * `element.offset<Top|Left|Width|Height>` methods are not precise enough.
+ *
+ * **Note:** in some contexts, like when the scale is 0, this method will fail
+ * because it's impossible to calculate a scaling ratio. When that happens, it
+ * will return `undefined`.
  */
 function getElementOffsetRect(element) {
+  var _element$offsetParent;
+  // Position and dimension values computed with `getBoundingClientRect` have
+  // subpixel precision, but are affected by distortions since they represent
+  // the "real" measures, or in other words, the actual final values as rendered
+  // by the browser.
+  const rect = element.getBoundingClientRect();
+  if (rect.width === 0 || rect.height === 0) {
+    return;
+  }
+  const offsetParentRect = (_element$offsetParent = element.offsetParent?.getBoundingClientRect()) !== null && _element$offsetParent !== void 0 ? _element$offsetParent : NULL_ELEMENT_OFFSET_RECT;
+
+  // Computed widths and heights have subpixel precision, and are not affected
+  // by distortions.
+  const computedWidth = parseFloat(getComputedStyle(element).width);
+  const computedHeight = parseFloat(getComputedStyle(element).height);
+
+  // We can obtain the current scale factor for the element by comparing "computed"
+  // dimensions with the "real" ones.
+  const scaleX = computedWidth / rect.width;
+  const scaleY = computedHeight / rect.height;
   return {
-    // The adjustments mentioned in the documentation above are necessary
-    // because `offsetLeft` and `offsetTop` are rounded to the nearest pixel,
-    // which can result in a position mismatch that causes unwanted overflow.
-    // For context, see: https://github.com/WordPress/gutenberg/pull/61979
-    left: Math.max(element.offsetLeft - 1, 0),
-    top: Math.max(element.offsetTop - 1, 0),
-    // This is a workaround to obtain these values with a sub-pixel precision,
-    // since `offsetWidth` and `offsetHeight` are rounded to the nearest pixel.
-    width: parseFloat(getComputedStyle(element).width),
-    height: parseFloat(getComputedStyle(element).height)
+    // To obtain the adjusted values for the position:
+    // 1. Compute the element's position relative to the offset parent.
+    // 2. Correct for the scale factor.
+    top: (rect.top - offsetParentRect?.top) * scaleY,
+    right: (offsetParentRect?.right - rect.right) * scaleX,
+    bottom: (offsetParentRect?.bottom - rect.bottom) * scaleY,
+    left: (rect.left - offsetParentRect?.left) * scaleX,
+    // Computed dimensions don't need any adjustments.
+    width: computedWidth,
+    height: computedHeight
   };
 }
+const POLL_RATE = 100;
 
 /**
  * Tracks the position and dimensions of an element, relative to its offset
  * parent. The element can be changed dynamically.
+ *
+ * **Note:** sometimes, the measurement will fail (see `getElementOffsetRect`'s
+ * documentation for more details). When that happens, this hook will attempt
+ * to measure again after a frame, and if that fails, it will poll every 100
+ * milliseconds until it succeeds.
  */
 function useTrackElementOffsetRect(targetElement) {
   const [indicatorPosition, setIndicatorPosition] = (0,external_wp_element_namespaceObject.useState)(NULL_ELEMENT_OFFSET_RECT);
-  useTrackElementRectUpdates(targetElement, element => setIndicatorPosition(getElementOffsetRect(element)));
+  const intervalRef = (0,external_wp_element_namespaceObject.useRef)();
+  const measure = use_event_useEvent(() => {
+    if (targetElement) {
+      const elementOffsetRect = getElementOffsetRect(targetElement);
+      if (elementOffsetRect) {
+        setIndicatorPosition(elementOffsetRect);
+        clearInterval(intervalRef.current);
+        return true;
+      }
+    } else {
+      clearInterval(intervalRef.current);
+    }
+    return false;
+  });
+  const setElement = (0,external_wp_compose_namespaceObject.useResizeObserver)(() => {
+    if (!measure()) {
+      requestAnimationFrame(() => {
+        if (!measure()) {
+          intervalRef.current = setInterval(measure, POLL_RATE);
+        }
+      });
+    }
+  });
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => setElement(targetElement), [setElement, targetElement]);
   return indicatorPosition;
 }
 
@@ -70958,10 +70927,11 @@ const TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabL
     onBlur: onBlur,
     ...otherProps,
     style: {
-      '--indicator-left': `${indicatorPosition.left}px`,
-      '--indicator-top': `${indicatorPosition.top}px`,
-      '--indicator-width': `${indicatorPosition.width}px`,
-      '--indicator-height': `${indicatorPosition.height}px`,
+      '--indicator-top': indicatorPosition.top,
+      '--indicator-right': indicatorPosition.right,
+      '--indicator-left': indicatorPosition.left,
+      '--indicator-width': indicatorPosition.width,
+      '--indicator-height': indicatorPosition.height,
       ...otherProps.style
     },
     className: dist_clsx(animationEnabled ? 'is-animation-enabled' : '', otherProps.className),
