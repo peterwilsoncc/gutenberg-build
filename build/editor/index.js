@@ -3619,9 +3619,13 @@ function getRenderingMode(state) {
  *
  * @return {string} Device type.
  */
-function getDeviceType(state) {
+const getDeviceType = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => state => {
+  const editorMode = select(external_wp_blockEditor_namespaceObject.store).__unstableGetEditorMode();
+  if (editorMode === 'zoom-out') {
+    return 'Desktop';
+  }
   return state.deviceType;
-}
+});
 
 /**
  * Returns true if the list view is opened.
@@ -18653,6 +18657,167 @@ function MaybeCategoryPanel() {
 }
 /* harmony default export */ const maybe_category_panel = (MaybeCategoryPanel);
 
+;// CONCATENATED MODULE: ./node_modules/uuid/dist/esm-browser/native.js
+const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID.bind(crypto);
+/* harmony default export */ const esm_browser_native = ({
+  randomUUID
+});
+;// CONCATENATED MODULE: ./node_modules/uuid/dist/esm-browser/rng.js
+// Unique ID creation requires a high quality random # generator. In the browser we therefore
+// require the crypto API and do not support built-in fallback to lower quality random number
+// generators (like Math.random()).
+let getRandomValues;
+const rnds8 = new Uint8Array(16);
+function rng() {
+  // lazy load so that environments that need to polyfill have a chance to do so
+  if (!getRandomValues) {
+    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation.
+    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto);
+
+    if (!getRandomValues) {
+      throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
+    }
+  }
+
+  return getRandomValues(rnds8);
+}
+;// CONCATENATED MODULE: ./node_modules/uuid/dist/esm-browser/stringify.js
+
+/**
+ * Convert array of 16 byte values to UUID string format of the form:
+ * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+ */
+
+const byteToHex = [];
+
+for (let i = 0; i < 256; ++i) {
+  byteToHex.push((i + 0x100).toString(16).slice(1));
+}
+
+function unsafeStringify(arr, offset = 0) {
+  // Note: Be careful editing this code!  It's been tuned for performance
+  // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
+  return byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]];
+}
+
+function stringify(arr, offset = 0) {
+  const uuid = unsafeStringify(arr, offset); // Consistency check for valid UUID.  If this throws, it's likely due to one
+  // of the following:
+  // - One or more input array values don't map to a hex octet (leading to
+  // "undefined" in the uuid)
+  // - Invalid input values for the RFC `version` or `variant` fields
+
+  if (!validate(uuid)) {
+    throw TypeError('Stringified UUID is invalid');
+  }
+
+  return uuid;
+}
+
+/* harmony default export */ const esm_browser_stringify = ((/* unused pure expression or super */ null && (stringify)));
+;// CONCATENATED MODULE: ./node_modules/uuid/dist/esm-browser/v4.js
+
+
+
+
+function v4(options, buf, offset) {
+  if (esm_browser_native.randomUUID && !buf && !options) {
+    return esm_browser_native.randomUUID();
+  }
+
+  options = options || {};
+  const rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+
+  rnds[6] = rnds[6] & 0x0f | 0x40;
+  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
+
+  if (buf) {
+    offset = offset || 0;
+
+    for (let i = 0; i < 16; ++i) {
+      buf[offset + i] = rnds[i];
+    }
+
+    return buf;
+  }
+
+  return unsafeStringify(rnds);
+}
+
+/* harmony default export */ const esm_browser_v4 = (v4);
+;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-publish-panel/media-util.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Generate a list of unique basenames given a list of URLs.
+ *
+ * We want all basenames to be unique, since sometimes the extension
+ * doesn't reflect the mime type, and may end up getting changed by
+ * the server, on upload.
+ *
+ * @param {string[]} urls The list of URLs
+ * @return {Record< string, string >} A URL => basename record.
+ */
+function generateUniqueBasenames(urls) {
+  const basenames = new Set();
+  return Object.fromEntries(urls.map(url => {
+    // We prefer to match the remote filename, if possible.
+    const filename = (0,external_wp_url_namespaceObject.getFilename)(url);
+    let basename = '';
+    if (filename) {
+      const parts = filename.split('.');
+      if (parts.length > 1) {
+        // Assume the last part is the extension.
+        parts.pop();
+      }
+      basename = parts.join('.');
+    }
+    if (!basename) {
+      // It looks like we don't have a basename, so let's use a UUID.
+      basename = esm_browser_v4();
+    }
+    if (basenames.has(basename)) {
+      // Append a UUID to deduplicate the basename.
+      // The server will try to deduplicate on its own if we don't do this,
+      // but it may run into a race condition
+      // (see https://github.com/WordPress/gutenberg/issues/64899).
+      // Deduplicating the filenames before uploading is safer.
+      basename = `${basename}-${esm_browser_v4()}`;
+    }
+    basenames.add(basename);
+    return [url, basename];
+  }));
+}
+
+/**
+ * Fetch a list of URLs, turning those into promises for files with
+ * unique filenames.
+ *
+ * @param {string[]} urls The list of URLs
+ * @return {Record< string, Promise< File > >} A URL => File promise record.
+ */
+function fetchMedia(urls) {
+  return Object.fromEntries(Object.entries(generateUniqueBasenames(urls)).map(([url, basename]) => {
+    const filePromise = window.fetch(url.includes('?') ? url : url + '?').then(response => response.blob()).then(blob => {
+      // The server will reject the upload if it doesn't have an extension,
+      // even though it'll rewrite the file name to match the mime type.
+      // Here we provide it with a safe extension to get it past that check.
+      return new File([blob], `${basename}.png`, {
+        type: blob.type
+      });
+    });
+    return [url, filePromise];
+  }));
+}
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-publish-panel/maybe-upload-media.js
 /**
  * WordPress dependencies
@@ -18664,6 +18829,11 @@ function MaybeCategoryPanel() {
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 
 function flattenBlocks(blocks) {
   const result = [];
@@ -18673,7 +18843,70 @@ function flattenBlocks(blocks) {
   });
   return result;
 }
-function Image(block) {
+
+/**
+ * Determine whether a block has external media.
+ *
+ * Different blocks use different attribute names (and potentially
+ * different logic as well) in determining whether the media is
+ * present, and whether it's external.
+ *
+ * @param {{name: string, attributes: Object}} block The block.
+ * @return {boolean?} Whether the block has external media
+ */
+function hasExternalMedia(block) {
+  if (block.name === 'core/image' || block.name === 'core/cover') {
+    return block.attributes.url && !block.attributes.id;
+  }
+  if (block.name === 'core/media-text') {
+    return block.attributes.mediaUrl && !block.attributes.mediaId;
+  }
+  return undefined;
+}
+
+/**
+ * Retrieve media info from a block.
+ *
+ * Different blocks use different attribute names, so we need this
+ * function to normalize things into a consistent naming scheme.
+ *
+ * @param {{name: string, attributes: Object}} block The block.
+ * @return {{url: ?string, alt: ?string, id: ?number}} The media info for the block.
+ */
+function getMediaInfo(block) {
+  if (block.name === 'core/image' || block.name === 'core/cover') {
+    const {
+      url,
+      alt,
+      id
+    } = block.attributes;
+    return {
+      url,
+      alt,
+      id
+    };
+  }
+  if (block.name === 'core/media-text') {
+    const {
+      mediaUrl: url,
+      mediaAlt: alt,
+      mediaId: id
+    } = block.attributes;
+    return {
+      url,
+      alt,
+      id
+    };
+  }
+  return {};
+}
+
+// Image component to represent a single image in the upload dialog.
+function Image({
+  clientId,
+  alt,
+  url
+}) {
   const {
     selectBlock
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
@@ -18682,16 +18915,16 @@ function Image(block) {
     role: "button",
     "aria-label": (0,external_wp_i18n_namespaceObject.__)('Select image block.'),
     onClick: () => {
-      selectBlock(block.clientId);
+      selectBlock(clientId);
     },
     onKeyDown: event => {
       if (event.key === 'Enter' || event.key === ' ') {
-        selectBlock(block.clientId);
+        selectBlock(clientId);
         event.preventDefault();
       }
     },
-    alt: block.attributes.alt,
-    src: block.attributes.url,
+    alt: alt,
+    src: url,
     animate: {
       opacity: 1
     },
@@ -18709,9 +18942,9 @@ function Image(block) {
     whileHover: {
       scale: 1.08
     }
-  }, block.clientId);
+  }, clientId);
 }
-function maybe_upload_media_PostFormatPanel() {
+function MaybeUploadMediaPanel() {
   const [isUploading, setIsUploading] = (0,external_wp_element_namespaceObject.useState)(false);
   const [isAnimating, setIsAnimating] = (0,external_wp_element_namespaceObject.useState)(false);
   const [hadUploadError, setHadUploadError] = (0,external_wp_element_namespaceObject.useState)(false);
@@ -18722,40 +18955,85 @@ function maybe_upload_media_PostFormatPanel() {
     editorBlocks: select(external_wp_blockEditor_namespaceObject.store).getBlocks(),
     mediaUpload: select(external_wp_blockEditor_namespaceObject.store).getSettings().mediaUpload
   }), []);
-  const externalImages = flattenBlocks(editorBlocks).filter(block => block.name === 'core/image' && block.attributes.url && !block.attributes.id);
+
+  // Get a list of blocks with external media.
+  const blocksWithExternalMedia = flattenBlocks(editorBlocks).filter(block => hasExternalMedia(block));
   const {
     updateBlockAttributes
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
-  if (!mediaUpload || !externalImages.length) {
+  if (!mediaUpload || !blocksWithExternalMedia.length) {
     return null;
   }
   const panelBodyTitle = [(0,external_wp_i18n_namespaceObject.__)('Suggestion:'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
     className: "editor-post-publish-panel__link",
     children: (0,external_wp_i18n_namespaceObject.__)('External media')
   }, "label")];
+
+  /**
+   * Update an individual block to point to newly-added library media.
+   *
+   * Different blocks use different attribute names, so we need this
+   * function to ensure we modify the correct attributes for each type.
+   *
+   * @param {{name: string, attributes: Object}} block The block.
+   * @param {{id: number, url: string}}          media Media library file info.
+   */
+  function updateBlockWithUploadedMedia(block, media) {
+    if (block.name === 'core/image' || block.name === 'core/cover') {
+      updateBlockAttributes(block.clientId, {
+        id: media.id,
+        url: media.url
+      });
+    }
+    if (block.name === 'core/media-text') {
+      updateBlockAttributes(block.clientId, {
+        mediaId: media.id,
+        mediaUrl: media.url
+      });
+    }
+  }
+
+  // Handle fetching and uploading all external media in the post.
   function uploadImages() {
     setIsUploading(true);
     setHadUploadError(false);
-    Promise.all(externalImages.map(image => window.fetch(image.attributes.url.includes('?') ? image.attributes.url : image.attributes.url + '?').then(response => response.blob()).then(blob => new Promise((resolve, reject) => {
-      mediaUpload({
-        filesList: [blob],
-        onFileChange: ([media]) => {
-          if ((0,external_wp_blob_namespaceObject.isBlobURL)(media.url)) {
-            return;
+
+    // Multiple blocks can be using the same URL, so we
+    // should ensure we only fetch and upload each of them once.
+    const mediaUrls = new Set(blocksWithExternalMedia.map(block => {
+      const {
+        url
+      } = getMediaInfo(block);
+      return url;
+    }));
+
+    // Create an upload promise for each URL, that we can wait for in all
+    // blocks that make use of that media.
+    const uploadPromises = Object.fromEntries(Object.entries(fetchMedia([...mediaUrls])).map(([url, filePromise]) => {
+      const uploadPromise = filePromise.then(blob => new Promise((resolve, reject) => {
+        mediaUpload({
+          filesList: [blob],
+          onFileChange: ([media]) => {
+            if ((0,external_wp_blob_namespaceObject.isBlobURL)(media.url)) {
+              return;
+            }
+            resolve(media);
+          },
+          onError() {
+            reject();
           }
-          updateBlockAttributes(image.clientId, {
-            id: media.id,
-            url: media.url
-          });
-          resolve();
-        },
-        onError() {
-          reject();
-        }
-      });
-    }).then(() => setIsAnimating(true))).catch(() => {
-      setHadUploadError(true);
-    }))).finally(() => {
+        });
+      }));
+      return [url, uploadPromise];
+    }));
+
+    // Wait for all blocks to be updated with library media.
+    Promise.allSettled(blocksWithExternalMedia.map(block => {
+      const {
+        url
+      } = getMediaInfo(block);
+      return uploadPromises[url].then(media => updateBlockWithUploadedMedia(block, media)).then(() => setIsAnimating(true)).catch(() => setHadUploadError(true));
+    })).finally(() => {
       setIsUploading(false);
     });
   }
@@ -18772,10 +19050,16 @@ function maybe_upload_media_PostFormatPanel() {
       },
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableAnimatePresence, {
         onExitComplete: () => setIsAnimating(false),
-        children: externalImages.map(image => {
+        children: blocksWithExternalMedia.map(block => {
+          const {
+            url,
+            alt
+          } = getMediaInfo(block);
           return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Image, {
-            ...image
-          }, image.clientId);
+            clientId: block.clientId,
+            url: url,
+            alt: alt
+          }, block.clientId);
         })
       }), isUploading || isAnimating ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
       // TODO: Switch to `true` (40px size) if possible
@@ -18894,7 +19178,7 @@ function PostPublishPanelPrepublish({
           children: siteHome
         })]
       })]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(maybe_upload_media_PostFormatPanel, {}), hasPublishAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MaybeUploadMediaPanel, {}), hasPublishAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
         initialOpen: false,
         title: [(0,external_wp_i18n_namespaceObject.__)('Visibility:'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
@@ -20896,73 +21180,6 @@ function PostTitleRaw(_, forwardedRef) {
 }
 /* harmony default export */ const post_title_raw = ((0,external_wp_element_namespaceObject.forwardRef)(PostTitleRaw));
 
-;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-trash/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-/**
- * Displays the Post Trash Button and Confirm Dialog in the Editor.
- *
- * @return {JSX.Element|null} The rendered PostTrash component.
- */
-
-
-
-function PostTrash() {
-  const {
-    isNew,
-    isDeleting,
-    postId
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const store = select(store_store);
-    return {
-      isNew: store.isEditedPostNew(),
-      isDeleting: store.isDeletingPost(),
-      postId: store.getCurrentPostId()
-    };
-  }, []);
-  const {
-    trashPost
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
-  const [showConfirmDialog, setShowConfirmDialog] = (0,external_wp_element_namespaceObject.useState)(false);
-  if (isNew || !postId) {
-    return null;
-  }
-  const handleConfirm = () => {
-    setShowConfirmDialog(false);
-    trashPost();
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      __next40pxDefaultSize: true,
-      className: "editor-post-trash",
-      isDestructive: true,
-      variant: "secondary",
-      isBusy: isDeleting,
-      "aria-disabled": isDeleting,
-      onClick: isDeleting ? undefined : () => setShowConfirmDialog(true),
-      children: (0,external_wp_i18n_namespaceObject.__)('Move to trash')
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalConfirmDialog, {
-      isOpen: showConfirmDialog,
-      onConfirm: handleConfirm,
-      onCancel: () => setShowConfirmDialog(false),
-      confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Move to trash'),
-      size: "medium",
-      children: (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to move this post to the trash?')
-    })]
-  });
-}
-
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-trash/check.js
 /**
  * WordPress dependencies
@@ -20973,6 +21190,7 @@ function PostTrash() {
 /**
  * Internal dependencies
  */
+
 
 
 /**
@@ -21006,13 +21224,92 @@ function PostTrashCheck({
       id: postId
     }) : false;
     return {
-      canTrashPost: (!isNew || postId) && canUserDelete
+      canTrashPost: (!isNew || postId) && canUserDelete && !GLOBAL_POST_TYPES.includes(postType)
     };
   }, []);
   if (!canTrashPost) {
     return null;
   }
   return children;
+}
+
+;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-trash/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+/**
+ * Displays the Post Trash Button and Confirm Dialog in the Editor.
+ *
+ * @param {?{onActionPerformed: Object}} An object containing the onActionPerformed function.
+ * @return {JSX.Element|null} The rendered PostTrash component.
+ */
+
+
+function PostTrash({
+  onActionPerformed
+}) {
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
+  const {
+    isNew,
+    isDeleting,
+    postId,
+    title
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const store = select(store_store);
+    return {
+      isNew: store.isEditedPostNew(),
+      isDeleting: store.isDeletingPost(),
+      postId: store.getCurrentPostId(),
+      title: store.getCurrentPostAttribute('title')
+    };
+  }, []);
+  const {
+    trashPost
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
+  const [showConfirmDialog, setShowConfirmDialog] = (0,external_wp_element_namespaceObject.useState)(false);
+  if (isNew || !postId) {
+    return null;
+  }
+  const handleConfirm = async () => {
+    setShowConfirmDialog(false);
+    await trashPost();
+    const item = await registry.resolveSelect(store_store).getCurrentPost();
+    // After the post is trashed, we want to trigger the onActionPerformed callback, so the user is redirect
+    // to the post view depending on if the user is on post editor or site editor.
+    onActionPerformed?.('move-to-trash', [item]);
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(PostTrashCheck, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
+      className: "editor-post-trash",
+      isDestructive: true,
+      variant: "secondary",
+      isBusy: isDeleting,
+      "aria-disabled": isDeleting,
+      onClick: isDeleting ? undefined : () => setShowConfirmDialog(true),
+      children: (0,external_wp_i18n_namespaceObject.__)('Move to trash')
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalConfirmDialog, {
+      isOpen: showConfirmDialog,
+      onConfirm: handleConfirm,
+      onCancel: () => setShowConfirmDialog(false),
+      confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Move to trash'),
+      size: "small",
+      children: (0,external_wp_i18n_namespaceObject.sprintf)(
+      // translators: %s: The item's title.
+      (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to move "%s" to the trash?'), title)
+    })]
+  });
 }
 
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/copy-small.js
@@ -21974,94 +22271,6 @@ const inserterMediaCategories = [{
 }];
 /* harmony default export */ const media_categories = (inserterMediaCategories);
 
-;// CONCATENATED MODULE: ./node_modules/uuid/dist/esm-browser/native.js
-const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID.bind(crypto);
-/* harmony default export */ const esm_browser_native = ({
-  randomUUID
-});
-;// CONCATENATED MODULE: ./node_modules/uuid/dist/esm-browser/rng.js
-// Unique ID creation requires a high quality random # generator. In the browser we therefore
-// require the crypto API and do not support built-in fallback to lower quality random number
-// generators (like Math.random()).
-let getRandomValues;
-const rnds8 = new Uint8Array(16);
-function rng() {
-  // lazy load so that environments that need to polyfill have a chance to do so
-  if (!getRandomValues) {
-    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation.
-    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto);
-
-    if (!getRandomValues) {
-      throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
-    }
-  }
-
-  return getRandomValues(rnds8);
-}
-;// CONCATENATED MODULE: ./node_modules/uuid/dist/esm-browser/stringify.js
-
-/**
- * Convert array of 16 byte values to UUID string format of the form:
- * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
- */
-
-const byteToHex = [];
-
-for (let i = 0; i < 256; ++i) {
-  byteToHex.push((i + 0x100).toString(16).slice(1));
-}
-
-function unsafeStringify(arr, offset = 0) {
-  // Note: Be careful editing this code!  It's been tuned for performance
-  // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
-  return byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]];
-}
-
-function stringify(arr, offset = 0) {
-  const uuid = unsafeStringify(arr, offset); // Consistency check for valid UUID.  If this throws, it's likely due to one
-  // of the following:
-  // - One or more input array values don't map to a hex octet (leading to
-  // "undefined" in the uuid)
-  // - Invalid input values for the RFC `version` or `variant` fields
-
-  if (!validate(uuid)) {
-    throw TypeError('Stringified UUID is invalid');
-  }
-
-  return uuid;
-}
-
-/* harmony default export */ const esm_browser_stringify = ((/* unused pure expression or super */ null && (stringify)));
-;// CONCATENATED MODULE: ./node_modules/uuid/dist/esm-browser/v4.js
-
-
-
-
-function v4(options, buf, offset) {
-  if (esm_browser_native.randomUUID && !buf && !options) {
-    return esm_browser_native.randomUUID();
-  }
-
-  options = options || {};
-  const rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-
-  rnds[6] = rnds[6] & 0x0f | 0x40;
-  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
-
-  if (buf) {
-    offset = offset || 0;
-
-    for (let i = 0; i < 16; ++i) {
-      buf[offset + i] = rnds[i];
-    }
-
-    return buf;
-  }
-
-  return unsafeStringify(rnds);
-}
-
-/* harmony default export */ const esm_browser_v4 = (v4);
 ;// CONCATENATED MODULE: ./packages/editor/build-module/utils/media-upload/index.js
 /**
  * External dependencies
@@ -22312,12 +22521,11 @@ function useGlobalStylesBaseConfig() {
   const baseConfig = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       __experimentalGetCurrentThemeBaseGlobalStyles,
+      getCurrentTheme,
       canUser
     } = select(external_wp_coreData_namespaceObject.store);
-    return canUser('read', {
-      kind: 'root',
-      name: 'theme'
-    }) && __experimentalGetCurrentThemeBaseGlobalStyles();
+    const currentTheme = getCurrentTheme();
+    return currentTheme && canUser('read', 'global-styles/themes', currentTheme.stylesheet) ? __experimentalGetCurrentThemeBaseGlobalStyles() : undefined;
   }, []);
   return [!!baseConfig, baseConfig];
 }
@@ -22375,13 +22583,18 @@ function GlobalStylesProvider({
 
 
 
-const EMPTY_BLOCKS_LIST = [];
 const use_block_editor_settings_EMPTY_OBJECT = {};
 function __experimentalReusableBlocksSelect(select) {
-  var _select$getEntityReco;
-  return (_select$getEntityReco = select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_block', {
+  const {
+    getEntityRecords,
+    hasFinishedResolution
+  } = select(external_wp_coreData_namespaceObject.store);
+  const reusableBlocks = getEntityRecords('postType', 'wp_block', {
     per_page: -1
-  })) !== null && _select$getEntityReco !== void 0 ? _select$getEntityReco : EMPTY_BLOCKS_LIST;
+  });
+  return hasFinishedResolution('getEntityRecords', ['postType', 'wp_block', {
+    per_page: -1
+  }]) ? reusableBlocks : undefined;
 }
 const BLOCK_EDITOR_SETTINGS = ['__experimentalBlockDirectory', '__experimentalDiscussionSettings', '__experimentalFeatures', '__experimentalGlobalStylesBaseStyles', 'alignWide', 'blockInspectorTabs', 'allowedMimeTypes', 'bodyPlaceholder', 'canLockBlocks', 'canUpdateBlockBindings', 'capabilities', 'clearBlockSelection', 'codeEditingEnabled', 'colors', 'disableCustomColors', 'disableCustomFontSizes', 'disableCustomSpacingSizes', 'disableCustomGradients', 'disableLayoutStyles', 'enableCustomLineHeight', 'enableCustomSpacing', 'enableCustomUnits', 'enableOpenverseMediaCategory', 'fontSizes', 'gradients', 'generateAnchors', 'onNavigateToEntityRecord', 'imageDefaultSize', 'imageDimensions', 'imageEditing', 'imageSizes', 'isRTL', 'locale', 'maxWidth', 'postContentAttributes', 'postsPerPage', 'readOnly', 'styles', 'titlePlaceholder', 'supportsLayout', 'widgetTypesToHideFromLegacyWidgetBlock', '__unstableHasCustomAppender', '__unstableIsPreviewMode', '__unstableResolvedAssets', '__unstableIsBlockBasedTheme'];
 const {
@@ -23388,6 +23601,8 @@ function BlockRemovalWarnings() {
 
 
 
+
+
 /**
  * Internal dependencies
  */
@@ -23417,8 +23632,14 @@ function useStartPatterns() {
     };
   }, []);
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
-    // filter patterns without postTypes declared if the current postType is page
-    // or patterns that declare the current postType in its post type array.
+    if (!blockPatternsWithPostContentBlockType?.length) {
+      return [];
+    }
+
+    /*
+     * Filter patterns without postTypes declared if the current postType is page
+     * or patterns that declare the current postType in its post type array.
+     */
     return blockPatternsWithPostContentBlockType.filter(pattern => {
       return postType === 'page' && !pattern.postTypes || Array.isArray(pattern.postTypes) && pattern.postTypes.includes(postType);
     });
@@ -23482,28 +23703,16 @@ function StartPageOptionsModal({
 }
 function StartPageOptions() {
   const [isClosed, setIsClosed] = (0,external_wp_element_namespaceObject.useState)(false);
-  const {
-    shouldEnableModal,
-    postType,
-    postId
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const shouldEnableModal = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       isEditedPostDirty,
       isEditedPostEmpty,
-      getCurrentPostType,
-      getCurrentPostId
+      getCurrentPostType
     } = select(store_store);
-    const _postType = getCurrentPostType();
-    return {
-      shouldEnableModal: !isEditedPostDirty() && isEditedPostEmpty() && TEMPLATE_POST_TYPE !== _postType,
-      postType: _postType,
-      postId: getCurrentPostId()
-    };
+    const preferencesModalActive = select(store).isModalActive('editor/preferences');
+    const choosePatternModalEnabled = select(external_wp_preferences_namespaceObject.store).get('core', 'enableChoosePatternModal');
+    return choosePatternModalEnabled && !preferencesModalActive && !isEditedPostDirty() && isEditedPostEmpty() && TEMPLATE_POST_TYPE !== getCurrentPostType();
   }, []);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    // Should reset the modal state when navigating to a new page/post.
-    setIsClosed(false);
-  }, [postType, postId]);
   if (!shouldEnableModal || isClosed) {
     return null;
   }
@@ -24365,7 +24574,7 @@ const provider_noop = () => {};
  * So we should not use their ids as post context. This is important to allow post blocks
  * (post content, post title) to be used within them without issues.
  */
-const NON_CONTEXTUAL_POST_TYPES = ['wp_block', 'wp_template', 'wp_navigation', 'wp_template_part'];
+const NON_CONTEXTUAL_POST_TYPES = ['wp_block', 'wp_navigation', 'wp_template_part'];
 
 /**
  * Depending on the post, template and template mode,
@@ -24463,7 +24672,8 @@ const ExperimentalEditorProvider = with_registry_provider(({
     editorSettings,
     selection,
     isReady,
-    mode
+    mode,
+    postTypes
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEditorSettings,
@@ -24471,25 +24681,50 @@ const ExperimentalEditorProvider = with_registry_provider(({
       getRenderingMode,
       __unstableIsEditorReady
     } = select(store_store);
+    const {
+      getPostTypes
+    } = select(external_wp_coreData_namespaceObject.store);
     return {
       editorSettings: getEditorSettings(),
       isReady: __unstableIsEditorReady(),
       mode: getRenderingMode(),
-      selection: getEditorSelection()
+      selection: getEditorSelection(),
+      postTypes: getPostTypes({
+        per_page: -1
+      })
     };
   }, []);
   const shouldRenderTemplate = !!template && mode !== 'post-only';
   const rootLevelPost = shouldRenderTemplate ? template : post;
   const defaultBlockContext = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const postContext = !NON_CONTEXTUAL_POST_TYPES.includes(rootLevelPost.type) || shouldRenderTemplate ? {
-      postId: post.id,
-      postType: post.type
-    } : {};
+    const postContext = {};
+    // If it is a template, try to inherit the post type from the slug.
+    if (post.type === 'wp_template') {
+      if (!post.is_custom) {
+        const [kind] = post.slug.split('-');
+        switch (kind) {
+          case 'page':
+            postContext.postType = 'page';
+            break;
+          case 'single':
+            // Infer the post type from the slug.
+            const postTypesSlugs = postTypes?.map(entity => entity.slug) || [];
+            const match = post.slug.match(`^single-(${postTypesSlugs.join('|')})(?:-.+)?$`);
+            if (match) {
+              postContext.postType = match[1];
+            }
+            break;
+        }
+      }
+    } else if (!NON_CONTEXTUAL_POST_TYPES.includes(rootLevelPost.type) || shouldRenderTemplate) {
+      postContext.postId = post.id;
+      postContext.postType = post.type;
+    }
     return {
       ...postContext,
       templateSlug: rootLevelPost.type === 'wp_template' ? rootLevelPost.slug : undefined
     };
-  }, [shouldRenderTemplate, post.id, post.type, rootLevelPost.type, rootLevelPost.slug]);
+  }, [shouldRenderTemplate, post.id, post.type, rootLevelPost.type, rootLevelPost.slug, postTypes]);
   const {
     id,
     type
@@ -26231,12 +26466,12 @@ function Header({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostPreviewButton, {
         className: "editor-header__post-preview-button",
         forceIsAutosaveable: forceIsDirty
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostViewLink, {}), !customSaveButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_publish_button_or_toggle, {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostViewLink, {}), (isWideViewport || !showIconLabels) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pinned_items.Slot, {
+        scope: "core"
+      }), !customSaveButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_publish_button_or_toggle, {
         forceIsDirty: forceIsDirty,
         setEntitiesSavedStatesCallback: setEntitiesSavedStatesCallback
-      }), customSaveButton, (isWideViewport || !showIconLabels) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pinned_items.Slot, {
-        scope: "core"
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MoreMenu, {})]
+      }), customSaveButton, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MoreMenu, {})]
     })]
   });
 }
@@ -26265,7 +26500,6 @@ const {
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function InserterSidebar() {
   const {
-    blockInsertionPoint,
     blockSectionRootClientId,
     inserterSidebarToggleRef,
     insertionPoint,
@@ -26278,7 +26512,6 @@ function InserterSidebar() {
       isPublishSidebarOpened
     } = unlock(select(store_store));
     const {
-      getBlockInsertionPoint,
       getBlockRootClientId,
       __unstableGetEditorMode,
       getSectionRootClientId
@@ -26299,7 +26532,6 @@ function InserterSidebar() {
       return getBlockRootClientId();
     };
     return {
-      blockInsertionPoint: getBlockInsertionPoint(),
       inserterSidebarToggleRef: getInserterSidebarToggleRef(),
       insertionPoint: getInsertionPoint(),
       showMostUsedBlocks: get('core', 'mostUsedBlocks'),
@@ -26333,8 +26565,8 @@ function InserterSidebar() {
       showMostUsedBlocks: showMostUsedBlocks,
       showInserterHelpPanel: true,
       shouldFocusBlock: isMobileViewport,
-      rootClientId: blockSectionRootClientId !== null && blockSectionRootClientId !== void 0 ? blockSectionRootClientId : blockInsertionPoint.rootClientId,
-      __experimentalInsertionIndex: blockInsertionPoint.index,
+      rootClientId: blockSectionRootClientId !== null && blockSectionRootClientId !== void 0 ? blockSectionRootClientId : insertionPoint.rootClientId,
+      __experimentalInsertionIndex: insertionPoint.insertionIndex,
       onSelect: insertionPoint.onSelect,
       __experimentalInitialTab: insertionPoint.tab,
       __experimentalInitialCategory: insertionPoint.category,
@@ -26767,7 +26999,7 @@ function EditTemplateBlocksNotification({
       if (!canEditTemplate) {
         return;
       }
-      if (!event.target.classList.contains('is-root-container')) {
+      if (!event.target.classList.contains('is-root-container') || event.target.dataset?.type === 'core/template-part') {
         return;
       }
       setIsDialogOpen(true);
@@ -28526,6 +28758,7 @@ function SiteDiscussion() {
 
 
 
+
 /**
  * Module Constants
  */
@@ -28574,6 +28807,8 @@ function PostSummary({
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
               spacing: 1,
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostStatus, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSchedulePanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostURLPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(panel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTemplatePanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostDiscussionPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrivatePostLastRevision, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageAttributesPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSyncStatus, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlogTitle, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostsPerPage, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SiteDiscussion, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_format_panel, {})]
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTrash, {
+              onActionPerformed: onActionPerformed
             }), fills]
           })]
         })
@@ -29204,10 +29439,10 @@ function Editor({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditorInterface, {
         ...props,
         children: extraContent
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(components_sidebar, {
+      }), children, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(components_sidebar, {
         onActionPerformed: onActionPerformed,
         extraPanels: extraSidebarPanels
-      }), children]
+      })]
     })]
   });
 }
@@ -29531,6 +29766,7 @@ function BlockManager({
 
 
 
+
 const {
   PreferencesModal,
   PreferencesModalTabs,
@@ -29571,6 +29807,7 @@ function EditorPreferencesModal({
   const {
     set: setPreference
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_preferences_namespaceObject.store);
+  const hasStarterPatterns = !!useStartPatterns().length;
   const sections = (0,external_wp_element_namespaceObject.useMemo)(() => [{
     name: 'general',
     tabLabel: (0,external_wp_i18n_namespaceObject.__)('General'),
@@ -29592,6 +29829,11 @@ function EditorPreferencesModal({
           featureName: "allowRightClickOverrides",
           help: (0,external_wp_i18n_namespaceObject.__)('Allows contextual List View menus via right-click, overriding browser defaults.'),
           label: (0,external_wp_i18n_namespaceObject.__)('Allow right-click contextual menus')
+        }), hasStarterPatterns && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreferenceToggleControl, {
+          scope: "core",
+          featureName: "enableChoosePatternModal",
+          help: (0,external_wp_i18n_namespaceObject.__)('Shows starter patterns when creating a new page.'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Show starter patterns')
         })]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(PreferencesModalSection, {
         title: (0,external_wp_i18n_namespaceObject.__)('Document settings'),
@@ -29701,7 +29943,27 @@ function EditorPreferencesModal({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_manager, {})
       })]
     })
-  }], [showBlockBreadcrumbsOption, extraSections, setIsInserterOpened, setIsListViewOpened, setPreference, isLargeViewport]);
+  }, window.__experimentalMediaProcessing && {
+    name: 'media',
+    tabLabel: (0,external_wp_i18n_namespaceObject.__)('Media'),
+    content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(PreferencesModalSection, {
+        title: (0,external_wp_i18n_namespaceObject.__)('General'),
+        description: (0,external_wp_i18n_namespaceObject.__)('Customize options related to the media upload flow.'),
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreferenceToggleControl, {
+          scope: "core/media",
+          featureName: "optimizeOnUpload",
+          help: (0,external_wp_i18n_namespaceObject.__)('Compress media items before uploading to the server.'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Pre-upload compression')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreferenceToggleControl, {
+          scope: "core/media",
+          featureName: "requireApproval",
+          help: (0,external_wp_i18n_namespaceObject.__)('Require approval step when optimizing existing media.'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Approval step')
+        })]
+      })
+    })
+  }].filter(Boolean), [showBlockBreadcrumbsOption, extraSections, setIsInserterOpened, setIsListViewOpened, setPreference, isLargeViewport, hasStarterPatterns]);
   if (!isActive) {
     return null;
   }
@@ -29826,8 +30088,9 @@ const CONTENT = 'content';
     const meta = registry.select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', context?.postType, context?.postId)?.meta;
     const newValues = {};
     for (const [attributeName, source] of Object.entries(bindings)) {
+      var _meta$source$args$key;
       // Use the key if the value is not set.
-      newValues[attributeName] = meta?.[source.args.key] || source.args.key;
+      newValues[attributeName] = (_meta$source$args$key = meta?.[source.args.key]) !== null && _meta$source$args$key !== void 0 ? _meta$source$args$key : source.args.key;
     }
     return newValues;
   },

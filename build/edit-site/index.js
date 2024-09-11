@@ -26599,8 +26599,6 @@ const {
   mergeBaseAndUserConfigs: style_book_mergeBaseAndUserConfigs
 } = unlock(external_wp_editor_namespaceObject.privateApis);
 const {
-  CompositeV2: Composite,
-  CompositeItemV2: CompositeItem,
   Tabs: style_book_Tabs
 } = unlock(external_wp_components_namespaceObject.privateApis);
 
@@ -26878,7 +26876,7 @@ const Examples = (0,external_wp_element_namespaceObject.memo)(({
   isSelected,
   onSelect
 }) => {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Composite, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
     orientation: "vertical",
     className: className,
     "aria-label": label,
@@ -26915,7 +26913,7 @@ const Example = ({
     role: "row",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       role: "gridcell",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(CompositeItem, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite.Item, {
         className: dist_clsx('edit-site-style-book__example', {
           'is-selected': isSelected
         }),
@@ -32707,7 +32705,7 @@ var useComposite = createHook(
     return props;
   }
 );
-var TW35PKTK_Composite = forwardRef2(function Composite2(props) {
+var Composite = forwardRef2(function Composite2(props) {
   const htmlProps = useComposite(props);
   return createElement(TW35PKTK_TagName, htmlProps);
 });
@@ -33974,7 +33972,7 @@ var useCompositeItem = createHook(
     }));
   }
 );
-var _3CCTMYB6_CompositeItem = memo2(
+var CompositeItem = memo2(
   forwardRef2(function CompositeItem2(props) {
     const htmlProps = useCompositeItem(props);
     return createElement(_3CCTMYB6_TagName, htmlProps);
@@ -34285,16 +34283,6 @@ var ComboboxItemValue = forwardRef2(function ComboboxItemValue2(props) {
 });
 
 
-;// CONCATENATED MODULE: ./packages/dataviews/build-module/lock-unlock.js
-/**
- * WordPress dependencies
- */
-
-const {
-  lock: lock_unlock_lock,
-  unlock: lock_unlock_unlock
-} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/dataviews');
-
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/components/dataviews-filters/search-widget.js
 /**
  * External dependencies
@@ -34318,13 +34306,6 @@ const {
  */
 
 
-
-const {
-  CompositeV2: search_widget_Composite,
-  CompositeItemV2: search_widget_CompositeItem,
-  CompositeHoverV2: search_widget_CompositeHover,
-  CompositeTypeaheadV2: CompositeTypeahead
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 const radioCheck = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
@@ -34378,7 +34359,7 @@ function ListBox({
   filter.operators?.length === 1 ? undefined : null);
   const currentFilter = view.filters?.find(f => f.field === filter.field);
   const currentValue = getCurrentValue(filter, currentFilter);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(search_widget_Composite, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
     virtualFocus: true,
     focusLoop: true,
     activeId: activeCompositeId,
@@ -34389,15 +34370,14 @@ function ListBox({
     (0,external_wp_i18n_namespaceObject.__)('List of: %1$s'), filter.name),
     onFocusVisible: () => {
       // `onFocusVisible` needs the `Composite` component to be focusable,
-      // which is implicitly achieved via the `virtualFocus: true` option
-      // in the `useCompositeStore` hook.
+      // which is implicitly achieved via the `virtualFocus` prop.
       if (!activeCompositeId && filter.elements.length) {
         setActiveCompositeId(generateFilterElementCompositeItemId(baseId, filter.elements[0].value));
       }
     },
-    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CompositeTypeahead, {}),
-    children: filter.elements.map(element => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(search_widget_CompositeHover, {
-      render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(search_widget_CompositeItem, {
+    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Typeahead, {}),
+    children: filter.elements.map(element => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite.Hover, {
+      render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
         id: generateFilterElementCompositeItemId(baseId, element.value),
         render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           "aria-label": element.label,
@@ -34755,6 +34735,16 @@ function FilterSummary({
     }
   });
 }
+
+;// CONCATENATED MODULE: ./packages/dataviews/build-module/lock-unlock.js
+/**
+ * WordPress dependencies
+ */
+
+const {
+  lock: lock_unlock_lock,
+  unlock: lock_unlock_unlock
+} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/dataviews');
 
 ;// CONCATENATED MODULE: ./packages/dataviews/build-module/components/dataviews-filters/add-filter.js
 /**
@@ -36331,9 +36321,6 @@ function ViewGrid({
 
 
 const {
-  CompositeV2: list_Composite,
-  CompositeItemV2: list_CompositeItem,
-  CompositeRowV2: CompositeRow,
   DropdownMenuV2: DropdownMenu
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function generateItemWrapperCompositeId(idPrefix) {
@@ -36356,7 +36343,7 @@ function PrimaryActionGridCell({
   const label = typeof primaryAction.label === 'string' ? primaryAction.label : primaryAction.label([item]);
   return 'RenderModal' in primaryAction ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     role: "gridcell",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_CompositeItem, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
       id: compositeItemId,
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         label: label,
@@ -36373,7 +36360,7 @@ function PrimaryActionGridCell({
     })
   }, primaryAction.id) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     role: "gridcell",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_CompositeItem, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
       id: compositeItemId,
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         label: label,
@@ -36440,7 +36427,7 @@ function ListItem({
   const renderedPrimaryField = primaryField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(primaryField.render, {
     item: item
   }) : null;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CompositeRow, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Row, {
     ref: itemRef,
     render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {}),
     role: "row",
@@ -36456,7 +36443,7 @@ function ListItem({
       spacing: 0,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         role: "gridcell",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_CompositeItem, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
           render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {}),
           role: "button",
           id: generateItemWrapperCompositeId(idPrefix),
@@ -36514,7 +36501,7 @@ function ListItem({
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           role: "gridcell",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenu, {
-            trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_CompositeItem, {
+            trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
               id: generateDropdownTriggerCompositeId(idPrefix),
               render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
                 size: "small",
@@ -36575,6 +36562,9 @@ function ViewList(props) {
   const selectCompositeItem = (0,external_wp_element_namespaceObject.useCallback)((targetIndex, generateCompositeId) => {
     // Clamping between 0 and data.length - 1 to avoid out of bounds.
     const clampedIndex = Math.min(data.length - 1, Math.max(0, targetIndex));
+    if (!data[clampedIndex]) {
+      return;
+    }
     const itemIdPrefix = generateCompositeItemIdPrefix(data[clampedIndex]);
     const targetCompositeItemId = generateCompositeId(itemIdPrefix);
     setActiveCompositeId(targetCompositeItemId);
@@ -36621,7 +36611,7 @@ function ViewList(props) {
       })
     });
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_Composite, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
     id: baseId,
     render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {}),
     className: "dataviews-view-list",
@@ -41338,11 +41328,6 @@ const useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters
 
 
 
-
-const {
-  CompositeV2: add_custom_template_modal_content_Composite,
-  CompositeItemV2: add_custom_template_modal_content_CompositeItem
-} = unlock(external_wp_components_namespaceObject.privateApis);
 const add_custom_template_modal_content_EMPTY_ARRAY = [];
 function SuggestionListItem({
   suggestion,
@@ -41351,7 +41336,7 @@ function SuggestionListItem({
   entityForSuggestions
 }) {
   const baseCssClass = 'edit-site-custom-template-modal__suggestions_list__list-item';
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(add_custom_template_modal_content_CompositeItem, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite.Item, {
     render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
     // TODO: Switch to `true` (40px size) if possible
     , {
@@ -41432,7 +41417,7 @@ function SuggestionList({
       value: search,
       label: labels.search_items,
       placeholder: labels.search_items
-    }), !!suggestions?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_custom_template_modal_content_Composite, {
+    }), !!suggestions?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
       orientation: "vertical",
       role: "listbox",
       className: "edit-site-custom-template-modal__suggestions_list",
@@ -45992,7 +45977,8 @@ function initializePostsDashboard(id, settings) {
     keepCaretInsideBlock: false,
     openPanels: ['post-status'],
     showBlockBreadcrumbs: true,
-    showListViewByDefault: false
+    showListViewByDefault: false,
+    enableChoosePatternModal: true
   });
   (0,external_wp_data_namespaceObject.dispatch)(store).updateSettings(settings);
 
@@ -46078,8 +46064,15 @@ function initializeEditor(id, settings) {
     keepCaretInsideBlock: false,
     openPanels: ['post-status'],
     showBlockBreadcrumbs: true,
-    showListViewByDefault: false
+    showListViewByDefault: false,
+    enableChoosePatternModal: true
   });
+  if (window.__experimentalMediaProcessing) {
+    (0,external_wp_data_namespaceObject.dispatch)(external_wp_preferences_namespaceObject.store).setDefaults('core/media', {
+      requireApproval: true,
+      optimizeOnUpload: true
+    });
+  }
   (0,external_wp_data_namespaceObject.dispatch)(store).updateSettings(settings);
 
   // Keep the defaultTemplateTypes in the core/editor settings too,
