@@ -18397,10 +18397,24 @@ const file_transforms_transforms = {
         const blobURL = (0,external_wp_blob_namespaceObject.createBlobURL)(file);
 
         // File will be uploaded in componentDidMount()
-        blocks.push((0,external_wp_blocks_namespaceObject.createBlock)('core/file', {
-          blob: blobURL,
-          fileName: file.name
-        }));
+        if (file.type.startsWith('video/')) {
+          blocks.push((0,external_wp_blocks_namespaceObject.createBlock)('core/video', {
+            blob: (0,external_wp_blob_namespaceObject.createBlobURL)(file)
+          }));
+        } else if (file.type.startsWith('image/')) {
+          blocks.push((0,external_wp_blocks_namespaceObject.createBlock)('core/image', {
+            blob: (0,external_wp_blob_namespaceObject.createBlobURL)(file)
+          }));
+        } else if (file.type.startsWith('audio/')) {
+          blocks.push((0,external_wp_blocks_namespaceObject.createBlock)('core/audio', {
+            blob: (0,external_wp_blob_namespaceObject.createBlobURL)(file)
+          }));
+        } else {
+          blocks.push((0,external_wp_blocks_namespaceObject.createBlock)('core/file', {
+            blob: blobURL,
+            fileName: file.name
+          }));
+        }
       });
       return blocks;
     }
@@ -26952,9 +26966,6 @@ function image_save_save({
  */
 
 
-
-
-
 function stripFirstImage(attributes, {
   shortcode
 }) {
@@ -27048,16 +27059,6 @@ const image_transforms_transforms = {
     // creating a new gallery.
     type: 'files',
     isMatch(files) {
-      // The following check is intended to catch non-image files when dropped together with images.
-      if (files.some(file => file.type.indexOf('image/') === 0) && files.some(file => file.type.indexOf('image/') !== 0)) {
-        const {
-          createErrorNotice
-        } = (0,external_wp_data_namespaceObject.dispatch)(external_wp_notices_namespaceObject.store);
-        createErrorNotice((0,external_wp_i18n_namespaceObject.__)('If uploading to a gallery all files need to be image formats'), {
-          id: 'gallery-transform-invalid-file',
-          type: 'snackbar'
-        });
-      }
       return files.every(file => file.type.indexOf('image/') === 0);
     },
     transform(files) {
