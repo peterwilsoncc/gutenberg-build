@@ -25738,7 +25738,7 @@ function image_Image({
   clientId,
   blockEditingMode,
   parentLayoutType,
-  containerWidth
+  maxContentWidth
 }) {
   const {
     url = '',
@@ -26392,7 +26392,7 @@ function image_Image({
     // @todo It would be good to revisit this once a content-width variable
     // becomes available.
     const maxWidthBuffer = maxWidth * 2.5;
-    const maxContentWidth = containerWidth || maxWidthBuffer;
+    const maxResizeWidth = maxContentWidth || maxWidthBuffer;
     let showRightHandle = false;
     let showLeftHandle = false;
 
@@ -26433,9 +26433,9 @@ function image_Image({
       },
       showHandle: isSingleSelected,
       minWidth: minWidth,
-      maxWidth: maxContentWidth,
+      maxWidth: maxResizeWidth,
       minHeight: minHeight,
-      maxHeight: maxContentWidth / ratio,
+      maxHeight: maxResizeWidth / ratio,
       lockAspectRatio: ratio,
       enable: {
         top: false,
@@ -26448,7 +26448,7 @@ function image_Image({
         onResizeStop();
 
         // Clear hardcoded width if the resized width is close to the max-content width.
-        if (
+        if (maxContentWidth &&
         // Only do this if the image is bigger than the container to prevent it from being squished.
         // TODO: Remove this check if the image support setting 100% width.
         naturalWidth >= maxContentWidth && Math.abs(elt.offsetWidth - maxContentWidth) < 10) {
@@ -26494,6 +26494,36 @@ function image_Image({
   });
 }
 
+;// CONCATENATED MODULE: ./packages/block-library/build-module/image/use-max-width-observer.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+function useMaxWidthObserver() {
+  const [contentResizeListener, {
+    width
+  }] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
+  const observerRef = (0,external_wp_element_namespaceObject.useRef)();
+  const maxWidthObserver = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    // Some themes set max-width on blocks.
+    className: "wp-block",
+    "aria-hidden": "true",
+    style: {
+      position: 'absolute',
+      inset: 0,
+      width: '100%',
+      height: 0,
+      margin: 0
+    },
+    ref: observerRef,
+    children: contentResizeListener
+  });
+  return [maxWidthObserver, width];
+}
+
+
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/image/edit.js
 /**
  * External dependencies
@@ -26513,10 +26543,10 @@ function image_Image({
 
 
 
-
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -26584,13 +26614,15 @@ function ImageEdit({
     metadata
   } = attributes;
   const [temporaryURL, setTemporaryURL] = (0,external_wp_element_namespaceObject.useState)(attributes.blob);
-  const figureRef = (0,external_wp_element_namespaceObject.useRef)();
-  const [contentResizeListener, {
-    width: containerWidth
-  }] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
+  const containerRef = (0,external_wp_element_namespaceObject.useRef)();
+  // Only observe the max width from the parent container when the parent layout is not flex nor grid.
+  // This won't work for them because the container width changes with the image.
+  // TODO: Find a way to observe the container width for flex and grid layouts.
+  const isMaxWidthContainerWidth = !parentLayout || parentLayout.type !== 'flex' && parentLayout.type !== 'grid';
+  const [maxWidthObserver, maxContentWidth] = useMaxWidthObserver();
   const [placeholderResizeListener, {
     width: placeholderWidth
-  }] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
+  }] = useResizeObserver();
   const isSmallContainer = placeholderWidth && placeholderWidth < 160;
   const altRef = (0,external_wp_element_namespaceObject.useRef)();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -26637,7 +26669,7 @@ function ImageEdit({
     });
   }
   function onSelectImagesList(images) {
-    const win = figureRef.current?.ownerDocument.defaultView;
+    const win = containerRef.current?.ownerDocument.defaultView;
     if (images.every(file => file instanceof win.File)) {
       /** @type {File[]} */
       const files = images;
@@ -26795,7 +26827,7 @@ function ImageEdit({
     'has-custom-border': !!borderProps.className || borderProps.style && Object.keys(borderProps.style).length > 0
   });
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
-    ref: figureRef,
+    ref: containerRef,
     className: classes
   });
 
@@ -26855,7 +26887,7 @@ function ImageEdit({
         clientId: clientId,
         blockEditingMode: blockEditingMode,
         parentLayoutType: parentLayout?.type,
-        containerWidth: containerWidth
+        maxContentWidth: maxContentWidth
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaPlaceholder, {
         icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
           icon: library_image
@@ -26877,7 +26909,7 @@ function ImageEdit({
     }),
     // The listener cannot be placed as the first element as it will break the in-between inserter.
     // See https://github.com/WordPress/gutenberg/blob/71134165868298fc15e22896d0c28b41b3755ff7/packages/block-editor/src/components/block-list/use-in-between-inserter.js#L120
-    contentResizeListener]
+    isSingleSelected && isMaxWidthContainerWidth && maxWidthObserver]
   });
 }
 /* harmony default export */ const image_edit = (ImageEdit);
