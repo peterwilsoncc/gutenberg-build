@@ -36562,6 +36562,9 @@ function ViewList(props) {
   const selectCompositeItem = (0,external_wp_element_namespaceObject.useCallback)((targetIndex, generateCompositeId) => {
     // Clamping between 0 and data.length - 1 to avoid out of bounds.
     const clampedIndex = Math.min(data.length - 1, Math.max(0, targetIndex));
+    if (!data[clampedIndex]) {
+      return;
+    }
     const itemIdPrefix = generateCompositeItemIdPrefix(data[clampedIndex]);
     const targetCompositeItemId = generateCompositeId(itemIdPrefix);
     setActiveCompositeId(targetCompositeItemId);
