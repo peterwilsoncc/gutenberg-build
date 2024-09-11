@@ -1794,7 +1794,7 @@ function ArchivesEdit({
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
           __next40pxDefaultSize: true,
           __nextHasNoMarginBottom: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Group by:'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Group by'),
           options: [{
             label: (0,external_wp_i18n_namespaceObject.__)('Year'),
             value: 'yearly'
@@ -28022,7 +28022,7 @@ function LatestPostsEdit({
         })
       }), displayPostContent && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
         className: "wp-block-latest-posts__post-content-radio",
-        label: (0,external_wp_i18n_namespaceObject.__)('Show:'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Show'),
         selected: displayPostContentRadio,
         options: [{
           label: (0,external_wp_i18n_namespaceObject.__)('Excerpt'),
