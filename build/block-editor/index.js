@@ -20225,7 +20225,7 @@ const units = [{
 
     // In the experiment we want to also show column control in Auto mode, and
     // the minimum width control in Manual mode.
-    const showColumnsControl = window.__experimentalEnableGridInteractivity || layout?.columnCount;
+    const showColumnsControl = window.__experimentalEnableGridInteractivity || !!layout?.columnCount;
     const showMinWidthControl = window.__experimentalEnableGridInteractivity || !layout?.columnCount;
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridLayoutTypeControl, {
@@ -20407,14 +20407,14 @@ function GridLayoutColumnsAndRowsControl({
               if (window.__experimentalEnableGridInteractivity) {
                 // Allow unsetting the column count when in auto mode.
                 const defaultNewColumnCount = isManualPlacement ? 1 : undefined;
-                const newColumnCount = value === '' ? defaultNewColumnCount : parseInt(value, 10);
+                const newColumnCount = value === '' || value === '0' ? defaultNewColumnCount : parseInt(value, 10);
                 onChange({
                   ...layout,
                   columnCount: newColumnCount
                 });
               } else {
                 // Don't allow unsetting the column count.
-                const newColumnCount = value === '' ? 1 : parseInt(value, 10);
+                const newColumnCount = value === '' || value === '0' ? 1 : parseInt(value, 10);
                 onChange({
                   ...layout,
                   columnCount: newColumnCount
@@ -20422,7 +20422,7 @@ function GridLayoutColumnsAndRowsControl({
               }
             },
             value: columnCount,
-            min: 0,
+            min: 1,
             label: (0,external_wp_i18n_namespaceObject.__)('Columns'),
             hideLabelFromVision: !window.__experimentalEnableGridInteractivity || !isManualPlacement
           })
@@ -20432,24 +20432,24 @@ function GridLayoutColumnsAndRowsControl({
             size: "__unstable-large",
             onChange: value => {
               // Don't allow unsetting the row count.
-              const newRowCount = value === '' ? 1 : parseInt(value, 10);
+              const newRowCount = value === '' || value === '0' ? 1 : parseInt(value, 10);
               onChange({
                 ...layout,
                 rowCount: newRowCount
               });
             },
             value: rowCount,
-            min: 0,
+            min: 1,
             label: (0,external_wp_i18n_namespaceObject.__)('Rows')
           }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
             __next40pxDefaultSize: true,
             __nextHasNoMarginBottom: true,
-            value: columnCount !== null && columnCount !== void 0 ? columnCount : 0,
+            value: columnCount !== null && columnCount !== void 0 ? columnCount : 1,
             onChange: value => onChange({
               ...layout,
-              columnCount: value
+              columnCount: value === '' || value === '0' ? 1 : value
             }),
-            min: 0,
+            min: 1,
             max: 16,
             withInputField: false,
             label: (0,external_wp_i18n_namespaceObject.__)('Columns'),
