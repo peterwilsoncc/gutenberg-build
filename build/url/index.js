@@ -581,7 +581,6 @@ __webpack_require__.d(__webpack_exports__, {
   getQueryString: () => (/* reexport */ getQueryString),
   hasQueryArg: () => (/* reexport */ hasQueryArg),
   isEmail: () => (/* reexport */ isEmail),
-  isPhoneNumber: () => (/* reexport */ isPhoneNumber),
   isURL: () => (/* reexport */ isURL),
   isValidAuthority: () => (/* reexport */ isValidAuthority),
   isValidFragment: () => (/* reexport */ isValidFragment),
@@ -640,27 +639,6 @@ const EMAIL_REGEXP = /^(mailto:)?[a-z0-9._%+-]+@[a-z0-9][a-z0-9.-]*\.[a-z]{2,63}
  */
 function isEmail(email) {
   return EMAIL_REGEXP.test(email);
-}
-
-;// CONCATENATED MODULE: ./packages/url/build-module/is-phone-number.js
-const PHONE_REGEXP = /^(tel:)?(\+)?\d{6,15}$/;
-
-/**
- * Determines whether the given string looks like a phone number.
- *
- * @param {string} phoneNumber The string to scrutinize.
- *
- * @example
- * ```js
- * const isPhoneNumber = isPhoneNumber('+1 (555) 123-4567'); // true
- * ```
- *
- * @return {boolean} Whether or not it looks like a phone number.
- */
-function isPhoneNumber(phoneNumber) {
-  // Remove any seperator from phone number.
-  phoneNumber = phoneNumber.replace(/[-.() ]/g, '');
-  return PHONE_REGEXP.test(phoneNumber);
 }
 
 ;// CONCATENATED MODULE: ./packages/url/build-module/get-protocol.js
@@ -1437,7 +1415,6 @@ function prependHTTPS(url) {
 }
 
 ;// CONCATENATED MODULE: ./packages/url/build-module/index.js
-
 
 
 

@@ -1776,6 +1776,22 @@ function getPostEditURL(postId) {
     action: 'edit'
   });
 }
+
+/**
+ * Returns the Post's Trashed URL.
+ *
+ * @param {number} postId   Post ID.
+ * @param {string} postType Post Type.
+ *
+ * @return {string} Post trashed URL.
+ */
+function getPostTrashedURL(postId, postType) {
+  return (0,external_wp_url_namespaceObject.addQueryArgs)('edit.php', {
+    trashed: 1,
+    post_type: postType,
+    ids: postId
+  });
+}
 class BrowserURL extends external_wp_element_namespaceObject.Component {
   constructor() {
     super(...arguments);
@@ -1787,14 +1803,33 @@ class BrowserURL extends external_wp_element_namespaceObject.Component {
     const {
       postId,
       postStatus,
+      postType,
+      isSavingPost,
       hasHistory
     } = this.props;
     const {
       historyId
     } = this.state;
+
+    // Posts are still dirty while saving so wait for saving to finish
+    // to avoid the unsaved changes warning when trashing posts.
+    if (postStatus === 'trash' && !isSavingPost) {
+      this.setTrashURL(postId, postType);
+      return;
+    }
     if ((postId !== prevProps.postId || postId !== historyId) && postStatus !== 'auto-draft' && postId && !hasHistory) {
       this.setBrowserURL(postId);
     }
+  }
+
+  /**
+   * Navigates the browser to the post trashed URL to show a notice about the trashed post.
+   *
+   * @param {number} postId   Post ID.
+   * @param {string} postType Post Type.
+   */
+  setTrashURL(postId, postType) {
+    window.location.href = getPostTrashedURL(postId, postType);
   }
 
   /**
@@ -1820,7 +1855,8 @@ class BrowserURL extends external_wp_element_namespaceObject.Component {
 }
 /* harmony default export */ const browser_url = ((0,external_wp_data_namespaceObject.withSelect)(select => {
   const {
-    getCurrentPost
+    getCurrentPost,
+    isSavingPost
   } = select(external_wp_editor_namespaceObject.store);
   const post = getCurrentPost();
   let {
@@ -1834,7 +1870,9 @@ class BrowserURL extends external_wp_element_namespaceObject.Component {
   }
   return {
     postId: id,
-    postStatus: status
+    postStatus: status,
+    postType: type,
+    isSavingPost: isSavingPost()
   };
 })(BrowserURL));
 
@@ -3258,15 +3296,8 @@ function initializeEditor(id, postType, postId, settings, initialEdits) {
     showBlockBreadcrumbs: true,
     showIconLabels: false,
     showListViewByDefault: false,
-    enableChoosePatternModal: true,
     isPublishSidebarEnabled: true
   });
-  if (window.__experimentalMediaProcessing) {
-    (0,external_wp_data_namespaceObject.dispatch)(external_wp_preferences_namespaceObject.store).setDefaults('core/media', {
-      requireApproval: true,
-      optimizeOnUpload: true
-    });
-  }
   (0,external_wp_data_namespaceObject.dispatch)(external_wp_blocks_namespaceObject.store).reapplyBlockTypeFilters();
 
   // Check if the block list view should be open by default.
