@@ -24574,7 +24574,7 @@ const provider_noop = () => {};
  * So we should not use their ids as post context. This is important to allow post blocks
  * (post content, post title) to be used within them without issues.
  */
-const NON_CONTEXTUAL_POST_TYPES = ['wp_block', 'wp_template', 'wp_navigation', 'wp_template_part'];
+const NON_CONTEXTUAL_POST_TYPES = ['wp_block', 'wp_navigation', 'wp_template_part'];
 
 /**
  * Depending on the post, template and template mode,
@@ -24672,7 +24672,8 @@ const ExperimentalEditorProvider = with_registry_provider(({
     editorSettings,
     selection,
     isReady,
-    mode
+    mode,
+    postTypes
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEditorSettings,
@@ -24680,25 +24681,50 @@ const ExperimentalEditorProvider = with_registry_provider(({
       getRenderingMode,
       __unstableIsEditorReady
     } = select(store_store);
+    const {
+      getPostTypes
+    } = select(external_wp_coreData_namespaceObject.store);
     return {
       editorSettings: getEditorSettings(),
       isReady: __unstableIsEditorReady(),
       mode: getRenderingMode(),
-      selection: getEditorSelection()
+      selection: getEditorSelection(),
+      postTypes: getPostTypes({
+        per_page: -1
+      })
     };
   }, []);
   const shouldRenderTemplate = !!template && mode !== 'post-only';
   const rootLevelPost = shouldRenderTemplate ? template : post;
   const defaultBlockContext = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const postContext = !NON_CONTEXTUAL_POST_TYPES.includes(rootLevelPost.type) || shouldRenderTemplate ? {
-      postId: post.id,
-      postType: post.type
-    } : {};
+    const postContext = {};
+    // If it is a template, try to inherit the post type from the slug.
+    if (post.type === 'wp_template') {
+      if (!post.is_custom) {
+        const [kind] = post.slug.split('-');
+        switch (kind) {
+          case 'page':
+            postContext.postType = 'page';
+            break;
+          case 'single':
+            // Infer the post type from the slug.
+            const postTypesSlugs = postTypes?.map(entity => entity.slug) || [];
+            const match = post.slug.match(`^single-(${postTypesSlugs.join('|')})(?:-.+)?$`);
+            if (match) {
+              postContext.postType = match[1];
+            }
+            break;
+        }
+      }
+    } else if (!NON_CONTEXTUAL_POST_TYPES.includes(rootLevelPost.type) || shouldRenderTemplate) {
+      postContext.postId = post.id;
+      postContext.postType = post.type;
+    }
     return {
       ...postContext,
       templateSlug: rootLevelPost.type === 'wp_template' ? rootLevelPost.slug : undefined
     };
-  }, [shouldRenderTemplate, post.id, post.type, rootLevelPost.type, rootLevelPost.slug]);
+  }, [shouldRenderTemplate, post.id, post.type, rootLevelPost.type, rootLevelPost.slug, postTypes]);
   const {
     id,
     type
