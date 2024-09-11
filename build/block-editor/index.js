@@ -42287,6 +42287,7 @@ function useNavModeExit(clientId) {
 function useZoomOutModeExit({
   editorMode
 }) {
+  const getSettings = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getSettings);
   const {
     __unstableSetEditorMode
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
@@ -42297,6 +42298,12 @@ function useZoomOutModeExit({
     function onDoubleClick(event) {
       if (!event.defaultPrevented) {
         event.preventDefault();
+        const {
+          __experimentalSetIsInserterOpened
+        } = getSettings();
+        if (typeof __experimentalSetIsInserterOpened === 'function') {
+          __experimentalSetIsInserterOpened(false);
+        }
         __unstableSetEditorMode('edit');
       }
     }
@@ -62403,8 +62410,12 @@ function ZoomOutToolbar({
       getNextBlockClientId,
       getPreviousBlockClientId,
       canRemoveBlock,
-      canMoveBlock
+      canMoveBlock,
+      getSettings
     } = select(store);
+    const {
+      __experimentalSetIsInserterOpened: setIsInserterOpened
+    } = getSettings();
     const {
       getBlockType
     } = select(external_wp_blocks_namespaceObject.store);
@@ -62437,7 +62448,8 @@ function ZoomOutToolbar({
       isNextBlockTemplatePart,
       isPrevBlockTemplatePart,
       canRemove: canRemoveBlock(clientId),
-      canMove: canMoveBlock(clientId)
+      canMove: canMoveBlock(clientId),
+      setIsInserterOpened
     };
   }, [clientId]);
   const {
@@ -62446,7 +62458,8 @@ function ZoomOutToolbar({
     isNextBlockTemplatePart,
     isPrevBlockTemplatePart,
     canRemove,
-    canMove
+    canMove,
+    setIsInserterOpened
   } = selected;
   const {
     removeBlock,
@@ -62493,6 +62506,10 @@ function ZoomOutToolbar({
       icon: edit,
       label: (0,external_wp_i18n_namespaceObject.__)('Edit'),
       onClick: () => {
+        // Setting may be undefined.
+        if (typeof setIsInserterOpened === 'function') {
+          setIsInserterOpened(false);
+        }
         __unstableSetEditorMode('edit');
         __unstableContentRef.current?.focus();
       }
