@@ -26543,6 +26543,7 @@ function useMaxWidthObserver() {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -26622,7 +26623,7 @@ function ImageEdit({
   const [maxWidthObserver, maxContentWidth] = useMaxWidthObserver();
   const [placeholderResizeListener, {
     width: placeholderWidth
-  }] = useResizeObserver();
+  }] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
   const isSmallContainer = placeholderWidth && placeholderWidth < 160;
   const altRef = (0,external_wp_element_namespaceObject.useRef)();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
