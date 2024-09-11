@@ -22760,7 +22760,7 @@ const resolvers_getEntityRecord = (kind, name, key = '', query) => async ({
         ...entityConfig.baseURLParams,
         ...query
       });
-      if (query !== undefined) {
+      if (query !== undefined && query._fields) {
         query = {
           ...query,
           include: [key]

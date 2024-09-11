@@ -1674,8 +1674,7 @@ const getGlobalAsyncEventDirective = type => {
           warn(`The value of data-wp-context in "${namespace}" store must be a valid stringified JSON object.`);
         }
         updateContext(currentValue.current, deepClone(value));
-        currentValue.current = proxifyContext(currentValue.current, inheritedValue[namespace]);
-        result[namespace] = currentValue.current;
+        result[namespace] = proxifyContext(currentValue.current, inheritedValue[namespace]);
       }
       return result;
     }, [defaultEntry, inheritedValue]);
