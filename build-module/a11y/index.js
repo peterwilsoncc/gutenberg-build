@@ -1,65 +1,33 @@
-/******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	// The require scope
-/******/ 	var __webpack_require__ = {};
-/******/ 	
+/******/ // The require scope
+/******/ var __webpack_require__ = {};
+/******/ 
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
+/******/ /* webpack/runtime/define property getters */
+/******/ (() => {
+/******/ 	// define getter functions for harmony exports
+/******/ 	__webpack_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
+/******/ 		}
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/hasOwnProperty shorthand */
+/******/ (() => {
+/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ })();
+/******/ 
 /************************************************************************/
 var __webpack_exports__ = {};
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
-  setup: () => (/* binding */ setup),
-  speak: () => (/* reexport */ speak)
+  c: () => (/* binding */ setup),
+  D: () => (/* reexport */ speak)
 });
 
-;// CONCATENATED MODULE: external ["wp","domReady"]
-const external_wp_domReady_namespaceObject = window["wp"]["domReady"];
-var external_wp_domReady_default = /*#__PURE__*/__webpack_require__.n(external_wp_domReady_namespaceObject);
-;// CONCATENATED MODULE: external ["wp","i18n"]
-const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
 ;// CONCATENATED MODULE: ./packages/a11y/build-module/shared/add-container.js
 /**
  * Build the live regions markup.
@@ -84,7 +52,6 @@ function addContainer(ariaLive = 'polite') {
   }
   return container;
 }
-
 ;// CONCATENATED MODULE: ./packages/a11y/build-module/shared/add-intro-text.js
 /**
  * Build the explanatory text to be placed before the aria live regions.
@@ -110,7 +77,6 @@ function addIntroText(introTextContent) {
   }
   return introText;
 }
-
 ;// CONCATENATED MODULE: ./packages/a11y/build-module/shared/clear.js
 /**
  * Clears the a11y-speak-region elements and hides the explanatory text.
@@ -127,7 +93,6 @@ function clear() {
     introText.setAttribute('hidden', 'hidden');
   }
 }
-
 ;// CONCATENATED MODULE: ./packages/a11y/build-module/shared/filter-message.js
 let previousMessage = '';
 
@@ -158,7 +123,6 @@ function filterMessage(message) {
   previousMessage = message;
   return message;
 }
-
 ;// CONCATENATED MODULE: ./packages/a11y/build-module/shared/index.js
 /**
  * Internal dependencies
@@ -231,30 +195,30 @@ function speak(message, ariaLive) {
     introText.removeAttribute('hidden');
   }
 }
-
-;// CONCATENATED MODULE: ./packages/a11y/build-module/index.js
-/**
- * WordPress dependencies
- */
-
-
-
+;// CONCATENATED MODULE: ./packages/a11y/build-module/module/index.js
 /**
  * Internal dependencies
  */
 
 
 
+// Without an i18n Script Module, "Notifications" (the only localized text used in this module)
+// will be translated on the server and provided as script-module data.
+let notificationsText = 'Notifications';
+try {
+  const textContent = document.getElementById('wp-script-module-data-@wordpress/a11y')?.textContent;
+  if (textContent) {
+    var _parsed$i18n$Notifica;
+    const parsed = JSON.parse(textContent);
+    notificationsText = (_parsed$i18n$Notifica = parsed?.i18n?.Notifications) !== null && _parsed$i18n$Notifica !== void 0 ? _parsed$i18n$Notifica : notificationsText;
+  }
+} catch {}
+
 /**
  * Create the live regions.
  */
-const setup = makeSetupFunction((0,external_wp_i18n_namespaceObject.__)('Notifications'));
-
-/**
- * Run setup on domReady.
- */
-external_wp_domReady_default()(setup);
-
-(window.wp = window.wp || {}).a11y = __webpack_exports__;
-/******/ })()
-;
+const setup = makeSetupFunction(notificationsText);
+setup();
+var __webpack_exports__setup = __webpack_exports__.c;
+var __webpack_exports__speak = __webpack_exports__.D;
+export { __webpack_exports__setup as setup, __webpack_exports__speak as speak };
