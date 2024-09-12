@@ -19058,6 +19058,118 @@ const getNameFromLabelV1 = content => {
   // Remove any remaining leading or trailing hyphens.
   .replace(/(^-+)|(-+$)/g, '');
 };
+const form_input_deprecated_v2 = {
+  attributes: {
+    type: {
+      type: 'string',
+      default: 'text'
+    },
+    name: {
+      type: 'string'
+    },
+    label: {
+      type: 'string',
+      default: 'Label',
+      selector: '.wp-block-form-input__label-content',
+      source: 'html',
+      __experimentalRole: 'content'
+    },
+    inlineLabel: {
+      type: 'boolean',
+      default: false
+    },
+    required: {
+      type: 'boolean',
+      default: false,
+      selector: '.wp-block-form-input__input',
+      source: 'attribute',
+      attribute: 'required'
+    },
+    placeholder: {
+      type: 'string',
+      selector: '.wp-block-form-input__input',
+      source: 'attribute',
+      attribute: 'placeholder',
+      __experimentalRole: 'content'
+    },
+    value: {
+      type: 'string',
+      default: '',
+      selector: 'input',
+      source: 'attribute',
+      attribute: 'value'
+    },
+    visibilityPermissions: {
+      type: 'string',
+      default: 'all'
+    }
+  },
+  supports: {
+    anchor: true,
+    reusable: false,
+    spacing: {
+      margin: ['top', 'bottom']
+    },
+    __experimentalBorder: {
+      radius: true,
+      __experimentalSkipSerialization: true,
+      __experimentalDefaultControls: {
+        radius: true
+      }
+    }
+  },
+  save({
+    attributes
+  }) {
+    const {
+      type,
+      name,
+      label,
+      inlineLabel,
+      required,
+      placeholder,
+      value
+    } = attributes;
+    const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetBorderClassesAndStyles)(attributes);
+    const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetColorClassesAndStyles)(attributes);
+    const inputStyle = {
+      ...borderProps.style,
+      ...colorProps.style
+    };
+    const inputClasses = dist_clsx('wp-block-form-input__input', colorProps.className, borderProps.className);
+    const TagName = type === 'textarea' ? 'textarea' : 'input';
+    const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
+    if ('hidden' === type) {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
+        type: type,
+        name: name,
+        value: value
+      });
+    }
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      ...blockProps,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("label", {
+        className: dist_clsx('wp-block-form-input__label', {
+          'is-label-inline': inlineLabel
+        }),
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          className: "wp-block-form-input__label-content",
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText.Content, {
+            value: label
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
+          className: inputClasses,
+          type: 'textarea' === type ? undefined : type,
+          name: name || getNameFromLabelV1(label),
+          required: required,
+          "aria-required": required,
+          placeholder: placeholder || undefined,
+          style: inputStyle
+        })]
+      })
+    });
+  }
+};
 
 // Version without wrapper div in saved markup
 // See: https://github.com/WordPress/gutenberg/pull/56507
@@ -19173,7 +19285,7 @@ const form_input_deprecated_v1 = {
     /* eslint-enable jsx-a11y/label-has-associated-control */
   }
 };
-const form_input_deprecated_deprecated = [form_input_deprecated_v1];
+const form_input_deprecated_deprecated = [form_input_deprecated_v2, form_input_deprecated_v1];
 /* harmony default export */ const form_input_deprecated = (form_input_deprecated_deprecated);
 
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/form-input/edit.js
@@ -19214,6 +19326,9 @@ function InputFieldBlock({
   if (ref.current) {
     ref.current.focus();
   }
+
+  // Note: radio inputs aren't implemented yet.
+  const isCheckboxOrRadio = type === 'checkbox' || type === 'radio';
   const controls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: ['hidden' !== type && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
@@ -19255,6 +19370,17 @@ function InputFieldBlock({
       })
     })]
   });
+  const content = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
+    tagName: "span",
+    className: "wp-block-form-input__label-content",
+    value: label,
+    onChange: newLabel => setAttributes({
+      label: newLabel
+    }),
+    "aria-label": label ? (0,external_wp_i18n_namespaceObject.__)('Label') : (0,external_wp_i18n_namespaceObject.__)('Empty label'),
+    "data-empty": !label,
+    placeholder: (0,external_wp_i18n_namespaceObject.__)('Type the label for this input')
+  });
   if ('hidden' === type) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [controls, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
@@ -19274,17 +19400,7 @@ function InputFieldBlock({
       className: dist_clsx('wp-block-form-input__label', {
         'is-label-inline': inlineLabel || 'checkbox' === type
       }),
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
-        tagName: "span",
-        className: "wp-block-form-input__label-content",
-        value: label,
-        onChange: newLabel => setAttributes({
-          label: newLabel
-        }),
-        "aria-label": label ? (0,external_wp_i18n_namespaceObject.__)('Label') : (0,external_wp_i18n_namespaceObject.__)('Empty label'),
-        "data-empty": label ? false : true,
-        placeholder: (0,external_wp_i18n_namespaceObject.__)('Type the label for this input')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
+      children: [!isCheckboxOrRadio && content, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
         type: 'textarea' === type ? undefined : type,
         className: dist_clsx(className, 'wp-block-form-input__input', colorProps.className, borderProps.className),
         "aria-label": (0,external_wp_i18n_namespaceObject.__)('Optional placeholder text')
@@ -19302,7 +19418,7 @@ function InputFieldBlock({
           ...borderProps.style,
           ...colorProps.style
         }
-      })]
+      }), isCheckboxOrRadio && content]
     })]
   });
 }
@@ -19360,6 +19476,9 @@ function form_input_save_save({
   const inputClasses = dist_clsx('wp-block-form-input__input', colorProps.className, borderProps.className);
   const TagName = type === 'textarea' ? 'textarea' : 'input';
   const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
+
+  // Note: radio inputs aren't implemented yet.
+  const isCheckboxOrRadio = type === 'checkbox' || type === 'radio';
   if ('hidden' === type) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
       type: type,
@@ -19373,7 +19492,7 @@ function form_input_save_save({
       className: dist_clsx('wp-block-form-input__label', {
         'is-label-inline': inlineLabel
       }),
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      children: [!isCheckboxOrRadio && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "wp-block-form-input__label-content",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText.Content, {
           value: label
@@ -19386,6 +19505,11 @@ function form_input_save_save({
         "aria-required": required,
         placeholder: placeholder || undefined,
         style: inputStyle
+      }), isCheckboxOrRadio && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        className: "wp-block-form-input__label-content",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText.Content, {
+          value: label
+        })
       })]
     })
   });
