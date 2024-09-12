@@ -5825,7 +5825,7 @@ const buttons_metadata = {
       }
     },
     spacing: {
-      blockGap: true,
+      blockGap: ["horizontal", "vertical"],
       padding: true,
       margin: ["top", "bottom"],
       __experimentalDefaultControls: {
