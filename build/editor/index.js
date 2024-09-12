@@ -26092,8 +26092,6 @@ const tablet = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 
-
-
 /**
  * Internal dependencies
  */
@@ -26108,7 +26106,6 @@ function PreviewDropdown({
 }) {
   const {
     deviceType,
-    editorMode,
     homeUrl,
     isTemplate,
     isViewable,
@@ -26126,13 +26123,9 @@ function PreviewDropdown({
     const {
       get
     } = select(external_wp_preferences_namespaceObject.store);
-    const {
-      __unstableGetEditorMode
-    } = select(external_wp_blockEditor_namespaceObject.store);
     const _currentPostType = getCurrentPostType();
     return {
       deviceType: getDeviceType(),
-      editorMode: __unstableGetEditorMode(),
       homeUrl: getEntityRecord('root', '__unstableBase')?.home,
       isTemplate: _currentPostType === 'wp_template',
       isViewable: (_getPostType$viewable = getPostType(_currentPostType)?.viewable) !== null && _getPostType$viewable !== void 0 ? _getPostType$viewable : false,
@@ -26142,24 +26135,6 @@ function PreviewDropdown({
   const {
     setDeviceType
   } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
-  const {
-    __unstableSetEditorMode
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
-
-  /**
-   * Save the original editing mode in a ref to restore it when we exit zoom out.
-   */
-  const originalEditingModeRef = (0,external_wp_element_namespaceObject.useRef)(editorMode);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (editorMode !== 'zoom-out') {
-      originalEditingModeRef.current = editorMode;
-    }
-    return () => {
-      if (editorMode === 'zoom-out' && editorMode !== originalEditingModeRef.current) {
-        __unstableSetEditorMode(originalEditingModeRef.current);
-      }
-    };
-  }, [editorMode, __unstableSetEditorMode]);
   const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   if (isMobile) {
     return null;
@@ -26193,48 +26168,21 @@ function PreviewDropdown({
     value: 'Desktop',
     label: (0,external_wp_i18n_namespaceObject.__)('Desktop'),
     icon: library_desktop
-  }];
-  if (window.__experimentalEnableZoomOutExperiment) {
-    choices.push({
-      value: 'ZoomOut',
-      label: (0,external_wp_i18n_namespaceObject.__)('Desktop (50%)'),
-      icon: library_desktop
-    });
-  }
-  choices.push({
+  }, {
     value: 'Tablet',
     label: (0,external_wp_i18n_namespaceObject.__)('Tablet'),
     icon: library_tablet
-  });
-  choices.push({
+  }, {
     value: 'Mobile',
     label: (0,external_wp_i18n_namespaceObject.__)('Mobile'),
     icon: library_mobile
-  });
-  const previewValue = editorMode === 'zoom-out' ? 'ZoomOut' : deviceType;
-
-  /**
-   * Handles the selection of a device type.
-   *
-   * @param {string} value The device type.
-   */
-  const onSelect = value => {
-    let newEditorMode = originalEditingModeRef.current;
-    if (value === 'ZoomOut') {
-      newEditorMode = 'zoom-out';
-      setDeviceType('Desktop');
-    } else {
-      setDeviceType(value);
-    }
-    __unstableSetEditorMode(newEditorMode);
-  };
+  }];
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
     className: dist_clsx('editor-preview-dropdown', `editor-preview-dropdown--${deviceType.toLowerCase()}`),
     popoverProps: popoverProps,
     toggleProps: toggleProps,
     menuProps: menuProps,
     icon: deviceIcons[deviceType.toLowerCase()],
-    text: editorMode === 'zoom-out' ? (0,external_wp_i18n_namespaceObject.__)('50%') : undefined,
     label: (0,external_wp_i18n_namespaceObject.__)('View'),
     disableOpenOnArrowDown: disabled,
     children: ({
@@ -26243,8 +26191,8 @@ function PreviewDropdown({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItemsChoice, {
           choices: choices,
-          value: previewValue,
-          onSelect: onSelect
+          value: deviceType,
+          onSelect: setDeviceType
         })
       }), isTemplate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuItem, {
@@ -26282,6 +26230,58 @@ function PreviewDropdown({
   });
 }
 
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/square.js
+/**
+ * WordPress dependencies
+ */
+
+
+const square = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fill: "none",
+    d: "M5.75 12.75V18.25H11.25M12.75 5.75H18.25V11.25",
+    stroke: "currentColor",
+    strokeWidth: "1.5",
+    strokeLinecap: "square"
+  })
+});
+/* harmony default export */ const library_square = (square);
+
+;// CONCATENATED MODULE: ./packages/editor/build-module/components/zoom-out-toggle/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+const ZoomOutToggle = () => {
+  const {
+    isZoomOutMode
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => ({
+    isZoomOutMode: select(external_wp_blockEditor_namespaceObject.store).__unstableGetEditorMode() === 'zoom-out'
+  }));
+  const {
+    __unstableSetEditorMode
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  const handleZoomOut = () => {
+    __unstableSetEditorMode(isZoomOutMode ? 'edit' : 'zoom-out');
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    onClick: handleZoomOut,
+    icon: library_square,
+    label: (0,external_wp_i18n_namespaceObject.__)('Toggle Zoom Out'),
+    isPressed: isZoomOutMode,
+    size: "compact"
+  });
+};
+/* harmony default export */ const zoom_out_toggle = (ZoomOutToggle);
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/header/index.js
 /**
  * WordPress dependencies
@@ -26297,6 +26297,7 @@ function PreviewDropdown({
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -26352,6 +26353,7 @@ function Header({
   title,
   icon
 }) {
+  const zoomOutExperimentEnabled = window.__experimentalEnableZoomOutExperiment;
   const isWideViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('large');
   const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
   const isTooNarrowForDocumentBar = (0,external_wp_compose_namespaceObject.useMediaQuery)('(max-width: 403px)');
@@ -26440,7 +26442,7 @@ function Header({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostPreviewButton, {
         className: "editor-header__post-preview-button",
         forceIsAutosaveable: forceIsDirty
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostViewLink, {}), (isWideViewport || !showIconLabels) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pinned_items.Slot, {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostViewLink, {}), zoomOutExperimentEnabled && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_toggle, {}), (isWideViewport || !showIconLabels) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pinned_items.Slot, {
         scope: "core"
       }), !customSaveButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_publish_button_or_toggle, {
         forceIsDirty: forceIsDirty,
