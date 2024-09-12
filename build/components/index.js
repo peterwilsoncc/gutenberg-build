@@ -42135,7 +42135,7 @@ function isValuesMixed(values = {}, selectedUnits, sides = ALL_SIDES) {
  * @return  Whether values are mixed.
  */
 function isValuesDefined(values) {
-  return values !== undefined && Object.values(values).filter(
+  return values && Object.values(values).filter(
   // Switching units when input is empty causes values only
   // containing units. This gives false positive on mixed values
   // unless filtered.
