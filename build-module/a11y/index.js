@@ -52,6 +52,7 @@ function addContainer(ariaLive = 'polite') {
   }
   return container;
 }
+
 ;// CONCATENATED MODULE: ./packages/a11y/build-module/shared/add-intro-text.js
 /**
  * Build the explanatory text to be placed before the aria live regions.
@@ -77,6 +78,7 @@ function addIntroText(introTextContent) {
   }
   return introText;
 }
+
 ;// CONCATENATED MODULE: ./packages/a11y/build-module/shared/clear.js
 /**
  * Clears the a11y-speak-region elements and hides the explanatory text.
@@ -93,6 +95,7 @@ function clear() {
     introText.setAttribute('hidden', 'hidden');
   }
 }
+
 ;// CONCATENATED MODULE: ./packages/a11y/build-module/shared/filter-message.js
 let previousMessage = '';
 
@@ -123,6 +126,7 @@ function filterMessage(message) {
   previousMessage = message;
   return message;
 }
+
 ;// CONCATENATED MODULE: ./packages/a11y/build-module/shared/index.js
 /**
  * Internal dependencies
@@ -195,6 +199,7 @@ function speak(message, ariaLive) {
     introText.removeAttribute('hidden');
   }
 }
+
 ;// CONCATENATED MODULE: ./packages/a11y/build-module/module/index.js
 /**
  * Internal dependencies
@@ -219,6 +224,7 @@ try {
  */
 const setup = makeSetupFunction(notificationsText);
 setup();
+
 var __webpack_exports__setup = __webpack_exports__.c;
 var __webpack_exports__speak = __webpack_exports__.D;
 export { __webpack_exports__setup as setup, __webpack_exports__speak as speak };

@@ -1,7 +1,7 @@
 import * as __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__ from "@wordpress/interactivity";
 /******/ var __webpack_modules__ = ({
 
-/***/ 225:
+/***/ 343:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -104,9 +104,10 @@ const fetchHeadAssets = async (doc, headElements) => {
   return [doc.querySelector('title'), ...doc.querySelectorAll('style'), ...headTags];
 };
 
+
 /***/ }),
 
-/***/ 638:
+/***/ 126:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
@@ -115,7 +116,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   S: () => (/* binding */ state)
 /* harmony export */ });
 /* harmony import */ var _wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(998);
-/* harmony import */ var _head__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(225);
+/* harmony import */ var _head__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(343);
 var _getConfig$navigation;
 /**
  * WordPress dependencies
@@ -454,6 +455,7 @@ if (true) {
     }, true);
   }
 }
+
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);
 
@@ -586,7 +588,7 @@ module.exports = x({ ["getConfig"]: () => __WEBPACK_EXTERNAL_MODULE__wordpress_i
 /******/ // startup
 /******/ // Load entry module and return exports
 /******/ // This entry module used 'module' so it can't be inlined
-/******/ var __webpack_exports__ = __webpack_require__(638);
+/******/ var __webpack_exports__ = __webpack_require__(126);
 /******/ __webpack_exports__ = await __webpack_exports__;
 /******/ var __webpack_exports__actions = __webpack_exports__.N;
 /******/ var __webpack_exports__state = __webpack_exports__.S;

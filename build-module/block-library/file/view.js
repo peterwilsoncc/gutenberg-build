@@ -73,6 +73,7 @@ const createActiveXObject = type => {
   }
   return ax;
 };
+
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/file/view.js
 /**
  * WordPress dependencies
@@ -91,3 +92,4 @@ const createActiveXObject = type => {
 }, {
   lock: true
 });
+
