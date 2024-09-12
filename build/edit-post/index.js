@@ -1421,7 +1421,7 @@ const isMetaBoxLocationVisible = (0,external_wp_data_namespaceObject.createRegis
   return isMetaBoxLocationActive(state, location) && getMetaBoxesPerLocation(state, location)?.some(({
     id
   }) => {
-    return select(external_wp_editor_namespaceObject.store).isEditorPanelEnabled(state, `meta-box-${id}`);
+    return select(external_wp_editor_namespaceObject.store).isEditorPanelEnabled(`meta-box-${id}`);
   });
 });
 
@@ -2634,18 +2634,12 @@ function usePaddingAppender() {
 
 
 
-
-/**
- * Internal dependencies
- */
-
 const isGutenbergPlugin =  true ? true : 0;
 function useShouldIframe() {
   const {
     isBlockBasedTheme,
     hasV3BlocksOnly,
     isEditingTemplate,
-    hasMetaBoxes,
     isZoomOutMode
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
@@ -2665,11 +2659,10 @@ function useShouldIframe() {
         return type.apiVersion >= 3;
       }),
       isEditingTemplate: getCurrentPostType() === 'wp_template',
-      hasMetaBoxes: select(store).hasMetaBoxes(),
       isZoomOutMode: __unstableGetEditorMode() === 'zoom-out'
     };
   }, []);
-  return (hasV3BlocksOnly || isGutenbergPlugin && isBlockBasedTheme) && !hasMetaBoxes || isEditingTemplate || isZoomOutMode;
+  return hasV3BlocksOnly || isGutenbergPlugin && isBlockBasedTheme || isEditingTemplate || isZoomOutMode;
 }
 
 ;// CONCATENATED MODULE: ./packages/edit-post/build-module/hooks/use-navigate-to-entity-record.js
@@ -2878,6 +2871,109 @@ function useEditorStyles() {
     return baseStyles;
   }, [editorSettings.defaultEditorStyles, editorSettings.disableLayoutStyles, editorSettings.styles, hasThemeStyleSupport, postType]);
 }
+
+/**
+ * @param {Object}  props
+ * @param {boolean} props.isLegacy True when the editor canvas is not in an iframe.
+ */
+function MetaBoxesMain({
+  isLegacy
+}) {
+  const [isOpen, openHeight, hasAnyVisible] = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      get
+    } = select(external_wp_preferences_namespaceObject.store);
+    const {
+      isMetaBoxLocationVisible
+    } = select(store);
+    return [get('core/edit-post', 'metaBoxesMainIsOpen'), get('core/edit-post', 'metaBoxesMainOpenHeight'), isMetaBoxLocationVisible('normal') || isMetaBoxLocationVisible('advanced') || isMetaBoxLocationVisible('side')];
+  }, []);
+  const {
+    set: setPreference
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_preferences_namespaceObject.store);
+  const resizableBoxRef = (0,external_wp_element_namespaceObject.useRef)();
+  const isShort = (0,external_wp_compose_namespaceObject.useMediaQuery)('(max-height: 549px)');
+  const isAutoHeight = openHeight === undefined;
+  // In case a user size is set stops the default max-height from applying.
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    if (!isLegacy && hasAnyVisible && !isShort && !isAutoHeight) {
+      resizableBoxRef.current.resizable.classList.add('has-user-size');
+    }
+  }, [isAutoHeight, isShort, hasAnyVisible, isLegacy]);
+  if (!hasAnyVisible) {
+    return;
+  }
+  const className = 'edit-post-meta-boxes-main';
+  const contents = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    className: dist_clsx(
+    // The class name 'edit-post-layout__metaboxes' is retained because some plugins use it.
+    'edit-post-layout__metaboxes', !isLegacy && 'edit-post-meta-boxes-main__liner'),
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MetaBoxes, {
+      location: "normal"
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MetaBoxes, {
+      location: "advanced"
+    })]
+  });
+  if (isLegacy) {
+    return contents;
+  }
+  if (isShort) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("details", {
+      className: className,
+      open: isOpen,
+      onToggle: ({
+        target
+      }) => {
+        setPreference('core/edit-post', 'metaBoxesMainIsOpen', target.open);
+      },
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("summary", {
+        children: (0,external_wp_i18n_namespaceObject.__)('Meta Boxes')
+      }), contents]
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ResizableBox, {
+    className: className,
+    defaultSize: {
+      height: openHeight
+    },
+    ref: resizableBoxRef,
+    enable: {
+      top: true,
+      right: false,
+      bottom: false,
+      left: false,
+      topLeft: false,
+      topRight: false,
+      bottomRight: false,
+      bottomLeft: false
+    }
+    // This is overriden by an !important rule that applies until user resizes.
+    ,
+    maxHeight: "100%",
+    bounds: "parent",
+    boundsByDirection: true
+    // Avoids hiccups while dragging over objects like iframes and ensures that
+    // the event to end the drag is captured by the target (resize handle)
+    // whether or not it’s under the pointer.
+    ,
+    onPointerDown: ({
+      pointerId,
+      target
+    }) => {
+      target.setPointerCapture(pointerId);
+    },
+    onResizeStart: (event, direction, elementRef) => {
+      // Avoids height jumping in case it’s limited by max-height.
+      elementRef.style.height = `${elementRef.offsetHeight}px`;
+      // Stops initial max-height from being applied.
+      elementRef.classList.add('has-user-size');
+    },
+    onResizeStop: () => {
+      setPreference('core/edit-post', 'metaBoxesMainOpenHeight', resizableBoxRef.current.state.height);
+    },
+    children: contents
+  });
+}
 function Layout({
   postId: initialPostId,
   postType: initialPostType,
@@ -3035,13 +3131,8 @@ function Layout({
         extraSidebarPanels: !isEditingTemplate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MetaBoxes, {
           location: "side"
         }),
-        extraContent: !isDistractionFree && showMetaBoxes && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-          className: "edit-post-layout__metaboxes",
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MetaBoxes, {
-            location: "normal"
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MetaBoxes, {
-            location: "advanced"
-          })]
+        extraContent: !isDistractionFree && showMetaBoxes && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MetaBoxesMain, {
+          isLegacy: !shouldIframe
         }),
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.PostLockedModal, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditorInitialization, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FullscreenMode, {
           isActive: isFullscreenActive
