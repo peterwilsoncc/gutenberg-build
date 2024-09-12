@@ -15680,10 +15680,8 @@ function PostFormat() {
         hideLabelFromVision: true
       }), suggestion && suggestion.id !== postFormat && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
         className: "editor-post-format__suggestion",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           variant: "link",
           onClick: () => onUpdatePostFormat(suggestion.id),
           children: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: post format */
@@ -15782,10 +15780,8 @@ function PostLastRevision() {
     revisionsCount
   } = usePostLastRevisionInfo();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_last_revision_check, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
       href: (0,external_wp_url_namespaceObject.addQueryArgs)('revision.php', {
         revision: lastRevisionId
       }),
@@ -16056,17 +16052,13 @@ function PostLockedModal() {
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
           className: "editor-post-locked-modal__buttons",
           justify: "flex-end",
-          children: [!isTakeover && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-          // TODO: Switch to `true` (40px size) if possible
-          , {
-            __next40pxDefaultSize: false,
+          children: [!isTakeover && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
             variant: "tertiary",
             href: unlockUrl,
             children: (0,external_wp_i18n_namespaceObject.__)('Take over')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-          // TODO: Switch to `true` (40px size) if possible
-          , {
-            __next40pxDefaultSize: false,
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
             variant: "primary",
             href: allPostsUrl,
             children: allPostsLabel
@@ -18140,10 +18132,8 @@ const PostFormatSuggestion = ({
   suggestedPostFormat,
   suggestionText,
   onUpdatePostFormat
-}) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-// TODO: Switch to `true` (40px size) if possible
-, {
-  __next40pxDefaultSize: false,
+}) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+  __next40pxDefaultSize: true,
   variant: "link",
   onClick: () => onUpdatePostFormat(suggestedPostFormat),
   children: suggestionText
@@ -19053,10 +19043,8 @@ function MaybeUploadMediaPanel() {
             alt: alt
           }, block.clientId);
         })
-      }), isUploading || isAnimating ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      }), isUploading || isAnimating ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         variant: "primary",
         onClick: uploadImages,
         children: (0,external_wp_i18n_namespaceObject.__)('Upload')
@@ -19438,10 +19426,8 @@ class PostPublishPanel extends external_wp_element_namespaceObject.Component {
       ...propsForPanel,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "editor-post-publish-panel__header",
-        children: isPostPublish ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        children: isPostPublish ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          size: "compact",
           onClick: onClose,
           icon: close_small,
           label: (0,external_wp_i18n_namespaceObject.__)('Close panel')
