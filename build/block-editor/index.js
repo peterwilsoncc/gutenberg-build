@@ -10754,7 +10754,7 @@ function getEnabledClientIdsTreeUnmemoized(state, rootClientId) {
  *
  * @return {Object[]} Tree of block objects with only clientID and innerBlocks set.
  */
-const getEnabledClientIdsTree = (0,external_wp_data_namespaceObject.createSelector)(getEnabledClientIdsTreeUnmemoized, state => [state.blocks.order, state.blockEditingModes, state.settings.templateLock, state.blockListSettings]);
+const getEnabledClientIdsTree = (0,external_wp_data_namespaceObject.createSelector)(getEnabledClientIdsTreeUnmemoized, state => [state.blocks.order, state.blockEditingModes, state.settings.templateLock, state.blockListSettings, state.editorMode]);
 
 /**
  * Returns a list of a given block's ancestors, from top to bottom. Blocks with
@@ -66300,18 +66300,15 @@ function ListViewComponent({
     getBlock
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const {
-    visibleBlockCount,
-    shouldShowInnerBlocks
+    visibleBlockCount
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getGlobalBlockCount,
-      getClientIdsOfDescendants,
-      __unstableGetEditorMode
+      getClientIdsOfDescendants
     } = select(store);
     const draggedBlockCount = draggedClientIds?.length > 0 ? getClientIdsOfDescendants(draggedClientIds).length + 1 : 0;
     return {
-      visibleBlockCount: getGlobalBlockCount() - draggedBlockCount,
-      shouldShowInnerBlocks: __unstableGetEditorMode() !== 'zoom-out'
+      visibleBlockCount: getGlobalBlockCount() - draggedBlockCount
     };
   }, [draggedClientIds]);
   const {
@@ -66502,7 +66499,6 @@ function ListViewComponent({
           fixedListWindow: fixedListWindow,
           selectedClientIds: selectedClientIds,
           isExpanded: isExpanded,
-          shouldShowInnerBlocks: shouldShowInnerBlocks,
           showAppender: showAppender
         })
       })
