@@ -37968,62 +37968,52 @@ function useDefaultViews({
       title: (0,external_wp_i18n_namespaceObject.__)('Published'),
       slug: 'published',
       icon: library_published,
-      view: {
-        ...DEFAULT_POST_BASE,
-        filters: [{
-          field: 'status',
-          operator: OPERATOR_IS_ANY,
-          value: 'publish'
-        }]
-      }
+      view: DEFAULT_POST_BASE,
+      filters: [{
+        field: 'status',
+        operator: OPERATOR_IS_ANY,
+        value: 'publish'
+      }]
     }, {
       title: (0,external_wp_i18n_namespaceObject.__)('Scheduled'),
       slug: 'future',
       icon: library_scheduled,
-      view: {
-        ...DEFAULT_POST_BASE,
-        filters: [{
-          field: 'status',
-          operator: OPERATOR_IS_ANY,
-          value: 'future'
-        }]
-      }
+      view: DEFAULT_POST_BASE,
+      filters: [{
+        field: 'status',
+        operator: OPERATOR_IS_ANY,
+        value: 'future'
+      }]
     }, {
       title: (0,external_wp_i18n_namespaceObject.__)('Drafts'),
       slug: 'drafts',
       icon: library_drafts,
-      view: {
-        ...DEFAULT_POST_BASE,
-        filters: [{
-          field: 'status',
-          operator: OPERATOR_IS_ANY,
-          value: 'draft'
-        }]
-      }
+      view: DEFAULT_POST_BASE,
+      filters: [{
+        field: 'status',
+        operator: OPERATOR_IS_ANY,
+        value: 'draft'
+      }]
     }, {
       title: (0,external_wp_i18n_namespaceObject.__)('Pending'),
       slug: 'pending',
       icon: library_pending,
-      view: {
-        ...DEFAULT_POST_BASE,
-        filters: [{
-          field: 'status',
-          operator: OPERATOR_IS_ANY,
-          value: 'pending'
-        }]
-      }
+      view: DEFAULT_POST_BASE,
+      filters: [{
+        field: 'status',
+        operator: OPERATOR_IS_ANY,
+        value: 'pending'
+      }]
     }, {
       title: (0,external_wp_i18n_namespaceObject.__)('Private'),
       slug: 'private',
       icon: not_allowed,
-      view: {
-        ...DEFAULT_POST_BASE,
-        filters: [{
-          field: 'status',
-          operator: OPERATOR_IS_ANY,
-          value: 'private'
-        }]
-      }
+      view: DEFAULT_POST_BASE,
+      filters: [{
+        field: 'status',
+        operator: OPERATOR_IS_ANY,
+        value: 'private'
+      }]
     }, {
       title: (0,external_wp_i18n_namespaceObject.__)('Trash'),
       slug: 'trash',
@@ -38031,13 +38021,13 @@ function useDefaultViews({
       view: {
         ...DEFAULT_POST_BASE,
         type: LAYOUT_TABLE,
-        layout: defaultLayouts[LAYOUT_TABLE].layout,
-        filters: [{
-          field: 'status',
-          operator: OPERATOR_IS_ANY,
-          value: 'trash'
-        }]
-      }
+        layout: defaultLayouts[LAYOUT_TABLE].layout
+      },
+      filters: [{
+        field: 'status',
+        operator: OPERATOR_IS_ANY,
+        value: 'trash'
+      }]
     }];
   }, [labels]);
 }
@@ -38752,6 +38742,9 @@ function PostList({
 }) {
   var _postId$split, _data$map, _usePrevious;
   const [view, setView] = useView(postType);
+  const defaultViews = useDefaultViews({
+    postType
+  });
   const history = post_list_useHistory();
   const location = post_list_useLocation();
   const {
@@ -38774,10 +38767,26 @@ function PostList({
       });
     }
   }, [history]);
+  const getActiveViewFilters = (views, match) => {
+    var _found$filters;
+    const found = views.find(({
+      slug
+    }) => slug === match);
+    return (_found$filters = found?.filters) !== null && _found$filters !== void 0 ? _found$filters : [];
+  };
   const {
     isLoading: isLoadingFields,
-    fields
+    fields: _fields
   } = post_fields(view.type);
+  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    const activeViewFilters = getActiveViewFilters(defaultViews, activeView).map(({
+      field
+    }) => field);
+    return _fields.map(field => ({
+      ...field,
+      elements: activeViewFilters.includes(field.id) ? [] : field.elements
+    }));
+  }, [_fields, defaultViews, activeView]);
   const queryArgs = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const filters = {};
     view.filters?.forEach(filter => {
@@ -38790,6 +38799,20 @@ function PostList({
         filters.author_exclude = filter.value;
       }
     });
+
+    // The bundled views want data filtered without displaying the filter.
+    const activeViewFilters = getActiveViewFilters(defaultViews, activeView);
+    activeViewFilters.forEach(filter => {
+      if (filter.field === 'status' && filter.operator === OPERATOR_IS_ANY) {
+        filters.status = filter.value;
+      }
+      if (filter.field === 'author' && filter.operator === OPERATOR_IS_ANY) {
+        filters.author = filter.value;
+      } else if (filter.field === 'author' && filter.operator === OPERATOR_IS_NONE) {
+        filters.author_exclude = filter.value;
+      }
+    });
+
     // We want to provide a different default item for the status filter
     // than the REST API provides.
     if (!filters.status || filters.status === '') {
@@ -38804,7 +38827,7 @@ function PostList({
       search: view.search,
       ...filters
     };
-  }, [view]);
+  }, [view, activeView, defaultViews]);
   const {
     records,
     isResolving: isLoadingData,
