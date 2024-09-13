@@ -42225,7 +42225,9 @@ function useNavModeExit(clientId) {
 function useZoomOutModeExit({
   editorMode
 }) {
-  const getSettings = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getSettings);
+  const {
+    getSettings
+  } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const {
     __unstableSetEditorMode
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
@@ -42249,7 +42251,7 @@ function useZoomOutModeExit({
     return () => {
       node.removeEventListener('dblclick', onDoubleClick);
     };
-  }, [editorMode, __unstableSetEditorMode]);
+  }, [editorMode, getSettings, __unstableSetEditorMode]);
 }
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-list/use-block-props/use-intersection-observer.js
