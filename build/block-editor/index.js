@@ -19026,24 +19026,13 @@ function getInitialView(values = {}, sides) {
   // - Has no values and the supported sides are balanced
   const hasMatchingAxialValues = top === bottom && left === right && (!!top || !!left);
   const hasNoValuesAndBalancedSides = !sideValues.length && hasBalancedSidesSupport(sides);
-  if (hasAxisSupport(sides) && (hasMatchingAxialValues || hasNoValuesAndBalancedSides)) {
-    return VIEWS.axial;
-  }
-
-  // Single side.
-  // - Ensure the side returned is the first side that has a value.
-  if (sideValues.length === 1) {
-    let side;
-    Object.entries(values).some(([key, value]) => {
-      side = key;
-      return value !== undefined;
-    });
-    return side;
-  }
 
   // Only single side supported and no value defined.
-  if (sides?.length === 1 && !sideValues.length) {
+  if (sides?.length === 1) {
     return sides[0];
+  }
+  if (hasAxisSupport(sides) && (hasMatchingAxialValues || hasNoValuesAndBalancedSides)) {
+    return VIEWS.axial;
   }
 
   // Default to the Custom (separated sides) view.
@@ -30581,85 +30570,32 @@ function SingleInputControl({
   });
 }
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/spacing-sizes-control/sides-dropdown/index.js
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/spacing-sizes-control/linked-button.js
 /**
  * WordPress dependencies
  */
 
 
 
-/**
- * Internal dependencies
- */
 
-
-
-
-const checkIcon = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-  icon: library_check,
-  size: 24
-});
-function SidesDropdown({
-  label: labelProp,
-  onChange,
-  sides,
-  value
+function linked_button_LinkedButton({
+  isLinked,
+  ...props
 }) {
-  if (!sides || !sides.length) {
-    return;
-  }
-  const supportedItems = getSupportedMenuItems(sides);
-  const sideIcon = supportedItems[value].icon;
-  const {
-    custom: customItem,
-    ...menuItems
-  } = supportedItems;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
-    icon: sideIcon,
-    label: labelProp,
-    className: "spacing-sizes-control__dropdown",
-    toggleProps: {
-      size: 'small'
-    },
-    children: ({
-      onClose
-    }) => {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
-          children: Object.entries(menuItems).map(([slug, {
-            label,
-            icon
-          }]) => {
-            const isSelected = value === slug;
-            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-              icon: icon,
-              iconPosition: "left",
-              isSelected: isSelected,
-              role: "menuitemradio",
-              onClick: () => {
-                onChange(slug);
-                onClose();
-              },
-              suffix: isSelected ? checkIcon : undefined,
-              children: label
-            }, slug);
-          })
-        }), !!customItem && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-            icon: customItem.icon,
-            iconPosition: "left",
-            isSelected: value === VIEWS.custom,
-            role: "menuitemradio",
-            onClick: () => {
-              onChange(VIEWS.custom);
-              onClose();
-            },
-            suffix: value === VIEWS.custom ? checkIcon : undefined,
-            children: customItem.label
-          })
-        })]
-      });
-    }
+  const label = isLinked ? (0,external_wp_i18n_namespaceObject.sprintf)(
+  // translators: 1. Type of spacing being modified (padding, margin, etc).
+  (0,external_wp_i18n_namespaceObject.__)('Unlink %1$s'), props.label.toLowerCase()).trim() : (0,external_wp_i18n_namespaceObject.sprintf)(
+  // translators: 1. Type of spacing being modified (padding, margin, etc).
+  (0,external_wp_i18n_namespaceObject.__)('Link %1$s'), props.label.toLowerCase()).trim();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
+    text: label,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      ...props,
+      size: "small",
+      icon: isLinked ? library_link : link_off,
+      iconSize: 24,
+      "aria-label": label
+    })
   });
 }
 
@@ -30741,6 +30677,9 @@ function SpacingSizesControl({
   const hasOneSide = sides?.length === 1;
   const hasOnlyAxialSides = sides?.includes('horizontal') && sides?.includes('vertical') && sides?.length === 2;
   const [view, setView] = (0,external_wp_element_namespaceObject.useState)(getInitialView(inputValues, sides));
+  const toggleLinked = () => {
+    setView(view === VIEWS.axial ? VIEWS.custom : VIEWS.axial);
+  };
   const handleOnChange = nextValue => {
     const newValues = {
       ...values,
@@ -30781,9 +30720,6 @@ function SpacingSizesControl({
   const label = (0,external_wp_i18n_namespaceObject.sprintf)(
   // translators: 2. Type of spacing being modified (Padding, margin, etc). 1: The side of the block being modified (top, bottom, left etc.).
   (0,external_wp_i18n_namespaceObject.__)('%1$s %2$s'), labelProp, sideLabel).trim();
-  const dropdownLabelText = (0,external_wp_i18n_namespaceObject.sprintf)(
-  // translators: %s: The current spacing property e.g. "Padding", "Margin".
-  (0,external_wp_i18n_namespaceObject._x)('%s options', 'Button label to reveal side configuration options'), labelProp);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
     className: "spacing-sizes-control",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -30792,11 +30728,10 @@ function SpacingSizesControl({
         as: "legend",
         className: "spacing-sizes-control__label",
         children: label
-      }), !hasOneSide && !hasOnlyAxialSides && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidesDropdown, {
-        label: dropdownLabelText,
-        onChange: setView,
-        sides: sides,
-        value: view
+      }), !hasOneSide && !hasOnlyAxialSides && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(linked_button_LinkedButton, {
+        label: labelProp,
+        onClick: toggleLinked,
+        isLinked: view === VIEWS.axial
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
       spacing: 0.5,
