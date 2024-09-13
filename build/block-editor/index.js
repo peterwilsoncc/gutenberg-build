@@ -31783,6 +31783,7 @@ function DimensionsPanel({
       }),
       panelId: panelId,
       children: [!showSpacingPresetsControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalBoxControl, {
+        __next40pxDefaultSize: true,
         values: paddingValues,
         onChange: setPaddingValues,
         label: (0,external_wp_i18n_namespaceObject.__)('Padding'),
@@ -31812,6 +31813,7 @@ function DimensionsPanel({
       }),
       panelId: panelId,
       children: [!showSpacingPresetsControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalBoxControl, {
+        __next40pxDefaultSize: true,
         values: marginValues,
         onChange: setMarginValues,
         inputProps: inputProps,
@@ -31846,6 +31848,7 @@ function DimensionsPanel({
       }),
       panelId: panelId,
       children: [!showSpacingPresetsControl && (isAxialGap ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalBoxControl, {
+        __next40pxDefaultSize: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Block spacing'),
         min: 0,
         onChange: setGapValues,
