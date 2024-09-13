@@ -54094,8 +54094,8 @@ function GridItemResizerInner({
     return () => observer.disconnect();
   }, [blockElement, rootBlockElement]);
   const justification = {
-    right: 'flex-start',
-    left: 'flex-end'
+    right: 'left',
+    left: 'right'
   };
   const alignment = {
     top: 'flex-end',
