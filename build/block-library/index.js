@@ -38483,6 +38483,19 @@ const navigation_submenu_metadata = {
   supports: {
     reusable: false,
     html: false,
+    typography: {
+      fontSize: true,
+      lineHeight: true,
+      __experimentalFontFamily: true,
+      __experimentalFontWeight: true,
+      __experimentalFontStyle: true,
+      __experimentalTextTransform: true,
+      __experimentalTextDecoration: true,
+      __experimentalLetterSpacing: true,
+      __experimentalDefaultControls: {
+        fontSize: true
+      }
+    },
     interactivity: {
       clientNavigation: true
     }
