@@ -37544,27 +37544,29 @@ function _DataViewsViewConfig({
     table: {}
   }
 }) {
-  const [isShowingViewPopover, setIsShowingViewPopover] = (0,external_wp_element_namespaceObject.useState)(false);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewTypeMenu, {
       defaultLayouts: defaultLayouts
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        size: "compact",
-        icon: library_cog,
-        label: (0,external_wp_i18n_namespaceObject._x)('View options', 'View is used as a noun'),
-        onClick: () => setIsShowingViewPopover(true)
-      }), isShowingViewPopover && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Popover, {
-        placement: "bottom-end",
-        onClose: () => {
-          setIsShowingViewPopover(false);
-        },
-        focusOnMount: true,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsViewConfigContent, {
-          density: density,
-          setDensity: setDensity
-        })
-      })]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
+      popoverProps: {
+        placement: 'bottom-end',
+        offset: 9
+      },
+      contentClassName: "dataviews-view-config",
+      renderToggle: ({
+        onToggle
+      }) => {
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          size: "compact",
+          icon: library_cog,
+          label: (0,external_wp_i18n_namespaceObject._x)('View options', 'View is used as a noun'),
+          onClick: onToggle
+        });
+      },
+      renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsViewConfigContent, {
+        density: density,
+        setDensity: setDensity
+      })
     })]
   });
 }
