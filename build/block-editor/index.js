@@ -7929,7 +7929,7 @@ var global_styles_namespaceObject = {};
 __webpack_require__.r(global_styles_namespaceObject);
 __webpack_require__.d(global_styles_namespaceObject, {
   AdvancedPanel: () => (AdvancedPanel),
-  BackgroundPanel: () => (BackgroundPanel),
+  BackgroundPanel: () => (background_panel_BackgroundImagePanel),
   BorderPanel: () => (BorderPanel),
   ColorPanel: () => (ColorPanel),
   DimensionsPanel: () => (DimensionsPanel),
@@ -24025,7 +24025,7 @@ const MediaReplaceFlow = ({
   };
 }), (0,external_wp_components_namespaceObject.withFilters)('editor.MediaReplaceFlow')])(MediaReplaceFlow));
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/global-styles/background-panel.js
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/background-image-control/index.js
 /**
  * External dependencies
  */
@@ -24053,54 +24053,15 @@ const MediaReplaceFlow = ({
 
 
 
+
 const IMAGE_BACKGROUND_TYPE = 'image';
-const background_panel_DEFAULT_CONTROLS = {
-  backgroundImage: true
-};
 const BACKGROUND_POPOVER_PROPS = {
   placement: 'left-start',
   offset: 36,
   shift: true,
   className: 'block-editor-global-styles-background-panel__popover'
 };
-const background_panel_noop = () => {};
-
-/**
- * Checks site settings to see if the background panel may be used.
- * `settings.background.backgroundSize` exists also,
- * but can only be used if settings?.background?.backgroundImage is `true`.
- *
- * @param {Object} settings Site settings
- * @return {boolean}        Whether site settings has activated background panel.
- */
-function useHasBackgroundPanel(settings) {
-  return external_wp_element_namespaceObject.Platform.OS === 'web' && settings?.background?.backgroundImage;
-}
-
-/**
- * Checks if there is a current value in the background size block support
- * attributes. Background size values include background size as well
- * as background position.
- *
- * @param {Object} style Style attribute.
- * @return {boolean}     Whether the block has a background size value set.
- */
-function hasBackgroundSizeValue(style) {
-  return style?.background?.backgroundPosition !== undefined || style?.background?.backgroundSize !== undefined;
-}
-
-/**
- * Checks if there is a current value in the background image block support
- * attributes.
- *
- * @param {Object} style Style attribute.
- * @return {boolean}     Whether the block has a background image value set.
- */
-function hasBackgroundImageValue(style) {
-  return !!style?.background?.backgroundImage?.id ||
-  // Supports url() string values in theme.json.
-  'string' === typeof style?.background?.backgroundImage || !!style?.background?.backgroundImage?.url;
-}
+const background_image_control_noop = () => {};
 
 /**
  * Get the help text for the background size control.
@@ -24162,7 +24123,7 @@ function InspectorImagePreviewItem({
   filename,
   label,
   className,
-  onToggleCallback = background_panel_noop
+  onToggleCallback = background_image_control_noop
 }) {
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (typeof toggleProps?.isOpen !== 'undefined') {
@@ -24209,7 +24170,7 @@ function BackgroundControlsPanel({
   filename,
   url: imgUrl,
   children,
-  onToggle: onToggleCallback = background_panel_noop,
+  onToggle: onToggleCallback = background_image_control_noop,
   hasImageValue
 }) {
   if (!hasImageValue) {
@@ -24255,8 +24216,8 @@ function BackgroundImageControls({
   onChange,
   style,
   inheritedValue,
-  onRemoveImage = background_panel_noop,
-  onResetImage = background_panel_noop,
+  onRemoveImage = background_image_control_noop,
+  onResetImage = background_image_control_noop,
   displayInPanel,
   defaultValues
 }) {
@@ -24524,37 +24485,12 @@ function BackgroundSizeControls({
     })]
   });
 }
-function BackgroundToolsPanel({
-  resetAllFilter,
-  onChange,
-  value,
-  panelId,
-  children,
-  headerLabel
-}) {
-  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-  const resetAll = () => {
-    const updatedValue = resetAllFilter(value);
-    onChange(updatedValue);
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
-    label: headerLabel,
-    resetAll: resetAll,
-    panelId: panelId,
-    dropdownMenuProps: dropdownMenuProps,
-    children: children
-  });
-}
-function BackgroundPanel({
-  as: Wrapper = BackgroundToolsPanel,
+function BackgroundImagePanel({
   value,
   onChange,
   inheritedValue = value,
   settings,
-  panelId,
-  defaultControls = background_panel_DEFAULT_CONTROLS,
-  defaultValues = {},
-  headerLabel = (0,external_wp_i18n_namespaceObject.__)('Background image')
+  defaultValues = {}
 }) {
   /*
    * Resolve any inherited "ref" pointers.
@@ -24590,12 +24526,6 @@ function BackgroundPanel({
     });
     return resolvedValues;
   }, [globalStyles, _links, inheritedValue]);
-  const resetAllFilter = (0,external_wp_element_namespaceObject.useCallback)(previousValue => {
-    return {
-      ...previousValue,
-      background: {}
-    };
-  }, []);
   const resetBackground = () => onChange(setImmutably(value, ['background'], {}));
   const {
     title,
@@ -24607,61 +24537,164 @@ function BackgroundPanel({
   const imageValue = value?.background?.backgroundImage || inheritedValue?.background?.backgroundImage;
   const shouldShowBackgroundImageControls = hasImageValue && 'none' !== imageValue && (settings?.background?.backgroundSize || settings?.background?.backgroundPosition || settings?.background?.backgroundRepeat);
   const [isDropDownOpen, setIsDropDownOpen] = (0,external_wp_element_namespaceObject.useState)(false);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    className: dist_clsx('block-editor-global-styles-background-panel__inspector-media-replace-container', {
+      'is-open': isDropDownOpen
+    }),
+    children: shouldShowBackgroundImageControls ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundControlsPanel, {
+      label: title,
+      filename: title,
+      url: url,
+      onToggle: setIsDropDownOpen,
+      hasImageValue: hasImageValue,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        spacing: 3,
+        className: "single-column",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundImageControls, {
+          onChange: onChange,
+          style: value,
+          inheritedValue: resolvedInheritedValue,
+          displayInPanel: true,
+          onResetImage: () => {
+            setIsDropDownOpen(false);
+            resetBackground();
+          },
+          onRemoveImage: () => setIsDropDownOpen(false),
+          defaultValues: defaultValues
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundSizeControls, {
+          onChange: onChange,
+          style: value,
+          defaultValues: defaultValues,
+          inheritedValue: resolvedInheritedValue
+        })]
+      })
+    }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundImageControls, {
+      onChange: onChange,
+      style: value,
+      inheritedValue: resolvedInheritedValue,
+      defaultValues: defaultValues,
+      onResetImage: () => {
+        setIsDropDownOpen(false);
+        resetBackground();
+      },
+      onRemoveImage: () => setIsDropDownOpen(false)
+    })
+  });
+}
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/global-styles/background-panel.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+const background_panel_DEFAULT_CONTROLS = {
+  backgroundImage: true
+};
+
+/**
+ * Checks site settings to see if the background panel may be used.
+ * `settings.background.backgroundSize` exists also,
+ * but can only be used if settings?.background?.backgroundImage is `true`.
+ *
+ * @param {Object} settings Site settings
+ * @return {boolean}        Whether site settings has activated background panel.
+ */
+function useHasBackgroundPanel(settings) {
+  return external_wp_element_namespaceObject.Platform.OS === 'web' && settings?.background?.backgroundImage;
+}
+
+/**
+ * Checks if there is a current value in the background size block support
+ * attributes. Background size values include background size as well
+ * as background position.
+ *
+ * @param {Object} style Style attribute.
+ * @return {boolean}     Whether the block has a background size value set.
+ */
+function hasBackgroundSizeValue(style) {
+  return style?.background?.backgroundPosition !== undefined || style?.background?.backgroundSize !== undefined;
+}
+
+/**
+ * Checks if there is a current value in the background image block support
+ * attributes.
+ *
+ * @param {Object} style Style attribute.
+ * @return {boolean}     Whether the block has a background image value set.
+ */
+function hasBackgroundImageValue(style) {
+  return !!style?.background?.backgroundImage?.id ||
+  // Supports url() string values in theme.json.
+  'string' === typeof style?.background?.backgroundImage || !!style?.background?.backgroundImage?.url;
+}
+function BackgroundToolsPanel({
+  resetAllFilter,
+  onChange,
+  value,
+  panelId,
+  children,
+  headerLabel
+}) {
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  const resetAll = () => {
+    const updatedValue = resetAllFilter(value);
+    onChange(updatedValue);
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+    label: headerLabel,
+    resetAll: resetAll,
+    panelId: panelId,
+    dropdownMenuProps: dropdownMenuProps,
+    children: children
+  });
+}
+function background_panel_BackgroundImagePanel({
+  as: Wrapper = BackgroundToolsPanel,
+  value,
+  onChange,
+  inheritedValue,
+  settings,
+  panelId,
+  defaultControls = background_panel_DEFAULT_CONTROLS,
+  defaultValues = {},
+  headerLabel = (0,external_wp_i18n_namespaceObject.__)('Background image')
+}) {
+  const showBackgroundImageControl = useHasBackgroundPanel(settings);
+  const resetBackground = () => onChange(setImmutably(value, ['background'], {}));
+  const resetAllFilter = (0,external_wp_element_namespaceObject.useCallback)(previousValue => {
+    return {
+      ...previousValue,
+      background: {}
+    };
+  }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Wrapper, {
     resetAllFilter: resetAllFilter,
     value: value,
     onChange: onChange,
     panelId: panelId,
     headerLabel: headerLabel,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: dist_clsx('block-editor-global-styles-background-panel__inspector-media-replace-container', {
-        'is-open': isDropDownOpen
-      }),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-        hasValue: () => !!value?.background,
-        label: (0,external_wp_i18n_namespaceObject.__)('Image'),
-        onDeselect: resetBackground,
-        isShownByDefault: defaultControls.backgroundImage,
-        panelId: panelId,
-        children: shouldShowBackgroundImageControls ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundControlsPanel, {
-          label: title,
-          filename: title,
-          url: url,
-          onToggle: setIsDropDownOpen,
-          hasImageValue: hasImageValue,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-            spacing: 3,
-            className: "single-column",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundImageControls, {
-              onChange: onChange,
-              style: value,
-              inheritedValue: resolvedInheritedValue,
-              displayInPanel: true,
-              onResetImage: () => {
-                setIsDropDownOpen(false);
-                resetBackground();
-              },
-              onRemoveImage: () => setIsDropDownOpen(false),
-              defaultValues: defaultValues
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundSizeControls, {
-              onChange: onChange,
-              panelId: panelId,
-              style: value,
-              defaultValues: defaultValues,
-              inheritedValue: resolvedInheritedValue
-            })]
-          })
-        }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundImageControls, {
-          onChange: onChange,
-          style: value,
-          inheritedValue: resolvedInheritedValue,
-          defaultValues: defaultValues,
-          onResetImage: () => {
-            setIsDropDownOpen(false);
-            resetBackground();
-          },
-          onRemoveImage: () => setIsDropDownOpen(false)
-        })
+    children: showBackgroundImageControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      hasValue: () => !!value?.background,
+      label: (0,external_wp_i18n_namespaceObject.__)('Image'),
+      onDeselect: resetBackground,
+      isShownByDefault: defaultControls.backgroundImage,
+      panelId: panelId,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundImagePanel, {
+        value: value,
+        onChange: onChange,
+        settings: settings,
+        inheritedValue: inheritedValue,
+        defaultControls: defaultControls,
+        defaultValues: defaultValues
       })
     })
   });
@@ -24775,7 +24808,7 @@ function BackgroundInspectorControl({
     children: children
   });
 }
-function BackgroundImagePanel({
+function background_BackgroundImagePanel({
   clientId,
   name,
   setAttributes,
@@ -24817,7 +24850,7 @@ function BackgroundImagePanel({
       backgroundSize: settings?.background?.backgroundSize && hasBackgroundSupport(name, 'backgroundSize')
     }
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundPanel, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(background_panel_BackgroundImagePanel, {
     inheritedValue: inheritedValue,
     as: BackgroundInspectorControl,
     panelId: clientId,
@@ -32863,7 +32896,7 @@ function BlockStyleControls({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ColorEdit, {
       ...passedProps
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundImagePanel, {
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(background_BackgroundImagePanel, {
       ...passedProps
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(typography_TypographyPanel, {
       ...passedProps

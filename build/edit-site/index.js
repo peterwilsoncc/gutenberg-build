@@ -15416,6 +15416,25 @@ const color = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 });
 /* harmony default export */ const library_color = (color);
 
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/background.js
+/**
+ * WordPress dependencies
+ */
+
+
+const background = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  width: "24",
+  height: "24",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M11.53 4.47a.75.75 0 1 0-1.06 1.06l8 8a.75.75 0 1 0 1.06-1.06l-8-8Zm5 1a.75.75 0 1 0-1.06 1.06l2 2a.75.75 0 1 0 1.06-1.06l-2-2Zm-11.06 10a.75.75 0 0 1 1.06 0l2 2a.75.75 0 1 1-1.06 1.06l-2-2a.75.75 0 0 1 0-1.06Zm.06-5a.75.75 0 0 0-1.06 1.06l8 8a.75.75 0 1 0 1.06-1.06l-8-8Zm-.06-3a.75.75 0 0 1 1.06 0l10 10a.75.75 0 1 1-1.06 1.06l-10-10a.75.75 0 0 1 0-1.06Zm3.06-2a.75.75 0 0 0-1.06 1.06l10 10a.75.75 0 1 0 1.06-1.06l-10-10Z"
+  })
+});
+/* harmony default export */ const library_background = (background);
+
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/shadow.js
 /**
  * WordPress dependencies
@@ -15453,11 +15472,17 @@ const {
   useHasTypographyPanel,
   useHasColorPanel,
   useGlobalSetting: root_menu_useGlobalSetting,
-  useSettingsForBlockElement
+  useSettingsForBlockElement,
+  useHasBackgroundPanel
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function RootMenu() {
   const [rawSettings] = root_menu_useGlobalSetting('');
   const settings = useSettingsForBlockElement(rawSettings);
+  /*
+   * Use the raw settings to determine if the background panel should be displayed,
+   * as the background panel is not dependent on the block element settings.
+   */
+  const hasBackgroundPanel = useHasBackgroundPanel(rawSettings);
   const hasTypographyPanel = useHasTypographyPanel(settings);
   const hasColorPanel = useHasColorPanel(settings);
   const hasShadowPanel = true; // useHasShadowPanel( settings );
@@ -15475,6 +15500,11 @@ function RootMenu() {
         path: "/colors",
         "aria-label": (0,external_wp_i18n_namespaceObject.__)('Colors styles'),
         children: (0,external_wp_i18n_namespaceObject.__)('Colors')
+      }), hasBackgroundPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
+        icon: library_background,
+        path: "/background",
+        "aria-label": (0,external_wp_i18n_namespaceObject.__)('Background styles'),
+        children: (0,external_wp_i18n_namespaceObject.__)('Background')
       }), hasShadowPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
         icon: library_shadow,
         path: "/shadows",
@@ -16633,7 +16663,7 @@ const {
   useHasFiltersPanel,
   useHasImageSettingsPanel,
   useGlobalStyle: screen_block_useGlobalStyle,
-  useHasBackgroundPanel,
+  useHasBackgroundPanel: screen_block_useHasBackgroundPanel,
   BackgroundPanel: StylesBackgroundPanel,
   BorderPanel: StylesBorderPanel,
   ColorPanel: StylesColorPanel,
@@ -16678,7 +16708,7 @@ function ScreenBlock({
     settings.dimensions.aspectRatio = false;
   }
   const blockVariations = useBlockVariations(name);
-  const hasBackgroundPanel = useHasBackgroundPanel(settings);
+  const hasBackgroundPanel = screen_block_useHasBackgroundPanel(settings);
   const hasTypographyPanel = screen_block_useHasTypographyPanel(settings);
   const hasColorPanel = screen_block_useHasColorPanel(settings);
   const hasBorderPanel = screen_block_useHasBorderPanel(settings);
@@ -25193,6 +25223,90 @@ function ScreenColorPalette({
 }
 /* harmony default export */ const screen_color_palette = (ScreenColorPalette);
 
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/background-panel.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+// Initial control values where no block style is set.
+
+const BACKGROUND_DEFAULT_VALUES = {
+  backgroundSize: 'auto'
+};
+const {
+  useGlobalStyle: background_panel_useGlobalStyle,
+  useGlobalSetting: background_panel_useGlobalSetting,
+  BackgroundPanel: background_panel_StylesBackgroundPanel
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
+
+/**
+ * Checks if there is a current value in the background image block support
+ * attributes.
+ *
+ * @param {Object} style Style attribute.
+ * @return {boolean}     Whether the block has a background image value set.
+ */
+function hasBackgroundImageValue(style) {
+  return !!style?.background?.backgroundImage?.id || !!style?.background?.backgroundImage?.url || typeof style?.background?.backgroundImage === 'string';
+}
+function BackgroundPanel() {
+  const [style] = background_panel_useGlobalStyle('', undefined, 'user', {
+    shouldDecodeEncode: false
+  });
+  const [inheritedStyle, setStyle] = background_panel_useGlobalStyle('', undefined, 'all', {
+    shouldDecodeEncode: false
+  });
+  const [settings] = background_panel_useGlobalSetting('');
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(background_panel_StylesBackgroundPanel, {
+    inheritedValue: inheritedStyle,
+    value: style,
+    onChange: setStyle,
+    settings: settings,
+    defaultValues: BACKGROUND_DEFAULT_VALUES
+  });
+}
+
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/screen-background.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+const {
+  useHasBackgroundPanel: screen_background_useHasBackgroundPanel,
+  useGlobalSetting: screen_background_useGlobalSetting
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
+function ScreenBackground() {
+  const [settings] = screen_background_useGlobalSetting('');
+  const hasBackgroundPanel = screen_background_useHasBackgroundPanel(settings);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Background'),
+      description: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+        children: (0,external_wp_i18n_namespaceObject.__)('Set styles for the site’s background.')
+      })
+    }), hasBackgroundPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundPanel, {})]
+  });
+}
+/* harmony default export */ const screen_background = (ScreenBackground);
+
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/shadows-panel.js
 /**
  * WordPress dependencies
@@ -26120,55 +26234,6 @@ function DimensionsPanel() {
   });
 }
 
-;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/background-panel.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-// Initial control values where no block style is set.
-
-const BACKGROUND_DEFAULT_VALUES = {
-  backgroundSize: 'auto'
-};
-const {
-  useGlobalStyle: background_panel_useGlobalStyle,
-  useGlobalSetting: background_panel_useGlobalSetting,
-  BackgroundPanel: background_panel_StylesBackgroundPanel
-} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
-
-/**
- * Checks if there is a current value in the background image block support
- * attributes.
- *
- * @param {Object} style Style attribute.
- * @return {boolean}     Whether the block has a background image value set.
- */
-function hasBackgroundImageValue(style) {
-  return !!style?.background?.backgroundImage?.id || !!style?.background?.backgroundImage?.url || typeof style?.background?.backgroundImage === 'string';
-}
-function BackgroundPanel() {
-  const [style] = background_panel_useGlobalStyle('', undefined, 'user', {
-    shouldDecodeEncode: false
-  });
-  const [inheritedStyle, setStyle] = background_panel_useGlobalStyle('', undefined, 'all', {
-    shouldDecodeEncode: false
-  });
-  const [settings] = background_panel_useGlobalSetting('');
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(background_panel_StylesBackgroundPanel, {
-    inheritedValue: inheritedStyle,
-    value: style,
-    onChange: setStyle,
-    settings: settings,
-    defaultValues: BACKGROUND_DEFAULT_VALUES
-  });
-}
-
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/global-styles/screen-layout.js
 /**
  * WordPress dependencies
@@ -26185,9 +26250,7 @@ function BackgroundPanel() {
 
 
 
-
 const {
-  useHasBackgroundPanel: screen_layout_useHasBackgroundPanel,
   useHasDimensionsPanel: screen_layout_useHasDimensionsPanel,
   useGlobalSetting: screen_layout_useGlobalSetting,
   useSettingsForBlockElement: screen_layout_useSettingsForBlockElement
@@ -26196,15 +26259,10 @@ function ScreenLayout() {
   const [rawSettings] = screen_layout_useGlobalSetting('');
   const settings = screen_layout_useSettingsForBlockElement(rawSettings);
   const hasDimensionsPanel = screen_layout_useHasDimensionsPanel(settings);
-  /*
-   * Use the raw settings to determine if the background panel should be displayed,
-   * as the background panel is not dependent on the block element settings.
-   */
-  const hasBackgroundPanel = screen_layout_useHasBackgroundPanel(rawSettings);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header, {
       title: (0,external_wp_i18n_namespaceObject.__)('Layout')
-    }), hasDimensionsPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DimensionsPanel, {}), hasBackgroundPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackgroundPanel, {})]
+    }), hasDimensionsPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DimensionsPanel, {})]
   });
 }
 /* harmony default export */ const screen_layout = (ScreenLayout);
@@ -27708,6 +27766,7 @@ function ScreenRevisions() {
 
 
 
+
 const SLOT_FILL_NAME = 'GlobalStylesMenu';
 const {
   useGlobalStylesReset: ui_useGlobalStylesReset
@@ -27996,6 +28055,9 @@ function GlobalStylesUI() {
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesNavigationScreen, {
       path: "/revisions",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(screen_revisions, {})
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesNavigationScreen, {
+      path: "/background",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(screen_background, {})
     }), blocks.map(block => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesNavigationScreen, {
       path: '/blocks/' + encodeURIComponent(block.name),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(screen_block, {
