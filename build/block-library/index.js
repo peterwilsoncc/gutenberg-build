@@ -26240,8 +26240,11 @@ function image_Image({
   const showUrlInput = isSingleSelected && !isEditingImage && !lockHrefControls && !lockUrlControls;
   const showCoverControls = isSingleSelected && canInsertCover;
   const showBlockControls = showUrlInput || allowCrop || showCoverControls;
-  const mediaReplaceFlow = isSingleSelected && !isEditingImage && !lockUrlControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-    group: "other",
+  const mediaReplaceFlow = isSingleSelected && !isEditingImage && !lockUrlControls &&
+  /*#__PURE__*/
+  // For contentOnly mode, put this button in its own area so it has borders around it.
+  (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+    group: isContentOnlyMode ? 'inline' : 'other',
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaReplaceFlow, {
       mediaId: id,
       mediaURL: url,
