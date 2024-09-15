@@ -11075,6 +11075,16 @@ const getBlockStyles = (0,external_wp_data_namespaceObject.createSelector)((stat
 function isZoomOutMode(state) {
   return state.editorMode === 'zoom-out';
 }
+
+/**
+ * Retrieves the client ID of the block which contains the blocks
+ * acting as "sections" in the editor. This is typically the "main content"
+ * of the template/post.
+ *
+ * @param {Object} state Editor state.
+ *
+ * @return {string|undefined} The section root client ID or undefined if not set.
+ */
 function getSectionRootClientId(state) {
   return state.settings?.[sectionRootClientIdKey];
 }
