@@ -44084,6 +44084,7 @@ function PostTemplateEdit({
       taxQuery,
       parents,
       pages,
+      format,
       // We gather extra query args to pass to the REST API call.
       // This way extenders of Query Loop can add their own query args,
       // and have accurate previews in the editor.
@@ -44163,6 +44164,10 @@ function PostTemplateEdit({
     if (parents?.length) {
       query.parent = parents;
     }
+    if (format?.length) {
+      query.format = format;
+    }
+
     // If sticky is not set, it will return all posts in the results.
     // If sticky is set to `only`, it will limit the results to sticky posts only.
     // If it is anything else, it will exclude sticky posts from results. For the record the value stored is `exclude`.
@@ -44189,7 +44194,7 @@ function PostTemplateEdit({
       }),
       blocks: getBlocks(clientId)
     };
-  }, [perPage, offset, order, orderBy, clientId, author, search, postType, exclude, sticky, inherit, templateSlug, taxQuery, parents, restQueryArgs, previewPostType]);
+  }, [perPage, offset, order, orderBy, clientId, author, search, postType, exclude, sticky, inherit, templateSlug, taxQuery, parents, format, restQueryArgs, previewPostType]);
   const blockContexts = (0,external_wp_element_namespaceObject.useMemo)(() => posts?.map(post => {
     var _post$class_list;
     return {
@@ -46508,6 +46513,7 @@ const mapToIHasNameAndId = (entities, path) => {
  * Returns a helper object that contains:
  * 1. An `options` object from the available post types, to be passed to a `SelectControl`.
  * 2. A helper map with available taxonomies per post type.
+ * 3. A helper map with post format support per post type.
  *
  * @return {Object} The helper object related to post types.
  */
@@ -46541,9 +46547,19 @@ const usePostTypes = () => {
     label: labels.singular_name,
     value: slug
   })), [postTypes]);
+  const postTypeFormatSupportMap = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (!postTypes?.length) {
+      return {};
+    }
+    return postTypes.reduce((accumulator, type) => {
+      accumulator[type.slug] = type.supports?.['post-formats'] || false;
+      return accumulator;
+    }, {});
+  }, [postTypes]);
   return {
     postTypesTaxonomiesMap,
-    postTypesSelectOptions
+    postTypesSelectOptions,
+    postTypeFormatSupportMap
   };
 };
 
@@ -47338,6 +47354,103 @@ function TaxonomyItem({
   });
 }
 
+;// CONCATENATED MODULE: ./packages/block-library/build-module/query/edit/inspector-controls/format-controls.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+// All WP post formats, sorted alphabetically by translated name.
+// Value is the post format slug. Label is the name.
+
+const POST_FORMATS = [{
+  value: 'aside',
+  label: (0,external_wp_i18n_namespaceObject.__)('Aside')
+}, {
+  value: 'audio',
+  label: (0,external_wp_i18n_namespaceObject.__)('Audio')
+}, {
+  value: 'chat',
+  label: (0,external_wp_i18n_namespaceObject.__)('Chat')
+}, {
+  value: 'gallery',
+  label: (0,external_wp_i18n_namespaceObject.__)('Gallery')
+}, {
+  value: 'image',
+  label: (0,external_wp_i18n_namespaceObject.__)('Image')
+}, {
+  value: 'link',
+  label: (0,external_wp_i18n_namespaceObject.__)('Link')
+}, {
+  value: 'quote',
+  label: (0,external_wp_i18n_namespaceObject.__)('Quote')
+}, {
+  value: 'standard',
+  label: (0,external_wp_i18n_namespaceObject.__)('Standard')
+}, {
+  value: 'status',
+  label: (0,external_wp_i18n_namespaceObject.__)('Status')
+}, {
+  value: 'video',
+  label: (0,external_wp_i18n_namespaceObject.__)('Video')
+}].sort((a, b) => {
+  const normalizedA = a.label.toUpperCase();
+  const normalizedB = b.label.toUpperCase();
+  if (normalizedA < normalizedB) {
+    return -1;
+  }
+  if (normalizedA > normalizedB) {
+    return 1;
+  }
+  return 0;
+});
+
+// A helper function to convert translatable post format names into their static values.
+function formatNamesToValues(names, formats) {
+  return names.map(name => {
+    return formats.find(item => item.label.toLocaleLowerCase() === name.toLocaleLowerCase())?.value;
+  }).filter(Boolean);
+}
+function FormatControls({
+  onChange,
+  query: {
+    format
+  }
+}) {
+  // 'format' is expected to be an array. If it is not an array, for example
+  // if a user has manually entered an invalid value in the block markup,
+  // convert it to an array to prevent JavaScript errors.
+  const normalizedFormats = Array.isArray(format) ? format : [format];
+  const {
+    supportedFormats
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const themeSupports = select(external_wp_coreData_namespaceObject.store).getThemeSupports();
+    return {
+      supportedFormats: themeSupports.formats
+    };
+  }, []);
+  const formats = POST_FORMATS.filter(item => supportedFormats.includes(item.value));
+  const values = normalizedFormats.map(name => formats.find(item => item.value === name)?.label).filter(Boolean);
+  const suggestions = formats.filter(item => !format.includes(item.value)).map(item => item.label);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FormTokenField, {
+    label: (0,external_wp_i18n_namespaceObject.__)('Formats'),
+    value: values,
+    suggestions: suggestions,
+    onChange: newValues => {
+      onChange({
+        format: formatNamesToValues(newValues, formats)
+      });
+    },
+    __experimentalShowHowTo: false,
+    __experimentalExpandOnFocus: true,
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true
+  });
+}
+
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/query/edit/inspector-controls/sticky-control.js
 /**
  * WordPress dependencies
@@ -47507,9 +47620,12 @@ const PagesControl = ({
 
 
 
+
+
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -47549,13 +47665,15 @@ function QueryInspectorControls(props) {
     sticky,
     inherit,
     taxQuery,
-    parents
+    parents,
+    format
   } = query;
   const allowedControls = useAllowedControls(attributes);
   const [showSticky, setShowSticky] = (0,external_wp_element_namespaceObject.useState)(postType === 'post');
   const {
     postTypesTaxonomiesMap,
-    postTypesSelectOptions
+    postTypesSelectOptions,
+    postTypeFormatSupportMap
   } = usePostTypes();
   const taxonomies = useTaxonomies(postType);
   const isPostTypeHierarchical = useIsPostTypeHierarchical(postType);
@@ -47581,6 +47699,13 @@ function QueryInspectorControls(props) {
     }
     // We need to reset `parents` because they are tied to each post type.
     updateQuery.parents = [];
+    // Post types can register post format support with `add_post_type_support`.
+    // But we need to reset the `format` property when switching to post types
+    // that do not support post formats.
+    const hasFormatSupport = postTypeFormatSupportMap[newValue];
+    if (!hasFormatSupport) {
+      updateQuery.format = [];
+    }
     setQuery(updateQuery);
   };
   const [querySearch, setQuerySearch] = (0,external_wp_element_namespaceObject.useState)(query.search);
@@ -47607,7 +47732,19 @@ function QueryInspectorControls(props) {
   const showAuthorControl = isControlAllowed(allowedControls, 'author');
   const showSearchControl = isControlAllowed(allowedControls, 'search');
   const showParentControl = isControlAllowed(allowedControls, 'parents') && isPostTypeHierarchical;
-  const showFiltersPanel = showTaxControl || showAuthorControl || showSearchControl || showParentControl;
+  const postTypeHasFormatSupport = postTypeFormatSupportMap[postType];
+  const showFormatControl = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    // Check if the post type supports post formats and if the control is allowed.
+    if (!postTypeHasFormatSupport || !isControlAllowed(allowedControls, 'format')) {
+      return false;
+    }
+    const themeSupports = select(external_wp_coreData_namespaceObject.store).getThemeSupports();
+
+    // If there are no supported formats, getThemeSupports still includes the default 'standard' format,
+    // and in this case the control should not be shown since the user has no other formats to choose from.
+    return themeSupports.formats && themeSupports.formats.length > 0 && themeSupports.formats.some(type => type !== 'standard');
+  }, [allowedControls, postTypeHasFormatSupport]);
+  const showFiltersPanel = showTaxControl || showAuthorControl || showSearchControl || showParentControl || showFormatControl;
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const showPostCountControl = isControlAllowed(allowedControls, 'postCount');
   const showOffSetControl = isControlAllowed(allowedControls, 'offset');
@@ -47733,7 +47870,8 @@ function QueryInspectorControls(props) {
           author: '',
           parents: [],
           search: '',
-          taxQuery: null
+          taxQuery: null,
+          format: []
         });
         setQuerySearch('');
       },
@@ -47779,6 +47917,16 @@ function QueryInspectorControls(props) {
           parents: parents,
           postType: postType,
           onChange: setQuery
+        })
+      }), showFormatControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => !!format?.length,
+        label: (0,external_wp_i18n_namespaceObject.__)('Formats'),
+        onDeselect: () => setQuery({
+          format: []
+        }),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FormatControls, {
+          onChange: setQuery,
+          query: query
         })
       })]
     })]
@@ -48967,7 +49115,8 @@ const query_metadata = {
         sticky: "",
         inherit: true,
         taxQuery: null,
-        parents: []
+        parents: [],
+        format: []
       }
     },
     tagName: {
