@@ -18258,10 +18258,8 @@ function FontCard({
     cursor: !!onClick ? 'pointer' : 'default'
   };
   const navigator = (0,external_wp_components_namespaceObject.__experimentalUseNavigator)();
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-  // TODO: Switch to `true` (40px size) if possible
-  , {
-    __next40pxDefaultSize: false,
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    __next40pxDefaultSize: true,
     onClick: () => {
       onClick();
       if (navigatorPath) {
@@ -18665,18 +18663,14 @@ function InstalledFonts() {
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         justify: "flex-end",
         className: "font-library-modal__footer",
-        children: [isInstalling && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ProgressBar, {}), shouldDisplayDeleteButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        children: [isInstalling && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ProgressBar, {}), shouldDisplayDeleteButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           isDestructive: true,
           variant: "tertiary",
           onClick: handleUninstallClick,
           children: (0,external_wp_i18n_namespaceObject.__)('Delete')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           variant: "primary",
           onClick: handleUpdate,
           disabled: !fontFamiliesHasChanges,
@@ -19223,10 +19217,8 @@ function FontCollection({
       }), selectedFont && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Flex, {
         justify: "flex-end",
         className: "font-library-modal__footer",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           variant: "primary",
           onClick: handleInstall,
           isBusy: isInstalling,
@@ -23376,10 +23368,8 @@ function UploadFonts() {
         onChange: onFilesUpload,
         render: ({
           openFileDialog
-        }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           className: "font-library-modal__upload-area",
           onClick: openFileDialog,
           children: (0,external_wp_i18n_namespaceObject.__)('Upload font')
@@ -24836,10 +24826,8 @@ function Palette({
           })]
         })
       })
-    }), window.__experimentalEnableColorRandomizer && themeColors?.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
+    }), window.__experimentalEnableColorRandomizer && themeColors?.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
       variant: "secondary",
       icon: library_shuffle,
       onClick: randomizeThemeColors,
@@ -25857,19 +25845,15 @@ function ShadowsEditPanel() {
           justify: "flex-end",
           expanded: false,
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-            // TODO: Switch to `true` (40px size) if possible
-            , {
-              __next40pxDefaultSize: false,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              __next40pxDefaultSize: true,
               variant: "tertiary",
               onClick: () => setIsRenameModalVisible(false),
               children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
             })
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-            // TODO: Switch to `true` (40px size) if possible
-            , {
-              __next40pxDefaultSize: false,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              __next40pxDefaultSize: true,
               variant: "primary",
               type: "submit",
               children: (0,external_wp_i18n_namespaceObject.__)('Save')
@@ -25997,19 +25981,15 @@ function shadows_edit_panel_ShadowItem({
           style: {
             flexGrow: 1
           },
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-          // TODO: Switch to `true` (40px size) if possible
-          , {
-            __next40pxDefaultSize: false,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
             icon: library_shadow,
             ...toggleProps,
             children: shadowObj.inset ? (0,external_wp_i18n_namespaceObject.__)('Inner shadow') : (0,external_wp_i18n_namespaceObject.__)('Drop shadow')
           })
         }), canRemove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-          // TODO: Switch to `true` (40px size) if possible
-          , {
-            __next40pxDefaultSize: false,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
             icon: library_reset,
             ...removeButtonProps
           })
@@ -27405,10 +27385,8 @@ function RevisionsButtons({
           'is-reset': isReset
         }),
         "aria-current": isSelected,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           className: "edit-site-global-styles-screen-revisions__revision-button",
           accessibleWhenDisabled: true,
           disabled: isSelected,
