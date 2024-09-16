@@ -16397,116 +16397,96 @@ function WpEmbedPreview({
 
 
 
-class EmbedPreview extends external_wp_element_namespaceObject.Component {
-  constructor() {
-    super(...arguments);
-    this.hideOverlay = this.hideOverlay.bind(this);
-    this.state = {
-      interactive: false
-    };
+function EmbedPreview({
+  preview,
+  previewable,
+  url,
+  type,
+  isSelected,
+  className,
+  icon,
+  label,
+  insertBlocksAfter,
+  attributes,
+  setAttributes
+}) {
+  const [interactive, setInteractive] = (0,external_wp_element_namespaceObject.useState)(false);
+  if (!isSelected && interactive) {
+    // We only want to change this when the block is not selected, because changing it when
+    // the block becomes selected makes the overlap disappear too early. Hiding the overlay
+    // happens on mouseup when the overlay is clicked.
+    setInteractive(false);
   }
-  static getDerivedStateFromProps(nextProps, state) {
-    if (!nextProps.isSelected && state.interactive) {
-      // We only want to change this when the block is not selected, because changing it when
-      // the block becomes selected makes the overlap disappear too early. Hiding the overlay
-      // happens on mouseup when the overlay is clicked.
-      return {
-        interactive: false
-      };
-    }
-    return null;
-  }
-  hideOverlay() {
+  const hideOverlay = () => {
     // This is called onMouseUp on the overlay. We can't respond to the `isSelected` prop
     // changing, because that happens on mouse down, and the overlay immediately disappears,
     // and the mouse event can end up in the preview content. We can't use onClick on
     // the overlay to hide it either, because then the editor misses the mouseup event, and
     // thinks we're multi-selecting blocks.
-    this.setState({
-      interactive: true
-    });
-  }
-  render() {
-    const {
-      preview,
-      previewable,
-      url,
-      type,
-      className,
-      icon,
-      label,
-      insertBlocksAfter,
-      attributes,
-      setAttributes,
-      isSelected
-    } = this.props;
-    const {
-      scripts
-    } = preview;
-    const {
-      interactive
-    } = this.state;
-    const html = 'photo' === type ? getPhotoHtml(preview) : preview.html;
-    const embedSourceUrl = (0,external_wp_url_namespaceObject.getAuthority)(url);
-    const iframeTitle = (0,external_wp_i18n_namespaceObject.sprintf)(
-    // translators: %s: host providing embed content e.g: www.youtube.com
-    (0,external_wp_i18n_namespaceObject.__)('Embedded content from %s'), embedSourceUrl);
-    const sandboxClassnames = dist_clsx(type, className, 'wp-block-embed__wrapper');
+    setInteractive(true);
+  };
+  const {
+    scripts
+  } = preview;
+  const html = 'photo' === type ? getPhotoHtml(preview) : preview.html;
+  const embedSourceUrl = (0,external_wp_url_namespaceObject.getAuthority)(url);
+  const iframeTitle = (0,external_wp_i18n_namespaceObject.sprintf)(
+  // translators: %s: host providing embed content e.g: www.youtube.com
+  (0,external_wp_i18n_namespaceObject.__)('Embedded content from %s'), embedSourceUrl);
+  const sandboxClassnames = dist_clsx(type, className, 'wp-block-embed__wrapper');
 
-    // Disabled because the overlay div doesn't actually have a role or functionality
-    // as far as the user is concerned. We're just catching the first click so that
-    // the block can be selected without interacting with the embed preview that the overlay covers.
-    /* eslint-disable jsx-a11y/no-static-element-interactions */
-    const embedWrapper = 'wp-embed' === type ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WpEmbedPreview, {
-      html: html
-    }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      className: "wp-block-embed__wrapper",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SandBox, {
-        html: html,
-        scripts: scripts,
-        title: iframeTitle,
-        type: sandboxClassnames,
-        onFocus: this.hideOverlay
-      }), !interactive && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "block-library-embed__interactive-overlay",
-        onMouseUp: this.hideOverlay
-      })]
-    });
-    /* eslint-enable jsx-a11y/no-static-element-interactions */
+  // Disabled because the overlay div doesn't actually have a role or functionality
+  // as far as the user is concerned. We're just catching the first click so that
+  // the block can be selected without interacting with the embed preview that the overlay covers.
+  /* eslint-disable jsx-a11y/no-static-element-interactions */
+  const embedWrapper = 'wp-embed' === type ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WpEmbedPreview, {
+    html: html
+  }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    className: "wp-block-embed__wrapper",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SandBox, {
+      html: html,
+      scripts: scripts,
+      title: iframeTitle,
+      type: sandboxClassnames,
+      onFocus: hideOverlay
+    }), !interactive && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "block-library-embed__interactive-overlay",
+      onMouseUp: hideOverlay
+    })]
+  });
+  /* eslint-enable jsx-a11y/no-static-element-interactions */
 
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("figure", {
-      className: dist_clsx(className, 'wp-block-embed', {
-        'is-type-video': 'video' === type
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("figure", {
+    className: dist_clsx(className, 'wp-block-embed', {
+      'is-type-video': 'video' === type
+    }),
+    children: [previewable ? embedWrapper : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Placeholder, {
+      icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
+        icon: icon,
+        showColors: true
       }),
-      children: [previewable ? embedWrapper : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Placeholder, {
-        icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-          icon: icon,
-          showColors: true
-        }),
-        label: label,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-          className: "components-placeholder__error",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
-            href: url,
-            children: url
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-          className: "components-placeholder__error",
-          children: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: host providing embed content e.g: www.youtube.com */
-          (0,external_wp_i18n_namespaceObject.__)("Embedded content from %s can't be previewed in the editor."), embedSourceUrl)
-        })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Caption, {
-        attributes: attributes,
-        setAttributes: setAttributes,
-        isSelected: isSelected,
-        insertBlocksAfter: insertBlocksAfter,
-        label: (0,external_wp_i18n_namespaceObject.__)('Embed caption text'),
-        showToolbarButton: isSelected
+      label: label,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+        className: "components-placeholder__error",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
+          href: url,
+          children: url
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+        className: "components-placeholder__error",
+        children: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: host providing embed content e.g: www.youtube.com */
+        (0,external_wp_i18n_namespaceObject.__)("Embedded content from %s can't be previewed in the editor."), embedSourceUrl)
       })]
-    });
-  }
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Caption, {
+      attributes: attributes,
+      setAttributes: setAttributes,
+      isSelected: isSelected,
+      insertBlocksAfter: insertBlocksAfter,
+      label: (0,external_wp_i18n_namespaceObject.__)('Embed caption text'),
+      showToolbarButton: isSelected
+    })]
+  });
 }
-/* harmony default export */ const embed_preview = (EmbedPreview);
 
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/embed/edit.js
 /**
@@ -16740,7 +16720,7 @@ const EmbedEdit = props => {
       switchBackToURLInput: () => setIsEditingURL(true)
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.View, {
       ...blockProps,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(embed_preview, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EmbedPreview, {
         preview: preview,
         previewable: previewable,
         className: className,
