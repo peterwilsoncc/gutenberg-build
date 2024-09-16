@@ -16170,11 +16170,14 @@ function ScreenRoot() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Card, {
     size: "small",
     className: "edit-site-global-styles-screen-root",
+    isRounded: false,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CardBody, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
         spacing: 4,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Card, {
+          className: "edit-site-global-styles-screen-root__active-style-tile",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CardMedia, {
+            className: "edit-site-global-styles-screen-root__active-style-tile-preview",
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(preview_styles, {})
           })
         }), hasVariations && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {

@@ -15686,7 +15686,6 @@ const TOGGLE_GROUP_CONTROL_PROPS = {
   fontWeight: 'normal',
   fontWeightHeading: '600',
   gridBase: '4px',
-  cardBorderRadius: '2px',
   cardPaddingXSmall: `${space(2)}`,
   cardPaddingSmall: `${space(4)}`,
   cardPaddingMedium: `${space(4)} ${space(6)}`,
@@ -42934,7 +42933,7 @@ function card_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried t
 // (as opposed to the `border` property), the value of the border radius needs
 // to be adjusted by removing 1px (this is because the `box-shadow` renders
 // as an "outer radius").
-const adjustedBorderRadius = `calc(${config_values.cardBorderRadius} - 1px)`;
+const adjustedBorderRadius = `calc(${config_values.radiusLarge} - 1px)`;
 const Card = /*#__PURE__*/emotion_react_browser_esm_css("box-shadow:0 0 0 1px ", config_values.surfaceBorderColor, ";outline:none;" + ( true ? "" : 0),  true ? "" : 0);
 const Header =  true ? {
   name: "1showjb",
@@ -43187,7 +43186,7 @@ function UnconnectedCard(props, forwardedRef) {
     size,
     ...otherProps
   } = useCard(props);
-  const elevationBorderRadius = isRounded ? config_values.cardBorderRadius : 0;
+  const elevationBorderRadius = isRounded ? config_values.radiusLarge : 0;
   const cx = useCx();
   const elevationClassName = (0,external_wp_element_namespaceObject.useMemo)(() => cx( /*#__PURE__*/emotion_react_browser_esm_css({
     borderRadius: elevationBorderRadius
