@@ -23456,11 +23456,11 @@ function FontLibraryModal({
     onRequestClose: onRequestClose,
     isFullScreen: true,
     className: "font-library-modal",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "font-library-modal__tabs",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Tabs, {
-        defaultTabId: defaultTabId,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tabs.TabList, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Tabs, {
+      defaultTabId: defaultTabId,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        className: "font-library-modal__tablist",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tabs.TabList, {
           children: tabs.map(({
             id,
             title
@@ -23468,29 +23468,29 @@ function FontLibraryModal({
             tabId: id,
             children: title
           }, id))
-        }), tabs.map(({
-          id
-        }) => {
-          let contents;
-          switch (id) {
-            case 'upload-fonts':
-              contents = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(upload_fonts, {});
-              break;
-            case 'installed-fonts':
-              contents = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(installed_fonts, {});
-              break;
-            default:
-              contents = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_collection, {
-                slug: id
-              });
-          }
-          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tabs.TabPanel, {
-            tabId: id,
-            focusable: false,
-            children: contents
-          }, id);
-        })]
-      })
+        })
+      }), tabs.map(({
+        id
+      }) => {
+        let contents;
+        switch (id) {
+          case 'upload-fonts':
+            contents = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(upload_fonts, {});
+            break;
+          case 'installed-fonts':
+            contents = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(installed_fonts, {});
+            break;
+          default:
+            contents = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_collection, {
+              slug: id
+            });
+        }
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tabs.TabPanel, {
+          tabId: id,
+          focusable: false,
+          children: contents
+        }, id);
+      })]
     })
   });
 }
