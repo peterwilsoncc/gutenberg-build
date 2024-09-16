@@ -17833,10 +17833,8 @@ function MostUsedTerms({
       role: "list",
       className: "editor-post-taxonomies__flat-term-most-used-list",
       children: terms.map(term => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           variant: "link",
           onClick: () => onSelect(term),
           children: term.name
@@ -18579,10 +18577,8 @@ function HierarchicalTermSelector({
       "aria-label": groupLabel,
       children: renderTerms('' !== filterValue ? filteredTermsTree : availableTermsTree)
     }), !loading && hasCreateAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         onClick: onToggleForm,
         className: "editor-post-taxonomies__hierarchical-terms-add",
         "aria-expanded": showForm,
@@ -21452,13 +21448,14 @@ function PostURL({
           prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlPrefixWrapper, {
             children: "/"
           }),
-          suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-          // TODO: Switch to `true` (40px size) if possible
-          , {
-            __next40pxDefaultSize: false,
-            icon: copy_small,
-            ref: copyButtonRef,
-            label: (0,external_wp_i18n_namespaceObject.__)('Copy')
+          suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlSuffixWrapper, {
+            variant: "control",
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              icon: copy_small,
+              ref: copyButtonRef,
+              size: "small",
+              label: "Copy"
+            })
           }),
           label: (0,external_wp_i18n_namespaceObject.__)('Link'),
           hideLabelFromVision: true,
@@ -26859,12 +26856,9 @@ function SavePublishPanels({
   } else if (isPublishable && !hasOtherEntitiesChanges) {
     unmountableContent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "editor-layout__toggle-publish-panel",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         variant: "secondary",
-        className: "editor-layout__toggle-publish-panel-button",
         onClick: togglePublishSidebar,
         "aria-expanded": false,
         children: (0,external_wp_i18n_namespaceObject.__)('Open publish panel')
@@ -26873,12 +26867,9 @@ function SavePublishPanels({
   } else {
     unmountableContent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "editor-layout__toggle-entities-saved-states-panel",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         variant: "secondary",
-        className: "editor-layout__toggle-entities-saved-states-panel-button",
         onClick: openEntitiesSavedStates,
         "aria-expanded": false,
         disabled: !isDirty,
