@@ -68065,6 +68065,12 @@ function useSaveImage({
         }
       });
     }
+    if (modifiers.length === 0) {
+      // No changes to apply.
+      setIsInProgress(false);
+      onFinishEditing();
+      return;
+    }
     external_wp_apiFetch_default()({
       path: `/wp/v2/media/${id}/edit`,
       method: 'POST',
