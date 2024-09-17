@@ -15690,10 +15690,10 @@ const TOGGLE_GROUP_CONTROL_PROPS = {
   cardPaddingSmall: `${space(4)}`,
   cardPaddingMedium: `${space(4)} ${space(6)}`,
   cardPaddingLarge: `${space(6)} ${space(8)}`,
-  elevationXSmall: `0 0.7px 1px rgba(0, 0, 0, 0.1), 0 1.2px 1.7px -0.2px rgba(0, 0, 0, 0.1), 0 2.3px 3.3px -0.5px rgba(0, 0, 0, 0.1)`,
-  elevationSmall: `0 0.7px 1px 0 rgba(0, 0, 0, 0.12), 0 2.2px 3.7px -0.2px rgba(0, 0, 0, 0.12), 0 5.3px 7.3px -0.5px rgba(0, 0, 0, 0.12)`,
-  elevationMedium: `0 0.7px 1px 0 rgba(0, 0, 0, 0.14), 0 4.2px 5.7px -0.2px rgba(0, 0, 0, 0.14), 0 7.3px 9.3px -0.5px rgba(0, 0, 0, 0.14)`,
-  elevationLarge: `0 0.7px 1px rgba(0, 0, 0, 0.15), 0 2.7px 3.8px -0.2px rgba(0, 0, 0, 0.15), 0 5.5px 7.8px -0.3px rgba(0, 0, 0, 0.15), 0.1px 11.5px 16.4px -0.5px rgba(0, 0, 0, 0.15)`,
+  elevationXSmall: `0 1px 1px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02), 0 3px 3px rgba(0, 0, 0, 0.02), 0 4px 4px rgba(0, 0, 0, 0.01)`,
+  elevationSmall: `0 1px 2px rgba(0, 0, 0, 0.05), 0 2px 3px rgba(0, 0, 0, 0.04), 0 6px 6px rgba(0, 0, 0, 0.03), 0 8px 8px rgba(0, 0, 0, 0.02)`,
+  elevationMedium: `0 2px 3px rgba(0, 0, 0, 0.05), 0 4px 5px rgba(0, 0, 0, 0.04), 0 12px 12px rgba(0, 0, 0, 0.03), 0 16px 16px rgba(0, 0, 0, 0.02)`,
+  elevationLarge: `0 5px 15px rgba(0, 0, 0, 0.08), 0 15px 27px rgba(0, 0, 0, 0.07), 0 30px 36px rgba(0, 0, 0, 0.04), 0 50px 43px rgba(0, 0, 0, 0.02)`,
   surfaceBackgroundColor: COLORS.white,
   surfaceBackgroundSubtleColor: '#F3F3F3',
   surfaceBackgroundTintColor: '#F5F5F5',
@@ -37231,7 +37231,7 @@ const thumbFocus = ({
 };
 const Thumb = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1epgpqk4"
-} : 0)("align-items:center;border-radius:", config_values.radiusRound, ";height:100%;outline:0;position:absolute;user-select:none;width:100%;", thumbColor, ";", thumbFocus, ";" + ( true ? "" : 0));
+} : 0)("align-items:center;border-radius:", config_values.radiusRound, ";height:100%;outline:0;position:absolute;user-select:none;width:100%;box-shadow:", config_values.elevationXSmall, ";", thumbColor, ";", thumbFocus, ";" + ( true ? "" : 0));
 const InputRange = /*#__PURE__*/emotion_styled_base_browser_esm("input",  true ? {
   target: "e1epgpqk3"
 } : 0)("box-sizing:border-box;cursor:pointer;display:block;height:100%;left:0;margin:0 -", thumbSize / 2, "px;opacity:0;outline:none;position:absolute;right:0;top:0;width:calc( 100% + ", thumbSize, "px );" + ( true ? "" : 0));
@@ -49053,7 +49053,7 @@ const slideDownAndFade = emotion_react_browser_esm_keyframes({
 });
 const styles_SelectPopover = /*#__PURE__*/emotion_styled_base_browser_esm(SelectPopover,  true ? {
   target: "e1p3eej76"
-} : 0)("display:flex;flex-direction:column;background-color:", COLORS.theme.background, ";border-radius:", config_values.radiusSmall, ";border:1px solid ", COLORS.theme.foreground, ";z-index:1000000;max-height:min( var( --popover-available-height, 400px ), 400px );overflow:auto;overscroll-behavior:contain;min-width:min-content;&[data-open]{@media not ( prefers-reduced-motion ){animation-duration:", ANIMATION_PARAMS.DURATION, ";animation-timing-function:", ANIMATION_PARAMS.EASING, ";animation-name:", slideDownAndFade, ";will-change:transform,opacity;}}&[data-focus-visible]{outline:none;}" + ( true ? "" : 0));
+} : 0)("display:flex;flex-direction:column;background-color:", COLORS.theme.background, ";border-radius:", config_values.radiusSmall, ";border:1px solid ", COLORS.theme.foreground, ";box-shadow:", config_values.elevationMedium, ";z-index:1000000;max-height:min( var( --popover-available-height, 400px ), 400px );overflow:auto;overscroll-behavior:contain;min-width:min-content;&[data-open]{@media not ( prefers-reduced-motion ){animation-duration:", ANIMATION_PARAMS.DURATION, ";animation-timing-function:", ANIMATION_PARAMS.EASING, ";animation-name:", slideDownAndFade, ";will-change:transform,opacity;}}&[data-focus-visible]{outline:none;}" + ( true ? "" : 0));
 const styles_SelectItem = /*#__PURE__*/emotion_styled_base_browser_esm(SelectItem,  true ? {
   target: "e1p3eej75"
 } : 0)(({
@@ -69786,7 +69786,7 @@ const DIVIDER_COLOR = COLORS.theme.gray[200];
 const LIGHTER_TEXT_COLOR = COLORS.theme.gray[700];
 const LIGHT_BACKGROUND_COLOR = COLORS.theme.gray[100];
 const TOOLBAR_VARIANT_BORDER_COLOR = COLORS.theme.foreground;
-const DEFAULT_BOX_SHADOW = `0 0 0 ${config_values.borderWidth} ${DEFAULT_BORDER_COLOR}, ${config_values.elevationXSmall}`;
+const DEFAULT_BOX_SHADOW = `0 0 0 ${config_values.borderWidth} ${DEFAULT_BORDER_COLOR}, ${config_values.elevationMedium}`;
 const TOOLBAR_VARIANT_BOX_SHADOW = `0 0 0 ${config_values.borderWidth} ${TOOLBAR_VARIANT_BORDER_COLOR}`;
 const GRID_TEMPLATE_COLS = 'minmax( 0, max-content ) 1fr';
 const MenuPopoverOuterWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
