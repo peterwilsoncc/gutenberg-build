@@ -46743,7 +46743,8 @@ function ComboboxControl(props) {
       selected: (0,external_wp_i18n_namespaceObject.__)('Item selected.')
     },
     __experimentalRenderItem,
-    expandOnFocus = true
+    expandOnFocus = true,
+    placeholder
   } = useDeprecated36pxDefaultSizeProp(props);
   const [value, setValue] = useControlledValue({
     value: valueProp,
@@ -46909,6 +46910,7 @@ function ComboboxControl(props) {
               className: "components-combobox-control__input",
               instanceId: instanceId,
               ref: inputContainer,
+              placeholder: placeholder,
               value: isExpanded ? inputValue : currentLabel,
               onFocus: onFocus,
               onBlur: onBlur,
