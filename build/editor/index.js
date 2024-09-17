@@ -19963,6 +19963,7 @@ function PostStatus() {
         onToggle,
         isOpen
       }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        className: "editor-post-status__toggle",
         variant: "tertiary",
         size: "compact",
         onClick: onToggle,
