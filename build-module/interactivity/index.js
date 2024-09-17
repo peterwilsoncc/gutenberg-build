@@ -96,91 +96,6 @@ var hooks_module_t,r,hooks_module_u,i,hooks_module_o=0,hooks_module_f=[],hooks_m
 function signals_core_module_i(){throw new Error("Cycle detected")}function signals_core_module_t(){if(!(signals_core_module_f>1)){var i,t=!1;while(void 0!==signals_core_module_s){var r=signals_core_module_s;signals_core_module_s=void 0;signals_core_module_v++;while(void 0!==r){var n=r.o;r.o=void 0;r.f&=-3;if(!(8&r.f)&&signals_core_module_a(r))try{r.c()}catch(r){if(!t){i=r;t=!0}}r=n}}signals_core_module_v=0;signals_core_module_f--;if(t)throw i}else signals_core_module_f--}function signals_core_module_r(i){if(signals_core_module_f>0)return i();signals_core_module_f++;try{return i()}finally{signals_core_module_t()}}var signals_core_module_n=void 0,signals_core_module_o=0;function signals_core_module_h(i){if(signals_core_module_o>0)return i();var t=signals_core_module_n;signals_core_module_n=void 0;signals_core_module_o++;try{return i()}finally{signals_core_module_o--;signals_core_module_n=t}}var signals_core_module_s=void 0,signals_core_module_f=0,signals_core_module_v=0,signals_core_module_e=0;function signals_core_module_u(i){if(void 0!==signals_core_module_n){var t=i.n;if(void 0===t||t.t!==signals_core_module_n){t={i:0,S:i,p:signals_core_module_n.s,n:void 0,t:signals_core_module_n,e:void 0,x:void 0,r:t};if(void 0!==signals_core_module_n.s)signals_core_module_n.s.n=t;signals_core_module_n.s=t;i.n=t;if(32&signals_core_module_n.f)i.S(t);return t}else if(-1===t.i){t.i=0;if(void 0!==t.n){t.n.p=t.p;if(void 0!==t.p)t.p.n=t.n;t.p=signals_core_module_n.s;t.n=void 0;signals_core_module_n.s.n=t;signals_core_module_n.s=t}return t}}}function signals_core_module_c(i){this.v=i;this.i=0;this.n=void 0;this.t=void 0}signals_core_module_c.prototype.h=function(){return!0};signals_core_module_c.prototype.S=function(i){if(this.t!==i&&void 0===i.e){i.x=this.t;if(void 0!==this.t)this.t.e=i;this.t=i}};signals_core_module_c.prototype.U=function(i){if(void 0!==this.t){var t=i.e,r=i.x;if(void 0!==t){t.x=r;i.e=void 0}if(void 0!==r){r.e=t;i.x=void 0}if(i===this.t)this.t=r}};signals_core_module_c.prototype.subscribe=function(i){var t=this;return E(function(){var r=t.value,n=32&this.f;this.f&=-33;try{i(r)}finally{this.f|=n}})};signals_core_module_c.prototype.valueOf=function(){return this.value};signals_core_module_c.prototype.toString=function(){return this.value+""};signals_core_module_c.prototype.toJSON=function(){return this.value};signals_core_module_c.prototype.peek=function(){return this.v};Object.defineProperty(signals_core_module_c.prototype,"value",{get:function(){var i=signals_core_module_u(this);if(void 0!==i)i.i=this.i;return this.v},set:function(r){if(signals_core_module_n instanceof signals_core_module_y)!function(){throw new Error("Computed cannot have side-effects")}();if(r!==this.v){if(signals_core_module_v>100)signals_core_module_i();this.v=r;this.i++;signals_core_module_e++;signals_core_module_f++;try{for(var o=this.t;void 0!==o;o=o.x)o.t.N()}finally{signals_core_module_t()}}}});function signals_core_module_d(i){return new signals_core_module_c(i)}function signals_core_module_a(i){for(var t=i.s;void 0!==t;t=t.n)if(t.S.i!==t.i||!t.S.h()||t.S.i!==t.i)return!0;return!1}function signals_core_module_l(i){for(var t=i.s;void 0!==t;t=t.n){var r=t.S.n;if(void 0!==r)t.r=r;t.S.n=t;t.i=-1;if(void 0===t.n){i.s=t;break}}}function signals_core_module_w(i){var t=i.s,r=void 0;while(void 0!==t){var n=t.p;if(-1===t.i){t.S.U(t);if(void 0!==n)n.n=t.n;if(void 0!==t.n)t.n.p=n}else r=t;t.S.n=t.r;if(void 0!==t.r)t.r=void 0;t=n}i.s=r}function signals_core_module_y(i){signals_core_module_c.call(this,void 0);this.x=i;this.s=void 0;this.g=signals_core_module_e-1;this.f=4}(signals_core_module_y.prototype=new signals_core_module_c).h=function(){this.f&=-3;if(1&this.f)return!1;if(32==(36&this.f))return!0;this.f&=-5;if(this.g===signals_core_module_e)return!0;this.g=signals_core_module_e;this.f|=1;if(this.i>0&&!signals_core_module_a(this)){this.f&=-2;return!0}var i=signals_core_module_n;try{signals_core_module_l(this);signals_core_module_n=this;var t=this.x();if(16&this.f||this.v!==t||0===this.i){this.v=t;this.f&=-17;this.i++}}catch(i){this.v=i;this.f|=16;this.i++}signals_core_module_n=i;signals_core_module_w(this);this.f&=-2;return!0};signals_core_module_y.prototype.S=function(i){if(void 0===this.t){this.f|=36;for(var t=this.s;void 0!==t;t=t.n)t.S.S(t)}signals_core_module_c.prototype.S.call(this,i)};signals_core_module_y.prototype.U=function(i){if(void 0!==this.t){signals_core_module_c.prototype.U.call(this,i);if(void 0===this.t){this.f&=-33;for(var t=this.s;void 0!==t;t=t.n)t.S.U(t)}}};signals_core_module_y.prototype.N=function(){if(!(2&this.f)){this.f|=6;for(var i=this.t;void 0!==i;i=i.x)i.t.N()}};signals_core_module_y.prototype.peek=function(){if(!this.h())signals_core_module_i();if(16&this.f)throw this.v;return this.v};Object.defineProperty(signals_core_module_y.prototype,"value",{get:function(){if(1&this.f)signals_core_module_i();var t=signals_core_module_u(this);this.h();if(void 0!==t)t.i=this.i;if(16&this.f)throw this.v;return this.v}});function signals_core_module_(i){return new signals_core_module_y(i)}function signals_core_module_p(i){var r=i.u;i.u=void 0;if("function"==typeof r){signals_core_module_f++;var o=signals_core_module_n;signals_core_module_n=void 0;try{r()}catch(t){i.f&=-2;i.f|=8;signals_core_module_g(i);throw t}finally{signals_core_module_n=o;signals_core_module_t()}}}function signals_core_module_g(i){for(var t=i.s;void 0!==t;t=t.n)t.S.U(t);i.x=void 0;i.s=void 0;signals_core_module_p(i)}function signals_core_module_b(i){if(signals_core_module_n!==this)throw new Error("Out-of-order effect");signals_core_module_w(this);signals_core_module_n=i;this.f&=-2;if(8&this.f)signals_core_module_g(this);signals_core_module_t()}function signals_core_module_x(i){this.x=i;this.u=void 0;this.s=void 0;this.o=void 0;this.f=32}signals_core_module_x.prototype.c=function(){var i=this.S();try{if(8&this.f)return;if(void 0===this.x)return;var t=this.x();if("function"==typeof t)this.u=t}finally{i()}};signals_core_module_x.prototype.S=function(){if(1&this.f)signals_core_module_i();this.f|=1;this.f&=-9;signals_core_module_p(this);signals_core_module_l(this);signals_core_module_f++;var t=signals_core_module_n;signals_core_module_n=this;return signals_core_module_b.bind(this,t)};signals_core_module_x.prototype.N=function(){if(!(2&this.f)){this.f|=2;this.o=signals_core_module_s;signals_core_module_s=this}};signals_core_module_x.prototype.d=function(){this.f|=8;if(!(1&this.f))signals_core_module_g(this)};function E(i){var t=new signals_core_module_x(i);try{t.c()}catch(i){t.d();throw i}return t.d.bind(t)}
 ;// CONCATENATED MODULE: ./packages/interactivity/node_modules/@preact/signals/dist/signals.module.js
 var signals_module_v,signals_module_s;function signals_module_l(n,i){preact_module/* options */.YM[n]=i.bind(null,preact_module/* options */.YM[n]||function(){})}function signals_module_d(n){if(signals_module_s)signals_module_s();signals_module_s=n&&n.S()}function signals_module_p(n){var r=this,f=n.data,o=useSignal(f);o.value=f;var e=F(function(){var n=r.__v;while(n=n.__)if(n.__c){n.__c.__$f|=4;break}r.__$u.c=function(){var n;if(!(0,preact_module/* isValidElement */.l$)(e.peek())&&3===(null==(n=r.base)?void 0:n.nodeType))r.base.data=e.peek();else{r.__$f|=1;r.setState({})}};return signals_core_module_(function(){var n=o.value.value;return 0===n?0:!0===n?"":n||""})},[]);return e.value}signals_module_p.displayName="_st";Object.defineProperties(signals_core_module_c.prototype,{constructor:{configurable:!0,value:void 0},type:{configurable:!0,value:signals_module_p},props:{configurable:!0,get:function(){return{data:this}}},__b:{configurable:!0,value:1}});signals_module_l("__b",function(n,r){if("string"==typeof r.type){var i,t=r.props;for(var f in t)if("children"!==f){var o=t[f];if(o instanceof signals_core_module_c){if(!i)r.__np=i={};i[f]=o;t[f]=o.peek()}}}n(r)});signals_module_l("__r",function(n,r){signals_module_d();var i,t=r.__c;if(t){t.__$f&=-2;if(void 0===(i=t.__$u))t.__$u=i=function(n){var r;E(function(){r=this});r.c=function(){t.__$f|=1;t.setState({})};return r}()}signals_module_v=t;signals_module_d(i);n(r)});signals_module_l("__e",function(n,r,i,t){signals_module_d();signals_module_v=void 0;n(r,i,t)});signals_module_l("diffed",function(n,r){signals_module_d();signals_module_v=void 0;var i;if("string"==typeof r.type&&(i=r.__e)){var t=r.__np,f=r.props;if(t){var o=i.U;if(o)for(var e in o){var u=o[e];if(void 0!==u&&!(e in t)){u.d();o[e]=void 0}}else i.U=o={};for(var a in t){var c=o[a],s=t[a];if(void 0===c){c=signals_module_(i,a,s,f);o[a]=c}else c.o(s,f)}}}n(r)});function signals_module_(n,r,i,t){var f=r in n&&void 0===n.ownerSVGElement,o=signals_core_module_d(i);return{o:function(n,r){o.value=n;t=r},d:E(function(){var i=o.value.value;if(t[r]!==i){t[r]=i;if(f)n[r]=i;else if(i)n.setAttribute(r,i);else n.removeAttribute(r)}})}}signals_module_l("unmount",function(n,r){if("string"==typeof r.type){var i=r.__e;if(i){var t=i.U;if(t){i.U=void 0;for(var f in t){var o=t[f];if(o)o.d()}}}}else{var e=r.__c;if(e){var u=e.__$u;if(u){e.__$u=void 0;u.d()}}}n(r)});signals_module_l("__h",function(n,r,i,t){if(t<3||9===t)r.__$f|=2;n(r,i,t)});preact_module/* Component */.wA.prototype.shouldComponentUpdate=function(n,r){var i=this.__$u;if(!(i&&void 0!==i.s||4&this.__$f))return!0;if(3&this.__$f)return!0;for(var t in r)return!0;for(var f in n)if("__source"!==f&&n[f]!==this.props[f])return!0;for(var o in this.props)if(!(o in n))return!0;return!1};function useSignal(n){return F(function(){return signals_core_module_d(n)},[])}function useComputed(n){var r=f(n);r.current=n;signals_module_v.__$f|=4;return t(function(){return u(function(){return r.current()})},[])}function useSignalEffect(n){var r=f(n);r.current=n;o(function(){return c(function(){return r.current()})},[])}
-;// CONCATENATED MODULE: ./packages/interactivity/build-module/proxies/registry.js
-/**
- * Proxies for each object.
- */
-const objToProxy = new WeakMap();
-const proxyToObj = new WeakMap();
-
-/**
- * Namespaces for each created proxy.
- */
-const proxyToNs = new WeakMap();
-
-/**
- * Object types that can be proxied.
- */
-const supported = new Set([Object, Array]);
-
-/**
- * Returns a proxy to the passed object with the given handlers, assigning the
- * specified namespace to it. If a proxy for the passed object was created
- * before, that proxy is returned.
- *
- * @param namespace The namespace that will be associated to this proxy.
- * @param obj       The object to proxify.
- * @param handlers  Handlers that the proxy will use.
- *
- * @throws Error if the object cannot be proxified. Use {@link shouldProxy} to
- *         check if a proxy can be created for a specific object.
- *
- * @return The created proxy.
- */
-const createProxy = (namespace, obj, handlers) => {
-  if (!shouldProxy(obj)) {
-    throw Error('This object cannot be proxified.');
-  }
-  if (!objToProxy.has(obj)) {
-    const proxy = new Proxy(obj, handlers);
-    objToProxy.set(obj, proxy);
-    proxyToObj.set(proxy, obj);
-    proxyToNs.set(proxy, namespace);
-  }
-  return objToProxy.get(obj);
-};
-
-/**
- * Returns the proxy for the given object. If there is no associated proxy, the
- * function returns `undefined`.
- *
- * @param obj Object from which to know the proxy.
- * @return Associated proxy or `undefined`.
- */
-const getProxyFromObject = obj => objToProxy.get(obj);
-
-/**
- * Gets the namespace associated with the given proxy.
- *
- * Proxies have a namespace assigned upon creation. See {@link createProxy}.
- *
- * @param proxy Proxy.
- * @return Namespace.
- */
-const getNamespaceFromProxy = proxy => proxyToNs.get(proxy);
-
-/**
- * Checks if a given object can be proxied.
- *
- * @param candidate Object to know whether it can be proxied.
- * @return True if the passed instance can be proxied.
- */
-const shouldProxy = candidate => {
-  if (typeof candidate !== 'object' || candidate === null) {
-    return false;
-  }
-  return !proxyToNs.has(candidate) && supported.has(candidate.constructor);
-};
-
-/**
- * Returns the target object for the passed proxy. If the passed object is not a registered proxy, the
- * function returns `undefined`.
- *
- * @param proxy Proxy from which to know the target.
- * @return The target object or `undefined`.
- */
-const getObjectFromProxy = proxy => proxyToObj.get(proxy);
-
 ;// CONCATENATED MODULE: ./packages/interactivity/build-module/namespaces.js
 const namespaceStack = [];
 const getNamespace = () => namespaceStack.slice(-1)[0];
@@ -576,6 +491,91 @@ const warn = message => {
  * @return Whether `candidate` is a plain object.
  */
 const isPlainObject = candidate => Boolean(candidate && typeof candidate === 'object' && candidate.constructor === Object);
+
+;// CONCATENATED MODULE: ./packages/interactivity/build-module/proxies/registry.js
+/**
+ * Proxies for each object.
+ */
+const objToProxy = new WeakMap();
+const proxyToObj = new WeakMap();
+
+/**
+ * Namespaces for each created proxy.
+ */
+const proxyToNs = new WeakMap();
+
+/**
+ * Object types that can be proxied.
+ */
+const supported = new Set([Object, Array]);
+
+/**
+ * Returns a proxy to the passed object with the given handlers, assigning the
+ * specified namespace to it. If a proxy for the passed object was created
+ * before, that proxy is returned.
+ *
+ * @param namespace The namespace that will be associated to this proxy.
+ * @param obj       The object to proxify.
+ * @param handlers  Handlers that the proxy will use.
+ *
+ * @throws Error if the object cannot be proxified. Use {@link shouldProxy} to
+ *         check if a proxy can be created for a specific object.
+ *
+ * @return The created proxy.
+ */
+const createProxy = (namespace, obj, handlers) => {
+  if (!shouldProxy(obj)) {
+    throw Error('This object cannot be proxified.');
+  }
+  if (!objToProxy.has(obj)) {
+    const proxy = new Proxy(obj, handlers);
+    objToProxy.set(obj, proxy);
+    proxyToObj.set(proxy, obj);
+    proxyToNs.set(proxy, namespace);
+  }
+  return objToProxy.get(obj);
+};
+
+/**
+ * Returns the proxy for the given object. If there is no associated proxy, the
+ * function returns `undefined`.
+ *
+ * @param obj Object from which to know the proxy.
+ * @return Associated proxy or `undefined`.
+ */
+const getProxyFromObject = obj => objToProxy.get(obj);
+
+/**
+ * Gets the namespace associated with the given proxy.
+ *
+ * Proxies have a namespace assigned upon creation. See {@link createProxy}.
+ *
+ * @param proxy Proxy.
+ * @return Namespace.
+ */
+const getNamespaceFromProxy = proxy => proxyToNs.get(proxy);
+
+/**
+ * Checks if a given object can be proxied.
+ *
+ * @param candidate Object to know whether it can be proxied.
+ * @return True if the passed instance can be proxied.
+ */
+const shouldProxy = candidate => {
+  if (typeof candidate !== 'object' || candidate === null) {
+    return false;
+  }
+  return !proxyToNs.has(candidate) && supported.has(candidate.constructor);
+};
+
+/**
+ * Returns the target object for the passed proxy. If the passed object is not a registered proxy, the
+ * function returns `undefined`.
+ *
+ * @param proxy Proxy from which to know the target.
+ * @return The target object or `undefined`.
+ */
+const getObjectFromProxy = proxy => proxyToObj.get(proxy);
 
 ;// CONCATENATED MODULE: ./packages/interactivity/build-module/proxies/signals.js
 /**
@@ -1063,10 +1063,70 @@ const proxifyStore = (namespace, obj, isRoot = true) => {
   return proxy;
 };
 
+;// CONCATENATED MODULE: ./packages/interactivity/build-module/proxies/context.js
+const contextObjectToProxy = new WeakMap();
+const contextObjectToFallback = new WeakMap();
+const contextProxies = new WeakSet();
+const descriptor = Reflect.getOwnPropertyDescriptor;
+
+// TODO: Use the proxy registry to avoid multiple proxies on the same object.
+const contextHandlers = {
+  get: (target, key) => {
+    const fallback = contextObjectToFallback.get(target);
+    // Always subscribe to prop changes in the current context.
+    const currentProp = target[key];
+
+    /*
+     * Return the value from `target` if it exists, or from `fallback`
+     * otherwise. This way, in the case the property doesn't exist either in
+     * `target` or `fallback`, it also subscribes to changes in the parent
+     * context.
+     */
+    return key in target ? currentProp : fallback[key];
+  },
+  set: (target, key, value) => {
+    const fallback = contextObjectToFallback.get(target);
+
+    // If the property exists in the current context, modify it. Otherwise,
+    // add it to the current context.
+    const obj = key in target || !(key in fallback) ? target : fallback;
+    obj[key] = value;
+    return true;
+  },
+  ownKeys: target => [...new Set([...Object.keys(contextObjectToFallback.get(target)), ...Object.keys(target)])],
+  getOwnPropertyDescriptor: (target, key) => descriptor(target, key) || descriptor(contextObjectToFallback.get(target), key)
+};
+
+/**
+ * Wrap a context object with a proxy to reproduce the context stack. The proxy
+ * uses the passed `inherited` context as a fallback to look up for properties
+ * that don't exist in the given context. Also, updated properties are modified
+ * where they are defined, or added to the main context when they don't exist.
+ *
+ * @param current   Current context.
+ * @param inherited Inherited context, used as fallback.
+ *
+ * @return The wrapped context object.
+ */
+const proxifyContext = (current, inherited = {}) => {
+  if (contextProxies.has(current)) {
+    throw Error('This object cannot be proxified.');
+  }
+  // Update the fallback object reference when it changes.
+  contextObjectToFallback.set(current, inherited);
+  if (!contextObjectToProxy.has(current)) {
+    const proxy = new Proxy(current, contextHandlers);
+    contextObjectToProxy.set(current, proxy);
+    contextProxies.add(proxy);
+  }
+  return contextObjectToProxy.get(current);
+};
+
 ;// CONCATENATED MODULE: ./packages/interactivity/build-module/proxies/index.js
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -1468,10 +1528,6 @@ preact_module/* options */.YM.vnode = vnode => {
  */
 
 
-/**
- * Internal dependencies
- */
-
 
 /**
  * Internal dependencies
@@ -1480,113 +1536,6 @@ preact_module/* options */.YM.vnode = vnode => {
 
 
 
-// Assigned objects should be ignored during proxification.
-const contextAssignedObjects = new WeakMap();
-
-// Store the context proxy and fallback for each object in the context.
-const contextObjectToProxy = new WeakMap();
-const contextProxyToObject = new WeakMap();
-const contextObjectToFallback = new WeakMap();
-const descriptor = Reflect.getOwnPropertyDescriptor;
-
-/**
- * Wrap a context object with a proxy to reproduce the context stack. The proxy
- * uses the passed `inherited` context as a fallback to look up for properties
- * that don't exist in the given context. Also, updated properties are modified
- * where they are defined, or added to the main context when they don't exist.
- *
- * By default, all plain objects inside the context are wrapped, unless it is
- * listed in the `ignore` option.
- *
- * @param current   Current context.
- * @param inherited Inherited context, used as fallback.
- *
- * @return The wrapped context object.
- */
-const proxifyContext = (current, inherited = {}) => {
-  // Update the fallback object reference when it changes.
-  contextObjectToFallback.set(current, inherited);
-  if (!contextObjectToProxy.has(current)) {
-    const proxy = new Proxy(current, {
-      get: (target, k) => {
-        const fallback = contextObjectToFallback.get(current);
-        // Always subscribe to prop changes in the current context.
-        const currentProp = target[k];
-
-        // Return the inherited prop when missing in target.
-        if (!(k in target) && k in fallback) {
-          return fallback[k];
-        }
-
-        // Proxify plain objects that were not directly assigned.
-        if (k in target && !contextAssignedObjects.get(target)?.has(k) && isPlainObject(currentProp)) {
-          return proxifyContext(currentProp);
-        }
-
-        // Return the stored proxy for `currentProp` when it exists.
-        if (contextObjectToProxy.has(currentProp)) {
-          return contextObjectToProxy.get(currentProp);
-        }
-
-        /*
-         * For other cases, return the value from target, also
-         * subscribing to changes in the parent context when the current
-         * prop is not defined.
-         */
-        return k in target ? currentProp : fallback[k];
-      },
-      set: (target, k, value) => {
-        const fallback = contextObjectToFallback.get(current);
-        const obj = k in target || !(k in fallback) ? target : fallback;
-
-        /*
-         * Assigned object values should not be proxified so they point
-         * to the original object and don't inherit unexpected
-         * properties.
-         */
-        if (value && typeof value === 'object') {
-          if (!contextAssignedObjects.has(obj)) {
-            contextAssignedObjects.set(obj, new Set());
-          }
-          contextAssignedObjects.get(obj).add(k);
-        }
-
-        /*
-         * When the value is a proxy, it's because it comes from the
-         * context, so the inner value is assigned instead.
-         */
-        if (contextProxyToObject.has(value)) {
-          const innerValue = contextProxyToObject.get(value);
-          obj[k] = innerValue;
-        } else {
-          obj[k] = value;
-        }
-        return true;
-      },
-      ownKeys: target => [...new Set([...Object.keys(contextObjectToFallback.get(current)), ...Object.keys(target)])],
-      getOwnPropertyDescriptor: (target, k) => descriptor(target, k) || descriptor(contextObjectToFallback.get(current), k)
-    });
-    contextObjectToProxy.set(current, proxy);
-    contextProxyToObject.set(proxy, current);
-  }
-  return contextObjectToProxy.get(current);
-};
-
-/**
- * Recursively update values within a context object.
- *
- * @param target A context instance.
- * @param source Object with properties to update in `target`.
- */
-const updateContext = (target, source) => {
-  for (const k in source) {
-    if (isPlainObject(peek(target, k)) && isPlainObject(source[k])) {
-      updateContext(peek(target, k), source[k]);
-    } else if (!(k in target)) {
-      target[k] = source[k];
-    }
-  }
-};
 
 /**
  * Recursively clone the passed object.
@@ -1722,7 +1671,7 @@ const getGlobalAsyncEventDirective = type => {
         if (!isPlainObject(value)) {
           warn(`The value of data-wp-context in "${namespace}" store must be a valid stringified JSON object.`);
         }
-        updateContext(currentValue.current, deepClone(value));
+        deepMerge(currentValue.current, deepClone(value), false);
         result[namespace] = proxifyContext(currentValue.current, inheritedValue[namespace]);
       }
       return result;
