@@ -30071,6 +30071,29 @@ const CONTENT = 'content';
  * Internal dependencies
  */
 
+
+function getMetadata(registry, context) {
+  let metaFields = {};
+  const {
+    type
+  } = registry.select(store_store).getCurrentPost();
+  const {
+    getEditedEntityRecord
+  } = registry.select(external_wp_coreData_namespaceObject.store);
+  const {
+    getRegisteredPostMeta
+  } = unlock(registry.select(external_wp_coreData_namespaceObject.store));
+  if (type === 'wp_template') {
+    const fields = getRegisteredPostMeta(context?.postType);
+    // Populate the `metaFields` object with the default values.
+    Object.entries(fields || {}).forEach(([key, props]) => {
+      metaFields[key] = props.default;
+    });
+  } else {
+    metaFields = getEditedEntityRecord('postType', context?.postType, context?.postId).meta;
+  }
+  return metaFields;
+}
 /* harmony default export */ const post_meta = ({
   name: 'core/post-meta',
   getValues({
@@ -30078,12 +30101,12 @@ const CONTENT = 'content';
     context,
     bindings
   }) {
-    const meta = registry.select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', context?.postType, context?.postId)?.meta;
+    const metaFields = getMetadata(registry, context);
     const newValues = {};
     for (const [attributeName, source] of Object.entries(bindings)) {
-      var _meta$source$args$key;
+      var _metaFields$source$ar;
       // Use the key if the value is not set.
-      newValues[attributeName] = (_meta$source$args$key = meta?.[source.args.key]) !== null && _meta$source$args$key !== void 0 ? _meta$source$args$key : source.args.key;
+      newValues[attributeName] = (_metaFields$source$ar = metaFields?.[source.args.key]) !== null && _metaFields$source$ar !== void 0 ? _metaFields$source$ar : source.args.key;
     }
     return newValues;
   },
@@ -30146,12 +30169,13 @@ const CONTENT = 'content';
     registry,
     context
   }) {
-    const metaFields = registry.select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', context?.postType, context?.postId).meta;
+    const metaFields = getMetadata(registry, context);
     if (!metaFields || !Object.keys(metaFields).length) {
       return null;
     }
 
     // Remove footnotes or private keys from the list of fields.
+    // TODO: Remove this once we retrieve the fields from 'types' endpoint in post or page editor.
     return Object.fromEntries(Object.entries(metaFields).filter(([key]) => key !== 'footnotes' && key.charAt(0) !== '_'));
   }
 });

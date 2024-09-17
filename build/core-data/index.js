@@ -612,7 +612,15 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   getEntityRecordPermissions: () => (getEntityRecordPermissions),
   getEntityRecordsPermissions: () => (getEntityRecordsPermissions),
   getNavigationFallbackId: () => (getNavigationFallbackId),
+  getRegisteredPostMeta: () => (getRegisteredPostMeta),
   getUndoManager: () => (getUndoManager)
+});
+
+// NAMESPACE OBJECT: ./packages/core-data/build-module/private-actions.js
+var private_actions_namespaceObject = {};
+__webpack_require__.r(private_actions_namespaceObject);
+__webpack_require__.d(private_actions_namespaceObject, {
+  receiveRegisteredPostMeta: () => (receiveRegisteredPostMeta)
 });
 
 // NAMESPACE OBJECT: ./packages/core-data/build-module/resolvers.js
@@ -640,6 +648,7 @@ __webpack_require__.d(resolvers_namespaceObject, {
   getEntityRecords: () => (resolvers_getEntityRecords),
   getNavigationFallbackId: () => (resolvers_getNavigationFallbackId),
   getRawEntityRecord: () => (resolvers_getRawEntityRecord),
+  getRegisteredPostMeta: () => (resolvers_getRegisteredPostMeta),
   getRevision: () => (resolvers_getRevision),
   getRevisions: () => (resolvers_getRevisions),
   getThemeSupports: () => (resolvers_getThemeSupports),
@@ -20985,6 +20994,25 @@ function defaultTemplates(state = {}, action) {
   }
   return state;
 }
+
+/**
+ * Reducer returning an object of registered post meta.
+ *
+ * @param {Object} state  Current state.
+ * @param {Object} action Dispatched action.
+ *
+ * @return {Object} Updated state.
+ */
+function registeredPostMeta(state = {}, action) {
+  switch (action.type) {
+    case 'RECEIVE_REGISTERED_POST_META':
+      return {
+        ...state,
+        [action.postType]: action.registeredPostMeta
+      };
+  }
+  return state;
+}
 /* harmony default export */ const build_module_reducer = ((0,external_wp_data_namespaceObject.combineReducers)({
   terms,
   users,
@@ -21005,7 +21033,8 @@ function defaultTemplates(state = {}, action) {
   blockPatternCategories,
   userPatternCategories,
   navigationFallbackId,
-  defaultTemplates
+  defaultTemplates,
+  registeredPostMeta
 }));
 
 // EXTERNAL MODULE: ./node_modules/equivalent-key-map/equivalent-key-map.js
@@ -22330,6 +22359,37 @@ function getEntityRecordPermissions(state, kind, name, id) {
   return getEntityRecordsPermissions(state, kind, name, id)[0];
 }
 
+/**
+ * Returns the registered post meta fields for a given post type.
+ *
+ * @param state    Data state.
+ * @param postType Post type.
+ *
+ * @return Registered post meta fields.
+ */
+function getRegisteredPostMeta(state, postType) {
+  var _state$registeredPost;
+  return (_state$registeredPost = state.registeredPostMeta?.[postType]) !== null && _state$registeredPost !== void 0 ? _state$registeredPost : {};
+}
+
+;// CONCATENATED MODULE: ./packages/core-data/build-module/private-actions.js
+/**
+ * Returns an action object used in signalling that the registered post meta
+ * fields for a post type have been received.
+ *
+ * @param {string} postType           Post type slug.
+ * @param {Object} registeredPostMeta Registered post meta.
+ *
+ * @return {Object} Action object.
+ */
+function receiveRegisteredPostMeta(postType, registeredPostMeta) {
+  return {
+    type: 'RECEIVE_REGISTERED_POST_META',
+    postType,
+    registeredPostMeta
+  };
+}
+
 ;// CONCATENATED MODULE: ./node_modules/camel-case/dist.es2015/index.js
 
 
@@ -23392,6 +23452,30 @@ const resolvers_getRevision = (kind, name, recordKey, revisionKey, query) => asy
   }
   if (record) {
     dispatch.receiveRevisions(kind, name, recordKey, record, query);
+  }
+};
+
+/**
+ * Requests a specific post type options from the REST API.
+ *
+ * @param {string} postType Post type slug.
+ */
+const resolvers_getRegisteredPostMeta = postType => async ({
+  dispatch,
+  resolveSelect
+}) => {
+  try {
+    const {
+      rest_namespace: restNamespace = 'wp/v2',
+      rest_base: restBase
+    } = (await resolveSelect.getPostType(postType)) || {};
+    const options = await external_wp_apiFetch_default()({
+      path: `${restNamespace}/${restBase}/?context=edit`,
+      method: 'OPTIONS'
+    });
+    dispatch.receiveRegisteredPostMeta(postType, options?.schema?.properties?.meta?.properties);
+  } catch {
+    dispatch.receiveRegisteredPostMeta(postType, false);
   }
 };
 
@@ -24909,6 +24993,7 @@ lock(privateApis, {
 
 
 
+
 // The entity selectors/resolvers and actions are shortcuts to their generic equivalents
 // (getEntityRecord, getEntityRecords, updateEntityRecord, updateEntityRecords)
 // Instead of getEntityRecord, the consumer could use more user-friendly named selector: getPostType, getTaxonomy...
@@ -24973,6 +25058,7 @@ const storeConfig = () => ({
  */
 const store = (0,external_wp_data_namespaceObject.createReduxStore)(STORE_NAME, storeConfig());
 unlock(store).registerPrivateSelectors(private_selectors_namespaceObject);
+unlock(store).registerPrivateActions(private_actions_namespaceObject);
 (0,external_wp_data_namespaceObject.register)(store); // Register store after unlocking private selectors to allow resolvers to use them.
 
 

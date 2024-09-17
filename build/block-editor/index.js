@@ -54950,6 +54950,7 @@ function useBlockBindingsUtils() {
 const {
   DropdownMenuV2
 } = unlock(external_wp_components_namespaceObject.privateApis);
+const block_bindings_EMPTY_OBJECT = {};
 const block_bindings_useToolsPanelDropdownMenuProps = () => {
   const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   return !isMobile ? {
@@ -55082,64 +55083,75 @@ const BlockBindingsPanel = ({
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const blockContext = (0,external_wp_element_namespaceObject.useContext)(block_context);
   const {
-    bindings
-  } = metadata || {};
-  const {
     removeAllBlockBindings
   } = useBlockBindingsUtils();
   const bindableAttributes = getBindableAttributes(blockName);
   const dropdownMenuProps = block_bindings_useToolsPanelDropdownMenuProps();
+
+  // `useSelect` is used purposely here to ensure `getFieldsList`
+  // is updated whenever there are updates in block context.
+  // `source.getFieldsList` may also call a selector via `registry.select`.
+  const _fieldsList = {};
+  const {
+    fieldsList,
+    canUpdateBlockBindings
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    if (!bindableAttributes || bindableAttributes.length === 0) {
+      return block_bindings_EMPTY_OBJECT;
+    }
+    const {
+      getBlockBindingsSources
+    } = unlock(external_wp_blocks_namespaceObject.privateApis);
+    const registeredSources = getBlockBindingsSources();
+    Object.entries(registeredSources).forEach(([sourceName, {
+      getFieldsList,
+      usesContext
+    }]) => {
+      if (getFieldsList) {
+        // Populate context.
+        const context = {};
+        if (usesContext?.length) {
+          for (const key of usesContext) {
+            context[key] = blockContext[key];
+          }
+        }
+        const sourceList = getFieldsList({
+          registry,
+          context
+        });
+        // Only add source if the list is not empty.
+        if (sourceList) {
+          _fieldsList[sourceName] = {
+            ...sourceList
+          };
+        }
+      }
+    });
+    return {
+      fieldsList: Object.values(_fieldsList).length > 0 ? _fieldsList : block_bindings_EMPTY_OBJECT,
+      canUpdateBlockBindings: select(store).getSettings().canUpdateBlockBindings
+    };
+  }, [blockContext, bindableAttributes, registry]);
+  // Return early if there are no bindable attributes.
+  if (!bindableAttributes || bindableAttributes.length === 0) {
+    return null;
+  }
+  // Remove empty sources from the list of fields.
+  Object.entries(fieldsList).forEach(([key, value]) => {
+    if (!Object.keys(value).length) {
+      delete fieldsList[key];
+    }
+  });
+  // Filter bindings to only show bindable attributes and remove pattern overrides.
+  const {
+    bindings
+  } = metadata || {};
   const filteredBindings = {
     ...bindings
   };
   Object.keys(filteredBindings).forEach(key => {
     if (!canBindAttribute(blockName, key) || filteredBindings[key].source === 'core/pattern-overrides') {
       delete filteredBindings[key];
-    }
-  });
-  const {
-    canUpdateBlockBindings
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    return {
-      canUpdateBlockBindings: select(store).getSettings().canUpdateBlockBindings
-    };
-  }, []);
-  if (!bindableAttributes || bindableAttributes.length === 0) {
-    return null;
-  }
-  const fieldsList = {};
-  const {
-    getBlockBindingsSources
-  } = unlock(external_wp_blocks_namespaceObject.privateApis);
-  const registeredSources = getBlockBindingsSources();
-  Object.entries(registeredSources).forEach(([sourceName, {
-    getFieldsList,
-    usesContext
-  }]) => {
-    if (getFieldsList) {
-      // Populate context.
-      const context = {};
-      if (usesContext?.length) {
-        for (const key of usesContext) {
-          context[key] = blockContext[key];
-        }
-      }
-      const sourceList = getFieldsList({
-        registry,
-        context
-      });
-      // Only add source if the list is not empty.
-      if (sourceList) {
-        fieldsList[sourceName] = {
-          ...sourceList
-        };
-      }
-    }
-  });
-  // Remove empty sources.
-  Object.entries(fieldsList).forEach(([key, value]) => {
-    if (!Object.keys(value).length) {
-      delete fieldsList[key];
     }
   });
 
