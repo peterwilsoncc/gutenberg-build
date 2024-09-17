@@ -2795,6 +2795,7 @@ function useNavigateToEntityRecord(initialPostId, initialPostType, defaultRender
 
 
 
+
 const {
   getLayoutStyles
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
@@ -2893,13 +2894,39 @@ function MetaBoxesMain({
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_preferences_namespaceObject.store);
   const resizableBoxRef = (0,external_wp_element_namespaceObject.useRef)();
   const isShort = (0,external_wp_compose_namespaceObject.useMediaQuery)('(max-height: 549px)');
-  const isAutoHeight = openHeight === undefined;
-  // In case a user size is set stops the default max-height from applying.
-  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    if (!isLegacy && hasAnyVisible && !isShort && !isAutoHeight) {
-      resizableBoxRef.current.resizable.classList.add('has-user-size');
+  const [{
+    min,
+    max
+  }, setHeightConstraints] = (0,external_wp_element_namespaceObject.useState)(() => ({}));
+  // Keeps the resizable area’s size constraints updated taking into account
+  // editor notices. The constraints are also used to derive the value for the
+  // aria-valuenow attribute on the seperator.
+  const effectSizeConstraints = (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
+    const container = node.closest('.interface-interface-skeleton__content');
+    const noticeLists = container.querySelectorAll(':scope > .components-notice-list');
+    const resizeHandle = container.querySelector('.edit-post-meta-boxes-main__resize-handle');
+    const actualize = () => {
+      const fullHeight = container.offsetHeight;
+      let nextMax = fullHeight;
+      for (const element of noticeLists) {
+        nextMax -= element.offsetHeight;
+      }
+      const nextMin = resizeHandle.offsetHeight;
+      setHeightConstraints({
+        min: nextMin,
+        max: nextMax
+      });
+    };
+    const observer = new window.ResizeObserver(actualize);
+    observer.observe(container);
+    for (const element of noticeLists) {
+      observer.observe(element);
     }
-  }, [isAutoHeight, isShort, hasAnyVisible, isLegacy]);
+    return () => observer.disconnect();
+  }, []);
+  const separatorRef = (0,external_wp_element_namespaceObject.useRef)();
+  const separatorHelpId = (0,external_wp_element_namespaceObject.useId)();
+  const [isUntouched, setIsUntouched] = (0,external_wp_element_namespaceObject.useState)(true);
   if (!hasAnyVisible) {
     return;
   }
@@ -2917,6 +2944,14 @@ function MetaBoxesMain({
   if (isLegacy) {
     return contents;
   }
+  const isAutoHeight = openHeight === undefined;
+  let usedMax = '50%'; // Approximation before max has a value.
+  if (max !== undefined) {
+    // Halves the available max height until a user height is set.
+    usedMax = isAutoHeight && isUntouched ? max / 2 : max;
+  }
+  const getAriaValueNow = height => Math.round((height - min) / (max - min) * 100);
+  const usedAriaValueNow = max === undefined || isAutoHeight ? 50 : getAriaValueNow(openHeight);
   if (isShort) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("details", {
       className: className,
@@ -2931,7 +2966,31 @@ function MetaBoxesMain({
       }), contents]
     });
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ResizableBox, {
+
+  // TODO: Support more/all keyboard interactions from the window splitter pattern:
+  // https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/
+  const onSeparatorKeyDown = event => {
+    const delta = {
+      ArrowUp: 20,
+      ArrowDown: -20
+    }[event.key];
+    if (delta) {
+      const {
+        resizable
+      } = resizableBoxRef.current;
+      const fromHeight = isAutoHeight ? resizable.offsetHeight : openHeight;
+      const nextHeight = Math.min(max, Math.max(min, delta + fromHeight));
+      resizableBoxRef.current.updateSize({
+        height: nextHeight,
+        // Oddly, if left unspecified a subsequent drag gesture applies a fixed
+        // width and the pane fails to shrink/grow with parent width changes from
+        // sidebars opening/closing or window resizes.
+        width: 'auto'
+      });
+      setPreference('core/edit-post', 'metaBoxesMainOpenHeight', nextHeight);
+    }
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ResizableBox, {
     className: className,
     defaultSize: {
       height: openHeight
@@ -2946,10 +3005,9 @@ function MetaBoxesMain({
       topRight: false,
       bottomRight: false,
       bottomLeft: false
-    }
-    // This is overriden by an !important rule that applies until user resizes.
-    ,
-    maxHeight: "100%",
+    },
+    minHeight: min,
+    maxHeight: usedMax,
     bounds: "parent",
     boundsByDirection: true
     // Avoids hiccups while dragging over objects like iframes and ensures that
@@ -2963,15 +3021,55 @@ function MetaBoxesMain({
       target.setPointerCapture(pointerId);
     },
     onResizeStart: (event, direction, elementRef) => {
-      // Avoids height jumping in case it’s limited by max-height.
-      elementRef.style.height = `${elementRef.offsetHeight}px`;
-      // Stops initial max-height from being applied.
-      elementRef.classList.add('has-user-size');
+      if (isAutoHeight) {
+        const heightNow = elementRef.offsetHeight;
+        // Sets the starting height to avoid visual jumps in height and
+        // aria-valuenow being `NaN` for the first (few) resize events.
+        resizableBoxRef.current.updateSize({
+          height: heightNow
+        });
+        // Causes `maxHeight` to update to full `max` value instead of half.
+        setIsUntouched(false);
+      }
+    },
+    onResize: () => {
+      const {
+        height
+      } = resizableBoxRef.current.state;
+      const separator = separatorRef.current;
+      separator.ariaValueNow = getAriaValueNow(height);
     },
     onResizeStop: () => {
-      setPreference('core/edit-post', 'metaBoxesMainOpenHeight', resizableBoxRef.current.state.height);
+      const nextHeight = resizableBoxRef.current.state.height;
+      setPreference('core/edit-post', 'metaBoxesMainOpenHeight', nextHeight);
     },
-    children: contents
+    handleClasses: {
+      top: 'edit-post-meta-boxes-main__resize-handle'
+    },
+    handleComponent: {
+      top: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
+          text: (0,external_wp_i18n_namespaceObject.__)('Drag to resize'),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("button", {
+            ref: separatorRef,
+            "aria-label": (0,external_wp_i18n_namespaceObject.__)('Drag to resize'),
+            "aria-describedby": separatorHelpId,
+            onKeyDown: onSeparatorKeyDown
+            // Disable reason: buttons are allowed to be separator role.
+            // eslint-disable-next-line jsx-a11y/no-interactive-element-to-noninteractive-role
+            ,
+            role: "separator",
+            "aria-valuenow": usedAriaValueNow
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
+          id: separatorHelpId,
+          children: (0,external_wp_i18n_namespaceObject.__)('Use up and down arrow keys to resize the metabox panel.')
+        })]
+      })
+    },
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("meta", {
+      ref: effectSizeConstraints
+    }), contents]
   });
 }
 function Layout({
