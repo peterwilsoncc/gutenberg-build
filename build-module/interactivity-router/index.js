@@ -292,6 +292,11 @@ const isValidEvent = event => event && event.button === 0 &&
 
 // Variable to store the current navigation.
 let navigatingTo = '';
+let hasLoadedNavigationTextsData = false;
+const navigationTexts = {
+  loading: 'Loading page, please wait.',
+  loaded: 'Page Loaded.'
+};
 const {
   state,
   actions
@@ -301,10 +306,6 @@ const {
     navigation: {
       hasStarted: false,
       hasFinished: false,
-      texts: {
-        loading: '',
-        loaded: ''
-      },
       message: ''
     }
   },
@@ -360,7 +361,7 @@ const {
           navigation.hasFinished = false;
         }
         if (screenReaderAnnouncement) {
-          navigation.message = navigation.texts.loading;
+          a11ySpeak('loading');
         }
       }, 400);
       const page = yield Promise.race([pages.get(pagePath), timeoutPromise]);
@@ -388,10 +389,7 @@ const {
           navigation.hasFinished = true;
         }
         if (screenReaderAnnouncement) {
-          // Announce that the page has been loaded. If the message is the
-          // same, we use a no-break space similar to the @wordpress/a11y
-          // package: https://github.com/WordPress/gutenberg/blob/c395242b8e6ee20f8b06c199e4fc2920d7018af1/packages/a11y/src/filter-message.js#L20-L26
-          navigation.message = navigation.texts.loaded + (navigation.message === navigation.texts.loaded ? '\u00A0' : '');
+          a11ySpeak('loaded');
         }
 
         // Scroll to the anchor if exits in the link.
@@ -433,6 +431,48 @@ const {
   }
 });
 
+/**
+ * Announces a message to screen readers.
+ *
+ * This is a wrapper around the `@wordpress/a11y` package's `speak` function. It handles importing
+ * the package on demand and should be used instead of calling `ally.speak` direacly.
+ *
+ * @param messageKey The message to be announced by assistive technologies.
+ */
+function a11ySpeak(messageKey) {
+  if (!hasLoadedNavigationTextsData) {
+    hasLoadedNavigationTextsData = true;
+    const content = document.getElementById('wp-script-module-data-@wordpress/interactivity-router')?.textContent;
+    if (content) {
+      try {
+        const parsed = JSON.parse(content);
+        if (typeof parsed?.i18n?.loading === 'string') {
+          navigationTexts.loading = parsed.i18n.loading;
+        }
+        if (typeof parsed?.i18n?.loaded === 'string') {
+          navigationTexts.loaded = parsed.i18n.loaded;
+        }
+      } catch {}
+    } else {
+      // Fallback to localized strings from Interactivity API state.
+      if (state.navigation.texts?.loading) {
+        navigationTexts.loading = state.navigation.texts.loading;
+      }
+      if (state.navigation.texts?.loaded) {
+        navigationTexts.loaded = state.navigation.texts.loaded;
+      }
+    }
+  }
+  const message = navigationTexts[messageKey];
+  if (true) {
+    Promise.resolve(/* import() */).then(__webpack_require__.bind(__webpack_require__, 105)).then(({
+      speak
+    }) => speak(message),
+    // Ignore failures to load the a11y module.
+    () => {});
+  } else {}
+}
+
 // Add click and prefetch to all links.
 if (true) {
   if (navigationMode === 'fullPage') {
@@ -458,6 +498,13 @@ if (true) {
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);
+
+/***/ }),
+
+/***/ 105:
+/***/ ((module) => {
+
+module.exports = import("@wordpress/a11y");;
 
 /***/ }),
 
