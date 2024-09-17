@@ -54786,14 +54786,7 @@ function BlockHooksControlPure({
             return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
               __nextHasNoMarginBottom: true,
               checked: checked,
-              label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-                justify: "flex-start",
-                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
-                  icon: block.icon
-                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-                  children: block.title
-                })]
-              }),
+              label: block.title,
               onChange: () => {
                 if (!checked) {
                   // Create and insert block.
