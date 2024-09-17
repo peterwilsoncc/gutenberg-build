@@ -6177,24 +6177,32 @@ function CategoriesEdit({
     showOnlyTopLevel,
     showEmpty,
     label,
-    showLabel
+    showLabel,
+    taxonomy: taxonomySlug
   },
   setAttributes,
   className
 }) {
   const selectId = (0,external_wp_compose_namespaceObject.useInstanceId)(CategoriesEdit, 'blocks-category-select');
+  const {
+    records: allTaxonomies,
+    isResolvingTaxonomies
+  } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('root', 'taxonomy');
+  const taxonomies = allTaxonomies?.filter(t => t.visibility.public);
+  const taxonomy = taxonomies?.find(t => t.slug === taxonomySlug);
+  const isHierarchicalTaxonomy = !isResolvingTaxonomies && taxonomy?.hierarchical;
   const query = {
     per_page: -1,
     hide_empty: !showEmpty,
     context: 'view'
   };
-  if (showOnlyTopLevel) {
+  if (isHierarchicalTaxonomy && showOnlyTopLevel) {
     query.parent = 0;
   }
   const {
     records: categories,
     isResolving
-  } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('taxonomy', 'category', query);
+  } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('taxonomy', taxonomySlug, query);
   const getCategoriesList = parentId => {
     if (!categories?.length) {
       return [];
@@ -6211,7 +6219,7 @@ function CategoriesEdit({
   });
   const renderCategoryName = name => !name ? (0,external_wp_i18n_namespaceObject.__)('(Untitled)') : (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(name).trim();
   const renderCategoryList = () => {
-    const parentId = showHierarchy ? 0 : null;
+    const parentId = isHierarchicalTaxonomy && showHierarchy ? 0 : null;
     const categoriesList = getCategoriesList(parentId);
     return categoriesList.map(category => renderCategoryListItem(category));
   };
@@ -6230,20 +6238,20 @@ function CategoriesEdit({
         target: "_blank",
         rel: "noreferrer noopener",
         children: renderCategoryName(name)
-      }), showPostCounts && ` (${count})`, showHierarchy && !!childCategories.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
+      }), showPostCounts && ` (${count})`, isHierarchicalTaxonomy && showHierarchy && !!childCategories.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
         className: "children",
         children: childCategories.map(childCategory => renderCategoryListItem(childCategory))
       })]
     }, id);
   };
   const renderCategoryDropdown = () => {
-    const parentId = showHierarchy ? 0 : null;
+    const parentId = isHierarchicalTaxonomy && showHierarchy ? 0 : null;
     const categoriesList = getCategoriesList(parentId);
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [showLabel ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
         className: "wp-block-categories__label",
         "aria-label": (0,external_wp_i18n_namespaceObject.__)('Label text'),
-        placeholder: (0,external_wp_i18n_namespaceObject.__)('Categories'),
+        placeholder: taxonomy.name,
         withoutInteractiveFormatting: true,
         value: label,
         onChange: html => setAttributes({
@@ -6252,11 +6260,12 @@ function CategoriesEdit({
       }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
         as: "label",
         htmlFor: selectId,
-        children: label ? label : (0,external_wp_i18n_namespaceObject.__)('Categories')
+        children: label ? label : taxonomy.name
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("select", {
         id: selectId,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("option", {
-          children: (0,external_wp_i18n_namespaceObject.__)('Select Category')
+          children: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: taxonomy's singular name */
+          (0,external_wp_i18n_namespaceObject.__)('Select %s'), taxonomy.labels.singular_name)
         }), categoriesList.map(category => renderCategoryDropdownItem(category, 0))]
       })]
     });
@@ -6273,7 +6282,7 @@ function CategoriesEdit({
       children: [Array.from({
         length: level * 3
       }).map(() => '\xa0'), renderCategoryName(name), showPostCounts && ` (${count})`]
-    }, id), showHierarchy && !!childCategories.length && childCategories.map(childCategory => renderCategoryDropdownItem(childCategory, level + 1))];
+    }, id), isHierarchicalTaxonomy && showHierarchy && !!childCategories.length && childCategories.map(childCategory => renderCategoryDropdownItem(childCategory, level + 1))];
   };
   const TagName = !!categories?.length && !displayAsDropdown && !isResolving ? 'ul' : 'div';
   const classes = dist_clsx(className, {
@@ -6288,7 +6297,19 @@ function CategoriesEdit({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
         title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        children: [Array.isArray(taxonomies) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+          __nextHasNoMarginBottom: true,
+          __next40pxDefaultSize: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Taxonomy'),
+          options: taxonomies.map(t => ({
+            label: t.name,
+            value: t.slug
+          })),
+          value: taxonomySlug,
+          onChange: selectedTaxonomy => setAttributes({
+            taxonomy: selectedTaxonomy
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
           __nextHasNoMarginBottom: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Display as dropdown'),
           checked: displayAsDropdown,
@@ -6304,17 +6325,17 @@ function CategoriesEdit({
           label: (0,external_wp_i18n_namespaceObject.__)('Show post counts'),
           checked: showPostCounts,
           onChange: toggleAttribute('showPostCounts')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        }), isHierarchicalTaxonomy && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
           __nextHasNoMarginBottom: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Show only top level categories'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Show only top level terms'),
           checked: showOnlyTopLevel,
           onChange: toggleAttribute('showOnlyTopLevel')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
           __nextHasNoMarginBottom: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Show empty categories'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Show empty terms'),
           checked: showEmpty,
           onChange: toggleAttribute('showEmpty')
-        }), !showOnlyTopLevel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        }), isHierarchicalTaxonomy && !showOnlyTopLevel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
           __nextHasNoMarginBottom: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Show hierarchy'),
           checked: showHierarchy,
@@ -6323,10 +6344,10 @@ function CategoriesEdit({
       })
     }), isResolving && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
       icon: library_pin,
-      label: (0,external_wp_i18n_namespaceObject.__)('Categories'),
+      label: (0,external_wp_i18n_namespaceObject.__)('Terms'),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
     }), !isResolving && categories?.length === 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-      children: (0,external_wp_i18n_namespaceObject.__)('Your site does not have any posts, so there is nothing to display here at the moment.')
+      children: taxonomy.labels.no_terms
     }), !isResolving && categories?.length > 0 && (displayAsDropdown ? renderCategoryDropdown() : renderCategoryList())]
   });
 }
@@ -6345,11 +6366,16 @@ const categories_metadata = {
   $schema: "https://schemas.wp.org/trunk/block.json",
   apiVersion: 3,
   name: "core/categories",
-  title: "Categories List",
+  title: "Terms List",
   category: "widgets",
-  description: "Display a list of all categories.",
+  description: "Display a list of all terms of a given taxonomy.",
+  keywords: ["categories"],
   textdomain: "default",
   attributes: {
+    taxonomy: {
+      type: "string",
+      "default": "category"
+    },
     displayAsDropdown: {
       type: "boolean",
       "default": false
