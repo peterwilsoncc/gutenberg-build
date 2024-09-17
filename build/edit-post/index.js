@@ -2634,13 +2634,16 @@ function usePaddingAppender() {
 
 
 
+const isGutenbergPlugin =  true ? true : 0;
 function useShouldIframe() {
   const {
+    isBlockBasedTheme,
     hasV3BlocksOnly,
     isEditingTemplate,
     isZoomOutMode
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
+      getEditorSettings,
       getCurrentPostType
     } = select(external_wp_editor_namespaceObject.store);
     const {
@@ -2649,7 +2652,9 @@ function useShouldIframe() {
     const {
       getBlockTypes
     } = select(external_wp_blocks_namespaceObject.store);
+    const editorSettings = getEditorSettings();
     return {
+      isBlockBasedTheme: editorSettings.__unstableIsBlockBasedTheme,
       hasV3BlocksOnly: getBlockTypes().every(type => {
         return type.apiVersion >= 3;
       }),
@@ -2657,7 +2662,7 @@ function useShouldIframe() {
       isZoomOutMode: __unstableGetEditorMode() === 'zoom-out'
     };
   }, []);
-  return hasV3BlocksOnly || isEditingTemplate || isZoomOutMode;
+  return hasV3BlocksOnly || isGutenbergPlugin && isBlockBasedTheme || isEditingTemplate || isZoomOutMode;
 }
 
 ;// CONCATENATED MODULE: ./packages/edit-post/build-module/hooks/use-navigate-to-entity-record.js
