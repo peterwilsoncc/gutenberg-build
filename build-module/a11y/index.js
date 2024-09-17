@@ -28,57 +28,6 @@ __webpack_require__.d(__webpack_exports__, {
   D: () => (/* reexport */ speak)
 });
 
-;// CONCATENATED MODULE: ./packages/a11y/build-module/shared/add-container.js
-/**
- * Build the live regions markup.
- *
- * @param {string} [ariaLive] Value for the 'aria-live' attribute; default: 'polite'.
- *
- * @return {HTMLDivElement} The ARIA live region HTML element.
- */
-function addContainer(ariaLive = 'polite') {
-  const container = document.createElement('div');
-  container.id = `a11y-speak-${ariaLive}`;
-  container.className = 'a11y-speak-region';
-  container.setAttribute('style', 'position: absolute;' + 'margin: -1px;' + 'padding: 0;' + 'height: 1px;' + 'width: 1px;' + 'overflow: hidden;' + 'clip: rect(1px, 1px, 1px, 1px);' + '-webkit-clip-path: inset(50%);' + 'clip-path: inset(50%);' + 'border: 0;' + 'word-wrap: normal !important;');
-  container.setAttribute('aria-live', ariaLive);
-  container.setAttribute('aria-relevant', 'additions text');
-  container.setAttribute('aria-atomic', 'true');
-  const {
-    body
-  } = document;
-  if (body) {
-    body.appendChild(container);
-  }
-  return container;
-}
-
-;// CONCATENATED MODULE: ./packages/a11y/build-module/shared/add-intro-text.js
-/**
- * Build the explanatory text to be placed before the aria live regions.
- *
- * This text is initially hidden from assistive technologies by using a `hidden`
- * HTML attribute which is then removed once a message fills the aria-live regions.
- *
- * @param {string} introTextContent The translated intro text content.
- * @return {HTMLParagraphElement} The explanatory text HTML element.
- */
-function addIntroText(introTextContent) {
-  const introText = document.createElement('p');
-  introText.id = 'a11y-speak-intro-text';
-  introText.className = 'a11y-speak-intro-text';
-  introText.textContent = introTextContent;
-  introText.setAttribute('style', 'position: absolute;' + 'margin: -1px;' + 'padding: 0;' + 'height: 1px;' + 'width: 1px;' + 'overflow: hidden;' + 'clip: rect(1px, 1px, 1px, 1px);' + '-webkit-clip-path: inset(50%);' + 'clip-path: inset(50%);' + 'border: 0;' + 'word-wrap: normal !important;');
-  introText.setAttribute('hidden', 'hidden');
-  const {
-    body
-  } = document;
-  if (body) {
-    body.appendChild(introText);
-  }
-  return introText;
-}
-
 ;// CONCATENATED MODULE: ./packages/a11y/build-module/shared/clear.js
 /**
  * Clears the a11y-speak-region elements and hides the explanatory text.
@@ -134,29 +83,6 @@ function filterMessage(message) {
 
 
 
-
-
-/**
- * Create the live regions.
- * @param {string} introTextContent The intro text content.
- */
-function makeSetupFunction(introTextContent) {
-  return function setup() {
-    const introText = document.getElementById('a11y-speak-intro-text');
-    const containerAssertive = document.getElementById('a11y-speak-assertive');
-    const containerPolite = document.getElementById('a11y-speak-polite');
-    if (introText === null) {
-      addIntroText(introTextContent);
-    }
-    if (containerAssertive === null) {
-      addContainer('assertive');
-    }
-    if (containerPolite === null) {
-      addContainer('polite');
-    }
-  };
-}
-
 /**
  * Allows you to easily announce dynamic interface updates to screen readers using ARIA live regions.
  * This module is inspired by the `speak` function in `wp-a11y.js`.
@@ -206,24 +132,12 @@ function speak(message, ariaLive) {
  */
 
 
-
-// Without an i18n Script Module, "Notifications" (the only localized text used in this module)
-// will be translated on the server and provided as script-module data.
-let notificationsText = 'Notifications';
-try {
-  const textContent = document.getElementById('wp-script-module-data-@wordpress/a11y')?.textContent;
-  if (textContent) {
-    var _parsed$i18n$Notifica;
-    const parsed = JSON.parse(textContent);
-    notificationsText = (_parsed$i18n$Notifica = parsed?.i18n?.Notifications) !== null && _parsed$i18n$Notifica !== void 0 ? _parsed$i18n$Notifica : notificationsText;
-  }
-} catch {}
-
 /**
- * Create the live regions.
+ * This no-op function is exported to provide compatibility with the `wp-a11y` Script.
+ *
+ * Filters should inject the relevant HTML on page load instead of requiring setup.
  */
-const setup = makeSetupFunction(notificationsText);
-setup();
+const setup = () => {};
 
 var __webpack_exports__setup = __webpack_exports__.c;
 var __webpack_exports__speak = __webpack_exports__.D;

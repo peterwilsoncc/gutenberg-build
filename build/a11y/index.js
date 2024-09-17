@@ -58,9 +58,7 @@ __webpack_require__.d(__webpack_exports__, {
 ;// CONCATENATED MODULE: external ["wp","domReady"]
 const external_wp_domReady_namespaceObject = window["wp"]["domReady"];
 var external_wp_domReady_default = /*#__PURE__*/__webpack_require__.n(external_wp_domReady_namespaceObject);
-;// CONCATENATED MODULE: external ["wp","i18n"]
-const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
-;// CONCATENATED MODULE: ./packages/a11y/build-module/shared/add-container.js
+;// CONCATENATED MODULE: ./packages/a11y/build-module/script/add-container.js
 /**
  * Build the live regions markup.
  *
@@ -85,21 +83,27 @@ function addContainer(ariaLive = 'polite') {
   return container;
 }
 
-;// CONCATENATED MODULE: ./packages/a11y/build-module/shared/add-intro-text.js
+;// CONCATENATED MODULE: external ["wp","i18n"]
+const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
+;// CONCATENATED MODULE: ./packages/a11y/build-module/script/add-intro-text.js
+/**
+ * WordPress dependencies
+ */
+
+
 /**
  * Build the explanatory text to be placed before the aria live regions.
  *
  * This text is initially hidden from assistive technologies by using a `hidden`
  * HTML attribute which is then removed once a message fills the aria-live regions.
  *
- * @param {string} introTextContent The translated intro text content.
  * @return {HTMLParagraphElement} The explanatory text HTML element.
  */
-function addIntroText(introTextContent) {
+function addIntroText() {
   const introText = document.createElement('p');
   introText.id = 'a11y-speak-intro-text';
   introText.className = 'a11y-speak-intro-text';
-  introText.textContent = introTextContent;
+  introText.textContent = (0,external_wp_i18n_namespaceObject.__)('Notifications');
   introText.setAttribute('style', 'position: absolute;' + 'margin: -1px;' + 'padding: 0;' + 'height: 1px;' + 'width: 1px;' + 'overflow: hidden;' + 'clip: rect(1px, 1px, 1px, 1px);' + '-webkit-clip-path: inset(50%);' + 'clip-path: inset(50%);' + 'border: 0;' + 'word-wrap: normal !important;');
   introText.setAttribute('hidden', 'hidden');
   const {
@@ -166,29 +170,6 @@ function filterMessage(message) {
 
 
 
-
-
-/**
- * Create the live regions.
- * @param {string} introTextContent The intro text content.
- */
-function makeSetupFunction(introTextContent) {
-  return function setup() {
-    const introText = document.getElementById('a11y-speak-intro-text');
-    const containerAssertive = document.getElementById('a11y-speak-assertive');
-    const containerPolite = document.getElementById('a11y-speak-polite');
-    if (introText === null) {
-      addIntroText(introTextContent);
-    }
-    if (containerAssertive === null) {
-      addContainer('assertive');
-    }
-    if (containerPolite === null) {
-      addContainer('polite');
-    }
-  };
-}
-
 /**
  * Allows you to easily announce dynamic interface updates to screen readers using ARIA live regions.
  * This module is inspired by the `speak` function in `wp-a11y.js`.
@@ -238,17 +219,30 @@ function speak(message, ariaLive) {
  */
 
 
-
 /**
  * Internal dependencies
  */
 
 
 
+
 /**
  * Create the live regions.
  */
-const setup = makeSetupFunction((0,external_wp_i18n_namespaceObject.__)('Notifications'));
+function setup() {
+  const introText = document.getElementById('a11y-speak-intro-text');
+  const containerAssertive = document.getElementById('a11y-speak-assertive');
+  const containerPolite = document.getElementById('a11y-speak-polite');
+  if (introText === null) {
+    addIntroText();
+  }
+  if (containerAssertive === null) {
+    addContainer('assertive');
+  }
+  if (containerPolite === null) {
+    addContainer('polite');
+  }
+}
 
 /**
  * Run setup on domReady.
