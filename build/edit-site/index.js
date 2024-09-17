@@ -26501,24 +26501,15 @@ const {
  *
  * @return {Object} Translated string for the view title and associated icon, both defaulting to ''.
  */
-function getEditorCanvasContainerTitleAndIcon(view) {
+function getEditorCanvasContainerTitle(view) {
   switch (view) {
     case 'style-book':
-      return {
-        title: (0,external_wp_i18n_namespaceObject.__)('Style Book'),
-        icon: library_seen
-      };
+      return (0,external_wp_i18n_namespaceObject.__)('Style Book');
     case 'global-styles-revisions':
     case 'global-styles-revisions:style-book':
-      return {
-        title: (0,external_wp_i18n_namespaceObject.__)('Style Revisions'),
-        icon: library_backup
-      };
+      return (0,external_wp_i18n_namespaceObject.__)('Style Revisions');
     default:
-      return {
-        title: '',
-        icon: ''
-      };
+      return '';
   }
 }
 function EditorCanvasContainer({
@@ -26569,9 +26560,7 @@ function EditorCanvasContainer({
   if (isClosed) {
     return null;
   }
-  const {
-    title
-  } = getEditorCanvasContainerTitleAndIcon(editorCanvasContainerView);
+  const title = getEditorCanvasContainerTitle(editorCanvasContainerView);
   const shouldShowCloseButton = onClose || closeButtonLabel;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditorContentSlotFill.Fill, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -28722,10 +28711,7 @@ function EditSiteEditor({
   }, [history, createSuccessNotice]);
 
   // Replace the title and icon displayed in the DocumentBar when there's an overlay visible.
-  const {
-    title,
-    icon
-  } = getEditorCanvasContainerTitleAndIcon(editorCanvasView);
+  const title = getEditorCanvasContainerTitle(editorCanvasView);
   const isReady = !isLoading;
   const transition = {
     duration: disableMotion ? 0 : 0.2
@@ -28749,7 +28735,6 @@ function EditSiteEditor({
       customSavePanel: _isPreviewingTheme && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SavePanel, {}),
       forceDisableBlockTools: !hasDefaultEditorCanvasView,
       title: title,
-      icon: icon,
       iframeProps: iframeProps,
       onActionPerformed: onActionPerformed,
       extraSidebarPanels: !isEditingPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(plugin_template_setting_panel.Slot, {}),

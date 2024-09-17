@@ -10520,18 +10520,9 @@ const external_wp_commands_namespaceObject = window["wp"]["commands"];
 
 
 
+/** @typedef {import("@wordpress/components").IconType} IconType */
 
 
-const TYPE_LABELS = {
-  // translators: 1: Pattern title.
-  wp_pattern: (0,external_wp_i18n_namespaceObject.__)('Editing pattern: %s'),
-  // translators: 1: Navigation menu title.
-  wp_navigation: (0,external_wp_i18n_namespaceObject.__)('Editing navigation menu: %s'),
-  // translators: 1: Template title.
-  wp_template: (0,external_wp_i18n_namespaceObject.__)('Editing template: %s'),
-  // translators: 1: Template part title.
-  wp_template_part: (0,external_wp_i18n_namespaceObject.__)('Editing template part: %s')
-};
 const MotionButton = (0,external_wp_components_namespaceObject.__unstableMotion)(external_wp_components_namespaceObject.Button);
 
 /**
@@ -10543,21 +10534,21 @@ const MotionButton = (0,external_wp_components_namespaceObject.__unstableMotion)
  * ```jsx
  * <DocumentBar />
  * ```
- * @param {Object}                                   props       The component props.
- * @param {string}                                   props.title A title for the document, defaulting to the document or
- *                                                               template title currently being edited.
- * @param {import("@wordpress/components").IconType} props.icon  An icon for the document, defaulting to an icon for document
- *                                                               or template currently being edited.
+ * @param {Object}   props       The component props.
+ * @param {string}   props.title A title for the document, defaulting to the document or
+ *                               template title currently being edited.
+ * @param {IconType} props.icon  An icon for the document, no default.
+ *                               (A default icon indicating the document post type is no longer used.)
  *
  * @return {JSX.Element} The rendered DocumentBar component.
  */
 function DocumentBar(props) {
   const {
     postType,
+    postTypeLabel,
     documentTitle,
     isNotFound,
     isUnsyncedPattern,
-    templateIcon,
     templateTitle,
     onNavigateToPreviousEntityRecord
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -10569,20 +10560,20 @@ function DocumentBar(props) {
     } = select(store_store);
     const {
       getEditedEntityRecord,
+      getPostType,
       isResolving: isResolvingSelector
     } = select(external_wp_coreData_namespaceObject.store);
     const _postType = getCurrentPostType();
     const _postId = getCurrentPostId();
     const _document = getEditedEntityRecord('postType', _postType, _postId);
     const _templateInfo = getTemplateInfo(_document);
+    const _postTypeLabel = getPostType(_postType)?.labels?.singular_name;
     return {
       postType: _postType,
+      postTypeLabel: _postTypeLabel,
       documentTitle: _document.title,
       isNotFound: !_document && !isResolvingSelector('getEditedEntityRecord', 'postType', _postType, _postId),
       isUnsyncedPattern: _document?.wp_pattern_sync_status === 'unsynced',
-      templateIcon: unlock(select(store_store)).getPostIcon(_postType, {
-        area: _document?.area
-      }),
       templateTitle: _templateInfo.title,
       onNavigateToPreviousEntityRecord: getEditorSettings().onNavigateToPreviousEntityRecord
     };
@@ -10596,7 +10587,7 @@ function DocumentBar(props) {
   const hasBackButton = !!onNavigateToPreviousEntityRecord;
   const entityTitle = isTemplate ? templateTitle : documentTitle;
   const title = props.title || entityTitle;
-  const icon = props.icon || templateIcon;
+  const icon = props.icon;
   const mountedRef = (0,external_wp_element_namespaceObject.useRef)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     mountedRef.current = true;
@@ -10656,15 +10647,18 @@ function DocumentBar(props) {
         transition: isReducedMotion ? {
           duration: 0
         } : undefined,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
+        children: [icon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
           icon: icon
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalText, {
           size: "body",
           as: "h1",
-          "aria-label": !props.title && TYPE_LABELS[postType] ?
-          // eslint-disable-next-line @wordpress/valid-sprintf
-          (0,external_wp_i18n_namespaceObject.sprintf)(TYPE_LABELS[postType], title) : undefined,
-          children: title ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title) : (0,external_wp_i18n_namespaceObject.__)('No title')
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            className: "editor-document-bar__post-title",
+            children: title ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title) : (0,external_wp_i18n_namespaceObject.__)('No title')
+          }), postTypeLabel && !props.title && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            className: "editor-document-bar__post-type-label",
+            children: '· ' + (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(postTypeLabel)
+          })]
         })]
       }, hasBackButton), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "editor-document-bar__shortcut",
@@ -26408,8 +26402,7 @@ function Header({
   forceIsDirty,
   forceDisableBlockTools,
   setEntitiesSavedStatesCallback,
-  title,
-  icon
+  title
 }) {
   const zoomOutExperimentEnabled = window.__experimentalEnableZoomOutExperiment;
   const isWideViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('large');
@@ -26476,8 +26469,7 @@ function Header({
         type: 'tween'
       },
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DocumentBar, {
-        title: title,
-        icon: icon
+        title: title
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__unstableMotion.div, {
       variants: toolbarVariations,
@@ -27704,7 +27696,6 @@ function EditorInterface({
   customSavePanel,
   forceDisableBlockTools,
   title,
-  icon,
   iframeProps
 }) {
   const {
@@ -27772,8 +27763,7 @@ function EditorInterface({
       setEntitiesSavedStatesCallback: setEntitiesSavedStatesCallback,
       customSaveButton: customSaveButton,
       forceDisableBlockTools: forceDisableBlockTools,
-      title: title,
-      icon: icon
+      title: title
     }),
     editorNotices: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(editor_notices, {}),
     secondarySidebar: !isPreviewMode && mode === 'visual' && (isInserterOpened && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InserterSidebar, {}) || isListViewOpened && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ListViewSidebar, {})),
