@@ -30080,7 +30080,7 @@ const CONTENT = 'content';
  */
 
 
-function getMetadata(registry, context) {
+function getMetadata(registry, context, registeredFields) {
   let metaFields = {};
   const {
     type
@@ -30088,14 +30088,12 @@ function getMetadata(registry, context) {
   const {
     getEditedEntityRecord
   } = registry.select(external_wp_coreData_namespaceObject.store);
-  const {
-    getRegisteredPostMeta
-  } = unlock(registry.select(external_wp_coreData_namespaceObject.store));
   if (type === 'wp_template') {
-    const fields = getRegisteredPostMeta(context?.postType);
     // Populate the `metaFields` object with the default values.
-    Object.entries(fields || {}).forEach(([key, props]) => {
-      metaFields[key] = props.default;
+    Object.entries(registeredFields || {}).forEach(([key, props]) => {
+      if (props.default) {
+        metaFields[key] = props.default;
+      }
     });
   } else {
     metaFields = getEditedEntityRecord('postType', context?.postType, context?.postId).meta;
@@ -30109,12 +30107,17 @@ function getMetadata(registry, context) {
     context,
     bindings
   }) {
-    const metaFields = getMetadata(registry, context);
+    const {
+      getRegisteredPostMeta
+    } = unlock(registry.select(external_wp_coreData_namespaceObject.store));
+    const registeredFields = getRegisteredPostMeta(context?.postType);
+    const metaFields = getMetadata(registry, context, registeredFields);
     const newValues = {};
     for (const [attributeName, source] of Object.entries(bindings)) {
-      var _metaFields$source$ar;
-      // Use the key if the value is not set.
-      newValues[attributeName] = (_metaFields$source$ar = metaFields?.[source.args.key]) !== null && _metaFields$source$ar !== void 0 ? _metaFields$source$ar : source.args.key;
+      var _ref, _metaFields$metaKey;
+      // Use the value, the field label, or the field key.
+      const metaKey = source.args.key;
+      newValues[attributeName] = (_ref = (_metaFields$metaKey = metaFields?.[metaKey]) !== null && _metaFields$metaKey !== void 0 ? _metaFields$metaKey : registeredFields?.[metaKey]?.title) !== null && _ref !== void 0 ? _ref : metaKey;
     }
     return newValues;
   },
@@ -30177,14 +30180,22 @@ function getMetadata(registry, context) {
     registry,
     context
   }) {
-    const metaFields = getMetadata(registry, context);
+    const {
+      getRegisteredPostMeta
+    } = unlock(registry.select(external_wp_coreData_namespaceObject.store));
+    const registeredFields = getRegisteredPostMeta(context?.postType);
+    const metaFields = getMetadata(registry, context, registeredFields);
     if (!metaFields || !Object.keys(metaFields).length) {
       return null;
     }
-
+    return Object.fromEntries(Object.entries(metaFields)
     // Remove footnotes or private keys from the list of fields.
-    // TODO: Remove this once we retrieve the fields from 'types' endpoint in post or page editor.
-    return Object.fromEntries(Object.entries(metaFields).filter(([key]) => key !== 'footnotes' && key.charAt(0) !== '_'));
+    .filter(([key]) => key !== 'footnotes' && key.charAt(0) !== '_')
+    // Return object with label and value.
+    .map(([key, value]) => [key, {
+      label: registeredFields?.[key]?.title || key,
+      value
+    }]));
   }
 });
 

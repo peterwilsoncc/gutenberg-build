@@ -54977,7 +54977,7 @@ function BlockBindingsPanelDropdown({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenuV2.Group, {
         children: [Object.keys(fieldsList).length > 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuV2.GroupLabel, {
           children: registeredSources[name].label
-        }), Object.entries(fields).map(([key, value]) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenuV2.RadioItem, {
+        }), Object.entries(fields).map(([key, args]) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenuV2.RadioItem, {
           onChange: () => updateBlockBindings({
             [attribute]: {
               source: name,
@@ -54990,9 +54990,9 @@ function BlockBindingsPanelDropdown({
           value: key,
           checked: key === currentKey,
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuV2.ItemLabel, {
-            children: key
+            children: args?.label
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuV2.ItemHelpText, {
-            children: value
+            children: args?.value
           })]
         }, key))]
       }), i !== Object.keys(fieldsList).length - 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuV2.Separator, {})]
@@ -55001,7 +55001,8 @@ function BlockBindingsPanelDropdown({
 }
 function BlockBindingsAttribute({
   attribute,
-  binding
+  binding,
+  fieldsList
 }) {
   const {
     source: sourceName,
@@ -55019,18 +55020,20 @@ function BlockBindingsAttribute({
       truncate: true,
       variant: !isSourceInvalid && 'muted',
       isDestructive: isSourceInvalid,
-      children: isSourceInvalid ? (0,external_wp_i18n_namespaceObject.__)('Invalid source') : args?.key || sourceProps?.label || sourceName
+      children: isSourceInvalid ? (0,external_wp_i18n_namespaceObject.__)('Invalid source') : fieldsList?.[sourceName]?.[args?.key]?.label || sourceProps?.label || sourceName
     })]
   });
 }
 function ReadOnlyBlockBindingsPanelItems({
-  bindings
+  bindings,
+  fieldsList
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: Object.entries(bindings).map(([attribute, binding]) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockBindingsAttribute, {
         attribute: attribute,
-        binding: binding
+        binding: binding,
+        fieldsList: fieldsList
       })
     }, attribute))
   });
@@ -55061,7 +55064,8 @@ function EditableBlockBindingsPanelItems({
           trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockBindingsAttribute, {
               attribute: attribute,
-              binding: binding
+              binding: binding,
+              fieldsList: fieldsList
             })
           }),
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockBindingsPanelDropdown, {
@@ -55171,7 +55175,8 @@ const BlockBindingsPanel = ({
         isBordered: true,
         isSeparated: true,
         children: readOnly ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ReadOnlyBlockBindingsPanelItems, {
-          bindings: filteredBindings
+          bindings: filteredBindings,
+          fieldsList: fieldsList
         }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditableBlockBindingsPanelItems, {
           attributes: bindableAttributes,
           bindings: filteredBindings,
@@ -72008,6 +72013,7 @@ function RichTextWrapper({
   } = context;
   const blockBindings = context[blockBindingsKey];
   const blockContext = (0,external_wp_element_namespaceObject.useContext)(block_context);
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const selector = select => {
     // Avoid subscribing to the block editor store if the block is not
     // selected.
@@ -72043,6 +72049,7 @@ function RichTextWrapper({
     disableBoundBlock,
     bindingsPlaceholder
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _fieldsList$relatedBi;
     if (!blockBindings?.[identifier] || !canBindBlock(blockName)) {
       return {};
     }
@@ -72051,18 +72058,23 @@ function RichTextWrapper({
       getBlockBindingsSource
     } = unlock(select(external_wp_blocks_namespaceObject.store));
     const blockBindingsSource = getBlockBindingsSource(relatedBinding.source);
+    const fieldsList = blockBindingsSource?.getFieldsList?.({
+      registry,
+      context: blockContext
+    });
     const _disableBoundBlock = !blockBindingsSource?.canUserEditValue?.({
       select,
       context: blockContext,
       args: relatedBinding.args
     });
-    const _bindingsPlaceholder = _disableBoundBlock ? relatedBinding?.args?.key || blockBindingsSource?.label : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: source label or key */
-    (0,external_wp_i18n_namespaceObject.__)('Add %s'), relatedBinding?.args?.key || blockBindingsSource?.label);
+    const bindingKey = (_fieldsList$relatedBi = fieldsList?.[relatedBinding?.args?.key]?.label) !== null && _fieldsList$relatedBi !== void 0 ? _fieldsList$relatedBi : blockBindingsSource?.label;
+    const _bindingsPlaceholder = _disableBoundBlock ? bindingKey : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: connected field label or source label */
+    (0,external_wp_i18n_namespaceObject.__)('Add %s'), bindingKey);
     return {
       disableBoundBlock: _disableBoundBlock,
       bindingsPlaceholder: (!adjustedValue || adjustedValue.length === 0) && _bindingsPlaceholder
     };
-  }, [blockBindings, identifier, blockName, blockContext, adjustedValue]);
+  }, [blockBindings, identifier, blockName, blockContext, registry, adjustedValue]);
   const shouldDisableEditing = readOnly || disableBoundBlock;
   const {
     getSelectionStart,
@@ -72188,7 +72200,6 @@ function RichTextWrapper({
     }
     element.focus();
   }
-  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const TagName = tagName;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [isSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(keyboardShortcutContext.Provider, {
