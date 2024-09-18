@@ -6352,6 +6352,43 @@ function CategoriesEdit({
   });
 }
 
+;// CONCATENATED MODULE: ./packages/block-library/build-module/categories/variations.js
+/**
+ * WordPress dependencies
+ */
+
+
+const variations = [{
+  name: 'terms',
+  title: (0,external_wp_i18n_namespaceObject.__)('Terms List'),
+  icon: library_category,
+  attributes: {
+    // We need to set an attribute here that will be set when inserting the block.
+    // We cannot leave this empty, as that would be interpreted as the default value,
+    // which is `category` -- for which we're defining a distinct variation below,
+    // for backwards compatibility reasons.
+    // The logical fallback is thus the only other built-in and public taxonomy: Tags.
+    taxonomy: 'post_tag'
+  },
+  isActive: blockAttributes =>
+  // This variation is used for any taxonomy other than `category`.
+  blockAttributes.taxonomy !== 'category'
+}, {
+  name: 'categories',
+  title: (0,external_wp_i18n_namespaceObject.__)('Categories List'),
+  description: (0,external_wp_i18n_namespaceObject.__)('Display a list of all categories.'),
+  icon: library_category,
+  attributes: {
+    taxonomy: 'category'
+  },
+  isActive: ['taxonomy'],
+  // The following is needed to prevent "Terms List" from showing up twice in the inserter
+  // (once for the block, once for the variation). Fortunately, it does not collide with
+  // `categories` being the default value of the `taxonomy` attribute.
+  isDefault: true
+}];
+/* harmony default export */ const categories_variations = (variations);
+
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/categories/index.js
 /**
  * WordPress dependencies
@@ -6450,6 +6487,7 @@ const categories_metadata = {
   style: "wp-block-categories"
 };
 
+
 const {
   name: categories_name
 } = categories_metadata;
@@ -6457,7 +6495,8 @@ const {
 const categories_settings = {
   icon: library_category,
   example: {},
-  edit: CategoriesEdit
+  edit: CategoriesEdit,
+  variations: categories_variations
 };
 const categories_init = () => initBlock({
   name: categories_name,
@@ -8307,7 +8346,7 @@ function columns_save_save({
  * @type {WPBlockVariation[]}
  */
 
-const variations = [{
+const variations_variations = [{
   name: 'one-column-full',
   title: (0,external_wp_i18n_namespaceObject.__)('100'),
   description: (0,external_wp_i18n_namespaceObject.__)('One column'),
@@ -8413,7 +8452,7 @@ const variations = [{
   }]],
   scope: ['block']
 }];
-/* harmony default export */ const columns_variations = (variations);
+/* harmony default export */ const columns_variations = (variations_variations);
 
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/columns/transforms.js
 /**
@@ -15480,7 +15519,7 @@ const cover_transforms_transforms = {
  */
 
 
-const variations_variations = [{
+const cover_variations_variations = [{
   name: 'cover',
   title: (0,external_wp_i18n_namespaceObject.__)('Cover'),
   description: (0,external_wp_i18n_namespaceObject.__)('Add an image or video with a text overlay.'),
@@ -15492,7 +15531,7 @@ const variations_variations = [{
   isDefault: true,
   icon: library_cover
 }];
-/* harmony default export */ const cover_variations = (variations_variations);
+/* harmony default export */ const cover_variations = (cover_variations_variations);
 
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/cover/index.js
 /**
