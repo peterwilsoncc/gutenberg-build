@@ -23464,18 +23464,22 @@ const resolvers_getRegisteredPostMeta = postType => async ({
   dispatch,
   resolveSelect
 }) => {
+  let options;
   try {
     const {
       rest_namespace: restNamespace = 'wp/v2',
       rest_base: restBase
     } = (await resolveSelect.getPostType(postType)) || {};
-    const options = await external_wp_apiFetch_default()({
+    options = await external_wp_apiFetch_default()({
       path: `${restNamespace}/${restBase}/?context=edit`,
       method: 'OPTIONS'
     });
+  } catch (error) {
+    // Do nothing if the request comes back with an API error.
+    return;
+  }
+  if (options) {
     dispatch.receiveRegisteredPostMeta(postType, options?.schema?.properties?.meta?.properties);
-  } catch {
-    dispatch.receiveRegisteredPostMeta(postType, false);
   }
 };
 
