@@ -36305,7 +36305,8 @@ function BlockCard({
   icon,
   description,
   blockType,
-  className
+  className,
+  name
 }) {
   if (blockType) {
     external_wp_deprecated_default()('`blockType` property in `BlockCard component`', {
@@ -36357,7 +36358,9 @@ function BlockCard({
       spacing: 1,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
         className: "block-editor-block-card__title",
-        children: title
+        children: name?.length ? (0,external_wp_i18n_namespaceObject.sprintf)(
+        // translators:  %1$s: Custom block name. %2$s: Block title.
+        (0,external_wp_i18n_namespaceObject.__)('%1$s (%2$s)'), name, title) : title
       }), description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
         className: "block-editor-block-card__description",
         children: description
