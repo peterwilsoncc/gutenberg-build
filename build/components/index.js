@@ -47189,10 +47189,80 @@ function unmodalize() {
   }
 }
 
+;// CONCATENATED MODULE: ./packages/components/build-module/modal/use-modal-exit-animation.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+// Animation duration (ms) extracted to JS in order to be used on a setTimeout.
+const FRAME_ANIMATION_DURATION = config_values.transitionDuration;
+const FRAME_ANIMATION_DURATION_NUMBER = Number.parseInt(config_values.transitionDuration);
+const EXIT_ANIMATION_NAME = 'components-modal__disappear-animation';
+function useModalExitAnimation() {
+  const frameRef = (0,external_wp_element_namespaceObject.useRef)();
+  const [isAnimatingOut, setIsAnimatingOut] = (0,external_wp_element_namespaceObject.useState)(false);
+  const isReducedMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
+  const closeModal = (0,external_wp_element_namespaceObject.useCallback)(() => new Promise(closeModalResolve => {
+    // Grab a "stable" reference of the frame element, since
+    // the value held by the react ref might change at runtime.
+    const frameEl = frameRef.current;
+    if (isReducedMotion) {
+      closeModalResolve();
+      return;
+    }
+    if (!frameEl) {
+       false ? 0 : void 0;
+      closeModalResolve();
+      return;
+    }
+    let handleAnimationEnd;
+    const startAnimation = () => new Promise(animationResolve => {
+      handleAnimationEnd = e => {
+        if (e.animationName === EXIT_ANIMATION_NAME) {
+          animationResolve();
+        }
+      };
+      frameEl.addEventListener('animationend', handleAnimationEnd);
+      setIsAnimatingOut(true);
+    });
+    const animationTimeout = () => new Promise(timeoutResolve => {
+      setTimeout(() => timeoutResolve(),
+      // Allow an extra 20% of the animation duration for the
+      // animationend event to fire, in case the animation frame is
+      // slightly delayes by some other events in the event loop.
+      FRAME_ANIMATION_DURATION_NUMBER * 1.2);
+    });
+    Promise.race([startAnimation(), animationTimeout()]).then(() => {
+      if (handleAnimationEnd) {
+        frameEl.removeEventListener('animationend', handleAnimationEnd);
+      }
+      setIsAnimatingOut(false);
+      closeModalResolve();
+    });
+  }), [isReducedMotion]);
+  return {
+    overlayClassname: isAnimatingOut ? 'is-animating-out' : undefined,
+    frameRef,
+    frameStyle: {
+      '--modal-frame-animation-duration': `${FRAME_ANIMATION_DURATION}`
+    },
+    closeModal
+  };
+}
+
 ;// CONCATENATED MODULE: ./packages/components/build-module/modal/index.js
 /**
  * External dependencies
  */
+
 
 /**
  * WordPress dependencies
@@ -47206,6 +47276,7 @@ function unmodalize() {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -47239,7 +47310,7 @@ function UnforwardedModal(props, forwardedRef) {
     closeButtonLabel,
     children,
     style,
-    overlayClassName,
+    overlayClassName: overlayClassnameProp,
     className,
     contentLabel,
     onKeyDown,
@@ -47343,6 +47414,12 @@ function UnforwardedModal(props, forwardedRef) {
       }
     };
   }, [bodyOpenClassName]);
+  const {
+    closeModal,
+    frameRef,
+    frameStyle,
+    overlayClassname
+  } = useModalExitAnimation();
 
   // Calls the isContentScrollable callback when the Modal children container resizes.
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
@@ -47359,9 +47436,7 @@ function UnforwardedModal(props, forwardedRef) {
   function handleEscapeKeyDown(event) {
     if (shouldCloseOnEsc && (event.code === 'Escape' || event.key === 'Escape') && !event.defaultPrevented) {
       event.preventDefault();
-      if (onRequestClose) {
-        onRequestClose(event);
-      }
+      closeModal().then(() => onRequestClose(event));
     }
   }
   const onContentContainerScroll = (0,external_wp_element_namespaceObject.useCallback)(e => {
@@ -47395,7 +47470,7 @@ function UnforwardedModal(props, forwardedRef) {
       const isSameTarget = target === pressTarget;
       pressTarget = null;
       if (button === 0 && isSameTarget) {
-        onRequestClose();
+        closeModal().then(() => onRequestClose());
       }
     }
   };
@@ -47404,15 +47479,18 @@ function UnforwardedModal(props, forwardedRef) {
   // eslint-disable-next-line jsx-a11y/no-static-element-interactions
   (0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([ref, forwardedRef]),
-    className: dist_clsx('components-modal__screen-overlay', overlayClassName),
+    className: dist_clsx('components-modal__screen-overlay', overlayClassname, overlayClassnameProp),
     onKeyDown: withIgnoreIMEEvents(handleEscapeKeyDown),
     ...(shouldCloseOnClickOutside ? overlayPressHandlers : {}),
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_provider, {
       document: document,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: dist_clsx('components-modal__frame', sizeClass, className),
-        style: style,
-        ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([constrainedTabbingRef, focusReturnRef, focusOnMount !== 'firstContentElement' ? focusOnMountRef : null]),
+        style: {
+          ...frameStyle,
+          ...style
+        },
+        ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([frameRef, constrainedTabbingRef, focusReturnRef, focusOnMount !== 'firstContentElement' ? focusOnMountRef : null]),
         role: role,
         "aria-label": contentLabel,
         "aria-labelledby": contentLabel ? undefined : headingId,
@@ -47449,7 +47527,7 @@ function UnforwardedModal(props, forwardedRef) {
                 marginLeft: 3
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
                 size: "small",
-                onClick: onRequestClose,
+                onClick: event => closeModal().then(() => onRequestClose(event)),
                 icon: library_close,
                 label: closeButtonLabel || (0,external_wp_i18n_namespaceObject.__)('Close')
               })]
