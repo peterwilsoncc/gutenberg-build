@@ -22484,19 +22484,36 @@ function useGlobalStylesUserConfig() {
     _links
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
+      getEntityRecord,
       getEditedEntityRecord,
       hasFinishedResolution,
       canUser
     } = select(external_wp_coreData_namespaceObject.store);
     const _globalStylesId = select(external_wp_coreData_namespaceObject.store).__experimentalGetCurrentGlobalStylesId();
-    const record = _globalStylesId && canUser('read', {
+    let record;
+    const userCanEditGlobalStyles = canUser('update', {
       kind: 'root',
       name: 'globalStyles',
       id: _globalStylesId
-    }) ? getEditedEntityRecord('root', 'globalStyles', _globalStylesId) : undefined;
+    });
+    if (_globalStylesId) {
+      if (userCanEditGlobalStyles) {
+        record = getEditedEntityRecord('root', 'globalStyles', _globalStylesId);
+      } else {
+        record = getEntityRecord('root', 'globalStyles', _globalStylesId, {
+          context: 'view'
+        });
+      }
+    }
     let hasResolved = false;
     if (hasFinishedResolution('__experimentalGetCurrentGlobalStylesId')) {
-      hasResolved = _globalStylesId ? hasFinishedResolution('getEditedEntityRecord', ['root', 'globalStyles', _globalStylesId]) : true;
+      if (_globalStylesId) {
+        hasResolved = userCanEditGlobalStyles ? hasFinishedResolution('getEditedEntityRecord', ['root', 'globalStyles', _globalStylesId]) : hasFinishedResolution('getEntityRecord', ['root', 'globalStyles', _globalStylesId, {
+          context: 'view'
+        }]);
+      } else {
+        hasResolved = true;
+      }
     }
     return {
       globalStylesId: _globalStylesId,
@@ -22544,15 +22561,7 @@ function useGlobalStylesUserConfig() {
   return [isReady, config, setConfig];
 }
 function useGlobalStylesBaseConfig() {
-  const baseConfig = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      __experimentalGetCurrentThemeBaseGlobalStyles,
-      getCurrentTheme,
-      canUser
-    } = select(external_wp_coreData_namespaceObject.store);
-    const currentTheme = getCurrentTheme();
-    return currentTheme && canUser('read', 'global-styles/themes', currentTheme.stylesheet) ? __experimentalGetCurrentThemeBaseGlobalStyles() : undefined;
-  }, []);
+  const baseConfig = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).__experimentalGetCurrentThemeBaseGlobalStyles(), []);
   return [!!baseConfig, baseConfig];
 }
 function useGlobalStylesContext() {

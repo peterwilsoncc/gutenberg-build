@@ -23218,7 +23218,7 @@ const resolvers_experimentalGetCurrentThemeBaseGlobalStyles = () => async ({
 }) => {
   const currentTheme = await resolveSelect.getCurrentTheme();
   const themeGlobalStyles = await external_wp_apiFetch_default()({
-    path: `/wp/v2/global-styles/themes/${currentTheme.stylesheet}`
+    path: `/wp/v2/global-styles/themes/${currentTheme.stylesheet}?context=view`
   });
   dispatch.__experimentalReceiveThemeBaseGlobalStyles(currentTheme.stylesheet, themeGlobalStyles);
 };
@@ -23228,7 +23228,7 @@ const resolvers_experimentalGetCurrentThemeGlobalStylesVariations = () => async 
 }) => {
   const currentTheme = await resolveSelect.getCurrentTheme();
   const variations = await external_wp_apiFetch_default()({
-    path: `/wp/v2/global-styles/themes/${currentTheme.stylesheet}/variations`
+    path: `/wp/v2/global-styles/themes/${currentTheme.stylesheet}/variations?context=view`
   });
   dispatch.__experimentalReceiveThemeGlobalStyleVariations(currentTheme.stylesheet, variations);
 };
