@@ -55128,7 +55128,7 @@ const BlockBindingsPanel = ({
           context
         });
         // Only add source if the list is not empty.
-        if (sourceList) {
+        if (Object.keys(sourceList || {}).length) {
           _fieldsList[sourceName] = {
             ...sourceList
           };
@@ -55144,12 +55144,6 @@ const BlockBindingsPanel = ({
   if (!bindableAttributes || bindableAttributes.length === 0) {
     return null;
   }
-  // Remove empty sources from the list of fields.
-  Object.entries(fieldsList).forEach(([key, value]) => {
-    if (!Object.keys(value).length) {
-      delete fieldsList[key];
-    }
-  });
   // Filter bindings to only show bindable attributes and remove pattern overrides.
   const {
     bindings
