@@ -17541,6 +17541,7 @@ const applyAwarenessUpdate = (awareness, update, origin) => {
 }
 
 ;// CONCATENATED MODULE: ./packages/sync/build-module/y-webrtc/crypto.js
+/* wp:polyfill */
 // File copied as is from the y-webrtc package.
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable eslint-comments/no-unlimited-disable */
@@ -17640,6 +17641,7 @@ const decrypt = (data, key) => {
 const decryptJson = (data, key) => decrypt(data, key).then(decryptedValue => readAny(createDecoder(new Uint8Array(decryptedValue))));
 
 ;// CONCATENATED MODULE: ./packages/sync/build-module/y-webrtc/y-webrtc.js
+/* wp:polyfill */
 // File copied as is from the y-webrtc package with only exports
 // added to the following vars/functions: signalingConns,rooms, publishSignalingMessage, log.
 /* eslint-disable eslint-comments/disable-enable-pair */
@@ -18326,6 +18328,7 @@ class WebrtcProvider extends observable_Observable {
 }
 
 ;// CONCATENATED MODULE: ./packages/sync/build-module/webrtc-http-stream-signaling.js
+/* wp:polyfill */
 /**
  * External dependencies
  */

@@ -597,6 +597,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 ;// CONCATENATED MODULE: ./packages/url/build-module/is-url.js
+/* wp:polyfill */
 /**
  * Determines whether the given string looks like a URL.
  *
@@ -790,6 +791,7 @@ function isValidPath(path) {
 }
 
 ;// CONCATENATED MODULE: ./packages/url/build-module/get-query-string.js
+/* wp:polyfill */
 /**
  * Returns the query string part of the URL.
  *
@@ -1341,6 +1343,7 @@ function cleanForSlug(string) {
 }
 
 ;// CONCATENATED MODULE: ./packages/url/build-module/get-filename.js
+/* wp:polyfill */
 /**
  * Returns the filename part of the URL.
  *

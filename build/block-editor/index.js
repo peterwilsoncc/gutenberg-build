@@ -48238,6 +48238,7 @@ function getCompatibilityStyles() {
 }
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/iframe/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -68110,6 +68111,7 @@ function useSaveImage({
 }
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/image-editor/use-transform-image.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */

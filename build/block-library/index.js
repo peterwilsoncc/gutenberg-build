@@ -16554,6 +16554,7 @@ function EmbedPreview({
 }
 
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/embed/edit.js
+/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -64386,6 +64387,7 @@ lock(privateApis, {
 });
 
 ;// CONCATENATED MODULE: ./packages/block-library/build-module/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */

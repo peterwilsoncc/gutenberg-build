@@ -22120,6 +22120,7 @@ const withRegistryProvider = (0,external_wp_compose_namespaceObject.createHigher
 /* harmony default export */ const with_registry_provider = (withRegistryProvider);
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/media-categories/index.js
+/* wp:polyfill */
 /**
  * The `editor` settings here need to be in sync with the corresponding ones in `editor` package.
  * See `packages/editor/src/components/media-categories/index.js`.

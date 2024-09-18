@@ -208,6 +208,7 @@ const external_wp_compose_namespaceObject = window["wp"]["compose"];
 const external_wp_apiFetch_namespaceObject = window["wp"]["apiFetch"];
 var external_wp_apiFetch_default = /*#__PURE__*/__webpack_require__.n(external_wp_apiFetch_namespaceObject);
 ;// CONCATENATED MODULE: ./packages/widgets/build-module/blocks/legacy-widget/edit/control.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
