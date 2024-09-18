@@ -42268,7 +42268,7 @@ function AllInputControl({
     const newUnits = applyValueToSides(selectedUnits, unit, sides);
     setSelectedUnits(newUnits);
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(h_stack_component, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledUnitControl, {
       ...props,
       __next40pxDefaultSize: __next40pxDefaultSize,
