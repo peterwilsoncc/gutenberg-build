@@ -55822,14 +55822,14 @@ const SocialLinkURLPopover = ({
       setPopover(false);
       popoverAnchor?.focus();
     },
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("form", {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
       className: "block-editor-url-popover__link-editor",
       onSubmit: event => {
         event.preventDefault();
         setPopover(false);
         popoverAnchor?.focus();
       },
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "block-editor-url-input",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.URLInput, {
           value: url,
@@ -55845,16 +55845,18 @@ const SocialLinkURLPopover = ({
               return;
             }
             removeBlock(clientId);
-          }
+          },
+          suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlSuffixWrapper, {
+            variant: "control",
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              icon: keyboard_return,
+              label: (0,external_wp_i18n_namespaceObject.__)('Apply'),
+              type: "submit",
+              size: "small"
+            })
+          })
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible.
-      , {
-        __next40pxDefaultSize: false,
-        icon: keyboard_return,
-        label: (0,external_wp_i18n_namespaceObject.__)('Apply'),
-        type: "submit"
-      })]
+      })
     })
   });
 };

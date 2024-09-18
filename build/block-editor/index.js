@@ -21901,8 +21901,8 @@ class URLInput extends external_wp_element_namespaceObject.Component {
     // as a Promise always resolves on the next tick of the event loop.
     this.suggestionsRequest = request;
   }
-  onChange(event) {
-    this.props.onChange(event.target.value);
+  onChange(newValue) {
+    this.props.onChange(newValue);
   }
   onFocus() {
     const {
@@ -22091,7 +22091,6 @@ class URLInput extends external_wp_element_namespaceObject.Component {
       id: inputId,
       value,
       required: true,
-      className: 'block-editor-url-input__input',
       type: 'text',
       onChange: this.onChange,
       onFocus: this.onFocus,
@@ -22104,7 +22103,8 @@ class URLInput extends external_wp_element_namespaceObject.Component {
       'aria-autocomplete': 'list',
       'aria-owns': suggestionsListboxId,
       'aria-activedescendant': selectedSuggestion !== null ? `${suggestionOptionIdPrefix}-${selectedSuggestion}` : undefined,
-      ref: this.inputRef
+      ref: this.inputRef,
+      suffix: this.props.suffix
     };
     if (renderControl) {
       return renderControl(controlProps, inputProps, loading);
@@ -22112,8 +22112,9 @@ class URLInput extends external_wp_element_namespaceObject.Component {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.BaseControl, {
       __nextHasNoMarginBottom: true,
       ...controlProps,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
-        ...inputProps
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
+        ...inputProps,
+        __next40pxDefaultSize: true
       }), loading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})]
     });
   }
@@ -22827,7 +22828,8 @@ const LinkControlSearchInput = (0,external_wp_element_namespaceObject.forwardRef
   suggestionsQuery = {},
   withURLSuggestion = true,
   createSuggestionButtonText,
-  hideLabelFromVision = false
+  hideLabelFromVision = false,
+  suffix
 }, ref) => {
   const genericSearchHandler = useSearchHandler(suggestionsQuery, allowDirectEntry, withCreateSuggestion, withURLSuggestion);
   const searchHandler = showSuggestions ? fetchSuggestions || genericSearchHandler : noopSearchHandler;
@@ -22911,7 +22913,8 @@ const LinkControlSearchInput = (0,external_wp_element_namespaceObject.forwardRef
           });
         }
       },
-      ref: ref
+      ref: ref,
+      suffix: suffix
     }), children]
   });
 });
@@ -23736,7 +23739,7 @@ function LinkControl({
           value: internalControlValue?.title,
           onChange: setInternalTextInputValue,
           onKeyDown: handleSubmitWithEnter,
-          size: "__unstable-large"
+          __next40pxDefaultSize: true
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(search_input, {
           currentLink: value,
           className: "block-editor-link-control__field block-editor-link-control__search-input",
@@ -23752,19 +23755,19 @@ function LinkControl({
           suggestionsQuery: suggestionsQuery,
           withURLSuggestion: !noURLSuggestion,
           createSuggestionButtonText: createSuggestionButtonText,
-          hideLabelFromVision: !showTextControl
-        }), !showActions && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-          className: "block-editor-link-control__search-enter",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-          // TODO: Switch to `true` (40px size) if possible
-          , {
-            __next40pxDefaultSize: false,
-            onClick: isDisabled ? link_control_noop : handleSubmit,
-            label: (0,external_wp_i18n_namespaceObject.__)('Submit'),
-            icon: keyboard_return,
-            className: "block-editor-link-control__search-submit",
-            "aria-disabled": isDisabled
-          })
+          hideLabelFromVision: !showTextControl,
+          suffix: showActions ? undefined : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlSuffixWrapper, {
+            variant: "control",
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              onClick: isDisabled ? link_control_noop : handleSubmit,
+              label: (0,external_wp_i18n_namespaceObject.__)('Submit'),
+              icon: keyboard_return,
+              className: "block-editor-link-control__search-submit",
+              "aria-disabled": isDisabled,
+              size: "small"
+            })
+          }),
+          props: true
         })]
       }), errorMessage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
         className: "block-editor-link-control__search-error",
