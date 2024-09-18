@@ -47694,7 +47694,8 @@ function QueryInspectorControls(props) {
   const {
     attributes,
     setQuery,
-    setDisplayLayout
+    setDisplayLayout,
+    isTemplate
   } = props;
   const {
     query,
@@ -47766,13 +47767,13 @@ function QueryInspectorControls(props) {
     onChangeDebounced();
     return onChangeDebounced.cancel;
   }, [querySearch, onChangeDebounced]);
-  const showInheritControl = isControlAllowed(allowedControls, 'inherit');
-  const showPostTypeControl = !inherit && isControlAllowed(allowedControls, 'postType');
+  const showInheritControl = isTemplate && isControlAllowed(allowedControls, 'inherit');
+  const showPostTypeControl = !inherit && isControlAllowed(allowedControls, 'postType') || !isTemplate;
   const postTypeControlLabel = (0,external_wp_i18n_namespaceObject.__)('Post type');
   const postTypeControlHelp = (0,external_wp_i18n_namespaceObject.__)('Select the type of content to display: posts, pages, or custom post types.');
   const showColumnsControl = false;
-  const showOrderControl = !inherit && isControlAllowed(allowedControls, 'order');
-  const showStickyControl = !inherit && showSticky && isControlAllowed(allowedControls, 'sticky');
+  const showOrderControl = !inherit && isControlAllowed(allowedControls, 'order') || !isTemplate;
+  const showStickyControl = !inherit && showSticky && isControlAllowed(allowedControls, 'sticky') || showSticky && !isTemplate;
   const showSettingsPanel = showInheritControl || showPostTypeControl || showColumnsControl || showOrderControl || showStickyControl;
   const showTaxControl = !!taxonomies?.length && isControlAllowed(allowedControls, 'taxQuery');
   const showAuthorControl = isControlAllowed(allowedControls, 'author');
@@ -48079,7 +48080,8 @@ function QueryContent({
   setAttributes,
   openPatternSelectionModal,
   name,
-  clientId
+  clientId,
+  context
 }) {
   const {
     queryId,
@@ -48092,6 +48094,9 @@ function QueryContent({
     } = {}
   } = attributes;
   const {
+    postType
+  } = context;
+  const {
     __unstableMarkNextChangeAsNotPersistent
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(QueryContent);
@@ -48099,6 +48104,12 @@ function QueryContent({
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
     template: query_content_TEMPLATE
   });
+  const isTemplate = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const currentTemplate = select(external_wp_coreData_namespaceObject.store).__experimentalGetTemplateForLink()?.type;
+    const isInTemplate = 'wp_template' === currentTemplate;
+    const isInSingularContent = postType !== undefined;
+    return isInTemplate && !isInSingularContent;
+  }, [postType]);
   const {
     postsPerPage
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -48132,6 +48143,12 @@ function QueryContent({
   // Changes in query property (which is an object) need to be in the same callback,
   // because updates are batched after the render and changes in different query properties
   // would cause to override previous wanted changes.
+  const updateQuery = (0,external_wp_element_namespaceObject.useCallback)(newQuery => setAttributes({
+    query: {
+      ...query,
+      ...newQuery
+    }
+  }), [query, setAttributes]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     const newQuery = {};
     // When we inherit from global query always need to set the `perPage`
@@ -48141,11 +48158,16 @@ function QueryContent({
     } else if (!query.perPage && postsPerPage) {
       newQuery.perPage = postsPerPage;
     }
+    // We need to reset the `inherit` value if not in a template, as queries
+    // are not inherited when outside a template (e.g. when in singular content).
+    if (!isTemplate && query.inherit) {
+      newQuery.inherit = false;
+    }
     if (!!Object.keys(newQuery).length) {
       __unstableMarkNextChangeAsNotPersistent();
       updateQuery(newQuery);
     }
-  }, [query.perPage, postsPerPage, inherit]);
+  }, [query.perPage, postsPerPage, inherit, isTemplate, query.inherit, __unstableMarkNextChangeAsNotPersistent, updateQuery]);
   // We need this for multi-query block pagination.
   // Query parameters for each block are scoped to their ID.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -48155,13 +48177,7 @@ function QueryContent({
         queryId: instanceId
       });
     }
-  }, [queryId, instanceId]);
-  const updateQuery = newQuery => setAttributes({
-    query: {
-      ...query,
-      ...newQuery
-    }
-  });
+  }, [queryId, instanceId, __unstableMarkNextChangeAsNotPersistent, setAttributes]);
   const updateDisplayLayout = newDisplayLayout => setAttributes({
     displayLayout: {
       ...displayLayout,
@@ -48184,7 +48200,8 @@ function QueryContent({
         setQuery: updateQuery,
         setDisplayLayout: updateDisplayLayout,
         setAttributes: setAttributes,
-        clientId: clientId
+        clientId: clientId,
+        isTemplate: isTemplate
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QueryToolbar, {
@@ -49177,6 +49194,7 @@ const query_metadata = {
       "default": false
     }
   },
+  usesContext: ["postType"],
   providesContext: {
     queryId: "queryId",
     query: "query",
