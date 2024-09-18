@@ -26409,7 +26409,8 @@ function Header({
   forceIsDirty,
   forceDisableBlockTools,
   setEntitiesSavedStatesCallback,
-  title
+  title,
+  isEditorIframed
 }) {
   const isWideViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('large');
   const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
@@ -26498,7 +26499,7 @@ function Header({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostPreviewButton, {
         className: "editor-header__post-preview-button",
         forceIsAutosaveable: forceIsDirty
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostViewLink, {}), isWideViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_toggle, {}), (isWideViewport || !showIconLabels) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pinned_items.Slot, {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostViewLink, {}), isEditorIframed && isWideViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_toggle, {}), (isWideViewport || !showIconLabels) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pinned_items.Slot, {
         scope: "core"
       }), !customSaveButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_publish_button_or_toggle, {
         forceIsDirty: forceIsDirty,
@@ -27763,7 +27764,8 @@ function EditorInterface({
       setEntitiesSavedStatesCallback: setEntitiesSavedStatesCallback,
       customSaveButton: customSaveButton,
       forceDisableBlockTools: forceDisableBlockTools,
-      title: title
+      title: title,
+      isEditorIframed: !disableIframe
     }),
     editorNotices: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(editor_notices, {}),
     secondarySidebar: !isPreviewMode && mode === 'visual' && (isInserterOpened && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InserterSidebar, {}) || isListViewOpened && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ListViewSidebar, {})),
