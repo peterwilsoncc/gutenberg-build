@@ -45228,10 +45228,7 @@ const post_title_metadata = {
       }
     }
   },
-  style: "wp-block-post-title",
-  selectors: {
-    typography: ".wp-block-post-title, .wp-block-post-title > a"
-  }
+  style: "wp-block-post-title"
 };
 
 
@@ -54547,10 +54544,7 @@ const site_title_metadata = {
     }
   },
   editorStyle: "wp-block-site-title-editor",
-  style: "wp-block-site-title",
-  selectors: {
-    typography: ".wp-block-site-title > span, .wp-block-site-title > a"
-  }
+  style: "wp-block-site-title"
 };
 
 
