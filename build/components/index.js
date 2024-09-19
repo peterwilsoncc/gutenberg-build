@@ -70727,52 +70727,12 @@ const tab_Tab = (0,external_wp_element_namespaceObject.forwardRef)(function Tab(
   });
 });
 
-;// CONCATENATED MODULE: ./packages/components/build-module/utils/hooks/use-event.js
-/* eslint-disable jsdoc/require-param */
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Any function.
- */
-
-/**
- * Creates a stable callback function that has access to the latest state and
- * can be used within event handlers and effect callbacks. Throws when used in
- * the render phase.
- *
- * @example
- *
- * ```tsx
- * function Component(props) {
- *   const onClick = useEvent(props.onClick);
- *   React.useEffect(() => {}, [onClick]);
- * }
- * ```
- */
-function use_event_useEvent(callback) {
-  const ref = (0,external_wp_element_namespaceObject.useRef)(() => {
-    throw new Error('Cannot call an event handler while rendering.');
-  });
-  (0,external_wp_element_namespaceObject.useInsertionEffect)(() => {
-    ref.current = callback;
-  });
-  return (0,external_wp_element_namespaceObject.useCallback)((...args) => ref.current?.(...args), []);
-}
-/* eslint-enable jsdoc/require-param */
-
 ;// CONCATENATED MODULE: ./packages/components/build-module/utils/element-rect.js
 /* eslint-disable jsdoc/require-param */
 /**
  * WordPress dependencies
  */
 
-
-/**
- * Internal dependencies
- */
 
 
 /**
@@ -70852,7 +70812,7 @@ const POLL_RATE = 100;
 function useTrackElementOffsetRect(targetElement) {
   const [indicatorPosition, setIndicatorPosition] = (0,external_wp_element_namespaceObject.useState)(NULL_ELEMENT_OFFSET_RECT);
   const intervalRef = (0,external_wp_element_namespaceObject.useRef)();
-  const measure = use_event_useEvent(() => {
+  const measure = (0,external_wp_compose_namespaceObject.useEvent)(() => {
     if (targetElement) {
       const elementOffsetRect = getElementOffsetRect(targetElement);
       if (elementOffsetRect) {
@@ -70886,9 +70846,6 @@ function useTrackElementOffsetRect(targetElement) {
  * WordPress dependencies
  */
 
-/**
- * Internal dependencies
- */
 
 
 /**
@@ -70908,7 +70865,7 @@ value,
  */
 onUpdate) {
   const previousValueRef = (0,external_wp_element_namespaceObject.useRef)(value);
-  const updateCallbackEvent = use_event_useEvent(onUpdate);
+  const updateCallbackEvent = (0,external_wp_compose_namespaceObject.useEvent)(onUpdate);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (previousValueRef.current !== value) {
       updateCallbackEvent({
