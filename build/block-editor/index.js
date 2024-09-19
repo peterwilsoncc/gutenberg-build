@@ -67481,20 +67481,25 @@ function __experimentalBlockVariationTransforms({
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const {
     activeBlockVariation,
-    variations
+    variations,
+    isContentOnly
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getActiveBlockVariation,
-      getBlockVariations
+      getBlockVariations,
+      __experimentalHasContentRoleAttribute
     } = select(external_wp_blocks_namespaceObject.store);
     const {
       getBlockName,
-      getBlockAttributes
+      getBlockAttributes,
+      getBlockEditingMode
     } = select(store);
     const name = blockClientId && getBlockName(blockClientId);
+    const isContentBlock = __experimentalHasContentRoleAttribute(name);
     return {
       activeBlockVariation: getActiveBlockVariation(name, getBlockAttributes(blockClientId)),
-      variations: name && getBlockVariations(name, 'transform')
+      variations: name && getBlockVariations(name, 'transform'),
+      isContentOnly: getBlockEditingMode(blockClientId) === 'contentOnly' && !isContentBlock
     };
   }, [blockClientId]);
   const selectedValue = activeBlockVariation?.name;
@@ -67519,9 +67524,7 @@ function __experimentalBlockVariationTransforms({
       }) => name === variationName).attributes
     });
   };
-
-  // Skip rendering if there are no variations
-  if (!variations?.length) {
+  if (!variations?.length || isContentOnly) {
     return null;
   }
   const baseClass = 'block-editor-block-variation-transforms';
