@@ -44935,8 +44935,7 @@ const {
 
 const post_time_to_read_settings = {
   icon: icon,
-  edit: post_time_to_read_edit,
-  example: {}
+  edit: post_time_to_read_edit
 };
 const post_time_to_read_init = () => initBlock({
   name: post_time_to_read_name,
