@@ -13521,6 +13521,7 @@ const getBlockEditingMode = (0,external_wp_data_namespaceObject.createRegistrySe
   if (clientId === null) {
     clientId = '';
   }
+
   // In zoom-out mode, override the behavior set by
   // __unstableSetBlockEditingMode to only allow editing the top-level
   // sections.
@@ -13534,9 +13535,12 @@ const getBlockEditingMode = (0,external_wp_data_namespaceObject.createRegistrySe
       return 'contentOnly';
     }
     const sectionsClientIds = getBlockOrder(state, sectionRootClientId);
-    if (!sectionsClientIds?.includes(clientId)) {
-      return 'disabled';
+
+    // Sections are always contentOnly.
+    if (sectionsClientIds?.includes(clientId)) {
+      return 'contentOnly';
     }
+    return 'disabled';
   }
   const blockEditingMode = state.blockEditingModes.get(clientId);
   if (blockEditingMode) {
