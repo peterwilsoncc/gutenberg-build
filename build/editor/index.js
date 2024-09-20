@@ -25532,12 +25532,8 @@ function DocumentTools({
     listViewShortcut,
     inserterSidebarToggleRef,
     listViewToggleRef,
-    hasFixedToolbar,
     showIconLabels
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getSettings
-    } = select(external_wp_blockEditor_namespaceObject.store);
     const {
       get
     } = select(external_wp_preferences_namespaceObject.store);
@@ -25559,7 +25555,6 @@ function DocumentTools({
       listViewShortcut: getShortcutRepresentation('core/editor/toggle-list-view'),
       inserterSidebarToggleRef: getInserterSidebarToggleRef(),
       listViewToggleRef: getListViewToggleRef(),
-      hasFixedToolbar: getSettings().hasFixedToolbar,
       showIconLabels: get('core', 'showIconLabels'),
       isDistractionFree: get('core', 'distractionFree'),
       isVisualMode: getEditorMode() === 'visual',
@@ -25615,7 +25610,7 @@ function DocumentTools({
           showTooltip: !showIconLabels,
           "aria-expanded": isInserterOpened
         }), (isWideViewport || !showIconLabels) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: [isLargeViewport && !hasFixedToolbar && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
+          children: [isLargeViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
             as: external_wp_blockEditor_namespaceObject.ToolSelector,
             showTooltip: !showIconLabels,
             variant: showIconLabels ? 'tertiary' : undefined,
