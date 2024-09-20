@@ -66730,7 +66730,7 @@ function useToolsPanel(props) {
   // the resetAll task. Without this, the flag is cleared after the first
   // control updates and forces a rerender with subsequent controls then
   // believing they need to reset, unfortunately using stale data.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     if (wasResetting) {
       isResettingRef.current = false;
     }
@@ -66762,7 +66762,7 @@ function useToolsPanel(props) {
       }
       return [...items, item.label];
     });
-  }, [setPanelItems, setMenuItemOrder]);
+  }, []);
 
   // Panels need to deregister on unmount to avoid orphans in menu state.
   // This is an issue when panel items are being injected via SlotFills.
@@ -66779,17 +66779,13 @@ function useToolsPanel(props) {
       }
       return newItems;
     });
-  }, [setPanelItems]);
+  }, []);
   const registerResetAllFilter = (0,external_wp_element_namespaceObject.useCallback)(newFilter => {
-    setResetAllFilters(filters => {
-      return [...filters, newFilter];
-    });
-  }, [setResetAllFilters]);
+    setResetAllFilters(filters => [...filters, newFilter]);
+  }, []);
   const deregisterResetAllFilter = (0,external_wp_element_namespaceObject.useCallback)(filterToRemove => {
-    setResetAllFilters(filters => {
-      return filters.filter(filter => filter !== filterToRemove);
-    });
-  }, [setResetAllFilters]);
+    setResetAllFilters(filters => filters.filter(filter => filter !== filterToRemove));
+  }, []);
 
   // Manage and share display state of menu items representing child controls.
   const [menuItems, setMenuItems] = (0,external_wp_element_namespaceObject.useState)({
@@ -66798,17 +66794,14 @@ function useToolsPanel(props) {
   });
 
   // Setup menuItems state as panel items register themselves.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    setMenuItems(prevState => {
-      const items = generateMenuItems({
-        panelItems,
-        shouldReset: false,
-        currentMenuItems: prevState,
-        menuItemOrder
-      });
-      return items;
-    });
-  }, [panelItems, setMenuItems, menuItemOrder]);
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    setMenuItems(currentMenuItems => generateMenuItems({
+      panelItems,
+      shouldReset: false,
+      currentMenuItems,
+      menuItemOrder
+    }));
+  }, [panelItems, menuItemOrder]);
 
   // Updates the status of the panel’s menu items. For default items the
   // value represents whether it differs from the default and for optional
@@ -66824,19 +66817,19 @@ function useToolsPanel(props) {
       };
       return newState;
     });
-  }, [setMenuItems]);
+  }, []);
 
   // Whether all optional menu items are hidden or not must be tracked
   // in order to later determine if the panel display is empty and handle
   // conditional display of a plus icon to indicate the presence of further
   // menu items.
   const [areAllOptionalControlsHidden, setAreAllOptionalControlsHidden] = (0,external_wp_element_namespaceObject.useState)(false);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     if (isMenuItemTypeEmpty(menuItems?.default) && !isMenuItemTypeEmpty(menuItems?.optional)) {
       const allControlsHidden = !Object.entries(menuItems.optional).some(([, isSelected]) => isSelected);
       setAreAllOptionalControlsHidden(allControlsHidden);
     }
-  }, [menuItems, setAreAllOptionalControlsHidden]);
+  }, [menuItems]);
   const cx = useCx();
   const classes = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const wrapperStyle = hasInnerWrapper && ToolsPanelWithInnerWrapper(DEFAULT_COLUMNS);
@@ -66860,7 +66853,7 @@ function useToolsPanel(props) {
       }
     };
     setMenuItems(newMenuItems);
-  }, [menuItems, panelItems, setMenuItems]);
+  }, [menuItems, panelItems]);
 
   // Resets display of children and executes resetAll callback if available.
   const resetAllItems = (0,external_wp_element_namespaceObject.useCallback)(() => {
@@ -66876,7 +66869,7 @@ function useToolsPanel(props) {
       shouldReset: true
     });
     setMenuItems(resetMenuItems);
-  }, [panelItems, resetAllFilters, resetAll, setMenuItems, menuItemOrder]);
+  }, [panelItems, resetAllFilters, resetAll, menuItemOrder]);
 
   // Assist ItemGroup styling when there are potentially hidden placeholder
   // items by identifying first & last items that are toggled on for display.
@@ -67086,7 +67079,7 @@ function useToolsPanelItem(props) {
       }
     };
   }, [currentPanelId, hasMatchingPanel, isShownByDefault, label, hasValueCallback, panelId, previousPanelId, registerPanelItem, deregisterPanelItem]);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     if (hasMatchingPanel) {
       registerResetAllFilter(resetAllFilterCallback);
     }
@@ -67106,7 +67099,7 @@ function useToolsPanelItem(props) {
   const isValueSet = hasValue();
   // Notify the panel when an item's value has changed except for optional
   // items without value because the item should not cause itself to hide.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     if (!isShownByDefault && !isValueSet) {
       return;
     }
@@ -67115,7 +67108,7 @@ function useToolsPanelItem(props) {
 
   // Determine if the panel item's corresponding menu is being toggled and
   // trigger appropriate callback if it is.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     // We check whether this item is currently registered as items rendered
     // via fills can persist through the parent panel being remounted.
     // See: https://github.com/WordPress/gutenberg/pull/45673
