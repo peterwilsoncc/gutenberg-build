@@ -113,13 +113,16 @@ const {
 function useAddNewPageCommand() {
   const isSiteEditor = (0,external_wp_url_namespaceObject.getPath)(window.location.href)?.includes('site-editor.php');
   const history = useHistory();
+  const isBlockBasedTheme = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return select(external_wp_coreData_namespaceObject.store).getCurrentTheme()?.is_block_theme;
+  }, []);
   const {
     saveEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
   const {
     createErrorNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
-  const createPageEntity = async ({
+  const createPageEntity = (0,external_wp_element_namespaceObject.useCallback)(async ({
     close
   }) => {
     try {
@@ -143,16 +146,16 @@ function useAddNewPageCommand() {
     } finally {
       close();
     }
-  };
+  }, [createErrorNotice, history, saveEntityRecord]);
   const commands = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const addNewPage = isSiteEditor ? createPageEntity : () => document.location.href = 'post-new.php?post_type=page';
+    const addNewPage = isSiteEditor && isBlockBasedTheme ? createPageEntity : () => document.location.href = 'post-new.php?post_type=page';
     return [{
       name: 'core/add-new-page',
       label: (0,external_wp_i18n_namespaceObject.__)('Add new page'),
       icon: library_plus,
       callback: addNewPage
     }];
-  }, [createPageEntity, isSiteEditor]);
+  }, [createPageEntity, isSiteEditor, isBlockBasedTheme]);
   return {
     isLoading: false,
     commands
