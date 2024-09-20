@@ -49158,6 +49158,7 @@ const query_metadata = {
   title: "Query Loop",
   category: "theme",
   description: "An advanced block that allows displaying post types based on different query parameters and visual configurations.",
+  keywords: ["posts", "list", "blog", "blogs", "custom post types"],
   textdomain: "default",
   attributes: {
     queryId: {
