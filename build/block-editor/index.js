@@ -44329,6 +44329,7 @@ function InsertionPoint(props) {
  */
 
 
+
 function useInBetweenInserter() {
   const openRef = (0,external_wp_element_namespaceObject.useContext)(insertion_point_InsertionPointOpenRef);
   const isInBetweenInserterDisabled = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getSettings().isDistractionFree || select(store).__unstableGetEditorMode() === 'zoom-out', []);
@@ -44342,8 +44343,9 @@ function useInBetweenInserter() {
     __unstableIsWithinBlockOverlay,
     getBlockEditingMode,
     getBlockName,
-    getBlockAttributes
-  } = (0,external_wp_data_namespaceObject.useSelect)(store);
+    getBlockAttributes,
+    getParentSectionBlock
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const {
     showInsertionPoint,
     hideInsertionPoint
@@ -44406,7 +44408,7 @@ function useInBetweenInserter() {
       // Don't show the insertion point if a parent block has an "overlay"
       // See https://github.com/WordPress/gutenberg/pull/34012#pullrequestreview-727762337
       const clientId = element.id.slice('block-'.length);
-      if (!clientId || __unstableIsWithinBlockOverlay(clientId)) {
+      if (!clientId || __unstableIsWithinBlockOverlay(clientId) || !!getParentSectionBlock(clientId)) {
         return;
       }
 
