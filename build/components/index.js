@@ -1774,6 +1774,7 @@ __webpack_require__.d(__webpack_exports__, {
   Autocomplete: () => (/* reexport */ Autocomplete),
   BaseControl: () => (/* reexport */ base_control),
   BlockQuotation: () => (/* reexport */ external_wp_primitives_namespaceObject.BlockQuotation),
+  BoxControl: () => (/* reexport */ box_control),
   Button: () => (/* reexport */ build_module_button),
   ButtonGroup: () => (/* reexport */ button_group),
   Card: () => (/* reexport */ card_component),
@@ -42594,14 +42595,14 @@ function box_control_useUniqueId(idProp) {
 }
 
 /**
- * BoxControl components let users set values for Top, Right, Bottom, and Left.
- * This can be used as an input control for values like `padding` or `margin`.
+ * A control that lets users set values for top, right, bottom, and left. Can be
+ * used as an input control for values like `padding` or `margin`.
  *
  * ```jsx
- * import { __experimentalBoxControl as BoxControl } from '@wordpress/components';
+ * import { BoxControl } from '@wordpress/components';
  * import { useState } from '@wordpress/element';
  *
- * const Example = () => {
+ * function Example() {
  * 	const [ values, setValues ] = useState( {
  * 		top: '50px',
  * 		left: '10%',
