@@ -9450,6 +9450,7 @@ function ComplementaryAreaToggle({
   icon,
   selectedIcon,
   name,
+  shortcut,
   ...props
 }) {
   const ComponentToUse = as;
@@ -9468,6 +9469,7 @@ function ComplementaryAreaToggle({
         enableComplementaryArea(scope, identifier);
       }
     },
+    shortcut: shortcut,
     ...props
   });
 }
@@ -9897,7 +9899,8 @@ function ComplementaryArea({
         icon: showIconLabels ? library_check : icon,
         showTooltip: !showIconLabels,
         variant: showIconLabels ? 'tertiary' : undefined,
-        size: "compact"
+        size: "compact",
+        shortcut: toggleShortcut
       })
     }), name && isPinnable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ComplementaryAreaMoreMenuItem, {
       target: name,
@@ -13675,7 +13678,6 @@ PluginPrePublishPanel.Slot = plugin_pre_publish_panel_Slot;
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -13752,12 +13754,10 @@ function PluginSidebar({
   ...props
 }) {
   const {
-    postTitle,
-    shortcut
+    postTitle
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return {
-      postTitle: select(store_store).getEditedPostAttribute('title'),
-      shortcut: select(external_wp_keyboardShortcuts_namespaceObject.store).getShortcutRepresentation('core/editor/toggle-sidebar')
+      postTitle: select(store_store).getEditedPostAttribute('title')
     };
   }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(complementary_area, {
@@ -13765,7 +13765,6 @@ function PluginSidebar({
     className: "editor-sidebar",
     smallScreenTitle: postTitle || (0,external_wp_i18n_namespaceObject.__)('(no title)'),
     scope: "core",
-    toggleShortcut: shortcut,
     ...props
   });
 }
