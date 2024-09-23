@@ -49335,6 +49335,14 @@ const query_no_results_metadata = {
   parent: ["core/query"],
   textdomain: "default",
   usesContext: ["queryId", "query"],
+  example: {
+    innerBlocks: [{
+      name: "core/paragraph",
+      attributes: {
+        content: "No posts were found."
+      }
+    }]
+  },
   supports: {
     align: true,
     reusable: false,
