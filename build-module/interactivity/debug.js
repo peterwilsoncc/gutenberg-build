@@ -9,6 +9,8 @@ __webpack_require__.d(__webpack_exports__, {
   iE: () => (/* reexport */ getConfig),
   fw: () => (/* reexport */ getContext),
   sb: () => (/* reexport */ getElement),
+  ST: () => (/* reexport */ getServerContext),
+  vV: () => (/* reexport */ getServerState),
   YH: () => (/* binding */ privateApis),
   QN: () => (/* reexport */ splitTask),
   h: () => (/* reexport */ store),
@@ -115,6 +117,41 @@ const getElement = () => {
     ref: ref.current,
     attributes: deepImmutable(attributes)
   });
+};
+
+/**
+ * Retrieves the part of the inherited context defined and updated from the
+ * server.
+ *
+ * The object returned is read-only, and includes the context defined in PHP
+ * with `wp_interactivity_data_wp_context()`, including the corresponding
+ * inherited properties. When `actions.navigate()` is called, this object is
+ * updated to reflect the changes in the new visited page, without affecting the
+ * context returned by `getContext()`. Directives can subscribe to those changes
+ * to update the context if needed.
+ *
+ * @example
+ * ```js
+ *  store('...', {
+ *    callbacks: {
+ *      updateServerContext() {
+ *        const context = getContext();
+ *        const serverContext = getServerContext();
+ *        // Override some property with the new value that came from the server.
+ *        context.overridableProp = serverContext.overridableProp;
+ *      },
+ *    },
+ *  });
+ * ```
+ *
+ * @param namespace Store namespace. By default, the namespace where the calling
+ *                  function exists is used.
+ * @return The server context content.
+ */
+const getServerContext = namespace => {
+  const scope = getScope();
+  if (false) {}
+  return scope.serverContext[namespace || getNamespace()];
 };
 
 ;// CONCATENATED MODULE: ./packages/interactivity/build-module/utils.js
@@ -677,6 +714,7 @@ const proxyToProps = new WeakMap();
  * @return `true` when it exists; false otherwise.
  */
 const hasPropSignal = (proxy, key) => proxyToProps.has(proxy) && proxyToProps.get(proxy).has(key);
+const readOnlyProxies = new WeakSet();
 
 /**
  * Returns the {@link PropSignal | `PropSignal`} instance associated with the
@@ -708,7 +746,10 @@ const getPropSignal = (proxy, key, initial) => {
       if (get) {
         prop.setGetter(get);
       } else {
-        prop.setValue(shouldProxy(value) ? proxifyState(ns, value) : value);
+        const readOnly = readOnlyProxies.has(proxy);
+        prop.setValue(shouldProxy(value) ? proxifyState(ns, value, {
+          readOnly
+        }) : value);
       }
     }
   }
@@ -766,6 +807,9 @@ const stateHandlers = {
     return result;
   },
   set(target, key, value, receiver) {
+    if (readOnlyProxies.has(receiver)) {
+      return false;
+    }
     setNamespace(getNamespaceFromProxy(receiver));
     try {
       return Reflect.set(target, key, value, receiver);
@@ -774,6 +818,9 @@ const stateHandlers = {
     }
   },
   defineProperty(target, key, desc) {
+    if (readOnlyProxies.has(getProxyFromObject(target))) {
+      return false;
+    }
     const isNew = !(key in target);
     const result = Reflect.defineProperty(target, key, desc);
     if (result) {
@@ -806,6 +853,9 @@ const stateHandlers = {
     return result;
   },
   deleteProperty(target, key) {
+    if (readOnlyProxies.has(getProxyFromObject(target))) {
+      return false;
+    }
     const result = Reflect.deleteProperty(target, key);
     if (result) {
       const prop = getPropSignal(getProxyFromObject(target), key);
@@ -833,15 +883,23 @@ const stateHandlers = {
  * Returns the proxy associated with the given state object, creating it if it
  * does not exist.
  *
- * @param namespace The namespace that will be associated to this proxy.
- * @param obj       The object to proxify.
+ * @param namespace        The namespace that will be associated to this proxy.
+ * @param obj              The object to proxify.
+ * @param options          Options.
+ * @param options.readOnly Read-only.
  *
  * @throws Error if the object cannot be proxified. Use {@link shouldProxy} to
  *         check if a proxy can be created for a specific object.
  *
  * @return The associated proxy.
  */
-const proxifyState = (namespace, obj) => createProxy(namespace, obj, stateHandlers);
+const proxifyState = (namespace, obj, options) => {
+  const proxy = createProxy(namespace, obj, stateHandlers);
+  if (options?.readOnly) {
+    readOnlyProxies.add(proxy);
+  }
+  return proxy;
+};
 
 /**
  * Reads the value of the specified property without subscribing to it.
@@ -1080,6 +1138,7 @@ const stores = new Map();
 const rawStores = new Map();
 const storeLocks = new Map();
 const storeConfigs = new Map();
+const serverStates = new Map();
 
 /**
  * Get the defined config for the store with the passed namespace.
@@ -1088,6 +1147,41 @@ const storeConfigs = new Map();
  * @return Defined config for the given namespace.
  */
 const getConfig = namespace => storeConfigs.get(namespace || getNamespace()) || {};
+
+/**
+ * Get the part of the state defined and updated from the server.
+ *
+ * The object returned is read-only, and includes the state defined in PHP with
+ * `wp_interactivity_state()`. When using `actions.navigate()`, this object is
+ * updated to reflect the changes in its properites, without affecting the state
+ * returned by `store()`. Directives can subscribe to those changes to update
+ * the state if needed.
+ *
+ * @example
+ * ```js
+ *  const { state } = store('myStore', {
+ *    callbacks: {
+ *      updateServerState() {
+ *        const serverState = getServerState();
+ *        // Override some property with the new value that came from the server.
+ *        state.overridableProp = serverState.overridableProp;
+ *      },
+ *    },
+ *  });
+ * ```
+ *
+ * @param namespace Store's namespace from which to retrieve the server state.
+ * @return The server state for the given namespace.
+ */
+const getServerState = namespace => {
+  const ns = namespace || getNamespace();
+  if (!serverStates.has(ns)) {
+    serverStates.set(ns, proxifyState(ns, {}, {
+      readOnly: true
+    }));
+  }
+  return serverStates.get(ns);
+};
 const universalUnlock = 'I acknowledge that using a private store means my plugin will inevitably break on the next store release.';
 
 /**
@@ -1199,6 +1293,7 @@ const populateServerData = data => {
         lock: universalUnlock
       });
       deepMerge(st.state, state, false);
+      deepMerge(getServerState(namespace), state);
     });
   }
   if (isPlainObject(data?.config)) {
@@ -1228,7 +1323,10 @@ populateServerData(data);
 
 
 // Main context.
-const context = (0,preact_module/* createContext */.kr)({});
+const context = (0,preact_module/* createContext */.kr)({
+  client: {},
+  server: {}
+});
 
 // WordPress Directives.
 const directiveCallbacks = {};
@@ -1383,7 +1481,12 @@ const Directives = ({
   scope.evaluate = T(getEvaluate({
     scope
   }), []);
-  scope.context = q(context);
+  const {
+    client,
+    server
+  } = q(context);
+  scope.context = client;
+  scope.serverContext = server;
   /* eslint-disable react-hooks/rules-of-hooks */
   scope.ref = previousScope?.ref || _(null);
   /* eslint-enable react-hooks/rules-of-hooks */
@@ -1589,14 +1692,25 @@ const getGlobalAsyncEventDirective = type => {
     const defaultEntry = context.find(({
       suffix
     }) => suffix === 'default');
-    const inheritedValue = q(inheritedContext);
+    const {
+      client: inheritedClient,
+      server: inheritedServer
+    } = q(inheritedContext);
     const ns = defaultEntry.namespace;
-    const currentValue = _(proxifyState(ns, {}));
+    const client = _(proxifyState(ns, {}));
+    const server = _(proxifyState(ns, {}, {
+      readOnly: true
+    }));
 
     // No change should be made if `defaultEntry` does not exist.
     const contextStack = F(() => {
       const result = {
-        ...inheritedValue
+        client: {
+          ...inheritedClient
+        },
+        server: {
+          ...inheritedServer
+        }
       };
       if (defaultEntry) {
         const {
@@ -1607,11 +1721,13 @@ const getGlobalAsyncEventDirective = type => {
         if (!isPlainObject(value)) {
           warn(`The value of data-wp-context in "${namespace}" store must be a valid stringified JSON object.`);
         }
-        deepMerge(currentValue.current, deepClone(value), false);
-        result[namespace] = proxifyContext(currentValue.current, inheritedValue[namespace]);
+        deepMerge(client.current, deepClone(value), false);
+        deepMerge(server.current, deepClone(value));
+        result.client[namespace] = proxifyContext(client.current, inheritedClient[namespace]);
+        result.server[namespace] = proxifyContext(server.current, inheritedServer[namespace]);
       }
       return result;
-    }, [defaultEntry, inheritedValue]);
+    }, [defaultEntry, inheritedClient, inheritedServer]);
     return (0,preact_module.h)(Provider, {
       value: contextStack
     }, children);
@@ -1960,17 +2076,23 @@ const getGlobalAsyncEventDirective = type => {
     const list = evaluate(entry);
     return list.map(item => {
       const itemProp = suffix === 'default' ? 'item' : kebabToCamelCase(suffix);
-      const itemContext = proxifyContext(proxifyState(namespace, {}), inheritedValue[namespace]);
+      const itemContext = proxifyContext(proxifyState(namespace, {}), inheritedValue.client[namespace]);
       const mergedContext = {
-        ...inheritedValue,
-        [namespace]: itemContext
+        client: {
+          ...inheritedValue.client,
+          [namespace]: itemContext
+        },
+        server: {
+          ...inheritedValue.server
+        }
       };
 
       // Set the item after proxifying the context.
-      mergedContext[namespace][itemProp] = item;
+      mergedContext.client[namespace][itemProp] = item;
       const scope = {
         ...getScope(),
-        context: mergedContext
+        context: mergedContext.client,
+        serverContext: mergedContext.server
       };
       const key = eachKey ? getEvaluate({
         scope
@@ -2326,6 +2448,8 @@ __webpack_require__.d(__webpack_exports__, {
   iE: () => (/* reexport */ build_module/* getConfig */.iE),
   fw: () => (/* reexport */ build_module/* getContext */.fw),
   sb: () => (/* reexport */ build_module/* getElement */.sb),
+  ST: () => (/* reexport */ build_module/* getServerContext */.ST),
+  vV: () => (/* reexport */ build_module/* getServerState */.vV),
   YH: () => (/* reexport */ build_module/* privateApis */.YH),
   QN: () => (/* reexport */ build_module/* splitTask */.QN),
   h: () => (/* reexport */ build_module/* store */.h),
@@ -2362,6 +2486,8 @@ var build_module = __webpack_require__(261);
 var __webpack_exports__getConfig = __webpack_exports__.iE;
 var __webpack_exports__getContext = __webpack_exports__.fw;
 var __webpack_exports__getElement = __webpack_exports__.sb;
+var __webpack_exports__getServerContext = __webpack_exports__.ST;
+var __webpack_exports__getServerState = __webpack_exports__.vV;
 var __webpack_exports__privateApis = __webpack_exports__.YH;
 var __webpack_exports__splitTask = __webpack_exports__.QN;
 var __webpack_exports__store = __webpack_exports__.h;
@@ -2374,4 +2500,4 @@ var __webpack_exports__useRef = __webpack_exports__.sO;
 var __webpack_exports__useState = __webpack_exports__.eJ;
 var __webpack_exports__useWatch = __webpack_exports__.qo;
 var __webpack_exports__withScope = __webpack_exports__.$e;
-export { __webpack_exports__getConfig as getConfig, __webpack_exports__getContext as getContext, __webpack_exports__getElement as getElement, __webpack_exports__privateApis as privateApis, __webpack_exports__splitTask as splitTask, __webpack_exports__store as store, __webpack_exports__useCallback as useCallback, __webpack_exports__useEffect as useEffect, __webpack_exports__useInit as useInit, __webpack_exports__useLayoutEffect as useLayoutEffect, __webpack_exports__useMemo as useMemo, __webpack_exports__useRef as useRef, __webpack_exports__useState as useState, __webpack_exports__useWatch as useWatch, __webpack_exports__withScope as withScope };
+export { __webpack_exports__getConfig as getConfig, __webpack_exports__getContext as getContext, __webpack_exports__getElement as getElement, __webpack_exports__getServerContext as getServerContext, __webpack_exports__getServerState as getServerState, __webpack_exports__privateApis as privateApis, __webpack_exports__splitTask as splitTask, __webpack_exports__store as store, __webpack_exports__useCallback as useCallback, __webpack_exports__useEffect as useEffect, __webpack_exports__useInit as useInit, __webpack_exports__useLayoutEffect as useLayoutEffect, __webpack_exports__useMemo as useMemo, __webpack_exports__useRef as useRef, __webpack_exports__useState as useState, __webpack_exports__useWatch as useWatch, __webpack_exports__withScope as withScope };
