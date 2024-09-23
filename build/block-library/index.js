@@ -9755,7 +9755,8 @@ const {
 const comment_author_name_settings = {
   icon: comment_author_name,
   edit: comment_author_name_edit_Edit,
-  deprecated: comment_author_name_deprecated
+  deprecated: comment_author_name_deprecated,
+  example: {}
 };
 const comment_author_name_init = () => initBlock({
   name: comment_author_name_name,
