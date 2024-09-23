@@ -62236,7 +62236,8 @@ const {
 
 const term_description_settings = {
   icon: term_description,
-  edit: TermDescriptionEdit
+  edit: TermDescriptionEdit,
+  example: {}
 };
 const term_description_init = () => initBlock({
   name: term_description_name,
