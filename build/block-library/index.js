@@ -12008,7 +12008,8 @@ const {
 const comments_title_settings = {
   icon: library_title,
   edit: comments_title_edit_Edit,
-  deprecated: comments_title_deprecated
+  deprecated: comments_title_deprecated,
+  example: {}
 };
 const comments_title_init = () => initBlock({
   name: comments_title_name,
