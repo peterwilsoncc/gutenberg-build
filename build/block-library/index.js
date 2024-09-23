@@ -43943,7 +43943,13 @@ const post_navigation_link_variations_variations = [{
   attributes: {
     type: 'next'
   },
-  scope: ['inserter', 'transform']
+  scope: ['inserter', 'transform'],
+  example: {
+    attributes: {
+      label: 'Next post',
+      arrow: 'arrow'
+    }
+  }
 }, {
   name: 'post-previous',
   title: (0,external_wp_i18n_namespaceObject.__)('Previous post'),
@@ -43952,7 +43958,13 @@ const post_navigation_link_variations_variations = [{
   attributes: {
     type: 'previous'
   },
-  scope: ['inserter', 'transform']
+  scope: ['inserter', 'transform'],
+  example: {
+    attributes: {
+      label: 'Previous post',
+      arrow: 'arrow'
+    }
+  }
 }];
 
 /**
@@ -44007,6 +44019,12 @@ const post_navigation_link_metadata = {
     taxonomy: {
       type: "string",
       "default": ""
+    }
+  },
+  example: {
+    attributes: {
+      label: "Next post",
+      arrow: "arrow"
     }
   },
   usesContext: ["postType"],
