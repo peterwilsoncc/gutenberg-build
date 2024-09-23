@@ -50357,6 +50357,11 @@ const query_title_metadata = {
       "default": true
     }
   },
+  example: {
+    attributes: {
+      type: "search"
+    }
+  },
   supports: {
     align: ["wide", "full"],
     html: false,
