@@ -49623,7 +49623,8 @@ const query_pagination_settings = {
   icon: query_pagination,
   edit: edit_QueryPaginationEdit,
   save: query_pagination_save_save,
-  deprecated: query_pagination_deprecated
+  deprecated: query_pagination_deprecated,
+  example: {}
 };
 const query_pagination_init = () => initBlock({
   name: query_pagination_name,
