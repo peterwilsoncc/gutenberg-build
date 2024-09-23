@@ -1294,6 +1294,14 @@ const universalUnlock = 'I acknowledge that using a private store means my plugi
  * @return A reference to the namespace content.
  */
 
+// Overload for when the types are inferred.
+
+// Overload for when types are passed via generics and they contain state.
+
+// Overload for when types are passed via generics and they don't contain state.
+
+// Overload for when types are divided into multiple parts.
+
 function store(namespace, {
   state = {},
   ...block
@@ -1483,7 +1491,7 @@ const resolve = (path, namespace) => {
   }
   let resolvedStore = stores.get(namespace);
   if (typeof resolvedStore === 'undefined') {
-    resolvedStore = store(namespace, undefined, {
+    resolvedStore = store(namespace, {}, {
       lock: universalUnlock
     });
   }
