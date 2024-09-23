@@ -59873,7 +59873,48 @@ const table_of_contents_metadata = {
       }
     }
   },
-  example: {},
+  example: {
+    innerBlocks: [{
+      name: "core/heading",
+      attributes: {
+        level: 2,
+        content: "Heading"
+      }
+    }, {
+      name: "core/heading",
+      attributes: {
+        level: 3,
+        content: "Subheading"
+      }
+    }, {
+      name: "core/heading",
+      attributes: {
+        level: 2,
+        content: "Heading"
+      }
+    }, {
+      name: "core/heading",
+      attributes: {
+        level: 3,
+        content: "Subheading"
+      }
+    }],
+    attributes: {
+      headings: [{
+        content: "Heading",
+        level: 2
+      }, {
+        content: "Subheading",
+        level: 3
+      }, {
+        content: "Heading",
+        level: 2
+      }, {
+        content: "Subheading",
+        level: 3
+      }]
+    }
+  },
   style: "wp-block-table-of-contents"
 };
 
