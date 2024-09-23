@@ -16503,25 +16503,11 @@ const post_publish_button_noop = () => {};
 class PostPublishButton extends external_wp_element_namespaceObject.Component {
   constructor(props) {
     super(props);
-    this.buttonNode = (0,external_wp_element_namespaceObject.createRef)();
     this.createOnClick = this.createOnClick.bind(this);
     this.closeEntitiesSavedStates = this.closeEntitiesSavedStates.bind(this);
     this.state = {
       entitiesSavedStatesCallback: false
     };
-  }
-  componentDidMount() {
-    if (this.props.focusOnMount) {
-      // This timeout is necessary to make sure the `useEffect` hook of
-      // `useFocusReturn` gets the correct element (the button that opens the
-      // PostPublishPanel) otherwise it will get this button.
-      this.timeoutID = setTimeout(() => {
-        this.buttonNode.current.focus();
-      }, 0);
-    }
-  }
-  componentWillUnmount() {
-    clearTimeout(this.timeoutID);
   }
   createOnClick(callback) {
     return (...args) => {
@@ -16642,7 +16628,6 @@ class PostPublishButton extends external_wp_element_namespaceObject.Component {
     const componentProps = isToggle ? toggleProps : buttonProps;
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        ref: this.buttonNode,
         ...componentProps,
         className: `${componentProps.className} editor-post-publish-button__button`,
         size: "compact",
@@ -19427,6 +19412,18 @@ class PostPublishPanel extends external_wp_element_namespaceObject.Component {
   constructor() {
     super(...arguments);
     this.onSubmit = this.onSubmit.bind(this);
+    this.cancelButtonNode = (0,external_wp_element_namespaceObject.createRef)();
+  }
+  componentDidMount() {
+    // This timeout is necessary to make sure the `useEffect` hook of
+    // `useFocusReturn` gets the correct element (the button that opens the
+    // PostPublishPanel) otherwise it will get this button.
+    this.timeoutID = setTimeout(() => {
+      this.cancelButtonNode.current.focus();
+    }, 0);
+  }
+  componentWillUnmount() {
+    clearTimeout(this.timeoutID);
   }
   componentDidUpdate(prevProps) {
     // Automatically collapse the publish sidebar when a post
@@ -19481,21 +19478,21 @@ class PostPublishPanel extends external_wp_element_namespaceObject.Component {
           label: (0,external_wp_i18n_namespaceObject.__)('Close panel')
         }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-            className: "editor-post-publish-panel__header-publish-button",
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_publish_button, {
-              focusOnMount: true,
-              onSubmit: this.onSubmit,
-              forceIsDirty: forceIsDirty
-            })
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
             className: "editor-post-publish-panel__header-cancel-button",
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              ref: this.cancelButtonNode,
               accessibleWhenDisabled: true,
               disabled: isSavingNonPostEntityChanges,
               onClick: onClose,
               variant: "secondary",
               size: "compact",
               children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+            })
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+            className: "editor-post-publish-panel__header-publish-button",
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_publish_button, {
+              onSubmit: this.onSubmit,
+              forceIsDirty: forceIsDirty
             })
           })]
         })
