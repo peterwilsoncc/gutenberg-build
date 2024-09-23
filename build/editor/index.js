@@ -24110,23 +24110,19 @@ function ContentOnlySettingsMenuItems({
     const {
       getBlockParentsByBlockName,
       getSettings,
-      getBlockAttributes
+      getBlockAttributes,
+      getBlockParents
     } = select(external_wp_blockEditor_namespaceObject.store);
+    const {
+      getCurrentTemplateId,
+      getRenderingMode
+    } = select(store_store);
     const patternParent = getBlockParentsByBlockName(clientId, 'core/block', true)[0];
     let record;
     if (patternParent) {
       record = select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', 'wp_block', getBlockAttributes(patternParent).ref);
-    } else {
-      const {
-        getCurrentTemplateId
-      } = select(store_store);
-      const templateId = getCurrentTemplateId();
-      const {
-        getBlockParents
-      } = unlock(select(external_wp_blockEditor_namespaceObject.store));
-      if (!getBlockParents(clientId).some(parent => postContentBlocks.includes(parent))) {
-        record = select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', 'wp_template', templateId);
-      }
+    } else if (getRenderingMode() === 'template-locked' && !getBlockParents(clientId).some(parent => postContentBlocks.includes(parent))) {
+      record = select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', 'wp_template', getCurrentTemplateId());
     }
     if (!record) {
       return {};
