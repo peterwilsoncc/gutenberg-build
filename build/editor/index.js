@@ -26324,6 +26324,7 @@ const square = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -26331,9 +26332,11 @@ const square = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 const ZoomOutToggle = () => {
   const {
-    isZoomOut
+    isZoomOut,
+    showIconLabels
   } = (0,external_wp_data_namespaceObject.useSelect)(select => ({
-    isZoomOut: unlock(select(external_wp_blockEditor_namespaceObject.store)).isZoomOut()
+    isZoomOut: unlock(select(external_wp_blockEditor_namespaceObject.store)).isZoomOut(),
+    showIconLabels: select(external_wp_preferences_namespaceObject.store).get('core', 'showIconLabels')
   }));
   const {
     resetZoomLevel,
@@ -26353,7 +26356,8 @@ const ZoomOutToggle = () => {
     icon: library_square,
     label: (0,external_wp_i18n_namespaceObject.__)('Toggle Zoom Out'),
     isPressed: isZoomOut,
-    size: "compact"
+    size: "compact",
+    showTooltip: !showIconLabels
   });
 };
 /* harmony default export */ const zoom_out_toggle = (ZoomOutToggle);
