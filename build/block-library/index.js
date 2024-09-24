@@ -9933,7 +9933,8 @@ const {
 
 const comment_content_settings = {
   icon: comment_content,
-  edit: comment_content_edit_Edit
+  edit: comment_content_edit_Edit,
+  example: {}
 };
 const comment_content_init = () => initBlock({
   name: comment_content_name,
