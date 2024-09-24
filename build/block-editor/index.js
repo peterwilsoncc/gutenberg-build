@@ -7689,6 +7689,7 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   getBlockStyles: () => (getBlockStyles),
   getBlockWithoutAttributes: () => (getBlockWithoutAttributes),
   getClosestAllowedInsertionPoint: () => (getClosestAllowedInsertionPoint),
+  getClosestAllowedInsertionPointForPattern: () => (getClosestAllowedInsertionPointForPattern),
   getContentLockingParent: () => (getContentLockingParent),
   getEnabledBlockParents: () => (getEnabledBlockParents),
   getEnabledClientIdsTree: () => (getEnabledClientIdsTree),
@@ -11003,21 +11004,24 @@ function isZoomOut(state) {
 /**
  * Finds the closest block where the block is allowed to be inserted.
  *
- * @param {Object} state    Editor state.
- * @param {string} name     Block name.
- * @param {string} clientId Default insertion point.
+ * @param {Object}            state    Editor state.
+ * @param {string[] | string} name     Block name or names.
+ * @param {string}            clientId Default insertion point.
  *
  * @return {string} clientID of the closest container when the block name can be inserted.
  */
 function getClosestAllowedInsertionPoint(state, name, clientId = '') {
+  const blockNames = Array.isArray(name) ? name : [name];
+  const areBlockNamesAllowedInClientId = id => blockNames.every(currentName => canInsertBlockType(state, currentName, id));
+
   // If we're trying to insert at the root level and it's not allowed
   // Try the section root instead.
   if (!clientId) {
-    if (canInsertBlockType(state, name, clientId)) {
+    if (areBlockNamesAllowedInClientId(clientId)) {
       return clientId;
     }
     const sectionRootClientId = getSectionRootClientId(state);
-    if (sectionRootClientId && canInsertBlockType(state, name, sectionRootClientId)) {
+    if (sectionRootClientId && areBlockNamesAllowedInClientId(sectionRootClientId)) {
       return sectionRootClientId;
     }
     return null;
@@ -11025,11 +11029,24 @@ function getClosestAllowedInsertionPoint(state, name, clientId = '') {
 
   // Traverse the block tree up until we find a place where we can insert.
   let current = clientId;
-  while (current !== null && !canInsertBlockType(state, name, current)) {
+  while (current !== null && !areBlockNamesAllowedInClientId(current)) {
     const parentClientId = getBlockRootClientId(state, current);
     current = parentClientId;
   }
   return current;
+}
+function getClosestAllowedInsertionPointForPattern(state, pattern, clientId) {
+  const {
+    allowedBlockTypes
+  } = getSettings(state);
+  const isAllowed = checkAllowListRecursive(getGrammar(pattern), allowedBlockTypes);
+  if (!isAllowed) {
+    return null;
+  }
+  const names = getGrammar(pattern).map(({
+    blockName: name
+  }) => name);
+  return getClosestAllowedInsertionPoint(state, names, clientId);
 }
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/store/utils.js
@@ -50965,35 +50982,52 @@ function useInsertionPoint({
 
 
 
+
+
 /**
  * Retrieves the block patterns inserter state.
  *
  * @param {Function} onInsert         function called when inserter a list of blocks.
  * @param {string=}  rootClientId     Insertion's root client ID.
- *
  * @param {string}   selectedCategory The selected pattern category.
+ * @param {boolean}  isQuick          For the quick inserter render only allowed patterns.
+ *
  * @return {Array} Returns the patterns state. (patterns, categories, onSelect handler)
  */
-const usePatternsState = (onInsert, rootClientId, selectedCategory) => {
+const usePatternsState = (onInsert, rootClientId, selectedCategory, isQuick) => {
   const {
     patternCategories,
-    patterns,
+    allPatterns,
     userPatternCategories
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      __experimentalGetAllowedPatterns,
-      getSettings
-    } = select(store);
+      getAllPatterns,
+      getSettings,
+      __experimentalGetAllowedPatterns
+    } = unlock(select(store));
     const {
       __experimentalUserPatternCategories,
       __experimentalBlockPatternCategories
     } = getSettings();
     return {
-      patterns: __experimentalGetAllowedPatterns(rootClientId),
+      allPatterns: isQuick ? __experimentalGetAllowedPatterns() : getAllPatterns(),
       userPatternCategories: __experimentalUserPatternCategories,
       patternCategories: __experimentalBlockPatternCategories
     };
-  }, [rootClientId]);
+  }, [isQuick]);
+  const {
+    getClosestAllowedInsertionPointForPattern
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
+  const patterns = (0,external_wp_element_namespaceObject.useMemo)(() => isQuick ? allPatterns : allPatterns.filter(({
+    inserter = true
+  }) => !!inserter).map(pattern => {
+    return {
+      ...pattern,
+      get blocks() {
+        return getParsedPattern(pattern).blocks;
+      }
+    };
+  }), [isQuick, allPatterns]);
   const allCategories = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const categories = [...patternCategories];
     userPatternCategories?.forEach(userCategory => {
@@ -51007,6 +51041,10 @@ const usePatternsState = (onInsert, rootClientId, selectedCategory) => {
     createSuccessNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   const onClickPattern = (0,external_wp_element_namespaceObject.useCallback)((pattern, blocks) => {
+    const destinationRootClientId = isQuick ? rootClientId : getClosestAllowedInsertionPointForPattern(pattern, rootClientId);
+    if (destinationRootClientId === null) {
+      return;
+    }
     const patternBlocks = pattern.type === INSERTER_PATTERN_TYPES.user && pattern.syncStatus !== 'unsynced' ? [(0,external_wp_blocks_namespaceObject.createBlock)('core/block', {
       ref: pattern.id
     })] : blocks;
@@ -51016,13 +51054,13 @@ const usePatternsState = (onInsert, rootClientId, selectedCategory) => {
         clonedBlock.attributes.metadata.categories = [selectedCategory];
       }
       return clonedBlock;
-    }), pattern.name);
+    }), pattern.name, false, destinationRootClientId);
     createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: block pattern title. */
     (0,external_wp_i18n_namespaceObject.__)('Block pattern "%s" inserted.'), pattern.title), {
       type: 'snackbar',
       id: 'inserter-notice'
     });
-  }, [createSuccessNotice, onInsert, selectedCategory]);
+  }, [createSuccessNotice, onInsert, selectedCategory, rootClientId, getClosestAllowedInsertionPointForPattern, isQuick]);
   return [patterns, allCategories, onClickPattern];
 };
 /* harmony default export */ const use_patterns_state = (usePatternsState);
@@ -53022,11 +53060,11 @@ function InserterMenu({
       }
     });
   }, [onInsertBlocks, onSelect, shouldFocusBlock]);
-  const onInsertPattern = (0,external_wp_element_namespaceObject.useCallback)((blocks, patternName) => {
+  const onInsertPattern = (0,external_wp_element_namespaceObject.useCallback)((blocks, patternName, ...args) => {
     onToggleInsertionPoint(false);
     onInsertBlocks(blocks, {
       patternName
-    });
+    }, ...args);
     onSelect();
   }, [onInsertBlocks, onSelect]);
   const onHover = (0,external_wp_element_namespaceObject.useCallback)(item => {
@@ -53238,7 +53276,7 @@ function QuickInserter({
     selectBlockOnInsert
   });
   const [blockTypes] = use_block_types_state(destinationRootClientId, onInsertBlocks, true);
-  const [patterns] = use_patterns_state(onInsertBlocks, destinationRootClientId);
+  const [patterns] = use_patterns_state(onInsertBlocks, destinationRootClientId, undefined, true);
   const {
     setInserterIsOpened,
     insertionIndex
