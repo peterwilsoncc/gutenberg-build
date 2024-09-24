@@ -2686,21 +2686,21 @@ const util_metadata = {
   attributes: {
     url: {
       type: "string",
-      __experimentalRole: "content"
+      role: "content"
     },
     caption: {
       type: "rich-text",
       source: "rich-text",
       selector: "figcaption",
-      __experimentalRole: "content"
+      role: "content"
     },
     type: {
       type: "string",
-      __experimentalRole: "content"
+      role: "content"
     },
     providerNameSlug: {
       type: "string",
-      __experimentalRole: "content"
+      role: "content"
     },
     allowResponsive: {
       type: "boolean",
@@ -2709,12 +2709,12 @@ const util_metadata = {
     responsive: {
       type: "boolean",
       "default": false,
-      __experimentalRole: "content"
+      role: "content"
     },
     previewable: {
       type: "boolean",
       "default": true,
-      __experimentalRole: "content"
+      role: "content"
     }
   },
   supports: {
@@ -3582,24 +3582,24 @@ const audio_metadata = {
   attributes: {
     blob: {
       type: "string",
-      __experimentalRole: "local"
+      role: "local"
     },
     src: {
       type: "string",
       source: "attribute",
       selector: "audio",
       attribute: "src",
-      __experimentalRole: "content"
+      role: "content"
     },
     caption: {
       type: "rich-text",
       source: "rich-text",
       selector: "figcaption",
-      __experimentalRole: "content"
+      role: "content"
     },
     id: {
       type: "number",
-      __experimentalRole: "content"
+      role: "content"
     },
     autoplay: {
       type: "boolean",
@@ -5318,34 +5318,34 @@ const button_metadata = {
       source: "attribute",
       selector: "a",
       attribute: "href",
-      __experimentalRole: "content"
+      role: "content"
     },
     title: {
       type: "string",
       source: "attribute",
       selector: "a,button",
       attribute: "title",
-      __experimentalRole: "content"
+      role: "content"
     },
     text: {
       type: "rich-text",
       source: "rich-text",
       selector: "a,button",
-      __experimentalRole: "content"
+      role: "content"
     },
     linkTarget: {
       type: "string",
       source: "attribute",
       selector: "a",
       attribute: "target",
-      __experimentalRole: "content"
+      role: "content"
     },
     rel: {
       type: "string",
       source: "attribute",
       selector: "a",
       attribute: "rel",
-      __experimentalRole: "content"
+      role: "content"
     },
     placeholder: {
       type: "string"
@@ -6436,7 +6436,7 @@ const categories_metadata = {
     },
     label: {
       type: "string",
-      __experimentalRole: "content"
+      role: "content"
     },
     showLabel: {
       type: "boolean",
@@ -16876,21 +16876,21 @@ const transforms_metadata = {
   attributes: {
     url: {
       type: "string",
-      __experimentalRole: "content"
+      role: "content"
     },
     caption: {
       type: "rich-text",
       source: "rich-text",
       selector: "figcaption",
-      __experimentalRole: "content"
+      role: "content"
     },
     type: {
       type: "string",
-      __experimentalRole: "content"
+      role: "content"
     },
     providerNameSlug: {
       type: "string",
-      __experimentalRole: "content"
+      role: "content"
     },
     allowResponsive: {
       type: "boolean",
@@ -16899,12 +16899,12 @@ const transforms_metadata = {
     responsive: {
       type: "boolean",
       "default": false,
-      __experimentalRole: "content"
+      role: "content"
     },
     previewable: {
       type: "boolean",
       "default": true,
-      __experimentalRole: "content"
+      role: "content"
     }
   },
   supports: {
@@ -17379,21 +17379,21 @@ const embed_deprecated_metadata = {
   attributes: {
     url: {
       type: "string",
-      __experimentalRole: "content"
+      role: "content"
     },
     caption: {
       type: "rich-text",
       source: "rich-text",
       selector: "figcaption",
-      __experimentalRole: "content"
+      role: "content"
     },
     type: {
       type: "string",
-      __experimentalRole: "content"
+      role: "content"
     },
     providerNameSlug: {
       type: "string",
-      __experimentalRole: "content"
+      role: "content"
     },
     allowResponsive: {
       type: "boolean",
@@ -17402,12 +17402,12 @@ const embed_deprecated_metadata = {
     responsive: {
       type: "boolean",
       "default": false,
-      __experimentalRole: "content"
+      role: "content"
     },
     previewable: {
       type: "boolean",
       "default": true,
-      __experimentalRole: "content"
+      role: "content"
     }
   },
   supports: {
@@ -17514,21 +17514,21 @@ const embed_metadata = {
   attributes: {
     url: {
       type: "string",
-      __experimentalRole: "content"
+      role: "content"
     },
     caption: {
       type: "rich-text",
       source: "rich-text",
       selector: "figcaption",
-      __experimentalRole: "content"
+      role: "content"
     },
     type: {
       type: "string",
-      __experimentalRole: "content"
+      role: "content"
     },
     providerNameSlug: {
       type: "string",
-      __experimentalRole: "content"
+      role: "content"
     },
     allowResponsive: {
       type: "boolean",
@@ -17537,12 +17537,12 @@ const embed_metadata = {
     responsive: {
       type: "boolean",
       "default": false,
-      __experimentalRole: "content"
+      role: "content"
     },
     previewable: {
       type: "boolean",
       "default": true,
-      __experimentalRole: "content"
+      role: "content"
     }
   },
   supports: {
@@ -18606,7 +18606,7 @@ const file_metadata = {
     },
     blob: {
       type: "string",
-      __experimentalRole: "local"
+      role: "local"
     },
     href: {
       type: "string"
@@ -19122,7 +19122,7 @@ const form_input_deprecated_v2 = {
       default: 'Label',
       selector: '.wp-block-form-input__label-content',
       source: 'html',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     inlineLabel: {
       type: 'boolean',
@@ -19140,7 +19140,7 @@ const form_input_deprecated_v2 = {
       selector: '.wp-block-form-input__input',
       source: 'attribute',
       attribute: 'placeholder',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     value: {
       type: 'string',
@@ -19237,7 +19237,7 @@ const form_input_deprecated_v1 = {
       default: 'Label',
       selector: '.wp-block-form-input__label-content',
       source: 'html',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     inlineLabel: {
       type: 'boolean',
@@ -19255,7 +19255,7 @@ const form_input_deprecated_v1 = {
       selector: '.wp-block-form-input__input',
       source: 'attribute',
       attribute: 'placeholder',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     value: {
       type: 'string',
@@ -19683,7 +19683,7 @@ const form_input_metadata = {
       "default": "Label",
       selector: ".wp-block-form-input__label-content",
       source: "rich-text",
-      __experimentalRole: "content"
+      role: "content"
     },
     inlineLabel: {
       type: "boolean",
@@ -19701,7 +19701,7 @@ const form_input_metadata = {
       selector: ".wp-block-form-input__input",
       source: "attribute",
       attribute: "placeholder",
-      __experimentalRole: "content"
+      role: "content"
     },
     value: {
       type: "string",
@@ -23696,7 +23696,7 @@ const heading_deprecated_v5 = {
       source: 'html',
       selector: 'h1,h2,h3,h4,h5,h6',
       default: '',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     level: {
       type: 'number',
@@ -24110,7 +24110,7 @@ const heading_metadata = {
       type: "rich-text",
       source: "rich-text",
       selector: "h1,h2,h3,h4,h5,h6",
-      __experimentalRole: "content"
+      role: "content"
     },
     level: {
       type: "number",
@@ -25205,7 +25205,7 @@ const image_deprecated_v6 = {
       source: 'attribute',
       selector: 'img',
       attribute: 'src',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     alt: {
       type: 'string',
@@ -25213,27 +25213,27 @@ const image_deprecated_v6 = {
       selector: 'img',
       attribute: 'alt',
       default: '',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     caption: {
       type: 'string',
       source: 'html',
       selector: 'figcaption',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     title: {
       type: 'string',
       source: 'attribute',
       selector: 'img',
       attribute: 'title',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     href: {
       type: 'string',
       source: 'attribute',
       selector: 'figure > a',
       attribute: 'href',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     rel: {
       type: 'string',
@@ -25249,7 +25249,7 @@ const image_deprecated_v6 = {
     },
     id: {
       type: 'number',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     width: {
       type: 'number'
@@ -25391,7 +25391,7 @@ const image_deprecated_v7 = {
       source: 'attribute',
       selector: 'img',
       attribute: 'src',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     alt: {
       type: 'string',
@@ -25399,27 +25399,27 @@ const image_deprecated_v7 = {
       selector: 'img',
       attribute: 'alt',
       default: '',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     caption: {
       type: 'string',
       source: 'html',
       selector: 'figcaption',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     title: {
       type: 'string',
       source: 'attribute',
       selector: 'img',
       attribute: 'title',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     href: {
       type: 'string',
       source: 'attribute',
       selector: 'figure > a',
       attribute: 'href',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     rel: {
       type: 'string',
@@ -25435,7 +25435,7 @@ const image_deprecated_v7 = {
     },
     id: {
       type: 'number',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     width: {
       type: 'number'
@@ -25574,7 +25574,7 @@ const deprecated_v8 = {
       source: 'attribute',
       selector: 'img',
       attribute: 'src',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     alt: {
       type: 'string',
@@ -25582,27 +25582,27 @@ const deprecated_v8 = {
       selector: 'img',
       attribute: 'alt',
       default: '',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     caption: {
       type: 'string',
       source: 'html',
       selector: 'figcaption',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     title: {
       type: 'string',
       source: 'attribute',
       selector: 'img',
       attribute: 'title',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     href: {
       type: 'string',
       source: 'attribute',
       selector: 'figure > a',
       attribute: 'href',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     rel: {
       type: 'string',
@@ -25618,7 +25618,7 @@ const deprecated_v8 = {
     },
     id: {
       type: 'number',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     width: {
       type: 'string'
@@ -27377,14 +27377,14 @@ const image_metadata = {
   attributes: {
     blob: {
       type: "string",
-      __experimentalRole: "local"
+      role: "local"
     },
     url: {
       type: "string",
       source: "attribute",
       selector: "img",
       attribute: "src",
-      __experimentalRole: "content"
+      role: "content"
     },
     alt: {
       type: "string",
@@ -27392,13 +27392,13 @@ const image_metadata = {
       selector: "img",
       attribute: "alt",
       "default": "",
-      __experimentalRole: "content"
+      role: "content"
     },
     caption: {
       type: "rich-text",
       source: "rich-text",
       selector: "figcaption",
-      __experimentalRole: "content"
+      role: "content"
     },
     lightbox: {
       type: "object",
@@ -27411,14 +27411,14 @@ const image_metadata = {
       source: "attribute",
       selector: "img",
       attribute: "title",
-      __experimentalRole: "content"
+      role: "content"
     },
     href: {
       type: "string",
       source: "attribute",
       selector: "figure > a",
       attribute: "href",
-      __experimentalRole: "content"
+      role: "content"
     },
     rel: {
       type: "string",
@@ -27434,7 +27434,7 @@ const image_metadata = {
     },
     id: {
       type: "number",
-      __experimentalRole: "content"
+      role: "content"
     },
     width: {
       type: "string"
@@ -28717,7 +28717,7 @@ const v0 = {
     ordered: {
       type: 'boolean',
       default: false,
-      __experimentalRole: 'content'
+      role: 'content'
     },
     values: {
       type: 'string',
@@ -28726,7 +28726,7 @@ const v0 = {
       multiline: 'li',
       __unstableMultilineWrapperTags: ['ol', 'ul'],
       default: '',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     type: {
       type: 'string'
@@ -28791,7 +28791,7 @@ const list_deprecated_v1 = {
     ordered: {
       type: 'boolean',
       default: false,
-      __experimentalRole: 'content'
+      role: 'content'
     },
     values: {
       type: 'string',
@@ -28800,7 +28800,7 @@ const list_deprecated_v1 = {
       multiline: 'li',
       __unstableMultilineWrapperTags: ['ol', 'ul'],
       default: '',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     type: {
       type: 'string'
@@ -28874,7 +28874,7 @@ const list_deprecated_v2 = {
     ordered: {
       type: 'boolean',
       default: false,
-      __experimentalRole: 'content'
+      role: 'content'
     },
     values: {
       type: 'string',
@@ -28883,7 +28883,7 @@ const list_deprecated_v2 = {
       multiline: 'li',
       __unstableMultilineWrapperTags: ['ol', 'ul'],
       default: '',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     type: {
       type: 'string'
@@ -28967,7 +28967,7 @@ const list_deprecated_v3 = {
     ordered: {
       type: 'boolean',
       default: false,
-      __experimentalRole: 'content'
+      role: 'content'
     },
     values: {
       type: 'string',
@@ -28976,7 +28976,7 @@ const list_deprecated_v3 = {
       multiline: 'li',
       __unstableMultilineWrapperTags: ['ol', 'ul'],
       default: '',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     type: {
       type: 'string'
@@ -29594,7 +29594,7 @@ const list_metadata = {
     ordered: {
       type: "boolean",
       "default": false,
-      __experimentalRole: "content"
+      role: "content"
     },
     values: {
       type: "string",
@@ -29603,7 +29603,7 @@ const list_metadata = {
       multiline: "li",
       __unstableMultilineWrapperTags: ["ol", "ul"],
       "default": "",
-      __experimentalRole: "content"
+      role: "content"
     },
     type: {
       type: "string"
@@ -30321,7 +30321,7 @@ const list_item_metadata = {
       type: "rich-text",
       source: "rich-text",
       selector: "li",
-      __experimentalRole: "content"
+      role: "content"
     }
   },
   supports: {
@@ -30737,29 +30737,29 @@ const v6Attributes = {
     selector: 'figure img',
     attribute: 'alt',
     default: '',
-    __experimentalRole: 'content'
+    role: 'content'
   },
   mediaId: {
     type: 'number',
-    __experimentalRole: 'content'
+    role: 'content'
   },
   mediaUrl: {
     type: 'string',
     source: 'attribute',
     selector: 'figure video,figure img',
     attribute: 'src',
-    __experimentalRole: 'content'
+    role: 'content'
   },
   href: {
     type: 'string',
     source: 'attribute',
     selector: 'figure a',
     attribute: 'href',
-    __experimentalRole: 'content'
+    role: 'content'
   },
   mediaType: {
     type: 'string',
-    __experimentalRole: 'content'
+    role: 'content'
   }
 };
 const v7Attributes = {
@@ -32542,7 +32542,7 @@ const media_text_metadata = {
       selector: "figure img",
       attribute: "alt",
       "default": "",
-      __experimentalRole: "content"
+      role: "content"
     },
     mediaPosition: {
       type: "string",
@@ -32550,14 +32550,14 @@ const media_text_metadata = {
     },
     mediaId: {
       type: "number",
-      __experimentalRole: "content"
+      role: "content"
     },
     mediaUrl: {
       type: "string",
       source: "attribute",
       selector: "figure video,figure img",
       attribute: "src",
-      __experimentalRole: "content"
+      role: "content"
     },
     mediaLink: {
       type: "string"
@@ -32576,7 +32576,7 @@ const media_text_metadata = {
       source: "attribute",
       selector: "figure a",
       attribute: "href",
-      __experimentalRole: "content"
+      role: "content"
     },
     rel: {
       type: "string",
@@ -32592,7 +32592,7 @@ const media_text_metadata = {
     },
     mediaType: {
       type: "string",
-      __experimentalRole: "content"
+      role: "content"
     },
     mediaWidth: {
       type: "number",
@@ -40454,7 +40454,7 @@ const {
       type: "rich-text",
       source: "rich-text",
       selector: "p",
-      __experimentalRole: "content"
+      role: "content"
     },
     dropCap: {
       type: "boolean",
@@ -40576,7 +40576,7 @@ const paragraph_metadata = {
       type: "rich-text",
       source: "rich-text",
       selector: "p",
-      __experimentalRole: "content"
+      role: "content"
     },
     dropCap: {
       type: "boolean",
@@ -45452,7 +45452,7 @@ const preformatted_metadata = {
       source: "rich-text",
       selector: "pre",
       __unstablePreserveWhiteSpace: true,
-      __experimentalRole: "content"
+      role: "content"
     }
   },
   supports: {
@@ -45616,14 +45616,14 @@ const pullquote_deprecated_v5 = {
       source: 'html',
       selector: 'blockquote',
       multiline: 'p',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     citation: {
       type: 'string',
       source: 'html',
       selector: 'cite',
       default: '',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     textAlign: {
       type: 'string'
@@ -46363,13 +46363,13 @@ const pullquote_metadata = {
       type: "rich-text",
       source: "rich-text",
       selector: "p",
-      __experimentalRole: "content"
+      role: "content"
     },
     citation: {
       type: "rich-text",
       source: "rich-text",
       selector: "cite",
-      __experimentalRole: "content"
+      role: "content"
     },
     textAlign: {
       type: "string"
@@ -50523,14 +50523,14 @@ const quote_deprecated_v4 = {
       selector: 'blockquote',
       multiline: 'p',
       default: '',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     citation: {
       type: 'string',
       source: 'html',
       selector: 'cite',
       default: '',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     align: {
       type: 'string'
@@ -50598,14 +50598,14 @@ const quote_deprecated_v3 = {
       selector: 'blockquote',
       multiline: 'p',
       default: '',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     citation: {
       type: 'string',
       source: 'html',
       selector: 'cite',
       default: '',
-      __experimentalRole: 'content'
+      role: 'content'
     },
     align: {
       type: 'string'
@@ -51156,13 +51156,13 @@ const quote_metadata = {
       selector: "blockquote",
       multiline: "p",
       "default": "",
-      __experimentalRole: "content"
+      role: "content"
     },
     citation: {
       type: "rich-text",
       source: "rich-text",
       selector: "cite",
-      __experimentalRole: "content"
+      role: "content"
     },
     textAlign: {
       type: "string"
@@ -52751,7 +52751,7 @@ const search_metadata = {
   attributes: {
     label: {
       type: "string",
-      __experimentalRole: "content"
+      role: "content"
     },
     showLabel: {
       type: "boolean",
@@ -52760,7 +52760,7 @@ const search_metadata = {
     placeholder: {
       type: "string",
       "default": "",
-      __experimentalRole: "content"
+      role: "content"
     },
     width: {
       type: "number"
@@ -52770,7 +52770,7 @@ const search_metadata = {
     },
     buttonText: {
       type: "string",
-      __experimentalRole: "content"
+      role: "content"
     },
     buttonPosition: {
       type: "string",
@@ -62521,7 +62521,7 @@ const verse_deprecated_v2 = {
       selector: 'pre',
       default: '',
       __unstablePreserveWhiteSpace: true,
-      __experimentalRole: 'content'
+      role: 'content'
     },
     textAlign: {
       type: 'string'
@@ -62721,7 +62721,7 @@ const verse_metadata = {
       source: "rich-text",
       selector: "pre",
       __unstablePreserveWhiteSpace: true,
-      __experimentalRole: "content"
+      role: "content"
     },
     textAlign: {
       type: "string"
@@ -62873,7 +62873,7 @@ const video_deprecated_metadata = {
       type: "rich-text",
       source: "rich-text",
       selector: "figcaption",
-      __experimentalRole: "content"
+      role: "content"
     },
     controls: {
       type: "boolean",
@@ -62884,7 +62884,7 @@ const video_deprecated_metadata = {
     },
     id: {
       type: "number",
-      __experimentalRole: "content"
+      role: "content"
     },
     loop: {
       type: "boolean",
@@ -62913,14 +62913,14 @@ const video_deprecated_metadata = {
     },
     blob: {
       type: "string",
-      __experimentalRole: "local"
+      role: "local"
     },
     src: {
       type: "string",
       source: "attribute",
       selector: "video",
       attribute: "src",
-      __experimentalRole: "content"
+      role: "content"
     },
     playsInline: {
       type: "boolean",
@@ -62929,7 +62929,7 @@ const video_deprecated_metadata = {
       attribute: "playsinline"
     },
     tracks: {
-      __experimentalRole: "content",
+      role: "content",
       type: "array",
       items: {
         type: "object"
@@ -63843,7 +63843,7 @@ const video_metadata = {
       type: "rich-text",
       source: "rich-text",
       selector: "figcaption",
-      __experimentalRole: "content"
+      role: "content"
     },
     controls: {
       type: "boolean",
@@ -63854,7 +63854,7 @@ const video_metadata = {
     },
     id: {
       type: "number",
-      __experimentalRole: "content"
+      role: "content"
     },
     loop: {
       type: "boolean",
@@ -63883,14 +63883,14 @@ const video_metadata = {
     },
     blob: {
       type: "string",
-      __experimentalRole: "local"
+      role: "local"
     },
     src: {
       type: "string",
       source: "attribute",
       selector: "video",
       attribute: "src",
-      __experimentalRole: "content"
+      role: "content"
     },
     playsInline: {
       type: "boolean",
@@ -63899,7 +63899,7 @@ const video_metadata = {
       attribute: "playsinline"
     },
     tracks: {
-      __experimentalRole: "content",
+      role: "content",
       type: "array",
       items: {
         type: "object"
