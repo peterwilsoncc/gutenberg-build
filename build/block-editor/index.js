@@ -7688,6 +7688,7 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   getBlockSettings: () => (getBlockSettings),
   getBlockStyles: () => (getBlockStyles),
   getBlockWithoutAttributes: () => (getBlockWithoutAttributes),
+  getClosestAllowedInsertionPoint: () => (getClosestAllowedInsertionPoint),
   getContentLockingParent: () => (getContentLockingParent),
   getEnabledBlockParents: () => (getEnabledBlockParents),
   getEnabledClientIdsTree: () => (getEnabledClientIdsTree),
@@ -10999,6 +11000,38 @@ function isZoomOut(state) {
   return getZoomLevel(state) < 100;
 }
 
+/**
+ * Finds the closest block where the block is allowed to be inserted.
+ *
+ * @param {Object} state    Editor state.
+ * @param {string} name     Block name.
+ * @param {string} clientId Default insertion point.
+ *
+ * @return {string} clientID of the closest container when the block name can be inserted.
+ */
+function getClosestAllowedInsertionPoint(state, name, clientId = '') {
+  // If we're trying to insert at the root level and it's not allowed
+  // Try the section root instead.
+  if (!clientId) {
+    if (canInsertBlockType(state, name, clientId)) {
+      return clientId;
+    }
+    const sectionRootClientId = getSectionRootClientId(state);
+    if (sectionRootClientId && canInsertBlockType(state, name, sectionRootClientId)) {
+      return sectionRootClientId;
+    }
+    return null;
+  }
+
+  // Traverse the block tree up until we find a place where we can insert.
+  let current = clientId;
+  while (current !== null && !canInsertBlockType(state, name, current)) {
+    const parentClientId = getBlockRootClientId(state, current);
+    current = parentClientId;
+  }
+  return current;
+}
+
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/store/utils.js
 /**
  * WordPress dependencies
@@ -11013,7 +11046,7 @@ function isZoomOut(state) {
 
 
 
-const withRootClientIdOptionKey = Symbol('withRootClientId');
+const isFiltered = Symbol('isFiltered');
 const parsedPatternCache = new WeakMap();
 const grammarMapCache = new WeakMap();
 function parsePattern(pattern) {
@@ -11203,7 +11236,9 @@ const selectors_EMPTY_ARRAY = [];
  * @type {Set}
  */
 const EMPTY_SET = new Set();
-const EMPTY_OBJECT = {};
+const DEFAULT_INSERTER_OPTIONS = {
+  [isFiltered]: true
+};
 
 /**
  * Returns a block's name given its client ID, or null if no block exists with
@@ -12892,7 +12927,7 @@ const buildBlockTypeItem = (state, {
  *                                        this item.
  * @property {number}   frecency          Heuristic that combines frequency and recency.
  */
-const getInserterItems = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)((state, rootClientId = null, options = EMPTY_OBJECT) => {
+const getInserterItems = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)((state, rootClientId = null, options = DEFAULT_INSERTER_OPTIONS) => {
   const buildReusableBlockInserterItem = reusableBlock => {
     const icon = !reusableBlock.wp_pattern_sync_status ? {
       src: library_symbol,
@@ -12927,35 +12962,13 @@ const getInserterItems = (0,external_wp_data_namespaceObject.createRegistrySelec
     buildScope: 'inserter'
   });
   let blockTypeInserterItems = (0,external_wp_blocks_namespaceObject.getBlockTypes)().filter(blockType => (0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockType, 'inserter', true)).map(buildBlockTypeInserterItem);
-  if (options[withRootClientIdOptionKey]) {
-    blockTypeInserterItems = blockTypeInserterItems.reduce((accumulator, item) => {
-      item.rootClientId = rootClientId !== null && rootClientId !== void 0 ? rootClientId : '';
-      while (!canInsertBlockTypeUnmemoized(state, item.name, item.rootClientId)) {
-        if (!item.rootClientId) {
-          let sectionRootClientId;
-          try {
-            sectionRootClientId = getSectionRootClientId(state);
-          } catch (e) {}
-          if (sectionRootClientId && canInsertBlockTypeUnmemoized(state, item.name, sectionRootClientId)) {
-            item.rootClientId = sectionRootClientId;
-          } else {
-            delete item.rootClientId;
-          }
-          break;
-        } else {
-          const parentClientId = getBlockRootClientId(state, item.rootClientId);
-          item.rootClientId = parentClientId;
-        }
-      }
-
-      // We could also add non insertable items and gray them out.
-      if (item.hasOwnProperty('rootClientId')) {
-        accumulator.push(item);
-      }
-      return accumulator;
-    }, []);
-  } else {
+  if (options[isFiltered] !== false) {
     blockTypeInserterItems = blockTypeInserterItems.filter(blockType => canIncludeBlockTypeInInserter(state, blockType, rootClientId));
+  } else {
+    blockTypeInserterItems = blockTypeInserterItems.map(blockType => ({
+      ...blockType,
+      isAllowedInCurrentRoot: canIncludeBlockTypeInInserter(state, blockType, rootClientId)
+    }));
   }
   const items = blockTypeInserterItems.reduce((accumulator, item) => {
     const {
@@ -45588,7 +45601,7 @@ function useBlockDropZone({
 
 
 
-const inner_blocks_EMPTY_OBJECT = {};
+const EMPTY_OBJECT = {};
 function BlockContext({
   children,
   clientId
@@ -45635,7 +45648,7 @@ function UncontrolledInnerBlocks(props) {
   } = props;
   useNestedSettingsUpdate(clientId, parentLock, allowedBlocks, prioritizedInserterBlocks, defaultBlock, directInsert, __experimentalDefaultBlock, __experimentalDirectInsert, templateLock, captureToolbars, orientation, layout);
   useInnerBlockTemplateSync(clientId, template, templateLock, templateInsertUpdatesSelection);
-  const defaultLayoutBlockSupport = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, 'layout') || (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, '__experimentalLayout') || inner_blocks_EMPTY_OBJECT;
+  const defaultLayoutBlockSupport = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, 'layout') || (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, '__experimentalLayout') || EMPTY_OBJECT;
   const {
     allowSizingOnChildren = false
   } = defaultLayoutBlockSupport;
@@ -50133,9 +50146,12 @@ function InserterPanel({
 
 
 
+
+
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -50149,9 +50165,15 @@ function InserterPanel({
  */
 const useBlockTypesState = (rootClientId, onInsert, isQuick) => {
   const options = (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    [withRootClientIdOptionKey]: !isQuick
+    [isFiltered]: !!isQuick
   }), [isQuick]);
   const [items] = (0,external_wp_data_namespaceObject.useSelect)(select => [select(store).getInserterItems(rootClientId, options)], [rootClientId, options]);
+  const {
+    getClosestAllowedInsertionPoint
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
+  const {
+    createErrorNotice
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   const [categories, collections] = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getCategories,
@@ -50164,14 +50186,24 @@ const useBlockTypesState = (rootClientId, onInsert, isQuick) => {
     initialAttributes,
     innerBlocks,
     syncStatus,
-    content,
-    rootClientId: _rootClientId
+    content
   }, shouldFocusBlock) => {
+    const destinationClientId = getClosestAllowedInsertionPoint(name, rootClientId);
+    if (destinationClientId === null) {
+      var _getBlockType$title;
+      const title = (_getBlockType$title = (0,external_wp_blocks_namespaceObject.getBlockType)(name)?.title) !== null && _getBlockType$title !== void 0 ? _getBlockType$title : name;
+      createErrorNotice((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: block pattern title. */
+      (0,external_wp_i18n_namespaceObject.__)('Block "%s" can\'t be inserted.'), title), {
+        type: 'snackbar',
+        id: 'inserter-notice'
+      });
+      return;
+    }
     const insertedBlock = syncStatus === 'unsynced' ? (0,external_wp_blocks_namespaceObject.parse)(content, {
       __unstableSkipMigrationLogs: true
     }) : (0,external_wp_blocks_namespaceObject.createBlock)(name, initialAttributes, (0,external_wp_blocks_namespaceObject.createBlocksFromInnerBlocksTemplate)(innerBlocks));
-    onInsert(insertedBlock, undefined, shouldFocusBlock, _rootClientId);
-  }, [onInsert]);
+    onInsert(insertedBlock, undefined, shouldFocusBlock, destinationClientId);
+  }, [onInsert, getClosestAllowedInsertionPoint, rootClientId]);
   return [items, categories, collections, onSelectItem];
 };
 /* harmony default export */ const use_block_types_state = (useBlockTypesState);
@@ -50371,7 +50403,7 @@ function BlockTypesTab({
     if (item.category === 'reusable') {
       continue;
     }
-    if (rootClientId && item.rootClientId === rootClientId) {
+    if (rootClientId && item.isAllowedInCurrentRoot) {
       itemsForCurrentRoot.push(item);
     } else {
       itemsRemaining.push(item);
@@ -50831,8 +50863,10 @@ function useInsertionPoint({
 }) {
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const {
-    getSelectedBlock
-  } = (0,external_wp_data_namespaceObject.useSelect)(store);
+    getSelectedBlock,
+    getClosestAllowedInsertionPoint,
+    isBlockInsertionPointVisible
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const {
     destinationRootClientId,
     destinationIndex
@@ -50900,17 +50934,20 @@ function useInsertionPoint({
     }
   }, [isAppender, getSelectedBlock, replaceBlocks, insertBlocks, destinationRootClientId, destinationIndex, onSelect, shouldFocusBlock, selectBlockOnInsert]);
   const onToggleInsertionPoint = (0,external_wp_element_namespaceObject.useCallback)(item => {
-    if (item?.hasOwnProperty('rootClientId')) {
-      showInsertionPoint(item.rootClientId, getIndex({
-        destinationRootClientId,
-        destinationIndex,
-        rootClientId: item.rootClientId,
-        registry
-      }));
+    if (item && !isBlockInsertionPointVisible()) {
+      const allowedDestinationRootClientId = getClosestAllowedInsertionPoint(item.name, destinationRootClientId);
+      if (allowedDestinationRootClientId !== null) {
+        showInsertionPoint(allowedDestinationRootClientId, getIndex({
+          destinationRootClientId,
+          destinationIndex,
+          rootClientId: allowedDestinationRootClientId,
+          registry
+        }));
+      }
     } else {
       hideInsertionPoint();
     }
-  }, [showInsertionPoint, hideInsertionPoint, destinationRootClientId, destinationIndex]);
+  }, [getClosestAllowedInsertionPoint, isBlockInsertionPointVisible, showInsertionPoint, hideInsertionPoint, destinationRootClientId, destinationIndex]);
   return [destinationRootClientId, onInsertBlocks, onToggleInsertionPoint];
 }
 /* harmony default export */ const use_insertion_point = (useInsertionPoint);
@@ -50986,7 +51023,7 @@ const usePatternsState = (onInsert, rootClientId, selectedCategory) => {
     createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: block pattern title. */
     (0,external_wp_i18n_namespaceObject.__)('Block pattern "%s" inserted.'), pattern.title), {
       type: 'snackbar',
-      id: 'block-pattern-inserted-notice'
+      id: 'inserter-notice'
     });
   }, [createSuccessNotice, onInsert, selectedCategory]);
   return [patterns, allCategories, onClickPattern];
@@ -52239,14 +52276,16 @@ function MediaPreview({
             }
           });
           createSuccessNotice((0,external_wp_i18n_namespaceObject.__)('Image uploaded and inserted.'), {
-            type: 'snackbar'
+            type: 'snackbar',
+            id: 'inserter-notice'
           });
           setIsInserting(false);
         },
         allowedTypes: ALLOWED_MEDIA_TYPES,
         onError(message) {
           createErrorNotice(message, {
-            type: 'snackbar'
+            type: 'snackbar',
+            id: 'inserter-notice'
           });
           setIsInserting(false);
         }
@@ -52310,7 +52349,8 @@ function MediaPreview({
       onSubmit: () => {
         onClick((0,external_wp_blocks_namespaceObject.cloneBlock)(block));
         createSuccessNotice((0,external_wp_i18n_namespaceObject.__)('Image inserted.'), {
-          type: 'snackbar'
+          type: 'snackbar',
+          id: 'inserter-notice'
         });
         setShowExternalUploadModal(false);
       }
