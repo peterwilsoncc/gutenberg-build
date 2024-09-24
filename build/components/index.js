@@ -60585,8 +60585,7 @@ function goTo(state, path, options = {}) {
     focusSelectors
   } = state;
   const currentLocation = {
-    ...state.currentLocation,
-    isInitial: false
+    ...state.currentLocation
   };
   const {
     // Default assignments
@@ -60631,6 +60630,7 @@ function goTo(state, path, options = {}) {
   return {
     currentLocation: {
       ...restOptions,
+      isInitial: false,
       path,
       isBack,
       hasRestoredFocus: false,
@@ -60646,8 +60646,7 @@ function goToParent(state, options = {}) {
     focusSelectors
   } = state;
   const currentLocation = {
-    ...state.currentLocation,
-    isInitial: false
+    ...state.currentLocation
   };
   const currentPath = currentLocation.path;
   if (currentPath === undefined) {
