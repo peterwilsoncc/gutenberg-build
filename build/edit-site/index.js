@@ -8306,7 +8306,7 @@ function ResizableFrame({
     }
     event.preventDefault();
     const step = 20 * (event.shiftKey ? 5 : 1);
-    const delta = step * (event.key === 'ArrowLeft' ? 1 : -1);
+    const delta = step * (event.key === 'ArrowLeft' ? 1 : -1) * ((0,external_wp_i18n_namespaceObject.isRTL)() ? -1 : 1);
     const newWidth = Math.min(Math.max(FRAME_MIN_WIDTH, frameRef.current.resizable.offsetWidth + delta), defaultSize.width);
     setFrameSize({
       width: newWidth,
@@ -8326,16 +8326,29 @@ function ResizableFrame({
   const resizeHandleVariants = {
     hidden: {
       opacity: 0,
-      left: 0
+      ...((0,external_wp_i18n_namespaceObject.isRTL)() ? {
+        right: 0
+      } : {
+        left: 0
+      })
     },
     visible: {
       opacity: 1,
-      left: -14 // Account for the handle's width.
+      // Account for the handle's width.
+      ...((0,external_wp_i18n_namespaceObject.isRTL)() ? {
+        right: -14
+      } : {
+        left: -14
+      })
     },
     active: {
       opacity: 1,
-      left: -14,
       // Account for the handle's width.
+      ...((0,external_wp_i18n_namespaceObject.isRTL)() ? {
+        right: -14
+      } : {
+        left: -14
+      }),
       scaleY: 1.3
     }
   };
@@ -8370,10 +8383,15 @@ function ResizableFrame({
     size: frameSize,
     enable: {
       top: false,
-      right: false,
       bottom: false,
       // Resizing will be disabled until the editor content is loaded.
-      left: isReady,
+      ...((0,external_wp_i18n_namespaceObject.isRTL)() ? {
+        right: isReady,
+        left: false
+      } : {
+        left: isReady,
+        right: false
+      }),
       topRight: false,
       bottomRight: false,
       bottomLeft: false,
@@ -8393,7 +8411,7 @@ function ResizableFrame({
     onMouseOver: () => setShouldShowHandle(true),
     onMouseOut: () => setShouldShowHandle(false),
     handleComponent: {
-      left: canvasMode === 'view' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      [(0,external_wp_i18n_namespaceObject.isRTL)() ? 'right' : 'left']: canvasMode === 'view' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
           text: (0,external_wp_i18n_namespaceObject.__)('Drag to resize'),
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.button, {
