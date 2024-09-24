@@ -26372,7 +26372,7 @@ const ZoomOutToggle = () => {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     onClick: handleZoomOut,
     icon: library_square,
-    label: (0,external_wp_i18n_namespaceObject.__)('Toggle Zoom Out'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Zoom Out'),
     isPressed: isZoomOut,
     size: "compact",
     showTooltip: !showIconLabels
