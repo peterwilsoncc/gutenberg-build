@@ -9375,7 +9375,6 @@ const __experimentalHasContentRoleAttribute = (...args) => {
   external_wp_deprecated_default()('__experimentalHasContentRoleAttribute', {
     since: '6.7',
     version: '6.8',
-    alternative: 'hasContentRoleAttribute',
     hint: 'This is a private selector.'
   });
   return hasContentRoleAttribute(...args);
