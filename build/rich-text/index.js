@@ -1517,7 +1517,7 @@ function removeReservedCharacters(string) {
 /**
  * Creates a Rich Text value from a DOM element and range.
  *
- * @param {Object}  $1                  Named argements.
+ * @param {Object}  $1                  Named arguments.
  * @param {Element} [$1.element]        Element to create value from.
  * @param {Range}   [$1.range]          Range to create value from.
  * @param {boolean} [$1.isEditableTree]
@@ -1659,7 +1659,7 @@ function createFromElement({
 /**
  * Gets the attributes of an element in object shape.
  *
- * @param {Object}  $1         Named argements.
+ * @param {Object}  $1         Named arguments.
  * @param {Element} $1.element Element to get attributes from.
  *
  * @return {Object|void} Attribute object or `undefined` if the element has no
