@@ -26054,10 +26054,8 @@ function ShadowPopoverContainer({
         onSelect: onShadowChange
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "block-editor-global-styles__clear-shadow",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           variant: "tertiary",
           onClick: () => onShadowChange(undefined),
           children: (0,external_wp_i18n_namespaceObject.__)('Clear')
@@ -26095,28 +26093,27 @@ function ShadowIndicator({
   onSelect,
   shadow
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
-    role: "option",
-    "aria-label": label,
-    "aria-selected": isActive,
-    className: dist_clsx('block-editor-global-styles__shadow__item', {
-      'is-active': isActive
-    }),
-    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
-      className: dist_clsx('block-editor-global-styles__shadow-indicator', {
-        unset: type === 'unset'
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
+    text: label,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
+      role: "option",
+      "aria-label": label,
+      "aria-selected": isActive,
+      className: dist_clsx('block-editor-global-styles__shadow__item', {
+        'is-active': isActive
       }),
-      onClick: onSelect,
-      label: label,
-      style: {
-        boxShadow: shadow
-      },
-      showTooltip: true,
-      children: isActive && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-        icon: library_check
+      render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("button", {
+        className: dist_clsx('block-editor-global-styles__shadow-indicator', {
+          unset: type === 'unset'
+        }),
+        onClick: onSelect,
+        style: {
+          boxShadow: shadow
+        },
+        "aria-label": label,
+        children: isActive && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+          icon: library_check
+        })
       })
     })
   });
@@ -26157,10 +26154,8 @@ function renderShadowToggle() {
       }),
       'aria-expanded': isOpen
     };
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
       ...toggleProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         justify: "flex-start",
@@ -27267,10 +27262,8 @@ function ColorPanelDropdown({
           'aria-label': (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s is the type of color property, e.g., "background" */
           (0,external_wp_i18n_namespaceObject.__)('Color %s styles'), label)
         };
-        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           ...toggleProps,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LabeledColorIndicators, {
             indicators: indicators,
@@ -33647,10 +33640,8 @@ function FiltersPanel({
           return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
             isBordered: true,
             isSeparated: true,
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-            // TODO: Switch to `true` (40px size) if possible
-            , {
-              __next40pxDefaultSize: false,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              __next40pxDefaultSize: true,
               ...toggleProps,
               children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LabeledColorIndicator, {
                 indicator: duotone,
@@ -53730,10 +53721,8 @@ function button_block_appender_ButtonBlockAppender({
       const label = hasSingleBlockType ? (0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: %s: the name of the block when there is only one
       (0,external_wp_i18n_namespaceObject._x)('Add %s', 'directly add the only allowed block'), blockTitle) : (0,external_wp_i18n_namespaceObject._x)('Add block', 'Generic label for block inserter button');
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         ref: mergedInserterButtonRef,
         onFocus: onFocus,
         tabIndex: tabIndex,
@@ -66639,10 +66628,8 @@ function BlockVariationPicker({
       }, variation.name))
     }), allowSkip && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "block-editor-block-variation-picker__skip",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         variant: "link",
         onClick: () => onSelect(),
         children: (0,external_wp_i18n_namespaceObject.__)('Skip')
@@ -66986,10 +66973,9 @@ function VariationsButtons({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
       as: "legend",
       children: (0,external_wp_i18n_namespaceObject.__)('Transform to variation')
-    }), variations.map(variation => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
+    }), variations.map(variation => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
+      size: "compact",
       icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
         icon: variation.icon,
         showColors: true
@@ -67417,10 +67403,8 @@ const renderToggle = settings => ({
     }),
     'aria-expanded': isOpen
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-  // TODO: Switch to `true` (40px size) if possible
-  , {
-    __next40pxDefaultSize: false,
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    __next40pxDefaultSize: true,
     ...toggleProps,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dropdown_LabeledColorIndicator, {
       colorValue: colorValue,
