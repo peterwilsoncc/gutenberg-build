@@ -47503,7 +47503,7 @@ function FormatControls({
   }, []);
   const formats = POST_FORMATS.filter(item => supportedFormats.includes(item.value));
   const values = normalizedFormats.map(name => formats.find(item => item.value === name)?.label).filter(Boolean);
-  const suggestions = formats.filter(item => !format.includes(item.value)).map(item => item.label);
+  const suggestions = formats.filter(item => !normalizedFormats.includes(item.value)).map(item => item.label);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FormTokenField, {
     label: (0,external_wp_i18n_namespaceObject.__)('Formats'),
     value: values,
