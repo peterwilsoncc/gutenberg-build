@@ -8306,7 +8306,8 @@ function blockBindingsSources(state = {}, action) {
           usesContext: getMergedUsesContext(state[action.name]?.usesContext, action.usesContext),
           getValues: action.getValues,
           setValues: action.setValues,
-          canUserEditValue: action.canUserEditValue,
+          // Only set `canUserEditValue` if `setValues` is also defined.
+          canUserEditValue: action.setValues && action.canUserEditValue,
           getFieldsList: action.getFieldsList
         }
       };
