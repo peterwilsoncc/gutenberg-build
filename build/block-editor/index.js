@@ -71645,7 +71645,8 @@ function RichTextWrapper({
   } = (0,external_wp_data_namespaceObject.useSelect)(selector, [clientId, identifier, instanceId, originalIsSelected, isBlockSelected]);
   const {
     disableBoundBlock,
-    bindingsPlaceholder
+    bindingsPlaceholder,
+    bindingsLabel
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _fieldsList$relatedBi;
     if (!blockBindings?.[identifier] || !canBindBlock(blockName)) {
@@ -71656,21 +71657,38 @@ function RichTextWrapper({
       getBlockBindingsSource
     } = unlock(select(external_wp_blocks_namespaceObject.store));
     const blockBindingsSource = getBlockBindingsSource(relatedBinding.source);
-    const fieldsList = blockBindingsSource?.getFieldsList?.({
-      registry,
-      context: blockContext
-    });
     const _disableBoundBlock = !blockBindingsSource?.canUserEditValue?.({
       select,
       context: blockContext,
       args: relatedBinding.args
     });
+
+    // Don't modify placeholders if value is not empty.
+    if (adjustedValue.length > 0) {
+      return {
+        disableBoundBlock: _disableBoundBlock,
+        // Null values will make them fall back to the default behavior.
+        bindingsPlaceholder: null,
+        bindingsLabel: null
+      };
+    }
+    const {
+      getBlockAttributes
+    } = select(store);
+    const blockAttributes = getBlockAttributes(clientId);
+    const fieldsList = blockBindingsSource?.getFieldsList?.({
+      registry,
+      context: blockContext
+    });
     const bindingKey = (_fieldsList$relatedBi = fieldsList?.[relatedBinding?.args?.key]?.label) !== null && _fieldsList$relatedBi !== void 0 ? _fieldsList$relatedBi : blockBindingsSource?.label;
     const _bindingsPlaceholder = _disableBoundBlock ? bindingKey : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: connected field label or source label */
     (0,external_wp_i18n_namespaceObject.__)('Add %s'), bindingKey);
+    const _bindingsLabel = _disableBoundBlock ? relatedBinding?.args?.key || blockBindingsSource?.label : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: source label or key */
+    (0,external_wp_i18n_namespaceObject.__)('Empty %s; start writing to edit its value'), relatedBinding?.args?.key || blockBindingsSource?.label);
     return {
       disableBoundBlock: _disableBoundBlock,
-      bindingsPlaceholder: (!adjustedValue || adjustedValue.length === 0) && _bindingsPlaceholder
+      bindingsPlaceholder: blockAttributes?.placeholder || _bindingsPlaceholder,
+      bindingsLabel: _bindingsLabel
     };
   }, [blockBindings, identifier, blockName, blockContext, registry, adjustedValue]);
   const shouldDisableEditing = readOnly || disableBoundBlock;
@@ -71829,7 +71847,7 @@ function RichTextWrapper({
       "aria-multiline": !disableLineBreaks,
       "aria-readonly": shouldDisableEditing,
       ...props,
-      "aria-label": bindingsPlaceholder || props['aria-label'] || placeholder,
+      "aria-label": bindingsLabel || props['aria-label'] || placeholder,
       ...autocompleteProps,
       ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([
       // Rich text ref must be first because its focus listener
