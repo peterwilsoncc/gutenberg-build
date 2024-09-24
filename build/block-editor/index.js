@@ -56452,6 +56452,7 @@ const post = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
 
 
 
+
 const SHOWN_SUGGESTIONS = 10;
 
 /** @typedef {import('@wordpress/components').WPCompleter} WPCompleter */
@@ -56486,7 +56487,7 @@ function createLinkCompleter() {
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
           icon: item.subtype === 'page' ? library_page : library_post
-        }, "icon"), item.title]
+        }, "icon"), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title)]
       });
     },
     getOptionCompletion(item) {
