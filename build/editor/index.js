@@ -19215,8 +19215,8 @@ function Image({
       scale: 0
     },
     style: {
-      width: '36px',
-      height: '36px',
+      width: '32px',
+      height: '32px',
       objectFit: 'cover',
       borderRadius: '2px',
       cursor: 'pointer'
@@ -19344,7 +19344,7 @@ function MaybeUploadMediaPanel() {
           }, block.clientId);
         })
       }), isUploading || isAnimating ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        __next40pxDefaultSize: true,
+        size: "compact",
         variant: "primary",
         onClick: uploadImages,
         children: (0,external_wp_i18n_namespaceObject.__)('Upload')
