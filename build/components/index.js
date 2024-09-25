@@ -60497,41 +60497,80 @@ function navigator_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tr
  */
 
 const navigatorProviderWrapper =  true ? {
-  name: "xpkswc",
-  styles: "overflow-x:hidden;contain:content"
+  name: "1br0vvk",
+  styles: "position:relative;overflow-x:clip;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;align-items:start"
 } : 0;
-const fadeInFromRight = emotion_react_browser_esm_keyframes({
-  '0%': {
-    opacity: 0,
-    transform: `translateX( 50px )`
-  },
-  '100%': {
-    opacity: 1,
-    transform: 'none'
+const fadeIn = emotion_react_browser_esm_keyframes({
+  from: {
+    opacity: 0
   }
 });
-const fadeInFromLeft = emotion_react_browser_esm_keyframes({
-  '0%': {
-    opacity: 0,
-    transform: `translateX( -50px )`
-  },
-  '100%': {
-    opacity: 1,
-    transform: 'none'
+const fadeOut = emotion_react_browser_esm_keyframes({
+  to: {
+    opacity: 0
   }
 });
-const navigatorScreenAnimation = ({
-  isInitial,
-  isBack,
-  isRTL
-}) => {
-  if (isInitial && !isBack) {
-    return;
+const slideFromRight = emotion_react_browser_esm_keyframes({
+  from: {
+    transform: 'translateX(100px)'
   }
-  const animationName = isRTL && isBack || !isRTL && !isBack ? fadeInFromRight : fadeInFromLeft;
-  return /*#__PURE__*/emotion_react_browser_esm_css("animation-duration:0.14s;animation-timing-function:ease-in-out;will-change:transform,opacity;animation-name:", animationName, ";@media ( prefers-reduced-motion ){animation-duration:0s;}" + ( true ? "" : 0),  true ? "" : 0);
+});
+const slideToLeft = emotion_react_browser_esm_keyframes({
+  to: {
+    transform: 'translateX(-80px)'
+  }
+});
+const slideFromLeft = emotion_react_browser_esm_keyframes({
+  from: {
+    transform: 'translateX(-100px)'
+  }
+});
+const slideToRight = emotion_react_browser_esm_keyframes({
+  to: {
+    transform: 'translateX(80px)'
+  }
+});
+const FADE = {
+  DURATION: 70,
+  EASING: 'linear',
+  DELAY: {
+    IN: 70,
+    OUT: 40
+  }
 };
-const navigatorScreen = props => /*#__PURE__*/emotion_react_browser_esm_css("overflow-x:auto;max-height:100%;", navigatorScreenAnimation(props), ";" + ( true ? "" : 0),  true ? "" : 0);
+const SLIDE = {
+  DURATION: 300,
+  EASING: 'cubic-bezier(0.33, 0, 0, 1)'
+};
+const TOTAL_ANIMATION_DURATION = {
+  IN: Math.max(FADE.DURATION + FADE.DELAY.IN, SLIDE.DURATION),
+  OUT: Math.max(FADE.DURATION + FADE.DELAY.OUT, SLIDE.DURATION)
+};
+const ANIMATION_END_NAMES = {
+  end: {
+    in: slideFromRight.name,
+    out: slideToLeft.name
+  },
+  start: {
+    in: slideFromLeft.name,
+    out: slideToRight.name
+  }
+};
+const ANIMATION = {
+  end: {
+    in: /*#__PURE__*/emotion_react_browser_esm_css(FADE.DURATION, "ms ", FADE.EASING, " ", FADE.DELAY.IN, "ms both ", fadeIn, ",", SLIDE.DURATION, "ms ", SLIDE.EASING, " both ", slideFromRight, ";" + ( true ? "" : 0),  true ? "" : 0),
+    out: /*#__PURE__*/emotion_react_browser_esm_css(FADE.DURATION, "ms ", FADE.EASING, " ", FADE.DELAY.OUT, "ms both ", fadeOut, ",", SLIDE.DURATION, "ms ", SLIDE.EASING, " both ", slideToLeft, ";" + ( true ? "" : 0),  true ? "" : 0)
+  },
+  start: {
+    in: /*#__PURE__*/emotion_react_browser_esm_css(FADE.DURATION, "ms ", FADE.EASING, " ", FADE.DELAY.IN, "ms both ", fadeIn, ",", SLIDE.DURATION, "ms ", SLIDE.EASING, " both ", slideFromLeft, ";" + ( true ? "" : 0),  true ? "" : 0),
+    out: /*#__PURE__*/emotion_react_browser_esm_css(FADE.DURATION, "ms ", FADE.EASING, " ", FADE.DELAY.OUT, "ms both ", fadeOut, ",", SLIDE.DURATION, "ms ", SLIDE.EASING, " both ", slideToRight, ";" + ( true ? "" : 0),  true ? "" : 0)
+  }
+};
+const navigatorScreenAnimation = /*#__PURE__*/emotion_react_browser_esm_css("z-index:1;&[data-animation-type='out']{z-index:0;}@media not ( prefers-reduced-motion ){&:not( [data-skip-animation] ){", ['start', 'end'].map(direction => ['in', 'out'].map(type => /*#__PURE__*/emotion_react_browser_esm_css("&[data-animation-direction='", direction, "'][data-animation-type='", type, "']{animation:", ANIMATION[direction][type], ";}" + ( true ? "" : 0),  true ? "" : 0))), ";}}" + ( true ? "" : 0),  true ? "" : 0);
+const navigatorScreen =  true ? {
+  name: "14di7zd",
+  styles: "overflow-x:auto;max-height:100%;box-sizing:border-box;position:relative;grid-column:1/-1;grid-row:1/-1"
+} : 0;
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/navigator/navigator-provider/component.js
 /**
@@ -60825,6 +60864,113 @@ const NavigatorProvider = contextConnect(UnconnectedNavigatorProvider, 'Navigato
 
 ;// CONCATENATED MODULE: external ["wp","escapeHtml"]
 const external_wp_escapeHtml_namespaceObject = window["wp"]["escapeHtml"];
+;// CONCATENATED MODULE: ./packages/components/build-module/navigator/navigator-screen/use-screen-animate-presence.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+// Possible values:
+// - 'INITIAL': the initial state
+// - 'ANIMATING_IN': start enter animation
+// - 'IN': enter animation has ended
+// - 'ANIMATING_OUT': start exit animation
+// - 'OUT': the exit animation has ended
+
+// Allow an extra 20% of the total animation duration to account for potential
+// event loop delays.
+const ANIMATION_TIMEOUT_MARGIN = 1.2;
+const isEnterAnimation = (animationDirection, animationStatus, animationName) => animationStatus === 'ANIMATING_IN' && animationName === ANIMATION_END_NAMES[animationDirection].in;
+const isExitAnimation = (animationDirection, animationStatus, animationName) => animationStatus === 'ANIMATING_OUT' && animationName === ANIMATION_END_NAMES[animationDirection].out;
+function useScreenAnimatePresence({
+  isMatch,
+  skipAnimation,
+  isBack,
+  onAnimationEnd
+}) {
+  const isRTL = (0,external_wp_i18n_namespaceObject.isRTL)();
+  const prefersReducedMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
+  const [animationStatus, setAnimationStatus] = (0,external_wp_element_namespaceObject.useState)('INITIAL');
+
+  // Start enter and exit animations when the screen is selected or deselected.
+  // The animation status is set to `IN` or `OUT` immediately if the animation
+  // should be skipped.
+  const becameSelected = animationStatus !== 'ANIMATING_IN' && animationStatus !== 'IN' && isMatch;
+  const becameUnselected = animationStatus !== 'ANIMATING_OUT' && animationStatus !== 'OUT' && !isMatch;
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    if (becameSelected) {
+      setAnimationStatus(skipAnimation || prefersReducedMotion ? 'IN' : 'ANIMATING_IN');
+    } else if (becameUnselected) {
+      setAnimationStatus(skipAnimation || prefersReducedMotion ? 'OUT' : 'ANIMATING_OUT');
+    }
+  }, [becameSelected, becameUnselected, skipAnimation, prefersReducedMotion]);
+
+  // Animation attributes (derived state).
+  const animationDirection = isRTL && isBack || !isRTL && !isBack ? 'end' : 'start';
+  const isAnimatingIn = animationStatus === 'ANIMATING_IN';
+  const isAnimatingOut = animationStatus === 'ANIMATING_OUT';
+  let animationType;
+  if (isAnimatingIn) {
+    animationType = 'in';
+  } else if (isAnimatingOut) {
+    animationType = 'out';
+  }
+  const onScreenAnimationEnd = (0,external_wp_element_namespaceObject.useCallback)(e => {
+    onAnimationEnd?.(e);
+    if (isExitAnimation(animationDirection, animationStatus, e.animationName)) {
+      // When the exit animation ends on an unselected screen, set the
+      // status to 'OUT' to remove the screen contents from the DOM.
+      setAnimationStatus('OUT');
+    } else if (isEnterAnimation(animationDirection, animationStatus, e.animationName)) {
+      // When the enter animation ends on a selected screen, set the
+      // status to 'IN' to ensure the screen is rendered in the DOM.
+      setAnimationStatus('IN');
+    }
+  }, [onAnimationEnd, animationStatus, animationDirection]);
+
+  // Fallback timeout to ensure that the logic is applied even if the
+  // `animationend` event is not triggered.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    let animationTimeout;
+    if (isAnimatingOut) {
+      animationTimeout = window.setTimeout(() => {
+        setAnimationStatus('OUT');
+        animationTimeout = undefined;
+      }, TOTAL_ANIMATION_DURATION.OUT * ANIMATION_TIMEOUT_MARGIN);
+    } else if (isAnimatingIn) {
+      animationTimeout = window.setTimeout(() => {
+        setAnimationStatus('IN');
+        animationTimeout = undefined;
+      }, TOTAL_ANIMATION_DURATION.IN * ANIMATION_TIMEOUT_MARGIN);
+    }
+    return () => {
+      if (animationTimeout) {
+        window.clearTimeout(animationTimeout);
+        animationTimeout = undefined;
+      }
+    };
+  }, [isAnimatingOut, isAnimatingIn]);
+  return {
+    animationStyles: navigatorScreenAnimation,
+    // Render the screen's contents in the DOM not only when the screen is
+    // selected, but also while it is animating out.
+    shouldRenderScreen: isMatch || animationStatus === 'IN' || animationStatus === 'ANIMATING_OUT',
+    screenProps: {
+      onAnimationEnd: onScreenAnimationEnd,
+      'data-animation-direction': animationDirection,
+      'data-animation-type': animationType,
+      'data-skip-animation': skipAnimation || undefined
+    }
+  };
+}
+
 ;// CONCATENATED MODULE: ./packages/components/build-module/navigator/navigator-screen/component.js
 /**
  * External dependencies
@@ -60833,7 +60979,6 @@ const external_wp_escapeHtml_namespaceObject = window["wp"]["escapeHtml"];
 /**
  * WordPress dependencies
  */
-
 
 
 
@@ -60850,6 +60995,7 @@ const external_wp_escapeHtml_namespaceObject = window["wp"]["escapeHtml"];
 
 
 
+
 function UnconnectedNavigatorScreen(props, forwardedRef) {
   if (!/^\//.test(props.path)) {
      false ? 0 : void 0;
@@ -60859,6 +61005,7 @@ function UnconnectedNavigatorScreen(props, forwardedRef) {
     children,
     className,
     path,
+    onAnimationEnd: onAnimationEndProp,
     ...otherProps
   } = useContextSystem(props, 'NavigatorScreen');
   const {
@@ -60867,8 +61014,17 @@ function UnconnectedNavigatorScreen(props, forwardedRef) {
     addScreen,
     removeScreen
   } = (0,external_wp_element_namespaceObject.useContext)(NavigatorContext);
+  const {
+    isInitial,
+    isBack,
+    focusTargetSelector,
+    skipFocus
+  } = location;
   const isMatch = match === screenId;
   const wrapperRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const skipAnimationAndFocusRestoration = !!isInitial && !isBack;
+
+  // Register / unregister screen with the navigator context.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     const screen = {
       id: screenId,
@@ -60877,62 +61033,66 @@ function UnconnectedNavigatorScreen(props, forwardedRef) {
     addScreen(screen);
     return () => removeScreen(screen);
   }, [screenId, path, addScreen, removeScreen]);
-  const isRTL = (0,external_wp_i18n_namespaceObject.isRTL)();
+
+  // Animation.
   const {
-    isInitial,
-    isBack
-  } = location;
-  const cx = useCx();
-  const classes = (0,external_wp_element_namespaceObject.useMemo)(() => cx(navigatorScreen({
-    isInitial,
+    animationStyles,
+    shouldRenderScreen,
+    screenProps
+  } = useScreenAnimatePresence({
+    isMatch,
     isBack,
-    isRTL
-  }), className), [className, cx, isInitial, isBack, isRTL]);
+    onAnimationEnd: onAnimationEndProp,
+    skipAnimation: skipAnimationAndFocusRestoration
+  });
+  const cx = useCx();
+  const classes = (0,external_wp_element_namespaceObject.useMemo)(() => cx(navigatorScreen, animationStyles, className), [className, cx, animationStyles]);
+
+  // Focus restoration
   const locationRef = (0,external_wp_element_namespaceObject.useRef)(location);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     locationRef.current = location;
   }, [location]);
-
-  // Focus restoration
-  const isInitialLocation = location.isInitial && !location.isBack;
   (0,external_wp_element_namespaceObject.useEffect)(() => {
+    const wrapperEl = wrapperRef.current;
     // Only attempt to restore focus:
     // - if the current location is not the initial one (to avoid moving focus on page load)
     // - when the screen becomes visible
     // - if the wrapper ref has been assigned
     // - if focus hasn't already been restored for the current location
     // - if the `skipFocus` option is not set to `true`. This is useful when we trigger the navigation outside of NavigatorScreen.
-    if (isInitialLocation || !isMatch || !wrapperRef.current || locationRef.current.hasRestoredFocus || location.skipFocus) {
+    if (skipAnimationAndFocusRestoration || !isMatch || !wrapperEl || locationRef.current.hasRestoredFocus || skipFocus) {
       return;
     }
-    const activeElement = wrapperRef.current.ownerDocument.activeElement;
+    const activeElement = wrapperEl.ownerDocument.activeElement;
 
     // If an element is already focused within the wrapper do not focus the
     // element. This prevents inputs or buttons from losing focus unnecessarily.
-    if (wrapperRef.current.contains(activeElement)) {
+    if (wrapperEl.contains(activeElement)) {
       return;
     }
     let elementToFocus = null;
 
     // When navigating back, if a selector is provided, use it to look for the
     // target element (assumed to be a node inside the current NavigatorScreen)
-    if (location.isBack && location.focusTargetSelector) {
-      elementToFocus = wrapperRef.current.querySelector(location.focusTargetSelector);
+    if (isBack && focusTargetSelector) {
+      elementToFocus = wrapperEl.querySelector(focusTargetSelector);
     }
 
     // If the previous query didn't run or find any element to focus, fallback
     // to the first tabbable element in the screen (or the screen itself).
     if (!elementToFocus) {
-      const [firstTabbable] = external_wp_dom_namespaceObject.focus.tabbable.find(wrapperRef.current);
-      elementToFocus = firstTabbable !== null && firstTabbable !== void 0 ? firstTabbable : wrapperRef.current;
+      const [firstTabbable] = external_wp_dom_namespaceObject.focus.tabbable.find(wrapperEl);
+      elementToFocus = firstTabbable !== null && firstTabbable !== void 0 ? firstTabbable : wrapperEl;
     }
     locationRef.current.hasRestoredFocus = true;
     elementToFocus.focus();
-  }, [isInitialLocation, isMatch, location.isBack, location.focusTargetSelector, location.skipFocus]);
+  }, [skipAnimationAndFocusRestoration, isMatch, isBack, focusTargetSelector, skipFocus]);
   const mergedWrapperRef = (0,external_wp_compose_namespaceObject.useMergeRefs)([forwardedRef, wrapperRef]);
-  return isMatch ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(component, {
+  return shouldRenderScreen ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(component, {
     ref: mergedWrapperRef,
     className: classes,
+    ...screenProps,
     ...otherProps,
     children: children
   }) : null;
