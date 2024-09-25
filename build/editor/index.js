@@ -30222,10 +30222,8 @@ function getPostMetaFields(registry, context) {
     if (postType === 'wp_template') {
       return false;
     }
-
-    // Check that the custom field is not protected and available in the REST API.
+    const fieldValue = getPostMetaFields(registry, context)?.[args.key]?.value;
     // Empty string or `false` could be a valid value, so we need to check if the field value is undefined.
-    const fieldValue = registry.select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', postType, context?.postId)?.meta?.[args.key];
     if (fieldValue === undefined) {
       return false;
     }
