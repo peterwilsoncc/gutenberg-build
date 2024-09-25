@@ -11127,6 +11127,11 @@ const comments_pagination_previous_metadata = {
       type: "string"
     }
   },
+  example: {
+    attributes: {
+      label: "Comments Previous Page"
+    }
+  },
   usesContext: ["postId", "comments/paginationArrow"],
   supports: {
     reusable: false,
@@ -11476,6 +11481,11 @@ const comments_pagination_next_metadata = {
   attributes: {
     label: {
       type: "string"
+    }
+  },
+  example: {
+    attributes: {
+      label: "Comments Next Page"
     }
   },
   usesContext: ["postId", "comments/paginationArrow"],
