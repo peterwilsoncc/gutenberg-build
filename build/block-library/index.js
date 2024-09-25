@@ -5040,6 +5040,7 @@ function ButtonEdit(props) {
   const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseColorProps)(attributes);
   const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
   const shadowProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetShadowClassesAndStyles)(attributes);
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const ref = (0,external_wp_element_namespaceObject.useRef)();
   const richTextRef = (0,external_wp_element_namespaceObject.useRef)();
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
@@ -5091,7 +5092,7 @@ function ButtonEdit(props) {
     const blockBindingsSource = unlock(select(external_wp_blocks_namespaceObject.store)).getBlockBindingsSource(metadata?.bindings?.url?.source);
     return {
       lockUrlControls: !!metadata?.bindings?.url && !blockBindingsSource?.canUserEditValue?.({
-        select,
+        registry,
         context,
         args: metadata?.bindings?.url?.args
       })
@@ -25933,6 +25934,7 @@ function image_Image({
   // The only supported unit is px, so we can parseInt to strip the px here.
   const numericWidth = width ? parseInt(width, 10) : undefined;
   const numericHeight = height ? parseInt(height, 10) : undefined;
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const imageRef = (0,external_wp_element_namespaceObject.useRef)();
   const {
     allowResize = true
@@ -26255,7 +26257,7 @@ function image_Image({
     const titleBindingSource = getBlockBindingsSource(titleBinding?.source);
     return {
       lockUrlControls: !!urlBinding && !urlBindingSource?.canUserEditValue?.({
-        select,
+        registry,
         context,
         args: urlBinding?.args
       }),
@@ -26268,14 +26270,14 @@ function image_Image({
       // This is a temporary solution until we support overriding the caption on the frontend.
       hasParentPattern,
       lockAltControls: !!altBinding && !altBindingSource?.canUserEditValue?.({
-        select,
+        registry,
         context,
         args: altBinding?.args
       }),
       lockAltControlsMessage: altBindingSource?.label ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Label of the bindings source. */
       (0,external_wp_i18n_namespaceObject.__)('Connected to %s'), altBindingSource.label) : (0,external_wp_i18n_namespaceObject.__)('Connected to dynamic data'),
       lockTitleControls: !!titleBinding && !titleBindingSource?.canUserEditValue?.({
-        select,
+        registry,
         context,
         args: titleBinding?.args
       }),
@@ -26788,6 +26790,7 @@ function ImageEdit({
     metadata
   } = attributes;
   const [temporaryURL, setTemporaryURL] = (0,external_wp_element_namespaceObject.useState)(attributes.blob);
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const containerRef = (0,external_wp_element_namespaceObject.useRef)();
   // Only observe the max width from the parent container when the parent layout is not flex nor grid.
   // This won't work for them because the container width changes with the image.
@@ -27016,7 +27019,7 @@ function ImageEdit({
     const blockBindingsSource = unlock(select(external_wp_blocks_namespaceObject.store)).getBlockBindingsSource(metadata?.bindings?.url?.source);
     return {
       lockUrlControls: !!metadata?.bindings?.url && !blockBindingsSource?.canUserEditValue?.({
-        select,
+        registry,
         context,
         args: metadata?.bindings?.url?.args
       }),
