@@ -26426,7 +26426,7 @@ function BorderPanel({
       onDeselect: () => resetBorder(),
       isShownByDefault: showBorderByDefault,
       panelId: panelId,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalBorderBoxControl, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BorderBoxControl, {
         colors: colors,
         enableAlpha: true,
         enableStyle: showBorderStyle,
