@@ -8027,10 +8027,8 @@ const SiteHub = (0,external_wp_element_namespaceObject.memo)((0,external_wp_elem
         className: dist_clsx('edit-site-site-hub__view-mode-toggle-container', {
           'has-transparent-background': isTransparent
         }),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           ref: ref,
           href: dashboardLink,
           label: (0,external_wp_i18n_namespaceObject.__)('Go to the Dashboard'),
@@ -8046,10 +8044,8 @@ const SiteHub = (0,external_wp_element_namespaceObject.memo)((0,external_wp_elem
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "edit-site-site-hub__title",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button
-          // TODO: Switch to `true` (40px size) if possible
-          , {
-            __next40pxDefaultSize: false,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
             variant: "link",
             href: homeUrl,
             target: "_blank",
@@ -8063,10 +8059,8 @@ const SiteHub = (0,external_wp_element_namespaceObject.memo)((0,external_wp_elem
           spacing: 0,
           expanded: false,
           className: "edit-site-site-hub__actions",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-          // TODO: Switch to `true` (40px size) if possible
-          , {
-            __next40pxDefaultSize: false,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
             className: "edit-site-site-hub_toggle-command-center",
             icon: library_search,
             onClick: () => openCommandCenter(),
@@ -8111,10 +8105,8 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
         className: dist_clsx('edit-site-site-hub__view-mode-toggle-container', {
           'has-transparent-background': isTransparent
         }),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           ref: ref,
           label: (0,external_wp_i18n_namespaceObject.__)('Go to Site Editor'),
           className: "edit-site-layout__view-mode-toggle",
@@ -8133,10 +8125,8 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "edit-site-site-hub__title",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-          // TODO: Switch to `true` (40px size) if possible
-          , {
-            __next40pxDefaultSize: false,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
             variant: "link",
             href: homeUrl,
             target: "_blank",
@@ -8147,10 +8137,8 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
           spacing: 0,
           expanded: false,
           className: "edit-site-site-hub__actions",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-          // TODO: Switch to `true` (40px size) if possible
-          , {
-            __next40pxDefaultSize: false,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
             className: "edit-site-site-hub_toggle-command-center",
             icon: library_search,
             onClick: () => openCommandCenter(),
@@ -13410,10 +13398,8 @@ function SavePanel() {
       className: dist_clsx('edit-site-editor__toggle-save-panel', {
         'screen-reader-text': isSaveViewOpen
       }),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         variant: "secondary",
         className: "edit-site-editor__toggle-save-panel-button",
         onClick: () => setIsSaveViewOpened(true),
@@ -40275,10 +40261,8 @@ function TitleField({
       gap: 0,
       justify: "flex-start",
       className: "edit-site-patterns__pattern-title",
-      children: item.type === PATTERN_TYPES.theme ? title : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      children: item.type === PATTERN_TYPES.theme ? title : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         variant: "link",
         onClick: onClick
         // Required for the grid's roving tab index system.
@@ -42753,10 +42737,8 @@ function PageTemplates() {
 
 
 function SidebarButton(props) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-  // TODO: Switch to `true` (40px size) if possible
-  , {
-    __next40pxDefaultSize: false,
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    __next40pxDefaultSize: true,
     ...props,
     className: dist_clsx('edit-site-sidebar-button', props.className)
   });
@@ -44791,19 +44773,15 @@ function AddNewItemModalContent({
         className: "patterns-create-modal__name-input"
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         justify: "right",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           variant: "tertiary",
           onClick: () => {
             setIsAdding(false);
           },
           children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           variant: "primary",
           type: "submit",
           "aria-disabled": !title || isSaving,
