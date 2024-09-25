@@ -30107,21 +30107,61 @@ const CONTENT = 'content';
  */
 
 
-function getMetadata(registry, context, registeredFields) {
-  let metaFields = {};
-  const type = registry.select(store_store).getCurrentPostType();
+
+/**
+ * Gets a list of post meta fields with their values and labels
+ * to be consumed in the needed callbacks.
+ * If the value is not available based on context, like in templates,
+ * it falls back to the default value, label, or key.
+ *
+ * @param {Object} registry The registry context exposed through `useRegistry`.
+ * @param {Object} context  The context provided.
+ * @return {Object} List of post meta fields with their value and label.
+ *
+ * @example
+ * ```js
+ * {
+ *     field_1_key: {
+ *         label: 'Field 1 Label',
+ *         value: 'Field 1 Value',
+ *     },
+ *     field_2_key: {
+ *         label: 'Field 2 Label',
+ *         value: 'Field 2 Value',
+ *     },
+ *     ...
+ * }
+ * ```
+ */
+function getPostMetaFields(registry, context) {
   const {
     getEditedEntityRecord
   } = registry.select(external_wp_coreData_namespaceObject.store);
+  const {
+    getRegisteredPostMeta
+  } = unlock(registry.select(external_wp_coreData_namespaceObject.store));
+  let entityMetaValues;
+  // Try to get the current entity meta values.
   if (context?.postType && context?.postId) {
-    metaFields = getEditedEntityRecord('postType', context?.postType, context?.postId).meta;
-  } else if (type === 'wp_template') {
-    // Populate the `metaFields` object with the default values.
-    Object.entries(registeredFields || {}).forEach(([key, props]) => {
-      if (props.default) {
-        metaFields[key] = props.default;
-      }
-    });
+    entityMetaValues = getEditedEntityRecord('postType', context?.postType, context?.postId).meta;
+  }
+  const registeredFields = getRegisteredPostMeta(context?.postType);
+  const metaFields = {};
+  Object.entries(registeredFields || {}).forEach(([key, props]) => {
+    // Don't include footnotes or private fields.
+    if (key !== 'footnotes' && key.charAt(0) !== '_') {
+      var _entityMetaValues$key;
+      metaFields[key] = {
+        label: props.title || key,
+        value: // When using the entity value, an empty string IS a valid value.
+        (_entityMetaValues$key = entityMetaValues?.[key]) !== null && _entityMetaValues$key !== void 0 ? _entityMetaValues$key :
+        // When using the default, an empty string IS NOT a valid value.
+        props.default || undefined
+      };
+    }
+  });
+  if (!Object.keys(metaFields || {}).length) {
+    return null;
   }
   return metaFields;
 }
@@ -30132,17 +30172,17 @@ function getMetadata(registry, context, registeredFields) {
     context,
     bindings
   }) {
-    const {
-      getRegisteredPostMeta
-    } = unlock(registry.select(external_wp_coreData_namespaceObject.store));
-    const registeredFields = getRegisteredPostMeta(context?.postType);
-    const metaFields = getMetadata(registry, context, registeredFields);
+    const metaFields = getPostMetaFields(registry, context);
     const newValues = {};
     for (const [attributeName, source] of Object.entries(bindings)) {
-      var _ref, _metaFields$metaKey;
+      var _ref;
       // Use the value, the field label, or the field key.
-      const metaKey = source.args.key;
-      newValues[attributeName] = (_ref = (_metaFields$metaKey = metaFields?.[metaKey]) !== null && _metaFields$metaKey !== void 0 ? _metaFields$metaKey : registeredFields?.[metaKey]?.title) !== null && _ref !== void 0 ? _ref : metaKey;
+      const fieldKey = source.args.key;
+      const {
+        value: fieldValue,
+        label: fieldLabel
+      } = metaFields?.[fieldKey] || {};
+      newValues[attributeName] = (_ref = fieldValue !== null && fieldValue !== void 0 ? fieldValue : fieldLabel) !== null && _ref !== void 0 ? _ref : fieldKey;
     }
     return newValues;
   },
@@ -30205,22 +30245,7 @@ function getMetadata(registry, context, registeredFields) {
     registry,
     context
   }) {
-    const {
-      getRegisteredPostMeta
-    } = unlock(registry.select(external_wp_coreData_namespaceObject.store));
-    const registeredFields = getRegisteredPostMeta(context?.postType);
-    const metaFields = getMetadata(registry, context, registeredFields);
-    if (!metaFields || !Object.keys(metaFields).length) {
-      return null;
-    }
-    return Object.fromEntries(Object.entries(metaFields)
-    // Remove footnotes or private keys from the list of fields.
-    .filter(([key]) => key !== 'footnotes' && key.charAt(0) !== '_')
-    // Return object with label and value.
-    .map(([key, value]) => [key, {
-      label: registeredFields?.[key]?.title || key,
-      value
-    }]));
+    return getPostMetaFields(registry, context);
   }
 });
 
