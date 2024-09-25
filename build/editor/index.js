@@ -30482,7 +30482,7 @@ function getPostMetaFields(registry, context) {
     });
   },
   canUserEditValue({
-    select,
+    registry,
     context,
     args
   }) {
@@ -30490,7 +30490,7 @@ function getPostMetaFields(registry, context) {
     if (context?.query || context?.queryId) {
       return false;
     }
-    const postType = context?.postType || select(store_store).getCurrentPostType();
+    const postType = context?.postType || registry.select(store_store).getCurrentPostType();
 
     // Check that editing is happening in the post editor and not a template.
     if (postType === 'wp_template') {
@@ -30499,18 +30499,18 @@ function getPostMetaFields(registry, context) {
 
     // Check that the custom field is not protected and available in the REST API.
     // Empty string or `false` could be a valid value, so we need to check if the field value is undefined.
-    const fieldValue = select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', postType, context?.postId)?.meta?.[args.key];
+    const fieldValue = registry.select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', postType, context?.postId)?.meta?.[args.key];
     if (fieldValue === undefined) {
       return false;
     }
     // Check that custom fields metabox is not enabled.
-    const areCustomFieldsEnabled = select(store_store).getEditorSettings().enableCustomFields;
+    const areCustomFieldsEnabled = registry.select(store_store).getEditorSettings().enableCustomFields;
     if (areCustomFieldsEnabled) {
       return false;
     }
 
     // Check that the user has the capability to edit post meta.
-    const canUserEdit = select(external_wp_coreData_namespaceObject.store).canUser('update', {
+    const canUserEdit = registry.select(external_wp_coreData_namespaceObject.store).canUser('update', {
       kind: 'postType',
       name: context?.postType,
       id: context?.postId
