@@ -10180,7 +10180,8 @@ const {
 const comment_date_settings = {
   icon: post_date,
   edit: comment_date_edit_Edit,
-  deprecated: comment_date_deprecated
+  deprecated: comment_date_deprecated,
+  example: {}
 };
 const comment_date_init = () => initBlock({
   name: comment_date_name,
