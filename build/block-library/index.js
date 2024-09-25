@@ -11636,7 +11636,8 @@ const {
 
 const comments_pagination_numbers_settings = {
   icon: query_pagination_numbers,
-  edit: CommentsPaginationNumbersEdit
+  edit: CommentsPaginationNumbersEdit,
+  example: {}
 };
 const comments_pagination_numbers_init = () => initBlock({
   name: comments_pagination_numbers_name,
