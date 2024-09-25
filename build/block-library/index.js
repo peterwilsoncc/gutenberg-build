@@ -10347,7 +10347,8 @@ const {
 
 const comment_edit_link_settings = {
   icon: comment_edit_link,
-  edit: comment_edit_link_edit_Edit
+  edit: comment_edit_link_edit_Edit,
+  example: {}
 };
 const comment_edit_link_init = () => initBlock({
   name: comment_edit_link_name,
@@ -10503,7 +10504,8 @@ const {
 
 const comment_reply_link_settings = {
   edit: comment_reply_link_edit,
-  icon: comment_reply_link
+  icon: comment_reply_link,
+  example: {}
 };
 const comment_reply_link_init = () => initBlock({
   name: comment_reply_link_name,
