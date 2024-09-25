@@ -26157,6 +26157,7 @@ const tablet = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 
+
 function PreviewDropdown({
   forceIsAutosaveable,
   disabled
@@ -26195,9 +26196,13 @@ function PreviewDropdown({
   const {
     __unstableSetEditorMode
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  const {
+    resetZoomLevel
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store));
   const handleDevicePreviewChange = newDeviceType => {
     setDeviceType(newDeviceType);
     __unstableSetEditorMode('edit');
+    resetZoomLevel();
   };
   const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   if (isMobile) {
