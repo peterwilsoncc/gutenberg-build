@@ -23934,8 +23934,7 @@ function LinkControl({
               "aria-disabled": isDisabled,
               size: "small"
             })
-          }),
-          props: true
+          })
         })]
       }), errorMessage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
         className: "block-editor-link-control__search-error",
