@@ -26391,7 +26391,6 @@ const ZoomOutToggle = () => {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -26469,24 +26468,21 @@ function Header({
       getEditorSettings,
       isPublishSidebarOpened: _isPublishSidebarOpened
     } = select(store_store);
-    const {
-      __unstableGetEditorMode
-    } = select(external_wp_blockEditor_namespaceObject.store);
     return {
       isTextEditor: getEditorMode() === 'text',
       isPublishSidebarOpened: _isPublishSidebarOpened(),
       showIconLabels: getPreference('core', 'showIconLabels'),
       hasFixedToolbar: getPreference('core', 'fixedToolbar'),
-      isNestedEntity: !!getEditorSettings().onNavigateToPreviousEntityRecord,
-      isZoomedOutView: __unstableGetEditorMode() === 'zoom-out'
+      isNestedEntity: !!getEditorSettings().onNavigateToPreviousEntityRecord
     };
   }, []);
   const [isBlockToolsCollapsed, setIsBlockToolsCollapsed] = (0,external_wp_element_namespaceObject.useState)(true);
   const hasCenter = isBlockToolsCollapsed && !isTooNarrowForDocumentBar;
   const hasBackButton = useHasBackButton();
-
-  // The edit-post-header classname is only kept for backward compatibilty
-  // as some plugins might be relying on its presence.
+  /*
+   * The edit-post-header classname is only kept for backward compatability
+   * as some plugins might be relying on its presence.
+   */
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "editor-header edit-post-header",
     children: [hasBackButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
@@ -26525,11 +26521,13 @@ function Header({
       className: "editor-header__settings",
       children: [!customSaveButton && !isPublishSidebarOpened &&
       /*#__PURE__*/
-      // This button isn't completely hidden by the publish sidebar.
-      // We can't hide the whole toolbar when the publish sidebar is open because
-      // we want to prevent mounting/unmounting the PostPublishButtonOrToggle DOM node.
-      // We track that DOM node to return focus to the PostPublishButtonOrToggle
-      // when the publish sidebar has been closed.
+      /*
+       * This button isn't completely hidden by the publish sidebar.
+       * We can't hide the whole toolbar when the publish sidebar is open because
+       * we want to prevent mounting/unmounting the PostPublishButtonOrToggle DOM node.
+       * We track that DOM node to return focus to the PostPublishButtonOrToggle
+       * when the publish sidebar has been closed.
+       */
       (0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSavedState, {
         forceIsDirty: forceIsDirty
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreviewDropdown, {
