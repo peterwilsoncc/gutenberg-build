@@ -47620,7 +47620,7 @@ const PerPageControl = ({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
     __next40pxDefaultSize: true,
     __nextHasNoMarginBottom: true,
-    label: (0,external_wp_i18n_namespaceObject.__)('Posts per page'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Items per page'),
     min: MIN_POSTS_PER_PAGE,
     max: MAX_POSTS_PER_PAGE,
     onChange: newPerPage => {
@@ -47680,7 +47680,7 @@ const PagesControl = ({
 }) => {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
     __next40pxDefaultSize: true,
-    label: (0,external_wp_i18n_namespaceObject.__)('Max pages'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Max pages to show'),
     value: pages,
     min: 0,
     onChange: newPages => {
@@ -47920,7 +47920,7 @@ function QueryInspectorControls(props) {
       },
       dropdownMenuProps: dropdownMenuProps,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Items'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Items per page'),
         hasValue: () => perPage > 0,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(per_page_control, {
           perPage: perPage,
@@ -47938,7 +47938,7 @@ function QueryInspectorControls(props) {
           onChange: setQuery
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Max Pages to Show'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Max pages to show'),
         hasValue: () => pages > 0,
         onDeselect: () => setQuery({
           pages: 0
