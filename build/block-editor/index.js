@@ -10872,11 +10872,11 @@ function getExpandedBlock(state) {
  * with the provided client ID.
  *
  * @param {Object} state    Global application state.
- * @param {Object} clientId Client Id of the block.
+ * @param {string} clientId Client Id of the block.
  *
  * @return {?string} Client ID of the ancestor block that is content locking the block.
  */
-const getContentLockingParent = (0,external_wp_data_namespaceObject.createSelector)((state, clientId) => {
+const getContentLockingParent = (state, clientId) => {
   let current = clientId;
   let result;
   while (!result && (current = state.blocks.parents.get(current))) {
@@ -10885,17 +10885,17 @@ const getContentLockingParent = (0,external_wp_data_namespaceObject.createSelect
     }
   }
   return result;
-}, state => [state.blocks.parents, state.blockListSettings, state.settings.templateLock]);
+};
 
 /**
  * Retrieves the client ID of the parent section block.
  *
  * @param {Object} state    Global application state.
- * @param {Object} clientId Client Id of the block.
+ * @param {string} clientId Client Id of the block.
  *
  * @return {?string} Client ID of the ancestor block that is content locking the block.
  */
-const getParentSectionBlock = (0,external_wp_data_namespaceObject.createSelector)((state, clientId) => {
+const getParentSectionBlock = (state, clientId) => {
   let current = clientId;
   let result;
   while (!result && (current = state.blocks.parents.get(current))) {
@@ -10904,13 +10904,13 @@ const getParentSectionBlock = (0,external_wp_data_namespaceObject.createSelector
     }
   }
   return result;
-}, state => [state.blocks.parents, state.blocks.order, state.blockListSettings, state.editorMode, state.settings.templateLock, state.blocks.byClientId, getSectionRootClientId(state)]);
+};
 
 /**
  * Retrieves the client ID is a content locking parent
  *
  * @param {Object} state    Global application state.
- * @param {Object} clientId Client Id of the block.
+ * @param {string} clientId Client Id of the block.
  *
  * @return {boolean} Whether the block is a content locking parent.
  */
