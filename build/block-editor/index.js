@@ -72132,9 +72132,15 @@ function RichTextWrapper({
       getBlockBindingsSource
     } = unlock(select(external_wp_blocks_namespaceObject.store));
     const blockBindingsSource = getBlockBindingsSource(relatedBinding.source);
+    const blockBindingsContext = {};
+    if (blockBindingsSource?.usesContext?.length) {
+      for (const key of blockBindingsSource.usesContext) {
+        blockBindingsContext[key] = blockContext[key];
+      }
+    }
     const _disableBoundBlock = !blockBindingsSource?.canUserEditValue?.({
       select,
-      context: blockContext,
+      context: blockBindingsContext,
       args: relatedBinding.args
     });
 
@@ -72153,7 +72159,7 @@ function RichTextWrapper({
     const blockAttributes = getBlockAttributes(clientId);
     const fieldsList = blockBindingsSource?.getFieldsList?.({
       registry,
-      context: blockContext
+      context: blockBindingsContext
     });
     const bindingKey = (_fieldsList$relatedBi = fieldsList?.[relatedBinding?.args?.key]?.label) !== null && _fieldsList$relatedBi !== void 0 ? _fieldsList$relatedBi : blockBindingsSource?.label;
     const _bindingsPlaceholder = _disableBoundBlock ? bindingKey : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: connected field label or source label */
