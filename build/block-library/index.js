@@ -49651,8 +49651,7 @@ const query_pagination_settings = {
   icon: query_pagination,
   edit: edit_QueryPaginationEdit,
   save: query_pagination_save_save,
-  deprecated: query_pagination_deprecated,
-  example: {}
+  deprecated: query_pagination_deprecated
 };
 const query_pagination_init = () => initBlock({
   name: query_pagination_name,
@@ -49909,7 +49908,8 @@ const {
 
 const query_pagination_numbers_settings = {
   icon: query_pagination_numbers,
-  edit: QueryPaginationNumbersEdit
+  edit: QueryPaginationNumbersEdit,
+  example: {}
 };
 const query_pagination_numbers_init = () => initBlock({
   name: query_pagination_numbers_name,
