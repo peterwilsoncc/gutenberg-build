@@ -66879,13 +66879,15 @@ function HeadingLevelDropdown({
   value,
   onChange
 }) {
+  const validOptions = options.filter(option => option === 0 || HEADING_LEVELS.includes(option)).sort((a, b) => a - b); // Sorts numerically in ascending order;
+
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarDropdownMenu, {
     popoverProps: block_heading_level_dropdown_POPOVER_PROPS,
     icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HeadingLevelIcon, {
       level: value
     }),
     label: (0,external_wp_i18n_namespaceObject.__)('Change level'),
-    controls: options.map(targetLevel => {
+    controls: validOptions.map(targetLevel => {
       const isActive = targetLevel === value;
       return {
         icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HeadingLevelIcon, {
