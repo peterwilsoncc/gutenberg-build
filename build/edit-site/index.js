@@ -7513,7 +7513,7 @@ const __experimentalGetInsertionPoint = (0,external_wp_data_namespaceObject.crea
     since: '6.5',
     version: '6.7'
   });
-  return unlock(select(external_wp_editor_namespaceObject.store)).getInsertionPoint();
+  return unlock(select(external_wp_editor_namespaceObject.store)).getInserter();
 });
 
 /**

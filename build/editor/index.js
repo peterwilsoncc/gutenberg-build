@@ -1838,8 +1838,8 @@ var store_private_selectors_namespaceObject = {};
 __webpack_require__.r(store_private_selectors_namespaceObject);
 __webpack_require__.d(store_private_selectors_namespaceObject, {
   getEntityActions: () => (private_selectors_getEntityActions),
+  getInserter: () => (getInserter),
   getInserterSidebarToggleRef: () => (getInserterSidebarToggleRef),
-  getInsertionPoint: () => (getInsertionPoint),
   getListViewToggleRef: () => (getListViewToggleRef),
   getPostBlocksByName: () => (getPostBlocksByName),
   getPostIcon: () => (getPostIcon),
@@ -4231,6 +4231,18 @@ function getNotificationArgumentsForTrashFail(data) {
   }];
 }
 
+;// CONCATENATED MODULE: external ["wp","privateApis"]
+const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
+;// CONCATENATED MODULE: ./packages/editor/build-module/lock-unlock.js
+/**
+ * WordPress dependencies
+ */
+
+const {
+  lock,
+  unlock
+} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/editor');
+
 ;// CONCATENATED MODULE: ./packages/editor/build-module/store/actions.js
 /**
  * WordPress dependencies
@@ -4923,15 +4935,28 @@ function removeEditorPanel(panelName) {
  *                                              use an object.
  * @param {string}         value.rootClientId   The root client ID to insert at.
  * @param {number}         value.insertionIndex The index to insert at.
+ * @param {string}         value.filterValue    A query to filter the inserter results.
+ * @param {Function}       value.onSelect       A callback when an item is selected.
+ * @param {string}         value.tab            The tab to open in the inserter.
+ * @param {string}         value.category       The category to initialize in the inserter.
  *
  * @return {Object} Action object.
  */
-function setIsInserterOpened(value) {
-  return {
+const setIsInserterOpened = value => ({
+  dispatch,
+  registry
+}) => {
+  if (typeof value === 'object' && value.hasOwnProperty('rootClientId') && value.hasOwnProperty('insertionIndex')) {
+    unlock(registry.dispatch(external_wp_blockEditor_namespaceObject.store)).setInsertionPoint({
+      rootClientId: value.rootClientId,
+      index: value.insertionIndex
+    });
+  }
+  dispatch({
     type: 'SET_IS_INSERTER_OPENED',
     value
-  };
-}
+  });
+};
 
 /**
  * Returns an action object used to open/close the list view.
@@ -5237,18 +5262,6 @@ function isTemplateRevertable(templateOrTemplatePart) {
   }
   return templateOrTemplatePart.source === constants_TEMPLATE_ORIGINS.custom && (Boolean(templateOrTemplatePart?.plugin) || templateOrTemplatePart?.has_theme_file);
 }
-
-;// CONCATENATED MODULE: external ["wp","privateApis"]
-const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
-;// CONCATENATED MODULE: ./packages/editor/build-module/lock-unlock.js
-/**
- * WordPress dependencies
- */
-
-const {
-  lock,
-  unlock
-} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/editor');
 
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/external.js
 /**
@@ -8756,13 +8769,13 @@ const EMPTY_INSERTION_POINT = {
 };
 
 /**
- * Get the insertion point for the inserter.
+ * Get the inserter.
  *
  * @param {Object} state Global application state.
  *
  * @return {Object} The root client ID, index to insert at and starting filter value.
  */
-const getInsertionPoint = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(state => {
+const getInserter = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(state => {
   if (typeof state.blockInserterPanel === 'object') {
     return state.blockInserterPanel;
   }
@@ -26841,13 +26854,13 @@ function InserterSidebar() {
   const {
     blockSectionRootClientId,
     inserterSidebarToggleRef,
-    insertionPoint,
+    inserter,
     showMostUsedBlocks,
     sidebarIsOpened
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getInserterSidebarToggleRef,
-      getInsertionPoint,
+      getInserter,
       isPublishSidebarOpened
     } = unlock(select(store_store));
     const {
@@ -26872,7 +26885,7 @@ function InserterSidebar() {
     };
     return {
       inserterSidebarToggleRef: getInserterSidebarToggleRef(),
-      insertionPoint: getInsertionPoint(),
+      inserter: getInserter(),
       showMostUsedBlocks: get('core', 'mostUsedBlocks'),
       blockSectionRootClientId: getBlockSectionRootClientId(),
       sidebarIsOpened: !!(getActiveComplementaryArea('core') || isPublishSidebarOpened())
@@ -26904,12 +26917,11 @@ function InserterSidebar() {
       showMostUsedBlocks: showMostUsedBlocks,
       showInserterHelpPanel: true,
       shouldFocusBlock: isMobileViewport,
-      rootClientId: blockSectionRootClientId !== null && blockSectionRootClientId !== void 0 ? blockSectionRootClientId : insertionPoint.rootClientId,
-      __experimentalInsertionIndex: insertionPoint.insertionIndex,
-      onSelect: insertionPoint.onSelect,
-      __experimentalInitialTab: insertionPoint.tab,
-      __experimentalInitialCategory: insertionPoint.category,
-      __experimentalFilterValue: insertionPoint.filterValue,
+      rootClientId: blockSectionRootClientId,
+      onSelect: inserter.onSelect,
+      __experimentalInitialTab: inserter.tab,
+      __experimentalInitialCategory: inserter.category,
+      __experimentalFilterValue: inserter.filterValue,
       onPatternCategorySelection: sidebarIsOpened ? () => disableComplementaryArea('core') : undefined,
       ref: libraryRef,
       onClose: closeInserterSidebar

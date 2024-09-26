@@ -7695,6 +7695,7 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   getEnabledClientIdsTree: () => (getEnabledClientIdsTree),
   getExpandedBlock: () => (getExpandedBlock),
   getInserterMediaCategories: () => (getInserterMediaCategories),
+  getInsertionPoint: () => (getInsertionPoint),
   getLastFocus: () => (getLastFocus),
   getLastInsertedBlocksClientIds: () => (getLastInsertedBlocksClientIds),
   getOpenedBlockSettingsMenu: () => (getOpenedBlockSettingsMenu),
@@ -7853,6 +7854,7 @@ __webpack_require__.d(private_actions_namespaceObject, {
   privateRemoveBlocks: () => (privateRemoveBlocks),
   resetZoomLevel: () => (resetZoomLevel),
   setBlockRemovalRules: () => (setBlockRemovalRules),
+  setInsertionPoint: () => (setInsertionPoint),
   setLastFocus: () => (setLastFocus),
   setOpenedBlockSettingsMenu: () => (setOpenedBlockSettingsMenu),
   setStyleOverride: () => (setStyleOverride),
@@ -9692,7 +9694,7 @@ function blocksMode(state = {}, action) {
  *
  * @return {Object} Updated state.
  */
-function insertionPoint(state = null, action) {
+function insertionCue(state = null, action) {
   switch (action.type) {
     case 'SHOW_INSERTION_POINT':
       {
@@ -10134,7 +10136,7 @@ function hoveredBlockClientId(state = false, action) {
  * @param {boolean} state  Current state.
  * @param {Object}  action Dispatched action.
  *
- * @return {boolean} Updated state.
+ * @return {number} Updated state.
  */
 function zoomLevel(state = 100, action) {
   switch (action.type) {
@@ -10142,6 +10144,24 @@ function zoomLevel(state = 100, action) {
       return action.zoom;
     case 'RESET_ZOOM_LEVEL':
       return 100;
+  }
+  return state;
+}
+
+/**
+ * Reducer setting the insertion point
+ *
+ * @param {boolean} state  Current state.
+ * @param {Object}  action Dispatched action.
+ *
+ * @return {Object} Updated state.
+ */
+function insertionPoint(state = null, action) {
+  switch (action.type) {
+    case 'SET_INSERTION_POINT':
+      return action.value;
+    case 'SELECT_BLOCK':
+      return null;
   }
   return state;
 }
@@ -10158,6 +10178,7 @@ const combinedReducers = (0,external_wp_data_namespaceObject.combineReducers)({
   blocksMode,
   blockListSettings,
   insertionPoint,
+  insertionCue,
   template,
   settings,
   preferences,
@@ -11047,6 +11068,16 @@ function getClosestAllowedInsertionPointForPattern(state, pattern, clientId) {
     blockName: name
   }) => name);
   return getClosestAllowedInsertionPoint(state, names, clientId);
+}
+
+/**
+ * Where the point where the next block will be inserted into.
+ *
+ * @param {Object} state
+ * @return {Object} where the insertion point in the block editor is or null if none is set.
+ */
+function getInsertionPoint(state) {
+  return state.insertionPoint;
 }
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/store/utils.js
@@ -12455,8 +12486,7 @@ function isCaretWithinFormattedText() {
 }
 
 /**
- * Returns the insertion point, the index at which the new inserted block would
- * be placed. Defaults to the last index.
+ * Returns the location of the insertion cue. Defaults to the last index.
  *
  * @param {Object} state Editor state.
  *
@@ -12465,13 +12495,13 @@ function isCaretWithinFormattedText() {
 const getBlockInsertionPoint = (0,external_wp_data_namespaceObject.createSelector)(state => {
   let rootClientId, index;
   const {
-    insertionPoint,
+    insertionCue,
     selection: {
       selectionEnd
     }
   } = state;
-  if (insertionPoint !== null) {
-    return insertionPoint;
+  if (insertionCue !== null) {
+    return insertionCue;
   }
   const {
     clientId
@@ -12486,17 +12516,17 @@ const getBlockInsertionPoint = (0,external_wp_data_namespaceObject.createSelecto
     rootClientId,
     index
   };
-}, state => [state.insertionPoint, state.selection.selectionEnd.clientId, state.blocks.parents, state.blocks.order]);
+}, state => [state.insertionCue, state.selection.selectionEnd.clientId, state.blocks.parents, state.blocks.order]);
 
 /**
- * Returns true if we should show the block insertion point.
+ * Returns true if the block insertion point is visible.
  *
  * @param {Object} state Global application state.
  *
  * @return {?boolean} Whether the insertion point is visible or not.
  */
 function isBlockInsertionPointVisible(state) {
-  return state.insertionPoint !== null;
+  return state.insertionCue !== null;
 }
 
 /**
@@ -14157,6 +14187,20 @@ function expandBlock(clientId) {
   return {
     type: 'SET_BLOCK_EXPANDED_IN_LIST_VIEW',
     clientId
+  };
+}
+
+/**
+ * @param {Object} value
+ * @param {string} value.rootClientId The root client ID to insert at.
+ * @param {number} value.index        The index to insert at.
+ *
+ * @return {Object} Action object.
+ */
+function setInsertionPoint(value) {
+  return {
+    type: 'SET_INSERTION_POINT',
+    value
   };
 }
 
@@ -46090,14 +46134,16 @@ function ZoomOutSeparator({
   const {
     sectionRootClientId,
     sectionClientIds,
-    blockInsertionPoint,
-    blockInsertionPointVisible
+    insertionPoint,
+    blockInsertionPointVisible,
+    blockInsertionPoint
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getBlockInsertionPoint,
+      getInsertionPoint,
       getBlockOrder,
+      getSectionRootClientId,
       isBlockInsertionPointVisible,
-      getSectionRootClientId
+      getBlockInsertionPoint
     } = unlock(select(store));
     const root = getSectionRootClientId();
     const sectionRootClientIds = getBlockOrder(root);
@@ -46105,6 +46151,7 @@ function ZoomOutSeparator({
       sectionRootClientId: root,
       sectionClientIds: sectionRootClientIds,
       blockOrder: getBlockOrder(root),
+      insertionPoint: getInsertionPoint(),
       blockInsertionPoint: getBlockInsertionPoint(),
       blockInsertionPointVisible: isBlockInsertionPointVisible()
     };
@@ -46118,11 +46165,16 @@ function ZoomOutSeparator({
   if (!isSectionBlock) {
     return null;
   }
+  const hasTopInsertionPoint = insertionPoint?.index === 0 && clientId === sectionClientIds[insertionPoint.index];
+  const hasBottomInsertionPoint = insertionPoint && insertionPoint.hasOwnProperty('index') && clientId === sectionClientIds[insertionPoint.index - 1];
+  // We want to show the zoom out separator in either of these conditions:
+  // 1. If the inserter has an insertion index set
+  // 2. We are dragging a pattern over an insertion point
   if (position === 'top') {
-    isVisible = blockInsertionPointVisible && blockInsertionPoint.index === 0 && clientId === sectionClientIds[blockInsertionPoint.index];
+    isVisible = hasTopInsertionPoint || blockInsertionPointVisible && blockInsertionPoint.index === 0 && clientId === sectionClientIds[blockInsertionPoint.index];
   }
   if (position === 'bottom') {
-    isVisible = blockInsertionPointVisible && clientId === sectionClientIds[blockInsertionPoint.index - 1];
+    isVisible = hasBottomInsertionPoint || blockInsertionPointVisible && clientId === sectionClientIds[blockInsertionPoint.index - 1];
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableAnimatePresence, {
     children: isVisible && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
@@ -50742,14 +50794,19 @@ function useInsertionPoint({
       getSelectedBlockClientId,
       getBlockRootClientId,
       getBlockIndex,
-      getBlockOrder
-    } = select(store);
+      getBlockOrder,
+      getInsertionPoint
+    } = unlock(select(store));
     const selectedBlockClientId = getSelectedBlockClientId();
     let _destinationRootClientId = rootClientId;
     let _destinationIndex;
+    const insertionPoint = getInsertionPoint();
     if (insertionIndex !== undefined) {
       // Insert into a specific index.
       _destinationIndex = insertionIndex;
+    } else if (insertionPoint && insertionPoint.hasOwnProperty('index')) {
+      _destinationRootClientId = insertionPoint?.rootClientId ? insertionPoint.rootClientId : rootClientId;
+      _destinationIndex = insertionPoint.index;
     } else if (clientId) {
       // Insert after a specific client ID.
       _destinationIndex = getBlockIndex(clientId);
@@ -53159,10 +53216,10 @@ function QuickInserter({
   // the insertion point can work as expected.
   const onBrowseAll = () => {
     setInserterIsOpened({
-      rootClientId,
-      insertionIndex,
       filterValue,
-      onSelect
+      onSelect,
+      rootClientId,
+      insertionIndex
     });
   };
   let maxBlockPatterns = 0;
@@ -62218,7 +62275,7 @@ function ZoomOutModeInserters() {
   const [isReady, setIsReady] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
     hasSelection,
-    blockInsertionPoint,
+    insertionPoint,
     blockOrder,
     blockInsertionPointVisible,
     setInserterIsOpened,
@@ -62228,18 +62285,18 @@ function ZoomOutModeInserters() {
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getSettings,
-      getBlockInsertionPoint,
+      getInsertionPoint,
       getBlockOrder,
       getSelectionStart,
       getSelectedBlockClientId,
       getHoveredBlockClientId,
-      isBlockInsertionPointVisible,
-      getSectionRootClientId
+      getSectionRootClientId,
+      isBlockInsertionPointVisible
     } = unlock(select(store));
     const root = getSectionRootClientId();
     return {
       hasSelection: !!getSelectionStart().clientId,
-      blockInsertionPoint: getBlockInsertionPoint(),
+      insertionPoint: getInsertionPoint(),
       blockOrder: getBlockOrder(root),
       blockInsertionPointVisible: isBlockInsertionPointVisible(),
       sectionRootClientId: root,
@@ -62248,9 +62305,11 @@ function ZoomOutModeInserters() {
       hoveredBlockClientId: getHoveredBlockClientId()
     };
   }, []);
+
+  // eslint-disable-next-line @wordpress/no-unused-vars-before-return
   const {
     showInsertionPoint
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
 
   // Defer the initial rendering to avoid the jumps due to the animation.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -62265,7 +62324,7 @@ function ZoomOutModeInserters() {
     return null;
   }
   return [undefined, ...blockOrder].map((clientId, index) => {
-    const shouldRenderInsertionPoint = blockInsertionPointVisible && blockInsertionPoint.index === index;
+    const shouldRenderInsertionPoint = blockInsertionPointVisible && insertionPoint?.index === index;
     const previousClientId = clientId;
     const nextClientId = blockOrder[index];
     const isSelected = hasSelection && (selectedBlockClientId === previousClientId || selectedBlockClientId === nextClientId);
