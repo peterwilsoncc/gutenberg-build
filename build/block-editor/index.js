@@ -42980,6 +42980,12 @@ use_block_props_useBlockProps.save = external_wp_blocks_namespaceObject.__unstab
 
 
 
+
+
+const {
+  isUnmodifiedBlockContent
+} = unlock(external_wp_blocks_namespaceObject.privateApis);
+
 /**
  * Merges wrapper props with special handling for classNames and styles.
  *
@@ -42988,9 +42994,6 @@ use_block_props_useBlockProps.save = external_wp_blocks_namespaceObject.__unstab
  *
  * @return {Object} Merged props.
  */
-
-
-
 function mergeWrapperProps(propsA, propsB) {
   const newProps = {
     ...propsA,
@@ -43268,14 +43271,32 @@ const applyWithDispatch = (0,external_wp_data_namespaceObject.withDispatch)((dis
           removeBlock(_clientId);
         } else {
           registry.batch(() => {
-            if (canInsertBlockType(getBlockName(firstClientId), targetRootClientId)) {
+            const firstBlock = getBlock(firstClientId);
+            const isFirstBlockContentUnmodified = isUnmodifiedBlockContent(firstBlock);
+            const defaultBlockName = (0,external_wp_blocks_namespaceObject.getDefaultBlockName)();
+            const replacement = (0,external_wp_blocks_namespaceObject.switchToBlockType)(firstBlock, defaultBlockName);
+            const canTransformToDefaultBlock = !!replacement?.length && replacement.every(block => canInsertBlockType(block.name, _clientId));
+            if (isFirstBlockContentUnmodified && canTransformToDefaultBlock) {
+              // Step 1: If the block is empty and can be transformed to the default block type.
+              replaceBlocks(firstClientId, replacement, changeSelection);
+            } else if (isFirstBlockContentUnmodified && firstBlock.name === defaultBlockName) {
+              // Step 2: If the block is empty and is already the default block type.
+              removeBlock(firstClientId);
+              const nextBlockClientId = getNextBlockClientId(clientId);
+              if (nextBlockClientId) {
+                selectBlock(nextBlockClientId);
+              }
+            } else if (canInsertBlockType(firstBlock.name, targetRootClientId)) {
+              // Step 3: If the block can be moved up.
               moveBlocksToPosition([firstClientId], _clientId, targetRootClientId, getBlockIndex(_clientId));
             } else {
-              const replacement = (0,external_wp_blocks_namespaceObject.switchToBlockType)(getBlock(firstClientId), (0,external_wp_blocks_namespaceObject.getDefaultBlockName)());
-              if (replacement && replacement.length && replacement.every(block => canInsertBlockType(block.name, targetRootClientId))) {
+              const canLiftAndTransformToDefaultBlock = !!replacement?.length && replacement.every(block => canInsertBlockType(block.name, targetRootClientId));
+              if (canLiftAndTransformToDefaultBlock) {
+                // Step 4: If the block can be transformed to the default block type and moved up.
                 insertBlocks(replacement, getBlockIndex(_clientId), targetRootClientId, changeSelection);
                 removeBlock(firstClientId, false);
               } else {
+                // Step 5: Continue the default behavior.
                 switchToDefaultOrRemove();
               }
             }
