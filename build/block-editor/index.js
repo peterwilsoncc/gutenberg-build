@@ -42610,9 +42610,7 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
   // used purposely here to ensure `boundAttributes` is updated whenever
   // there are attribute updates.
   // `source.getValues` may also call a selector via `registry.select`.
-  const updatedContext = {
-    ...context
-  };
+  const updatedContext = {};
   const boundAttributes = (0,external_wp_data_namespaceObject.useSelect)(() => {
     if (!blockBindings) {
       return;
@@ -42732,7 +42730,10 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
         ...boundAttributes
       },
       setAttributes: _setAttributes,
-      context: updatedContext
+      context: {
+        ...context,
+        ...updatedContext
+      }
     })
   });
 }, 'withBlockBindingSupport');
