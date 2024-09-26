@@ -50406,27 +50406,25 @@ function Pagination({
         expanded: false,
         spacing: 1,
         className: "block-editor-patterns__grid-pagination-previous",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           variant: "tertiary",
           onClick: () => changePage(1),
           disabled: currentPage === 1,
           "aria-label": (0,external_wp_i18n_namespaceObject.__)('First page'),
+          size: "compact",
           accessibleWhenDisabled: true,
+          className: "block-editor-patterns__grid-pagination-button",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: "\xAB"
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           variant: "tertiary",
           onClick: () => changePage(currentPage - 1),
           disabled: currentPage === 1,
           "aria-label": (0,external_wp_i18n_namespaceObject.__)('Previous page'),
+          size: "compact",
           accessibleWhenDisabled: true,
+          className: "block-editor-patterns__grid-pagination-button",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: "\u2039"
           })
@@ -50440,15 +50438,14 @@ function Pagination({
         expanded: false,
         spacing: 1,
         className: "block-editor-patterns__grid-pagination-next",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           variant: "tertiary",
           onClick: () => changePage(currentPage + 1),
           disabled: currentPage === numPages,
           "aria-label": (0,external_wp_i18n_namespaceObject.__)('Next page'),
+          size: "compact",
           accessibleWhenDisabled: true,
+          className: "block-editor-patterns__grid-pagination-button",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: "\u203A"
           })
@@ -50457,8 +50454,9 @@ function Pagination({
           onClick: () => changePage(numPages),
           disabled: currentPage === numPages,
           "aria-label": (0,external_wp_i18n_namespaceObject.__)('Last page'),
-          size: "default",
+          size: "compact",
           accessibleWhenDisabled: true,
+          className: "block-editor-patterns__grid-pagination-button",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: "\xBB"
           })
@@ -66048,10 +66046,8 @@ function BlockNavigationDropdownToggle({
   innerRef,
   ...props
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-  // TODO: Switch to `true` (40px size) if possible
-  , {
-    __next40pxDefaultSize: false,
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    __next40pxDefaultSize: true,
     ...props,
     ref: innerRef,
     icon: list_view,
@@ -66559,10 +66555,8 @@ const Actions = ({
   onBlockPatternSelect
 }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
   className: "block-editor-block-pattern-setup__actions",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-  // TODO: Switch to `true` (40px size) if possible
-  , {
-    __next40pxDefaultSize: false,
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    __next40pxDefaultSize: true,
     variant: "primary",
     onClick: onBlockPatternSelect,
     children: (0,external_wp_i18n_namespaceObject.__)('Choose')
@@ -66575,19 +66569,15 @@ const CarouselNavigation = ({
   totalSlides
 }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
   className: "block-editor-block-pattern-setup__navigation",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-  // TODO: Switch to `true` (40px size) if possible
-  , {
-    __next40pxDefaultSize: false,
+  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    size: "compact",
     icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right : chevron_left,
     label: (0,external_wp_i18n_namespaceObject.__)('Previous pattern'),
     onClick: handlePrevious,
     disabled: activeSlide === 0,
     accessibleWhenDisabled: true
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-  // TODO: Switch to `true` (40px size) if possible
-  , {
-    __next40pxDefaultSize: false,
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    size: "compact",
     icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_left : chevron_right,
     label: (0,external_wp_i18n_namespaceObject.__)('Next pattern'),
     onClick: handleNext,
@@ -66607,18 +66597,14 @@ const SetupToolbar = ({
   const isCarouselView = viewMode === VIEWMODES.carousel;
   const displayControls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "block-editor-block-pattern-setup__display-controls",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      size: "compact",
       icon: stretch_full_width,
       label: (0,external_wp_i18n_namespaceObject.__)('Carousel view'),
       onClick: () => setViewMode(VIEWMODES.carousel),
       isPressed: isCarouselView
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      size: "compact",
       icon: library_grid,
       label: (0,external_wp_i18n_namespaceObject.__)('Grid view'),
       onClick: () => setViewMode(VIEWMODES.grid),
@@ -73335,10 +73321,8 @@ function BlockQuickNavigationItem({
   const {
     selectBlock
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-  // TODO: Switch to `true` (40px size) if possible
-  , {
-    __next40pxDefaultSize: false,
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    __next40pxDefaultSize: true,
     isPressed: isSelected,
     onClick: async () => {
       await selectBlock(clientId);
