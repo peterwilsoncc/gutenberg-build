@@ -39723,7 +39723,7 @@ const swatchGap = 12;
 const borderControlPopoverControls = /*#__PURE__*/emotion_react_browser_esm_css("width:", swatchSize * 6 + swatchGap * 5, "px;>div:first-of-type>", StyledLabel, "{margin-bottom:0;}&& ", StyledLabel, "+button:not( .has-text ){min-width:24px;padding:0;}" + ( true ? "" : 0),  true ? "" : 0);
 const borderControlPopoverContent = /*#__PURE__*/emotion_react_browser_esm_css( true ? "" : 0,  true ? "" : 0);
 const borderColorIndicator = /*#__PURE__*/emotion_react_browser_esm_css( true ? "" : 0,  true ? "" : 0);
-const resetButton = /*#__PURE__*/emotion_react_browser_esm_css("justify-content:center;width:100%;&&{border-top:", config_values.borderWidth, " solid ", COLORS.gray[400], ";border-top-left-radius:0;border-top-right-radius:0;height:40px;}" + ( true ? "" : 0),  true ? "" : 0);
+const resetButton = /*#__PURE__*/emotion_react_browser_esm_css("justify-content:center;width:100%;&&{border-top:", config_values.borderWidth, " solid ", COLORS.gray[400], ";border-top-left-radius:0;border-top-right-radius:0;}" + ( true ? "" : 0),  true ? "" : 0);
 const borderSlider = () => /*#__PURE__*/emotion_react_browser_esm_css("flex:1 1 60%;", rtl({
   marginRight: space(3)
 })(), ";" + ( true ? "" : 0),  true ? "" : 0);
@@ -40392,6 +40392,7 @@ const BorderControlDropdown = (props, forwardedRef) => {
           onReset();
           onClose();
         },
+        __next40pxDefaultSize: true,
         children: (0,external_wp_i18n_namespaceObject.__)('Reset')
       })
     })]
