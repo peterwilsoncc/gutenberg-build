@@ -14631,22 +14631,22 @@ function Icon({
 }
 /* harmony default export */ const build_module_icon = ((0,external_wp_element_namespaceObject.forwardRef)(Icon));
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/home-button.js
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/arrow-up-left.js
 /**
  * WordPress dependencies
  */
 
 
-const homeButton = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+const arrowUpLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  width: "24",
+  height: "24",
+  fill: "none",
   xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M4.25 7A2.75 2.75 0 0 1 7 4.25h10A2.75 2.75 0 0 1 19.75 7v10A2.75 2.75 0 0 1 17 19.75H7A2.75 2.75 0 0 1 4.25 17V7ZM7 5.75c-.69 0-1.25.56-1.25 1.25v10c0 .69.56 1.25 1.25 1.25h10c.69 0 1.25-.56 1.25-1.25V7c0-.69-.56-1.25-1.25-1.25H7Z"
+    d: "M14 6H6v8h1.5V8.5L17 18l1-1-9.5-9.5H14V6Z"
   })
 });
-/* harmony default export */ const home_button = (homeButton);
+/* harmony default export */ const arrow_up_left = (arrowUpLeft);
 
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/welcome-guide/image.js
 
@@ -28720,7 +28720,7 @@ function EditSiteEditor({
             }),
             variants: toggleHomeIconVariants,
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-              icon: home_button
+              icon: arrow_up_left
             })
           })]
         })
