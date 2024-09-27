@@ -1832,6 +1832,7 @@ __webpack_require__.d(__webpack_exports__, {
   MenuItemsChoice: () => (/* reexport */ menu_items_choice),
   Modal: () => (/* reexport */ modal),
   NavigableMenu: () => (/* reexport */ navigable_container_menu),
+  Navigator: () => (/* reexport */ navigator_Navigator),
   Notice: () => (/* reexport */ build_module_notice),
   NoticeList: () => (/* reexport */ list),
   Panel: () => (/* reexport */ panel),
@@ -1951,6 +1952,7 @@ __webpack_require__.d(__webpack_exports__, {
   navigateRegions: () => (/* reexport */ navigate_regions),
   privateApis: () => (/* reexport */ privateApis),
   useBaseControlProps: () => (/* reexport */ useBaseControlProps),
+  useNavigator: () => (/* reexport */ useNavigator),
   withConstrainedTabbing: () => (/* reexport */ with_constrained_tabbing),
   withFallbackStyles: () => (/* reexport */ with_fallback_styles),
   withFilters: () => (/* reexport */ withFilters),
@@ -60498,7 +60500,7 @@ function navigator_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tr
  * External dependencies
  */
 
-const navigatorProviderWrapper =  true ? {
+const navigatorWrapper =  true ? {
   name: "1br0vvk",
   styles: "position:relative;overflow-x:clip;contain:layout;display:grid;grid-template-columns:1fr;grid-template-rows:1fr;align-items:start"
 } : 0;
@@ -60574,7 +60576,7 @@ const navigatorScreen =  true ? {
   styles: "overflow-x:auto;max-height:100%;box-sizing:border-box;position:relative;grid-column:1/-1;grid-row:1/-1"
 } : 0;
 
-;// CONCATENATED MODULE: ./packages/components/build-module/navigator/navigator-provider/component.js
+;// CONCATENATED MODULE: ./packages/components/build-module/navigator/navigator/component.js
 /**
  * External dependencies
  */
@@ -60757,7 +60759,7 @@ function UnconnectedNavigator(props, forwardedRef) {
     children,
     className,
     ...otherProps
-  } = useContextSystem(props, 'NavigatorProvider');
+  } = useContextSystem(props, 'Navigator');
   const [routerState, dispatch] = (0,external_wp_element_namespaceObject.useReducer)(routerReducer, initialPathProp, path => ({
     screens: [],
     currentLocation: {
@@ -60816,7 +60818,7 @@ function UnconnectedNavigator(props, forwardedRef) {
     };
   }, [currentLocation, matchedPath, methods]);
   const cx = useCx();
-  const classes = (0,external_wp_element_namespaceObject.useMemo)(() => cx(navigatorProviderWrapper, className), [className, cx]);
+  const classes = (0,external_wp_element_namespaceObject.useMemo)(() => cx(navigatorWrapper, className), [className, cx]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(component, {
     ref: forwardedRef,
     className: classes,
@@ -60827,42 +60829,7 @@ function UnconnectedNavigator(props, forwardedRef) {
     })
   });
 }
-
-/**
- * The `NavigatorProvider` component allows rendering nested views/panels/menus
- * (via the `NavigatorScreen` component and navigate between these different
- * view (via the `NavigatorButton` and `NavigatorBackButton` components or the
- * `useNavigator` hook).
- *
- * ```jsx
- * import {
- *   __experimentalNavigatorProvider as NavigatorProvider,
- *   __experimentalNavigatorScreen as NavigatorScreen,
- *   __experimentalNavigatorButton as NavigatorButton,
- *   __experimentalNavigatorBackButton as NavigatorBackButton,
- * } from '@wordpress/components';
- *
- * const MyNavigation = () => (
- *   <NavigatorProvider initialPath="/">
- *     <NavigatorScreen path="/">
- *       <p>This is the home screen.</p>
- *        <NavigatorButton path="/child">
- *          Navigate to child screen.
- *       </NavigatorButton>
- *     </NavigatorScreen>
- *
- *     <NavigatorScreen path="/child">
- *       <p>This is the child screen.</p>
- *       <NavigatorBackButton>
- *         Go back
- *       </NavigatorBackButton>
- *     </NavigatorScreen>
- *   </NavigatorProvider>
- * );
- * ```
- */
-const component_Navigator = contextConnect(UnconnectedNavigator, 'NavigatorProvider');
-/* harmony default export */ const navigator_provider_component = ((/* unused pure expression or super */ null && (component_Navigator)));
+const component_Navigator = contextConnect(UnconnectedNavigator, 'Navigator');
 
 ;// CONCATENATED MODULE: external ["wp","escapeHtml"]
 const external_wp_escapeHtml_namespaceObject = window["wp"]["escapeHtml"];
@@ -61009,7 +60976,7 @@ function UnconnectedNavigatorScreen(props, forwardedRef) {
     path,
     onAnimationEnd: onAnimationEndProp,
     ...otherProps
-  } = useContextSystem(props, 'NavigatorScreen');
+  } = useContextSystem(props, 'Navigator.Screen');
   const {
     location,
     match,
@@ -61099,7 +61066,7 @@ function UnconnectedNavigatorScreen(props, forwardedRef) {
     children: children
   }) : null;
 }
-const NavigatorScreen = contextConnect(UnconnectedNavigatorScreen, 'NavigatorScreen');
+const NavigatorScreen = contextConnect(UnconnectedNavigatorScreen, 'Navigator.Screen');
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/navigator/use-navigator.js
 /**
@@ -61112,7 +61079,10 @@ const NavigatorScreen = contextConnect(UnconnectedNavigatorScreen, 'NavigatorScr
  */
 
 /**
- * Retrieves a `navigator` instance.
+ * Retrieves a `navigator` instance. This hook provides advanced functionality,
+ * such as imperatively navigating to a new location (with options like
+ * navigating back or skipping focus restoration) and accessing the current
+ * location and path parameters.
  */
 function useNavigator() {
   const {
@@ -61153,7 +61123,7 @@ function useNavigatorButton(props) {
     as = build_module_button,
     attributeName = 'id',
     ...otherProps
-  } = useContextSystem(props, 'NavigatorButton');
+  } = useContextSystem(props, 'Navigator.Button');
   const escapedPath = (0,external_wp_escapeHtml_namespaceObject.escapeAttribute)(path);
   const {
     goTo
@@ -61193,7 +61163,7 @@ function UnconnectedNavigatorButton(props, forwardedRef) {
     ...navigatorButtonProps
   });
 }
-const NavigatorButton = contextConnect(UnconnectedNavigatorButton, 'NavigatorButton');
+const NavigatorButton = contextConnect(UnconnectedNavigatorButton, 'Navigator.Button');
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/navigator/navigator-back-button/hook.js
 /**
@@ -61213,7 +61183,7 @@ function useNavigatorBackButton(props) {
     onClick,
     as = build_module_button,
     ...otherProps
-  } = useContextSystem(props, 'NavigatorBackButton');
+  } = useContextSystem(props, 'Navigator.BackButton');
   const {
     goBack
   } = useNavigator();
@@ -61249,7 +61219,7 @@ function UnconnectedNavigatorBackButton(props, forwardedRef) {
     ...navigatorBackButtonProps
   });
 }
-const NavigatorBackButton = contextConnect(UnconnectedNavigatorBackButton, 'NavigatorBackButton');
+const NavigatorBackButton = contextConnect(UnconnectedNavigatorBackButton, 'Navigator.BackButton');
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/navigator/navigator-to-parent-button/component.js
 /**
@@ -61266,14 +61236,18 @@ const NavigatorBackButton = contextConnect(UnconnectedNavigatorBackButton, 'Navi
 function UnconnectedNavigatorToParentButton(props, forwardedRef) {
   external_wp_deprecated_default()('wp.components.NavigatorToParentButton', {
     since: '6.7',
-    alternative: 'wp.components.NavigatorBackButton'
+    alternative: 'wp.components.Navigator.BackButton'
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigatorBackButton, {
     ref: forwardedRef,
     ...props
   });
 }
-const NavigatorToParentButton = contextConnect(UnconnectedNavigatorToParentButton, 'NavigatorToParentButton');
+
+/**
+ * @deprecated
+ */
+const NavigatorToParentButton = contextConnect(UnconnectedNavigatorToParentButton, 'Navigator.ToParentButton');
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/navigator/legacy.js
 /**
@@ -61288,9 +61262,8 @@ const NavigatorToParentButton = contextConnect(UnconnectedNavigatorToParentButto
 
 /**
  * The `NavigatorProvider` component allows rendering nested views/panels/menus
- * (via the `NavigatorScreen` component and navigate between these different
- * view (via the `NavigatorButton` and `NavigatorBackButton` components or the
- * `useNavigator` hook).
+ * (via the `NavigatorScreen` component and navigate between them
+ * (via the `NavigatorButton` and `NavigatorBackButton` components).
  *
  * ```jsx
  * import {
@@ -61326,8 +61299,7 @@ const NavigatorProvider = Object.assign(component_Navigator, {
 /**
  * The `NavigatorScreen` component represents a single view/screen/panel and
  * should be used in combination with the `NavigatorProvider`, the
- * `NavigatorButton` and the `NavigatorBackButton` components (or the `useNavigator`
- * hook).
+ * `NavigatorButton` and the `NavigatorBackButton` components.
  *
  * @example
  * ```jsx
@@ -61364,7 +61336,7 @@ const legacy_NavigatorScreen = Object.assign(NavigatorScreen, {
 /**
  * The `NavigatorButton` component can be used to navigate to a screen and should
  * be used in combination with the `NavigatorProvider`, the `NavigatorScreen`
- * and the `NavigatorBackButton` components (or the `useNavigator` hook).
+ * and the `NavigatorBackButton` components.
  *
  * @example
  * ```jsx
@@ -61401,8 +61373,7 @@ const legacy_NavigatorButton = Object.assign(NavigatorButton, {
 /**
  * The `NavigatorBackButton` component can be used to navigate to a screen and
  * should be used in combination with the `NavigatorProvider`, the
- * `NavigatorScreen` and the `NavigatorButton` components (or the `useNavigator`
- * hook).
+ * `NavigatorScreen` and the `NavigatorButton` components.
  *
  * @example
  * ```jsx
@@ -61444,6 +61415,139 @@ const legacy_NavigatorBackButton = Object.assign(NavigatorBackButton, {
  */
 const legacy_NavigatorToParentButton = Object.assign(NavigatorToParentButton, {
   displayName: 'NavigatorToParentButton'
+});
+
+;// CONCATENATED MODULE: ./packages/components/build-module/navigator/index.js
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+/**
+ * The `Navigator` component allows rendering nested views/panels/menus
+ * (via the `Navigator.Screen` component) and navigate between them
+ * (via the `Navigator.Button` and `Navigator.BackButton` components).
+ *
+ * ```jsx
+ * import { Navigator } from '@wordpress/components';
+ *
+ * const MyNavigation = () => (
+ *   <Navigator initialPath="/">
+ *     <Navigator.Screen path="/">
+ *       <p>This is the home screen.</p>
+ *        <Navigator.Button path="/child">
+ *          Navigate to child screen.
+ *       </Navigator.Button>
+ *     </Navigator.Screen>
+ *
+ *     <Navigator.Screen path="/child">
+ *       <p>This is the child screen.</p>
+ *       <Navigator.BackButton>
+ *         Go back
+ *       </Navigator.BackButton>
+ *     </Navigator.Screen>
+ *   </Navigator>
+ * );
+ * ```
+ */
+const navigator_Navigator = Object.assign(component_Navigator, {
+  /**
+   * The `Navigator.Screen` component represents a single view/screen/panel and
+   * should be used in combination with the `Navigator`, the `Navigator.Button`
+   * and the `Navigator.BackButton` components.
+   *
+   * @example
+   * ```jsx
+   * import { Navigator } from '@wordpress/components';
+   *
+   * const MyNavigation = () => (
+   *   <Navigator initialPath="/">
+   *     <Navigator.Screen path="/">
+   *       <p>This is the home screen.</p>
+   *        <Navigator.Button path="/child">
+   *          Navigate to child screen.
+   *       </Navigator.Button>
+   *     </Navigator.Screen>
+   *
+   *     <Navigator.Screen path="/child">
+   *       <p>This is the child screen.</p>
+   *       <Navigator.BackButton>
+   *         Go back
+   *       </Navigator.BackButton>
+   *     </Navigator.Screen>
+   *   </Navigator>
+   * );
+   * ```
+   */
+  Screen: Object.assign(NavigatorScreen, {
+    displayName: 'Navigator.Screen'
+  }),
+  /**
+   * The `Navigator.Button` component can be used to navigate to a screen and
+   * should be used in combination with the `Navigator`, the `Navigator.Screen`
+   * and the `Navigator.BackButton` components.
+   *
+   * @example
+   * ```jsx
+   * import { Navigator } from '@wordpress/components';
+   *
+   * const MyNavigation = () => (
+   *   <Navigator initialPath="/">
+   *     <Navigator.Screen path="/">
+   *       <p>This is the home screen.</p>
+   *        <Navigator.Button path="/child">
+   *          Navigate to child screen.
+   *       </Navigator.Button>
+   *     </Navigator.Screen>
+   *
+   *     <Navigator.Screen path="/child">
+   *       <p>This is the child screen.</p>
+   *       <Navigator.BackButton>
+   *         Go back
+   *       </Navigator.BackButton>
+   *     </Navigator.Screen>
+   *   </Navigator>
+   * );
+   * ```
+   */
+  Button: Object.assign(NavigatorButton, {
+    displayName: 'Navigator.Button'
+  }),
+  /**
+   * The `Navigator.BackButton` component can be used to navigate to a screen and
+   * should be used in combination with the `Navigator`, the `Navigator.Screen`
+   * and the `Navigator.Button` components.
+   *
+   * @example
+   * ```jsx
+   * import { Navigator } from '@wordpress/components';
+   *
+   * const MyNavigation = () => (
+   *   <Navigator initialPath="/">
+   *     <Navigator.Screen path="/">
+   *       <p>This is the home screen.</p>
+   *        <Navigator.Button path="/child">
+   *          Navigate to child screen.
+   *       </Navigator.Button>
+   *     </Navigator.Screen>
+   *
+   *     <Navigator.Screen path="/child">
+   *       <p>This is the child screen.</p>
+   *       <Navigator.BackButton>
+   *         Go back
+   *       </Navigator.BackButton>
+   *     </Navigator.Screen>
+   *   </Navigator>
+   * );
+   * ```
+   */
+  BackButton: Object.assign(NavigatorBackButton, {
+    displayName: 'Navigator.BackButton'
+  })
 });
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/notice/index.js
@@ -71513,6 +71617,7 @@ lock(privateApis, {
 
 
 // Components.
+
 
 
 
