@@ -12012,8 +12012,16 @@ function EntitiesSavedStatesExtensible({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
         isBlock: true,
         as: external_wp_components_namespaceObject.Button,
+        variant: "secondary",
+        size: "compact",
+        onClick: dismissPanel,
+        children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+        isBlock: true,
+        as: external_wp_components_namespaceObject.Button,
         ref: saveButtonRef,
         variant: "primary",
+        size: "compact",
         disabled: !saveEnabled,
         accessibleWhenDisabled: true,
         onClick: () => saveDirtyEntities({
@@ -12024,12 +12032,6 @@ function EntitiesSavedStatesExtensible({
         }),
         className: "editor-entities-saved-states__save-button",
         children: saveLabel
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-        isBlock: true,
-        as: external_wp_components_namespaceObject.Button,
-        variant: "secondary",
-        onClick: dismissPanel,
-        children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "entities-saved-states__text-prompt",
