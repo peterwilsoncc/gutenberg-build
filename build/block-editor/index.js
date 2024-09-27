@@ -46086,6 +46086,7 @@ function ObserveTyping({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -46158,7 +46159,23 @@ function ZoomOutSeparator({
       }),
       "data-is-insertion-point": "true",
       onDragOver: () => setIsDraggedOver(true),
-      onDragLeave: () => setIsDraggedOver(false)
+      onDragLeave: () => setIsDraggedOver(false),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
+        initial: {
+          opacity: 0
+        },
+        animate: {
+          opacity: 1
+        },
+        exit: {
+          opacity: 0
+        },
+        transition: {
+          type: 'tween',
+          duration: 0.1
+        },
+        children: (0,external_wp_i18n_namespaceObject.__)('Drop pattern.')
+      })
     })
   });
 }
