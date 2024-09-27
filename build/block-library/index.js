@@ -53860,8 +53860,8 @@ function LogoEdit({
     }
   }, [logoUrl, temporaryURL]);
   if (!!logoUrl || !!temporaryURL) {
-    logoImage = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SiteLogo, {
+    logoImage = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SiteLogo, {
         alt: alt,
         attributes: attributes,
         className: className,
@@ -53874,7 +53874,9 @@ function LogoEdit({
         setIcon: setIcon,
         iconId: siteIconId,
         canUserEdit: canUserEdit
-      })
+      }), canUserEdit && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropZone, {
+        onFilesDrop: onFilesDrop
+      })]
     });
   }
   const placeholder = content => {
