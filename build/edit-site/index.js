@@ -26523,7 +26523,7 @@ function EditorCanvasContainer({
           onKeyDown: closeOnEscape,
           "aria-label": title,
           children: [shouldShowCloseButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            __next40pxDefaultSize: true,
+            size: "compact",
             className: "edit-site-editor-canvas-container__close-button",
             icon: close_small,
             label: closeButtonLabel || (0,external_wp_i18n_namespaceObject.__)('Close'),
