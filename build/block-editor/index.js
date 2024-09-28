@@ -52119,6 +52119,7 @@ function getBlockAndPreviewFromMedia(media, mediaType) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -52241,8 +52242,12 @@ function MediaPreview({
     // If this happens, we insert the image block using the external
     // URL and let the user know about the possible implications.
     window.fetch(url).then(response => response.blob()).then(blob => {
+      const fileName = (0,external_wp_url_namespaceObject.getFilename)(url) || 'image.jpg';
+      const file = new File([blob], fileName, {
+        type: blob.type
+      });
       settings.mediaUpload({
-        filesList: [blob],
+        filesList: [file],
         additionalData: {
           caption
         },
