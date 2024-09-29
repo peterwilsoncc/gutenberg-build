@@ -1006,15 +1006,11 @@ const initializeMetaBoxes = () => ({
   actions_metaBoxesInitialized = true;
 
   // Save metaboxes on save completion, except for autosaves.
-  (0,external_wp_hooks_namespaceObject.addFilter)('editor.__unstableSavePost', 'core/edit-post/save-metaboxes', (previous, options) => previous.then(() => {
-    if (options.isAutosave) {
-      return;
+  (0,external_wp_hooks_namespaceObject.addAction)('editor.savePost', 'core/edit-post/save-metaboxes', async options => {
+    if (!options.isAutosave && select.hasMetaBoxes()) {
+      await dispatch.requestMetaBoxUpdates();
     }
-    if (!select.hasMetaBoxes()) {
-      return;
-    }
-    return dispatch.requestMetaBoxUpdates();
-  }));
+  });
   dispatch({
     type: 'META_BOXES_INITIALIZED'
   });

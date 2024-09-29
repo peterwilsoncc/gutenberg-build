@@ -4413,7 +4413,7 @@ const savePost = (options = {}) => async ({
     });
   }
   const previousRecord = select.getCurrentPost();
-  const edits = {
+  let edits = {
     id: previousRecord.id,
     ...registry.select(external_wp_coreData_namespaceObject.store).getEntityRecordNonTransientEdits('postType', previousRecord.type, previousRecord.id),
     content
@@ -4424,7 +4424,7 @@ const savePost = (options = {}) => async ({
   });
   let error = false;
   try {
-    error = await (0,external_wp_hooks_namespaceObject.applyFilters)('editor.__unstablePreSavePost', Promise.resolve(false), options);
+    edits = await (0,external_wp_hooks_namespaceObject.applyFiltersAsync)('editor.preSavePost', edits, options);
   } catch (err) {
     error = err;
   }
@@ -4438,10 +4438,21 @@ const savePost = (options = {}) => async ({
   if (!error) {
     error = registry.select(external_wp_coreData_namespaceObject.store).getLastEntitySaveError('postType', previousRecord.type, previousRecord.id);
   }
+
+  // Run the hook with legacy unstable name for backward compatibility
   if (!error) {
-    await (0,external_wp_hooks_namespaceObject.applyFilters)('editor.__unstableSavePost', Promise.resolve(), options).catch(err => {
+    try {
+      await (0,external_wp_hooks_namespaceObject.applyFilters)('editor.__unstableSavePost', Promise.resolve(), options);
+    } catch (err) {
       error = err;
-    });
+    }
+  }
+  if (!error) {
+    try {
+      await (0,external_wp_hooks_namespaceObject.doActionAsync)('editor.savePost', options);
+    } catch (err) {
+      error = err;
+    }
   }
   dispatch({
     type: 'REQUEST_POST_UPDATE_FINISH',
