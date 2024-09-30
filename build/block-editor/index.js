@@ -72292,24 +72292,24 @@ function ToolSelector(props, ref) {
           value: mode === 'navigation' ? 'navigation' : 'edit',
           onSelect: __unstableSetEditorMode,
           choices: [{
-            value: 'edit',
-            label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-              children: [selectIcon, (0,external_wp_i18n_namespaceObject.__)('Design')]
-            }),
-            info: (0,external_wp_i18n_namespaceObject.__)('Full control over layout and styling.')
-          }, {
             value: 'navigation',
             label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
                 icon: edit
-              }), (0,external_wp_i18n_namespaceObject.__)('Edit')]
+              }), (0,external_wp_i18n_namespaceObject.__)('Write')]
             }),
             info: (0,external_wp_i18n_namespaceObject.__)('Focus on content.')
+          }, {
+            value: 'edit',
+            label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+              children: [selectIcon, (0,external_wp_i18n_namespaceObject.__)('Design')]
+            }),
+            info: (0,external_wp_i18n_namespaceObject.__)('Edit layout and styles.')
           }]
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "block-editor-tool-selector__help",
-        children: (0,external_wp_i18n_namespaceObject.__)('Tools provide different interactions for selecting, navigating, and editing blocks. Toggle between select and edit by pressing Escape and Enter.')
+        children: (0,external_wp_i18n_namespaceObject.__)('Tools provide different sets of interactions for blocks. Toggle between simplified content tools (Write) and advanced visual editing tools (Design).')
       })]
     })
   });
