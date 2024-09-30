@@ -35607,6 +35607,7 @@ function useComputeControlledOrUncontrolledValue(valueProp) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -35644,7 +35645,8 @@ function UnforwardedToggleGroupControlAsRadioGroup({
   const radio = useRadioStore({
     defaultValue,
     value,
-    setValue: wrappedOnChangeProp
+    setValue: wrappedOnChangeProp,
+    rtl: (0,external_wp_i18n_namespaceObject.isRTL)()
   });
   const selectedValue = useStoreState(radio, 'value');
   const setValue = radio.setValue;
