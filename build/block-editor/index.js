@@ -70114,25 +70114,26 @@ const InsertFromURLPopover = ({
 }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(url_popover, {
   anchor: popoverAnchor,
   onClose: onClose,
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("form", {
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
     className: "block-editor-media-placeholder__url-input-form",
     onSubmit: onSubmit,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
-      className: "block-editor-media-placeholder__url-input-field",
-      type: "text",
-      "aria-label": (0,external_wp_i18n_namespaceObject.__)('URL'),
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
+      __next40pxDefaultSize: true,
+      label: (0,external_wp_i18n_namespaceObject.__)('URL'),
+      hideLabelFromVision: true,
       placeholder: (0,external_wp_i18n_namespaceObject.__)('Paste or type URL'),
       onChange: onChange,
-      value: src
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
-      className: "block-editor-media-placeholder__url-input-submit-button",
-      icon: keyboard_return,
-      label: (0,external_wp_i18n_namespaceObject.__)('Apply'),
-      type: "submit"
-    })]
+      value: src,
+      suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlSuffixWrapper, {
+        variant: "control",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          size: "small",
+          icon: keyboard_return,
+          label: (0,external_wp_i18n_namespaceObject.__)('Apply'),
+          type: "submit"
+        })
+      })
+    })
   })
 });
 const URLSelectionUI = ({
@@ -70230,9 +70231,6 @@ function MediaPlaceholder({
       return false;
     }
     return allowedTypes.every(allowedType => allowedType === 'image' || allowedType.startsWith('image/'));
-  };
-  const onChangeSrc = event => {
-    setSrc(event.target.value);
   };
   const onFilesUpload = files => {
     if (!handleUpload || typeof handleUpload === 'function' && !handleUpload(files)) {
@@ -70412,7 +70410,7 @@ function MediaPlaceholder({
   const renderUrlSelectionUI = () => {
     return onSelectURL && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(URLSelectionUI, {
       src: src,
-      onChangeSrc: onChangeSrc,
+      onChangeSrc: setSrc,
       onSelectURL: onSelectURL
     });
   };
