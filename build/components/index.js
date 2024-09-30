@@ -71069,10 +71069,10 @@ const useTabsContext = () => (0,external_wp_element_namespaceObject.useContext)(
 
 const TabListWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "enfox0g2"
-} : 0)("position:relative;display:flex;align-items:stretch;flex-direction:row;text-align:center;&[aria-orientation='vertical']{flex-direction:column;text-align:start;}@media not ( prefers-reduced-motion ){&.is-animation-enabled::after{transition-property:transform;transition-duration:0.2s;transition-timing-function:ease-out;}}--direction-factor:1;--direction-origin-x:left;--indicator-start:var( --indicator-left );&:dir( rtl ){--direction-factor:-1;--direction-origin-x:right;--indicator-start:var( --indicator-right );}&::after{content:'';position:absolute;pointer-events:none;transform-origin:var( --direction-origin-x ) top;outline:2px solid transparent;outline-offset:-1px;}--antialiasing-factor:100;&:not( [aria-orientation='vertical'] ){&::after{bottom:0;height:0;width:calc( var( --antialiasing-factor ) * 1px );transform:translateX(\n\t\t\t\t\tcalc(\n\t\t\t\t\t\tvar( --indicator-start ) * var( --direction-factor ) *\n\t\t\t\t\t\t\t1px\n\t\t\t\t\t)\n\t\t\t\t) scaleX(\n\t\t\t\t\tcalc(\n\t\t\t\t\t\tvar( --indicator-width ) / var( --antialiasing-factor )\n\t\t\t\t\t)\n\t\t\t\t);border-bottom:var( --wp-admin-border-width-focus ) solid ", COLORS.theme.accent, ";}}&[aria-orientation='vertical']::after{z-index:-1;top:0;left:0;width:100%;height:calc( var( --antialiasing-factor ) * 1px );transform:translateY( calc( var( --indicator-top ) * 1px ) ) scaleY(\n\t\t\t\tcalc( var( --indicator-height ) / var( --antialiasing-factor ) )\n\t\t\t);background-color:", COLORS.theme.gray[100], ";}" + ( true ? "" : 0));
+} : 0)("position:relative;display:flex;align-items:stretch;flex-direction:row;text-align:center;overflow-x:auto;&[aria-orientation='vertical']{flex-direction:column;text-align:start;}:where( [aria-orientation='horizontal'] ){width:fit-content;}--direction-factor:1;--direction-start:left;--direction-end:right;--indicator-start:var( --indicator-left );&:dir( rtl ){--direction-factor:-1;--direction-start:right;--direction-end:left;--indicator-start:var( --indicator-right );}@media not ( prefers-reduced-motion ){&.is-animation-enabled::before{transition-property:transform;transition-duration:0.2s;transition-timing-function:ease-out;}}&::before{content:'';position:absolute;pointer-events:none;transform-origin:var( --direction-start ) top;outline:2px solid transparent;outline-offset:-1px;}--antialiasing-factor:100;&:not( [aria-orientation='vertical'] ){--fade-width:4rem;--fade-gradient-base:transparent 0%,black var( --fade-width );--fade-gradient-composed:var( --fade-gradient-base ),black 60%,transparent 50%;&.is-overflowing-first{mask-image:linear-gradient(\n\t\t\t\tto var( --direction-end ),\n\t\t\t\tvar( --fade-gradient-base )\n\t\t\t);}&.is-overflowing-last{mask-image:linear-gradient(\n\t\t\t\tto var( --direction-start ),\n\t\t\t\tvar( --fade-gradient-base )\n\t\t\t);}&.is-overflowing-first.is-overflowing-last{mask-image:linear-gradient(\n\t\t\t\t\tto right,\n\t\t\t\t\tvar( --fade-gradient-composed )\n\t\t\t\t),linear-gradient( to left, var( --fade-gradient-composed ) );}&::before{bottom:0;height:0;width:calc( var( --antialiasing-factor ) * 1px );transform:translateX(\n\t\t\t\t\tcalc(\n\t\t\t\t\t\tvar( --indicator-start ) * var( --direction-factor ) *\n\t\t\t\t\t\t\t1px\n\t\t\t\t\t)\n\t\t\t\t) scaleX(\n\t\t\t\t\tcalc(\n\t\t\t\t\t\tvar( --indicator-width ) / var( --antialiasing-factor )\n\t\t\t\t\t)\n\t\t\t\t);border-bottom:var( --wp-admin-border-width-focus ) solid ", COLORS.theme.accent, ";}}&[aria-orientation='vertical']::before{top:0;left:0;width:100%;height:calc( var( --antialiasing-factor ) * 1px );transform:translateY( calc( var( --indicator-top ) * 1px ) ) scaleY(\n\t\t\t\tcalc( var( --indicator-height ) / var( --antialiasing-factor ) )\n\t\t\t);background-color:", COLORS.theme.gray[100], ";}" + ( true ? "" : 0));
 const styles_Tab = /*#__PURE__*/emotion_styled_base_browser_esm(Tab,  true ? {
   target: "enfox0g1"
-} : 0)("&{display:inline-flex;align-items:center;position:relative;border-radius:0;min-height:", space(12), ";height:auto;background:transparent;border:none;box-shadow:none;cursor:pointer;line-height:1.2;padding:", space(4), ";margin-left:0;font-weight:500;text-align:inherit;hyphens:auto;color:", COLORS.theme.foreground, ";&[aria-disabled='true']{cursor:default;color:", COLORS.ui.textDisabled, ";}&:not( [aria-disabled='true'] ):hover{color:", COLORS.theme.accent, ";}&:focus:not( :disabled ){position:relative;box-shadow:none;outline:none;}&::before{content:'';position:absolute;top:", space(3), ";right:", space(3), ";bottom:", space(3), ";left:", space(3), ";pointer-events:none;outline:var( --wp-admin-border-width-focus ) solid ", COLORS.theme.accent, ";border-radius:", config_values.radiusSmall, ";opacity:0;@media not ( prefers-reduced-motion ){transition:opacity 0.1s linear;}}&:focus-visible::before{opacity:1;}}[aria-orientation='vertical'] &{min-height:", space(10), ";}" + ( true ? "" : 0));
+} : 0)("&{scroll-margin:24px;flex-grow:1;flex-shrink:0;display:inline-flex;align-items:center;position:relative;border-radius:0;height:", space(12), ";background:transparent;border:none;box-shadow:none;cursor:pointer;line-height:1.2;padding:", space(4), ";margin-left:0;font-weight:500;text-align:inherit;color:", COLORS.theme.foreground, ";&[aria-disabled='true']{cursor:default;color:", COLORS.ui.textDisabled, ";}&:not( [aria-disabled='true'] ):hover{color:", COLORS.theme.accent, ";}&:focus:not( :disabled ){position:relative;box-shadow:none;outline:none;}&::after{content:'';position:absolute;top:", space(3), ";right:", space(3), ";bottom:", space(3), ";left:", space(3), ";pointer-events:none;outline:var( --wp-admin-border-width-focus ) solid ", COLORS.theme.accent, ";border-radius:", config_values.radiusSmall, ";opacity:0;@media not ( prefers-reduced-motion ){transition:opacity 0.1s linear;}}&:focus-visible::after{opacity:1;}}[aria-orientation='vertical'] &{min-height:", space(10), ";}[aria-orientation='horizontal'] &{justify-content:center;}" + ( true ? "" : 0));
 const styles_TabPanel = /*#__PURE__*/emotion_styled_base_browser_esm(TabPanel,  true ? {
   target: "enfox0g0"
 } : 0)("&:focus{box-shadow:none;outline:none;}&:focus-visible{box-shadow:0 0 0 var( --wp-admin-border-width-focus ) ", COLORS.theme.accent, ";outline:2px solid transparent;outline-offset:0;}" + ( true ? "" : 0));
@@ -71158,7 +71158,7 @@ const NULL_ELEMENT_OFFSET_RECT = {
  * will return `undefined`.
  */
 function getElementOffsetRect(element) {
-  var _element$offsetParent;
+  var _offsetParent$getBoun, _offsetParent$scrollL, _offsetParent$scrollT;
   // Position and dimension values computed with `getBoundingClientRect` have
   // subpixel precision, but are affected by distortions since they represent
   // the "real" measures, or in other words, the actual final values as rendered
@@ -71167,7 +71167,10 @@ function getElementOffsetRect(element) {
   if (rect.width === 0 || rect.height === 0) {
     return;
   }
-  const offsetParentRect = (_element$offsetParent = element.offsetParent?.getBoundingClientRect()) !== null && _element$offsetParent !== void 0 ? _element$offsetParent : NULL_ELEMENT_OFFSET_RECT;
+  const offsetParent = element.offsetParent;
+  const offsetParentRect = (_offsetParent$getBoun = offsetParent?.getBoundingClientRect()) !== null && _offsetParent$getBoun !== void 0 ? _offsetParent$getBoun : NULL_ELEMENT_OFFSET_RECT;
+  const offsetParentScrollX = (_offsetParent$scrollL = offsetParent?.scrollLeft) !== null && _offsetParent$scrollL !== void 0 ? _offsetParent$scrollL : 0;
+  const offsetParentScrollY = (_offsetParent$scrollT = offsetParent?.scrollTop) !== null && _offsetParent$scrollT !== void 0 ? _offsetParent$scrollT : 0;
 
   // Computed widths and heights have subpixel precision, and are not affected
   // by distortions.
@@ -71182,10 +71185,11 @@ function getElementOffsetRect(element) {
     // To obtain the adjusted values for the position:
     // 1. Compute the element's position relative to the offset parent.
     // 2. Correct for the scale factor.
-    top: (rect.top - offsetParentRect?.top) * scaleY,
-    right: (offsetParentRect?.right - rect.right) * scaleX,
-    bottom: (offsetParentRect?.bottom - rect.bottom) * scaleY,
-    left: (rect.left - offsetParentRect?.left) * scaleX,
+    // 3. Adjust for the scroll position of the offset parent.
+    top: (rect.top - offsetParentRect?.top) * scaleY + offsetParentScrollY,
+    right: (offsetParentRect?.right - rect.right) * scaleX - offsetParentScrollX,
+    bottom: (offsetParentRect?.bottom - rect.bottom) * scaleY - offsetParentScrollY,
+    left: (rect.left - offsetParentRect?.left) * scaleX + offsetParentScrollX,
     // Computed dimensions don't need any adjustments.
     width: computedWidth,
     height: computedHeight
@@ -71270,6 +71274,74 @@ onUpdate) {
 }
 /* eslint-enable jsdoc/require-param */
 
+;// CONCATENATED MODULE: ./packages/components/build-module/tabs/use-track-overflow.js
+/* eslint-disable jsdoc/require-param */
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Tracks if an element contains overflow and on which end by tracking the
+ * first and last child elements with an `IntersectionObserver` in relation
+ * to the parent element.
+ *
+ * Note that the returned value will only indicate whether the first or last
+ * element is currently "going out of bounds" but not whether it happens on
+ * the X or Y axis.
+ */
+function useTrackOverflow(parent, children) {
+  const [first, setFirst] = (0,external_wp_element_namespaceObject.useState)(false);
+  const [last, setLast] = (0,external_wp_element_namespaceObject.useState)(false);
+  const [observer, setObserver] = (0,external_wp_element_namespaceObject.useState)();
+  const callback = (0,external_wp_compose_namespaceObject.useEvent)(entries => {
+    for (const entry of entries) {
+      if (entry.target === children.first) {
+        setFirst(!entry.isIntersecting);
+      }
+      if (entry.target === children.last) {
+        setLast(!entry.isIntersecting);
+      }
+    }
+  });
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (!parent || !window.IntersectionObserver) {
+      return;
+    }
+    const newObserver = new IntersectionObserver(callback, {
+      root: parent,
+      threshold: 0.9
+    });
+    setObserver(newObserver);
+    return () => newObserver.disconnect();
+  }, [callback, parent]);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (!observer) {
+      return;
+    }
+    if (children.first) {
+      observer.observe(children.first);
+    }
+    if (children.last) {
+      observer.observe(children.last);
+    }
+    return () => {
+      if (children.first) {
+        observer.unobserve(children.first);
+      }
+      if (children.last) {
+        observer.unobserve(children.last);
+      }
+    };
+  }, [children.first, children.last, observer]);
+  return {
+    first,
+    last
+  };
+}
+/* eslint-enable jsdoc/require-param */
+
 ;// CONCATENATED MODULE: ./packages/components/build-module/tabs/tablist.js
 /**
  * External dependencies
@@ -71283,6 +71355,7 @@ onUpdate) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -71293,32 +71366,59 @@ onUpdate) {
 
 
 
+
+const SCROLL_MARGIN = 24;
 const TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabList({
   children,
   ...otherProps
 }, ref) {
-  const context = useTabsContext();
-  const tabStoreState = useStoreState(context?.store);
-  const selectedId = tabStoreState?.selectedId;
-  const indicatorPosition = useTrackElementOffsetRect(context?.store.item(selectedId)?.element);
+  var _useTabsContext;
+  const {
+    store
+  } = (_useTabsContext = useTabsContext()) !== null && _useTabsContext !== void 0 ? _useTabsContext : {};
+  const selectedId = useStoreState(store, 'selectedId');
+  const activeId = useStoreState(store, 'activeId');
+  const selectOnMove = useStoreState(store, 'selectOnMove');
+  const items = useStoreState(store, 'items');
+  const [parent, setParent] = (0,external_wp_element_namespaceObject.useState)();
+  const refs = (0,external_wp_compose_namespaceObject.useMergeRefs)([ref, setParent]);
+  const overflow = useTrackOverflow(parent, {
+    first: items?.at(0)?.element,
+    last: items?.at(-1)?.element
+  });
+  const selectedTabPosition = useTrackElementOffsetRect(store?.item(selectedId)?.element);
   const [animationEnabled, setAnimationEnabled] = (0,external_wp_element_namespaceObject.useState)(false);
   useOnValueUpdate(selectedId, ({
     previousValue
-  }) => previousValue && setAnimationEnabled(true));
-  if (!context || !tabStoreState) {
-     false ? 0 : void 0;
-    return null;
-  }
-  const {
-    store
-  } = context;
-  const {
-    activeId,
-    selectOnMove
-  } = tabStoreState;
-  const {
-    setActiveId
-  } = store;
+  }) => {
+    if (previousValue) {
+      setAnimationEnabled(true);
+    }
+  });
+
+  // Make sure selected tab is scrolled into view.
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    if (!parent || !selectedTabPosition) {
+      return;
+    }
+    const {
+      scrollLeft: parentScroll
+    } = parent;
+    const parentWidth = parent.getBoundingClientRect().width;
+    const {
+      left: childLeft,
+      width: childWidth
+    } = selectedTabPosition;
+    const parentRightEdge = parentScroll + parentWidth;
+    const childRightEdge = childLeft + childWidth;
+    const rightOverflow = childRightEdge + SCROLL_MARGIN - parentRightEdge;
+    const leftOverflow = parentScroll - (childLeft - SCROLL_MARGIN);
+    if (leftOverflow > 0) {
+      parent.scrollLeft = parentScroll - leftOverflow;
+    } else if (rightOverflow > 0) {
+      parent.scrollLeft = parentScroll + rightOverflow;
+    }
+  }, [parent, selectedTabPosition]);
   const onBlur = () => {
     if (!selectOnMove) {
       return;
@@ -71329,30 +71429,35 @@ const TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabL
     // that the selected tab will receive keyboard focus when tabbing back into
     // the tablist.
     if (selectedId !== activeId) {
-      setActiveId(selectedId);
+      store?.setActiveId(selectedId);
     }
   };
+  if (!store) {
+     false ? 0 : void 0;
+    return null;
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tab_list_TabList, {
-    ref: ref,
+    ref: refs,
     store: store,
     render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TabListWrapper, {
       onTransitionEnd: event => {
-        if (event.pseudoElement === '::after') {
+        if (event.pseudoElement === '::before') {
           setAnimationEnabled(false);
         }
       }
     }),
     onBlur: onBlur,
+    tabIndex: -1,
     ...otherProps,
     style: {
-      '--indicator-top': indicatorPosition.top,
-      '--indicator-right': indicatorPosition.right,
-      '--indicator-left': indicatorPosition.left,
-      '--indicator-width': indicatorPosition.width,
-      '--indicator-height': indicatorPosition.height,
+      '--indicator-top': selectedTabPosition.top,
+      '--indicator-right': selectedTabPosition.right,
+      '--indicator-left': selectedTabPosition.left,
+      '--indicator-width': selectedTabPosition.width,
+      '--indicator-height': selectedTabPosition.height,
       ...otherProps.style
     },
-    className: dist_clsx(animationEnabled ? 'is-animation-enabled' : '', otherProps.className),
+    className: dist_clsx(overflow.first && 'is-overflowing-first', overflow.last && 'is-overflowing-last', animationEnabled && 'is-animation-enabled', otherProps.className),
     children: children
   });
 });

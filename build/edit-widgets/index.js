@@ -3315,7 +3315,7 @@ const SIDEBAR_ACTIVE_BY_DEFAULT = external_wp_element_namespaceObject.Platform.s
 });
 const BLOCK_INSPECTOR_IDENTIFIER = 'edit-widgets/block-inspector';
 
-// Widget areas were one called block areas, so use 'edit-widgets/block-areas'
+// Widget areas were once called block areas, so use 'edit-widgets/block-areas'
 // for backwards compatibility.
 const WIDGET_AREAS_IDENTIFIER = 'edit-widgets/block-areas';
 
@@ -3448,10 +3448,10 @@ function Sidebar() {
     enableComplementaryArea
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
 
-  // `newSelectedTabId` could technically be falsey if no tab is selected (i.e.
+  // `newSelectedTabId` could technically be falsy if no tab is selected (i.e.
   // the initial render) or when we don't want a tab displayed (i.e. the
   // sidebar is closed). These cases should both be covered by the `!!` check
-  // below, so we shouldn't need any additional falsey handling.
+  // below, so we shouldn't need any additional falsy handling.
   const onTabSelect = (0,external_wp_element_namespaceObject.useCallback)(newSelectedTabId => {
     if (!!newSelectedTabId) {
       enableComplementaryArea(store_store.name, newSelectedTabId);

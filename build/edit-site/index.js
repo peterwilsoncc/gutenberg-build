@@ -23549,7 +23549,7 @@ function FontLibraryModal({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Tabs, {
       defaultTabId: defaultTabId,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "font-library-modal__tablist",
+        className: "font-library-modal__tablist-container",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tabs.TabList, {
           children: tabs.map(({
             id,
@@ -26760,11 +26760,14 @@ function StyleBook({
       children: [resizeObserver, showTabs ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "edit-site-style-book__tabs",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(style_book_Tabs, {
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.TabList, {
-            children: tabs.map(tab => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.Tab, {
-              tabId: tab.slug,
-              children: tab.title
-            }, tab.slug))
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+            className: "edit-site-style-book__tablist-container",
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.TabList, {
+              children: tabs.map(tab => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.Tab, {
+                tabId: tab.slug,
+                children: tab.title
+              }, tab.slug))
+            })
           }), tabs.map(tab => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.TabPanel, {
             tabId: tab.slug,
             focusable: false,
