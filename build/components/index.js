@@ -58162,6 +58162,7 @@ function Guide({
           className: "components-guide__finish-button",
           variant: "primary",
           onClick: onFinish,
+          __next40pxDefaultSize: true,
           children: finishButtonText
         })]
       })]
