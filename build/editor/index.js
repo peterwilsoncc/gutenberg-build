@@ -26747,7 +26747,8 @@ function Header({
     isPublishSidebarOpened,
     showIconLabels,
     hasFixedToolbar,
-    isNestedEntity
+    isNestedEntity,
+    postType
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       get: getPreference
@@ -26755,9 +26756,11 @@ function Header({
     const {
       getEditorMode,
       getEditorSettings,
+      getCurrentPostType,
       isPublishSidebarOpened: _isPublishSidebarOpened
     } = select(store_store);
     return {
+      postType: getCurrentPostType(),
       isTextEditor: getEditorMode() === 'text',
       isPublishSidebarOpened: _isPublishSidebarOpened(),
       showIconLabels: getPreference('core', 'showIconLabels'),
@@ -26765,6 +26768,7 @@ function Header({
       isNestedEntity: !!getEditorSettings().onNavigateToPreviousEntityRecord
     };
   }, []);
+  const canBeZoomedOut = ['post', 'page', 'wp_template'].includes(postType);
   const [isBlockToolsCollapsed, setIsBlockToolsCollapsed] = (0,external_wp_element_namespaceObject.useState)(true);
   const hasCenter = isBlockToolsCollapsed && !isTooNarrowForDocumentBar;
   const hasBackButton = useHasBackButton();
@@ -26819,7 +26823,7 @@ function Header({
        */
       (0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSavedState, {
         forceIsDirty: forceIsDirty
-      }), isEditorIframed && isWideViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_toggle, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreviewDropdown, {
+      }), canBeZoomedOut && isEditorIframed && isWideViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_toggle, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreviewDropdown, {
         forceIsAutosaveable: forceIsDirty,
         disabled: isNestedEntity
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostPreviewButton, {
