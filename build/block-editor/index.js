@@ -52220,8 +52220,12 @@ function MediaPreview({
     createSuccessNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   const {
-    getSettings
+    getSettings,
+    getBlock
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
+  const {
+    updateBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const onMediaInsert = (0,external_wp_element_namespaceObject.useCallback)(previewBlock => {
     // Prevent multiple uploads when we're in the process of inserting.
     if (isInserting) {
@@ -52266,18 +52270,28 @@ function MediaPreview({
           if ((0,external_wp_blob_namespaceObject.isBlobURL)(img.url)) {
             return;
           }
-          onClick({
-            ...clonedBlock,
-            attributes: {
+          if (!getBlock(clonedBlock.clientId)) {
+            // Ensure the block is only inserted once.
+            onClick({
+              ...clonedBlock,
+              attributes: {
+                ...clonedBlock.attributes,
+                id: img.id,
+                url: img.url
+              }
+            });
+            createSuccessNotice((0,external_wp_i18n_namespaceObject.__)('Image uploaded and inserted.'), {
+              type: 'snackbar',
+              id: 'inserter-notice'
+            });
+          } else {
+            // For subsequent calls, update the existing block.
+            updateBlockAttributes(clonedBlock.clientId, {
               ...clonedBlock.attributes,
               id: img.id,
               url: img.url
-            }
-          });
-          createSuccessNotice((0,external_wp_i18n_namespaceObject.__)('Image uploaded and inserted.'), {
-            type: 'snackbar',
-            id: 'inserter-notice'
-          });
+            });
+          }
           setIsInserting(false);
         },
         allowedTypes: ALLOWED_MEDIA_TYPES,
@@ -52293,7 +52307,7 @@ function MediaPreview({
       setShowExternalUploadModal(true);
       setIsInserting(false);
     });
-  }, [isInserting, getSettings, onClick, createSuccessNotice, createErrorNotice]);
+  }, [isInserting, getSettings, onClick, createSuccessNotice, updateBlockAttributes, createErrorNotice, getBlock]);
   const title = typeof media.title === 'string' ? media.title : media.title?.rendered || (0,external_wp_i18n_namespaceObject.__)('no title');
   let truncatedTitle;
   if (title.length > MAXIMUM_TITLE_LENGTH) {
