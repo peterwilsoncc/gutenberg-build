@@ -34668,6 +34668,9 @@ const getNodeText = node => {
   return '';
 };
 const EMPTY_FILTERED_OPTIONS = [];
+
+// Used for generating the instance ID
+const AUTOCOMPLETE_HOOK_REFERENCE = {};
 function useAutocomplete({
   record,
   onChange,
@@ -34675,7 +34678,7 @@ function useAutocomplete({
   completers,
   contentRef
 }) {
-  const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(useAutocomplete);
+  const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(AUTOCOMPLETE_HOOK_REFERENCE);
   const [selectedIndex, setSelectedIndex] = (0,external_wp_element_namespaceObject.useState)(0);
   const [filteredOptions, setFilteredOptions] = (0,external_wp_element_namespaceObject.useState)(EMPTY_FILTERED_OPTIONS);
   const [filterValue, setFilterValue] = (0,external_wp_element_namespaceObject.useState)('');

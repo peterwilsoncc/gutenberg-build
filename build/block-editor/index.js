@@ -33987,12 +33987,15 @@ function useDuotoneStyles({
     // change in Safari.
   }, [isValidFilter, blockElement, colors]);
 }
+
+// Used for generating the instance ID
+const DUOTONE_BLOCK_PROPS_REFERENCE = {};
 function duotone_useBlockProps({
   clientId,
   name,
   style
 }) {
-  const id = (0,external_wp_compose_namespaceObject.useInstanceId)(duotone_useBlockProps);
+  const id = (0,external_wp_compose_namespaceObject.useInstanceId)(DUOTONE_BLOCK_PROPS_REFERENCE);
   const selector = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const blockType = (0,external_wp_blocks_namespaceObject.getBlockType)(name);
     if (blockType) {
@@ -34433,6 +34436,9 @@ function PositionPanelPure({
     return (0,external_wp_blocks_namespaceObject.hasBlockSupport)(name, POSITION_SUPPORT_KEY);
   }
 });
+
+// Used for generating the instance ID
+const POSITION_BLOCK_PROPS_REFERENCE = {};
 function position_useBlockProps({
   name,
   style
@@ -34442,7 +34448,7 @@ function position_useBlockProps({
     name
   });
   const allowPositionStyles = hasPositionBlockSupport && !isPositionDisabled;
-  const id = (0,external_wp_compose_namespaceObject.useInstanceId)(position_useBlockProps);
+  const id = (0,external_wp_compose_namespaceObject.useInstanceId)(POSITION_BLOCK_PROPS_REFERENCE);
 
   // Higher specificity to override defaults in editor UI.
   const positionSelector = `.wp-container-${id}.wp-container-${id}`;
@@ -54410,8 +54416,11 @@ function GridItemMover({
 
 
 
+// Used for generating the instance ID
 
 
+
+const LAYOUT_CHILD_BLOCK_PROPS_REFERENCE = {};
 function useBlockPropsChildLayoutStyles({
   style
 }) {
@@ -54433,7 +54442,7 @@ function useBlockPropsChildLayoutStyles({
     columnCount,
     minimumColumnWidth
   } = parentLayout;
-  const id = (0,external_wp_compose_namespaceObject.useInstanceId)(useBlockPropsChildLayoutStyles);
+  const id = (0,external_wp_compose_namespaceObject.useInstanceId)(LAYOUT_CHILD_BLOCK_PROPS_REFERENCE);
   const selector = `.wp-container-content-${id}`;
 
   // Check that the grid layout attributes are of the correct type, so that we don't accidentally
