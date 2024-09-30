@@ -8605,15 +8605,15 @@ function private_selectors_getBlockBindingsSource(state, sourceName) {
  * @param {string} blockTypeName Block type name.
  * @return {boolean} Whether block type has content role attribute.
  */
-const hasContentRoleAttribute = (0,external_wp_data_namespaceObject.createSelector)((state, blockTypeName) => {
+const hasContentRoleAttribute = (state, blockTypeName) => {
   const blockType = selectors_getBlockType(state, blockTypeName);
   if (!blockType) {
     return false;
   }
-  return Object.entries(blockType.attributes).some(([, {
+  return Object.values(blockType.attributes).some(({
     role,
     __experimentalRole
-  }]) => {
+  }) => {
     if (role === 'content') {
       return true;
     }
@@ -8628,7 +8628,7 @@ const hasContentRoleAttribute = (0,external_wp_data_namespaceObject.createSelect
     }
     return false;
   });
-}, (state, blockTypeName) => [state.blockTypes[blockTypeName]?.attributes]);
+};
 
 ;// CONCATENATED MODULE: ./packages/blocks/build-module/store/selectors.js
 /**
