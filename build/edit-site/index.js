@@ -23677,29 +23677,15 @@ function FontFamilies() {
       defaultTabId: modalTabOpen
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       spacing: 4,
-      children: [themeFonts.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      children: [[...themeFonts, ...customFonts].length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(subtitle, {
           level: 3,
-          children: /* translators: Heading for a list of fonts provided by the theme. */
-          (0,external_wp_i18n_namespaceObject._x)('Theme', 'font source')
+          children: (0,external_wp_i18n_namespaceObject.__)('Fonts')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
           size: "large",
           isBordered: true,
           isSeparated: true,
           children: themeFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_family_item, {
-            font: font
-          }, font.slug))
-        })]
-      }), customFonts.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(subtitle, {
-          level: 3,
-          children: /* translators: Heading for a list of fonts installed by the user. */
-          (0,external_wp_i18n_namespaceObject._x)('Custom', 'font source')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
-          size: "large",
-          isBordered: true,
-          isSeparated: true,
-          children: customFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_family_item, {
             font: font
           }, font.slug))
         })]
@@ -23756,7 +23742,7 @@ function ScreenTypography() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header, {
       title: (0,external_wp_i18n_namespaceObject.__)('Typography'),
-      description: (0,external_wp_i18n_namespaceObject.__)('Typography styles and the application of those styles on site elements.')
+      description: (0,external_wp_i18n_namespaceObject.__)('Available fonts, typographic styles, and the application of those styles.')
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "edit-site-global-styles-screen",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
