@@ -59671,7 +59671,10 @@ function UnforwardedSearchControl({
 }, forwardedRef) {
   // @ts-expect-error The `disabled` prop is not yet supported in the SearchControl component.
   // Work with the design team (@WordPress/gutenberg-design) if you need this feature.
-  delete restProps.disabled;
+  const {
+    disabled,
+    ...filteredRestProps
+  } = restProps;
   const searchRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(SearchControl, 'components-search-control');
   const contextValue = (0,external_wp_element_namespaceObject.useMemo)(() => ({
@@ -59713,7 +59716,7 @@ function UnforwardedSearchControl({
           onClose: onClose
         })
       }),
-      ...restProps
+      ...filteredRestProps
     })
   });
 }
