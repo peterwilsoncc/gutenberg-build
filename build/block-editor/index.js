@@ -62301,26 +62301,15 @@ function ZoomOutPopover({
 
 
 
-
 function ZoomOutModeInserterButton({
-  isVisible,
   onClick
 }) {
-  const [zoomOutModeInserterButtonHovered, setZoomOutModeInserterButtonHovered] = (0,external_wp_element_namespaceObject.useState)(false);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     variant: "primary",
     icon: library_plus,
     size: "compact",
-    className: dist_clsx('block-editor-button-pattern-inserter__button', 'block-editor-block-tools__zoom-out-mode-inserter-button', {
-      'is-visible': isVisible || zoomOutModeInserterButtonHovered
-    }),
+    className: dist_clsx('block-editor-button-pattern-inserter__button', 'block-editor-block-tools__zoom-out-mode-inserter-button'),
     onClick: onClick,
-    onMouseOver: () => {
-      setZoomOutModeInserterButtonHovered(true);
-    },
-    onMouseOut: () => {
-      setZoomOutModeInserterButtonHovered(false);
-    },
     label: (0,external_wp_i18n_namespaceObject._x)('Add pattern', 'Generic label for pattern inserter button')
   });
 }
@@ -62350,8 +62339,7 @@ function ZoomOutModeInserters() {
     blockInsertionPointVisible,
     setInserterIsOpened,
     sectionRootClientId,
-    selectedBlockClientId,
-    hoveredBlockClientId
+    selectedBlockClientId
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getSettings,
@@ -62359,7 +62347,6 @@ function ZoomOutModeInserters() {
       getBlockOrder,
       getSelectionStart,
       getSelectedBlockClientId,
-      getHoveredBlockClientId,
       getSectionRootClientId,
       isBlockInsertionPointVisible
     } = unlock(select(store));
@@ -62371,8 +62358,7 @@ function ZoomOutModeInserters() {
       blockInsertionPointVisible: isBlockInsertionPointVisible(),
       sectionRootClientId: root,
       setInserterIsOpened: getSettings().__experimentalSetIsInserterOpened,
-      selectedBlockClientId: getSelectedBlockClientId(),
-      hoveredBlockClientId: getHoveredBlockClientId()
+      selectedBlockClientId: getSelectedBlockClientId()
     };
   }, []);
 
@@ -62390,20 +62376,18 @@ function ZoomOutModeInserters() {
       clearTimeout(timeout);
     };
   }, []);
-  if (!isReady) {
+  if (!isReady || !hasSelection) {
     return null;
   }
   return [undefined, ...blockOrder].map((clientId, index) => {
     const shouldRenderInsertionPoint = blockInsertionPointVisible && insertionPoint?.index === index;
     const previousClientId = clientId;
     const nextClientId = blockOrder[index];
-    const isSelected = hasSelection && (selectedBlockClientId === previousClientId || selectedBlockClientId === nextClientId);
-    const isHovered = hoveredBlockClientId === previousClientId || hoveredBlockClientId === nextClientId;
+    const isSelected = selectedBlockClientId === previousClientId || selectedBlockClientId === nextClientId;
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inbetween, {
       previousClientId: previousClientId,
       nextClientId: nextClientId,
-      children: !shouldRenderInsertionPoint && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_mode_inserter_button, {
-        isVisible: isSelected || isHovered,
+      children: !shouldRenderInsertionPoint && isSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_mode_inserter_button, {
         onClick: () => {
           setInserterIsOpened({
             rootClientId: sectionRootClientId,
