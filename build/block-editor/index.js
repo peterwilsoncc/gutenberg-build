@@ -13179,7 +13179,7 @@ const __experimentalGetPatternsByBlockTypes = (0,external_wp_data_namespaceObjec
  * Determines the items that appear in the available pattern transforms list.
  *
  * For now we only handle blocks without InnerBlocks and take into account
- * the `__experimentalRole` property of blocks' attributes for the transformation.
+ * the `role` property of blocks' attributes for the transformation.
  *
  * We return the first set of possible eligible block patterns,
  * by checking the `blockTypes` property. We still have to recurse through
@@ -13198,7 +13198,7 @@ const __experimentalGetPatternTransformItems = (0,external_wp_data_namespaceObje
   }
   /**
    * For now we only handle blocks without InnerBlocks and take into account
-   * the `__experimentalRole` property of blocks' attributes for the transformation.
+   * the `role` property of blocks' attributes for the transformation.
    * Note that the blocks have been retrieved through `getBlock`, which doesn't
    * return the inner blocks of an inner block controller, so we still need
    * to check for this case too.
@@ -13596,7 +13596,10 @@ const getBlockEditingMode = (0,external_wp_data_namespaceObject.createRegistrySe
   const templateLock = getTemplateLock(state, rootClientId);
   if (templateLock === 'contentOnly') {
     const name = getBlockName(state, clientId);
-    const isContent = select(external_wp_blocks_namespaceObject.store).__experimentalHasContentRoleAttribute(name);
+    const {
+      hasContentRoleAttribute
+    } = unlock(select(external_wp_blocks_namespaceObject.store));
+    const isContent = hasContentRoleAttribute(name);
     return isContent ? 'contentOnly' : 'disabled';
   }
   const parentMode = getBlockEditingMode(state, rootClientId);
@@ -58718,7 +58721,7 @@ const getMatchingBlockByName = (block, selectedBlockName, consumedBlocks = new S
  * @return {Object} The block's attributes to retain.
  */
 const getRetainedBlockAttributes = (name, attributes) => {
-  const contentAttributes = (0,external_wp_blocks_namespaceObject.__experimentalGetBlockAttributesNamesByRole)(name, 'content');
+  const contentAttributes = (0,external_wp_blocks_namespaceObject.getBlockAttributesNamesByRole)(name, 'content');
   if (!contentAttributes?.length) {
     return attributes;
   }
@@ -67345,6 +67348,7 @@ const BlockPatternSetup = ({
 
 
 
+
 function VariationsButtons({
   className,
   onSelectVariation,
@@ -67452,8 +67456,7 @@ function __experimentalBlockVariationTransforms({
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getActiveBlockVariation,
-      getBlockVariations,
-      __experimentalHasContentRoleAttribute
+      getBlockVariations
     } = select(external_wp_blocks_namespaceObject.store);
     const {
       getBlockName,
@@ -67461,7 +67464,10 @@ function __experimentalBlockVariationTransforms({
       getBlockEditingMode
     } = select(store);
     const name = blockClientId && getBlockName(blockClientId);
-    const isContentBlock = __experimentalHasContentRoleAttribute(name);
+    const {
+      hasContentRoleAttribute
+    } = unlock(select(external_wp_blocks_namespaceObject.store));
+    const isContentBlock = hasContentRoleAttribute(name);
     return {
       activeBlockVariation: getActiveBlockVariation(name, getBlockAttributes(blockClientId)),
       variations: name && getBlockVariations(name, 'transform'),
