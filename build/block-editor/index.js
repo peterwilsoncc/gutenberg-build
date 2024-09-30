@@ -36088,18 +36088,22 @@ function LayoutTypeSwitcher({
   type,
   onChange
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ButtonGroup, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+    __next40pxDefaultSize: true,
+    isBlock: true,
+    label: (0,external_wp_i18n_namespaceObject.__)('Layout type'),
+    __nextHasNoMarginBottom: true,
+    hideLabelFromVision: true,
+    isAdaptiveWidth: true,
+    value: type,
+    onChange: onChange,
     children: getLayoutTypes().map(({
       name,
       label
     }) => {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
-        isPressed: type === name,
-        onClick: () => onChange(name),
-        children: label
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+        value: name,
+        label: label
       }, name);
     })
   });
