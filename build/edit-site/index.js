@@ -26403,44 +26403,59 @@ function useHasEditorCanvasContainer() {
 /* harmony default export */ const editor_canvas_container = (EditorCanvasContainer);
 
 
-;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/style-book/index.js
-/**
- * External dependencies
- */
-
-
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/style-book/constants.js
 /**
  * WordPress dependencies
  */
-
-
-
-
-
-
-
-
 
 
 /**
  * Internal dependencies
  */
 
-
-
-
-const {
-  ExperimentalBlockEditorProvider,
-  useGlobalStyle: style_book_useGlobalStyle,
-  GlobalStylesContext: style_book_GlobalStylesContext,
-  useGlobalStylesOutputWithConfig
-} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
-const {
-  mergeBaseAndUserConfigs: style_book_mergeBaseAndUserConfigs
-} = unlock(external_wp_editor_namespaceObject.privateApis);
-const {
-  Tabs: style_book_Tabs
-} = unlock(external_wp_components_namespaceObject.privateApis);
+const STYLE_BOOK_THEME_SUBCATEGORIES = [{
+  slug: 'site-identity',
+  title: (0,external_wp_i18n_namespaceObject.__)('Site Identity'),
+  blocks: ['core/site-logo', 'core/site-title', 'core/site-tagline']
+}, {
+  slug: 'design',
+  title: (0,external_wp_i18n_namespaceObject.__)('Design'),
+  blocks: ['core/navigation', 'core/avatar', 'core/post-time-to-read'],
+  exclude: ['core/home-link', 'core/navigation-link']
+}, {
+  slug: 'posts',
+  title: (0,external_wp_i18n_namespaceObject.__)('Posts'),
+  blocks: ['core/post-title', 'core/post-excerpt', 'core/post-author', 'core/post-author-name', 'core/post-author-biography', 'core/post-date', 'core/post-terms', 'core/term-description', 'core/query-title', 'core/query-no-results', 'core/query-pagination', 'core/query-numbers']
+}, {
+  slug: 'comments',
+  title: (0,external_wp_i18n_namespaceObject.__)('Comments'),
+  blocks: ['core/comments-title', 'core/comments-pagination', 'core/comments-pagination-numbers', 'core/comments', 'core/comments-author-name', 'core/comment-content', 'core/comment-date', 'core/comment-edit-link', 'core/comment-reply-link', 'core/comment-template', 'core/post-comments-count', 'core/post-comments-link']
+}];
+const STYLE_BOOK_CATEGORIES = [{
+  slug: 'text',
+  title: (0,external_wp_i18n_namespaceObject.__)('Text'),
+  blocks: ['core/post-content', 'core/home-link', 'core/navigation-link']
+}, {
+  slug: 'colors',
+  title: (0,external_wp_i18n_namespaceObject.__)('Colors'),
+  blocks: ['custom/colors']
+}, {
+  slug: 'theme',
+  title: (0,external_wp_i18n_namespaceObject.__)('Theme'),
+  subcategories: STYLE_BOOK_THEME_SUBCATEGORIES
+}, {
+  slug: 'media',
+  title: (0,external_wp_i18n_namespaceObject.__)('Media'),
+  blocks: ['core/post-featured-image']
+}, {
+  slug: 'widgets',
+  title: (0,external_wp_i18n_namespaceObject.__)('Widgets'),
+  blocks: []
+}, {
+  slug: 'embed',
+  title: (0,external_wp_i18n_namespaceObject.__)('Embeds'),
+  include: []
+}];
 
 // The content area of the Style Book is rendered within an iframe so that global styles
 // are applied to elements within the entire content area. To support elements that are
@@ -26450,23 +26465,35 @@ const {
 // applied to the `button` element, targeted via `.edit-site-style-book__example`.
 // This is to ensure that browser default styles for buttons are not applied to the previews.
 const STYLE_BOOK_IFRAME_STYLES = `
+	// Forming a "block formatting context" to prevent margin collapsing.
+	// @see https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context
+	.is-root-container {
+		display: flow-root;
+	}
+	
+	body {
+		position: relative;
+		padding: 32px !important;
+	}
+
 	.edit-site-style-book__examples {
-		max-width: 900px;
+		max-width: 1200px;
 		margin: 0 auto;
 	}
 
 	.edit-site-style-book__example {
+	    max-width: 900px;
 		border-radius: 2px;
 		cursor: pointer;
 		display: flex;
 		flex-direction: column;
 		gap: 40px;
-		margin-bottom: 40px;
 		padding: 16px;
 		width: 100%;
 		box-sizing: border-box;
 		scroll-margin-top: 32px;
 		scroll-margin-bottom: 32px;
+		margin: 0 auto 40px auto;
 	}
 
 	.edit-site-style-book__example.is-selected {
@@ -26481,7 +26508,8 @@ const STYLE_BOOK_IFRAME_STYLES = `
 	.edit-site-style-book__examples.is-wide .edit-site-style-book__example {
 		flex-direction: row;
 	}
-
+	
+	.edit-site-style-book__subcategory-title,
 	.edit-site-style-book__example-title {
 		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 		font-size: 11px;
@@ -26490,6 +26518,13 @@ const STYLE_BOOK_IFRAME_STYLES = `
 		margin: 0;
 		text-align: left;
 		text-transform: uppercase;
+	}
+	
+	.edit-site-style-book__subcategory-title {
+		font-size: 16px;
+		margin-bottom: 40px;
+    	border-bottom: 1px solid #ddd;
+    	padding-bottom: 8px;
 	}
 
 	.edit-site-style-book__examples.is-wide .edit-site-style-book__example-title {
@@ -26513,9 +26548,88 @@ const STYLE_BOOK_IFRAME_STYLES = `
 		margin-bottom: 0;
 	}
 `;
-function isObjectEmpty(object) {
-  return !object || Object.keys(object).length === 0;
+
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/style-book/categories.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+/**
+ * Returns category examples for a given category definition and list of examples.
+ * @param {StyleBookCategory} categoryDefinition The category definition.
+ * @param {BlockExample[]}    examples           An array of block examples.
+ * @return {CategoryExamples|undefined} An object containing the category examples.
+ */
+function getExamplesByCategory(categoryDefinition, examples) {
+  if (!categoryDefinition?.slug || !examples?.length) {
+    return;
+  }
+  if (categoryDefinition?.subcategories?.length) {
+    return categoryDefinition.subcategories.reduce((acc, subcategoryDefinition) => {
+      const subcategoryExamples = getExamplesByCategory(subcategoryDefinition, examples);
+      if (subcategoryExamples) {
+        acc.subcategories = [...acc.subcategories, subcategoryExamples];
+      }
+      return acc;
+    }, {
+      title: categoryDefinition.title,
+      slug: categoryDefinition.slug,
+      subcategories: []
+    });
+  }
+  const blocksToInclude = categoryDefinition?.blocks || [];
+  const blocksToExclude = categoryDefinition?.exclude || [];
+  const categoryExamples = examples.filter(example => {
+    return !blocksToExclude.includes(example.name) && (example.category === categoryDefinition.slug || blocksToInclude.includes(example.name));
+  });
+  if (!categoryExamples.length) {
+    return;
+  }
+  return {
+    title: categoryDefinition.title,
+    slug: categoryDefinition.slug,
+    examples: categoryExamples
+  };
 }
+
+/**
+ * Returns category examples for a given category definition and list of examples.
+ *
+ * @return {StyleBookCategory[]} An array of top-level category definitions.
+ */
+function getTopLevelStyleBookCategories() {
+  const reservedCategories = [...STYLE_BOOK_THEME_SUBCATEGORIES, ...STYLE_BOOK_CATEGORIES].map(({
+    slug
+  }) => slug);
+  const extraCategories = (0,external_wp_blocks_namespaceObject.getCategories)().filter(({
+    slug
+  }) => !reservedCategories.includes(slug));
+  return [...STYLE_BOOK_CATEGORIES, ...extraCategories];
+}
+
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/style-book/examples.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+/**
+ * Returns a list of examples for registered block types.
+ *
+ * @return {BlockExample[]} An array of block examples.
+ */
 function getExamples() {
   const nonHeadingBlockExamples = (0,external_wp_blocks_namespaceObject.getBlockTypes)().filter(blockType => {
     const {
@@ -26552,6 +26666,50 @@ function getExamples() {
   };
   return [headingsExample, ...nonHeadingBlockExamples];
 }
+
+;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/style-book/index.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+const {
+  ExperimentalBlockEditorProvider,
+  useGlobalStyle: style_book_useGlobalStyle,
+  GlobalStylesContext: style_book_GlobalStylesContext,
+  useGlobalStylesOutputWithConfig
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
+const {
+  mergeBaseAndUserConfigs: style_book_mergeBaseAndUserConfigs
+} = unlock(external_wp_editor_namespaceObject.privateApis);
+const {
+  Tabs: style_book_Tabs
+} = unlock(external_wp_components_namespaceObject.privateApis);
+function isObjectEmpty(object) {
+  return !object || Object.keys(object).length === 0;
+}
 function StyleBook({
   enableResizing = true,
   isSelected,
@@ -26566,11 +26724,7 @@ function StyleBook({
   const [textColor] = style_book_useGlobalStyle('color.text');
   const [backgroundColor] = style_book_useGlobalStyle('color.background');
   const [examples] = (0,external_wp_element_namespaceObject.useState)(getExamples);
-  const tabs = (0,external_wp_element_namespaceObject.useMemo)(() => (0,external_wp_blocks_namespaceObject.getCategories)().filter(category => examples.some(example => example.category === category.slug)).map(category => ({
-    name: category.slug,
-    title: category.title,
-    icon: category.icon
-  })), [examples]);
+  const tabs = (0,external_wp_element_namespaceObject.useMemo)(() => getTopLevelStyleBookCategories().filter(category => examples.some(example => example.category === category.slug)), [examples]);
   const {
     base: baseConfig
   } = (0,external_wp_element_namespaceObject.useContext)(style_book_GlobalStylesContext);
@@ -26608,14 +26762,14 @@ function StyleBook({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(style_book_Tabs, {
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.TabList, {
             children: tabs.map(tab => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.Tab, {
-              tabId: tab.name,
+              tabId: tab.slug,
               children: tab.title
-            }, tab.name))
+            }, tab.slug))
           }), tabs.map(tab => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.TabPanel, {
-            tabId: tab.name,
+            tabId: tab.slug,
             focusable: false,
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleBookBody, {
-              category: tab.name,
+              category: tab.slug,
               examples: examples,
               isSelected: isSelected,
               onSelect: onSelect,
@@ -26623,7 +26777,7 @@ function StyleBook({
               sizes: sizes,
               title: tab.title
             })
-          }, tab.name))]
+          }, tab.slug))]
         })
       }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleBookBody, {
         examples: examples,
@@ -26677,7 +26831,6 @@ const StyleBookBody = ({
     },
     readonly: true
   };
-  const buttonModeStyles = onClick ? 'body { cursor: pointer; } body * { pointer-events: none; }' : '';
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.__unstableIframe, {
     className: dist_clsx('edit-site-style-book__iframe', {
       'is-focused': isFocused && !!onClick,
@@ -26688,12 +26841,8 @@ const StyleBookBody = ({
     ...(onClick ? buttonModeProps : {}),
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__unstableEditorStyles, {
       styles: settings.styles
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("style", {
-      children:
-      // Forming a "block formatting context" to prevent margin collapsing.
-      // @see https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context
-      `.is-root-container { display: flow-root; }
-						body { position: relative; padding: 32px !important; }` + STYLE_BOOK_IFRAME_STYLES + buttonModeStyles
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("style", {
+      children: [STYLE_BOOK_IFRAME_STYLES, !!onClick && 'body { cursor: pointer; } body * { pointer-events: none; }']
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Examples, {
       className: dist_clsx('edit-site-style-book__examples', {
         'is-wide': sizes.width > 600
@@ -26716,12 +26865,16 @@ const Examples = (0,external_wp_element_namespaceObject.memo)(({
   isSelected,
   onSelect
 }) => {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
+  const categoryDefinition = category ? getTopLevelStyleBookCategories().find(_category => _category.slug === category) : null;
+  const filteredExamples = categoryDefinition ? getExamplesByCategory(categoryDefinition, examples) : {
+    examples
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite, {
     orientation: "vertical",
     className: className,
     "aria-label": label,
     role: "grid",
-    children: examples.filter(example => category ? example.category === category : true).map(example => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Example, {
+    children: [!!filteredExamples?.examples?.length && filteredExamples.examples.map(example => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Example, {
       id: `example-${example.name}`,
       title: example.title,
       blocks: example.blocks,
@@ -26729,9 +26882,36 @@ const Examples = (0,external_wp_element_namespaceObject.memo)(({
       onClick: () => {
         onSelect?.(example.name);
       }
-    }, example.name))
+    }, example.name)), !!filteredExamples?.subcategories?.length && filteredExamples.subcategories.map(subcategory => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite.Group, {
+      className: "edit-site-style-book__subcategory",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.GroupLabel, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
+          className: "edit-site-style-book__subcategory-title",
+          children: subcategory.title
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Subcategory, {
+        examples: subcategory.examples,
+        isSelected: isSelected,
+        onSelect: onSelect
+      })]
+    }, `subcategory-${subcategory.slug}`))]
   });
 });
+const Subcategory = ({
+  examples,
+  isSelected,
+  onSelect
+}) => {
+  return !!examples?.length && examples.map(example => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Example, {
+    id: `example-${example.name}`,
+    title: example.title,
+    blocks: example.blocks,
+    isSelected: isSelected(example.name),
+    onClick: () => {
+      onSelect?.(example.name);
+    }
+  }, example.name));
+};
 const Example = ({
   id,
   title,
