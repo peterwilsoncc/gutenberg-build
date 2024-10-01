@@ -12570,6 +12570,52 @@ function getTemplateLock(state, rootClientId) {
 }
 
 /**
+ * Determines if the given block type is visible in the inserter.
+ * Note that this is different than whether a block is allowed to be inserted.
+ * In some cases, the block is not allowed in a given position but
+ * it should still be visible in the inserter to be able to add it
+ * to a different position.
+ *
+ * @param {Object}        state           Editor state.
+ * @param {string|Object} blockNameOrType The block type object, e.g., the response
+ *                                        from the block directory; or a string name of
+ *                                        an installed block type, e.g.' core/paragraph'.
+ *
+ * @return {boolean} Whether the given block type is allowed to be inserted.
+ */
+const isBlockVisibleInTheInserter = (state, blockNameOrType) => {
+  let blockType;
+  let blockName;
+  if (blockNameOrType && 'object' === typeof blockNameOrType) {
+    blockType = blockNameOrType;
+    blockName = blockNameOrType.name;
+  } else {
+    blockType = (0,external_wp_blocks_namespaceObject.getBlockType)(blockNameOrType);
+    blockName = blockNameOrType;
+  }
+  if (!blockType) {
+    return false;
+  }
+  const {
+    allowedBlockTypes
+  } = getSettings(state);
+  const isBlockAllowedInEditor = checkAllowList(allowedBlockTypes, blockName, true);
+  if (!isBlockAllowedInEditor) {
+    return false;
+  }
+
+  // If parent blocks are not visible, child blocks should be hidden too.
+  if (!!blockType.parent?.length) {
+    return blockType.parent.some(name => isBlockVisibleInTheInserter(state, name) ||
+    // Exception for blocks with post-content parent,
+    // the root level is often consider as "core/post-content".
+    // This exception should only apply to the post editor ideally though.
+    name === 'core/post-content');
+  }
+  return true;
+};
+
+/**
  * Determines if the given block type is allowed to be inserted into the block list.
  * This function is not exported and not memoized because using a memoized selector
  * inside another memoized selector is just a waste of time.
@@ -12583,22 +12629,15 @@ function getTemplateLock(state, rootClientId) {
  * @return {boolean} Whether the given block type is allowed to be inserted.
  */
 const canInsertBlockTypeUnmemoized = (state, blockName, rootClientId = null) => {
+  if (!isBlockVisibleInTheInserter(state, blockName)) {
+    return false;
+  }
   let blockType;
   if (blockName && 'object' === typeof blockName) {
     blockType = blockName;
     blockName = blockType.name;
   } else {
     blockType = (0,external_wp_blocks_namespaceObject.getBlockType)(blockName);
-  }
-  if (!blockType) {
-    return false;
-  }
-  const {
-    allowedBlockTypes
-  } = getSettings(state);
-  const isBlockAllowedInEditor = checkAllowList(allowedBlockTypes, blockName, true);
-  if (!isBlockAllowedInEditor) {
-    return false;
   }
   const isLocked = !!getTemplateLock(state, rootClientId);
   if (isLocked) {
@@ -12940,6 +12979,7 @@ const buildBlockTypeItem = (state, {
     description: blockType.description,
     category: blockType.category,
     keywords: blockType.keywords,
+    parent: blockType.parent,
     variations: inserterVariations,
     example: blockType.example,
     utility: 1 // Deprecated.
@@ -13013,7 +13053,7 @@ const getInserterItems = (0,external_wp_data_namespaceObject.createRegistrySelec
   if (options[isFiltered] !== false) {
     blockTypeInserterItems = blockTypeInserterItems.filter(blockType => canIncludeBlockTypeInInserter(state, blockType, rootClientId));
   } else {
-    blockTypeInserterItems = blockTypeInserterItems.map(blockType => ({
+    blockTypeInserterItems = blockTypeInserterItems.filter(blockType => isBlockVisibleInTheInserter(state, blockType)).map(blockType => ({
       ...blockType,
       isAllowedInCurrentRoot: canIncludeBlockTypeInInserter(state, blockType, rootClientId)
     }));
@@ -13197,7 +13237,7 @@ const getAllowedPatternsDependants = select => (state, rootClientId) => [...getA
  * @return {Array?} The list of allowed patterns.
  */
 const __experimentalGetAllowedPatterns = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => {
-  return (0,external_wp_data_namespaceObject.createSelector)((state, rootClientId = null) => {
+  return (0,external_wp_data_namespaceObject.createSelector)((state, rootClientId = null, options = DEFAULT_INSERTER_OPTIONS) => {
     const {
       getAllPatterns
     } = unlock(select(STORE_NAME));
@@ -13218,7 +13258,7 @@ const __experimentalGetAllowedPatterns = (0,external_wp_data_namespaceObject.cre
     const availableParsedPatterns = parsedPatterns.filter(pattern => checkAllowListRecursive(getGrammar(pattern), allowedBlockTypes));
     const patternsAllowed = availableParsedPatterns.filter(pattern => getGrammar(pattern).every(({
       blockName: name
-    }) => canInsertBlockType(state, name, rootClientId)));
+    }) => options[isFiltered] !== false ? canInsertBlockType(state, name, rootClientId) : isBlockVisibleInTheInserter(state, name)));
     return patternsAllowed;
   }, getAllowedPatternsDependants(select));
 });
@@ -50910,13 +50950,15 @@ function useInsertionPoint({
  * @return {Array} Returns the patterns state. (patterns, categories, onSelect handler)
  */
 const usePatternsState = (onInsert, rootClientId, selectedCategory, isQuick) => {
+  const options = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    [isFiltered]: !!isQuick
+  }), [isQuick]);
   const {
     patternCategories,
-    allPatterns,
+    patterns,
     userPatternCategories
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getAllPatterns,
       getSettings,
       __experimentalGetAllowedPatterns
     } = unlock(select(store));
@@ -50925,24 +50967,14 @@ const usePatternsState = (onInsert, rootClientId, selectedCategory, isQuick) => 
       __experimentalBlockPatternCategories
     } = getSettings();
     return {
-      allPatterns: isQuick ? __experimentalGetAllowedPatterns() : getAllPatterns(),
+      patterns: __experimentalGetAllowedPatterns(rootClientId, options),
       userPatternCategories: __experimentalUserPatternCategories,
       patternCategories: __experimentalBlockPatternCategories
     };
-  }, [isQuick]);
+  }, [rootClientId, options]);
   const {
     getClosestAllowedInsertionPointForPattern
   } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
-  const patterns = (0,external_wp_element_namespaceObject.useMemo)(() => isQuick ? allPatterns : allPatterns.filter(({
-    inserter = true
-  }) => !!inserter).map(pattern => {
-    return {
-      ...pattern,
-      get blocks() {
-        return getParsedPattern(pattern).blocks;
-      }
-    };
-  }), [isQuick, allPatterns]);
   const allCategories = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const categories = [...patternCategories];
     userPatternCategories?.forEach(userCategory => {
