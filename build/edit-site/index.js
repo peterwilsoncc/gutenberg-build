@@ -15379,13 +15379,13 @@ function GenericNavigationButton({
   });
 }
 function NavigationButtonAsItem(props) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorButton, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Navigator.Button, {
     as: GenericNavigationButton,
     ...props
   });
 }
 function NavigationBackButtonAsItem(props) {
-  return /*#__PURE__*/_jsx(NavigatorBackButton, {
+  return /*#__PURE__*/_jsx(Navigator.BackButton, {
     as: GenericNavigationButton,
     ...props
   });
@@ -16335,7 +16335,7 @@ function ScreenHeader({
         paddingY: 3,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
           spacing: 2,
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorBackButton, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Navigator.BackButton, {
             icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right : chevron_left,
             size: "small",
             label: (0,external_wp_i18n_namespaceObject.__)('Back'),
@@ -18360,7 +18360,7 @@ function FontCard({
   const style = {
     cursor: !!onClick ? 'pointer' : 'default'
   };
-  const navigator = (0,external_wp_components_namespaceObject.__experimentalUseNavigator)();
+  const navigator = (0,external_wp_components_namespaceObject.useNavigator)();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     __next40pxDefaultSize: true,
     onClick: () => {
@@ -18641,9 +18641,9 @@ function InstalledFonts() {
       className: "font-library-modal__loading",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ProgressBar, {})
     }), !isResolvingLibrary && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalNavigatorProvider, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Navigator, {
         initialPath: libraryFontSelected ? '/fontFamily' : '/',
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorScreen, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Navigator.Screen, {
           path: "/",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
             spacing: "8",
@@ -18698,7 +18698,7 @@ function InstalledFonts() {
               })]
             })]
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalNavigatorScreen, {
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Navigator.Screen, {
           path: "/fontFamily",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ConfirmDeleteDialog, {
             font: libraryFontSelected,
@@ -18709,7 +18709,7 @@ function InstalledFonts() {
             handleSetLibraryFontSelected: handleSetLibraryFontSelected
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
             justify: "flex-start",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorBackButton, {
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Navigator.BackButton, {
               icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right : chevron_left,
               size: "small",
               onClick: () => {
@@ -18792,7 +18792,7 @@ function ConfirmDeleteDialog({
   uninstallFontFamily,
   handleSetLibraryFontSelected
 }) {
-  const navigator = (0,external_wp_components_namespaceObject.__experimentalUseNavigator)();
+  const navigator = (0,external_wp_components_namespaceObject.useNavigator)();
   const handleConfirmUninstall = async () => {
     setNotice(null);
     setIsOpen(false);
@@ -19192,10 +19192,10 @@ function FontCollection({
       className: "font-library-modal__loading",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ProgressBar, {})
     }), !isLoading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalNavigatorProvider, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Navigator, {
         initialPath: "/",
         className: "font-library-modal__tabpanel-layout",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalNavigatorScreen, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Navigator.Screen, {
           path: "/",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
             justify: "space-between",
@@ -19255,11 +19255,11 @@ function FontCollection({
               }, font.font_family_settings.slug))
             })
           })]
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalNavigatorScreen, {
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Navigator.Screen, {
           path: "/fontFamily",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
             justify: "flex-start",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorBackButton, {
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Navigator.BackButton, {
               icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right : chevron_left,
               size: "small",
               onClick: () => {
@@ -24224,7 +24224,7 @@ function FontSize() {
     },
     goBack,
     goTo
-  } = (0,external_wp_components_namespaceObject.__experimentalUseNavigator)();
+  } = (0,external_wp_components_namespaceObject.useNavigator)();
   const [fontSizes, setFontSizes] = font_size_useGlobalSetting('typography.fontSizes');
   const [globalFluid] = font_size_useGlobalSetting('typography.fluid');
 
@@ -25576,7 +25576,7 @@ function ShadowsEditPanel() {
       slug
     },
     goTo
-  } = (0,external_wp_components_namespaceObject.__experimentalUseNavigator)();
+  } = (0,external_wp_components_namespaceObject.useNavigator)();
   const [shadows, setShadows] = shadows_edit_panel_useGlobalSetting(`shadow.presets.${category}`);
   const [baseShadows] = shadows_edit_panel_useGlobalSetting(`shadow.presets.${category}`, undefined, 'base');
   const [selectedShadow, setSelectedShadow] = (0,external_wp_element_namespaceObject.useState)(() => (shadows || []).find(shadow => shadow.slug === slug));
@@ -27574,7 +27574,7 @@ const PAGE_SIZE = 10;
 function ScreenRevisions() {
   const {
     goTo
-  } = (0,external_wp_components_namespaceObject.__experimentalUseNavigator)();
+  } = (0,external_wp_components_namespaceObject.useNavigator)();
   const {
     user: currentEditorGlobalStyles,
     setUserConfig
@@ -27763,7 +27763,7 @@ function GlobalStylesActionMenu() {
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const {
     goTo
-  } = (0,external_wp_components_namespaceObject.__experimentalUseNavigator)();
+  } = (0,external_wp_components_namespaceObject.useNavigator)();
   const loadCustomCSS = () => {
     setEditorCanvasContainerView('global-styles-css');
     goTo('/css');
@@ -27807,7 +27807,7 @@ function GlobalStylesNavigationScreen({
   className,
   ...props
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorScreen, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Navigator.Screen, {
     className: ['edit-site-global-styles-sidebar__navigator-screen', className].filter(Boolean).join(' '),
     ...props
   });
@@ -27849,7 +27849,7 @@ function ContextScreens({
   });
 }
 function GlobalStylesStyleBook() {
-  const navigator = (0,external_wp_components_namespaceObject.__experimentalUseNavigator)();
+  const navigator = (0,external_wp_components_namespaceObject.useNavigator)();
   const {
     path
   } = navigator.location;
@@ -27866,7 +27866,7 @@ function GlobalStylesStyleBook() {
   });
 }
 function GlobalStylesBlockLink() {
-  const navigator = (0,external_wp_components_namespaceObject.__experimentalUseNavigator)();
+  const navigator = (0,external_wp_components_namespaceObject.useNavigator)();
   const {
     selectedBlockName,
     selectedBlockClientId
@@ -27905,7 +27905,7 @@ function GlobalStylesEditorCanvasContainerLink() {
   const {
     goTo,
     location
-  } = (0,external_wp_components_namespaceObject.__experimentalUseNavigator)();
+  } = (0,external_wp_components_namespaceObject.useNavigator)();
   const editorCanvasContainerView = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).getEditorCanvasContainerView(), []);
   const path = location?.path;
   const isRevisionsOpen = path === '/revisions';
@@ -27940,7 +27940,7 @@ function GlobalStylesEditorCanvasContainerLink() {
 function GlobalStylesUI() {
   const blocks = (0,external_wp_blocks_namespaceObject.getBlockTypes)();
   const editorCanvasContainerView = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).getEditorCanvasContainerView(), []);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalNavigatorProvider, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Navigator, {
     className: "edit-site-global-styles-sidebar__navigator-provider",
     initialPath: "/",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesNavigationScreen, {
@@ -28150,7 +28150,7 @@ function GlobalStylesSidebar() {
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_editor_namespaceObject.store);
   const {
     goTo
-  } = (0,external_wp_components_namespaceObject.__experimentalUseNavigator)();
+  } = (0,external_wp_components_namespaceObject.useNavigator)();
   const toggleRevisions = () => {
     setIsListViewOpened(false);
     if (isRevisionsStyleBookOpened) {

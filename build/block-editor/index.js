@@ -51542,7 +51542,7 @@ function ScreenHeader({
         paddingY: 3,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
           spacing: 2,
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorBackButton, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Navigator.BackButton, {
             style:
             // TODO: This style override is also used in ToolsPanelHeader.
             // It should be supported out-of-the-box by Button.
@@ -51568,13 +51568,13 @@ function MobileTabNavigation({
   categories,
   children
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalNavigatorProvider, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Navigator, {
     initialPath: "/",
     className: "block-editor-inserter__mobile-tab-navigation",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorScreen, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Navigator.Screen, {
       path: "/",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
-        children: categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNavigatorButton, {
+        children: categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Navigator.Button, {
           path: `/category/${category.name}`,
           as: external_wp_components_namespaceObject.__experimentalItem,
           isAction: true,
@@ -51587,7 +51587,7 @@ function MobileTabNavigation({
           })
         }, category.name))
       })
-    }), categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalNavigatorScreen, {
+    }), categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Navigator.Screen, {
       path: `/category/${category.name}`,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ScreenHeader, {
         title: (0,external_wp_i18n_namespaceObject.__)('Back')
