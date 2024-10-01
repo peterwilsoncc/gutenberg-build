@@ -30023,7 +30023,7 @@ const CONTENT = 'content';
 /* harmony default export */ const pattern_overrides = ({
   name: 'core/pattern-overrides',
   getValues({
-    registry,
+    select,
     clientId,
     context,
     bindings
@@ -30031,7 +30031,7 @@ const CONTENT = 'content';
     const patternOverridesContent = context['pattern/overrides'];
     const {
       getBlockAttributes
-    } = registry.select(external_wp_blockEditor_namespaceObject.store);
+    } = select(external_wp_blockEditor_namespaceObject.store);
     const currentBlockAttributes = getBlockAttributes(clientId);
     const overridesValues = {};
     for (const attributeName of Object.keys(bindings)) {
@@ -30049,7 +30049,8 @@ const CONTENT = 'content';
     return overridesValues;
   },
   setValues({
-    registry,
+    select,
+    dispatch,
     clientId,
     bindings
   }) {
@@ -30057,7 +30058,7 @@ const CONTENT = 'content';
       getBlockAttributes,
       getBlockParentsByBlockName,
       getBlocks
-    } = registry.select(external_wp_blockEditor_namespaceObject.store);
+    } = select(external_wp_blockEditor_namespaceObject.store);
     const currentBlockAttributes = getBlockAttributes(clientId);
     const blockName = currentBlockAttributes?.metadata?.name;
     if (!blockName) {
@@ -30078,7 +30079,7 @@ const CONTENT = 'content';
       const syncBlocksWithSameName = blocks => {
         for (const block of blocks) {
           if (block.attributes?.metadata?.name === blockName) {
-            registry.dispatch(external_wp_blockEditor_namespaceObject.store).updateBlockAttributes(block.clientId, attributes);
+            dispatch(external_wp_blockEditor_namespaceObject.store).updateBlockAttributes(block.clientId, attributes);
           }
           syncBlocksWithSameName(block.innerBlocks);
         }
@@ -30087,7 +30088,7 @@ const CONTENT = 'content';
       return;
     }
     const currentBindingValue = getBlockAttributes(patternClientId)?.[CONTENT];
-    registry.dispatch(external_wp_blockEditor_namespaceObject.store).updateBlockAttributes(patternClientId, {
+    dispatch(external_wp_blockEditor_namespaceObject.store).updateBlockAttributes(patternClientId, {
       [CONTENT]: {
         ...currentBindingValue,
         [blockName]: {
@@ -30125,8 +30126,8 @@ const CONTENT = 'content';
  * If the value is not available based on context, like in templates,
  * it falls back to the default value, label, or key.
  *
- * @param {Object} registry The registry context exposed through `useRegistry`.
- * @param {Object} context  The context provided.
+ * @param {Object} select  The select function from the data store.
+ * @param {Object} context The context provided.
  * @return {Object} List of post meta fields with their value and label.
  *
  * @example
@@ -30144,13 +30145,13 @@ const CONTENT = 'content';
  * }
  * ```
  */
-function getPostMetaFields(registry, context) {
+function getPostMetaFields(select, context) {
   const {
     getEditedEntityRecord
-  } = registry.select(external_wp_coreData_namespaceObject.store);
+  } = select(external_wp_coreData_namespaceObject.store);
   const {
     getRegisteredPostMeta
-  } = unlock(registry.select(external_wp_coreData_namespaceObject.store));
+  } = unlock(select(external_wp_coreData_namespaceObject.store));
   let entityMetaValues;
   // Try to get the current entity meta values.
   if (context?.postType && context?.postId) {
@@ -30179,11 +30180,11 @@ function getPostMetaFields(registry, context) {
 /* harmony default export */ const post_meta = ({
   name: 'core/post-meta',
   getValues({
-    registry,
+    select,
     context,
     bindings
   }) {
-    const metaFields = getPostMetaFields(registry, context);
+    const metaFields = getPostMetaFields(select, context);
     const newValues = {};
     for (const [attributeName, source] of Object.entries(bindings)) {
       var _ref;
@@ -30198,7 +30199,7 @@ function getPostMetaFields(registry, context) {
     return newValues;
   },
   setValues({
-    registry,
+    dispatch,
     context,
     bindings
   }) {
@@ -30209,12 +30210,12 @@ function getPostMetaFields(registry, context) {
     }) => {
       newMeta[args.key] = newValue;
     });
-    registry.dispatch(external_wp_coreData_namespaceObject.store).editEntityRecord('postType', context?.postType, context?.postId, {
+    dispatch(external_wp_coreData_namespaceObject.store).editEntityRecord('postType', context?.postType, context?.postId, {
       meta: newMeta
     });
   },
   canUserEditValue({
-    registry,
+    select,
     context,
     args
   }) {
@@ -30222,25 +30223,25 @@ function getPostMetaFields(registry, context) {
     if (context?.query || context?.queryId) {
       return false;
     }
-    const postType = context?.postType || registry.select(store_store).getCurrentPostType();
+    const postType = context?.postType || select(store_store).getCurrentPostType();
 
     // Check that editing is happening in the post editor and not a template.
     if (postType === 'wp_template') {
       return false;
     }
-    const fieldValue = getPostMetaFields(registry, context)?.[args.key]?.value;
+    const fieldValue = getPostMetaFields(select, context)?.[args.key]?.value;
     // Empty string or `false` could be a valid value, so we need to check if the field value is undefined.
     if (fieldValue === undefined) {
       return false;
     }
     // Check that custom fields metabox is not enabled.
-    const areCustomFieldsEnabled = registry.select(store_store).getEditorSettings().enableCustomFields;
+    const areCustomFieldsEnabled = select(store_store).getEditorSettings().enableCustomFields;
     if (areCustomFieldsEnabled) {
       return false;
     }
 
     // Check that the user has the capability to edit post meta.
-    const canUserEdit = registry.select(external_wp_coreData_namespaceObject.store).canUser('update', {
+    const canUserEdit = select(external_wp_coreData_namespaceObject.store).canUser('update', {
       kind: 'postType',
       name: context?.postType,
       id: context?.postId
@@ -30251,10 +30252,10 @@ function getPostMetaFields(registry, context) {
     return true;
   },
   getFieldsList({
-    registry,
+    select,
     context
   }) {
-    return getPostMetaFields(registry, context);
+    return getPostMetaFields(select, context);
   }
 });
 
