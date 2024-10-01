@@ -14196,13 +14196,16 @@ function useLink(params, state, shouldReplace = false) {
   }
   const currentArgs = (0,external_wp_url_namespaceObject.getQueryArgs)(window.location.href);
   const currentUrlWithoutArgs = (0,external_wp_url_namespaceObject.removeQueryArgs)(window.location.href, ...Object.keys(currentArgs));
+  let extraParams = {};
   if (isPreviewingTheme()) {
-    params = {
-      ...params,
+    extraParams = {
       wp_theme_preview: currentlyPreviewingTheme()
     };
   }
-  const newUrl = (0,external_wp_url_namespaceObject.addQueryArgs)(currentUrlWithoutArgs, params);
+  const newUrl = (0,external_wp_url_namespaceObject.addQueryArgs)(currentUrlWithoutArgs, {
+    ...params,
+    ...extraParams
+  });
   return {
     href: newUrl,
     onClick
