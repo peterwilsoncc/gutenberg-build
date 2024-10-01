@@ -7518,6 +7518,8 @@ const unregisterBlockVariation = (blockName, variationName) => {
  * behavior. Once registered, the source is available to be connected
  * to the supported block attributes.
  *
+ * @since 6.7.0 Introduced in WordPress core.
+ *
  * @param {Object}   source                    Properties of the source to be registered.
  * @param {string}   source.name               The unique and machine-readable name.
  * @param {string}   [source.label]            Human-readable label. Optional when it is defined in the server.
@@ -7634,6 +7636,8 @@ const registerBlockBindingsSource = source => {
 /**
  * Unregisters a block bindings source by providing its name.
  *
+ * @since 6.7.0 Introduced in WordPress core.
+ *
  * @param {string} name The name of the block bindings source to unregister.
  *
  * @example
@@ -7655,6 +7659,8 @@ function unregisterBlockBindingsSource(name) {
 /**
  * Returns a registered block bindings source by its name.
  *
+ * @since 6.7.0 Introduced in WordPress core.
+ *
  * @param {string} name Block bindings source name.
  *
  * @return {?Object} Block bindings source.
@@ -7665,6 +7671,8 @@ function getBlockBindingsSource(name) {
 
 /**
  * Returns all registered block bindings sources.
+ *
+ * @since 6.7.0 Introduced in WordPress core.
  *
  * @return {Array} Block bindings sources.
  */
