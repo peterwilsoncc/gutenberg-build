@@ -62517,15 +62517,17 @@ function block_tools_selector(select) {
     getFirstMultiSelectedBlockClientId,
     getSettings,
     __unstableGetEditorMode,
-    isTyping
-  } = select(store);
+    isTyping,
+    isDragging
+  } = unlock(select(store));
   const clientId = getSelectedBlockClientId() || getFirstMultiSelectedBlockClientId();
   const editorMode = __unstableGetEditorMode();
   return {
     clientId,
     hasFixedToolbar: getSettings().hasFixedToolbar,
     isTyping: isTyping(),
-    isZoomOutMode: editorMode === 'zoom-out'
+    isZoomOutMode: editorMode === 'zoom-out',
+    isDragging: isDragging()
   };
 }
 
@@ -62547,7 +62549,8 @@ function BlockTools({
     clientId,
     hasFixedToolbar,
     isTyping,
-    isZoomOutMode
+    isZoomOutMode,
+    isDragging
   } = (0,external_wp_data_namespaceObject.useSelect)(block_tools_selector, []);
   const isMatch = (0,external_wp_keyboardShortcuts_namespaceObject.__unstableUseShortcutEventMatch)();
   const {
@@ -62689,7 +62692,7 @@ function BlockTools({
         }), children, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Popover.Slot, {
           name: "__unstable-block-tools-after",
           ref: blockToolbarAfterRef
-        }), isZoomOutMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_mode_inserters, {
+        }), isZoomOutMode && !isDragging && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_mode_inserters, {
           __unstableContentRef: __unstableContentRef
         })]
       })
