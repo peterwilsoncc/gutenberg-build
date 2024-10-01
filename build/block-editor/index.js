@@ -42618,7 +42618,7 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
   // there are attribute updates.
   // `source.getValues` may also call a selector via `registry.select`.
   const updatedContext = {};
-  const boundAttributes = (0,external_wp_data_namespaceObject.useSelect)(() => {
+  const boundAttributes = (0,external_wp_data_namespaceObject.useSelect)(select => {
     if (!blockBindings) {
       return;
     }
@@ -42656,7 +42656,7 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
           });
         } else {
           values = source.getValues({
-            registry,
+            select,
             context: updatedContext,
             clientId,
             bindings
@@ -42673,7 +42673,7 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
       }
     }
     return attributes;
-  }, [blockBindings, name, clientId, updatedContext, registry, sources]);
+  }, [blockBindings, name, clientId, updatedContext, sources]);
   const hasParentPattern = !!updatedContext['pattern/overrides'];
   const hasPatternOverridesDefaultBinding = props.attributes.metadata?.bindings?.[DEFAULT_ATTRIBUTE]?.source === 'core/pattern-overrides';
   const _setAttributes = (0,external_wp_element_namespaceObject.useCallback)(nextAttributes => {
@@ -42709,7 +42709,8 @@ const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHig
       if (blockBindingsBySource.size) {
         for (const [source, bindings] of blockBindingsBySource) {
           source.setValues({
-            registry,
+            select: registry.select,
+            dispatch: registry.dispatch,
             context: updatedContext,
             clientId,
             bindings
@@ -55064,7 +55065,6 @@ const BlockBindingsPanel = ({
   name: blockName,
   metadata
 }) => {
-  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const blockContext = (0,external_wp_element_namespaceObject.useContext)(block_context);
   const {
     removeAllBlockBindings
@@ -55074,7 +55074,7 @@ const BlockBindingsPanel = ({
 
   // `useSelect` is used purposely here to ensure `getFieldsList`
   // is updated whenever there are updates in block context.
-  // `source.getFieldsList` may also call a selector via `registry.select`.
+  // `source.getFieldsList` may also call a selector via `select`.
   const _fieldsList = {};
   const {
     fieldsList,
@@ -55100,7 +55100,7 @@ const BlockBindingsPanel = ({
           }
         }
         const sourceList = getFieldsList({
-          registry,
+          select,
           context
         });
         // Only add source if the list is not empty.
@@ -55115,7 +55115,7 @@ const BlockBindingsPanel = ({
       fieldsList: Object.values(_fieldsList).length > 0 ? _fieldsList : block_bindings_EMPTY_OBJECT,
       canUpdateBlockBindings: select(store).getSettings().canUpdateBlockBindings
     };
-  }, [blockContext, bindableAttributes, registry]);
+  }, [blockContext, bindableAttributes]);
   // Return early if there are no bindable attributes.
   if (!bindableAttributes || bindableAttributes.length === 0) {
     return null;
@@ -72038,7 +72038,7 @@ function RichTextWrapper({
       }
     }
     const _disableBoundBlock = !blockBindingsSource?.canUserEditValue?.({
-      registry,
+      select,
       context: blockBindingsContext,
       args: relatedBinding.args
     });
@@ -72057,7 +72057,7 @@ function RichTextWrapper({
     } = select(store);
     const blockAttributes = getBlockAttributes(clientId);
     const fieldsList = blockBindingsSource?.getFieldsList?.({
-      registry,
+      select,
       context: blockBindingsContext
     });
     const bindingKey = (_fieldsList$relatedBi = fieldsList?.[relatedBinding?.args?.key]?.label) !== null && _fieldsList$relatedBi !== void 0 ? _fieldsList$relatedBi : blockBindingsSource?.label;
@@ -72070,7 +72070,7 @@ function RichTextWrapper({
       bindingsPlaceholder: blockAttributes?.placeholder || _bindingsPlaceholder,
       bindingsLabel: _bindingsLabel
     };
-  }, [blockBindings, identifier, blockName, blockContext, registry, adjustedValue]);
+  }, [blockBindings, identifier, blockName, blockContext, adjustedValue]);
   const shouldDisableEditing = readOnly || disableBoundBlock;
   const {
     getSelectionStart,
