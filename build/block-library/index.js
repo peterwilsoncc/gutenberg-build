@@ -4904,7 +4904,6 @@ const linkOff = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
 
 
 
-
 /**
  * WordPress dependencies
  */
@@ -5088,7 +5087,7 @@ function ButtonEdit(props) {
     if (!isSelected) {
       return {};
     }
-    const blockBindingsSource = unlock(select(external_wp_blocks_namespaceObject.store)).getBlockBindingsSource(metadata?.bindings?.url?.source);
+    const blockBindingsSource = (0,external_wp_blocks_namespaceObject.getBlockBindingsSource)(metadata?.bindings?.url?.source);
     return {
       lockUrlControls: !!metadata?.bindings?.url && !blockBindingsSource?.canUserEditValue?.({
         select,
@@ -26242,17 +26241,14 @@ function image_Image({
       return {};
     }
     const {
-      getBlockBindingsSource
-    } = unlock(select(external_wp_blocks_namespaceObject.store));
-    const {
       url: urlBinding,
       alt: altBinding,
       title: titleBinding
     } = metadata?.bindings || {};
     const hasParentPattern = !!context['pattern/overrides'];
-    const urlBindingSource = getBlockBindingsSource(urlBinding?.source);
-    const altBindingSource = getBlockBindingsSource(altBinding?.source);
-    const titleBindingSource = getBlockBindingsSource(titleBinding?.source);
+    const urlBindingSource = (0,external_wp_blocks_namespaceObject.getBlockBindingsSource)(urlBinding?.source);
+    const altBindingSource = (0,external_wp_blocks_namespaceObject.getBlockBindingsSource)(altBinding?.source);
+    const titleBindingSource = (0,external_wp_blocks_namespaceObject.getBlockBindingsSource)(titleBinding?.source);
     return {
       lockUrlControls: !!urlBinding && !urlBindingSource?.canUserEditValue?.({
         select,
@@ -26725,7 +26721,6 @@ function useMaxWidthObserver() {
 
 
 
-
 /**
  * Module constants
  */
@@ -27013,7 +27008,7 @@ function ImageEdit({
     if (!isSingleSelected) {
       return {};
     }
-    const blockBindingsSource = unlock(select(external_wp_blocks_namespaceObject.store)).getBlockBindingsSource(metadata?.bindings?.url?.source);
+    const blockBindingsSource = (0,external_wp_blocks_namespaceObject.getBlockBindingsSource)(metadata?.bindings?.url?.source);
     return {
       lockUrlControls: !!metadata?.bindings?.url && !blockBindingsSource?.canUserEditValue?.({
         select,
@@ -51413,15 +51408,12 @@ function ReusableBlockEdit({
       getSettings,
       getBlockEditingMode
     } = select(external_wp_blockEditor_namespaceObject.store);
-    const {
-      getBlockBindingsSource
-    } = unlock(select(external_wp_blocks_namespaceObject.store));
     // For editing link to the site editor if the theme and user permissions support it.
     return {
       innerBlocks: getBlocks(patternClientId),
       onNavigateToEntityRecord: getSettings().onNavigateToEntityRecord,
       editingMode: getBlockEditingMode(patternClientId),
-      hasPatternOverridesSource: !!getBlockBindingsSource('core/pattern-overrides')
+      hasPatternOverridesSource: !!(0,external_wp_blocks_namespaceObject.getBlockBindingsSource)('core/pattern-overrides')
     };
   }, [patternClientId]);
 

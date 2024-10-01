@@ -8915,15 +8915,12 @@ function ControlsWithStoreSubscription(props) {
     isEditingSyncedPattern
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getBlockBindingsSource
-    } = unlock(select(external_wp_blocks_namespaceObject.store));
-    const {
       getCurrentPostType,
       getEditedPostAttribute
     } = select(store_store);
     return {
       // For editing link to the site editor if the theme and user permissions support it.
-      hasPatternOverridesSource: !!getBlockBindingsSource('core/pattern-overrides'),
+      hasPatternOverridesSource: !!(0,external_wp_blocks_namespaceObject.getBlockBindingsSource)('core/pattern-overrides'),
       isEditingSyncedPattern: getCurrentPostType() === pattern_overrides_PATTERN_TYPES.user && getEditedPostAttribute('meta')?.wp_pattern_sync_status !== PATTERN_SYNC_TYPES.unsynced && getEditedPostAttribute('wp_pattern_sync_status') !== PATTERN_SYNC_TYPES.unsynced
     };
   }, []);
@@ -30284,11 +30281,8 @@ function getPostMetaFields(select, context) {
  * ```
  */
 function registerCoreBlockBindingsSources() {
-  const {
-    registerBlockBindingsSource
-  } = unlock(external_wp_blocks_namespaceObject.privateApis);
-  registerBlockBindingsSource(pattern_overrides);
-  registerBlockBindingsSource(post_meta);
+  (0,external_wp_blocks_namespaceObject.registerBlockBindingsSource)(pattern_overrides);
+  (0,external_wp_blocks_namespaceObject.registerBlockBindingsSource)(post_meta);
 }
 
 /**
