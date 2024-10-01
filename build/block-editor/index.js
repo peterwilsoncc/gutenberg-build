@@ -62232,6 +62232,7 @@ function ZoomOutToolbar({
       label: (0,external_wp_i18n_namespaceObject.__)('Delete'),
       onClick: () => {
         removeBlock(clientId);
+        __unstableContentRef.current?.focus();
       }
     })]
   });
