@@ -19650,8 +19650,7 @@ const flexWrapOptions = ['wrap', 'nowrap'];
         isToolbar: true
       }), allowVerticalAlignment && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexLayoutVerticalAlignmentControl, {
         layout: layout,
-        onChange: onChange,
-        isToolbar: true
+        onChange: onChange
       })]
     });
   },
@@ -19717,8 +19716,7 @@ const flexWrapOptions = ['wrap', 'nowrap'];
 });
 function FlexLayoutVerticalAlignmentControl({
   layout,
-  onChange,
-  isToolbar = false
+  onChange
 }) {
   const {
     orientation = 'horizontal'
@@ -19733,40 +19731,10 @@ function FlexLayoutVerticalAlignmentControl({
       verticalAlignment: value
     });
   };
-  if (isToolbar) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockVerticalAlignmentControl, {
-      onChange: onVerticalAlignmentChange,
-      value: verticalAlignment,
-      controls: orientation === 'horizontal' ? ['top', 'center', 'bottom', 'stretch'] : ['top', 'center', 'bottom', 'space-between']
-    });
-  }
-  const verticalAlignmentOptions = [{
-    value: 'flex-start',
-    label: (0,external_wp_i18n_namespaceObject.__)('Align items top')
-  }, {
-    value: 'center',
-    label: (0,external_wp_i18n_namespaceObject.__)('Align items center')
-  }, {
-    value: 'flex-end',
-    label: (0,external_wp_i18n_namespaceObject.__)('Align items bottom')
-  }];
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
-    className: "block-editor-hooks__flex-layout-vertical-alignment-control",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("legend", {
-      children: (0,external_wp_i18n_namespaceObject.__)('Vertical alignment')
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      children: verticalAlignmentOptions.map((value, icon, label) => {
-        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
-          label: label,
-          icon: icon,
-          isPressed: verticalAlignment === value,
-          onClick: () => onVerticalAlignmentChange(value)
-        }, value);
-      })
-    })]
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockVerticalAlignmentControl, {
+    onChange: onVerticalAlignmentChange,
+    value: verticalAlignment,
+    controls: orientation === 'horizontal' ? ['top', 'center', 'bottom', 'stretch'] : ['top', 'center', 'bottom', 'space-between']
   });
 }
 const POPOVER_PROPS = {
@@ -22378,10 +22346,8 @@ class URLInput extends external_wp_element_namespaceObject.Component {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         ...suggestionsListProps,
         className: dist_clsx('block-editor-url-input__suggestions', `${className}__suggestions`),
-        children: suggestions.map((suggestion, index) => /*#__PURE__*/(0,external_React_.createElement)(external_wp_components_namespaceObject.Button
-        // TODO: Switch to `true` (40px size) if possible
-        , {
-          __next40pxDefaultSize: false,
+        children: suggestions.map((suggestion, index) => /*#__PURE__*/(0,external_React_.createElement)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           ...buildSuggestionItemProps(suggestion, index),
           key: suggestion.id,
           className: dist_clsx('block-editor-url-input__suggestion', {
@@ -72290,10 +72256,8 @@ function ToolSelector(props, ref) {
     renderToggle: ({
       isOpen,
       onToggle
-    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
+    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      size: "compact",
       ...props,
       ref: ref,
       icon: mode === 'navigation' ? edit : selectIcon,
@@ -72424,10 +72388,8 @@ class URLInputButton extends external_wp_element_namespaceObject.Component {
     const buttonLabel = url ? (0,external_wp_i18n_namespaceObject.__)('Edit link') : (0,external_wp_i18n_namespaceObject.__)('Insert link');
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "block-editor-url-input__button",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        size: "compact",
         icon: library_link,
         label: buttonLabel,
         onClick: this.toggle,
@@ -72438,24 +72400,24 @@ class URLInputButton extends external_wp_element_namespaceObject.Component {
         onSubmit: this.submitLink,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
           className: "block-editor-url-input__button-modal-line",
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-          // TODO: Switch to `true` (40px size) if possible
-          , {
-            __next40pxDefaultSize: false,
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
             className: "block-editor-url-input__back",
             icon: arrow_left,
             label: (0,external_wp_i18n_namespaceObject.__)('Close'),
             onClick: this.toggle
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(url_input, {
             value: url || '',
-            onChange: onChange
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-          // TODO: Switch to `true` (40px size) if possible
-          , {
-            __next40pxDefaultSize: false,
-            icon: keyboard_return,
-            label: (0,external_wp_i18n_namespaceObject.__)('Submit'),
-            type: "submit"
+            onChange: onChange,
+            suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlSuffixWrapper, {
+              variant: "control",
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+                size: "small",
+                icon: keyboard_return,
+                label: (0,external_wp_i18n_namespaceObject.__)('Submit'),
+                type: "submit"
+              })
+            })
           })]
         })
       })]
@@ -72890,10 +72852,8 @@ function SkipToSelectedBlock() {
   const onClick = () => {
     ref.current?.focus();
   };
-  return selectedBlockClientId ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-  // TODO: Switch to `true` (40px size) if possible
-  , {
-    __next40pxDefaultSize: false,
+  return selectedBlockClientId ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    __next40pxDefaultSize: true,
     variant: "secondary",
     className: "block-editor-skip-to-selected-block",
     onClick: onClick,
