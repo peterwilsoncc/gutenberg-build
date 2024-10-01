@@ -7662,6 +7662,7 @@ __webpack_require__.d(__webpack_exports__, {
   store: () => (/* reexport */ store),
   storeConfig: () => (/* reexport */ storeConfig),
   transformStyles: () => (/* reexport */ transform_styles),
+  useBlockBindingsUtils: () => (/* reexport */ useBlockBindingsUtils),
   useBlockCommands: () => (/* reexport */ useBlockCommands),
   useBlockDisplayInformation: () => (/* reexport */ useBlockDisplayInformation),
   useBlockEditContext: () => (/* reexport */ useBlockEditContext),
@@ -54918,6 +54919,54 @@ function BlockHooksControlPure({
 function isObjectEmpty(object) {
   return !object || Object.keys(object).length === 0;
 }
+
+/**
+ * Contains utils to update the block `bindings` metadata.
+ *
+ * @typedef {Object} WPBlockBindingsUtils
+ *
+ * @property {Function} updateBlockBindings    Updates the value of the bindings connected to block attributes.
+ * @property {Function} removeAllBlockBindings Removes the bindings property of the `metadata` attribute.
+ */
+
+/**
+ * Retrieves the existing utils needed to update the block `bindings` metadata.
+ * They can be used to create, modify, or remove connections from the existing block attributes.
+ *
+ * It contains the following utils:
+ * - `updateBlockBindings`: Updates the value of the bindings connected to block attributes. It can be used to remove a specific binding by setting the value to `undefined`.
+ * - `removeAllBlockBindings`: Removes the bindings property of the `metadata` attribute.
+ *
+ * @return {?WPBlockBindingsUtils} Object containing the block bindings utils.
+ *
+ * @example
+ * ```js
+ * import { useBlockBindingsUtils } from '@wordpress/block-editor'
+ * const { updateBlockBindings, removeAllBlockBindings } = useBlockBindingsUtils();
+ *
+ * // Update url and alt attributes.
+ * updateBlockBindings( {
+ *     url: {
+ *         source: 'core/post-meta',
+ *         args: {
+ *             key: 'url_custom_field',
+ *         },
+ *     },
+ *     alt: {
+ *         source: 'core/post-meta',
+ *         args: {
+ *             key: 'text_custom_field',
+ *         },
+ *     },
+ * } );
+ *
+ * // Remove binding from url attribute.
+ * updateBlockBindings( { url: undefined } );
+ *
+ * // Remove bindings from all attributes.
+ * removeAllBlockBindings();
+ * ```
+ */
 function useBlockBindingsUtils() {
   const {
     clientId
@@ -55057,10 +55106,7 @@ function BlockBindingsPanelDropdown({
   attribute,
   binding
 }) {
-  const {
-    getBlockBindingsSources
-  } = unlock(external_wp_blocks_namespaceObject.privateApis);
-  const registeredSources = getBlockBindingsSources();
+  const registeredSources = (0,external_wp_blocks_namespaceObject.getBlockBindingsSources)();
   const {
     updateBlockBindings
   } = useBlockBindingsUtils();
@@ -55101,7 +55147,7 @@ function BlockBindingsAttribute({
     source: sourceName,
     args
   } = binding || {};
-  const sourceProps = unlock(external_wp_blocks_namespaceObject.privateApis).getBlockBindingsSource(sourceName);
+  const sourceProps = (0,external_wp_blocks_namespaceObject.getBlockBindingsSource)(sourceName);
   const isSourceInvalid = !sourceProps;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     className: "block-editor-bindings__item",
@@ -55193,10 +55239,7 @@ const BlockBindingsPanel = ({
     if (!bindableAttributes || bindableAttributes.length === 0) {
       return block_bindings_EMPTY_OBJECT;
     }
-    const {
-      getBlockBindingsSources
-    } = unlock(external_wp_blocks_namespaceObject.privateApis);
-    const registeredSources = getBlockBindingsSources();
+    const registeredSources = (0,external_wp_blocks_namespaceObject.getBlockBindingsSources)();
     Object.entries(registeredSources).forEach(([sourceName, {
       getFieldsList,
       usesContext
@@ -71497,7 +71540,6 @@ function withDeprecations(Component) {
 
 
 
-
 const keyboardShortcutContext = (0,external_wp_element_namespaceObject.createContext)();
 const inputEventContext = (0,external_wp_element_namespaceObject.createContext)();
 const instanceIdKey = Symbol('instanceId');
@@ -71619,10 +71661,7 @@ function RichTextWrapper({
       return {};
     }
     const relatedBinding = blockBindings[identifier];
-    const {
-      getBlockBindingsSource
-    } = unlock(select(external_wp_blocks_namespaceObject.store));
-    const blockBindingsSource = getBlockBindingsSource(relatedBinding.source);
+    const blockBindingsSource = (0,external_wp_blocks_namespaceObject.getBlockBindingsSource)(relatedBinding.source);
     const blockBindingsContext = {};
     if (blockBindingsSource?.usesContext?.length) {
       for (const key of blockBindingsSource.usesContext) {
@@ -74418,6 +74457,7 @@ const __experimentalGetElementClassName = element => {
 /* harmony default export */ const get_px_from_css_unit = (() => '');
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/utils/index.js
+
 
 
 
@@ -77768,7 +77808,6 @@ function ResolutionTool({
 
 
 
-
 /**
  * Private @wordpress/block-editor APIs.
  */
@@ -77812,7 +77851,6 @@ lock(privateApis, {
   useBlockDisplayTitle: useBlockDisplayTitle,
   __unstableBlockStyleVariationOverridesWithConfig: __unstableBlockStyleVariationOverridesWithConfig,
   setBackgroundStyleDefaults: setBackgroundStyleDefaults,
-  useBlockBindingsUtils: useBlockBindingsUtils,
   sectionRootClientIdKey: sectionRootClientIdKey
 });
 
