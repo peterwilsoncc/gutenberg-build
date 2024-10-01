@@ -1775,6 +1775,7 @@ __webpack_require__.d(__webpack_exports__, {
   BaseControl: () => (/* reexport */ base_control),
   BlockQuotation: () => (/* reexport */ external_wp_primitives_namespaceObject.BlockQuotation),
   BorderBoxControl: () => (/* reexport */ border_box_control_component),
+  BorderControl: () => (/* reexport */ border_control_component),
   BoxControl: () => (/* reexport */ box_control),
   Button: () => (/* reexport */ build_module_button),
   ButtonGroup: () => (/* reexport */ button_group),
@@ -35234,21 +35235,6 @@ const BorderBoxControlVisualizer = (props, forwardedRef) => {
 const ConnectedBorderBoxControlVisualizer = contextConnect(BorderBoxControlVisualizer, 'BorderBoxControlVisualizer');
 /* harmony default export */ const border_box_control_visualizer_component = (ConnectedBorderBoxControlVisualizer);
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/close-small.js
-/**
- * WordPress dependencies
- */
-
-
-const closeSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z"
-  })
-});
-/* harmony default export */ const close_small = (closeSmall);
-
 ;// CONCATENATED MODULE: ./packages/icons/build-module/library/line-solid.js
 /**
  * WordPress dependencies
@@ -40235,12 +40221,9 @@ function useBorderControlDropdown(props) {
  */
 
 
-
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -40327,7 +40310,6 @@ const BorderControlDropdown = (props, forwardedRef) => {
     popoverContentClassName,
     popoverControlsClassName,
     resetButtonClassName,
-    showDropdownHeader,
     size,
     __unstablePopoverProps,
     ...otherProps
@@ -40366,16 +40348,7 @@ const BorderControlDropdown = (props, forwardedRef) => {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(v_stack_component, {
         className: popoverControlsClassName,
         spacing: 6,
-        children: [showDropdownHeader ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(h_stack_component, {
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledLabel, {
-            children: (0,external_wp_i18n_namespaceObject.__)('Border color')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-            size: "small",
-            label: (0,external_wp_i18n_namespaceObject.__)('Close border color'),
-            icon: close_small,
-            onClick: onClose
-          })]
-        }) : undefined, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_palette, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_palette, {
           className: popoverContentClassName,
           value: color,
           onChange: onColorChange,
@@ -40886,7 +40859,6 @@ const UnconnectedBorderControl = (props, forwardedRef) => {
             isStyleSettable: isStyleSettable,
             onChange: onBorderChange,
             previousStyleSelection: previousStyleSelection,
-            showDropdownHeader: showDropdownHeader,
             __experimentalIsRenderedInSidebar: __experimentalIsRenderedInSidebar,
             size: size
           })
@@ -40929,7 +40901,7 @@ const UnconnectedBorderControl = (props, forwardedRef) => {
  * a "shape" abstraction.
  *
  * ```jsx
- * import { __experimentalBorderControl as BorderControl } from '@wordpress/components';
+ * import { BorderControl } from '@wordpress/components';
  * import { __ } from '@wordpress/i18n';
  *
  * const colors = [
@@ -46393,6 +46365,21 @@ function PaletteEdit({
   });
 }
 /* harmony default export */ const palette_edit = (PaletteEdit);
+
+;// CONCATENATED MODULE: ./packages/icons/build-module/library/close-small.js
+/**
+ * WordPress dependencies
+ */
+
+
+const closeSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M12 13.06l3.712 3.713 1.061-1.06L13.061 12l3.712-3.712-1.06-1.06L12 10.938 8.288 7.227l-1.061 1.06L10.939 12l-3.712 3.712 1.06 1.061L12 13.061z"
+  })
+});
+/* harmony default export */ const close_small = (closeSmall);
 
 ;// CONCATENATED MODULE: ./packages/components/build-module/combobox-control/styles.js
 
