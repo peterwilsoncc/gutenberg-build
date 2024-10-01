@@ -24215,7 +24215,6 @@ function FontSize() {
       origin,
       slug
     },
-    goBack,
     goTo
   } = (0,external_wp_components_namespaceObject.__experimentalUseNavigator)();
   const [fontSizes, setFontSizes] = font_size_useGlobalSetting('typography.fontSizes');
@@ -24228,10 +24227,10 @@ function FontSize() {
   const fontSize = sizes.find(size => size.slug === slug);
 
   // Whether the font size is fluid. If not defined, use the global fluid value of the theme.
-  const isFluid = fontSize.fluid !== undefined ? !!fontSize.fluid : !!globalFluid;
+  const isFluid = fontSize?.fluid !== undefined ? !!fontSize.fluid : !!globalFluid;
 
   // Whether custom fluid values are used.
-  const isCustomFluid = typeof fontSize.fluid === 'object';
+  const isCustomFluid = typeof fontSize?.fluid === 'object';
   const handleNameChange = value => {
     updateFontSize('name', value);
   };
@@ -24281,8 +24280,6 @@ function FontSize() {
     });
   };
   const handleRemoveFontSize = () => {
-    // Navigate to the font sizes list.
-    goBack();
     const newFontSizes = sizes.filter(size => size.slug !== slug);
     setFontSizes({
       ...fontSizes,
@@ -24295,6 +24292,20 @@ function FontSize() {
   const toggleRenameDialog = () => {
     setIsRenameDialogOpen(!isRenameDialogOpen);
   };
+
+  // Navigate to the font sizes list if the font size is not available.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (!fontSize) {
+      goTo('/typography/font-sizes/', {
+        isBack: true
+      });
+    }
+  }, [fontSize, goTo]);
+
+  // Avoid rendering if the font size is not available.
+  if (!fontSize) {
+    return null;
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(confirm_delete_font_size_dialog, {
       fontSize: fontSize,
