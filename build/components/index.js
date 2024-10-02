@@ -35131,7 +35131,7 @@ const toggleGroupControl = ({
   isBlock,
   isDeselectable,
   size
-}) => /*#__PURE__*/emotion_react_browser_esm_css("background:", COLORS.ui.background, ";border:1px solid transparent;border-radius:", config_values.radiusSmall, ";display:inline-flex;min-width:0;position:relative;", toggleGroupControlSize(size), " ", !isDeselectable && enclosingBorders(isBlock), "@media not ( prefers-reduced-motion ){&.is-animation-enabled::before{transition-property:transform,border-radius;transition-duration:0.2s;transition-timing-function:ease-out;}}&::before{content:'';position:absolute;pointer-events:none;background:", COLORS.gray[900], ";outline:2px solid transparent;outline-offset:-3px;--antialiasing-factor:100;border-radius:calc(\n\t\t\t\t", config_values.radiusXSmall, " /\n\t\t\t\t\t(\n\t\t\t\t\t\tvar( --selected-width, 0 ) /\n\t\t\t\t\t\t\tvar( --antialiasing-factor )\n\t\t\t\t\t)\n\t\t\t)/", config_values.radiusXSmall, ";left:-1px;width:calc( var( --antialiasing-factor ) * 1px );height:calc( var( --selected-height, 0 ) * 1px );transform-origin:left top;transform:translateX( calc( var( --selected-left, 0 ) * 1px ) ) scaleX(\n\t\t\t\tcalc(\n\t\t\t\t\tvar( --selected-width, 0 ) / var( --antialiasing-factor )\n\t\t\t\t)\n\t\t\t);}" + ( true ? "" : 0),  true ? "" : 0);
+}) => /*#__PURE__*/emotion_react_browser_esm_css("background:", COLORS.ui.background, ";border:1px solid transparent;border-radius:", config_values.radiusSmall, ";display:inline-flex;min-width:0;position:relative;", toggleGroupControlSize(size), " ", !isDeselectable && enclosingBorders(isBlock), "@media not ( prefers-reduced-motion ){&[data-indicator-animated]::before{transition-property:transform,border-radius;transition-duration:0.2s;transition-timing-function:ease-out;}}&::before{content:'';position:absolute;pointer-events:none;background:", COLORS.gray[900], ";outline:2px solid transparent;outline-offset:-3px;--antialiasing-factor:100;border-radius:calc(\n\t\t\t\t", config_values.radiusXSmall, " /\n\t\t\t\t\t(\n\t\t\t\t\t\tvar( --selected-width, 0 ) /\n\t\t\t\t\t\t\tvar( --antialiasing-factor )\n\t\t\t\t\t)\n\t\t\t)/", config_values.radiusXSmall, ";left:-1px;width:calc( var( --antialiasing-factor ) * 1px );height:calc( var( --selected-height, 0 ) * 1px );transform-origin:left top;transform:translateX( calc( var( --selected-left, 0 ) * 1px ) ) scaleX(\n\t\t\t\tcalc(\n\t\t\t\t\tvar( --selected-width, 0 ) / var( --antialiasing-factor )\n\t\t\t\t)\n\t\t\t);}" + ( true ? "" : 0),  true ? "" : 0);
 const enclosingBorders = isBlock => {
   const enclosingBorder = /*#__PURE__*/emotion_react_browser_esm_css("border-color:", COLORS.ui.border, ";" + ( true ? "" : 0),  true ? "" : 0);
   return /*#__PURE__*/emotion_react_browser_esm_css(isBlock && enclosingBorder, " &:hover{border-color:", COLORS.ui.borderHover, ";}&:focus-within{border-color:", COLORS.ui.borderFocus, ";box-shadow:", config_values.controlBoxShadowFocus, ";z-index:1;outline:2px solid transparent;outline-offset:-2px;}" + ( true ? "" : 0),  true ? "" : 0);
@@ -35714,29 +35714,44 @@ onUpdate) {
 
 
 /**
- * A utility used to animate something (e.g. an indicator for the selected option
- * of a component).
+ * A utility used to animate something in a container component based on the "offset
+ * rect" (position relative to the container and size) of a subelement. For example,
+ * this is useful to render an indicator for the selected option of a component, and
+ * to animate it when the selected option changes.
  *
- * It works by tracking the position and size (i.e., the "rect") of a given subelement,
- * typically the one that corresponds to the selected option, relative to its offset
- * parent. Then it:
+ * Takes in a container element and the up-to-date "offset rect" of the target
+ * subelement, obtained with `useTrackElementOffsetRect`. Then it does the following:
  *
- * - Keeps CSS variables with that information in the parent, so that the animation
- *   can be implemented with them.
- * - Adds a `is-animation-enabled` CSS class when the element changes, so that the
- *   target (e.g. the indicator) can be animated to its new position.
- * - Removes the `is-animation-enabled` class when the animation is done.
+ * - Adds CSS variables with rect information to the container, so that the indicator
+ *   can be rendered and animated with them. These are kept up-to-date, enabling CSS
+ *   transitions on change.
+ * - Sets an attribute (`data-subelement-animated` by default) when the tracked
+ *   element changes, so that the target (e.g. the indicator) can be animated to its
+ *   new size and position.
+ * - Removes the attribute when the animation is done.
+ *
+ * The need for the attribute is due to the fact that the rect might update in
+ * situations other than when the tracked element changes, e.g. the tracked element
+ * might be resized. In such cases, there is no need to animate the indicator, and
+ * the change in size or position of the indicator needs to be reflected immediately.
  */
 
 
-function useSubelementAnimation(subelement, {
-  parent = subelement?.offsetParent,
+function useAnimatedOffsetRect(
+/**
+ * The container element.
+ */
+container,
+/**
+ * The rect of the tracked element.
+ */
+rect, {
   prefix = 'subelement',
-  transitionEndFilter
+  dataAttribute = `${prefix}-animated`,
+  transitionEndFilter = () => true
 } = {}) {
-  const rect = useTrackElementOffsetRect(subelement);
   const setProperties = (0,external_wp_compose_namespaceObject.useEvent)(() => {
-    Object.keys(rect).forEach(property => property !== 'element' && parent?.style.setProperty(`--${prefix}-${property}`, String(rect[property])));
+    Object.keys(rect).forEach(property => property !== 'element' && container?.style.setProperty(`--${prefix}-${property}`, String(rect[property])));
   });
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     setProperties();
@@ -35746,19 +35761,18 @@ function useSubelementAnimation(subelement, {
   }) => {
     // Only enable the animation when moving from one element to another.
     if (rect.element && previousValue) {
-      parent?.classList.add('is-animation-enabled');
+      container?.setAttribute(`data-${dataAttribute}`, '');
     }
   });
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     function onTransitionEnd(event) {
-      var _transitionEndFilter;
-      if ((_transitionEndFilter = transitionEndFilter?.(event)) !== null && _transitionEndFilter !== void 0 ? _transitionEndFilter : true) {
-        parent?.classList.remove('is-animation-enabled');
+      if (transitionEndFilter(event)) {
+        container?.removeAttribute(`data-${dataAttribute}`);
       }
     }
-    parent?.addEventListener('transitionend', onTransitionEnd);
-    return () => parent?.removeEventListener('transitionend', onTransitionEnd);
-  }, [parent, transitionEndFilter]);
+    container?.addEventListener('transitionend', onTransitionEnd);
+    return () => container?.removeEventListener('transitionend', onTransitionEnd);
+  }, [dataAttribute, container, transitionEndFilter]);
 }
 function UnconnectedToggleGroupControl(props, forwardedRef) {
   const {
@@ -35781,9 +35795,10 @@ function UnconnectedToggleGroupControl(props, forwardedRef) {
   const [selectedElement, setSelectedElement] = (0,external_wp_element_namespaceObject.useState)();
   const [controlElement, setControlElement] = (0,external_wp_element_namespaceObject.useState)();
   const refs = (0,external_wp_compose_namespaceObject.useMergeRefs)([setControlElement, forwardedRef]);
-  useSubelementAnimation(value ? selectedElement : undefined, {
-    parent: controlElement,
+  const selectedRect = useTrackElementOffsetRect(value ? selectedElement : undefined);
+  useAnimatedOffsetRect(controlElement, selectedRect, {
     prefix: 'selected',
+    dataAttribute: 'indicator-animated',
     transitionEndFilter: event => event.pseudoElement === '::before'
   });
   const cx = useCx();
