@@ -24233,6 +24233,18 @@ function FontSize() {
   // Get the font size by slug.
   const fontSize = sizes.find(size => size.slug === slug);
 
+  // Navigate to the font sizes list if the font size is not available.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (!fontSize) {
+      goTo('/typography/font-sizes/', {
+        isBack: true
+      });
+    }
+  }, [fontSize, goTo]);
+  if (!origin || !slug || !fontSize) {
+    return null;
+  }
+
   // Whether the font size is fluid. If not defined, use the global fluid value of the theme.
   const isFluid = fontSize?.fluid !== undefined ? !!fontSize.fluid : !!globalFluid;
 
@@ -24299,20 +24311,6 @@ function FontSize() {
   const toggleRenameDialog = () => {
     setIsRenameDialogOpen(!isRenameDialogOpen);
   };
-
-  // Navigate to the font sizes list if the font size is not available.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!fontSize) {
-      goTo('/typography/font-sizes/', {
-        isBack: true
-      });
-    }
-  }, [fontSize, goTo]);
-
-  // Avoid rendering if the font size is not available.
-  if (!fontSize) {
-    return null;
-  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(confirm_delete_font_size_dialog, {
       fontSize: fontSize,
@@ -25595,6 +25593,9 @@ function ShadowsEditPanel() {
   const [isConfirmDialogVisible, setIsConfirmDialogVisible] = (0,external_wp_element_namespaceObject.useState)(false);
   const [isRenameModalVisible, setIsRenameModalVisible] = (0,external_wp_element_namespaceObject.useState)(false);
   const [shadowName, setShadowName] = (0,external_wp_element_namespaceObject.useState)(selectedShadow.name);
+  if (!category || !slug) {
+    return null;
+  }
   const onShadowChange = shadow => {
     setSelectedShadow({
       ...selectedShadow,
