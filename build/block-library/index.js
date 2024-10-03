@@ -18624,7 +18624,8 @@ const file_metadata = {
       role: "local"
     },
     href: {
-      type: "string"
+      type: "string",
+      role: "content"
     },
     fileId: {
       type: "string",
@@ -18635,13 +18636,15 @@ const file_metadata = {
     fileName: {
       type: "rich-text",
       source: "rich-text",
-      selector: "a:not([download])"
+      selector: "a:not([download])",
+      role: "content"
     },
     textLinkHref: {
       type: "string",
       source: "attribute",
       selector: "a:not([download])",
-      attribute: "href"
+      attribute: "href",
+      role: "content"
     },
     textLinkTarget: {
       type: "string",
@@ -18656,7 +18659,8 @@ const file_metadata = {
     downloadButtonText: {
       type: "rich-text",
       source: "rich-text",
-      selector: "a[download]"
+      selector: "a[download]",
+      role: "content"
     },
     displayPreview: {
       type: "boolean"
