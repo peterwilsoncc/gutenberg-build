@@ -46572,14 +46572,16 @@ function useTabNav() {
   const {
     hasMultiSelection,
     getSelectedBlockClientId,
-    getBlockCount
-  } = (0,external_wp_data_namespaceObject.useSelect)(store);
+    getBlockCount,
+    getBlockOrder,
+    getLastFocus,
+    getSectionRootClientId,
+    isZoomOut,
+    __unstableGetEditorMode
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const {
     setLastFocus
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
-  const {
-    getLastFocus
-  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
 
   // Reference that holds the a flag for enabling or disabling
   // capturing on the focus capture elements.
@@ -46596,6 +46598,20 @@ function useTabNav() {
       } else {
         // Handles when the last focus has not been set yet, or has been cleared by new blocks being added via the inserter.
         container.current.querySelector(`[data-block="${getSelectedBlockClientId()}"]`).focus();
+      }
+    }
+    // In "compose" mode without a selected ID, we want to place focus on the section root when tabbing to the canvas.
+    else if (__unstableGetEditorMode() === 'zoom-out' && isZoomOut()) {
+      const sectionRootClientId = getSectionRootClientId();
+      const sectionBlocks = getBlockOrder(sectionRootClientId);
+
+      // If we have section within the section root, focus the first one.
+      if (sectionBlocks.length) {
+        container.current.querySelector(`[data-block="${sectionBlocks[0]}"]`).focus();
+      }
+      // If we don't have any section blocks, focus the section root.
+      else {
+        container.current.querySelector(`[data-block="${sectionRootClientId}"]`).focus();
       }
     } else {
       const canvasElement = container.current.ownerDocument === event.target.ownerDocument ? container.current : container.current.ownerDocument.defaultView.frameElement;
