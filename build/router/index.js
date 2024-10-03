@@ -904,10 +904,12 @@ function getLocationWithParams() {
   }
   return locationWithParams;
 }
-history_history.push = push;
-history_history.replace = replace;
-history_history.getLocationWithParams = getLocationWithParams;
-/* harmony default export */ const build_module_history = (history_history);
+/* harmony default export */ const build_module_history = ({
+  ...history_history,
+  push,
+  replace,
+  getLocationWithParams
+});
 
 ;// CONCATENATED MODULE: external "ReactJSXRuntime"
 const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
@@ -922,8 +924,8 @@ const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
  */
 
 
-const RoutesContext = (0,external_wp_element_namespaceObject.createContext)();
-const HistoryContext = (0,external_wp_element_namespaceObject.createContext)();
+const RoutesContext = (0,external_wp_element_namespaceObject.createContext)(null);
+const HistoryContext = (0,external_wp_element_namespaceObject.createContext)(build_module_history);
 function useLocation() {
   return (0,external_wp_element_namespaceObject.useContext)(RoutesContext);
 }
