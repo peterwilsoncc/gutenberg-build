@@ -26770,6 +26770,7 @@ const ZoomOutToggle = () => {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -26833,12 +26834,13 @@ function header_Header({
   const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
   const isTooNarrowForDocumentBar = (0,external_wp_compose_namespaceObject.useMediaQuery)('(max-width: 403px)');
   const {
+    postType,
     isTextEditor,
     isPublishSidebarOpened,
     showIconLabels,
     hasFixedToolbar,
-    isNestedEntity,
-    postType
+    hasBlockSelection,
+    isNestedEntity
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       get: getPreference
@@ -26855,12 +26857,13 @@ function header_Header({
       isPublishSidebarOpened: _isPublishSidebarOpened(),
       showIconLabels: getPreference('core', 'showIconLabels'),
       hasFixedToolbar: getPreference('core', 'fixedToolbar'),
+      hasBlockSelection: !!select(external_wp_blockEditor_namespaceObject.store).getBlockSelectionStart(),
       isNestedEntity: !!getEditorSettings().onNavigateToPreviousEntityRecord
     };
   }, []);
   const canBeZoomedOut = ['post', 'page', 'wp_template'].includes(postType);
   const [isBlockToolsCollapsed, setIsBlockToolsCollapsed] = (0,external_wp_element_namespaceObject.useState)(true);
-  const hasCenter = isBlockToolsCollapsed && !isTooNarrowForDocumentBar;
+  const hasCenter = (!hasBlockSelection || isBlockToolsCollapsed) && !isTooNarrowForDocumentBar;
   const hasBackButton = useHasBackButton();
   /*
    * The edit-post-header classname is only kept for backward compatability
