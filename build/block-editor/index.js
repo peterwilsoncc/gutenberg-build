@@ -42357,6 +42357,7 @@ function useFocusHandler(clientId) {
  */
 
 
+
 /**
  * Adds block behaviour:
  *   - Removes the block on BACKSPACE.
@@ -42371,12 +42372,16 @@ function useEventHandlers({
 }) {
   const {
     getBlockRootClientId,
-    getBlockIndex
-  } = (0,external_wp_data_namespaceObject.useSelect)(store);
+    getBlockIndex,
+    isZoomOut,
+    __unstableGetEditorMode
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const {
     insertAfterBlock,
-    removeBlock
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+    removeBlock,
+    __unstableSetEditorMode,
+    resetZoomLevel
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   return (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
     if (!isSelected) {
       return;
@@ -42403,7 +42408,10 @@ function useEventHandlers({
         return;
       }
       event.preventDefault();
-      if (keyCode === external_wp_keycodes_namespaceObject.ENTER) {
+      if (keyCode === external_wp_keycodes_namespaceObject.ENTER && __unstableGetEditorMode() === 'zoom-out' && isZoomOut()) {
+        __unstableSetEditorMode('edit');
+        resetZoomLevel();
+      } else if (keyCode === external_wp_keycodes_namespaceObject.ENTER) {
         insertAfterBlock(clientId);
       } else {
         removeBlock(clientId);
@@ -42425,7 +42433,7 @@ function useEventHandlers({
       node.removeEventListener('keydown', onKeyDown);
       node.removeEventListener('dragstart', onDragStart);
     };
-  }, [clientId, isSelected, getBlockRootClientId, getBlockIndex, insertAfterBlock, removeBlock]);
+  }, [clientId, isSelected, getBlockRootClientId, getBlockIndex, insertAfterBlock, removeBlock, __unstableGetEditorMode, __unstableSetEditorMode, isZoomOut, resetZoomLevel]);
 }
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-list/use-block-props/use-zoom-out-mode-exit.js
@@ -62165,7 +62173,6 @@ function Shuffle({
 
 
 
-
 function ZoomOutToolbar({
   clientId,
   __unstableContentRef
@@ -62222,14 +62229,11 @@ function ZoomOutToolbar({
     isNextBlockTemplatePart,
     isPrevBlockTemplatePart,
     canRemove,
-    canMove,
-    setIsInserterOpened
+    canMove
   } = selected;
   const {
-    removeBlock,
-    __unstableSetEditorMode,
-    resetZoomLevel
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+    removeBlock
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const showBlockDraggable = canMove && !isBlockTemplatePart;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(NavigableToolbar, {
     className: "zoom-out-toolbar"
@@ -62263,19 +62267,6 @@ function ZoomOutToolbar({
     }), canMove && canRemove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Shuffle, {
       clientId: clientId,
       as: external_wp_components_namespaceObject.ToolbarButton
-    }), !isBlockTemplatePart && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-      className: "zoom-out-toolbar-button",
-      icon: edit,
-      label: (0,external_wp_i18n_namespaceObject.__)('Edit'),
-      onClick: () => {
-        // Setting may be undefined.
-        if (typeof setIsInserterOpened === 'function') {
-          setIsInserterOpened(false);
-        }
-        __unstableSetEditorMode('edit');
-        resetZoomLevel();
-        __unstableContentRef.current?.focus();
-      }
     }), canRemove && !isBlockTemplatePart && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       className: "zoom-out-toolbar-button",
       icon: library_trash,
