@@ -35697,10 +35697,8 @@ onUpdate) {
 }
 /* eslint-enable jsdoc/require-param */
 
-;// CONCATENATED MODULE: ./packages/components/build-module/toggle-group-control/toggle-group-control/component.js
-/**
- * External dependencies
- */
+;// CONCATENATED MODULE: ./packages/components/build-module/utils/hooks/use-animated-offset-rect.js
+/* eslint-disable jsdoc/require-param */
 
 /**
  * WordPress dependencies
@@ -35710,15 +35708,6 @@ onUpdate) {
 /**
  * Internal dependencies
  */
-
-
-
-
-
-
-
-
-
 
 
 
@@ -35744,8 +35733,6 @@ onUpdate) {
  * might be resized. In such cases, there is no need to animate the indicator, and
  * the change in size or position of the indicator needs to be reflected immediately.
  */
-
-
 function useAnimatedOffsetRect(
 /**
  * The container element.
@@ -35783,6 +35770,34 @@ rect, {
     return () => container?.removeEventListener('transitionend', onTransitionEnd);
   }, [dataAttribute, container, transitionEndFilter]);
 }
+/* eslint-enable jsdoc/require-param */
+
+;// CONCATENATED MODULE: ./packages/components/build-module/toggle-group-control/toggle-group-control/component.js
+/**
+ * External dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
 function UnconnectedToggleGroupControl(props, forwardedRef) {
   const {
     __nextHasNoMarginBottom = false,
@@ -71261,7 +71276,7 @@ const useTabsContext = () => (0,external_wp_element_namespaceObject.useContext)(
 
 const TabListWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "enfox0g2"
-} : 0)("position:relative;display:flex;align-items:stretch;flex-direction:row;text-align:center;overflow-x:auto;&[aria-orientation='vertical']{flex-direction:column;text-align:start;}:where( [aria-orientation='horizontal'] ){width:fit-content;}--direction-factor:1;--direction-start:left;--direction-end:right;--indicator-start:var( --indicator-left );&:dir( rtl ){--direction-factor:-1;--direction-start:right;--direction-end:left;--indicator-start:var( --indicator-right );}@media not ( prefers-reduced-motion ){&.is-animation-enabled::before{transition-property:transform;transition-duration:0.2s;transition-timing-function:ease-out;}}&::before{content:'';position:absolute;pointer-events:none;transform-origin:var( --direction-start ) top;outline:2px solid transparent;outline-offset:-1px;}--antialiasing-factor:100;&:not( [aria-orientation='vertical'] ){--fade-width:4rem;--fade-gradient-base:transparent 0%,black var( --fade-width );--fade-gradient-composed:var( --fade-gradient-base ),black 60%,transparent 50%;&.is-overflowing-first{mask-image:linear-gradient(\n\t\t\t\tto var( --direction-end ),\n\t\t\t\tvar( --fade-gradient-base )\n\t\t\t);}&.is-overflowing-last{mask-image:linear-gradient(\n\t\t\t\tto var( --direction-start ),\n\t\t\t\tvar( --fade-gradient-base )\n\t\t\t);}&.is-overflowing-first.is-overflowing-last{mask-image:linear-gradient(\n\t\t\t\t\tto right,\n\t\t\t\t\tvar( --fade-gradient-composed )\n\t\t\t\t),linear-gradient( to left, var( --fade-gradient-composed ) );}&::before{bottom:0;height:0;width:calc( var( --antialiasing-factor ) * 1px );transform:translateX(\n\t\t\t\t\tcalc(\n\t\t\t\t\t\tvar( --indicator-start ) * var( --direction-factor ) *\n\t\t\t\t\t\t\t1px\n\t\t\t\t\t)\n\t\t\t\t) scaleX(\n\t\t\t\t\tcalc(\n\t\t\t\t\t\tvar( --indicator-width ) / var( --antialiasing-factor )\n\t\t\t\t\t)\n\t\t\t\t);border-bottom:var( --wp-admin-border-width-focus ) solid ", COLORS.theme.accent, ";}}&[aria-orientation='vertical']::before{top:0;left:0;width:100%;height:calc( var( --antialiasing-factor ) * 1px );transform:translateY( calc( var( --indicator-top ) * 1px ) ) scaleY(\n\t\t\t\tcalc( var( --indicator-height ) / var( --antialiasing-factor ) )\n\t\t\t);background-color:", COLORS.theme.gray[100], ";}" + ( true ? "" : 0));
+} : 0)("position:relative;display:flex;align-items:stretch;flex-direction:row;text-align:center;overflow-x:auto;&[aria-orientation='vertical']{flex-direction:column;text-align:start;}:where( [aria-orientation='horizontal'] ){width:fit-content;}--direction-factor:1;--direction-start:left;--direction-end:right;--selected-start:var( --selected-left, 0 );&:dir( rtl ){--direction-factor:-1;--direction-start:right;--direction-end:left;--selected-start:var( --selected-right, 0 );}@media not ( prefers-reduced-motion ){&[data-indicator-animated]::before{transition-property:transform;transition-duration:0.2s;transition-timing-function:ease-out;}}&::before{content:'';position:absolute;pointer-events:none;transform-origin:var( --direction-start ) top;outline:2px solid transparent;outline-offset:-1px;}--antialiasing-factor:100;&:not( [aria-orientation='vertical'] ){--fade-width:4rem;--fade-gradient-base:transparent 0%,black var( --fade-width );--fade-gradient-composed:var( --fade-gradient-base ),black 60%,transparent 50%;&.is-overflowing-first{mask-image:linear-gradient(\n\t\t\t\tto var( --direction-end ),\n\t\t\t\tvar( --fade-gradient-base )\n\t\t\t);}&.is-overflowing-last{mask-image:linear-gradient(\n\t\t\t\tto var( --direction-start ),\n\t\t\t\tvar( --fade-gradient-base )\n\t\t\t);}&.is-overflowing-first.is-overflowing-last{mask-image:linear-gradient(\n\t\t\t\t\tto right,\n\t\t\t\t\tvar( --fade-gradient-composed )\n\t\t\t\t),linear-gradient( to left, var( --fade-gradient-composed ) );}&::before{bottom:0;height:0;width:calc( var( --antialiasing-factor ) * 1px );transform:translateX(\n\t\t\t\t\tcalc(\n\t\t\t\t\t\tvar( --selected-start ) * var( --direction-factor ) *\n\t\t\t\t\t\t\t1px\n\t\t\t\t\t)\n\t\t\t\t) scaleX(\n\t\t\t\t\tcalc(\n\t\t\t\t\t\tvar( --selected-width, 0 ) /\n\t\t\t\t\t\t\tvar( --antialiasing-factor )\n\t\t\t\t\t)\n\t\t\t\t);border-bottom:var( --wp-admin-border-width-focus ) solid ", COLORS.theme.accent, ";}}&[aria-orientation='vertical']::before{top:0;left:0;width:100%;height:calc( var( --antialiasing-factor ) * 1px );transform:translateY( calc( var( --selected-top, 0 ) * 1px ) ) scaleY(\n\t\t\t\tcalc(\n\t\t\t\t\tvar( --selected-height, 0 ) / var( --antialiasing-factor )\n\t\t\t\t)\n\t\t\t);background-color:", COLORS.theme.gray[100], ";}" + ( true ? "" : 0));
 const styles_Tab = /*#__PURE__*/emotion_styled_base_browser_esm(Tab,  true ? {
   target: "enfox0g1"
 } : 0)("&{scroll-margin:24px;flex-grow:1;flex-shrink:0;display:inline-flex;align-items:center;position:relative;border-radius:0;height:", space(12), ";background:transparent;border:none;box-shadow:none;cursor:pointer;line-height:1.2;padding:", space(4), ";margin-left:0;font-weight:500;text-align:inherit;color:", COLORS.theme.foreground, ";&[aria-disabled='true']{cursor:default;color:", COLORS.ui.textDisabled, ";}&:not( [aria-disabled='true'] ):hover{color:", COLORS.theme.accent, ";}&:focus:not( :disabled ){position:relative;box-shadow:none;outline:none;}&::after{content:'';position:absolute;top:", space(3), ";right:", space(3), ";bottom:", space(3), ";left:", space(3), ";pointer-events:none;outline:var( --wp-admin-border-width-focus ) solid ", COLORS.theme.accent, ";border-radius:", config_values.radiusSmall, ";opacity:0;@media not ( prefers-reduced-motion ){transition:opacity 0.1s linear;}}&:focus-visible::after{opacity:1;}}[aria-orientation='vertical'] &{min-height:", space(10), ";}[aria-orientation='horizontal'] &{justify-content:center;}" + ( true ? "" : 0));
@@ -71405,7 +71420,39 @@ function useTrackOverflow(parent, children) {
 
 
 
-const SCROLL_MARGIN = 24;
+const DEFAULT_SCROLL_MARGIN = 24;
+
+/**
+ * Scrolls a given parent element so that a given rect is visible.
+ *
+ * The scroll is updated initially and whenever the rect changes.
+ */
+function useScrollRectIntoView(parent, rect, {
+  margin = DEFAULT_SCROLL_MARGIN
+} = {}) {
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    if (!parent || !rect) {
+      return;
+    }
+    const {
+      scrollLeft: parentScroll
+    } = parent;
+    const parentWidth = parent.getBoundingClientRect().width;
+    const {
+      left: childLeft,
+      width: childWidth
+    } = rect;
+    const parentRightEdge = parentScroll + parentWidth;
+    const childRightEdge = childLeft + childWidth;
+    const rightOverflow = childRightEdge + margin - parentRightEdge;
+    const leftOverflow = parentScroll - (childLeft - margin);
+    if (leftOverflow > 0) {
+      parent.scrollLeft = parentScroll - leftOverflow;
+    } else if (rightOverflow > 0) {
+      parent.scrollLeft = parentScroll + rightOverflow;
+    }
+  }, [margin, parent, rect]);
+}
 const TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabList({
   children,
   ...otherProps
@@ -71420,43 +71467,23 @@ const TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabL
   const items = useStoreState(store, 'items');
   const [parent, setParent] = (0,external_wp_element_namespaceObject.useState)();
   const refs = (0,external_wp_compose_namespaceObject.useMergeRefs)([ref, setParent]);
+  const selectedRect = useTrackElementOffsetRect(store?.item(selectedId)?.element);
+
+  // Track overflow to show scroll hints.
   const overflow = useTrackOverflow(parent, {
     first: items?.at(0)?.element,
     last: items?.at(-1)?.element
   });
-  const selectedTabPosition = useTrackElementOffsetRect(store?.item(selectedId)?.element);
-  const [animationEnabled, setAnimationEnabled] = (0,external_wp_element_namespaceObject.useState)(false);
-  useOnValueUpdate(selectedId, ({
-    previousValue
-  }) => {
-    if (previousValue) {
-      setAnimationEnabled(true);
-    }
+
+  // Size, position, and animate the indicator.
+  useAnimatedOffsetRect(parent, selectedRect, {
+    prefix: 'selected',
+    dataAttribute: 'indicator-animated',
+    transitionEndFilter: event => event.pseudoElement === '::before'
   });
 
   // Make sure selected tab is scrolled into view.
-  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    if (!parent || !selectedTabPosition) {
-      return;
-    }
-    const {
-      scrollLeft: parentScroll
-    } = parent;
-    const parentWidth = parent.getBoundingClientRect().width;
-    const {
-      left: childLeft,
-      width: childWidth
-    } = selectedTabPosition;
-    const parentRightEdge = parentScroll + parentWidth;
-    const childRightEdge = childLeft + childWidth;
-    const rightOverflow = childRightEdge + SCROLL_MARGIN - parentRightEdge;
-    const leftOverflow = parentScroll - (childLeft - SCROLL_MARGIN);
-    if (leftOverflow > 0) {
-      parent.scrollLeft = parentScroll - leftOverflow;
-    } else if (rightOverflow > 0) {
-      parent.scrollLeft = parentScroll + rightOverflow;
-    }
-  }, [parent, selectedTabPosition]);
+  useScrollRectIntoView(parent, selectedRect);
   const onBlur = () => {
     if (!selectOnMove) {
       return;
@@ -71477,25 +71504,11 @@ const TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabL
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tab_list_TabList, {
     ref: refs,
     store: store,
-    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TabListWrapper, {
-      onTransitionEnd: event => {
-        if (event.pseudoElement === '::before') {
-          setAnimationEnabled(false);
-        }
-      }
-    }),
+    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TabListWrapper, {}),
     onBlur: onBlur,
     tabIndex: -1,
     ...otherProps,
-    style: {
-      '--indicator-top': selectedTabPosition.top,
-      '--indicator-right': selectedTabPosition.right,
-      '--indicator-left': selectedTabPosition.left,
-      '--indicator-width': selectedTabPosition.width,
-      '--indicator-height': selectedTabPosition.height,
-      ...otherProps.style
-    },
-    className: dist_clsx(overflow.first && 'is-overflowing-first', overflow.last && 'is-overflowing-last', animationEnabled && 'is-animation-enabled', otherProps.className),
+    className: dist_clsx(overflow.first && 'is-overflowing-first', overflow.last && 'is-overflowing-last', otherProps.className),
     children: children
   });
 });
