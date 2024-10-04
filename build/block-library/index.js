@@ -47849,16 +47849,16 @@ function QueryInspectorControls(props) {
         isBlock: true,
         onChange: value => {
           setQuery({
-            inherit: !!value
+            inherit: value === 'default'
           });
         },
         help: inherit ? (0,external_wp_i18n_namespaceObject.__)('Display a list of posts or custom post types based on the current template.') : (0,external_wp_i18n_namespaceObject.__)('Display a list of posts or custom post types based on specific criteria.'),
-        value: !!inherit,
+        value: !!inherit ? 'default' : 'custom',
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-          value: true,
+          value: "default",
           label: (0,external_wp_i18n_namespaceObject.__)('Default')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-          value: false,
+          value: "custom",
           label: (0,external_wp_i18n_namespaceObject.__)('Custom')
         })]
       }), showPostTypeControl && (postTypesSelectOptions.length > 2 ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
