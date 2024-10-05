@@ -37126,7 +37126,8 @@ const wrapperMargin = ({
   }
   return '';
 };
-const range_control_styles_Wrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
+const range_control_styles_Wrapper = /*#__PURE__*/emotion_styled_base_browser_esm('div',  true ? {
+  shouldForwardProp: prop => !['color', '__nextHasNoMarginBottom', 'marks'].includes(prop),
   target: "e1epgpqk13"
 } : 0)("display:block;flex:1;position:relative;width:100%;", wrapperColor, ";", rangeHeight, ";", wrapperMargin, ";" + ( true ? "" : 0));
 const BeforeIconWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
@@ -37232,9 +37233,7 @@ const InputRange = /*#__PURE__*/emotion_styled_base_browser_esm("input",  true ?
 const tooltipShow = ({
   show
 }) => {
-  return /*#__PURE__*/emotion_react_browser_esm_css({
-    opacity: show ? 1 : 0
-  },  true ? "" : 0,  true ? "" : 0);
+  return /*#__PURE__*/emotion_react_browser_esm_css("display:", show ? 'inline-block' : 'none', ";opacity:", show ? 1 : 0, ";@media not ( prefers-reduced-motion ){transition:opacity 120ms ease,display 120ms ease allow-discrete;}@starting-style{opacity:0;}" + ( true ? "" : 0),  true ? "" : 0);
 };
 var range_control_styles_ref =  true ? {
   name: "1cypxip",
@@ -37255,7 +37254,7 @@ const tooltipPosition = ({
 };
 const range_control_styles_Tooltip = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1epgpqk2"
-} : 0)("background:rgba( 0, 0, 0, 0.8 );border-radius:", config_values.radiusSmall, ";color:white;display:inline-block;font-size:12px;min-width:32px;opacity:0;padding:4px 8px;pointer-events:none;position:absolute;text-align:center;user-select:none;line-height:1.4;@media not ( prefers-reduced-motion ){transition:opacity 120ms ease;}", tooltipShow, ";", tooltipPosition, ";", rtl({
+} : 0)("background:rgba( 0, 0, 0, 0.8 );border-radius:", config_values.radiusSmall, ";color:white;font-size:12px;min-width:32px;padding:4px 8px;pointer-events:none;position:absolute;text-align:center;user-select:none;line-height:1.4;", tooltipShow, ";", tooltipPosition, ";", rtl({
   transform: 'translateX(-50%)'
 }, {
   transform: 'translateX(50%)'
@@ -37491,7 +37490,7 @@ function SimpleTooltip(props) {
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(range_control_styles_Tooltip, {
     ...restProps,
-    "aria-hidden": show,
+    "aria-hidden": "false",
     className: classes,
     position: position,
     show: show,
