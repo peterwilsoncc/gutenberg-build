@@ -62517,7 +62517,6 @@ function useShowBlockTools() {
 
 
 
-
 function block_tools_selector(select) {
   const {
     getSelectedBlockClientId,
@@ -62575,7 +62574,6 @@ function BlockTools({
     showZoomOutToolbar
   } = useShowBlockTools();
   const {
-    clearSelectedBlock,
     duplicateBlocks,
     removeBlocks,
     replaceBlocks,
@@ -62586,7 +62584,6 @@ function BlockTools({
     moveBlocksDown,
     expandBlock
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
-  const blockSelectionButtonRef = (0,external_wp_element_namespaceObject.useRef)();
   function onKeyDown(event) {
     if (event.defaultPrevented) {
       return;
@@ -62645,10 +62642,6 @@ function BlockTools({
         // block so that focus is directed back to the beginning of the selection.
         // In effect, to the user this feels like deselecting the multi-selection.
         selectBlock(clientIds[0]);
-      } else if (clientIds.length === 1 && event.target === blockSelectionButtonRef?.current) {
-        event.preventDefault();
-        clearSelectedBlock();
-        getEditorRegion(__unstableContentRef.current)?.focus();
       }
     } else if (isMatch('core/block-editor/collapse-list-view', event)) {
       // If focus is currently within a text field, such as a rich text block or other editable field,
