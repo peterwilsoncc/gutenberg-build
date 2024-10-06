@@ -72312,13 +72312,15 @@ function ToolSelector(props, ref) {
                 icon: edit
               }), (0,external_wp_i18n_namespaceObject.__)('Write')]
             }),
-            info: (0,external_wp_i18n_namespaceObject.__)('Focus on content.')
+            info: (0,external_wp_i18n_namespaceObject.__)('Focus on content.'),
+            'aria-label': (0,external_wp_i18n_namespaceObject.__)('Write')
           }, {
             value: 'edit',
             label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
               children: [selectIcon, (0,external_wp_i18n_namespaceObject.__)('Design')]
             }),
-            info: (0,external_wp_i18n_namespaceObject.__)('Edit layout and styles.')
+            info: (0,external_wp_i18n_namespaceObject.__)('Edit layout and styles.'),
+            'aria-label': (0,external_wp_i18n_namespaceObject.__)('Design')
           }]
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
