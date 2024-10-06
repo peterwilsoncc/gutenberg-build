@@ -21712,10 +21712,8 @@ function LinkSettingsDrawer({
   const id = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkSettingsDrawer);
   const settingsDrawerId = `link-control-settings-drawer-${id}`;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
       className: "block-editor-link-control__drawer-toggle",
       "aria-expanded": settingsOpen,
       onClick: () => setSettingsOpen(!settingsOpen),
@@ -23839,17 +23837,13 @@ function LinkControl({
     }), showActions && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       justify: "right",
       className: "block-editor-link-control__search-actions",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         variant: "tertiary",
         onClick: handleCancel,
         children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         variant: "primary",
         onClick: isDisabled ? link_control_noop : handleSubmit,
         className: "block-editor-link-control__search-submit",
@@ -63983,10 +63977,7 @@ function ListViewBlockSelectButton({
       onClick(event);
     }
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button
-  // TODO: Switch to `true` (40px size) if possible
-  , {
-    __next40pxDefaultSize: false,
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("a", {
     className: dist_clsx('block-editor-list-view-block-select-button', className),
     onClick: onClick,
     onContextMenu: onContextMenu,
@@ -70154,10 +70145,8 @@ const URLSelectionUI = ({
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "block-editor-media-placeholder__url-input-container",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
       className: "block-editor-media-placeholder__button",
       onClick: openURLInput,
       isPressed: isURLInputVisible,
@@ -70389,10 +70378,8 @@ function MediaPlaceholder({
     });
   };
   const renderCancelLink = () => {
-    return onCancel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-    // TODO: Switch to `true` (40px size) if possible
-    , {
-      __next40pxDefaultSize: false,
+    return onCancel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
       className: "block-editor-media-placeholder__cancel-button",
       title: (0,external_wp_i18n_namespaceObject.__)('Cancel'),
       variant: "link",
@@ -70410,10 +70397,8 @@ function MediaPlaceholder({
   const renderFeaturedImageToggle = () => {
     return onToggleFeaturedImage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "block-editor-media-placeholder__url-input-container",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         className: "block-editor-media-placeholder__button",
         onClick: onToggleFeaturedImage,
         variant: "secondary",
@@ -70425,10 +70410,8 @@ function MediaPlaceholder({
     const defaultButton = ({
       open
     }) => {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
         variant: "secondary",
         onClick: () => {
           open();
@@ -70459,10 +70442,8 @@ function MediaPlaceholder({
             openFileDialog
           }) => {
             const content = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-              // TODO: Switch to `true` (40px size) if possible
-              , {
-                __next40pxDefaultSize: false,
+              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+                __next40pxDefaultSize: true,
                 variant: "primary",
                 className: dist_clsx('block-editor-media-placeholder__button', 'block-editor-media-placeholder__upload-button'),
                 onClick: openFileDialog,
@@ -70479,10 +70460,8 @@ function MediaPlaceholder({
         children: [renderDropZone(), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FormFileUpload, {
           render: ({
             openFileDialog
-          }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-          // TODO: Switch to `true` (40px size) if possible
-          , {
-            __next40pxDefaultSize: false,
+          }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
             onClick: openFileDialog,
             variant: "primary",
             className: dist_clsx('block-editor-media-placeholder__button', 'block-editor-media-placeholder__upload-button'),
@@ -73582,16 +73561,19 @@ function InspectorControlsTabs({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(inspector_controls_tabs_Tabs, {
       defaultTabId: initialTabName,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls_tabs_Tabs.TabList, {
-        children: tabs.map(tab => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls_tabs_Tabs.Tab, {
+        children: tabs.map(tab => showIconLabels ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls_tabs_Tabs.Tab, {
           tabId: tab.name,
-          render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-          // TODO: Switch to `true` (40px size) if possible
-          , {
-            __next40pxDefaultSize: false,
-            icon: !showIconLabels ? tab.icon : undefined,
-            label: !showIconLabels ? tab.title : undefined,
+          className: tab.className,
+          children: tab.title
+        }, tab.name) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
+          text: tab.title,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls_tabs_Tabs.Tab, {
+            tabId: tab.name,
             className: tab.className,
-            children: showIconLabels && tab.title
+            "aria-label": tab.title,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+              icon: tab.icon
+            })
           })
         }, tab.name))
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls_tabs_Tabs.TabPanel, {
@@ -74601,20 +74583,16 @@ function InspectorPopoverHeader({
         label,
         icon,
         onClick
-      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        size: "small",
         className: "block-editor-inspector-popover-header__action",
         label: label,
         icon: icon,
         variant: !icon && 'tertiary',
         onClick: onClick,
         children: !icon && label
-      }, label)), onClose && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button
-      // TODO: Switch to `true` (40px size) if possible
-      , {
-        __next40pxDefaultSize: false,
+      }, label)), onClose && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        size: "small",
         className: "block-editor-inspector-popover-header__action",
         label: (0,external_wp_i18n_namespaceObject.__)('Close'),
         icon: close_small,
