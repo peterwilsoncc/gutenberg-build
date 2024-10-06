@@ -54063,7 +54063,8 @@ function DatePicker({
           viewPreviousMonth();
           setFocusable(subMonths(focusable, 1));
           onMonthPreviewed?.(format(subMonths(viewing, 1), TIMEZONELESS_FORMAT));
-        }
+        },
+        size: "compact"
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(NavigatorHeading, {
         level: 3,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {
@@ -54077,7 +54078,8 @@ function DatePicker({
           viewNextMonth();
           setFocusable(addMonths(focusable, 1));
           onMonthPreviewed?.(format(addMonths(viewing, 1), TIMEZONELESS_FORMAT));
-        }
+        },
+        size: "compact"
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Calendar, {
       onFocus: () => setIsFocusWithinCalendar(true),
