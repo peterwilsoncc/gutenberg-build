@@ -1682,7 +1682,7 @@ function InitPatternModal() {
       isNewPost: isCleanNewPost()
     };
   }, []);
-  const [isModalOpen, setIsModalOpen] = (0,external_wp_element_namespaceObject.useState)(() => isNewPost && postType === 'wp_block' ? true : false);
+  const [isModalOpen, setIsModalOpen] = (0,external_wp_element_namespaceObject.useState)(() => isNewPost && postType === 'wp_block');
   if (postType !== 'wp_block' || !isNewPost) {
     return null;
   }
