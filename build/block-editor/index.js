@@ -44665,12 +44665,21 @@ function default_block_appender_DefaultBlockAppender() {
 /** @typedef {import('../../selectors').WPDirectInsertBlock } WPDirectInsertBlock */
 
 const pendingSettingsUpdates = new WeakMap();
+
+// Creates a memoizing caching function that remembers the last value and keeps returning it
+// as long as the new values are shallowly equal. Helps keep dependencies stable.
+function createShallowMemo() {
+  let value;
+  return newValue => {
+    if (value === undefined || !external_wp_isShallowEqual_default()(value, newValue)) {
+      value = newValue;
+    }
+    return value;
+  };
+}
 function useShallowMemo(value) {
-  const [prevValue, setPrevValue] = (0,external_wp_element_namespaceObject.useState)(value);
-  if (!external_wp_isShallowEqual_default()(prevValue, value)) {
-    setPrevValue(value);
-  }
-  return prevValue;
+  const [memo] = (0,external_wp_element_namespaceObject.useState)(createShallowMemo);
+  return memo(value);
 }
 
 /**
@@ -44713,9 +44722,7 @@ function useNestedSettingsUpdate(clientId, parentLock, allowedBlocks, prioritize
   // otherwise if the arrays change length but the first elements are equal the comparison,
   // does not works as expected.
   const _allowedBlocks = useShallowMemo(allowedBlocks);
-  const _prioritizedInserterBlocks = (0,external_wp_element_namespaceObject.useMemo)(() => prioritizedInserterBlocks,
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  prioritizedInserterBlocks);
+  const _prioritizedInserterBlocks = useShallowMemo(prioritizedInserterBlocks);
   const _templateLock = templateLock === undefined || parentLock === 'contentOnly' ? parentLock : templateLock;
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     const newSettings = {
