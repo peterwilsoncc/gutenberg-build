@@ -52968,6 +52968,52 @@ function TabbedSidebar({
 }
 /* harmony default export */ const tabbed_sidebar = ((0,external_wp_element_namespaceObject.forwardRef)(TabbedSidebar));
 
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/hooks/use-zoom-out.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+/**
+ * A hook used to set the zoomed out view, invoking the hook sets the mode.
+ *
+ * @param {boolean} zoomOut If we should zoom out or not.
+ */
+function useZoomOut(zoomOut = true) {
+  const {
+    setZoomLevel
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  const {
+    isZoomOut
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
+  const originalIsZoomOutRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    // Only set this on mount so we know what to return to when we unmount.
+    if (!originalIsZoomOutRef.current) {
+      originalIsZoomOutRef.current = isZoomOut();
+    }
+
+    // The effect opens the zoom-out view if we want it open and the canvas is not currently zoomed-out.
+    if (zoomOut && isZoomOut() === false) {
+      setZoomLevel(50);
+    } else if (!zoomOut && isZoomOut() && originalIsZoomOutRef.current !== isZoomOut()) {
+      setZoomLevel(originalIsZoomOutRef.current ? 50 : 100);
+    }
+    return () => {
+      if (isZoomOut() && isZoomOut() !== originalIsZoomOutRef.current) {
+        setZoomLevel(originalIsZoomOutRef.current ? 50 : 100);
+      }
+    };
+  }, [isZoomOut, setZoomLevel, zoomOut]);
+}
+
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inserter/menu.js
 /**
  * External dependencies
@@ -52986,6 +53032,7 @@ function TabbedSidebar({
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -53030,6 +53077,8 @@ function InserterMenu({
     }
   }
   const [selectedTab, setSelectedTab] = (0,external_wp_element_namespaceObject.useState)(getInitialTab());
+  const shouldUseZoomOut = selectedTab === 'patterns' || selectedTab === 'media';
+  useZoomOut(shouldUseZoomOut);
   const [destinationRootClientId, onInsertBlocks, onToggleInsertionPoint] = use_insertion_point({
     rootClientId,
     clientId,
@@ -55958,52 +56007,6 @@ function useCachedTruthy(value) {
     }
   }, [value]);
   return cachedValue;
-}
-
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/hooks/use-zoom-out.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-/**
- * A hook used to set the zoomed out view, invoking the hook sets the mode.
- *
- * @param {boolean} zoomOut If we should zoom out or not.
- */
-function useZoomOut(zoomOut = true) {
-  const {
-    setZoomLevel
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
-  const {
-    isZoomOut
-  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
-  const originalIsZoomOutRef = (0,external_wp_element_namespaceObject.useRef)(null);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    // Only set this on mount so we know what to return to when we unmount.
-    if (!originalIsZoomOutRef.current) {
-      originalIsZoomOutRef.current = isZoomOut();
-    }
-
-    // The effect opens the zoom-out view if we want it open and the canvas is not currently zoomed-out.
-    if (zoomOut && isZoomOut() === false) {
-      setZoomLevel(50);
-    } else if (!zoomOut && isZoomOut() && originalIsZoomOutRef.current !== isZoomOut()) {
-      setZoomLevel(originalIsZoomOutRef.current ? 50 : 100);
-    }
-    return () => {
-      if (isZoomOut() && isZoomOut() !== originalIsZoomOutRef.current) {
-        setZoomLevel(originalIsZoomOutRef.current ? 50 : 100);
-      }
-    };
-  }, [isZoomOut, setZoomLevel, zoomOut]);
 }
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/hooks/index.js
