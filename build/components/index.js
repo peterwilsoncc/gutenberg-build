@@ -45867,6 +45867,28 @@ function NameInput({
   });
 }
 
+/*
+ * Deduplicates the slugs of the provided elements.
+ */
+function deduplicateElementSlugs(elements) {
+  const slugCounts = {};
+  return elements.map(element => {
+    var _newSlug;
+    let newSlug;
+    const {
+      slug
+    } = element;
+    slugCounts[slug] = (slugCounts[slug] || 0) + 1;
+    if (slugCounts[slug] > 1) {
+      newSlug = `${slug}-${slugCounts[slug] - 1}`;
+    }
+    return {
+      ...element,
+      slug: (_newSlug = newSlug) !== null && _newSlug !== void 0 ? _newSlug : slug
+    };
+  });
+}
+
 /**
  * Returns a name and slug for a palette item. The name takes the format "Color + id".
  * To ensure there are no duplicate ids, this function checks all slugs.
@@ -46027,7 +46049,7 @@ function PaletteEditListView({
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     elementsReferenceRef.current = elements;
   }, [elements]);
-  const debounceOnChange = (0,external_wp_compose_namespaceObject.useDebounce)(onChange, 100);
+  const debounceOnChange = (0,external_wp_compose_namespaceObject.useDebounce)(updatedElements => onChange(deduplicateElementSlugs(updatedElements)), 100);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(v_stack_component, {
     spacing: 3,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(item_group_component, {
