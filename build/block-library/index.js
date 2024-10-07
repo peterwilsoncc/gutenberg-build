@@ -48518,7 +48518,7 @@ function PatternSelectionModal({
           __nextHasNoMarginBottom: true,
           onChange: setSearchValue,
           value: searchValue,
-          label: (0,external_wp_i18n_namespaceObject.__)('Search for patterns'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Search'),
           placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockContextProvider, {
@@ -61158,7 +61158,7 @@ function TemplatePartSelectionModal({
         __nextHasNoMarginBottom: true,
         onChange: setSearchValue,
         value: searchValue,
-        label: (0,external_wp_i18n_namespaceObject.__)('Search for replacements'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Search'),
         placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
       })
     }), hasTemplateParts && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {

@@ -22761,9 +22761,7 @@ const DEFAULT_LINK_SETTINGS = [{
 
 
 
-
 function LinkControlSearchResults({
-  instanceId,
   withCreateSuggestion,
   currentInputValue,
   handleSuggestionClick,
@@ -22783,23 +22781,14 @@ function LinkControlSearchResults({
   const shouldShowCreateSuggestion = withCreateSuggestion && !isSingleDirectEntryResult && !isInitialSuggestions;
   // If the query has a specified type, then we can skip showing them in the result. See #24839.
   const shouldShowSuggestionsTypes = !suggestionsQuery?.type;
-
-  // According to guidelines aria-label should be added if the label
-  // itself is not visible.
-  // See: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role
-  const searchResultsLabelId = `block-editor-link-control-search-results-label-${instanceId}`;
   const labelText = isInitialSuggestions ? (0,external_wp_i18n_namespaceObject.__)('Suggestions') : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: search term. */
   (0,external_wp_i18n_namespaceObject.__)('Search results for "%s"'), currentInputValue);
-  const searchResultsLabel = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
-    id: searchResultsLabelId,
-    children: labelText
-  });
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "block-editor-link-control__search-results-wrapper",
-    children: [searchResultsLabel, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...suggestionsListProps,
       className: resultsListClasses,
-      "aria-labelledby": searchResultsLabelId,
+      "aria-label": labelText,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
         children: suggestions.map((suggestion, index) => {
           if (shouldShowCreateSuggestion && CREATE_TYPE === suggestion.type) {
@@ -22838,7 +22827,7 @@ function LinkControlSearchResults({
           }, `${suggestion.id}-${suggestion.type}`);
         })
       })
-    })]
+    })
   });
 }
 
@@ -23009,7 +22998,6 @@ function useSearchHandler(suggestionsQuery, allowDirectEntry, withCreateSuggesti
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -23050,7 +23038,6 @@ const LinkControlSearchInput = (0,external_wp_element_namespaceObject.forwardRef
 }, ref) => {
   const genericSearchHandler = useSearchHandler(suggestionsQuery, allowDirectEntry, withCreateSuggestion, withURLSuggestion);
   const searchHandler = showSuggestions ? fetchSuggestions || genericSearchHandler : noopSearchHandler;
-  const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkControlSearchInput);
   const [focusedSuggestion, setFocusedSuggestion] = (0,external_wp_element_namespaceObject.useState)();
 
   /**
@@ -23066,7 +23053,6 @@ const LinkControlSearchInput = (0,external_wp_element_namespaceObject.forwardRef
   };
   const handleRenderSuggestions = props => renderSuggestions({
     ...props,
-    instanceId,
     withCreateSuggestion,
     createSuggestionButtonText,
     suggestionsQuery,
@@ -23103,16 +23089,17 @@ const LinkControlSearchInput = (0,external_wp_element_namespaceObject.forwardRef
       }, suggestion);
     }
   };
+  const inputLabel = placeholder !== null && placeholder !== void 0 ? placeholder : (0,external_wp_i18n_namespaceObject.__)('Search or type URL');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "block-editor-link-control__search-input-container",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(url_input, {
       disableSuggestions: currentLink?.url === value,
-      label: (0,external_wp_i18n_namespaceObject.__)('Link'),
+      label: inputLabel,
       hideLabelFromVision: hideLabelFromVision,
       className: className,
       value: value,
       onChange: onInputChange,
-      placeholder: placeholder !== null && placeholder !== void 0 ? placeholder : (0,external_wp_i18n_namespaceObject.__)('Search or type URL'),
+      placeholder: inputLabel,
       __experimentalRenderSuggestions: showSuggestions ? handleRenderSuggestions : null,
       __experimentalFetchLinkSuggestions: searchHandler,
       __experimentalHandleURLSuggestions: true,
@@ -50477,7 +50464,7 @@ function PatternsExplorerSearch({
       __nextHasNoMarginBottom: true,
       onChange: setSearchValue,
       value: searchValue,
-      label: (0,external_wp_i18n_namespaceObject.__)('Search for patterns'),
+      label: (0,external_wp_i18n_namespaceObject.__)('Search'),
       placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
     })
   });
@@ -53130,7 +53117,7 @@ function InserterMenu({
           setFilterValue(value);
         },
         value: filterValue,
-        label: (0,external_wp_i18n_namespaceObject.__)('Search for blocks and patterns'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Search'),
         placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
       }), !!delayedFilterValue && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(search_results, {
         filterValue: delayedFilterValue,
@@ -53365,7 +53352,7 @@ function QuickInserter({
       onChange: value => {
         setFilterValue(value);
       },
-      label: (0,external_wp_i18n_namespaceObject.__)('Search for blocks and patterns'),
+      label: (0,external_wp_i18n_namespaceObject.__)('Search'),
       placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "block-editor-inserter__quick-inserter-results",
