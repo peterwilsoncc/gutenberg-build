@@ -2560,21 +2560,15 @@ function useCommands() {
 
 
 
-function usePaddingAppender() {
+
+// Ruleset to add space for the typewriter effect. When typing in the last
+// block, there needs to be room to scroll up.
+const CSS = ':root :where(.editor-styles-wrapper)::after {content: ""; display: block; height: 40vh;}';
+function usePaddingAppender(enabled) {
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
-  return (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
+  const effect = (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
     function onMouseDown(event) {
       if (event.target !== node) {
-        return;
-      }
-      const {
-        ownerDocument
-      } = node;
-      const {
-        defaultView
-      } = ownerDocument;
-      const pseudoHeight = defaultView.parseInt(defaultView.getComputedStyle(node, ':after').height, 10);
-      if (!pseudoHeight) {
         return;
       }
 
@@ -2606,6 +2600,7 @@ function usePaddingAppender() {
       node.removeEventListener('mousedown', onMouseDown);
     };
   }, [registry]);
+  return enabled ? [effect, CSS] : [];
 }
 
 ;// CONCATENATED MODULE: ./packages/edit-post/build-module/components/layout/use-should-iframe.js
@@ -2795,30 +2790,17 @@ const {
   BlockKeyboardShortcuts
 } = unlock(external_wp_blockLibrary_namespaceObject.privateApis);
 const DESIGN_POST_TYPES = ['wp_template', 'wp_template_part', 'wp_block', 'wp_navigation'];
-function useEditorStyles() {
+function useEditorStyles(...additionalStyles) {
   const {
     hasThemeStyleSupport,
-    editorSettings,
-    isZoomedOutView,
-    renderingMode,
-    postType
+    editorSettings
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      __unstableGetEditorMode
-    } = select(external_wp_blockEditor_namespaceObject.store);
-    const {
-      getCurrentPostType,
-      getRenderingMode
-    } = select(external_wp_editor_namespaceObject.store);
-    const _postType = getCurrentPostType();
     return {
       hasThemeStyleSupport: select(store).isFeatureActive('themeStyles'),
-      editorSettings: select(external_wp_editor_namespaceObject.store).getEditorSettings(),
-      isZoomedOutView: __unstableGetEditorMode() === 'zoom-out',
-      renderingMode: getRenderingMode(),
-      postType: _postType
+      editorSettings: select(external_wp_editor_namespaceObject.store).getEditorSettings()
     };
   }, []);
+  const addedStyles = additionalStyles.join('\n');
 
   // Compute the default styles.
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
@@ -2843,16 +2825,13 @@ function useEditorStyles() {
       });
     }
     const baseStyles = hasThemeStyles ? (_editorSettings$style3 = editorSettings.styles) !== null && _editorSettings$style3 !== void 0 ? _editorSettings$style3 : [] : defaultEditorStyles;
-
-    // Add a space for the typewriter effect. When typing in the last block,
-    // there needs to be room to scroll up.
-    if (!isZoomedOutView && renderingMode === 'post-only' && !DESIGN_POST_TYPES.includes(postType)) {
+    if (addedStyles) {
       return [...baseStyles, {
-        css: ':root :where(.editor-styles-wrapper)::after {content: ""; display: block; height: 40vh;}'
+        css: addedStyles
       }];
     }
     return baseStyles;
-  }, [editorSettings.defaultEditorStyles, editorSettings.disableLayoutStyles, editorSettings.styles, hasThemeStyleSupport, postType]);
+  }, [editorSettings.defaultEditorStyles, editorSettings.disableLayoutStyles, editorSettings.styles, hasThemeStyleSupport, addedStyles]);
 }
 
 /**
@@ -3062,7 +3041,6 @@ function Layout({
 }) {
   layout_useCommands();
   useCommands();
-  const paddingAppenderRef = usePaddingAppender();
   const shouldIframe = useShouldIframe();
   const {
     createErrorNotice
@@ -3086,7 +3064,8 @@ function Layout({
     showMetaBoxes,
     hasHistory,
     isWelcomeGuideVisible,
-    templateId
+    templateId,
+    enablePaddingAppender
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _getPostType$viewable;
     const {
@@ -3106,18 +3085,28 @@ function Layout({
       kind: 'postType',
       name: 'wp_template'
     });
+    const {
+      __unstableGetEditorMode
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    const {
+      getEditorMode,
+      getRenderingMode
+    } = select(external_wp_editor_namespaceObject.store);
+    const isRenderingPostOnly = getRenderingMode() === 'post-only';
     return {
-      mode: select(external_wp_editor_namespaceObject.store).getEditorMode(),
+      mode: getEditorMode(),
       isFullscreenActive: select(store).isFeatureActive('fullscreenMode'),
       hasActiveMetaboxes: select(store).hasMetaBoxes(),
       hasBlockSelected: !!select(external_wp_blockEditor_namespaceObject.store).getBlockSelectionStart(),
       showIconLabels: get('core', 'showIconLabels'),
       isDistractionFree: get('core', 'distractionFree'),
-      showMetaBoxes: !DESIGN_POST_TYPES.includes(currentPostType) && select(external_wp_editor_namespaceObject.store).getRenderingMode() === 'post-only',
+      showMetaBoxes: !DESIGN_POST_TYPES.includes(currentPostType) && isRenderingPostOnly,
       isWelcomeGuideVisible: isFeatureActive('welcomeGuide'),
-      templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate ? getEditedPostTemplateId() : null
+      templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate ? getEditedPostTemplateId() : null,
+      enablePaddingAppender: __unstableGetEditorMode() !== 'zoom-out' && isRenderingPostOnly && !DESIGN_POST_TYPES.includes(currentPostType)
     };
   }, [currentPostType, isEditingTemplate, settings.supportsTemplateMode]);
+  const [paddingAppenderRef, paddingStyle] = usePaddingAppender(enablePaddingAppender);
 
   // Set the right context for the command palette
   const commandContext = hasBlockSelected ? 'block-selection-edit' : 'entity-edit';
@@ -3128,7 +3117,7 @@ function Layout({
     onNavigateToPreviousEntityRecord,
     defaultRenderingMode: 'post-only'
   }), [settings, onNavigateToEntityRecord, onNavigateToPreviousEntityRecord]);
-  const styles = useEditorStyles();
+  const styles = useEditorStyles(paddingStyle);
 
   // We need to add the show-icon-labels class to the body element so it is applied to modals.
   if (showIconLabels) {
