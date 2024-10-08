@@ -9438,6 +9438,9 @@ function dist_floating_ui_utils_rectToClientRect(rect) {
 
 
 ;// CONCATENATED MODULE: ./node_modules/@floating-ui/dom/node_modules/@floating-ui/utils/dist/floating-ui.utils.dom.mjs
+function hasWindow() {
+  return typeof window !== 'undefined';
+}
 function getNodeName(node) {
   if (isNode(node)) {
     return (node.nodeName || '').toLowerCase();
@@ -9456,17 +9459,25 @@ function getDocumentElement(node) {
   return (_ref = (isNode(node) ? node.ownerDocument : node.document) || window.document) == null ? void 0 : _ref.documentElement;
 }
 function isNode(value) {
+  if (!hasWindow()) {
+    return false;
+  }
   return value instanceof Node || value instanceof floating_ui_utils_dom_getWindow(value).Node;
 }
 function isElement(value) {
+  if (!hasWindow()) {
+    return false;
+  }
   return value instanceof Element || value instanceof floating_ui_utils_dom_getWindow(value).Element;
 }
 function isHTMLElement(value) {
+  if (!hasWindow()) {
+    return false;
+  }
   return value instanceof HTMLElement || value instanceof floating_ui_utils_dom_getWindow(value).HTMLElement;
 }
 function isShadowRoot(value) {
-  // Browsers without `ShadowRoot` support.
-  if (typeof ShadowRoot === 'undefined') {
+  if (!hasWindow() || typeof ShadowRoot === 'undefined') {
     return false;
   }
   return value instanceof ShadowRoot || value instanceof floating_ui_utils_dom_getWindow(value).ShadowRoot;
@@ -9492,9 +9503,9 @@ function isTopLayer(element) {
     }
   });
 }
-function isContainingBlock(element) {
+function isContainingBlock(elementOrCss) {
   const webkit = isWebKit();
-  const css = floating_ui_utils_dom_getComputedStyle(element);
+  const css = isElement(elementOrCss) ? floating_ui_utils_dom_getComputedStyle(elementOrCss) : elementOrCss;
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block
   return css.transform !== 'none' || css.perspective !== 'none' || (css.containerType ? css.containerType !== 'normal' : false) || !webkit && (css.backdropFilter ? css.backdropFilter !== 'none' : false) || !webkit && (css.filter ? css.filter !== 'none' : false) || ['transform', 'perspective', 'filter'].some(value => (css.willChange || '').includes(value)) || ['paint', 'layout', 'strict', 'content'].some(value => (css.contain || '').includes(value));
@@ -9502,11 +9513,10 @@ function isContainingBlock(element) {
 function getContainingBlock(element) {
   let currentNode = getParentNode(element);
   while (isHTMLElement(currentNode) && !isLastTraversableNode(currentNode)) {
-    if (isTopLayer(currentNode)) {
-      return null;
-    }
     if (isContainingBlock(currentNode)) {
       return currentNode;
+    } else if (isTopLayer(currentNode)) {
+      return null;
     }
     currentNode = getParentNode(currentNode);
   }
@@ -9571,9 +9581,13 @@ function getOverflowAncestors(node, list, traverseIframes) {
   const isBody = scrollableAncestor === ((_node$ownerDocument2 = node.ownerDocument) == null ? void 0 : _node$ownerDocument2.body);
   const win = floating_ui_utils_dom_getWindow(scrollableAncestor);
   if (isBody) {
-    return list.concat(win, win.visualViewport || [], isOverflowElement(scrollableAncestor) ? scrollableAncestor : [], win.frameElement && traverseIframes ? getOverflowAncestors(win.frameElement) : []);
+    const frameElement = getFrameElement(win);
+    return list.concat(win, win.visualViewport || [], isOverflowElement(scrollableAncestor) ? scrollableAncestor : [], frameElement && traverseIframes ? getOverflowAncestors(frameElement) : []);
   }
   return list.concat(scrollableAncestor, getOverflowAncestors(scrollableAncestor, [], traverseIframes));
+}
+function getFrameElement(win) {
+  return win.parent && Object.getPrototypeOf(win.parent) ? win.frameElement : null;
 }
 
 
@@ -11645,7 +11659,7 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
-/* global Reflect, Promise, SuppressedError, Symbol */
+/* global Reflect, Promise, SuppressedError, Symbol, Iterator */
 
 var extendStatics = function(d, b) {
   extendStatics = Object.setPrototypeOf ||
@@ -11756,8 +11770,8 @@ function __awaiter(thisArg, _arguments, P, generator) {
 }
 
 function __generator(thisArg, body) {
-  var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-  return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+  var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+  return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
   function verb(n) { return function (v) { return step([n, v]); }; }
   function step(op) {
       if (f) throw new TypeError("Generator is already executing.");
@@ -11861,7 +11875,7 @@ function __await(v) {
 function __asyncGenerator(thisArg, _arguments, generator) {
   if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
   var g = generator.apply(thisArg, _arguments || []), i, q = [];
-  return i = {}, verb("next"), verb("throw"), verb("return", awaitReturn), i[Symbol.asyncIterator] = function () { return this; }, i;
+  return i = Object.create((typeof AsyncIterator === "function" ? AsyncIterator : Object).prototype), verb("next"), verb("throw"), verb("return", awaitReturn), i[Symbol.asyncIterator] = function () { return this; }, i;
   function awaitReturn(f) { return function (v) { return Promise.resolve(v).then(f, reject); }; }
   function verb(n, f) { if (g[n]) { i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; if (f) i[n] = f(i[n]); } }
   function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
@@ -11959,17 +11973,22 @@ function __disposeResources(env) {
     env.error = env.hasError ? new _SuppressedError(e, env.error, "An error was suppressed during disposal.") : e;
     env.hasError = true;
   }
+  var r, s = 0;
   function next() {
-    while (env.stack.length) {
-      var rec = env.stack.pop();
+    while (r = env.stack.pop()) {
       try {
-        var result = rec.dispose && rec.dispose.call(rec.value);
-        if (rec.async) return Promise.resolve(result).then(next, function(e) { fail(e); return next(); });
+        if (!r.async && s === 1) return s = 0, env.stack.push(r), Promise.resolve().then(next);
+        if (r.dispose) {
+          var result = r.dispose.call(r.value);
+          if (r.async) return s |= 2, Promise.resolve(result).then(next, function(e) { fail(e); return next(); });
+        }
+        else s |= 1;
       }
       catch (e) {
-          fail(e);
+        fail(e);
       }
     }
+    if (s === 1) return env.hasError ? Promise.reject(env.error) : Promise.resolve();
     if (env.hasError) throw env.error;
   }
   return next();
@@ -37126,7 +37145,8 @@ const wrapperMargin = ({
   }
   return '';
 };
-const range_control_styles_Wrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
+const range_control_styles_Wrapper = /*#__PURE__*/emotion_styled_base_browser_esm('div',  true ? {
+  shouldForwardProp: prop => !['color', '__nextHasNoMarginBottom', 'marks'].includes(prop),
   target: "e1epgpqk13"
 } : 0)("display:block;flex:1;position:relative;width:100%;", wrapperColor, ";", rangeHeight, ";", wrapperMargin, ";" + ( true ? "" : 0));
 const BeforeIconWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
@@ -37232,9 +37252,7 @@ const InputRange = /*#__PURE__*/emotion_styled_base_browser_esm("input",  true ?
 const tooltipShow = ({
   show
 }) => {
-  return /*#__PURE__*/emotion_react_browser_esm_css({
-    opacity: show ? 1 : 0
-  },  true ? "" : 0,  true ? "" : 0);
+  return /*#__PURE__*/emotion_react_browser_esm_css("display:", show ? 'inline-block' : 'none', ";opacity:", show ? 1 : 0, ";@media not ( prefers-reduced-motion ){transition:opacity 120ms ease,display 120ms ease allow-discrete;}@starting-style{opacity:0;}" + ( true ? "" : 0),  true ? "" : 0);
 };
 var range_control_styles_ref =  true ? {
   name: "1cypxip",
@@ -37255,7 +37273,7 @@ const tooltipPosition = ({
 };
 const range_control_styles_Tooltip = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1epgpqk2"
-} : 0)("background:rgba( 0, 0, 0, 0.8 );border-radius:", config_values.radiusSmall, ";color:white;display:inline-block;font-size:12px;min-width:32px;opacity:0;padding:4px 8px;pointer-events:none;position:absolute;text-align:center;user-select:none;line-height:1.4;@media not ( prefers-reduced-motion ){transition:opacity 120ms ease;}", tooltipShow, ";", tooltipPosition, ";", rtl({
+} : 0)("background:rgba( 0, 0, 0, 0.8 );border-radius:", config_values.radiusSmall, ";color:white;font-size:12px;min-width:32px;padding:4px 8px;pointer-events:none;position:absolute;text-align:center;user-select:none;line-height:1.4;", tooltipShow, ";", tooltipPosition, ";", rtl({
   transform: 'translateX(-50%)'
 }, {
   transform: 'translateX(50%)'
@@ -37491,7 +37509,7 @@ function SimpleTooltip(props) {
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(range_control_styles_Tooltip, {
     ...restProps,
-    "aria-hidden": show,
+    "aria-hidden": "false",
     className: classes,
     position: position,
     show: show,
@@ -46004,6 +46022,28 @@ function NameInput({
   });
 }
 
+/*
+ * Deduplicates the slugs of the provided elements.
+ */
+function deduplicateElementSlugs(elements) {
+  const slugCounts = {};
+  return elements.map(element => {
+    var _newSlug;
+    let newSlug;
+    const {
+      slug
+    } = element;
+    slugCounts[slug] = (slugCounts[slug] || 0) + 1;
+    if (slugCounts[slug] > 1) {
+      newSlug = `${slug}-${slugCounts[slug] - 1}`;
+    }
+    return {
+      ...element,
+      slug: (_newSlug = newSlug) !== null && _newSlug !== void 0 ? _newSlug : slug
+    };
+  });
+}
+
 /**
  * Returns a name and slug for a palette item. The name takes the format "Color + id".
  * To ensure there are no duplicate ids, this function checks all slugs.
@@ -46164,7 +46204,7 @@ function PaletteEditListView({
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     elementsReferenceRef.current = elements;
   }, [elements]);
-  const debounceOnChange = (0,external_wp_compose_namespaceObject.useDebounce)(onChange, 100);
+  const debounceOnChange = (0,external_wp_compose_namespaceObject.useDebounce)(updatedElements => onChange(deduplicateElementSlugs(updatedElements)), 100);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(v_stack_component, {
     spacing: 3,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(item_group_component, {
@@ -55720,6 +55760,7 @@ function DropZoneComponent({
       setType(_type);
     },
     onDragEnd() {
+      setIsDraggingOverElement(false);
       setIsDraggingOverDocument(false);
       setType(undefined);
     },
@@ -55732,8 +55773,6 @@ function DropZoneComponent({
   });
   const classes = dist_clsx('components-drop-zone', className, {
     'is-active': (isDraggingOverDocument || isDraggingOverElement) && (type === 'file' && onFilesDrop || type === 'html' && onHTMLDrop || type === 'default' && onDrop),
-    'has-dragged-out': !isDraggingOverElement,
-    // Keeping the following classnames for legacy purposes
     'is-dragging-over-document': isDraggingOverDocument,
     'is-dragging-over-element': isDraggingOverElement,
     [`is-dragging-${type}`]: !!type
@@ -60334,8 +60373,7 @@ function lexer(str) {
 function dist_es2015_parse(str, options) {
     if (options === void 0) { options = {}; }
     var tokens = lexer(str);
-    var _a = options.prefixes, prefixes = _a === void 0 ? "./" : _a;
-    var defaultPattern = "[^".concat(escapeString(options.delimiter || "/#?"), "]+?");
+    var _a = options.prefixes, prefixes = _a === void 0 ? "./" : _a, _b = options.delimiter, delimiter = _b === void 0 ? "/#?" : _b;
     var result = [];
     var key = 0;
     var i = 0;
@@ -60359,6 +60397,24 @@ function dist_es2015_parse(str, options) {
         }
         return result;
     };
+    var isSafe = function (value) {
+        for (var _i = 0, delimiter_1 = delimiter; _i < delimiter_1.length; _i++) {
+            var char = delimiter_1[_i];
+            if (value.indexOf(char) > -1)
+                return true;
+        }
+        return false;
+    };
+    var safePattern = function (prefix) {
+        var prev = result[result.length - 1];
+        var prevText = prefix || (prev && typeof prev === "string" ? prev : "");
+        if (prev && !prevText) {
+            throw new TypeError("Must have text between two parameters, missing text after \"".concat(prev.name, "\""));
+        }
+        if (!prevText || isSafe(prevText))
+            return "[^".concat(escapeString(delimiter), "]+?");
+        return "(?:(?!".concat(escapeString(prevText), ")[^").concat(escapeString(delimiter), "])+?");
+    };
     while (i < tokens.length) {
         var char = tryConsume("CHAR");
         var name = tryConsume("NAME");
@@ -60377,7 +60433,7 @@ function dist_es2015_parse(str, options) {
                 name: name || key++,
                 prefix: prefix,
                 suffix: "",
-                pattern: pattern || defaultPattern,
+                pattern: pattern || safePattern(prefix),
                 modifier: tryConsume("MODIFIER") || "",
             });
             continue;
@@ -60400,7 +60456,7 @@ function dist_es2015_parse(str, options) {
             mustConsume("CLOSE");
             result.push({
                 name: name_1 || (pattern_1 ? key++ : ""),
-                pattern: name_1 && !pattern_1 ? defaultPattern : pattern_1,
+                pattern: name_1 && !pattern_1 ? safePattern(prefix) : pattern_1,
                 prefix: prefix,
                 suffix: suffix,
                 modifier: tryConsume("MODIFIER") || "",
@@ -60593,11 +60649,9 @@ function tokensToRegexp(tokens, keys, options) {
                 }
                 else {
                     if (token.modifier === "+" || token.modifier === "*") {
-                        route += "((?:".concat(token.pattern, ")").concat(token.modifier, ")");
+                        throw new TypeError("Can not repeat \"".concat(token.name, "\" without a prefix and suffix"));
                     }
-                    else {
-                        route += "(".concat(token.pattern, ")").concat(token.modifier);
-                    }
+                    route += "(".concat(token.pattern, ")").concat(token.modifier);
                 }
             }
             else {

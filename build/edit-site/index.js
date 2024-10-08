@@ -7701,8 +7701,6 @@ const external_wp_plugins_namespaceObject = window["wp"]["plugins"];
 const external_wp_router_namespaceObject = window["wp"]["router"];
 ;// CONCATENATED MODULE: ./node_modules/clsx/dist/clsx.mjs
 function clsx_r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=clsx_r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=clsx_r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
-;// CONCATENATED MODULE: external ["wp","keyboardShortcuts"]
-const external_wp_keyboardShortcuts_namespaceObject = window["wp"]["keyboardShortcuts"];
 ;// CONCATENATED MODULE: external ["wp","commands"]
 const external_wp_commands_namespaceObject = window["wp"]["commands"];
 ;// CONCATENATED MODULE: external ["wp","coreCommands"]
@@ -8445,6 +8443,8 @@ function ResizableFrame({
 }
 /* harmony default export */ const resizable_frame = (ResizableFrame);
 
+;// CONCATENATED MODULE: external ["wp","keyboardShortcuts"]
+const external_wp_keyboardShortcuts_namespaceObject = window["wp"]["keyboardShortcuts"];
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/keyboard-shortcuts/register.js
 /**
  * WordPress dependencies
@@ -13497,7 +13497,6 @@ function useSyncCanvasModeWithURL() {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -13535,26 +13534,16 @@ function Layout({
   const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   const toggleRef = (0,external_wp_element_namespaceObject.useRef)();
   const {
-    canvasMode,
-    previousShortcut,
-    nextShortcut
+    canvasMode
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getAllShortcutKeyCombinations
-    } = select(external_wp_keyboardShortcuts_namespaceObject.store);
     const {
       getCanvasMode
     } = unlock(select(store));
     return {
-      canvasMode: getCanvasMode(),
-      previousShortcut: getAllShortcutKeyCombinations('core/editor/previous-region'),
-      nextShortcut: getAllShortcutKeyCombinations('core/editor/next-region')
+      canvasMode: getCanvasMode()
     };
   }, []);
-  const navigateRegionsProps = (0,external_wp_components_namespaceObject.__unstableUseNavigateRegions)({
-    previous: previousShortcut,
-    next: nextShortcut
-  });
+  const navigateRegionsProps = (0,external_wp_components_namespaceObject.__unstableUseNavigateRegions)();
   const disableMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
   const [canvasResizer, canvasSize] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
   const isEditorLoading = useIsSiteEditorLoading();
@@ -16499,7 +16488,7 @@ function ScreenBlockList() {
       className: "edit-site-block-types-search",
       onChange: setFilterValue,
       value: filterValue,
-      label: (0,external_wp_i18n_namespaceObject.__)('Search for blocks'),
+      label: (0,external_wp_i18n_namespaceObject.__)('Search'),
       placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MemoizedBlockList, {
       filterValue: deferredFilterValue
@@ -17356,7 +17345,7 @@ function FontSizes() {
       isBordered: true,
       isSeparated: true,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
-        path: "/typography/font-sizes/",
+        path: "/typography/font-sizes",
         "aria-label": (0,external_wp_i18n_namespaceObject.__)('Edit font size presets'),
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
           direction: "row",
@@ -23658,6 +23647,19 @@ function FontFamilyItem({
 const {
   useGlobalSetting: font_families_useGlobalSetting
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
+
+/**
+ * Maps the fonts with the source, if available.
+ *
+ * @param {Array}  fonts  The fonts to map.
+ * @param {string} source The source of the fonts.
+ * @return {Array} The mapped fonts.
+ */
+function mapFontsWithSource(fonts, source) {
+  return fonts ? fonts.map(f => setUIValuesNeeded(f, {
+    source
+  })) : [];
+}
 function FontFamilies() {
   const {
     baseCustomFonts,
@@ -23666,13 +23668,10 @@ function FontFamilies() {
   } = (0,external_wp_element_namespaceObject.useContext)(FontLibraryContext);
   const [fontFamilies] = font_families_useGlobalSetting('typography.fontFamilies');
   const [baseFontFamilies] = font_families_useGlobalSetting('typography.fontFamilies', undefined, 'base');
-  const themeFonts = fontFamilies?.theme ? fontFamilies.theme.map(f => setUIValuesNeeded(f, {
-    source: 'theme'
-  })).sort((a, b) => a.name.localeCompare(b.name)) : [];
-  const customFonts = fontFamilies?.custom ? fontFamilies.custom.map(f => setUIValuesNeeded(f, {
-    source: 'custom'
-  })).sort((a, b) => a.name.localeCompare(b.name)) : [];
-  const hasFonts = 0 < customFonts.length || 0 < themeFonts.length;
+  const themeFonts = mapFontsWithSource(fontFamilies?.theme, 'theme');
+  const customFonts = mapFontsWithSource(fontFamilies?.custom, 'custom');
+  const activeFonts = [...themeFonts, ...customFonts].sort((a, b) => a.name.localeCompare(b.name));
+  const hasFonts = 0 < activeFonts.length;
   const hasInstalledFonts = hasFonts || baseFontFamilies?.theme?.length > 0 || baseCustomFonts?.length > 0;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [!!modalTabOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_library_modal, {
@@ -23680,7 +23679,7 @@ function FontFamilies() {
       defaultTabId: modalTabOpen
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       spacing: 4,
-      children: [[...themeFonts, ...customFonts].length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: [activeFonts.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(subtitle, {
           level: 3,
           children: (0,external_wp_i18n_namespaceObject.__)('Fonts')
@@ -23688,7 +23687,7 @@ function FontFamilies() {
           size: "large",
           isBordered: true,
           isSeparated: true,
-          children: themeFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_family_item, {
+          children: activeFonts.map(font => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_family_item, {
             font: font
           }, font.slug))
         })]
@@ -24222,7 +24221,7 @@ function FontSize() {
       origin,
       slug
     },
-    goTo
+    goBack
   } = (0,external_wp_components_namespaceObject.useNavigator)();
   const [fontSizes, setFontSizes] = font_size_useGlobalSetting('typography.fontSizes');
   const [globalFluid] = font_size_useGlobalSetting('typography.fluid');
@@ -24235,12 +24234,10 @@ function FontSize() {
 
   // Navigate to the font sizes list if the font size is not available.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!fontSize) {
-      goTo('/typography/font-sizes/', {
-        isBack: true
-      });
+    if (!!slug && !fontSize) {
+      goBack();
     }
-  }, [fontSize, goTo]);
+  }, [slug, fontSize, goBack]);
   if (!origin || !slug || !fontSize) {
     return null;
   }
@@ -24329,8 +24326,7 @@ function FontSize() {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header, {
           title: fontSize.name,
           description: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: font size preset name. */
-          (0,external_wp_i18n_namespaceObject.__)('Manage the font size %s.'), fontSize.name),
-          onBack: () => goTo('/typography/font-sizes/')
+          (0,external_wp_i18n_namespaceObject.__)('Manage the font size %s.'), fontSize.name)
         }), origin === 'custom' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
             marginTop: 3,
@@ -24359,6 +24355,8 @@ function FontSize() {
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalView, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
           paddingX: 4,
+          marginBottom: 0,
+          paddingBottom: 6,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
             spacing: 4,
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
@@ -25580,13 +25578,27 @@ const presetShadowMenuItems = [{
 }];
 function ShadowsEditPanel() {
   const {
+    goBack,
     params: {
       category,
       slug
-    },
-    goTo
+    }
   } = (0,external_wp_components_namespaceObject.useNavigator)();
   const [shadows, setShadows] = shadows_edit_panel_useGlobalSetting(`shadow.presets.${category}`);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    const hasCurrentShadow = shadows?.some(shadow => shadow.slug === slug);
+    // If the shadow being edited doesn't exist anymore in the global styles setting, navigate back
+    // to prevent the user from editing a non-existent shadow entry.
+    // This can happen, for example:
+    // - when the user deletes the shadow
+    // - when the user resets the styles while editing a custom shadow
+    //
+    // The check on the slug is necessary to prevent a double back navigation when the user triggers
+    // a backward navigation by interacting with the screen's UI.
+    if (!!slug && !hasCurrentShadow) {
+      goBack();
+    }
+  }, [shadows, slug, goBack]);
   const [baseShadows] = shadows_edit_panel_useGlobalSetting(`shadow.presets.${category}`, undefined, 'base');
   const [selectedShadow, setSelectedShadow] = (0,external_wp_element_namespaceObject.useState)(() => (shadows || []).find(shadow => shadow.slug === slug));
   const baseSelectedShadow = (0,external_wp_element_namespaceObject.useMemo)(() => (baseShadows || []).find(b => b.slug === slug), [baseShadows, slug]);
@@ -25619,9 +25631,7 @@ function ShadowsEditPanel() {
     }
   };
   const handleShadowDelete = () => {
-    const updatedShadows = shadows.filter(s => s.slug !== slug);
-    setShadows(updatedShadows);
-    goTo(`/shadows`);
+    setShadows(shadows.filter(s => s.slug !== slug));
   };
   const handleShadowRename = newName => {
     if (!newName) {
@@ -27967,7 +27977,7 @@ function GlobalStylesUI() {
       path: "/typography",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(screen_typography, {})
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesNavigationScreen, {
-      path: "/typography/font-sizes/",
+      path: "/typography/font-sizes",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes, {})
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesNavigationScreen, {
       path: "/typography/font-sizes/:origin/:slug",
@@ -28718,7 +28728,6 @@ function EditSiteEditor({
         'show-icon-labels': showIconLabels
       }),
       styles: styles,
-      enableRegionNavigation: false,
       customSaveButton: _isPreviewingTheme && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SaveButton, {
         size: "compact"
       }),
@@ -35696,7 +35705,7 @@ const unseen = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
   viewBox: "0 0 24 24",
   xmlns: "http://www.w3.org/2000/svg",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4.67 10.664s-2.09 1.11-2.917 1.582l.494.87 1.608-.914.002.002c.343.502.86 1.17 1.563 1.84.348.33.742.663 1.185.976L5.57 16.744l.858.515 1.02-1.701a9.1 9.1 0 0 0 4.051 1.18V19h1v-2.263a9.1 9.1 0 0 0 4.05-1.18l1.021 1.7.858-.514-1.034-1.723c.442-.313.837-.646 1.184-.977.703-.669 1.22-1.337 1.563-1.839l.002-.003 1.61.914.493-.87c-1.75-.994-2.918-1.58-2.918-1.58l-.003.005a8.29 8.29 0 0 1-.422.689 10.097 10.097 0 0 1-1.36 1.598c-1.218 1.16-3.042 2.293-5.544 2.293-2.503 0-4.327-1.132-5.546-2.293a10.099 10.099 0 0 1-1.359-1.599 8.267 8.267 0 0 1-.422-.689l-.003-.005Z"
+    d: "M20.7 12.7s0-.1-.1-.2c0-.2-.2-.4-.4-.6-.3-.5-.9-1.2-1.6-1.8-.7-.6-1.5-1.3-2.6-1.8l-.6 1.4c.9.4 1.6 1 2.1 1.5.6.6 1.1 1.2 1.4 1.6.1.2.3.4.3.5v.1l.7-.3.7-.3Zm-5.2-9.3-1.8 4c-.5-.1-1.1-.2-1.7-.2-3 0-5.2 1.4-6.6 2.7-.7.7-1.2 1.3-1.6 1.8-.2.3-.3.5-.4.6 0 0 0 .1-.1.2s0 0 .7.3l.7.3V13c0-.1.2-.3.3-.5.3-.4.7-1 1.4-1.6 1.2-1.2 3-2.3 5.5-2.3H13v.3c-.4 0-.8-.1-1.1-.1-1.9 0-3.5 1.6-3.5 3.5s.6 2.3 1.6 2.9l-2 4.4.9.4 7.6-16.2-.9-.4Zm-3 12.6c1.7-.2 3-1.7 3-3.5s-.2-1.4-.6-1.9L12.4 16Z"
   })
 });
 /* harmony default export */ const library_unseen = (unseen);
@@ -37485,7 +37494,7 @@ function FieldItem({
               }
             }, 50);
           },
-          icon: isVisible ? library_seen : library_unseen,
+          icon: isVisible ? library_unseen : library_seen,
           label: isVisible ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: field label */
           (0,external_wp_i18n_namespaceObject.__)('Hide %s'), label) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: field label */
           (0,external_wp_i18n_namespaceObject.__)('Show %s'), label)
@@ -41664,7 +41673,7 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
-/* global Reflect, Promise, SuppressedError, Symbol */
+/* global Reflect, Promise, SuppressedError, Symbol, Iterator */
 
 var extendStatics = function(d, b) {
   extendStatics = Object.setPrototypeOf ||
@@ -41775,8 +41784,8 @@ function __awaiter(thisArg, _arguments, P, generator) {
 }
 
 function __generator(thisArg, body) {
-  var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-  return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+  var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+  return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
   function verb(n) { return function (v) { return step([n, v]); }; }
   function step(op) {
       if (f) throw new TypeError("Generator is already executing.");
@@ -41880,7 +41889,7 @@ function __await(v) {
 function __asyncGenerator(thisArg, _arguments, generator) {
   if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
   var g = generator.apply(thisArg, _arguments || []), i, q = [];
-  return i = {}, verb("next"), verb("throw"), verb("return", awaitReturn), i[Symbol.asyncIterator] = function () { return this; }, i;
+  return i = Object.create((typeof AsyncIterator === "function" ? AsyncIterator : Object).prototype), verb("next"), verb("throw"), verb("return", awaitReturn), i[Symbol.asyncIterator] = function () { return this; }, i;
   function awaitReturn(f) { return function (v) { return Promise.resolve(v).then(f, reject); }; }
   function verb(n, f) { if (g[n]) { i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; if (f) i[n] = f(i[n]); } }
   function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
@@ -41978,17 +41987,22 @@ function __disposeResources(env) {
     env.error = env.hasError ? new _SuppressedError(e, env.error, "An error was suppressed during disposal.") : e;
     env.hasError = true;
   }
+  var r, s = 0;
   function next() {
-    while (env.stack.length) {
-      var rec = env.stack.pop();
+    while (r = env.stack.pop()) {
       try {
-        var result = rec.dispose && rec.dispose.call(rec.value);
-        if (rec.async) return Promise.resolve(result).then(next, function(e) { fail(e); return next(); });
+        if (!r.async && s === 1) return s = 0, env.stack.push(r), Promise.resolve().then(next);
+        if (r.dispose) {
+          var result = r.dispose.call(r.value);
+          if (r.async) return s |= 2, Promise.resolve(result).then(next, function(e) { fail(e); return next(); });
+        }
+        else s |= 1;
       }
       catch (e) {
-          fail(e);
+        fail(e);
       }
     }
+    if (s === 1) return env.hasError ? Promise.reject(env.error) : Promise.resolve();
     if (env.hasError) throw env.error;
   }
   return next();
