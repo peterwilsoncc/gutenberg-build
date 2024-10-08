@@ -16489,10 +16489,7 @@ function EmbedPreview({
   isSelected,
   className,
   icon,
-  label,
-  insertBlocksAfter,
-  attributes,
-  setAttributes
+  label
 }) {
   const [interactive, setInteractive] = (0,external_wp_element_namespaceObject.useState)(false);
   if (!isSelected && interactive) {
@@ -16540,11 +16537,8 @@ function EmbedPreview({
   });
   /* eslint-enable jsx-a11y/no-static-element-interactions */
 
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("figure", {
-    className: dist_clsx(className, 'wp-block-embed', {
-      'is-type-video': 'video' === type
-    }),
-    children: [previewable ? embedWrapper : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Placeholder, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: previewable ? embedWrapper : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Placeholder, {
       icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
         icon: icon,
         showColors: true
@@ -16561,14 +16555,7 @@ function EmbedPreview({
         children: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: host providing embed content e.g: www.youtube.com */
         (0,external_wp_i18n_namespaceObject.__)("Embedded content from %s can't be previewed in the editor."), embedSourceUrl)
       })]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Caption, {
-      attributes: attributes,
-      setAttributes: setAttributes,
-      isSelected: isSelected,
-      insertBlocksAfter: insertBlocksAfter,
-      label: (0,external_wp_i18n_namespaceObject.__)('Embed caption text'),
-      showToolbarButton: isSelected
-    })]
+    })
   });
 }
 
@@ -16592,6 +16579,7 @@ function EmbedPreview({
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -16803,9 +16791,14 @@ const EmbedEdit = props => {
       allowResponsive: allowResponsive,
       toggleResponsive: toggleResponsive,
       switchBackToURLInput: () => setIsEditingURL(true)
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.View, {
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("figure", {
       ...blockProps,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EmbedPreview, {
+      className: dist_clsx(blockProps.className, className, {
+        [`is-type-${type}`]: type,
+        [`is-provider-${providerNameSlug}`]: providerNameSlug,
+        [`wp-block-embed-${providerNameSlug}`]: providerNameSlug
+      }),
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EmbedPreview, {
         preview: preview,
         previewable: previewable,
         className: className,
@@ -16821,7 +16814,14 @@ const EmbedEdit = props => {
         insertBlocksAfter: insertBlocksAfter,
         attributes: attributes,
         setAttributes: setAttributes
-      })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Caption, {
+        attributes: attributes,
+        setAttributes: setAttributes,
+        isSelected: isSelected,
+        insertBlocksAfter: insertBlocksAfter,
+        label: (0,external_wp_i18n_namespaceObject.__)('Embed caption text'),
+        showToolbarButton: isSelected
+      })]
     })]
   });
 };
