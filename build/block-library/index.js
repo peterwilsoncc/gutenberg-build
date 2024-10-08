@@ -51331,10 +51331,12 @@ const external_wp_patterns_namespaceObject = window["wp"]["patterns"];
 
 
 
+
 const {
   useLayoutClasses
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
+  isOverridableBlock,
   hasOverridableBlocks
 } = unlock(external_wp_patterns_namespaceObject.privateApis);
 const fullAlignments = ['full', 'wide', 'left', 'right'];
@@ -51362,6 +51364,15 @@ const useInferredLayout = (blocks, parentLayout) => {
     };
   }, [blocks, parentLayout]);
 };
+function setBlockEditMode(setEditMode, blocks, mode) {
+  blocks.forEach(block => {
+    const editMode = mode || (isOverridableBlock(block) ? 'contentOnly' : 'disabled');
+    setEditMode(block.clientId, editMode);
+    setBlockEditMode(setEditMode, block.innerBlocks,
+    // Disable editing for nested patterns.
+    block.name === block_name ? 'disabled' : mode);
+  });
+}
 function RecursionWarning() {
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -51429,6 +51440,7 @@ function ReusableBlockEdit({
     content
   },
   __unstableParentLayout: parentLayout,
+  clientId: patternClientId,
   setAttributes
 }) {
   const {
@@ -51440,21 +51452,35 @@ function ReusableBlockEdit({
   });
   const isMissing = hasResolved && !record;
   const {
+    setBlockEditingMode,
     __unstableMarkLastChangeAsPersistent
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const {
+    innerBlocks,
     onNavigateToEntityRecord,
+    editingMode,
     hasPatternOverridesSource
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getSettings
+      getBlocks,
+      getSettings,
+      getBlockEditingMode
     } = select(external_wp_blockEditor_namespaceObject.store);
     // For editing link to the site editor if the theme and user permissions support it.
     return {
+      innerBlocks: getBlocks(patternClientId),
       onNavigateToEntityRecord: getSettings().onNavigateToEntityRecord,
+      editingMode: getBlockEditingMode(patternClientId),
       hasPatternOverridesSource: !!(0,external_wp_blocks_namespaceObject.getBlockBindingsSource)('core/pattern-overrides')
     };
-  }, []);
+  }, [patternClientId]);
+
+  // Sync the editing mode of the pattern block with the inner blocks.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    setBlockEditMode(setBlockEditingMode, innerBlocks,
+    // Disable editing if the pattern itself is disabled.
+    editingMode === 'disabled' || !hasPatternOverridesSource ? 'disabled' : undefined);
+  }, [editingMode, innerBlocks, setBlockEditingMode, hasPatternOverridesSource]);
   const canOverrideBlocks = (0,external_wp_element_namespaceObject.useMemo)(() => hasPatternOverridesSource && hasOverridableBlocks(blocks), [hasPatternOverridesSource, blocks]);
   const {
     alignment,
@@ -51469,6 +51495,7 @@ function ReusableBlockEdit({
     })
   });
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
+    templateLock: 'all',
     layout,
     value: blocks,
     onInput: edit_NOOP,

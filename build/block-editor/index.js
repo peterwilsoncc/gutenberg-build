@@ -7700,7 +7700,6 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   getLastFocus: () => (getLastFocus),
   getLastInsertedBlocksClientIds: () => (getLastInsertedBlocksClientIds),
   getOpenedBlockSettingsMenu: () => (getOpenedBlockSettingsMenu),
-  getParentPatternCount: () => (getParentPatternCount),
   getParentSectionBlock: () => (getParentSectionBlock),
   getPatternBySlug: () => (getPatternBySlug),
   getRegisteredInserterMediaCategories: () => (getRegisteredInserterMediaCategories),
@@ -11082,24 +11081,6 @@ function getInsertionPoint(state) {
   return state.insertionPoint;
 }
 
-/**
- * Retrieves the number of parent pattern blocks.
- *
- * @param {Object} state    Global application state.
- * @param {string} clientId The block client ID.
- *
- * @return {number} The number of parent pattern blocks.
- */
-function getParentPatternCount(state, clientId) {
-  const parents = getBlockParents(state, clientId);
-  return parents.reduce((count, parent) => {
-    if (getBlockName(state, parent) === 'core/block') {
-      return count + 1;
-    }
-    return count;
-  }, 0);
-}
-
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/store/utils.js
 /**
  * WordPress dependencies
@@ -13713,36 +13694,6 @@ const getBlockEditingMode = (0,external_wp_data_namespaceObject.createRegistrySe
   // rootClientId, but the default rootClientId is actually `''`.
   if (clientId === null) {
     clientId = '';
-  }
-
-  // Handle pattern blocks (core/block) and the content of those blocks.
-  const parentPatternCount = getParentPatternCount(state, clientId);
-
-  // Make the outer pattern block content only mode.
-  if (getBlockName(state, clientId) === 'core/block' && parentPatternCount === 0) {
-    return 'contentOnly';
-  }
-  if (parentPatternCount > 0) {
-    var _attributes$metadata$;
-    // Disable nested patterns.
-    if (parentPatternCount > 1) {
-      return 'disabled';
-    }
-
-    // Disable pattern content editing in zoom-out mode.
-    const _isZoomOut = __unstableGetEditorMode(state) === 'zoom-out';
-    if (_isZoomOut) {
-      return 'disabled';
-    }
-
-    // If the block has a binding of any kind, allow content only editing.
-    const attributes = getBlockAttributes(state, clientId);
-    if (Object.keys((_attributes$metadata$ = attributes?.metadata?.bindings) !== null && _attributes$metadata$ !== void 0 ? _attributes$metadata$ : {})?.length > 0) {
-      return 'contentOnly';
-    }
-
-    // Otherwise, the block is part of the pattern source and should not be editable.
-    return 'disabled';
   }
 
   // In zoom-out mode, override the behavior set by
