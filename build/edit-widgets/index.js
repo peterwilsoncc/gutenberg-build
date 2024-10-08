@@ -152,6 +152,8 @@ const external_wp_data_namespaceObject = window["wp"]["data"];
 ;// CONCATENATED MODULE: external ["wp","deprecated"]
 const external_wp_deprecated_namespaceObject = window["wp"]["deprecated"];
 var external_wp_deprecated_default = /*#__PURE__*/__webpack_require__.n(external_wp_deprecated_namespaceObject);
+;// CONCATENATED MODULE: external ["wp","editor"]
+const external_wp_editor_namespaceObject = window["wp"]["editor"];
 ;// CONCATENATED MODULE: external ["wp","element"]
 const external_wp_element_namespaceObject = window["wp"]["element"];
 ;// CONCATENATED MODULE: external ["wp","blockLibrary"]
@@ -4923,6 +4925,7 @@ function Layout({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -4932,7 +4935,12 @@ function Layout({
 
 
 
+
 const disabledBlocks = ['core/more', 'core/freeform', 'core/template-part', ...(ALLOW_REUSABLE_BLOCKS ? [] : ['core/block'])];
+const {
+  registerCoreBlockBindingsSources,
+  bootstrapBlockBindingsSourcesFromServer
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 
 /**
  * Initializes the block editor in the widgets screen.
@@ -4954,6 +4962,8 @@ function initializeEditor(id, settings) {
   });
   (0,external_wp_data_namespaceObject.dispatch)(external_wp_blocks_namespaceObject.store).reapplyBlockTypeFilters();
   (0,external_wp_blockLibrary_namespaceObject.registerCoreBlocks)(coreBlocks);
+  bootstrapBlockBindingsSourcesFromServer(settings?.blockBindingsSources);
+  registerCoreBlockBindingsSources();
   (0,external_wp_widgets_namespaceObject.registerLegacyWidgetBlock)();
   if (true) {
     (0,external_wp_blockLibrary_namespaceObject.__experimentalRegisterExperimentalCoreBlocks)({
