@@ -17345,7 +17345,7 @@ function FontSizes() {
       isBordered: true,
       isSeparated: true,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
-        path: "/typography/font-sizes/",
+        path: "/typography/font-sizes",
         "aria-label": (0,external_wp_i18n_namespaceObject.__)('Edit font size presets'),
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
           direction: "row",
@@ -24211,7 +24211,7 @@ function FontSize() {
       origin,
       slug
     },
-    goTo
+    goBack
   } = (0,external_wp_components_namespaceObject.useNavigator)();
   const [fontSizes, setFontSizes] = font_size_useGlobalSetting('typography.fontSizes');
   const [globalFluid] = font_size_useGlobalSetting('typography.fluid');
@@ -24224,12 +24224,10 @@ function FontSize() {
 
   // Navigate to the font sizes list if the font size is not available.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!fontSize) {
-      goTo('/typography/font-sizes/', {
-        isBack: true
-      });
+    if (!!slug && !fontSize) {
+      goBack();
     }
-  }, [fontSize, goTo]);
+  }, [slug, fontSize, goBack]);
   if (!origin || !slug || !fontSize) {
     return null;
   }
@@ -24318,8 +24316,7 @@ function FontSize() {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header, {
           title: fontSize.name,
           description: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: font size preset name. */
-          (0,external_wp_i18n_namespaceObject.__)('Manage the font size %s.'), fontSize.name),
-          onBack: () => goTo('/typography/font-sizes/')
+          (0,external_wp_i18n_namespaceObject.__)('Manage the font size %s.'), fontSize.name)
         }), origin === 'custom' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
             marginTop: 3,
@@ -27970,7 +27967,7 @@ function GlobalStylesUI() {
       path: "/typography",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(screen_typography, {})
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesNavigationScreen, {
-      path: "/typography/font-sizes/",
+      path: "/typography/font-sizes",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes, {})
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesNavigationScreen, {
       path: "/typography/font-sizes/:origin/:slug",
