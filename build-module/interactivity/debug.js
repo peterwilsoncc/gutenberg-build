@@ -1334,12 +1334,6 @@ populateServerData(data);
 
 
 
-function isNonDefaultDirectiveSuffix(entry) {
-  return entry.suffix !== null;
-}
-function isDefaultDirectiveSuffix(entry) {
-  return entry.suffix === null;
-}
 // Main context.
 const context = (0,preact_module/* createContext */.kr)({
   client: {},
@@ -1358,7 +1352,7 @@ const directivePriorities = {};
  * directive(
  *   'alert', // Name without the `data-wp-` prefix.
  *   ( { directives: { alert }, element, evaluate } ) => {
- *     const defaultEntry = alert.find( isDefaultDirectiveSuffix );
+ *     const defaultEntry = alert.find( entry => entry.suffix === 'default' );
  *     element.props.onclick = () => { alert( evaluate( defaultEntry ) ); }
  *   }
  * )
@@ -1377,7 +1371,7 @@ const directivePriorities = {};
  * </div>
  * ```
  * Note that, in the previous example, the directive callback gets the path
- * value (`state.alert`) from the directive entry with suffix `null`. A
+ * value (`state.alert`) from the directive entry with suffix `default`. A
  * custom suffix can also be specified by appending `--` to the directive
  * attribute, followed by the suffix, like in the following HTML snippet:
  *
@@ -1553,7 +1547,9 @@ preact_module/* options */.YM.vnode = vnode => {
     const props = vnode.props;
     const directives = props.__directives;
     if (directives.key) {
-      vnode.key = directives.key.find(isDefaultDirectiveSuffix).value;
+      vnode.key = directives.key.find(({
+        suffix
+      }) => suffix === 'default').value;
     }
     delete props.__directives;
     const priorityLevels = getPriorityLevels(directives);
@@ -1648,7 +1644,9 @@ const getGlobalEventDirective = type => {
     directives,
     evaluate
   }) => {
-    directives[`on-${type}`].filter(isNonDefaultDirectiveSuffix).forEach(entry => {
+    directives[`on-${type}`].filter(({
+      suffix
+    }) => suffix !== 'default').forEach(entry => {
       const eventName = entry.suffix.split('--', 1)[0];
       useInit(() => {
         const cb = event => evaluate(entry, event);
@@ -1671,7 +1669,9 @@ const getGlobalAsyncEventDirective = type => {
     directives,
     evaluate
   }) => {
-    directives[`on-async-${type}`].filter(isNonDefaultDirectiveSuffix).forEach(entry => {
+    directives[`on-async-${type}`].filter(({
+      suffix
+    }) => suffix !== 'default').forEach(entry => {
       const eventName = entry.suffix.split('--', 1)[0];
       useInit(() => {
         const cb = async event => {
@@ -1701,7 +1701,9 @@ const getGlobalAsyncEventDirective = type => {
     const {
       Provider
     } = inheritedContext;
-    const defaultEntry = context.find(isDefaultDirectiveSuffix);
+    const defaultEntry = context.find(({
+      suffix
+    }) => suffix === 'default');
     const {
       client: inheritedClient,
       server: inheritedServer
@@ -1799,7 +1801,9 @@ const getGlobalAsyncEventDirective = type => {
     evaluate
   }) => {
     const events = new Map();
-    on.filter(isNonDefaultDirectiveSuffix).forEach(entry => {
+    on.filter(({
+      suffix
+    }) => suffix !== 'default').forEach(entry => {
       const event = entry.suffix.split('--')[0];
       if (!events.has(event)) {
         events.set(event, new Set());
@@ -1835,7 +1839,9 @@ const getGlobalAsyncEventDirective = type => {
     evaluate
   }) => {
     const events = new Map();
-    onAsync.filter(isNonDefaultDirectiveSuffix).forEach(entry => {
+    onAsync.filter(({
+      suffix
+    }) => suffix !== 'default').forEach(entry => {
       const event = entry.suffix.split('--')[0];
       if (!events.has(event)) {
         events.set(event, new Set());
@@ -1874,7 +1880,9 @@ const getGlobalAsyncEventDirective = type => {
     element,
     evaluate
   }) => {
-    classNames.filter(isNonDefaultDirectiveSuffix).forEach(entry => {
+    classNames.filter(({
+      suffix
+    }) => suffix !== 'default').forEach(entry => {
       const className = entry.suffix;
       const result = evaluate(entry);
       const currentClass = element.props.class || '';
@@ -1907,7 +1915,9 @@ const getGlobalAsyncEventDirective = type => {
     element,
     evaluate
   }) => {
-    style.filter(isNonDefaultDirectiveSuffix).forEach(entry => {
+    style.filter(({
+      suffix
+    }) => suffix !== 'default').forEach(entry => {
       const styleProp = entry.suffix;
       const result = evaluate(entry);
       element.props.style = element.props.style || {};
@@ -1942,7 +1952,9 @@ const getGlobalAsyncEventDirective = type => {
     element,
     evaluate
   }) => {
-    bind.filter(isNonDefaultDirectiveSuffix).forEach(entry => {
+    bind.filter(({
+      suffix
+    }) => suffix !== 'default').forEach(entry => {
       const attribute = entry.suffix;
       const result = evaluate(entry);
       element.props[attribute] = result;
@@ -2026,7 +2038,9 @@ const getGlobalAsyncEventDirective = type => {
     element,
     evaluate
   }) => {
-    const entry = text.find(isDefaultDirectiveSuffix);
+    const entry = text.find(({
+      suffix
+    }) => suffix === 'default');
     if (!entry) {
       element.props.children = null;
       return;
@@ -2068,11 +2082,12 @@ const getGlobalAsyncEventDirective = type => {
     const inheritedValue = q(inheritedContext);
     const [entry] = each;
     const {
-      namespace
+      namespace,
+      suffix
     } = entry;
     const list = evaluate(entry);
-    const itemProp = isNonDefaultDirectiveSuffix(entry) ? kebabToCamelCase(entry.suffix) : 'item';
     return list.map(item => {
+      const itemProp = suffix === 'default' ? 'item' : kebabToCamelCase(suffix);
       const itemContext = proxifyContext(proxifyState(namespace, {}), inheritedValue.client[namespace]);
       const mergedContext = {
         client: {
@@ -2243,11 +2258,11 @@ function toVdom(root) {
           return obj;
         }
         const prefix = directiveMatch[1] || '';
-        const suffix = directiveMatch[2] || null;
+        const suffix = directiveMatch[2] || 'default';
         obj[prefix] = obj[prefix] || [];
         obj[prefix].push({
           namespace: ns !== null && ns !== void 0 ? ns : currentNamespace(),
-          value: value,
+          value,
           suffix
         });
         return obj;

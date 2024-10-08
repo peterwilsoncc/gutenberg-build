@@ -1530,7 +1530,7 @@ module.exports = normalizeWheel;
 /***/ ((module) => {
 
 var x=String;
-var create=function() {return {isColorSupported:false,reset:x,bold:x,dim:x,italic:x,underline:x,inverse:x,hidden:x,strikethrough:x,black:x,red:x,green:x,yellow:x,blue:x,magenta:x,cyan:x,white:x,gray:x,bgBlack:x,bgRed:x,bgGreen:x,bgYellow:x,bgBlue:x,bgMagenta:x,bgCyan:x,bgWhite:x,blackBright:x,redBright:x,greenBright:x,yellowBright:x,blueBright:x,magentaBright:x,cyanBright:x,whiteBright:x,bgBlackBright:x,bgRedBright:x,bgGreenBright:x,bgYellowBright:x,bgBlueBright:x,bgMagentaBright:x,bgCyanBright:x,bgWhiteBright:x}};
+var create=function() {return {isColorSupported:false,reset:x,bold:x,dim:x,italic:x,underline:x,inverse:x,hidden:x,strikethrough:x,black:x,red:x,green:x,yellow:x,blue:x,magenta:x,cyan:x,white:x,gray:x,bgBlack:x,bgRed:x,bgGreen:x,bgYellow:x,bgBlue:x,bgMagenta:x,bgCyan:x,bgWhite:x}};
 module.exports=create();
 module.exports.createColors = create;
 
@@ -22761,7 +22761,9 @@ const DEFAULT_LINK_SETTINGS = [{
 
 
 
+
 function LinkControlSearchResults({
+  instanceId,
   withCreateSuggestion,
   currentInputValue,
   handleSuggestionClick,
@@ -22781,14 +22783,23 @@ function LinkControlSearchResults({
   const shouldShowCreateSuggestion = withCreateSuggestion && !isSingleDirectEntryResult && !isInitialSuggestions;
   // If the query has a specified type, then we can skip showing them in the result. See #24839.
   const shouldShowSuggestionsTypes = !suggestionsQuery?.type;
+
+  // According to guidelines aria-label should be added if the label
+  // itself is not visible.
+  // See: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role
+  const searchResultsLabelId = `block-editor-link-control-search-results-label-${instanceId}`;
   const labelText = isInitialSuggestions ? (0,external_wp_i18n_namespaceObject.__)('Suggestions') : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: search term. */
   (0,external_wp_i18n_namespaceObject.__)('Search results for "%s"'), currentInputValue);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+  const searchResultsLabel = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
+    id: searchResultsLabelId,
+    children: labelText
+  });
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "block-editor-link-control__search-results-wrapper",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    children: [searchResultsLabel, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...suggestionsListProps,
       className: resultsListClasses,
-      "aria-label": labelText,
+      "aria-labelledby": searchResultsLabelId,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
         children: suggestions.map((suggestion, index) => {
           if (shouldShowCreateSuggestion && CREATE_TYPE === suggestion.type) {
@@ -22827,7 +22838,7 @@ function LinkControlSearchResults({
           }, `${suggestion.id}-${suggestion.type}`);
         })
       })
-    })
+    })]
   });
 }
 
@@ -22998,6 +23009,7 @@ function useSearchHandler(suggestionsQuery, allowDirectEntry, withCreateSuggesti
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -23038,6 +23050,7 @@ const LinkControlSearchInput = (0,external_wp_element_namespaceObject.forwardRef
 }, ref) => {
   const genericSearchHandler = useSearchHandler(suggestionsQuery, allowDirectEntry, withCreateSuggestion, withURLSuggestion);
   const searchHandler = showSuggestions ? fetchSuggestions || genericSearchHandler : noopSearchHandler;
+  const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkControlSearchInput);
   const [focusedSuggestion, setFocusedSuggestion] = (0,external_wp_element_namespaceObject.useState)();
 
   /**
@@ -23053,6 +23066,7 @@ const LinkControlSearchInput = (0,external_wp_element_namespaceObject.forwardRef
   };
   const handleRenderSuggestions = props => renderSuggestions({
     ...props,
+    instanceId,
     withCreateSuggestion,
     createSuggestionButtonText,
     suggestionsQuery,
@@ -23089,17 +23103,16 @@ const LinkControlSearchInput = (0,external_wp_element_namespaceObject.forwardRef
       }, suggestion);
     }
   };
-  const inputLabel = placeholder !== null && placeholder !== void 0 ? placeholder : (0,external_wp_i18n_namespaceObject.__)('Search or type URL');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "block-editor-link-control__search-input-container",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(url_input, {
       disableSuggestions: currentLink?.url === value,
-      label: inputLabel,
+      label: (0,external_wp_i18n_namespaceObject.__)('Link'),
       hideLabelFromVision: hideLabelFromVision,
       className: className,
       value: value,
       onChange: onInputChange,
-      placeholder: inputLabel,
+      placeholder: placeholder !== null && placeholder !== void 0 ? placeholder : (0,external_wp_i18n_namespaceObject.__)('Search or type URL'),
       __experimentalRenderSuggestions: showSuggestions ? handleRenderSuggestions : null,
       __experimentalFetchLinkSuggestions: searchHandler,
       __experimentalHandleURLSuggestions: true,
@@ -42344,7 +42357,6 @@ function useFocusHandler(clientId) {
  */
 
 
-
 /**
  * Adds block behaviour:
  *   - Removes the block on BACKSPACE.
@@ -42359,16 +42371,12 @@ function useEventHandlers({
 }) {
   const {
     getBlockRootClientId,
-    getBlockIndex,
-    isZoomOut,
-    __unstableGetEditorMode
-  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
+    getBlockIndex
+  } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const {
     insertAfterBlock,
-    removeBlock,
-    __unstableSetEditorMode,
-    resetZoomLevel
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+    removeBlock
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   return (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
     if (!isSelected) {
       return;
@@ -42395,10 +42403,7 @@ function useEventHandlers({
         return;
       }
       event.preventDefault();
-      if (keyCode === external_wp_keycodes_namespaceObject.ENTER && __unstableGetEditorMode() === 'zoom-out' && isZoomOut()) {
-        __unstableSetEditorMode('edit');
-        resetZoomLevel();
-      } else if (keyCode === external_wp_keycodes_namespaceObject.ENTER) {
+      if (keyCode === external_wp_keycodes_namespaceObject.ENTER) {
         insertAfterBlock(clientId);
       } else {
         removeBlock(clientId);
@@ -42420,7 +42425,7 @@ function useEventHandlers({
       node.removeEventListener('keydown', onKeyDown);
       node.removeEventListener('dragstart', onDragStart);
     };
-  }, [clientId, isSelected, getBlockRootClientId, getBlockIndex, insertAfterBlock, removeBlock, __unstableGetEditorMode, __unstableSetEditorMode, isZoomOut, resetZoomLevel]);
+  }, [clientId, isSelected, getBlockRootClientId, getBlockIndex, insertAfterBlock, removeBlock]);
 }
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-list/use-block-props/use-zoom-out-mode-exit.js
@@ -44652,21 +44657,12 @@ function default_block_appender_DefaultBlockAppender() {
 /** @typedef {import('../../selectors').WPDirectInsertBlock } WPDirectInsertBlock */
 
 const pendingSettingsUpdates = new WeakMap();
-
-// Creates a memoizing caching function that remembers the last value and keeps returning it
-// as long as the new values are shallowly equal. Helps keep dependencies stable.
-function createShallowMemo() {
-  let value;
-  return newValue => {
-    if (value === undefined || !external_wp_isShallowEqual_default()(value, newValue)) {
-      value = newValue;
-    }
-    return value;
-  };
-}
 function useShallowMemo(value) {
-  const [memo] = (0,external_wp_element_namespaceObject.useState)(createShallowMemo);
-  return memo(value);
+  const [prevValue, setPrevValue] = (0,external_wp_element_namespaceObject.useState)(value);
+  if (!external_wp_isShallowEqual_default()(prevValue, value)) {
+    setPrevValue(value);
+  }
+  return prevValue;
 }
 
 /**
@@ -44709,7 +44705,9 @@ function useNestedSettingsUpdate(clientId, parentLock, allowedBlocks, prioritize
   // otherwise if the arrays change length but the first elements are equal the comparison,
   // does not works as expected.
   const _allowedBlocks = useShallowMemo(allowedBlocks);
-  const _prioritizedInserterBlocks = useShallowMemo(prioritizedInserterBlocks);
+  const _prioritizedInserterBlocks = (0,external_wp_element_namespaceObject.useMemo)(() => prioritizedInserterBlocks,
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  prioritizedInserterBlocks);
   const _templateLock = templateLock === undefined || parentLock === 'contentOnly' ? parentLock : templateLock;
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     const newSettings = {
@@ -46574,16 +46572,14 @@ function useTabNav() {
   const {
     hasMultiSelection,
     getSelectedBlockClientId,
-    getBlockCount,
-    getBlockOrder,
-    getLastFocus,
-    getSectionRootClientId,
-    isZoomOut,
-    __unstableGetEditorMode
-  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
+    getBlockCount
+  } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const {
     setLastFocus
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  const {
+    getLastFocus
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
 
   // Reference that holds the a flag for enabling or disabling
   // capturing on the focus capture elements.
@@ -46600,20 +46596,6 @@ function useTabNav() {
       } else {
         // Handles when the last focus has not been set yet, or has been cleared by new blocks being added via the inserter.
         container.current.querySelector(`[data-block="${getSelectedBlockClientId()}"]`).focus();
-      }
-    }
-    // In "compose" mode without a selected ID, we want to place focus on the section root when tabbing to the canvas.
-    else if (__unstableGetEditorMode() === 'zoom-out' && isZoomOut()) {
-      const sectionRootClientId = getSectionRootClientId();
-      const sectionBlocks = getBlockOrder(sectionRootClientId);
-
-      // If we have section within the section root, focus the first one.
-      if (sectionBlocks.length) {
-        container.current.querySelector(`[data-block="${sectionBlocks[0]}"]`).focus();
-      }
-      // If we don't have any section blocks, focus the section root.
-      else {
-        container.current.querySelector(`[data-block="${sectionRootClientId}"]`).focus();
       }
     } else {
       const canvasElement = container.current.ownerDocument === event.target.ownerDocument ? container.current : container.current.ownerDocument.defaultView.frameElement;
@@ -50464,7 +50446,7 @@ function PatternsExplorerSearch({
       __nextHasNoMarginBottom: true,
       onChange: setSearchValue,
       value: searchValue,
-      label: (0,external_wp_i18n_namespaceObject.__)('Search'),
+      label: (0,external_wp_i18n_namespaceObject.__)('Search for patterns'),
       placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
     })
   });
@@ -52953,52 +52935,6 @@ function TabbedSidebar({
 }
 /* harmony default export */ const tabbed_sidebar = ((0,external_wp_element_namespaceObject.forwardRef)(TabbedSidebar));
 
-;// CONCATENATED MODULE: ./packages/block-editor/build-module/hooks/use-zoom-out.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-/**
- * A hook used to set the zoomed out view, invoking the hook sets the mode.
- *
- * @param {boolean} zoomOut If we should zoom out or not.
- */
-function useZoomOut(zoomOut = true) {
-  const {
-    setZoomLevel
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
-  const {
-    isZoomOut
-  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
-  const originalIsZoomOutRef = (0,external_wp_element_namespaceObject.useRef)(null);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    // Only set this on mount so we know what to return to when we unmount.
-    if (!originalIsZoomOutRef.current) {
-      originalIsZoomOutRef.current = isZoomOut();
-    }
-
-    // The effect opens the zoom-out view if we want it open and the canvas is not currently zoomed-out.
-    if (zoomOut && isZoomOut() === false) {
-      setZoomLevel(50);
-    } else if (!zoomOut && isZoomOut() && originalIsZoomOutRef.current !== isZoomOut()) {
-      setZoomLevel(originalIsZoomOutRef.current ? 50 : 100);
-    }
-    return () => {
-      if (isZoomOut() && isZoomOut() !== originalIsZoomOutRef.current) {
-        setZoomLevel(originalIsZoomOutRef.current ? 50 : 100);
-      }
-    };
-  }, [isZoomOut, setZoomLevel, zoomOut]);
-}
-
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/inserter/menu.js
 /**
  * External dependencies
@@ -53017,7 +52953,6 @@ function useZoomOut(zoomOut = true) {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -53062,8 +52997,6 @@ function InserterMenu({
     }
   }
   const [selectedTab, setSelectedTab] = (0,external_wp_element_namespaceObject.useState)(getInitialTab());
-  const shouldUseZoomOut = selectedTab === 'patterns' || selectedTab === 'media';
-  useZoomOut(shouldUseZoomOut);
   const [destinationRootClientId, onInsertBlocks, onToggleInsertionPoint] = use_insertion_point({
     rootClientId,
     clientId,
@@ -53117,7 +53050,7 @@ function InserterMenu({
           setFilterValue(value);
         },
         value: filterValue,
-        label: (0,external_wp_i18n_namespaceObject.__)('Search'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Search for blocks and patterns'),
         placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
       }), !!delayedFilterValue && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(search_results, {
         filterValue: delayedFilterValue,
@@ -53352,7 +53285,7 @@ function QuickInserter({
       onChange: value => {
         setFilterValue(value);
       },
-      label: (0,external_wp_i18n_namespaceObject.__)('Search'),
+      label: (0,external_wp_i18n_namespaceObject.__)('Search for blocks and patterns'),
       placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "block-editor-inserter__quick-inserter-results",
@@ -55992,6 +55925,52 @@ function useCachedTruthy(value) {
     }
   }, [value]);
   return cachedValue;
+}
+
+;// CONCATENATED MODULE: ./packages/block-editor/build-module/hooks/use-zoom-out.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+/**
+ * A hook used to set the zoomed out view, invoking the hook sets the mode.
+ *
+ * @param {boolean} zoomOut If we should zoom out or not.
+ */
+function useZoomOut(zoomOut = true) {
+  const {
+    setZoomLevel
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  const {
+    isZoomOut
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
+  const originalIsZoomOutRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    // Only set this on mount so we know what to return to when we unmount.
+    if (!originalIsZoomOutRef.current) {
+      originalIsZoomOutRef.current = isZoomOut();
+    }
+
+    // The effect opens the zoom-out view if we want it open and the canvas is not currently zoomed-out.
+    if (zoomOut && isZoomOut() === false) {
+      setZoomLevel(50);
+    } else if (!zoomOut && isZoomOut() && originalIsZoomOutRef.current !== isZoomOut()) {
+      setZoomLevel(originalIsZoomOutRef.current ? 50 : 100);
+    }
+    return () => {
+      if (isZoomOut() && isZoomOut() !== originalIsZoomOutRef.current) {
+        setZoomLevel(originalIsZoomOutRef.current ? 50 : 100);
+      }
+    };
+  }, [isZoomOut, setZoomLevel, zoomOut]);
 }
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/hooks/index.js
@@ -62161,6 +62140,7 @@ function Shuffle({
 
 
 
+
 function ZoomOutToolbar({
   clientId,
   __unstableContentRef
@@ -62217,11 +62197,14 @@ function ZoomOutToolbar({
     isNextBlockTemplatePart,
     isPrevBlockTemplatePart,
     canRemove,
-    canMove
+    canMove,
+    setIsInserterOpened
   } = selected;
   const {
-    removeBlock
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+    removeBlock,
+    __unstableSetEditorMode,
+    resetZoomLevel
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const showBlockDraggable = canMove && !isBlockTemplatePart;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(NavigableToolbar, {
     className: "zoom-out-toolbar"
@@ -62255,6 +62238,19 @@ function ZoomOutToolbar({
     }), canMove && canRemove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Shuffle, {
       clientId: clientId,
       as: external_wp_components_namespaceObject.ToolbarButton
+    }), !isBlockTemplatePart && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+      className: "zoom-out-toolbar-button",
+      icon: edit,
+      label: (0,external_wp_i18n_namespaceObject.__)('Edit'),
+      onClick: () => {
+        // Setting may be undefined.
+        if (typeof setIsInserterOpened === 'function') {
+          setIsInserterOpened(false);
+        }
+        __unstableSetEditorMode('edit');
+        resetZoomLevel();
+        __unstableContentRef.current?.focus();
+      }
     }), canRemove && !isBlockTemplatePart && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       className: "zoom-out-toolbar-button",
       icon: library_trash,
@@ -62505,6 +62501,7 @@ function useShowBlockTools() {
 
 
 
+
 function block_tools_selector(select) {
   const {
     getSelectedBlockClientId,
@@ -62562,6 +62559,7 @@ function BlockTools({
     showZoomOutToolbar
   } = useShowBlockTools();
   const {
+    clearSelectedBlock,
     duplicateBlocks,
     removeBlocks,
     replaceBlocks,
@@ -62572,6 +62570,7 @@ function BlockTools({
     moveBlocksDown,
     expandBlock
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  const blockSelectionButtonRef = (0,external_wp_element_namespaceObject.useRef)();
   function onKeyDown(event) {
     if (event.defaultPrevented) {
       return;
@@ -62630,6 +62629,10 @@ function BlockTools({
         // block so that focus is directed back to the beginning of the selection.
         // In effect, to the user this feels like deselecting the multi-selection.
         selectBlock(clientIds[0]);
+      } else if (clientIds.length === 1 && event.target === blockSelectionButtonRef?.current) {
+        event.preventDefault();
+        clearSelectedBlock();
+        getEditorRegion(__unstableContentRef.current)?.focus();
       }
     } else if (isMatch('core/block-editor/collapse-list-view', event)) {
       // If focus is currently within a text field, such as a rich text block or other editable field,
@@ -72300,15 +72303,13 @@ function ToolSelector(props, ref) {
                 icon: edit
               }), (0,external_wp_i18n_namespaceObject.__)('Write')]
             }),
-            info: (0,external_wp_i18n_namespaceObject.__)('Focus on content.'),
-            'aria-label': (0,external_wp_i18n_namespaceObject.__)('Write')
+            info: (0,external_wp_i18n_namespaceObject.__)('Focus on content.')
           }, {
             value: 'edit',
             label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
               children: [selectIcon, (0,external_wp_i18n_namespaceObject.__)('Design')]
             }),
-            info: (0,external_wp_i18n_namespaceObject.__)('Edit layout and styles.'),
-            'aria-label': (0,external_wp_i18n_namespaceObject.__)('Design')
+            info: (0,external_wp_i18n_namespaceObject.__)('Edit layout and styles.')
           }]
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {

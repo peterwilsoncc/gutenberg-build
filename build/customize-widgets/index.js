@@ -186,8 +186,6 @@ const external_wp_widgets_namespaceObject = window["wp"]["widgets"];
 const external_wp_blocks_namespaceObject = window["wp"]["blocks"];
 ;// CONCATENATED MODULE: external ["wp","data"]
 const external_wp_data_namespaceObject = window["wp"]["data"];
-;// CONCATENATED MODULE: external ["wp","editor"]
-const external_wp_editor_namespaceObject = window["wp"]["editor"];
 ;// CONCATENATED MODULE: external ["wp","preferences"]
 const external_wp_preferences_namespaceObject = window["wp"]["preferences"];
 ;// CONCATENATED MODULE: external ["wp","components"]
@@ -2675,11 +2673,9 @@ const withWideWidgetDisplay = (0,external_wp_compose_namespaceObject.createHighe
 
 
 
-
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -2690,10 +2686,6 @@ const {
 } = window;
 const DISABLED_BLOCKS = ['core/more', 'core/block', 'core/freeform', 'core/template-part'];
 const ENABLE_EXPERIMENTAL_FSE_BLOCKS = false;
-const {
-  registerCoreBlockBindingsSources,
-  bootstrapBlockBindingsSourcesFromServer
-} = unlock(external_wp_editor_namespaceObject.privateApis);
 
 /**
  * Initializes the widgets block editor in the customizer.
@@ -2711,8 +2703,6 @@ function initialize(editorName, blockEditorSettings) {
     return !(DISABLED_BLOCKS.includes(block.name) || block.name.startsWith('core/post') || block.name.startsWith('core/query') || block.name.startsWith('core/site') || block.name.startsWith('core/navigation'));
   });
   (0,external_wp_blockLibrary_namespaceObject.registerCoreBlocks)(coreBlocks);
-  bootstrapBlockBindingsSourcesFromServer(blockEditorSettings?.blockBindingsSources);
-  registerCoreBlockBindingsSources();
   (0,external_wp_widgets_namespaceObject.registerLegacyWidgetBlock)();
   if (true) {
     (0,external_wp_blockLibrary_namespaceObject.__experimentalRegisterExperimentalCoreBlocks)({
