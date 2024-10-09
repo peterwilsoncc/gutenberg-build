@@ -27510,9 +27510,6 @@ const {
 const PAGE_SIZE = 10;
 function ScreenRevisions() {
   const {
-    goTo
-  } = (0,external_wp_components_namespaceObject.useNavigator)();
-  const {
     user: currentEditorGlobalStyles,
     setUserConfig
   } = (0,external_wp_element_namespaceObject.useContext)(screen_revisions_GlobalStylesContext);
@@ -27543,6 +27540,9 @@ function ScreenRevisions() {
     setEditorCanvasContainerView
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const selectedRevisionMatchesEditorStyles = screen_revisions_areGlobalStyleConfigsEqual(currentlySelectedRevision, currentEditorGlobalStyles);
+
+  // The actual code that triggers the revisions screen to navigate back
+  // to the home screen in in `packages/edit-site/src/components/global-styles/ui.js`.
   const onCloseRevisions = () => {
     const canvasContainerView = editorCanvasContainerView === 'global-styles-revisions:style-book' ? 'style-book' : undefined;
     setEditorCanvasContainerView(canvasContainerView);
@@ -27552,11 +27552,6 @@ function ScreenRevisions() {
     setIsLoadingRevisionWithUnsavedChanges(false);
     onCloseRevisions();
   };
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!editorCanvasContainerView || !editorCanvasContainerView.startsWith('global-styles-revisions')) {
-      goTo('/'); // Return to global styles main panel.
-    }
-  }, [editorCanvasContainerView]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (!isLoading && revisions.length) {
       setCurrentRevisions(revisions);
@@ -27695,12 +27690,8 @@ function GlobalStylesActionMenu() {
   const {
     setEditorCanvasContainerView
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
-  const {
-    goTo
-  } = (0,external_wp_components_namespaceObject.useNavigator)();
   const loadCustomCSS = () => {
     setEditorCanvasContainerView('global-styles-css');
-    goTo('/css');
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesMenuFill, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
@@ -27851,21 +27842,31 @@ function GlobalStylesEditorCanvasContainerLink() {
     switch (editorCanvasContainerView) {
       case 'global-styles-revisions':
       case 'global-styles-revisions:style-book':
-        goTo('/revisions');
+        if (!isRevisionsOpen) {
+          goTo('/revisions');
+        }
         break;
       case 'global-styles-css':
         goTo('/css');
         break;
+      // The stand-alone style book is open
+      // and the revisions panel is open,
+      // close the revisions panel.
+      // Otherwise keep the style book open while
+      // browsing global styles panel.
+      //
+      // Falling through as it matches the default scenario.
       case 'style-book':
-        /*
-         * The stand-alone style book is open
-         * and the revisions panel is open,
-         * close the revisions panel.
-         * Otherwise keep the style book open while
-         * browsing global styles panel.
-         */
+      default:
+        // In general, if the revision screen is in view but the
+        // `editorCanvasContainerView` is not a revision view, close it.
+        // This also includes the scenario when the stand-alone style
+        // book is open, in which case we want the user to close the
+        // revisions screen and browse global styles.
         if (isRevisionsOpen) {
-          goTo('/');
+          goTo('/', {
+            isBack: true
+          });
         }
         break;
     }
@@ -28079,22 +28080,16 @@ function GlobalStylesSidebar() {
   const {
     setIsListViewOpened
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_editor_namespaceObject.store);
-  const {
-    goTo
-  } = (0,external_wp_components_namespaceObject.useNavigator)();
   const toggleRevisions = () => {
     setIsListViewOpened(false);
     if (isRevisionsStyleBookOpened) {
-      goTo('/');
       setEditorCanvasContainerView('style-book');
       return;
     }
     if (isRevisionsOpened) {
-      goTo('/');
       setEditorCanvasContainerView(undefined);
       return;
     }
-    goTo('/revisions');
     if (isStyleBookOpened) {
       setEditorCanvasContainerView('global-styles-revisions:style-book');
     } else {
