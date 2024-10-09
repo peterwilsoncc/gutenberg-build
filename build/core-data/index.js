@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 2167:
+/***/ 3249:
 /***/ ((module) => {
 
 "use strict";
@@ -316,7 +316,7 @@ module.exports = EquivalentKeyMap;
 
 /***/ }),
 
-/***/ 5619:
+/***/ 7734:
 /***/ ((module) => {
 
 "use strict";
@@ -396,7 +396,7 @@ module.exports = function equal(a, b) {
 
 /***/ }),
 
-/***/ 2248:
+/***/ 3622:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 (function(e){if(true)module.exports=e();else { var t; }})(function(){var t=Math.floor,n=Math.abs,r=Math.pow;return function(){function d(s,e,n){function t(o,i){if(!e[o]){if(!s[o]){var l=undefined;if(!i&&l)return require(o,!0);if(r)return r(o,!0);var c=new Error("Cannot find module '"+o+"'");throw c.code="MODULE_NOT_FOUND",c}var a=e[o]={exports:{}};s[o][0].call(a.exports,function(e){var r=s[o][1][e];return t(r||e)},a,a.exports,d,s,e,n)}return e[o].exports}for(var r=undefined,a=0;a<n.length;a++)t(n[a]);return t}return d}()({1:[function(e,t,n){'use strict';function r(e){var t=e.length;if(0<t%4)throw new Error("Invalid string. Length must be a multiple of 4");var n=e.indexOf("=");-1===n&&(n=t);var r=n===t?0:4-n%4;return[n,r]}function a(e,t,n){return 3*(t+n)/4-n}function o(e){var t,n,o=r(e),d=o[0],s=o[1],l=new p(a(e,d,s)),c=0,f=0<s?d-4:d;for(n=0;n<f;n+=4)t=u[e.charCodeAt(n)]<<18|u[e.charCodeAt(n+1)]<<12|u[e.charCodeAt(n+2)]<<6|u[e.charCodeAt(n+3)],l[c++]=255&t>>16,l[c++]=255&t>>8,l[c++]=255&t;return 2===s&&(t=u[e.charCodeAt(n)]<<2|u[e.charCodeAt(n+1)]>>4,l[c++]=255&t),1===s&&(t=u[e.charCodeAt(n)]<<10|u[e.charCodeAt(n+1)]<<4|u[e.charCodeAt(n+2)]>>2,l[c++]=255&t>>8,l[c++]=255&t),l}function d(e){return c[63&e>>18]+c[63&e>>12]+c[63&e>>6]+c[63&e]}function s(e,t,n){for(var r,a=[],o=t;o<n;o+=3)r=(16711680&e[o]<<16)+(65280&e[o+1]<<8)+(255&e[o+2]),a.push(d(r));return a.join("")}function l(e){for(var t,n=e.length,r=n%3,a=[],o=16383,d=0,l=n-r;d<l;d+=o)a.push(s(e,d,d+o>l?l:d+o));return 1===r?(t=e[n-1],a.push(c[t>>2]+c[63&t<<4]+"==")):2===r&&(t=(e[n-2]<<8)+e[n-1],a.push(c[t>>10]+c[63&t>>4]+c[63&t<<2]+"=")),a.join("")}n.byteLength=function(e){var t=r(e),n=t[0],a=t[1];return 3*(n+a)/4-a},n.toByteArray=o,n.fromByteArray=l;for(var c=[],u=[],p="undefined"==typeof Uint8Array?Array:Uint8Array,f="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",g=0,_=f.length;g<_;++g)c[g]=f[g],u[f.charCodeAt(g)]=g;u[45]=62,u[95]=63},{}],2:[function(){},{}],3:[function(e,t,n){(function(){(function(){/*!
@@ -655,17 +655,17 @@ __webpack_require__.d(resolvers_namespaceObject, {
   getUserPatternCategories: () => (resolvers_getUserPatternCategories)
 });
 
-;// CONCATENATED MODULE: external ["wp","data"]
+;// external ["wp","data"]
 const external_wp_data_namespaceObject = window["wp"]["data"];
 // EXTERNAL MODULE: ./node_modules/fast-deep-equal/es6/index.js
-var es6 = __webpack_require__(5619);
+var es6 = __webpack_require__(7734);
 var es6_default = /*#__PURE__*/__webpack_require__.n(es6);
-;// CONCATENATED MODULE: external ["wp","compose"]
+;// external ["wp","compose"]
 const external_wp_compose_namespaceObject = window["wp"]["compose"];
-;// CONCATENATED MODULE: external ["wp","isShallowEqual"]
+;// external ["wp","isShallowEqual"]
 const external_wp_isShallowEqual_namespaceObject = window["wp"]["isShallowEqual"];
 var external_wp_isShallowEqual_default = /*#__PURE__*/__webpack_require__.n(external_wp_isShallowEqual_namespaceObject);
-;// CONCATENATED MODULE: ./packages/undo-manager/build-module/index.js
+;// ./packages/undo-manager/build-module/index.js
 /**
  * WordPress dependencies
  */
@@ -837,7 +837,7 @@ function createUndoManager() {
   };
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/utils/if-matching-action.js
+;// ./packages/core-data/build-module/utils/if-matching-action.js
 /** @typedef {import('../types').AnyFunction} AnyFunction */
 
 /**
@@ -857,7 +857,7 @@ const ifMatchingAction = isMatch => reducer => (state, action) => {
 };
 /* harmony default export */ const if_matching_action = (ifMatchingAction);
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/utils/replace-action.js
+;// ./packages/core-data/build-module/utils/replace-action.js
 /** @typedef {import('../types').AnyFunction} AnyFunction */
 
 /**
@@ -873,7 +873,7 @@ const replaceAction = replacer => reducer => (state, action) => {
 };
 /* harmony default export */ const replace_action = (replaceAction);
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/utils/conservative-map-item.js
+;// ./packages/core-data/build-module/utils/conservative-map-item.js
 /**
  * External dependencies
  */
@@ -919,7 +919,7 @@ function conservativeMapItem(item, nextItem) {
   return result;
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/utils/on-sub-key.js
+;// ./packages/core-data/build-module/utils/on-sub-key.js
 /** @typedef {import('../types').AnyFunction} AnyFunction */
 
 /**
@@ -951,7 +951,7 @@ const onSubKey = actionProperty => reducer => (state = {}, action) => {
 };
 /* harmony default export */ const on_sub_key = (onSubKey);
 
-;// CONCATENATED MODULE: ./node_modules/tslib/tslib.es6.mjs
+;// ./node_modules/tslib/tslib.es6.mjs
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -1331,7 +1331,7 @@ function __disposeResources(env) {
   __disposeResources,
 });
 
-;// CONCATENATED MODULE: ./node_modules/lower-case/dist.es2015/index.js
+;// ./node_modules/lower-case/dist.es2015/index.js
 /**
  * Source: ftp://ftp.unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt
  */
@@ -1380,7 +1380,7 @@ function lowerCase(str) {
     return str.toLowerCase();
 }
 
-;// CONCATENATED MODULE: ./node_modules/no-case/dist.es2015/index.js
+;// ./node_modules/no-case/dist.es2015/index.js
 
 // Support camel case ("camelCase" -> "camel Case" and "CAMELCase" -> "CAMEL Case").
 var DEFAULT_SPLIT_REGEXP = [/([a-z0-9])([A-Z])/g, /([A-Z])([A-Z][a-z])/g];
@@ -1412,7 +1412,7 @@ function replace(input, re, value) {
     return re.reduce(function (input, re) { return input.replace(re, value); }, input);
 }
 
-;// CONCATENATED MODULE: ./node_modules/upper-case-first/dist.es2015/index.js
+;// ./node_modules/upper-case-first/dist.es2015/index.js
 /**
  * Upper case the first character of an input string.
  */
@@ -1420,7 +1420,7 @@ function upperCaseFirst(input) {
     return input.charAt(0).toUpperCase() + input.substr(1);
 }
 
-;// CONCATENATED MODULE: ./node_modules/capital-case/dist.es2015/index.js
+;// ./node_modules/capital-case/dist.es2015/index.js
 
 
 
@@ -1432,7 +1432,7 @@ function capitalCase(input, options) {
     return noCase(input, __assign({ delimiter: " ", transform: capitalCaseTransform }, options));
 }
 
-;// CONCATENATED MODULE: ./node_modules/pascal-case/dist.es2015/index.js
+;// ./node_modules/pascal-case/dist.es2015/index.js
 
 
 function pascalCaseTransform(input, index) {
@@ -1451,14 +1451,14 @@ function pascalCase(input, options) {
     return noCase(input, __assign({ delimiter: "", transform: pascalCaseTransform }, options));
 }
 
-;// CONCATENATED MODULE: external ["wp","apiFetch"]
+;// external ["wp","apiFetch"]
 const external_wp_apiFetch_namespaceObject = window["wp"]["apiFetch"];
 var external_wp_apiFetch_default = /*#__PURE__*/__webpack_require__.n(external_wp_apiFetch_namespaceObject);
-;// CONCATENATED MODULE: external ["wp","i18n"]
+;// external ["wp","i18n"]
 const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
-;// CONCATENATED MODULE: external ["wp","richText"]
+;// external ["wp","richText"]
 const external_wp_richText_namespaceObject = window["wp"]["richText"];
-;// CONCATENATED MODULE: ./packages/core-data/node_modules/uuid/dist/esm-browser/rng.js
+;// ./packages/core-data/node_modules/uuid/dist/esm-browser/rng.js
 // Unique ID creation requires a high quality random # generator. In the browser we therefore
 // require the crypto API and do not support built-in fallback to lower quality random number
 // generators (like Math.random()).
@@ -1478,9 +1478,9 @@ function rng() {
 
   return rng_getRandomValues(rnds8);
 }
-;// CONCATENATED MODULE: ./packages/core-data/node_modules/uuid/dist/esm-browser/regex.js
+;// ./packages/core-data/node_modules/uuid/dist/esm-browser/regex.js
 /* harmony default export */ const regex = (/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i);
-;// CONCATENATED MODULE: ./packages/core-data/node_modules/uuid/dist/esm-browser/validate.js
+;// ./packages/core-data/node_modules/uuid/dist/esm-browser/validate.js
 
 
 function validate(uuid) {
@@ -1488,7 +1488,7 @@ function validate(uuid) {
 }
 
 /* harmony default export */ const esm_browser_validate = (validate);
-;// CONCATENATED MODULE: ./packages/core-data/node_modules/uuid/dist/esm-browser/stringify.js
+;// ./packages/core-data/node_modules/uuid/dist/esm-browser/stringify.js
 
 /**
  * Convert array of 16 byte values to UUID string format of the form:
@@ -1519,7 +1519,7 @@ function stringify(arr) {
 }
 
 /* harmony default export */ const esm_browser_stringify = (stringify);
-;// CONCATENATED MODULE: ./packages/core-data/node_modules/uuid/dist/esm-browser/v4.js
+;// ./packages/core-data/node_modules/uuid/dist/esm-browser/v4.js
 
 
 
@@ -1544,12 +1544,12 @@ function v4(options, buf, offset) {
 }
 
 /* harmony default export */ const esm_browser_v4 = (v4);
-;// CONCATENATED MODULE: external ["wp","url"]
+;// external ["wp","url"]
 const external_wp_url_namespaceObject = window["wp"]["url"];
-;// CONCATENATED MODULE: external ["wp","deprecated"]
+;// external ["wp","deprecated"]
 const external_wp_deprecated_namespaceObject = window["wp"]["deprecated"];
 var external_wp_deprecated_default = /*#__PURE__*/__webpack_require__.n(external_wp_deprecated_namespaceObject);
-;// CONCATENATED MODULE: ./packages/core-data/build-module/utils/set-nested-value.js
+;// ./packages/core-data/build-module/utils/set-nested-value.js
 /**
  * Sets the value at path of object.
  * If a portion of path doesn’t exist, it’s created.
@@ -1593,7 +1593,7 @@ function setNestedValue(object, path, value) {
   return object;
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/utils/get-nested-value.js
+;// ./packages/core-data/build-module/utils/get-nested-value.js
 /**
  * Helper util to return a value from a certain path of the object.
  * Path is specified as either:
@@ -1618,7 +1618,7 @@ function getNestedValue(object, path, defaultValue) {
   return value !== undefined ? value : defaultValue;
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/queried-data/actions.js
+;// ./packages/core-data/build-module/queried-data/actions.js
 /**
  * Returns an action object used in signalling that items have been received.
  *
@@ -1675,7 +1675,7 @@ function receiveQueriedItems(items, query = {}, edits, meta) {
   };
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/batch/default-processor.js
+;// ./packages/core-data/build-module/batch/default-processor.js
 /**
  * WordPress dependencies
  */
@@ -1753,7 +1753,8 @@ async function defaultProcessor(requests) {
   return results;
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/batch/create-batch.js
+;// ./packages/core-data/build-module/batch/create-batch.js
+/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -1918,7 +1919,7 @@ class ObservableSet {
   }
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/name.js
+;// ./packages/core-data/build-module/name.js
 /**
  * The reducer key used by core data in store registration.
  * This is defined in a separate file to avoid cycle-dependency
@@ -1927,7 +1928,7 @@ class ObservableSet {
  */
 const STORE_NAME = 'core';
 
-;// CONCATENATED MODULE: ./node_modules/lib0/map.js
+;// ./node_modules/lib0/map.js
 /**
  * Utility module to work with key-value stores.
  *
@@ -2041,7 +2042,7 @@ const map_all = (m, f) => {
   return true
 }
 
-;// CONCATENATED MODULE: ./node_modules/lib0/set.js
+;// ./node_modules/lib0/set.js
 /**
  * Utility module to work with sets.
  *
@@ -2072,7 +2073,7 @@ const first = set =>
  */
 const from = entries => new Set(entries)
 
-;// CONCATENATED MODULE: ./node_modules/lib0/array.js
+;// ./node_modules/lib0/array.js
 /**
  * Utility module to work with Arrays.
  *
@@ -2258,7 +2259,7 @@ const array_map = (arr, mapper) => {
   return /** @type {any} */ (res)
 }
 
-;// CONCATENATED MODULE: ./node_modules/lib0/observable.js
+;// ./node_modules/lib0/observable.js
 /**
  * Observable class prototype.
  *
@@ -2274,7 +2275,7 @@ const array_map = (arr, mapper) => {
  *
  * @template N
  */
-class observable_Observable {
+class Observable {
   constructor () {
     /**
      * Some desc.
@@ -2339,7 +2340,7 @@ class observable_Observable {
   }
 }
 
-;// CONCATENATED MODULE: ./node_modules/lib0/math.js
+;// ./node_modules/lib0/math.js
 /**
  * Common Math expressions.
  *
@@ -2399,7 +2400,7 @@ const sign = Math.sign
  */
 const isNegativeZero = n => n !== 0 ? n < 0 : 1 / n < 0
 
-;// CONCATENATED MODULE: ./node_modules/lib0/string.js
+;// ./node_modules/lib0/string.js
 
 
 /**
@@ -2538,7 +2539,7 @@ const splice = (str, index, remove, insert = '') => str.slice(0, index) + insert
  */
 const repeat = (source, n) => array.unfold(n, () => source).join('')
 
-;// CONCATENATED MODULE: ./node_modules/lib0/conditions.js
+;// ./node_modules/lib0/conditions.js
 /**
  * Often used conditions.
  *
@@ -2553,7 +2554,7 @@ const repeat = (source, n) => array.unfold(n, () => source).join('')
 /* c8 ignore next */
 const undefinedToNull = v => v === undefined ? null : v
 
-;// CONCATENATED MODULE: ./node_modules/lib0/storage.js
+;// ./node_modules/lib0/storage.js
 /* eslint-env browser */
 
 /**
@@ -2627,7 +2628,7 @@ const onChange = eventHandler => usePolyfill || addEventListener('storage', /** 
 /* c8 ignore next */
 const offChange = eventHandler => usePolyfill || removeEventListener('storage', /** @type {any} */ (eventHandler))
 
-;// CONCATENATED MODULE: ./node_modules/lib0/object.js
+;// ./node_modules/lib0/object.js
 /**
  * Utility functions for working with EcmaScript objects.
  *
@@ -2737,7 +2738,7 @@ const hasProperty = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key)
  */
 const object_equalFlat = (a, b) => a === b || (object_length(a) === object_length(b) && object_every(a, (val, key) => (val !== undefined || hasProperty(b, key)) && b[key] === val))
 
-;// CONCATENATED MODULE: ./node_modules/lib0/function.js
+;// ./node_modules/lib0/function.js
 /**
  * Common functions and function call helpers.
  *
@@ -2925,7 +2926,7 @@ const isTemplate = (T) =>
    **/
   n => n && n.constructor === T
 
-;// CONCATENATED MODULE: ./node_modules/lib0/environment.js
+;// ./node_modules/lib0/environment.js
 /**
  * Isomorphic module to work access the environment (query params, env variables).
  *
@@ -3057,7 +3058,7 @@ const supportsColor = !hasParam('no-colors') &&
 )
 /* c8 ignore stop */
 
-;// CONCATENATED MODULE: ./node_modules/lib0/buffer.js
+;// ./node_modules/lib0/buffer.js
 /**
  * Utility functions to work with buffers (Uint8Array).
  *
@@ -3214,7 +3215,7 @@ const shiftNBitsLeft = (bs, N) => {
   return bs
 }
 
-;// CONCATENATED MODULE: ./node_modules/lib0/binary.js
+;// ./node_modules/lib0/binary.js
 /* eslint-env browser */
 
 /**
@@ -3306,7 +3307,7 @@ const BITS31 = 0x7FFFFFFF
  */
 const BITS32 = 0xFFFFFFFF
 
-;// CONCATENATED MODULE: ./node_modules/lib0/number.js
+;// ./node_modules/lib0/number.js
 /**
  * Utility helpers for working with numbers.
  *
@@ -3345,7 +3346,7 @@ const countBits = n => {
   return count
 }
 
-;// CONCATENATED MODULE: ./node_modules/lib0/encoding.js
+;// ./node_modules/lib0/encoding.js
 /**
  * Efficient schema-less binary encoding with support for variable length encoding.
  *
@@ -4003,7 +4004,7 @@ class RleEncoder extends Encoder {
  *
  * Encodes the values [3, 1100, 1101, 1050, 0] to [3, 1097, 1, -51, -1050] using writeVarInt.
  */
-class IntDiffEncoder extends (/* unused pure expression or super */ null && (Encoder)) {
+class IntDiffEncoder extends Encoder {
   /**
    * @param {number} start
    */
@@ -4032,7 +4033,7 @@ class IntDiffEncoder extends (/* unused pure expression or super */ null && (Enc
  *
  * Encodes the values [1,1,1,2,3,4,5,6] as [1,1,0,2,1,5] (RLE([1,0,0,1,1,1,1,1]) ⇒ RleIntDiff[1,1,0,2,1,5])
  */
-class RleIntDiffEncoder extends (/* unused pure expression or super */ null && (Encoder)) {
+class RleIntDiffEncoder extends Encoder {
   /**
    * @param {number} start
    */
@@ -4263,7 +4264,7 @@ class StringEncoder {
   }
 }
 
-;// CONCATENATED MODULE: ./node_modules/lib0/error.js
+;// ./node_modules/lib0/error.js
 /**
  * Error helpers.
  *
@@ -4295,7 +4296,7 @@ const unexpectedCase = () => {
   throw error_create('Unexpected case')
 }
 
-;// CONCATENATED MODULE: ./node_modules/lib0/decoding.js
+;// ./node_modules/lib0/decoding.js
 /**
  * Efficient schema-less binary decoding with support for variable length encoding.
  *
@@ -4833,7 +4834,7 @@ class RleDecoder extends Decoder {
   }
 }
 
-class IntDiffDecoder extends (/* unused pure expression or super */ null && (Decoder)) {
+class IntDiffDecoder extends Decoder {
   /**
    * @param {Uint8Array} uint8Array
    * @param {number} start
@@ -4856,7 +4857,7 @@ class IntDiffDecoder extends (/* unused pure expression or super */ null && (Dec
   }
 }
 
-class RleIntDiffDecoder extends (/* unused pure expression or super */ null && (Decoder)) {
+class RleIntDiffDecoder extends Decoder {
   /**
    * @param {Uint8Array} uint8Array
    * @param {number} start
@@ -4917,7 +4918,7 @@ class UintOptRleDecoder extends Decoder {
   }
 }
 
-class IncUintOptRleDecoder extends (/* unused pure expression or super */ null && (Decoder)) {
+class IncUintOptRleDecoder extends Decoder {
   /**
    * @param {Uint8Array} uint8Array
    */
@@ -4934,7 +4935,7 @@ class IncUintOptRleDecoder extends (/* unused pure expression or super */ null &
     if (this.count === 0) {
       this.s = readVarInt(this)
       // if the sign is negative, we read the count too, otherwise count is 1
-      const isNegative = math.isNegativeZero(this.s)
+      const isNegative = isNegativeZero(this.s)
       this.count = 1
       if (isNegative) {
         this.s = -this.s
@@ -5004,13 +5005,13 @@ class StringDecoder {
   }
 }
 
-;// CONCATENATED MODULE: ./node_modules/lib0/webcrypto.js
+;// ./node_modules/lib0/webcrypto.js
 /* eslint-env browser */
 
 const subtle = crypto.subtle
 const webcrypto_getRandomValues = crypto.getRandomValues.bind(crypto)
 
-;// CONCATENATED MODULE: ./node_modules/lib0/random.js
+;// ./node_modules/lib0/random.js
 /**
  * Isomorphic module for true random numbers / buffers / uuids.
  *
@@ -5049,7 +5050,7 @@ const uuidv4 = () => uuidv4Template.replace(/[018]/g, /** @param {number} c */ c
   (c ^ uint32() & 15 >> c / 4).toString(16)
 )
 
-;// CONCATENATED MODULE: ./node_modules/lib0/promise.js
+;// ./node_modules/lib0/promise.js
 /**
  * Utility helpers to work with promises.
  *
@@ -5149,7 +5150,7 @@ const wait = timeout => promise_create((resolve, reject) => setTimeout(resolve, 
  */
 const isPromise = p => p instanceof Promise || (p && p.then && p.catch && p.finally)
 
-;// CONCATENATED MODULE: ./node_modules/lib0/pair.js
+;// ./node_modules/lib0/pair.js
 /**
  * Working with value pairs.
  *
@@ -5201,7 +5202,7 @@ const pair_forEach = (arr, f) => arr.forEach(p => f(p.left, p.right))
  */
 const pair_map = (arr, f) => arr.map(p => f(p.left, p.right))
 
-;// CONCATENATED MODULE: ./node_modules/lib0/dom.js
+;// ./node_modules/lib0/dom.js
 /* eslint-env browser */
 
 /**
@@ -5466,7 +5467,7 @@ const isParentOf = (parent, child) => {
 }
 /* c8 ignore stop */
 
-;// CONCATENATED MODULE: ./node_modules/lib0/symbol.js
+;// ./node_modules/lib0/symbol.js
 /**
  * Utility module to work with EcmaScript Symbols.
  *
@@ -5486,7 +5487,7 @@ const symbol_create = Symbol
  */
 const isSymbol = s => typeof s === 'symbol'
 
-;// CONCATENATED MODULE: ./node_modules/lib0/time.js
+;// ./node_modules/lib0/time.js
 /**
  * Utility module to work with time.
  *
@@ -5536,7 +5537,7 @@ const humanizeDuration = d => {
   return minutes + 'min' + (seconds > 0 ? ' ' + seconds + 's' : '')
 }
 
-;// CONCATENATED MODULE: ./node_modules/lib0/logging.common.js
+;// ./node_modules/lib0/logging.common.js
 
 
 
@@ -5614,7 +5615,7 @@ const createModuleLogger = (_print, moduleName) => {
 }
 /* c8 ignore stop */
 
-;// CONCATENATED MODULE: ./node_modules/lib0/logging.js
+;// ./node_modules/lib0/logging.js
 /**
  * Isomorphic logging module with support for colors!
  *
@@ -5990,7 +5991,7 @@ const createVConsole = (dom) => new VConsole(dom)
  */
 const logging_createModuleLogger = (moduleName) => createModuleLogger(print, moduleName)
 
-;// CONCATENATED MODULE: ./node_modules/lib0/iterator.js
+;// ./node_modules/lib0/iterator.js
 /**
  * Utility module to create and manipulate Iterators.
  *
@@ -6053,7 +6054,7 @@ const iteratorMap = (iterator, fmap) => createIterator(() => {
   return { done, value: done ? undefined : fmap(value) }
 })
 
-;// CONCATENATED MODULE: ./node_modules/yjs/dist/yjs.mjs
+;// ./node_modules/yjs/dist/yjs.mjs
 
 
 
@@ -6082,7 +6083,7 @@ const iteratorMap = (iterator, fmap) => createIterator(() => {
  *
  * @extends {Observable<any>}
  */
-class AbstractConnector extends (/* unused pure expression or super */ null && (Observable)) {
+class AbstractConnector extends Observable {
   /**
    * @param {Doc} ydoc
    * @param {any} awareness
@@ -6450,7 +6451,7 @@ const generateNewClientId = uint32;
  * A Yjs instance handles the state of shared data.
  * @extends Observable<string>
  */
-class Doc extends observable_Observable {
+class Doc extends Observable {
   /**
    * @param {DocOpts} opts configuration
    */
@@ -9562,7 +9563,7 @@ const popStackItem = (undoManager, stack, eventType) => {
  *
  * @extends {Observable<'stack-item-added'|'stack-item-popped'|'stack-cleared'|'stack-item-updated'>}
  */
-class UndoManager extends (/* unused pure expression or super */ null && (Observable)) {
+class UndoManager extends Observable {
   /**
    * @param {AbstractType<any>|Array<AbstractType<any>>} typeScope Accepts either a single type, or an array of types
    * @param {UndoManagerOptions} options
@@ -9573,7 +9574,7 @@ class UndoManager extends (/* unused pure expression or super */ null && (Observ
     deleteFilter = () => true,
     trackedOrigins = new Set([null]),
     ignoreRemoteMapChanges = false,
-    doc = /** @type {Doc} */ (array.isArray(typeScope) ? typeScope[0].doc : typeScope.doc)
+    doc = /** @type {Doc} */ (isArray(typeScope) ? typeScope[0].doc : typeScope.doc)
   } = {}) {
     super();
     /**
@@ -9633,7 +9634,7 @@ class UndoManager extends (/* unused pure expression or super */ null && (Observ
           addToDeleteSet(insertions, client, startClock, len);
         }
       });
-      const now = time.getUnixTime();
+      const now = getUnixTime();
       let didAdd = false;
       if (this.lastChange > 0 && now - this.lastChange < this.captureTimeout && stack.length > 0 && !undoing && !redoing) {
         // append change to last stack op
@@ -9671,7 +9672,7 @@ class UndoManager extends (/* unused pure expression or super */ null && (Observ
    * @param {Array<AbstractType<any>> | AbstractType<any>} ytypes
    */
   addToScope (ytypes) {
-    ytypes = array.isArray(ytypes) ? ytypes : [ytypes];
+    ytypes = isArray(ytypes) ? ytypes : [ytypes];
     ytypes.forEach(ytype => {
       if (this.scope.every(yt => yt !== ytype)) {
         this.scope.push(ytype);
@@ -15491,7 +15492,7 @@ const splitItem = (transaction, leftItem, diff) => {
  * @param {Array<StackItem>} stack
  * @param {ID} id
  */
-const isDeletedByUndoStack = (stack, id) => array.some(stack, /** @param {StackItem} s */ s => isDeleted(s.deletions, id));
+const isDeletedByUndoStack = (stack, id) => some(stack, /** @param {StackItem} s */ s => isDeleted(s.deletions, id));
 
 /**
  * Redoes the effect of this operation.
@@ -16174,7 +16175,7 @@ glo[importIdentifier] = true;
 
 //# sourceMappingURL=yjs.mjs.map
 
-;// CONCATENATED MODULE: ./packages/sync/build-module/provider.js
+;// ./packages/sync/build-module/provider.js
 /**
  * External dependencies
  */
@@ -16296,7 +16297,7 @@ const createSyncProvider = (connectLocal, connectRemote) => {
   };
 };
 
-;// CONCATENATED MODULE: ./node_modules/lib0/indexeddb.js
+;// ./node_modules/lib0/indexeddb.js
 /* eslint-env browser */
 
 /**
@@ -16563,7 +16564,7 @@ const createIDBKeyRangeLowerBound = (lower, lowerOpen) => IDBKeyRange.lowerBound
 
 /* c8 ignore stop */
 
-;// CONCATENATED MODULE: ./node_modules/y-indexeddb/src/y-indexeddb.js
+;// ./node_modules/y-indexeddb/src/y-indexeddb.js
 
 
 
@@ -16617,7 +16618,7 @@ const clearDocument = name => idb.deleteDB(name)
 /**
  * @extends Observable<string>
  */
-class IndexeddbPersistence extends observable_Observable {
+class IndexeddbPersistence extends Observable {
   /**
    * @param {string} name
    * @param {Y.Doc} doc
@@ -16749,7 +16750,7 @@ class IndexeddbPersistence extends observable_Observable {
   }
 }
 
-;// CONCATENATED MODULE: ./packages/sync/build-module/connect-indexdb.js
+;// ./packages/sync/build-module/connect-indexdb.js
 /**
  * External dependencies
  */
@@ -16781,7 +16782,7 @@ function connectIndexDb(objectId, objectType, doc) {
   });
 }
 
-;// CONCATENATED MODULE: ./node_modules/lib0/websocket.js
+;// ./node_modules/lib0/websocket.js
 /* eslint-env browser */
 
 /**
@@ -16873,7 +16874,7 @@ const setupWS = (wsclient) => {
 /**
  * @extends Observable<string>
  */
-class WebsocketClient extends observable_Observable {
+class WebsocketClient extends Observable {
   /**
    * @param {string} url
    * @param {object} opts
@@ -16936,7 +16937,7 @@ class WebsocketClient extends observable_Observable {
   }
 }
 
-;// CONCATENATED MODULE: ./node_modules/lib0/broadcastchannel.js
+;// ./node_modules/lib0/broadcastchannel.js
 /* eslint-env browser */
 
 /**
@@ -17068,7 +17069,7 @@ const publish = (room, data, origin = null) => {
   c.subs.forEach(sub => sub(data, origin))
 }
 
-;// CONCATENATED MODULE: ./node_modules/lib0/mutex.js
+;// ./node_modules/lib0/mutex.js
 /**
  * Mutual exclude for JavaScript.
  *
@@ -17114,9 +17115,9 @@ const createMutex = () => {
 }
 
 // EXTERNAL MODULE: ./node_modules/simple-peer/simplepeer.min.js
-var simplepeer_min = __webpack_require__(2248);
+var simplepeer_min = __webpack_require__(3622);
 var simplepeer_min_default = /*#__PURE__*/__webpack_require__.n(simplepeer_min);
-;// CONCATENATED MODULE: ./node_modules/y-protocols/sync.js
+;// ./node_modules/y-protocols/sync.js
 /**
  * @module sync-protocol
  */
@@ -17248,7 +17249,7 @@ const readSyncMessage = (decoder, encoder, doc, transactionOrigin) => {
   return messageType
 }
 
-;// CONCATENATED MODULE: ./node_modules/y-protocols/awareness.js
+;// ./node_modules/y-protocols/awareness.js
 /**
  * @module awareness-protocol
  */
@@ -17287,7 +17288,7 @@ const outdatedTimeout = 30000
  *
  * @extends {Observable<string>}
  */
-class Awareness extends observable_Observable {
+class Awareness extends Observable {
   /**
    * @param {Y.Doc} doc
    */
@@ -17545,7 +17546,7 @@ const applyAwarenessUpdate = (awareness, update, origin) => {
   }
 }
 
-;// CONCATENATED MODULE: ./packages/sync/build-module/y-webrtc/crypto.js
+;// ./packages/sync/build-module/y-webrtc/crypto.js
 /* wp:polyfill */
 // File copied as is from the y-webrtc package.
 /* eslint-disable eslint-comments/disable-enable-pair */
@@ -17645,7 +17646,7 @@ const decrypt = (data, key) => {
  */
 const decryptJson = (data, key) => decrypt(data, key).then(decryptedValue => readAny(createDecoder(new Uint8Array(decryptedValue))));
 
-;// CONCATENATED MODULE: ./packages/sync/build-module/y-webrtc/y-webrtc.js
+;// ./packages/sync/build-module/y-webrtc/y-webrtc.js
 /* wp:polyfill */
 // File copied as is from the y-webrtc package with only exports
 // added to the following vars/functions: signalingConns,rooms, publishSignalingMessage, log.
@@ -18242,7 +18243,7 @@ class SignalingConn extends WebsocketClient {
 /**
  * @extends Observable<string>
  */
-class WebrtcProvider extends observable_Observable {
+class WebrtcProvider extends Observable {
   /**
    * @param {string} roomName
    * @param {Y.Doc} doc
@@ -18332,7 +18333,7 @@ class WebrtcProvider extends observable_Observable {
   }
 }
 
-;// CONCATENATED MODULE: ./packages/sync/build-module/webrtc-http-stream-signaling.js
+;// ./packages/sync/build-module/webrtc-http-stream-signaling.js
 /* wp:polyfill */
 /**
  * External dependencies
@@ -18553,7 +18554,7 @@ const webrtc_http_stream_signaling_messageReconnectTimeout = 30000;
 /**
  * @augments Observable<string>
  */
-class HttpSignalingConn extends observable_Observable {
+class HttpSignalingConn extends Observable {
   /**
    * @param {string} url
    */
@@ -18640,7 +18641,7 @@ class WebrtcProviderWithHttpSignaling extends WebrtcProvider {
   }
 }
 
-;// CONCATENATED MODULE: ./packages/sync/build-module/create-webrtc-connection.js
+;// ./packages/sync/build-module/create-webrtc-connection.js
 /**
  * External dependencies
  */
@@ -18679,7 +18680,7 @@ function createWebRTCConnection({
   };
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/sync.js
+;// ./packages/core-data/build-module/sync.js
 /**
  * WordPress dependencies
  */
@@ -18697,7 +18698,7 @@ function getSyncProvider() {
   return syncProvider;
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/actions.js
+;// ./packages/core-data/build-module/actions.js
 /**
  * External dependencies
  */
@@ -19539,7 +19540,7 @@ const receiveRevisions = (kind, name, recordKey, records, query, invalidateCache
   });
 };
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/entities.js
+;// ./packages/core-data/build-module/entities.js
 /**
  * External dependencies
  */
@@ -20053,7 +20054,7 @@ const getOrLoadEntitiesConfig = (kind, name) => async ({
   return configs;
 };
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/utils/get-normalized-comma-separable.js
+;// ./packages/core-data/build-module/utils/get-normalized-comma-separable.js
 /**
  * Given a value which can be specified as one or the other of a comma-separated
  * string or an array, returns a value normalized to an array of strings, or
@@ -20073,7 +20074,7 @@ function getNormalizedCommaSeparable(value) {
 }
 /* harmony default export */ const get_normalized_comma_separable = (getNormalizedCommaSeparable);
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/utils/with-weak-map-cache.js
+;// ./packages/core-data/build-module/utils/with-weak-map-cache.js
 /**
  * Given a function, returns an enhanced function which caches the result and
  * tracks in WeakMap. The result is only cached if the original function is
@@ -20104,7 +20105,7 @@ function withWeakMapCache(fn) {
 }
 /* harmony default export */ const with_weak_map_cache = (withWeakMapCache);
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/queried-data/get-query-parts.js
+;// ./packages/core-data/build-module/queried-data/get-query-parts.js
 /**
  * WordPress dependencies
  */
@@ -20208,7 +20209,7 @@ function getQueryParts(query) {
 }
 /* harmony default export */ const get_query_parts = (with_weak_map_cache(getQueryParts));
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/queried-data/reducer.js
+;// ./packages/core-data/build-module/queried-data/reducer.js
 /**
  * WordPress dependencies
  */
@@ -20444,7 +20445,7 @@ const queries = (state = {}, action) => {
   queries
 }));
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/reducer.js
+;// ./packages/core-data/build-module/reducer.js
 /**
  * External dependencies
  */
@@ -21046,9 +21047,9 @@ function registeredPostMeta(state = {}, action) {
 }));
 
 // EXTERNAL MODULE: ./node_modules/equivalent-key-map/equivalent-key-map.js
-var equivalent_key_map = __webpack_require__(2167);
+var equivalent_key_map = __webpack_require__(3249);
 var equivalent_key_map_default = /*#__PURE__*/__webpack_require__.n(equivalent_key_map);
-;// CONCATENATED MODULE: ./packages/core-data/build-module/queried-data/selectors.js
+;// ./packages/core-data/build-module/queried-data/selectors.js
 /**
  * External dependencies
  */
@@ -21183,7 +21184,7 @@ function getQueriedTotalPages(state, query = {}) {
   return (_state$queries$contex2 = state.queries?.[context]?.[stableKey]?.meta?.totalPages) !== null && _state$queries$contex2 !== void 0 ? _state$queries$contex2 : null;
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/utils/is-numeric-id.js
+;// ./packages/core-data/build-module/utils/is-numeric-id.js
 /**
  * Checks argument to determine if it's a numeric ID.
  * For example, '123' is a numeric ID, but '123abc' is not.
@@ -21195,7 +21196,7 @@ function isNumericID(id) {
   return /^\s*\d+\s*$/.test(id);
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/utils/is-raw-attribute.js
+;// ./packages/core-data/build-module/utils/is-raw-attribute.js
 /**
  * Checks whether the attribute is a "raw" attribute or not.
  *
@@ -21208,7 +21209,7 @@ function isRawAttribute(entity, attribute) {
   return (entity.rawAttributes || []).includes(attribute);
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/utils/user-permissions.js
+;// ./packages/core-data/build-module/utils/user-permissions.js
 const ALLOWED_RESOURCE_ACTIONS = ['create', 'read', 'update', 'delete'];
 function getUserPermissionsFromAllowHeader(allowedMethods) {
   const permissions = {};
@@ -21231,7 +21232,7 @@ function getUserPermissionCacheKey(action, resource, id) {
   return key;
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/selectors.js
+;// ./packages/core-data/build-module/selectors.js
 /**
  * WordPress dependencies
  */
@@ -22298,7 +22299,7 @@ const getRevision = (0,external_wp_data_namespaceObject.createSelector)((state, 
   return [state.entities.records?.[kind]?.[name]?.revisions?.[recordKey]?.items?.[context]?.[revisionKey], state.entities.records?.[kind]?.[name]?.revisions?.[recordKey]?.itemIsComplete?.[context]?.[revisionKey]];
 });
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/private-selectors.js
+;// ./packages/core-data/build-module/private-selectors.js
 /**
  * WordPress dependencies
  */
@@ -22380,7 +22381,7 @@ function getRegisteredPostMeta(state, postType) {
   return (_state$registeredPost = state.registeredPostMeta?.[postType]) !== null && _state$registeredPost !== void 0 ? _state$registeredPost : {};
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/private-actions.js
+;// ./packages/core-data/build-module/private-actions.js
 /**
  * Returns an action object used in signalling that the registered post meta
  * fields for a post type have been received.
@@ -22398,7 +22399,7 @@ function receiveRegisteredPostMeta(postType, registeredPostMeta) {
   };
 }
 
-;// CONCATENATED MODULE: ./node_modules/camel-case/dist.es2015/index.js
+;// ./node_modules/camel-case/dist.es2015/index.js
 
 
 function camelCaseTransform(input, index) {
@@ -22416,9 +22417,9 @@ function camelCase(input, options) {
     return pascalCase(input, __assign({ transform: camelCaseTransform }, options));
 }
 
-;// CONCATENATED MODULE: external ["wp","htmlEntities"]
+;// external ["wp","htmlEntities"]
 const external_wp_htmlEntities_namespaceObject = window["wp"]["htmlEntities"];
-;// CONCATENATED MODULE: ./packages/core-data/build-module/utils/forward-resolver.js
+;// ./packages/core-data/build-module/utils/forward-resolver.js
 /**
  * Higher-order function which forward the resolution to another resolver with the same arguments.
  *
@@ -22433,7 +22434,7 @@ const forwardResolver = resolverName => (...args) => async ({
 };
 /* harmony default export */ const forward_resolver = (forwardResolver);
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/fetch/__experimental-fetch-link-suggestions.js
+;// ./packages/core-data/build-module/fetch/__experimental-fetch-link-suggestions.js
 /**
  * WordPress dependencies
  */
@@ -22616,7 +22617,7 @@ function tokenize(text) {
   return text.toLowerCase().match(/[\p{L}\p{N}]+/gu) || [];
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/fetch/__experimental-fetch-url-data.js
+;// ./packages/core-data/build-module/fetch/__experimental-fetch-url-data.js
 /**
  * WordPress dependencies
  */
@@ -22685,7 +22686,7 @@ const fetchUrlData = async (url, options = {}) => {
 };
 /* harmony default export */ const _experimental_fetch_url_data = (fetchUrlData);
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/fetch/index.js
+;// ./packages/core-data/build-module/fetch/index.js
 /**
  * External dependencies
  */
@@ -22707,7 +22708,8 @@ async function fetchBlockPatterns() {
   return restPatterns.map(pattern => Object.fromEntries(Object.entries(pattern).map(([key, value]) => [camelCase(key), value])));
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/resolvers.js
+;// ./packages/core-data/build-module/resolvers.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -23491,7 +23493,7 @@ const resolvers_getRegisteredPostMeta = postType => async ({
   }
 };
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/locks/utils.js
+;// ./packages/core-data/build-module/locks/utils.js
 function deepCopyLocksTreePath(tree, path) {
   const newTree = {
     ...tree
@@ -23553,7 +23555,7 @@ function hasConflictingLock({
   return false;
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/locks/reducer.js
+;// ./packages/core-data/build-module/locks/reducer.js
 /**
  * Internal dependencies
  */
@@ -23624,7 +23626,7 @@ function locks(state = DEFAULT_STATE, action) {
   return state;
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/locks/selectors.js
+;// ./packages/core-data/build-module/locks/selectors.js
 /**
  * Internal dependencies
  */
@@ -23665,7 +23667,7 @@ function isLockAvailable(state, store, path, {
   return true;
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/locks/engine.js
+;// ./packages/core-data/build-module/locks/engine.js
 /**
  * Internal dependencies
  */
@@ -23727,7 +23729,7 @@ function createLocks() {
   };
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/locks/actions.js
+;// ./packages/core-data/build-module/locks/actions.js
 /**
  * Internal dependencies
  */
@@ -23748,9 +23750,9 @@ function createLocksActions() {
   };
 }
 
-;// CONCATENATED MODULE: external ["wp","privateApis"]
+;// external ["wp","privateApis"]
 const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
-;// CONCATENATED MODULE: ./packages/core-data/build-module/lock-unlock.js
+;// ./packages/core-data/build-module/lock-unlock.js
 /**
  * WordPress dependencies
  */
@@ -23760,18 +23762,18 @@ const {
   unlock
 } = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/core-data');
 
-;// CONCATENATED MODULE: external ["wp","element"]
+;// external ["wp","element"]
 const external_wp_element_namespaceObject = window["wp"]["element"];
-;// CONCATENATED MODULE: ./packages/core-data/build-module/entity-context.js
+;// ./packages/core-data/build-module/entity-context.js
 /**
  * WordPress dependencies
  */
 
 const EntityContext = (0,external_wp_element_namespaceObject.createContext)({});
 
-;// CONCATENATED MODULE: external "ReactJSXRuntime"
+;// external "ReactJSXRuntime"
 const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
-;// CONCATENATED MODULE: ./packages/core-data/build-module/entity-provider.js
+;// ./packages/core-data/build-module/entity-provider.js
 /**
  * WordPress dependencies
  */
@@ -23816,7 +23818,7 @@ function EntityProvider({
   });
 }
 
-;// CONCATENATED MODULE: ./node_modules/memize/dist/index.js
+;// ./node_modules/memize/dist/index.js
 /**
  * Memize options object.
  *
@@ -23978,7 +23980,7 @@ function memize(fn, options) {
 
 
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/hooks/memoize.js
+;// ./packages/core-data/build-module/hooks/memoize.js
 /**
  * External dependencies
  */
@@ -23987,7 +23989,7 @@ function memize(fn, options) {
 // re-export due to restrictive esModuleInterop setting
 /* harmony default export */ const memoize = (memize);
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/hooks/constants.js
+;// ./packages/core-data/build-module/hooks/constants.js
 let Status = /*#__PURE__*/function (Status) {
   Status["Idle"] = "IDLE";
   Status["Resolving"] = "RESOLVING";
@@ -23996,7 +23998,7 @@ let Status = /*#__PURE__*/function (Status) {
   return Status;
 }({});
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/hooks/use-query-select.js
+;// ./packages/core-data/build-module/hooks/use-query-select.js
 /**
  * WordPress dependencies
  */
@@ -24102,7 +24104,7 @@ const enrichSelectors = memoize(selectors => {
   return resolvers;
 });
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/hooks/use-entity-record.js
+;// ./packages/core-data/build-module/hooks/use-entity-record.js
 /**
  * WordPress dependencies
  */
@@ -24265,7 +24267,7 @@ function __experimentalUseEntityRecord(kind, name, recordId, options) {
   return useEntityRecord(kind, name, recordId, options);
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/hooks/use-entity-records.js
+;// ./packages/core-data/build-module/hooks/use-entity-records.js
 /**
  * WordPress dependencies
  */
@@ -24408,9 +24410,9 @@ function useEntityRecordsWithPermissions(kind, name, queryArgs = {}, options = {
   };
 }
 
-;// CONCATENATED MODULE: external ["wp","warning"]
+;// external ["wp","warning"]
 const external_wp_warning_namespaceObject = window["wp"]["warning"];
-;// CONCATENATED MODULE: ./packages/core-data/build-module/hooks/use-resource-permissions.js
+;// ./packages/core-data/build-module/hooks/use-resource-permissions.js
 /**
  * WordPress dependencies
  */
@@ -24566,9 +24568,9 @@ function __experimentalUseResourcePermissions(resource, id) {
   return useResourcePermissions(resource, id);
 }
 
-;// CONCATENATED MODULE: external ["wp","blocks"]
+;// external ["wp","blocks"]
 const external_wp_blocks_namespaceObject = window["wp"]["blocks"];
-;// CONCATENATED MODULE: ./packages/core-data/build-module/hooks/use-entity-id.js
+;// ./packages/core-data/build-module/hooks/use-entity-id.js
 /**
  * WordPress dependencies
  */
@@ -24591,9 +24593,9 @@ function useEntityId(kind, name) {
   return context?.[kind]?.[name];
 }
 
-;// CONCATENATED MODULE: external ["wp","blockEditor"]
+;// external ["wp","blockEditor"]
 const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
-;// CONCATENATED MODULE: ./packages/core-data/build-module/footnotes/get-rich-text-values-cached.js
+;// ./packages/core-data/build-module/footnotes/get-rich-text-values-cached.js
 /**
  * WordPress dependencies
  */
@@ -24627,7 +24629,7 @@ function getRichTextValuesCached(block) {
   return cache.get(block);
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/footnotes/get-footnotes-order.js
+;// ./packages/core-data/build-module/footnotes/get-footnotes-order.js
 /**
  * Internal dependencies
  */
@@ -24663,7 +24665,7 @@ function getFootnotesOrder(blocks) {
   return blocks.flatMap(getBlockFootnotesOrder);
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/footnotes/index.js
+;// ./packages/core-data/build-module/footnotes/index.js
 /**
  * WordPress dependencies
  */
@@ -24775,7 +24777,7 @@ function updateFootnotesFromMeta(blocks, meta) {
   };
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/hooks/use-entity-block-editor.js
+;// ./packages/core-data/build-module/hooks/use-entity-block-editor.js
 /**
  * WordPress dependencies
  */
@@ -24908,7 +24910,7 @@ function useEntityBlockEditor(kind, name, {
   return [blocks, onInput, onChange];
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/hooks/use-entity-prop.js
+;// ./packages/core-data/build-module/hooks/use-entity-prop.js
 /**
  * WordPress dependencies
  */
@@ -24967,7 +24969,7 @@ function useEntityProp(kind, name, prop, _id) {
   return [value, setValue, fullValue];
 }
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/hooks/index.js
+;// ./packages/core-data/build-module/hooks/index.js
 
 
 
@@ -24975,7 +24977,7 @@ function useEntityProp(kind, name, prop, _id) {
 
 
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/private-apis.js
+;// ./packages/core-data/build-module/private-apis.js
 /**
  * Internal dependencies
  */
@@ -24986,7 +24988,7 @@ lock(privateApis, {
   useEntityRecordsWithPermissions: useEntityRecordsWithPermissions
 });
 
-;// CONCATENATED MODULE: ./packages/core-data/build-module/index.js
+;// ./packages/core-data/build-module/index.js
 /**
  * WordPress dependencies
  */
