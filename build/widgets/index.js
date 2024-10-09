@@ -184,7 +184,6 @@ function WidgetTypeSelector({
 
 ;// ./packages/widgets/build-module/blocks/legacy-widget/edit/inspector-card.js
 
-
 function InspectorCard({
   name,
   description
@@ -638,7 +637,6 @@ function serializeForm(form) {
  */
 
 
-
 function Form({
   title,
   isVisible,
@@ -678,7 +676,7 @@ function Form({
       onChangeHasPreview,
       onError(error) {
         window.console.error(error);
-        createNotice('error', (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: the name of the affected block. */
+        createNotice('error', (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: the name of the affected block. */
         (0,external_wp_i18n_namespaceObject.__)('The "%s" block was affected by errors and may not function properly. Check the developer tools for more details.'), idBase || id));
       }
     });
@@ -734,8 +732,6 @@ function Form({
 /**
  * WordPress dependencies
  */
-
-
 
 
 
@@ -850,7 +846,6 @@ function Preview({
  */
 
 
-
 function NoPreview({
   name
 }) {
@@ -918,8 +913,6 @@ function ConvertToBlocksButton({
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -1353,8 +1346,6 @@ const group = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 
 
 
-
-
 function edit_Edit(props) {
   const {
     clientId
@@ -1417,8 +1408,6 @@ function PreviewContent({
  */
 
 
-
-
 function save({
   attributes
 }) {
@@ -1438,8 +1427,6 @@ function save({
 /**
  * WordPress dependencies
  */
-
-
 
 
 const v1 = {

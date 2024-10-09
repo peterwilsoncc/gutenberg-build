@@ -46,7 +46,7 @@ const updateHead = async newHead => {
   await Promise.all([...headElements.entries()].filter(([, {
     tag
   }]) => tag.nodeName === 'SCRIPT').map(async ([url]) => {
-    await import( /* webpackIgnore: true */url);
+    await import(/* webpackIgnore: true */url);
   }));
 
   // Prepare new assets.

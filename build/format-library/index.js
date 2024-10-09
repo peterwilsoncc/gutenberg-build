@@ -36,8 +36,6 @@ const formatBold = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 
 
 
-
-
 const bold_name = 'core/bold';
 const title = (0,external_wp_i18n_namespaceObject.__)('Bold');
 const bold = {
@@ -103,8 +101,6 @@ const code = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
 /**
  * WordPress dependencies
  */
-
-
 
 
 
@@ -185,8 +181,6 @@ const external_wp_element_namespaceObject = window["wp"]["element"];
 /**
  * WordPress dependencies
  */
-
-
 
 
 
@@ -362,8 +356,6 @@ const formatItalic = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 /**
  * WordPress dependencies
  */
-
-
 
 
 
@@ -829,7 +821,7 @@ function InlineLinkUI({
     };
   }
   function createButtonText(searchTerm) {
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: search term. */
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: search term. */
     (0,external_wp_i18n_namespaceObject.__)('Create page: <mark>%s</mark>'), searchTerm), {
       mark: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("mark", {})
     });
@@ -906,8 +898,6 @@ function getRichTextValueFromSelection(value, isActive) {
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -1140,8 +1130,6 @@ const formatStrikethrough = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceOb
 
 
 
-
-
 const strikethrough_name = 'core/strikethrough';
 const strikethrough_title = (0,external_wp_i18n_namespaceObject.__)('Strikethrough');
 const strikethrough = {
@@ -1182,8 +1170,6 @@ const strikethrough = {
 /**
  * WordPress dependencies
  */
-
-
 
 
 
@@ -1312,7 +1298,6 @@ const {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -1475,8 +1460,6 @@ function InlineColorUI({
 /**
  * Internal dependencies
  */
-
-
 
 
 const transparentValue = 'rgba(0, 0, 0, 0)';
@@ -1817,8 +1800,6 @@ const language = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(e
 /**
  * WordPress dependencies
  */
-
-
 
 
 

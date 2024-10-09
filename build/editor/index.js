@@ -5382,7 +5382,7 @@ const viewPostRevisions = {
   label(items) {
     var _items$0$_links$versi;
     const revisionsCount = (_items$0$_links$versi = items[0]._links?.['version-history']?.[0]?.count) !== null && _items$0$_links$versi !== void 0 ? _items$0$_links$versi : 0;
-    return (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: number of revisions */
+    return (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: number of revisions */
     (0,external_wp_i18n_namespaceObject.__)('View revisions (%s)'), revisionsCount);
   },
   isEligible(post) {
@@ -5544,7 +5544,6 @@ function getFieldTypeDefinition(type) {
 /**
  * Internal dependencies
  */
-
 
 function DateTime({
   data,
@@ -5800,8 +5799,6 @@ function getControlByType(type) {
  * Internal dependencies
  */
 
-
-
 function Header({
   title
 }) {
@@ -6006,8 +6003,6 @@ const closeSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -6253,7 +6248,6 @@ const titleField = {
 
 
 
-
 const fields = [title];
 const formDuplicateAction = {
   fields: ['title']
@@ -6273,7 +6267,7 @@ const duplicatePost = {
   }) => {
     const [item, setItem] = (0,external_wp_element_namespaceObject.useState)({
       ...items[0],
-      title: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Existing template title */
+      title: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Existing template title */
       (0,external_wp_i18n_namespaceObject.__)('%s (Copy)'), getItemTitle(items[0]))
     });
     const [isCreatingPage, setIsCreatingPage] = (0,external_wp_element_namespaceObject.useState)(false);
@@ -6447,7 +6441,6 @@ const duplicatePattern = {
 
 
 
-
 // Patterns.
 const {
   PATTERN_TYPES
@@ -6595,7 +6588,6 @@ const orderField = {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -7304,13 +7296,13 @@ const restorePost = {
     }) => status === 'fulfilled')) {
       let successMessage;
       if (posts.length === 1) {
-        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of posts. */
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The number of posts. */
         (0,external_wp_i18n_namespaceObject.__)('"%s" has been restored.'), getItemTitle(posts[0]));
       } else if (posts[0].type === 'page') {
-        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of posts. */
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The number of posts. */
         (0,external_wp_i18n_namespaceObject.__)('%d pages have been restored.'), posts.length);
       } else {
-        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of posts. */
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The number of posts. */
         (0,external_wp_i18n_namespaceObject.__)('%d posts have been restored.'), posts.length);
       }
       createSuccessNotice(successMessage, {
@@ -7346,10 +7338,10 @@ const restorePost = {
         if (errorMessages.size === 0) {
           errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while restoring the posts.');
         } else if (errorMessages.size === 1) {
-          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
+          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: an error message */
           (0,external_wp_i18n_namespaceObject.__)('An error occurred while restoring the posts: %s'), [...errorMessages][0]);
         } else {
-          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
+          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: a list of comma separated error messages */
           (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while restoring the posts: %s'), [...errorMessages].join(','));
         }
       }
@@ -7380,7 +7372,6 @@ const restorePost = {
 /**
  * Internal dependencies
  */
-
 
 
 const reset_post_isTemplateRevertable = templateOrTemplatePart => {
@@ -7506,8 +7497,8 @@ const resetPostAction = {
           });
           await saveEditedEntityRecord('postType', template.type, template.id);
         }
-        createSuccessNotice(items.length > 1 ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of items. */
-        (0,external_wp_i18n_namespaceObject.__)('%s items reset.'), items.length) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The template/part's name. */
+        createSuccessNotice(items.length > 1 ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The number of items. */
+        (0,external_wp_i18n_namespaceObject.__)('%s items reset.'), items.length) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The template/part's name. */
         (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), getItemTitle(items[0])), {
           type: 'snackbar',
           id: 'revert-template-action'
@@ -7729,7 +7720,6 @@ const editPostWithNotices = async (postsWithUpdates, notice, callbacks) => {
 
 
 
-
 const {
   PATTERN_TYPES: delete_post_PATTERN_TYPES
 } = lock_unlock_unlock(external_wp_patterns_namespaceObject.privateApis);
@@ -7783,8 +7773,8 @@ const deletePostAction = {
               success: {
                 messages: {
                   getMessage: item => {
-                    return isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The template/part's name. */
-                    (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(getItemTitle(item))) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The template/part's name. */
+                    return isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The template/part's name. */
+                    (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(getItemTitle(item))) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The template/part's name. */
                     (0,external_wp_i18n_namespaceObject.__)('"%s" deleted.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(getItemTitle(item)));
                   },
                   getBatchMessage: () => {
@@ -7805,12 +7795,12 @@ const deletePostAction = {
                       return isResetting ? (0,external_wp_i18n_namespaceObject.__)('An error occurred while reverting the items.') : (0,external_wp_i18n_namespaceObject.__)('An error occurred while deleting the items.');
                     }
                     if (errors.size === 1) {
-                      return isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
-                      (0,external_wp_i18n_namespaceObject.__)('An error occurred while reverting the items: %s'), [...errors][0]) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
+                      return isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: an error message */
+                      (0,external_wp_i18n_namespaceObject.__)('An error occurred while reverting the items: %s'), [...errors][0]) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: an error message */
                       (0,external_wp_i18n_namespaceObject.__)('An error occurred while deleting the items: %s'), [...errors][0]);
                     }
-                    return isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
-                    (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while reverting the items: %s'), [...errors].join(',')) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
+                    return isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: a list of comma separated error messages */
+                    (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while reverting the items: %s'), [...errors].join(',')) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: a list of comma separated error messages */
                     (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while deleting the items: %s'), [...errors].join(','));
                   }
                 }
@@ -7849,7 +7839,6 @@ const deletePostAction = {
 /**
  * Internal dependencies
  */
-
 
 
 const trash_post_trashPost = {
@@ -7909,10 +7898,10 @@ const trash_post_trashPost = {
             }) => status === 'fulfilled')) {
               let successMessage;
               if (promiseResult.length === 1) {
-                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The item's title. */
+                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The item's title. */
                 (0,external_wp_i18n_namespaceObject.__)('"%s" moved to the trash.'), getItemTitle(items[0]));
               } else {
-                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The number of items. */
+                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The number of items. */
                 (0,external_wp_i18n_namespaceObject._n)('%s item moved to the trash.', '%s items moved to the trash.', items.length), items.length);
               }
               createSuccessNotice(successMessage, {
@@ -7945,10 +7934,10 @@ const trash_post_trashPost = {
                 if (errorMessages.size === 0) {
                   errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while moving the items to the trash.');
                 } else if (errorMessages.size === 1) {
-                  errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
+                  errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: an error message */
                   (0,external_wp_i18n_namespaceObject.__)('An error occurred while moving the item to the trash: %s'), [...errorMessages][0]);
                 } else {
-                  errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
+                  errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: a list of comma separated error messages */
                   (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while moving the items to the trash: %s'), [...errorMessages].join(','));
                 }
               }
@@ -8026,7 +8015,7 @@ const permanentlyDeletePost = {
     }) => status === 'fulfilled')) {
       let successMessage;
       if (promiseResult.length === 1) {
-        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The posts's title. */
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The posts's title. */
         (0,external_wp_i18n_namespaceObject.__)('"%s" permanently deleted.'), getItemTitle(posts[0]));
       } else {
         successMessage = (0,external_wp_i18n_namespaceObject.__)('The items were permanently deleted.');
@@ -8062,10 +8051,10 @@ const permanentlyDeletePost = {
         if (errorMessages.size === 0) {
           errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the items.');
         } else if (errorMessages.size === 1) {
-          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
+          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: an error message */
           (0,external_wp_i18n_namespaceObject.__)('An error occurred while permanently deleting the items: %s'), [...errorMessages][0]);
         } else {
-          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
+          errorMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: a list of comma separated error messages */
           (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while permanently deleting the items: %s'), [...errorMessages].join(','));
         }
       }
@@ -8164,7 +8153,6 @@ const getCleanTemplatePartSlug = title => {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -8407,7 +8395,7 @@ const duplicateTemplatePart = {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CreateTemplatePartModalContents, {
       blocks: blocks,
       defaultArea: item.area,
-      defaultTitle: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Existing template part title */
+      defaultTitle: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Existing template part title */
       (0,external_wp_i18n_namespaceObject.__)('%s (Copy)'), utils_getItemTitle(item)),
       onCreate: onTemplatePartSuccess,
       onError: closeModal,
@@ -8767,8 +8755,8 @@ const removeTemplates = items => async ({
       } else if (typeof items[0].title?.raw === 'string') {
         title = items[0].title?.raw;
       }
-      successMessage = isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The template/part's name. */
-      (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title)) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: The template/part's name. */
+      successMessage = isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The template/part's name. */
+      (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title)) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The template/part's name. */
       (0,external_wp_i18n_namespaceObject.__)('"%s" deleted.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title));
     } else {
       successMessage = isResetting ? (0,external_wp_i18n_namespaceObject.__)('Items reset.') : (0,external_wp_i18n_namespaceObject.__)('Items deleted.');
@@ -8801,12 +8789,12 @@ const removeTemplates = items => async ({
       if (errorMessages.size === 0) {
         errorMessage = (0,external_wp_i18n_namespaceObject.__)('An error occurred while deleting the items.');
       } else if (errorMessages.size === 1) {
-        errorMessage = isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
-        (0,external_wp_i18n_namespaceObject.__)('An error occurred while reverting the items: %s'), [...errorMessages][0]) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: an error message */
+        errorMessage = isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: an error message */
+        (0,external_wp_i18n_namespaceObject.__)('An error occurred while reverting the items: %s'), [...errorMessages][0]) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: an error message */
         (0,external_wp_i18n_namespaceObject.__)('An error occurred while deleting the items: %s'), [...errorMessages][0]);
       } else {
-        errorMessage = isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
-        (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while reverting the items: %s'), [...errorMessages].join(',')) : (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: a list of comma separated error messages */
+        errorMessage = isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: a list of comma separated error messages */
+        (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while reverting the items: %s'), [...errorMessages].join(',')) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: a list of comma separated error messages */
         (0,external_wp_i18n_namespaceObject.__)('Some errors occurred while deleting the items: %s'), [...errorMessages].join(','));
       }
     }
@@ -8853,7 +8841,6 @@ const navigation = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 /**
  * WordPress dependencies
  */
-
 
 
 const page = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
@@ -9187,8 +9174,6 @@ function shimAttributeSource(settings) {
 
 /** @typedef {import('@wordpress/components').WPCompleter} WPCompleter */
 
-
-
 function getUserLabel(user) {
   const avatar = user.avatar_urls && user.avatar_urls[24] ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
     className: "editor-autocompleters__user-avatar",
@@ -9286,8 +9271,6 @@ const external_wp_mediaUtils_namespaceObject = window["wp"]["mediaUtils"];
 
 
 /** @typedef {import('@wordpress/blocks').WPBlockSettings} WPBlockSettings */
-
-
 
 const {
   PatternOverridesControls,
@@ -9922,8 +9905,6 @@ function ComplementaryAreaToggle({
  */
 
 
-
-
 const ComplementaryAreaHeader = ({
   smallScreenTitle,
   children,
@@ -10132,8 +10113,6 @@ PinnedItems.Slot = PinnedItemsSlot;
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -10469,7 +10448,6 @@ NavigableRegion.displayName = 'NavigableRegion';
 /**
  * Internal dependencies
  */
-
 
 
 const interface_skeleton_ANIMATION_DURATION = 0.25;
@@ -10958,7 +10936,6 @@ const external_wp_commands_namespaceObject = window["wp"]["commands"];
 
 /** @typedef {import("@wordpress/components").IconType} IconType */
 
-
 const MotionButton = (0,external_wp_components_namespaceObject.__unstableMotion)(external_wp_components_namespaceObject.Button);
 
 /**
@@ -11112,7 +11089,6 @@ const external_wp_richText_namespaceObject = window["wp"]["richText"];
  */
 
 
-
 const TableOfContentsItem = ({
   children,
   isValid,
@@ -11161,7 +11137,6 @@ const TableOfContentsItem = ({
 /**
  * Module constants
  */
-
 
 const emptyHeadingContent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("em", {
   children: (0,external_wp_i18n_namespaceObject.__)('(Empty heading)')
@@ -11680,8 +11655,6 @@ function EditorHistoryUndo(props, ref) {
 
 
 
-
-
 function TemplateValidationNotice() {
   const [showConfirmDialog, setShowConfirmDialog] = (0,external_wp_element_namespaceObject.useState)(false);
   const isValid = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -11744,8 +11717,6 @@ function TemplateValidationNotice() {
  *
  * @return {JSX.Element} The rendered EditorNotices component.
  */
-
-
 
 function EditorNotices() {
   const {
@@ -11826,8 +11797,6 @@ function EditorSnackbars() {
 
 
 
-
-
 function EntityRecordItem({
   record,
   checked,
@@ -11888,7 +11857,6 @@ function EntityRecordItem({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -12063,7 +12031,6 @@ const useIsDirty = () => {
 
 
 
-
 function identity(values) {
   return values;
 }
@@ -12196,7 +12163,7 @@ function EntitiesSavedStatesExtensible({
         }), additionalPrompt]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
         id: renderDialog ? dialogDescription : undefined,
-        children: isDirty ? (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %d: number of site changes waiting to be saved. */
+        children: isDirty ? (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of site changes waiting to be saved. */
         (0,external_wp_i18n_namespaceObject._n)('There is <strong>%d site change</strong> waiting to be saved.', 'There are <strong>%d site changes</strong> waiting to be saved.', sortedPartitionedSavables.length), sortedPartitionedSavables.length), {
           strong: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {})
         }) : (0,external_wp_i18n_namespaceObject.__)('Select the items you want to save.')
@@ -12661,7 +12628,6 @@ var remove_accents_default = /*#__PURE__*/__webpack_require__.n(remove_accents);
 
 
 
-
 const PostPanelRow = (0,external_wp_element_namespaceObject.forwardRef)(({
   className,
   label,
@@ -12782,7 +12748,6 @@ const unescapeTerms = terms => {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -13000,7 +12965,7 @@ function ParentRow() {
           title: (0,external_wp_i18n_namespaceObject.__)('Parent'),
           onClose: onClose
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-          children: [(0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %1$s The home URL of the WordPress installation without the scheme. */
+          children: [(0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %1$s The home URL of the WordPress installation without the scheme. */
           (0,external_wp_i18n_namespaceObject.__)('Child pages inherit characteristics from their parent, such as URL structure. For instance, if "Pricing" is a child of "Services", its URL would be %1$s<wbr />/services<wbr />/pricing.'), (0,external_wp_url_namespaceObject.filterURLForDisplay)(homeUrl).replace(/([/.])/g, '<wbr />$1')), {
             wbr: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("wbr", {})
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
@@ -13096,7 +13061,6 @@ const addTemplate = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -13300,7 +13264,6 @@ function useCurrentTemplateSlug() {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -13558,8 +13521,6 @@ EnablePluginDocumentSettingPanelOption.Slot = Slot;
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -14286,8 +14247,6 @@ function PluginSidebarMoreMenuItem(props) {
  */
 
 
-
-
 function SwapTemplateButton({
   onClick
 }) {
@@ -14410,8 +14369,6 @@ function ResetDefaultTemplate({
 
 
 
-
-
 function CreateNewTemplate({
   onClick
 }) {
@@ -14466,8 +14423,6 @@ function CreateNewTemplate({
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -14947,7 +14902,6 @@ function PostAuthorCheck({
 
 
 
-
 function PostAuthorToggle({
   isOpen,
   onClick
@@ -15132,7 +15086,6 @@ function PostPingbacks() {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -15466,8 +15419,6 @@ PluginPostExcerpt.Slot = plugin_Slot;
  * Module Constants
  */
 
-
-
 const post_excerpt_panel_PANEL_NAME = 'post-excerpt';
 function ExcerptPanel() {
   const {
@@ -15720,7 +15671,6 @@ function PostFeaturedImageCheck({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -16063,7 +16013,6 @@ function PostFormatCheck({
 
 // All WP post formats, sorted alphabetically by translated name.
 
-
 const POST_FORMATS = [{
   id: 'aside',
   caption: (0,external_wp_i18n_namespaceObject.__)('Aside')
@@ -16168,7 +16117,7 @@ function PostFormat() {
           __next40pxDefaultSize: true,
           variant: "link",
           onClick: () => onUpdatePostFormat(suggestion.id),
-          children: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: post format */
+          children: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: post format */
           (0,external_wp_i18n_namespaceObject.__)('Apply suggested format: %s'), suggestion.caption)
         })
       })]
@@ -16272,7 +16221,7 @@ function PostLastRevision() {
       className: "editor-post-last-revision__title",
       icon: library_backup,
       iconPosition: "right",
-      text: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: number of revisions */
+      text: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: number of revisions */
       (0,external_wp_i18n_namespaceObject.__)('Revisions (%s)'), revisionsCount)
     })
   });
@@ -16351,8 +16300,6 @@ function PostLastRevisionPanel() {
  *
  * @return {JSX.Element|null} The rendered PostLockedModal component.
  */
-
-
 
 function PostLockedModal() {
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(PostLockedModal);
@@ -16512,7 +16459,7 @@ function PostLockedModal() {
         height: 64
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
         children: [!!isTakeover && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-          children: (0,external_wp_element_namespaceObject.createInterpolateElement)(userDisplayName ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: user's display name */
+          children: (0,external_wp_element_namespaceObject.createInterpolateElement)(userDisplayName ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: user's display name */
           (0,external_wp_i18n_namespaceObject.__)('<strong>%s</strong> now has editing control of this post (<PreviewLink />). Don’t worry, your changes up to this moment have been saved.'), userDisplayName) : (0,external_wp_i18n_namespaceObject.__)('Another user now has editing control of this post (<PreviewLink />). Don’t worry, your changes up to this moment have been saved.'), {
             strong: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {}),
             PreviewLink: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
@@ -16522,7 +16469,7 @@ function PostLockedModal() {
           })
         }), !isTakeover && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-            children: (0,external_wp_element_namespaceObject.createInterpolateElement)(userDisplayName ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: user's display name */
+            children: (0,external_wp_element_namespaceObject.createInterpolateElement)(userDisplayName ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: user's display name */
             (0,external_wp_i18n_namespaceObject.__)('<strong>%s</strong> is currently working on this post (<PreviewLink />), which means you cannot make changes, unless you take over.'), userDisplayName) : (0,external_wp_i18n_namespaceObject.__)('Another user is currently working on this post (<PreviewLink />), which means you cannot make changes, unless you take over.'), {
               strong: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {}),
               PreviewLink: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
@@ -16656,10 +16603,8 @@ function PostPendingStatus() {
  */
 
 
-
-
 function writeInterstitialMessage(targetDocument) {
-  let markup = (0,external_wp_element_namespaceObject.renderToString)( /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+  let markup = (0,external_wp_element_namespaceObject.renderToString)(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "editor-post-preview-button__interstitial-message",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.SVG, {
       xmlns: "http://www.w3.org/2000/svg",
@@ -16930,7 +16875,6 @@ function PublishButtonLabel() {
 
 
 
-
 const post_publish_button_noop = () => {};
 class PostPublishButton extends external_wp_element_namespaceObject.Component {
   constructor(props) {
@@ -17184,7 +17128,6 @@ const visibilityOptions = {
  * @param {Function} props.onClose Function to call when the popover is closed.
  * @return {JSX.Element} The rendered component.
  */
-
 
 function PostVisibility({
   onClose
@@ -18212,7 +18155,6 @@ function isSameDay(left, right) {
  */
 
 
-
 const MIN_MOST_USED_TERMS = 3;
 const DEFAULT_QUERY = {
   per_page: 10,
@@ -18288,8 +18230,6 @@ function MostUsedTerms({
  *
  * @type {Array<any>}
  */
-
-
 
 const flat_term_selector_EMPTY_ARRAY = [];
 
@@ -18469,18 +18409,18 @@ function FlatTermSelector({
     }
     const newTermIds = [...termIds, newTerm.id];
     const defaultName = slug === 'post_tag' ? (0,external_wp_i18n_namespaceObject.__)('Tag') : (0,external_wp_i18n_namespaceObject.__)('Term');
-    const termAddedMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: term name. */
+    const termAddedMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: term name. */
     (0,external_wp_i18n_namespaceObject._x)('%s added', 'term'), (_taxonomy$labels$sing = taxonomy?.labels?.singular_name) !== null && _taxonomy$labels$sing !== void 0 ? _taxonomy$labels$sing : defaultName);
     (0,external_wp_a11y_namespaceObject.speak)(termAddedMessage, 'assertive');
     onUpdateTerms(newTermIds);
   }
   const newTermLabel = (_taxonomy$labels$add_ = taxonomy?.labels?.add_new_item) !== null && _taxonomy$labels$add_ !== void 0 ? _taxonomy$labels$add_ : slug === 'post_tag' ? (0,external_wp_i18n_namespaceObject.__)('Add new tag') : (0,external_wp_i18n_namespaceObject.__)('Add new Term');
   const singularName = (_taxonomy$labels$sing2 = taxonomy?.labels?.singular_name) !== null && _taxonomy$labels$sing2 !== void 0 ? _taxonomy$labels$sing2 : slug === 'post_tag' ? (0,external_wp_i18n_namespaceObject.__)('Tag') : (0,external_wp_i18n_namespaceObject.__)('Term');
-  const termAddedLabel = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: term name. */
+  const termAddedLabel = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: term name. */
   (0,external_wp_i18n_namespaceObject._x)('%s added', 'term'), singularName);
-  const termRemovedLabel = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: term name. */
+  const termRemovedLabel = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: term name. */
   (0,external_wp_i18n_namespaceObject._x)('%s removed', 'term'), singularName);
-  const removeTermLabel = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: term name. */
+  const removeTermLabel = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: term name. */
   (0,external_wp_i18n_namespaceObject._x)('Remove %s', 'term'), singularName);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FormTokenField, {
@@ -18518,7 +18458,6 @@ function FlatTermSelector({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -18590,7 +18529,6 @@ const MaybeTagsPanel = () => {
 
 
 
-
 const getSuggestion = (supportedFormats, suggestedPostFormat) => {
   const formats = POST_FORMATS.filter(format => supportedFormats?.includes(format.id));
   return formats.find(format => format.id === suggestedPostFormat);
@@ -18643,7 +18581,7 @@ function PostFormatPanel() {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostFormatSuggestion, {
         onUpdatePostFormat: onUpdatePostFormat,
         suggestedPostFormat: suggestion.id,
-        suggestionText: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: post format */
+        suggestionText: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: post format */
         (0,external_wp_i18n_namespaceObject.__)('Apply the "%1$s" format.'), suggestion.caption)
       })
     })]
@@ -18673,7 +18611,6 @@ function PostFormatPanel() {
 /**
  * Module Constants
  */
-
 
 const hierarchical_term_selector_DEFAULT_QUERY = {
   per_page: -1,
@@ -18920,7 +18857,7 @@ function HierarchicalTermSelector({
       return;
     }
     const defaultName = slug === 'category' ? (0,external_wp_i18n_namespaceObject.__)('Category') : (0,external_wp_i18n_namespaceObject.__)('Term');
-    const termAddedMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: taxonomy name */
+    const termAddedMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: taxonomy name */
     (0,external_wp_i18n_namespaceObject._x)('%s added', 'term'), (_taxonomy$labels$sing = taxonomy?.labels?.singular_name) !== null && _taxonomy$labels$sing !== void 0 ? _taxonomy$labels$sing : defaultName);
     (0,external_wp_a11y_namespaceObject.speak)(termAddedMessage, 'assertive');
     setAdding(false);
@@ -18943,7 +18880,7 @@ function HierarchicalTermSelector({
     setFilterValue(value);
     setFilteredTermsTree(newFilteredTermsTree);
     const resultCount = getResultCount(newFilteredTermsTree);
-    const resultsFoundMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %d: number of results */
+    const resultsFoundMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of results */
     (0,external_wp_i18n_namespaceObject._n)('%d result found.', '%d results found.', resultCount), resultCount);
     debouncedSpeak(resultsFoundMessage, 'assertive');
   };
@@ -19052,7 +18989,6 @@ function HierarchicalTermSelector({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -19282,7 +19218,6 @@ function fetchMedia(urls) {
 /**
  * Internal dependencies
  */
-
 
 
 function flattenBlocks(blocks) {
@@ -19548,8 +19483,6 @@ function MaybeUploadMediaPanel() {
 
 
 
-
-
 function PostPublishPanelPrepublish({
   children
 }) {
@@ -19666,8 +19599,6 @@ function PostPublishPanelPrepublish({
 
 
 
-
-
 const POSTNAME = '%postname%';
 const PAGENAME = '%pagename%';
 
@@ -19775,7 +19706,7 @@ class PostPublishPanelPostpublish extends external_wp_element_namespaceObject.Co
             __nextHasNoMarginBottom: true,
             className: "post-publish-panel__postpublish-post-address",
             readOnly: true,
-            label: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: post type singular name */
+            label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: post type singular name */
             (0,external_wp_i18n_namespaceObject.__)('%s address'), postLabel),
             value: (0,external_wp_url_namespaceObject.safeDecodeURIComponent)(link),
             onFocus: this.onSelectInput
@@ -19836,8 +19767,6 @@ class PostPublishPanelPostpublish extends external_wp_element_namespaceObject.Co
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -20254,8 +20183,6 @@ function PostSticky() {
 
 
 
-
-
 const postStatusesInfo = {
   'auto-draft': {
     label: (0,external_wp_i18n_namespaceObject.__)('Draft'),
@@ -20498,7 +20425,6 @@ function PostStatus() {
  *                                      as dirty.
  * @return {import('react').ComponentType} The component.
  */
-
 
 function PostSavedState({
   forceIsDirty
@@ -20862,8 +20788,6 @@ function PostSlug() {
  * @return {JSX.Element} The rendered component.
  */
 
-
-
 function PostSwitchToDraftButton() {
   external_wp_deprecated_default()('wp.editor.PostSwitchToDraftButton', {
     since: '6.7',
@@ -21024,7 +20948,7 @@ function PostTaxonomies({
       })
     };
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.Fragment, {
-      children: taxonomyWrapper( /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TaxonomyComponent, {
+      children: taxonomyWrapper(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TaxonomyComponent, {
         ...taxonomyComponentProps
       }), taxonomy)
     }, `taxonomy-${taxonomy.slug}`);
@@ -21180,8 +21104,6 @@ var lib = __webpack_require__(4132);
  *
  * @return {JSX.Element|null} The rendered PostTextEditor component.
  */
-
-
 
 function PostTextEditor() {
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(PostTextEditor);
@@ -21518,26 +21440,22 @@ function PostTitle(_, forwardedRef) {
   const className = dist_clsx(DEFAULT_CLASSNAMES, {
     'is-selected': isSelected
   });
-  return (
-    /*#__PURE__*/
-    /* eslint-disable jsx-a11y/heading-has-content, jsx-a11y/no-noninteractive-element-to-interactive-role */
-    (0,external_ReactJSXRuntime_namespaceObject.jsx)(post_type_support_check, {
-      supportKeys: "title",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h1", {
-        ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([richTextRef, focusRef]),
-        contentEditable: true,
-        className: className,
-        "aria-label": decodedPlaceholder,
-        role: "textbox",
-        "aria-multiline": "true",
-        onFocus: onSelect,
-        onBlur: onUnselect,
-        onKeyDown: onKeyDown,
-        onPaste: onPaste
-      })
+  return /*#__PURE__*/ /* eslint-disable jsx-a11y/heading-has-content, jsx-a11y/no-noninteractive-element-to-interactive-role */(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_type_support_check, {
+    supportKeys: "title",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h1", {
+      ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([richTextRef, focusRef]),
+      contentEditable: true,
+      className: className,
+      "aria-label": decodedPlaceholder,
+      role: "textbox",
+      "aria-multiline": "true",
+      onFocus: onSelect,
+      onBlur: onUnselect,
+      onKeyDown: onKeyDown,
+      onPaste: onPaste
     })
-    /* eslint-enable jsx-a11y/heading-has-content, jsx-a11y/no-noninteractive-element-to-interactive-role */
-  );
+  })
+  /* eslint-enable jsx-a11y/heading-has-content, jsx-a11y/no-noninteractive-element-to-interactive-role */;
 }
 
 /**
@@ -21714,7 +21632,6 @@ function PostTrashCheck({
  * @return {JSX.Element|null} The rendered PostTrash component.
  */
 
-
 function PostTrash({
   onActionPerformed
 }) {
@@ -21820,7 +21737,6 @@ const copySmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
  *
  * @return {Component} The rendered PostURL component.
  */
-
 
 function PostURL({
   onClose
@@ -22257,7 +22173,7 @@ function TimeToRead() {
   const minutesToRead = Math.round((0,external_wp_wordcount_namespaceObject.count)(content, wordCountType) / AVERAGE_READING_RATE);
   const minutesToReadString = minutesToRead === 0 ? (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.__)('<span>< 1</span> minute'), {
     span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {})
-  }) : (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s is the number of minutes the post will take to read. */
+  }) : (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s is the number of minutes the post will take to read. */
   (0,external_wp_i18n_namespaceObject._n)('<span>%d</span> minute', '<span>%d</span> minutes', minutesToRead), minutesToRead), {
     span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {})
   });
@@ -22300,8 +22216,6 @@ function CharacterCount() {
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -23448,7 +23362,6 @@ function useHideBlocksFromInserter(postType, mode) {
  */
 
 
-
 const keyboard = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
@@ -24299,8 +24212,6 @@ const textFormattingShortcuts = [{
 
 
 
-
-
 function KeyCombination({
   keyCombination,
   forceAriaLabel
@@ -24407,7 +24318,6 @@ function DynamicShortcut({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -24527,8 +24437,6 @@ function KeyboardShortcutHelpModal() {
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -24671,7 +24579,6 @@ function ContentOnlySettingsMenu() {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -24899,8 +24806,6 @@ function ConvertToRegularBlocks({
  */
 
 
-
-
 function ConvertToTemplatePart({
   clientIds,
   blocks
@@ -25029,8 +24934,6 @@ function TemplatePartConverterMenuItem({
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -25852,8 +25755,6 @@ const previous = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(e
  */
 
 
-
-
 const {
   useHasBlockToolbar
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
@@ -25938,8 +25839,6 @@ const plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -26284,8 +26183,6 @@ ViewMoreMenuGroup.Slot = ({
 
 
 
-
-
 function MoreMenu() {
   const {
     openModal
@@ -26606,8 +26503,6 @@ const tablet = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 
-
-
 function PreviewDropdown({
   forceIsAutosaveable,
   disabled
@@ -26832,7 +26727,6 @@ const ZoomOutToggle = () => {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -27115,8 +27009,6 @@ function InserterSidebar() {
 
 
 
-
-
 function ListViewOutline() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
@@ -27293,8 +27185,6 @@ function ListViewSidebar() {
 
 
 
-
-
 const {
   Fill: save_publish_panels_Fill,
   Slot: save_publish_panels_Slot
@@ -27393,7 +27283,6 @@ function SavePublishPanels({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -27538,8 +27427,6 @@ function EditTemplateBlocksNotification({
 /**
  * WordPress dependencies
  */
-
-
 
 
 
@@ -27783,8 +27670,6 @@ function useSelectNearestEditableBlock({
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -28154,8 +28039,6 @@ function VisualEditor({
 
 
 
-
-
 const interfaceLabels = {
   /* translators: accessibility text for the editor top bar landmark region. */
   header: (0,external_wp_i18n_namespaceObject.__)('Editor top bar'),
@@ -28418,8 +28301,6 @@ function usePostActions({
 
 
 
-
-
 const {
   DropdownMenuV2,
   kebabCase
@@ -28591,7 +28472,6 @@ function ActionsDropdownMenuGroup({
 
 
 
-
 function PostCardPanel({
   postType,
   postId,
@@ -28741,7 +28621,7 @@ function PostContentInformation() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "editor-post-content-information",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-      children: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: 1: How many words a post has. 2: the number of minutes to read the post (e.g. 130 words, 2 minutes read time.) */
+      children: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: How many words a post has. 2: the number of minutes to read the post (e.g. 130 words, 2 minutes read time.) */
       (0,external_wp_i18n_namespaceObject.__)('%1$s, %2$s read time.'), wordsCountText, minutesText)
     })
   });
@@ -28770,7 +28650,6 @@ function PostContentInformation() {
  *
  * @return {Component} The component to be rendered.
  */
-
 
 function panel_PostFormat() {
   const {
@@ -28906,8 +28785,6 @@ function PostPanelSection({
 
 
 
-
-
 const blog_title_EMPTY_OBJECT = {};
 function BlogTitle() {
   const {
@@ -29019,8 +28896,6 @@ function BlogTitle() {
 
 
 
-
-
 function PostsPerPage() {
   const {
     editEntityRecord
@@ -29123,8 +28998,6 @@ function PostsPerPage() {
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -29263,8 +29136,6 @@ function SiteDiscussion() {
 /**
  * Module Constants
  */
-
-
 
 const post_summary_PANEL_NAME = 'post-status';
 function PostSummary({
@@ -29519,7 +29390,6 @@ const sidebars = {
 
 
 
-
 const {
   Tabs
 } = unlock(external_wp_components_namespaceObject.privateApis);
@@ -29756,7 +29626,6 @@ function useAutoSwitchEditorSidebars() {
 
 
 
-
 const {
   Tabs: sidebar_Tabs
 } = unlock(external_wp_components_namespaceObject.privateApis);
@@ -29894,8 +29763,6 @@ const Sidebar = ({
 
 
 
-
-
 function Editor({
   postType,
   postId,
@@ -29984,7 +29851,6 @@ const {
 
 
 
-
 function BlockTypesChecklist({
   blockTypes,
   value,
@@ -30020,7 +29886,6 @@ function BlockTypesChecklist({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -30128,7 +29993,6 @@ function BlockManagerCategory({
 
 
 
-
 function BlockManager() {
   const debouncedSpeak = (0,external_wp_compose_namespaceObject.useDebounce)(external_wp_a11y_namespaceObject.speak, 500);
   const [search, setSearch] = (0,external_wp_element_namespaceObject.useState)('');
@@ -30174,7 +30038,7 @@ function BlockManager() {
       return;
     }
     const count = filteredBlockTypes.length;
-    const resultsFoundMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %d: number of results. */
+    const resultsFoundMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of results. */
     (0,external_wp_i18n_namespaceObject._n)('%d result found.', '%d results found.', count), count);
     debouncedSpeak(resultsFoundMessage);
   }, [filteredBlockTypes?.length, search, debouncedSpeak]);
@@ -30182,7 +30046,7 @@ function BlockManager() {
     className: "editor-block-manager__content",
     children: [!!numberOfHiddenBlocks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "editor-block-manager__disabled-blocks-count",
-      children: [(0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %d: number of blocks. */
+      children: [(0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of blocks. */
       (0,external_wp_i18n_namespaceObject._n)('%d block is hidden.', '%d blocks are hidden.', numberOfHiddenBlocks), numberOfHiddenBlocks), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         __next40pxDefaultSize: true,
         variant: "link",
@@ -30232,8 +30096,6 @@ function BlockManager() {
 /**
  * Internal dependencies
  */
-
-
 
 
 

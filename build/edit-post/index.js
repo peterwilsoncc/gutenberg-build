@@ -1691,8 +1691,6 @@ function KeyboardShortcuts() {
 
 
 
-
-
 function InitPatternModal() {
   const {
     editPost
@@ -1879,7 +1877,6 @@ class BrowserURL extends external_wp_element_namespaceObject.Component {
  * @return {Component} The component to be rendered.
  */
 
-
 function MetaBoxesArea({
   location
 }) {
@@ -1966,8 +1963,6 @@ class MetaBoxVisibility extends external_wp_element_namespaceObject.Component {
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -2093,8 +2088,6 @@ function WelcomeGuideMenuItem() {
  */
 
 
-
-
 const {
   PreferenceBaseOption
 } = unlock(external_wp_preferences_namespaceObject.privateApis);
@@ -2192,7 +2185,6 @@ const {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -2296,8 +2288,6 @@ function EditPostPreferencesModal() {
 
 
 
-
-
 const {
   ToolsMoreMenuGroup,
   ViewMoreMenuGroup
@@ -2323,7 +2313,6 @@ const MoreMenu = () => {
 /* harmony default export */ const more_menu = (MoreMenu);
 
 ;// ./packages/edit-post/build-module/components/welcome-guide/image.js
-
 
 function WelcomeGuideImage({
   nonAnimatedSrc,
@@ -2355,8 +2344,6 @@ function WelcomeGuideImage({
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -2449,8 +2436,6 @@ function WelcomeGuideDefault() {
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -2787,8 +2772,6 @@ function useNavigateToEntityRecord(initialPostId, initialPostType, defaultRender
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -3165,7 +3148,7 @@ function Layout({
     'has-metaboxes': hasActiveMetaboxes
   });
   function onPluginAreaError(name) {
-    createErrorNotice((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: plugin name */
+    createErrorNotice((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: plugin name */
     (0,external_wp_i18n_namespaceObject.__)('The "%s" plugin has encountered an error and cannot be rendered.'), name));
   }
   const {
@@ -3528,7 +3511,7 @@ function initializeEditor(id, postType, postId, settings, initialEdits) {
   // Prevent the default browser action for files dropped outside of dropzones.
   window.addEventListener('dragover', e => e.preventDefault(), false);
   window.addEventListener('drop', e => e.preventDefault(), false);
-  root.render( /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.StrictMode, {
+  root.render(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.StrictMode, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(layout, {
       settings: settings,
       postId: postId,

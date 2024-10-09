@@ -386,11 +386,11 @@ function PreferenceToggleMenuItem({
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const speakMessage = () => {
     if (isActive) {
-      const message = messageDeactivated || (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: preference name, e.g. 'Fullscreen mode' */
+      const message = messageDeactivated || (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: preference name, e.g. 'Fullscreen mode' */
       (0,external_wp_i18n_namespaceObject.__)('Preference deactivated - %s'), label);
       (0,external_wp_a11y_namespaceObject.speak)(message);
     } else {
-      const message = messageActivated || (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: preference name, e.g. 'Fullscreen mode' */
+      const message = messageActivated || (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: preference name, e.g. 'Fullscreen mode' */
       (0,external_wp_i18n_namespaceObject.__)('Preference activated - %s'), label);
       (0,external_wp_a11y_namespaceObject.speak)(message);
     }
@@ -420,7 +420,6 @@ function PreferenceToggleMenuItem({
 /**
  * WordPress dependencies
  */
-
 
 
 function BaseOption({
@@ -498,7 +497,6 @@ function PreferencesModal({
 }
 
 ;// ./packages/preferences/build-module/components/preferences-modal-section/index.js
-
 
 const Section = ({
   description,
@@ -613,7 +611,6 @@ const {
 /**
  * Internal dependencies
  */
-
 
 
 const {

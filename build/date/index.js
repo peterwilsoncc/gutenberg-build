@@ -1585,7 +1585,7 @@ function format(dateFormat, dateValue = new Date()) {
       continue;
     }
     if (char in formatMap) {
-      const formatter = formatMap[( /** @type {keyof formatMap} */char)];
+      const formatter = formatMap[(/** @type {keyof formatMap} */char)];
       if (typeof formatter !== 'string') {
         // If the format is a function, call it.
         newFormat.push('[' + formatter(momentDate) + ']');
@@ -1747,7 +1747,7 @@ function buildMoment(dateValue, timezone = '') {
   const dateMoment = external_moment_default()(dateValue);
   if (timezone && !isUTCOffset(timezone)) {
     // The ! isUTCOffset() check guarantees that timezone is a string.
-    return dateMoment.tz( /** @type {string} */timezone);
+    return dateMoment.tz(/** @type {string} */timezone);
   }
   if (timezone && isUTCOffset(timezone)) {
     return dateMoment.utcOffset(timezone);

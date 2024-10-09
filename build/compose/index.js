@@ -3178,7 +3178,7 @@ class Listener {
     this.listeners = {};
     this.handleEvent = this.handleEvent.bind(this);
   }
-  add( /** @type {any} */eventType, /** @type {any} */instance) {
+  add(/** @type {any} */eventType, /** @type {any} */instance) {
     if (!this.listeners[eventType]) {
       // Adding first listener for this type, so bind event.
       window.addEventListener(eventType, this.handleEvent);
@@ -3186,19 +3186,19 @@ class Listener {
     }
     this.listeners[eventType].push(instance);
   }
-  remove( /** @type {any} */eventType, /** @type {any} */instance) {
+  remove(/** @type {any} */eventType, /** @type {any} */instance) {
     if (!this.listeners[eventType]) {
       return;
     }
-    this.listeners[eventType] = this.listeners[eventType].filter(( /** @type {any} */listener) => listener !== instance);
+    this.listeners[eventType] = this.listeners[eventType].filter((/** @type {any} */listener) => listener !== instance);
     if (!this.listeners[eventType].length) {
       // Removing last listener for this type, so unbind event.
       window.removeEventListener(eventType, this.handleEvent);
       delete this.listeners[eventType];
     }
   }
-  handleEvent( /** @type {any} */event) {
-    this.listeners[event.type]?.forEach(( /** @type {any} */instance) => {
+  handleEvent(/** @type {any} */event) {
+    this.listeners[event.type]?.forEach((/** @type {any} */instance) => {
       instance.handleEvent(event);
     });
   }
@@ -3253,7 +3253,7 @@ function withGlobalEvents(eventTypesToHandlers) {
   // @ts-ignore We don't need to fix the type-related issues because this is deprecated.
   return createHigherOrderComponent(WrappedComponent => {
     class Wrapper extends external_wp_element_namespaceObject.Component {
-      constructor( /** @type {any} */props) {
+      constructor(/** @type {any} */props) {
         super(props);
         this.handleEvent = this.handleEvent.bind(this);
         this.handleRef = this.handleRef.bind(this);
@@ -3268,8 +3268,8 @@ function withGlobalEvents(eventTypesToHandlers) {
           with_global_events_listener.remove(eventType, this);
         });
       }
-      handleEvent( /** @type {any} */event) {
-        const handler = eventTypesToHandlers[( /** @type {keyof GlobalEventHandlersEventMap} */
+      handleEvent(/** @type {any} */event) {
+        const handler = eventTypesToHandlers[(/** @type {keyof GlobalEventHandlersEventMap} */
         event.type
 
         /* eslint-enable jsdoc/no-undefined-types */)];
@@ -3277,7 +3277,7 @@ function withGlobalEvents(eventTypesToHandlers) {
           this.wrappedRef[handler](event);
         }
       }
-      handleRef( /** @type {any} */el) {
+      handleRef(/** @type {any} */el) {
         this.wrappedRef = el;
         // Any component using `withGlobalEvents` that is not setting a `ref`
         // will cause `this.props.forwardedRef` to be `null`, so we need this
@@ -3469,7 +3469,7 @@ function withState(initialState = {}) {
   });
   return createHigherOrderComponent(OriginalComponent => {
     return class WrappedComponent extends external_wp_element_namespaceObject.Component {
-      constructor( /** @type {any} */props) {
+      constructor(/** @type {any} */props) {
         super(props);
         this.setState = this.setState.bind(this);
         this.state = initialState;
@@ -3560,8 +3560,8 @@ function useRefEffect(callback, dependencies) {
  * ```
  */
 function useConstrainedTabbing() {
-  return useRefEffect(( /** @type {HTMLElement} */node) => {
-    function onKeyDown( /** @type {KeyboardEvent} */event) {
+  return useRefEffect((/** @type {HTMLElement} */node) => {
+    function onKeyDown(/** @type {KeyboardEvent} */event) {
       const {
         key,
         shiftKey,
@@ -3571,7 +3571,7 @@ function useConstrainedTabbing() {
         return;
       }
       const action = shiftKey ? 'findPrevious' : 'findNext';
-      const nextElement = external_wp_dom_namespaceObject.focus.tabbable[action]( /** @type {HTMLElement} */target) || null;
+      const nextElement = external_wp_dom_namespaceObject.focus.tabbable[action](/** @type {HTMLElement} */target) || null;
 
       // When the target element contains the element that is about to
       // receive focus, for example when the target is a tabbable
@@ -3579,7 +3579,7 @@ function useConstrainedTabbing() {
       // In this case we can't rely on native browsers behavior. We need
       // to manage focus instead.
       // See https://github.com/WordPress/gutenberg/issues/46041.
-      if ( /** @type {HTMLElement} */target.contains(nextElement)) {
+      if (/** @type {HTMLElement} */target.contains(nextElement)) {
         event.preventDefault();
         nextElement?.focus();
         return;
@@ -4521,7 +4521,7 @@ var mousetrap_global_bind = __webpack_require__(5760);
  * @param {(e: import('mousetrap').ExtendedKeyboardEvent, combo: string) => void} callback  Shortcut callback.
  * @param {WPKeyboardShortcutConfig}                                              options   Shortcut options.
  */
-function useKeyboardShortcut( /* eslint-enable jsdoc/valid-types */
+function useKeyboardShortcut(/* eslint-enable jsdoc/valid-types */
 shortcuts, callback, {
   bindGlobal = false,
   eventName = 'keydown',
@@ -4559,7 +4559,7 @@ shortcuts, callback, {
       }
       const bindFn = bindGlobal ? 'bindGlobal' : 'bind';
       // @ts-ignore `bindGlobal` is an undocumented property
-      mousetrap[bindFn](shortcut, ( /* eslint-disable jsdoc/valid-types */
+      mousetrap[bindFn](shortcut, (/* eslint-disable jsdoc/valid-types */
       /** @type {[e: import('mousetrap').ExtendedKeyboardEvent, combo: string]} */...args) => /* eslint-enable jsdoc/valid-types */
       currentCallbackRef.current(...args), eventName);
     });
@@ -4986,7 +4986,7 @@ const OPERATOR_EVALUATORS = {
   '>=': (breakpointValue, width) => width >= breakpointValue,
   '<': (breakpointValue, width) => width < breakpointValue
 };
-const ViewportMatchWidthContext = (0,external_wp_element_namespaceObject.createContext)( /** @type {null | number} */null);
+const ViewportMatchWidthContext = (0,external_wp_element_namespaceObject.createContext)(/** @type {null | number} */null);
 
 /**
  * Returns true if the viewport matches the given query, or false otherwise.
@@ -5348,9 +5348,9 @@ function useAsyncList(list, config = {
 function useWarnOnChange(object, prefix = 'Change detection') {
   const previousValues = usePrevious(object);
   Object.entries(previousValues !== null && previousValues !== void 0 ? previousValues : []).forEach(([key, value]) => {
-    if (value !== object[( /** @type {keyof typeof object} */key)]) {
+    if (value !== object[(/** @type {keyof typeof object} */key)]) {
       // eslint-disable-next-line no-console
-      console.warn(`${prefix}: ${key} key changed:`, value, object[( /** @type {keyof typeof object} */key)]
+      console.warn(`${prefix}: ${key} key changed:`, value, object[(/** @type {keyof typeof object} */key)]
       /* eslint-enable jsdoc/check-types */);
     }
   });
@@ -5607,7 +5607,7 @@ function useDropZone({
       } while (elementToCheck = elementToCheck.parentElement);
       return false;
     }
-    function maybeDragStart( /** @type {DragEvent} */event) {
+    function maybeDragStart(/** @type {DragEvent} */event) {
       if (isDragging) {
         return;
       }
@@ -5623,21 +5623,21 @@ function useDropZone({
         onDragStartRef.current(event);
       }
     }
-    function onDragEnter( /** @type {DragEvent} */event) {
+    function onDragEnter(/** @type {DragEvent} */event) {
       event.preventDefault();
 
       // The `dragenter` event will also fire when entering child
       // elements, but we only want to call `onDragEnter` when
       // entering the drop zone, which means the `relatedTarget`
       // (element that has been left) should be outside the drop zone.
-      if (element.contains( /** @type {Node} */event.relatedTarget)) {
+      if (element.contains(/** @type {Node} */event.relatedTarget)) {
         return;
       }
       if (onDragEnterRef.current) {
         onDragEnterRef.current(event);
       }
     }
-    function onDragOver( /** @type {DragEvent} */event) {
+    function onDragOver(/** @type {DragEvent} */event) {
       // Only call onDragOver for the innermost hovered drop zones.
       if (!event.defaultPrevented && onDragOverRef.current) {
         onDragOverRef.current(event);
@@ -5647,7 +5647,7 @@ function useDropZone({
       // drop zones that `onDragOver` is already handled.
       event.preventDefault();
     }
-    function onDragLeave( /** @type {DragEvent} */event) {
+    function onDragLeave(/** @type {DragEvent} */event) {
       // The `dragleave` event will also fire when leaving child
       // elements, but we only want to call `onDragLeave` when
       // leaving the drop zone, which means the `relatedTarget`
@@ -5663,7 +5663,7 @@ function useDropZone({
         onDragLeaveRef.current(event);
       }
     }
-    function onDrop( /** @type {DragEvent} */event) {
+    function onDrop(/** @type {DragEvent} */event) {
       // Don't handle drop if an inner drop zone already handled it.
       if (event.defaultPrevented) {
         return;
@@ -5683,7 +5683,7 @@ function useDropZone({
       }
       maybeDragEnd(event);
     }
-    function maybeDragEnd( /** @type {MouseEvent} */event) {
+    function maybeDragEnd(/** @type {MouseEvent} */event) {
       if (!isDragging) {
         return;
       }
@@ -5811,7 +5811,7 @@ function useFixedWindowList(elementRef, itemHeight, totalItems, options) {
     visibleItems: initWindowSize,
     start: 0,
     end: initWindowSize,
-    itemInView: ( /** @type {number} */index) => {
+    itemInView: (/** @type {number} */index) => {
       return index >= 0 && index <= initWindowSize;
     }
   });
@@ -5820,7 +5820,7 @@ function useFixedWindowList(elementRef, itemHeight, totalItems, options) {
       return;
     }
     const scrollContainer = (0,external_wp_dom_namespaceObject.getScrollContainer)(elementRef.current);
-    const measureWindow = ( /** @type {boolean | undefined} */initRender) => {
+    const measureWindow = (/** @type {boolean | undefined} */initRender) => {
       var _options$windowOversc;
       if (!scrollContainer) {
         return;
@@ -5836,7 +5836,7 @@ function useFixedWindowList(elementRef, itemHeight, totalItems, options) {
           visibleItems,
           start,
           end,
-          itemInView: ( /** @type {number} */index) => {
+          itemInView: (/** @type {number} */index) => {
             return start <= index && index <= end;
           }
         };
@@ -5863,7 +5863,7 @@ function useFixedWindowList(elementRef, itemHeight, totalItems, options) {
       return;
     }
     const scrollContainer = (0,external_wp_dom_namespaceObject.getScrollContainer)(elementRef.current);
-    const handleKeyDown = ( /** @type {KeyboardEvent} */event) => {
+    const handleKeyDown = (/** @type {KeyboardEvent} */event) => {
       switch (event.keyCode) {
         case external_wp_keycodes_namespaceObject.HOME:
           {

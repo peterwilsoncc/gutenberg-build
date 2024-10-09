@@ -11320,7 +11320,6 @@ const computePopoverPosition = c => c === null || Number.isNaN(c) ? undefined : 
 
 
 
-
 const TooltipInternalContext = (0,external_wp_element_namespaceObject.createContext)({
   isNestedInTooltip: false
 });
@@ -11514,7 +11513,7 @@ function use_update_effect_useUpdateEffect(effect, deps) {
  */
 
 
-const ComponentsContext = (0,external_wp_element_namespaceObject.createContext)( /** @type {Record<string, any>} */{});
+const ComponentsContext = (0,external_wp_element_namespaceObject.createContext)(/** @type {Record<string, any>} */{});
 const useComponentsContext = () => (0,external_wp_element_namespaceObject.useContext)(ComponentsContext);
 
 /**
@@ -15620,7 +15619,6 @@ const Point = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -28540,7 +28538,6 @@ function useDeprecated36pxDefaultSizeProp(props) {
 
 
 
-
 function useUniqueId(idProp) {
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(InputBase);
   const id = `input-base-control-${instanceId}`;
@@ -31185,7 +31182,6 @@ const StyledVisualLabel = /*#__PURE__*/emotion_styled_base_browser_esm("span",  
 
 
 
-
 const UnconnectedBaseControl = props => {
   const {
     __nextHasNoMarginBottom = false,
@@ -31545,8 +31541,6 @@ function Icon({
 
 
 
-
-
 const disabledEventsOnDisabledButton = ['onMouseDown', 'onClick'];
 function button_useDeprecatedProps({
   __experimentalIsFocusable,
@@ -31833,7 +31827,7 @@ function getNumber(value) {
  * @return {number} The sum of values.
  */
 function add(...args) {
-  return args.reduce( /** @type {(sum:number, arg: number|string) => number} */
+  return args.reduce(/** @type {(sum:number, arg: number|string) => number} */
   (sum, arg) => sum + getNumber(arg), 0);
 }
 
@@ -31845,7 +31839,7 @@ function add(...args) {
  * @return {number} The difference of the values.
  */
 function subtract(...args) {
-  return args.reduce( /** @type {(diff:number, arg: number|string, index:number) => number} */
+  return args.reduce(/** @type {(diff:number, arg: number|string, index:number) => number} */
   (diff, arg, index) => {
     const value = getNumber(arg);
     return index === 0 ? value : diff - value;
@@ -32145,8 +32139,6 @@ const HStack = contextConnect(UnconnectedHStack, 'HStack');
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -32494,7 +32486,6 @@ function getAngle(centerX, centerY, pointX, pointY) {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -33272,7 +33263,6 @@ function Fill({
  */
 
 
-
 /**
  * Whether the argument is a function.
  *
@@ -33827,8 +33817,6 @@ function provider_SlotFillProvider({
 
 
 
-
-
 function slot_fill_Fill(props) {
   // We're adding both Fills here so they can register themselves before
   // their respective slot has been registered. Only the Fill that has a slot
@@ -33973,8 +33961,6 @@ function overlayMiddlewares() {
  *
  * @type {string}
  */
-
-
 
 const SLOT_NAME = 'Popover';
 
@@ -34258,7 +34244,7 @@ const UnforwardedPopover = (props, forwardedRef) => {
       children: content
     });
   } else if (!inline) {
-    content = (0,external_wp_element_namespaceObject.createPortal)( /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleProvider, {
+    content = (0,external_wp_element_namespaceObject.createPortal)(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleProvider, {
       document: document,
       children: content
     }), getPopoverFallbackContainer());
@@ -34338,8 +34324,6 @@ popover_Popover.__unstableSlotNameProvider = slotNameContext.Provider;
 
 
 
-
-
 function ListBox({
   items,
   onSelect,
@@ -34409,10 +34393,10 @@ function getAutoCompleterUI(autocompleter) {
       }
       if (!!options.length) {
         if (filterValue) {
-          debouncedSpeak((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %d: number of results. */
+          debouncedSpeak((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of results. */
           (0,external_wp_i18n_namespaceObject._n)('%d result found, use up and down arrow keys to navigate.', '%d results found, use up and down arrow keys to navigate.', options.length), options.length), 'assertive');
         } else {
-          debouncedSpeak((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %d: number of results. */
+          debouncedSpeak((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of results. */
           (0,external_wp_i18n_namespaceObject._n)('Initial %d result loaded. Type to filter all available results. Use up and down arrow keys to navigate.', 'Initial %d results loaded. Type to filter all available results. Use up and down arrow keys to navigate.', options.length), options.length), 'assertive');
         }
       } else {
@@ -34445,7 +34429,7 @@ function getAutoCompleterUI(autocompleter) {
           listBoxId: listBoxId,
           className: className
         })
-      }), contentRef.current && needsA11yCompat && (0,external_ReactDOM_namespaceObject.createPortal)( /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ListBox, {
+      }), contentRef.current && needsA11yCompat && (0,external_ReactDOM_namespaceObject.createPortal)(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ListBox, {
         items: items,
         onSelect: onSelect,
         selectedIndex: selectedIndex,
@@ -34498,8 +34482,6 @@ function useOnClickOutside(ref, handler) {
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -35819,7 +35801,6 @@ rect, {
 
 
 
-
 function UnconnectedToggleGroupControl(props, forwardedRef) {
   const {
     __nextHasNoMarginBottom = false,
@@ -36105,7 +36086,6 @@ const isIconStyles = ({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -36424,7 +36404,6 @@ var a11y_o=function(o){var t=o/255;return t<.04045?t/12.92:Math.pow((t+.055)/1.0
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -37338,8 +37317,6 @@ const input_range_ForwardedComponent = (0,external_wp_element_namespaceObject.fo
  */
 
 
-
-
 function RangeMark(props) {
   const {
     className,
@@ -37376,8 +37353,6 @@ function RangeMark(props) {
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -37558,7 +37533,6 @@ function useTooltipPosition({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -38051,7 +38025,6 @@ const InputControlPrefixWrapper = contextConnect(UnconnectedInputControlPrefixWr
 
 
 
-
 const InputWithSlider = ({
   min,
   max,
@@ -38115,8 +38088,6 @@ const InputWithSlider = ({
 /**
  * Internal dependencies
  */
-
-
 
 
 const RgbInput = ({
@@ -38197,8 +38168,6 @@ const RgbInput = ({
 /**
  * Internal dependencies
  */
-
-
 
 
 const HslInput = ({
@@ -38464,7 +38433,6 @@ const Picker = ({
 
 
 
-
 k([names]);
 const options = [{
   label: 'RGB',
@@ -38661,7 +38629,6 @@ const check = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -38883,7 +38850,6 @@ function ButtonAction({
  * };
  * ```
  */
-
 
 function ListboxCircularOptionPicker(props) {
   const {
@@ -39368,7 +39334,6 @@ const normalizeColorValue = (value, element) => {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -40266,8 +40231,6 @@ function useBorderControlDropdown(props) {
 
 
 
-
-
 const getAriaLabelColorValue = colorValue => {
   // Leave hex values as-is. Remove the `var()` wrapper from CSS vars.
   return colorValue.replace(/^var\((.+)\)$/, '$1');
@@ -40820,7 +40783,6 @@ function useBorderControl(props) {
 
 
 
-
 const BorderLabel = props => {
   const {
     label,
@@ -41180,7 +41142,6 @@ function useBorderBoxControlSplitControls(props) {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -41589,7 +41550,6 @@ function useBorderBoxControl(props) {
 
 
 
-
 const component_BorderLabel = props => {
   const {
     label,
@@ -41801,7 +41761,6 @@ const LeftStroke = /*#__PURE__*/emotion_styled_base_browser_esm(VerticalStroke, 
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -42218,8 +42177,6 @@ function applyValueToSides(currentValues, newValue, sides) {
 
 
 
-
-
 const all_input_control_noop = () => {};
 function AllInputControl({
   __next40pxDefaultSize,
@@ -42298,8 +42255,6 @@ function AllInputControl({
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -42423,8 +42378,6 @@ function BoxInputControls({
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -42574,7 +42527,6 @@ function LinkedButton({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -43167,7 +43119,6 @@ function useCard(props) {
 
 
 
-
 function UnconnectedCard(props, forwardedRef) {
   const {
     children,
@@ -43179,7 +43130,7 @@ function UnconnectedCard(props, forwardedRef) {
   } = useCard(props);
   const elevationBorderRadius = isRounded ? config_values.radiusLarge : 0;
   const cx = useCx();
-  const elevationClassName = (0,external_wp_element_namespaceObject.useMemo)(() => cx( /*#__PURE__*/emotion_react_browser_esm_css({
+  const elevationClassName = (0,external_wp_element_namespaceObject.useMemo)(() => cx(/*#__PURE__*/emotion_react_browser_esm_css({
     borderRadius: elevationBorderRadius
   },  true ? "" : 0,  true ? "" : 0)), [cx, elevationBorderRadius]);
   const contextProviderValue = (0,external_wp_element_namespaceObject.useMemo)(() => {
@@ -43857,7 +43808,6 @@ const CardMedia = contextConnect(UnconnectedCardMedia, 'CardMedia');
 
 
 
-
 /**
  * Checkboxes allow the user to select one or more items from a set.
  *
@@ -44388,8 +44338,6 @@ function getHorizontalRelativeGradientPosition(mouseXCoordinate, containerElemen
 
 
 
-
-
 function ControlPointButton({
   isOpen,
   position,
@@ -44637,7 +44585,6 @@ ControlPoints.InsertPoint = InsertPoint;
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -45032,7 +44979,6 @@ const AccessoryWrapper = /*#__PURE__*/emotion_styled_base_browser_esm(flex_block
 
 
 
-
 const GradientAnglePicker = ({
   gradientAST,
   hasGradient,
@@ -45189,7 +45135,6 @@ function CustomGradientPicker({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -45690,7 +45635,6 @@ const NavigableMenu = (0,external_wp_element_namespaceObject.forwardRef)(Unforwa
 
 
 
-
 function dropdown_menu_mergeProps(defaultProps = {}, props = {}) {
   const mergedProps = {
     ...defaultProps,
@@ -46009,8 +45953,6 @@ const RemoveButton = /*#__PURE__*/emotion_styled_base_browser_esm(build_module_b
 
 
 
-
-
 const DEFAULT_COLOR = '#000';
 function NameInput({
   value,
@@ -46073,7 +46015,7 @@ function getNameAndSlugForPosition(elements, slugPrefix) {
     return previousValue;
   }, 1);
   return {
-    name: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: is an id for a custom color */
+    name: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: is an id for a custom color */
     (0,external_wp_i18n_namespaceObject.__)('Color %s'), position),
     slug: `${slugPrefix}color-${position}`
   };
@@ -46539,7 +46481,6 @@ const TokenInput = (0,external_wp_element_namespaceObject.forwardRef)(UnForwarde
  * Internal dependencies
  */
 
-
 const handleMouseDown = e => {
   // By preventing default here, we will not lose focus of <input> when clicking a suggestion.
   e.preventDefault();
@@ -46680,7 +46621,6 @@ function SuggestionsList({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -46907,7 +46847,7 @@ function ComboboxControl(props) {
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     const hasMatchingSuggestions = matchingSuggestions.length > 0;
     if (isExpanded) {
-      const message = hasMatchingSuggestions ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %d: number of results. */
+      const message = hasMatchingSuggestions ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of results. */
       (0,external_wp_i18n_namespaceObject._n)('%d result found, use up and down arrow keys to navigate.', '%d results found, use up and down arrow keys to navigate.', matchingSuggestions.length), matchingSuggestions.length) : (0,external_wp_i18n_namespaceObject.__)('No results.');
       (0,external_wp_a11y_namespaceObject.speak)(message, 'polite');
     }
@@ -47315,8 +47255,6 @@ function useModalExitAnimation() {
 
 // Used to track and dismiss the prior modal when another opens unless nested.
 
-
-
 const ModalContext = (0,external_wp_element_namespaceObject.createContext)(new Set());
 
 // Used to track body class names applied while modals are open.
@@ -47570,7 +47508,7 @@ function UnforwardedModal(props, forwardedRef) {
       })
     })
   });
-  return (0,external_wp_element_namespaceObject.createPortal)( /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ModalContext.Provider, {
+  return (0,external_wp_element_namespaceObject.createPortal)(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ModalContext.Provider, {
     value: nestedDismissers,
     children: modal
   }), document.body);
@@ -47640,8 +47578,6 @@ const styles_wrapper =  true ? {
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -49416,7 +49352,6 @@ const SelectedItemCheck = /*#__PURE__*/emotion_styled_base_browser_esm(SelectIte
 
 
 
-
 const CustomSelectContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
 function defaultRenderSelectedValue(value) {
   const isValueEmpty = Array.isArray(value) ? value.length === 0 : value === undefined || value === null;
@@ -49529,7 +49464,6 @@ function _CustomSelect(props) {
 
 
 
-
 function CustomSelectItem({
   children,
   ...props
@@ -49566,8 +49500,6 @@ CustomSelectItem.displayName = 'CustomSelectControlV2.Item';
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -54206,7 +54138,6 @@ const TIMEZONELESS_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
  * ```
  */
 
-
 function DatePicker({
   currentDate,
   onChange,
@@ -54633,7 +54564,6 @@ const ToggleGroupControlOption = (0,external_wp_element_namespaceObject.forwardR
 
 
 
-
 function TimeInput({
   value: valueProp,
   defaultValue,
@@ -54776,7 +54706,6 @@ function TimeInput({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -55078,8 +55007,6 @@ const date_time_styles_Wrapper = /*#__PURE__*/emotion_styled_base_browser_esm(v_
 
 
 
-
-
 const date_time_noop = () => {};
 function UnforwardedDateTimePicker({
   currentDate,
@@ -55206,8 +55133,6 @@ const findSizeBySlug = (sizes, slug) => sizes.find(size => slug === size.slug);
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -55444,8 +55369,6 @@ const disclosure_DisclosureContent = (0,external_wp_element_namespaceObject.forw
 /**
  * Internal dependencies
  */
-
-
 
 const dragImageClass = 'components-draggable__invisible-drag-image';
 const cloneWrapperClass = 'components-draggable__clone';
@@ -55693,7 +55616,6 @@ const upload = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 /**
  * Internal dependencies
  */
-
 
 /**
  * `DropZone` is a component creating a drop zone area taking the full size of its parent element. It supports dropping files, HTML content or any other HTML drop event.
@@ -55968,8 +55890,6 @@ function DuotoneSwatch({
 
 
 
-
-
 function ColorOption({
   label,
   value,
@@ -56088,7 +56008,6 @@ function CustomDuotoneBar({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -56269,7 +56188,6 @@ function DuotonePicker({
  * Internal dependencies
  */
 
-
 function UnforwardedExternalLink(props, ref) {
   const {
     href,
@@ -56292,29 +56210,25 @@ function UnforwardedExternalLink(props, ref) {
       props.onClick(event);
     }
   };
-  return (
-    /*#__PURE__*/
-    /* eslint-disable react/jsx-no-target-blank */
-    (0,external_ReactJSXRuntime_namespaceObject.jsxs)("a", {
-      ...additionalProps,
-      className: classes,
-      href: href,
-      onClick: onClickHandler,
-      target: "_blank",
-      rel: optimizedRel,
-      ref: ref,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        className: "components-external-link__contents",
-        children: children
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        className: "components-external-link__icon",
-        "aria-label": /* translators: accessibility text */
-        (0,external_wp_i18n_namespaceObject.__)('(opens in a new tab)'),
-        children: "\u2197"
-      })]
-    })
-    /* eslint-enable react/jsx-no-target-blank */
-  );
+  return /*#__PURE__*/ /* eslint-disable react/jsx-no-target-blank */(0,external_ReactJSXRuntime_namespaceObject.jsxs)("a", {
+    ...additionalProps,
+    className: classes,
+    href: href,
+    onClick: onClickHandler,
+    target: "_blank",
+    rel: optimizedRel,
+    ref: ref,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "components-external-link__contents",
+      children: children
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "components-external-link__icon",
+      "aria-label": /* translators: accessibility text */
+      (0,external_wp_i18n_namespaceObject.__)('(opens in a new tab)'),
+      children: "\u2197"
+    })]
+  })
+  /* eslint-enable react/jsx-no-target-blank */;
 }
 
 /**
@@ -56461,7 +56375,6 @@ const GridLineY = /*#__PURE__*/emotion_styled_base_browser_esm(GridLine,  true ?
 
 
 
-
 const TEXTCONTROL_MIN = 0;
 const TEXTCONTROL_MAX = 100;
 const controls_noop = () => {};
@@ -56575,7 +56488,6 @@ function FocalPoint({
  */
 
 
-
 function FocalPointPickerGrid({
   bounds,
   ...props
@@ -56672,7 +56584,6 @@ function media_Media({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -56978,7 +56889,6 @@ function FocusableIframe({
  */
 
 
-
 const settings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
@@ -57233,7 +57143,6 @@ const FontSizePickerToggleGroup = props => {
 
 
 
-
 const DEFAULT_UNITS = ['px', 'em', 'rem', 'vw', 'vh'];
 const MAX_TOGGLE_GROUP_SIZES = 5;
 const UnforwardedFontSizePicker = (props, ref) => {
@@ -57426,7 +57335,6 @@ const FontSizePicker = (0,external_wp_element_namespaceObject.forwardRef)(Unforw
  */
 
 
-
 /**
  * FormFileUpload is a component that allows users to select files from their local device.
  *
@@ -57494,7 +57402,6 @@ function FormFileUpload({
 /**
  * Internal dependencies
  */
-
 
 const form_toggle_noop = () => {};
 function UnforwardedFormToggle(props, ref) {
@@ -57570,7 +57477,6 @@ const FormToggle = (0,external_wp_element_namespaceObject.forwardRef)(Unforwarde
 
 
 
-
 const token_noop = () => {};
 function Token({
   value,
@@ -57598,7 +57504,7 @@ function Token({
     value
   });
   const transformedValue = displayTransform(value);
-  const termPositionAndCount = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: 1: term name, 2: term position in a set of terms, 3: total term set count. */
+  const termPositionAndCount = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: term name, 2: term position in a set of terms, 3: total term set count. */
   (0,external_wp_i18n_namespaceObject.__)('%1$s (%2$s of %3$s)'), transformedValue, termPosition, termsCount);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
     className: tokenClasses,
@@ -57670,7 +57576,6 @@ const TokensAndInputWrapperFlex = /*#__PURE__*/emotion_styled_base_browser_esm(f
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -58102,7 +58007,7 @@ function FormTokenField(props) {
       }
     }
     if (inputHasMinimumChars) {
-      const message = hasMatchingSuggestions ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %d: number of results. */
+      const message = hasMatchingSuggestions ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of results. */
       (0,external_wp_i18n_namespaceObject._n)('%d result found, use up and down arrow keys to navigate.', '%d results found, use up and down arrow keys to navigate.', matchingSuggestions.length), matchingSuggestions.length) : (0,external_wp_i18n_namespaceObject.__)('No results.');
       debouncedSpeak(message, 'assertive');
     }
@@ -58262,7 +58167,7 @@ function PageControl({
       "aria-current": page === currentPage ? 'step' : undefined,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
         icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageControlIcon, {}),
-        "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: 1: current page number 2: total number of pages */
+        "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: current page number 2: total number of pages */
         (0,external_wp_i18n_namespaceObject.__)('Page %1$d of %2$d'), page + 1, numberOfPages),
         onClick: () => setCurrentPage(page)
       }, page)
@@ -58286,7 +58191,6 @@ function PageControl({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -58590,8 +58494,6 @@ const component_Item = contextConnect(UnconnectedItem, 'Item');
  * Internal dependencies
  */
 
-
-
 function KeyboardShortcut({
   target,
   callback,
@@ -58682,7 +58584,6 @@ function KeyboardShortcuts({
  * Internal dependencies
  */
 
-
 /**
  * `MenuGroup` wraps a series of related `MenuItem` components into a common
  * section.
@@ -58744,7 +58645,6 @@ function MenuGroup(props) {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -58838,7 +58738,6 @@ const MenuItem = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedM
 /**
  * Internal dependencies
  */
-
 
 
 const menu_items_choice_noop = () => {};
@@ -59406,7 +59305,6 @@ const chevronLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
 
 
 
-
 function UnforwardedNavigationBackButton({
   backButtonLabel,
   className,
@@ -59481,7 +59379,6 @@ const useNavigationGroupContext = () => (0,external_wp_element_namespaceObject.u
 
 
 
-
 let uniqueId = 0;
 
 /**
@@ -59534,8 +59431,6 @@ function NavigationGroup({
 /**
  * Internal dependencies
  */
-
-
 
 
 function NavigationItemBaseContent(props) {
@@ -59685,7 +59580,6 @@ function NavigationItemBase(props) {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -60043,7 +59937,7 @@ function MenuTitleSearch({
       return;
     }
     const count = Object.values(items).filter(item => item._isVisible).length;
-    const resultsFoundMessage = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %d: number of results. */
+    const resultsFoundMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of results. */
     (0,external_wp_i18n_namespaceObject._n)('%d result found.', '%d results found.', count), count);
     debouncedSpeak(resultsFoundMessage);
     // Ignore exhaustive-deps rule for now. See https://github.com/WordPress/gutenberg/pull/44090
@@ -60060,7 +59954,7 @@ function MenuTitleSearch({
     }
   };
   const inputId = `components-navigation__menu-title-search-${menu}`;
-  const placeholder = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: placeholder for menu search box. %s: menu title */
+  const placeholder = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: placeholder for menu search box. %s: menu title */
   (0,external_wp_i18n_namespaceObject.__)('Search %s'), title?.toLowerCase()).trim();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuTitleSearchControlWrapper, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(search_control, {
@@ -60089,7 +59983,6 @@ function MenuTitleSearch({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -60172,7 +60065,6 @@ function NavigationMenuTitle({
 
 
 
-
 function NavigationSearchNoResultsFound({
   search
 }) {
@@ -60206,7 +60098,6 @@ function NavigationSearchNoResultsFound({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -61843,7 +61734,6 @@ const navigator_Navigator = Object.assign(component_Navigator, {
 
 
 
-
 const notice_noop = () => {};
 
 /**
@@ -62032,7 +61922,6 @@ function NoticeList({
 
 ;// ./packages/components/build-module/panel/header.js
 
-
 /**
  * Internal dependencies
  */
@@ -62069,7 +61958,6 @@ function PanelHeader({
 /**
  * Internal dependencies
  */
-
 
 
 function UnforwardedPanel({
@@ -62137,7 +62025,6 @@ const chevronUp = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -62292,7 +62179,6 @@ const PanelRow = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedP
  */
 
 
-
 const PlaceholderIllustration = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   className: "components-placeholder__illustration",
   fill: "none",
@@ -62444,7 +62330,6 @@ const ProgressElement = /*#__PURE__*/emotion_styled_base_browser_esm("progress",
 /**
  * Internal dependencies
  */
-
 
 
 function UnforwardedProgressBar(props, ref) {
@@ -62992,7 +62877,6 @@ const radio_group_RadioGroup = (0,external_wp_element_namespaceObject.forwardRef
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -64305,7 +64189,6 @@ const label_ForwardedComponent = (0,external_wp_element_namespaceObject.forwardR
 
 
 
-
 const resize_tooltip_noop = () => {};
 function ResizeTooltip({
   axis,
@@ -64364,7 +64247,6 @@ const resize_tooltip_ForwardedComponent = (0,external_wp_element_namespaceObject
 /**
  * Internal dependencies
  */
-
 
 
 const HANDLE_CLASS_NAME = 'components-resizable-box__handle';
@@ -64492,7 +64374,6 @@ function ResponsiveWrapper({
 /**
  * Internal dependencies
  */
-
 
 const observeAndResizeJS = function () {
   const {
@@ -64747,7 +64628,6 @@ function SandBox({
  */
 
 
-
 const NOTICE_TIMEOUT = 10000;
 
 /**
@@ -64905,7 +64785,6 @@ const Snackbar = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedS
 
 
 
-
 const SNACKBAR_VARIANTS = {
   init: {
     height: 0,
@@ -65041,7 +64920,6 @@ const SpinnerIndicator = /*#__PURE__*/emotion_styled_base_browser_esm("path",  t
 /**
  * WordPress dependencies
  */
-
 
 
 function UnforwardedSpinner({
@@ -65652,7 +65530,6 @@ var TabPanel = forwardRef2(function TabPanel2(props) {
 
 
 
-
 // Separate the actual tab name from the instance ID. This is
 // necessary because Ariakit internally uses the element ID when
 // a new tab is selected, but our implementation looks specifically
@@ -66040,7 +65917,6 @@ const TextareaControl = (0,external_wp_element_namespaceObject.forwardRef)(Unfor
  */
 
 
-
 /**
  * Highlights occurrences of a given string within another string of text. Wraps
  * each match with a `<mark>` tag which provides browser default styling.
@@ -66099,7 +65975,6 @@ const tip = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(extern
  * Internal dependencies
  */
 
-
 function Tip(props) {
   const {
     children
@@ -66133,7 +66008,6 @@ function Tip(props) {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -66540,7 +66414,6 @@ function ToolbarGroupCollapsed({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -67073,8 +66946,6 @@ function useToolsPanelHeader(props) {
 
 
 
-
-
 const DefaultControlsGroup = ({
   itemClassName,
   items,
@@ -67583,7 +67454,6 @@ function useToolsPanel(props) {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -68345,7 +68215,6 @@ const TreeGridItem = (0,external_wp_element_namespaceObject.forwardRef)(Unforwar
  */
 
 
-
 function UnforwardedTreeGridCell({
   children,
   withoutGridItem = false,
@@ -68671,7 +68540,6 @@ const withConstrainedTabbing = (0,external_wp_compose_namespaceObject.createHigh
 /**
  * WordPress dependencies
  */
-
 
 
 
@@ -70618,7 +70486,6 @@ function useTemporaryFocusVisibleFix({
 
 
 
-
 const DropdownMenuItem = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuItem({
   prefix,
   suffix,
@@ -70706,7 +70573,6 @@ var MenuItemCheck = forwardRef2(function MenuItemCheck2(props) {
 
 
 
-
 const DropdownMenuCheckboxItem = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuCheckboxItem({
   suffix,
   children,
@@ -70764,7 +70630,6 @@ const DropdownMenuCheckboxItem = (0,external_wp_element_namespaceObject.forwardR
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -70957,8 +70822,6 @@ const DropdownMenuItemHelpText = (0,external_wp_element_namespaceObject.forwardR
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -71366,7 +71229,6 @@ const styles_TabPanel = /*#__PURE__*/emotion_styled_base_browser_esm(TabPanel,  
 /**
  * Internal dependencies
  */
-
 
 
 

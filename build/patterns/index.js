@@ -549,7 +549,6 @@ function useAddPatternCategory() {
 
 
 
-
 function CreatePatternModal({
   className = 'patterns-menu-items__convert-modal',
   modalTitle,
@@ -712,7 +711,7 @@ function useDuplicatePatternProps({
     defaultCategories: getTermLabels(pattern, categories),
     defaultSyncType: pattern.type !== PATTERN_TYPES.user // Theme patterns are unsynced by default.
     ? PATTERN_SYNC_TYPES.unsynced : pattern.wp_pattern_sync_status || PATTERN_SYNC_TYPES.full,
-    defaultTitle: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Existing pattern title */
+    defaultTitle: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Existing pattern title */
     (0,external_wp_i18n_namespaceObject.__)('%s (Copy)'), typeof pattern.title === 'string' ? pattern.title : pattern.title.raw),
     onSuccess: ({
       pattern: newPattern
@@ -754,7 +753,6 @@ function DuplicatePatternModal({
 /**
  * WordPress dependencies
  */
-
 
 
 
@@ -901,8 +899,6 @@ const symbol = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
  * @return {import('react').ComponentType} The menu control or null.
  */
 
-
-
 function PatternConvertButton({
   clientIds,
   rootClientId,
@@ -1022,8 +1018,6 @@ const external_wp_url_namespaceObject = window["wp"]["url"];
 
 
 
-
-
 function PatternsManageButton({
   clientId
 }) {
@@ -1095,8 +1089,6 @@ function PatternsManageButton({
 
 
 
-
-
 function PatternsMenuItems({
   rootClientId
 }) {
@@ -1134,7 +1126,6 @@ const external_wp_a11y_namespaceObject = window["wp"]["a11y"];
 /**
  * Internal dependencies
  */
-
 
 
 function RenamePatternCategoryModal({
@@ -1278,7 +1269,6 @@ function RenamePatternCategoryModal({
 
 
 
-
 function AllowOverridesModal({
   placeholder,
   initialName = '',
@@ -1290,7 +1280,7 @@ function AllowOverridesModal({
   const isNameValid = !!editedBlockName.trim();
   const handleSubmit = () => {
     if (editedBlockName !== initialName) {
-      const message = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: new name/label for the block */
+      const message = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: new name/label for the block */
       (0,external_wp_i18n_namespaceObject.__)('Block name changed to: "%s".'), editedBlockName);
 
       // Must be assertive to immediately announce change.
@@ -1403,8 +1393,6 @@ function DisallowOverridesModal({
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -1591,7 +1579,6 @@ const copy = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
 
 
 
-
 const {
   useBlockDisplayTitle
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
@@ -1634,7 +1621,7 @@ function PatternOverridesToolbarIndicator({
     clientId: clientIds[0],
     maximumLength: 35
   });
-  const blockDescription = isSingleBlockSelected ? (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %1s: The block type's name; %2s: The block's user-provided name (the same as the override name). */
+  const blockDescription = isSingleBlockSelected ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %1s: The block type's name; %2s: The block's user-provided name (the same as the override name). */
   (0,external_wp_i18n_namespaceObject.__)('This %1$s is editable using the "%2$s" override.'), firstBlockTitle.toLowerCase(), firstBlockName) : (0,external_wp_i18n_namespaceObject.__)('These blocks are editable using overrides.');
   const descriptionId = (0,external_wp_element_namespaceObject.useId)();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {

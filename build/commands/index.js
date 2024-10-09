@@ -3507,8 +3507,6 @@ unlock(store).registerPrivateActions(private_actions_namespaceObject);
  */
 
 
-
-
 const inputLabel = (0,external_wp_i18n_namespaceObject.__)('Search commands and settings');
 function CommandMenuLoader({
   name,

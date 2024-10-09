@@ -1413,7 +1413,6 @@ const starEmpty = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 
 
 
-
 function Stars({
   rating
 }) {
@@ -1422,7 +1421,7 @@ function Stars({
   const halfStarCount = Math.ceil(rating - fullStarCount);
   const emptyStarCount = 5 - (fullStarCount + halfStarCount);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
-    "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: number of stars. */
+    "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: number of stars. */
     (0,external_wp_i18n_namespaceObject.__)('%s out of 5 stars'), stars),
     children: [Array.from({
       length: fullStarCount
@@ -1497,7 +1496,6 @@ function DownloadableBlockIcon({
  */
 
 
-
 const DownloadableBlockNotice = ({
   block
 }) => {
@@ -1541,8 +1539,6 @@ const DownloadableBlockNotice = ({
 
 // Return the appropriate block item label, given the block data and status.
 
-
-
 function getDownloadableBlockLabel({
   title,
   rating,
@@ -1571,7 +1567,7 @@ function getDownloadableBlockLabel({
     /* translators: %1$s: block title */
     return (0,external_wp_i18n_namespaceObject.sprintf)('Install %s.', (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title));
   }
-  return (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %1$s: block title, %2$s: average rating, %3$s: total ratings count. */
+  return (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %1$s: block title, %2$s: average rating, %3$s: total ratings count. */
   (0,external_wp_i18n_namespaceObject._n)('Install %1$s. %2$s stars with %3$s review.', 'Install %1$s. %2$s stars with %3$s reviews.', ratingCount), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title), stars, ratingCount);
 }
 function DownloadableBlockListItem({
@@ -1644,7 +1640,7 @@ function DownloadableBlockListItem({
         className: "block-directory-downloadable-block-list-item__details",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: "block-directory-downloadable-block-list-item__title",
-          children: (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %1$s: block title, %2$s: author name. */
+          children: (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %1$s: block title, %2$s: author name. */
           (0,external_wp_i18n_namespaceObject.__)('%1$s <span>by %2$s</span>'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title), author), {
             span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
               className: "block-directory-downloadable-block-list-item__author"
@@ -1732,8 +1728,6 @@ const external_wp_a11y_namespaceObject = window["wp"]["a11y"];
 
 
 
-
-
 function DownloadableBlocksInserterPanel({
   children,
   downloadableItems,
@@ -1741,7 +1735,7 @@ function DownloadableBlocksInserterPanel({
 }) {
   const count = downloadableItems.length;
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    (0,external_wp_a11y_namespaceObject.speak)((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %d: number of available blocks. */
+    (0,external_wp_a11y_namespaceObject.speak)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of available blocks. */
     (0,external_wp_i18n_namespaceObject._n)('%d additional block is available to install.', '%d additional blocks are available to install.', count), count));
   }, [count]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -1790,8 +1784,6 @@ const blockDefault = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 
 
 
-
-
 function DownloadableBlocksNoResults() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
@@ -1828,8 +1820,6 @@ function DownloadableBlocksNoResults() {
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -1976,7 +1966,6 @@ function InserterMenuDownloadableBlocksPanel() {
  */
 
 
-
 function CompactList({
   items
 }) {
@@ -2002,7 +1991,7 @@ function CompactList({
           children: title
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "block-directory-compact-list__item-author",
-          children: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: Name of the block author. */
+          children: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Name of the block author. */
           (0,external_wp_i18n_namespaceObject.__)('By %s'), author)
         })]
       })]
@@ -2022,7 +2011,6 @@ function CompactList({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -2088,7 +2076,7 @@ function InstallButton({
     disabled: isInstallingBlock,
     isBusy: isInstallingBlock,
     variant: "primary",
-    children: (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: block name */
+    children: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: block name */
     (0,external_wp_i18n_namespaceObject.__)('Install %s'), block.title)
   });
 }
@@ -2108,7 +2096,6 @@ function InstallButton({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -2170,7 +2157,7 @@ const ModifiedWarning = ({
     } = select(external_wp_blockEditor_namespaceObject.store);
     return canInsertBlockType('core/html', getBlockRootClientId(clientId));
   }, [clientId]);
-  let messageHTML = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: block name */
+  let messageHTML = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: block name */
   (0,external_wp_i18n_namespaceObject.__)('Your site doesn’t include support for the %s block. You can try installing the block or remove it entirely.'), originalBlock.title || originalName);
   const actions = [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InstallButton, {
     block: originalBlock,
@@ -2178,9 +2165,9 @@ const ModifiedWarning = ({
     clientId: props.clientId
   }, "install")];
   if (hasContent && hasHTMLBlock) {
-    messageHTML = (0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: block name */
+    messageHTML = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: block name */
     (0,external_wp_i18n_namespaceObject.__)('Your site doesn’t include support for the %s block. You can try installing the block, convert it to a Custom HTML block, or remove it entirely.'), originalBlock.title || originalName);
-    actions.push( /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    actions.push(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       __next40pxDefaultSize: true,
       onClick: convertToHTML,
       variant: "tertiary",
@@ -2209,8 +2196,6 @@ const ModifiedWarning = ({
 /**
  * Internal dependencies
  */
-
-
 
 
 

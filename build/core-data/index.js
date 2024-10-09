@@ -17587,9 +17587,7 @@ const deriveKey = (secret, roomName) => {
  */
 const encrypt = (data, key) => {
   if (!key) {
-    return /** @type {PromiseLike<Uint8Array>} */(
-      resolve(data)
-    );
+    return /** @type {PromiseLike<Uint8Array>} */resolve(data);
   }
   const iv = crypto.getRandomValues(new Uint8Array(12));
   return crypto.subtle.encrypt({
@@ -17622,9 +17620,7 @@ const encryptJson = (data, key) => {
  */
 const decrypt = (data, key) => {
   if (!key) {
-    return /** @type {PromiseLike<Uint8Array>} */(
-      resolve(data)
-    );
+    return /** @type {PromiseLike<Uint8Array>} */resolve(data);
   }
   const dataDecoder = createDecoder(data);
   const algorithm = readVarString(dataDecoder);
@@ -18274,7 +18270,7 @@ class WebrtcProvider extends Observable {
     /**
      * @type {PromiseLike<CryptoKey | null>}
      */
-    this.key = password ? deriveKey(password, roomName) : ( /** @type {PromiseLike<null>} */resolve(null));
+    this.key = password ? deriveKey(password, roomName) : (/** @type {PromiseLike<null>} */resolve(null));
     /**
      * @type {Room|null}
      */
@@ -18372,7 +18368,7 @@ function setupSignalEventHandlers(signalCon, url) {
       from: room.peerId
     }));
   });
-  signalCon.on('message', ( /** @type {{ type: any; topic: any; data: string; }} */m) => {
+  signalCon.on('message', (/** @type {{ type: any; topic: any; data: string; }} */m) => {
     switch (m.type) {
       case 'publish':
         {
@@ -18381,7 +18377,7 @@ function setupSignalEventHandlers(signalCon, url) {
           if (room === null || typeof roomName !== 'string' || room === undefined) {
             return;
           }
-          const execMessage = ( /** @type {any} */data) => {
+          const execMessage = (/** @type {any} */data) => {
             const webrtcConns = room.webrtcConns;
             const peerId = room.peerId;
             if (data === null || data.from === peerId || data.to !== undefined && data.to !== peerId || room.bcConns.has(data.from)) {
@@ -18476,7 +18472,7 @@ function setupHttpSignal(httpClient) {
     httpClient.ws = eventSource;
     httpClient.connecting = true;
     httpClient.connected = false;
-    const onSingleMessage = ( /** @type {any} */message) => {
+    const onSingleMessage = (/** @type {any} */message) => {
       if (message && message.type === 'pong') {
         clearTimeout(pingTimeout);
         pingTimeout = setTimeout(sendPing, webrtc_http_stream_signaling_messageReconnectTimeout / 2);
@@ -18515,7 +18511,7 @@ function setupHttpSignal(httpClient) {
       httpClient.ws.onclose = () => {
         onclose(null);
       };
-      httpClient.ws.send = function send( /** @type {string} */message) {
+      httpClient.ws.send = function send(/** @type {string} */message) {
         window.fetch(url, {
           body: new URLSearchParams({
             subscriber_id: subscriberId.toString(),
@@ -18626,7 +18622,7 @@ class HttpSignalingConn extends Observable {
 class WebrtcProviderWithHttpSignaling extends WebrtcProvider {
   connect() {
     this.shouldConnect = true;
-    this.signalingUrls.forEach(( /** @type {string} */url) => {
+    this.signalingUrls.forEach((/** @type {string} */url) => {
       const signalingConn = setIfUndefined(signalingConns, url,
       // Only this conditional logic to create a normal websocket connection or
       // an http signaling connection was added to the constructor when compared
@@ -18669,7 +18665,7 @@ function createWebRTCConnection({
   signaling,
   password
 }) {
-  return function ( /** @type {string} */objectId, /** @type {string} */objectType, /** @type {import("yjs").Doc} */doc) {
+  return function (/** @type {string} */objectId, /** @type {string} */objectType, /** @type {import("yjs").Doc} */doc) {
     const roomName = `${objectType}-${objectId}`;
     new WebrtcProviderWithHttpSignaling(roomName, doc, {
       signaling,

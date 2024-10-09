@@ -879,8 +879,6 @@ function ComplementaryAreaToggle({
  */
 
 
-
-
 const ComplementaryAreaHeader = ({
   smallScreenTitle,
   children,
@@ -1089,8 +1087,6 @@ PinnedItems.Slot = PinnedItemsSlot;
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -1386,7 +1382,6 @@ NavigableRegion.displayName = 'NavigableRegion';
 /**
  * Internal dependencies
  */
-
 
 
 const interface_skeleton_ANIMATION_DURATION = 0.25;
@@ -1794,7 +1789,7 @@ const saveEditedWidgetAreas = () => async ({
       type: 'snackbar'
     });
   } catch (e) {
-    registry.dispatch(external_wp_notices_namespaceObject.store).createErrorNotice( /* translators: %s: The error message. */
+    registry.dispatch(external_wp_notices_namespaceObject.store).createErrorNotice(/* translators: %s: The error message. */
     (0,external_wp_i18n_namespaceObject.sprintf)((0,external_wp_i18n_namespaceObject.__)('There was an error. %s'), e.message), {
       type: 'snackbar'
     });
@@ -1944,7 +1939,7 @@ const saveWidgetArea = widgetAreaId => async ({
     }
   }
   if (failedWidgetNames.length) {
-    throw new Error((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: List of widget names */
+    throw new Error((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: List of widget names */
     (0,external_wp_i18n_namespaceObject.__)('Could not save the following widgets: %s.'), failedWidgetNames.join(', ')));
   }
   registry.dispatch(external_wp_coreData_namespaceObject.store).editEntityRecord(KIND, WIDGET_AREA_ENTITY_TYPE, widgetAreaId, {
@@ -2492,8 +2487,6 @@ const external_wp_hooks_namespaceObject = window["wp"]["hooks"];
 /**
  * Internal dependencies
  */
-
-
 
 
 const withMoveToWidgetAreaToolbarItem = (0,external_wp_compose_namespaceObject.createHigherOrderComponent)(BlockEdit => props => {
@@ -3085,7 +3078,6 @@ const ENABLE_EXPERIMENTAL_FSE_BLOCKS = false;
 
 
 
-
 const {
   ExperimentalBlockEditorProvider
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
@@ -3257,7 +3249,6 @@ const external_wp_dom_namespaceObject = window["wp"]["dom"];
  */
 
 
-
 function WidgetAreas({
   selectedWidgetAreaId
 }) {
@@ -3326,7 +3317,6 @@ const WIDGET_AREAS_IDENTIFIER = 'edit-widgets/block-areas';
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -3629,8 +3619,6 @@ function RedoButton(props, ref) {
 
 
 
-
-
 function DocumentTools() {
   const isMediumViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
   const {
@@ -3853,8 +3841,6 @@ const textFormattingShortcuts = [{
 
 
 
-
-
 function KeyCombination({
   keyCombination,
   forceAriaLabel
@@ -3961,7 +3947,6 @@ function DynamicShortcut({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -4095,8 +4080,6 @@ ToolsMoreMenuGroup.Slot = ({
 
 
 
-
-
 function MoreMenu() {
   const [isKeyboardShortcutsModalActive, setIsKeyboardShortcutsModalVisible] = (0,external_wp_element_namespaceObject.useState)(false);
   const toggleKeyboardShortcutsModal = () => setIsKeyboardShortcutsModalVisible(!isKeyboardShortcutsModalActive);
@@ -4204,8 +4187,6 @@ function MoreMenu() {
 
 
 
-
-
 function Header() {
   const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
   const blockToolbarRef = (0,external_wp_element_namespaceObject.useRef)();
@@ -4257,8 +4238,6 @@ function Header() {
 
 
 // Last three notices. Slices from the tail end of the list.
-
-
 
 const MAX_VISIBLE_NOTICES = -3;
 function Notices() {
@@ -4313,7 +4292,6 @@ function Notices() {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -4433,7 +4411,6 @@ const useWidgetLibraryInsertionPoint = () => {
 
 
 
-
 function InserterSidebar() {
   const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   const {
@@ -4493,7 +4470,6 @@ function InserterSidebar() {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -4602,7 +4578,6 @@ function SecondarySidebar() {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -4743,8 +4718,6 @@ function UnsavedChangesWarning() {
 /**
  * Internal dependencies
  */
-
-
 
 
 function WelcomeGuide() {
@@ -4890,7 +4863,6 @@ function WelcomeGuideImage({
 
 
 
-
 function Layout({
   blockEditorSettings
 }) {
@@ -4898,7 +4870,7 @@ function Layout({
     createErrorNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   function onPluginAreaError(name) {
-    createErrorNotice((0,external_wp_i18n_namespaceObject.sprintf)( /* translators: %s: plugin name */
+    createErrorNotice((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: plugin name */
     (0,external_wp_i18n_namespaceObject.__)('The "%s" plugin has encountered an error and cannot be rendered.'), name));
   }
   const navigateRegionsProps = (0,external_wp_components_namespaceObject.__unstableUseNavigateRegions)();
@@ -4988,7 +4960,7 @@ function initializeEditor(id, settings) {
   // do this will result in errors in the default block parser.
   // see: https://github.com/WordPress/gutenberg/issues/33097
   (0,external_wp_blocks_namespaceObject.setFreeformContentHandlerName)('core/html');
-  root.render( /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.StrictMode, {
+  root.render(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.StrictMode, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(layout, {
       blockEditorSettings: settings
     })

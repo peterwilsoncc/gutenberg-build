@@ -1786,7 +1786,7 @@ function renderNativeComponent(type, props, context, legacyContext = {}) {
  * @return {string} Serialized element
  */
 function renderComponent(Component, props, context, legacyContext = {}) {
-  const instance = new ( /** @type {import('react').ComponentClass} */
+  const instance = new (/** @type {import('react').ComponentClass} */
   Component)(props, legacyContext);
   if (typeof
   // Ignore reason: Current prettier reformats parens and mangles type assertion

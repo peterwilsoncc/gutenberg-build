@@ -532,7 +532,6 @@ const store = (0,external_wp_data_namespaceObject.createReduxStore)(STORE_NAME, 
  */
 
 
-
 function Inserter({
   setIsOpened
 }) {
@@ -681,8 +680,6 @@ const textFormattingShortcuts = [{
 
 
 
-
-
 function KeyCombination({
   keyCombination,
   forceAriaLabel
@@ -788,7 +785,6 @@ function DynamicShortcut({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -909,8 +905,6 @@ function KeyboardShortcutHelpModal({
  */
 
 
-
-
 function MoreMenu() {
   const [isKeyboardShortcutsModalActive, setIsKeyboardShortcutsModalVisible] = (0,external_wp_element_namespaceObject.useState)(false);
   const toggleKeyboardShortcutsModal = () => setIsKeyboardShortcutsModalVisible(!isKeyboardShortcutsModalActive);
@@ -1003,8 +997,6 @@ function MoreMenu() {
 
 
 
-
-
 function Header({
   sidebar,
   inserter,
@@ -1054,7 +1046,7 @@ function Header({
           }
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MoreMenu, {})]
       })
-    }), (0,external_wp_element_namespaceObject.createPortal)( /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(components_inserter, {
+    }), (0,external_wp_element_namespaceObject.createPortal)(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(components_inserter, {
       setIsOpened: setIsInserterOpened
     }), inserter.contentContainer[0])]
   });
@@ -1482,7 +1474,6 @@ function SidebarEditorProvider({
 
 
 
-
 function WelcomeGuide({
   sidebar
 }) {
@@ -1661,8 +1652,6 @@ function BlockAppender(props) {
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -1898,7 +1887,6 @@ function useClearSelectedBlock(sidebarControl, popoverRef) {
 
 
 
-
 function CustomizeWidgets({
   api,
   sidebarControls,
@@ -1918,7 +1906,7 @@ function CustomizeWidgets({
       unsubscribers.forEach(unsubscriber => unsubscriber());
     };
   }, [sidebarControls]);
-  const activeSidebar = activeSidebarControl && (0,external_wp_element_namespaceObject.createPortal)( /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ErrorBoundary, {
+  const activeSidebar = activeSidebarControl && (0,external_wp_element_namespaceObject.createPortal)(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ErrorBoundary, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarBlockEditor, {
       blockEditorSettings: blockEditorSettings,
       sidebar: activeSidebarControl.sidebarAdapter,
@@ -1929,7 +1917,7 @@ function CustomizeWidgets({
 
   // We have to portal this to the parent of both the editor and the inspector,
   // so that the popovers will appear above both of them.
-  const popover = parentContainer && (0,external_wp_element_namespaceObject.createPortal)( /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+  const popover = parentContainer && (0,external_wp_element_namespaceObject.createPortal)(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "customize-widgets-popover",
     ref: popoverRef,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Popover.Slot, {})
@@ -2561,8 +2549,6 @@ function getSidebarControl() {
 
 
 
-
-
 const withMoveToSidebarToolbarItem = (0,external_wp_compose_namespaceObject.createHigherOrderComponent)(BlockEdit => props => {
   let widgetId = (0,external_wp_widgets_namespaceObject.getWidgetIdFromBlock)(props);
   const sidebarControls = useSidebarControls();
@@ -2739,7 +2725,7 @@ function initialize(editorName, blockEditorSettings) {
         sidebarControls.push(control);
       }
     });
-    (0,external_wp_element_namespaceObject.createRoot)(container).render( /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.StrictMode, {
+    (0,external_wp_element_namespaceObject.createRoot)(container).render(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.StrictMode, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CustomizeWidgets, {
         api: build_module_wp.customize,
         sidebarControls: sidebarControls,
