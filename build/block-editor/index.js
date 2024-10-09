@@ -72624,6 +72624,7 @@ const selectIcon = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 function ToolSelector(props, ref) {
   const mode = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).__unstableGetEditorMode(), []);
   const {
+    resetZoomLevel,
     __unstableSetEditorMode
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
@@ -72650,7 +72651,10 @@ function ToolSelector(props, ref) {
         "aria-label": (0,external_wp_i18n_namespaceObject.__)('Tools'),
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItemsChoice, {
           value: mode === 'navigation' ? 'navigation' : 'edit',
-          onSelect: __unstableSetEditorMode,
+          onSelect: newMode => {
+            resetZoomLevel();
+            __unstableSetEditorMode(newMode);
+          },
           choices: [{
             value: 'edit',
             label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
