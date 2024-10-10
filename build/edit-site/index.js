@@ -40458,6 +40458,7 @@ function DataviewsPatterns() {
   const categoryId = categoryIdFromURL || PATTERN_DEFAULT_CATEGORY;
   const [view, setView] = (0,external_wp_element_namespaceObject.useState)(DEFAULT_VIEW);
   const previousCategoryId = (0,external_wp_compose_namespaceObject.usePrevious)(categoryId);
+  const previousPostType = (0,external_wp_compose_namespaceObject.usePrevious)(type);
   const viewSyncStatus = view.filters?.find(({
     field
   }) => field === 'sync-status')?.value;
@@ -40501,13 +40502,13 @@ function DataviewsPatterns() {
 
   // Reset the page number when the category changes.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (previousCategoryId !== categoryId) {
+    if (previousCategoryId !== categoryId || previousPostType !== type) {
       setView(prevView => ({
         ...prevView,
         page: 1
       }));
     }
-  }, [categoryId, previousCategoryId]);
+  }, [categoryId, previousCategoryId, previousPostType, type]);
   const {
     data,
     paginationInfo
