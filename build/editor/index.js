@@ -27907,7 +27907,7 @@ function VisualEditor({
   })]);
   const zoomOutProps = isZoomedOut && !isTabletViewport ? {
     scale: 'default',
-    frameSize: '48px'
+    frameSize: '40px'
   } : {};
   const forceFullHeight = postType === NAVIGATION_POST_TYPE;
   const enableResizing = [NAVIGATION_POST_TYPE, constants_TEMPLATE_PART_POST_TYPE, PATTERN_POST_TYPE].includes(postType) &&
