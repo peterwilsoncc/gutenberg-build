@@ -59771,6 +59771,7 @@ const StyledInputControl = /*#__PURE__*/emotion_styled_base_browser_esm(input_co
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -59787,6 +59788,11 @@ function SuffixItem({
   if (!onClose && !value) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icons_build_module_icon, {
       icon: library_search
+    });
+  }
+  if (onClose) {
+    external_wp_deprecated_default()('`onClose` prop in wp.components.SearchControl', {
+      since: '6.8'
     });
   }
   const onReset = () => {
