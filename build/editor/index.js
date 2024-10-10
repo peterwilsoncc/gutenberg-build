@@ -27396,7 +27396,10 @@ function EditTemplateBlocksNotification({
       if (!event.target.classList.contains('is-root-container') || event.target.dataset?.type === 'core/template-part') {
         return;
       }
-      setIsDialogOpen(true);
+      if (!event.defaultPrevented) {
+        event.preventDefault();
+        setIsDialogOpen(true);
+      }
     };
     const canvas = contentRef.current;
     canvas?.addEventListener('dblclick', handleDblClick);
@@ -27683,7 +27686,8 @@ const {
   useLayoutClasses,
   useLayoutStyles,
   ExperimentalBlockCanvas: BlockCanvas,
-  useFlashEditableBlocks
+  useFlashEditableBlocks,
+  useZoomOutModeExit
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
 /**
@@ -27904,7 +27908,7 @@ function VisualEditor({
     isEnabled: renderingMode === 'template-locked'
   }), useSelectNearestEditableBlock({
     isEnabled: renderingMode === 'template-locked'
-  })]);
+  }), useZoomOutModeExit()]);
   const zoomOutProps = isZoomedOut && !isTabletViewport ? {
     scale: 'default',
     frameSize: '40px'

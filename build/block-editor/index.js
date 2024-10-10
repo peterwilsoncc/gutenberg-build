@@ -77579,6 +77579,7 @@ function ResolutionTool({
 
 
 
+
 /**
  * Private @wordpress/block-editor APIs.
  */
@@ -77609,6 +77610,7 @@ lock(privateApis, {
   TextAlignmentControl: TextAlignmentControl,
   usesContextKey: usesContextKey,
   useFlashEditableBlocks: useFlashEditableBlocks,
+  useZoomOutModeExit: useZoomOutModeExit,
   globalStylesDataKey: globalStylesDataKey,
   globalStylesLinksDataKey: globalStylesLinksDataKey,
   selectBlockPatternsKey: selectBlockPatternsKey,
