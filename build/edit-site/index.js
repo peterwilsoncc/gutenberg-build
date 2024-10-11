@@ -26188,6 +26188,8 @@ function SidebarNavigationScreenGlobalStylesContent() {
 
 
 
+
+
 /**
  * Internal dependencies
  */
@@ -26195,9 +26197,14 @@ function SidebarNavigationScreenGlobalStylesContent() {
 
 
 function ScreenStyleVariations() {
-  // Move to zoom out mode when this component is mounted
-  // and back to the previous mode when unmounted.
+  // Style Variations should only be previewed in with
+  // - a "zoomed out" editor
+  // - "Desktop" device preview
+  const {
+    setDeviceType
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_editor_namespaceObject.store);
   (0,external_wp_blockEditor_namespaceObject.useZoomOut)();
+  setDeviceType('desktop');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header, {
       title: (0,external_wp_i18n_namespaceObject.__)('Browse styles'),
