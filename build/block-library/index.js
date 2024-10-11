@@ -47793,12 +47793,12 @@ function QueryInspectorControls(props) {
     return onChangeDebounced.cancel;
   }, [querySearch, onChangeDebounced]);
   const showInheritControl = isTemplate && isControlAllowed(allowedControls, 'inherit');
-  const showPostTypeControl = !inherit && isControlAllowed(allowedControls, 'postType') || !isTemplate;
+  const showPostTypeControl = !inherit && isControlAllowed(allowedControls, 'postType');
   const postTypeControlLabel = (0,external_wp_i18n_namespaceObject.__)('Post type');
   const postTypeControlHelp = (0,external_wp_i18n_namespaceObject.__)('Select the type of content to display: posts, pages, or custom post types.');
   const showColumnsControl = false;
-  const showOrderControl = !inherit && isControlAllowed(allowedControls, 'order') || !isTemplate;
-  const showStickyControl = !inherit && showSticky && isControlAllowed(allowedControls, 'sticky') || showSticky && !isTemplate;
+  const showOrderControl = !inherit && isControlAllowed(allowedControls, 'order');
+  const showStickyControl = !inherit && showSticky && isControlAllowed(allowedControls, 'sticky');
   const showSettingsPanel = showInheritControl || showPostTypeControl || showColumnsControl || showOrderControl || showStickyControl;
   const showTaxControl = !!taxonomies?.length && isControlAllowed(allowedControls, 'taxQuery');
   const showAuthorControl = isControlAllowed(allowedControls, 'author');
