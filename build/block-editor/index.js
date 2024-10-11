@@ -49298,7 +49298,7 @@ function EditorStyles({
 
 // This is used to avoid rendering the block list if the sizes change.
 
-let MemoizedBlockList;
+const MemoizedBlockList = (0,external_wp_element_namespaceObject.memo)(BlockList);
 const MAX_HEIGHT = 2000;
 const EMPTY_ADDITIONAL_STYLES = [];
 function ScaledBlockPreview({
@@ -49332,9 +49332,6 @@ function ScaledBlockPreview({
     }
     return styles;
   }, [styles, additionalStyles]);
-
-  // Initialize on render instead of module top level, to avoid circular dependency issues.
-  MemoizedBlockList = MemoizedBlockList || (0,external_wp_element_namespaceObject.memo)(BlockList);
   const scale = containerWidth / viewportWidth;
   const aspectRatio = contentHeight ? containerWidth / (contentHeight * scale) : 0;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Disabled, {
