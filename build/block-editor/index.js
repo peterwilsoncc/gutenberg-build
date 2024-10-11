@@ -42308,27 +42308,24 @@ function useNavModeExit(clientId) {
 
 /**
  * Allows Zoom Out mode to be exited by double clicking in the selected block.
- *
- * @param {string} clientId Block client ID.
  */
-function useZoomOutModeExit({
-  editorMode
-}) {
+function useZoomOutModeExit() {
   const {
     getSettings,
-    isZoomOut
+    isZoomOut,
+    __unstableGetEditorMode
   } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const {
     __unstableSetEditorMode,
     resetZoomLevel
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   return (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
-    // In "compose" mode.
-    const composeMode = editorMode === 'zoom-out' && isZoomOut();
-    if (!composeMode) {
-      return;
-    }
     function onDoubleClick(event) {
+      // In "compose" mode.
+      const composeMode = __unstableGetEditorMode() === 'zoom-out' && isZoomOut();
+      if (!composeMode) {
+        return;
+      }
       if (!event.defaultPrevented) {
         event.preventDefault();
         const {
@@ -42345,7 +42342,7 @@ function useZoomOutModeExit({
     return () => {
       node.removeEventListener('dblclick', onDoubleClick);
     };
-  }, [editorMode, getSettings, __unstableSetEditorMode]);
+  }, [getSettings, __unstableSetEditorMode, __unstableGetEditorMode, isZoomOut, resetZoomLevel]);
 }
 
 ;// CONCATENATED MODULE: ./packages/block-editor/build-module/components/block-list/use-block-props/use-intersection-observer.js
@@ -42805,7 +42802,6 @@ function use_block_props_useBlockProps(props = {}, {
     name,
     blockApiVersion,
     blockTitle,
-    editorMode,
     isSelected,
     isSubtreeDisabled,
     hasOverlay,
@@ -42835,9 +42831,7 @@ function use_block_props_useBlockProps(props = {}, {
   }), useBlockRefProvider(clientId), useFocusHandler(clientId), useEventHandlers({
     clientId,
     isSelected
-  }), useNavModeExit(clientId), useZoomOutModeExit({
-    editorMode
-  }), useIsHovered({
+  }), useNavModeExit(clientId), useZoomOutModeExit(), useIsHovered({
     clientId
   }), useIntersectionObserver(), use_moving_animation({
     triggerAnimationOnChange: index,
@@ -43462,7 +43456,6 @@ function BlockListBlockProvider(props) {
       mayDisplayParentControls: _hasBlockSupport(getBlockName(clientId), '__experimentalExposeControlsToChildren', false) && hasSelectedInnerBlock(clientId),
       blockApiVersion: blockType?.apiVersion || 1,
       blockTitle: match?.title || blockType?.title,
-      editorMode,
       isSubtreeDisabled: blockEditingMode === 'disabled' && isBlockSubtreeDisabled(clientId),
       hasOverlay: __unstableHasActiveBlockOverlayActive(clientId) && !isDragging(),
       initialPosition: _isSelected && (editorMode === 'edit' || editorMode === 'zoom-out') // Don't recalculate the initialPosition when toggling in/out of zoom-out mode
@@ -43496,7 +43489,6 @@ function BlockListBlockProvider(props) {
     themeSupportsLayout,
     isTemporarilyEditingAsBlocks,
     blockEditingMode,
-    editorMode,
     mayDisplayControls,
     mayDisplayParentControls,
     index,
@@ -43550,7 +43542,6 @@ function BlockListBlockProvider(props) {
     hasOverlay,
     initialPosition,
     blockEditingMode,
-    editorMode,
     isHighlighted,
     isMultiSelected,
     isPartiallySelected,
