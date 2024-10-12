@@ -7206,7 +7206,6 @@ const setCanvasMode = mode => ({
     registry.batch(() => {
       registry.dispatch(external_wp_blockEditor_namespaceObject.store).clearSelectedBlock();
       registry.dispatch(external_wp_editor_namespaceObject.store).setDeviceType('Desktop');
-      registry.dispatch(external_wp_blockEditor_namespaceObject.store).__unstableSetEditorMode('edit');
       const isPublishSidebarOpened = registry.select(external_wp_editor_namespaceObject.store).isPublishSidebarOpened();
       dispatch({
         type: 'SET_CANVAS_MODE',

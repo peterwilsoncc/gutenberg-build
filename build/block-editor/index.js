@@ -9868,21 +9868,6 @@ const blockListSettings = (state = {}, action) => {
 };
 
 /**
- * Reducer returning which mode is enabled.
- *
- * @param {string} state  Current state.
- * @param {Object} action Dispatched action.
- *
- * @return {string} Updated state.
- */
-function editorMode(state = 'edit', action) {
-  if (action.type === 'SET_EDITOR_MODE') {
-    return action.mode;
-  }
-  return state;
-}
-
-/**
  * Reducer return an updated state representing the most recent block attribute
  * update. The state is structured as an object where the keys represent the
  * client IDs of blocks, the values a subset of attributes from the most recent
@@ -10186,7 +10171,6 @@ const combinedReducers = (0,external_wp_data_namespaceObject.combineReducers)({
   preferences,
   lastBlockAttributesChange,
   lastFocus,
-  editorMode,
   expandedBlock,
   highlightedBlock,
   lastBlockInserted,
@@ -10265,6 +10249,8 @@ const symbol = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 ;// external ["wp","richText"]
 const external_wp_richText_namespaceObject = window["wp"]["richText"];
+;// external ["wp","preferences"]
+const external_wp_preferences_namespaceObject = window["wp"]["preferences"];
 ;// external ["wp","blockSerializationDefaultParser"]
 const external_wp_blockSerializationDefaultParser_namespaceObject = window["wp"]["blockSerializationDefaultParser"];
 ;// ./packages/block-editor/build-module/store/private-keys.js
@@ -11234,6 +11220,7 @@ function orderBy(items, field, order = 'asc') {
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -13464,7 +13451,7 @@ function __experimentalGetLastBlockAttributeChanges(state) {
  * @return {boolean} Is navigation mode enabled.
  */
 function isNavigationMode(state) {
-  return state.editorMode === 'navigation';
+  return __unstableGetEditorMode(state) === 'navigation';
 }
 
 /**
@@ -13474,9 +13461,9 @@ function isNavigationMode(state) {
  *
  * @return {string} the editor mode.
  */
-function __unstableGetEditorMode(state) {
-  return state.editorMode;
-}
+const __unstableGetEditorMode = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
+  return select(external_wp_preferences_namespaceObject.store).get('core', 'editorTool');
+});
 
 /**
  * Returns whether block moving mode is enabled.
@@ -14344,6 +14331,7 @@ function findRichTextAttributeKey(blockType) {
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -15743,7 +15731,8 @@ const setNavigationMode = (isNavigationMode = true) => ({
  */
 const __unstableSetEditorMode = mode => ({
   dispatch,
-  select
+  select,
+  registry
 }) => {
   // When switching to zoom-out mode, we need to select the parent section
   if (mode === 'zoom-out') {
@@ -15772,10 +15761,7 @@ const __unstableSetEditorMode = mode => ({
       }
     }
   }
-  dispatch({
-    type: 'SET_EDITOR_MODE',
-    mode
-  });
+  registry.dispatch(external_wp_preferences_namespaceObject.store).set('core', 'editorTool', mode);
   if (mode === 'navigation') {
     (0,external_wp_a11y_namespaceObject.speak)((0,external_wp_i18n_namespaceObject.__)('You are currently in navigation mode. Navigate blocks using the Tab key and Arrow keys. Use Left and Right Arrow keys to move between nesting levels. To exit navigation mode and edit the selected block, press Enter.'));
   } else if (mode === 'edit') {
@@ -21810,8 +21796,6 @@ function MediaUploadCheck({
 ;// external ["wp","isShallowEqual"]
 const external_wp_isShallowEqual_namespaceObject = window["wp"]["isShallowEqual"];
 var external_wp_isShallowEqual_default = /*#__PURE__*/__webpack_require__.n(external_wp_isShallowEqual_namespaceObject);
-;// external ["wp","preferences"]
-const external_wp_preferences_namespaceObject = window["wp"]["preferences"];
 ;// ./packages/icons/build-module/library/keyboard-return.js
 /**
  * WordPress dependencies
