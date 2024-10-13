@@ -35490,12 +35490,13 @@ function UnforwardedToggleGroupControlAsRadioGroup({
   const selectedValue = useStoreState(radio, 'value');
   const setValue = radio.setValue;
   const groupContextValue = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    activeItemIsNotFirstItem: () => radio.getState().activeId !== radio.first(),
     baseId,
     isBlock: !isAdaptiveWidth,
     size,
     value: selectedValue,
     setValue
-  }), [baseId, isAdaptiveWidth, size, selectedValue, setValue]);
+  }), [baseId, isAdaptiveWidth, radio, size, selectedValue, setValue]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(toggle_group_control_context.Provider, {
     value: groupContextValue,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RadioGroup, {
@@ -35969,7 +35970,6 @@ function ToggleGroupControlOptionBase(props, forwardedRef) {
     value,
     children,
     showTooltip = false,
-    onFocus: onFocusProp,
     disabled,
     ...otherButtonProps
   } = buttonProps;
@@ -36004,7 +36004,6 @@ function ToggleGroupControlOptionBase(props, forwardedRef) {
       children: isDeselectable ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("button", {
         ...commonProps,
         disabled: disabled,
-        onFocus: onFocusProp,
         "aria-pressed": isPressed,
         type: "button",
         onClick: buttonOnClick,
@@ -36013,16 +36012,16 @@ function ToggleGroupControlOptionBase(props, forwardedRef) {
         })
       }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Radio, {
         disabled: disabled,
-        render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("button", {
-          type: "button",
-          ...commonProps,
-          onFocus: event => {
-            onFocusProp?.(event);
-            if (event.defaultPrevented) {
-              return;
-            }
+        onFocusVisible: () => {
+          // Conditions ensure that the first visible focus to a radio group
+          // without a selected option will not automatically select the option.
+          if (toggleGroupControlContext.value !== null || toggleGroupControlContext.activeItemIsNotFirstItem?.()) {
             toggleGroupControlContext.setValue(value);
           }
+        },
+        render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("button", {
+          type: "button",
+          ...commonProps
         }),
         value: value,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(component_ButtonContentView, {
