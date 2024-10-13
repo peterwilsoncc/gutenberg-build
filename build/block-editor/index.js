@@ -54816,6 +54816,8 @@ function isObjectEmpty(object) {
  * - `updateBlockBindings`: Updates the value of the bindings connected to block attributes. It can be used to remove a specific binding by setting the value to `undefined`.
  * - `removeAllBlockBindings`: Removes the bindings property of the `metadata` attribute.
  *
+ * @param {?string} clientId Optional block client ID. If not set, it will use the current block client ID from the context.
+ *
  * @return {?WPBlockBindingsUtils} Object containing the block bindings utils.
  *
  * @example
@@ -54846,10 +54848,11 @@ function isObjectEmpty(object) {
  * removeAllBlockBindings();
  * ```
  */
-function useBlockBindingsUtils() {
+function useBlockBindingsUtils(clientId) {
   const {
-    clientId
+    clientId: contextClientId
   } = useBlockEditContext();
+  const blockClientId = clientId || contextClientId;
   const {
     updateBlockAttributes
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
@@ -54892,7 +54895,7 @@ function useBlockBindingsUtils() {
         bindings: currentBindings,
         ...metadata
       } = {}
-    } = getBlockAttributes(clientId);
+    } = getBlockAttributes(blockClientId);
     const newBindings = {
       ...currentBindings
     };
@@ -54910,7 +54913,7 @@ function useBlockBindingsUtils() {
     if (isObjectEmpty(newMetadata.bindings)) {
       delete newMetadata.bindings;
     }
-    updateBlockAttributes(clientId, {
+    updateBlockAttributes(blockClientId, {
       metadata: isObjectEmpty(newMetadata) ? undefined : newMetadata
     });
   };
@@ -54932,8 +54935,8 @@ function useBlockBindingsUtils() {
         bindings,
         ...metadata
       } = {}
-    } = getBlockAttributes(clientId);
-    updateBlockAttributes(clientId, {
+    } = getBlockAttributes(blockClientId);
+    updateBlockAttributes(blockClientId, {
       metadata: isObjectEmpty(metadata) ? undefined : metadata
     });
   };
