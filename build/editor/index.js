@@ -21773,87 +21773,100 @@ function PostURL({
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   const [forceEmptyField, setForceEmptyField] = (0,external_wp_element_namespaceObject.useState)(false);
   const copyButtonRef = (0,external_wp_compose_namespaceObject.useCopyToClipboard)(permalink, () => {
-    createNotice('info', (0,external_wp_i18n_namespaceObject.__)('Copied URL to clipboard.'), {
+    createNotice('info', (0,external_wp_i18n_namespaceObject.__)('Copied Permalink to clipboard.'), {
       isDismissible: true,
       type: 'snackbar'
     });
   });
+  const postUrlSlugDescriptionId = 'editor-post-url__slug-descriotion-' + (0,external_wp_compose_namespaceObject.useInstanceId)(PostURL);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "editor-post-url",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalInspectorPopoverHeader, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Link'),
+      title: (0,external_wp_i18n_namespaceObject.__)('Slug'),
       onClose: onClose
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       spacing: 3,
-      children: [isEditable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        children: (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.__)('Customize the last part of the URL. <a>Learn more.</a>'), {
+      children: [isEditable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+        className: "editor-post-url__intro",
+        children: (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.__)('<span>Customize the last part of the Permalink.</span> <a>Learn more.</a>'), {
+          span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            id: postUrlSlugDescriptionId
+          }),
           a: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
             href: (0,external_wp_i18n_namespaceObject.__)('https://wordpress.org/documentation/article/page-post-settings-sidebar/#permalink')
           })
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-        children: [isEditable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
-          __next40pxDefaultSize: true,
-          prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlPrefixWrapper, {
-            children: "/"
-          }),
-          suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlSuffixWrapper, {
-            variant: "control",
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-              icon: copy_small,
-              ref: copyButtonRef,
-              size: "small",
-              label: "Copy"
-            })
-          }),
-          label: (0,external_wp_i18n_namespaceObject.__)('Link'),
-          hideLabelFromVision: true,
-          value: forceEmptyField ? '' : postSlug,
-          autoComplete: "off",
-          spellCheck: "false",
-          type: "text",
-          className: "editor-post-url__input",
-          onChange: newValue => {
-            editPost({
-              slug: newValue
-            });
-            // When we delete the field the permalink gets
-            // reverted to the original value.
-            // The forceEmptyField logic allows the user to have
-            // the field temporarily empty while typing.
-            if (!newValue) {
-              if (!forceEmptyField) {
-                setForceEmptyField(true);
+        children: [isEditable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
+            __next40pxDefaultSize: true,
+            prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlPrefixWrapper, {
+              children: "/"
+            }),
+            suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlSuffixWrapper, {
+              variant: "control",
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+                icon: copy_small,
+                ref: copyButtonRef,
+                size: "small",
+                label: "Copy"
+              })
+            }),
+            label: (0,external_wp_i18n_namespaceObject.__)('Slug'),
+            hideLabelFromVision: true,
+            value: forceEmptyField ? '' : postSlug,
+            autoComplete: "off",
+            spellCheck: "false",
+            type: "text",
+            className: "editor-post-url__input",
+            onChange: newValue => {
+              editPost({
+                slug: newValue
+              });
+              // When we delete the field the permalink gets
+              // reverted to the original value.
+              // The forceEmptyField logic allows the user to have
+              // the field temporarily empty while typing.
+              if (!newValue) {
+                if (!forceEmptyField) {
+                  setForceEmptyField(true);
+                }
+                return;
               }
-              return;
-            }
-            if (forceEmptyField) {
-              setForceEmptyField(false);
-            }
-          },
-          onBlur: event => {
-            editPost({
-              slug: (0,external_wp_url_namespaceObject.cleanForSlug)(event.target.value)
-            });
-            if (forceEmptyField) {
-              setForceEmptyField(false);
-            }
-          },
-          help: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ExternalLink, {
-            className: "editor-post-url__link",
-            href: postLink,
-            target: "_blank",
+              if (forceEmptyField) {
+                setForceEmptyField(false);
+              }
+            },
+            onBlur: event => {
+              editPost({
+                slug: (0,external_wp_url_namespaceObject.cleanForSlug)(event.target.value)
+              });
+              if (forceEmptyField) {
+                setForceEmptyField(false);
+              }
+            },
+            "aria-describedby": postUrlSlugDescriptionId
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("p", {
+            className: "editor-post-url__permalink",
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-              className: "editor-post-url__link-prefix",
-              children: permalinkPrefix
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-              className: "editor-post-url__link-slug",
-              children: postSlug
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-              className: "editor-post-url__link-suffix",
-              children: permalinkSuffix
+              className: "editor-post-url__permalink-visual-label",
+              children: (0,external_wp_i18n_namespaceObject.__)('Permalink:')
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ExternalLink, {
+              className: "editor-post-url__link",
+              href: postLink,
+              target: "_blank",
+              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+                className: "editor-post-url__link-prefix",
+                children: permalinkPrefix
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+                className: "editor-post-url__link-slug",
+                children: postSlug
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+                className: "editor-post-url__link-suffix",
+                children: permalinkSuffix
+              })]
             })]
-          })
+          })]
         }), !isEditable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
           className: "editor-post-url__link",
           href: postLink,
@@ -21967,6 +21980,25 @@ function usePostURLLabel() {
  */
 
 function PostURLPanel() {
+  const {
+    isFrontPage
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getCurrentPostId
+    } = select(store_store);
+    const {
+      getEditedEntityRecord,
+      canUser
+    } = select(external_wp_coreData_namespaceObject.store);
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEditedEntityRecord('root', 'site') : undefined;
+    const _id = getCurrentPostId();
+    return {
+      isFrontPage: siteSettings?.page_on_front === _id
+    };
+  }, []);
   // Use internal state instead of a ref to make sure that the component
   // re-renders when the popover's anchor updates.
   const [popoverAnchor, setPopoverAnchor] = (0,external_wp_element_namespaceObject.useState)(null);
@@ -21979,11 +22011,12 @@ function PostURLPanel() {
     offset: 36,
     shift: true
   }), [popoverAnchor]);
+  const label = isFrontPage ? (0,external_wp_i18n_namespaceObject.__)('Link') : (0,external_wp_i18n_namespaceObject.__)('Slug');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostURLCheck, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_panel_row, {
-      label: (0,external_wp_i18n_namespaceObject.__)('Link'),
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(post_panel_row, {
+      label: label,
       ref: setPopoverAnchor,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
+      children: [!isFrontPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
         popoverProps: popoverProps,
         className: "editor-post-url__panel-dropdown",
         contentClassName: "editor-post-url__panel-dialog",
@@ -22000,7 +22033,7 @@ function PostURLPanel() {
         }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostURL, {
           onClose: onClose
         })
-      })
+      }), isFrontPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FrontPageLink, {})]
     })
   });
 }
@@ -22009,27 +22042,10 @@ function PostURLToggle({
   onClick
 }) {
   const {
-    slug,
-    isFrontPage,
-    postLink
+    slug
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getCurrentPostId,
-      getCurrentPost
-    } = select(store_store);
-    const {
-      getEditedEntityRecord,
-      canUser
-    } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = canUser('read', {
-      kind: 'root',
-      name: 'site'
-    }) ? getEditedEntityRecord('root', 'site') : undefined;
-    const _id = getCurrentPostId();
     return {
-      slug: select(store_store).getEditedPostSlug(),
-      isFrontPage: siteSettings?.page_on_front === _id,
-      postLink: getCurrentPost()?.link
+      slug: select(store_store).getEditedPostSlug()
     };
   }, []);
   const decodedSlug = (0,external_wp_url_namespaceObject.safeDecodeURIComponent)(slug);
@@ -22042,10 +22058,27 @@ function PostURLToggle({
     ,
     "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)((0,external_wp_i18n_namespaceObject.__)('Change link: %s'), decodedSlug),
     onClick: onClick,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalTruncate, {
-      numberOfLines: 1,
-      children: isFrontPage ? postLink : `/${decodedSlug}`
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: decodedSlug
     })
+  });
+}
+function FrontPageLink() {
+  const {
+    postLink
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getCurrentPost
+    } = select(store_store);
+    return {
+      postLink: getCurrentPost()?.link
+    };
+  }, []);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
+    className: "editor-post-url__front-page-link",
+    href: postLink,
+    target: "_blank",
+    children: postLink
   });
 }
 
