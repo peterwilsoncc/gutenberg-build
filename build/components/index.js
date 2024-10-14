@@ -47145,7 +47145,7 @@ function modalize(modalElement) {
  */
 function elementShouldBeHidden(element) {
   const role = element.getAttribute('role');
-  return !(element.tagName === 'SCRIPT' || element.hasAttribute('aria-hidden') || element.hasAttribute('aria-live') || role && LIVE_REGION_ARIA_ROLES.has(role));
+  return !(element.tagName === 'SCRIPT' || element.hasAttribute('hidden') || element.hasAttribute('aria-hidden') || element.hasAttribute('aria-live') || role && LIVE_REGION_ARIA_ROLES.has(role));
 }
 
 /**
