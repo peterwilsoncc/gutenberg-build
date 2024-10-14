@@ -54487,13 +54487,51 @@ function ChildLayoutControlsPure({
     allowSizingOnChildren = false,
     isManualPlacement
   } = parentLayout;
-  const rootClientId = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    return select(store).getBlockRootClientId(clientId);
+  if (parentLayoutType !== 'grid') {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridTools, {
+    clientId: clientId,
+    style: style,
+    setAttributes: setAttributes,
+    allowSizingOnChildren: allowSizingOnChildren,
+    isManualPlacement: isManualPlacement,
+    parentLayout: parentLayout
+  });
+}
+function GridTools({
+  clientId,
+  style,
+  setAttributes,
+  allowSizingOnChildren,
+  isManualPlacement,
+  parentLayout
+}) {
+  const {
+    rootClientId,
+    isVisible
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockRootClientId,
+      getBlockEditingMode,
+      getTemplateLock
+    } = select(store);
+    const _rootClientId = getBlockRootClientId(clientId);
+    if (getTemplateLock(_rootClientId) || getBlockEditingMode(_rootClientId) !== 'default') {
+      return {
+        rootClientId: _rootClientId,
+        isVisible: false
+      };
+    }
+    return {
+      rootClientId: _rootClientId,
+      isVisible: true
+    };
   }, [clientId]);
 
   // Use useState() instead of useRef() so that GridItemResizer updates when ref is set.
   const [resizerBounds, setResizerBounds] = (0,external_wp_element_namespaceObject.useState)();
-  if (parentLayoutType !== 'grid') {
+  if (!isVisible) {
     return null;
   }
   function updateLayout(layout) {
@@ -55515,27 +55553,29 @@ function placeBlock(occupiedRects, gridColumnCount, blockColumnSpan, blockRowSpa
 function GridLayoutSync(props) {
   useGridLayoutSync(props);
 }
-function GridTools({
+function grid_visualizer_GridTools({
   clientId,
   layout
 }) {
-  const {
-    isSelected,
-    isDragging
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const isVisible = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       isBlockSelected,
-      isDraggingBlocks
+      isDraggingBlocks,
+      getTemplateLock,
+      getBlockEditingMode
     } = select(store);
-    return {
-      isSelected: isBlockSelected(clientId),
-      isDragging: isDraggingBlocks()
-    };
-  });
+
+    // These calls are purposely ordered from least expensive to most expensive.
+    // Hides the visualizer in cases where the user is not or cannot interact with it.
+    if (!isDraggingBlocks() && !isBlockSelected(clientId) || getTemplateLock(clientId) || getBlockEditingMode(clientId) !== 'default') {
+      return false;
+    }
+    return true;
+  }, [clientId]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridLayoutSync, {
       clientId: clientId
-    }), (isSelected || isDragging) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridVisualizer, {
+    }), isVisible && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridVisualizer, {
       clientId: clientId,
       parentLayout: layout
     })]
@@ -55548,7 +55588,7 @@ const addGridVisualizerToBlockEdit = (0,external_wp_compose_namespaceObject.crea
     }, "edit");
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridTools, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(grid_visualizer_GridTools, {
       clientId: props.clientId,
       layout: props.attributes.layout
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockEdit, {
