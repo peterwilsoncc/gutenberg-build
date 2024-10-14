@@ -53094,7 +53094,7 @@ function InserterMenu({
         onSelect: handleSetSelectedTab,
         onClose: onClose,
         selectedTab: selectedTab,
-        closeButtonLabel: (0,external_wp_i18n_namespaceObject.__)('Close block inserter'),
+        closeButtonLabel: (0,external_wp_i18n_namespaceObject.__)('Close Block Inserter'),
         tabs: [{
           name: 'blocks',
           title: (0,external_wp_i18n_namespaceObject.__)('Blocks'),

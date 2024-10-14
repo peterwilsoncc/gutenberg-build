@@ -3663,7 +3663,7 @@ function DocumentTools() {
       icon: library_plus
       /* translators: button label text should, if possible, be under 16
       	characters. */,
-      label: (0,external_wp_i18n_namespaceObject._x)('Toggle block inserter', 'Generic label for block inserter button'),
+      label: (0,external_wp_i18n_namespaceObject._x)('Block Inserter', 'Generic label for block inserter button'),
       size: "compact"
     }), isMediumViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
@@ -4439,7 +4439,7 @@ function InserterSidebar() {
         __next40pxDefaultSize: true,
         icon: library_close,
         onClick: closeInserter,
-        label: (0,external_wp_i18n_namespaceObject.__)('Close block inserter')
+        label: (0,external_wp_i18n_namespaceObject.__)('Close Block Inserter')
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "edit-widgets-layout__inserter-panel-content",
