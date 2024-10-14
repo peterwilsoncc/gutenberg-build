@@ -36220,11 +36220,11 @@ function ListItem({
   const labelId = `${idPrefix}-label`;
   const descriptionId = `${idPrefix}-description`;
   const [isHovered, setIsHovered] = (0,external_wp_element_namespaceObject.useState)(false);
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-  const handleMouseLeave = () => {
-    setIsHovered(false);
+  const handleHover = ({
+    type
+  }) => {
+    const isHover = type === 'mouseenter';
+    setIsHovered(isHover);
   };
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (isSelected) {
@@ -36256,6 +36256,35 @@ function ListItem({
   const renderedPrimaryField = primaryField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(primaryField.render, {
     item: item
   }) : null;
+  const usedActions = eligibleActions?.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+    spacing: 3,
+    className: "dataviews-view-list__item-actions",
+    children: [primaryAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrimaryActionGridCell, {
+      idPrefix: idPrefix,
+      primaryAction: primaryAction,
+      item: item
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      role: "gridcell",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenu, {
+        trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
+          id: generateDropdownTriggerCompositeId(idPrefix),
+          render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            size: "small",
+            icon: more_vertical,
+            label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
+            accessibleWhenDisabled: true,
+            disabled: !actions.length,
+            onKeyDown: onDropdownTriggerKeyDown
+          })
+        }),
+        placement: "bottom-end",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsDropdownMenuGroup, {
+          actions: eligibleActions,
+          item: item
+        })
+      })
+    })]
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Row, {
     ref: itemRef,
     render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {}),
@@ -36264,89 +36293,55 @@ function ListItem({
       'is-selected': isSelected,
       'is-hovered': isHovered
     }),
-    onMouseEnter: handleMouseEnter,
-    onMouseLeave: handleMouseLeave,
+    onMouseEnter: handleHover,
+    onMouseLeave: handleHover,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       className: "dataviews-view-list__item-wrapper",
-      alignment: "center",
       spacing: 0,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         role: "gridcell",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
-          render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {}),
-          role: "button",
           id: generateItemWrapperCompositeId(idPrefix),
           "aria-pressed": isSelected,
           "aria-labelledby": labelId,
           "aria-describedby": descriptionId,
           className: "dataviews-view-list__item",
-          onClick: () => onSelect(item),
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-            spacing: 3,
-            justify: "start",
-            alignment: "flex-start",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-              className: "dataviews-view-list__media-wrapper",
-              children: renderedMediaField
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-              spacing: 1,
-              className: "dataviews-view-list__field-wrapper",
-              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-                className: "dataviews-view-list__primary-field",
-                id: labelId,
-                children: renderedPrimaryField
-              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-                className: "dataviews-view-list__fields",
-                id: descriptionId,
-                children: visibleFields.map(field => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-                  className: "dataviews-view-list__field",
-                  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
-                    as: "span",
-                    className: "dataviews-view-list__field-label",
-                    children: field.label
-                  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-                    className: "dataviews-view-list__field-value",
-                    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.render, {
-                      item: item
-                    })
-                  })]
-                }, field.id))
-              })]
-            })]
-          })
+          onClick: () => onSelect(item)
         })
-      }), eligibleActions?.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         spacing: 3,
-        justify: "flex-end",
-        className: "dataviews-view-list__item-actions",
-        style: {
-          flexShrink: '0',
-          width: 'auto'
-        },
-        children: [primaryAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrimaryActionGridCell, {
-          idPrefix: idPrefix,
-          primaryAction: primaryAction,
-          item: item
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-          role: "gridcell",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenu, {
-            trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
-              id: generateDropdownTriggerCompositeId(idPrefix),
-              render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-                size: "small",
-                icon: more_vertical,
-                label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
-                accessibleWhenDisabled: true,
-                disabled: !actions.length,
-                onKeyDown: onDropdownTriggerKeyDown
-              })
-            }),
-            placement: "bottom-end",
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsDropdownMenuGroup, {
-              actions: eligibleActions,
-              item: item
-            })
-          })
+        justify: "start",
+        alignment: "flex-start",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          className: "dataviews-view-list__media-wrapper",
+          children: renderedMediaField
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+          spacing: 1,
+          className: "dataviews-view-list__field-wrapper",
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+            spacing: 0,
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+              className: "dataviews-view-list__primary-field",
+              id: labelId,
+              children: renderedPrimaryField
+            }), usedActions]
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+            className: "dataviews-view-list__fields",
+            id: descriptionId,
+            children: visibleFields.map(field => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+              className: "dataviews-view-list__field",
+              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
+                as: "span",
+                className: "dataviews-view-list__field-label",
+                children: field.label
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+                className: "dataviews-view-list__field-value",
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.render, {
+                  item: item
+                })
+              })]
+            }, field.id))
+          })]
         })]
       })]
     })
