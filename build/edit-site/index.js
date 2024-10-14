@@ -7701,8 +7701,6 @@ const external_wp_plugins_namespaceObject = window["wp"]["plugins"];
 const external_wp_router_namespaceObject = window["wp"]["router"];
 ;// CONCATENATED MODULE: ./node_modules/clsx/dist/clsx.mjs
 function clsx_r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=clsx_r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=clsx_r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
-;// CONCATENATED MODULE: external ["wp","keyboardShortcuts"]
-const external_wp_keyboardShortcuts_namespaceObject = window["wp"]["keyboardShortcuts"];
 ;// CONCATENATED MODULE: external ["wp","commands"]
 const external_wp_commands_namespaceObject = window["wp"]["commands"];
 ;// CONCATENATED MODULE: external ["wp","coreCommands"]
@@ -8427,6 +8425,8 @@ function ResizableFrame({
 }
 /* harmony default export */ const resizable_frame = (ResizableFrame);
 
+;// CONCATENATED MODULE: external ["wp","keyboardShortcuts"]
+const external_wp_keyboardShortcuts_namespaceObject = window["wp"]["keyboardShortcuts"];
 ;// CONCATENATED MODULE: ./packages/edit-site/build-module/components/keyboard-shortcuts/register.js
 /**
  * WordPress dependencies
@@ -13479,7 +13479,6 @@ function useSyncCanvasModeWithURL() {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -13517,26 +13516,16 @@ function Layout({
   const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   const toggleRef = (0,external_wp_element_namespaceObject.useRef)();
   const {
-    canvasMode,
-    previousShortcut,
-    nextShortcut
+    canvasMode
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getAllShortcutKeyCombinations
-    } = select(external_wp_keyboardShortcuts_namespaceObject.store);
     const {
       getCanvasMode
     } = unlock(select(store));
     return {
-      canvasMode: getCanvasMode(),
-      previousShortcut: getAllShortcutKeyCombinations('core/editor/previous-region'),
-      nextShortcut: getAllShortcutKeyCombinations('core/editor/next-region')
+      canvasMode: getCanvasMode()
     };
   }, []);
-  const navigateRegionsProps = (0,external_wp_components_namespaceObject.__unstableUseNavigateRegions)({
-    previous: previousShortcut,
-    next: nextShortcut
-  });
+  const navigateRegionsProps = (0,external_wp_components_namespaceObject.__unstableUseNavigateRegions)();
   const disableMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
   const [canvasResizer, canvasSize] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
   const isEditorLoading = useIsSiteEditorLoading();
@@ -28543,7 +28532,6 @@ function EditSiteEditor({
         'show-icon-labels': showIconLabels
       }),
       styles: styles,
-      enableRegionNavigation: false,
       customSaveButton: _isPreviewingTheme && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SaveButton, {
         size: "compact"
       }),
