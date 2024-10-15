@@ -4449,7 +4449,9 @@ const savePost = (options = {}) => async ({
   }
   if (!error) {
     try {
-      await (0,external_wp_hooks_namespaceObject.doActionAsync)('editor.savePost', options);
+      await (0,external_wp_hooks_namespaceObject.doActionAsync)('editor.savePost', {
+        id: previousRecord.id
+      }, options);
     } catch (err) {
       error = err;
     }
