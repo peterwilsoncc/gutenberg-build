@@ -46089,20 +46089,19 @@ function ZoomOutSeparator({
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableAnimatePresence, {
     children: isVisible && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
-      as: "button",
-      layout: !isReducedMotion,
       initial: {
         height: 0
       },
       animate: {
-        height: '120px'
+        // Use a height equal to that of the zoom out frame size.
+        height: 'calc(1 * var(--wp-block-editor-iframe-zoom-out-frame-size) / var(--wp-block-editor-iframe-zoom-out-scale)'
       },
       exit: {
         height: 0
       },
       transition: {
         type: 'tween',
-        duration: 0.2,
+        duration: isReducedMotion ? 0 : 0.2,
         ease: [0.6, 0, 0.4, 1]
       },
       className: dist_clsx('block-editor-block-list__zoom-out-separator', {
@@ -46119,11 +46118,15 @@ function ZoomOutSeparator({
           opacity: 1
         },
         exit: {
-          opacity: 0
+          opacity: 0,
+          transition: {
+            delay: -0.125
+          }
         },
         transition: {
-          type: 'tween',
-          duration: 0.1
+          ease: 'linear',
+          duration: 0.1,
+          delay: 0.125
         },
         children: (0,external_wp_i18n_namespaceObject.__)('Drop pattern.')
       })
