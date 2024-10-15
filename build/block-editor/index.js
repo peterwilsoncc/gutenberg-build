@@ -32296,9 +32296,12 @@ function getVisibleElementBounds(element) {
 
 
 
+
 /**
  * Internal dependencies
  */
+
+
 
 
 
@@ -32339,21 +32342,61 @@ function BlockPopover({
       observer.disconnect();
     };
   }, [selectedElement]);
+  const {
+    isZoomOut,
+    parentSectionBlock,
+    isSectionSelected
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _getParentSectionBloc;
+    const {
+      isZoomOut: isZoomOutSelector,
+      getSectionRootClientId,
+      getParentSectionBlock,
+      getBlockOrder
+    } = unlock(select(store));
+    return {
+      isZoomOut: isZoomOutSelector(),
+      parentSectionBlock: (_getParentSectionBloc = getParentSectionBlock(clientId)) !== null && _getParentSectionBloc !== void 0 ? _getParentSectionBloc : clientId,
+      isSectionSelected: getBlockOrder(getSectionRootClientId()).includes(clientId)
+    };
+  }, [clientId]);
+
+  // This element is used to position the zoom out view vertical toolbar
+  // correctly, relative to the selected section.
+  const parentSectionElement = useBlockElement(parentSectionBlock);
   const popoverAnchor = (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (
     // popoverDimensionsRecomputeCounter is by definition always equal or greater
     // than 0. This check is only there to satisfy the correctness of the
     // exhaustive-deps rule for the `useMemo` hook.
-    popoverDimensionsRecomputeCounter < 0 || !selectedElement || bottomClientId && !lastSelectedElement) {
+    popoverDimensionsRecomputeCounter < 0 || isZoomOut && !parentSectionElement || !selectedElement || bottomClientId && !lastSelectedElement) {
       return undefined;
     }
     return {
       getBoundingClientRect() {
+        // The zoom out view has a vertical block toolbar that should always
+        // be on the edge of the canvas, aligned to the top of the currently
+        // selected section. This condition changes the anchor of the toolbar
+        // to the section instead of the block to handle blocks that are
+        // not full width and nested blocks to keep section height.
+        if (isZoomOut && isSectionSelected) {
+          // Compute the height based on the parent section of the
+          // selected block, because the selected block may be
+          // shorter than the section.
+          const canvasElementRect = getVisibleElementBounds(__unstableContentRef.current);
+          const parentSectionElementRect = getVisibleElementBounds(parentSectionElement);
+          const anchorHeight = parentSectionElementRect.bottom - parentSectionElementRect.top;
+
+          // Always use the width of the section root element to make sure
+          // the toolbar is always on the edge of the canvas.
+          const anchorWidth = canvasElementRect.width;
+          return new window.DOMRectReadOnly(canvasElementRect.left, parentSectionElementRect.top, anchorWidth, anchorHeight);
+        }
         return lastSelectedElement ? rectUnion(getVisibleElementBounds(selectedElement), getVisibleElementBounds(lastSelectedElement)) : getVisibleElementBounds(selectedElement);
       },
       contextElement: selectedElement
     };
-  }, [bottomClientId, lastSelectedElement, selectedElement, popoverDimensionsRecomputeCounter]);
+  }, [popoverDimensionsRecomputeCounter, isZoomOut, parentSectionElement, selectedElement, bottomClientId, lastSelectedElement, isSectionSelected, __unstableContentRef]);
   if (!selectedElement || bottomClientId && !lastSelectedElement) {
     return null;
   }
@@ -62186,7 +62229,8 @@ function ZoomOutPopover({
     flip: false,
     shift: true
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_popover, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrivateBlockPopover, {
+    __unstableContentRef: __unstableContentRef,
     clientId: capturingClientId || clientId,
     bottomClientId: lastClientId,
     className: dist_clsx('zoom-out-toolbar-popover', {
@@ -62330,6 +62374,7 @@ function ZoomOutModeInserters() {
  */
 
 
+
 /**
  * Source of truth for which block tools are showing in the block editor.
  *
@@ -62344,8 +62389,10 @@ function useShowBlockTools() {
       getBlockMode,
       getSettings,
       __unstableGetEditorMode,
-      isTyping
-    } = select(store);
+      isTyping,
+      getBlockOrder,
+      getSectionRootClientId
+    } = unlock(select(store));
     const clientId = getSelectedBlockClientId() || getFirstMultiSelectedBlockClientId();
     const block = getBlock(clientId);
     const editorMode = __unstableGetEditorMode();
@@ -62353,7 +62400,8 @@ function useShowBlockTools() {
     const isEmptyDefaultBlock = hasSelectedBlock && (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(block) && getBlockMode(clientId) !== 'html';
     const _showEmptyBlockSideInserter = clientId && !isTyping() && editorMode === 'edit' && isEmptyDefaultBlock;
     const isZoomOut = editorMode === 'zoom-out';
-    const _showZoomOutToolbar = isZoomOut && block?.attributes?.align === 'full' && !_showEmptyBlockSideInserter;
+    const isSectionSelected = getBlockOrder(getSectionRootClientId()).includes(clientId);
+    const _showZoomOutToolbar = clientId && isZoomOut && !_showEmptyBlockSideInserter && isSectionSelected;
     const _showBlockToolbarPopover = !_showZoomOutToolbar && !getSettings().hasFixedToolbar && !_showEmptyBlockSideInserter && hasSelectedBlock && !isEmptyDefaultBlock;
     return {
       showEmptyBlockSideInserter: _showEmptyBlockSideInserter,
