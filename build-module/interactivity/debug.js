@@ -213,9 +213,8 @@ const afterNextFrame = callback => {
  *
  * @return Promise
  */
-const splitTask = () => {
+const splitTask = typeof window.scheduler?.yield === 'function' ? window.scheduler.yield.bind(window.scheduler) : () => {
   return new Promise(resolve => {
-    // TODO: Use scheduler.yield() when available.
     setTimeout(resolve, 0);
   });
 };
