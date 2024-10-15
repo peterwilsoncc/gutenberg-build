@@ -17005,6 +17005,7 @@ const StylesPreviewTypography = ({
  * Internal dependencies
  */
 
+const use_theme_style_variations_by_property_EMPTY_ARRAY = [];
 const {
   GlobalStylesContext: use_theme_style_variations_by_property_GlobalStylesContext,
   areGlobalStyleConfigsEqual
@@ -17069,7 +17070,7 @@ function useCurrentMergeThemeStyleVariationsWithUserConfig(properties = []) {
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const _variationsFromTheme = select(external_wp_coreData_namespaceObject.store).__experimentalGetCurrentThemeGlobalStylesVariations();
     return {
-      variationsFromTheme: _variationsFromTheme || []
+      variationsFromTheme: _variationsFromTheme || use_theme_style_variations_by_property_EMPTY_ARRAY
     };
   }, []);
   const {
@@ -26064,11 +26065,7 @@ function StyleVariationsContainer({
   const {
     user
   } = (0,external_wp_element_namespaceObject.useContext)(style_variations_container_GlobalStylesContext);
-  const [currentUserStyles, setCurrentUserStyles] = (0,external_wp_element_namespaceObject.useState)(user);
-  const userStyles = currentUserStyles?.styles;
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    setCurrentUserStyles(user);
-  }, [user]);
+  const userStyles = user?.styles;
   const variations = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return select(external_wp_coreData_namespaceObject.store).__experimentalGetCurrentThemeGlobalStylesVariations();
   }, []);
