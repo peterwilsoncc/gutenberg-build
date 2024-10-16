@@ -12570,10 +12570,11 @@ function getTemplateLock(state, rootClientId) {
  * @param {string|Object} blockNameOrType The block type object, e.g., the response
  *                                        from the block directory; or a string name of
  *                                        an installed block type, e.g.' core/paragraph'.
+ * @param {Set}           checkedBlocks   Set of block names that have already been checked.
  *
  * @return {boolean} Whether the given block type is allowed to be inserted.
  */
-const isBlockVisibleInTheInserter = (state, blockNameOrType) => {
+const isBlockVisibleInTheInserter = (state, blockNameOrType, checkedBlocks = new Set()) => {
   let blockType;
   let blockName;
   if (blockNameOrType && 'object' === typeof blockNameOrType) {
@@ -12593,10 +12594,14 @@ const isBlockVisibleInTheInserter = (state, blockNameOrType) => {
   if (!isBlockAllowedInEditor) {
     return false;
   }
+  if (checkedBlocks.has(blockName)) {
+    return false;
+  }
+  checkedBlocks.add(blockName);
 
   // If parent blocks are not visible, child blocks should be hidden too.
   if (!!blockType.parent?.length) {
-    return blockType.parent.some(name => isBlockVisibleInTheInserter(state, name) ||
+    return blockType.parent.some(name => blockName !== name && isBlockVisibleInTheInserter(state, name, checkedBlocks) ||
     // Exception for blocks with post-content parent,
     // the root level is often consider as "core/post-content".
     // This exception should only apply to the post editor ideally though.

@@ -7020,6 +7020,10 @@ function registerBlockType(blockNameOrMetadata, settings) {
      false ? 0 : void 0;
     return;
   }
+  if (1 === settings?.parent?.length && name === settings.parent[0]) {
+     false ? 0 : void 0;
+    return;
+  }
   if (!/^[a-z][a-z0-9-]*\/[a-z][a-z0-9-]*$/.test(name)) {
      false ? 0 : void 0;
     return;
