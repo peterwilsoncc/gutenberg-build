@@ -47628,7 +47628,7 @@ function QueryInspectorControls(props) {
     format
   } = query;
   const allowedControls = useAllowedControls(attributes);
-  const [showSticky, setShowSticky] = (0,external_wp_element_namespaceObject.useState)(postType === 'post');
+  const showSticky = postType === 'post';
   const {
     postTypesTaxonomiesMap,
     postTypesSelectOptions,
@@ -47636,9 +47636,6 @@ function QueryInspectorControls(props) {
   } = usePostTypes();
   const taxonomies = useTaxonomies(postType);
   const isPostTypeHierarchical = useIsPostTypeHierarchical(postType);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    setShowSticky(postType === 'post');
-  }, [postType]);
   const onPostTypeChange = newValue => {
     const updateQuery = {
       postType: newValue
