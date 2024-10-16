@@ -44048,6 +44048,116 @@ const itemSizes = {
   large: /*#__PURE__*/emotion_react_browser_esm_css("padding:", paddingYLarge, " ", config_values.controlPaddingXLarge, "px;" + ( true ? "" : 0),  true ? "" : 0)
 };
 
+;// ./packages/components/build-module/item-group/context.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+const ItemGroupContext = (0,external_wp_element_namespaceObject.createContext)({
+  size: 'medium'
+});
+const useItemGroupContext = () => (0,external_wp_element_namespaceObject.useContext)(ItemGroupContext);
+
+;// ./packages/components/build-module/item-group/item/hook.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+function useItem(props) {
+  const {
+    as: asProp,
+    className,
+    onClick,
+    role = 'listitem',
+    size: sizeProp,
+    ...otherProps
+  } = useContextSystem(props, 'Item');
+  const {
+    spacedAround,
+    size: contextSize
+  } = useItemGroupContext();
+  const size = sizeProp || contextSize;
+  const as = asProp || (typeof onClick !== 'undefined' ? 'button' : 'div');
+  const cx = useCx();
+  const classes = (0,external_wp_element_namespaceObject.useMemo)(() => cx((as === 'button' || as === 'a') && unstyledButton(as), itemSizes[size] || itemSizes.medium, item, spacedAround && styles_spacedAround, className), [as, className, cx, size, spacedAround]);
+  const wrapperClassName = cx(itemWrapper);
+  return {
+    as,
+    className: classes,
+    onClick,
+    wrapperClassName,
+    role,
+    ...otherProps
+  };
+}
+
+;// ./packages/components/build-module/item-group/item/component.js
+/**
+ * External dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+function UnconnectedItem(props, forwardedRef) {
+  const {
+    role,
+    wrapperClassName,
+    ...otherProps
+  } = useItem(props);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    role: role,
+    className: wrapperClassName,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(component, {
+      ...otherProps,
+      ref: forwardedRef
+    })
+  });
+}
+
+/**
+ * `Item` is used in combination with `ItemGroup` to display a list of items
+ * grouped and styled together.
+ *
+ * ```jsx
+ * import {
+ *   __experimentalItemGroup as ItemGroup,
+ *   __experimentalItem as Item,
+ * } from '@wordpress/components';
+ *
+ * function Example() {
+ *   return (
+ *     <ItemGroup>
+ *       <Item>Code</Item>
+ *       <Item>is</Item>
+ *       <Item>Poetry</Item>
+ *     </ItemGroup>
+ *   );
+ * }
+ * ```
+ */
+const component_Item = contextConnect(UnconnectedItem, 'Item');
+/* harmony default export */ const item_component = (component_Item);
+
 ;// ./packages/components/build-module/item-group/item-group/hook.js
 /**
  * Internal dependencies
@@ -44079,21 +44189,6 @@ function useItemGroup(props) {
     ...otherProps
   };
 }
-
-;// ./packages/components/build-module/item-group/context.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-const ItemGroupContext = (0,external_wp_element_namespaceObject.createContext)({
-  size: 'medium'
-});
-const useItemGroupContext = () => (0,external_wp_element_namespaceObject.useContext)(ItemGroupContext);
 
 ;// ./packages/components/build-module/item-group/item-group/component.js
 /**
@@ -45877,8 +45972,6 @@ function palette_edit_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have
  * External dependencies
  */
 
-
-
 /**
  * Internal dependencies
  */
@@ -45891,22 +45984,11 @@ function palette_edit_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have
 
 
 const IndicatorStyled = /*#__PURE__*/emotion_styled_base_browser_esm(color_indicator,  true ? {
-  target: "e1lpqc909"
+  target: "e1lpqc908"
 } : 0)("&&{flex-shrink:0;width:", space(6), ";height:", space(6), ";}" + ( true ? "" : 0));
 const NameInputControl = /*#__PURE__*/emotion_styled_base_browser_esm(input_control,  true ? {
-  target: "e1lpqc908"
-} : 0)(Container, "{background:", COLORS.gray[100], ";border-radius:", config_values.radiusXSmall, ";", Input, Input, Input, Input, "{height:", space(8), ";}", BackdropUI, BackdropUI, BackdropUI, "{border-color:transparent;box-shadow:none;}}" + ( true ? "" : 0));
-const buttonStyleReset = ({
-  as
-}) => {
-  if (as === 'button') {
-    return /*#__PURE__*/emotion_react_browser_esm_css("display:flex;align-items:center;width:100%;appearance:none;background:transparent;border:none;border-radius:0;padding:0;cursor:pointer;&:hover{color:", COLORS.theme.accent, ";}" + ( true ? "" : 0),  true ? "" : 0);
-  }
-  return null;
-};
-const PaletteItem = /*#__PURE__*/emotion_styled_base_browser_esm(component,  true ? {
   target: "e1lpqc907"
-} : 0)(buttonStyleReset, " padding-block:3px;padding-inline-start:", space(3), ";border:1px solid ", config_values.surfaceBorderColor, ";border-bottom-color:transparent;font-size:", font('default.fontSize'), ";&:focus-visible{border-color:transparent;box-shadow:0 0 0 var( --wp-admin-border-width-focus ) ", COLORS.theme.accent, ";outline:2px solid transparent;outline-offset:0;}border-top-left-radius:", config_values.radiusSmall, ";border-top-right-radius:", config_values.radiusSmall, ";&+&{border-top-left-radius:0;border-top-right-radius:0;}&:last-child{border-bottom-left-radius:", config_values.radiusSmall, ";border-bottom-right-radius:", config_values.radiusSmall, ";border-bottom-color:", config_values.surfaceBorderColor, ";}&.is-selected+&{border-top-color:transparent;}&.is-selected{border-color:", COLORS.theme.accent, ";}" + ( true ? "" : 0));
+} : 0)(Container, "{background:", COLORS.gray[100], ";border-radius:", config_values.radiusXSmall, ";", Input, Input, Input, Input, "{height:", space(8), ";}", BackdropUI, BackdropUI, BackdropUI, "{border-color:transparent;box-shadow:none;}}" + ( true ? "" : 0));
 const NameContainer = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "e1lpqc906"
 } : 0)("line-height:", space(8), ";margin-left:", space(2), ";margin-right:", space(2), ";white-space:nowrap;overflow:hidden;" + ( true ? "" : 0));
@@ -46097,9 +46179,9 @@ function palette_edit_Option({
     // Use the custom palette color item as the popover anchor.
     anchor: popoverAnchor
   }), [popoverAnchor, receivedPopoverProps]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(PaletteItem, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(item_component, {
     ref: setPopoverAnchor,
-    as: "div",
+    size: "small",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(h_stack_component, {
       justify: "flex-start",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
@@ -46166,6 +46248,8 @@ function PaletteEditListView({
     spacing: 3,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(item_group_component, {
       isRounded: true,
+      isBordered: true,
+      isSeparated: true,
       children: elements.map((element, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(palette_edit_Option, {
         isGradient: isGradient,
         canOnlyChangeValues: canOnlyChangeValues,
@@ -58399,101 +58483,6 @@ function UnforwardedIconButton({
   });
 }
 /* harmony default export */ const deprecated = ((0,external_wp_element_namespaceObject.forwardRef)(UnforwardedIconButton));
-
-;// ./packages/components/build-module/item-group/item/hook.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-function useItem(props) {
-  const {
-    as: asProp,
-    className,
-    onClick,
-    role = 'listitem',
-    size: sizeProp,
-    ...otherProps
-  } = useContextSystem(props, 'Item');
-  const {
-    spacedAround,
-    size: contextSize
-  } = useItemGroupContext();
-  const size = sizeProp || contextSize;
-  const as = asProp || (typeof onClick !== 'undefined' ? 'button' : 'div');
-  const cx = useCx();
-  const classes = (0,external_wp_element_namespaceObject.useMemo)(() => cx((as === 'button' || as === 'a') && unstyledButton(as), itemSizes[size] || itemSizes.medium, item, spacedAround && styles_spacedAround, className), [as, className, cx, size, spacedAround]);
-  const wrapperClassName = cx(itemWrapper);
-  return {
-    as,
-    className: classes,
-    onClick,
-    wrapperClassName,
-    role,
-    ...otherProps
-  };
-}
-
-;// ./packages/components/build-module/item-group/item/component.js
-/**
- * External dependencies
- */
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-function UnconnectedItem(props, forwardedRef) {
-  const {
-    role,
-    wrapperClassName,
-    ...otherProps
-  } = useItem(props);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    role: role,
-    className: wrapperClassName,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(component, {
-      ...otherProps,
-      ref: forwardedRef
-    })
-  });
-}
-
-/**
- * `Item` is used in combination with `ItemGroup` to display a list of items
- * grouped and styled together.
- *
- * ```jsx
- * import {
- *   __experimentalItemGroup as ItemGroup,
- *   __experimentalItem as Item,
- * } from '@wordpress/components';
- *
- * function Example() {
- *   return (
- *     <ItemGroup>
- *       <Item>Code</Item>
- *       <Item>is</Item>
- *       <Item>Poetry</Item>
- *     </ItemGroup>
- *   );
- * }
- * ```
- */
-const component_Item = contextConnect(UnconnectedItem, 'Item');
-/* harmony default export */ const item_component = (component_Item);
 
 ;// ./packages/components/build-module/keyboard-shortcuts/index.js
 /**
