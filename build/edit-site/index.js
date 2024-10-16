@@ -42772,7 +42772,7 @@ function PageTemplates() {
 
 function SidebarButton(props) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-    __next40pxDefaultSize: true,
+    size: "compact",
     ...props,
     className: dist_clsx('edit-site-sidebar-button', props.className)
   });
