@@ -24728,7 +24728,7 @@ const ExperimentalEditorProvider = with_registry_provider(({
     selection,
     isReady,
     mode,
-    postTypes
+    postTypeEntities
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEditorSettings,
@@ -24737,32 +24737,30 @@ const ExperimentalEditorProvider = with_registry_provider(({
       __unstableIsEditorReady
     } = select(store_store);
     const {
-      getPostTypes
+      getEntitiesConfig
     } = select(external_wp_coreData_namespaceObject.store);
     return {
       editorSettings: getEditorSettings(),
       isReady: __unstableIsEditorReady(),
       mode: getRenderingMode(),
       selection: getEditorSelection(),
-      postTypes: getPostTypes({
-        per_page: -1
-      })
+      postTypeEntities: post.type === 'wp_template' ? getEntitiesConfig('postType') : null
     };
-  }, []);
+  }, [post.type]);
   const shouldRenderTemplate = !!template && mode !== 'post-only';
   const rootLevelPost = shouldRenderTemplate ? template : post;
   const defaultBlockContext = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const postContext = {};
-    // If it is a template, try to inherit the post type from the slug.
+    // If it is a template, try to inherit the post type from the name.
     if (post.type === 'wp_template') {
       if (post.slug === 'page') {
         postContext.postType = 'page';
       } else if (post.slug === 'single') {
         postContext.postType = 'post';
       } else if (post.slug.split('-')[0] === 'single') {
-        // If the slug is single-{postType}, infer the post type from the slug.
-        const postTypesSlugs = postTypes?.map(entity => entity.slug) || [];
-        const match = post.slug.match(`^single-(${postTypesSlugs.join('|')})(?:-.+)?$`);
+        // If the slug is single-{postType}, infer the post type from the name.
+        const postTypeNames = postTypeEntities?.map(entity => entity.name) || [];
+        const match = post.slug.match(`^single-(${postTypeNames.join('|')})(?:-.+)?$`);
         if (match) {
           postContext.postType = match[1];
         }
@@ -24775,7 +24773,7 @@ const ExperimentalEditorProvider = with_registry_provider(({
       ...postContext,
       templateSlug: rootLevelPost.type === 'wp_template' ? rootLevelPost.slug : undefined
     };
-  }, [shouldRenderTemplate, post.id, post.type, post.slug, rootLevelPost.type, rootLevelPost.slug, postTypes]);
+  }, [shouldRenderTemplate, post.id, post.type, post.slug, rootLevelPost.type, rootLevelPost.slug, postTypeEntities]);
   const {
     id,
     type
