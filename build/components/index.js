@@ -65531,6 +65531,7 @@ var TabPanel = forwardRef2(function TabPanel2(props) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -65618,7 +65619,8 @@ const UnforwardedTabPanel = ({
     },
     orientation,
     selectOnMove,
-    defaultSelectedId: prependInstanceId(initialTabName)
+    defaultSelectedId: prependInstanceId(initialTabName),
+    rtl: (0,external_wp_i18n_namespaceObject.isRTL)()
   });
   const selectedTabName = extractTabName(useStoreState(tabStore, 'selectedId'));
   const setTabStoreSelectedId = (0,external_wp_element_namespaceObject.useCallback)(tabName => {
@@ -71525,6 +71527,7 @@ const tabpanel_TabPanel = (0,external_wp_element_namespaceObject.forwardRef)(fun
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -71551,7 +71554,8 @@ function Tabs({
       const strippedDownId = typeof selectedId === 'string' ? selectedId.replace(`${instanceId}-`, '') : selectedId;
       onSelect?.(strippedDownId);
     },
-    selectedId: selectedTabId && `${instanceId}-${selectedTabId}`
+    selectedId: selectedTabId && `${instanceId}-${selectedTabId}`,
+    rtl: (0,external_wp_i18n_namespaceObject.isRTL)()
   });
   const isControlled = selectedTabId !== undefined;
   const {
