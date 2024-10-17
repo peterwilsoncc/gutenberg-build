@@ -71454,8 +71454,16 @@ const tablist_TabList = (0,external_wp_element_namespaceObject.forwardRef)(funct
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledTabList, {
     ref: refs,
     store: store,
+    render: props => {
+      var _props$tabIndex;
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        ...props,
+        // Fallback to -1 to prevent browsers from making the tablist
+        // tabbable when it is a scrolling container.
+        tabIndex: (_props$tabIndex = props.tabIndex) !== null && _props$tabIndex !== void 0 ? _props$tabIndex : -1
+      });
+    },
     onBlur: onBlur,
-    tabIndex: -1,
     "data-select-on-move": selectOnMove ? 'true' : 'false',
     ...otherProps,
     className: dist_clsx(overflow.first && 'is-overflowing-first', overflow.last && 'is-overflowing-last', otherProps.className),
