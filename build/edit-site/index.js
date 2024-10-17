@@ -8032,7 +8032,8 @@ const SiteHub = (0,external_wp_element_namespaceObject.memo)((0,external_wp_elem
           label: (0,external_wp_i18n_namespaceObject.__)('Go to the Dashboard'),
           className: "edit-site-layout__view-mode-toggle",
           style: {
-            transform: 'scale(0.5)',
+            transform: 'scale(0.5333) translateX(-4px)',
+            // Offset to position the icon 12px from viewport edge
             borderRadius: 4
           },
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(site_icon, {
@@ -8058,7 +8059,7 @@ const SiteHub = (0,external_wp_element_namespaceObject.memo)((0,external_wp_elem
           expanded: false,
           className: "edit-site-site-hub__actions",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            __next40pxDefaultSize: true,
+            size: "compact",
             className: "edit-site-site-hub_toggle-command-center",
             icon: library_search,
             onClick: () => openCommandCenter(),
