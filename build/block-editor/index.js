@@ -48375,7 +48375,7 @@ function Iframe({
     scripts = ''
   } = resolvedAssets;
   const [iframeDocument, setIframeDocument] = (0,external_wp_element_namespaceObject.useState)();
-  const initialContainerWidth = (0,external_wp_element_namespaceObject.useRef)();
+  const initialContainerWidth = (0,external_wp_element_namespaceObject.useRef)(0);
   const [bodyClasses, setBodyClasses] = (0,external_wp_element_namespaceObject.useState)([]);
   const clearerRef = useBlockSelectionClearer();
   const [before, writingFlowRef, after] = useWritingFlow();
@@ -48462,6 +48462,7 @@ function Iframe({
       initialContainerWidth.current = containerWidth;
     }
   }, [containerWidth, isZoomedOut]);
+  const scaleContainerWidth = Math.max(initialContainerWidth.current, containerWidth);
   const disabledRef = (0,external_wp_compose_namespaceObject.useDisabled)({
     isDisabled: !readonly
   });
@@ -48507,13 +48508,6 @@ function Iframe({
   }, [html]);
   (0,external_wp_element_namespaceObject.useEffect)(() => cleanup, [cleanup]);
   const zoomOutAnimationClassnameRef = (0,external_wp_element_namespaceObject.useRef)(null);
-  const handleZoomOutAnimationClassname = () => {
-    clearTimeout(zoomOutAnimationClassnameRef.current);
-    iframeDocument.documentElement.classList.add('zoom-out-animation');
-    zoomOutAnimationClassnameRef.current = setTimeout(() => {
-      iframeDocument.documentElement.classList.remove('zoom-out-animation');
-    }, 400); // 400ms should match the animation speed used in components/iframe/content.scss
-  };
 
   // Toggle zoom out CSS Classes only when zoom out mode changes. We could add these into the useEffect
   // that controls settings the CSS variables, but then we would need to do more work to ensure we're
@@ -48523,6 +48517,13 @@ function Iframe({
     if (!iframeDocument || !isZoomedOut) {
       return;
     }
+    const handleZoomOutAnimationClassname = () => {
+      clearTimeout(zoomOutAnimationClassnameRef.current);
+      iframeDocument.documentElement.classList.add('zoom-out-animation');
+      zoomOutAnimationClassnameRef.current = setTimeout(() => {
+        iframeDocument.documentElement.classList.remove('zoom-out-animation');
+      }, 400); // 400ms should match the animation speed used in components/iframe/content.scss
+    };
     handleZoomOutAnimationClassname();
     iframeDocument.documentElement.classList.add('is-zoomed-out');
     return () => {
@@ -48545,29 +48546,23 @@ function Iframe({
     // This scaling calculation has to happen within the JS because CSS calc() can
     // only divide and multiply by a unitless value. I.e. calc( 100px / 2 ) is valid
     // but calc( 100px / 2px ) is not.
-    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scale', scale === 'default' ? (Math.min(containerWidth, maxWidth) - parseInt(frameSize) * 2) / Math.max(initialContainerWidth.current, containerWidth) : scale);
+    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scale', scale === 'default' ? (Math.min(containerWidth, maxWidth) - parseInt(frameSize) * 2) / scaleContainerWidth : scale);
 
     // frameSize has to be a px value for the scaling and frame size to be computed correctly.
     iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-frame-size', typeof frameSize === 'number' ? `${frameSize}px` : frameSize);
     iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-content-height', `${contentHeight}px`);
     iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-inner-height', `${iframeWindowInnerHeight}px`);
     iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-container-width', `${containerWidth}px`);
-    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-outer-container-width', `${Math.max(initialContainerWidth.current, containerWidth)}px`);
-
-    // iframeDocument.documentElement.style.setProperty(
-    // 	'--wp-block-editor-iframe-zoom-out-outer-container-width',
-    // 	`${ Math.max( initialContainerWidth.current, containerWidth ) }px`
-    // );
-
+    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scale-container-width', `${scaleContainerWidth}px`);
     return () => {
       iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-scale');
       iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-frame-size');
       iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-content-height');
       iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-inner-height');
       iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-container-width');
-      iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-outer-container-width');
+      iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-scale-container-width');
     };
-  }, [scale, frameSize, iframeDocument, iframeWindowInnerHeight, contentHeight, containerWidth, windowInnerWidth, isZoomedOut]);
+  }, [scale, frameSize, iframeDocument, iframeWindowInnerHeight, contentHeight, containerWidth, windowInnerWidth, isZoomedOut, scaleContainerWidth]);
 
   // Make sure to not render the before and after focusable div elements in view
   // mode. They're only needed to capture focus in edit mode.
@@ -48634,7 +48629,7 @@ function Iframe({
     children: [containerResizeListener, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: dist_clsx('block-editor-iframe__scale-container', isZoomedOut && 'is-zoomed-out'),
       style: {
-        '--wp-block-editor-iframe-zoom-out-outer-container-width': isZoomedOut && `${Math.max(initialContainerWidth.current, containerWidth)}px`
+        '--wp-block-editor-iframe-zoom-out-scale-container-width': isZoomedOut && `${scaleContainerWidth}px`
       },
       children: iframe
     })]
