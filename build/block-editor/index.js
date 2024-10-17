@@ -51821,7 +51821,6 @@ function CategoryTabs({
   };
   const previousSelectedCategory = (0,external_wp_compose_namespaceObject.usePrevious)(selectedCategory);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(category_tabs_Tabs, {
-    className: "block-editor-inserter__category-tabs",
     selectOnMove: false,
     selectedTabId: selectedCategory ? selectedCategory.name : null,
     orientation: "vertical",
