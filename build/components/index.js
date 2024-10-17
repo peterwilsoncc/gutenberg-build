@@ -62825,6 +62825,7 @@ const radio_Radio = (0,external_wp_element_namespaceObject.forwardRef)(Unforward
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -62845,7 +62846,8 @@ function UnforwardedRadioGroup({
     defaultValue: defaultChecked,
     setValue: newValue => {
       onChange?.(newValue !== null && newValue !== void 0 ? newValue : undefined);
-    }
+    },
+    rtl: (0,external_wp_i18n_namespaceObject.isRTL)()
   });
   const contextValue = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     store: radioStore,
