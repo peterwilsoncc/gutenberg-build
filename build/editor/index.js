@@ -30273,11 +30273,9 @@ function getPostMetaFields(select, context) {
  */
 
 
-
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -30294,32 +30292,6 @@ function getPostMetaFields(select, context) {
 function registerCoreBlockBindingsSources() {
   (0,external_wp_blocks_namespaceObject.registerBlockBindingsSource)(pattern_overrides);
   (0,external_wp_blocks_namespaceObject.registerBlockBindingsSource)(post_meta);
-}
-
-/**
- * Function to bootstrap core block bindings sources defined in the server.
- *
- * @param {Object} sources Object containing the sources to bootstrap.
- *
- * @example
- * ```js
- * import { bootstrapBlockBindingsSourcesFromServer } from '@wordpress/editor';
- *
- * bootstrapBlockBindingsSourcesFromServer( sources );
- * ```
- */
-function bootstrapBlockBindingsSourcesFromServer(sources) {
-  if (sources) {
-    const {
-      addBootstrappedBlockBindingsSource
-    } = unlock((0,external_wp_data_namespaceObject.dispatch)(external_wp_blocks_namespaceObject.store));
-    for (const [name, args] of Object.entries(sources)) {
-      addBootstrappedBlockBindingsSource({
-        name,
-        ...args
-      });
-    }
-  }
 }
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/private-apis.js
@@ -30367,7 +30339,6 @@ lock(privateApis, {
   ViewMoreMenuGroup: view_more_menu_group,
   ResizableEditor: resizable_editor,
   registerCoreBlockBindingsSources: registerCoreBlockBindingsSources,
-  bootstrapBlockBindingsSourcesFromServer: bootstrapBlockBindingsSourcesFromServer,
   // This is a temporary private API while we're updating the site editor to use EditorProvider.
   interfaceStore,
   ...remainingInterfaceApis

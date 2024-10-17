@@ -5972,7 +5972,6 @@ var private_actions_namespaceObject = {};
 __webpack_require__.r(private_actions_namespaceObject);
 __webpack_require__.d(private_actions_namespaceObject, {
   addBlockBindingsSource: () => (addBlockBindingsSource),
-  addBootstrappedBlockBindingsSource: () => (addBootstrappedBlockBindingsSource),
   addBootstrappedBlockType: () => (addBootstrappedBlockType),
   addUnprocessedBlockType: () => (addUnprocessedBlockType),
   removeBlockBindingsSource: () => (removeBlockBindingsSource)
@@ -7555,11 +7554,14 @@ const registerBlockBindingsSource = source => {
 
   /*
    * Check if the source has been already registered on the client.
-   * If the `getValues` property is defined, it could be assumed the source is already registered.
+   * If any property expected to be "client-only" is defined, return a warning.
    */
-  if (existingSource?.getValues) {
-     false ? 0 : void 0;
-    return;
+  const serverProps = ['label', 'usesContext'];
+  for (const prop in existingSource) {
+    if (!serverProps.includes(prop) && existingSource[prop]) {
+       false ? 0 : void 0;
+      return;
+    }
   }
 
   // Check the `name` property is correct.
@@ -8380,19 +8382,6 @@ function blockBindingsSources(state = {}, action) {
           // Only set `canUserEditValue` if `setValues` is also defined.
           canUserEditValue: action.setValues && action.canUserEditValue,
           getFieldsList
-        }
-      };
-    case 'ADD_BOOTSTRAPPED_BLOCK_BINDINGS_SOURCE':
-      return {
-        ...state,
-        [action.name]: {
-          /*
-           * Keep the exisitng properties in case the source has been registered
-           * in the client before bootstrapping.
-           */
-          ...state[action.name],
-          label: action.label,
-          usesContext: getMergedUsesContext(state[action.name]?.usesContext, action.usesContext)
         }
       };
     case 'REMOVE_BLOCK_BINDINGS_SOURCE':
@@ -10000,20 +9989,6 @@ function removeBlockBindingsSource(name) {
   return {
     type: 'REMOVE_BLOCK_BINDINGS_SOURCE',
     name
-  };
-}
-
-/**
- * Add bootstrapped block bindings sources, usually initialized from the server.
- *
- * @param {string} source Name of the source to bootstrap.
- */
-function addBootstrappedBlockBindingsSource(source) {
-  return {
-    type: 'ADD_BOOTSTRAPPED_BLOCK_BINDINGS_SOURCE',
-    name: source.name,
-    label: source.label,
-    usesContext: source.usesContext
   };
 }
 
