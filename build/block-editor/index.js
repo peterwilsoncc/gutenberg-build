@@ -48537,7 +48537,8 @@ function Iframe({
       ...props,
       style: {
         ...props.style,
-        height: props.style?.height
+        height: props.style?.height,
+        border: 0
       },
       ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([ref, setRef]),
       tabIndex: tabIndex
