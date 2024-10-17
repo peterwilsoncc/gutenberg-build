@@ -15764,12 +15764,10 @@ function RootMenu() {
       children: [hasTypographyPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
         icon: library_typography,
         path: "/typography",
-        "aria-label": (0,external_wp_i18n_namespaceObject.__)('Typography styles'),
         children: (0,external_wp_i18n_namespaceObject.__)('Typography')
       }), hasColorPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
         icon: library_color,
         path: "/colors",
-        "aria-label": (0,external_wp_i18n_namespaceObject.__)('Colors styles'),
         children: (0,external_wp_i18n_namespaceObject.__)('Colors')
       }), hasBackgroundPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
         icon: library_background,
@@ -15779,12 +15777,10 @@ function RootMenu() {
       }), hasShadowPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
         icon: library_shadow,
         path: "/shadows",
-        "aria-label": (0,external_wp_i18n_namespaceObject.__)('Shadow styles'),
         children: (0,external_wp_i18n_namespaceObject.__)('Shadows')
       }), hasLayoutPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
         icon: library_layout,
         path: "/layout",
-        "aria-label": (0,external_wp_i18n_namespaceObject.__)('Layout styles'),
         children: (0,external_wp_i18n_namespaceObject.__)('Layout')
       })]
     })
@@ -16448,7 +16444,6 @@ function ScreenRoot() {
         }), hasVariations && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
             path: "/variations",
-            "aria-label": (0,external_wp_i18n_namespaceObject.__)('Browse styles'),
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
               justify: "space-between",
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
@@ -16475,7 +16470,6 @@ function ScreenRoot() {
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
           path: "/blocks",
-          "aria-label": (0,external_wp_i18n_namespaceObject.__)('Blocks styles'),
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
             justify: "space-between",
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
@@ -16497,7 +16491,6 @@ function ScreenRoot() {
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
             path: "/css",
-            "aria-label": (0,external_wp_i18n_namespaceObject.__)('Additional CSS'),
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
               justify: "space-between",
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
@@ -16564,7 +16557,6 @@ function VariationsPanel({
       }
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
         path: '/blocks/' + encodeURIComponent(name) + '/variations/' + encodeURIComponent(style.name),
-        "aria-label": style.label,
         children: style.label
       }, index);
     })
@@ -16689,12 +16681,8 @@ function BlockMenuItem({
   if (!hasBlockMenuItem) {
     return null;
   }
-  const navigationButtonLabel = (0,external_wp_i18n_namespaceObject.sprintf)(
-  // translators: %s: is the name of a block e.g., 'Image' or 'Table'.
-  (0,external_wp_i18n_namespaceObject.__)('%s block styles'), block.title);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
     path: '/blocks/' + encodeURIComponent(block.name),
-    "aria-label": navigationButtonLabel,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       justify: "flex-start",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
@@ -17188,12 +17176,8 @@ function ElementItem({
   const [fallbackBackgroundColor] = typography_elements_useGlobalStyle('color.background');
   const [gradientValue] = typography_elements_useGlobalStyle(prefix + 'color.gradient');
   const [color] = typography_elements_useGlobalStyle(prefix + 'color.text');
-  const navigationButtonLabel = (0,external_wp_i18n_namespaceObject.sprintf)(
-  // translators: %s: is a subset of Typography, e.g., 'text' or 'links'.
-  (0,external_wp_i18n_namespaceObject.__)('Typography %s styles'), label);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
     path: parentMenu + '/typography/' + element,
-    "aria-label": navigationButtonLabel,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       justify: "flex-start",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
@@ -17206,6 +17190,7 @@ function ElementItem({
           fontWeight,
           ...extraStyles
         },
+        "aria-hidden": "true",
         children: (0,external_wp_i18n_namespaceObject.__)('Aa')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
         children: label
@@ -17609,7 +17594,6 @@ function FontSizes() {
       isSeparated: true,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
         path: "/typography/font-sizes",
-        "aria-label": (0,external_wp_i18n_namespaceObject.__)('Edit font size presets'),
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
           direction: "row",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
@@ -24939,7 +24923,6 @@ function Palette({
   const [randomizeThemeColors] = useColorRandomizer();
   const colors = (0,external_wp_element_namespaceObject.useMemo)(() => [...(customColors || EMPTY_COLORS), ...(themeColors || EMPTY_COLORS), ...(defaultColors && defaultPaletteEnabled ? defaultColors : EMPTY_COLORS)], [customColors, themeColors, defaultColors, defaultPaletteEnabled]);
   const screenPath = !name ? '/colors/palette' : '/blocks/' + encodeURIComponent(name) + '/colors/palette';
-  const paletteButtonText = colors.length > 0 ? (0,external_wp_i18n_namespaceObject.__)('Edit palette') : (0,external_wp_i18n_namespaceObject.__)('Add colors');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 3,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(subtitle, {
@@ -24950,21 +24933,25 @@ function Palette({
       isSeparated: true,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
         path: screenPath,
-        "aria-label": paletteButtonText,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
           direction: "row",
-          children: [colors.length <= 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+          children: [colors.length > 0 ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalZStack, {
+              isLayered: false,
+              offset: -8,
+              children: colors.slice(0, 5).map(({
+                color
+              }, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_indicator_wrapper, {
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ColorIndicator, {
+                  colorValue: color
+                })
+              }, `${color}-${index}`))
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+              isBlock: true,
+              children: (0,external_wp_i18n_namespaceObject.__)('Edit palette')
+            })]
+          }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
             children: (0,external_wp_i18n_namespaceObject.__)('Add colors')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalZStack, {
-            isLayered: false,
-            offset: -8,
-            children: colors.slice(0, 5).map(({
-              color
-            }, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_indicator_wrapper, {
-              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ColorIndicator, {
-                colorValue: color
-              })
-            }, `${color}-${index}`))
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
             icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_left : chevron_right
           })]
@@ -25542,9 +25529,6 @@ function ShadowItem({
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
     path: `/shadows/edit/${category}/${shadow.slug}`,
-    "aria-label":
-    // translators: %s: name of the shadow
-    (0,external_wp_i18n_namespaceObject.sprintf)('Edit shadow %s', shadow.name),
     icon: library_shadow,
     children: shadow.name
   });

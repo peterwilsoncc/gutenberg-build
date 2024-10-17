@@ -27194,7 +27194,6 @@ const LabeledColorIndicators = ({
     }, index))
   }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
     className: "block-editor-panel-color-gradient-settings__color-name",
-    title: label,
     children: label
   })]
 });
@@ -27253,9 +27252,7 @@ function ColorPanelDropdown({
           className: dist_clsx('block-editor-panel-color-gradient-settings__dropdown', {
             'is-open': isOpen
           }),
-          'aria-expanded': isOpen,
-          'aria-label': (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s is the type of color property, e.g., "background" */
-          (0,external_wp_i18n_namespaceObject.__)('Color %s styles'), label)
+          'aria-expanded': isOpen
         };
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           __next40pxDefaultSize: true,
