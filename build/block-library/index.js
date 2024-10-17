@@ -58683,7 +58683,6 @@ function TableEdit({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
         group: "other",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarDropdownMenu, {
-          hasArrowIndicator: true,
           icon: library_table,
           label: (0,external_wp_i18n_namespaceObject.__)('Edit table'),
           controls: tableControls
