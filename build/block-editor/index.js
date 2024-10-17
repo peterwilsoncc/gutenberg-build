@@ -48375,7 +48375,7 @@ function Iframe({
     scripts = ''
   } = resolvedAssets;
   const [iframeDocument, setIframeDocument] = (0,external_wp_element_namespaceObject.useState)();
-  const prevContainerWidthRef = (0,external_wp_element_namespaceObject.useRef)();
+  const initialContainerWidth = (0,external_wp_element_namespaceObject.useRef)();
   const [bodyClasses, setBodyClasses] = (0,external_wp_element_namespaceObject.useState)([]);
   const clearerRef = useBlockSelectionClearer();
   const [before, writingFlowRef, after] = useWritingFlow();
@@ -48459,7 +48459,7 @@ function Iframe({
   const isZoomedOut = scale !== 1;
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (!isZoomedOut) {
-      prevContainerWidthRef.current = containerWidth;
+      initialContainerWidth.current = containerWidth;
     }
   }, [containerWidth, isZoomedOut]);
   const disabledRef = (0,external_wp_compose_namespaceObject.useDisabled)({
@@ -48506,31 +48506,66 @@ function Iframe({
     return [_src, () => URL.revokeObjectURL(_src)];
   }, [html]);
   (0,external_wp_element_namespaceObject.useEffect)(() => cleanup, [cleanup]);
+  const zoomOutAnimationClassnameRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const handleZoomOutAnimationClassname = () => {
+    clearTimeout(zoomOutAnimationClassnameRef.current);
+    iframeDocument.documentElement.classList.add('zoom-out-animation');
+    zoomOutAnimationClassnameRef.current = setTimeout(() => {
+      iframeDocument.documentElement.classList.remove('zoom-out-animation');
+    }, 400); // 400ms should match the animation speed used in components/iframe/content.scss
+  };
+
+  // Toggle zoom out CSS Classes only when zoom out mode changes. We could add these into the useEffect
+  // that controls settings the CSS variables, but then we would need to do more work to ensure we're
+  // only toggling these when the zoom out mode changes, as that useEffect is also triggered by a large
+  // number of dependencies.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (!iframeDocument || !isZoomedOut) {
       return;
     }
+    handleZoomOutAnimationClassname();
     iframeDocument.documentElement.classList.add('is-zoomed-out');
+    return () => {
+      handleZoomOutAnimationClassname();
+      iframeDocument.documentElement.classList.remove('is-zoomed-out');
+    };
+  }, [iframeDocument, isZoomedOut]);
+
+  // Calculate the scaling and CSS variables for the zoom out canvas
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (!iframeDocument || !isZoomedOut) {
+      return;
+    }
     const maxWidth = 750;
+    // Note: When we initialize the zoom out when the canvas is smaller (sidebars open),
+    // initialContainerWidth will be smaller than the full page, and reflow will happen
+    // when the canvas area becomes larger due to sidebars closing. This is a known but
+    // minor divergence for now.
+
     // This scaling calculation has to happen within the JS because CSS calc() can
     // only divide and multiply by a unitless value. I.e. calc( 100px / 2 ) is valid
     // but calc( 100px / 2px ) is not.
-    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scale', scale === 'default' ? (Math.min(containerWidth, maxWidth) - parseInt(frameSize) * 2) / prevContainerWidthRef.current : scale);
+    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scale', scale === 'default' ? (Math.min(containerWidth, maxWidth) - parseInt(frameSize) * 2) / Math.max(initialContainerWidth.current, containerWidth) : scale);
 
     // frameSize has to be a px value for the scaling and frame size to be computed correctly.
     iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-frame-size', typeof frameSize === 'number' ? `${frameSize}px` : frameSize);
     iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-content-height', `${contentHeight}px`);
     iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-inner-height', `${iframeWindowInnerHeight}px`);
     iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-container-width', `${containerWidth}px`);
-    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-prev-container-width', `${prevContainerWidthRef.current}px`);
+    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-outer-container-width', `${Math.max(initialContainerWidth.current, containerWidth)}px`);
+
+    // iframeDocument.documentElement.style.setProperty(
+    // 	'--wp-block-editor-iframe-zoom-out-outer-container-width',
+    // 	`${ Math.max( initialContainerWidth.current, containerWidth ) }px`
+    // );
+
     return () => {
-      iframeDocument.documentElement.classList.remove('is-zoomed-out');
       iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-scale');
       iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-frame-size');
       iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-content-height');
       iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-inner-height');
       iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-container-width');
-      iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-prev-container-width');
+      iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-outer-container-width');
     };
   }, [scale, frameSize, iframeDocument, iframeWindowInnerHeight, contentHeight, containerWidth, windowInnerWidth, isZoomedOut]);
 
@@ -48599,8 +48634,7 @@ function Iframe({
     children: [containerResizeListener, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: dist_clsx('block-editor-iframe__scale-container', isZoomedOut && 'is-zoomed-out'),
       style: {
-        '--wp-block-editor-iframe-zoom-out-container-width': isZoomedOut && `${containerWidth}px`,
-        '--wp-block-editor-iframe-zoom-out-prev-container-width': isZoomedOut && `${prevContainerWidthRef.current}px`
+        '--wp-block-editor-iframe-zoom-out-outer-container-width': isZoomedOut && `${Math.max(initialContainerWidth.current, containerWidth)}px`
       },
       children: iframe
     })]
