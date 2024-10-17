@@ -13141,6 +13141,20 @@ const __experimentalGetParsedPattern = (0,external_wp_data_namespaceObject.creat
   return pattern ? getParsedPattern(pattern) : null;
 });
 const getAllowedPatternsDependants = select => (state, rootClientId) => [...getAllPatternsDependants(select)(state), ...getInsertBlockTypeDependants(state, rootClientId)];
+const patternsWithParsedBlocks = new WeakMap();
+function enhancePatternWithParsedBlocks(pattern) {
+  let enhancedPattern = patternsWithParsedBlocks.get(pattern);
+  if (!enhancedPattern) {
+    enhancedPattern = {
+      ...pattern,
+      get blocks() {
+        return getParsedPattern(pattern).blocks;
+      }
+    };
+    patternsWithParsedBlocks.set(pattern, enhancedPattern);
+  }
+  return enhancedPattern;
+}
 
 /**
  * Returns the list of allowed patterns for inner blocks children.
@@ -13161,14 +13175,7 @@ const __experimentalGetAllowedPatterns = (0,external_wp_data_namespaceObject.cre
     } = getSettings(state);
     const parsedPatterns = patterns.filter(({
       inserter = true
-    }) => !!inserter).map(pattern => {
-      return {
-        ...pattern,
-        get blocks() {
-          return getParsedPattern(pattern).blocks;
-        }
-      };
-    });
+    }) => !!inserter).map(enhancePatternWithParsedBlocks);
     const availableParsedPatterns = parsedPatterns.filter(pattern => checkAllowListRecursive(getGrammar(pattern), allowedBlockTypes));
     const patternsAllowed = availableParsedPatterns.filter(pattern => getGrammar(pattern).every(({
       blockName: name
