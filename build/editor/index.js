@@ -2531,6 +2531,18 @@ function getTemplatePartIcon(iconName) {
   return symbol_filled;
 }
 
+;// external ["wp","privateApis"]
+const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
+;// ./packages/editor/build-module/lock-unlock.js
+/**
+ * WordPress dependencies
+ */
+
+const {
+  lock,
+  unlock
+} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/editor');
+
 ;// ./packages/editor/build-module/store/selectors.js
 /**
  * WordPress dependencies
@@ -2549,6 +2561,7 @@ function getTemplatePartIcon(iconName) {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -3642,8 +3655,8 @@ function getRenderingMode(state) {
  * @return {string} Device type.
  */
 const getDeviceType = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => state => {
-  const editorMode = select(external_wp_blockEditor_namespaceObject.store).__unstableGetEditorMode();
-  if (editorMode === 'zoom-out') {
+  const isZoomOut = unlock(select(external_wp_blockEditor_namespaceObject.store)).isZoomOut();
+  if (isZoomOut) {
     return 'Desktop';
   }
   return state.deviceType;
@@ -4252,18 +4265,6 @@ function getNotificationArgumentsForTrashFail(data) {
     id: TRASH_POST_NOTICE_ID
   }];
 }
-
-;// external ["wp","privateApis"]
-const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
-;// ./packages/editor/build-module/lock-unlock.js
-/**
- * WordPress dependencies
- */
-
-const {
-  lock,
-  unlock
-} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/editor');
 
 ;// ./packages/editor/build-module/store/actions.js
 /**
@@ -25907,8 +25908,8 @@ function DocumentTools({
       getShortcutRepresentation
     } = select(external_wp_keyboardShortcuts_namespaceObject.store);
     const {
-      __unstableGetEditorMode
-    } = select(external_wp_blockEditor_namespaceObject.store);
+      isZoomOut
+    } = unlock(select(external_wp_blockEditor_namespaceObject.store));
     return {
       isInserterOpened: select(store_store).isInserterOpened(),
       isListViewOpen: isListViewOpened(),
@@ -25918,7 +25919,7 @@ function DocumentTools({
       showIconLabels: get('core', 'showIconLabels'),
       isDistractionFree: get('core', 'distractionFree'),
       isVisualMode: getEditorMode() === 'visual',
-      isZoomedOutView: __unstableGetEditorMode() === 'zoom-out'
+      isZoomedOutView: isZoomOut()
     };
   }, []);
   const preventDefault = event => {
@@ -26723,8 +26724,7 @@ const ZoomOutToggle = () => {
   }));
   const {
     resetZoomLevel,
-    setZoomLevel,
-    __unstableSetEditorMode
+    setZoomLevel
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store));
   const handleZoomOut = () => {
     if (isZoomOut) {
@@ -26732,7 +26732,6 @@ const ZoomOutToggle = () => {
     } else {
       setZoomLevel(50);
     }
-    __unstableSetEditorMode(isZoomOut ? 'edit' : 'zoom-out');
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     onClick: handleZoomOut,
@@ -26954,7 +26953,7 @@ function InserterSidebar() {
     } = unlock(select(store_store));
     const {
       getBlockRootClientId,
-      __unstableGetEditorMode,
+      isZoomOut,
       getSectionRootClientId
     } = unlock(select(external_wp_blockEditor_namespaceObject.store));
     const {
@@ -26964,7 +26963,7 @@ function InserterSidebar() {
       getActiveComplementaryArea
     } = select(store);
     const getBlockSectionRootClientId = () => {
-      if (__unstableGetEditorMode() === 'zoom-out') {
+      if (isZoomOut()) {
         const sectionRootClientId = getSectionRootClientId();
         if (sectionRootClientId) {
           return sectionRootClientId;

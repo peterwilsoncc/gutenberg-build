@@ -2635,6 +2635,11 @@ function usePaddingAppender(enabled) {
 
 
 
+
+/**
+ * Internal dependencies
+ */
+
 const isGutenbergPlugin =  true ? true : 0;
 function useShouldIframe() {
   const {
@@ -2648,8 +2653,8 @@ function useShouldIframe() {
       getCurrentPostType
     } = select(external_wp_editor_namespaceObject.store);
     const {
-      __unstableGetEditorMode
-    } = select(external_wp_blockEditor_namespaceObject.store);
+      isZoomOut
+    } = unlock(select(external_wp_blockEditor_namespaceObject.store));
     const {
       getBlockTypes
     } = select(external_wp_blocks_namespaceObject.store);
@@ -2660,7 +2665,7 @@ function useShouldIframe() {
         return type.apiVersion >= 3;
       }),
       isEditingTemplate: getCurrentPostType() === 'wp_template',
-      isZoomOutMode: __unstableGetEditorMode() === 'zoom-out'
+      isZoomOutMode: isZoomOut()
     };
   }, []);
   return hasV3BlocksOnly || isGutenbergPlugin && isBlockBasedTheme || isEditingTemplate || isZoomOutMode;
@@ -3113,8 +3118,8 @@ function Layout({
       name: 'wp_template'
     });
     const {
-      __unstableGetEditorMode
-    } = select(external_wp_blockEditor_namespaceObject.store);
+      isZoomOut
+    } = unlock(select(external_wp_blockEditor_namespaceObject.store));
     const {
       getEditorMode,
       getRenderingMode
@@ -3130,7 +3135,7 @@ function Layout({
       showMetaBoxes: !DESIGN_POST_TYPES.includes(currentPostType) && isRenderingPostOnly,
       isWelcomeGuideVisible: isFeatureActive('welcomeGuide'),
       templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate ? getEditedPostTemplateId() : null,
-      enablePaddingAppender: __unstableGetEditorMode() !== 'zoom-out' && isRenderingPostOnly && !DESIGN_POST_TYPES.includes(currentPostType)
+      enablePaddingAppender: !isZoomOut() && isRenderingPostOnly && !DESIGN_POST_TYPES.includes(currentPostType)
     };
   }, [currentPostType, isEditingTemplate, settings.supportsTemplateMode]);
   const [paddingAppenderRef, paddingStyle] = usePaddingAppender(enablePaddingAppender);
