@@ -61289,19 +61289,19 @@ function BlockGroupToolbar() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       icon: library_group,
-      label: (0,external_wp_i18n_namespaceObject._x)('Group', 'verb'),
+      label: (0,external_wp_i18n_namespaceObject._x)('Group', 'action: convert blocks to group'),
       onClick: onConvertToGroup
     }), canInsertRow && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       icon: library_row,
-      label: (0,external_wp_i18n_namespaceObject._x)('Row', 'single horizontal line'),
+      label: (0,external_wp_i18n_namespaceObject._x)('Row', 'action: convert blocks to row'),
       onClick: onConvertToRow
     }), canInsertStack && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       icon: library_stack,
-      label: (0,external_wp_i18n_namespaceObject._x)('Stack', 'verb'),
+      label: (0,external_wp_i18n_namespaceObject._x)('Stack', 'action: convert blocks to stack'),
       onClick: onConvertToStack
     }), canInsertGrid && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       icon: library_grid,
-      label: (0,external_wp_i18n_namespaceObject._x)('Grid', 'verb'),
+      label: (0,external_wp_i18n_namespaceObject._x)('Grid', 'action: convert blocks to grid'),
       onClick: onConvertToGrid
     })]
   });
