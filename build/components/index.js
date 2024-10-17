@@ -65268,7 +65268,7 @@ var useTabList = createHook(
     return props;
   }
 );
-var tab_list_TabList = forwardRef2(function TabList2(props) {
+var TabList = forwardRef2(function TabList2(props) {
   const htmlProps = useTabList(props);
   return HKOOKEDE_createElement(tab_list_TagName, htmlProps);
 });
@@ -65680,7 +65680,7 @@ const UnforwardedTabPanel = ({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: className,
     ref: ref,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tab_list_TabList, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TabList, {
       store: tabStore,
       className: "components-tab-panel__tabs",
       children: tabs.map(tab => {
@@ -71209,7 +71209,7 @@ function tabs_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried t
 
 
 
-const TabListWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
+const StyledTabList = /*#__PURE__*/emotion_styled_base_browser_esm(TabList,  true ? {
   target: "enfox0g4"
 } : 0)("display:flex;align-items:stretch;overflow-x:auto;&[aria-orientation='vertical']{flex-direction:column;}:where( [aria-orientation='horizontal'] ){width:fit-content;}--direction-factor:1;--direction-start:left;--direction-end:right;--selected-start:var( --selected-left, 0 );&:dir( rtl ){--direction-factor:-1;--direction-start:right;--direction-end:left;--selected-start:var( --selected-right, 0 );}@media not ( prefers-reduced-motion ){&[data-indicator-animated]::before{transition-property:transform,border-radius,border-block;transition-duration:0.2s;transition-timing-function:ease-out;}}position:relative;&::before{content:'';position:absolute;pointer-events:none;transform-origin:var( --direction-start ) top;outline:2px solid transparent;outline-offset:-1px;}--antialiasing-factor:100;&[aria-orientation='horizontal']{--fade-width:4rem;--fade-gradient-base:transparent 0%,black var( --fade-width );--fade-gradient-composed:var( --fade-gradient-base ),black 60%,transparent 50%;&.is-overflowing-first{mask-image:linear-gradient(\n\t\t\t\tto var( --direction-end ),\n\t\t\t\tvar( --fade-gradient-base )\n\t\t\t);}&.is-overflowing-last{mask-image:linear-gradient(\n\t\t\t\tto var( --direction-start ),\n\t\t\t\tvar( --fade-gradient-base )\n\t\t\t);}&.is-overflowing-first.is-overflowing-last{mask-image:linear-gradient(\n\t\t\t\t\tto right,\n\t\t\t\t\tvar( --fade-gradient-composed )\n\t\t\t\t),linear-gradient( to left, var( --fade-gradient-composed ) );}&::before{bottom:0;height:0;width:calc( var( --antialiasing-factor ) * 1px );transform:translateX(\n\t\t\t\t\tcalc(\n\t\t\t\t\t\tvar( --selected-start ) * var( --direction-factor ) *\n\t\t\t\t\t\t\t1px\n\t\t\t\t\t)\n\t\t\t\t) scaleX(\n\t\t\t\t\tcalc(\n\t\t\t\t\t\tvar( --selected-width, 0 ) /\n\t\t\t\t\t\t\tvar( --antialiasing-factor )\n\t\t\t\t\t)\n\t\t\t\t);border-bottom:var( --wp-admin-border-width-focus ) solid ", COLORS.theme.accent, ";}}&[aria-orientation='vertical']{&::before{border-radius:", config_values.radiusSmall, "/calc(\n\t\t\t\t\t", config_values.radiusSmall, " /\n\t\t\t\t\t\t(\n\t\t\t\t\t\t\tvar( --selected-height, 0 ) /\n\t\t\t\t\t\t\t\tvar( --antialiasing-factor )\n\t\t\t\t\t\t)\n\t\t\t\t);top:0;left:0;width:100%;height:calc( var( --antialiasing-factor ) * 1px );transform:translateY( calc( var( --selected-top, 0 ) * 1px ) ) scaleY(\n\t\t\t\t\tcalc(\n\t\t\t\t\t\tvar( --selected-height, 0 ) /\n\t\t\t\t\t\t\tvar( --antialiasing-factor )\n\t\t\t\t\t)\n\t\t\t\t);background-color:color-mix(\n\t\t\t\tin srgb,\n\t\t\t\t", COLORS.theme.accent, ",\n\t\t\t\ttransparent 96%\n\t\t\t);}&[data-select-on-move='true']:has(\n\t\t\t\t:is( :focus-visible, [data-focus-visible] )\n\t\t\t)::before{box-sizing:border-box;border:var( --wp-admin-border-width-focus ) solid ", COLORS.theme.accent, ";border-block-width:calc(\n\t\t\t\tvar( --wp-admin-border-width-focus, 1px ) /\n\t\t\t\t\t(\n\t\t\t\t\t\tvar( --selected-height, 0 ) /\n\t\t\t\t\t\t\tvar( --antialiasing-factor )\n\t\t\t\t\t)\n\t\t\t);}}" + ( true ? "" : 0));
 const styles_Tab = /*#__PURE__*/emotion_styled_base_browser_esm(Tab,  true ? {
@@ -71350,7 +71350,6 @@ function useTrackOverflow(parent, children) {
  */
 
 
-
 /**
  * WordPress dependencies
  */
@@ -71402,7 +71401,7 @@ function useScrollRectIntoView(parent, rect, {
     }
   }, [margin, parent, rect]);
 }
-const TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabList({
+const tablist_TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabList({
   children,
   ...otherProps
 }, ref) {
@@ -71450,10 +71449,9 @@ const TabList = (0,external_wp_element_namespaceObject.forwardRef)(function TabL
      false ? 0 : void 0;
     return null;
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tab_list_TabList, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledTabList, {
     ref: refs,
     store: store,
-    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TabListWrapper, {}),
     onBlur: onBlur,
     tabIndex: -1,
     "data-select-on-move": selectOnMove ? 'true' : 'false',
@@ -71684,7 +71682,7 @@ function Tabs({
     children: children
   });
 }
-Tabs.TabList = TabList;
+Tabs.TabList = tablist_TabList;
 Tabs.Tab = tab_Tab;
 Tabs.TabPanel = tabpanel_TabPanel;
 Tabs.Context = TabsContext;
