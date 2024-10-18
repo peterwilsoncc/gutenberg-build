@@ -15754,17 +15754,36 @@ function PostFeaturedImage({
       }
     });
   }
+
+  /**
+   * Generates the featured image alt text for this editing context.
+   *
+   * @param {Object} imageMedia                               The image media object.
+   * @param {string} imageMedia.alt_text                      The alternative text of the image.
+   * @param {Object} imageMedia.media_details                 The media details of the image.
+   * @param {Object} imageMedia.media_details.sizes           The sizes of the image.
+   * @param {Object} imageMedia.media_details.sizes.full      The full size details of the image.
+   * @param {string} imageMedia.media_details.sizes.full.file The file name of the full size image.
+   * @param {string} imageMedia.slug                          The slug of the image.
+   * @return {string} The featured image alt text.
+   */
+  function getImageDescription(imageMedia) {
+    if (imageMedia.alt_text) {
+      return (0,external_wp_i18n_namespaceObject.sprintf)(
+      // Translators: %s: The selected image alt text.
+      (0,external_wp_i18n_namespaceObject.__)('Current image: %s'), imageMedia.alt_text);
+    }
+    return (0,external_wp_i18n_namespaceObject.sprintf)(
+    // Translators: %s: The selected image filename.
+    (0,external_wp_i18n_namespaceObject.__)('The current image has no alternative text. The file name is: %s'), imageMedia.media_details.sizes?.full?.file || imageMedia.slug);
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(post_featured_image_check, {
     children: [noticeUI, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "editor-post-featured-image",
-      children: [media && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      children: [media && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         id: `editor-post-featured-image-${featuredImageId}-describedby`,
         className: "hidden",
-        children: [media.alt_text && (0,external_wp_i18n_namespaceObject.sprintf)(
-        // Translators: %s: The selected image alt text.
-        (0,external_wp_i18n_namespaceObject.__)('Current image: %s'), media.alt_text), !media.alt_text && (0,external_wp_i18n_namespaceObject.sprintf)(
-        // Translators: %s: The selected image filename.
-        (0,external_wp_i18n_namespaceObject.__)('The current image has no alternative text. The file name is: %s'), media.media_details.sizes?.full?.file || media.slug)]
+        children: getImageDescription(media)
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUploadCheck, {
         fallback: instructions,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUpload, {
@@ -15790,7 +15809,7 @@ function PostFeaturedImage({
               children: [!!featuredImageId && media && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
                 className: "editor-post-featured-image__preview-image",
                 src: mediaSourceUrl,
-                alt: ""
+                alt: getImageDescription(media)
               }), isLoading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}), !featuredImageId && !isLoading && (postType?.labels?.set_featured_image || DEFAULT_SET_FEATURE_IMAGE_LABEL)]
             }), !!featuredImageId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
               className: "editor-post-featured-image__actions",
