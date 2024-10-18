@@ -30540,7 +30540,8 @@ function getPostMetaFields(select, context) {
         value: // When using the entity value, an empty string IS a valid value.
         (_entityMetaValues$key = entityMetaValues?.[key]) !== null && _entityMetaValues$key !== void 0 ? _entityMetaValues$key :
         // When using the default, an empty string IS NOT a valid value.
-        props.default || undefined
+        props.default || undefined,
+        type: props.type
       };
     }
   });
