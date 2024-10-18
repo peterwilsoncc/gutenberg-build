@@ -55145,6 +55145,7 @@ function useBlockBindingsUtils(clientId) {
 
 
 
+
 const {
   DropdownMenuV2
 } = unlock(external_wp_components_namespaceObject.privateApis);
@@ -55164,17 +55165,27 @@ function BlockBindingsPanelDropdown({
   attribute,
   binding
 }) {
+  const {
+    clientId
+  } = useBlockEditContext();
   const registeredSources = (0,external_wp_blocks_namespaceObject.getBlockBindingsSources)();
   const {
     updateBlockBindings
   } = useBlockBindingsUtils();
   const currentKey = binding?.args?.key;
+  const attributeType = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      name: blockName
+    } = select(store).getBlock(clientId);
+    const _attributeType = (0,external_wp_blocks_namespaceObject.getBlockType)(blockName).attributes?.[attribute]?.type;
+    return _attributeType === 'rich-text' ? 'string' : _attributeType;
+  }, [clientId, attribute]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: Object.entries(fieldsList).map(([name, fields], i) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_element_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenuV2.Group, {
         children: [Object.keys(fieldsList).length > 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuV2.GroupLabel, {
           children: registeredSources[name].label
-        }), Object.entries(fields).map(([key, args]) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenuV2.RadioItem, {
+        }), Object.entries(fields).filter(([, args]) => args?.type === attributeType).map(([key, args]) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenuV2.RadioItem, {
           onChange: () => updateBlockBindings({
             [attribute]: {
               source: name,
