@@ -71545,7 +71545,15 @@ const tabpanel_TabPanel = (0,external_wp_element_namespaceObject.forwardRef)(fun
 
 
 
-function Tabs({
+/**
+ * Display one panel of content at a time with a tabbed interface, based on the
+ * WAI-ARIA Tabs Pattern⁠.
+ *
+ * @see https://www.w3.org/WAI/ARIA/apg/patterns/tabs/
+ * ```
+ */
+
+const Tabs = Object.assign(function Tabs({
   selectOnMove = true,
   defaultTabId,
   orientation = 'horizontal',
@@ -71691,12 +71699,20 @@ function Tabs({
     value: contextValue,
     children: children
   });
-}
-Tabs.TabList = tablist_TabList;
-Tabs.Tab = tab_Tab;
-Tabs.TabPanel = tabpanel_TabPanel;
-Tabs.Context = TabsContext;
-/* harmony default export */ const tabs = (Tabs);
+}, {
+  Tab: Object.assign(tab_Tab, {
+    displayName: 'Tabs.Tab'
+  }),
+  TabList: Object.assign(tablist_TabList, {
+    displayName: 'Tabs.TabList'
+  }),
+  TabPanel: Object.assign(tabpanel_TabPanel, {
+    displayName: 'Tabs.TabPanel'
+  }),
+  Context: Object.assign(TabsContext, {
+    displayName: 'Tabs.Context'
+  })
+});
 
 ;// external ["wp","privateApis"]
 const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
@@ -71727,7 +71743,7 @@ lock(privateApis, {
   __experimentalPopoverLegacyPositionToPlacement: positionToPlacement,
   createPrivateSlotFill: createPrivateSlotFill,
   ComponentsContext: ComponentsContext,
-  Tabs: tabs,
+  Tabs: Tabs,
   Theme: theme,
   DropdownMenuV2: DropdownMenuV2,
   kebabCase: kebabCase
