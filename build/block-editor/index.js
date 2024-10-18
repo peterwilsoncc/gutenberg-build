@@ -61799,7 +61799,10 @@ function PrivateBlockToolbar({
     isUsingBindings,
     hasParentPattern,
     hasContentOnlyLocking,
-    showShuffleButton
+    showShuffleButton,
+    showSlots,
+    showGroupButtons,
+    showLockButtons
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockName,
@@ -61842,7 +61845,10 @@ function PrivateBlockToolbar({
       isUsingBindings: _isUsingBindings,
       hasParentPattern: _hasParentPattern,
       hasContentOnlyLocking: _hasTemplateLock,
-      showShuffleButton: isZoomOut()
+      showShuffleButton: isZoomOut(),
+      showSlots: !isZoomOut(),
+      showGroupButtons: !isZoomOut(),
+      showLockButtons: !isZoomOut()
     };
   }, []);
   const toolbarWrapperRef = (0,external_wp_element_namespaceObject.useRef)(null);
@@ -61893,19 +61899,19 @@ function PrivateBlockToolbar({
           className: "block-editor-block-toolbar__block-controls",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_switcher, {
             clientIds: blockClientIds
-          }), !isMultiToolbar && isDefaultEditingMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockLockToolbar, {
+          }), !isMultiToolbar && isDefaultEditingMode && showLockButtons && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockLockToolbar, {
             clientId: blockClientId
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_mover, {
             clientIds: blockClientIds,
             hideDragHandle: hideDragHandle
           })]
         })
-      }), !hasContentOnlyLocking && shouldShowVisualToolbar && isMultiToolbar && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(toolbar, {}), showShuffleButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+      }), !hasContentOnlyLocking && shouldShowVisualToolbar && isMultiToolbar && showGroupButtons && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(toolbar, {}), showShuffleButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Shuffle, {
           clientId: blockClientIds[0],
           as: external_wp_components_namespaceObject.ToolbarButton
         })
-      }), shouldShowVisualToolbar && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      }), shouldShowVisualToolbar && showSlots && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_controls.Slot, {
           group: "parent",
           className: "block-editor-block-toolbar__slot"
