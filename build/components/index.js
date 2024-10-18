@@ -35640,11 +35640,13 @@ const POLL_RATE = 100;
  * to measure again after a frame, and if that fails, it will poll every 100
  * milliseconds until it succeeds.
  */
-function useTrackElementOffsetRect(targetElement) {
+function useTrackElementOffsetRect(targetElement, deps = []) {
   const [indicatorPosition, setIndicatorPosition] = (0,external_wp_element_namespaceObject.useState)(NULL_ELEMENT_OFFSET_RECT);
   const intervalRef = (0,external_wp_element_namespaceObject.useRef)();
   const measure = (0,external_wp_compose_namespaceObject.useEvent)(() => {
-    if (targetElement) {
+    // Check that the targetElement is still attached to the DOM, in case
+    // it was removed since the last `measure` call.
+    if (targetElement && targetElement.isConnected) {
       const elementOffsetRect = getElementOffsetRect(targetElement);
       if (elementOffsetRect) {
         setIndicatorPosition(elementOffsetRect);
@@ -35671,6 +35673,16 @@ function useTrackElementOffsetRect(targetElement) {
       setIndicatorPosition(NULL_ELEMENT_OFFSET_RECT);
     }
   }, [setElement, targetElement]);
+
+  // Escape hatch to force a remeasurement when something else changes rather
+  // than the target elements' ref or size (for example, the target element
+  // can change its position within the tablist).
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    measure();
+    // `measure` is a stable function, so it's safe to omit it from the deps array.
+    // deps can't be statically analyzed by ESLint
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
   return indicatorPosition;
 }
 
@@ -71352,6 +71364,7 @@ function useTrackOverflow(parent, children) {
  */
 
 
+
 /**
  * WordPress dependencies
  */
@@ -71362,7 +71375,6 @@ function useTrackOverflow(parent, children) {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -71417,7 +71429,12 @@ const tablist_TabList = (0,external_wp_element_namespaceObject.forwardRef)(funct
   const items = useStoreState(store, 'items');
   const [parent, setParent] = (0,external_wp_element_namespaceObject.useState)();
   const refs = (0,external_wp_compose_namespaceObject.useMergeRefs)([ref, setParent]);
-  const selectedRect = useTrackElementOffsetRect(store?.item(selectedId)?.element);
+  const selectedItem = store?.item(selectedId);
+  const renderedItems = useStoreState(store, 'renderedItems');
+  const selectedItemIndex = renderedItems && selectedItem ? renderedItems.indexOf(selectedItem) : -1;
+  // Use selectedItemIndex as a dependency to force recalculation when the
+  // selected item index changes (elements are swapped / added / removed).
+  const selectedRect = useTrackElementOffsetRect(selectedItem?.element, [selectedItemIndex]);
 
   // Track overflow to show scroll hints.
   const overflow = useTrackOverflow(parent, {
