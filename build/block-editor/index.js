@@ -72636,22 +72636,19 @@ const TAB_SETTINGS = {
   name: 'settings',
   title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
   value: 'settings',
-  icon: library_cog,
-  className: 'block-editor-block-inspector__tab-item'
+  icon: library_cog
 };
 const TAB_STYLES = {
   name: 'styles',
   title: (0,external_wp_i18n_namespaceObject.__)('Styles'),
   value: 'styles',
-  icon: library_styles,
-  className: 'block-editor-block-inspector__tab-item'
+  icon: library_styles
 };
 const TAB_LIST_VIEW = {
   name: 'list',
   title: (0,external_wp_i18n_namespaceObject.__)('List View'),
   value: 'list-view',
-  icon: list_view,
-  className: 'block-editor-block-inspector__tab-item'
+  icon: list_view
 };
 
 ;// ./packages/block-editor/build-module/components/inspector-controls-tabs/advanced-controls-panel.js
@@ -72870,13 +72867,11 @@ function InspectorControlsTabs({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls_tabs_Tabs.TabList, {
         children: tabs.map(tab => showIconLabels ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls_tabs_Tabs.Tab, {
           tabId: tab.name,
-          className: tab.className,
           children: tab.title
         }, tab.name) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
           text: tab.title,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls_tabs_Tabs.Tab, {
             tabId: tab.name,
-            className: tab.className,
             "aria-label": tab.title,
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
               icon: tab.icon
