@@ -7587,10 +7587,7 @@ const registerBlockBindingsSource = source => {
   }
 
   // Check the `label` property is correct.
-  if (label && existingSource?.label) {
-     false ? 0 : void 0;
-    return;
-  }
+
   if (!label && !existingSource?.label) {
      false ? 0 : void 0;
     return;
@@ -7598,6 +7595,9 @@ const registerBlockBindingsSource = source => {
   if (label && typeof label !== 'string') {
      false ? 0 : void 0;
     return;
+  }
+  if (label && existingSource?.label && label !== existingSource?.label) {
+     false ? 0 : void 0;
   }
 
   // Check the `usesContext` property is correct.
@@ -8374,8 +8374,7 @@ function blockBindingsSources(state = {}, action) {
       return {
         ...state,
         [action.name]: {
-          // Don't override the label if it's already set.
-          label: state[action.name]?.label || action.label,
+          label: action.label || state[action.name]?.label,
           usesContext: getMergedUsesContext(state[action.name]?.usesContext, action.usesContext),
           getValues: action.getValues,
           setValues: action.setValues,
