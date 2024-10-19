@@ -26354,7 +26354,9 @@ const square = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
  */
 
 
-const ZoomOutToggle = () => {
+const ZoomOutToggle = ({
+  disabled
+}) => {
   const {
     isZoomOut,
     showIconLabels
@@ -26376,6 +26378,8 @@ const ZoomOutToggle = () => {
     __unstableSetEditorMode(isZoomOut ? 'edit' : 'zoom-out');
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    accessibleWhenDisabled: true,
+    disabled: disabled,
     onClick: handleZoomOut,
     icon: library_square,
     label: (0,external_wp_i18n_namespaceObject.__)('Toggle Zoom Out'),
@@ -26546,7 +26550,9 @@ function Header({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostPreviewButton, {
         className: "editor-header__post-preview-button",
         forceIsAutosaveable: forceIsDirty
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostViewLink, {}), isEditorIframed && isWideViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_toggle, {}), (isWideViewport || !showIconLabels) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pinned_items.Slot, {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostViewLink, {}), isEditorIframed && isWideViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_toggle, {
+        disabled: forceDisableBlockTools
+      }), (isWideViewport || !showIconLabels) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pinned_items.Slot, {
         scope: "core"
       }), !customSaveButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_publish_button_or_toggle, {
         forceIsDirty: forceIsDirty,
