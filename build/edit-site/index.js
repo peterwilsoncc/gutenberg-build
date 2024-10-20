@@ -14406,6 +14406,7 @@ function useEditModeCommands() {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -14598,8 +14599,14 @@ function useInitEditedEntityFromURL() {
   const {
     setEditedEntity
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const {
+    __unstableSetEditorMode,
+    resetZoomLevel
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store));
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (isReady) {
+      __unstableSetEditorMode('edit');
+      resetZoomLevel();
       setEditedEntity(postType, postId, context);
     }
   }, [isReady, postType, postId, context, setEditedEntity]);
@@ -28620,6 +28627,7 @@ function useEditorTitle() {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -28746,6 +28754,10 @@ function EditSiteEditor({
     setCanvasMode
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const {
+    __unstableSetEditorMode,
+    resetZoomLevel
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store));
+  const {
     createSuccessNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   const history = editor_useHistory();
@@ -28828,6 +28840,9 @@ function EditSiteEditor({
             tooltipPosition: "middle right",
             onClick: () => {
               setCanvasMode('view');
+              __unstableSetEditorMode('edit');
+              resetZoomLevel();
+
               // TODO: this is a temporary solution to navigate to the posts list if we are
               // come here through `posts list` and are in focus mode editing a template, template part etc..
               if (isPostsList && params?.focusMode) {
