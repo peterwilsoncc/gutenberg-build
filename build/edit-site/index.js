@@ -26884,31 +26884,29 @@ function StyleBook({
         color: textColor,
         background: backgroundColor
       },
-      children: [resizeObserver, showTabs ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "edit-site-style-book__tabs",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(style_book_Tabs, {
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-            className: "edit-site-style-book__tablist-container",
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.TabList, {
-              children: tabs.map(tab => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.Tab, {
-                tabId: tab.slug,
-                children: tab.title
-              }, tab.slug))
-            })
-          }), tabs.map(tab => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.TabPanel, {
-            tabId: tab.slug,
-            focusable: false,
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleBookBody, {
-              category: tab.slug,
-              examples: examples,
-              isSelected: isSelected,
-              onSelect: onSelect,
-              settings: settings,
-              sizes: sizes,
-              title: tab.title
-            })
-          }, tab.slug))]
-        })
+      children: [resizeObserver, showTabs ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(style_book_Tabs, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          className: "edit-site-style-book__tablist-container",
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.TabList, {
+            children: tabs.map(tab => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.Tab, {
+              tabId: tab.slug,
+              children: tab.title
+            }, tab.slug))
+          })
+        }), tabs.map(tab => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.TabPanel, {
+          tabId: tab.slug,
+          focusable: false,
+          className: "edit-site-style-book__tabpanel",
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleBookBody, {
+            category: tab.slug,
+            examples: examples,
+            isSelected: isSelected,
+            onSelect: onSelect,
+            settings: settings,
+            sizes: sizes,
+            title: tab.title
+          })
+        }, tab.slug))]
       }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleBookBody, {
         examples: examples,
         isSelected: isSelected,
