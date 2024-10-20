@@ -51949,12 +51949,16 @@ function BlockPatternsTab({
   selectedCategory,
   onInsert,
   rootClientId,
+  setHasCategories,
   children
 }) {
   const [showPatternsExplorer, setShowPatternsExplorer] = (0,external_wp_element_namespaceObject.useState)(false);
   const categories = usePatternCategories(rootClientId);
   const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   const isResolvingPatterns = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).isResolvingPatterns(), []);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    setHasCategories(!!categories.length);
+  }, [categories, setHasCategories]);
   if (isResolvingPatterns) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "block-editor-inserter__patterns-loading",
@@ -52536,6 +52540,7 @@ function MediaTab({
   rootClientId,
   selectedCategory,
   onSelectCategory,
+  setHasCategories,
   onInsert,
   children
 }) {
@@ -52553,6 +52558,9 @@ function MediaTab({
     ...mediaCategory,
     label: mediaCategory.labels.name
   })), [mediaCategories]);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    setHasCategories(!!categories.length);
+  }, [categories, setHasCategories]);
   if (!categories.length) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(no_results, {});
   }
@@ -52997,6 +53005,7 @@ function InserterMenu({
   const [selectedPatternCategory, setSelectedPatternCategory] = (0,external_wp_element_namespaceObject.useState)(__experimentalInitialCategory);
   const [patternFilter, setPatternFilter] = (0,external_wp_element_namespaceObject.useState)('all');
   const [selectedMediaCategory, setSelectedMediaCategory] = (0,external_wp_element_namespaceObject.useState)(null);
+  const [hasCategories, setHasCategories] = (0,external_wp_element_namespaceObject.useState)(true);
   function getInitialTab() {
     if (__experimentalInitialTab) {
       return __experimentalInitialTab;
@@ -53044,8 +53053,8 @@ function InserterMenu({
     setPatternFilter(filter);
     onPatternCategorySelection?.();
   }, [setSelectedPatternCategory, onPatternCategorySelection]);
-  const showPatternPanel = selectedTab === 'patterns' && !delayedFilterValue && !!selectedPatternCategory;
-  const showMediaPanel = selectedTab === 'media' && !!selectedMediaCategory;
+  const showPatternPanel = selectedTab === 'patterns' && hasCategories && !delayedFilterValue && !!selectedPatternCategory;
+  const showMediaPanel = selectedTab === 'media' && !!selectedMediaCategory && hasCategories;
   const inserterSearch = (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (selectedTab === 'media') {
       return null;
@@ -53103,6 +53112,7 @@ function InserterMenu({
       onInsert: onInsertPattern,
       onSelectCategory: onClickPatternCategory,
       selectedCategory: selectedPatternCategory,
+      setHasCategories: setHasCategories,
       children: showPatternPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternCategoryPreviews, {
         rootClientId: destinationRootClientId,
         onInsert: onInsertPattern,
@@ -53118,6 +53128,7 @@ function InserterMenu({
       selectedCategory: selectedMediaCategory,
       onSelectCategory: setSelectedMediaCategory,
       onInsert: onInsert,
+      setHasCategories: setHasCategories,
       children: showMediaPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MediaCategoryPanel, {
         rootClientId: destinationRootClientId,
         onInsert: onInsert,
