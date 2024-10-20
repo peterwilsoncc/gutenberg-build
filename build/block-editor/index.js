@@ -62732,9 +62732,12 @@ const useBlockCommands = () => {
 
 
 
+
 /**
  * Internal dependencies
  */
+
+
 
 
 
@@ -62760,10 +62763,16 @@ function ExperimentalBlockCanvas({
   iframeProps
 }) {
   useBlockCommands();
+  const isTabletViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   const resetTypingRef = useMouseMoveTypingReset();
   const clearerRef = useBlockSelectionClearer();
   const localRef = (0,external_wp_element_namespaceObject.useRef)();
   const contentRef = (0,external_wp_compose_namespaceObject.useMergeRefs)([contentRefProp, clearerRef, localRef]);
+  const isZoomedOut = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).isZoomOut(), []);
+  const zoomOutIframeProps = isZoomedOut && !isTabletViewport ? {
+    scale: 'default',
+    frameSize: '40px'
+  } : {};
   if (!shouldIframe) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(BlockTools, {
       __unstableContentRef: localRef,
@@ -62795,6 +62804,7 @@ function ExperimentalBlockCanvas({
     },
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(iframe, {
       ...iframeProps,
+      ...zoomOutIframeProps,
       ref: resetTypingRef,
       contentRef: contentRef,
       style: {

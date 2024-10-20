@@ -25926,9 +25926,6 @@ function DocumentTools({
     const {
       getShortcutRepresentation
     } = select(external_wp_keyboardShortcuts_namespaceObject.store);
-    const {
-      isZoomOut
-    } = unlock(select(external_wp_blockEditor_namespaceObject.store));
     return {
       isInserterOpened: select(store_store).isInserterOpened(),
       isListViewOpen: isListViewOpened(),
@@ -25937,8 +25934,7 @@ function DocumentTools({
       listViewToggleRef: getListViewToggleRef(),
       showIconLabels: get('core', 'showIconLabels'),
       isDistractionFree: get('core', 'distractionFree'),
-      isVisualMode: getEditorMode() === 'visual',
-      isZoomedOutView: isZoomOut()
+      isVisualMode: getEditorMode() === 'visual'
     };
   }, []);
   const preventDefault = event => {
@@ -27802,7 +27798,6 @@ function VisualEditor({
 }) {
   const [resizeObserver, sizes] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
   const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('small', '<');
-  const isTabletViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   const {
     renderingMode,
     postContentAttributes,
@@ -27974,10 +27969,6 @@ function VisualEditor({
   }), useSelectNearestEditableBlock({
     isEnabled: renderingMode === 'template-locked'
   }), useZoomOutModeExit()]);
-  const zoomOutProps = isZoomedOut && !isTabletViewport ? {
-    scale: 'default',
-    frameSize: '40px'
-  } : {};
   const forceFullHeight = postType === NAVIGATION_POST_TYPE;
   const enableResizing = [NAVIGATION_POST_TYPE, constants_TEMPLATE_PART_POST_TYPE, PATTERN_POST_TYPE].includes(postType) &&
   // Disable in previews / view mode.
@@ -28013,7 +28004,6 @@ function VisualEditor({
         height: "100%",
         iframeProps: {
           ...iframeProps,
-          ...zoomOutProps,
           style: {
             ...iframeProps?.style,
             ...deviceStyles
