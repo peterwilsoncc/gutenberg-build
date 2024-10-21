@@ -6067,7 +6067,6 @@ var private_actions_namespaceObject = {};
 __webpack_require__.r(private_actions_namespaceObject);
 __webpack_require__.d(private_actions_namespaceObject, {
   registerRoute: () => (registerRoute),
-  setCanvasMode: () => (setCanvasMode),
   setEditorCanvasContainerView: () => (setEditorCanvasContainerView)
 });
 
@@ -6102,7 +6101,6 @@ __webpack_require__.d(selectors_namespaceObject, {
 var private_selectors_namespaceObject = {};
 __webpack_require__.r(private_selectors_namespaceObject);
 __webpack_require__.d(private_selectors_namespaceObject, {
-  getCanvasMode: () => (getCanvasMode),
   getEditorCanvasContainerView: () => (getEditorCanvasContainerView),
   getRoutes: () => (getRoutes)
 });
@@ -6678,22 +6676,6 @@ function saveViewPanel(state = false, action) {
   switch (action.type) {
     case 'SET_IS_SAVE_VIEW_OPENED':
       return action.isOpen;
-    case 'SET_CANVAS_MODE':
-      return false;
-  }
-  return state;
-}
-
-/**
- * Reducer used to track the site editor canvas mode (edit or view).
- *
- * @param {Object} state  Current state.
- * @param {Object} action Dispatched action.
- */
-function canvasMode(state = 'init', action) {
-  switch (action.type) {
-    case 'SET_CANVAS_MODE':
-      return action.mode;
   }
   return state;
 }
@@ -6724,7 +6706,6 @@ function routes(state = [], action) {
   settings,
   editedPost,
   saveViewPanel,
-  canvasMode,
   editorCanvasContainerView,
   routes
 }));
@@ -7196,64 +7177,6 @@ const toggleDistractionFree = () => ({
 
 ;// ./packages/edit-site/build-module/store/private-actions.js
 /**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Action that switches the canvas mode.
- *
- * @param {?string} mode Canvas mode.
- */
-const setCanvasMode = mode => ({
-  registry,
-  dispatch
-}) => {
-  const isMediumOrBigger = window.matchMedia('(min-width: 782px)').matches;
-  const switchCanvasMode = () => {
-    registry.batch(() => {
-      registry.dispatch(external_wp_blockEditor_namespaceObject.store).clearSelectedBlock();
-      registry.dispatch(external_wp_editor_namespaceObject.store).setDeviceType('Desktop');
-      const isPublishSidebarOpened = registry.select(external_wp_editor_namespaceObject.store).isPublishSidebarOpened();
-      dispatch({
-        type: 'SET_CANVAS_MODE',
-        mode
-      });
-      const isEditMode = mode === 'edit';
-      if (isPublishSidebarOpened && !isEditMode) {
-        registry.dispatch(external_wp_editor_namespaceObject.store).closePublishSidebar();
-      }
-
-      // Check if the block list view should be open by default.
-      // If `distractionFree` mode is enabled, the block list view should not be open.
-      // This behavior is disabled for small viewports.
-      if (isMediumOrBigger && isEditMode && registry.select(external_wp_preferences_namespaceObject.store).get('core', 'showListViewByDefault') && !registry.select(external_wp_preferences_namespaceObject.store).get('core', 'distractionFree')) {
-        registry.dispatch(external_wp_editor_namespaceObject.store).setIsListViewOpened(true);
-      } else {
-        registry.dispatch(external_wp_editor_namespaceObject.store).setIsListViewOpened(false);
-      }
-      registry.dispatch(external_wp_editor_namespaceObject.store).setIsInserterOpened(false);
-    });
-  };
-
-  /*
-   * Skip transition in mobile, otherwise it crashes the browser.
-   * See: https://github.com/WordPress/gutenberg/pull/63002.
-   */
-  if (!isMediumOrBigger || !document.startViewTransition) {
-    switchCanvasMode();
-  } else {
-    document.documentElement.classList.add(`canvas-mode-${mode}-transition`);
-    const transition = document.startViewTransition(() => switchCanvasMode());
-    transition.finished.finally(() => {
-      document.documentElement.classList.remove(`canvas-mode-${mode}-transition`);
-    });
-  }
-};
-
-/**
  * Action that switches the editor canvas container view.
  *
  * @param {?string} view Editor canvas container view.
@@ -7652,17 +7575,6 @@ function hasPageContentFocus() {
 }
 
 ;// ./packages/edit-site/build-module/store/private-selectors.js
-/**
- * Returns the current canvas mode.
- *
- * @param {Object} state Global application state.
- *
- * @return {string} Canvas mode.
- */
-function getCanvasMode(state) {
-  return state.canvasMode;
-}
-
 /**
  * Returns the editor canvas container view.
  *
@@ -8185,9 +8097,12 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
  */
 
 
+const {
+  useLocation,
+  useHistory: resizable_frame_useHistory
+} = unlock(external_wp_router_namespaceObject.privateApis);
 
 // Removes the inline styles in the drag handles.
-
 const HANDLE_STYLES_OVERRIDE = {
   position: undefined,
   userSelect: undefined,
@@ -8238,6 +8153,13 @@ function ResizableFrame({
   defaultSize,
   innerContentStyle
 }) {
+  const history = resizable_frame_useHistory();
+  const {
+    params
+  } = useLocation();
+  const {
+    canvas = 'view'
+  } = params;
   const disableMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
   const [frameSize, setFrameSize] = (0,external_wp_element_namespaceObject.useState)(INITIAL_FRAME_SIZE);
   // The width of the resizable frame when a new resize gesture starts.
@@ -8245,10 +8167,6 @@ function ResizableFrame({
   const [isResizing, setIsResizing] = (0,external_wp_element_namespaceObject.useState)(false);
   const [shouldShowHandle, setShouldShowHandle] = (0,external_wp_element_namespaceObject.useState)(false);
   const [resizeRatio, setResizeRatio] = (0,external_wp_element_namespaceObject.useState)(1);
-  const canvasMode = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).getCanvasMode(), []);
-  const {
-    setCanvasMode
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const FRAME_TRANSITION = {
     type: 'tween',
     duration: isResizing ? 0 : 0.5
@@ -8295,7 +8213,12 @@ function ResizableFrame({
       setFrameSize(INITIAL_FRAME_SIZE);
     } else {
       // Trigger full screen if the frame is resized far enough to the left.
-      setCanvasMode('edit');
+      history.push({
+        ...params,
+        canvas: 'edit'
+      }, undefined, {
+        transition: 'canvas-mode-edit-transition'
+      });
     }
   };
 
@@ -8372,7 +8295,7 @@ function ResizableFrame({
         });
       }
     },
-    whileHover: canvasMode === 'view' ? {
+    whileHover: canvas === 'view' ? {
       scale: 1.005,
       transition: {
         duration: disableMotion ? 0 : 0.5,
@@ -8411,7 +8334,7 @@ function ResizableFrame({
     onMouseOver: () => setShouldShowHandle(true),
     onMouseOut: () => setShouldShowHandle(false),
     handleComponent: {
-      [(0,external_wp_i18n_namespaceObject.isRTL)() ? 'right' : 'left']: canvasMode === 'view' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      [(0,external_wp_i18n_namespaceObject.isRTL)() ? 'right' : 'left']: canvas === 'view' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
           text: (0,external_wp_i18n_namespaceObject.__)('Drag to resize'),
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.button, {
@@ -8496,11 +8419,15 @@ function KeyboardShortcutsRegister() {
 
 
 
+
 /**
  * Internal dependencies
  */
 
 
+const {
+  useHistory: global_useHistory
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function KeyboardShortcutsGlobal() {
   const {
     __experimentalGetDirtyEntityRecords,
@@ -8510,18 +8437,16 @@ function KeyboardShortcutsGlobal() {
     hasNonPostEntityChanges
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_editor_namespaceObject.store);
   const {
-    getCanvasMode
-  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
-  const {
     setIsSaveViewOpened
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const history = global_useHistory();
   (0,external_wp_keyboardShortcuts_namespaceObject.useShortcut)('core/edit-site/save', event => {
     event.preventDefault();
     const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
     const hasDirtyEntities = !!dirtyEntityRecords.length;
     const isSaving = dirtyEntityRecords.some(record => isSavingEntityRecord(record.kind, record.name, record.key));
     const _hasNonPostEntityChanges = hasNonPostEntityChanges();
-    const isViewMode = getCanvasMode() === 'view';
+    const isViewMode = history.getLocationWithParams().params.canvas === 'view';
     if ((!hasDirtyEntities || !_hasNonPostEntityChanges || isSaving) && !isViewMode) {
       return;
     }
@@ -13047,7 +12972,7 @@ function currentlyPreviewingTheme() {
 
 
 const {
-  useLocation
+  useLocation: save_button_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
 function SaveButton({
   className = 'edit-site-save-button__button',
@@ -13060,7 +12985,7 @@ function SaveButton({
 }) {
   const {
     params
-  } = useLocation();
+  } = save_button_useLocation();
   const {
     setIsSaveViewOpened
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
@@ -13299,6 +13224,8 @@ function useActualCurrentTheme() {
 
 
 
+
+
 /**
  * Internal dependencies
  */
@@ -13312,6 +13239,9 @@ const {
   EntitiesSavedStatesExtensible,
   NavigableRegion
 } = unlock(external_wp_editor_namespaceObject.privateApis);
+const {
+  useLocation: save_panel_useLocation
+} = unlock(external_wp_router_namespaceObject.privateApis);
 const EntitiesSavedStatesForPreview = ({
   onClose
 }) => {
@@ -13359,8 +13289,13 @@ const _EntitiesSavedStates = ({
 };
 function SavePanel() {
   const {
+    params
+  } = save_panel_useLocation();
+  const {
+    canvas = 'view'
+  } = params;
+  const {
     isSaveViewOpen,
-    canvasMode,
     isDirty,
     isSaving
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -13372,15 +13307,13 @@ function SavePanel() {
     const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
     const isActivatingTheme = isResolving('activateTheme');
     const {
-      isSaveViewOpened,
-      getCanvasMode
+      isSaveViewOpened
     } = unlock(select(store));
 
     // The currently selected entity to display.
     // Typically template or template part in the site editor.
     return {
       isSaveViewOpen: isSaveViewOpened(),
-      canvasMode: getCanvasMode(),
       isDirty: dirtyEntityRecords.length > 0,
       isSaving: dirtyEntityRecords.some(record => isSavingEntityRecord(record.kind, record.name, record.key)) || isActivatingTheme
     };
@@ -13389,7 +13322,10 @@ function SavePanel() {
     setIsSaveViewOpened
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const onClose = () => setIsSaveViewOpened(false);
-  if (canvasMode === 'view') {
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    setIsSaveViewOpened(false);
+  }, [canvas, setIsSaveViewOpened]);
+  if (canvas === 'view') {
     return isSaveViewOpen ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
       className: "edit-site-save-panel__modal",
       onRequestClose: onClose,
@@ -13428,69 +13364,6 @@ function SavePanel() {
   });
 }
 
-;// ./packages/edit-site/build-module/components/sync-state-with-url/use-sync-canvas-mode-with-url.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-const {
-  useLocation: use_sync_canvas_mode_with_url_useLocation,
-  useHistory: use_sync_canvas_mode_with_url_useHistory
-} = unlock(external_wp_router_namespaceObject.privateApis);
-function useSyncCanvasModeWithURL() {
-  const history = use_sync_canvas_mode_with_url_useHistory();
-  const {
-    params
-  } = use_sync_canvas_mode_with_url_useLocation();
-  const canvasMode = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).getCanvasMode(), []);
-  const {
-    setCanvasMode
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
-  const currentCanvasModeRef = (0,external_wp_element_namespaceObject.useRef)(canvasMode);
-  const {
-    canvas: canvasInUrl
-  } = params;
-  const currentCanvasInUrlRef = (0,external_wp_element_namespaceObject.useRef)(canvasInUrl);
-  const currentUrlParamsRef = (0,external_wp_element_namespaceObject.useRef)(params);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    currentUrlParamsRef.current = params;
-  }, [params]);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    currentCanvasModeRef.current = canvasMode;
-    if (canvasMode === 'init') {
-      return;
-    }
-    if (canvasMode === 'edit' && currentCanvasInUrlRef.current !== canvasMode) {
-      history.push({
-        ...currentUrlParamsRef.current,
-        canvas: 'edit'
-      });
-    }
-    if (canvasMode === 'view' && currentCanvasInUrlRef.current !== undefined) {
-      history.push({
-        ...currentUrlParamsRef.current,
-        canvas: undefined
-      });
-    }
-  }, [canvasMode, history]);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    currentCanvasInUrlRef.current = canvasInUrl;
-    if (canvasInUrl !== 'edit' && currentCanvasModeRef.current !== 'view') {
-      setCanvasMode('view');
-    } else if (canvasInUrl === 'edit' && currentCanvasModeRef.current !== 'edit') {
-      setCanvasMode('edit');
-    }
-  }, [canvasInUrl, setCanvasMode]);
-}
-
 ;// ./packages/edit-site/build-module/components/layout/index.js
 /**
  * External dependencies
@@ -13525,8 +13398,6 @@ function useSyncCanvasModeWithURL() {
 
 
 
-
-
 const {
   useCommands
 } = unlock(external_wp_coreCommands_namespaceObject.privateApis);
@@ -13536,24 +13407,22 @@ const {
 const {
   NavigableRegion: layout_NavigableRegion
 } = unlock(external_wp_editor_namespaceObject.privateApis);
+const {
+  useLocation: layout_useLocation
+} = unlock(external_wp_router_namespaceObject.privateApis);
 const layout_ANIMATION_DURATION = 0.3;
 function Layout({
   route
 }) {
-  useSyncCanvasModeWithURL();
+  const {
+    params
+  } = layout_useLocation();
+  const {
+    canvas = 'view'
+  } = params;
   useCommands();
   const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   const toggleRef = (0,external_wp_element_namespaceObject.useRef)();
-  const {
-    canvasMode
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getCanvasMode
-    } = unlock(select(store));
-    return {
-      canvasMode: getCanvasMode()
-    };
-  }, []);
   const navigateRegionsProps = (0,external_wp_components_namespaceObject.__unstableUseNavigateRegions)();
   const disableMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
   const [canvasResizer, canvasSize] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
@@ -13565,31 +13434,24 @@ function Layout({
     widths
   } = route;
   const animationRef = animation({
-    triggerAnimationOnChange: canvasMode
+    triggerAnimationOnChange: routeKey + '-' + canvas
   });
   const [backgroundColor] = layout_useGlobalStyle('color.background');
   const [gradientValue] = layout_useGlobalStyle('color.gradient');
-  const previousCanvaMode = (0,external_wp_compose_namespaceObject.usePrevious)(canvasMode);
+  const previousCanvaMode = (0,external_wp_compose_namespaceObject.usePrevious)(canvas);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (previousCanvaMode === 'edit') {
       toggleRef.current?.focus();
     }
     // Should not depend on the previous canvas mode value but the next.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [canvasMode]);
-
-  // Synchronizing the URL with the store value of canvasMode happens in an effect
-  // This condition ensures the component is only rendered after the synchronization happens
-  // which prevents any animations due to potential canvasMode value change.
-  if (canvasMode === 'init') {
-    return null;
-  }
+  }, [canvas]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_commands_namespaceObject.CommandMenu, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(register, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(global, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...navigateRegionsProps,
       ref: navigateRegionsProps.ref,
       className: dist_clsx('edit-site-layout', navigateRegionsProps.className, {
-        'is-full-canvas': canvasMode === 'edit'
+        'is-full-canvas': canvas === 'edit'
       }),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
         className: "edit-site-layout__content",
@@ -13597,7 +13459,7 @@ function Layout({
           ariaLabel: (0,external_wp_i18n_namespaceObject.__)('Navigation'),
           className: "edit-site-layout__sidebar-region",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableAnimatePresence, {
-            children: canvasMode === 'view' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__unstableMotion.div, {
+            children: canvas === 'view' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__unstableMotion.div, {
               initial: {
                 opacity: 0
               },
@@ -13626,14 +13488,14 @@ function Layout({
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EditorSnackbars, {}), isMobileViewport && areas.mobile && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
           className: "edit-site-layout__mobile",
-          children: [canvasMode !== 'edit' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarContent, {
+          children: [canvas !== 'edit' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarContent, {
             routeKey: routeKey,
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SiteHubMobile, {
               ref: toggleRef,
               isTransparent: isResizableFrameOversized
             })
           }), areas.mobile]
-        }), !isMobileViewport && areas.content && canvasMode !== 'edit' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        }), !isMobileViewport && areas.content && canvas !== 'edit' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "edit-site-layout__area",
           style: {
             maxWidth: widths?.content
@@ -13655,7 +13517,7 @@ function Layout({
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ErrorBoundary, {
               children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(resizable_frame, {
                 isReady: !isEditorLoading,
-                isFullWidth: canvasMode === 'edit',
+                isFullWidth: canvas === 'edit',
                 defaultSize: {
                   width: canvasSize.width - 24 /* $canvas-padding */,
                   height: canvasSize.height
@@ -13810,15 +13672,14 @@ const {
 } = unlock(external_wp_router_namespaceObject.privateApis);
 function useGlobalStylesOpenStylesCommands() {
   const {
-    openGeneralSidebar,
-    setCanvasMode
+    openGeneralSidebar
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const {
     params
   } = use_common_commands_useLocation();
   const {
-    getCanvasMode
-  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
+    canvas = 'view'
+  } = params;
   const history = use_common_commands_useHistory();
   const isBlockBasedTheme = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return select(external_wp_coreData_namespaceObject.store).getCurrentTheme().is_block_theme;
@@ -13840,14 +13701,19 @@ function useGlobalStylesOpenStylesCommands() {
             canvas: 'edit'
           });
         }
-        if (params.postId && getCanvasMode() !== 'edit') {
-          setCanvasMode('edit');
+        if (params.postId && canvas !== 'edit') {
+          history.push({
+            ...params,
+            canvas: 'edit'
+          }, undefined, {
+            transition: 'canvas-mode-edit-transition'
+          });
         }
         openGeneralSidebar('edit-site/global-styles');
       },
       icon: library_styles
     }];
-  }, [history, openGeneralSidebar, setCanvasMode, getCanvasMode, isBlockBasedTheme, params.postId]);
+  }, [history, openGeneralSidebar, params, canvas, isBlockBasedTheme]);
   return {
     isLoading: false,
     commands
@@ -13855,15 +13721,14 @@ function useGlobalStylesOpenStylesCommands() {
 }
 function useGlobalStylesToggleWelcomeGuideCommands() {
   const {
-    openGeneralSidebar,
-    setCanvasMode
+    openGeneralSidebar
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const {
     params
   } = use_common_commands_useLocation();
   const {
-    getCanvasMode
-  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
+    canvas = 'view'
+  } = params;
   const {
     set
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_preferences_namespaceObject.store);
@@ -13888,8 +13753,13 @@ function useGlobalStylesToggleWelcomeGuideCommands() {
             canvas: 'edit'
           });
         }
-        if (params.postId && getCanvasMode() !== 'edit') {
-          setCanvasMode('edit');
+        if (params.postId && canvas !== 'edit') {
+          history.push({
+            ...params,
+            canvas: 'edit'
+          }, undefined, {
+            transition: 'canvas-mode-edit-transition'
+          });
         }
         openGeneralSidebar('edit-site/global-styles');
         set('core/edit-site', 'welcomeGuideStyles', true);
@@ -13901,7 +13771,7 @@ function useGlobalStylesToggleWelcomeGuideCommands() {
       },
       icon: library_help
     }];
-  }, [history, openGeneralSidebar, setCanvasMode, getCanvasMode, isBlockBasedTheme, set, params.postId]);
+  }, [history, openGeneralSidebar, canvas, isBlockBasedTheme, set, params]);
   return {
     isLoading: false,
     commands
@@ -13933,12 +13803,14 @@ function useGlobalStylesResetCommands() {
 function useGlobalStylesOpenCssCommands() {
   const {
     openGeneralSidebar,
-    setEditorCanvasContainerView,
-    setCanvasMode
+    setEditorCanvasContainerView
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const {
     params
   } = use_common_commands_useLocation();
+  const {
+    canvas = 'view'
+  } = params;
   const history = use_common_commands_useHistory();
   const {
     canEditCSS
@@ -13953,9 +13825,6 @@ function useGlobalStylesOpenCssCommands() {
       canEditCSS: !!globalStyles?._links?.['wp:action-edit-css']
     };
   }, []);
-  const {
-    getCanvasMode
-  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const commands = (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (!canEditCSS) {
       return [];
@@ -13974,14 +13843,19 @@ function useGlobalStylesOpenCssCommands() {
             canvas: 'edit'
           });
         }
-        if (params.postId && getCanvasMode() !== 'edit') {
-          setCanvasMode('edit');
+        if (params.postId && canvas !== 'edit') {
+          history.push({
+            ...params,
+            canvas: 'edit'
+          }, undefined, {
+            transition: 'canvas-mode-edit-transition'
+          });
         }
         openGeneralSidebar('edit-site/global-styles');
         setEditorCanvasContainerView('global-styles-css');
       }
     }];
-  }, [history, openGeneralSidebar, setEditorCanvasContainerView, canEditCSS, getCanvasMode, setCanvasMode, params.postId]);
+  }, [history, openGeneralSidebar, setEditorCanvasContainerView, canEditCSS, canvas, params]);
   return {
     isLoading: false,
     commands
@@ -13990,15 +13864,14 @@ function useGlobalStylesOpenCssCommands() {
 function useGlobalStylesOpenRevisionsCommands() {
   const {
     openGeneralSidebar,
-    setEditorCanvasContainerView,
-    setCanvasMode
+    setEditorCanvasContainerView
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
-  const {
-    getCanvasMode
-  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const {
     params
   } = use_common_commands_useLocation();
+  const {
+    canvas = 'view'
+  } = params;
   const history = use_common_commands_useHistory();
   const hasRevisions = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
@@ -14027,14 +13900,19 @@ function useGlobalStylesOpenRevisionsCommands() {
             canvas: 'edit'
           });
         }
-        if (params.postId && getCanvasMode() !== 'edit') {
-          setCanvasMode('edit');
+        if (params.postId && canvas !== 'edit') {
+          history.push({
+            ...params,
+            canvas: 'edit'
+          }, undefined, {
+            transition: 'canvas-mode-edit-transition'
+          });
         }
         openGeneralSidebar('edit-site/global-styles');
         setEditorCanvasContainerView('global-styles-revisions');
       }
     }];
-  }, [hasRevisions, history, openGeneralSidebar, setEditorCanvasContainerView, getCanvasMode, setCanvasMode, params.postId]);
+  }, [hasRevisions, history, openGeneralSidebar, setEditorCanvasContainerView, canvas, params]);
   return {
     isLoading: false,
     commands
@@ -14252,21 +14130,26 @@ function Link({
 
 
 const {
-  useHistory: use_edit_mode_commands_useHistory
+  useHistory: use_edit_mode_commands_useHistory,
+  useLocation: use_edit_mode_commands_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
 function usePageContentFocusCommands() {
   const {
     record: template
   } = useEditedEntityRecord();
   const {
+    params
+  } = use_edit_mode_commands_useLocation();
+  const {
+    canvas = 'view'
+  } = params;
+  const {
     isPage,
-    canvasMode,
     templateId,
     currentPostType
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      isPage: _isPage,
-      getCanvasMode
+      isPage: _isPage
     } = unlock(select(store));
     const {
       getCurrentPostType,
@@ -14274,7 +14157,6 @@ function usePageContentFocusCommands() {
     } = select(external_wp_editor_namespaceObject.store);
     return {
       isPage: _isPage(),
-      canvasMode: getCanvasMode(),
       templateId: getCurrentTemplateId(),
       currentPostType: getCurrentPostType()
     };
@@ -14288,7 +14170,7 @@ function usePageContentFocusCommands() {
   const {
     setRenderingMode
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_editor_namespaceObject.store);
-  if (!isPage || canvasMode !== 'edit') {
+  if (!isPage || canvas !== 'edit') {
     return {
       isLoading: false,
       commands: []
@@ -14842,40 +14724,37 @@ function useHasEditorCanvasContainer() {
 
 
 
+
 /**
  * Internal dependencies
  */
 
 
-
 const {
   useCommandContext
 } = unlock(external_wp_commands_namespaceObject.privateApis);
+const {
+  useLocation: use_set_command_context_useLocation
+} = unlock(external_wp_router_namespaceObject.privateApis);
 
 /**
  * React hook used to set the correct command context based on the current state.
  */
 function useSetCommandContext() {
   const {
-    hasBlockSelected,
-    canvasMode
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getCanvasMode
-    } = unlock(select(store));
-    const {
-      getBlockSelectionStart
-    } = select(external_wp_blockEditor_namespaceObject.store);
-    return {
-      canvasMode: getCanvasMode(),
-      hasBlockSelected: getBlockSelectionStart()
-    };
+    params
+  } = use_set_command_context_useLocation();
+  const {
+    canvas = 'view'
+  } = params;
+  const hasBlockSelected = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return select(external_wp_blockEditor_namespaceObject.store).getBlockSelectionStart();
   }, []);
   const hasEditorCanvasContainer = useHasEditorCanvasContainer();
 
   // Sets the right context for the command palette
   let commandContext = 'site-editor';
-  if (canvasMode === 'edit') {
+  if (canvas === 'edit') {
     commandContext = 'entity-edit';
   }
   if (hasBlockSelected) {
@@ -15448,20 +15327,23 @@ function useNavigateToPreviousEntityRecord() {
   return goBack;
 }
 function useSpecificEditorSettings() {
+  const {
+    params
+  } = use_site_editor_settings_useLocation();
+  const {
+    canvas = 'view'
+  } = params;
   const onNavigateToEntityRecord = useNavigateToEntityRecord();
   const {
-    canvasMode,
     settings,
     shouldUseTemplateAsDefaultRenderingMode
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEditedPostContext,
-      getCanvasMode,
       getSettings
     } = unlock(select(store));
     const _context = getEditedPostContext();
     return {
-      canvasMode: getCanvasMode(),
       settings: getSettings(),
       // TODO: The `postType` check should be removed when the default rendering mode per post type is merged.
       // @see https://github.com/WordPress/gutenberg/pull/62304/
@@ -15475,13 +15357,13 @@ function useSpecificEditorSettings() {
       ...settings,
       richEditingEnabled: true,
       supportsTemplateMode: true,
-      focusMode: canvasMode !== 'view',
+      focusMode: canvas !== 'view',
       defaultRenderingMode,
       onNavigateToEntityRecord,
       onNavigateToPreviousEntityRecord,
-      __unstableIsPreviewMode: canvasMode === 'view'
+      __unstableIsPreviewMode: canvas === 'view'
     };
-  }, [settings, canvasMode, defaultRenderingMode, onNavigateToEntityRecord, onNavigateToPreviousEntityRecord]);
+  }, [settings, canvas, defaultRenderingMode, onNavigateToEntityRecord, onNavigateToPreviousEntityRecord]);
   return defaultEditorSettings;
 }
 
@@ -28199,6 +28081,7 @@ function DefaultSidebar({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -28212,7 +28095,16 @@ function DefaultSidebar({
 const {
   interfaceStore: global_styles_sidebar_interfaceStore
 } = unlock(external_wp_editor_namespaceObject.privateApis);
+const {
+  useLocation: global_styles_sidebar_useLocation
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function GlobalStylesSidebar() {
+  const {
+    params
+  } = global_styles_sidebar_useLocation();
+  const {
+    canvas = 'view'
+  } = params;
   const {
     shouldClearCanvasContainerView,
     isStyleBookOpened,
@@ -28225,12 +28117,11 @@ function GlobalStylesSidebar() {
       getActiveComplementaryArea
     } = select(global_styles_sidebar_interfaceStore);
     const {
-      getEditorCanvasContainerView,
-      getCanvasMode
+      getEditorCanvasContainerView
     } = unlock(select(store));
     const canvasContainerView = getEditorCanvasContainerView();
     const _isVisualEditorMode = 'visual' === select(external_wp_editor_namespaceObject.store).getEditorMode();
-    const _isEditCanvasMode = 'edit' === getCanvasMode();
+    const _isEditCanvasMode = 'edit' === canvas;
     const _showListViewByDefault = select(external_wp_preferences_namespaceObject.store).get('core', 'showListViewByDefault');
     const {
       getEntityRecord,
@@ -28246,7 +28137,7 @@ function GlobalStylesSidebar() {
       isRevisionsStyleBookOpened: 'global-styles-revisions:style-book' === canvasContainerView,
       isRevisionsOpened: 'global-styles-revisions' === canvasContainerView
     };
-  }, []);
+  }, [canvas]);
   const {
     setEditorCanvasContainerView
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
@@ -28254,7 +28145,7 @@ function GlobalStylesSidebar() {
     if (shouldClearCanvasContainerView) {
       setEditorCanvasContainerView(undefined);
     }
-  }, [shouldClearCanvasContainerView]);
+  }, [shouldClearCanvasContainerView, setEditorCanvasContainerView]);
   const {
     setIsListViewOpened
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_editor_namespaceObject.store);
@@ -28463,33 +28354,32 @@ function MoreMenu() {
 
 
 
+
 /**
  * Internal dependencies
  */
 
-
+const {
+  useLocation: use_editor_iframe_props_useLocation,
+  useHistory: use_editor_iframe_props_useHistory
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function useEditorIframeProps() {
   const {
-    canvasMode,
-    currentPostIsTrashed
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getCanvasMode
-    } = unlock(select(store));
-    return {
-      canvasMode: getCanvasMode(),
-      currentPostIsTrashed: select(external_wp_editor_namespaceObject.store).getCurrentPostAttribute('status') === 'trash'
-    };
-  }, []);
+    params
+  } = use_editor_iframe_props_useLocation();
+  const history = use_editor_iframe_props_useHistory();
   const {
-    setCanvasMode
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+    canvas = 'view'
+  } = params;
+  const currentPostIsTrashed = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return select(external_wp_editor_namespaceObject.store).getCurrentPostAttribute('status') === 'trash';
+  }, []);
   const [isFocused, setIsFocused] = (0,external_wp_element_namespaceObject.useState)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (canvasMode === 'edit') {
+    if (canvas === 'edit') {
       setIsFocused(false);
     }
-  }, [canvasMode]);
+  }, [canvas]);
 
   // In view mode, make the canvas iframe be perceived and behave as a button
   // to switch to edit mode, with a meaningful label and no title attribute.
@@ -28507,11 +28397,21 @@ function useEditorIframeProps() {
       } = event;
       if ((keyCode === external_wp_keycodes_namespaceObject.ENTER || keyCode === external_wp_keycodes_namespaceObject.SPACE) && !currentPostIsTrashed) {
         event.preventDefault();
-        setCanvasMode('edit');
+        history.push({
+          ...params,
+          canvas: 'edit'
+        }, undefined, {
+          transition: 'canvas-mode-edit-transition'
+        });
       }
     },
     onClick: () => {
-      setCanvasMode('edit');
+      history.push({
+        ...params,
+        canvas: 'edit'
+      }, undefined, {
+        transition: 'canvas-mode-edit-transition'
+      });
     },
     onClickCapture: event => {
       if (currentPostIsTrashed) {
@@ -28523,9 +28423,9 @@ function useEditorIframeProps() {
   };
   return {
     className: dist_clsx('edit-site-visual-editor__editor-canvas', {
-      'is-focused': isFocused && canvasMode === 'view'
+      'is-focused': isFocused && canvas === 'view'
     }),
-    ...(canvasMode === 'view' ? viewModeIframeProps : {})
+    ...(canvas === 'view' ? viewModeIframeProps : {})
   };
 }
 
@@ -28604,6 +28504,49 @@ function useEditorTitle() {
 }
 /* harmony default export */ const use_editor_title = (useEditorTitle);
 
+;// ./packages/edit-site/build-module/components/editor/use-adapt-editor-to-canvas.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+function useAdaptEditorToCanvas(canvas) {
+  const {
+    clearSelectedBlock
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  const {
+    setDeviceType,
+    closePublishSidebar,
+    setIsListViewOpened,
+    setIsInserterOpened
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_editor_namespaceObject.store);
+  const {
+    get: getPreference
+  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_preferences_namespaceObject.store);
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    const isMediumOrBigger = window.matchMedia('(min-width: 782px)').matches;
+    registry.batch(() => {
+      clearSelectedBlock();
+      setDeviceType('Desktop');
+      closePublishSidebar();
+      setIsInserterOpened(false);
+
+      // Check if the block list view should be open by default.
+      // If `distractionFree` mode is enabled, the block list view should not be open.
+      // This behavior is disabled for small viewports.
+      if (isMediumOrBigger && canvas === 'edit' && getPreference('core', 'showListViewByDefault') && !getPreference('core', 'distractionFree')) {
+        setIsListViewOpened(true);
+      } else {
+        setIsListViewOpened(false);
+      }
+    });
+  }, [canvas, registry, clearSelectedBlock, setDeviceType, closePublishSidebar, setIsInserterOpened, setIsListViewOpened, getPreference]);
+}
+
 ;// ./packages/edit-site/build-module/components/editor/index.js
 /**
  * External dependencies
@@ -28631,6 +28574,7 @@ function useEditorTitle() {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -28689,13 +28633,16 @@ function EditSiteEditor({
   const {
     params
   } = editor_useLocation();
+  const {
+    canvas = 'view'
+  } = params;
   const isLoading = useIsSiteEditorLoading();
+  useAdaptEditorToCanvas(canvas);
   const {
     editedPostType,
     editedPostId,
     contextPostType,
     contextPostId,
-    canvasMode,
     isEditingPage,
     supportsGlobalStyles,
     showIconLabels,
@@ -28706,7 +28653,6 @@ function EditSiteEditor({
     const {
       getEditorCanvasContainerView,
       getEditedPostContext,
-      getCanvasMode,
       isPage,
       getEditedPostType,
       getEditedPostId
@@ -28728,7 +28674,6 @@ function EditSiteEditor({
       editedPostId: getEditedPostId(),
       contextPostType: _context?.postId ? _context.postType : undefined,
       contextPostId: _context?.postId ? _context.postId : undefined,
-      canvasMode: getCanvasMode(),
       isEditingPage: isPage(),
       supportsGlobalStyles: getCurrentTheme()?.is_block_theme,
       showIconLabels: get('core', 'showIconLabels'),
@@ -28741,18 +28686,15 @@ function EditSiteEditor({
   const _isPreviewingTheme = isPreviewingTheme();
   const hasDefaultEditorCanvasView = !useHasEditorCanvasContainer();
   const iframeProps = useEditorIframeProps();
-  const isEditMode = canvasMode === 'edit';
+  const isEditMode = canvas === 'edit';
   const postWithTemplate = !!contextPostId;
   const loadingProgressId = (0,external_wp_compose_namespaceObject.useInstanceId)(CanvasLoader, 'edit-site-editor__loading-progress');
   const settings = useSpecificEditorSettings();
   const styles = (0,external_wp_element_namespaceObject.useMemo)(() => [...settings.styles, {
     // Forming a "block formatting context" to prevent margin collapsing.
     // @see https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context
-    css: canvasMode === 'view' ? `body{min-height: 100vh; ${currentPostIsTrashed ? '' : 'cursor: pointer;'}}` : undefined
-  }], [settings.styles, canvasMode, currentPostIsTrashed]);
-  const {
-    setCanvasMode
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+    css: canvas === 'view' ? `body{min-height: 100vh; ${currentPostIsTrashed ? '' : 'cursor: pointer;'}}` : undefined
+  }], [settings.styles, canvas, currentPostIsTrashed]);
   const {
     __unstableSetEditorMode,
     resetZoomLevel
@@ -28839,7 +28781,6 @@ function EditSiteEditor({
             showTooltip: true,
             tooltipPosition: "middle right",
             onClick: () => {
-              setCanvasMode('view');
               __unstableSetEditorMode('edit');
               resetZoomLevel();
 
@@ -28849,6 +28790,15 @@ function EditSiteEditor({
                 history.push({
                   page: 'gutenberg-posts-dashboard',
                   postType: 'post'
+                }, undefined, {
+                  transition: 'canvas-mode-view-transition'
+                });
+              } else {
+                history.push({
+                  ...params,
+                  canvas: undefined
+                }, undefined, {
+                  transition: 'canvas-mode-view-transition'
                 });
               }
             },
@@ -29330,6 +29280,7 @@ function SidebarNavigationScreenDetailsFooter({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -29343,13 +29294,18 @@ function SidebarNavigationScreenDetailsFooter({
 
 
 
+const {
+  useLocation: sidebar_navigation_screen_global_styles_useLocation,
+  useHistory: sidebar_navigation_screen_global_styles_useHistory
+} = unlock(external_wp_router_namespaceObject.privateApis);
 function SidebarNavigationItemGlobalStyles(props) {
   const {
     openGeneralSidebar
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const history = sidebar_navigation_screen_global_styles_useHistory();
   const {
-    setCanvasMode
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+    params
+  } = sidebar_navigation_screen_global_styles_useLocation();
   const hasGlobalStyleVariations = (0,external_wp_data_namespaceObject.useSelect)(select => !!select(external_wp_coreData_namespaceObject.store).__experimentalGetCurrentThemeGlobalStylesVariations()?.length, []);
   if (hasGlobalStyleVariations) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItem, {
@@ -29364,7 +29320,12 @@ function SidebarNavigationItemGlobalStyles(props) {
     ...props,
     onClick: () => {
       // Switch to edit mode.
-      setCanvasMode('edit');
+      history.push({
+        ...params,
+        canvas: 'edit'
+      }, undefined, {
+        transition: 'canvas-mode-edit-transition'
+      });
       // Open global styles sidebar.
       openGeneralSidebar('edit-site/global-styles');
     }
@@ -29373,6 +29334,13 @@ function SidebarNavigationItemGlobalStyles(props) {
 function SidebarNavigationScreenGlobalStyles({
   backPath
 }) {
+  const history = sidebar_navigation_screen_global_styles_useHistory();
+  const {
+    params
+  } = sidebar_navigation_screen_global_styles_useLocation();
+  const {
+    canvas = 'view'
+  } = params;
   const {
     revisions,
     isLoading: isLoadingRevisions
@@ -29385,17 +29353,14 @@ function SidebarNavigationScreenGlobalStyles({
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_editor_namespaceObject.store);
   const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   const {
-    setCanvasMode,
     setEditorCanvasContainerView
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   const {
-    isViewMode,
     isStyleBookOpened,
     revisionsCount
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _globalStyles$_links$;
     const {
-      getCanvasMode,
       getEditorCanvasContainerView
     } = unlock(select(store));
     const {
@@ -29405,7 +29370,6 @@ function SidebarNavigationScreenGlobalStyles({
     const globalStylesId = __experimentalGetCurrentGlobalStylesId();
     const globalStyles = globalStylesId ? getEntityRecord('root', 'globalStyles', globalStylesId) : undefined;
     return {
-      isViewMode: 'view' === getCanvasMode(),
       isStyleBookOpened: 'style-book' === getEditorCanvasContainerView(),
       revisionsCount: (_globalStyles$_links$ = globalStyles?._links?.['version-history']?.[0]?.count) !== null && _globalStyles$_links$ !== void 0 ? _globalStyles$_links$ : 0
     };
@@ -29414,8 +29378,14 @@ function SidebarNavigationScreenGlobalStyles({
     set: setPreference
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_preferences_namespaceObject.store);
   const openGlobalStyles = (0,external_wp_element_namespaceObject.useCallback)(async () => {
-    return Promise.all([setPreference('core', 'distractionFree', false), setCanvasMode('edit'), openGeneralSidebar('edit-site/global-styles')]);
-  }, [setCanvasMode, openGeneralSidebar, setPreference]);
+    history.push({
+      ...params,
+      canvas: 'edit'
+    }, undefined, {
+      transition: 'canvas-mode-edit-transition'
+    });
+    return Promise.all([setPreference('core', 'distractionFree', false), openGeneralSidebar('edit-site/global-styles')]);
+  }, [history, params, openGeneralSidebar, setPreference]);
   const openStyleBook = (0,external_wp_element_namespaceObject.useCallback)(async () => {
     await openGlobalStyles();
     // Open the Style Book once the canvas mode is set to edit,
@@ -29459,7 +29429,7 @@ function SidebarNavigationScreenGlobalStyles({
           onClick: async () => await openGlobalStyles()
         })]
       })
-    }), isStyleBookOpened && !isMobileViewport && isViewMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book, {
+    }), isStyleBookOpened && !isMobileViewport && canvas === 'view' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book, {
       enableResizing: false,
       isSelected: () => false,
       onClick: openStyleBook,
