@@ -48073,13 +48073,15 @@ function useWritingFlow() {
   const hasMultiSelection = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).hasMultiSelection(), []);
   return [before, (0,external_wp_compose_namespaceObject.useMergeRefs)([ref, useClipboardHandler(), useInput(), useDragSelection(), useSelectionObserver(), useClickSelection(), useMultiSelection(), useSelectAll(), useArrowNav(), (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
     node.tabIndex = 0;
+    node.dataset.hasMultiSelection = hasMultiSelection;
     if (!hasMultiSelection) {
-      return;
+      return () => {
+        delete node.dataset.hasMultiSelection;
+      };
     }
-    node.classList.add('has-multi-selection');
     node.setAttribute('aria-label', (0,external_wp_i18n_namespaceObject.__)('Multiple selected blocks'));
     return () => {
-      node.classList.remove('has-multi-selection');
+      delete node.dataset.hasMultiSelection;
       node.removeAttribute('aria-label');
     };
   }, [hasMultiSelection])]), after];
