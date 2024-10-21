@@ -15794,9 +15794,9 @@ const __unstableSetEditorMode = mode => ({
 }) => {
   registry.dispatch(external_wp_preferences_namespaceObject.store).set('core', 'editorTool', mode);
   if (mode === 'navigation') {
-    (0,external_wp_a11y_namespaceObject.speak)((0,external_wp_i18n_namespaceObject.__)('You are currently in navigation mode. Navigate blocks using the Tab key and Arrow keys. Use Left and Right Arrow keys to move between nesting levels. To exit navigation mode and edit the selected block, press Enter.'));
+    (0,external_wp_a11y_namespaceObject.speak)((0,external_wp_i18n_namespaceObject.__)('You are currently in Write mode.'));
   } else if (mode === 'edit') {
-    (0,external_wp_a11y_namespaceObject.speak)((0,external_wp_i18n_namespaceObject.__)('You are currently in edit mode. To return to the navigation mode, press Escape.'));
+    (0,external_wp_a11y_namespaceObject.speak)((0,external_wp_i18n_namespaceObject.__)('You are currently in Design mode.'));
   }
 };
 
