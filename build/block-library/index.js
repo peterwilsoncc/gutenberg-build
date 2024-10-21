@@ -13524,10 +13524,15 @@ const cover_deprecated_v1 = {
 };
 /* harmony default export */ const cover_deprecated = ([v13, v12, deprecated_v11, deprecated_v10, v9, v8, v7, v6, v5, v4, v3, v2, cover_deprecated_v1]);
 
+;// ./packages/block-library/build-module/cover/constants.js
+const DEFAULT_MEDIA_SIZE_SLUG = 'full';
+
 ;// ./packages/block-library/build-module/cover/edit/inspector-controls.js
 /**
  * WordPress dependencies
  */
+
+
 
 
 
@@ -13541,8 +13546,10 @@ const cover_deprecated_v1 = {
 
 
 
+
 const {
-  cleanEmptyObject: inspector_controls_cleanEmptyObject
+  cleanEmptyObject: inspector_controls_cleanEmptyObject,
+  ResolutionTool
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function CoverHeightInput({
   onChange,
@@ -13600,6 +13607,7 @@ function CoverInspectorControls({
 }) {
   const {
     useFeaturedImage,
+    id,
     dimRatio,
     focalPoint,
     hasParallax,
@@ -13616,10 +13624,37 @@ function CoverInspectorControls({
     url,
     overlayColor
   } = currentSettings;
+  const sizeSlug = attributes.sizeSlug || DEFAULT_MEDIA_SIZE_SLUG;
   const {
     gradientValue,
     setGradient
   } = (0,external_wp_blockEditor_namespaceObject.__experimentalUseGradient)();
+  const {
+    getSettings
+  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
+  const imageSizes = getSettings()?.imageSizes;
+  const image = (0,external_wp_data_namespaceObject.useSelect)(select => id && isImageBackground ? select(external_wp_coreData_namespaceObject.store).getMedia(id, {
+    context: 'view'
+  }) : null, [id, isImageBackground]);
+  function updateImage(newSizeSlug) {
+    const newUrl = image?.media_details?.sizes?.[newSizeSlug]?.source_url;
+    if (!newUrl) {
+      return null;
+    }
+    setAttributes({
+      url: newUrl,
+      sizeSlug: newSizeSlug
+    });
+  }
+  const imageSizeOptions = imageSizes?.filter(({
+    slug
+  }) => image?.media_details?.sizes?.[slug]?.source_url)?.map(({
+    name,
+    slug
+  }) => ({
+    value: slug,
+    label: name
+  }));
   const toggleParallax = () => {
     setAttributes({
       hasParallax: !hasParallax,
@@ -13657,7 +13692,8 @@ function CoverInspectorControls({
             hasParallax: false,
             focalPoint: undefined,
             isRepeated: false,
-            alt: ''
+            alt: '',
+            sizeSlug: undefined
           });
         },
         dropdownMenuProps: dropdownMenuProps,
@@ -13731,6 +13767,11 @@ function CoverInspectorControls({
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("br", {}), (0,external_wp_i18n_namespaceObject.__)('Leave empty if decorative.')]
             })
           })
+        }), !useFeaturedImage && !!imageSizeOptions?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResolutionTool, {
+          value: sizeSlug,
+          onChange: updateImage,
+          options: imageSizeOptions,
+          defaultValue: DEFAULT_MEDIA_SIZE_SLUG
         })]
       })
     }), colorGradientSettings.hasColorsOrGradients && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
@@ -14733,6 +14774,7 @@ function compositeIsDark(dimRatio, overlayColor, backgroundColor) {
 
 
 
+
 function getInnerBlocksTemplate(attributes) {
   return [['core/paragraph', {
     align: 'center',
@@ -14781,9 +14823,13 @@ function CoverEdit({
     allowedBlocks,
     templateLock,
     tagName: TagName = 'div',
-    isUserOverlayColor
+    isUserOverlayColor,
+    sizeSlug
   } = attributes;
   const [featuredImage] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', postType, 'featured_media', postId);
+  const {
+    getSettings
+  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
   const {
     __unstableMarkNextChangeAsNotPersistent
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
@@ -14852,6 +14898,23 @@ function CoverEdit({
     // See issue #52835 for context.
     const newDimRatio = originalUrl === undefined && dimRatio === 100 ? 50 : dimRatio;
     const newIsDark = compositeIsDark(newDimRatio, newOverlayColor, averageBackgroundColor);
+    if (backgroundType === IMAGE_BACKGROUND_TYPE && mediaAttributes.id) {
+      const {
+        imageDefaultSize
+      } = getSettings();
+
+      // Try to use the previous selected image size if it's available
+      // otherwise try the default image size or fallback to full size.
+      if (sizeSlug && newMedia?.sizes?.[sizeSlug]) {
+        mediaAttributes.sizeSlug = sizeSlug;
+        mediaAttributes.url = newMedia?.sizes?.[sizeSlug]?.url;
+      } else if (newMedia?.sizes?.[imageDefaultSize]) {
+        mediaAttributes.sizeSlug = imageDefaultSize;
+        mediaAttributes.url = newMedia?.sizes?.[sizeSlug]?.url;
+      } else {
+        mediaAttributes.sizeSlug = DEFAULT_MEDIA_SIZE_SLUG;
+      }
+    }
     setAttributes({
       ...mediaAttributes,
       focalPoint: undefined,
@@ -15182,7 +15245,8 @@ function cover_save_save({
     id,
     minHeight: minHeightProp,
     minHeightUnit,
-    tagName: Tag
+    tagName: Tag,
+    sizeSlug
   } = attributes;
   const overlayColorClass = (0,external_wp_blockEditor_namespaceObject.getColorClassName)('background-color', overlayColor);
   const gradientClass = (0,external_wp_blockEditor_namespaceObject.__experimentalGetGradientClass)(gradient);
@@ -15209,6 +15273,7 @@ function cover_save_save({
     'has-custom-content-position': !isContentPositionCenter(contentPosition)
   }, getPositionClassName(contentPosition));
   const imgClasses = dist_clsx('wp-block-cover__image-background', id ? `wp-image-${id}` : null, {
+    [`size-${sizeSlug}`]: sizeSlug,
     'has-parallax': hasParallax,
     'is-repeated': isRepeated
   });
@@ -15630,6 +15695,9 @@ const cover_metadata = {
     tagName: {
       type: "string",
       "default": "div"
+    },
+    sizeSlug: {
+      type: "string"
     }
   },
   usesContext: ["postId", "postType"],
@@ -25820,7 +25888,7 @@ const upload = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 const {
   DimensionsTool,
-  ResolutionTool
+  ResolutionTool: image_ResolutionTool
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const scaleOptions = [{
   value: 'cover',
@@ -26405,7 +26473,7 @@ function image_Image({
             }),
             __nextHasNoMarginBottom: true
           })
-        }), isResizable && (parentLayoutType === 'grid' ? aspectRatioControl : dimensionsControl), !!imageSizeOptions.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResolutionTool, {
+        }), isResizable && (parentLayoutType === 'grid' ? aspectRatioControl : dimensionsControl), !!imageSizeOptions.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(image_ResolutionTool, {
           value: sizeSlug,
           onChange: updateImage,
           options: imageSizeOptions
@@ -30511,7 +30579,7 @@ const mediaAndText = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
  * WordPress dependencies
  */
 
-const DEFAULT_MEDIA_SIZE_SLUG = 'full';
+const constants_DEFAULT_MEDIA_SIZE_SLUG = 'full';
 const WIDTH_CONSTRAINT_PERCENTAGE = 15;
 const media_text_constants_LINK_DESTINATION_MEDIA = 'media';
 const media_text_constants_LINK_DESTINATION_ATTACHMENT = 'attachment';
@@ -30803,7 +30871,7 @@ const media_text_deprecated_v7 = {
       linkTarget,
       rel
     } = attributes;
-    const mediaSizeSlug = attributes.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG;
+    const mediaSizeSlug = attributes.mediaSizeSlug || constants_DEFAULT_MEDIA_SIZE_SLUG;
     const newRel = !rel ? undefined : rel;
     const imageClasses = dist_clsx({
       [`wp-image-${mediaId}`]: mediaId && mediaType === 'image',
@@ -30903,7 +30971,7 @@ const media_text_deprecated_v6 = {
       linkTarget,
       rel
     } = attributes;
-    const mediaSizeSlug = attributes.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG;
+    const mediaSizeSlug = attributes.mediaSizeSlug || constants_DEFAULT_MEDIA_SIZE_SLUG;
     const newRel = !rel ? undefined : rel;
     const imageClasses = dist_clsx({
       [`wp-image-${mediaId}`]: mediaId && mediaType === 'image',
@@ -31020,7 +31088,7 @@ const media_text_deprecated_v5 = {
       linkTarget,
       rel
     } = attributes;
-    const mediaSizeSlug = attributes.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG;
+    const mediaSizeSlug = attributes.mediaSizeSlug || constants_DEFAULT_MEDIA_SIZE_SLUG;
     const newRel = !rel ? undefined : rel;
     const imageClasses = dist_clsx({
       [`wp-image-${mediaId}`]: mediaId && mediaType === 'image',
@@ -31121,7 +31189,7 @@ const media_text_deprecated_v4 = {
       linkTarget,
       rel
     } = attributes;
-    const mediaSizeSlug = attributes.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG;
+    const mediaSizeSlug = attributes.mediaSizeSlug || constants_DEFAULT_MEDIA_SIZE_SLUG;
     const newRel = !rel ? undefined : rel;
     const imageClasses = dist_clsx({
       [`wp-image-${mediaId}`]: mediaId && mediaType === 'image',
@@ -31850,7 +31918,7 @@ function MediaTextEdit({
     allowedBlocks,
     useFeaturedImage
   } = attributes;
-  const mediaSizeSlug = attributes.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG;
+  const mediaSizeSlug = attributes.mediaSizeSlug || constants_DEFAULT_MEDIA_SIZE_SLUG;
   const [featuredImage] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', postType, 'featured_media', postId);
   const featuredImageMedia = (0,external_wp_data_namespaceObject.useSelect)(select => featuredImage && select(external_wp_coreData_namespaceObject.store).getMedia(featuredImage, {
     context: 'view'
@@ -32179,7 +32247,7 @@ function media_text_save_save({
     linkTarget,
     rel
   } = attributes;
-  const mediaSizeSlug = attributes.mediaSizeSlug || DEFAULT_MEDIA_SIZE_SLUG;
+  const mediaSizeSlug = attributes.mediaSizeSlug || constants_DEFAULT_MEDIA_SIZE_SLUG;
   const newRel = !rel ? undefined : rel;
   const imageClasses = dist_clsx({
     [`wp-image-${mediaId}`]: mediaId && mediaType === 'image',
