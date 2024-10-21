@@ -25895,16 +25895,13 @@ function LinkedButton({
   ...props
 }) {
   const label = isLinked ? (0,external_wp_i18n_namespaceObject.__)('Unlink radii') : (0,external_wp_i18n_namespaceObject.__)('Link radii');
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
-    text: label,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      ...props,
-      className: "component-border-radius-control__linked-button",
-      size: "small",
-      icon: isLinked ? library_link : link_off,
-      iconSize: 24,
-      "aria-label": label
-    })
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    ...props,
+    className: "component-border-radius-control__linked-button",
+    size: "small",
+    icon: isLinked ? library_link : link_off,
+    iconSize: 24,
+    label: label
   });
 }
 
