@@ -28296,35 +28296,37 @@ function GlobalStylesSidebar() {
     header: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
       className: "edit-site-global-styles-sidebar__header",
       gap: 1,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexBlock, {
-        style: {
-          minWidth: 'min-content'
-        },
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
           className: "edit-site-global-styles-sidebar__header-title",
           children: (0,external_wp_i18n_namespaceObject.__)('Styles')
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          icon: library_seen,
-          label: (0,external_wp_i18n_namespaceObject.__)('Style Book'),
-          isPressed: isStyleBookOpened || isRevisionsStyleBookOpened,
-          accessibleWhenDisabled: true,
-          disabled: shouldClearCanvasContainerView,
-          onClick: toggleStyleBook,
-          size: "compact"
-        })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Revisions'),
-          icon: library_backup,
-          onClick: toggleRevisions,
-          accessibleWhenDisabled: true,
-          disabled: !hasRevisions,
-          isPressed: isRevisionsOpened || isRevisionsStyleBookOpened,
-          size: "compact"
-        })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesMenuSlot, {})]
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
+        justify: "flex-end",
+        gap: 1,
+        className: "edit-site-global-styles-sidebar__header-actions",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            icon: library_seen,
+            label: (0,external_wp_i18n_namespaceObject.__)('Style Book'),
+            isPressed: isStyleBookOpened || isRevisionsStyleBookOpened,
+            accessibleWhenDisabled: true,
+            disabled: shouldClearCanvasContainerView,
+            onClick: toggleStyleBook,
+            size: "compact"
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            label: (0,external_wp_i18n_namespaceObject.__)('Revisions'),
+            icon: library_backup,
+            onClick: toggleRevisions,
+            accessibleWhenDisabled: true,
+            disabled: !hasRevisions,
+            isPressed: isRevisionsOpened || isRevisionsStyleBookOpened,
+            size: "compact"
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesMenuSlot, {})]
+      })]
     }),
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ui, {})
   });
