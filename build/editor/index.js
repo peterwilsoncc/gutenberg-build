@@ -5078,10 +5078,11 @@ const switchEditorMode = mode => ({
   registry
 }) => {
   registry.dispatch(external_wp_preferences_namespaceObject.store).set('core', 'editorMode', mode);
-
-  // Unselect blocks when we switch to a non visual mode.
   if (mode !== 'visual') {
+    // Unselect blocks when we switch to a non visual mode.
     registry.dispatch(external_wp_blockEditor_namespaceObject.store).clearSelectedBlock();
+    // Exit zoom out state when switching to a non visual mode.
+    unlock(registry.dispatch(external_wp_blockEditor_namespaceObject.store)).resetZoomLevel();
   }
   if (mode === 'visual') {
     (0,external_wp_a11y_namespaceObject.speak)((0,external_wp_i18n_namespaceObject.__)('Visual editor selected'), 'assertive');
@@ -27333,11 +27334,9 @@ function SavePublishPanels({
 
 
 
-
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -27363,19 +27362,13 @@ function TextEditor({
       isRichEditingEnabled: getEditorSettings().richEditingEnabled
     };
   }, []);
-  const {
-    resetZoomLevel,
-    __unstableSetEditorMode
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store));
   const titleRef = (0,external_wp_element_namespaceObject.useRef)();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    resetZoomLevel();
-    __unstableSetEditorMode('edit');
     if (autoFocus) {
       return;
     }
     titleRef?.current?.focus();
-  }, [autoFocus, resetZoomLevel, __unstableSetEditorMode]);
+  }, [autoFocus]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "editor-text-editor",
     children: [isRichEditingEnabled && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
