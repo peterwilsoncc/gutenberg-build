@@ -62609,6 +62609,9 @@ function ZoomOutModeInserters() {
     nextClientId: nextClientId,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_mode_inserter_button, {
       onClick: () => {
+        // Hotfix for wp/6.7 where focus is not transferred to the sidebar if the
+        // block library is already open.
+        const blockLibrary = document.querySelector('[aria-label="Block Library"]');
         setInserterIsOpened({
           rootClientId: sectionRootClientId,
           insertionIndex: index + 1,
@@ -62618,6 +62621,12 @@ function ZoomOutModeInserters() {
         showInsertionPoint(sectionRootClientId, index + 1, {
           operation: 'insert'
         });
+
+        // If the block library was available before we opened it with `setInserterIsOpened`, we need to
+        // send focus to the block library.
+        if (blockLibrary) {
+          blockLibrary.focus();
+        }
       }
     })
   });
