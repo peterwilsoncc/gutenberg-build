@@ -46585,6 +46585,7 @@ const TokenInput = (0,external_wp_element_namespaceObject.forwardRef)(UnForwarde
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -46644,12 +46645,12 @@ function SuggestionsList({
       suggestionAfterMatch: transformedSuggestion.substring(indexOfMatch + matchText.length)
     };
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("ul", {
     ref: listRef,
     className: "components-form-token-field__suggestions-list",
     id: `components-form-token-suggestions-${instanceId}`,
     role: "listbox",
-    children: suggestions.map((suggestion, index) => {
+    children: [suggestions.map((suggestion, index) => {
       const matchText = computeSuggestionMatch(suggestion);
       const isSelected = index === selectedIndex;
       const isDisabled = typeof suggestion === 'object' && suggestion?.disabled;
@@ -46687,7 +46688,10 @@ function SuggestionsList({
         children: output
       }, key);
       /* eslint-enable jsx-a11y/click-events-have-key-events */
-    })
+    }), suggestions.length === 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
+      className: "components-form-token-field__suggestion is-empty",
+      children: (0,external_wp_i18n_namespaceObject.__)('No items found')
+    })]
   });
 }
 /* harmony default export */ const suggestions_list = (SuggestionsList);
