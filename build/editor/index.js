@@ -23009,7 +23009,7 @@ function __experimentalReusableBlocksSelect(select) {
     per_page: -1
   }]) ? reusableBlocks : undefined;
 }
-const BLOCK_EDITOR_SETTINGS = ['__experimentalBlockDirectory', '__experimentalDiscussionSettings', '__experimentalFeatures', '__experimentalGlobalStylesBaseStyles', 'alignWide', 'blockInspectorTabs', 'allowedMimeTypes', 'bodyPlaceholder', 'canLockBlocks', 'canUpdateBlockBindings', 'capabilities', 'clearBlockSelection', 'codeEditingEnabled', 'colors', 'disableCustomColors', 'disableCustomFontSizes', 'disableCustomSpacingSizes', 'disableCustomGradients', 'disableLayoutStyles', 'enableCustomLineHeight', 'enableCustomSpacing', 'enableCustomUnits', 'enableOpenverseMediaCategory', 'fontSizes', 'gradients', 'generateAnchors', 'onNavigateToEntityRecord', 'imageDefaultSize', 'imageDimensions', 'imageEditing', 'imageSizes', 'isRTL', 'locale', 'maxWidth', 'postContentAttributes', 'postsPerPage', 'readOnly', 'styles', 'titlePlaceholder', 'supportsLayout', 'widgetTypesToHideFromLegacyWidgetBlock', '__unstableHasCustomAppender', '__unstableIsPreviewMode', '__unstableResolvedAssets', '__unstableIsBlockBasedTheme'];
+const BLOCK_EDITOR_SETTINGS = ['__experimentalBlockDirectory', '__experimentalDiscussionSettings', '__experimentalFeatures', '__experimentalGlobalStylesBaseStyles', 'alignWide', 'blockInspectorTabs', 'allowedMimeTypes', 'bodyPlaceholder', 'canLockBlocks', 'canUpdateBlockBindings', 'capabilities', 'clearBlockSelection', 'codeEditingEnabled', 'colors', 'disableCustomColors', 'disableCustomFontSizes', 'disableCustomSpacingSizes', 'disableCustomGradients', 'disableLayoutStyles', 'enableCustomLineHeight', 'enableCustomSpacing', 'enableCustomUnits', 'enableOpenverseMediaCategory', 'fontSizes', 'gradients', 'generateAnchors', 'onNavigateToEntityRecord', 'imageDefaultSize', 'imageDimensions', 'imageEditing', 'imageSizes', 'isPreviewMode', 'isRTL', 'locale', 'maxWidth', 'postContentAttributes', 'postsPerPage', 'readOnly', 'styles', 'titlePlaceholder', 'supportsLayout', 'widgetTypesToHideFromLegacyWidgetBlock', '__unstableHasCustomAppender', '__unstableResolvedAssets', '__unstableIsBlockBasedTheme'];
 const {
   globalStylesDataKey,
   globalStylesLinksDataKey,
@@ -23685,7 +23685,7 @@ function useEditorCommandLoader() {
       isDistractionFree: get('core', 'distractionFree'),
       isFocusMode: get('core', 'focusMode'),
       isTopToolbar: get('core', 'fixedToolbar'),
-      isPreviewMode: getSettings().__unstableIsPreviewMode,
+      isPreviewMode: getSettings().isPreviewMode,
       isViewable: (_getPostType$viewable = getPostType(getCurrentPostType())?.viewable) !== null && _getPostType$viewable !== void 0 ? _getPostType$viewable : false,
       isCodeEditingEnabled: getEditorSettings().codeEditingEnabled,
       isRichEditingEnabled: getEditorSettings().richEditingEnabled,
@@ -25222,7 +25222,7 @@ const ExperimentalEditorProvider = with_registry_provider(({
           selection: selection,
           settings: blockEditorSettings,
           useSubRegistry: false,
-          children: [children, !settings.__unstableIsPreviewMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+          children: [children, !settings.isPreviewMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternsMenuItems, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplatePartMenuItems, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ContentOnlySettingsMenu, {}), mode === 'template-locked' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DisableNonPageContentBlocks, {}), type === 'wp_navigation' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationBlockEditingMode, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditorKeyboardShortcuts, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(keyboard_shortcut_help_modal, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockRemovalWarnings, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StartPageOptions, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StartTemplateOptions, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternRenameModal, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternDuplicateModal, {})]
           })]
         })
@@ -27811,7 +27811,7 @@ function VisualEditor({
       deviceType: getDeviceType(),
       isFocusedEntity: !!editorSettings.onNavigateToPreviousEntityRecord,
       postType: postTypeSlug,
-      isPreview: editorSettings.__unstableIsPreviewMode
+      isPreview: editorSettings.isPreviewMode
     };
   }, []);
   const {
@@ -28116,7 +28116,7 @@ function EditorInterface({
       isInserterOpened: select(store_store).isInserterOpened(),
       isListViewOpened: select(store_store).isListViewOpened(),
       isDistractionFree: get('core', 'distractionFree'),
-      isPreviewMode: editorSettings.__unstableIsPreviewMode,
+      isPreviewMode: editorSettings.isPreviewMode,
       showBlockBreadcrumbs: get('core', 'showBlockBreadcrumbs'),
       // translators: Default label for the Document in the Block Breadcrumb.
       documentLabel: postTypeLabel || (0,external_wp_i18n_namespaceObject._x)('Document', 'noun'),

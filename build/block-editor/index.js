@@ -8164,7 +8164,7 @@ const SETTINGS_DEFAULTS = {
   __mobileEnablePageTemplates: false,
   __experimentalBlockPatterns: [],
   __experimentalBlockPatternCategories: [],
-  __unstableIsPreviewMode: false,
+  isPreviewMode: false,
   // These settings will be completely revamped in the future.
   // The goal is to evolve this into an API which will instruct
   // the block inspector to animate transitions between what it
@@ -8302,6 +8302,7 @@ function moveTo(array, from, to, count = 1) {
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -9754,16 +9755,25 @@ function template(state = {
 function settings(state = SETTINGS_DEFAULTS, action) {
   switch (action.type) {
     case 'UPDATE_SETTINGS':
-      if (action.reset) {
-        return {
+      {
+        const updatedSettings = action.reset ? {
           ...SETTINGS_DEFAULTS,
           ...action.settings
+        } : {
+          ...state,
+          ...action.settings
         };
+        Object.defineProperty(updatedSettings, '__unstableIsPreviewMode', {
+          get() {
+            external_wp_deprecated_default()('__unstableIsPreviewMode', {
+              since: '6.8',
+              alternative: 'isPreviewMode'
+            });
+            return this.isPreviewMode;
+          }
+        });
+        return updatedSettings;
       }
-      return {
-        ...state,
-        ...action.settings
-      };
   }
   return state;
 }
@@ -13900,6 +13910,7 @@ const external_wp_a11y_namespaceObject = window["wp"]["a11y"];
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -13931,14 +13942,27 @@ function __experimentalUpdateSettings(settings, {
   stripExperimentalSettings = false,
   reset = false
 } = {}) {
-  let cleanSettings = settings;
+  let incomingSettings = settings;
+  if (Object.hasOwn(incomingSettings, '__unstableIsPreviewMode')) {
+    external_wp_deprecated_default()("__unstableIsPreviewMode argument in wp.data.dispatch('core/block-editor').updateSettings", {
+      since: '6.8',
+      alternative: 'isPreviewMode'
+    });
+    incomingSettings = {
+      ...incomingSettings
+    };
+    incomingSettings.isPreviewMode = incomingSettings.__unstableIsPreviewMode;
+    delete incomingSettings.__unstableIsPreviewMode;
+  }
+  let cleanSettings = incomingSettings;
+
   // There are no plugins in the mobile apps, so there is no
   // need to strip the experimental settings:
   if (stripExperimentalSettings && external_wp_element_namespaceObject.Platform.OS === 'web') {
     cleanSettings = {};
-    for (const key in settings) {
+    for (const key in incomingSettings) {
       if (!privateSettings.includes(key)) {
-        cleanSettings[key] = settings[key];
+        cleanSettings[key] = incomingSettings[key];
       }
     }
   }
@@ -37038,7 +37062,7 @@ const ExperimentalBlockEditorProvider = with_registry_provider(props => {
   useBlockSync(props);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.SlotFillProvider, {
     passthrough: true,
-    children: [!settings?.__unstableIsPreviewMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(keyboard_shortcuts.Register, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockRefsProvider, {
+    children: [!settings?.isPreviewMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(keyboard_shortcuts.Register, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockRefsProvider, {
       children: children
     })]
   });
@@ -43470,7 +43494,7 @@ function BlockListBlockProvider(props) {
     const blockType = (0,external_wp_blocks_namespaceObject.getBlockType)(blockName);
     const {
       supportsLayout,
-      __unstableIsPreviewMode: isPreviewMode
+      isPreviewMode
     } = getSettings();
     const hasLightBlockWrapper = blockType?.apiVersion > 1;
     const previewContext = {
@@ -46361,7 +46385,7 @@ function Items({
       isZoomOut: _isZoomOut
     } = unlock(select(store));
     const _order = getBlockOrder(rootClientId);
-    if (getSettings().__unstableIsPreviewMode) {
+    if (getSettings().isPreviewMode) {
       return {
         order: _order,
         selectedBlocks: block_list_EMPTY_ARRAY,
@@ -48325,7 +48349,7 @@ function Iframe({
     const settings = getSettings();
     return {
       resolvedAssets: settings.__unstableResolvedAssets,
-      isPreviewMode: settings.__unstableIsPreviewMode
+      isPreviewMode: settings.isPreviewMode
     };
   }, []);
   const {
@@ -49505,7 +49529,7 @@ function BlockPreview({
     ...originalSettings,
     focusMode: false,
     // Disable "Spotlight mode".
-    __unstableIsPreviewMode: true
+    isPreviewMode: true
   }), [originalSettings]);
   const renderedBlocks = (0,external_wp_element_namespaceObject.useMemo)(() => Array.isArray(blocks) ? blocks : [blocks], [blocks]);
   if (!blocks || blocks.length === 0) {
@@ -49562,7 +49586,7 @@ function useBlockPreview({
     // Clear styles included by the parent settings, as they are already output by the parent's EditorStyles.
     focusMode: false,
     // Disable "Spotlight mode".
-    __unstableIsPreviewMode: true
+    isPreviewMode: true
   }), [originalSettings]);
   const disabledRef = (0,external_wp_compose_namespaceObject.useDisabled)();
   const ref = (0,external_wp_compose_namespaceObject.useMergeRefs)([props.ref, disabledRef]);

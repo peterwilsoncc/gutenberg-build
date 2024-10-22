@@ -15361,7 +15361,7 @@ function useSpecificEditorSettings() {
       defaultRenderingMode,
       onNavigateToEntityRecord,
       onNavigateToPreviousEntityRecord,
-      __unstableIsPreviewMode: canvas === 'view'
+      isPreviewMode: canvas === 'view'
     };
   }, [settings, canvas, defaultRenderingMode, onNavigateToEntityRecord, onNavigateToPreviousEntityRecord]);
   return defaultEditorSettings;
@@ -26749,7 +26749,7 @@ function StyleBook({
   const originalSettings = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).getSettings(), []);
   const settings = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     ...originalSettings,
-    __unstableIsPreviewMode: true
+    isPreviewMode: true
   }), [originalSettings]);
   const [globalStyles] = useGlobalStylesOutputWithConfig(mergedConfig);
   settings.styles = !isObjectEmpty(globalStyles) && !isObjectEmpty(userConfig) ? globalStyles : settings.styles;
@@ -26934,7 +26934,7 @@ const Example = ({
     ...originalSettings,
     focusMode: false,
     // Disable "Spotlight mode".
-    __unstableIsPreviewMode: true
+    isPreviewMode: true
   }), [originalSettings]);
 
   // Cache the list of blocks to avoid additional processing when the component is re-rendered.
@@ -27072,7 +27072,7 @@ function Revisions({
   const originalSettings = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).getSettings(), []);
   const settings = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     ...originalSettings,
-    __unstableIsPreviewMode: true
+    isPreviewMode: true
   }), [originalSettings]);
   const [globalStyles] = revisions_useGlobalStylesOutputWithConfig(mergedConfig);
   const editorStyles = !revisions_isObjectEmpty(globalStyles) && !revisions_isObjectEmpty(userConfig) ? globalStyles : settings.styles;
@@ -40440,7 +40440,7 @@ function usePatternSettings() {
     return {
       ...restStoredSettings,
       __experimentalBlockPatterns: blockPatterns,
-      __unstableIsPreviewMode: true
+      isPreviewMode: true
     };
   }, [storedSettings, blockPatterns]);
   return settings;
