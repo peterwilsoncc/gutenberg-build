@@ -27966,7 +27966,6 @@ function VisualEditor({
   !isMobileViewport &&
   // Dsiable resizing in zoomed-out mode.
   !isZoomedOut;
-  const shouldIframe = !disableIframe || ['Tablet', 'Mobile'].includes(deviceType);
   const iframeStyles = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return [...(styles !== null && styles !== void 0 ? styles : []), {
       css: `.is-root-container{display:flow-root;${
@@ -27981,13 +27980,13 @@ function VisualEditor({
     'edit-post-visual-editor', className, {
       'has-padding': isFocusedEntity || enableResizing,
       'is-resizable': enableResizing,
-      'is-iframed': shouldIframe
+      'is-iframed': !disableIframe
     }),
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(resizable_editor, {
       enableResizing: enableResizing,
       height: sizes.height && !forceFullHeight ? sizes.height : '100%',
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(BlockCanvas, {
-        shouldIframe: shouldIframe,
+        shouldIframe: !disableIframe,
         contentRef: contentRef,
         styles: iframeStyles,
         height: "100%",
