@@ -20085,6 +20085,7 @@ const gallery = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
 ;// ./packages/block-library/build-module/gallery/constants.js
 const LINK_DESTINATION_NONE = 'none';
 const LINK_DESTINATION_MEDIA = 'media';
+const LINK_DESTINATION_LIGHTBOX = 'lightbox';
 const LINK_DESTINATION_ATTACHMENT = 'attachment';
 const LINK_DESTINATION_MEDIA_WP_CORE = 'file';
 const LINK_DESTINATION_ATTACHMENT_WP_CORE = 'post';
@@ -21128,10 +21129,13 @@ const MEDIA_ID_NO_FEATURED_IMAGE_SET = 0;
  *
  * @param {Object} image              Gallery image.
  * @param {string} galleryDestination Gallery's selected link destination.
- * @param {Object} imageDestination   Image blocks attributes.
+ * @param {Object} imageDestination   Image block link destination attribute.
+ * @param {Object} attributes         Block attributes.
+ * @param {Object} lightboxSetting    Lightbox setting.
+ *
  * @return {Object}            New attributes to assign to image block.
  */
-function utils_getHrefAndDestination(image, galleryDestination, imageDestination) {
+function utils_getHrefAndDestination(image, galleryDestination, imageDestination, attributes, lightboxSetting) {
   // Gutenberg and WordPress use different constants so if image_default_link_type
   // option is set we need to map from the WP Core values.
   switch (imageDestination ? imageDestination : galleryDestination) {
@@ -21140,18 +21144,36 @@ function utils_getHrefAndDestination(image, galleryDestination, imageDestination
       return {
         href: image?.source_url || image?.url,
         // eslint-disable-line camelcase
-        linkDestination: constants_LINK_DESTINATION_MEDIA
+        linkDestination: constants_LINK_DESTINATION_MEDIA,
+        lightbox: lightboxSetting?.enabled ? {
+          ...attributes?.lightbox,
+          enabled: false
+        } : undefined
       };
     case LINK_DESTINATION_ATTACHMENT_WP_CORE:
     case LINK_DESTINATION_ATTACHMENT:
       return {
         href: image?.link,
-        linkDestination: constants_LINK_DESTINATION_ATTACHMENT
+        linkDestination: constants_LINK_DESTINATION_ATTACHMENT,
+        lightbox: lightboxSetting?.enabled ? {
+          ...attributes?.lightbox,
+          enabled: false
+        } : undefined
+      };
+    case LINK_DESTINATION_LIGHTBOX:
+      return {
+        href: undefined,
+        lightbox: !lightboxSetting?.enabled ? {
+          ...attributes?.lightbox,
+          enabled: true
+        } : undefined,
+        linkDestination: constants_LINK_DESTINATION_NONE
       };
     case LINK_DESTINATION_NONE:
       return {
         href: undefined,
-        linkDestination: constants_LINK_DESTINATION_NONE
+        linkDestination: constants_LINK_DESTINATION_NONE,
+        lightbox: undefined
       };
   }
   return {};
@@ -21516,7 +21538,7 @@ function GapStyles({
 
 
 const MAX_COLUMNS = 8;
-const linkOptions = [{
+let linkOptions = [{
   icon: custom_link,
   label: (0,external_wp_i18n_namespaceObject.__)('Link images to attachment pages'),
   value: LINK_DESTINATION_ATTACHMENT,
@@ -21526,6 +21548,12 @@ const linkOptions = [{
   label: (0,external_wp_i18n_namespaceObject.__)('Link images to media files'),
   value: LINK_DESTINATION_MEDIA,
   noticeText: (0,external_wp_i18n_namespaceObject.__)('Media Files')
+}, {
+  icon: library_fullscreen,
+  label: (0,external_wp_i18n_namespaceObject.__)('Expand on click'),
+  value: LINK_DESTINATION_LIGHTBOX,
+  noticeText: (0,external_wp_i18n_namespaceObject.__)('Lightbox effect'),
+  infoText: (0,external_wp_i18n_namespaceObject.__)('Scale images with a lightbox effect')
 }, {
   icon: link_off,
   label: (0,external_wp_i18n_namespaceObject._x)('None', 'Media item link option'),
@@ -21552,6 +21580,10 @@ function GalleryEdit(props) {
     isContentLocked,
     onFocus
   } = props;
+  const lightboxSetting = (0,external_wp_blockEditor_namespaceObject.useSettings)('blocks.core/image.lightbox')[0];
+  if (!lightboxSetting?.allowEditing) {
+    linkOptions = linkOptions.filter(option => option.value !== LINK_DESTINATION_LIGHTBOX);
+  }
   const {
     columns,
     imageCrop,
@@ -21728,7 +21760,7 @@ function GalleryEdit(props) {
       const image = block.attributes.id ? imageData.find(({
         id
       }) => id === block.attributes.id) : null;
-      changedAttributes[block.clientId] = utils_getHrefAndDestination(image, value);
+      changedAttributes[block.clientId] = utils_getHrefAndDestination(image, value, false, block.attributes, lightboxSetting);
     });
     updateBlockAttributes(blocks, changedAttributes, true);
     const linkToText = [...linkOptions].find(linkType => linkType.value === value);
@@ -21935,6 +21967,7 @@ function GalleryEdit(props) {
                 onClose();
               },
               role: "menuitemradio",
+              info: linkItem.infoText,
               children: linkItem.label
             }, linkItem.value);
           })
