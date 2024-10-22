@@ -13501,7 +13501,7 @@ function Layout({
             maxWidth: widths?.content
           },
           children: areas.content
-        }), !isMobileViewport && areas.edit && canvasMode !== 'edit' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        }), !isMobileViewport && areas.edit && canvas !== 'edit' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "edit-site-layout__area",
           style: {
             maxWidth: widths?.edit
