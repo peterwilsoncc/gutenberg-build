@@ -1863,6 +1863,12 @@ const metadata = {
   },
   supports: {
     align: true,
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true
+    },
     html: false,
     spacing: {
       margin: true,
