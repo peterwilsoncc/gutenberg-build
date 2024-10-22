@@ -30709,11 +30709,7 @@ function linked_button_LinkedButton({
   isLinked,
   ...props
 }) {
-  const label = isLinked ? (0,external_wp_i18n_namespaceObject.sprintf)(
-  // translators: 1. Type of spacing being modified (padding, margin, etc).
-  (0,external_wp_i18n_namespaceObject.__)('Unlink %1$s'), props.label.toLowerCase()).trim() : (0,external_wp_i18n_namespaceObject.sprintf)(
-  // translators: 1. Type of spacing being modified (padding, margin, etc).
-  (0,external_wp_i18n_namespaceObject.__)('Link %1$s'), props.label.toLowerCase()).trim();
+  const label = isLinked ? (0,external_wp_i18n_namespaceObject.__)('Unlink sides') : (0,external_wp_i18n_namespaceObject.__)('Link sides');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
     text: label,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
