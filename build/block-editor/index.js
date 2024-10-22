@@ -42439,53 +42439,6 @@ function useEventHandlers({
   }, [clientId, isSelected, getBlockRootClientId, getBlockIndex, insertAfterBlock, removeBlock, isZoomOut, resetZoomLevel]);
 }
 
-;// ./packages/block-editor/build-module/components/block-list/use-block-props/use-zoom-out-mode-exit.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-/**
- * Allows Zoom Out mode to be exited by double clicking in the selected block.
- */
-function useZoomOutModeExit() {
-  const {
-    getSettings,
-    isZoomOut
-  } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
-  const {
-    resetZoomLevel
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
-  return (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
-    function onDoubleClick(event) {
-      if (!isZoomOut()) {
-        return;
-      }
-      if (!event.defaultPrevented) {
-        event.preventDefault();
-        const {
-          __experimentalSetIsInserterOpened
-        } = getSettings();
-        if (typeof __experimentalSetIsInserterOpened === 'function') {
-          __experimentalSetIsInserterOpened(false);
-        }
-        resetZoomLevel();
-      }
-    }
-    node.addEventListener('dblclick', onDoubleClick);
-    return () => {
-      node.removeEventListener('dblclick', onDoubleClick);
-    };
-  }, [getSettings, isZoomOut, resetZoomLevel]);
-}
-
 ;// ./packages/block-editor/build-module/components/block-list/use-block-props/use-intersection-observer.js
 /**
  * WordPress dependencies
@@ -42885,7 +42838,6 @@ function shimAttributeSource(settings, name) {
 
 
 
-
 /**
  * This hook is used to lightly mark an element as a block element. The element
  * should be the outermost element of a block. Call this hook and pass the
@@ -42968,7 +42920,7 @@ function use_block_props_useBlockProps(props = {}, {
   }), useBlockRefProvider(clientId), useFocusHandler(clientId), useEventHandlers({
     clientId,
     isSelected
-  }), useZoomOutModeExit(), useIsHovered({
+  }), useIsHovered({
     clientId
   }), useIntersectionObserver(), use_moving_animation({
     triggerAnimationOnChange: index,
@@ -77570,7 +77522,6 @@ function ResolutionTool({
 
 
 
-
 /**
  * Private @wordpress/block-editor APIs.
  */
@@ -77601,7 +77552,6 @@ lock(privateApis, {
   TextAlignmentControl: TextAlignmentControl,
   usesContextKey: usesContextKey,
   useFlashEditableBlocks: useFlashEditableBlocks,
-  useZoomOutModeExit: useZoomOutModeExit,
   globalStylesDataKey: globalStylesDataKey,
   globalStylesLinksDataKey: globalStylesLinksDataKey,
   selectBlockPatternsKey: selectBlockPatternsKey,

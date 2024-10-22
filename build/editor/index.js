@@ -27683,6 +27683,53 @@ function useSelectNearestEditableBlock({
   }, [isEnabled]);
 }
 
+;// ./packages/editor/build-module/components/visual-editor/use-zoom-out-mode-exit.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Allows Zoom Out mode to be exited by double clicking in the selected block.
+ */
+function useZoomOutModeExit() {
+  const {
+    getSettings,
+    isZoomOut
+  } = unlock((0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store));
+  const {
+    resetZoomLevel
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store));
+  return (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
+    function onDoubleClick(event) {
+      if (!isZoomOut()) {
+        return;
+      }
+      if (!event.defaultPrevented) {
+        event.preventDefault();
+        const {
+          __experimentalSetIsInserterOpened
+        } = getSettings();
+        if (typeof __experimentalSetIsInserterOpened === 'function') {
+          __experimentalSetIsInserterOpened(false);
+        }
+        resetZoomLevel();
+      }
+    }
+    node.addEventListener('dblclick', onDoubleClick);
+    return () => {
+      node.removeEventListener('dblclick', onDoubleClick);
+    };
+  }, [getSettings, isZoomOut, resetZoomLevel]);
+}
+
 ;// ./packages/editor/build-module/components/visual-editor/index.js
 /**
  * External dependencies
@@ -27710,13 +27757,13 @@ function useSelectNearestEditableBlock({
 
 
 
+
 const {
   LayoutStyle,
   useLayoutClasses,
   useLayoutStyles,
   ExperimentalBlockCanvas: BlockCanvas,
-  useFlashEditableBlocks,
-  useZoomOutModeExit
+  useFlashEditableBlocks
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
 /**
