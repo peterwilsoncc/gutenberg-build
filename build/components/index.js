@@ -47115,8 +47115,11 @@ function proxyComposite(ProxiedComponent, propMap = {}) {
       store,
       ...rest
     } = mapLegacyStatePropsToComponentProps(legacyProps);
-    const props = rest;
-    props.id = (0,external_wp_compose_namespaceObject.useInstanceId)(store, props.baseId, props.id);
+    let props = rest;
+    props = {
+      ...props,
+      id: (0,external_wp_compose_namespaceObject.useInstanceId)(store, props.baseId, props.id)
+    };
     Object.entries(propMap).forEach(([from, to]) => {
       if (props.hasOwnProperty(from)) {
         Object.assign(props, {

@@ -48357,7 +48357,7 @@ function Iframe({
     scripts = ''
   } = resolvedAssets;
   const [iframeDocument, setIframeDocument] = (0,external_wp_element_namespaceObject.useState)();
-  const initialContainerWidth = (0,external_wp_element_namespaceObject.useRef)(0);
+  const initialContainerWidthRef = (0,external_wp_element_namespaceObject.useRef)(0);
   const [bodyClasses, setBodyClasses] = (0,external_wp_element_namespaceObject.useState)([]);
   const clearerRef = useBlockSelectionClearer();
   const [before, writingFlowRef, after] = useWritingFlow();
@@ -48441,10 +48441,10 @@ function Iframe({
   const isZoomedOut = scale !== 1;
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (!isZoomedOut) {
-      initialContainerWidth.current = containerWidth;
+      initialContainerWidthRef.current = containerWidth;
     }
   }, [containerWidth, isZoomedOut]);
-  const scaleContainerWidth = Math.max(initialContainerWidth.current, containerWidth);
+  const scaleContainerWidth = Math.max(initialContainerWidthRef.current, containerWidth);
   const disabledRef = (0,external_wp_compose_namespaceObject.useDisabled)({
     isDisabled: !readonly
   });
@@ -48521,7 +48521,7 @@ function Iframe({
     }
     const maxWidth = 750;
     // Note: When we initialize the zoom out when the canvas is smaller (sidebars open),
-    // initialContainerWidth will be smaller than the full page, and reflow will happen
+    // initialContainerWidthRef will be smaller than the full page, and reflow will happen
     // when the canvas area becomes larger due to sidebars closing. This is a known but
     // minor divergence for now.
 

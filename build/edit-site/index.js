@@ -38185,7 +38185,7 @@ function FooterContent({
   getItemId
 }) {
   const [actionInProgress, setActionInProgress] = (0,external_wp_element_namespaceObject.useState)(null);
-  const footerContent = (0,external_wp_element_namespaceObject.useRef)(null);
+  const footerContentRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const bulkActions = (0,external_wp_element_namespaceObject.useMemo)(() => actions.filter(action => action.supportsBulk), [actions]);
   const selectableItems = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return data.filter(item => {
@@ -38199,14 +38199,14 @@ function FooterContent({
     return action.supportsBulk && action.icon && selectedItems.some(item => !action.isEligible || action.isEligible(item));
   }), [actions, selectedItems]);
   if (!actionInProgress) {
-    if (footerContent.current) {
-      footerContent.current = null;
+    if (footerContentRef.current) {
+      footerContentRef.current = null;
     }
     return renderFooterContent(data, actions, getItemId, selection, actionsToShow, selectedItems, actionInProgress, setActionInProgress, onChangeSelection);
-  } else if (!footerContent.current) {
-    footerContent.current = renderFooterContent(data, actions, getItemId, selection, actionsToShow, selectedItems, actionInProgress, setActionInProgress, onChangeSelection);
+  } else if (!footerContentRef.current) {
+    footerContentRef.current = renderFooterContent(data, actions, getItemId, selection, actionsToShow, selectedItems, actionInProgress, setActionInProgress, onChangeSelection);
   }
-  return footerContent.current;
+  return footerContentRef.current;
 }
 function BulkActionsFooter() {
   const {
