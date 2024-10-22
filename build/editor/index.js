@@ -26723,7 +26723,7 @@ const ZoomOutToggle = ({
     if (isZoomOut) {
       resetZoomLevel();
     } else {
-      setZoomLevel(50);
+      setZoomLevel('auto-scaled');
     }
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {

@@ -7709,6 +7709,7 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   getStyleOverrides: () => (getStyleOverrides),
   getTemporarilyEditingAsBlocks: () => (getTemporarilyEditingAsBlocks),
   getTemporarilyEditingFocusModeToRevert: () => (getTemporarilyEditingFocusModeToRevert),
+  getZoomLevel: () => (getZoomLevel),
   hasAllowedPatterns: () => (hasAllowedPatterns),
   isBlockInterfaceHidden: () => (private_selectors_isBlockInterfaceHidden),
   isBlockSubtreeDisabled: () => (isBlockSubtreeDisabled),
@@ -10995,7 +10996,17 @@ function getSectionRootClientId(state) {
  * @return {boolean} Whether the editor is zoomed.
  */
 function isZoomOut(state) {
-  return state.zoomLevel < 100;
+  return state.zoomLevel === 'auto-scaled' || state.zoomLevel < 100;
+}
+
+/**
+ * Returns whether the zoom level.
+ *
+ * @param {Object} state Global application state.
+ * @return {number|"auto-scaled"} Zoom level.
+ */
+function getZoomLevel(state) {
+  return state.zoomLevel;
 }
 
 /**
@@ -48557,7 +48568,7 @@ function Iframe({
     // This scaling calculation has to happen within the JS because CSS calc() can
     // only divide and multiply by a unitless value. I.e. calc( 100px / 2 ) is valid
     // but calc( 100px / 2px ) is not.
-    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scale', scale === 'default' ? (Math.min(containerWidth, maxWidth) - parseInt(frameSize) * 2) / scaleContainerWidth : scale);
+    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scale', scale === 'auto-scaled' ? (Math.min(containerWidth, maxWidth) - parseInt(frameSize) * 2) / scaleContainerWidth : scale);
 
     // frameSize has to be a px value for the scaling and frame size to be computed correctly.
     iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-frame-size', typeof frameSize === 'number' ? `${frameSize}px` : frameSize);
@@ -52977,7 +52988,7 @@ function useZoomOut(zoomOut = true) {
     const isZoomOutOnMount = isZoomOut();
     return () => {
       if (isZoomOutOnMount && isWideViewport) {
-        setZoomLevel(50);
+        setZoomLevel('auto-scaled');
       } else {
         resetZoomLevel();
       }
@@ -52985,7 +52996,7 @@ function useZoomOut(zoomOut = true) {
   }, []);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (zoomOut && isWideViewport) {
-      setZoomLevel(50);
+      setZoomLevel('auto-scaled');
     } else {
       resetZoomLevel();
     }
@@ -62839,9 +62850,9 @@ function ExperimentalBlockCanvas({
   const clearerRef = useBlockSelectionClearer();
   const localRef = (0,external_wp_element_namespaceObject.useRef)();
   const contentRef = (0,external_wp_compose_namespaceObject.useMergeRefs)([contentRefProp, clearerRef, localRef]);
-  const isZoomedOut = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).isZoomOut(), []);
-  const zoomOutIframeProps = isZoomedOut && !isTabletViewport ? {
-    scale: 'default',
+  const zoomLevel = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).getZoomLevel(), []);
+  const zoomOutIframeProps = zoomLevel !== 100 && !isTabletViewport ? {
+    scale: zoomLevel,
     frameSize: '40px'
   } : {};
   if (!shouldIframe) {
