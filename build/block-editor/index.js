@@ -19391,47 +19391,80 @@ function getGapCSSValue(blockGapValue, defaultValue = '0') {
   return row === column ? row : `${row} ${column}`;
 }
 
-;// ./packages/block-editor/build-module/components/block-vertical-alignment-control/icons.js
+;// ./packages/icons/build-module/library/justify-top.js
 /**
  * WordPress dependencies
  */
 
 
-const alignBottom = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
+const justifyTop = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Path, {
-    d: "M15 4H9v11h6V4zM4 18.5V20h16v-1.5H4z"
-  })
-});
-const alignCenter = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Path, {
-    d: "M20 11h-5V4H9v7H4v1.5h5V20h6v-7.5h5z"
-  })
-});
-const alignTop = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Path, {
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M9 20h6V9H9v11zM4 4v1.5h16V4H4z"
   })
 });
-const alignStretch = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
+/* harmony default export */ const justify_top = (justifyTop);
+
+;// ./packages/icons/build-module/library/justify-center-vertical.js
+/**
+ * WordPress dependencies
+ */
+
+
+const justifyCenterVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Path, {
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M20 11h-5V4H9v7H4v1.5h5V20h6v-7.5h5z"
+  })
+});
+/* harmony default export */ const justify_center_vertical = (justifyCenterVertical);
+
+;// ./packages/icons/build-module/library/justify-bottom.js
+/**
+ * WordPress dependencies
+ */
+
+
+const justifyBottom = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M15 4H9v11h6V4zM4 18.5V20h16v-1.5H4z"
+  })
+});
+/* harmony default export */ const justify_bottom = (justifyBottom);
+
+;// ./packages/icons/build-module/library/justify-stretch-vertical.js
+/**
+ * WordPress dependencies
+ */
+
+
+const justifyStretchVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M4 4L20 4L20 5.5L4 5.5L4 4ZM10 7L14 7L14 17L10 17L10 7ZM20 18.5L4 18.5L4 20L20 20L20 18.5Z"
   })
 });
-const spaceBetween = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
+/* harmony default export */ const justify_stretch_vertical = (justifyStretchVertical);
+
+;// ./packages/icons/build-module/library/justify-space-between-vertical.js
+/**
+ * WordPress dependencies
+ */
+
+
+const justifySpaceBetweenVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Path, {
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M7 4H17V8L7 8V4ZM7 16L17 16V20L7 20V16ZM20 11.25H4V12.75H20V11.25Z"
   })
 });
+/* harmony default export */ const justify_space_between_vertical = (justifySpaceBetweenVertical);
 
 ;// ./packages/block-editor/build-module/components/block-vertical-alignment-control/ui.js
 /**
@@ -19440,30 +19473,26 @@ const spaceBetween = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 
 
 
-/**
- * Internal dependencies
- */
-
 
 const BLOCK_ALIGNMENTS_CONTROLS = {
   top: {
-    icon: alignTop,
+    icon: justify_top,
     title: (0,external_wp_i18n_namespaceObject._x)('Align top', 'Block vertical alignment setting')
   },
   center: {
-    icon: alignCenter,
+    icon: justify_center_vertical,
     title: (0,external_wp_i18n_namespaceObject._x)('Align middle', 'Block vertical alignment setting')
   },
   bottom: {
-    icon: alignBottom,
+    icon: justify_bottom,
     title: (0,external_wp_i18n_namespaceObject._x)('Align bottom', 'Block vertical alignment setting')
   },
   stretch: {
-    icon: alignStretch,
+    icon: justify_stretch_vertical,
     title: (0,external_wp_i18n_namespaceObject._x)('Stretch to fill', 'Block vertical alignment setting')
   },
   'space-between': {
-    icon: spaceBetween,
+    icon: justify_space_between_vertical,
     title: (0,external_wp_i18n_namespaceObject._x)('Space between', 'Block vertical alignment setting')
   }
 };
@@ -28662,14 +28691,14 @@ const alignLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
  */
 
 
-const align_center_alignCenter = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+const alignCenter = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M7.5 5.5h9V4h-9v1.5Zm-3.5 7h16V11H4v1.5Zm3.5 7h9V18h-9v1.5Z"
   })
 });
-/* harmony default export */ const align_center = (align_center_alignCenter);
+/* harmony default export */ const align_center = (alignCenter);
 
 ;// ./packages/icons/build-module/library/align-right.js
 /**
