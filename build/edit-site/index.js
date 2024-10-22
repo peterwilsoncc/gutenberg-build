@@ -45105,7 +45105,7 @@ function PostList({
         size: "compact",
         isPressed: quickEdit,
         icon: drawer_right,
-        label: (0,external_wp_i18n_namespaceObject.__)('Toggle details panel'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Details panel'),
         onClick: () => {
           history.push({
             ...location.params,
