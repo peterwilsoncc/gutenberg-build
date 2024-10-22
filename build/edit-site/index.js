@@ -27007,7 +27007,7 @@ function ScreenCSS() {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header, {
       title: (0,external_wp_i18n_namespaceObject.__)('CSS'),
       description: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: [description, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
+        children: [description, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("br", {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
           href: (0,external_wp_i18n_namespaceObject.__)('https://developer.wordpress.org/advanced-administration/wordpress/css/'),
           className: "edit-site-global-styles-screen-css-help-link",
           children: (0,external_wp_i18n_namespaceObject.__)('Learn more about CSS')
@@ -28052,7 +28052,6 @@ function DefaultSidebar({
       scope: "core",
       identifier: identifier,
       title: title,
-      smallScreenTitle: title,
       icon: icon,
       closeLabel: closeLabel,
       header: header,
@@ -28073,6 +28072,7 @@ function DefaultSidebar({
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -28141,6 +28141,7 @@ function GlobalStylesSidebar() {
   const {
     setEditorCanvasContainerView
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (shouldClearCanvasContainerView) {
       setEditorCanvasContainerView(undefined);
@@ -28196,7 +28197,7 @@ function GlobalStylesSidebar() {
         justify: "flex-end",
         gap: 1,
         className: "edit-site-global-styles-sidebar__header-actions",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+        children: [!isMobileViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
             icon: library_seen,
             label: (0,external_wp_i18n_namespaceObject.__)('Style Book'),

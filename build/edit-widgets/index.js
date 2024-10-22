@@ -880,7 +880,6 @@ function ComplementaryAreaToggle({
 
 
 const ComplementaryAreaHeader = ({
-  smallScreenTitle,
   children,
   className,
   toggleButtonProps
@@ -889,18 +888,10 @@ const ComplementaryAreaHeader = ({
     icon: close_small,
     ...toggleButtonProps
   });
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      className: "components-panel__header interface-complementary-area-header__small",
-      children: [smallScreenTitle && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
-        className: "interface-complementary-area-header__small-title",
-        children: smallScreenTitle
-      }), toggleButton]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      className: dist_clsx('components-panel__header', 'interface-complementary-area-header', className),
-      tabIndex: -1,
-      children: [children, toggleButton]
-    })]
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    className: dist_clsx('components-panel__header', 'interface-complementary-area-header', className),
+    tabIndex: -1,
+    children: [children, toggleButton]
   });
 };
 /* harmony default export */ const complementary_area_header = (ComplementaryAreaHeader);
@@ -1212,7 +1203,6 @@ function ComplementaryArea({
   panelClassName,
   scope,
   name,
-  smallScreenTitle,
   title,
   toggleShortcut,
   isActiveByDefault
@@ -1250,6 +1240,7 @@ function ComplementaryArea({
       showIconLabels: get('core', 'showIconLabels')
     };
   }, [identifier, scope]);
+  const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   useAdjustComplementaryListener(scope, identifier, activeArea, isActive, isSmall);
   const {
     enableComplementaryArea,
@@ -1301,7 +1292,6 @@ function ComplementaryArea({
         className: headerClassName,
         closeLabel: closeLabel,
         onClose: () => disableComplementaryArea(scope),
-        smallScreenTitle: smallScreenTitle,
         toggleButtonProps: {
           label: closeLabel,
           size: 'small',
@@ -1313,7 +1303,7 @@ function ComplementaryArea({
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
             className: "interface-complementary-area-header__title",
             children: title
-          }), isPinnable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          }), isPinnable && !isMobileViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
             className: "interface-complementary-area__pin-unpin-item",
             icon: isPinned ? star_filled : star_empty,
             label: isPinned ? (0,external_wp_i18n_namespaceObject.__)('Unpin from toolbar') : (0,external_wp_i18n_namespaceObject.__)('Pin to toolbar'),
