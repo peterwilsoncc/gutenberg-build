@@ -27309,7 +27309,9 @@ rtl.watch = () => (0,external_wp_i18n_namespaceObject.isRTL)();
 
 
 
-const isDefined = o => typeof o !== 'undefined' && o !== null;
+function isDefined(o) {
+  return typeof o !== 'undefined' && o !== null;
+}
 function useSpacer(props) {
   const {
     className,

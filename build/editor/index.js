@@ -7585,7 +7585,7 @@ const trash = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
  * Internal dependencies
  */
 
-const getErrorMessagesFromPromises = allSettledResults => {
+function getErrorMessagesFromPromises(allSettledResults) {
   const errorMessages = new Set();
   // If there was at lease one failure.
   if (allSettledResults.length === 1) {
@@ -7605,7 +7605,7 @@ const getErrorMessagesFromPromises = allSettledResults => {
     }
   }
   return errorMessages;
-};
+}
 const deletePostWithNotices = async (posts, notice, callbacks) => {
   const {
     createSuccessNotice,
