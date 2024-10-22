@@ -52905,6 +52905,7 @@ function TabbedSidebar({
 
 
 
+
 /**
  * A hook used to set the editor mode to zoomed out mode, invoking the hook sets the mode.
  *
@@ -52918,10 +52919,11 @@ function useZoomOut(zoomOut = true) {
   const {
     isZoomOut
   } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
+  const isWideViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('large');
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     const isZoomOutOnMount = isZoomOut();
     return () => {
-      if (isZoomOutOnMount) {
+      if (isZoomOutOnMount && isWideViewport) {
         setZoomLevel(50);
       } else {
         resetZoomLevel();
@@ -52929,12 +52931,12 @@ function useZoomOut(zoomOut = true) {
     };
   }, []);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (zoomOut) {
+    if (zoomOut && isWideViewport) {
       setZoomLevel(50);
     } else {
       resetZoomLevel();
     }
-  }, [zoomOut, setZoomLevel, resetZoomLevel]);
+  }, [zoomOut, setZoomLevel, resetZoomLevel, isWideViewport]);
 }
 
 ;// ./packages/block-editor/build-module/components/inserter/menu.js
