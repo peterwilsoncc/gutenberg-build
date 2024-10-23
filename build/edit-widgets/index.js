@@ -342,6 +342,8 @@ const starEmpty = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 const external_wp_viewport_namespaceObject = window["wp"]["viewport"];
 ;// external ["wp","compose"]
 const external_wp_compose_namespaceObject = window["wp"]["compose"];
+;// external ["wp","plugins"]
+const external_wp_plugins_namespaceObject = window["wp"]["plugins"];
 ;// ./packages/icons/build-module/library/close-small.js
 /**
  * WordPress dependencies
@@ -790,20 +792,6 @@ const store = (0,external_wp_data_namespaceObject.createReduxStore)(STORE_NAME, 
 // we'd be able to replace this with a register call.
 (0,external_wp_data_namespaceObject.register)(store);
 
-;// external ["wp","plugins"]
-const external_wp_plugins_namespaceObject = window["wp"]["plugins"];
-;// ./packages/interface/build-module/components/complementary-area-context/index.js
-/**
- * WordPress dependencies
- */
-
-/* harmony default export */ const complementary_area_context = ((0,external_wp_plugins_namespaceObject.withPluginContext)((context, ownProps) => {
-  return {
-    icon: ownProps.icon || context.icon,
-    identifier: ownProps.identifier || `${context.name}/${ownProps.name}`
-  };
-}));
-
 ;// ./packages/interface/build-module/components/complementary-area-toggle/index.js
 /**
  * WordPress dependencies
@@ -811,10 +799,10 @@ const external_wp_plugins_namespaceObject = window["wp"]["plugins"];
 
 
 
+
 /**
  * Internal dependencies
  */
-
 
 
 /**
@@ -831,14 +819,17 @@ function roleSupportsCheckedState(role) {
 function ComplementaryAreaToggle({
   as = external_wp_components_namespaceObject.Button,
   scope,
-  identifier,
-  icon,
+  identifier: identifierProp,
+  icon: iconProp,
   selectedIcon,
   name,
   shortcut,
   ...props
 }) {
   const ComponentToUse = as;
+  const context = (0,external_wp_plugins_namespaceObject.usePluginContext)();
+  const icon = iconProp || context.icon;
+  const identifier = identifierProp || `${context.name}/${name}`;
   const isSelected = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getActiveComplementaryArea(scope) === identifier, [identifier, scope]);
   const {
     enableComplementaryArea,
@@ -861,7 +852,6 @@ function ComplementaryAreaToggle({
     ...props
   });
 }
-/* harmony default export */ const complementary_area_toggle = (complementary_area_context(ComplementaryAreaToggle));
 
 ;// ./packages/interface/build-module/components/complementary-area-header/index.js
 /**
@@ -884,7 +874,7 @@ const ComplementaryAreaHeader = ({
   className,
   toggleButtonProps
 }) => {
-  const toggleButton = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(complementary_area_toggle, {
+  const toggleButton = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ComplementaryAreaToggle, {
     icon: close_small,
     ...toggleButtonProps
   });
@@ -1002,7 +992,7 @@ function ComplementaryAreaMoreMenuItem({
   __unstableExplicitMenuItem,
   ...props
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(complementary_area_toggle, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ComplementaryAreaToggle, {
     as: toggleProps => {
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(action_item, {
         __unstableExplicitMenuItem: __unstableExplicitMenuItem,
@@ -1075,10 +1065,10 @@ PinnedItems.Slot = PinnedItemsSlot;
 
 
 
+
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -1195,10 +1185,10 @@ function ComplementaryArea({
   children,
   className,
   closeLabel = (0,external_wp_i18n_namespaceObject.__)('Close plugin'),
-  identifier,
+  identifier: identifierProp,
   header,
   headerClassName,
-  icon,
+  icon: iconProp,
   isPinnable = true,
   panelClassName,
   scope,
@@ -1207,6 +1197,10 @@ function ComplementaryArea({
   toggleShortcut,
   isActiveByDefault
 }) {
+  const context = (0,external_wp_plugins_namespaceObject.usePluginContext)();
+  const icon = iconProp || context.icon;
+  const identifier = identifierProp || `${context.name}/${name}`;
+
   // This state is used to delay the rendering of the Fill
   // until the initial effect runs.
   // This prevents the animation from running on mount if
@@ -1264,7 +1258,7 @@ function ComplementaryArea({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [isPinnable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pinned_items, {
       scope: scope,
-      children: isPinned && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(complementary_area_toggle, {
+      children: isPinned && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ComplementaryAreaToggle, {
         scope: scope,
         identifier: identifier,
         isPressed: isActive && (!showIconLabels || isLarge),
@@ -1320,9 +1314,8 @@ function ComplementaryArea({
     })]
   });
 }
-const ComplementaryAreaWrapped = complementary_area_context(ComplementaryArea);
-ComplementaryAreaWrapped.Slot = ComplementaryAreaSlot;
-/* harmony default export */ const complementary_area = (ComplementaryAreaWrapped);
+ComplementaryArea.Slot = ComplementaryAreaSlot;
+/* harmony default export */ const complementary_area = (ComplementaryArea);
 
 ;// ./packages/interface/build-module/components/navigable-region/index.js
 /**
