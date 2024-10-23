@@ -1514,7 +1514,7 @@ __webpack_require__.d(__webpack_exports__, {
   PluginPostPublishPanel: () => (/* reexport */ plugin_post_publish_panel),
   PluginPostStatusInfo: () => (/* reexport */ plugin_post_status_info),
   PluginPrePublishPanel: () => (/* reexport */ plugin_pre_publish_panel),
-  PluginPreviewMenuItem: () => (/* reexport */ plugin_preview_menu_item),
+  PluginPreviewMenuItem: () => (/* reexport */ PluginPreviewMenuItem),
   PluginSidebar: () => (/* reexport */ PluginSidebar),
   PluginSidebarMoreMenuItem: () => (/* reexport */ PluginSidebarMoreMenuItem),
   PostAuthor: () => (/* reexport */ post_author),
@@ -14013,7 +14013,6 @@ PluginPrePublishPanel.Slot = plugin_pre_publish_panel_Slot;
 
 
 
-
 /**
  * Renders a menu item in the Preview dropdown, which can be used as a button or link depending on the props provided.
  * The text within the component appears as the menu item label.
@@ -14035,12 +14034,12 @@ PluginPrePublishPanel.Slot = plugin_pre_publish_panel_Slot;
  * }
  *
  * const ExternalPreviewMenuItem = () => (
- *   <PreviewDropdownMenuItem
+ *   <PluginPreviewMenuItem
  *     icon={ external }
  *     onClick={ onPreviewClick }
  *   >
  *     { __( 'Preview in new tab' ) }
- *   </PreviewDropdownMenuItem>
+ *   </PluginPreviewMenuItem>
  * );
  * registerPlugin( 'external-preview-menu-item', {
  *     render: ExternalPreviewMenuItem,
@@ -14049,14 +14048,17 @@ PluginPrePublishPanel.Slot = plugin_pre_publish_panel_Slot;
  *
  * @return {Component} The rendered menu item component.
  */
-/* harmony default export */ const plugin_preview_menu_item = ((0,external_wp_compose_namespaceObject.compose)((0,external_wp_plugins_namespaceObject.withPluginContext)((context, ownProps) => {
-  var _ownProps$as;
-  return {
-    as: (_ownProps$as = ownProps.as) !== null && _ownProps$as !== void 0 ? _ownProps$as : external_wp_components_namespaceObject.MenuItem,
-    icon: ownProps.icon || context.icon,
-    name: 'core/plugin-preview-menu'
-  };
-}))(action_item));
+
+function PluginPreviewMenuItem(props) {
+  var _props$as;
+  const context = (0,external_wp_plugins_namespaceObject.usePluginContext)();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(action_item, {
+    name: "core/plugin-preview-menu",
+    as: (_props$as = props.as) !== null && _props$as !== void 0 ? _props$as : external_wp_components_namespaceObject.MenuItem,
+    icon: props.icon || context.icon,
+    ...props
+  });
+}
 
 ;// ./packages/editor/build-module/components/plugin-sidebar/index.js
 /**
