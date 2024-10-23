@@ -1510,7 +1510,7 @@ __webpack_require__.d(__webpack_exports__, {
   PlainText: () => (/* reexport */ PlainText),
   PluginBlockSettingsMenuItem: () => (/* reexport */ plugin_block_settings_menu_item),
   PluginDocumentSettingPanel: () => (/* reexport */ plugin_document_setting_panel),
-  PluginMoreMenuItem: () => (/* reexport */ plugin_more_menu_item),
+  PluginMoreMenuItem: () => (/* reexport */ PluginMoreMenuItem),
   PluginPostPublishPanel: () => (/* reexport */ plugin_post_publish_panel),
   PluginPostStatusInfo: () => (/* reexport */ plugin_post_status_info),
   PluginPrePublishPanel: () => (/* reexport */ plugin_pre_publish_panel),
@@ -13736,7 +13736,6 @@ const PluginBlockSettingsMenuItem = ({
 
 
 
-
 /**
  * Renders a menu item in `Plugins` group in `More Menu` drop down, and can be used to as a button or link depending on the props provided.
  * The text within the component appears as the menu item label.
@@ -13793,14 +13792,17 @@ const PluginBlockSettingsMenuItem = ({
  *
  * @return {Component} The component to be rendered.
  */
-/* harmony default export */ const plugin_more_menu_item = ((0,external_wp_compose_namespaceObject.compose)((0,external_wp_plugins_namespaceObject.withPluginContext)((context, ownProps) => {
-  var _ownProps$as;
-  return {
-    as: (_ownProps$as = ownProps.as) !== null && _ownProps$as !== void 0 ? _ownProps$as : external_wp_components_namespaceObject.MenuItem,
-    icon: ownProps.icon || context.icon,
-    name: 'core/plugin-more-menu'
-  };
-}))(action_item));
+
+function PluginMoreMenuItem(props) {
+  var _props$as;
+  const context = (0,external_wp_plugins_namespaceObject.usePluginContext)();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(action_item, {
+    name: "core/plugin-more-menu",
+    as: (_props$as = props.as) !== null && _props$as !== void 0 ? _props$as : external_wp_components_namespaceObject.MenuItem,
+    icon: props.icon || context.icon,
+    ...props
+  });
+}
 
 ;// ./packages/editor/build-module/components/plugin-post-publish-panel/index.js
 /**
