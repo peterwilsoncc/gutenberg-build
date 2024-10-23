@@ -25647,18 +25647,21 @@ function useMultipleOriginColorsAndGradients() {
     if (themeColors && themeColors.length) {
       result.push({
         name: (0,external_wp_i18n_namespaceObject._x)('Theme', 'Indicates this palette comes from the theme.'),
+        slug: 'theme',
         colors: themeColors
       });
     }
     if (shouldDisplayDefaultColors && defaultColors && defaultColors.length) {
       result.push({
         name: (0,external_wp_i18n_namespaceObject._x)('Default', 'Indicates this palette comes from WordPress.'),
+        slug: 'default',
         colors: defaultColors
       });
     }
     if (customColors && customColors.length) {
       result.push({
-        name: (0,external_wp_i18n_namespaceObject._x)('Custom', 'Indicates this palette comes from the theme.'),
+        name: (0,external_wp_i18n_namespaceObject._x)('Custom', 'Indicates this palette is created by the user.'),
+        slug: 'custom',
         colors: customColors
       });
     }
@@ -25669,18 +25672,21 @@ function useMultipleOriginColorsAndGradients() {
     if (themeGradients && themeGradients.length) {
       result.push({
         name: (0,external_wp_i18n_namespaceObject._x)('Theme', 'Indicates this palette comes from the theme.'),
+        slug: 'theme',
         gradients: themeGradients
       });
     }
     if (shouldDisplayDefaultGradients && defaultGradients && defaultGradients.length) {
       result.push({
         name: (0,external_wp_i18n_namespaceObject._x)('Default', 'Indicates this palette comes from WordPress.'),
+        slug: 'default',
         gradients: defaultGradients
       });
     }
     if (customGradients && customGradients.length) {
       result.push({
         name: (0,external_wp_i18n_namespaceObject._x)('Custom', 'Indicates this palette is created by the user.'),
+        slug: 'custom',
         gradients: customGradients
       });
     }

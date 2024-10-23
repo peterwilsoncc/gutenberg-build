@@ -26427,6 +26427,43 @@ function ScreenStyleVariations() {
  * Internal dependencies
  */
 
+const STYLE_BOOK_COLOR_GROUPS = [{
+  slug: 'theme-colors',
+  title: (0,external_wp_i18n_namespaceObject.__)('Theme Colors'),
+  origin: 'theme',
+  type: 'colors'
+}, {
+  slug: 'theme-gradients',
+  title: (0,external_wp_i18n_namespaceObject.__)('Theme Gradients'),
+  origin: 'theme',
+  type: 'gradients'
+}, {
+  slug: 'custom-colors',
+  title: (0,external_wp_i18n_namespaceObject.__)('Custom Colors'),
+  origin: 'custom',
+  type: 'colors'
+}, {
+  slug: 'custom-gradients',
+  title: (0,external_wp_i18n_namespaceObject.__)('Custom Gradients'),
+  origin: 'custom',
+  // User.
+  type: 'gradients'
+}, {
+  slug: 'duotones',
+  title: (0,external_wp_i18n_namespaceObject.__)('Duotones'),
+  origin: 'theme',
+  type: 'duotones'
+}, {
+  slug: 'default-colors',
+  title: (0,external_wp_i18n_namespaceObject.__)('Default Colors'),
+  origin: 'default',
+  type: 'colors'
+}, {
+  slug: 'default-gradients',
+  title: (0,external_wp_i18n_namespaceObject.__)('Default Gradients'),
+  origin: 'default',
+  type: 'gradients'
+}];
 const STYLE_BOOK_THEME_SUBCATEGORIES = [{
   slug: 'site-identity',
   title: (0,external_wp_i18n_namespaceObject.__)('Site Identity'),
@@ -26452,7 +26489,7 @@ const STYLE_BOOK_CATEGORIES = [{
 }, {
   slug: 'colors',
   title: (0,external_wp_i18n_namespaceObject.__)('Colors'),
-  blocks: ['custom/colors']
+  blocks: []
 }, {
   slug: 'theme',
   title: (0,external_wp_i18n_namespaceObject.__)('Theme'),
@@ -26484,7 +26521,7 @@ const STYLE_BOOK_IFRAME_STYLES = `
 	.is-root-container {
 		display: flow-root;
 	}
-	
+
 	body {
 		position: relative;
 		padding: 32px !important;
@@ -26514,15 +26551,40 @@ const STYLE_BOOK_IFRAME_STYLES = `
 		box-shadow: 0 0 0 1px var(--wp-components-color-accent, var(--wp-admin-theme-color, #007cba));
 	}
 
+	.edit-site-style-book__example.is-disabled-example {
+		pointer-events: none;
+	}
+
 	.edit-site-style-book__example:focus:not(:disabled) {
 		box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent, var(--wp-admin-theme-color, #007cba));
 		outline: 3px solid transparent;
 	}
 
+	.edit-site-style-book__duotone-example > div:first-child {
+		display: flex;
+		aspect-ratio: 16 / 9;
+		grid-row: span 1;
+		grid-column: span 2;
+	}
+	.edit-site-style-book__duotone-example img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.edit-site-style-book__duotone-example > div:not(:first-child) {
+		height: 20px;
+		border: 1px solid #ddd;
+	}
+
+	.edit-site-style-book__color-example {
+		height: 52px;
+		border: 1px solid #ddd;
+	}
+
 	.edit-site-style-book__examples.is-wide .edit-site-style-book__example {
 		flex-direction: row;
 	}
-	
+
 	.edit-site-style-book__subcategory-title,
 	.edit-site-style-book__example-title {
 		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
@@ -26533,7 +26595,7 @@ const STYLE_BOOK_IFRAME_STYLES = `
 		text-align: left;
 		text-transform: uppercase;
 	}
-	
+
 	.edit-site-style-book__subcategory-title {
 		font-size: 16px;
 		margin-bottom: 40px;
@@ -26628,6 +26690,94 @@ function getTopLevelStyleBookCategories() {
   return [...STYLE_BOOK_CATEGORIES, ...extraCategories];
 }
 
+;// ./packages/edit-site/build-module/components/style-book/color-examples.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+const ColorExamples = ({
+  colors,
+  type
+}) => {
+  if (!colors) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalGrid, {
+    columns: 2,
+    rowGap: 8,
+    columnGap: 16,
+    children: colors.map(color => {
+      const className = type === 'gradients' ? (0,external_wp_blockEditor_namespaceObject.__experimentalGetGradientClass)(color.slug) : (0,external_wp_blockEditor_namespaceObject.getColorClassName)('background-color', color.slug);
+      const classes = dist_clsx('edit-site-style-book__color-example', className);
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.View, {
+        className: classes
+      }, color.slug);
+    })
+  });
+};
+/* harmony default export */ const color_examples = (ColorExamples);
+
+;// ./packages/edit-site/build-module/components/style-book/duotone-examples.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+const DuotoneExamples = ({
+  duotones
+}) => {
+  if (!duotones) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalGrid, {
+    columns: 2,
+    rowGap: 16,
+    columnGap: 16,
+    children: duotones.map(duotone => {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalGrid, {
+        className: "edit-site-style-book__duotone-example",
+        columns: 2,
+        rowGap: 8,
+        columnGap: 8,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.View, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+            alt: `Duotone example: ${duotone.slug}`,
+            src: "https://s.w.org/images/core/5.3/MtBlanc1.jpg",
+            style: {
+              filter: `url(#wp-duotone-${duotone.slug})`
+            }
+          })
+        }), duotone.colors.map(color => {
+          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.View, {
+            className: "edit-site-style-book__color-example",
+            style: {
+              backgroundColor: color
+            }
+          }, color);
+        })]
+      }, duotone.slug);
+    })
+  });
+};
+/* harmony default export */ const duotone_examples = (DuotoneExamples);
+
 ;// ./packages/edit-site/build-module/components/style-book/examples.js
 /**
  * WordPress dependencies
@@ -26639,19 +26789,62 @@ function getTopLevelStyleBookCategories() {
  * Internal dependencies
  */
 
+
+
+
+
+/**
+ * Returns examples color examples for each origin
+ * e.g. Core (Default), Theme, and User.
+ *
+ * @param {MultiOriginPalettes} colors Global Styles color palettes per origin.
+ * @return {BlockExample[]} An array of color block examples.
+ */
+
+function getColorExamples(colors) {
+  if (!colors) {
+    return [];
+  }
+  const examples = [];
+  STYLE_BOOK_COLOR_GROUPS.forEach(group => {
+    const palette = colors[group.type].find(origin => origin.slug === group.origin);
+    if (palette?.[group.type]) {
+      const example = {
+        name: group.slug,
+        title: group.title,
+        category: 'colors'
+      };
+      if (group.type === 'duotones') {
+        example.content = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(duotone_examples, {
+          duotones: palette[group.type]
+        });
+        examples.push(example);
+      } else {
+        example.content = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_examples, {
+          colors: palette[group.type],
+          type: group.type
+        });
+        examples.push(example);
+      }
+    }
+  });
+  return examples;
+}
+
 /**
  * Returns a list of examples for registered block types.
  *
+ * @param {MultiOriginPalettes} colors Global styles colors grouped by origin e.g. Core, Theme, and User.
  * @return {BlockExample[]} An array of block examples.
  */
-function getExamples() {
+function getExamples(colors) {
   const nonHeadingBlockExamples = (0,external_wp_blocks_namespaceObject.getBlockTypes)().filter(blockType => {
     const {
       name,
       example,
       supports
     } = blockType;
-    return name !== 'core/heading' && !!example && supports.inserter !== false;
+    return name !== 'core/heading' && !!example && supports?.inserter !== false;
   }).map(blockType => ({
     name: blockType.name,
     title: blockType.title,
@@ -26678,7 +26871,8 @@ function getExamples() {
       });
     })
   };
-  return [headingsExample, ...nonHeadingBlockExamples];
+  const colorExamples = getColorExamples(colors);
+  return [headingsExample, ...colorExamples, ...nonHeadingBlockExamples];
 }
 
 ;// ./packages/edit-site/build-module/components/style-book/index.js
@@ -26723,6 +26917,53 @@ const {
 function isObjectEmpty(object) {
   return !object || Object.keys(object).length === 0;
 }
+
+/**
+ * Retrieves colors, gradients, and duotone filters from Global Styles.
+ * The inclusion of default (Core) palettes is controlled by the relevant
+ * theme.json property e.g. defaultPalette, defaultGradients, defaultDuotone.
+ *
+ * @return {Object} Object containing properties for each type of palette.
+ */
+function useMultiOriginPalettes() {
+  const {
+    colors,
+    gradients
+  } = (0,external_wp_blockEditor_namespaceObject.__experimentalUseMultipleOriginColorsAndGradients)();
+
+  // Add duotone filters to the palettes data.
+  const [shouldDisplayDefaultDuotones, customDuotones, themeDuotones, defaultDuotones] = (0,external_wp_blockEditor_namespaceObject.useSettings)('color.defaultDuotone', 'color.duotone.custom', 'color.duotone.theme', 'color.duotone.default');
+  const palettes = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    const result = {
+      colors,
+      gradients,
+      duotones: []
+    };
+    if (themeDuotones && themeDuotones.length) {
+      result.duotones.push({
+        name: (0,external_wp_i18n_namespaceObject._x)('Theme', 'Indicates these duotone filters come from the theme.'),
+        slug: 'theme',
+        duotones: themeDuotones
+      });
+    }
+    if (shouldDisplayDefaultDuotones && defaultDuotones && defaultDuotones.length) {
+      result.duotones.push({
+        name: (0,external_wp_i18n_namespaceObject._x)('Default', 'Indicates these duotone filters come from WordPress.'),
+        slug: 'default',
+        duotones: defaultDuotones
+      });
+    }
+    if (customDuotones && customDuotones.length) {
+      result.duotones.push({
+        name: (0,external_wp_i18n_namespaceObject._x)('Custom', 'Indicates these doutone filters are created by the user.'),
+        slug: 'custom',
+        duotones: customDuotones
+      });
+    }
+    return result;
+  }, [colors, gradients, customDuotones, themeDuotones, defaultDuotones, shouldDisplayDefaultDuotones]);
+  return palettes;
+}
 function StyleBook({
   enableResizing = true,
   isSelected,
@@ -26736,8 +26977,14 @@ function StyleBook({
   const [resizeObserver, sizes] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
   const [textColor] = style_book_useGlobalStyle('color.text');
   const [backgroundColor] = style_book_useGlobalStyle('color.background');
-  const [examples] = (0,external_wp_element_namespaceObject.useState)(getExamples);
+  const colors = useMultiOriginPalettes();
+  const [examples, setExamples] = (0,external_wp_element_namespaceObject.useState)(() => getExamples(colors));
   const tabs = (0,external_wp_element_namespaceObject.useMemo)(() => getTopLevelStyleBookCategories().filter(category => examples.some(example => example.category === category.slug)), [examples]);
+
+  // Ensure color examples are kept in sync with Global Styles palette changes.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    setExamples(getExamples(colors));
+  }, [colors]);
   const {
     base: baseConfig
   } = (0,external_wp_element_namespaceObject.useContext)(style_book_GlobalStylesContext);
@@ -26891,6 +27138,7 @@ const Examples = (0,external_wp_element_namespaceObject.memo)(({
     children: [!!filteredExamples?.examples?.length && filteredExamples.examples.map(example => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Example, {
       id: `example-${example.name}`,
       title: example.title,
+      content: example.content,
       blocks: example.blocks,
       isSelected: isSelected(example.name),
       onClick: () => {
@@ -26919,6 +27167,7 @@ const Subcategory = ({
   return !!examples?.length && examples.map(example => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Example, {
     id: `example-${example.name}`,
     title: example.title,
+    content: example.content,
     blocks: example.blocks,
     isSelected: isSelected(example.name),
     onClick: () => {
@@ -26926,12 +27175,14 @@ const Subcategory = ({
     }
   }, example.name));
 };
+const disabledExamples = ['example-duotones'];
 const Example = ({
   id,
   title,
   blocks,
   isSelected,
-  onClick
+  onClick,
+  content
 }) => {
   const originalSettings = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).getSettings(), []);
   const settings = (0,external_wp_element_namespaceObject.useMemo)(() => ({
@@ -26943,13 +27194,18 @@ const Example = ({
 
   // Cache the list of blocks to avoid additional processing when the component is re-rendered.
   const renderedBlocks = (0,external_wp_element_namespaceObject.useMemo)(() => Array.isArray(blocks) ? blocks : [blocks], [blocks]);
+  const disabledProps = disabledExamples.includes(id) ? {
+    disabled: true,
+    accessibleWhenDisabled: true
+  } : {};
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     role: "row",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       role: "gridcell",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite.Item, {
         className: dist_clsx('edit-site-style-book__example', {
-          'is-selected': isSelected
+          'is-selected': isSelected,
+          'is-disabled-example': !!disabledProps?.disabled
         }),
         id: id,
         "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(
@@ -26958,6 +27214,7 @@ const Example = ({
         render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {}),
         role: "button",
         onClick: onClick,
+        ...disabledProps,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: "edit-site-style-book__example-title",
           children: title
@@ -26966,12 +27223,12 @@ const Example = ({
           "aria-hidden": true,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Disabled, {
             className: "edit-site-style-book__example-preview__content",
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ExperimentalBlockEditorProvider, {
+            children: content ? content : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ExperimentalBlockEditorProvider, {
               value: renderedBlocks,
               settings: settings,
-              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockList, {
+              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__unstableEditorStyles, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockList, {
                 renderAppender: false
-              })
+              })]
             })
           })
         })]
@@ -27725,6 +27982,7 @@ function ScreenRevisions() {
 
 
 
+
 const SLOT_FILL_NAME = 'GlobalStylesMenu';
 const {
   useGlobalStylesReset: ui_useGlobalStylesReset
@@ -27849,6 +28107,12 @@ function GlobalStylesStyleBook() {
     // '/blocks/core%2Fbuttons'.
     path === `/blocks/${encodeURIComponent(blockName)}` || path.startsWith(`/blocks/${encodeURIComponent(blockName)}/`),
     onSelect: blockName => {
+      if (STYLE_BOOK_COLOR_GROUPS.find(group => group.slug === blockName)) {
+        // Go to color palettes Global Styles.
+        navigator.goTo('/colors/palette');
+        return;
+      }
+
       // Now go to the selected block.
       navigator.goTo('/blocks/' + encodeURIComponent(blockName));
     }
