@@ -21787,7 +21787,7 @@ function PostURL({
       type: 'snackbar'
     });
   });
-  const postUrlSlugDescriptionId = 'editor-post-url__slug-descriotion-' + (0,external_wp_compose_namespaceObject.useInstanceId)(PostURL);
+  const postUrlSlugDescriptionId = 'editor-post-url__slug-description-' + (0,external_wp_compose_namespaceObject.useInstanceId)(PostURL);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "editor-post-url",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalInspectorPopoverHeader, {
