@@ -44191,9 +44191,6 @@ const default_views_defaultLayouts = {
     layout: {
       primaryField: 'title',
       styles: {
-        'featured-image': {
-          width: '1%'
-        },
         title: {
           maxWidth: 300
         }
@@ -44202,14 +44199,14 @@ const default_views_defaultLayouts = {
   },
   [LAYOUT_GRID]: {
     layout: {
-      mediaField: 'featured-image',
+      mediaField: 'featured_media',
       primaryField: 'title'
     }
   },
   [LAYOUT_LIST]: {
     layout: {
       primaryField: 'title',
-      mediaField: 'featured-image'
+      mediaField: 'featured_media'
     }
   }
 };
@@ -44411,32 +44408,187 @@ function AddNewPostModal({
   });
 }
 
-;// ./packages/edit-site/build-module/components/media/index.js
+;// external ["wp","mediaUtils"]
+const external_wp_mediaUtils_namespaceObject = window["wp"]["mediaUtils"];
+;// ./packages/icons/build-module/library/line-solid.js
 /**
  * WordPress dependencies
  */
 
 
-function Media({
-  id,
-  size = ['large', 'medium', 'thumbnail'],
-  ...props
-}) {
+const lineSolid = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M5 11.25h14v1.5H5z"
+  })
+});
+/* harmony default export */ const line_solid = (lineSolid);
+
+;// ./packages/fields/build-module/fields/featured-image/featured-image-edit.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+// @ts-ignore
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const FeaturedImageEdit = ({
+  data,
+  field,
+  onChange
+}) => {
   const {
-    record: media
-  } = (0,external_wp_coreData_namespaceObject.useEntityRecord)('root', 'media', id);
-  const currentSize = size.find(s => !!media?.media_details?.sizes[s]);
-  const mediaUrl = media?.media_details?.sizes[currentSize]?.source_url || media?.source_url;
-  if (!mediaUrl) {
-    return null;
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
-    ...props,
-    src: mediaUrl,
-    alt: media.alt_text
+    id
+  } = field;
+  const value = field.getValue({
+    item: data
   });
-}
-/* harmony default export */ const components_media = (Media);
+  const media = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
+    return getEntityRecord('root', 'media', value);
+  }, [value]);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: newValue
+  }), [id, onChange]);
+  const url = media?.source_url;
+  const title = media?.title?.rendered;
+  const ref = (0,external_wp_element_namespaceObject.useRef)(null);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("fieldset", {
+    className: "fields-controls__featured-image",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "fields-controls__featured-image-container",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_mediaUtils_namespaceObject.MediaUpload, {
+        onSelect: selectedMedia => {
+          onChangeControl(selectedMedia.id);
+        },
+        allowedTypes: ['image'],
+        render: ({
+          open
+        }) => {
+          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+            ref: ref,
+            role: "button",
+            tabIndex: -1,
+            onClick: () => {
+              open();
+            },
+            onKeyDown: open,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalGrid, {
+              rowGap: 0,
+              columnGap: 8,
+              templateColumns: "24px 1fr 24px",
+              children: [url && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+                  className: "fields-controls__featured-image-image",
+                  alt: "",
+                  width: 24,
+                  height: 24,
+                  src: url
+                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+                  className: "fields-controls__featured-image-title",
+                  children: title
+                })]
+              }), !url && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+                  className: "fields-controls__featured-image-placeholder",
+                  style: {
+                    width: '24px',
+                    height: '24px'
+                  }
+                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+                  className: "fields-controls__featured-image-title",
+                  children: (0,external_wp_i18n_namespaceObject.__)('Choose an image…')
+                })]
+              }), url && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+                  size: "small",
+                  className: "fields-controls__featured-image-remove-button",
+                  icon: line_solid,
+                  onClick: event => {
+                    event.stopPropagation();
+                    onChangeControl(0);
+                  }
+                })
+              })]
+            })
+          });
+        }
+      })
+    })
+  });
+};
+
+;// ./packages/fields/build-module/fields/featured-image/featured-image-view.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+const FeaturedImageView = ({
+  item
+}) => {
+  const mediaId = item.featured_media;
+  const media = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
+    return mediaId ? getEntityRecord('root', 'media', mediaId) : null;
+  }, [mediaId]);
+  const url = media?.source_url;
+  if (url) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+      className: "fields-controls__featured-image-image",
+      src: url,
+      alt: ""
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+    className: "fields-controls__featured-image-placeholder"
+  });
+};
+
+;// ./packages/fields/build-module/fields/featured-image/index.js
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+const featuredImageField = {
+  id: 'featured_media',
+  type: 'text',
+  label: (0,external_wp_i18n_namespaceObject.__)('Featured Image'),
+  getValue: ({
+    item
+  }) => item.featured_media,
+  Edit: FeaturedImageEdit,
+  render: FeaturedImageView,
+  enableSorting: false
+};
+/* harmony default export */ const featured_image = (featuredImageField);
 
 ;// ./packages/edit-site/build-module/components/post-fields/index.js
 /**
@@ -44456,10 +44608,10 @@ function Media({
 
 
 
+
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -44497,37 +44649,6 @@ const STATUSES = [{
   icon: library_trash
 }];
 const getFormattedDate = dateToDisplay => (0,external_wp_date_namespaceObject.dateI18n)((0,external_wp_date_namespaceObject.getSettings)().formats.datetimeAbbreviated, (0,external_wp_date_namespaceObject.getDate)(dateToDisplay));
-function FeaturedImage({
-  item,
-  viewType
-}) {
-  const isDisabled = item.status === 'trash';
-  const {
-    onClick
-  } = useLink({
-    postId: item.id,
-    postType: item.type,
-    canvas: 'edit'
-  });
-  const hasMedia = !!item.featured_media;
-  const size = viewType === LAYOUT_GRID ? ['large', 'full', 'medium', 'thumbnail'] : ['thumbnail', 'medium', 'large', 'full'];
-  const media = hasMedia ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(components_media, {
-    className: "edit-site-post-list__featured-image",
-    id: item.featured_media,
-    size: size
-  }) : null;
-  const renderButton = viewType !== LAYOUT_LIST && !isDisabled;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    className: `edit-site-post-list__featured-image-wrapper is-layout-${viewType}`,
-    children: renderButton ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("button", {
-      className: "edit-site-post-list__featured-image-button",
-      type: "button",
-      onClick: onClick,
-      "aria-label": item.title?.rendered || (0,external_wp_i18n_namespaceObject.__)('(no title)'),
-      children: media
-    }) : media
-  });
-}
 function PostStatusField({
   item
 }) {
@@ -44609,20 +44730,7 @@ function usePostFields(viewType) {
       postsPageId: siteSettings?.page_for_posts
     };
   }, []);
-  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [{
-    id: 'featured-image',
-    label: (0,external_wp_i18n_namespaceObject.__)('Featured Image'),
-    getValue: ({
-      item
-    }) => item.featured_media,
-    render: ({
-      item
-    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FeaturedImage, {
-      item: item,
-      viewType: viewType
-    }),
-    enableSorting: false
-  }, {
+  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [featured_image, {
     label: (0,external_wp_i18n_namespaceObject.__)('Title'),
     id: 'title',
     type: 'text',
@@ -45896,11 +46004,11 @@ function PostEditForm({
   }), [_fields]);
   const form = {
     type: 'panel',
-    fields: ['title', 'status', 'date', 'author', 'comment_status']
+    fields: ['featured_media', 'title', 'author', 'date', 'comment_status']
   };
   const onChange = edits => {
     for (const id of ids) {
-      if (edits.status && edits.status !== 'future' && record.status === 'future' && new Date(record.date) > new Date()) {
+      if (edits.status && edits.status !== 'future' && record?.status === 'future' && new Date(record.date) > new Date()) {
         edits.date = null;
       }
       if (edits.status && edits.status === 'private' && record.password) {
