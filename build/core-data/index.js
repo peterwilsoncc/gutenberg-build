@@ -24876,7 +24876,6 @@ function useEntityBlockEditor(kind, name, {
     }
     return _blocks;
   }, [kind, name, id, editedBlocks, content, getEntityRecord, getEntityRecordEdits]);
-  const updateFootnotes = (0,external_wp_element_namespaceObject.useCallback)(_blocks => updateFootnotesFromMeta(_blocks, meta), [meta]);
   const onChange = (0,external_wp_element_namespaceObject.useCallback)((newBlocks, options) => {
     const noChange = blocks === newBlocks;
     if (noChange) {
@@ -24895,19 +24894,19 @@ function useEntityBlockEditor(kind, name, {
       content: ({
         blocks: blocksForSerialization = []
       }) => (0,external_wp_blocks_namespaceObject.__unstableSerializeAndClean)(blocksForSerialization),
-      ...updateFootnotes(newBlocks)
+      ...updateFootnotesFromMeta(newBlocks, meta)
     };
     editEntityRecord(kind, name, id, edits, {
       isCached: false,
       ...rest
     });
-  }, [kind, name, id, blocks, updateFootnotes, __unstableCreateUndoLevel, editEntityRecord]);
+  }, [kind, name, id, blocks, meta, __unstableCreateUndoLevel, editEntityRecord]);
   const onInput = (0,external_wp_element_namespaceObject.useCallback)((newBlocks, options) => {
     const {
       selection,
       ...rest
     } = options;
-    const footnotesChanges = updateFootnotes(newBlocks);
+    const footnotesChanges = updateFootnotesFromMeta(newBlocks, meta);
     const edits = {
       selection,
       ...footnotesChanges
@@ -24916,7 +24915,7 @@ function useEntityBlockEditor(kind, name, {
       isCached: true,
       ...rest
     });
-  }, [kind, name, id, updateFootnotes, editEntityRecord]);
+  }, [kind, name, id, meta, editEntityRecord]);
   return [blocks, onInput, onChange];
 }
 
