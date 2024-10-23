@@ -7674,7 +7674,6 @@ __webpack_require__.d(__webpack_exports__, {
   useSetting: () => (/* reexport */ useSetting),
   useSettings: () => (/* reexport */ use_settings_useSettings),
   useStyleOverride: () => (/* reexport */ useStyleOverride),
-  useZoomOut: () => (/* reexport */ useZoomOut),
   withColorContext: () => (/* reexport */ with_color_context),
   withColors: () => (/* reexport */ withColors),
   withFontSizes: () => (/* reexport */ with_font_sizes)
@@ -78167,6 +78166,7 @@ lock(privateApis, {
   usesContextKey: usesContextKey,
   useFlashEditableBlocks: useFlashEditableBlocks,
   useZoomOutModeExit: useZoomOutModeExit,
+  useZoomOut: useZoomOut,
   globalStylesDataKey: globalStylesDataKey,
   globalStylesLinksDataKey: globalStylesLinksDataKey,
   selectBlockPatternsKey: selectBlockPatternsKey,
