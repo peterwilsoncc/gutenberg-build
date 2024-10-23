@@ -59934,6 +59934,18 @@ function BlockActions({
   });
 }
 
+;// ./packages/block-editor/build-module/components/collab/block-comment-icon-slot.js
+/**
+ * WordPress dependencies
+ */
+
+const {
+  Fill: __unstableCommentIconFill,
+  Slot: block_comment_icon_slot_Slot
+} = (0,external_wp_components_namespaceObject.createSlotFill)('__unstableCommentIconFill');
+__unstableCommentIconFill.Slot = block_comment_icon_slot_Slot;
+/* harmony default export */ const block_comment_icon_slot = (__unstableCommentIconFill);
+
 ;// ./packages/block-editor/build-module/components/block-settings-menu/block-html-convert-button.js
 /**
  * WordPress dependencies
@@ -60898,6 +60910,7 @@ function BlockParentSelectorMenuItem({
 
 
 
+
 const block_settings_dropdown_POPOVER_PROPS = {
   className: 'block-editor-block-settings-menu__popover',
   placement: 'bottom-start'
@@ -61088,6 +61101,10 @@ function BlockSettingsDropdown({
                 shortcut: shortcuts.insertAfter,
                 children: (0,external_wp_i18n_namespaceObject.__)('Add after')
               })]
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_comment_icon_slot.Slot, {
+              fillProps: {
+                onClose
+              }
             })]
           }), canCopyStyles && !isContentOnly && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuGroup, {
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyMenuItem, {
@@ -61123,6 +61140,18 @@ function BlockSettingsDropdown({
 }
 /* harmony default export */ const block_settings_dropdown = (BlockSettingsDropdown);
 
+;// ./packages/block-editor/build-module/components/collab/block-comment-icon-toolbar-slot.js
+/**
+ * WordPress dependencies
+ */
+
+const {
+  Fill: __unstableCommentIconToolbarFill,
+  Slot: block_comment_icon_toolbar_slot_Slot
+} = (0,external_wp_components_namespaceObject.createSlotFill)('__unstableCommentIconToolbarFill');
+__unstableCommentIconToolbarFill.Slot = block_comment_icon_toolbar_slot_Slot;
+/* harmony default export */ const block_comment_icon_toolbar_slot = (__unstableCommentIconToolbarFill);
+
 ;// ./packages/block-editor/build-module/components/block-settings-menu/index.js
 /**
  * WordPress dependencies
@@ -61134,18 +61163,19 @@ function BlockSettingsDropdown({
  */
 
 
+
 function BlockSettingsMenu({
   clientIds,
   ...props
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_comment_icon_toolbar_slot.Slot, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
       children: toggleProps => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_settings_dropdown, {
         clientIds: clientIds,
         toggleProps: toggleProps,
         ...props
       })
-    })
+    })]
   });
 }
 /* harmony default export */ const block_settings_menu = (BlockSettingsMenu);
@@ -77522,6 +77552,7 @@ function ResolutionTool({
 
 
 
+
 /**
  * Private @wordpress/block-editor APIs.
  */
@@ -77565,7 +77596,9 @@ lock(privateApis, {
   useBlockDisplayTitle: useBlockDisplayTitle,
   __unstableBlockStyleVariationOverridesWithConfig: __unstableBlockStyleVariationOverridesWithConfig,
   setBackgroundStyleDefaults: setBackgroundStyleDefaults,
-  sectionRootClientIdKey: sectionRootClientIdKey
+  sectionRootClientIdKey: sectionRootClientIdKey,
+  __unstableCommentIconFill: block_comment_icon_slot,
+  __unstableCommentIconToolbarFill: block_comment_icon_toolbar_slot
 });
 
 ;// ./packages/block-editor/build-module/index.js
