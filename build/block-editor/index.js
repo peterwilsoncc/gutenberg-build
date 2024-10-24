@@ -45433,7 +45433,7 @@ function isInsertionPoint(targetToCheck, ownerDocument) {
   const {
     defaultView
   } = ownerDocument;
-  return !!(defaultView && targetToCheck instanceof defaultView.HTMLElement && targetToCheck.dataset.isInsertionPoint);
+  return !!(defaultView && targetToCheck instanceof defaultView.HTMLElement && targetToCheck.closest('[data-is-insertion-point]'));
 }
 
 /**
@@ -45786,10 +45786,14 @@ function useInnerBlocksProps(props = {}, options = {}) {
       getBlockSettings,
       getSectionRootClientId
     } = unlock(select(store));
-    let _isDropZoneDisabled;
     if (!clientId) {
+      const sectionRootClientId = getSectionRootClientId();
+      // Disable the root drop zone when zoomed out and the section root client id
+      // is not the root block list (represented by an empty string).
+      // This avoids drag handling bugs caused by having two block lists acting as
+      // drop zones - the actual 'root' block list and the section root.
       return {
-        isDropZoneDisabled: _isDropZoneDisabled
+        isDropZoneDisabled: isZoomOut() && sectionRootClientId !== ''
       };
     }
     const {
@@ -45800,7 +45804,7 @@ function useInnerBlocksProps(props = {}, options = {}) {
     const blockEditingMode = getBlockEditingMode(clientId);
     const parentClientId = getBlockRootClientId(clientId);
     const [defaultLayout] = getBlockSettings(clientId, 'layout');
-    _isDropZoneDisabled = blockEditingMode === 'disabled';
+    let _isDropZoneDisabled = blockEditingMode === 'disabled';
     if (isZoomOut()) {
       // In zoom out mode, we want to disable the drop zone for the sections.
       // The inner blocks belonging to the section drop zone is
