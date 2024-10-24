@@ -28622,7 +28622,10 @@ function VisualEditor({
   contentRef,
   className
 }) {
-  const [resizeObserver, sizes] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
+  const [contentHeight, setContentHeight] = (0,external_wp_element_namespaceObject.useState)('');
+  const effectContentHeight = (0,external_wp_compose_namespaceObject.useResizeObserver)(([entry]) => {
+    setContentHeight(entry.borderBoxSize[0].blockSize);
+  });
   const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('small', '<');
   const {
     renderingMode,
@@ -28788,13 +28791,6 @@ function VisualEditor({
 		.is-root-container.alignwide:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: var(--wp--style--global--wide-size);}
 		.is-root-container.alignfull { max-width: none; margin-left: auto; margin-right: auto;}
 		.is-root-container.alignfull:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: none;}`;
-  const localRef = (0,external_wp_element_namespaceObject.useRef)();
-  const typewriterRef = (0,external_wp_blockEditor_namespaceObject.__unstableUseTypewriter)();
-  contentRef = (0,external_wp_compose_namespaceObject.useMergeRefs)([localRef, contentRef, renderingMode === 'post-only' ? typewriterRef : null, useFlashEditableBlocks({
-    isEnabled: renderingMode === 'template-locked'
-  }), useSelectNearestEditableBlock({
-    isEnabled: renderingMode === 'template-locked'
-  }), useZoomOutModeExit()]);
   const forceFullHeight = postType === NAVIGATION_POST_TYPE;
   const enableResizing = [NAVIGATION_POST_TYPE, constants_TEMPLATE_PART_POST_TYPE, PATTERN_POST_TYPE].includes(postType) &&
   // Disable in previews / view mode.
@@ -28814,6 +28810,16 @@ function VisualEditor({
       enableResizing ? 'min-height:0!important;' : ''}}`
     }];
   }, [styles, enableResizing]);
+  const localRef = (0,external_wp_element_namespaceObject.useRef)();
+  const typewriterRef = (0,external_wp_blockEditor_namespaceObject.__unstableUseTypewriter)();
+  contentRef = (0,external_wp_compose_namespaceObject.useMergeRefs)([localRef, contentRef, renderingMode === 'post-only' ? typewriterRef : null, useFlashEditableBlocks({
+    isEnabled: renderingMode === 'template-locked'
+  }), useSelectNearestEditableBlock({
+    isEnabled: renderingMode === 'template-locked'
+  }), useZoomOutModeExit(),
+  // Avoid resize listeners when not needed, these will trigger
+  // unnecessary re-renders when animating the iframe width.
+  enableResizing ? effectContentHeight : null]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: dist_clsx('editor-visual-editor',
     // this class is here for backward compatibility reasons.
@@ -28824,7 +28830,7 @@ function VisualEditor({
     }),
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(resizable_editor, {
       enableResizing: enableResizing,
-      height: sizes.height && !forceFullHeight ? sizes.height : '100%',
+      height: contentHeight && !forceFullHeight ? contentHeight : '100%',
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(BlockCanvas, {
         shouldIframe: !disableIframe,
         contentRef: contentRef,
@@ -28884,11 +28890,7 @@ function VisualEditor({
           }), renderingMode === 'template-locked' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditTemplateBlocksNotification, {
             contentRef: localRef
           })]
-        }),
-        // Avoid resize listeners when not needed,
-        // these will trigger unnecessary re-renders
-        // when animating the iframe width.
-        enableResizing && resizeObserver]
+        })]
       })
     })
   });
