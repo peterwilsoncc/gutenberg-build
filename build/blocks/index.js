@@ -7034,10 +7034,6 @@ function registerBlockType(blockNameOrMetadata, settings) {
      false ? 0 : void 0;
     return;
   }
-  if (1 === settings?.parent?.length && name === settings.parent[0]) {
-     false ? 0 : void 0;
-    return;
-  }
   if (!/^[a-z][a-z0-9-]*\/[a-z][a-z0-9-]*$/.test(name)) {
      false ? 0 : void 0;
     return;
@@ -9626,6 +9622,24 @@ const processBlockType = (name, blockSettings) => ({
   }
   settings.icon = normalizeIconObject(settings.icon);
   if (!isValidIcon(settings.icon.src)) {
+     false ? 0 : void 0;
+    return;
+  }
+  if (typeof settings?.parent === 'string' || settings?.parent instanceof String) {
+    settings.parent = [settings.parent];
+     false ? 0 : void 0;
+    // Intentionally continue:
+    //
+    // While string values were never supported, they appeared to work with some unintended side-effects
+    // that have been fixed by [#66250](https://github.com/WordPress/gutenberg/pull/66250).
+    //
+    // To be backwards-compatible, this code that automatically migrates strings to arrays.
+  }
+  if (!Array.isArray(settings?.parent) && settings?.parent !== undefined) {
+     false ? 0 : void 0;
+    return;
+  }
+  if (1 === settings?.parent?.length && name === settings.parent[0]) {
      false ? 0 : void 0;
     return;
   }
