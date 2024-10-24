@@ -64416,6 +64416,7 @@ function ListViewBranch(props) {
     expandedState,
     draggedClientIds
   } = useListViewContext();
+  const nextPositionRef = (0,external_wp_element_namespaceObject.useRef)();
   if (!canParentExpand) {
     return null;
   }
@@ -64426,7 +64427,7 @@ function ListViewBranch(props) {
   const blockCount = filteredBlocks.length;
   // The appender means an extra row in List View, so add 1 to the row count.
   const rowCount = showAppender ? blockCount + 1 : blockCount;
-  let nextPosition = listPosition;
+  nextPositionRef.current = listPosition;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [filteredBlocks.map((block, index) => {
       var _expandedState$client;
@@ -64435,7 +64436,7 @@ function ListViewBranch(props) {
         innerBlocks
       } = block;
       if (index > 0) {
-        nextPosition += countBlocks(filteredBlocks[index - 1], expandedState, draggedClientIds, isExpanded);
+        nextPositionRef.current += countBlocks(filteredBlocks[index - 1], expandedState, draggedClientIds, isExpanded);
       }
       const isDragged = !!draggedClientIds?.includes(clientId);
 
@@ -64457,7 +64458,7 @@ function ListViewBranch(props) {
       const {
         itemInView
       } = fixedListWindow;
-      const blockInView = itemInView(nextPosition);
+      const blockInView = itemInView(nextPositionRef.current);
       const position = index + 1;
       const updatedPath = path.length > 0 ? `${path}_${position}` : `${position}`;
       const hasNestedBlocks = !!innerBlocks?.length;
@@ -64492,7 +64493,7 @@ function ListViewBranch(props) {
           showBlockMovers: showBlockMovers,
           path: updatedPath,
           isExpanded: isDragged ? false : shouldExpand,
-          listPosition: nextPosition,
+          listPosition: nextPositionRef.current,
           selectedClientIds: selectedClientIds,
           isSyncedBranch: syncedBranch,
           displacement: displacement,
@@ -64509,7 +64510,7 @@ function ListViewBranch(props) {
           showBlockMovers: showBlockMovers,
           level: level + 1,
           path: updatedPath,
-          listPosition: nextPosition + 1,
+          listPosition: nextPositionRef.current + 1,
           fixedListWindow: fixedListWindow,
           isBranchSelected: isSelectedBranch,
           selectedClientIds: selectedClientIds,

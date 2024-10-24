@@ -59721,14 +59721,14 @@ function TableOfContentsEdit({
     createWarningNotice,
     removeNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
-  let noticeId;
+  const noticeIdRef = (0,external_wp_element_namespaceObject.useRef)();
   const showRedirectionPreventedNotice = event => {
     event.preventDefault();
     // Remove previous warning if any, to show one at a time per block.
-    removeNotice(noticeId);
-    noticeId = `block-library/core/table-of-contents/redirection-prevented/${instanceId}`;
+    removeNotice(noticeIdRef.current);
+    noticeIdRef.current = `block-library/core/table-of-contents/redirection-prevented/${instanceId}`;
     createWarningNotice((0,external_wp_i18n_namespaceObject.__)('Links are disabled in the editor.'), {
-      id: noticeId,
+      id: noticeIdRef.current,
       type: 'snackbar'
     });
   };
