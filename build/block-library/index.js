@@ -21544,7 +21544,7 @@ function GapStyles({
 
 
 const MAX_COLUMNS = 8;
-let linkOptions = [{
+const LINK_OPTIONS = [{
   icon: custom_link,
   label: (0,external_wp_i18n_namespaceObject.__)('Link images to attachment pages'),
   value: LINK_DESTINATION_ATTACHMENT,
@@ -21586,10 +21586,8 @@ function GalleryEdit(props) {
     isContentLocked,
     onFocus
   } = props;
-  const lightboxSetting = (0,external_wp_blockEditor_namespaceObject.useSettings)('blocks.core/image.lightbox')[0];
-  if (!lightboxSetting?.allowEditing) {
-    linkOptions = linkOptions.filter(option => option.value !== LINK_DESTINATION_LIGHTBOX);
-  }
+  const [lightboxSetting] = (0,external_wp_blockEditor_namespaceObject.useSettings)('blocks.core/image.lightbox');
+  const linkOptions = !lightboxSetting?.allowEditing ? LINK_OPTIONS.filter(option => option.value !== LINK_DESTINATION_LIGHTBOX) : LINK_OPTIONS;
   const {
     columns,
     imageCrop,
