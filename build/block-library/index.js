@@ -28187,17 +28187,12 @@ function LatestPostsEdit({
 
   // If a user clicks to a link prevent redirection and show a warning.
   const {
-    createWarningNotice,
-    removeNotice
+    createWarningNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
-  let noticeId;
   const showRedirectionPreventedNotice = event => {
     event.preventDefault();
-    // Remove previous warning if any, to show one at a time per block.
-    removeNotice(noticeId);
-    noticeId = `block-library/core/latest-posts/redirection-prevented/${instanceId}`;
     createWarningNotice((0,external_wp_i18n_namespaceObject.__)('Links are disabled in the editor.'), {
-      id: noticeId,
+      id: `block-library/core/latest-posts/redirection-prevented/${instanceId}`,
       type: 'snackbar'
     });
   };
@@ -59728,17 +59723,12 @@ function TableOfContentsEdit({
 
   // If a user clicks to a link prevent redirection and show a warning.
   const {
-    createWarningNotice,
-    removeNotice
+    createWarningNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
-  const noticeIdRef = (0,external_wp_element_namespaceObject.useRef)();
   const showRedirectionPreventedNotice = event => {
     event.preventDefault();
-    // Remove previous warning if any, to show one at a time per block.
-    removeNotice(noticeIdRef.current);
-    noticeIdRef.current = `block-library/core/table-of-contents/redirection-prevented/${instanceId}`;
     createWarningNotice((0,external_wp_i18n_namespaceObject.__)('Links are disabled in the editor.'), {
-      id: noticeIdRef.current,
+      id: `block-library/core/table-of-contents/redirection-prevented/${instanceId}`,
       type: 'snackbar'
     });
   };
