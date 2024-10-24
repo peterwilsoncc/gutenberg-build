@@ -27487,6 +27487,8 @@ const square = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 
+
+
 /**
  * Internal dependencies
  */
@@ -27506,6 +27508,31 @@ const ZoomOutToggle = ({
     resetZoomLevel,
     setZoomLevel
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store));
+  const {
+    registerShortcut,
+    unregisterShortcut
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_keyboardShortcuts_namespaceObject.store);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    registerShortcut({
+      name: 'core/editor/zoom',
+      category: 'global',
+      description: (0,external_wp_i18n_namespaceObject.__)('Enter or exit zoom out.'),
+      keyCombination: {
+        modifier: 'primaryShift',
+        character: '0'
+      }
+    });
+    return () => {
+      unregisterShortcut('core/editor/zoom');
+    };
+  }, [registerShortcut, unregisterShortcut]);
+  (0,external_wp_keyboardShortcuts_namespaceObject.useShortcut)('core/editor/zoom', () => {
+    if (isZoomOut) {
+      resetZoomLevel();
+    } else {
+      setZoomLevel('auto-scaled');
+    }
+  });
   const handleZoomOut = () => {
     if (isZoomOut) {
       resetZoomLevel();
