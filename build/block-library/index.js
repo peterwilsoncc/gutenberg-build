@@ -53003,6 +53003,18 @@ const separator_transforms_transforms = {
     schema: {
       hr: {}
     }
+  }],
+  to: [{
+    type: 'block',
+    blocks: ['core/spacer'],
+    // Transform to Spacer.
+    transform: ({
+      anchor
+    }) => {
+      return (0,external_wp_blocks_namespaceObject.createBlock)('core/spacer', {
+        anchor: anchor || ''
+      });
+    }
   }]
 };
 /* harmony default export */ const separator_transforms = (separator_transforms_transforms);
@@ -57084,6 +57096,27 @@ const SpacerEdit = ({
 };
 /* harmony default export */ const spacer_edit = (SpacerEdit);
 
+;// ./packages/block-library/build-module/spacer/transforms.js
+/**
+ * WordPress dependencies
+ */
+
+const spacer_transforms_transforms = {
+  to: [{
+    type: 'block',
+    blocks: ['core/separator'],
+    // Transform to Separator.
+    transform: ({
+      anchor
+    }) => {
+      return (0,external_wp_blocks_namespaceObject.createBlock)('core/separator', {
+        anchor: anchor || ''
+      });
+    }
+  }]
+};
+/* harmony default export */ const spacer_transforms = (spacer_transforms_transforms);
+
 ;// ./packages/block-library/build-module/spacer/save.js
 /**
  * WordPress dependencies
@@ -57162,12 +57195,14 @@ const spacer_metadata = {
   style: "wp-block-spacer"
 };
 
+
 const {
   name: spacer_name
 } = spacer_metadata;
 
 const spacer_settings = {
   icon: resize_corner_n_e,
+  transforms: spacer_transforms,
   edit: spacer_edit,
   save: spacer_save_save,
   deprecated: spacer_deprecated
