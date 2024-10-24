@@ -33177,11 +33177,14 @@ const elementTypes = [{
   elementType: 'heading',
   elements: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
 }];
+
+// Used for generating the instance ID
+const STYLE_BLOCK_PROPS_REFERENCE = {};
 function style_useBlockProps({
   name,
   style
 }) {
-  const blockElementsContainerIdentifier = `wp-elements-${(0,external_wp_compose_namespaceObject.useInstanceId)(style_useBlockProps)}`;
+  const blockElementsContainerIdentifier = (0,external_wp_compose_namespaceObject.useInstanceId)(STYLE_BLOCK_PROPS_REFERENCE, 'wp-elements');
   const baseElementSelector = `.${blockElementsContainerIdentifier}`;
   const blockElementStyles = style?.elements;
   const styles = (0,external_wp_element_namespaceObject.useMemo)(() => {
