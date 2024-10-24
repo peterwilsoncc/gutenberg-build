@@ -14482,16 +14482,14 @@ function useInitEditedEntityFromURL() {
     setEditedEntity
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const {
-    __unstableSetEditorMode,
     resetZoomLevel
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store));
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (isReady) {
-      __unstableSetEditorMode('edit');
       resetZoomLevel();
       setEditedEntity(postType, postId, context);
     }
-  }, [isReady, postType, postId, context, setEditedEntity]);
+  }, [isReady, postType, postId, context, setEditedEntity, resetZoomLevel]);
 }
 
 ;// ./packages/edit-site/build-module/components/layout/router.js
@@ -28959,7 +28957,6 @@ function EditSiteEditor({
     css: canvas === 'view' ? `body{min-height: 100vh; ${currentPostIsTrashed ? '' : 'cursor: pointer;'}}` : undefined
   }], [settings.styles, canvas, currentPostIsTrashed]);
   const {
-    __unstableSetEditorMode,
     resetZoomLevel
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store));
   const {
@@ -29044,7 +29041,6 @@ function EditSiteEditor({
             showTooltip: true,
             tooltipPosition: "middle right",
             onClick: () => {
-              __unstableSetEditorMode('edit');
               resetZoomLevel();
 
               // TODO: this is a temporary solution to navigate to the posts list if we are
