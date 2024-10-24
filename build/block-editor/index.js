@@ -7712,7 +7712,7 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   isDragging: () => (private_selectors_isDragging),
   isResolvingPatterns: () => (isResolvingPatterns),
   isSectionBlock: () => (isSectionBlock),
-  isZoomOut: () => (private_selectors_isZoomOut),
+  isZoomOut: () => (isZoomOut),
   isZoomOutMode: () => (isZoomOutMode)
 });
 
@@ -11130,7 +11130,7 @@ function getZoomLevel(state) {
  * @param {Object} state Global application state.
  * @return {boolean} Whether the editor is zoomed.
  */
-function private_selectors_isZoomOut(state) {
+function isZoomOut(state) {
   return getZoomLevel(state) < 100;
 }
 
@@ -45766,7 +45766,8 @@ function useInnerBlocksProps(props = {}, options = {}) {
       getBlockEditingMode,
       getBlockSettings,
       isDragging,
-      getSectionRootClientId
+      getSectionRootClientId,
+      isZoomOutMode: isZoomOut
     } = unlock(select(store));
     if (!clientId) {
       const sectionRootClientId = getSectionRootClientId();
