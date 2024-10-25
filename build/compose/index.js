@@ -3732,7 +3732,9 @@ function useCopyOnClick(ref, text, timeout = 4000) {
  */
 function useUpdatedRef(value) {
   const ref = (0,external_wp_element_namespaceObject.useRef)(value);
-  ref.current = value;
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    ref.current = value;
+  }, [value]);
   return ref;
 }
 
