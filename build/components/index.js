@@ -35788,10 +35788,11 @@ container,
 rect, {
   prefix = 'subelement',
   dataAttribute = `${prefix}-animated`,
-  transitionEndFilter = () => true
+  transitionEndFilter = () => true,
+  roundRect = false
 } = {}) {
   const setProperties = (0,external_wp_compose_namespaceObject.useEvent)(() => {
-    Object.keys(rect).forEach(property => property !== 'element' && container?.style.setProperty(`--${prefix}-${property}`, String(rect[property])));
+    Object.keys(rect).forEach(property => property !== 'element' && container?.style.setProperty(`--${prefix}-${property}`, String(roundRect ? Math.floor(rect[property]) : rect[property])));
   });
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     setProperties();
@@ -35866,7 +35867,8 @@ function UnconnectedToggleGroupControl(props, forwardedRef) {
   useAnimatedOffsetRect(controlElement, selectedRect, {
     prefix: 'selected',
     dataAttribute: 'indicator-animated',
-    transitionEndFilter: event => event.pseudoElement === '::before'
+    transitionEndFilter: event => event.pseudoElement === '::before',
+    roundRect: true
   });
   const cx = useCx();
   const classes = (0,external_wp_element_namespaceObject.useMemo)(() => cx(toggleGroupControl({
@@ -71469,7 +71471,8 @@ const tablist_TabList = (0,external_wp_element_namespaceObject.forwardRef)(funct
   useAnimatedOffsetRect(parent, selectedRect, {
     prefix: 'selected',
     dataAttribute: 'indicator-animated',
-    transitionEndFilter: event => event.pseudoElement === '::before'
+    transitionEndFilter: event => event.pseudoElement === '::before',
+    roundRect: true
   });
 
   // Make sure selected tab is scrolled into view.
