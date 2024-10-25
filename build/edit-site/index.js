@@ -26977,13 +26977,8 @@ function StyleBook({
   const [textColor] = style_book_useGlobalStyle('color.text');
   const [backgroundColor] = style_book_useGlobalStyle('color.background');
   const colors = useMultiOriginPalettes();
-  const [examples, setExamples] = (0,external_wp_element_namespaceObject.useState)(() => getExamples(colors));
+  const examples = (0,external_wp_element_namespaceObject.useMemo)(() => getExamples(colors), [colors]);
   const tabs = (0,external_wp_element_namespaceObject.useMemo)(() => getTopLevelStyleBookCategories().filter(category => examples.some(example => example.category === category.slug)), [examples]);
-
-  // Ensure color examples are kept in sync with Global Styles palette changes.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    setExamples(getExamples(colors));
-  }, [colors]);
   const {
     base: baseConfig
   } = (0,external_wp_element_namespaceObject.useContext)(style_book_GlobalStylesContext);
