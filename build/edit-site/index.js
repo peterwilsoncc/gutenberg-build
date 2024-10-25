@@ -26997,12 +26997,12 @@ function StyleBook({
   // Copied from packages/edit-site/src/components/revisions/index.js
   // could we create a shared hook?
   const originalSettings = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).getSettings(), []);
+  const [globalStyles] = useGlobalStylesOutputWithConfig(mergedConfig);
   const settings = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     ...originalSettings,
+    styles: !isObjectEmpty(globalStyles) && !isObjectEmpty(userConfig) ? globalStyles : originalSettings.styles,
     isPreviewMode: true
-  }), [originalSettings]);
-  const [globalStyles] = useGlobalStylesOutputWithConfig(mergedConfig);
-  settings.styles = !isObjectEmpty(globalStyles) && !isObjectEmpty(userConfig) ? globalStyles : settings.styles;
+  }), [globalStyles, originalSettings, userConfig]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(editor_canvas_container, {
     onClose: onClose,
     enableResizing: enableResizing,
