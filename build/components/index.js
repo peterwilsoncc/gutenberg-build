@@ -11486,11 +11486,9 @@ function use_update_effect_useUpdateEffect(effect, deps) {
     }
     mountedRef.current = true;
     return undefined;
-    // Disable reasons:
     // 1. This hook needs to pass a dep list that isn't an array literal
     // 2. `effect` is missing from the array, and will need to be added carefully to avoid additional warnings
     // see https://github.com/WordPress/gutenberg/pull/41166
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
   (0,external_wp_element_namespaceObject.useEffect)(() => () => {
     mountedRef.current = false;
@@ -33240,18 +33238,16 @@ function Fill({
     const refValue = ref.current;
     registerFill(name, refValue);
     return () => unregisterFill(name, refValue);
-    // Ignore reason: the useLayoutEffects here are written to fire at specific times, and introducing new dependencies could cause unexpected changes in behavior.
+    // The useLayoutEffects here are written to fire at specific times, and introducing new dependencies could cause unexpected changes in behavior.
     // We'll leave them as-is until a more detailed investigation/refactor can be performed.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     ref.current.children = children;
     if (slot) {
       slot.forceUpdate();
     }
-    // Ignore reason: the useLayoutEffects here are written to fire at specific times, and introducing new dependencies could cause unexpected changes in behavior.
+    // The useLayoutEffects here are written to fire at specific times, and introducing new dependencies could cause unexpected changes in behavior.
     // We'll leave them as-is until a more detailed investigation/refactor can be performed.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [children]);
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     if (name === ref.current.name) {
@@ -33261,9 +33257,8 @@ function Fill({
     unregisterFill(ref.current.name, ref.current);
     ref.current.name = name;
     registerFill(name, ref.current);
-    // Ignore reason: the useLayoutEffects here are written to fire at specific times, and introducing new dependencies could cause unexpected changes in behavior.
+    // The useLayoutEffects here are written to fire at specific times, and introducing new dependencies could cause unexpected changes in behavior.
     // We'll leave them as-is until a more detailed investigation/refactor can be performed.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name]);
   return null;
 }
@@ -33617,11 +33612,10 @@ function slot_Slot(props, forwardedRef) {
     return () => {
       unregisterSlot(name, ref);
     };
-    // Ignore reason: We don't want to unregister and register the slot whenever
+    // We don't want to unregister and register the slot whenever
     // `fillProps` change, which would cause the fill to be re-mounted. Instead,
     // we can just update the slot (see hook below).
     // For more context, see https://github.com/WordPress/gutenberg/pull/44403#discussion_r994415973
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [registerSlot, unregisterSlot, name]);
   // fillProps may be an update that interacts with the layout, so we
   // useLayoutEffect.
@@ -34426,9 +34420,8 @@ function getAutoCompleterUI(autocompleter) {
     (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
       onChangeOptions(items);
       announce(items);
-      // Temporarily disabling exhaustive-deps to avoid introducing unexpected side effecst.
+      // We want to avoid introducing unexpected side effects.
       // See https://github.com/WordPress/gutenberg/pull/41820
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [items]);
     if (items.length === 0) {
       return null;
@@ -34477,10 +34470,7 @@ function useOnClickOutside(ref, handler) {
       document.removeEventListener('mousedown', listener);
       document.removeEventListener('touchstart', listener);
     };
-    // Disable reason: `ref` is a ref object and should not be included in a
-    // hook's dependency list.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [handler]);
+  }, [handler, ref]);
 }
 
 ;// ./packages/components/build-module/autocomplete/index.js
@@ -34758,9 +34748,8 @@ function useAutocomplete({
     setAutocompleter(completer);
     setAutocompleterUI(() => completer !== autocompleter ? getAutoCompleterUI(completer) : AutocompleterUI);
     setFilterValue(query === null ? '' : query);
-    // Temporarily disabling exhaustive-deps to avoid introducing unexpected side effecst.
+    // We want to avoid introducing unexpected side effects.
     // See https://github.com/WordPress/gutenberg/pull/41820
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [textContent]);
   const {
     key: selectedKey = ''
@@ -35697,7 +35686,6 @@ function useTrackElementOffsetRect(targetElement, deps = []) {
     measure();
     // `measure` is a stable function, so it's safe to omit it from the deps array.
     // deps can't be statically analyzed by ESLint
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
   return indicatorPosition;
 }
@@ -54430,7 +54418,6 @@ function date_Day({
     }
     // isFocusAllowed is not a dep as there is no point calling focus() on
     // an already focused element.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocusable]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DayButton, {
     ref: ref,
@@ -57799,15 +57786,12 @@ function FormTokenField(props) {
     }
 
     // TODO: updateSuggestions() should first be refactored so its actual deps are clearer.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [suggestions, prevSuggestions, value, prevValue]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     updateSuggestions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [incompleteTokenValue]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     updateSuggestions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [__experimentalAutoSelectFirstMatch]);
   if (disabled && isActive) {
     setIsActive(false);
@@ -59265,9 +59249,8 @@ function Navigation({
     if (activeMenu !== menu) {
       setActiveMenu(activeMenu);
     }
-    // Ignore exhaustive-deps here, as it would require either a larger refactor or some questionable workarounds.
+    // Not adding deps for now, as it would require either a larger refactor or some questionable workarounds.
     // See https://github.com/WordPress/gutenberg/pull/41612 for context.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeMenu]);
   const context = {
     activeItem,
@@ -59554,8 +59537,8 @@ const useNavigationTreeItem = (itemId, props) => {
     return () => {
       removeItem(itemId);
     };
-    // Ignore exhaustive-deps rule for now. See https://github.com/WordPress/gutenberg/pull/41639
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Not adding deps for now, as it would require either a larger refactor.
+    // See https://github.com/WordPress/gutenberg/pull/41639
   }, [activeMenu, search]);
 };
 
@@ -59727,8 +59710,8 @@ const useNavigationTreeMenu = props => {
     return () => {
       removeMenu(key);
     };
-    // Ignore exhaustive-deps rule for now. See https://github.com/WordPress/gutenberg/pull/44090
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Not adding deps for now, as it would require either a larger refactor
+    // See https://github.com/WordPress/gutenberg/pull/44090
   }, []);
 };
 
@@ -59984,8 +59967,8 @@ function MenuTitleSearch({
     const resultsFoundMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of results. */
     (0,external_wp_i18n_namespaceObject._n)('%d result found.', '%d results found.', count), count);
     debouncedSpeak(resultsFoundMessage);
-    // Ignore exhaustive-deps rule for now. See https://github.com/WordPress/gutenberg/pull/44090
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Not adding deps for now, as it would require either a larger refactor.
+    // See https://github.com/WordPress/gutenberg/pull/44090
   }, [items, search]);
   const onClose = () => {
     onSearch?.('');
@@ -64625,21 +64608,18 @@ function SandBox({
       iframe?.removeEventListener('load', tryNoForceSandBox, false);
       defaultView?.removeEventListener('message', checkMessageForResize);
     };
-    // Ignore reason: passing `exhaustive-deps` will likely involve a more detailed refactor.
+    // Passing `exhaustive-deps` will likely involve a more detailed refactor.
     // See https://github.com/WordPress/gutenberg/pull/44378
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     trySandBox();
-    // Ignore reason: passing `exhaustive-deps` will likely involve a more detailed refactor.
+    // Passing `exhaustive-deps` will likely involve a more detailed refactor.
     // See https://github.com/WordPress/gutenberg/pull/44378
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [title, styles, scripts]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     trySandBox(true);
-    // Ignore reason: passing `exhaustive-deps` will likely involve a more detailed refactor.
+    // Passing `exhaustive-deps` will likely involve a more detailed refactor.
     // See https://github.com/WordPress/gutenberg/pull/44378
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [html, type]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("iframe", {
     ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([ref, (0,external_wp_compose_namespaceObject.useFocusableIframe)()]),
@@ -67635,11 +67615,9 @@ function useToolsPanelItem(props) {
 
   // hasValue is a new function on every render, so do not add it as a
   // dependency to the useCallback hook! If needed, we should use a ref.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const hasValueCallback = (0,external_wp_element_namespaceObject.useCallback)(hasValue, [panelId]);
   // resetAllFilter is a new function on every render, so do not add it as a
   // dependency to the useCallback hook! If needed, we should use a ref.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const resetAllFilterCallback = (0,external_wp_element_namespaceObject.useCallback)(resetAllFilter, [panelId]);
   const previousPanelId = (0,external_wp_compose_namespaceObject.usePrevious)(currentPanelId);
   const hasMatchingPanel = currentPanelId === panelId || currentPanelId === null;
