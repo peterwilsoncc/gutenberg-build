@@ -12161,7 +12161,7 @@ function EntitiesSavedStatesExtensible({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
         id: renderDialog ? dialogDescription : undefined,
         children: isDirty ? (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of site changes waiting to be saved. */
-        (0,external_wp_i18n_namespaceObject._n)('There is <strong>%d site change</strong> waiting to be saved.', 'There are <strong>%d site changes</strong> waiting to be saved.', sortedPartitionedSavables.length), sortedPartitionedSavables.length), {
+        (0,external_wp_i18n_namespaceObject._n)('There is <strong>%d site change</strong> waiting to be saved.', 'There are <strong>%d site changes</strong> waiting to be saved.', dirtyEntityRecords.length), dirtyEntityRecords.length), {
           strong: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {})
         }) : (0,external_wp_i18n_namespaceObject.__)('Select the items you want to save.')
       })]
