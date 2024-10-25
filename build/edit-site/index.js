@@ -44896,12 +44896,12 @@ const SlugEdit = ({
   const permalinkPrefix = prefix;
   const permalinkSuffix = suffix;
   const isEditable = PERMALINK_POSTNAME_REGEX.test(permalinkTemplate);
-  const originalSlug = (0,external_wp_element_namespaceObject.useRef)(slug);
-  const slugToDisplay = slug || originalSlug.current;
+  const originalSlugRef = (0,external_wp_element_namespaceObject.useRef)(slug);
+  const slugToDisplay = slug || originalSlugRef.current;
   const permalink = isEditable ? `${permalinkPrefix}${slugToDisplay}${permalinkSuffix}` : (0,external_wp_url_namespaceObject.safeDecodeURIComponent)(data.link || '');
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (slug && originalSlug.current === undefined) {
-      originalSlug.current = slug;
+    if (slug && originalSlugRef.current === undefined) {
+      originalSlugRef.current = slug;
     }
   }, [slug]);
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
@@ -44951,7 +44951,7 @@ const SlugEdit = ({
         },
         onBlur: () => {
           if (slug === '') {
-            onChangeControl(originalSlug.current);
+            onChangeControl(originalSlugRef.current);
           }
         },
         "aria-describedby": postUrlSlugDescriptionId,
@@ -45001,13 +45001,13 @@ const SlugView = ({
   item
 }) => {
   const slug = item.slug;
-  const originalSlug = (0,external_wp_element_namespaceObject.useRef)(slug);
+  const originalSlugRef = (0,external_wp_element_namespaceObject.useRef)(slug);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (slug && originalSlug.current === undefined) {
-      originalSlug.current = slug;
+    if (slug && originalSlugRef.current === undefined) {
+      originalSlugRef.current = slug;
     }
   }, [slug]);
-  const slugToDisplay = slug || originalSlug.current;
+  const slugToDisplay = slug || originalSlugRef.current;
   return `/${slugToDisplay !== null && slugToDisplay !== void 0 ? slugToDisplay : ''}`;
 };
 /* harmony default export */ const slug_view = (SlugView);
