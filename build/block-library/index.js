@@ -24533,8 +24533,8 @@ function HTMLEditPreview({
   content,
   isSelected
 }) {
-  const settingStyles = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).getSettings().styles);
-  const styles = (0,external_wp_element_namespaceObject.useMemo)(() => [DEFAULT_STYLES, ...(0,external_wp_blockEditor_namespaceObject.transformStyles)(settingStyles.filter(style => style.css))], [settingStyles]);
+  const settingStyles = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).getSettings().styles, []);
+  const styles = (0,external_wp_element_namespaceObject.useMemo)(() => [DEFAULT_STYLES, ...(0,external_wp_blockEditor_namespaceObject.transformStyles)((settingStyles !== null && settingStyles !== void 0 ? settingStyles : []).filter(style => style.css))], [settingStyles]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SandBox, {
       html: content,
@@ -24557,6 +24557,7 @@ function HTMLEditPreview({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -24570,6 +24571,9 @@ function HTMLEdit({
   const [isPreview, setIsPreview] = (0,external_wp_element_namespaceObject.useState)();
   const isDisabled = (0,external_wp_element_namespaceObject.useContext)(external_wp_components_namespaceObject.Disabled.Context);
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(HTMLEdit, 'html-edit-desc');
+  const isPreviewMode = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return select(external_wp_blockEditor_namespaceObject.store).getSettings().isPreviewMode;
+  }, []);
   function switchToPreview() {
     setIsPreview(true);
   }
@@ -24594,7 +24598,7 @@ function HTMLEdit({
           children: (0,external_wp_i18n_namespaceObject.__)('Preview')
         })]
       })
-    }), isPreview || isDisabled ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    }), isPreview || isPreviewMode || isDisabled ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HTMLEditPreview, {
         content: attributes.content,
         isSelected: isSelected
