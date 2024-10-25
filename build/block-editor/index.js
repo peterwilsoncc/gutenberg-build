@@ -52921,7 +52921,6 @@ function TabbedSidebar({
 
 
 
-
 /**
  * A hook used to set the editor mode to zoomed out mode, invoking the hook sets the mode.
  *
@@ -52935,11 +52934,10 @@ function useZoomOut(zoomOut = true) {
   const {
     isZoomOut
   } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
-  const isWideViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('large');
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     const isZoomOutOnMount = isZoomOut();
     return () => {
-      if (isZoomOutOnMount && isWideViewport) {
+      if (isZoomOutOnMount) {
         setZoomLevel('auto-scaled');
       } else {
         resetZoomLevel();
@@ -52947,12 +52945,12 @@ function useZoomOut(zoomOut = true) {
     };
   }, []);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (zoomOut && isWideViewport) {
+    if (zoomOut) {
       setZoomLevel('auto-scaled');
     } else {
       resetZoomLevel();
     }
-  }, [zoomOut, setZoomLevel, resetZoomLevel, isWideViewport]);
+  }, [zoomOut, setZoomLevel, resetZoomLevel]);
 }
 
 ;// ./packages/block-editor/build-module/components/inserter/menu.js
@@ -53008,6 +53006,7 @@ function InserterMenu({
   const [selectedPatternCategory, setSelectedPatternCategory] = (0,external_wp_element_namespaceObject.useState)(__experimentalInitialCategory);
   const [patternFilter, setPatternFilter] = (0,external_wp_element_namespaceObject.useState)('all');
   const [selectedMediaCategory, setSelectedMediaCategory] = (0,external_wp_element_namespaceObject.useState)(null);
+  const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('large');
   function getInitialTab() {
     if (__experimentalInitialTab) {
       return __experimentalInitialTab;
@@ -53018,7 +53017,7 @@ function InserterMenu({
   }
   const [selectedTab, setSelectedTab] = (0,external_wp_element_namespaceObject.useState)(getInitialTab());
   const shouldUseZoomOut = selectedTab === 'patterns' || selectedTab === 'media';
-  useZoomOut(shouldUseZoomOut);
+  useZoomOut(shouldUseZoomOut && isLargeViewport);
   const [destinationRootClientId, onInsertBlocks, onToggleInsertionPoint] = use_insertion_point({
     rootClientId,
     clientId,
