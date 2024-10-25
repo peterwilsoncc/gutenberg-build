@@ -16329,9 +16329,7 @@ function use_settings_useSettings(...paths) {
   const {
     clientId = null
   } = useBlockEditContext();
-  return (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).getBlockSettings(clientId, ...paths),
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  [clientId, ...paths]);
+  return (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).getBlockSettings(clientId, ...paths), [clientId, ...paths]);
 }
 
 /**
@@ -27936,7 +27934,6 @@ function BlockColorContrastChecker({
 
   // There are so many things that can change the color of a block
   // So we perform this check on every render.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (!blockEl) {
       return;
@@ -42067,9 +42064,7 @@ function useMovingAnimation({
   } = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     previous: ref.current && getAbsolutePosition(ref.current),
     prevRect: ref.current && ref.current.getBoundingClientRect()
-  }),
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  [triggerAnimationOnChange]);
+  }), [triggerAnimationOnChange]);
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     if (!previous || !ref.current) {
       return;
@@ -51798,7 +51793,6 @@ function PatternCategoryPreviews({
   } = pagingProps;
 
   // Hide block pattern preview on unmount.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   (0,external_wp_element_namespaceObject.useEffect)(() => () => onHover(null), []);
   const onSetPatternSyncFilter = (0,external_wp_element_namespaceObject.useCallback)(value => {
     setPatternSyncFilter(value);
@@ -65814,8 +65808,7 @@ function ListViewComponent({
     if (selectedClientIds?.length) {
       focusListItem(selectedClientIds[0], elementRef?.current);
     }
-    // Disable reason: Only focus on the selected item when the list view is mounted.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Only focus on the selected item when the list view is mounted.
   }, []);
   const expand = (0,external_wp_element_namespaceObject.useCallback)(clientId => {
     if (!clientId) {

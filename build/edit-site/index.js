@@ -12843,9 +12843,7 @@ function useMovingAnimation({
   } = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     previous: ref.current && getAbsolutePosition(ref.current),
     prevRect: ref.current && ref.current.getBoundingClientRect()
-  }),
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  [triggerAnimationOnChange]);
+  }), [triggerAnimationOnChange]);
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     if (!previous || !ref.current) {
       return;
@@ -13444,7 +13442,6 @@ function Layout({
       toggleRef.current?.focus();
     }
     // Should not depend on the previous canvas mode value but the next.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canvas]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_commands_namespaceObject.CommandMenu, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(register, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(global, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -15317,10 +15314,9 @@ function useNavigateToPreviousEntityRecord() {
     const didComeFromEditorCanvas = previousLocation?.params.canvas === 'edit';
     const showBackButton = isFocusMode && didComeFromEditorCanvas;
     return showBackButton ? () => history.back() : undefined;
-    // Disable reason: previousLocation changes when the component updates for any reason, not
+    // `previousLocation` changes when the component updates for any reason, not
     // just when location changes. Until this is fixed we can't add it to deps. See
     // https://github.com/WordPress/gutenberg/pull/58710#discussion_r1479219465.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location, history]);
   return goBack;
 }

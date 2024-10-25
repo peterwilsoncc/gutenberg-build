@@ -14879,8 +14879,7 @@ function CoverEdit({
         isUserOverlayColor: isUserOverlayColor || false
       });
     })();
-    // Disable reason: Update the block only when the featured image changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Update the block only when the featured image changes.
   }, [mediaUrl]);
 
   // instead of destructuring the attributes
@@ -18223,8 +18222,7 @@ function FileEdit({
         downloadButtonText: (0,external_wp_i18n_namespaceObject._x)('Download', 'button label')
       });
     }
-    // Reason: This effect should only run on mount.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // This effect should only run on mount.
   }, []);
   function onSelectFile(newMedia) {
     if (!newMedia || !newMedia.url) {
@@ -56284,7 +56282,6 @@ function SocialLinksEdit(props) {
         ...backgroundBackupRef.current
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [logosOnly]);
   const SocialPlaceholder = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
     className: "wp-block-social-links__social-placeholder",
