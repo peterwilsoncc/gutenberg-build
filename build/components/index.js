@@ -40661,6 +40661,26 @@ const UnitControl = (0,external_wp_element_namespaceObject.forwardRef)(Unforward
 
 /* harmony default export */ const unit_control = (UnitControl);
 
+;// ./packages/components/build-module/utils/deprecated-36px-size.js
+/**
+ * WordPress dependencies
+ */
+
+function maybeWarnDeprecated36pxSize({
+  componentName,
+  __next40pxDefaultSize,
+  size
+}) {
+  if (__next40pxDefaultSize || size !== 'default') {
+    return;
+  }
+  external_wp_deprecated_default()(`36px default size for wp.components.${componentName}`, {
+    since: '6.8',
+    version: '7.1',
+    hint: 'Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version.'
+  });
+}
+
 ;// ./packages/components/build-module/border-control/border-control/hook.js
 /**
  * WordPress dependencies
@@ -40670,6 +40690,8 @@ const UnitControl = (0,external_wp_element_namespaceObject.forwardRef)(Unforward
 /**
  * Internal dependencies
  */
+
+
 
 
 
@@ -40697,6 +40719,11 @@ function useBorderControl(props) {
     __next40pxDefaultSize,
     ...otherProps
   } = useContextSystem(props, 'BorderControl');
+  maybeWarnDeprecated36pxSize({
+    componentName: 'BorderControl',
+    __next40pxDefaultSize,
+    size
+  });
   const computedSize = size === 'default' && __next40pxDefaultSize ? '__unstable-large' : size;
   const [widthValue, originalWidthUnit] = parseQuantityAndUnitFromRawValue(border?.width);
   const widthUnit = originalWidthUnit || 'px';
@@ -40938,6 +40965,7 @@ const UnconnectedBorderControl = (props, forwardedRef) => {
  *
  * 	return (
  * 		<BorderControl
+ * 			__next40pxDefaultSize
  * 			colors={ colors }
  * 			label={ __( 'Border' ) }
  * 			onChange={ onChange }
@@ -41441,26 +41469,6 @@ function mode(values) {
     }
   });
   return currentMode;
-}
-
-;// ./packages/components/build-module/utils/deprecated-36px-size.js
-/**
- * WordPress dependencies
- */
-
-function maybeWarnDeprecated36pxSize({
-  componentName,
-  __next40pxDefaultSize,
-  size
-}) {
-  if (__next40pxDefaultSize || size !== 'default') {
-    return;
-  }
-  external_wp_deprecated_default()(`36px default size for wp.components.${componentName}`, {
-    since: '6.7',
-    version: '7.0',
-    hint: 'Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version.'
-  });
 }
 
 ;// ./packages/components/build-module/border-box-control/border-box-control/hook.js
