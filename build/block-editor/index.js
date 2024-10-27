@@ -53020,6 +53020,7 @@ function InserterMenu({
   const [selectedPatternCategory, setSelectedPatternCategory] = (0,external_wp_element_namespaceObject.useState)(__experimentalInitialCategory);
   const [patternFilter, setPatternFilter] = (0,external_wp_element_namespaceObject.useState)('all');
   const [selectedMediaCategory, setSelectedMediaCategory] = (0,external_wp_element_namespaceObject.useState)(null);
+  const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('large');
   const [hasCategories, setHasCategories] = (0,external_wp_element_namespaceObject.useState)(true);
   function getInitialTab() {
     if (__experimentalInitialTab) {
@@ -53031,7 +53032,7 @@ function InserterMenu({
   }
   const [selectedTab, setSelectedTab] = (0,external_wp_element_namespaceObject.useState)(getInitialTab());
   const shouldUseZoomOut = selectedTab === 'patterns' || selectedTab === 'media';
-  useZoomOut(shouldUseZoomOut);
+  useZoomOut(shouldUseZoomOut && isLargeViewport);
   const [destinationRootClientId, onInsertBlocks, onToggleInsertionPoint] = use_insertion_point({
     rootClientId,
     clientId,
