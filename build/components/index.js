@@ -70406,9 +70406,9 @@ var MenuSeparator = forwardRef2(function MenuSeparator2(props) {
 });
 
 
-;// ./packages/components/build-module/dropdown-menu-v2/styles.js
+;// ./packages/components/build-module/menu/styles.js
 
-function dropdown_menu_v2_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
+function menu_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
 /**
  * External dependencies
  */
@@ -70447,60 +70447,60 @@ const DEFAULT_BOX_SHADOW = `0 0 0 ${config_values.borderWidth} ${DEFAULT_BORDER_
 const TOOLBAR_VARIANT_BOX_SHADOW = `0 0 0 ${config_values.borderWidth} ${TOOLBAR_VARIANT_BORDER_COLOR}`;
 const GRID_TEMPLATE_COLS = 'minmax( 0, max-content ) 1fr';
 const MenuPopoverOuterWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
-  target: "e1kdzosf14"
+  target: "e1wg7tti14"
 } : 0)("position:relative;background-color:", COLORS.ui.background, ";border-radius:", config_values.radiusMedium, ";", props => /*#__PURE__*/emotion_react_browser_esm_css("box-shadow:", props.variant === 'toolbar' ? TOOLBAR_VARIANT_BOX_SHADOW : DEFAULT_BOX_SHADOW, ";" + ( true ? "" : 0),  true ? "" : 0), " overflow:hidden;@media not ( prefers-reduced-motion ){transition-property:transform,opacity;transition-timing-function:", styles_ANIMATION_PARAMS.EASING, ";transition-duration:", styles_ANIMATION_PARAMS.DURATION.IN, ";will-change:transform,opacity;opacity:0;&:has( [data-enter] ){opacity:1;}&:has( [data-leave] ){transition-duration:", styles_ANIMATION_PARAMS.DURATION.OUT, ";}&:has( [data-side='bottom'] ),&:has( [data-side='top'] ){transform:scaleY( ", styles_ANIMATION_PARAMS.SCALE_AMOUNT_OUTER, " );}&:has( [data-side='bottom'] ){transform-origin:top;}&:has( [data-side='top'] ){transform-origin:bottom;}&:has( [data-enter][data-side='bottom'] ),&:has( [data-enter][data-side='top'] ),&:has( [data-leave][data-side='bottom'] ),&:has( [data-leave][data-side='top'] ){transform:scaleY( 1 );}}" + ( true ? "" : 0));
 const MenuPopoverInnerWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
-  target: "e1kdzosf13"
+  target: "e1wg7tti13"
 } : 0)("position:relative;z-index:1000000;display:grid;grid-template-columns:", GRID_TEMPLATE_COLS, ";grid-template-rows:auto;box-sizing:border-box;min-width:160px;max-width:320px;max-height:var( --popover-available-height );padding:", CONTENT_WRAPPER_PADDING, ";overscroll-behavior:contain;overflow:auto;outline:2px solid transparent!important;@media not ( prefers-reduced-motion ){transition:inherit;transform-origin:inherit;&[data-side='bottom'],&[data-side='top']{transform:scaleY(\n\t\t\t\tcalc(\n\t\t\t\t\t1 / ", styles_ANIMATION_PARAMS.SCALE_AMOUNT_OUTER, " *\n\t\t\t\t\t\t", styles_ANIMATION_PARAMS.SCALE_AMOUNT_CONTENT, "\n\t\t\t\t)\n\t\t\t);}&[data-enter][data-side='bottom'],&[data-enter][data-side='top'],&[data-leave][data-side='bottom'],&[data-leave][data-side='top']{transform:scaleY( 1 );}}" + ( true ? "" : 0));
 const baseItem = /*#__PURE__*/emotion_react_browser_esm_css("all:unset;position:relative;min-height:", space(10), ";box-sizing:border-box;grid-column:1/-1;display:grid;grid-template-columns:", GRID_TEMPLATE_COLS, ";align-items:center;@supports ( grid-template-columns: subgrid ){grid-template-columns:subgrid;}font-size:", font('default.fontSize'), ";font-family:inherit;font-weight:normal;line-height:20px;color:", COLORS.theme.foreground, ";border-radius:", config_values.radiusSmall, ";padding-block:", ITEM_PADDING_BLOCK, ";padding-inline:", ITEM_PADDING_INLINE, ";scroll-margin:", CONTENT_WRAPPER_PADDING, ";user-select:none;outline:none;&[aria-disabled='true']{color:", COLORS.ui.textDisabled, ";cursor:not-allowed;}&[data-active-item]:not( [data-focus-visible] ):not(\n\t\t\t[aria-disabled='true']\n\t\t){background-color:", COLORS.theme.accent, ";color:", COLORS.white, ";}&[data-focus-visible]{box-shadow:0 0 0 1.5px ", COLORS.theme.accent, ";outline:2px solid transparent;}&:active,&[data-active]{}", MenuPopoverInnerWrapper, ":not(:focus) &:not(:focus)[aria-expanded=\"true\"]{background-color:", LIGHT_BACKGROUND_COLOR, ";color:", COLORS.theme.foreground, ";}svg{fill:currentColor;}" + ( true ? "" : 0),  true ? "" : 0);
 const styles_DropdownMenuItem = /*#__PURE__*/emotion_styled_base_browser_esm(B6XZVSMQ_MenuItem,  true ? {
-  target: "e1kdzosf12"
+  target: "e1wg7tti12"
 } : 0)(baseItem, ";" + ( true ? "" : 0));
 const styles_DropdownMenuCheckboxItem = /*#__PURE__*/emotion_styled_base_browser_esm(MenuItemCheckbox,  true ? {
-  target: "e1kdzosf11"
+  target: "e1wg7tti11"
 } : 0)(baseItem, ";" + ( true ? "" : 0));
 const styles_DropdownMenuRadioItem = /*#__PURE__*/emotion_styled_base_browser_esm(MenuItemRadio,  true ? {
-  target: "e1kdzosf10"
+  target: "e1wg7tti10"
 } : 0)(baseItem, ";" + ( true ? "" : 0));
 const ItemPrefixWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
-  target: "e1kdzosf9"
+  target: "e1wg7tti9"
 } : 0)("grid-column:1;", styles_DropdownMenuCheckboxItem, ">&,", styles_DropdownMenuRadioItem, ">&{min-width:", space(6), ";}", styles_DropdownMenuCheckboxItem, ">&,", styles_DropdownMenuRadioItem, ">&,&:not( :empty ){margin-inline-end:", space(2), ";}display:flex;align-items:center;justify-content:center;color:", LIGHTER_TEXT_COLOR, ";[data-active-item]:not( [data-focus-visible] )>&,[aria-disabled='true']>&{color:inherit;}" + ( true ? "" : 0));
 const DropdownMenuItemContentWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
-  target: "e1kdzosf8"
+  target: "e1wg7tti8"
 } : 0)("grid-column:2;display:flex;align-items:center;justify-content:space-between;gap:", space(3), ";pointer-events:none;" + ( true ? "" : 0));
 const DropdownMenuItemChildrenWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
-  target: "e1kdzosf7"
+  target: "e1wg7tti7"
 } : 0)("flex:1;display:inline-flex;flex-direction:column;gap:", space(1), ";" + ( true ? "" : 0));
 const ItemSuffixWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
-  target: "e1kdzosf6"
+  target: "e1wg7tti6"
 } : 0)("flex:0 1 fit-content;min-width:0;width:fit-content;display:flex;align-items:center;justify-content:center;gap:", space(3), ";color:", LIGHTER_TEXT_COLOR, ";[data-active-item]:not( [data-focus-visible] ) *:not(", MenuPopoverInnerWrapper, ") &,[aria-disabled='true'] *:not(", MenuPopoverInnerWrapper, ") &{color:inherit;}" + ( true ? "" : 0));
 const styles_DropdownMenuGroup = /*#__PURE__*/emotion_styled_base_browser_esm(menu_group_MenuGroup,  true ? {
-  target: "e1kdzosf5"
+  target: "e1wg7tti5"
 } : 0)( true ? {
   name: "49aokf",
   styles: "display:contents"
 } : 0);
 const DropdownMenuGroupLabel = /*#__PURE__*/emotion_styled_base_browser_esm(MenuGroupLabel,  true ? {
-  target: "e1kdzosf4"
+  target: "e1wg7tti4"
 } : 0)("grid-column:1/-1;padding-block-start:", space(3), ";padding-block-end:", space(2), ";padding-inline:", ITEM_PADDING_INLINE, ";" + ( true ? "" : 0));
 const styles_DropdownMenuSeparator = /*#__PURE__*/emotion_styled_base_browser_esm(MenuSeparator,  true ? {
-  target: "e1kdzosf3"
+  target: "e1wg7tti3"
 } : 0)("grid-column:1/-1;border:none;height:", config_values.borderWidth, ";background-color:", props => props.variant === 'toolbar' ? TOOLBAR_VARIANT_BORDER_COLOR : DIVIDER_COLOR, ";margin-block:", space(2), ";margin-inline:", ITEM_PADDING_INLINE, ";outline:2px solid transparent;" + ( true ? "" : 0));
 const SubmenuChevronIcon = /*#__PURE__*/emotion_styled_base_browser_esm(build_module_icon,  true ? {
-  target: "e1kdzosf2"
+  target: "e1wg7tti2"
 } : 0)("width:", space(1.5), ";", rtl({
   transform: `scaleX(1)`
 }, {
   transform: `scaleX(-1)`
 }), ";" + ( true ? "" : 0));
 const styles_DropdownMenuItemLabel = /*#__PURE__*/emotion_styled_base_browser_esm(truncate_component,  true ? {
-  target: "e1kdzosf1"
+  target: "e1wg7tti1"
 } : 0)("font-size:", font('default.fontSize'), ";line-height:20px;color:inherit;" + ( true ? "" : 0));
 const styles_DropdownMenuItemHelpText = /*#__PURE__*/emotion_styled_base_browser_esm(truncate_component,  true ? {
-  target: "e1kdzosf0"
+  target: "e1wg7tti0"
 } : 0)("font-size:", font('helpText.fontSize'), ";line-height:16px;color:", LIGHTER_TEXT_COLOR, ";word-break:break-all;[data-active-item]:not( [data-focus-visible] ) *:not( ", MenuPopoverInnerWrapper, " ) &,[aria-disabled='true'] *:not( ", MenuPopoverInnerWrapper, " ) &{color:inherit;}" + ( true ? "" : 0));
 
-;// ./packages/components/build-module/dropdown-menu-v2/context.js
+;// ./packages/components/build-module/menu/context.js
 /**
  * WordPress dependencies
  */
@@ -70512,7 +70512,7 @@ const styles_DropdownMenuItemHelpText = /*#__PURE__*/emotion_styled_base_browser
 
 const DropdownMenuContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
 
-;// ./packages/components/build-module/dropdown-menu-v2/use-temporary-focus-visible-fix.js
+;// ./packages/components/build-module/menu/use-temporary-focus-visible-fix.js
 /**
  * WordPress dependencies
  */
@@ -70533,7 +70533,7 @@ function useTemporaryFocusVisibleFix({
   };
 }
 
-;// ./packages/components/build-module/dropdown-menu-v2/item.js
+;// ./packages/components/build-module/menu/item.js
 /**
  * WordPress dependencies
  */
@@ -70614,7 +70614,7 @@ var MenuItemCheck = forwardRef2(function MenuItemCheck2(props) {
 });
 
 
-;// ./packages/components/build-module/dropdown-menu-v2/checkbox-item.js
+;// ./packages/components/build-module/menu/checkbox-item.js
 /**
  * External dependencies
  */
@@ -70676,7 +70676,7 @@ const DropdownMenuCheckboxItem = (0,external_wp_element_namespaceObject.forwardR
   });
 });
 
-;// ./packages/components/build-module/dropdown-menu-v2/radio-item.js
+;// ./packages/components/build-module/menu/radio-item.js
 /**
  * External dependencies
  */
@@ -70748,7 +70748,7 @@ const DropdownMenuRadioItem = (0,external_wp_element_namespaceObject.forwardRef)
   });
 });
 
-;// ./packages/components/build-module/dropdown-menu-v2/group.js
+;// ./packages/components/build-module/menu/group.js
 /**
  * WordPress dependencies
  */
@@ -70770,7 +70770,7 @@ const DropdownMenuGroup = (0,external_wp_element_namespaceObject.forwardRef)(fun
   });
 });
 
-;// ./packages/components/build-module/dropdown-menu-v2/group-label.js
+;// ./packages/components/build-module/menu/group-label.js
 /**
  * WordPress dependencies
  */
@@ -70803,7 +70803,7 @@ const group_label_DropdownMenuGroupLabel = (0,external_wp_element_namespaceObjec
   });
 });
 
-;// ./packages/components/build-module/dropdown-menu-v2/separator.js
+;// ./packages/components/build-module/menu/separator.js
 /**
  * WordPress dependencies
  */
@@ -70826,7 +70826,7 @@ const DropdownMenuSeparator = (0,external_wp_element_namespaceObject.forwardRef)
   });
 });
 
-;// ./packages/components/build-module/dropdown-menu-v2/item-label.js
+;// ./packages/components/build-module/menu/item-label.js
 /**
  * WordPress dependencies
  */
@@ -70846,7 +70846,7 @@ const DropdownMenuItemLabel = (0,external_wp_element_namespaceObject.forwardRef)
   });
 });
 
-;// ./packages/components/build-module/dropdown-menu-v2/item-help-text.js
+;// ./packages/components/build-module/menu/item-help-text.js
 /**
  * WordPress dependencies
  */
@@ -70866,7 +70866,7 @@ const DropdownMenuItemHelpText = (0,external_wp_element_namespaceObject.forwardR
   });
 });
 
-;// ./packages/components/build-module/dropdown-menu-v2/index.js
+;// ./packages/components/build-module/menu/index.js
 /**
  * External dependencies
  */
@@ -70895,7 +70895,7 @@ const DropdownMenuItemHelpText = (0,external_wp_element_namespaceObject.forwardR
 
 
 
-const dropdown_menu_v2_UnconnectedDropdownMenu = (props, ref) => {
+const menu_UnconnectedDropdownMenu = (props, ref) => {
   var _props$placement;
   const {
     // Store props
@@ -71018,7 +71018,7 @@ const dropdown_menu_v2_UnconnectedDropdownMenu = (props, ref) => {
     })]
   });
 };
-const DropdownMenuV2 = Object.assign(contextConnect(dropdown_menu_v2_UnconnectedDropdownMenu, 'DropdownMenu'), {
+const DropdownMenuV2 = Object.assign(contextConnect(menu_UnconnectedDropdownMenu, 'DropdownMenu'), {
   Context: Object.assign(DropdownMenuContext, {
     displayName: 'DropdownMenuV2.Context'
   }),
@@ -71047,7 +71047,7 @@ const DropdownMenuV2 = Object.assign(contextConnect(dropdown_menu_v2_Unconnected
     displayName: 'DropdownMenuV2.ItemHelpText'
   })
 });
-/* harmony default export */ const dropdown_menu_v2 = ((/* unused pure expression or super */ null && (DropdownMenuV2)));
+/* harmony default export */ const build_module_menu = ((/* unused pure expression or super */ null && (DropdownMenuV2)));
 
 ;// ./packages/components/build-module/theme/styles.js
 
