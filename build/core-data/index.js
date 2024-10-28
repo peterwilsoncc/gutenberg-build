@@ -23237,6 +23237,7 @@ const resolvers_experimentalGetCurrentThemeBaseGlobalStyles = () => async ({
   dispatch
 }) => {
   const currentTheme = await resolveSelect.getCurrentTheme();
+  // Please adjust the preloaded requests if this changes!
   const themeGlobalStyles = await external_wp_apiFetch_default()({
     path: `/wp/v2/global-styles/themes/${currentTheme.stylesheet}?context=view`
   });
@@ -23247,6 +23248,7 @@ const resolvers_experimentalGetCurrentThemeGlobalStylesVariations = () => async 
   dispatch
 }) => {
   const currentTheme = await resolveSelect.getCurrentTheme();
+  // Please adjust the preloaded requests if this changes!
   const variations = await external_wp_apiFetch_default()({
     path: `/wp/v2/global-styles/themes/${currentTheme.stylesheet}/variations?context=view`
   });
