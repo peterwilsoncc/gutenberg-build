@@ -69239,6 +69239,24 @@ function useDimensionHandler(customHeight, customWidth, defaultHeight, defaultWi
 
 const IMAGE_SIZE_PRESETS = [25, 50, 75, 100];
 const image_size_control_noop = () => {};
+
+/**
+ * Get scaled width and height for the given scale.
+ *
+ * @param {number} scale       The scale to get the scaled width and height for.
+ * @param {number} imageWidth  The image width.
+ * @param {number} imageHeight The image height.
+ *
+ * @return {Object} The scaled width and height.
+ */
+function getScaledWidthAndHeight(scale, imageWidth, imageHeight) {
+  const scaledWidth = Math.round(imageWidth * (scale / 100));
+  const scaledHeight = Math.round(imageHeight * (scale / 100));
+  return {
+    scaledWidth,
+    scaledHeight
+  };
+}
 function ImageSizeControl({
   imageSizeHelp,
   imageWidth,
@@ -69257,6 +69275,35 @@ function ImageSizeControl({
     updateDimension,
     updateDimensions
   } = useDimensionHandler(height, width, imageHeight, imageWidth, onChange);
+
+  /**
+   * Updates the dimensions for the given scale.
+   * Handler for toggle group control change.
+   *
+   * @param {number} scale The scale to update the dimensions for.
+   */
+  const handleUpdateDimensions = scale => {
+    if (undefined === scale) {
+      updateDimensions();
+      return;
+    }
+    const {
+      scaledWidth,
+      scaledHeight
+    } = getScaledWidthAndHeight(scale, imageWidth, imageHeight);
+    updateDimensions(scaledHeight, scaledWidth);
+  };
+
+  /**
+   * Add the stored image preset value to toggle group control.
+   */
+  const selectedValue = IMAGE_SIZE_PRESETS.find(scale => {
+    const {
+      scaledWidth,
+      scaledHeight
+    } = getScaledWidthAndHeight(scale, imageWidth, imageHeight);
+    return currentWidth === scaledWidth && currentHeight === scaledHeight;
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [imageSizeOptions && imageSizeOptions.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
       __nextHasNoMarginBottom: true,
@@ -69286,26 +69333,20 @@ function ImageSizeControl({
           onChange: value => updateDimension('height', value),
           size: "__unstable-large"
         })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ButtonGroup, {
-          "aria-label": (0,external_wp_i18n_namespaceObject.__)('Image size presets'),
-          children: IMAGE_SIZE_PRESETS.map(scale => {
-            const scaledWidth = Math.round(imageWidth * (scale / 100));
-            const scaledHeight = Math.round(imageHeight * (scale / 100));
-            const isCurrent = currentWidth === scaledWidth && currentHeight === scaledHeight;
-            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
-              size: "small",
-              variant: isCurrent ? 'primary' : undefined,
-              isPressed: isCurrent,
-              onClick: () => updateDimensions(scaledHeight, scaledWidth),
-              children: [scale, "%"]
-            }, scale);
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          size: "small",
-          onClick: () => updateDimensions(),
-          children: (0,external_wp_i18n_namespaceObject.__)('Reset')
-        })]
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Image size presets'),
+        hideLabelFromVision: true,
+        onChange: handleUpdateDimensions,
+        value: selectedValue,
+        isBlock: true,
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        children: IMAGE_SIZE_PRESETS.map(scale => {
+          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+            value: scale,
+            label: `${scale}%`
+          }, scale);
+        })
       })]
     })]
   });
