@@ -2305,68 +2305,6 @@ Document.default = Document
 
 /***/ }),
 
-/***/ 8940:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-let Declaration = __webpack_require__(1516)
-let PreviousMap = __webpack_require__(5696)
-let Comment = __webpack_require__(6589)
-let AtRule = __webpack_require__(1326)
-let Input = __webpack_require__(5380)
-let Root = __webpack_require__(9434)
-let Rule = __webpack_require__(4092)
-
-function fromJSON(json, inputs) {
-  if (Array.isArray(json)) return json.map(n => fromJSON(n))
-
-  let { inputs: ownInputs, ...defaults } = json
-  if (ownInputs) {
-    inputs = []
-    for (let input of ownInputs) {
-      let inputHydrated = { ...input, __proto__: Input.prototype }
-      if (inputHydrated.map) {
-        inputHydrated.map = {
-          ...inputHydrated.map,
-          __proto__: PreviousMap.prototype
-        }
-      }
-      inputs.push(inputHydrated)
-    }
-  }
-  if (defaults.nodes) {
-    defaults.nodes = json.nodes.map(n => fromJSON(n, inputs))
-  }
-  if (defaults.source) {
-    let { inputId, ...source } = defaults.source
-    defaults.source = source
-    if (inputId != null) {
-      defaults.source.input = inputs[inputId]
-    }
-  }
-  if (defaults.type === 'root') {
-    return new Root(defaults)
-  } else if (defaults.type === 'decl') {
-    return new Declaration(defaults)
-  } else if (defaults.type === 'rule') {
-    return new Rule(defaults)
-  } else if (defaults.type === 'comment') {
-    return new Comment(defaults)
-  } else if (defaults.type === 'atrule') {
-    return new AtRule(defaults)
-  } else {
-    throw new Error('Unknown node type: ' + json.type)
-  }
-}
-
-module.exports = fromJSON
-fromJSON.default = fromJSON
-
-
-/***/ }),
-
 /***/ 5380:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -4766,115 +4704,6 @@ class Parser {
 }
 
 module.exports = Parser
-
-
-/***/ }),
-
-/***/ 4529:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-let CssSyntaxError = __webpack_require__(356)
-let Declaration = __webpack_require__(1516)
-let LazyResult = __webpack_require__(448)
-let Container = __webpack_require__(683)
-let Processor = __webpack_require__(9656)
-let stringify = __webpack_require__(633)
-let fromJSON = __webpack_require__(8940)
-let Document = __webpack_require__(271)
-let Warning = __webpack_require__(5776)
-let Comment = __webpack_require__(6589)
-let AtRule = __webpack_require__(1326)
-let Result = __webpack_require__(9055)
-let Input = __webpack_require__(5380)
-let parse = __webpack_require__(4295)
-let list = __webpack_require__(7374)
-let Rule = __webpack_require__(4092)
-let Root = __webpack_require__(9434)
-let Node = __webpack_require__(7490)
-
-function postcss(...plugins) {
-  if (plugins.length === 1 && Array.isArray(plugins[0])) {
-    plugins = plugins[0]
-  }
-  return new Processor(plugins)
-}
-
-postcss.plugin = function plugin(name, initializer) {
-  let warningPrinted = false
-  function creator(...args) {
-    // eslint-disable-next-line no-console
-    if (console && console.warn && !warningPrinted) {
-      warningPrinted = true
-      // eslint-disable-next-line no-console
-      console.warn(
-        name +
-          ': postcss.plugin was deprecated. Migration guide:\n' +
-          'https://evilmartians.com/chronicles/postcss-8-plugin-migration'
-      )
-      if (process.env.LANG && process.env.LANG.startsWith('cn')) {
-        /* c8 ignore next 7 */
-        // eslint-disable-next-line no-console
-        console.warn(
-          name +
-            ': 里面 postcss.plugin 被弃用. 迁移指南:\n' +
-            'https://www.w3ctech.com/topic/2226'
-        )
-      }
-    }
-    let transformer = initializer(...args)
-    transformer.postcssPlugin = name
-    transformer.postcssVersion = new Processor().version
-    return transformer
-  }
-
-  let cache
-  Object.defineProperty(creator, 'postcss', {
-    get() {
-      if (!cache) cache = creator()
-      return cache
-    }
-  })
-
-  creator.process = function (css, processOpts, pluginOpts) {
-    return postcss([creator(pluginOpts)]).process(css, processOpts)
-  }
-
-  return creator
-}
-
-postcss.stringify = stringify
-postcss.parse = parse
-postcss.fromJSON = fromJSON
-postcss.list = list
-
-postcss.comment = defaults => new Comment(defaults)
-postcss.atRule = defaults => new AtRule(defaults)
-postcss.decl = defaults => new Declaration(defaults)
-postcss.rule = defaults => new Rule(defaults)
-postcss.root = defaults => new Root(defaults)
-postcss.document = defaults => new Document(defaults)
-
-postcss.CssSyntaxError = CssSyntaxError
-postcss.Declaration = Declaration
-postcss.Container = Container
-postcss.Processor = Processor
-postcss.Document = Document
-postcss.Comment = Comment
-postcss.Warning = Warning
-postcss.AtRule = AtRule
-postcss.Result = Result
-postcss.Input = Input
-postcss.Rule = Rule
-postcss.Root = Root
-postcss.Node = Node
-
-LazyResult.registerPostcss(postcss)
-
-module.exports = postcss
-postcss.default = postcss
 
 
 /***/ }),
@@ -49025,40 +48854,12 @@ function specificity(selector) {
 
 
 
-// EXTERNAL MODULE: ./node_modules/postcss/lib/postcss.js
-var postcss = __webpack_require__(4529);
-;// ./node_modules/postcss/lib/postcss.mjs
-
-
-/* harmony default export */ const lib_postcss = (postcss);
-
-const postcss_stringify = postcss.stringify
-const fromJSON = postcss.fromJSON
-const postcss_plugin = postcss.plugin
-const postcss_parse = postcss.parse
-const list = postcss.list
-
-const postcss_document = postcss.document
-const comment = postcss.comment
-const atRule = postcss.atRule
-const rule = postcss.rule
-const decl = postcss.decl
-const root = postcss.root
-
-const CssSyntaxError = postcss.CssSyntaxError
-const Declaration = postcss.Declaration
-const Container = postcss.Container
-const Processor = postcss.Processor
-const Document = postcss.Document
-const Comment = postcss.Comment
-const postcss_Warning = postcss.Warning
-const AtRule = postcss.AtRule
-const Result = postcss.Result
-const Input = postcss.Input
-const Rule = postcss.Rule
-const postcss_Root = postcss.Root
-const Node = postcss.Node
-
+// EXTERNAL MODULE: ./node_modules/postcss/lib/processor.js
+var processor = __webpack_require__(9656);
+var processor_default = /*#__PURE__*/__webpack_require__.n(processor);
+// EXTERNAL MODULE: ./node_modules/postcss/lib/css-syntax-error.js
+var css_syntax_error = __webpack_require__(356);
+var css_syntax_error_default = /*#__PURE__*/__webpack_require__.n(css_syntax_error);
 // EXTERNAL MODULE: ./node_modules/postcss-prefix-selector/index.js
 var postcss_prefix_selector = __webpack_require__(1443);
 var postcss_prefix_selector_default = /*#__PURE__*/__webpack_require__.n(postcss_prefix_selector);
@@ -49069,6 +48870,7 @@ var postcss_urlrebase_default = /*#__PURE__*/__webpack_require__.n(postcss_urlre
 /**
  * External dependencies
  */
+
 
 
 
@@ -49166,7 +48968,7 @@ function transformStyle({
   try {
     var _transformOptions$ign;
     const excludedSelectors = [...ignoredSelectors, ...((_transformOptions$ign = transformOptions?.ignoredSelectors) !== null && _transformOptions$ign !== void 0 ? _transformOptions$ign : []), wrapperSelector];
-    return lib_postcss([wrapperSelector && postcss_prefix_selector_default()({
+    return new (processor_default())([wrapperSelector && postcss_prefix_selector_default()({
       prefix: wrapperSelector,
       transform(prefix, selector, prefixedSelector) {
         // For backwards compatibility, don't use the `exclude` option
@@ -49189,7 +48991,7 @@ function transformStyle({
       rootUrl: baseURL
     })].filter(Boolean)).process(css, {}).css; // use sync PostCSS API
   } catch (error) {
-    if (error instanceof CssSyntaxError) {
+    if (error instanceof (css_syntax_error_default())) {
       // eslint-disable-next-line no-console
       console.warn('wp.blockEditor.transformStyles Failed to transform CSS.', error.message + '\n' + error.showSourceCode(false));
     } else {
@@ -75999,7 +75801,7 @@ function Parser_parse (value, root, parent, rule, rules, rulesets, pseudo, point
 			case 47:
 				switch (peek()) {
 					case 42: case 47:
-						Utility_append(Parser_comment(commenter(next(), caret()), root, parent), declarations)
+						Utility_append(comment(commenter(next(), caret()), root, parent), declarations)
 						break
 					default:
 						characters += '/'
@@ -76110,7 +75912,7 @@ function ruleset (value, root, parent, index, offset, rules, points, type, props
  * @param {object?} parent
  * @return {object}
  */
-function Parser_comment (value, root, parent) {
+function comment (value, root, parent) {
 	return node(value, root, parent, COMMENT, Utility_from(Tokenizer_char()), Utility_substr(value, 2, -2), 0)
 }
 
