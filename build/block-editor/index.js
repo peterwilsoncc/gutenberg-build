@@ -71001,7 +71001,9 @@ function createLinkInParagraph(url, onReplace) {
 const allEventListeners = [before_input_rules, input_rules, insert_replacement_text, remove_browser_shortcuts, shortcuts, input_events, undo_automatic_change, paste_handler, event_listeners_delete, enter, firefox_compat];
 function useEventListeners(props) {
   const propsRef = (0,external_wp_element_namespaceObject.useRef)(props);
-  propsRef.current = props;
+  (0,external_wp_element_namespaceObject.useInsertionEffect)(() => {
+    propsRef.current = props;
+  });
   const refEffects = (0,external_wp_element_namespaceObject.useMemo)(() => allEventListeners.map(refEffect => refEffect(propsRef)), [propsRef]);
   return (0,external_wp_compose_namespaceObject.useRefEffect)(element => {
     if (!props.isSelected) {
