@@ -71282,6 +71282,11 @@ const styles_TabPanel = /*#__PURE__*/emotion_styled_base_browser_esm(TabPanel,  
 
 ;// ./packages/components/build-module/tabs/tab.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
 
@@ -71303,15 +71308,24 @@ const tab_Tab = (0,external_wp_element_namespaceObject.forwardRef)(function Tab(
   render,
   ...otherProps
 }, ref) {
-  const context = useTabsContext();
-  if (!context) {
-     false ? 0 : void 0;
-    return null;
-  }
+  var _useTabsContext;
   const {
     store,
     instanceId
-  } = context;
+  } = (_useTabsContext = useTabsContext()) !== null && _useTabsContext !== void 0 ? _useTabsContext : {};
+
+  // If the active item is not connected, the tablist may end up in a state
+  // where none of the tabs are tabbable. In this case, we force all tabs to
+  // be tabbable, so that as soon as an item received focus, it becomes active
+  // and Tablist goes back to working as expected.
+  // eslint-disable-next-line @wordpress/no-unused-vars-before-return
+  const tabbable = useStoreState(store, state => {
+    return state?.activeId !== null && !store?.item(state?.activeId)?.element?.isConnected;
+  });
+  if (!store) {
+     false ? 0 : void 0;
+    return null;
+  }
   const instancedTabId = `${instanceId}-${tabId}`;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_Tab, {
     ref: ref,
@@ -71319,6 +71333,7 @@ const tab_Tab = (0,external_wp_element_namespaceObject.forwardRef)(function Tab(
     id: instancedTabId,
     disabled: disabled,
     render: render,
+    tabbable: tabbable,
     ...otherProps,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TabChildren, {
       children: children
@@ -71584,7 +71599,6 @@ const tabpanel_TabPanel = (0,external_wp_element_namespaceObject.forwardRef)(fun
  */
 
 
-
 /**
  * WordPress dependencies
  */
@@ -71601,6 +71615,13 @@ const tabpanel_TabPanel = (0,external_wp_element_namespaceObject.forwardRef)(fun
 
 
 
+function externalToInternalTabId(externalId, instanceId) {
+  return externalId && `${instanceId}-${externalId}`;
+}
+function internalToExternalTabId(internalId, instanceId) {
+  return typeof internalId === 'string' ? internalId.replace(`${instanceId}-`, '') : internalId;
+}
+
 /**
  * Display one panel of content at a time with a tabbed interface, based on the
  * WAI-ARIA Tabs Pattern⁠.
@@ -71608,130 +71629,41 @@ const tabpanel_TabPanel = (0,external_wp_element_namespaceObject.forwardRef)(fun
  * @see https://www.w3.org/WAI/ARIA/apg/patterns/tabs/
  * ```
  */
-
 const Tabs = Object.assign(function Tabs({
   selectOnMove = true,
   defaultTabId,
   orientation = 'horizontal',
   onSelect,
   children,
-  selectedTabId
+  selectedTabId,
+  activeTabId,
+  defaultActiveTabId,
+  onActiveTabIdChange
 }) {
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(Tabs, 'tabs');
   const store = useTabStore({
     selectOnMove,
     orientation,
-    defaultSelectedId: defaultTabId && `${instanceId}-${defaultTabId}`,
-    setSelectedId: selectedId => {
-      const strippedDownId = typeof selectedId === 'string' ? selectedId.replace(`${instanceId}-`, '') : selectedId;
-      onSelect?.(strippedDownId);
+    defaultSelectedId: externalToInternalTabId(defaultTabId, instanceId),
+    setSelectedId: newSelectedId => {
+      onSelect?.(internalToExternalTabId(newSelectedId, instanceId));
     },
-    selectedId: selectedTabId && `${instanceId}-${selectedTabId}`,
+    selectedId: externalToInternalTabId(selectedTabId, instanceId),
+    defaultActiveId: externalToInternalTabId(defaultActiveTabId, instanceId),
+    setActiveId: newActiveId => {
+      onActiveTabIdChange?.(internalToExternalTabId(newActiveId, instanceId));
+    },
+    activeId: externalToInternalTabId(activeTabId, instanceId),
     rtl: (0,external_wp_i18n_namespaceObject.isRTL)()
   });
-  const isControlled = selectedTabId !== undefined;
   const {
     items,
-    selectedId,
     activeId
   } = useStoreState(store);
   const {
-    setSelectedId,
     setActiveId
   } = store;
-
-  // Keep track of whether tabs have been populated. This is used to prevent
-  // certain effects from firing too early while tab data and relevant
-  // variables are undefined during the initial render.
-  const tabsHavePopulatedRef = (0,external_wp_element_namespaceObject.useRef)(false);
-  if (items.length > 0) {
-    tabsHavePopulatedRef.current = true;
-  }
-  const selectedTab = items.find(item => item.id === selectedId);
-  const firstEnabledTab = items.find(item => {
-    // Ariakit internally refers to disabled tabs as `dimmed`.
-    return !item.dimmed;
-  });
-  const initialTab = items.find(item => item.id === `${instanceId}-${defaultTabId}`);
-
-  // Handle selecting the initial tab.
-  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    if (isControlled) {
-      return;
-    }
-
-    // Wait for the denoted initial tab to be declared before making a
-    // selection. This ensures that if a tab is declared lazily it can
-    // still receive initial selection, as well as ensuring no tab is
-    // selected if an invalid `defaultTabId` is provided.
-    if (defaultTabId && !initialTab) {
-      return;
-    }
-
-    // If the currently selected tab is missing (i.e. removed from the DOM),
-    // fall back to the initial tab or the first enabled tab if there is
-    // one. Otherwise, no tab should be selected.
-    if (!items.find(item => item.id === selectedId)) {
-      if (initialTab && !initialTab.dimmed) {
-        setSelectedId(initialTab?.id);
-        return;
-      }
-      if (firstEnabledTab) {
-        setSelectedId(firstEnabledTab.id);
-      } else if (tabsHavePopulatedRef.current) {
-        setSelectedId(null);
-      }
-    }
-  }, [firstEnabledTab, initialTab, defaultTabId, isControlled, items, selectedId, setSelectedId]);
-
-  // Handle the currently selected tab becoming disabled.
-  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    if (!selectedTab?.dimmed) {
-      return;
-    }
-
-    // In controlled mode, we trust that disabling tabs is done
-    // intentionally, and don't select a new tab automatically.
-    if (isControlled) {
-      setSelectedId(null);
-      return;
-    }
-
-    // If the currently selected tab becomes disabled, fall back to the
-    // `defaultTabId` if possible. Otherwise select the first
-    // enabled tab (if there is one).
-    if (initialTab && !initialTab.dimmed) {
-      setSelectedId(initialTab.id);
-      return;
-    }
-    if (firstEnabledTab) {
-      setSelectedId(firstEnabledTab.id);
-    }
-  }, [firstEnabledTab, initialTab, isControlled, selectedTab?.dimmed, setSelectedId]);
-
-  // Clear `selectedId` if the active tab is removed from the DOM in controlled mode.
-  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    if (!isControlled) {
-      return;
-    }
-
-    // Once the tabs have populated, if the `selectedTabId` still can't be
-    // found, clear the selection.
-    if (tabsHavePopulatedRef.current && !!selectedTabId && !selectedTab) {
-      setSelectedId(null);
-    }
-  }, [isControlled, selectedTab, selectedTabId, setSelectedId]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    // If there is no active tab, fallback to place focus on the first enabled tab
-    // so there is always an active element
-    if (selectedTabId === null && !activeId && firstEnabledTab?.id) {
-      setActiveId(firstEnabledTab.id);
-    }
-  }, [selectedTabId, activeId, firstEnabledTab?.id, setActiveId]);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!isControlled) {
-      return;
-    }
     requestAnimationFrame(() => {
       const focusedElement = items?.[0]?.element?.ownerDocument.activeElement;
       if (!focusedElement || !items.some(item => focusedElement === item.element)) {
@@ -71746,7 +71678,7 @@ const Tabs = Object.assign(function Tabs({
         setActiveId(focusedElement.id);
       }
     });
-  }, [activeId, isControlled, items, setActiveId]);
+  }, [activeId, items, setActiveId]);
   const contextValue = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     store,
     instanceId

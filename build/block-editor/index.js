@@ -51862,6 +51862,7 @@ function PatternCategoryPreviews({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -51885,14 +51886,27 @@ function CategoryTabs({
     ease: [0.6, 0, 0.4, 1]
   };
   const previousSelectedCategory = (0,external_wp_compose_namespaceObject.usePrevious)(selectedCategory);
+  const selectedTabId = selectedCategory ? selectedCategory.name : null;
+  const [activeTabId, setActiveId] = (0,external_wp_element_namespaceObject.useState)();
+  const firstTabId = categories?.[0]?.name;
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    // If there is no active tab, make the first tab the active tab, so that
+    // when focus is moved to the tablist, the first tab will be focused
+    // despite not being selected
+    if (selectedTabId === null && !activeTabId && firstTabId) {
+      setActiveId(firstTabId);
+    }
+  }, [selectedTabId, activeTabId, firstTabId, setActiveId]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(category_tabs_Tabs, {
     selectOnMove: false,
-    selectedTabId: selectedCategory ? selectedCategory.name : null,
+    selectedTabId: selectedTabId,
     orientation: "vertical",
     onSelect: categoryId => {
       // Pass the full category object
       onSelectCategory(categories.find(category => category.name === categoryId));
     },
+    activeTabId: activeTabId,
+    onActiveTabIdChange: setActiveId,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(category_tabs_Tabs.TabList, {
       className: "block-editor-inserter__category-tablist",
       children: categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(category_tabs_Tabs.Tab, {
