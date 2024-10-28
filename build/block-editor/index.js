@@ -51722,7 +51722,7 @@ function PatternsFilter({
             value: patternSyncFilter
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-          className: "block-editor-tool-selector__help",
+          className: "block-editor-inserter__patterns-filter-help",
           children: (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.__)('Patterns are available from the <Link>WordPress.org Pattern Directory</Link>, bundled in the active theme, or created by users on this site. Only patterns created on this site can be synced.'), {
             Link: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
               href: (0,external_wp_i18n_namespaceObject.__)('https://wordpress.org/patterns/')
