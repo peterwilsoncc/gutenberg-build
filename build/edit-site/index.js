@@ -8382,38 +8382,11 @@ function ResizableFrame({
 
 ;// external ["wp","keyboardShortcuts"]
 const external_wp_keyboardShortcuts_namespaceObject = window["wp"]["keyboardShortcuts"];
-;// ./packages/edit-site/build-module/components/keyboard-shortcuts/register.js
+;// ./packages/edit-site/build-module/components/save-keyboard-shortcut/index.js
 /**
  * WordPress dependencies
  */
 
-
-
-
-function KeyboardShortcutsRegister() {
-  // Registering the shortcuts.
-  const {
-    registerShortcut
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_keyboardShortcuts_namespaceObject.store);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    registerShortcut({
-      name: 'core/edit-site/save',
-      category: 'global',
-      description: (0,external_wp_i18n_namespaceObject.__)('Save your changes.'),
-      keyCombination: {
-        modifier: 'primary',
-        character: 's'
-      }
-    });
-  }, [registerShortcut]);
-  return null;
-}
-/* harmony default export */ const register = (KeyboardShortcutsRegister);
-
-;// ./packages/edit-site/build-module/components/keyboard-shortcuts/global.js
-/**
- * WordPress dependencies
- */
 
 
 
@@ -8424,40 +8397,62 @@ function KeyboardShortcutsRegister() {
  * Internal dependencies
  */
 
+const shortcutName = 'core/edit-site/save';
 
-const {
-  useHistory: global_useHistory
-} = unlock(external_wp_router_namespaceObject.privateApis);
-function KeyboardShortcutsGlobal() {
+/**
+ * Register the save keyboard shortcut in view mode.
+ *
+ * @return {null} Returns null.
+ */
+function SaveKeyboardShortcut() {
   const {
     __experimentalGetDirtyEntityRecords,
     isSavingEntityRecord
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_coreData_namespaceObject.store);
   const {
-    hasNonPostEntityChanges
+    hasNonPostEntityChanges,
+    isPostSavingLocked
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_editor_namespaceObject.store);
+  const {
+    savePost
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_editor_namespaceObject.store);
   const {
     setIsSaveViewOpened
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const history = global_useHistory();
+  const {
+    registerShortcut,
+    unregisterShortcut
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_keyboardShortcuts_namespaceObject.store);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    registerShortcut({
+      name: shortcutName,
+      category: 'global',
+      description: (0,external_wp_i18n_namespaceObject.__)('Save your changes.'),
+      keyCombination: {
+        modifier: 'primary',
+        character: 's'
+      }
+    });
+    return () => {
+      unregisterShortcut(shortcutName);
+    };
+  }, [registerShortcut, unregisterShortcut]);
   (0,external_wp_keyboardShortcuts_namespaceObject.useShortcut)('core/edit-site/save', event => {
     event.preventDefault();
     const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
     const hasDirtyEntities = !!dirtyEntityRecords.length;
     const isSaving = dirtyEntityRecords.some(record => isSavingEntityRecord(record.kind, record.name, record.key));
-    const _hasNonPostEntityChanges = hasNonPostEntityChanges();
-    const isViewMode = history.getLocationWithParams().params.canvas === 'view';
-    if ((!hasDirtyEntities || !_hasNonPostEntityChanges || isSaving) && !isViewMode) {
+    if (!hasDirtyEntities || isSaving) {
       return;
     }
-    // At this point, we know that there are dirty entities, other than
-    // the edited post, and we're not in the process of saving, so open
-    // save view.
-    setIsSaveViewOpened(true);
+    if (hasNonPostEntityChanges()) {
+      setIsSaveViewOpened(true);
+    } else if (!isPostSavingLocked()) {
+      savePost();
+    }
   });
   return null;
 }
-/* harmony default export */ const global = (KeyboardShortcutsGlobal);
 
 ;// ./packages/edit-site/build-module/components/use-edited-entity-record/index.js
 /**
@@ -13395,7 +13390,6 @@ function SavePanel() {
 
 
 
-
 const {
   useCommands
 } = unlock(external_wp_coreCommands_namespaceObject.privateApis);
@@ -13444,7 +13438,7 @@ function Layout({
     // Should not depend on the previous canvas mode value but the next.
   }, [canvas]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_commands_namespaceObject.CommandMenu, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(register, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(global, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_commands_namespaceObject.CommandMenu, {}), canvas === 'view' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SaveKeyboardShortcut, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...navigateRegionsProps,
       ref: navigateRegionsProps.ref,
       className: dist_clsx('edit-site-layout', navigateRegionsProps.className, {
