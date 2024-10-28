@@ -34540,7 +34540,7 @@ function useAutocomplete({
   const [filterValue, setFilterValue] = (0,external_wp_element_namespaceObject.useState)('');
   const [autocompleter, setAutocompleter] = (0,external_wp_element_namespaceObject.useState)(null);
   const [AutocompleterUI, setAutocompleterUI] = (0,external_wp_element_namespaceObject.useState)(null);
-  const backspacing = (0,external_wp_element_namespaceObject.useRef)(false);
+  const backspacingRef = (0,external_wp_element_namespaceObject.useRef)(false);
   function insertCompletion(replacement) {
     if (autocompleter === null) {
       return;
@@ -34600,7 +34600,7 @@ function useAutocomplete({
     setFilteredOptions(options);
   }
   function handleKeyDown(event) {
-    backspacing.current = event.key === 'Backspace';
+    backspacingRef.current = event.key === 'Backspace';
     if (!autocompleter) {
       return;
     }
@@ -34715,7 +34715,7 @@ function useAutocomplete({
     //
     // Ex: "Some text @marcelo sekkkk" <--- "kkkk" caused a mismatch, but
     // if the user presses backspace here, it will show the completion popup again.
-    const matchingWhileBackspacing = backspacing.current && wordsFromTrigger.length <= 3;
+    const matchingWhileBackspacing = backspacingRef.current && wordsFromTrigger.length <= 3;
     if (mismatch && !(matchingWhileBackspacing || hasOneTriggerWord)) {
       if (autocompleter) {
         reset();
