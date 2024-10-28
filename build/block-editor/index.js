@@ -56441,19 +56441,27 @@ function createBlockCompleter() {
     useItems(filterValue) {
       const {
         rootClientId,
-        selectedBlockName,
+        selectedBlockId,
         prioritizedBlocks
       } = (0,external_wp_data_namespaceObject.useSelect)(select => {
         const {
           getSelectedBlockClientId,
-          getBlockName,
+          getBlock,
           getBlockListSettings,
           getBlockRootClientId
         } = select(store);
+        const {
+          getActiveBlockVariation
+        } = select(external_wp_blocks_namespaceObject.store);
         const selectedBlockClientId = getSelectedBlockClientId();
+        const {
+          name: blockName,
+          attributes
+        } = getBlock(selectedBlockClientId);
+        const activeBlockVariation = getActiveBlockVariation(blockName, attributes);
         const _rootClientId = getBlockRootClientId(selectedBlockClientId);
         return {
-          selectedBlockName: selectedBlockClientId ? getBlockName(selectedBlockClientId) : null,
+          selectedBlockId: activeBlockVariation ? `${blockName}/${activeBlockVariation.name}` : blockName,
           rootClientId: _rootClientId,
           prioritizedBlocks: getBlockListSettings(_rootClientId)?.prioritizedInserterBlocks
         };
@@ -56461,8 +56469,8 @@ function createBlockCompleter() {
       const [items, categories, collections] = use_block_types_state(rootClientId, block_noop, true);
       const filteredItems = (0,external_wp_element_namespaceObject.useMemo)(() => {
         const initialFilteredItems = !!filterValue.trim() ? searchBlockItems(items, categories, collections, filterValue) : orderInserterBlockItems(orderBy(items, 'frecency', 'desc'), prioritizedBlocks);
-        return initialFilteredItems.filter(item => item.name !== selectedBlockName).slice(0, block_SHOWN_BLOCK_TYPES);
-      }, [filterValue, selectedBlockName, items, categories, collections, prioritizedBlocks]);
+        return initialFilteredItems.filter(item => item.id !== selectedBlockId).slice(0, block_SHOWN_BLOCK_TYPES);
+      }, [filterValue, selectedBlockId, items, categories, collections, prioritizedBlocks]);
       const options = (0,external_wp_element_namespaceObject.useMemo)(() => filteredItems.map(blockItem => {
         const {
           title,
