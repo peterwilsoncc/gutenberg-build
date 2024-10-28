@@ -30658,9 +30658,6 @@ function buildMenuLabel(title, id, status) {
   // translators: 1: title of the menu. 2: status of the menu (draft, pending, etc.).
   (0,external_wp_i18n_namespaceObject._x)('%1$s (%2$s)', 'menu label'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title), status);
 }
-
-// Save a boolean to prevent us creating a fallback more than once per session.
-let hasCreatedFallback = false;
 function SidebarNavigationScreenNavigationMenus({
   backPath
 }) {
@@ -30673,16 +30670,14 @@ function SidebarNavigationScreenNavigationMenus({
   const {
     getNavigationFallbackId
   } = unlock((0,external_wp_data_namespaceObject.useSelect)(external_wp_coreData_namespaceObject.store));
+  const isCreatingNavigationFallback = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).isResolving('getNavigationFallbackId'), []);
   const firstNavigationMenu = navigationMenus?.[0];
-
-  // Save a boolean to prevent us creating a fallback more than once per session.
-  if (firstNavigationMenu) {
-    hasCreatedFallback = true;
-  }
 
   // If there is no navigation menu found
   // then trigger fallback algorithm to create one.
-  if (!firstNavigationMenu && !isResolvingNavigationMenus && hasResolvedNavigationMenus && !hasCreatedFallback) {
+  if (!firstNavigationMenu && !isResolvingNavigationMenus && hasResolvedNavigationMenus &&
+  // Ensure a fallback navigation is created only once
+  !isCreatingNavigationFallback) {
     getNavigationFallbackId();
   }
   const {
