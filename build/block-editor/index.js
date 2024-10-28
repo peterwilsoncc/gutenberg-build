@@ -23427,7 +23427,8 @@ function LinkPreview({
     });
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Currently selected'),
+    role: "group",
+    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Manage link'),
     className: dist_clsx('block-editor-link-control__search-item', {
       'is-current': true,
       'is-rich': hasRichData,
@@ -23440,6 +23441,9 @@ function LinkPreview({
       className: "block-editor-link-control__search-item-top",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
         className: "block-editor-link-control__search-item-header",
+        role: "figure",
+        "aria-label": /* translators: Accessibility text for the link preview when editing a link. */
+        (0,external_wp_i18n_namespaceObject.__)('Link information'),
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: dist_clsx('block-editor-link-control__search-item-icon', {
             'is-image': richData?.icon
@@ -23471,23 +23475,22 @@ function LinkPreview({
         icon: edit,
         label: (0,external_wp_i18n_namespaceObject.__)('Edit link'),
         onClick: onEditClick,
-        size: "compact"
+        size: "compact",
+        showTooltip: !showIconLabels
       }), hasUnlinkControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         icon: link_off,
         label: (0,external_wp_i18n_namespaceObject.__)('Remove link'),
         onClick: onRemove,
-        size: "compact"
+        size: "compact",
+        showTooltip: !showIconLabels
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         icon: copy_small,
-        label: (0,external_wp_i18n_namespaceObject.sprintf)(
-        // Translators: %s is a placeholder for the link URL and an optional colon, (if a Link URL is present).
-        (0,external_wp_i18n_namespaceObject.__)('Copy link%s'),
-        // Ends up looking like "Copy link: https://example.com".
-        isEmptyURL || showIconLabels ? '' : ': ' + value.url),
+        label: (0,external_wp_i18n_namespaceObject.__)('Copy link'),
         ref: ref,
         accessibleWhenDisabled: true,
         disabled: isEmptyURL,
-        size: "compact"
+        size: "compact",
+        showTooltip: !showIconLabels
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewerSlot, {
         fillProps: value
       })]
