@@ -27554,6 +27554,7 @@ const square = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -27583,7 +27584,9 @@ const ZoomOutToggle = ({
       category: 'global',
       description: (0,external_wp_i18n_namespaceObject.__)('Enter or exit zoom out.'),
       keyCombination: {
-        modifier: 'primaryShift',
+        // `primaryShift+0` (`ctrl+shift+0`) is the shortcut for switching
+        // to input mode in Windows, so apply a different key combination.
+        modifier: (0,external_wp_keycodes_namespaceObject.isAppleOS)() ? 'primaryShift' : 'secondary',
         character: '0'
       }
     });
