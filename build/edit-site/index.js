@@ -37900,7 +37900,7 @@ function FilterVisibilityToggle({
       className: "dataviews-filters__visibility-toggle",
       size: "compact",
       icon: library_funnel,
-      label: (0,external_wp_i18n_namespaceObject.__)('Toggle filter display'),
+      label: (0,external_wp_i18n_namespaceObject._x)('Filter', 'verb'),
       onClick: () => {
         if (!isShowingFilter) {
           setOpenedFilter(null);
@@ -45665,7 +45665,7 @@ function PostList({
         size: "compact",
         isPressed: quickEdit,
         icon: drawer_right,
-        label: (0,external_wp_i18n_namespaceObject.__)('Details panel'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Details'),
         onClick: () => {
           history.push({
             ...location.params,

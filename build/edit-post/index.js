@@ -1667,7 +1667,7 @@ function KeyboardShortcuts() {
     registerShortcut({
       name: 'core/edit-post/toggle-fullscreen',
       category: 'global',
-      description: (0,external_wp_i18n_namespaceObject.__)('Toggle fullscreen mode.'),
+      description: (0,external_wp_i18n_namespaceObject.__)('Enable or disable fullscreen mode.'),
       keyCombination: {
         modifier: 'secondary',
         character: 'f'

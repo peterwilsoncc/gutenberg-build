@@ -40325,7 +40325,7 @@ function DropCapControl({
   } else if (dropCap) {
     helpText = (0,external_wp_i18n_namespaceObject.__)('Showing large initial letter.');
   } else {
-    helpText = (0,external_wp_i18n_namespaceObject.__)('Toggle to show a large initial letter.');
+    helpText = (0,external_wp_i18n_namespaceObject.__)('Show a large initial letter.');
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
     hasValue: () => !!dropCap,
@@ -52534,7 +52534,7 @@ function SearchEdit({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-          title: (0,external_wp_i18n_namespaceObject.__)('Toggle search label'),
+          title: (0,external_wp_i18n_namespaceObject.__)('Show search label'),
           icon: toggleLabel,
           onClick: () => {
             setAttributes({

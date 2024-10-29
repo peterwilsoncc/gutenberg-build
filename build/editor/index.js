@@ -5052,7 +5052,7 @@ const toggleDistractionFree = () => ({
   }
   registry.batch(() => {
     registry.dispatch(external_wp_preferences_namespaceObject.store).set('core', 'distractionFree', !isDistractionFree);
-    registry.dispatch(external_wp_notices_namespaceObject.store).createInfoNotice(isDistractionFree ? (0,external_wp_i18n_namespaceObject.__)('Distraction free off.') : (0,external_wp_i18n_namespaceObject.__)('Distraction free on.'), {
+    registry.dispatch(external_wp_notices_namespaceObject.store).createInfoNotice(isDistractionFree ? (0,external_wp_i18n_namespaceObject.__)('Distraction free mode deactivated.') : (0,external_wp_i18n_namespaceObject.__)('Distraction free mode activated.'), {
       id: 'core/editor/distraction-free-mode/notice',
       type: 'snackbar',
       actions: [{
@@ -11493,7 +11493,7 @@ function EditorKeyboardShortcutsRegister() {
     registerShortcut({
       name: 'core/editor/toggle-list-view',
       category: 'global',
-      description: (0,external_wp_i18n_namespaceObject.__)('Open the List View.'),
+      description: (0,external_wp_i18n_namespaceObject.__)('Show or hide the List View.'),
       keyCombination: {
         modifier: 'access',
         character: 'o'
@@ -11502,7 +11502,7 @@ function EditorKeyboardShortcutsRegister() {
     registerShortcut({
       name: 'core/editor/toggle-distraction-free',
       category: 'global',
-      description: (0,external_wp_i18n_namespaceObject.__)('Toggle distraction free mode.'),
+      description: (0,external_wp_i18n_namespaceObject.__)('Enter or exit distraction free mode.'),
       keyCombination: {
         modifier: 'primaryShift',
         character: '\\'
@@ -11511,7 +11511,7 @@ function EditorKeyboardShortcutsRegister() {
     registerShortcut({
       name: 'core/editor/toggle-sidebar',
       category: 'global',
-      description: (0,external_wp_i18n_namespaceObject.__)('Show or hide the Settings sidebar.'),
+      description: (0,external_wp_i18n_namespaceObject.__)('Show or hide the Settings panel.'),
       keyCombination: {
         modifier: 'primaryShift',
         character: ','
@@ -23804,7 +23804,7 @@ function useEditorCommandLoader() {
   });
   commands.push({
     name: 'core/toggle-distraction-free',
-    label: isDistractionFree ? (0,external_wp_i18n_namespaceObject.__)('Exit Distraction Free') : (0,external_wp_i18n_namespaceObject.__)('Enter Distraction Free'),
+    label: isDistractionFree ? (0,external_wp_i18n_namespaceObject.__)('Exit Distraction free') : (0,external_wp_i18n_namespaceObject.__)('Enter Distraction free'),
     callback: ({
       close
     }) => {
@@ -23824,7 +23824,7 @@ function useEditorCommandLoader() {
   });
   commands.push({
     name: 'core/toggle-spotlight-mode',
-    label: (0,external_wp_i18n_namespaceObject.__)('Toggle spotlight'),
+    label: isFocusMode ? (0,external_wp_i18n_namespaceObject.__)('Exit Spotlight mode') : (0,external_wp_i18n_namespaceObject.__)('Enter Spotlight mode'),
     callback: ({
       close
     }) => {
@@ -23859,7 +23859,7 @@ function useEditorCommandLoader() {
   });
   commands.push({
     name: 'core/toggle-top-toolbar',
-    label: (0,external_wp_i18n_namespaceObject.__)('Toggle top toolbar'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Top toolbar'),
     callback: ({
       close
     }) => {
@@ -23909,7 +23909,7 @@ function useEditorCommandLoader() {
   });
   commands.push({
     name: 'core/open-settings-sidebar',
-    label: (0,external_wp_i18n_namespaceObject.__)('Toggle settings sidebar'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Show or hide the Settings panel.'),
     icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? drawer_left : drawer_right,
     callback: ({
       close
@@ -23925,7 +23925,7 @@ function useEditorCommandLoader() {
   });
   commands.push({
     name: 'core/open-block-inspector',
-    label: (0,external_wp_i18n_namespaceObject.__)('Toggle block inspector'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Show or hide the Block settings panel'),
     icon: block_default,
     callback: ({
       close

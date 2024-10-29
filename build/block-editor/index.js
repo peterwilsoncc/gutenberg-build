@@ -56514,7 +56514,7 @@ const fullscreen = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 
 function BlockFullHeightAlignmentControl({
   isActive,
-  label = (0,external_wp_i18n_namespaceObject.__)('Toggle full height'),
+  label = (0,external_wp_i18n_namespaceObject.__)('Full height'),
   onToggle,
   isDisabled
 }) {
