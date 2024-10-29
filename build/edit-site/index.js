@@ -39327,11 +39327,12 @@ function ListItem({
       eligibleActions: _eligibleActions
     };
   }, [actions, item]);
-  const renderedMediaField = mediaField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(mediaField.render, {
-    item: item
-  }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    className: "dataviews-view-list__media-placeholder"
-  });
+  const renderedMediaField = mediaField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    className: "dataviews-view-list__media-wrapper",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(mediaField.render, {
+      item: item
+    })
+  }) : null;
   const renderedPrimaryField = primaryField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(primaryField.render, {
     item: item
   }) : null;
@@ -39391,10 +39392,7 @@ function ListItem({
         spacing: 3,
         justify: "start",
         alignment: "flex-start",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-          className: "dataviews-view-list__media-wrapper",
-          children: renderedMediaField
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        children: [renderedMediaField, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
           spacing: 1,
           className: "dataviews-view-list__field-wrapper",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -43928,8 +43926,7 @@ const page_templates_defaultLayouts = {
   [LAYOUT_LIST]: {
     fields: ['title', 'description', 'author'],
     layout: {
-      primaryField: 'title',
-      mediaField: 'preview'
+      primaryField: 'title'
     }
   }
 };
