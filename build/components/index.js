@@ -66748,6 +66748,9 @@ function UnforwardedToolbar({
       },
       Dropdown: {
         variant: 'toolbar'
+      },
+      Menu: {
+        variant: 'toolbar'
       }
     };
   }, [isVariantDefined]);
@@ -70454,37 +70457,37 @@ const MenuPopoverInnerWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("di
   target: "e1wg7tti13"
 } : 0)("position:relative;z-index:1000000;display:grid;grid-template-columns:", GRID_TEMPLATE_COLS, ";grid-template-rows:auto;box-sizing:border-box;min-width:160px;max-width:320px;max-height:var( --popover-available-height );padding:", CONTENT_WRAPPER_PADDING, ";overscroll-behavior:contain;overflow:auto;outline:2px solid transparent!important;@media not ( prefers-reduced-motion ){transition:inherit;transform-origin:inherit;&[data-side='bottom'],&[data-side='top']{transform:scaleY(\n\t\t\t\tcalc(\n\t\t\t\t\t1 / ", styles_ANIMATION_PARAMS.SCALE_AMOUNT_OUTER, " *\n\t\t\t\t\t\t", styles_ANIMATION_PARAMS.SCALE_AMOUNT_CONTENT, "\n\t\t\t\t)\n\t\t\t);}&[data-enter][data-side='bottom'],&[data-enter][data-side='top'],&[data-leave][data-side='bottom'],&[data-leave][data-side='top']{transform:scaleY( 1 );}}" + ( true ? "" : 0));
 const baseItem = /*#__PURE__*/emotion_react_browser_esm_css("all:unset;position:relative;min-height:", space(10), ";box-sizing:border-box;grid-column:1/-1;display:grid;grid-template-columns:", GRID_TEMPLATE_COLS, ";align-items:center;@supports ( grid-template-columns: subgrid ){grid-template-columns:subgrid;}font-size:", font('default.fontSize'), ";font-family:inherit;font-weight:normal;line-height:20px;color:", COLORS.theme.foreground, ";border-radius:", config_values.radiusSmall, ";padding-block:", ITEM_PADDING_BLOCK, ";padding-inline:", ITEM_PADDING_INLINE, ";scroll-margin:", CONTENT_WRAPPER_PADDING, ";user-select:none;outline:none;&[aria-disabled='true']{color:", COLORS.ui.textDisabled, ";cursor:not-allowed;}&[data-active-item]:not( [data-focus-visible] ):not(\n\t\t\t[aria-disabled='true']\n\t\t){background-color:", COLORS.theme.accent, ";color:", COLORS.white, ";}&[data-focus-visible]{box-shadow:0 0 0 1.5px ", COLORS.theme.accent, ";outline:2px solid transparent;}&:active,&[data-active]{}", MenuPopoverInnerWrapper, ":not(:focus) &:not(:focus)[aria-expanded=\"true\"]{background-color:", LIGHT_BACKGROUND_COLOR, ";color:", COLORS.theme.foreground, ";}svg{fill:currentColor;}" + ( true ? "" : 0),  true ? "" : 0);
-const styles_DropdownMenuItem = /*#__PURE__*/emotion_styled_base_browser_esm(B6XZVSMQ_MenuItem,  true ? {
+const styles_MenuItem = /*#__PURE__*/emotion_styled_base_browser_esm(B6XZVSMQ_MenuItem,  true ? {
   target: "e1wg7tti12"
 } : 0)(baseItem, ";" + ( true ? "" : 0));
-const styles_DropdownMenuCheckboxItem = /*#__PURE__*/emotion_styled_base_browser_esm(MenuItemCheckbox,  true ? {
+const styles_MenuCheckboxItem = /*#__PURE__*/emotion_styled_base_browser_esm(MenuItemCheckbox,  true ? {
   target: "e1wg7tti11"
 } : 0)(baseItem, ";" + ( true ? "" : 0));
-const styles_DropdownMenuRadioItem = /*#__PURE__*/emotion_styled_base_browser_esm(MenuItemRadio,  true ? {
+const styles_MenuRadioItem = /*#__PURE__*/emotion_styled_base_browser_esm(MenuItemRadio,  true ? {
   target: "e1wg7tti10"
 } : 0)(baseItem, ";" + ( true ? "" : 0));
 const ItemPrefixWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1wg7tti9"
-} : 0)("grid-column:1;", styles_DropdownMenuCheckboxItem, ">&,", styles_DropdownMenuRadioItem, ">&{min-width:", space(6), ";}", styles_DropdownMenuCheckboxItem, ">&,", styles_DropdownMenuRadioItem, ">&,&:not( :empty ){margin-inline-end:", space(2), ";}display:flex;align-items:center;justify-content:center;color:", LIGHTER_TEXT_COLOR, ";[data-active-item]:not( [data-focus-visible] )>&,[aria-disabled='true']>&{color:inherit;}" + ( true ? "" : 0));
-const DropdownMenuItemContentWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
+} : 0)("grid-column:1;", styles_MenuCheckboxItem, ">&,", styles_MenuRadioItem, ">&{min-width:", space(6), ";}", styles_MenuCheckboxItem, ">&,", styles_MenuRadioItem, ">&,&:not( :empty ){margin-inline-end:", space(2), ";}display:flex;align-items:center;justify-content:center;color:", LIGHTER_TEXT_COLOR, ";[data-active-item]:not( [data-focus-visible] )>&,[aria-disabled='true']>&{color:inherit;}" + ( true ? "" : 0));
+const MenuItemContentWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "e1wg7tti8"
 } : 0)("grid-column:2;display:flex;align-items:center;justify-content:space-between;gap:", space(3), ";pointer-events:none;" + ( true ? "" : 0));
-const DropdownMenuItemChildrenWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
+const MenuItemChildrenWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "e1wg7tti7"
 } : 0)("flex:1;display:inline-flex;flex-direction:column;gap:", space(1), ";" + ( true ? "" : 0));
 const ItemSuffixWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1wg7tti6"
 } : 0)("flex:0 1 fit-content;min-width:0;width:fit-content;display:flex;align-items:center;justify-content:center;gap:", space(3), ";color:", LIGHTER_TEXT_COLOR, ";[data-active-item]:not( [data-focus-visible] ) *:not(", MenuPopoverInnerWrapper, ") &,[aria-disabled='true'] *:not(", MenuPopoverInnerWrapper, ") &{color:inherit;}" + ( true ? "" : 0));
-const styles_DropdownMenuGroup = /*#__PURE__*/emotion_styled_base_browser_esm(menu_group_MenuGroup,  true ? {
+const styles_MenuGroup = /*#__PURE__*/emotion_styled_base_browser_esm(menu_group_MenuGroup,  true ? {
   target: "e1wg7tti5"
 } : 0)( true ? {
   name: "49aokf",
   styles: "display:contents"
 } : 0);
-const DropdownMenuGroupLabel = /*#__PURE__*/emotion_styled_base_browser_esm(MenuGroupLabel,  true ? {
+const styles_MenuGroupLabel = /*#__PURE__*/emotion_styled_base_browser_esm(MenuGroupLabel,  true ? {
   target: "e1wg7tti4"
 } : 0)("grid-column:1/-1;padding-block-start:", space(3), ";padding-block-end:", space(2), ";padding-inline:", ITEM_PADDING_INLINE, ";" + ( true ? "" : 0));
-const styles_DropdownMenuSeparator = /*#__PURE__*/emotion_styled_base_browser_esm(MenuSeparator,  true ? {
+const styles_MenuSeparator = /*#__PURE__*/emotion_styled_base_browser_esm(MenuSeparator,  true ? {
   target: "e1wg7tti3"
 } : 0)("grid-column:1/-1;border:none;height:", config_values.borderWidth, ";background-color:", props => props.variant === 'toolbar' ? TOOLBAR_VARIANT_BORDER_COLOR : DIVIDER_COLOR, ";margin-block:", space(2), ";margin-inline:", ITEM_PADDING_INLINE, ";outline:2px solid transparent;" + ( true ? "" : 0));
 const SubmenuChevronIcon = /*#__PURE__*/emotion_styled_base_browser_esm(build_module_icon,  true ? {
@@ -70494,10 +70497,10 @@ const SubmenuChevronIcon = /*#__PURE__*/emotion_styled_base_browser_esm(build_mo
 }, {
   transform: `scaleX(-1)`
 }), ";" + ( true ? "" : 0));
-const styles_DropdownMenuItemLabel = /*#__PURE__*/emotion_styled_base_browser_esm(truncate_component,  true ? {
+const styles_MenuItemLabel = /*#__PURE__*/emotion_styled_base_browser_esm(truncate_component,  true ? {
   target: "e1wg7tti1"
 } : 0)("font-size:", font('default.fontSize'), ";line-height:20px;color:inherit;" + ( true ? "" : 0));
-const styles_DropdownMenuItemHelpText = /*#__PURE__*/emotion_styled_base_browser_esm(truncate_component,  true ? {
+const styles_MenuItemHelpText = /*#__PURE__*/emotion_styled_base_browser_esm(truncate_component,  true ? {
   target: "e1wg7tti0"
 } : 0)("font-size:", font('helpText.fontSize'), ";line-height:16px;color:", LIGHTER_TEXT_COLOR, ";word-break:break-all;[data-active-item]:not( [data-focus-visible] ) *:not( ", MenuPopoverInnerWrapper, " ) &,[aria-disabled='true'] *:not( ", MenuPopoverInnerWrapper, " ) &{color:inherit;}" + ( true ? "" : 0));
 
@@ -70511,7 +70514,7 @@ const styles_DropdownMenuItemHelpText = /*#__PURE__*/emotion_styled_base_browser
  * Internal dependencies
  */
 
-const DropdownMenuContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
+const MenuContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
 
 ;// ./packages/components/build-module/menu/use-temporary-focus-visible-fix.js
 /**
@@ -70548,7 +70551,7 @@ function useTemporaryFocusVisibleFix({
 
 
 
-const DropdownMenuItem = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuItem({
+const item_MenuItem = (0,external_wp_element_namespaceObject.forwardRef)(function MenuItem({
   prefix,
   suffix,
   children,
@@ -70560,18 +70563,18 @@ const DropdownMenuItem = (0,external_wp_element_namespaceObject.forwardRef)(func
   const focusVisibleFixProps = useTemporaryFocusVisibleFix({
     onBlur
   });
-  const dropdownMenuContext = (0,external_wp_element_namespaceObject.useContext)(DropdownMenuContext);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_DropdownMenuItem, {
+  const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_MenuItem, {
     ref: ref,
     ...props,
     ...focusVisibleFixProps,
     accessibleWhenDisabled: true,
     hideOnClick: hideOnClick,
-    store: dropdownMenuContext?.store,
+    store: menuContext?.store,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemPrefixWrapper, {
       children: prefix
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenuItemContentWrapper, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItemChildrenWrapper, {
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(MenuItemContentWrapper, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuItemChildrenWrapper, {
         children: children
       }), suffix && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemSuffixWrapper, {
         children: suffix
@@ -70635,7 +70638,7 @@ var MenuItemCheck = forwardRef2(function MenuItemCheck2(props) {
 
 
 
-const DropdownMenuCheckboxItem = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuCheckboxItem({
+const MenuCheckboxItem = (0,external_wp_element_namespaceObject.forwardRef)(function MenuCheckboxItem({
   suffix,
   children,
   onBlur,
@@ -70646,16 +70649,16 @@ const DropdownMenuCheckboxItem = (0,external_wp_element_namespaceObject.forwardR
   const focusVisibleFixProps = useTemporaryFocusVisibleFix({
     onBlur
   });
-  const dropdownMenuContext = (0,external_wp_element_namespaceObject.useContext)(DropdownMenuContext);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_DropdownMenuCheckboxItem, {
+  const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_MenuCheckboxItem, {
     ref: ref,
     ...props,
     ...focusVisibleFixProps,
     accessibleWhenDisabled: true,
     hideOnClick: hideOnClick,
-    store: dropdownMenuContext?.store,
+    store: menuContext?.store,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuItemCheck, {
-      store: dropdownMenuContext?.store,
+      store: menuContext?.store,
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemPrefixWrapper, {})
       // Override some ariakit inline styles
       ,
@@ -70667,8 +70670,8 @@ const DropdownMenuCheckboxItem = (0,external_wp_element_namespaceObject.forwardR
         icon: library_check,
         size: 24
       })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenuItemContentWrapper, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItemChildrenWrapper, {
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(MenuItemContentWrapper, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuItemChildrenWrapper, {
         children: children
       }), suffix && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemSuffixWrapper, {
         children: suffix
@@ -70707,7 +70710,7 @@ const radioCheck = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
     r: 3
   })
 });
-const DropdownMenuRadioItem = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuRadioItem({
+const MenuRadioItem = (0,external_wp_element_namespaceObject.forwardRef)(function MenuRadioItem({
   suffix,
   children,
   onBlur,
@@ -70718,16 +70721,16 @@ const DropdownMenuRadioItem = (0,external_wp_element_namespaceObject.forwardRef)
   const focusVisibleFixProps = useTemporaryFocusVisibleFix({
     onBlur
   });
-  const dropdownMenuContext = (0,external_wp_element_namespaceObject.useContext)(DropdownMenuContext);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_DropdownMenuRadioItem, {
+  const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_MenuRadioItem, {
     ref: ref,
     ...props,
     ...focusVisibleFixProps,
     accessibleWhenDisabled: true,
     hideOnClick: hideOnClick,
-    store: dropdownMenuContext?.store,
+    store: menuContext?.store,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuItemCheck, {
-      store: dropdownMenuContext?.store,
+      store: menuContext?.store,
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemPrefixWrapper, {})
       // Override some ariakit inline styles
       ,
@@ -70739,8 +70742,8 @@ const DropdownMenuRadioItem = (0,external_wp_element_namespaceObject.forwardRef)
         icon: radioCheck,
         size: 24
       })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(DropdownMenuItemContentWrapper, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItemChildrenWrapper, {
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(MenuItemContentWrapper, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuItemChildrenWrapper, {
         children: children
       }), suffix && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemSuffixWrapper, {
         children: suffix
@@ -70762,12 +70765,12 @@ const DropdownMenuRadioItem = (0,external_wp_element_namespaceObject.forwardRef)
 
 
 
-const DropdownMenuGroup = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuGroup(props, ref) {
-  const dropdownMenuContext = (0,external_wp_element_namespaceObject.useContext)(DropdownMenuContext);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_DropdownMenuGroup, {
+const group_MenuGroup = (0,external_wp_element_namespaceObject.forwardRef)(function MenuGroup(props, ref) {
+  const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_MenuGroup, {
     ref: ref,
     ...props,
-    store: dropdownMenuContext?.store
+    store: menuContext?.store
   });
 });
 
@@ -70785,9 +70788,9 @@ const DropdownMenuGroup = (0,external_wp_element_namespaceObject.forwardRef)(fun
 
 
 
-const group_label_DropdownMenuGroupLabel = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuGroup(props, ref) {
-  const dropdownMenuContext = (0,external_wp_element_namespaceObject.useContext)(DropdownMenuContext);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuGroupLabel, {
+const group_label_MenuGroupLabel = (0,external_wp_element_namespaceObject.forwardRef)(function MenuGroup(props, ref) {
+  const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_MenuGroupLabel, {
     ref: ref,
     render:
     /*#__PURE__*/
@@ -70800,7 +70803,7 @@ const group_label_DropdownMenuGroupLabel = (0,external_wp_element_namespaceObjec
       lineHeight: "16px"
     }),
     ...props,
-    store: dropdownMenuContext?.store
+    store: menuContext?.store
   });
 });
 
@@ -70817,13 +70820,13 @@ const group_label_DropdownMenuGroupLabel = (0,external_wp_element_namespaceObjec
 
 
 
-const DropdownMenuSeparator = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuSeparator(props, ref) {
-  const dropdownMenuContext = (0,external_wp_element_namespaceObject.useContext)(DropdownMenuContext);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_DropdownMenuSeparator, {
+const separator_MenuSeparator = (0,external_wp_element_namespaceObject.forwardRef)(function MenuSeparator(props, ref) {
+  const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_MenuSeparator, {
     ref: ref,
     ...props,
-    store: dropdownMenuContext?.store,
-    variant: dropdownMenuContext?.variant
+    store: menuContext?.store,
+    variant: menuContext?.variant
   });
 });
 
@@ -70839,8 +70842,8 @@ const DropdownMenuSeparator = (0,external_wp_element_namespaceObject.forwardRef)
 
 
 
-const DropdownMenuItemLabel = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuItemLabel(props, ref) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_DropdownMenuItemLabel, {
+const MenuItemLabel = (0,external_wp_element_namespaceObject.forwardRef)(function MenuItemLabel(props, ref) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_MenuItemLabel, {
     numberOfLines: 1,
     ref: ref,
     ...props
@@ -70859,8 +70862,8 @@ const DropdownMenuItemLabel = (0,external_wp_element_namespaceObject.forwardRef)
 
 
 
-const DropdownMenuItemHelpText = (0,external_wp_element_namespaceObject.forwardRef)(function DropdownMenuItemHelpText(props, ref) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_DropdownMenuItemHelpText, {
+const MenuItemHelpText = (0,external_wp_element_namespaceObject.forwardRef)(function MenuItemHelpText(props, ref) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_MenuItemHelpText, {
     numberOfLines: 2,
     ref: ref,
     ...props
@@ -70896,7 +70899,7 @@ const DropdownMenuItemHelpText = (0,external_wp_element_namespaceObject.forwardR
 
 
 
-const menu_UnconnectedDropdownMenu = (props, ref) => {
+const UnconnectedMenu = (props, ref) => {
   var _props$placement;
   const {
     // Store props
@@ -70915,13 +70918,13 @@ const menu_UnconnectedDropdownMenu = (props, ref) => {
     variant,
     // Rest
     ...otherProps
-  } = useContextSystem(props, 'DropdownMenu');
-  const parentContext = (0,external_wp_element_namespaceObject.useContext)(DropdownMenuContext);
+  } = useContextSystem(props, 'Menu');
+  const parentContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
   const computedDirection = (0,external_wp_i18n_namespaceObject.isRTL)() ? 'rtl' : 'ltr';
 
   // If an explicit value for the `placement` prop is not passed,
-  // apply a default placement of `bottom-start` for the root dropdown,
-  // and of `right-start` for nested dropdowns.
+  // apply a default placement of `bottom-start` for the root menu popover,
+  // and of `right-start` for nested menu popovers.
   let computedPlacement = (_props$placement = props.placement) !== null && _props$placement !== void 0 ? _props$placement : parentContext?.store ? 'right-start' : 'bottom-start';
   // Swap left/right in case of RTL direction
   if (computedDirection === 'rtl') {
@@ -70931,7 +70934,7 @@ const menu_UnconnectedDropdownMenu = (props, ref) => {
       computedPlacement = computedPlacement.replace('left', 'right');
     }
   }
-  const dropdownMenuStore = useMenuStore({
+  const menuStore = useMenuStore({
     parent: parentContext?.store,
     open,
     defaultOpen,
@@ -70943,17 +70946,17 @@ const menu_UnconnectedDropdownMenu = (props, ref) => {
     rtl: computedDirection === 'rtl'
   });
   const contextValue = (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    store: dropdownMenuStore,
+    store: menuStore,
     variant
-  }), [dropdownMenuStore, variant]);
+  }), [menuStore, variant]);
 
   // Extract the side from the applied placement — useful for animations.
   // Using `currentPlacement` instead of `placement` to make sure that we
   // use the final computed placement (including "flips" etc).
-  const appliedPlacementSide = useStoreState(dropdownMenuStore, 'currentPlacement').split('-')[0];
-  if (dropdownMenuStore.parent && !((0,external_wp_element_namespaceObject.isValidElement)(trigger) && DropdownMenuItem === trigger.type)) {
+  const appliedPlacementSide = useStoreState(menuStore, 'currentPlacement').split('-')[0];
+  if (menuStore.parent && !((0,external_wp_element_namespaceObject.isValidElement)(trigger) && item_MenuItem === trigger.type)) {
     // eslint-disable-next-line no-console
-    console.warn('For nested DropdownMenus, the `trigger` should always be a `DropdownMenuItem`.');
+    console.warn('For nested Menus, the `trigger` should always be a `MenuItem`.');
   }
   const hideOnEscape = (0,external_wp_element_namespaceObject.useCallback)(event => {
     // Pressing Escape can cause unexpected consequences (ie. exiting
@@ -70971,8 +70974,8 @@ const menu_UnconnectedDropdownMenu = (props, ref) => {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuButton, {
       ref: ref,
-      store: dropdownMenuStore,
-      render: dropdownMenuStore.parent ? (0,external_wp_element_namespaceObject.cloneElement)(trigger, {
+      store: menuStore,
+      render: menuStore.parent ? (0,external_wp_element_namespaceObject.cloneElement)(trigger, {
         // Add submenu arrow, unless a `suffix` is explicitly specified
         suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
           children: [trigger.props.suffix, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SubmenuChevronIcon, {
@@ -70986,15 +70989,15 @@ const menu_UnconnectedDropdownMenu = (props, ref) => {
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu, {
       ...otherProps,
       modal: modal,
-      store: dropdownMenuStore
+      store: menuStore
       // Root menu has an 8px distance from its trigger,
       // otherwise 0 (which causes the submenu to slightly overlap)
       ,
-      gutter: gutter !== null && gutter !== void 0 ? gutter : dropdownMenuStore.parent ? 0 : 8
+      gutter: gutter !== null && gutter !== void 0 ? gutter : menuStore.parent ? 0 : 8
       // Align nested menu by the same (but opposite) amount
       // as the menu container's padding.
       ,
-      shift: shift !== null && shift !== void 0 ? shift : dropdownMenuStore.parent ? -4 : 0,
+      shift: shift !== null && shift !== void 0 ? shift : menuStore.parent ? -4 : 0,
       hideOnHoverOutside: false,
       "data-side": appliedPlacementSide,
       wrapperProps: wrapperProps,
@@ -71012,43 +71015,43 @@ const menu_UnconnectedDropdownMenu = (props, ref) => {
           ...renderProps
         })
       }),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuContext.Provider, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuContext.Provider, {
         value: contextValue,
         children: children
       })
     })]
   });
 };
-const DropdownMenuV2 = Object.assign(contextConnect(menu_UnconnectedDropdownMenu, 'DropdownMenu'), {
-  Context: Object.assign(DropdownMenuContext, {
-    displayName: 'DropdownMenuV2.Context'
+const menu_Menu = Object.assign(contextConnect(UnconnectedMenu, 'Menu'), {
+  Context: Object.assign(MenuContext, {
+    displayName: 'Menu.Context'
   }),
-  Item: Object.assign(DropdownMenuItem, {
-    displayName: 'DropdownMenuV2.Item'
+  Item: Object.assign(item_MenuItem, {
+    displayName: 'Menu.Item'
   }),
-  RadioItem: Object.assign(DropdownMenuRadioItem, {
-    displayName: 'DropdownMenuV2.RadioItem'
+  RadioItem: Object.assign(MenuRadioItem, {
+    displayName: 'Menu.RadioItem'
   }),
-  CheckboxItem: Object.assign(DropdownMenuCheckboxItem, {
-    displayName: 'DropdownMenuV2.CheckboxItem'
+  CheckboxItem: Object.assign(MenuCheckboxItem, {
+    displayName: 'Menu.CheckboxItem'
   }),
-  Group: Object.assign(DropdownMenuGroup, {
-    displayName: 'DropdownMenuV2.Group'
+  Group: Object.assign(group_MenuGroup, {
+    displayName: 'Menu.Group'
   }),
-  GroupLabel: Object.assign(group_label_DropdownMenuGroupLabel, {
-    displayName: 'DropdownMenuV2.GroupLabel'
+  GroupLabel: Object.assign(group_label_MenuGroupLabel, {
+    displayName: 'Menu.GroupLabel'
   }),
-  Separator: Object.assign(DropdownMenuSeparator, {
-    displayName: 'DropdownMenuV2.Separator'
+  Separator: Object.assign(separator_MenuSeparator, {
+    displayName: 'Menu.Separator'
   }),
-  ItemLabel: Object.assign(DropdownMenuItemLabel, {
-    displayName: 'DropdownMenuV2.ItemLabel'
+  ItemLabel: Object.assign(MenuItemLabel, {
+    displayName: 'Menu.ItemLabel'
   }),
-  ItemHelpText: Object.assign(DropdownMenuItemHelpText, {
-    displayName: 'DropdownMenuV2.ItemHelpText'
+  ItemHelpText: Object.assign(MenuItemHelpText, {
+    displayName: 'Menu.ItemHelpText'
   })
 });
-/* harmony default export */ const build_module_menu = ((/* unused pure expression or super */ null && (DropdownMenuV2)));
+/* harmony default export */ const build_module_menu = ((/* unused pure expression or super */ null && (menu_Menu)));
 
 ;// ./packages/components/build-module/theme/styles.js
 
@@ -71734,7 +71737,7 @@ lock(privateApis, {
   ComponentsContext: ComponentsContext,
   Tabs: Tabs,
   Theme: theme,
-  DropdownMenuV2: DropdownMenuV2,
+  Menu: menu_Menu,
   kebabCase: kebabCase
 });
 
