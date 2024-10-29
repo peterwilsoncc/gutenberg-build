@@ -10908,6 +10908,52 @@ const chevronLeftSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObjec
 const external_wp_keycodes_namespaceObject = window["wp"]["keycodes"];
 ;// external ["wp","commands"]
 const external_wp_commands_namespaceObject = window["wp"]["commands"];
+;// ./packages/editor/build-module/utils/pageTypeBadge.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Custom hook to get the page type badge for the current post on edit site view.
+ */
+function usePageTypeBadge() {
+  const {
+    isFrontPage,
+    isPostsPage
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getCurrentPostId
+    } = select(store_store);
+    const {
+      canUser,
+      getEditedEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
+    const postId = getCurrentPostId();
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEditedEntityRecord('root', 'site') : undefined;
+    return {
+      isFrontPage: siteSettings?.page_on_front === postId,
+      isPostsPage: siteSettings?.page_for_posts === postId
+    };
+  });
+  if (isFrontPage) {
+    return (0,external_wp_i18n_namespaceObject.__)('Homepage');
+  } else if (isPostsPage) {
+    return (0,external_wp_i18n_namespaceObject.__)('Posts Page');
+  }
+  return false;
+}
+
 ;// ./packages/editor/build-module/components/document-bar/index.js
 /**
  * External dependencies
@@ -10932,6 +10978,7 @@ const external_wp_commands_namespaceObject = window["wp"]["commands"];
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -10999,6 +11046,7 @@ function DocumentBar(props) {
   const entityTitle = isTemplate ? templateTitle : documentTitle;
   const title = props.title || entityTitle;
   const icon = props.icon;
+  const pageTypeBadge = usePageTypeBadge();
   const mountedRef = (0,external_wp_element_namespaceObject.useRef)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     mountedRef.current = true;
@@ -11065,9 +11113,12 @@ function DocumentBar(props) {
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             className: "editor-document-bar__post-title",
             children: title ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title) : (0,external_wp_i18n_namespaceObject.__)('No title')
-          }), postTypeLabel && !props.title && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          }), pageTypeBadge && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             className: "editor-document-bar__post-type-label",
-            children: '· ' + (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(postTypeLabel)
+            children: `· ${pageTypeBadge}`
+          }), postTypeLabel && !props.title && !pageTypeBadge && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            className: "editor-document-bar__post-type-label",
+            children: `· ${(0,external_wp_htmlEntities_namespaceObject.decodeEntities)(postTypeLabel)}`
           })]
         })]
       }, hasBackButton), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
@@ -29368,14 +29419,13 @@ function ActionsDropdownMenuGroup({
 
 
 
+
 function PostCardPanel({
   postType,
   postId,
   onActionPerformed
 }) {
   const {
-    isFrontPage,
-    isPostsPage,
     title,
     icon
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -29383,24 +29433,18 @@ function PostCardPanel({
       __experimentalGetTemplateInfo
     } = select(store_store);
     const {
-      canUser,
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = canUser('read', {
-      kind: 'root',
-      name: 'site'
-    }) ? getEditedEntityRecord('root', 'site') : undefined;
     const _record = getEditedEntityRecord('postType', postType, postId);
     const _templateInfo = [constants_TEMPLATE_POST_TYPE, constants_TEMPLATE_PART_POST_TYPE].includes(postType) && __experimentalGetTemplateInfo(_record);
     return {
       title: _templateInfo?.title || _record?.title,
       icon: unlock(select(store_store)).getPostIcon(postType, {
         area: _record?.area
-      }),
-      isFrontPage: siteSettings?.page_on_front === postId,
-      isPostsPage: siteSettings?.page_for_posts === postId
+      })
     };
   }, [postId, postType]);
+  const pageTypeBadge = usePageTypeBadge();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "editor-post-card-panel",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -29417,12 +29461,9 @@ function PostCardPanel({
         weight: 500,
         as: "h2",
         lineHeight: "20px",
-        children: [title ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title) : (0,external_wp_i18n_namespaceObject.__)('No title'), isFrontPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        children: [title ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title) : (0,external_wp_i18n_namespaceObject.__)('No title'), pageTypeBadge && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: "editor-post-card-panel__title-badge",
-          children: (0,external_wp_i18n_namespaceObject.__)('Homepage')
-        }), isPostsPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          className: "editor-post-card-panel__title-badge",
-          children: (0,external_wp_i18n_namespaceObject.__)('Posts Page')
+          children: pageTypeBadge
         })]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostActions, {
         postType: postType,
