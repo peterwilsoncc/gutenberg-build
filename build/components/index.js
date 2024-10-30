@@ -61906,6 +61906,7 @@ function Notice({
             computedVariant = 'primary';
           }
           return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+            __next40pxDefaultSize: true,
             href: url,
             variant: computedVariant,
             onClick: url ? undefined : onClick,
@@ -61915,6 +61916,7 @@ function Notice({
         })
       })]
     }), isDismissible && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+      size: "small",
       className: "components-notice__dismiss",
       icon: library_close,
       label: (0,external_wp_i18n_namespaceObject.__)('Close'),
