@@ -1493,6 +1493,8 @@ const rootEntitiesConfig = [{
   name: '__unstableBase',
   baseURL: '/',
   baseURLParams: {
+    // Please also change the preload path when changing this.
+    // @see lib/compat/wordpress-6.8/preload.php
     _fields: ['description', 'gmt_offset', 'home', 'name', 'site_icon', 'site_icon_url', 'site_logo', 'timezone_string', 'url'].join(',')
   },
   // The entity doesn't support selecting multiple records.
