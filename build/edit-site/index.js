@@ -44883,6 +44883,75 @@ const copySmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 });
 /* harmony default export */ const copy_small = (copySmall);
 
+;// ./packages/fields/build-module/actions/utils.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+const utils_TEMPLATE_POST_TYPE = 'wp_template';
+const utils_TEMPLATE_PART_POST_TYPE = 'wp_template_part';
+const utils_TEMPLATE_ORIGINS = {
+  custom: 'custom',
+  theme: 'theme',
+  plugin: 'plugin'
+};
+function isTemplate(post) {
+  return post.type === utils_TEMPLATE_POST_TYPE;
+}
+function isTemplatePart(post) {
+  return post.type === utils_TEMPLATE_PART_POST_TYPE;
+}
+function isTemplateOrTemplatePart(p) {
+  return p.type === utils_TEMPLATE_POST_TYPE || p.type === utils_TEMPLATE_PART_POST_TYPE;
+}
+function getItemTitle(item) {
+  if (typeof item.title === 'string') {
+    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title);
+  }
+  if ('rendered' in item.title) {
+    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.rendered);
+  }
+  if ('raw' in item.title) {
+    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.raw);
+  }
+  return '';
+}
+
+/**
+ * Check if a template is removable.
+ *
+ * @param template The template entity to check.
+ * @return Whether the template is removable.
+ */
+function utils_isTemplateRemovable(template) {
+  if (!template) {
+    return false;
+  }
+  // In patterns list page we map the templates parts to a different object
+  // than the one returned from the endpoint. This is why we need to check for
+  // two props whether is custom or has a theme file.
+  return [template.source, template.source].includes(utils_TEMPLATE_ORIGINS.custom) && !Boolean(template.type === 'wp_template' && template?.plugin) && !template.has_theme_file;
+}
+
+;// ./packages/fields/build-module/fields/slug/utils.js
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+const getSlug = item => {
+  return item.slug || (0,external_wp_url_namespaceObject.cleanForSlug)(getItemTitle(item)) || item.id.toString();
+};
+
 ;// ./packages/fields/build-module/fields/slug/slug-edit.js
 /**
  * WordPress dependencies
@@ -44900,18 +44969,19 @@ const copySmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
  * Internal dependencies
  */
 
+
+
 const SlugEdit = ({
   field,
   onChange,
   data
 }) => {
-  var _field$getValue;
   const {
     id
   } = field;
-  const slug = (_field$getValue = field.getValue({
+  const slug = field.getValue({
     item: data
-  })) !== null && _field$getValue !== void 0 ? _field$getValue : '';
+  }) || getSlug(data);
   const permalinkTemplate = data.permalink_template || '';
   const PERMALINK_POSTNAME_REGEX = /%(?:postname|pagename)%/;
   const [prefix, suffix] = permalinkTemplate.split(PERMALINK_POSTNAME_REGEX);
@@ -44976,29 +45046,26 @@ const SlugEdit = ({
             onChangeControl(originalSlugRef.current);
           }
         },
-        "aria-describedby": postUrlSlugDescriptionId,
-        help: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("p", {
-            className: "fields-controls__slug-help",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-              className: "fields-controls__slug-help-visual-label",
-              children: (0,external_wp_i18n_namespaceObject.__)('Permalink:')
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ExternalLink, {
-              className: "fields-controls__slug-help-link",
-              href: permalink,
-              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-                className: "fields-controls__slug-help-prefix",
-                children: permalinkPrefix
-              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-                className: "fields-controls__slug-help-slug",
-                children: slugToDisplay
-              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-                className: "fields-controls__slug-help-suffix",
-                children: permalinkSuffix
-              })]
-            })]
-          })
-        })
+        "aria-describedby": postUrlSlugDescriptionId
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+        className: "fields-controls__slug-help",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          className: "fields-controls__slug-help-visual-label",
+          children: (0,external_wp_i18n_namespaceObject.__)('Permalink:')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ExternalLink, {
+          className: "fields-controls__slug-help-link",
+          href: permalink,
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            className: "fields-controls__slug-help-prefix",
+            children: permalinkPrefix
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            className: "fields-controls__slug-help-slug",
+            children: slugToDisplay
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            className: "fields-controls__slug-help-suffix",
+            children: permalinkSuffix
+          })]
+        })]
       })]
     }), !isEditable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
       className: "fields-controls__slug-help",
@@ -45019,10 +45086,11 @@ const SlugEdit = ({
  * Internal dependencies
  */
 
+
 const SlugView = ({
   item
 }) => {
-  const slug = item.slug;
+  const slug = typeof item === 'object' ? getSlug(item) : '';
   const originalSlugRef = (0,external_wp_element_namespaceObject.useRef)(slug);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (slug && originalSlugRef.current === undefined) {
@@ -45030,7 +45098,7 @@ const SlugView = ({
     }
   }, [slug]);
   const slugToDisplay = slug || originalSlugRef.current;
-  return `/${slugToDisplay !== null && slugToDisplay !== void 0 ? slugToDisplay : ''}`;
+  return `${slugToDisplay}`;
 };
 /* harmony default export */ const slug_view = (SlugView);
 
