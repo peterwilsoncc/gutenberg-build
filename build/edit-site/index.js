@@ -45434,6 +45434,92 @@ const parentField = {
  */
 /* harmony default export */ const fields_parent = (parentField);
 
+;// ./packages/fields/build-module/fields/password/edit.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+function PasswordEdit({
+  data,
+  onChange,
+  field
+}) {
+  const [showPassword, setShowPassword] = (0,external_wp_element_namespaceObject.useState)(!!field.getValue({
+    item: data
+  }));
+  const handleTogglePassword = value => {
+    setShowPassword(value);
+    if (!value) {
+      onChange({
+        password: ''
+      });
+    }
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    as: "fieldset",
+    spacing: 4,
+    className: "fields-controls__password",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+      __nextHasNoMarginBottom: true,
+      label: (0,external_wp_i18n_namespaceObject.__)('Password protected'),
+      help: (0,external_wp_i18n_namespaceObject.__)('Only visible to those who know the password'),
+      checked: showPassword,
+      onChange: handleTogglePassword
+    }), showPassword && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "fields-controls__password-input",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Password'),
+        onChange: value => onChange({
+          password: value
+        }),
+        value: field.getValue({
+          item: data
+        }) || '',
+        placeholder: (0,external_wp_i18n_namespaceObject.__)('Use a secure password'),
+        type: "text",
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        maxLength: 255
+      })
+    })]
+  });
+}
+/* harmony default export */ const password_edit = (PasswordEdit);
+
+;// ./packages/fields/build-module/fields/password/index.js
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+const passwordField = {
+  id: 'password',
+  type: 'text',
+  getValue: ({
+    item
+  }) => item.password,
+  Edit: password_edit,
+  enableSorting: false,
+  enableHiding: false,
+  isVisible: item => item.status !== 'private'
+};
+
+/**
+ * This field is used to display the post password.
+ */
+/* harmony default export */ const fields_password = (passwordField);
+
 ;// ./packages/edit-site/build-module/components/post-fields/index.js
 /**
  * External dependencies
@@ -45710,7 +45796,7 @@ function usePostFields(viewType) {
       label: (0,external_wp_i18n_namespaceObject.__)('Closed'),
       description: (0,external_wp_i18n_namespaceObject.__)('Visitors cannot add new comments or replies. Existing comments remain visible.')
     }]
-  }], [authors, viewType, frontPageId, postsPageId]);
+  }, fields_password], [authors, viewType, frontPageId, postsPageId]);
   return {
     isLoading: isLoadingAuthors,
     fields
@@ -46828,6 +46914,7 @@ function DataForm({
 const {
   PostCardPanel
 } = unlock(external_wp_editor_namespaceObject.privateApis);
+const fieldsWithBulkEditSupport = ['title', 'status', 'date', 'author', 'comment_status'];
 function PostEditForm({
   postType,
   postId
@@ -46856,11 +46943,19 @@ function PostEditForm({
     }
     return field;
   }), [_fields]);
-  const form = {
+  const form = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     type: 'panel',
-    fields: ['featured_media', 'title', 'author', 'date', 'slug', 'parent', 'comment_status']
-  };
-  const fieldsWithBulkEditSupport = ['title', 'status', 'date', 'author', 'comment_status'];
+    fields: ['featured_media', 'title', 'status_and_visibility', 'author', 'date', 'slug', 'parent', 'comment_status'].filter(field => ids.length === 1 || fieldsWithBulkEditSupport.includes(field)),
+    combinedFields: [{
+      id: 'status_and_visibility',
+      label: (0,external_wp_i18n_namespaceObject.__)('Status & Visibility'),
+      children: ['status', 'password'],
+      direction: 'vertical',
+      render: ({
+        item
+      }) => item.status
+    }]
+  }), [ids]);
   const onChange = edits => {
     for (const id of ids) {
       if (edits.status && edits.status !== 'future' && record?.status === 'future' && new Date(record.date) > new Date()) {
@@ -46889,10 +46984,7 @@ function PostEditForm({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
       data: ids.length === 1 ? record : multiEdits,
       fields: fields,
-      form: ids.length === 1 ? form : {
-        ...form,
-        fields: form.fields.filter(field => fieldsWithBulkEditSupport.includes(field))
-      },
+      form: form,
       onChange: onChange
     })]
   });
