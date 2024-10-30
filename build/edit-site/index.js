@@ -41450,7 +41450,7 @@ function PreviewWrapper({
     className: "page-patterns-preview-field__button",
     type: "button",
     onClick: item.type !== PATTERN_TYPES.theme ? onClick : undefined,
-    "aria-label": item.title,
+    "aria-label": defaultGetTitle(item),
     "aria-describedby": ariaDescribedBy,
     "aria-disabled": item.type === PATTERN_TYPES.theme,
     children: children
