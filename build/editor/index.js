@@ -12712,7 +12712,7 @@ function buildTermsTree(flatTerms) {
   const flatTermsWithParentAndChildren = flatTerms.map(term => {
     return {
       children: [],
-      parent: null,
+      parent: undefined,
       ...term
     };
   });
@@ -12720,7 +12720,7 @@ function buildTermsTree(flatTerms) {
   // All terms should have a `parent` because we're about to index them by it.
   if (flatTermsWithParentAndChildren.some(({
     parent
-  }) => parent === null)) {
+  }) => parent === undefined)) {
     return flatTermsWithParentAndChildren;
   }
   const termsByParent = flatTermsWithParentAndChildren.reduce((acc, term) => {
