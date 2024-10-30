@@ -44311,7 +44311,8 @@ function PostTemplateEdit({
       ...restQueryArgs
     } = {},
     templateSlug,
-    previewPostType
+    previewPostType,
+    postType: postTypeFromContext
   },
   attributes: {
     layout
@@ -44404,7 +44405,7 @@ function PostTemplateEdit({
     }
     // When we preview Query Loop blocks we should prefer the current
     // block's postType, which is passed through block context.
-    const usedPostType = previewPostType || postType;
+    const usedPostType = postTypeFromContext !== 'page' ? postTypeFromContext : previewPostType || postType;
     return {
       posts: getEntityRecords('postType', usedPostType, {
         ...query,
@@ -44517,7 +44518,7 @@ const post_template_metadata = {
   parent: ["core/query"],
   description: "Contains the block elements used to render a post, like the title, date, featured image, content or excerpt, and more.",
   textdomain: "default",
-  usesContext: ["queryId", "query", "displayLayout", "templateSlug", "previewPostType", "enhancedPagination"],
+  usesContext: ["queryId", "query", "displayLayout", "templateSlug", "previewPostType", "enhancedPagination", "postType"],
   supports: {
     reusable: false,
     html: false,
@@ -47026,6 +47027,35 @@ const useUnsupportedBlocks = clientId => {
   }, [clientId]);
 };
 
+/**
+ * Helper function that returns the query context from the editor based on the
+ * available template slug.
+ *
+ * @param {string} templateSlug Current template slug based on context.
+ * @return {Object} An object with isSingular and templateType properties.
+ */
+function getQueryContextFromTemplate(templateSlug) {
+  // In the Post Editor, the template slug is not available.
+  if (!templateSlug) {
+    return {
+      isSingular: true
+    };
+  }
+  let isSingular = false;
+  let templateType = templateSlug === 'wp' ? 'custom' : templateSlug;
+  const singularTemplates = ['404', 'blank', 'single', 'page', 'custom'];
+  const templateTypeFromSlug = templateSlug.includes('-') ? templateSlug.split('-', 1)[0] : templateSlug;
+  const queryFromTemplateSlug = templateSlug.includes('-') ? templateSlug.split('-').slice(1).join('-') : '';
+  if (queryFromTemplateSlug) {
+    templateType = templateTypeFromSlug;
+  }
+  isSingular = singularTemplates.includes(templateType);
+  return {
+    isSingular,
+    templateType
+  };
+}
+
 ;// ./packages/block-library/build-module/query/edit/inspector-controls/enhanced-pagination-control.js
 /**
  * WordPress dependencies
@@ -47854,13 +47884,14 @@ function QueryInspectorControls(props) {
     attributes,
     setQuery,
     setDisplayLayout,
-    isTemplate
+    postTypeFromContext,
+    isSingular
   } = props;
   const {
     query,
     displayLayout
   } = attributes;
-  const {
+  let {
     order,
     orderBy,
     author: authorIds,
@@ -47874,6 +47905,12 @@ function QueryInspectorControls(props) {
     parents,
     format
   } = query;
+  // If a post type is set in context, update `postType` to match it,
+  // unless the post type is `page`, as it usually doesn't make sense to loop
+  // through pages.
+  if (postTypeFromContext && postTypeFromContext !== 'page' && postTypeFromContext !== postType) {
+    postType = postTypeFromContext;
+  }
   const allowedControls = useAllowedControls(attributes);
   const showSticky = postType === 'post';
   const {
@@ -47923,7 +47960,7 @@ function QueryInspectorControls(props) {
     onChangeDebounced();
     return onChangeDebounced.cancel;
   }, [querySearch, onChangeDebounced]);
-  const showInheritControl = isTemplate && isControlAllowed(allowedControls, 'inherit');
+  const showInheritControl = !isSingular && isControlAllowed(allowedControls, 'inherit');
   const showPostTypeControl = !inherit && isControlAllowed(allowedControls, 'postType');
   const postTypeControlLabel = (0,external_wp_i18n_namespaceObject.__)('Post type');
   const postTypeControlHelp = (0,external_wp_i18n_namespaceObject.__)('Select the type of content to display: posts, pages, or custom post types.');
@@ -48226,6 +48263,7 @@ function EnhancedPaginationModal({
 
 
 
+
 const DEFAULTS_POSTS_PER_PAGE = 3;
 const query_content_TEMPLATE = [['core/post-template']];
 function QueryContent({
@@ -48247,8 +48285,12 @@ function QueryContent({
     } = {}
   } = attributes;
   const {
+    templateSlug,
     postType
   } = context;
+  const {
+    isSingular
+  } = getQueryContextFromTemplate(templateSlug);
   const {
     __unstableMarkNextChangeAsNotPersistent
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
@@ -48257,12 +48299,6 @@ function QueryContent({
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
     template: query_content_TEMPLATE
   });
-  const isTemplate = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const currentTemplate = select(external_wp_coreData_namespaceObject.store).__experimentalGetTemplateForLink()?.type;
-    const isInTemplate = 'wp_template' === currentTemplate;
-    const isInSingularContent = postType !== undefined;
-    return isInTemplate && !isInSingularContent;
-  }, [postType]);
   const {
     postsPerPage
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -48311,16 +48347,16 @@ function QueryContent({
     } else if (!query.perPage && postsPerPage) {
       newQuery.perPage = postsPerPage;
     }
-    // We need to reset the `inherit` value if not in a template, as queries
-    // are not inherited when outside a template (e.g. when in singular content).
-    if (!isTemplate && query.inherit) {
+    // We need to reset the `inherit` value if in a singular template, as queries
+    // are not inherited when in singular content (e.g. post, page, 404, blank).
+    if (isSingular && query.inherit) {
       newQuery.inherit = false;
     }
     if (!!Object.keys(newQuery).length) {
       __unstableMarkNextChangeAsNotPersistent();
       updateQuery(newQuery);
     }
-  }, [query.perPage, postsPerPage, inherit, isTemplate, query.inherit, __unstableMarkNextChangeAsNotPersistent, updateQuery]);
+  }, [query.perPage, query.inherit, postsPerPage, inherit, isSingular, __unstableMarkNextChangeAsNotPersistent, updateQuery]);
   // We need this for multi-query block pagination.
   // Query parameters for each block are scoped to their ID.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -48354,7 +48390,8 @@ function QueryContent({
         setDisplayLayout: updateDisplayLayout,
         setAttributes: setAttributes,
         clientId: clientId,
-        isTemplate: isTemplate
+        postTypeFromContext: postType,
+        isSingular: isSingular
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QueryToolbar, {
@@ -49344,7 +49381,7 @@ const query_metadata = {
       "default": false
     }
   },
-  usesContext: ["postType"],
+  usesContext: ["postType", "templateSlug"],
   providesContext: {
     queryId: "queryId",
     query: "query",
