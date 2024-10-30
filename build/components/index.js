@@ -64796,8 +64796,9 @@ function UnforwardedSnackbar({
         url
       }, index) => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+          __next40pxDefaultSize: true,
           href: url,
-          variant: "tertiary",
+          variant: "link",
           onClick: event => onActionClick(event, onClick),
           className: "components-snackbar__action",
           children: label
