@@ -1804,6 +1804,8 @@ __webpack_require__.d(actions_namespaceObject, {
   toggleEditorPanelOpened: () => (toggleEditorPanelOpened),
   togglePublishSidebar: () => (togglePublishSidebar),
   toggleSelection: () => (toggleSelection),
+  toggleSpotlightMode: () => (toggleSpotlightMode),
+  toggleTopToolbar: () => (toggleTopToolbar),
   trashPost: () => (trashPost),
   undo: () => (undo),
   unlockPostAutosaving: () => (unlockPostAutosaving),
@@ -5034,8 +5036,13 @@ function setIsListViewOpened(isOpen) {
  * Action that toggles Distraction free mode.
  * Distraction free mode expects there are no sidebars, as due to the
  * z-index values set, you can't close sidebars.
+ *
+ * @param {Object}  [options={}]                Optional configuration object
+ * @param {boolean} [options.createNotice=true] Whether to create a notice
  */
-const toggleDistractionFree = () => ({
+const toggleDistractionFree = ({
+  createNotice = true
+} = {}) => ({
   dispatch,
   registry
 }) => {
@@ -5052,19 +5059,61 @@ const toggleDistractionFree = () => ({
   }
   registry.batch(() => {
     registry.dispatch(external_wp_preferences_namespaceObject.store).set('core', 'distractionFree', !isDistractionFree);
-    registry.dispatch(external_wp_notices_namespaceObject.store).createInfoNotice(isDistractionFree ? (0,external_wp_i18n_namespaceObject.__)('Distraction free mode deactivated.') : (0,external_wp_i18n_namespaceObject.__)('Distraction free mode activated.'), {
-      id: 'core/editor/distraction-free-mode/notice',
-      type: 'snackbar',
-      actions: [{
-        label: (0,external_wp_i18n_namespaceObject.__)('Undo'),
-        onClick: () => {
-          registry.batch(() => {
-            registry.dispatch(external_wp_preferences_namespaceObject.store).set('core', 'fixedToolbar', isDistractionFree ? true : false);
-            registry.dispatch(external_wp_preferences_namespaceObject.store).toggle('core', 'distractionFree');
-          });
-        }
-      }]
-    });
+    if (createNotice) {
+      registry.dispatch(external_wp_notices_namespaceObject.store).createInfoNotice(isDistractionFree ? (0,external_wp_i18n_namespaceObject.__)('Distraction free mode deactivated.') : (0,external_wp_i18n_namespaceObject.__)('Distraction free mode activated.'), {
+        id: 'core/editor/distraction-free-mode/notice',
+        type: 'snackbar',
+        actions: [{
+          label: (0,external_wp_i18n_namespaceObject.__)('Undo'),
+          onClick: () => {
+            registry.batch(() => {
+              registry.dispatch(external_wp_preferences_namespaceObject.store).set('core', 'fixedToolbar', isDistractionFree);
+              registry.dispatch(external_wp_preferences_namespaceObject.store).toggle('core', 'distractionFree');
+            });
+          }
+        }]
+      });
+    }
+  });
+};
+
+/**
+ * Action that toggles the Spotlight Mode view option.
+ */
+const toggleSpotlightMode = () => ({
+  registry
+}) => {
+  registry.dispatch(external_wp_preferences_namespaceObject.store).toggle('core', 'focusMode');
+  const isFocusMode = registry.select(external_wp_preferences_namespaceObject.store).get('core', 'focusMode');
+  registry.dispatch(external_wp_notices_namespaceObject.store).createInfoNotice(isFocusMode ? (0,external_wp_i18n_namespaceObject.__)('Spotlight mode activated.') : (0,external_wp_i18n_namespaceObject.__)('Spotlight mode deactivated.'), {
+    id: 'core/editor/toggle-spotlight-mode/notice',
+    type: 'snackbar',
+    actions: [{
+      label: (0,external_wp_i18n_namespaceObject.__)('Undo'),
+      onClick: () => {
+        registry.dispatch(external_wp_preferences_namespaceObject.store).toggle('core', 'focusMode');
+      }
+    }]
+  });
+};
+
+/**
+ * Action that toggles the Top Toolbar view option.
+ */
+const toggleTopToolbar = () => ({
+  registry
+}) => {
+  registry.dispatch(external_wp_preferences_namespaceObject.store).toggle('core', 'fixedToolbar');
+  const isTopToolbar = registry.select(external_wp_preferences_namespaceObject.store).get('core', 'fixedToolbar');
+  registry.dispatch(external_wp_notices_namespaceObject.store).createInfoNotice(isTopToolbar ? (0,external_wp_i18n_namespaceObject.__)('Top toolbar activated.') : (0,external_wp_i18n_namespaceObject.__)('Top toolbar deactivated.'), {
+    id: 'core/editor/toggle-top-toolbar/notice',
+    type: 'snackbar',
+    actions: [{
+      label: (0,external_wp_i18n_namespaceObject.__)('Undo'),
+      onClick: () => {
+        registry.dispatch(external_wp_preferences_namespaceObject.store).toggle('core', 'fixedToolbar');
+      }
+    }]
   });
 };
 
@@ -23788,7 +23837,6 @@ function useEditorCommandLoader() {
     isListViewOpen,
     showBlockBreadcrumbs,
     isDistractionFree,
-    isTopToolbar,
     isFocusMode,
     isPreviewMode,
     isViewable,
@@ -23817,7 +23865,6 @@ function useEditorCommandLoader() {
       showBlockBreadcrumbs: get('core', 'showBlockBreadcrumbs'),
       isDistractionFree: get('core', 'distractionFree'),
       isFocusMode: get('core', 'focusMode'),
-      isTopToolbar: get('core', 'fixedToolbar'),
       isPreviewMode: getSettings().isPreviewMode,
       isViewable: (_getPostType$viewable = getPostType(getCurrentPostType())?.viewable) !== null && _getPostType$viewable !== void 0 ? _getPostType$viewable : false,
       isCodeEditingEnabled: getEditorSettings().codeEditingEnabled,
@@ -23838,7 +23885,9 @@ function useEditorCommandLoader() {
     __unstableSaveForPreview,
     setIsListViewOpened,
     switchEditorMode,
-    toggleDistractionFree
+    toggleDistractionFree,
+    toggleSpotlightMode,
+    toggleTopToolbar
   } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
   const {
     openModal,
@@ -23893,18 +23942,8 @@ function useEditorCommandLoader() {
     callback: ({
       close
     }) => {
-      toggle('core', 'focusMode');
+      toggleSpotlightMode();
       close();
-      createInfoNotice(isFocusMode ? (0,external_wp_i18n_namespaceObject.__)('Spotlight off.') : (0,external_wp_i18n_namespaceObject.__)('Spotlight on.'), {
-        id: 'core/editor/toggle-spotlight-mode/notice',
-        type: 'snackbar',
-        actions: [{
-          label: (0,external_wp_i18n_namespaceObject.__)('Undo'),
-          onClick: () => {
-            toggle('core', 'focusMode');
-          }
-        }]
-      });
     }
   });
   commands.push({
@@ -23928,21 +23967,8 @@ function useEditorCommandLoader() {
     callback: ({
       close
     }) => {
-      toggle('core', 'fixedToolbar');
-      if (isDistractionFree) {
-        toggleDistractionFree();
-      }
+      toggleTopToolbar();
       close();
-      createInfoNotice(isTopToolbar ? (0,external_wp_i18n_namespaceObject.__)('Top toolbar off.') : (0,external_wp_i18n_namespaceObject.__)('Top toolbar on.'), {
-        id: 'core/editor/toggle-top-toolbar/notice',
-        type: 'snackbar',
-        actions: [{
-          label: (0,external_wp_i18n_namespaceObject.__)('Undo'),
-          onClick: () => {
-            toggle('core', 'fixedToolbar');
-          }
-        }]
-      });
     }
   });
   if (allowSwitchEditorMode) {
@@ -27161,25 +27187,27 @@ function MoreMenu() {
             onToggle: turnOffDistractionFree,
             label: (0,external_wp_i18n_namespaceObject.__)('Top toolbar'),
             info: (0,external_wp_i18n_namespaceObject.__)('Access all block and document tools in a single place'),
-            messageActivated: (0,external_wp_i18n_namespaceObject.__)('Top toolbar activated'),
-            messageDeactivated: (0,external_wp_i18n_namespaceObject.__)('Top toolbar deactivated')
+            messageActivated: (0,external_wp_i18n_namespaceObject.__)('Top toolbar activated.'),
+            messageDeactivated: (0,external_wp_i18n_namespaceObject.__)('Top toolbar deactivated.')
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_preferences_namespaceObject.PreferenceToggleMenuItem, {
             scope: "core",
             name: "distractionFree",
             label: (0,external_wp_i18n_namespaceObject.__)('Distraction free'),
             info: (0,external_wp_i18n_namespaceObject.__)('Write with calmness'),
             handleToggling: false,
-            onToggle: toggleDistractionFree,
-            messageActivated: (0,external_wp_i18n_namespaceObject.__)('Distraction free mode activated'),
-            messageDeactivated: (0,external_wp_i18n_namespaceObject.__)('Distraction free mode deactivated'),
+            onToggle: () => toggleDistractionFree({
+              createNotice: false
+            }),
+            messageActivated: (0,external_wp_i18n_namespaceObject.__)('Distraction free mode activated.'),
+            messageDeactivated: (0,external_wp_i18n_namespaceObject.__)('Distraction free mode deactivated.'),
             shortcut: external_wp_keycodes_namespaceObject.displayShortcut.primaryShift('\\')
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_preferences_namespaceObject.PreferenceToggleMenuItem, {
             scope: "core",
             name: "focusMode",
             label: (0,external_wp_i18n_namespaceObject.__)('Spotlight mode'),
             info: (0,external_wp_i18n_namespaceObject.__)('Focus on one block at a time'),
-            messageActivated: (0,external_wp_i18n_namespaceObject.__)('Spotlight mode activated'),
-            messageDeactivated: (0,external_wp_i18n_namespaceObject.__)('Spotlight mode deactivated')
+            messageActivated: (0,external_wp_i18n_namespaceObject.__)('Spotlight mode activated.'),
+            messageDeactivated: (0,external_wp_i18n_namespaceObject.__)('Spotlight mode deactivated.')
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(view_more_menu_group.Slot, {
             fillProps: {
               onClose
