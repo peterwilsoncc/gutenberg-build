@@ -26413,6 +26413,12 @@ function CollabSidebar() {
       postId: select(store_store).getCurrentPostId()
     };
   }, []);
+  const postStatus = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const post = select(store_store).getCurrentPost();
+    return {
+      postStatus: post?.status
+    };
+  }, []);
   const threads = (0,external_wp_data_namespaceObject.useSelect)(select => {
     if (!postId) {
       return threadsEmptyArray;
@@ -26571,7 +26577,7 @@ function CollabSidebar() {
   }, [postId, clientId]);
 
   // Check if the experimental flag is enabled.
-  if (!isBlockCommentExperimentEnabled) {
+  if (!isBlockCommentExperimentEnabled || postStatus.postStatus === 'publish') {
     return null; // or maybe return some message indicating no threads are available.
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
