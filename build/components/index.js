@@ -46239,6 +46239,7 @@ function palette_edit_Option({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(h_stack_component, {
       justify: "flex-start",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+        size: "small",
         onClick: () => {
           setIsEditingColor(true);
         },
@@ -46437,6 +46438,7 @@ function PaletteEdit({
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(navigable_container_menu, {
               role: "menu",
               children: [!isEditing && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+                __next40pxDefaultSize: true,
                 variant: "tertiary",
                 onClick: () => {
                   setIsEditing(true);
@@ -46445,6 +46447,7 @@ function PaletteEdit({
                 className: "components-palette-edit__menu-button",
                 children: (0,external_wp_i18n_namespaceObject.__)('Show details')
               }), !canOnlyChangeValues && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+                __next40pxDefaultSize: true,
                 variant: "tertiary",
                 onClick: () => {
                   setEditingElement(null);
@@ -46455,6 +46458,8 @@ function PaletteEdit({
                 className: "components-palette-edit__menu-button",
                 children: isGradient ? (0,external_wp_i18n_namespaceObject.__)('Remove all gradients') : (0,external_wp_i18n_namespaceObject.__)('Remove all colors')
               }), canReset && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+                __next40pxDefaultSize: true,
+                className: "components-palette-edit__menu-button",
                 variant: "tertiary",
                 onClick: () => {
                   setEditingElement(null);
