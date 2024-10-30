@@ -32079,6 +32079,33 @@ function getControlByType(type) {
   throw 'Control ' + type + ' not found';
 }
 
+;// ./packages/dataviews/build-module/components/form-field-visibility/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+function FormFieldVisibility({
+  data,
+  field,
+  children
+}) {
+  const isVisible = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (field.isVisible) {
+      return field.isVisible(data);
+    }
+    return true;
+  }, [field.isVisible, data]);
+  if (!isVisible) {
+    return null;
+  }
+  return children;
+}
+
 ;// ./packages/dataviews/build-module/components/dataform-combined-edit/index.js
 /**
  * WordPress dependencies
@@ -32088,6 +32115,8 @@ function getControlByType(type) {
 /**
  * Internal dependencies
  */
+
+
 
 function Header({
   title
@@ -32117,12 +32146,16 @@ function DataFormCombinedEdit({
     id
   }) => id === fieldId)).filter(childField => !!childField);
   const children = visibleChildren.map(child => {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "dataforms-combined-edit__field",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(child.Edit, {
-        data: data,
-        field: child,
-        onChange: onChange
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FormFieldVisibility, {
+      data: data,
+      field: child,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        className: "dataforms-combined-edit__field",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(child.Edit, {
+          data: data,
+          field: child,
+          onChange: onChange
+        })
       })
     }, child.id);
   });
@@ -41450,7 +41483,7 @@ function PreviewWrapper({
     className: "page-patterns-preview-field__button",
     type: "button",
     onClick: item.type !== PATTERN_TYPES.theme ? onClick : undefined,
-    "aria-label": item.title,
+    "aria-label": defaultGetTitle(item),
     "aria-describedby": ariaDescribedBy,
     "aria-disabled": item.type === PATTERN_TYPES.theme,
     children: children
@@ -46510,6 +46543,7 @@ function getVisibleFields(fields, formFields = [], combinedFields) {
 
 
 
+
 function FormRegular({
   data,
   fields,
@@ -46520,10 +46554,14 @@ function FormRegular({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 4,
     children: visibleFields.map(field => {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.Edit, {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FormFieldVisibility, {
         data: data,
         field: field,
-        onChange: onChange
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.Edit, {
+          data: data,
+          field: field,
+          onChange: onChange
+        })
       }, field.id);
     })
   });
@@ -46541,6 +46579,7 @@ function FormRegular({
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -46642,10 +46681,14 @@ function FormPanel({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 2,
     children: visibleFields.map(field => {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FormField, {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FormFieldVisibility, {
         data: data,
         field: field,
-        onChange: onChange
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FormField, {
+          data: data,
+          field: field,
+          onChange: onChange
+        })
       }, field.id);
     })
   });
