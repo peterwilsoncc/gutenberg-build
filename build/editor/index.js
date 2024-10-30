@@ -26370,7 +26370,7 @@ const AddCommentToolbarButton = ({
 
 
 
-const threadsEmptyArray = [];
+const collab_sidebar_EMPTY_ARRAY = [];
 const isBlockCommentExperimentEnabled = window?.__experimentalEnableBlockComment;
 const modifyBlockCommentAttributes = settings => {
   if (!settings.attributes.blockCommentId) {
@@ -26404,45 +26404,43 @@ function CollabSidebar() {
   const {
     enableComplementaryArea
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const [blockCommentID, setBlockCommentID] = (0,external_wp_element_namespaceObject.useState)(null);
   const [showCommentBoard, setShowCommentBoard] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
-    postId
+    postId,
+    postStatus,
+    threads
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    return {
-      postId: select(store_store).getCurrentPostId()
-    };
-  }, []);
-  const postStatus = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const post = select(store_store).getCurrentPost();
-    return {
-      postStatus: post?.status
-    };
-  }, []);
-  const threads = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    if (!postId) {
-      return threadsEmptyArray;
-    }
     const {
-      getEntityRecords
-    } = select(external_wp_coreData_namespaceObject.store);
-    const data = getEntityRecords('root', 'comment', {
-      post: postId,
+      getCurrentPostId,
+      getEditedPostAttribute
+    } = select(store_store);
+    const _postId = getCurrentPostId();
+    const data = !!_postId ? select(external_wp_coreData_namespaceObject.store).getEntityRecords('root', 'comment', {
+      post: _postId,
       type: 'block_comment',
       status: 'any',
       per_page: 100
-    });
-    return data || threadsEmptyArray;
-  }, [postId]);
-  const clientId = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    }) : null;
+    return {
+      postId: _postId,
+      postStatus: getEditedPostAttribute('status'),
+      threads: data !== null && data !== void 0 ? data : collab_sidebar_EMPTY_ARRAY
+    };
+  }, []);
+  const {
+    clientId,
+    blockCommentId
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
+      getBlockAttributes,
       getSelectedBlockClientId
     } = select(external_wp_blockEditor_namespaceObject.store);
-    return getSelectedBlockClientId();
+    const _clientId = getSelectedBlockClientId();
+    return {
+      clientId: _clientId,
+      blockCommentId: _clientId ? getBlockAttributes(_clientId)?.blockCommentId : null
+    };
   }, []);
-  const blockDetails = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    return clientId ? select(external_wp_blockEditor_namespaceObject.store).getBlock(clientId) : null;
-  }, [clientId]);
 
   // Get the dispatch functions to save the comment and update the block attributes.
   const {
@@ -26570,20 +26568,15 @@ function CollabSidebar() {
       isDismissible: true
     });
   };
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (blockDetails) {
-      setBlockCommentID(blockDetails?.attributes.blockCommentId);
-    }
-  }, [postId, clientId]);
 
   // Check if the experimental flag is enabled.
-  if (!isBlockCommentExperimentEnabled || postStatus.postStatus === 'publish') {
+  if (!isBlockCommentExperimentEnabled || postStatus === 'publish') {
     return null; // or maybe return some message indicating no threads are available.
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [!blockCommentID && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_button, {
+    children: [!blockCommentId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_button, {
       onClick: openCollabBoard
-    }), blockCommentID > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_button_toolbar, {
+    }), blockCommentId > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_button_toolbar, {
       onClick: openCollabBoard
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PluginSidebar, {
       identifier: collabSidebarName
