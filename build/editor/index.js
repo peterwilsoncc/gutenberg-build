@@ -22979,21 +22979,33 @@ function useGlobalStylesUserConfig() {
     const _globalStylesId = select(external_wp_coreData_namespaceObject.store).__experimentalGetCurrentGlobalStylesId();
     let record;
 
-    // We want the global styles ID request to finish before triggering
-    // the OPTIONS request for user capabilities, otherwise it will
-    // fetch `/wp/v2/global-styles` instead of
-    // `/wp/v2/global-styles/{id}`!
-    // Please adjust the preloaded requests if this changes!
+    /*
+     * Ensure that the global styles ID request is complete by testing `_globalStylesId`,
+     * before firing off the `canUser` OPTIONS request for user capabilities, otherwise it will
+     * fetch `/wp/v2/global-styles` instead of `/wp/v2/global-styles/{id}`.
+     * NOTE: Please keep in sync any preload paths sent to `block_editor_rest_api_preload()`,
+     * or set using the `block_editor_rest_api_preload_paths` filter, if this changes.
+     */
     const userCanEditGlobalStyles = _globalStylesId ? canUser('update', {
       kind: 'root',
       name: 'globalStyles',
       id: _globalStylesId
     }) : null;
     if (_globalStylesId &&
-    // We want the OPTIONS request for user capabilities to finish
-    // before getting the records, otherwise we'll fetch both!
+    /*
+     * Test that the OPTIONS request for user capabilities is complete
+     * before fetching the global styles entity record.
+     * This is to avoid fetching the global styles entity unnecessarily.
+     */
     typeof userCanEditGlobalStyles === 'boolean') {
-      // Please adjust the preloaded requests if this changes!
+      /*
+       * Fetch the global styles entity record based on the user's capabilities.
+       * The default context is `edit` for users who can edit global styles.
+       * Otherwise, the context is `view`.
+       * NOTE: There is an equivalent conditional check using `current_user_can()` in the backend
+       * to preload the global styles entity. Please keep in sync any preload paths sent to `block_editor_rest_api_preload()`,
+       * or set using `block_editor_rest_api_preload_paths` filter, if this changes.
+       */
       if (userCanEditGlobalStyles) {
         record = getEditedEntityRecord('root', 'globalStyles', _globalStylesId);
       } else {
