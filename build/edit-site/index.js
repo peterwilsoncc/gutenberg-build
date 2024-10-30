@@ -45025,6 +45025,314 @@ const slugField = {
 };
 /* harmony default export */ const slug = (slugField);
 
+;// ./packages/fields/build-module/fields/parent/utils.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+function getTitleWithFallbackName(post) {
+  return typeof post.title === 'object' && 'rendered' in post.title && post.title.rendered ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(post.title.rendered) : `#${post?.id} (${(0,external_wp_i18n_namespaceObject.__)('no title')})`;
+}
+
+;// ./packages/fields/build-module/fields/parent/parent-edit.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+// @ts-ignore
+
+/**
+ * External dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+function buildTermsTree(flatTerms) {
+  const flatTermsWithParentAndChildren = flatTerms.map(term => {
+    return {
+      children: [],
+      ...term
+    };
+  });
+
+  // All terms should have a `parent` because we're about to index them by it.
+  if (flatTermsWithParentAndChildren.some(({
+    parent
+  }) => parent === null || parent === undefined)) {
+    return flatTermsWithParentAndChildren;
+  }
+  const termsByParent = flatTermsWithParentAndChildren.reduce((acc, term) => {
+    const {
+      parent
+    } = term;
+    if (!acc[parent]) {
+      acc[parent] = [];
+    }
+    acc[parent].push(term);
+    return acc;
+  }, {});
+  const fillWithChildren = terms => {
+    return terms.map(term => {
+      const children = termsByParent[term.id];
+      return {
+        ...term,
+        children: children && children.length ? fillWithChildren(children) : []
+      };
+    });
+  };
+  return fillWithChildren(termsByParent['0'] || []);
+}
+const getItemPriority = (name, searchValue) => {
+  const normalizedName = remove_accents_default()(name || '').toLowerCase();
+  const normalizedSearch = remove_accents_default()(searchValue || '').toLowerCase();
+  if (normalizedName === normalizedSearch) {
+    return 0;
+  }
+  if (normalizedName.startsWith(normalizedSearch)) {
+    return normalizedName.length;
+  }
+  return Infinity;
+};
+function PageAttributesParent({
+  data,
+  onChangeControl
+}) {
+  const [fieldValue, setFieldValue] = (0,external_wp_element_namespaceObject.useState)(null);
+  const pageId = data.parent;
+  const postId = data.id;
+  const postTypeSlug = data.type;
+  const {
+    parentPostTitle,
+    pageItems,
+    isHierarchical
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    // @ts-expect-error getPostType is not typed
+    const {
+      getEntityRecord,
+      getEntityRecords,
+      getPostType
+    } = select(external_wp_coreData_namespaceObject.store);
+    const postTypeInfo = getPostType(postTypeSlug);
+    const postIsHierarchical = postTypeInfo?.hierarchical && postTypeInfo.viewable;
+    const parentPost = pageId ? getEntityRecord('postType', postTypeSlug, pageId) : null;
+    const query = {
+      per_page: 100,
+      exclude: postId,
+      parent_exclude: postId,
+      orderby: 'menu_order',
+      order: 'asc',
+      _fields: 'id,title,parent',
+      ...(fieldValue !== null && {
+        search: fieldValue
+      })
+    };
+    return {
+      isHierarchical: postIsHierarchical,
+      parentPostTitle: parentPost ? getTitleWithFallbackName(parentPost) : '',
+      pageItems: postIsHierarchical ? getEntityRecords('postType', postTypeSlug, query) : null
+    };
+  }, [fieldValue, pageId, postId, postTypeSlug]);
+
+  /**
+   * This logic has been copied from https://github.com/WordPress/gutenberg/blob/0249771b519d5646171fb9fae422006c8ab773f2/packages/editor/src/components/page-attributes/parent.js#L106.
+   */
+  const parentOptions = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    const getOptionsFromTree = (tree, level = 0) => {
+      const mappedNodes = tree.map(treeNode => [{
+        value: treeNode.id,
+        label: '— '.repeat(level) + (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(treeNode.name),
+        rawName: treeNode.name
+      }, ...getOptionsFromTree(treeNode.children || [], level + 1)]);
+      const sortedNodes = mappedNodes.sort(([a], [b]) => {
+        const priorityA = getItemPriority(a.rawName, fieldValue !== null && fieldValue !== void 0 ? fieldValue : '');
+        const priorityB = getItemPriority(b.rawName, fieldValue !== null && fieldValue !== void 0 ? fieldValue : '');
+        return priorityA >= priorityB ? 1 : -1;
+      });
+      return sortedNodes.flat();
+    };
+    if (!pageItems) {
+      return [];
+    }
+    let tree = pageItems.map(item => {
+      var _item$parent;
+      return {
+        id: item.id,
+        parent: (_item$parent = item.parent) !== null && _item$parent !== void 0 ? _item$parent : null,
+        name: getTitleWithFallbackName(item)
+      };
+    });
+
+    // Only build a hierarchical tree when not searching.
+    if (!fieldValue) {
+      tree = buildTermsTree(tree);
+    }
+    const opts = getOptionsFromTree(tree);
+
+    // Ensure the current parent is in the options list.
+    const optsHasParent = opts.find(item => item.value === pageId);
+    if (pageId && parentPostTitle && !optsHasParent) {
+      opts.unshift({
+        value: pageId,
+        label: parentPostTitle,
+        rawName: ''
+      });
+    }
+    return opts.map(option => ({
+      ...option,
+      value: option.value.toString()
+    }));
+  }, [pageItems, fieldValue, parentPostTitle, pageId]);
+  if (!isHierarchical) {
+    return null;
+  }
+
+  /**
+   * Handle user input.
+   *
+   * @param {string} inputValue The current value of the input field.
+   */
+  const handleKeydown = inputValue => {
+    setFieldValue(inputValue);
+  };
+
+  /**
+   * Handle author selection.
+   *
+   * @param {Object} selectedPostId The selected Author.
+   */
+  const handleChange = selectedPostId => {
+    if (selectedPostId) {
+      var _parseInt;
+      return onChangeControl((_parseInt = parseInt(selectedPostId, 10)) !== null && _parseInt !== void 0 ? _parseInt : 0);
+    }
+    onChangeControl(0);
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ComboboxControl, {
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
+    label: (0,external_wp_i18n_namespaceObject.__)('Parent'),
+    help: (0,external_wp_i18n_namespaceObject.__)('Choose a parent page.'),
+    value: pageId?.toString(),
+    options: parentOptions,
+    onFilterValueChange: (0,external_wp_compose_namespaceObject.debounce)(value => handleKeydown(value), 300),
+    onChange: handleChange,
+    hideLabelFromVision: true
+  });
+}
+const ParentEdit = ({
+  data,
+  field,
+  onChange
+}) => {
+  const {
+    id
+  } = field;
+  const homeUrl = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    // @ts-expect-error getEntityRecord is not typed with unstableBase as argument.
+    return select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.home;
+  }, []);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: newValue
+  }), [id, onChange]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("fieldset", {
+    className: "fields-controls__parent",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      children: [(0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %1$s The home URL of the WordPress installation without the scheme. */
+      (0,external_wp_i18n_namespaceObject.__)('Child pages inherit characteristics from their parent, such as URL structure. For instance, if "Pricing" is a child of "Services", its URL would be %1$s<wbr />/services<wbr />/pricing.'), (0,external_wp_url_namespaceObject.filterURLForDisplay)(homeUrl).replace(/([/.])/g, '<wbr />$1')), {
+        wbr: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("wbr", {})
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+        children: (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.__)('They also show up as sub-items in the default navigation menu. <a>Learn more.</a>'), {
+          a: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
+            href: (0,external_wp_i18n_namespaceObject.__)('https://wordpress.org/documentation/article/page-post-settings-sidebar/#page-attributes'),
+            children: undefined
+          })
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageAttributesParent, {
+        data: data,
+        onChangeControl: onChangeControl
+      })]
+    })
+  });
+};
+
+;// ./packages/fields/build-module/fields/parent/parent-view.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+const ParentView = ({
+  item
+}) => {
+  const parent = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
+    return item?.parent ? getEntityRecord('postType', item.type, item.parent) : null;
+  }, [item.parent, item.type]);
+  if (parent) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: getTitleWithFallbackName(parent)
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: (0,external_wp_i18n_namespaceObject.__)('None')
+  });
+};
+
+;// ./packages/fields/build-module/fields/parent/index.js
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+const parentField = {
+  id: 'parent',
+  type: 'text',
+  label: (0,external_wp_i18n_namespaceObject.__)('Parent'),
+  getValue: ({
+    item
+  }) => item.parent,
+  Edit: ParentEdit,
+  render: ParentView,
+  enableSorting: true
+};
+
+/**
+ * This field is used to display the post parent.
+ */
+/* harmony default export */ const fields_parent = (parentField);
+
 ;// ./packages/edit-site/build-module/components/post-fields/index.js
 /**
  * External dependencies
@@ -45283,7 +45591,7 @@ function usePostFields(viewType) {
         children: getFormattedDate(item.date)
       });
     }
-  }, slug, {
+  }, slug, fields_parent, {
     id: 'comment_status',
     label: (0,external_wp_i18n_namespaceObject.__)('Discussion'),
     type: 'text',
@@ -46439,7 +46747,7 @@ function PostEditForm({
   }), [_fields]);
   const form = {
     type: 'panel',
-    fields: ['featured_media', 'title', 'author', 'date', 'slug', 'comment_status']
+    fields: ['featured_media', 'title', 'author', 'date', 'slug', 'parent', 'comment_status']
   };
   const fieldsWithBulkEditSupport = ['title', 'status', 'date', 'author', 'comment_status'];
   const onChange = edits => {
