@@ -34234,6 +34234,7 @@ const UnforwardedPopover = (props, forwardedRef) => {
         children: headerTitle
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
         className: "components-popover__close",
+        size: "small",
         icon: library_close,
         onClick: onClose
       })]
