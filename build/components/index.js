@@ -62168,6 +62168,7 @@ const PanelBodyTitle = (0,external_wp_element_namespaceObject.forwardRef)(({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
     className: "components-panel__body-title",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(build_module_button, {
+      __next40pxDefaultSize: true,
       className: "components-panel__body-toggle",
       "aria-expanded": isOpened,
       ref: ref,
