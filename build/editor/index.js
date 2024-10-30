@@ -5793,33 +5793,6 @@ function getControlByType(type) {
   throw 'Control ' + type + ' not found';
 }
 
-;// ./packages/dataviews/build-module/components/form-field-visibility/index.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-function FormFieldVisibility({
-  data,
-  field,
-  children
-}) {
-  const isVisible = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (field.isVisible) {
-      return field.isVisible(data);
-    }
-    return true;
-  }, [field.isVisible, data]);
-  if (!isVisible) {
-    return null;
-  }
-  return children;
-}
-
 ;// ./packages/dataviews/build-module/components/dataform-combined-edit/index.js
 /**
  * WordPress dependencies
@@ -5829,8 +5802,6 @@ function FormFieldVisibility({
 /**
  * Internal dependencies
  */
-
-
 
 function Header({
   title
@@ -5860,16 +5831,12 @@ function DataFormCombinedEdit({
     id
   }) => id === fieldId)).filter(childField => !!childField);
   const children = visibleChildren.map(child => {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FormFieldVisibility, {
-      data: data,
-      field: child,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "dataforms-combined-edit__field",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(child.Edit, {
-          data: data,
-          field: child,
-          onChange: onChange
-        })
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "dataforms-combined-edit__field",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(child.Edit, {
+        data: data,
+        field: child,
+        onChange: onChange
       })
     }, child.id);
   });
@@ -5994,7 +5961,6 @@ function getVisibleFields(fields, formFields = [], combinedFields) {
 
 
 
-
 function FormRegular({
   data,
   fields,
@@ -6005,14 +5971,10 @@ function FormRegular({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 4,
     children: visibleFields.map(field => {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FormFieldVisibility, {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.Edit, {
         data: data,
         field: field,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.Edit, {
-          data: data,
-          field: field,
-          onChange: onChange
-        })
+        onChange: onChange
       }, field.id);
     })
   });
@@ -6045,7 +6007,6 @@ const closeSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -6147,14 +6108,10 @@ function FormPanel({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 2,
     children: visibleFields.map(field => {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FormFieldVisibility, {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FormField, {
         data: data,
         field: field,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FormField, {
-          data: data,
-          field: field,
-          onChange: onChange
-        })
+        onChange: onChange
       }, field.id);
     })
   });
@@ -26413,7 +26370,7 @@ const AddCommentToolbarButton = ({
 
 
 
-const collab_sidebar_EMPTY_ARRAY = [];
+const threadsEmptyArray = [];
 const isBlockCommentExperimentEnabled = window?.__experimentalEnableBlockComment;
 const modifyBlockCommentAttributes = settings => {
   if (!settings.attributes.blockCommentId) {
@@ -26447,43 +26404,45 @@ function CollabSidebar() {
   const {
     enableComplementaryArea
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const [blockCommentID, setBlockCommentID] = (0,external_wp_element_namespaceObject.useState)(null);
   const [showCommentBoard, setShowCommentBoard] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
-    postId,
-    postStatus,
-    threads
+    postId
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return {
+      postId: select(store_store).getCurrentPostId()
+    };
+  }, []);
+  const postStatus = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const post = select(store_store).getCurrentPost();
+    return {
+      postStatus: post?.status
+    };
+  }, []);
+  const threads = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    if (!postId) {
+      return threadsEmptyArray;
+    }
     const {
-      getCurrentPostId,
-      getEditedPostAttribute
-    } = select(store_store);
-    const _postId = getCurrentPostId();
-    const data = !!_postId ? select(external_wp_coreData_namespaceObject.store).getEntityRecords('root', 'comment', {
-      post: _postId,
+      getEntityRecords
+    } = select(external_wp_coreData_namespaceObject.store);
+    const data = getEntityRecords('root', 'comment', {
+      post: postId,
       type: 'block_comment',
       status: 'any',
       per_page: 100
-    }) : null;
-    return {
-      postId: _postId,
-      postStatus: getEditedPostAttribute('status'),
-      threads: data !== null && data !== void 0 ? data : collab_sidebar_EMPTY_ARRAY
-    };
-  }, []);
-  const {
-    clientId,
-    blockCommentId
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    });
+    return data || threadsEmptyArray;
+  }, [postId]);
+  const clientId = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getBlockAttributes,
       getSelectedBlockClientId
     } = select(external_wp_blockEditor_namespaceObject.store);
-    const _clientId = getSelectedBlockClientId();
-    return {
-      clientId: _clientId,
-      blockCommentId: _clientId ? getBlockAttributes(_clientId)?.blockCommentId : null
-    };
+    return getSelectedBlockClientId();
   }, []);
+  const blockDetails = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return clientId ? select(external_wp_blockEditor_namespaceObject.store).getBlock(clientId) : null;
+  }, [clientId]);
 
   // Get the dispatch functions to save the comment and update the block attributes.
   const {
@@ -26611,15 +26570,20 @@ function CollabSidebar() {
       isDismissible: true
     });
   };
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (blockDetails) {
+      setBlockCommentID(blockDetails?.attributes.blockCommentId);
+    }
+  }, [postId, clientId]);
 
   // Check if the experimental flag is enabled.
-  if (!isBlockCommentExperimentEnabled || postStatus === 'publish') {
+  if (!isBlockCommentExperimentEnabled || postStatus.postStatus === 'publish') {
     return null; // or maybe return some message indicating no threads are available.
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [!blockCommentId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_button, {
+    children: [!blockCommentID && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_button, {
       onClick: openCollabBoard
-    }), blockCommentId > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_button_toolbar, {
+    }), blockCommentID > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_button_toolbar, {
       onClick: openCollabBoard
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PluginSidebar, {
       identifier: collabSidebarName
