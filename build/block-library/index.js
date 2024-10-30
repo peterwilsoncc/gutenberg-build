@@ -12262,7 +12262,7 @@ const v8ToV11BlockAttributes = {
     enum: ['all', 'insert', false]
   }
 };
-const v12BlockAttributes = {
+const v12toV13BlockAttributes = {
   ...v8ToV11BlockAttributes,
   useFeaturedImage: {
     type: 'boolean',
@@ -12271,6 +12271,19 @@ const v12BlockAttributes = {
   tagName: {
     type: 'string',
     default: 'div'
+  }
+};
+const v14BlockAttributes = {
+  ...v12toV13BlockAttributes,
+  isUserOverlayColor: {
+    type: 'boolean'
+  },
+  sizeSlug: {
+    type: 'string'
+  },
+  alt: {
+    type: 'string',
+    default: ''
   }
 };
 const v7toV11BlockSupports = {
@@ -12337,10 +12350,133 @@ const v12BlockSupports = {
     allowJustification: false
   }
 };
+const v14BlockSupports = {
+  ...v12BlockSupports,
+  shadow: true,
+  dimensions: {
+    aspectRatio: true
+  },
+  interactivity: {
+    clientNavigation: true
+  }
+};
+
+// Deprecation for blocks that have z-index.
+const v14 = {
+  attributes: v14BlockAttributes,
+  supports: v14BlockSupports,
+  save({
+    attributes
+  }) {
+    const {
+      backgroundType,
+      gradient,
+      contentPosition,
+      customGradient,
+      customOverlayColor,
+      dimRatio,
+      focalPoint,
+      useFeaturedImage,
+      hasParallax,
+      isDark,
+      isRepeated,
+      overlayColor,
+      url,
+      alt,
+      id,
+      minHeight: minHeightProp,
+      minHeightUnit,
+      tagName: Tag,
+      sizeSlug
+    } = attributes;
+    const overlayColorClass = (0,external_wp_blockEditor_namespaceObject.getColorClassName)('background-color', overlayColor);
+    const gradientClass = (0,external_wp_blockEditor_namespaceObject.__experimentalGetGradientClass)(gradient);
+    const minHeight = minHeightProp && minHeightUnit ? `${minHeightProp}${minHeightUnit}` : minHeightProp;
+    const isImageBackground = IMAGE_BACKGROUND_TYPE === backgroundType;
+    const isVideoBackground = VIDEO_BACKGROUND_TYPE === backgroundType;
+    const isImgElement = !(hasParallax || isRepeated);
+    const style = {
+      minHeight: minHeight || undefined
+    };
+    const bgStyle = {
+      backgroundColor: !overlayColorClass ? customOverlayColor : undefined,
+      background: customGradient ? customGradient : undefined
+    };
+    const objectPosition =
+    // prettier-ignore
+    focalPoint && isImgElement ? mediaPosition(focalPoint) : undefined;
+    const backgroundImage = url ? `url(${url})` : undefined;
+    const backgroundPosition = mediaPosition(focalPoint);
+    const classes = dist_clsx({
+      'is-light': !isDark,
+      'has-parallax': hasParallax,
+      'is-repeated': isRepeated,
+      'has-custom-content-position': !isContentPositionCenter(contentPosition)
+    }, getPositionClassName(contentPosition));
+    const imgClasses = dist_clsx('wp-block-cover__image-background', id ? `wp-image-${id}` : null, {
+      [`size-${sizeSlug}`]: sizeSlug,
+      'has-parallax': hasParallax,
+      'is-repeated': isRepeated
+    });
+    const gradientValue = gradient || customGradient;
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Tag, {
+      ...external_wp_blockEditor_namespaceObject.useBlockProps.save({
+        className: classes,
+        style
+      }),
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        "aria-hidden": "true",
+        className: dist_clsx('wp-block-cover__background', overlayColorClass, dimRatioToClass(dimRatio), {
+          'has-background-dim': dimRatio !== undefined,
+          // For backwards compatibility. Former versions of the Cover Block applied
+          // `.wp-block-cover__gradient-background` in the presence of
+          // media, a gradient and a dim.
+          'wp-block-cover__gradient-background': url && gradientValue && dimRatio !== 0,
+          'has-background-gradient': gradientValue,
+          [gradientClass]: gradientClass
+        }),
+        style: bgStyle
+      }), !useFeaturedImage && isImageBackground && url && (isImgElement ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+        className: imgClasses,
+        alt: alt,
+        src: url,
+        style: {
+          objectPosition
+        },
+        "data-object-fit": "cover",
+        "data-object-position": objectPosition
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        role: alt ? 'img' : undefined,
+        "aria-label": alt ? alt : undefined,
+        className: imgClasses,
+        style: {
+          backgroundPosition,
+          backgroundImage
+        }
+      })), isVideoBackground && url && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("video", {
+        className: dist_clsx('wp-block-cover__video-background', 'intrinsic-ignore'),
+        autoPlay: true,
+        muted: true,
+        loop: true,
+        playsInline: true,
+        src: url,
+        style: {
+          objectPosition
+        },
+        "data-object-fit": "cover",
+        "data-object-position": objectPosition
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        ...external_wp_blockEditor_namespaceObject.useInnerBlocksProps.save({
+          className: 'wp-block-cover__inner-container'
+        })
+      })]
+    });
+  }
+};
 
 // Deprecation for blocks that does not have the aria-label when the image background is fixed or repeated.
 const v13 = {
-  attributes: v12BlockAttributes,
+  attributes: v12toV13BlockAttributes,
   supports: v12BlockSupports,
   save({
     attributes
@@ -12450,7 +12586,7 @@ const v13 = {
 
 // Deprecation for blocks to prevent auto overlay color from overriding previously set values.
 const v12 = {
-  attributes: v12BlockAttributes,
+  attributes: v12toV13BlockAttributes,
   supports: v12BlockSupports,
   isEligible(attributes) {
     return (attributes.customOverlayColor !== undefined || attributes.overlayColor !== undefined) && attributes.isUserOverlayColor === undefined;
@@ -13539,7 +13675,7 @@ const cover_deprecated_v1 = {
     })]];
   }
 };
-/* harmony default export */ const cover_deprecated = ([v13, v12, deprecated_v11, deprecated_v10, v9, v8, v7, v6, v5, v4, v3, v2, cover_deprecated_v1]);
+/* harmony default export */ const cover_deprecated = ([v14, v13, v12, deprecated_v11, deprecated_v10, v9, v8, v7, v6, v5, v4, v3, v2, cover_deprecated_v1]);
 
 ;// ./packages/block-library/build-module/cover/constants.js
 const DEFAULT_MEDIA_SIZE_SLUG = 'full';
@@ -15165,23 +15301,7 @@ function CoverEdit({
         ...blockProps.style
       },
       "data-url": url,
-      children: [resizeListener, showOverlay && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        "aria-hidden": "true",
-        className: dist_clsx('wp-block-cover__background', dimRatioToClass(dimRatio), {
-          [overlayColor.class]: overlayColor.class,
-          'has-background-dim': dimRatio !== undefined,
-          // For backwards compatibility. Former versions of the Cover Block applied
-          // `.wp-block-cover__gradient-background` in the presence of
-          // media, a gradient and a dim.
-          'wp-block-cover__gradient-background': url && gradientValue && dimRatio !== 0,
-          'has-background-gradient': gradientValue,
-          [gradientClass]: gradientClass
-        }),
-        style: {
-          backgroundImage: gradientValue,
-          ...bgStyle
-        }
-      }), !url && useFeaturedImage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
+      children: [resizeListener, !url && useFeaturedImage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
         className: "wp-block-cover__image--placeholder-image",
         withIllustration: true
       }), url && isImageBackground && (isImgElement ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
@@ -15207,6 +15327,22 @@ function CoverEdit({
         loop: true,
         src: url,
         style: mediaStyle
+      }), showOverlay && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        "aria-hidden": "true",
+        className: dist_clsx('wp-block-cover__background', dimRatioToClass(dimRatio), {
+          [overlayColor.class]: overlayColor.class,
+          'has-background-dim': dimRatio !== undefined,
+          // For backwards compatibility. Former versions of the Cover Block applied
+          // `.wp-block-cover__gradient-background` in the presence of
+          // media, a gradient and a dim.
+          'wp-block-cover__gradient-background': url && gradientValue && dimRatio !== 0,
+          'has-background-gradient': gradientValue,
+          [gradientClass]: gradientClass
+        }),
+        style: {
+          backgroundImage: gradientValue,
+          ...bgStyle
+        }
       }), isUploadingMedia && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CoverPlaceholder, {
         disableMediaButtons: true,
         onSelectMedia: onSelectMedia,
@@ -15299,19 +15435,7 @@ function cover_save_save({
       className: classes,
       style
     }),
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-      "aria-hidden": "true",
-      className: dist_clsx('wp-block-cover__background', overlayColorClass, dimRatioToClass(dimRatio), {
-        'has-background-dim': dimRatio !== undefined,
-        // For backwards compatibility. Former versions of the Cover Block applied
-        // `.wp-block-cover__gradient-background` in the presence of
-        // media, a gradient and a dim.
-        'wp-block-cover__gradient-background': url && gradientValue && dimRatio !== 0,
-        'has-background-gradient': gradientValue,
-        [gradientClass]: gradientClass
-      }),
-      style: bgStyle
-    }), !useFeaturedImage && isImageBackground && url && (isImgElement ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+    children: [!useFeaturedImage && isImageBackground && url && (isImgElement ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
       className: imgClasses,
       alt: alt,
       src: url,
@@ -15340,6 +15464,18 @@ function cover_save_save({
       },
       "data-object-fit": "cover",
       "data-object-position": objectPosition
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      "aria-hidden": "true",
+      className: dist_clsx('wp-block-cover__background', overlayColorClass, dimRatioToClass(dimRatio), {
+        'has-background-dim': dimRatio !== undefined,
+        // For backwards compatibility. Former versions of the Cover Block applied
+        // `.wp-block-cover__gradient-background` in the presence of
+        // media, a gradient and a dim.
+        'wp-block-cover__gradient-background': url && gradientValue && dimRatio !== 0,
+        'has-background-gradient': gradientValue,
+        [gradientClass]: gradientClass
+      }),
+      style: bgStyle
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...external_wp_blockEditor_namespaceObject.useInnerBlocksProps.save({
         className: 'wp-block-cover__inner-container'
@@ -35699,27 +35835,6 @@ function AccessibleMenuDescription({
 
 
 
-function useResponsiveMenu(navRef) {
-  const [isResponsiveMenuOpen, setResponsiveMenuVisibility] = (0,external_wp_element_namespaceObject.useState)(false);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!navRef.current) {
-      return;
-    }
-    const htmlElement = navRef.current.ownerDocument.documentElement;
-
-    // Add a `has-modal-open` class to the <html> when the responsive
-    // menu is open. This reproduces the same behavior of the frontend.
-    if (isResponsiveMenuOpen) {
-      htmlElement.classList.add('has-modal-open');
-    } else {
-      htmlElement.classList.remove('has-modal-open');
-    }
-    return () => {
-      htmlElement?.classList.remove('has-modal-open');
-    };
-  }, [navRef, isResponsiveMenuOpen]);
-  return [isResponsiveMenuOpen, setResponsiveMenuVisibility];
-}
 function ColorTools({
   textColor,
   setTextColor,
@@ -35879,8 +35994,7 @@ function Navigation({
     selectBlock,
     __unstableMarkNextChangeAsNotPersistent
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
-  const navRef = (0,external_wp_element_namespaceObject.useRef)();
-  const [isResponsiveMenuOpen, setResponsiveMenuVisibility] = useResponsiveMenu(navRef);
+  const [isResponsiveMenuOpen, setResponsiveMenuVisibility] = (0,external_wp_element_namespaceObject.useState)(false);
   const [overlayMenuPreview, setOverlayMenuPreview] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
     hasResolvedNavigationMenus,
@@ -35943,6 +36057,7 @@ function Navigation({
     __unstableMarkNextChangeAsNotPersistent();
     setRef(navigationFallbackId);
   }, [ref, setRef, hasUnsavedBlocks, navigationFallbackId, __unstableMarkNextChangeAsNotPersistent]);
+  const navRef = (0,external_wp_element_namespaceObject.useRef)();
 
   // The standard HTML5 tag for the block wrapper.
   const TagName = 'nav';
