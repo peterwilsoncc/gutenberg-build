@@ -58747,6 +58747,7 @@ function UnforwardedMenuItem(props, ref) {
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(build_module_button, {
+    __next40pxDefaultSize: true,
     ref: ref
     // Make sure aria-checked matches spec https://www.w3.org/TR/wai-aria-1.1/#aria-checked
     ,
