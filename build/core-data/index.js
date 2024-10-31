@@ -524,7 +524,6 @@ __webpack_require__.d(build_module_selectors_namespaceObject, {
   __experimentalGetDirtyEntityRecords: () => (__experimentalGetDirtyEntityRecords),
   __experimentalGetEntitiesBeingSaved: () => (__experimentalGetEntitiesBeingSaved),
   __experimentalGetEntityRecordNoResolver: () => (__experimentalGetEntityRecordNoResolver),
-  __experimentalGetTemplateForLink: () => (__experimentalGetTemplateForLink),
   canUser: () => (canUser),
   canUserEditEntityRecord: () => (canUserEditEntityRecord),
   getAuthors: () => (getAuthors),
@@ -630,7 +629,6 @@ __webpack_require__.d(resolvers_namespaceObject, {
   __experimentalGetCurrentGlobalStylesId: () => (resolvers_experimentalGetCurrentGlobalStylesId),
   __experimentalGetCurrentThemeBaseGlobalStyles: () => (resolvers_experimentalGetCurrentThemeBaseGlobalStyles),
   __experimentalGetCurrentThemeGlobalStylesVariations: () => (resolvers_experimentalGetCurrentThemeGlobalStylesVariations),
-  __experimentalGetTemplateForLink: () => (resolvers_experimentalGetTemplateForLink),
   canUser: () => (resolvers_canUser),
   canUserEditEntityRecord: () => (resolvers_canUserEditEntityRecord),
   getAuthors: () => (resolvers_getAuthors),
@@ -4045,24 +4043,6 @@ const hasFetchedAutosaves = (0,external_wp_data_namespaceObject.createRegistrySe
  */
 function getReferenceByDistinctEdits(state) {
   return state.editsReference;
-}
-
-/**
- * Retrieve the frontend template used for a given link.
- *
- * @param state Editor state.
- * @param link  Link.
- *
- * @return The template record.
- */
-function __experimentalGetTemplateForLink(state, link) {
-  const records = getEntityRecords(state, 'postType', 'wp_template', {
-    'find-template': link
-  });
-  if (records?.length) {
-    return getEditedEntityRecord(state, 'postType', 'wp_template', records[0].id);
-  }
-  return null;
 }
 
 /**
@@ -23124,43 +23104,6 @@ const resolvers_getAutosave = (postType, postId) => async ({
 }) => {
   await resolveSelect.getAutosaves(postType, postId);
 };
-
-/**
- * Retrieve the frontend template used for a given link.
- *
- * @param {string} link Link.
- */
-const resolvers_experimentalGetTemplateForLink = link => async ({
-  dispatch,
-  resolveSelect
-}) => {
-  let template;
-  try {
-    // This is NOT calling a REST endpoint but rather ends up with a response from
-    // an Ajax function which has a different shape from a WP_REST_Response.
-    template = await external_wp_apiFetch_default()({
-      url: (0,external_wp_url_namespaceObject.addQueryArgs)(link, {
-        '_wp-find-template': true
-      })
-    }).then(({
-      data
-    }) => data);
-  } catch (e) {
-    // For non-FSE themes, it is possible that this request returns an error.
-  }
-  if (!template) {
-    return;
-  }
-  const record = await resolveSelect.getEntityRecord('postType', 'wp_template', template.id);
-  if (record) {
-    dispatch.receiveEntityRecords('postType', 'wp_template', [record], {
-      'find-template': link
-    });
-  }
-};
-resolvers_experimentalGetTemplateForLink.shouldInvalidate = action => {
-  return (action.type === 'RECEIVE_ITEMS' || action.type === 'REMOVE_ITEMS') && action.invalidateCache && action.kind === 'postType' && action.name === 'wp_template';
-};
 const resolvers_experimentalGetCurrentGlobalStylesId = () => async ({
   dispatch,
   resolveSelect
@@ -23293,14 +23236,22 @@ const resolvers_getNavigationFallbackId = () => async ({
   });
 };
 const resolvers_getDefaultTemplateId = query => async ({
-  dispatch
+  dispatch,
+  registry
 }) => {
-  const template = await external_wp_apiFetch_default()({
-    path: (0,external_wp_url_namespaceObject.addQueryArgs)('/wp/v2/templates/lookup', query)
+  const response = await external_wp_apiFetch_default()({
+    path: (0,external_wp_url_namespaceObject.addQueryArgs)('/wp/v2/templates/lookup', query),
+    parse: false
   });
+  const template = await response.json();
   // Endpoint may return an empty object if no template is found.
   if (template?.id) {
-    dispatch.receiveDefaultTemplateId(query, template.id);
+    registry.batch(() => {
+      dispatch.receiveDefaultTemplateId(query, template.id);
+      dispatch.receiveEntityRecords('postType', 'wp_template', [template]);
+      // Avoid further network requests.
+      dispatch.finishResolution('getEntityRecord', ['postType', 'wp_template', template.id]);
+    });
   }
 };
 
