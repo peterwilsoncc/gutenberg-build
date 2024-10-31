@@ -40672,7 +40672,7 @@ function maybeWarnDeprecated36pxSize({
   __next40pxDefaultSize,
   size
 }) {
-  if (__next40pxDefaultSize || size !== 'default') {
+  if (__next40pxDefaultSize || size !== undefined && size !== 'default') {
     return;
   }
   external_wp_deprecated_default()(`36px default size for wp.components.${componentName}`, {
@@ -62850,6 +62850,7 @@ const RadioGroupContext = (0,external_wp_element_namespaceObject.createContext)(
 
 
 
+
 function UnforwardedRadio({
   value,
   children,
@@ -62861,6 +62862,11 @@ function UnforwardedRadio({
   } = (0,external_wp_element_namespaceObject.useContext)(RadioGroupContext);
   const selectedValue = useStoreState(store, 'value');
   const isChecked = selectedValue !== undefined && selectedValue === value;
+  maybeWarnDeprecated36pxSize({
+    componentName: 'Radio',
+    size: undefined,
+    __next40pxDefaultSize: props.__next40pxDefaultSize
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Radio, {
     disabled: disabled,
     store: store,

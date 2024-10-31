@@ -8364,6 +8364,7 @@ function CreateTemplatePartModalContents({
             area: value,
             description
           }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalRadio, {
+            __next40pxDefaultSize: true,
             value: value,
             className: "editor-create-template-part-modal__area-radio",
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
