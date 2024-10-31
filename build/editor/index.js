@@ -27706,6 +27706,7 @@ const ZoomOutToggle = ({
 
 
 
+
 const toolbarVariations = {
   distractionFreeDisabled: {
     y: '-50px'
@@ -27757,15 +27758,13 @@ function header_Header({
     isPublishSidebarOpened,
     showIconLabels,
     hasFixedToolbar,
-    hasBlockSelection,
-    isNestedEntity
+    hasBlockSelection
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       get: getPreference
     } = select(external_wp_preferences_namespaceObject.store);
     const {
       getEditorMode,
-      getEditorSettings,
       getCurrentPostType,
       isPublishSidebarOpened: _isPublishSidebarOpened
     } = select(store_store);
@@ -27775,11 +27774,11 @@ function header_Header({
       isPublishSidebarOpened: _isPublishSidebarOpened(),
       showIconLabels: getPreference('core', 'showIconLabels'),
       hasFixedToolbar: getPreference('core', 'fixedToolbar'),
-      hasBlockSelection: !!select(external_wp_blockEditor_namespaceObject.store).getBlockSelectionStart(),
-      isNestedEntity: !!getEditorSettings().onNavigateToPreviousEntityRecord
+      hasBlockSelection: !!select(external_wp_blockEditor_namespaceObject.store).getBlockSelectionStart()
     };
   }, []);
   const canBeZoomedOut = ['post', 'page', 'wp_template'].includes(postType);
+  const disablePreviewOption = [NAVIGATION_POST_TYPE, constants_TEMPLATE_PART_POST_TYPE, PATTERN_POST_TYPE].includes(postType);
   const [isBlockToolsCollapsed, setIsBlockToolsCollapsed] = (0,external_wp_element_namespaceObject.useState)(true);
   const hasCenter = (!hasBlockSelection || isBlockToolsCollapsed) && !isTooNarrowForDocumentBar;
   const hasBackButton = useHasBackButton();
@@ -27838,7 +27837,7 @@ function header_Header({
         disabled: forceDisableBlockTools
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreviewDropdown, {
         forceIsAutosaveable: forceIsDirty,
-        disabled: isNestedEntity
+        disabled: disablePreviewOption
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostPreviewButton, {
         className: "editor-header__post-preview-button",
         forceIsAutosaveable: forceIsDirty
