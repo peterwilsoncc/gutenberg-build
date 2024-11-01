@@ -62453,7 +62453,10 @@ function useShowBlockTools() {
     const editorMode = __unstableGetEditorMode();
     const hasSelectedBlock = !!clientId && !!block;
     const isEmptyDefaultBlock = hasSelectedBlock && (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(block) && getBlockMode(clientId) !== 'html';
-    const _showEmptyBlockSideInserter = clientId && !isTyping() && editorMode === 'edit' && isEmptyDefaultBlock;
+    const _showEmptyBlockSideInserter = clientId && !isTyping() &&
+    // Hide the block inserter on the navigation mode.
+    // See https://github.com/WordPress/gutenberg/pull/66636#discussion_r1824728483.
+    editorMode !== 'navigation' && isEmptyDefaultBlock;
     const isZoomOut = editorMode === 'zoom-out';
     const isSectionSelected = getBlockOrder(getSectionRootClientId()).includes(clientId);
     const _showZoomOutToolbar = clientId && isZoomOut && !_showEmptyBlockSideInserter && isSectionSelected;
