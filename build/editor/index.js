@@ -29033,8 +29033,11 @@ function VisualEditor({
           blockName: wrapperBlockName,
           uniqueId: wrapperUniqueId,
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockList, {
-            className: dist_clsx('is-' + deviceType.toLowerCase() + '-preview', renderingMode !== 'post-only' || isDesignPostType ? 'wp-site-blocks' : `${blockListLayoutClass} wp-block-post-content` // Ensure root level blocks receive default/flow blockGap styling rules.
-            ),
+            className: dist_clsx('is-' + deviceType.toLowerCase() + '-preview', renderingMode !== 'post-only' || isDesignPostType ? 'wp-site-blocks' : `${blockListLayoutClass} wp-block-post-content`,
+            // Ensure root level blocks receive default/flow blockGap styling rules.
+            {
+              'has-global-padding': renderingMode === 'post-only' && !isDesignPostType && hasRootPaddingAwareAlignments
+            }),
             layout: blockListLayout,
             dropZoneElement:
             // When iframed, pass in the html element of the iframe to
