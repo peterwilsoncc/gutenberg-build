@@ -57684,6 +57684,7 @@ function Token({
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
       className: "components-form-token-field__remove-token",
+      size: "small",
       icon: close_small,
       onClick: !disabled ? onClick : undefined
       // Disable reason: Even when FormTokenField itself is accessibly disabled, token reset buttons shouldn't be in the tab sequence.
