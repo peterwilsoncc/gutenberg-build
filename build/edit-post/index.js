@@ -3476,6 +3476,7 @@ function initializeEditor(id, postType, postId, settings, initialEdits) {
   (0,external_wp_data_namespaceObject.dispatch)(external_wp_preferences_namespaceObject.store).setDefaults('core', {
     allowRightClickOverrides: true,
     editorMode: 'visual',
+    editorTool: 'edit',
     fixedToolbar: false,
     hiddenBlockTypes: [],
     inactivePanels: [],
