@@ -62205,19 +62205,22 @@ function BlockTools({
     if (event.defaultPrevented) {
       return;
     }
-    if (isMatch('core/block-editor/move-up', event)) {
+    if (isMatch('core/block-editor/move-up', event) || isMatch('core/block-editor/move-down', event)) {
       const clientIds = getSelectedBlockClientIds();
       if (clientIds.length) {
         event.preventDefault();
         const rootClientId = getBlockRootClientId(clientIds[0]);
-        moveBlocksUp(clientIds, rootClientId);
-      }
-    } else if (isMatch('core/block-editor/move-down', event)) {
-      const clientIds = getSelectedBlockClientIds();
-      if (clientIds.length) {
-        event.preventDefault();
-        const rootClientId = getBlockRootClientId(clientIds[0]);
-        moveBlocksDown(clientIds, rootClientId);
+        const direction = isMatch('core/block-editor/move-up', event) ? 'up' : 'down';
+        if (direction === 'up') {
+          moveBlocksUp(clientIds, rootClientId);
+        } else {
+          moveBlocksDown(clientIds, rootClientId);
+        }
+        const blockLength = Array.isArray(clientIds) ? clientIds.length : 1;
+        const message = (0,external_wp_i18n_namespaceObject.sprintf)(
+        // translators: %d: the name of the block that has been moved
+        (0,external_wp_i18n_namespaceObject._n)('%d block moved.', '%d blocks moved.', clientIds.length), blockLength);
+        (0,external_wp_a11y_namespaceObject.speak)(message);
       }
     } else if (isMatch('core/block-editor/duplicate', event)) {
       const clientIds = getSelectedBlockClientIds();
