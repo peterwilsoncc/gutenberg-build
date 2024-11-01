@@ -1,5 +1,25 @@
 == Changelog ==
 
+= 19.6.0-rc.3 =
+
+
+## Changelog
+
+### Bug Fixes
+
+#### Block Editor
+- Post Editor: Set the default value of the editorTool to edit. ([66636](https://github.com/WordPress/gutenberg/pull/66636))
+
+
+
+
+## Contributors
+
+The following contributors merged PRs in this release:
+
+@arthur791004
+
+
 = 19.5.1 =
 
 
