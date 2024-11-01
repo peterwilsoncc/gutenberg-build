@@ -25994,6 +25994,21 @@ const plugins = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
 });
 /* harmony default export */ const library_plugins = (plugins);
 
+;// ./packages/icons/build-module/library/chevron-down.js
+/**
+ * WordPress dependencies
+ */
+
+
+const chevronDown = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"
+  })
+});
+/* harmony default export */ const chevron_down = (chevronDown);
+
 ;// ./packages/icons/build-module/library/crop.js
 /**
  * WordPress dependencies
@@ -26056,7 +26071,6 @@ const upload = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -26085,6 +26099,9 @@ const scaleOptions = [{
   label: (0,external_wp_i18n_namespaceObject._x)('Contain', 'Scale option for dimensions control'),
   help: (0,external_wp_i18n_namespaceObject.__)('Image is contained without distortion.')
 }];
+const WRITEMODE_POPOVER_PROPS = {
+  placement: 'bottom-start'
+};
 
 // If the image has a href, wrap in an <a /> tag to trigger any inherited link element styles.
 const ImageWrapper = ({
@@ -26110,6 +26127,109 @@ const ImageWrapper = ({
     children: children
   });
 };
+function ContentOnlyControls({
+  attributes,
+  setAttributes,
+  lockAltControls,
+  lockAltControlsMessage,
+  lockTitleControls,
+  lockTitleControlsMessage
+}) {
+  // Use internal state instead of a ref to make sure that the component
+  // re-renders when the popover's anchor updates.
+  const [popoverAnchor, setPopoverAnchor] = (0,external_wp_element_namespaceObject.useState)(null);
+  const [isAltDialogOpen, setIsAltDialogOpen] = (0,external_wp_element_namespaceObject.useState)(false);
+  const [isTitleDialogOpen, setIsTitleDialogOpen] = (0,external_wp_element_namespaceObject.useState)(false);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
+      ref: setPopoverAnchor,
+      children: toggleProps => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
+        icon: chevron_down
+        /* translators: button label text should, if possible, be under 16 characters. */,
+        label: (0,external_wp_i18n_namespaceObject.__)('More'),
+        toggleProps: {
+          ...toggleProps,
+          description: (0,external_wp_i18n_namespaceObject.__)('Displays more controls.')
+        },
+        popoverProps: WRITEMODE_POPOVER_PROPS,
+        children: ({
+          onClose
+        }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+            onClick: () => {
+              setIsAltDialogOpen(true);
+              onClose();
+            },
+            children: (0,external_wp_i18n_namespaceObject._x)('Alternative text', 'Alternative text for an image. Block toolbar label, a low character count is preferred.')
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+            onClick: () => {
+              setIsTitleDialogOpen(true);
+              onClose();
+            },
+            children: (0,external_wp_i18n_namespaceObject.__)('Title text')
+          })]
+        })
+      })
+    }), isAltDialogOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Popover, {
+      placement: "bottom-start",
+      anchor: popoverAnchor,
+      onClose: () => setIsAltDialogOpen(false),
+      offset: 13,
+      variant: "toolbar",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        className: "wp-block-image__toolbar_content_textarea__container",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextareaControl, {
+          className: "wp-block-image__toolbar_content_textarea",
+          label: (0,external_wp_i18n_namespaceObject.__)('Alternative text'),
+          value: attributes.alt || '',
+          onChange: value => setAttributes({
+            alt: value
+          }),
+          disabled: lockAltControls,
+          help: lockAltControls ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+            children: lockAltControlsMessage
+          }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
+              href:
+              // translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations.
+              (0,external_wp_i18n_namespaceObject.__)('https://www.w3.org/WAI/tutorials/images/decision-tree/'),
+              children: (0,external_wp_i18n_namespaceObject.__)('Describe the purpose of the image.')
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("br", {}), (0,external_wp_i18n_namespaceObject.__)('Leave empty if decorative.')]
+          }),
+          __nextHasNoMarginBottom: true
+        })
+      })
+    }), isTitleDialogOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Popover, {
+      placement: "bottom-start",
+      anchor: popoverAnchor,
+      onClose: () => setIsTitleDialogOpen(false),
+      offset: 13,
+      variant: "toolbar",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        className: "wp-block-image__toolbar_content_textarea__container",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+          __next40pxDefaultSize: true,
+          className: "wp-block-image__toolbar_content_textarea",
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Title attribute'),
+          value: attributes.title || '',
+          onChange: value => setAttributes({
+            title: value
+          }),
+          disabled: lockTitleControls,
+          help: lockTitleControls ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+            children: lockTitleControlsMessage
+          }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+            children: [(0,external_wp_i18n_namespaceObject.__)('Describe the role of this image on the page.'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
+              href: "https://www.w3.org/TR/html52/dom.html#the-title-attribute",
+              children: (0,external_wp_i18n_namespaceObject.__)('(Note: many devices and browsers do not display this text.)')
+            })]
+          })
+        })
+      })
+    })]
+  });
+}
 function image_Image({
   temporaryURL,
   attributes,
@@ -26554,82 +26674,16 @@ function image_Image({
     // Add some extra controls for content attributes when content only mode is active.
     // With content only mode active, the inspector is hidden, so users need another way
     // to edit these attributes.
-    (0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
-      group: "other",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
-        popoverProps: {
-          position: 'bottom right'
-        },
-        renderToggle: ({
-          isOpen,
-          onToggle
-        }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-          onClick: onToggle,
-          "aria-haspopup": "true",
-          "aria-expanded": isOpen,
-          onKeyDown: event => {
-            if (!isOpen && event.keyCode === external_wp_keycodes_namespaceObject.DOWN) {
-              event.preventDefault();
-              onToggle();
-            }
-          },
-          children: (0,external_wp_i18n_namespaceObject._x)('Alternative text', 'Alternative text for an image. Block toolbar label, a low character count is preferred.')
-        }),
-        renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextareaControl, {
-          className: "wp-block-image__toolbar_content_textarea",
-          label: (0,external_wp_i18n_namespaceObject.__)('Alternative text'),
-          value: alt || '',
-          onChange: updateAlt,
-          disabled: lockAltControls,
-          help: lockAltControls ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-            children: lockAltControlsMessage
-          }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
-              href:
-              // translators: Localized tutorial, if one exists. W3C Web Accessibility Initiative link has list of existing translations.
-              (0,external_wp_i18n_namespaceObject.__)('https://www.w3.org/WAI/tutorials/images/decision-tree/'),
-              children: (0,external_wp_i18n_namespaceObject.__)('Describe the purpose of the image.')
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("br", {}), (0,external_wp_i18n_namespaceObject.__)('Leave empty if decorative.')]
-          }),
-          __nextHasNoMarginBottom: true
-        })
-      }), title && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
-        popoverProps: {
-          position: 'bottom right'
-        },
-        renderToggle: ({
-          isOpen,
-          onToggle
-        }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-          onClick: onToggle,
-          "aria-haspopup": "true",
-          "aria-expanded": isOpen,
-          onKeyDown: event => {
-            if (!isOpen && event.keyCode === external_wp_keycodes_namespaceObject.DOWN) {
-              event.preventDefault();
-              onToggle();
-            }
-          },
-          children: (0,external_wp_i18n_namespaceObject.__)('Title')
-        }),
-        renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-          __next40pxDefaultSize: true,
-          className: "wp-block-image__toolbar_content_textarea",
-          __nextHasNoMarginBottom: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Title attribute'),
-          value: title || '',
-          onChange: onSetTitle,
-          disabled: lockTitleControls,
-          help: lockTitleControls ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-            children: lockTitleControlsMessage
-          }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-            children: [(0,external_wp_i18n_namespaceObject.__)('Describe the role of this image on the page.'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
-              href: "https://www.w3.org/TR/html52/dom.html#the-title-attribute",
-              children: (0,external_wp_i18n_namespaceObject.__)('(Note: many devices and browsers do not display this text.)')
-            })]
-          })
-        })
-      })]
+    (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      group: "block",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ContentOnlyControls, {
+        attributes: attributes,
+        setAttributes: setAttributes,
+        lockAltControls: lockAltControls,
+        lockAltControlsMessage: lockAltControlsMessage,
+        lockTitleControls: lockTitleControls,
+        lockTitleControlsMessage: lockTitleControlsMessage
+      })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
         label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
@@ -35034,21 +35088,6 @@ const chevronUp = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
   })
 });
 /* harmony default export */ const chevron_up = (chevronUp);
-
-;// ./packages/icons/build-module/library/chevron-down.js
-/**
- * WordPress dependencies
- */
-
-
-const chevronDown = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"
-  })
-});
-/* harmony default export */ const chevron_down = (chevronDown);
 
 ;// ./packages/block-library/build-module/navigation/edit/leaf-more-menu.js
 /**
