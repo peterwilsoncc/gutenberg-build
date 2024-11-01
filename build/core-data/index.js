@@ -23237,13 +23237,15 @@ const resolvers_getNavigationFallbackId = () => async ({
 };
 const resolvers_getDefaultTemplateId = query => async ({
   dispatch,
-  registry
+  registry,
+  resolveSelect
 }) => {
-  const response = await external_wp_apiFetch_default()({
-    path: (0,external_wp_url_namespaceObject.addQueryArgs)('/wp/v2/templates/lookup', query),
-    parse: false
+  const template = await external_wp_apiFetch_default()({
+    path: (0,external_wp_url_namespaceObject.addQueryArgs)('/wp/v2/templates/lookup', query)
   });
-  const template = await response.json();
+  // Wait for the the entities config to be loaded, otherwise receiving
+  // the template as an entity will not work.
+  await resolveSelect.getEntitiesConfig('postType');
   // Endpoint may return an empty object if no template is found.
   if (template?.id) {
     registry.batch(() => {

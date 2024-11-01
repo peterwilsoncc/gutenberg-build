@@ -17,10 +17,7 @@ function gutenberg_block_editor_preload_paths_6_8( $paths, $context ) {
 			}
 		}
 
-		// Core already preloads both of these for `core/edit-post`.
-		// To do: investigate why adding this preload path breaks the site
-		// editor in Safari ("template not found"). Perhaps a race condition?
-		// $paths[] = '/wp/v2/settings';
+		$paths[] = '/wp/v2/settings';
 		$paths[] = array( '/wp/v2/settings', 'OPTIONS' );
 		$paths[] = '/?_fields=' . implode(
 			',',
