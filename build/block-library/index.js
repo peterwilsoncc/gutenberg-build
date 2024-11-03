@@ -44349,8 +44349,7 @@ function PostTemplateEdit({
       ...restQueryArgs
     } = {},
     templateSlug,
-    previewPostType,
-    postType: postTypeFromContext
+    previewPostType
   },
   attributes: {
     layout
@@ -44443,7 +44442,7 @@ function PostTemplateEdit({
     }
     // When we preview Query Loop blocks we should prefer the current
     // block's postType, which is passed through block context.
-    const usedPostType = postTypeFromContext && postTypeFromContext !== 'page' ? postTypeFromContext : previewPostType || postType;
+    const usedPostType = previewPostType || postType;
     return {
       posts: getEntityRecords('postType', usedPostType, {
         ...query,
@@ -47922,14 +47921,13 @@ function QueryInspectorControls(props) {
     attributes,
     setQuery,
     setDisplayLayout,
-    postTypeFromContext,
     isSingular
   } = props;
   const {
     query,
     displayLayout
   } = attributes;
-  let {
+  const {
     order,
     orderBy,
     author: authorIds,
@@ -47943,12 +47941,6 @@ function QueryInspectorControls(props) {
     parents,
     format
   } = query;
-  // If a post type is set in context, update `postType` to match it,
-  // unless the post type is `page`, as it usually doesn't make sense to loop
-  // through pages.
-  if (postTypeFromContext && postTypeFromContext !== 'page' && postTypeFromContext !== postType) {
-    postType = postTypeFromContext;
-  }
   const allowedControls = useAllowedControls(attributes);
   const showSticky = postType === 'post';
   const {
@@ -48323,8 +48315,7 @@ function QueryContent({
     } = {}
   } = attributes;
   const {
-    templateSlug,
-    postType
+    templateSlug
   } = context;
   const {
     isSingular
@@ -48428,7 +48419,6 @@ function QueryContent({
         setDisplayLayout: updateDisplayLayout,
         setAttributes: setAttributes,
         clientId: clientId,
-        postTypeFromContext: postType,
         isSingular: isSingular
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
@@ -49419,7 +49409,7 @@ const query_metadata = {
       "default": false
     }
   },
-  usesContext: ["postType", "templateSlug"],
+  usesContext: ["templateSlug"],
   providesContext: {
     queryId: "queryId",
     query: "query",
