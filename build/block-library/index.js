@@ -28190,7 +28190,6 @@ function LatestPostsEdit({
           displayPostContent: value
         })
       }), displayPostContent && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
-        className: "wp-block-latest-posts__post-content-radio",
         label: (0,external_wp_i18n_namespaceObject.__)('Show'),
         selected: displayPostContentRadio,
         options: [{
