@@ -6689,7 +6689,7 @@ const __EXPERIMENTAL_STYLE_PROPERTY = {
   },
   fontFamily: {
     value: ['typography', 'fontFamily'],
-    support: ['typography', '__experimentalFontFamily'],
+    support: ['typography', 'fontFamily'],
     useEngine: true
   },
   fontSize: {
@@ -6699,12 +6699,12 @@ const __EXPERIMENTAL_STYLE_PROPERTY = {
   },
   fontStyle: {
     value: ['typography', 'fontStyle'],
-    support: ['typography', '__experimentalFontStyle'],
+    support: ['typography', 'fontStyle'],
     useEngine: true
   },
   fontWeight: {
     value: ['typography', 'fontWeight'],
-    support: ['typography', '__experimentalFontWeight'],
+    support: ['typography', 'fontWeight'],
     useEngine: true
   },
   lineHeight: {
@@ -6746,17 +6746,17 @@ const __EXPERIMENTAL_STYLE_PROPERTY = {
   },
   textDecoration: {
     value: ['typography', 'textDecoration'],
-    support: ['typography', '__experimentalTextDecoration'],
+    support: ['typography', 'textDecoration'],
     useEngine: true
   },
   textTransform: {
     value: ['typography', 'textTransform'],
-    support: ['typography', '__experimentalTextTransform'],
+    support: ['typography', 'textTransform'],
     useEngine: true
   },
   letterSpacing: {
     value: ['typography', 'letterSpacing'],
-    support: ['typography', '__experimentalLetterSpacing'],
+    support: ['typography', 'letterSpacing'],
     useEngine: true
   },
   writingMode: {
@@ -6800,6 +6800,14 @@ const __EXPERIMENTAL_PATHS_WITH_OVERRIDE = {
   'dimensions.aspectRatios': true,
   'typography.fontSizes': true,
   'spacing.spacingSizes': true
+};
+const TYPOGRAPHY_SUPPORTS_EXPERIMENTAL_TO_STABLE = {
+  __experimentalFontFamily: 'fontFamily',
+  __experimentalFontStyle: 'fontStyle',
+  __experimentalFontWeight: 'fontWeight',
+  __experimentalLetterSpacing: 'letterSpacing',
+  __experimentalTextDecoration: 'textDecoration',
+  __experimentalTextTransform: 'textTransform'
 };
 
 ;// external ["wp","warning"]
@@ -9537,6 +9545,18 @@ function mergeBlockVariations(bootstrappedVariations = [], clientVariations = []
   });
   return result;
 }
+function stabilizeSupports(rawSupports) {
+  if (!rawSupports) {
+    return rawSupports;
+  }
+  const supports = {
+    ...rawSupports
+  };
+  if (supports?.typography && typeof supports.typography === 'object') {
+    supports.typography = Object.fromEntries(Object.entries(supports.typography).map(([key, value]) => [TYPOGRAPHY_SUPPORTS_EXPERIMENTAL_TO_STABLE[key] || key, value]));
+  }
+  return supports;
+}
 
 /**
  * Takes the unprocessed block type settings, merges them with block type metadata
@@ -9569,25 +9589,40 @@ const processBlockType = (name, blockSettings) => ({
     // blockType.variations can be defined as a filePath.
     variations: mergeBlockVariations(Array.isArray(bootstrappedBlockType?.variations) ? bootstrappedBlockType.variations : [], Array.isArray(blockSettings?.variations) ? blockSettings.variations : [])
   };
+
+  // Stabilize any experimental supports before applying filters.
+  blockType.supports = stabilizeSupports(blockType.supports);
   const settings = (0,external_wp_hooks_namespaceObject.applyFilters)('blocks.registerBlockType', blockType, name, null);
+
+  // Re-stabilize any experimental supports after applying filters.
+  // This ensures that any supports updated by filters are also stabilized.
+  blockType.supports = stabilizeSupports(blockType.supports);
   if (settings.description && typeof settings.description !== 'string') {
     external_wp_deprecated_default()('Declaring non-string block descriptions', {
       since: '6.2'
     });
   }
   if (settings.deprecated) {
-    settings.deprecated = settings.deprecated.map(deprecation => Object.fromEntries(Object.entries(
-    // Only keep valid deprecation keys.
-    (0,external_wp_hooks_namespaceObject.applyFilters)('blocks.registerBlockType',
-    // Merge deprecation keys with pre-filter settings
-    // so that filters that depend on specific keys being
-    // present don't fail.
-    {
-      // Omit deprecation keys here so that deprecations
-      // can opt out of specific keys like "supports".
-      ...omit(blockType, DEPRECATED_ENTRY_KEYS),
-      ...deprecation
-    }, blockType.name, deprecation)).filter(([key]) => DEPRECATED_ENTRY_KEYS.includes(key))));
+    settings.deprecated = settings.deprecated.map(deprecation => {
+      // Stabilize any experimental supports before applying filters.
+      deprecation.supports = stabilizeSupports(deprecation.supports);
+      const filteredDeprecation =
+      // Only keep valid deprecation keys.
+      (0,external_wp_hooks_namespaceObject.applyFilters)('blocks.registerBlockType',
+      // Merge deprecation keys with pre-filter settings
+      // so that filters that depend on specific keys being
+      // present don't fail.
+      {
+        // Omit deprecation keys here so that deprecations
+        // can opt out of specific keys like "supports".
+        ...omit(blockType, DEPRECATED_ENTRY_KEYS),
+        ...deprecation
+      }, blockType.name, deprecation);
+      // Re-stabilize any experimental supports after applying filters.
+      // This ensures that any supports updated by filters are also stabilized.
+      filteredDeprecation.supports = stabilizeSupports(filteredDeprecation.supports);
+      return Object.fromEntries(Object.entries(filteredDeprecation).filter(([key]) => DEPRECATED_ENTRY_KEYS.includes(key)));
+    });
   }
   if (!isPlainObject(settings)) {
      false ? 0 : void 0;

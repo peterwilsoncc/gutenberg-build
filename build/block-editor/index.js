@@ -29458,7 +29458,7 @@ var external_wp_tokenList_default = /*#__PURE__*/__webpack_require__.n(external_
 
 
 
-const FONT_FAMILY_SUPPORT_KEY = 'typography.__experimentalFontFamily';
+const FONT_FAMILY_SUPPORT_KEY = 'typography.fontFamily';
 const {
   kebabCase: font_family_kebabCase
 } = unlock(external_wp_components_namespaceObject.privateApis);
@@ -30072,12 +30072,12 @@ function addAssignedTextAlign(props, blockType, attributes) {
 function omit(object, keys) {
   return Object.fromEntries(Object.entries(object).filter(([key]) => !keys.includes(key)));
 }
-const LETTER_SPACING_SUPPORT_KEY = 'typography.__experimentalLetterSpacing';
-const TEXT_TRANSFORM_SUPPORT_KEY = 'typography.__experimentalTextTransform';
-const TEXT_DECORATION_SUPPORT_KEY = 'typography.__experimentalTextDecoration';
+const LETTER_SPACING_SUPPORT_KEY = 'typography.letterSpacing';
+const TEXT_TRANSFORM_SUPPORT_KEY = 'typography.textTransform';
+const TEXT_DECORATION_SUPPORT_KEY = 'typography.textDecoration';
 const TEXT_COLUMNS_SUPPORT_KEY = 'typography.textColumns';
-const FONT_STYLE_SUPPORT_KEY = 'typography.__experimentalFontStyle';
-const FONT_WEIGHT_SUPPORT_KEY = 'typography.__experimentalFontWeight';
+const FONT_STYLE_SUPPORT_KEY = 'typography.fontStyle';
+const FONT_WEIGHT_SUPPORT_KEY = 'typography.fontWeight';
 const WRITING_MODE_SUPPORT_KEY = 'typography.__experimentalWritingMode';
 const TYPOGRAPHY_SUPPORT_KEY = 'typography';
 const TYPOGRAPHY_SUPPORT_KEYS = [LINE_HEIGHT_SUPPORT_KEY, FONT_SIZE_SUPPORT_KEY, FONT_STYLE_SUPPORT_KEY, FONT_WEIGHT_SUPPORT_KEY, FONT_FAMILY_SUPPORT_KEY, TEXT_ALIGN_SUPPORT_KEY, TEXT_COLUMNS_SUPPORT_KEY, TEXT_DECORATION_SUPPORT_KEY, WRITING_MODE_SUPPORT_KEY, TEXT_TRANSFORM_SUPPORT_KEY, LETTER_SPACING_SUPPORT_KEY];
@@ -59211,17 +59211,17 @@ const ALIGN_WIDE_SUPPORT_KEY = 'alignWide';
 const supports_BORDER_SUPPORT_KEY = '__experimentalBorder';
 const supports_COLOR_SUPPORT_KEY = 'color';
 const CUSTOM_CLASS_NAME_SUPPORT_KEY = 'customClassName';
-const supports_FONT_FAMILY_SUPPORT_KEY = 'typography.__experimentalFontFamily';
+const supports_FONT_FAMILY_SUPPORT_KEY = 'typography.fontFamily';
 const supports_FONT_SIZE_SUPPORT_KEY = 'typography.fontSize';
 const supports_LINE_HEIGHT_SUPPORT_KEY = 'typography.lineHeight';
 /**
  * Key within block settings' support array indicating support for font style.
  */
-const supports_FONT_STYLE_SUPPORT_KEY = 'typography.__experimentalFontStyle';
+const supports_FONT_STYLE_SUPPORT_KEY = 'typography.fontStyle';
 /**
  * Key within block settings' support array indicating support for font weight.
  */
-const supports_FONT_WEIGHT_SUPPORT_KEY = 'typography.__experimentalFontWeight';
+const supports_FONT_WEIGHT_SUPPORT_KEY = 'typography.fontWeight';
 /**
  * Key within block settings' supports array indicating support for text
  * align e.g. settings found in `block.json`.
@@ -59236,7 +59236,7 @@ const supports_TEXT_COLUMNS_SUPPORT_KEY = 'typography.textColumns';
  * Key within block settings' supports array indicating support for text
  * decorations e.g. settings found in `block.json`.
  */
-const supports_TEXT_DECORATION_SUPPORT_KEY = 'typography.__experimentalTextDecoration';
+const supports_TEXT_DECORATION_SUPPORT_KEY = 'typography.textDecoration';
 /**
  * Key within block settings' supports array indicating support for writing mode
  * e.g. settings found in `block.json`.
@@ -59246,13 +59246,13 @@ const supports_WRITING_MODE_SUPPORT_KEY = 'typography.__experimentalWritingMode'
  * Key within block settings' supports array indicating support for text
  * transforms e.g. settings found in `block.json`.
  */
-const supports_TEXT_TRANSFORM_SUPPORT_KEY = 'typography.__experimentalTextTransform';
+const supports_TEXT_TRANSFORM_SUPPORT_KEY = 'typography.textTransform';
 
 /**
  * Key within block settings' supports array indicating support for letter-spacing
  * e.g. settings found in `block.json`.
  */
-const supports_LETTER_SPACING_SUPPORT_KEY = 'typography.__experimentalLetterSpacing';
+const supports_LETTER_SPACING_SUPPORT_KEY = 'typography.letterSpacing';
 const LAYOUT_SUPPORT_KEY = 'layout';
 const supports_TYPOGRAPHY_SUPPORT_KEYS = [supports_LINE_HEIGHT_SUPPORT_KEY, supports_FONT_SIZE_SUPPORT_KEY, supports_FONT_STYLE_SUPPORT_KEY, supports_FONT_WEIGHT_SUPPORT_KEY, supports_FONT_FAMILY_SUPPORT_KEY, supports_TEXT_ALIGN_SUPPORT_KEY, supports_TEXT_COLUMNS_SUPPORT_KEY, supports_TEXT_DECORATION_SUPPORT_KEY, supports_TEXT_TRANSFORM_SUPPORT_KEY, supports_WRITING_MODE_SUPPORT_KEY, supports_LETTER_SPACING_SUPPORT_KEY];
 const EFFECTS_SUPPORT_KEYS = ['shadow'];
