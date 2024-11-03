@@ -52,6 +52,7 @@ __webpack_require__.r(__webpack_exports__);
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
   MediaUpload: () => (/* reexport */ media_upload),
+  privateApis: () => (/* reexport */ privateApis),
   transformAttachment: () => (/* reexport */ transformAttachment),
   uploadMedia: () => (/* reexport */ uploadMedia),
   validateFileSize: () => (/* reexport */ validateFileSize),
@@ -919,7 +920,126 @@ function uploadMedia({
   });
 }
 
+;// ./packages/media-utils/build-module/utils/sideload-to-server.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+/**
+ * Uploads a file to the server without creating an attachment.
+ *
+ * @param file           Media File to Save.
+ * @param attachmentId   Parent attachment ID.
+ * @param additionalData Additional data to include in the request.
+ * @param signal         Abort signal.
+ *
+ * @return The saved attachment.
+ */
+async function sideloadToServer(file, attachmentId, additionalData = {}, signal) {
+  // Create upload payload.
+  const data = new FormData();
+  data.append('file', file, file.name || file.type.replace('/', '.'));
+  for (const [key, value] of Object.entries(additionalData)) {
+    flattenFormData(data, key, value);
+  }
+  return transformAttachment(await external_wp_apiFetch_default()({
+    path: `/wp/v2/media/${attachmentId}/sideload`,
+    body: data,
+    method: 'POST',
+    signal
+  }));
+}
+
+;// ./packages/media-utils/build-module/utils/sideload-media.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const noop = () => {};
+/**
+ * Uploads a file to the server without creating an attachment.
+ *
+ * @param $0                Parameters object passed to the function.
+ * @param $0.file           Media File to Save.
+ * @param $0.attachmentId   Parent attachment ID.
+ * @param $0.additionalData Additional data to include in the request.
+ * @param $0.signal         Abort signal.
+ * @param $0.onFileChange   Function called each time a file or a temporary representation of the file is available.
+ * @param $0.onError        Function called when an error happens.
+ */
+async function sideloadMedia({
+  file,
+  attachmentId,
+  additionalData = {},
+  signal,
+  onFileChange,
+  onError = noop
+}) {
+  try {
+    const attachment = await sideloadToServer(file, attachmentId, additionalData, signal);
+    onFileChange?.([attachment]);
+  } catch (error) {
+    let message;
+    if (error instanceof Error) {
+      message = error.message;
+    } else {
+      message = (0,external_wp_i18n_namespaceObject.sprintf)(
+      // translators: %s: file name
+      (0,external_wp_i18n_namespaceObject.__)('Error while sideloading file %s to the server.'), file.name);
+    }
+    onError(new UploadError({
+      code: 'GENERAL',
+      message,
+      file,
+      cause: error instanceof Error ? error : undefined
+    }));
+  }
+}
+
+;// external ["wp","privateApis"]
+const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
+;// ./packages/media-utils/build-module/lock-unlock.js
+/**
+ * WordPress dependencies
+ */
+
+const {
+  lock,
+  unlock
+} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/media-utils');
+
+;// ./packages/media-utils/build-module/private-apis.js
+/**
+ * Internal dependencies
+ */
+
+
+
+/**
+ * Private @wordpress/media-utils APIs.
+ */
+const privateApis = {};
+lock(privateApis, {
+  sideloadMedia: sideloadMedia
+});
+
 ;// ./packages/media-utils/build-module/index.js
+
 
 
 
