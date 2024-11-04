@@ -22266,7 +22266,9 @@ class URLInput extends external_wp_element_namespaceObject.Component {
       focusOnMount: false,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         ...suggestionsListProps,
-        className: dist_clsx('block-editor-url-input__suggestions', `${className}__suggestions`),
+        className: dist_clsx('block-editor-url-input__suggestions', {
+          [`${className}__suggestions`]: className
+        }),
         children: suggestions.map((suggestion, index) => /*#__PURE__*/(0,external_React_.createElement)(external_wp_components_namespaceObject.Button, {
           __next40pxDefaultSize: true,
           ...buildSuggestionItemProps(suggestion, index),
