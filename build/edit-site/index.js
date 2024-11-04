@@ -25797,9 +25797,8 @@ function ShadowsEditPanel() {
       },
       confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Delete'),
       size: "medium",
-      children: (0,external_wp_i18n_namespaceObject.sprintf)(
-      // translators: %s: name of the shadow
-      'Are you sure you want to delete "%s"?', selectedShadow.name)
+      children: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Name of the shadow preset. */
+      (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to delete "%s" shadow preset?'), selectedShadow.name)
     }), isRenameModalVisible && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
       title: (0,external_wp_i18n_namespaceObject.__)('Rename'),
       onRequestClose: () => setIsRenameModalVisible(false),
