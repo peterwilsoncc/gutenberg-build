@@ -63484,8 +63484,6 @@ function TracksEditor({
       onToggle
     }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Text tracks'),
-        showTooltip: true,
         "aria-expanded": isOpen,
         "aria-haspopup": "true",
         onClick: onToggle,
