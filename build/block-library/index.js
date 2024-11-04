@@ -44378,6 +44378,12 @@ function PostTemplateEdit({
       _fields: ['id'],
       slug: templateSlug.replace('category-', '')
     });
+    const templateTag = inherit && templateSlug?.startsWith('tag-') && getEntityRecords('taxonomy', 'post_tag', {
+      context: 'view',
+      per_page: 1,
+      _fields: ['id'],
+      slug: templateSlug.replace('tag-', '')
+    });
     const query = {
       offset: offset || 0,
       order,
@@ -44438,6 +44444,11 @@ function PostTemplateEdit({
         postType = query.postType;
       } else if (templateCategory) {
         query.categories = templateCategory[0]?.id;
+      } else if (templateTag) {
+        query.tags = templateTag[0]?.id;
+      } else if (templateSlug?.startsWith('taxonomy-post_format')) {
+        // Get the post format slug from the template slug by removing the prefix.
+        query.format = templateSlug.replace('taxonomy-post_format-post-format-', '');
       }
     }
     // When we preview Query Loop blocks we should prefer the current
