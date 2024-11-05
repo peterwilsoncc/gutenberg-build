@@ -50030,7 +50030,7 @@ const useBlockTypesState = (rootClientId, onInsert, isQuick) => {
       __unstableSkipMigrationLogs: true
     }) : (0,external_wp_blocks_namespaceObject.createBlock)(name, initialAttributes, (0,external_wp_blocks_namespaceObject.createBlocksFromInnerBlocksTemplate)(innerBlocks));
     onInsert(insertedBlock, undefined, shouldFocusBlock, destinationClientId);
-  }, [onInsert, getClosestAllowedInsertionPoint, rootClientId]);
+  }, [getClosestAllowedInsertionPoint, rootClientId, onInsert, createErrorNotice]);
   return [items, categories, collections, onSelectItem];
 };
 /* harmony default export */ const use_block_types_state = (useBlockTypesState);
