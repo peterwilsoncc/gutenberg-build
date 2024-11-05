@@ -2427,8 +2427,6 @@ const EDIT_MERGE_PROPERTIES = new Set(['meta']);
 
 /**
  * Constant for the store module (or reducer) key.
- *
- * @type {string}
  */
 const STORE_NAME = 'core/editor';
 const SAVE_POST_NOTICE_ID = 'SAVE_POST_NOTICE_ID';
@@ -2928,8 +2926,8 @@ function isCurrentPostPending(state) {
 /**
  * Return true if the current post has already been published.
  *
- * @param {Object}  state       Global application state.
- * @param {Object?} currentPost Explicit current post for bypassing registry selector.
+ * @param {Object} state         Global application state.
+ * @param {Object} [currentPost] Explicit current post for bypassing registry selector.
  *
  * @return {boolean} Whether the post has been published.
  */
@@ -9171,8 +9169,6 @@ const getPostBlocksByName = (0,external_wp_data_namespaceObject.createRegistrySe
  * Post editor data store configuration.
  *
  * @see https://github.com/WordPress/gutenberg/blob/HEAD/packages/data/README.md#registerStore
- *
- * @type {Object}
  */
 const storeConfig = {
   reducer: store_reducer,
@@ -9184,8 +9180,6 @@ const storeConfig = {
  * Store definition for the editor namespace.
  *
  * @see https://github.com/WordPress/gutenberg/blob/HEAD/packages/data/README.md#createReduxStore
- *
- * @type {Object}
  */
 const store_store = (0,external_wp_data_namespaceObject.createReduxStore)(STORE_NAME, {
   ...storeConfig
