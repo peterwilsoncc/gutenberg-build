@@ -32203,15 +32203,14 @@ function getVisibleElementBounds(element) {
   const stack = [element];
   let currentElement;
   while (currentElement = stack.pop()) {
-    for (const child of currentElement.children) {
-      if (isElementVisible(child)) {
-        let childBounds = child.getBoundingClientRect();
-        // If the parent is scrollable, use parent's scrollable bounds.
-        if (isScrollable(currentElement)) {
-          childBounds = currentElement.getBoundingClientRect();
+    // Children won’t affect bounds unless the element is not scrollable.
+    if (!isScrollable(currentElement)) {
+      for (const child of currentElement.children) {
+        if (isElementVisible(child)) {
+          const childBounds = child.getBoundingClientRect();
+          bounds = rectUnion(bounds, childBounds);
+          stack.push(child);
         }
-        bounds = rectUnion(bounds, childBounds);
-        stack.push(child);
       }
     }
   }
