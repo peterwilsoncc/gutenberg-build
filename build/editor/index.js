@@ -11103,13 +11103,15 @@ function DocumentBar(props) {
     documentTitle,
     isNotFound,
     templateTitle,
-    onNavigateToPreviousEntityRecord
+    onNavigateToPreviousEntityRecord,
+    isTemplatePreview
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getCurrentPostType,
       getCurrentPostId,
       getEditorSettings,
-      __experimentalGetTemplateInfo: getTemplateInfo
+      __experimentalGetTemplateInfo: getTemplateInfo,
+      getRenderingMode
     } = select(store_store);
     const {
       getEditedEntityRecord,
@@ -11127,7 +11129,8 @@ function DocumentBar(props) {
       documentTitle: _document.title,
       isNotFound: !_document && !isResolvingSelector('getEditedEntityRecord', 'postType', _postType, _postId),
       templateTitle: _templateInfo.title,
-      onNavigateToPreviousEntityRecord: getEditorSettings().onNavigateToPreviousEntityRecord
+      onNavigateToPreviousEntityRecord: getEditorSettings().onNavigateToPreviousEntityRecord,
+      isTemplatePreview: getRenderingMode() === 'template-locked'
     };
   }, []);
   const {
@@ -11175,6 +11178,9 @@ function DocumentBar(props) {
         } : undefined,
         children: (0,external_wp_i18n_namespaceObject.__)('Back')
       })
+    }), !isTemplate && isTemplatePreview && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
+      icon: library_layout,
+      className: "editor-document-bar__icon-layout"
     }), isNotFound ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
       children: (0,external_wp_i18n_namespaceObject.__)('Document not found')
     }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
@@ -27486,13 +27492,19 @@ function PreviewDropdown({
     homeUrl,
     isTemplate,
     isViewable,
-    showIconLabels
+    showIconLabels,
+    isTemplateHidden,
+    templateId
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _getPostType$viewable;
     const {
       getDeviceType,
-      getCurrentPostType
+      getCurrentPostType,
+      getCurrentTemplateId
     } = select(store_store);
+    const {
+      getRenderingMode
+    } = unlock(select(store_store));
     const {
       getEntityRecord,
       getPostType
@@ -27506,11 +27518,14 @@ function PreviewDropdown({
       homeUrl: getEntityRecord('root', '__unstableBase')?.home,
       isTemplate: _currentPostType === 'wp_template',
       isViewable: (_getPostType$viewable = getPostType(_currentPostType)?.viewable) !== null && _getPostType$viewable !== void 0 ? _getPostType$viewable : false,
-      showIconLabels: get('core', 'showIconLabels')
+      showIconLabels: get('core', 'showIconLabels'),
+      isTemplateHidden: getRenderingMode() === 'post-only',
+      templateId: getCurrentTemplateId()
     };
   }, []);
   const {
-    setDeviceType
+    setDeviceType,
+    setRenderingMode
   } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
   const {
     resetZoomLevel
@@ -27589,6 +27604,16 @@ function PreviewDropdown({
             children: /* translators: accessibility text */
             (0,external_wp_i18n_namespaceObject.__)('(opens in a new tab)')
           })]
+        })
+      }), !isTemplate && !!templateId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+          icon: !isTemplateHidden ? library_check : undefined,
+          isSelected: !isTemplateHidden,
+          role: "menuitemcheckbox",
+          onClick: () => {
+            setRenderingMode(isTemplateHidden ? 'template-locked' : 'post-only');
+          },
+          children: (0,external_wp_i18n_namespaceObject.__)('Show template')
         })
       }), isViewable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostPreviewButton, {
