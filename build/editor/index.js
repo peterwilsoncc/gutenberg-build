@@ -23390,10 +23390,11 @@ function useBlockEditorSettings(settings, postType, postId, renderingMode) {
       templateLock: postType === 'wp_navigation' ? 'insert' : settings.templateLock,
       template: postType === 'wp_navigation' ? [['core/navigation', {}, []]] : settings.template,
       __experimentalSetIsInserterOpened: setIsInserterOpened,
-      [sectionRootClientIdKey]: sectionRootClientId
+      [sectionRootClientIdKey]: sectionRootClientId,
+      editorTool: renderingMode === 'post-only' && postType !== 'wp_template' ? 'edit' : undefined
     };
     return blockEditorSettings;
-  }, [allowedBlockTypes, allowRightClickOverrides, focusMode, forceDisableFocusMode, hasFixedToolbar, isDistractionFree, keepCaretInsideBlock, settings, hasUploadPermissions, userPatternCategories, blockPatterns, blockPatternCategories, canUseUnfilteredHTML, undo, createPageEntity, userCanCreatePages, pageOnFront, pageForPosts, postType, setIsInserterOpened, sectionRootClientId, globalStylesData, globalStylesLinksData]);
+  }, [allowedBlockTypes, allowRightClickOverrides, focusMode, forceDisableFocusMode, hasFixedToolbar, isDistractionFree, keepCaretInsideBlock, settings, hasUploadPermissions, userPatternCategories, blockPatterns, blockPatternCategories, canUseUnfilteredHTML, undo, createPageEntity, userCanCreatePages, pageOnFront, pageForPosts, postType, setIsInserterOpened, sectionRootClientId, globalStylesData, globalStylesLinksData, renderingMode]);
 }
 /* harmony default export */ const use_block_editor_settings = (useBlockEditorSettings);
 
@@ -26850,7 +26851,8 @@ function DocumentTools({
     listViewShortcut,
     inserterSidebarToggleRef,
     listViewToggleRef,
-    showIconLabels
+    showIconLabels,
+    showTools
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       get
@@ -26859,7 +26861,9 @@ function DocumentTools({
       isListViewOpened,
       getEditorMode,
       getInserterSidebarToggleRef,
-      getListViewToggleRef
+      getListViewToggleRef,
+      getRenderingMode,
+      getCurrentPostType
     } = unlock(select(store_store));
     const {
       getShortcutRepresentation
@@ -26872,7 +26876,8 @@ function DocumentTools({
       listViewToggleRef: getListViewToggleRef(),
       showIconLabels: get('core', 'showIconLabels'),
       isDistractionFree: get('core', 'distractionFree'),
-      isVisualMode: getEditorMode() === 'visual'
+      isVisualMode: getEditorMode() === 'visual',
+      showTools: getRenderingMode() !== 'post-only' || getCurrentPostType() === 'wp_template'
     };
   }, []);
   const preventDefault = event => {
@@ -26924,7 +26929,7 @@ function DocumentTools({
           showTooltip: !showIconLabels,
           "aria-expanded": isInserterOpened
         }), (isWideViewport || !showIconLabels) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: [isLargeViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
+          children: [showTools && isLargeViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
             as: external_wp_blockEditor_namespaceObject.ToolSelector,
             showTooltip: !showIconLabels,
             variant: showIconLabels ? 'tertiary' : undefined,
