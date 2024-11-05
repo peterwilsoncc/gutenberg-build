@@ -48656,7 +48656,6 @@ function searchPatterns(patterns = [], searchValue = '') {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -48693,7 +48692,6 @@ function PatternSelectionModal({
   const filteredBlockPatterns = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return searchPatterns(blockPatterns, searchValue);
   }, [blockPatterns, searchValue]);
-  const shownBlockPatterns = (0,external_wp_compose_namespaceObject.useAsyncList)(filteredBlockPatterns);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
     overlayClassName: "block-library-query-pattern__selection-modal",
     title: (0,external_wp_i18n_namespaceObject.__)('Choose a pattern'),
@@ -48714,7 +48712,6 @@ function PatternSelectionModal({
         value: blockPreviewContext,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockPatternsList, {
           blockPatterns: filteredBlockPatterns,
-          shownPatterns: shownBlockPatterns,
           onClickPattern: onBlockPatternSelect
         })
       })]
@@ -61286,7 +61283,6 @@ function mapTemplatePartToBlockPattern(templatePart) {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -61311,7 +61307,6 @@ function TemplatePartSelectionModal({
     const partsAsPatterns = templateParts.map(templatePart => mapTemplatePartToBlockPattern(templatePart));
     return searchPatterns(partsAsPatterns, searchValue);
   }, [templateParts, searchValue]);
-  const shownTemplateParts = (0,external_wp_compose_namespaceObject.useAsyncList)(filteredTemplateParts);
   const blockPatterns = useAlternativeBlockPatterns(area, clientId);
   const filteredBlockPatterns = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return searchPatterns(blockPatterns, searchValue);
@@ -61349,7 +61344,6 @@ function TemplatePartSelectionModal({
         children: (0,external_wp_i18n_namespaceObject.__)('Existing template parts')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockPatternsList, {
         blockPatterns: filteredTemplateParts,
-        shownPatterns: shownTemplateParts,
         onClickPattern: pattern => {
           onTemplatePartSelect(pattern.templatePart);
         }
@@ -61852,7 +61846,6 @@ function TemplatePartInnerBlocks({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -61899,7 +61892,6 @@ function TemplatesList({
   // edit function!
   const blockPatterns = useAlternativeBlockPatterns(area, clientId);
   const canReplace = isEntityAvailable && !!blockPatterns.length && (area === 'header' || area === 'footer');
-  const shownTemplates = (0,external_wp_compose_namespaceObject.useAsyncList)(blockPatterns);
   if (!canReplace) {
     return null;
   }
@@ -61908,7 +61900,6 @@ function TemplatesList({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockPatternsList, {
       label: (0,external_wp_i18n_namespaceObject.__)('Templates'),
       blockPatterns: blockPatterns,
-      shownPatterns: shownTemplates,
       onClickPattern: onSelect,
       showTitle: false
     })

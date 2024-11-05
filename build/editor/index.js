@@ -14386,7 +14386,6 @@ function PluginSidebarMoreMenuItem(props) {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -14446,11 +14445,9 @@ function TemplatesList({
     title: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(template.title.rendered),
     id: template.id
   })), [availableTemplates]);
-  const shownTemplates = (0,external_wp_compose_namespaceObject.useAsyncList)(templatesAsPatterns);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockPatternsList, {
     label: (0,external_wp_i18n_namespaceObject.__)('Templates'),
     blockPatterns: templatesAsPatterns,
-    shownPatterns: shownTemplates,
     onClickPattern: onSelect
   });
 }
@@ -24216,7 +24213,6 @@ function BlockRemovalWarnings() {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -24263,7 +24259,6 @@ function PatternSelection({
   blockPatterns,
   onChoosePattern
 }) {
-  const shownBlockPatterns = (0,external_wp_compose_namespaceObject.useAsyncList)(blockPatterns);
   const {
     editEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
@@ -24282,7 +24277,6 @@ function PatternSelection({
   }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockPatternsList, {
     blockPatterns: blockPatterns,
-    shownPatterns: shownBlockPatterns,
     onClickPattern: (_pattern, blocks) => {
       editEntityRecord('postType', postType, postId, {
         blocks,
@@ -24781,7 +24775,6 @@ function ContentOnlySettingsMenu() {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -24863,10 +24856,8 @@ function start_template_options_PatternSelection({
 }) {
   const [,, onChange] = (0,external_wp_coreData_namespaceObject.useEntityBlockEditor)('postType', postType);
   const blockPatterns = start_template_options_useStartPatterns(fallbackContent);
-  const shownBlockPatterns = (0,external_wp_compose_namespaceObject.useAsyncList)(blockPatterns);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockPatternsList, {
     blockPatterns: blockPatterns,
-    shownPatterns: shownBlockPatterns,
     onClickPattern: (pattern, blocks) => {
       onChange(blocks, {
         selection: undefined
@@ -30346,7 +30337,6 @@ function useAvailablePatterns(template) {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -30358,14 +30348,12 @@ function post_transform_panel_TemplatesList({
   availableTemplates,
   onSelect
 }) {
-  const shownTemplates = (0,external_wp_compose_namespaceObject.useAsyncList)(availableTemplates);
   if (!availableTemplates || availableTemplates?.length === 0) {
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockPatternsList, {
     label: (0,external_wp_i18n_namespaceObject.__)('Templates'),
     blockPatterns: availableTemplates,
-    shownPatterns: shownTemplates,
     onClickPattern: onSelect,
     showTitlesAsTooltip: true
   });

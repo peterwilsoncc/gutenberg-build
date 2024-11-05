@@ -41424,53 +41424,6 @@ const lockSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 });
 /* harmony default export */ const lock_small = (lockSmall);
 
-;// external ["wp","priorityQueue"]
-const external_wp_priorityQueue_namespaceObject = window["wp"]["priorityQueue"];
-;// ./packages/edit-site/build-module/components/async/index.js
-/**
- * WordPress dependencies
- */
-
-
-const blockPreviewQueue = (0,external_wp_priorityQueue_namespaceObject.createQueue)();
-
-/**
- * Renders a component at the next idle time.
- * @param {*} props
- */
-function Async({
-  children,
-  placeholder
-}) {
-  const [shouldRender, setShouldRender] = (0,external_wp_element_namespaceObject.useState)(false);
-
-  // In the future, we could try to use startTransition here, but currently
-  // react will batch all transitions, which means all previews will be
-  // rendered at the same time.
-  // https://react.dev/reference/react/startTransition#caveats
-  // > If there are multiple ongoing Transitions, React currently batches them
-  // > together. This is a limitation that will likely be removed in a future
-  // > release.
-
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    const context = {};
-    blockPreviewQueue.add(context, () => {
-      // Synchronously run all renders so it consumes timeRemaining.
-      // See https://github.com/WordPress/gutenberg/pull/48238
-      (0,external_wp_element_namespaceObject.flushSync)(() => {
-        setShouldRender(true);
-      });
-    });
-    return () => {
-      blockPreviewQueue.cancel(context);
-    };
-  }, []);
-  if (!shouldRender) {
-    return placeholder;
-  }
-  return children;
-}
-
 ;// ./packages/icons/build-module/library/plugins.js
 /**
  * WordPress dependencies
@@ -41630,7 +41583,6 @@ function useAddedBy(postType, postId) {
 
 
 
-
 const {
   useGlobalStyle: fields_useGlobalStyle
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
@@ -41681,7 +41633,7 @@ function PreviewField({
       item: item,
       onClick: onClick,
       ariaDescribedBy: !!description ? descriptionId : undefined,
-      children: [isEmpty && isTemplatePart && (0,external_wp_i18n_namespaceObject.__)('Empty template part'), isEmpty && !isTemplatePart && (0,external_wp_i18n_namespaceObject.__)('Empty pattern'), !isEmpty && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Async, {
+      children: [isEmpty && isTemplatePart && (0,external_wp_i18n_namespaceObject.__)('Empty template part'), isEmpty && !isTemplatePart && (0,external_wp_i18n_namespaceObject.__)('Empty pattern'), !isEmpty && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview.Async, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview, {
           blocks: blocks,
           viewportWidth: item.viewportWidth
@@ -43916,7 +43868,6 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
 
 
 
-
 const {
   useGlobalStyle: page_templates_fields_useGlobalStyle
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
@@ -43956,7 +43907,7 @@ function fields_PreviewField({
         type: "button",
         onClick: onClick,
         "aria-label": item.title?.rendered || item.title,
-        children: [isEmpty && (0,external_wp_i18n_namespaceObject.__)('Empty template'), !isEmpty && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Async, {
+        children: [isEmpty && (0,external_wp_i18n_namespaceObject.__)('Empty template'), !isEmpty && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview.Async, {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview, {
             blocks: blocks
           })

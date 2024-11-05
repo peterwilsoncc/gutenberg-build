@@ -49277,6 +49277,53 @@ function AutoBlockPreview(props) {
   });
 }
 
+;// external ["wp","priorityQueue"]
+const external_wp_priorityQueue_namespaceObject = window["wp"]["priorityQueue"];
+;// ./packages/block-editor/build-module/components/block-preview/async.js
+/**
+ * WordPress dependencies
+ */
+
+
+const blockPreviewQueue = (0,external_wp_priorityQueue_namespaceObject.createQueue)();
+
+/**
+ * Renders a component at the next idle time.
+ * @param {*} props
+ */
+function Async({
+  children,
+  placeholder
+}) {
+  const [shouldRender, setShouldRender] = (0,external_wp_element_namespaceObject.useState)(false);
+
+  // In the future, we could try to use startTransition here, but currently
+  // react will batch all transitions, which means all previews will be
+  // rendered at the same time.
+  // https://react.dev/reference/react/startTransition#caveats
+  // > If there are multiple ongoing Transitions, React currently batches them
+  // > together. This is a limitation that will likely be removed in a future
+  // > release.
+
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    const context = {};
+    blockPreviewQueue.add(context, () => {
+      // Synchronously run all renders so it consumes timeRemaining.
+      // See https://github.com/WordPress/gutenberg/pull/48238
+      (0,external_wp_element_namespaceObject.flushSync)(() => {
+        setShouldRender(true);
+      });
+    });
+    return () => {
+      blockPreviewQueue.cancel(context);
+    };
+  }, []);
+  if (!shouldRender) {
+    return placeholder;
+  }
+  return children;
+}
+
 ;// ./packages/block-editor/build-module/components/block-preview/index.js
 /**
  * External dependencies
@@ -49294,6 +49341,7 @@ function AutoBlockPreview(props) {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -49349,6 +49397,8 @@ function BlockPreview({
     })
   });
 }
+const MemoizedBlockPreview = (0,external_wp_element_namespaceObject.memo)(BlockPreview);
+MemoizedBlockPreview.Async = Async;
 
 /**
  * BlockPreview renders a preview of a block or array of blocks.
@@ -49361,7 +49411,7 @@ function BlockPreview({
  *
  * @return {Component} The component to be rendered.
  */
-/* harmony default export */ const block_preview = ((0,external_wp_element_namespaceObject.memo)(BlockPreview));
+/* harmony default export */ const block_preview = (MemoizedBlockPreview);
 
 /**
  * This hook is used to lightly mark an element as a block preview wrapper
@@ -50489,9 +50539,12 @@ function BlockPattern({
             onHover?.(pattern);
           },
           onMouseLeave: () => onHover?.(null),
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_preview, {
-            blocks: blocks,
-            viewportWidth: viewportWidth
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_preview.Async, {
+            placeholder: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockPatternPlaceholder, {}),
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_preview, {
+              blocks: blocks,
+              viewportWidth: viewportWidth
+            })
           }), showTitle && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
             className: "block-editor-patterns__pattern-details",
             spacing: 2,
@@ -50522,7 +50575,6 @@ function BlockPatternPlaceholder() {
 function BlockPatternsList({
   isDraggable,
   blockPatterns,
-  shownPatterns,
   onHover,
   onClickPattern,
   orientation,
@@ -50537,9 +50589,9 @@ function BlockPatternsList({
     // Reset the active composite item whenever the available patterns change,
     // to make sure that Composite widget can receive focus correctly when its
     // composite items change. The first composite item will receive focus.
-    const firstCompositeItemId = blockPatterns.find(pattern => shownPatterns.includes(pattern))?.name;
+    const firstCompositeItemId = blockPatterns[0]?.name;
     setActiveCompositeId(firstCompositeItemId);
-  }, [shownPatterns, blockPatterns]);
+  }, [blockPatterns]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite, {
     orientation: orientation,
     activeId: activeCompositeId,
@@ -50548,19 +50600,16 @@ function BlockPatternsList({
     className: "block-editor-block-patterns-list",
     "aria-label": label,
     ref: ref,
-    children: [blockPatterns.map(pattern => {
-      const isShown = shownPatterns.includes(pattern);
-      return isShown ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockPattern, {
-        id: pattern.name,
-        pattern: pattern,
-        onClick: onClickPattern,
-        onHover: onHover,
-        isDraggable: isDraggable,
-        showTitle: showTitle,
-        showTooltip: showTitlesAsTooltip,
-        category: category
-      }, pattern.name) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockPatternPlaceholder, {}, pattern.name);
-    }), pagingProps && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Pagination, {
+    children: [blockPatterns.map(pattern => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockPattern, {
+      id: pattern.name,
+      pattern: pattern,
+      onClick: onClickPattern,
+      onHover: onHover,
+      isDraggable: isDraggable,
+      showTitle: showTitle,
+      showTooltip: showTitlesAsTooltip,
+      category: category
+    }, pattern.name)), pagingProps && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Pagination, {
       ...pagingProps
     })]
   });
@@ -51082,7 +51131,6 @@ function getItemSearchRank(item, searchTerm, config = {}) {
 
 
 const PAGE_SIZE = 20;
-const INITIAL_INSERTER_RESULTS = 5;
 
 /**
  * Supplies values needed to page the patterns list client side.
@@ -51106,9 +51154,6 @@ function usePatternsPaging(currentCategoryPatterns, currentCategory, scrollConta
   const categoryPatterns = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return currentCategoryPatterns.slice(pageIndex * PAGE_SIZE, pageIndex * PAGE_SIZE + PAGE_SIZE);
   }, [pageIndex, currentCategoryPatterns]);
-  const categoryPatternsAsyncList = (0,external_wp_compose_namespaceObject.useAsyncList)(categoryPatterns, {
-    step: INITIAL_INSERTER_RESULTS
-  });
   const numPages = Math.ceil(currentCategoryPatterns.length / PAGE_SIZE);
   const changePage = page => {
     const scrollContainer = (0,external_wp_dom_namespaceObject.getScrollContainer)(scrollContainerRef?.current);
@@ -51122,7 +51167,6 @@ function usePatternsPaging(currentCategoryPatterns, currentCategory, scrollConta
   return {
     totalItems,
     categoryPatterns,
-    categoryPatternsAsyncList,
     numPages,
     changePage,
     currentPage
@@ -51228,7 +51272,6 @@ function PatternList({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inserter_listbox, {
       children: hasItems && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_list, {
-          shownPatterns: pagingProps.categoryPatternsAsyncList,
           blockPatterns: pagingProps.categoryPatterns,
           onClickPattern: onClickPattern,
           isDraggable: false
@@ -51647,7 +51690,6 @@ function PatternCategoryPreviews({
         children: (0,external_wp_i18n_namespaceObject.__)('Drag and drop patterns into the canvas.')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_list, {
         ref: scrollContainerRef,
-        shownPatterns: pagingProps.categoryPatternsAsyncList,
         blockPatterns: pagingProps.categoryPatterns,
         onClickPattern: onClickPattern,
         onHover: onHover,
@@ -52521,7 +52563,7 @@ const orderInserterBlockItems = (items, priority) => {
 
 
 
-const search_results_INITIAL_INSERTER_RESULTS = 9;
+const INITIAL_INSERTER_RESULTS = 9;
 /**
  * Shared reference to an empty array for cases where it is important to avoid
  * returning a new array reference on every invocation and rerendering the component.
@@ -52602,9 +52644,8 @@ function InserterSearchResults({
     debouncedSpeak(resultsFoundMessage);
   }, [filterValue, debouncedSpeak, filteredBlockTypes, filteredBlockPatterns]);
   const currentShownBlockTypes = (0,external_wp_compose_namespaceObject.useAsyncList)(filteredBlockTypes, {
-    step: search_results_INITIAL_INSERTER_RESULTS
+    step: INITIAL_INSERTER_RESULTS
   });
-  const currentShownPatterns = (0,external_wp_compose_namespaceObject.useAsyncList)(currentShownBlockTypes.length === filteredBlockTypes.length ? filteredBlockPatterns : search_results_EMPTY_ARRAY);
   const hasItems = filteredBlockTypes.length > 0 || filteredBlockPatterns.length > 0;
   const blocksUI = !!filteredBlockTypes.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(panel, {
     title: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
@@ -52625,7 +52666,6 @@ function InserterSearchResults({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "block-editor-inserter__quick-inserter-patterns",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_list, {
-        shownPatterns: currentShownPatterns,
         blockPatterns: filteredBlockPatterns,
         onClickPattern: onClickPattern,
         onHover: onHoverPattern,
@@ -61552,7 +61592,6 @@ function useHasBlockToolbar() {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -61615,7 +61654,6 @@ function ChangeDesign({
       );
     }).slice(0, MAX_PATTERNS_TO_SHOW);
   }, [categories, currentPatternName, patterns]);
-  const currentShownPatterns = (0,external_wp_compose_namespaceObject.useAsyncList)(sameCategoryPatternsWithSingleWrapper);
   if (sameCategoryPatternsWithSingleWrapper.length < 2) {
     return null;
   }
@@ -61648,7 +61686,6 @@ function ChangeDesign({
       className: "block-editor-block-toolbar-change-design-content-wrapper",
       paddingSize: "none",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_list, {
-        shownPatterns: currentShownPatterns,
         blockPatterns: sameCategoryPatternsWithSingleWrapper,
         onClickPattern: onClickPattern,
         showTitle: false
