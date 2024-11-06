@@ -2663,38 +2663,28 @@ function usePaddingAppender(enabled) {
  * Internal dependencies
  */
 
-const isGutenbergPlugin =  true ? true : 0;
 function useShouldIframe() {
-  const {
-    isBlockBasedTheme,
-    hasV3BlocksOnly,
-    isEditingTemplateOrPattern,
-    isZoomOutMode,
-    deviceType
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  return (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEditorSettings,
       getCurrentPostType,
       getDeviceType
     } = select(external_wp_editor_namespaceObject.store);
-    const {
-      isZoomOut
-    } = unlock(select(external_wp_blockEditor_namespaceObject.store));
-    const {
-      getBlockTypes
-    } = select(external_wp_blocks_namespaceObject.store);
-    const editorSettings = getEditorSettings();
-    return {
-      isBlockBasedTheme: editorSettings.__unstableIsBlockBasedTheme,
-      hasV3BlocksOnly: getBlockTypes().every(type => {
-        return type.apiVersion >= 3;
-      }),
-      isEditingTemplateOrPattern: ['wp_template', 'wp_block'].includes(getCurrentPostType()),
-      isZoomOutMode: isZoomOut(),
-      deviceType: getDeviceType()
-    };
+    return (
+      // If the theme is block based, we ALWAYS use the iframe for
+      // consistency across the post and site editor. The iframe was
+      // introduced long before the sited editor and block themes, so
+      // these themes are expecting it.
+      getEditorSettings().__unstableIsBlockBasedTheme ||
+      // For classic themes, we also still want to iframe all the special
+      // editor features and modes such as device previews, zoom out, and
+      // template/pattern editing.
+      getDeviceType() !== 'Desktop' || ['wp_template', 'wp_block'].includes(getCurrentPostType()) || unlock(select(external_wp_blockEditor_namespaceObject.store)).isZoomOut() ||
+      // Finally, still iframe the editor for classic themes if all blocks
+      // are v3 (which means they are marked as iframe-compatible).
+      select(external_wp_blocks_namespaceObject.store).getBlockTypes().every(type => type.apiVersion >= 3)
+    );
   }, []);
-  return hasV3BlocksOnly || isGutenbergPlugin && isBlockBasedTheme || isEditingTemplateOrPattern || isZoomOutMode || ['Tablet', 'Mobile'].includes(deviceType);
 }
 
 ;// ./packages/edit-post/build-module/hooks/use-navigate-to-entity-record.js
