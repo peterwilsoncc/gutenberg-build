@@ -26752,6 +26752,13 @@ function image_Image({
   const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseBorderProps)(attributes);
   const shadowProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetShadowClassesAndStyles)(attributes);
   const isRounded = attributes.className?.includes('is-style-rounded');
+  const {
+    postType,
+    postId,
+    queryId
+  } = context;
+  const isDescendentOfQueryLoop = Number.isFinite(queryId);
+  const [, setFeaturedImage] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', postType, 'featured_media', postId);
   let img = temporaryURL && hasImageErrored ?
   /*#__PURE__*/
   // Show a placeholder during upload when the blob URL can't be loaded. This can
@@ -26921,8 +26928,26 @@ function image_Image({
       children: [mediaReplaceFlow, metadata?.bindings ? controls : sizeControls]
     });
   }
+
+  /**
+   * Set the post's featured image with the current image.
+   */
+  const setPostFeatureImage = () => {
+    setFeaturedImage(id);
+    createSuccessNotice((0,external_wp_i18n_namespaceObject.__)('Post featured image updated.'), {
+      type: 'snackbar'
+    });
+  };
+  const featuredImageControl = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockSettingsMenuControls, {
+    children: ({
+      selectedClientIds
+    }) => selectedClientIds.length === 1 && !isDescendentOfQueryLoop && postId && id && clientId === selectedClientIds[0] && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+      onClick: setPostFeatureImage,
+      children: (0,external_wp_i18n_namespaceObject.__)('Set featured image')
+    })
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [mediaReplaceFlow, controls, img, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Caption, {
+    children: [mediaReplaceFlow, controls, featuredImageControl, img, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Caption, {
       attributes: attributes,
       setAttributes: setAttributes,
       isSelected: isSingleSelected,
@@ -27628,7 +27653,7 @@ const image_metadata = {
   name: "core/image",
   title: "Image",
   category: "media",
-  usesContext: ["allowResize", "imageCrop", "fixedHeight"],
+  usesContext: ["allowResize", "imageCrop", "fixedHeight", "postId", "postType", "queryId"],
   description: "Insert an image to make a visual statement.",
   keywords: ["img", "photo", "picture"],
   textdomain: "default",
