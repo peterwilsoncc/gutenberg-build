@@ -27546,11 +27546,6 @@ function useGlobalStylesRevisions({
 const external_wp_date_namespaceObject = window["wp"]["date"];
 ;// ./packages/edit-site/build-module/components/global-styles/screen-revisions/revisions-buttons.js
 /**
- * External dependencies
- */
-
-
-/**
  * WordPress dependencies
  */
 
@@ -27648,10 +27643,11 @@ function RevisionsButtons({
   const {
     datetimeAbbreviated
   } = (0,external_wp_date_namespaceObject.getSettings)().formats;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ol", {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
+    orientation: "vertical",
     className: "edit-site-global-styles-screen-revisions__revisions-list",
     "aria-label": (0,external_wp_i18n_namespaceObject.__)('Global styles revisions list'),
-    role: "group",
+    role: "listbox",
     children: userRevisions.map((revision, index) => {
       const {
         id,
@@ -27670,22 +27666,27 @@ function RevisionsButtons({
       const modifiedDate = (0,external_wp_date_namespaceObject.getDate)(modified);
       const displayDate = modified && dateNowInMs - modifiedDate.getTime() > DAY_IN_MILLISECONDS ? (0,external_wp_date_namespaceObject.dateI18n)(datetimeAbbreviated, modifiedDate) : (0,external_wp_date_namespaceObject.humanTimeDiff)(modified);
       const revisionLabel = getRevisionLabel(id, authorDisplayName, (0,external_wp_date_namespaceObject.dateI18n)(datetimeAbbreviated, modifiedDate), areStylesEqual);
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
-        className: dist_clsx('edit-site-global-styles-screen-revisions__revision-item', {
-          'is-selected': isSelected,
-          'is-active': areStylesEqual,
-          'is-reset': isReset
-        }),
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite.Item, {
+        className: "edit-site-global-styles-screen-revisions__revision-item",
         "aria-current": isSelected,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          __next40pxDefaultSize: true,
-          className: "edit-site-global-styles-screen-revisions__revision-button",
-          accessibleWhenDisabled: true,
-          disabled: isSelected,
-          onClick: () => {
+        role: "option",
+        onKeyDown: event => {
+          const {
+            keyCode
+          } = event;
+          if (keyCode === external_wp_keycodes_namespaceObject.ENTER || keyCode === external_wp_keycodes_namespaceObject.SPACE) {
             onChange(revision);
-          },
-          "aria-label": revisionLabel,
+          }
+        },
+        onClick: event => {
+          event.preventDefault();
+          onChange(revision);
+        },
+        "aria-selected": isSelected,
+        "aria-label": revisionLabel,
+        render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {}),
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          className: "edit-site-global-styles-screen-revisions__revision-item-wrapper",
           children: isReset ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
             className: "edit-site-global-styles-screen-revisions__description",
             children: [(0,external_wp_i18n_namespaceObject.__)('Default styles'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
@@ -27720,6 +27721,7 @@ function RevisionsButtons({
           variant: "primary",
           className: "edit-site-global-styles-screen-revisions__apply-button",
           onClick: onApplyRevision,
+          "aria-label": (0,external_wp_i18n_namespaceObject.__)('Apply the selected revision to your site.'),
           children: isReset ? (0,external_wp_i18n_namespaceObject.__)('Reset to defaults') : (0,external_wp_i18n_namespaceObject.__)('Apply')
         }))]
       }, id);
