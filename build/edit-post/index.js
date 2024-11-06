@@ -95,7 +95,6 @@ __webpack_require__.d(actions_namespaceObject, {
   toggleEditorPanelEnabled: () => (toggleEditorPanelEnabled),
   toggleEditorPanelOpened: () => (toggleEditorPanelOpened),
   toggleFeature: () => (toggleFeature),
-  toggleFullscreenMode: () => (toggleFullscreenMode),
   togglePinnedPluginItem: () => (togglePinnedPluginItem),
   togglePublishSidebar: () => (togglePublishSidebar),
   updatePreferredStyleVariations: () => (updatePreferredStyleVariations)
@@ -597,8 +596,6 @@ const getMetaBoxContainer = location => {
 
 
 
-
-
 /**
  * Internal dependencies
  */
@@ -1062,26 +1059,6 @@ const toggleDistractionFree = () => ({
     alternative: "dispatch( 'core/editor').toggleDistractionFree"
   });
   registry.dispatch(external_wp_editor_namespaceObject.store).toggleDistractionFree();
-};
-
-/**
- * Action that toggles the Fullscreen Mode view option.
- */
-const toggleFullscreenMode = () => ({
-  registry
-}) => {
-  const isFullscreen = registry.select(external_wp_preferences_namespaceObject.store).get('core/edit-post', 'fullscreenMode');
-  registry.dispatch(external_wp_preferences_namespaceObject.store).toggle('core/edit-post', 'fullscreenMode');
-  registry.dispatch(external_wp_notices_namespaceObject.store).createInfoNotice(isFullscreen ? (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode activated.') : (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode deactivated.'), {
-    id: 'core/edit-post/toggle-fullscreen-mode/notice',
-    type: 'snackbar',
-    actions: [{
-      label: (0,external_wp_i18n_namespaceObject.__)('Undo'),
-      onClick: () => {
-        registry.dispatch(external_wp_preferences_namespaceObject.store).toggle('core/edit-post', 'fullscreenMode');
-      }
-    }]
-  });
 };
 
 ;// ./packages/edit-post/build-module/store/private-selectors.js
@@ -1681,7 +1658,7 @@ unlock(store).registerPrivateSelectors(private_selectors_namespaceObject);
 
 function KeyboardShortcuts() {
   const {
-    toggleFullscreenMode
+    toggleFeature
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const {
     registerShortcut
@@ -1698,7 +1675,7 @@ function KeyboardShortcuts() {
     });
   }, []);
   (0,external_wp_keyboardShortcuts_namespaceObject.useShortcut)('core/edit-post/toggle-fullscreen', () => {
-    toggleFullscreenMode();
+    toggleFeature('fullscreenMode');
   });
   return null;
 }
@@ -2324,8 +2301,8 @@ const MoreMenu = () => {
         name: "fullscreenMode",
         label: (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode'),
         info: (0,external_wp_i18n_namespaceObject.__)('Show and hide the admin user interface'),
-        messageActivated: (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode activated.'),
-        messageDeactivated: (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode deactivated.'),
+        messageActivated: (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode activated'),
+        messageDeactivated: (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode deactivated'),
         shortcut: external_wp_keycodes_namespaceObject.displayShortcut.secondary('f')
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ToolsMoreMenuGroup, {
@@ -3158,7 +3135,7 @@ function Layout({
       hasBlockSelected: !!select(external_wp_blockEditor_namespaceObject.store).getBlockSelectionStart(),
       showIconLabels: get('core', 'showIconLabels'),
       isDistractionFree: get('core', 'distractionFree'),
-      showMetaBoxes: !DESIGN_POST_TYPES.includes(currentPostType),
+      showMetaBoxes: !DESIGN_POST_TYPES.includes(currentPostType) && isRenderingPostOnly,
       isWelcomeGuideVisible: isFeatureActive('welcomeGuide'),
       templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate ? getEditedPostTemplateId() : null,
       enablePaddingAppender: !isZoomOut() && isRenderingPostOnly && !DESIGN_POST_TYPES.includes(currentPostType)

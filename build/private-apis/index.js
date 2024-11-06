@@ -47,18 +47,20 @@ __webpack_require__.d(__webpack_exports__, {
  * wordpress/private-apis – the utilities to enable private cross-package
  * exports of private APIs.
  *
- * This "implementation.ts" file is needed for the sake of the unit tests. It
+ * This "implementation.js" file is needed for the sake of the unit tests. It
  * exports more than the public API of the package to aid in testing.
  */
 
 /**
  * The list of core modules allowed to opt-in to the private APIs.
  */
-const CORE_MODULES_USING_PRIVATE_APIS = ['@wordpress/block-directory', '@wordpress/block-editor', '@wordpress/block-library', '@wordpress/blocks', '@wordpress/commands', '@wordpress/components', '@wordpress/core-commands', '@wordpress/core-data', '@wordpress/customize-widgets', '@wordpress/data', '@wordpress/edit-post', '@wordpress/edit-site', '@wordpress/edit-widgets', '@wordpress/editor', '@wordpress/format-library', '@wordpress/patterns', '@wordpress/preferences', '@wordpress/reusable-blocks', '@wordpress/router', '@wordpress/dataviews', '@wordpress/fields', '@wordpress/media-utils'];
+const CORE_MODULES_USING_PRIVATE_APIS = ['@wordpress/block-directory', '@wordpress/block-editor', '@wordpress/block-library', '@wordpress/blocks', '@wordpress/commands', '@wordpress/components', '@wordpress/core-commands', '@wordpress/core-data', '@wordpress/customize-widgets', '@wordpress/data', '@wordpress/edit-post', '@wordpress/edit-site', '@wordpress/edit-widgets', '@wordpress/editor', '@wordpress/format-library', '@wordpress/patterns', '@wordpress/preferences', '@wordpress/reusable-blocks', '@wordpress/router', '@wordpress/dataviews', '@wordpress/fields'];
 
 /**
  * A list of core modules that already opted-in to
  * the privateApis package.
+ *
+ * @type {string[]}
  */
 const registeredPrivateApis = [];
 
@@ -85,9 +87,9 @@ const allowReRegistration =  false ? 0 : true;
  * Called by a @wordpress package wishing to opt-in to accessing or exposing
  * private private APIs.
  *
- * @param consent    The consent string.
- * @param moduleName The name of the module that is opting in.
- * @return An object containing the lock and unlock functions.
+ * @param {string} consent    The consent string.
+ * @param {string} moduleName The name of the module that is opting in.
+ * @return {{lock: typeof lock, unlock: typeof unlock}} An object containing the lock and unlock functions.
  */
 const __dangerousOptInToUnstableAPIsOnlyForCoreModules = (consent, moduleName) => {
   if (!CORE_MODULES_USING_PRIVATE_APIS.includes(moduleName)) {
@@ -130,8 +132,8 @@ const __dangerousOptInToUnstableAPIsOnlyForCoreModules = (consent, moduleName) =
  * // { a: 1 }
  * ```
  *
- * @param object      The object to bind the private data to.
- * @param privateData The private data to bind to the object.
+ * @param {any} object      The object to bind the private data to.
+ * @param {any} privateData The private data to bind to the object.
  */
 function lock(object, privateData) {
   if (!object) {
@@ -163,8 +165,8 @@ function lock(object, privateData) {
  * // { a: 1 }
  * ```
  *
- * @param object The object to unlock the private data from.
- * @return The private data bound to the object.
+ * @param {any} object The object to unlock the private data from.
+ * @return {any} The private data bound to the object.
  */
 function unlock(object) {
   if (!object) {
@@ -189,7 +191,7 @@ const __private = Symbol('Private API ID');
  * Private function to allow the unit tests to allow
  * a mock module to access the private APIs.
  *
- * @param name The name of the module.
+ * @param {string} name The name of the module.
  */
 function allowCoreModule(name) {
   CORE_MODULES_USING_PRIVATE_APIS.push(name);

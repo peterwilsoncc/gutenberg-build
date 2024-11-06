@@ -3076,7 +3076,7 @@ const coreDataStore = {
 /**
  * Create an event emitter.
  *
- * @return The event emitter.
+ * @return {import("../types").DataEmitter} Emitter.
  */
 function createEmitter() {
   let isPaused = false;

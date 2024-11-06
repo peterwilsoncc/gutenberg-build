@@ -920,14 +920,18 @@ class WP_Theme_JSON_Resolver_Gutenberg {
 			return $theme_json;
 		}
 
-		$resolved_theme_json_data = $theme_json->get_raw_data();
+		$resolved_theme_json_data = array(
+			'version' => WP_Theme_JSON_Gutenberg::LATEST_SCHEMA,
+		);
 
 		foreach ( $resolved_urls as $resolved_url ) {
 			$path = explode( '.', $resolved_url['target'] );
 			_wp_array_set( $resolved_theme_json_data, $path, $resolved_url['href'] );
 		}
 
-		return new WP_Theme_JSON_Gutenberg( $resolved_theme_json_data );
+		$theme_json->merge( new WP_Theme_JSON_Gutenberg( $resolved_theme_json_data ) );
+
+		return $theme_json;
 	}
 
 	/**
