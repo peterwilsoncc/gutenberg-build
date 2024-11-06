@@ -52764,7 +52764,7 @@ function TabbedSidebar({
           icon: close_small,
           label: closeButtonLabel,
           onClick: () => onClose(),
-          size: "small"
+          size: "compact"
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tabbed_sidebar_Tabs.TabList, {
           className: "block-editor-tabbed-sidebar__tablist",
           ref: ref,

@@ -10428,7 +10428,7 @@ function ComplementaryArea({
         onClose: () => disableComplementaryArea(scope),
         toggleButtonProps: {
           label: closeLabel,
-          size: 'small',
+          size: 'compact',
           shortcut: toggleShortcut,
           scope,
           identifier
