@@ -42431,6 +42431,7 @@ const post_content_metadata = {
     spacing: {
       blockGap: true,
       padding: true,
+      margin: true,
       __experimentalDefaultControls: {
         margin: false,
         padding: false
@@ -42455,6 +42456,18 @@ const post_content_metadata = {
       __experimentalLetterSpacing: true,
       __experimentalDefaultControls: {
         fontSize: true
+      }
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true,
+      __experimentalDefaultControls: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
       }
     }
   },
