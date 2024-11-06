@@ -18059,11 +18059,11 @@ function createBlockEditFilter(features) {
 }
 function BlockProps({
   index,
-  useBlockProps,
+  useBlockProps: hook,
   setAllWrapperProps,
   ...props
 }) {
-  const wrapperProps = useBlockProps(props);
+  const wrapperProps = hook(props);
   const setWrapperProps = next => setAllWrapperProps(prev => {
     const nextAll = [...prev];
     nextAll[index] = next;
