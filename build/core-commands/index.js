@@ -167,7 +167,7 @@ function useAdminNavigationCommands() {
     label: (0,external_wp_i18n_namespaceObject.__)('Add new post'),
     icon: library_plus,
     callback: () => {
-      document.location.href = 'post-new.php';
+      document.location.assign('post-new.php');
     }
   });
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
