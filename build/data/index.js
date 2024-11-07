@@ -4130,10 +4130,10 @@ function Store(registry, suspense) {
     };
   };
 }
-function useStaticSelect(storeName) {
+function _useStaticSelect(storeName) {
   return useRegistry().select(storeName);
 }
-function useMappingSelect(suspense, mapSelect, deps) {
+function _useMappingSelect(suspense, mapSelect, deps) {
   const registry = useRegistry();
   const isAsync = useAsyncMode();
   const store = (0,external_wp_element_namespaceObject.useMemo)(() => Store(registry, suspense), [registry, suspense]);
@@ -4225,11 +4225,9 @@ function useSelect(mapSelect, deps) {
     throw new Error(`Switching useSelect from ${prevMode} to ${nextMode} is not allowed`);
   }
 
-  /* eslint-disable react-hooks/rules-of-hooks */
   // `staticSelectMode` is not allowed to change during the hook instance's,
   // lifetime, so the rules of hooks are not really violated.
-  return staticSelectMode ? useStaticSelect(mapSelect) : useMappingSelect(false, mapSelect, deps);
-  /* eslint-enable react-hooks/rules-of-hooks */
+  return staticSelectMode ? _useStaticSelect(mapSelect) : _useMappingSelect(false, mapSelect, deps);
 }
 
 /**
@@ -4252,7 +4250,7 @@ function useSelect(mapSelect, deps) {
  * @return {ReturnType<T>} Data object returned by the `mapSelect` function.
  */
 function useSuspenseSelect(mapSelect, deps) {
-  return useMappingSelect(true, mapSelect, deps);
+  return _useMappingSelect(true, mapSelect, deps);
 }
 
 ;// external "ReactJSXRuntime"
