@@ -62423,7 +62423,7 @@ const trash = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 
 
 
-const useTransformCommands = () => {
+const getTransformCommands = () => function useTransformCommands() {
   const {
     replaceBlocks,
     multiSelect
@@ -62521,7 +62521,7 @@ const useTransformCommands = () => {
     commands
   };
 };
-const useQuickActionsCommands = () => {
+const getQuickActionsCommands = () => function useQuickActionsCommands() {
   const {
     clientIds,
     isUngroupable,
@@ -62661,11 +62661,11 @@ const useQuickActionsCommands = () => {
 const useBlockCommands = () => {
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/block-editor/blockTransforms',
-    hook: useTransformCommands
+    hook: getTransformCommands()
   });
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/block-editor/blockQuickActions',
-    hook: useQuickActionsCommands,
+    hook: getQuickActionsCommands(),
     context: 'block-selection-edit'
   });
 };

@@ -13670,7 +13670,7 @@ const {
   useHistory: use_common_commands_useHistory,
   useLocation: use_common_commands_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
-function useGlobalStylesOpenStylesCommands() {
+const getGlobalStylesOpenStylesCommands = () => function useGlobalStylesOpenStylesCommands() {
   const {
     openGeneralSidebar
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
@@ -13718,8 +13718,8 @@ function useGlobalStylesOpenStylesCommands() {
     isLoading: false,
     commands
   };
-}
-function useGlobalStylesToggleWelcomeGuideCommands() {
+};
+const getGlobalStylesToggleWelcomeGuideCommands = () => function useGlobalStylesToggleWelcomeGuideCommands() {
   const {
     openGeneralSidebar
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
@@ -13776,8 +13776,8 @@ function useGlobalStylesToggleWelcomeGuideCommands() {
     isLoading: false,
     commands
   };
-}
-function useGlobalStylesResetCommands() {
+};
+const getGlobalStylesResetCommands = () => function useGlobalStylesResetCommands() {
   const [canReset, onReset] = useGlobalStylesReset();
   const commands = (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (!canReset) {
@@ -13799,8 +13799,8 @@ function useGlobalStylesResetCommands() {
     isLoading: false,
     commands
   };
-}
-function useGlobalStylesOpenCssCommands() {
+};
+const getGlobalStylesOpenCssCommands = () => function useGlobalStylesOpenCssCommands() {
   const {
     openGeneralSidebar,
     setEditorCanvasContainerView
@@ -13860,8 +13860,8 @@ function useGlobalStylesOpenCssCommands() {
     isLoading: false,
     commands
   };
-}
-function useGlobalStylesOpenRevisionsCommands() {
+};
+const getGlobalStylesOpenRevisionsCommands = () => function useGlobalStylesOpenRevisionsCommands() {
   const {
     openGeneralSidebar,
     setEditorCanvasContainerView
@@ -13917,7 +13917,7 @@ function useGlobalStylesOpenRevisionsCommands() {
     isLoading: false,
     commands
   };
-}
+};
 function useCommonCommands() {
   const homeUrl = (0,external_wp_data_namespaceObject.useSelect)(select => {
     // Site index.
@@ -13936,23 +13936,23 @@ function useCommonCommands() {
   });
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/edit-site/open-styles',
-    hook: useGlobalStylesOpenStylesCommands
+    hook: getGlobalStylesOpenStylesCommands()
   });
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/edit-site/toggle-styles-welcome-guide',
-    hook: useGlobalStylesToggleWelcomeGuideCommands
+    hook: getGlobalStylesToggleWelcomeGuideCommands()
   });
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/edit-site/reset-global-styles',
-    hook: useGlobalStylesResetCommands
+    hook: getGlobalStylesResetCommands()
   });
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/edit-site/open-styles-css',
-    hook: useGlobalStylesOpenCssCommands
+    hook: getGlobalStylesOpenCssCommands()
   });
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/edit-site/open-styles-revisions',
-    hook: useGlobalStylesOpenRevisionsCommands
+    hook: getGlobalStylesOpenRevisionsCommands()
   });
 }
 
@@ -14133,7 +14133,7 @@ const {
   useHistory: use_edit_mode_commands_useHistory,
   useLocation: use_edit_mode_commands_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
-function usePageContentFocusCommands() {
+const getPageContentFocusCommands = () => function usePageContentFocusCommands() {
   const {
     record: template
   } = useEditedEntityRecord();
@@ -14207,8 +14207,8 @@ function usePageContentFocusCommands() {
     isLoading: false,
     commands
   };
-}
-function useManipulateDocumentCommands() {
+};
+const getManipulateDocumentCommands = () => function useManipulateDocumentCommands() {
   const {
     isLoaded,
     record: template
@@ -14266,16 +14266,16 @@ function useManipulateDocumentCommands() {
     isLoading: !isLoaded,
     commands
   };
-}
+};
 function useEditModeCommands() {
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/edit-site/page-content-focus',
-    hook: usePageContentFocusCommands,
+    hook: getPageContentFocusCommands(),
     context: 'entity-edit'
   });
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/edit-site/manipulate-document',
-    hook: useManipulateDocumentCommands
+    hook: getManipulateDocumentCommands()
   });
 }
 

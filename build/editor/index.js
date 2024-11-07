@@ -23839,7 +23839,7 @@ function PatternDuplicateModal() {
 
 
 
-function useEditorCommandLoader() {
+const getEditorCommandLoader = () => function useEditorCommandLoader() {
   const {
     editorMode,
     isListViewOpen,
@@ -24072,8 +24072,8 @@ function useEditorCommandLoader() {
     commands,
     isLoading: false
   };
-}
-function useEditedEntityContextualCommands() {
+};
+const getEditedEntityContextualCommands = () => function useEditedEntityContextualCommands() {
   const {
     postType
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -24116,15 +24116,15 @@ function useEditedEntityContextualCommands() {
     isLoading: false,
     commands
   };
-}
+};
 function useCommands() {
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/editor/edit-ui',
-    hook: useEditorCommandLoader
+    hook: getEditorCommandLoader()
   });
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/editor/contextual-commands',
-    hook: useEditedEntityContextualCommands,
+    hook: getEditedEntityContextualCommands(),
     context: 'entity-edit'
   });
 }
