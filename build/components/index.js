@@ -40356,7 +40356,7 @@ const BorderControlDropdown = (props, forwardedRef) => {
     tooltipPosition: dropdownPosition,
     label: (0,external_wp_i18n_namespaceObject.__)('Border color and style picker'),
     showTooltip: true,
-    __next40pxDefaultSize: size === '__unstable-large' ? true : false,
+    __next40pxDefaultSize: size === '__unstable-large',
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
       className: indicatorWrapperClassName,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_indicator, {

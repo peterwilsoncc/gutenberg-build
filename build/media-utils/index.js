@@ -355,7 +355,7 @@ class MediaUpload extends external_wp_element_namespaceObject.Component {
       state: currentState,
       multiple,
       selection,
-      editing: value && value.length ? true : false
+      editing: !!value?.length
     });
     wp.media.frame = this.frame;
     this.initializeListeners();
