@@ -10460,7 +10460,7 @@ function getEnabledClientIdsTreeUnmemoized(state, rootClientId) {
  *
  * @return {Object[]} Tree of block objects with only clientID and innerBlocks set.
  */
-const getEnabledClientIdsTree = (0,external_wp_data_namespaceObject.createSelector)(getEnabledClientIdsTreeUnmemoized, state => [state.blocks.order, state.blockEditingModes, state.settings.templateLock, state.blockListSettings, state.editorMode, state.zoomLevel, getSectionRootClientId(state)]);
+const getEnabledClientIdsTree = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(getEnabledClientIdsTreeUnmemoized, state => [state.blocks.order, state.blockEditingModes, state.settings.templateLock, state.blockListSettings, select(STORE_NAME).__unstableGetEditorMode(state), state.zoomLevel, getSectionRootClientId(state)]));
 
 /**
  * Returns a list of a given block's ancestors, from top to bottom. Blocks with
@@ -10624,7 +10624,7 @@ const hasAllowedPatterns = (0,external_wp_data_namespaceObject.createRegistrySel
       name: blockName
     }) => canInsertBlockType(state, blockName, rootClientId));
   });
-}, (state, rootClientId) => [...getAllPatternsDependants(select)(state), ...getInsertBlockTypeDependants(state, rootClientId)]));
+}, (state, rootClientId) => [...getAllPatternsDependants(select)(state), ...getInsertBlockTypeDependants(select)(state, rootClientId)]));
 function mapUserPattern(userPattern, __experimentalUserPatternCategories = []) {
   return {
     name: `core/block/${userPattern.id}`,
@@ -10985,9 +10985,9 @@ const checkAllowListRecursive = (blocks, allowedBlockTypes) => {
 const getAllPatternsDependants = select => state => {
   return [state.settings.__experimentalBlockPatterns, state.settings.__experimentalUserPatternCategories, state.settings.__experimentalReusableBlocks, state.settings[selectBlockPatternsKey]?.(select), state.blockPatterns, unlock(select(STORE_NAME)).getReusableBlocks()];
 };
-function getInsertBlockTypeDependants(state, rootClientId) {
-  return [state.blockListSettings[rootClientId], state.blocks.byClientId.get(rootClientId), state.settings.allowedBlockTypes, state.settings.templateLock, state.blockEditingModes, state.editorMode, getSectionRootClientId(state)];
-}
+const getInsertBlockTypeDependants = select => (state, rootClientId) => {
+  return [state.blockListSettings[rootClientId], state.blocks.byClientId.get(rootClientId), state.settings.allowedBlockTypes, state.settings.templateLock, state.blockEditingModes, select(STORE_NAME).__unstableGetEditorMode(state), getSectionRootClientId(state)];
+};
 
 ;// ./packages/block-editor/build-module/utils/sorting.js
 /**
@@ -12570,7 +12570,7 @@ const canInsertBlockTypeUnmemoized = (state, blockName, rootClientId = null) => 
  *
  * @return {boolean} Whether the given block type is allowed to be inserted.
  */
-const canInsertBlockType = (0,external_wp_data_namespaceObject.createSelector)(canInsertBlockTypeUnmemoized, (state, blockName, rootClientId) => getInsertBlockTypeDependants(state, rootClientId));
+const canInsertBlockType = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(canInsertBlockTypeUnmemoized, (state, blockName, rootClientId) => getInsertBlockTypeDependants(select)(state, rootClientId)));
 
 /**
  * Determines if the given blocks are allowed to be inserted into the block
@@ -12952,7 +12952,7 @@ const getInserterItems = (0,external_wp_data_namespaceObject.createRegistrySelec
   });
   const sortedBlockTypes = [...coreItems, ...nonCoreItems];
   return [...sortedBlockTypes, ...syncedPatternInserterItems];
-}, (state, rootClientId) => [(0,external_wp_blocks_namespaceObject.getBlockTypes)(), unlock(select(STORE_NAME)).getReusableBlocks(), state.blocks.order, state.preferences.insertUsage, ...getInsertBlockTypeDependants(state, rootClientId)]));
+}, (state, rootClientId) => [(0,external_wp_blocks_namespaceObject.getBlockTypes)(), unlock(select(STORE_NAME)).getReusableBlocks(), state.blocks.order, state.preferences.insertUsage, ...getInsertBlockTypeDependants(select)(state, rootClientId)]));
 
 /**
  * Determines the items that appear in the available block transforms list.
@@ -12980,7 +12980,7 @@ const getInserterItems = (0,external_wp_data_namespaceObject.createRegistrySelec
  *                                          this item.
  * @property {number}          frecency     Heuristic that combines frequency and recency.
  */
-const getBlockTransformItems = (0,external_wp_data_namespaceObject.createSelector)((state, blocks, rootClientId = null) => {
+const getBlockTransformItems = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)((state, blocks, rootClientId = null) => {
   const normalizedBlocks = Array.isArray(blocks) ? blocks : [blocks];
   const buildBlockTypeTransformItem = buildBlockTypeItem(state, {
     buildScope: 'transform'
@@ -12994,7 +12994,7 @@ const getBlockTransformItems = (0,external_wp_data_namespaceObject.createSelecto
     return accumulator;
   }, []);
   return orderBy(possibleTransforms, block => itemsByName[block.name].frecency, 'desc');
-}, (state, blocks, rootClientId) => [(0,external_wp_blocks_namespaceObject.getBlockTypes)(), state.preferences.insertUsage, ...getInsertBlockTypeDependants(state, rootClientId)]);
+}, (state, blocks, rootClientId) => [(0,external_wp_blocks_namespaceObject.getBlockTypes)(), state.preferences.insertUsage, ...getInsertBlockTypeDependants(select)(state, rootClientId)]));
 
 /**
  * Determines whether there are items to show in the inserter.
@@ -13031,7 +13031,7 @@ const getAllowedBlocks = (0,external_wp_data_namespaceObject.createRegistrySelec
     blockTypes.push('core/block');
   }
   return blockTypes;
-}, (state, rootClientId) => [(0,external_wp_blocks_namespaceObject.getBlockTypes)(), unlock(select(STORE_NAME)).getReusableBlocks(), ...getInsertBlockTypeDependants(state, rootClientId)]));
+}, (state, rootClientId) => [(0,external_wp_blocks_namespaceObject.getBlockTypes)(), unlock(select(STORE_NAME)).getReusableBlocks(), ...getInsertBlockTypeDependants(select)(state, rootClientId)]));
 const __experimentalGetAllowedBlocks = (0,external_wp_data_namespaceObject.createSelector)((state, rootClientId = null) => {
   external_wp_deprecated_default()('wp.data.select( "core/block-editor" ).__experimentalGetAllowedBlocks', {
     alternative: 'wp.data.select( "core/block-editor" ).getAllowedBlocks',
@@ -13080,7 +13080,7 @@ const __experimentalGetParsedPattern = (0,external_wp_data_namespaceObject.creat
   const pattern = unlock(select(STORE_NAME)).getPatternBySlug(patternName);
   return pattern ? getParsedPattern(pattern) : null;
 });
-const getAllowedPatternsDependants = select => (state, rootClientId) => [...getAllPatternsDependants(select)(state), ...getInsertBlockTypeDependants(state, rootClientId)];
+const getAllowedPatternsDependants = select => (state, rootClientId) => [...getAllPatternsDependants(select)(state), ...getInsertBlockTypeDependants(select)(state, rootClientId)];
 const patternsWithParsedBlocks = new WeakMap();
 function enhancePatternWithParsedBlocks(pattern) {
   let enhancedPattern = patternsWithParsedBlocks.get(pattern);
