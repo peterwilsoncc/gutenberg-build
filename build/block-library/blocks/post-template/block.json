@@ -13,8 +13,7 @@
 		"displayLayout",
 		"templateSlug",
 		"previewPostType",
-		"enhancedPagination",
-		"postType"
+		"enhancedPagination"
 	],
 	"supports": {
 		"reusable": false,

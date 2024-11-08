@@ -13332,9 +13332,8 @@ function isNavigationMode(state) {
  *
  * @return {string} the editor mode.
  */
-const __unstableGetEditorMode = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => state => {
-  var _state$settings$edito;
-  return (_state$settings$edito = state.settings.editorTool) !== null && _state$settings$edito !== void 0 ? _state$settings$edito : select(external_wp_preferences_namespaceObject.store).get('core', 'editorTool');
+const __unstableGetEditorMode = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
+  return select(external_wp_preferences_namespaceObject.store).get('core', 'editorTool');
 });
 
 /**
@@ -18059,11 +18058,11 @@ function createBlockEditFilter(features) {
 }
 function BlockProps({
   index,
-  useBlockProps: hook,
+  useBlockProps,
   setAllWrapperProps,
   ...props
 }) {
-  const wrapperProps = hook(props);
+  const wrapperProps = useBlockProps(props);
   const setWrapperProps = next => setAllWrapperProps(prev => {
     const nextAll = [...prev];
     nextAll[index] = next;
@@ -22267,9 +22266,7 @@ class URLInput extends external_wp_element_namespaceObject.Component {
       focusOnMount: false,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         ...suggestionsListProps,
-        className: dist_clsx('block-editor-url-input__suggestions', {
-          [`${className}__suggestions`]: className
-        }),
+        className: dist_clsx('block-editor-url-input__suggestions', `${className}__suggestions`),
         children: suggestions.map((suggestion, index) => /*#__PURE__*/(0,external_React_.createElement)(external_wp_components_namespaceObject.Button, {
           __next40pxDefaultSize: true,
           ...buildSuggestionItemProps(suggestion, index),
@@ -29461,7 +29458,7 @@ var external_wp_tokenList_default = /*#__PURE__*/__webpack_require__.n(external_
 
 
 
-const FONT_FAMILY_SUPPORT_KEY = 'typography.fontFamily';
+const FONT_FAMILY_SUPPORT_KEY = 'typography.__experimentalFontFamily';
 const {
   kebabCase: font_family_kebabCase
 } = unlock(external_wp_components_namespaceObject.privateApis);
@@ -30075,12 +30072,12 @@ function addAssignedTextAlign(props, blockType, attributes) {
 function omit(object, keys) {
   return Object.fromEntries(Object.entries(object).filter(([key]) => !keys.includes(key)));
 }
-const LETTER_SPACING_SUPPORT_KEY = 'typography.letterSpacing';
-const TEXT_TRANSFORM_SUPPORT_KEY = 'typography.textTransform';
-const TEXT_DECORATION_SUPPORT_KEY = 'typography.textDecoration';
+const LETTER_SPACING_SUPPORT_KEY = 'typography.__experimentalLetterSpacing';
+const TEXT_TRANSFORM_SUPPORT_KEY = 'typography.__experimentalTextTransform';
+const TEXT_DECORATION_SUPPORT_KEY = 'typography.__experimentalTextDecoration';
 const TEXT_COLUMNS_SUPPORT_KEY = 'typography.textColumns';
-const FONT_STYLE_SUPPORT_KEY = 'typography.fontStyle';
-const FONT_WEIGHT_SUPPORT_KEY = 'typography.fontWeight';
+const FONT_STYLE_SUPPORT_KEY = 'typography.__experimentalFontStyle';
+const FONT_WEIGHT_SUPPORT_KEY = 'typography.__experimentalFontWeight';
 const WRITING_MODE_SUPPORT_KEY = 'typography.__experimentalWritingMode';
 const TYPOGRAPHY_SUPPORT_KEY = 'typography';
 const TYPOGRAPHY_SUPPORT_KEYS = [LINE_HEIGHT_SUPPORT_KEY, FONT_SIZE_SUPPORT_KEY, FONT_STYLE_SUPPORT_KEY, FONT_WEIGHT_SUPPORT_KEY, FONT_FAMILY_SUPPORT_KEY, TEXT_ALIGN_SUPPORT_KEY, TEXT_COLUMNS_SUPPORT_KEY, TEXT_DECORATION_SUPPORT_KEY, WRITING_MODE_SUPPORT_KEY, TEXT_TRANSFORM_SUPPORT_KEY, LETTER_SPACING_SUPPORT_KEY];
@@ -31588,34 +31585,22 @@ function splitStyleValue(value) {
   }
   return value;
 }
-function splitGapValue(value, isAxialGap) {
-  if (!value) {
-    return value;
-  }
-
+function splitGapValue(value) {
   // Check for shorthand value (a string value).
-  if (typeof value === 'string') {
-    /*
-     * Map the string value to appropriate sides for the spacing control depending
-     * on whether the current block has axial gap support or not.
-     *
-     * Note: The axial value pairs must match for the spacing control to display
-     * the appropriate horizontal/vertical sliders.
-     */
-    return isAxialGap ? {
-      top: value,
-      right: value,
-      bottom: value,
-      left: value
-    } : {
+  if (value && typeof value === 'string') {
+    // If the value is a string, treat it as a single side (top) for the spacing controls.
+    return {
       top: value
     };
   }
-  return {
-    ...value,
-    right: value?.left,
-    bottom: value?.top
-  };
+  if (value) {
+    return {
+      ...value,
+      right: value?.left,
+      bottom: value?.top
+    };
+  }
+  return value;
 }
 function DimensionsToolsPanel({
   resetAllFilter,
@@ -31741,10 +31726,10 @@ function DimensionsPanel({
 
   // Block Gap
   const showGapControl = useHasGap(settings);
+  const gapValue = decodeValue(inheritedValue?.spacing?.blockGap);
+  const gapValues = splitGapValue(gapValue);
   const gapSides = Array.isArray(settings?.spacing?.blockGap) ? settings?.spacing?.blockGap : settings?.spacing?.blockGap?.sides;
   const isAxialGap = gapSides && gapSides.some(side => AXIAL_SIDES.includes(side));
-  const gapValue = decodeValue(inheritedValue?.spacing?.blockGap);
-  const gapValues = splitGapValue(gapValue, isAxialGap);
   const setGapValue = newGapValue => {
     onChange(setImmutably(value, ['spacing', 'blockGap'], newGapValue));
   };
@@ -32171,45 +32156,41 @@ function isScrollable(element) {
   const style = window.getComputedStyle(element);
   return style.overflowX === 'auto' || style.overflowX === 'scroll' || style.overflowY === 'auto' || style.overflowY === 'scroll';
 }
-const WITH_OVERFLOW_ELEMENT_BLOCKS = ['core/navigation'];
+
 /**
- * Returns the bounding rectangle of an element, with special handling for blocks
- * that have visible overflowing children (defined in WITH_OVERFLOW_ELEMENT_BLOCKS).
+ * Returns the rect of the element including all visible nested elements.
  *
- * For blocks like Navigation that can have overflowing elements (e.g. submenus),
- * this function calculates the combined bounds of both the parent and its visible
- * children. The returned rect may extend beyond the viewport.
+ * Visible nested elements, including elements that overflow the parent, are
+ * taken into account.
+ *
+ * This function is useful for calculating the visible area of a block that
+ * contains nested elements that overflow the block, e.g. the Navigation block,
+ * which can contain overflowing Submenu blocks.
+ *
  * The returned rect represents the full extent of the element and its visible
  * children, which may extend beyond the viewport.
  *
  * @param {Element} element Element.
  * @return {DOMRect} Bounding client rect of the element and its visible children.
  */
-function getElementBounds(element) {
+function getVisibleElementBounds(element) {
   const viewport = element.ownerDocument.defaultView;
   if (!viewport) {
     return new window.DOMRectReadOnly();
   }
   let bounds = element.getBoundingClientRect();
-  const dataType = element.getAttribute('data-type');
-
-  /*
-   * For blocks with overflowing elements (like Navigation), include the bounds
-   * of visible children that extend beyond the parent container.
-   */
-  if (dataType && WITH_OVERFLOW_ELEMENT_BLOCKS.includes(dataType)) {
-    const stack = [element];
-    let currentElement;
-    while (currentElement = stack.pop()) {
-      // Children won’t affect bounds unless the element is not scrollable.
-      if (!isScrollable(currentElement)) {
-        for (const child of currentElement.children) {
-          if (isElementVisible(child)) {
-            const childBounds = child.getBoundingClientRect();
-            bounds = rectUnion(bounds, childBounds);
-            stack.push(child);
-          }
+  const stack = [element];
+  let currentElement;
+  while (currentElement = stack.pop()) {
+    for (const child of currentElement.children) {
+      if (isElementVisible(child)) {
+        let childBounds = child.getBoundingClientRect();
+        // If the parent is scrollable, use parent's scrollable bounds.
+        if (isScrollable(currentElement)) {
+          childBounds = currentElement.getBoundingClientRect();
         }
+        bounds = rectUnion(bounds, childBounds);
+        stack.push(child);
       }
     }
   }
@@ -32294,7 +32275,7 @@ function BlockPopover({
     }
     return {
       getBoundingClientRect() {
-        return lastSelectedElement ? rectUnion(getElementBounds(selectedElement), getElementBounds(lastSelectedElement)) : getElementBounds(selectedElement);
+        return lastSelectedElement ? rectUnion(getVisibleElementBounds(selectedElement), getVisibleElementBounds(lastSelectedElement)) : getVisibleElementBounds(selectedElement);
       },
       contextElement: selectedElement
     };
@@ -48249,21 +48230,6 @@ function Iframe({
       }
       iFrameDocument.addEventListener('dragover', preventFileDropDefault, false);
       iFrameDocument.addEventListener('drop', preventFileDropDefault, false);
-      // Prevent clicks on links from navigating away. Note that links
-      // inside `contenteditable` are already disabled by the browser, so
-      // this is for links in blocks outside of `contenteditable`.
-      iFrameDocument.addEventListener('click', event => {
-        if (event.target.tagName === 'A') {
-          event.preventDefault();
-
-          // Appending a hash to the current URL will not reload the
-          // page. This is useful for e.g. footnotes.
-          const href = event.target.getAttribute('href');
-          if (href.startsWith('#')) {
-            iFrameDocument.defaultView.location.hash = href.slice(1);
-          }
-        }
-      });
     }
     node.addEventListener('load', onLoad);
     return () => {
@@ -48320,7 +48286,6 @@ function Iframe({
 <html>
 	<head>
 		<meta charset="utf-8">
-		<base href="${window.location.origin}">
 		<script>window.frameElement._load()</script>
 		<style>
 			html{
@@ -49306,53 +49271,6 @@ function AutoBlockPreview(props) {
   });
 }
 
-;// external ["wp","priorityQueue"]
-const external_wp_priorityQueue_namespaceObject = window["wp"]["priorityQueue"];
-;// ./packages/block-editor/build-module/components/block-preview/async.js
-/**
- * WordPress dependencies
- */
-
-
-const blockPreviewQueue = (0,external_wp_priorityQueue_namespaceObject.createQueue)();
-
-/**
- * Renders a component at the next idle time.
- * @param {*} props
- */
-function Async({
-  children,
-  placeholder
-}) {
-  const [shouldRender, setShouldRender] = (0,external_wp_element_namespaceObject.useState)(false);
-
-  // In the future, we could try to use startTransition here, but currently
-  // react will batch all transitions, which means all previews will be
-  // rendered at the same time.
-  // https://react.dev/reference/react/startTransition#caveats
-  // > If there are multiple ongoing Transitions, React currently batches them
-  // > together. This is a limitation that will likely be removed in a future
-  // > release.
-
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    const context = {};
-    blockPreviewQueue.add(context, () => {
-      // Synchronously run all renders so it consumes timeRemaining.
-      // See https://github.com/WordPress/gutenberg/pull/48238
-      (0,external_wp_element_namespaceObject.flushSync)(() => {
-        setShouldRender(true);
-      });
-    });
-    return () => {
-      blockPreviewQueue.cancel(context);
-    };
-  }, []);
-  if (!shouldRender) {
-    return placeholder;
-  }
-  return children;
-}
-
 ;// ./packages/block-editor/build-module/components/block-preview/index.js
 /**
  * External dependencies
@@ -49370,7 +49288,6 @@ function Async({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -49426,8 +49343,6 @@ function BlockPreview({
     })
   });
 }
-const MemoizedBlockPreview = (0,external_wp_element_namespaceObject.memo)(BlockPreview);
-MemoizedBlockPreview.Async = Async;
 
 /**
  * BlockPreview renders a preview of a block or array of blocks.
@@ -49440,7 +49355,7 @@ MemoizedBlockPreview.Async = Async;
  *
  * @return {Component} The component to be rendered.
  */
-/* harmony default export */ const block_preview = (MemoizedBlockPreview);
+/* harmony default export */ const block_preview = ((0,external_wp_element_namespaceObject.memo)(BlockPreview));
 
 /**
  * This hook is used to lightly mark an element as a block preview wrapper
@@ -50059,7 +49974,7 @@ const useBlockTypesState = (rootClientId, onInsert, isQuick) => {
       __unstableSkipMigrationLogs: true
     }) : (0,external_wp_blocks_namespaceObject.createBlock)(name, initialAttributes, (0,external_wp_blocks_namespaceObject.createBlocksFromInnerBlocksTemplate)(innerBlocks));
     onInsert(insertedBlock, undefined, shouldFocusBlock, destinationClientId);
-  }, [getClosestAllowedInsertionPoint, rootClientId, onInsert, createErrorNotice]);
+  }, [onInsert, getClosestAllowedInsertionPoint, rootClientId]);
   return [items, categories, collections, onSelectItem];
 };
 /* harmony default export */ const use_block_types_state = (useBlockTypesState);
@@ -50568,12 +50483,9 @@ function BlockPattern({
             onHover?.(pattern);
           },
           onMouseLeave: () => onHover?.(null),
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_preview.Async, {
-            placeholder: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockPatternPlaceholder, {}),
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_preview, {
-              blocks: blocks,
-              viewportWidth: viewportWidth
-            })
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_preview, {
+            blocks: blocks,
+            viewportWidth: viewportWidth
           }), showTitle && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
             className: "block-editor-patterns__pattern-details",
             spacing: 2,
@@ -50604,6 +50516,7 @@ function BlockPatternPlaceholder() {
 function BlockPatternsList({
   isDraggable,
   blockPatterns,
+  shownPatterns,
   onHover,
   onClickPattern,
   orientation,
@@ -50618,9 +50531,9 @@ function BlockPatternsList({
     // Reset the active composite item whenever the available patterns change,
     // to make sure that Composite widget can receive focus correctly when its
     // composite items change. The first composite item will receive focus.
-    const firstCompositeItemId = blockPatterns[0]?.name;
+    const firstCompositeItemId = blockPatterns.find(pattern => shownPatterns.includes(pattern))?.name;
     setActiveCompositeId(firstCompositeItemId);
-  }, [blockPatterns]);
+  }, [shownPatterns, blockPatterns]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite, {
     orientation: orientation,
     activeId: activeCompositeId,
@@ -50629,16 +50542,19 @@ function BlockPatternsList({
     className: "block-editor-block-patterns-list",
     "aria-label": label,
     ref: ref,
-    children: [blockPatterns.map(pattern => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockPattern, {
-      id: pattern.name,
-      pattern: pattern,
-      onClick: onClickPattern,
-      onHover: onHover,
-      isDraggable: isDraggable,
-      showTitle: showTitle,
-      showTooltip: showTitlesAsTooltip,
-      category: category
-    }, pattern.name)), pagingProps && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Pagination, {
+    children: [blockPatterns.map(pattern => {
+      const isShown = shownPatterns.includes(pattern);
+      return isShown ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockPattern, {
+        id: pattern.name,
+        pattern: pattern,
+        onClick: onClickPattern,
+        onHover: onHover,
+        isDraggable: isDraggable,
+        showTitle: showTitle,
+        showTooltip: showTitlesAsTooltip,
+        category: category
+      }, pattern.name) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockPatternPlaceholder, {}, pattern.name);
+    }), pagingProps && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Pagination, {
       ...pagingProps
     })]
   });
@@ -51160,6 +51076,7 @@ function getItemSearchRank(item, searchTerm, config = {}) {
 
 
 const PAGE_SIZE = 20;
+const INITIAL_INSERTER_RESULTS = 5;
 
 /**
  * Supplies values needed to page the patterns list client side.
@@ -51183,6 +51100,9 @@ function usePatternsPaging(currentCategoryPatterns, currentCategory, scrollConta
   const categoryPatterns = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return currentCategoryPatterns.slice(pageIndex * PAGE_SIZE, pageIndex * PAGE_SIZE + PAGE_SIZE);
   }, [pageIndex, currentCategoryPatterns]);
+  const categoryPatternsAsyncList = (0,external_wp_compose_namespaceObject.useAsyncList)(categoryPatterns, {
+    step: INITIAL_INSERTER_RESULTS
+  });
   const numPages = Math.ceil(currentCategoryPatterns.length / PAGE_SIZE);
   const changePage = page => {
     const scrollContainer = (0,external_wp_dom_namespaceObject.getScrollContainer)(scrollContainerRef?.current);
@@ -51196,6 +51116,7 @@ function usePatternsPaging(currentCategoryPatterns, currentCategory, scrollConta
   return {
     totalItems,
     categoryPatterns,
+    categoryPatternsAsyncList,
     numPages,
     changePage,
     currentPage
@@ -51301,6 +51222,7 @@ function PatternList({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inserter_listbox, {
       children: hasItems && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_list, {
+          shownPatterns: pagingProps.categoryPatternsAsyncList,
           blockPatterns: pagingProps.categoryPatterns,
           onClickPattern: onClickPattern,
           isDraggable: false
@@ -51719,6 +51641,7 @@ function PatternCategoryPreviews({
         children: (0,external_wp_i18n_namespaceObject.__)('Drag and drop patterns into the canvas.')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_list, {
         ref: scrollContainerRef,
+        shownPatterns: pagingProps.categoryPatternsAsyncList,
         blockPatterns: pagingProps.categoryPatterns,
         onClickPattern: onClickPattern,
         onHover: onHover,
@@ -52592,7 +52515,7 @@ const orderInserterBlockItems = (items, priority) => {
 
 
 
-const INITIAL_INSERTER_RESULTS = 9;
+const search_results_INITIAL_INSERTER_RESULTS = 9;
 /**
  * Shared reference to an empty array for cases where it is important to avoid
  * returning a new array reference on every invocation and rerendering the component.
@@ -52673,8 +52596,9 @@ function InserterSearchResults({
     debouncedSpeak(resultsFoundMessage);
   }, [filterValue, debouncedSpeak, filteredBlockTypes, filteredBlockPatterns]);
   const currentShownBlockTypes = (0,external_wp_compose_namespaceObject.useAsyncList)(filteredBlockTypes, {
-    step: INITIAL_INSERTER_RESULTS
+    step: search_results_INITIAL_INSERTER_RESULTS
   });
+  const currentShownPatterns = (0,external_wp_compose_namespaceObject.useAsyncList)(currentShownBlockTypes.length === filteredBlockTypes.length ? filteredBlockPatterns : search_results_EMPTY_ARRAY);
   const hasItems = filteredBlockTypes.length > 0 || filteredBlockPatterns.length > 0;
   const blocksUI = !!filteredBlockTypes.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(panel, {
     title: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
@@ -52695,6 +52619,7 @@ function InserterSearchResults({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "block-editor-inserter__quick-inserter-patterns",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_list, {
+        shownPatterns: currentShownPatterns,
         blockPatterns: filteredBlockPatterns,
         onClickPattern: onClickPattern,
         onHover: onHoverPattern,
@@ -52780,7 +52705,7 @@ function TabbedSidebar({
           icon: close_small,
           label: closeButtonLabel,
           onClick: () => onClose(),
-          size: "compact"
+          size: "small"
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tabbed_sidebar_Tabs.TabList, {
           className: "block-editor-tabbed-sidebar__tablist",
           ref: ref,
@@ -56978,7 +56903,7 @@ function getProps(contentElement, selectedBlockElement, scrollContainer, toolbar
 
   // Get how far the content area has been scrolled.
   const scrollTop = scrollContainer?.scrollTop || 0;
-  const blockRect = getElementBounds(selectedBlockElement);
+  const blockRect = getVisibleElementBounds(selectedBlockElement);
   const contentRect = contentElement.getBoundingClientRect();
 
   // Get the vertical position of top of the visible content area.
@@ -59287,17 +59212,17 @@ const ALIGN_WIDE_SUPPORT_KEY = 'alignWide';
 const supports_BORDER_SUPPORT_KEY = '__experimentalBorder';
 const supports_COLOR_SUPPORT_KEY = 'color';
 const CUSTOM_CLASS_NAME_SUPPORT_KEY = 'customClassName';
-const supports_FONT_FAMILY_SUPPORT_KEY = 'typography.fontFamily';
+const supports_FONT_FAMILY_SUPPORT_KEY = 'typography.__experimentalFontFamily';
 const supports_FONT_SIZE_SUPPORT_KEY = 'typography.fontSize';
 const supports_LINE_HEIGHT_SUPPORT_KEY = 'typography.lineHeight';
 /**
  * Key within block settings' support array indicating support for font style.
  */
-const supports_FONT_STYLE_SUPPORT_KEY = 'typography.fontStyle';
+const supports_FONT_STYLE_SUPPORT_KEY = 'typography.__experimentalFontStyle';
 /**
  * Key within block settings' support array indicating support for font weight.
  */
-const supports_FONT_WEIGHT_SUPPORT_KEY = 'typography.fontWeight';
+const supports_FONT_WEIGHT_SUPPORT_KEY = 'typography.__experimentalFontWeight';
 /**
  * Key within block settings' supports array indicating support for text
  * align e.g. settings found in `block.json`.
@@ -59312,7 +59237,7 @@ const supports_TEXT_COLUMNS_SUPPORT_KEY = 'typography.textColumns';
  * Key within block settings' supports array indicating support for text
  * decorations e.g. settings found in `block.json`.
  */
-const supports_TEXT_DECORATION_SUPPORT_KEY = 'typography.textDecoration';
+const supports_TEXT_DECORATION_SUPPORT_KEY = 'typography.__experimentalTextDecoration';
 /**
  * Key within block settings' supports array indicating support for writing mode
  * e.g. settings found in `block.json`.
@@ -59322,13 +59247,13 @@ const supports_WRITING_MODE_SUPPORT_KEY = 'typography.__experimentalWritingMode'
  * Key within block settings' supports array indicating support for text
  * transforms e.g. settings found in `block.json`.
  */
-const supports_TEXT_TRANSFORM_SUPPORT_KEY = 'typography.textTransform';
+const supports_TEXT_TRANSFORM_SUPPORT_KEY = 'typography.__experimentalTextTransform';
 
 /**
  * Key within block settings' supports array indicating support for letter-spacing
  * e.g. settings found in `block.json`.
  */
-const supports_LETTER_SPACING_SUPPORT_KEY = 'typography.letterSpacing';
+const supports_LETTER_SPACING_SUPPORT_KEY = 'typography.__experimentalLetterSpacing';
 const LAYOUT_SUPPORT_KEY = 'layout';
 const supports_TYPOGRAPHY_SUPPORT_KEYS = [supports_LINE_HEIGHT_SUPPORT_KEY, supports_FONT_SIZE_SUPPORT_KEY, supports_FONT_STYLE_SUPPORT_KEY, supports_FONT_WEIGHT_SUPPORT_KEY, supports_FONT_FAMILY_SUPPORT_KEY, supports_TEXT_ALIGN_SUPPORT_KEY, supports_TEXT_COLUMNS_SUPPORT_KEY, supports_TEXT_DECORATION_SUPPORT_KEY, supports_TEXT_TRANSFORM_SUPPORT_KEY, supports_WRITING_MODE_SUPPORT_KEY, supports_LETTER_SPACING_SUPPORT_KEY];
 const EFFECTS_SUPPORT_KEYS = ['shadow'];
@@ -61621,6 +61546,7 @@ function useHasBlockToolbar() {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -61683,6 +61609,7 @@ function ChangeDesign({
       );
     }).slice(0, MAX_PATTERNS_TO_SHOW);
   }, [categories, currentPatternName, patterns]);
+  const currentShownPatterns = (0,external_wp_compose_namespaceObject.useAsyncList)(sameCategoryPatternsWithSingleWrapper);
   if (sameCategoryPatternsWithSingleWrapper.length < 2) {
     return null;
   }
@@ -61715,6 +61642,7 @@ function ChangeDesign({
       className: "block-editor-block-toolbar-change-design-content-wrapper",
       paddingSize: "none",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_list, {
+        shownPatterns: currentShownPatterns,
         blockPatterns: sameCategoryPatternsWithSingleWrapper,
         onClickPattern: onClickPattern,
         showTitle: false
@@ -62277,22 +62205,19 @@ function BlockTools({
     if (event.defaultPrevented) {
       return;
     }
-    if (isMatch('core/block-editor/move-up', event) || isMatch('core/block-editor/move-down', event)) {
+    if (isMatch('core/block-editor/move-up', event)) {
       const clientIds = getSelectedBlockClientIds();
       if (clientIds.length) {
         event.preventDefault();
         const rootClientId = getBlockRootClientId(clientIds[0]);
-        const direction = isMatch('core/block-editor/move-up', event) ? 'up' : 'down';
-        if (direction === 'up') {
-          moveBlocksUp(clientIds, rootClientId);
-        } else {
-          moveBlocksDown(clientIds, rootClientId);
-        }
-        const blockLength = Array.isArray(clientIds) ? clientIds.length : 1;
-        const message = (0,external_wp_i18n_namespaceObject.sprintf)(
-        // translators: %d: the name of the block that has been moved
-        (0,external_wp_i18n_namespaceObject._n)('%d block moved.', '%d blocks moved.', clientIds.length), blockLength);
-        (0,external_wp_a11y_namespaceObject.speak)(message);
+        moveBlocksUp(clientIds, rootClientId);
+      }
+    } else if (isMatch('core/block-editor/move-down', event)) {
+      const clientIds = getSelectedBlockClientIds();
+      if (clientIds.length) {
+        event.preventDefault();
+        const rootClientId = getBlockRootClientId(clientIds[0]);
+        moveBlocksDown(clientIds, rootClientId);
       }
     } else if (isMatch('core/block-editor/duplicate', event)) {
       const clientIds = getSelectedBlockClientIds();
@@ -62439,7 +62364,7 @@ const trash = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 
 
 
-const getTransformCommands = () => function useTransformCommands() {
+const useTransformCommands = () => {
   const {
     replaceBlocks,
     multiSelect
@@ -62537,7 +62462,7 @@ const getTransformCommands = () => function useTransformCommands() {
     commands
   };
 };
-const getQuickActionsCommands = () => function useQuickActionsCommands() {
+const useQuickActionsCommands = () => {
   const {
     clientIds,
     isUngroupable,
@@ -62677,11 +62602,11 @@ const getQuickActionsCommands = () => function useQuickActionsCommands() {
 const useBlockCommands = () => {
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/block-editor/blockTransforms',
-    hook: getTransformCommands()
+    hook: useTransformCommands
   });
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/block-editor/blockQuickActions',
-    hook: getQuickActionsCommands(),
+    hook: useQuickActionsCommands,
     context: 'block-selection-edit'
   });
 };

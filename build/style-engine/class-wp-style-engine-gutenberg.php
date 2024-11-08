@@ -424,15 +424,8 @@ if ( ! class_exists( 'WP_Style_Engine_Gutenberg' ) ) {
 						continue;
 					}
 
-					$classnames = static::get_classnames( $style_value, $style_definition );
-					if ( ! empty( $classnames ) ) {
-						$parsed_styles['classnames'] = array_merge( $parsed_styles['classnames'], $classnames );
-					}
-
-					$css_declarations = static::get_css_declarations( $style_value, $style_definition, $options );
-					if ( ! empty( $css_declarations ) ) {
-						$parsed_styles['declarations'] = array_merge( $parsed_styles['declarations'], $css_declarations );
-					}
+					$parsed_styles['classnames']   = array_merge( $parsed_styles['classnames'], static::get_classnames( $style_value, $style_definition ) );
+					$parsed_styles['declarations'] = array_merge( $parsed_styles['declarations'], static::get_css_declarations( $style_value, $style_definition, $options ) );
 				}
 			}
 

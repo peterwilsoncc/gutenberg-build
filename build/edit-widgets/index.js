@@ -1288,7 +1288,7 @@ function ComplementaryArea({
         onClose: () => disableComplementaryArea(scope),
         toggleButtonProps: {
           label: closeLabel,
-          size: 'compact',
+          size: 'small',
           shortcut: toggleShortcut,
           scope,
           identifier
@@ -4490,10 +4490,10 @@ function ListViewSidebar() {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {
           children: (0,external_wp_i18n_namespaceObject.__)('List View')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
           icon: close_small,
           label: (0,external_wp_i18n_namespaceObject.__)('Close'),
-          onClick: closeListView,
-          size: "compact"
+          onClick: closeListView
         })]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "edit-widgets-editor__list-view-panel-content",
