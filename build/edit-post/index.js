@@ -95,6 +95,7 @@ __webpack_require__.d(actions_namespaceObject, {
   toggleEditorPanelEnabled: () => (toggleEditorPanelEnabled),
   toggleEditorPanelOpened: () => (toggleEditorPanelOpened),
   toggleFeature: () => (toggleFeature),
+  toggleFullscreenMode: () => (toggleFullscreenMode),
   togglePinnedPluginItem: () => (togglePinnedPluginItem),
   togglePublishSidebar: () => (togglePublishSidebar),
   updatePreferredStyleVariations: () => (updatePreferredStyleVariations)
@@ -596,6 +597,8 @@ const getMetaBoxContainer = location => {
 
 
 
+
+
 /**
  * Internal dependencies
  */
@@ -1059,6 +1062,26 @@ const toggleDistractionFree = () => ({
     alternative: "dispatch( 'core/editor').toggleDistractionFree"
   });
   registry.dispatch(external_wp_editor_namespaceObject.store).toggleDistractionFree();
+};
+
+/**
+ * Action that toggles the Fullscreen Mode view option.
+ */
+const toggleFullscreenMode = () => ({
+  registry
+}) => {
+  const isFullscreen = registry.select(external_wp_preferences_namespaceObject.store).get('core/edit-post', 'fullscreenMode');
+  registry.dispatch(external_wp_preferences_namespaceObject.store).toggle('core/edit-post', 'fullscreenMode');
+  registry.dispatch(external_wp_notices_namespaceObject.store).createInfoNotice(isFullscreen ? (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode activated.') : (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode deactivated.'), {
+    id: 'core/edit-post/toggle-fullscreen-mode/notice',
+    type: 'snackbar',
+    actions: [{
+      label: (0,external_wp_i18n_namespaceObject.__)('Undo'),
+      onClick: () => {
+        registry.dispatch(external_wp_preferences_namespaceObject.store).toggle('core/edit-post', 'fullscreenMode');
+      }
+    }]
+  });
 };
 
 ;// ./packages/edit-post/build-module/store/private-selectors.js
@@ -1658,7 +1681,7 @@ unlock(store).registerPrivateSelectors(private_selectors_namespaceObject);
 
 function KeyboardShortcuts() {
   const {
-    toggleFeature
+    toggleFullscreenMode
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const {
     registerShortcut
@@ -1675,7 +1698,7 @@ function KeyboardShortcuts() {
     });
   }, []);
   (0,external_wp_keyboardShortcuts_namespaceObject.useShortcut)('core/edit-post/toggle-fullscreen', () => {
-    toggleFeature('fullscreenMode');
+    toggleFullscreenMode();
   });
   return null;
 }
@@ -2301,8 +2324,8 @@ const MoreMenu = () => {
         name: "fullscreenMode",
         label: (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode'),
         info: (0,external_wp_i18n_namespaceObject.__)('Show and hide the admin user interface'),
-        messageActivated: (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode activated'),
-        messageDeactivated: (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode deactivated'),
+        messageActivated: (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode activated.'),
+        messageDeactivated: (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode deactivated.'),
         shortcut: external_wp_keycodes_namespaceObject.displayShortcut.secondary('f')
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ToolsMoreMenuGroup, {
@@ -2640,38 +2663,28 @@ function usePaddingAppender(enabled) {
  * Internal dependencies
  */
 
-const isGutenbergPlugin =  true ? true : 0;
 function useShouldIframe() {
-  const {
-    isBlockBasedTheme,
-    hasV3BlocksOnly,
-    isEditingTemplateOrPattern,
-    isZoomOutMode,
-    deviceType
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  return (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEditorSettings,
       getCurrentPostType,
       getDeviceType
     } = select(external_wp_editor_namespaceObject.store);
-    const {
-      isZoomOut
-    } = unlock(select(external_wp_blockEditor_namespaceObject.store));
-    const {
-      getBlockTypes
-    } = select(external_wp_blocks_namespaceObject.store);
-    const editorSettings = getEditorSettings();
-    return {
-      isBlockBasedTheme: editorSettings.__unstableIsBlockBasedTheme,
-      hasV3BlocksOnly: getBlockTypes().every(type => {
-        return type.apiVersion >= 3;
-      }),
-      isEditingTemplateOrPattern: ['wp_template', 'wp_block'].includes(getCurrentPostType()),
-      isZoomOutMode: isZoomOut(),
-      deviceType: getDeviceType()
-    };
+    return (
+      // If the theme is block based, we ALWAYS use the iframe for
+      // consistency across the post and site editor. The iframe was
+      // introduced long before the sited editor and block themes, so
+      // these themes are expecting it.
+      getEditorSettings().__unstableIsBlockBasedTheme ||
+      // For classic themes, we also still want to iframe all the special
+      // editor features and modes such as device previews, zoom out, and
+      // template/pattern editing.
+      getDeviceType() !== 'Desktop' || ['wp_template', 'wp_block'].includes(getCurrentPostType()) || unlock(select(external_wp_blockEditor_namespaceObject.store)).isZoomOut() ||
+      // Finally, still iframe the editor for classic themes if all blocks
+      // are v3 (which means they are marked as iframe-compatible).
+      select(external_wp_blocks_namespaceObject.store).getBlockTypes().every(type => type.apiVersion >= 3)
+    );
   }, []);
-  return hasV3BlocksOnly || isGutenbergPlugin && isBlockBasedTheme || isEditingTemplateOrPattern || isZoomOutMode || ['Tablet', 'Mobile'].includes(deviceType);
 }
 
 ;// ./packages/edit-post/build-module/hooks/use-navigate-to-entity-record.js
@@ -3135,7 +3148,7 @@ function Layout({
       hasBlockSelected: !!select(external_wp_blockEditor_namespaceObject.store).getBlockSelectionStart(),
       showIconLabels: get('core', 'showIconLabels'),
       isDistractionFree: get('core', 'distractionFree'),
-      showMetaBoxes: !DESIGN_POST_TYPES.includes(currentPostType) && isRenderingPostOnly,
+      showMetaBoxes: !DESIGN_POST_TYPES.includes(currentPostType),
       isWelcomeGuideVisible: isFeatureActive('welcomeGuide'),
       templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate ? getEditedPostTemplateId() : null,
       enablePaddingAppender: !isZoomOut() && isRenderingPostOnly && !DESIGN_POST_TYPES.includes(currentPostType)

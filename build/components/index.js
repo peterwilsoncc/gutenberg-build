@@ -34234,6 +34234,7 @@ const UnforwardedPopover = (props, forwardedRef) => {
         children: headerTitle
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
         className: "components-popover__close",
+        size: "small",
         icon: library_close,
         onClick: onClose
       })]
@@ -40355,7 +40356,7 @@ const BorderControlDropdown = (props, forwardedRef) => {
     tooltipPosition: dropdownPosition,
     label: (0,external_wp_i18n_namespaceObject.__)('Border color and style picker'),
     showTooltip: true,
-    __next40pxDefaultSize: size === '__unstable-large' ? true : false,
+    __next40pxDefaultSize: size === '__unstable-large',
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
       className: indicatorWrapperClassName,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_indicator, {
@@ -40671,7 +40672,7 @@ function maybeWarnDeprecated36pxSize({
   __next40pxDefaultSize,
   size
 }) {
-  if (__next40pxDefaultSize || size !== 'default') {
+  if (__next40pxDefaultSize || size !== undefined && size !== 'default') {
     return;
   }
   external_wp_deprecated_default()(`36px default size for wp.components.${componentName}`, {
@@ -46238,6 +46239,7 @@ function palette_edit_Option({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(h_stack_component, {
       justify: "flex-start",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+        size: "small",
         onClick: () => {
           setIsEditingColor(true);
         },
@@ -46436,6 +46438,7 @@ function PaletteEdit({
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(navigable_container_menu, {
               role: "menu",
               children: [!isEditing && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+                __next40pxDefaultSize: true,
                 variant: "tertiary",
                 onClick: () => {
                   setIsEditing(true);
@@ -46444,6 +46447,7 @@ function PaletteEdit({
                 className: "components-palette-edit__menu-button",
                 children: (0,external_wp_i18n_namespaceObject.__)('Show details')
               }), !canOnlyChangeValues && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+                __next40pxDefaultSize: true,
                 variant: "tertiary",
                 onClick: () => {
                   setEditingElement(null);
@@ -46454,6 +46458,8 @@ function PaletteEdit({
                 className: "components-palette-edit__menu-button",
                 children: isGradient ? (0,external_wp_i18n_namespaceObject.__)('Remove all gradients') : (0,external_wp_i18n_namespaceObject.__)('Remove all colors')
               }), canReset && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+                __next40pxDefaultSize: true,
+                className: "components-palette-edit__menu-button",
                 variant: "tertiary",
                 onClick: () => {
                   setEditingElement(null);
@@ -57526,6 +57532,10 @@ function FormFileUpload({
     ...props,
     children: children
   });
+  // @todo: Temporary fix a bug that prevents Chromium browsers from selecting ".heic" files
+  // from the file upload. See https://core.trac.wordpress.org/ticket/62268#comment:4.
+  // This can be removed once the Chromium fix is in the stable channel.
+  const compatAccept = !!accept?.includes('image/*') ? `${accept}, image/heic, image/heif` : accept;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "components-form-file-upload",
     children: [ui, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
@@ -57535,7 +57545,7 @@ function FormFileUpload({
       style: {
         display: 'none'
       },
-      accept: accept,
+      accept: compatAccept,
       onChange: onChange,
       onClick: onClick,
       "data-testid": "form-file-upload-input"
@@ -57678,6 +57688,7 @@ function Token({
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
       className: "components-form-token-field__remove-token",
+      size: "small",
       icon: close_small,
       onClick: !disabled ? onClick : undefined
       // Disable reason: Even when FormTokenField itself is accessibly disabled, token reset buttons shouldn't be in the tab sequence.
@@ -58318,6 +58329,7 @@ function PageControl({
       // Set aria-current="step" on the active page, see https://www.w3.org/TR/wai-aria-1.1/#aria-current
       "aria-current": page === currentPage ? 'step' : undefined,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+        size: "small",
         icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageControlIcon, {}),
         "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: current page number 2: total number of pages */
         (0,external_wp_i18n_namespaceObject.__)('Page %1$d of %2$d'), page + 1, numberOfPages),
@@ -58740,6 +58752,7 @@ function UnforwardedMenuItem(props, ref) {
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(build_module_button, {
+    __next40pxDefaultSize: true,
     ref: ref
     // Make sure aria-checked matches spec https://www.w3.org/TR/wai-aria-1.1/#aria-checked
     ,
@@ -61899,6 +61912,7 @@ function Notice({
             computedVariant = 'primary';
           }
           return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+            __next40pxDefaultSize: true,
             href: url,
             variant: computedVariant,
             onClick: url ? undefined : onClick,
@@ -61908,6 +61922,7 @@ function Notice({
         })
       })]
     }), isDismissible && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+      size: "small",
       className: "components-notice__dismiss",
       icon: library_close,
       label: (0,external_wp_i18n_namespaceObject.__)('Close'),
@@ -62168,6 +62183,7 @@ const PanelBodyTitle = (0,external_wp_element_namespaceObject.forwardRef)(({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
     className: "components-panel__body-title",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(build_module_button, {
+      __next40pxDefaultSize: true,
       className: "components-panel__body-toggle",
       "aria-expanded": isOpened,
       ref: ref,
@@ -62839,6 +62855,7 @@ const RadioGroupContext = (0,external_wp_element_namespaceObject.createContext)(
 
 
 
+
 function UnforwardedRadio({
   value,
   children,
@@ -62850,6 +62867,11 @@ function UnforwardedRadio({
   } = (0,external_wp_element_namespaceObject.useContext)(RadioGroupContext);
   const selectedValue = useStoreState(store, 'value');
   const isChecked = selectedValue !== undefined && selectedValue === value;
+  maybeWarnDeprecated36pxSize({
+    componentName: 'Radio',
+    size: undefined,
+    __next40pxDefaultSize: props.__next40pxDefaultSize
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Radio, {
     disabled: disabled,
     store: store,
@@ -64794,8 +64816,9 @@ function UnforwardedSnackbar({
         url
       }, index) => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+          __next40pxDefaultSize: true,
           href: url,
-          variant: "tertiary",
+          variant: "link",
           onClick: event => onActionClick(event, onClick),
           className: "components-snackbar__action",
           children: label
@@ -71465,10 +71488,21 @@ function useScrollRectIntoView(parent, rect, {
     const childRightEdge = childLeft + childWidth;
     const rightOverflow = childRightEdge + margin - parentRightEdge;
     const leftOverflow = parentScroll - (childLeft - margin);
+    let scrollLeft = null;
     if (leftOverflow > 0) {
-      parent.scrollLeft = parentScroll - leftOverflow;
+      scrollLeft = parentScroll - leftOverflow;
     } else if (rightOverflow > 0) {
-      parent.scrollLeft = parentScroll + rightOverflow;
+      scrollLeft = parentScroll + rightOverflow;
+    }
+    if (scrollLeft !== null) {
+      /**
+       * The optional chaining is used here to avoid unit test failures.
+       * It can be removed when JSDOM supports `Element` scroll methods.
+       * See: https://github.com/WordPress/gutenberg/pull/66498#issuecomment-2441146096
+       */
+      parent.scroll?.({
+        left: scrollLeft
+      });
     }
   }, [margin, parent, rect]);
 }

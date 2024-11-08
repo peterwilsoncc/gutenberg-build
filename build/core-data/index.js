@@ -524,7 +524,6 @@ __webpack_require__.d(build_module_selectors_namespaceObject, {
   __experimentalGetDirtyEntityRecords: () => (__experimentalGetDirtyEntityRecords),
   __experimentalGetEntitiesBeingSaved: () => (__experimentalGetEntitiesBeingSaved),
   __experimentalGetEntityRecordNoResolver: () => (__experimentalGetEntityRecordNoResolver),
-  __experimentalGetTemplateForLink: () => (__experimentalGetTemplateForLink),
   canUser: () => (canUser),
   canUserEditEntityRecord: () => (canUserEditEntityRecord),
   getAuthors: () => (getAuthors),
@@ -630,7 +629,6 @@ __webpack_require__.d(resolvers_namespaceObject, {
   __experimentalGetCurrentGlobalStylesId: () => (resolvers_experimentalGetCurrentGlobalStylesId),
   __experimentalGetCurrentThemeBaseGlobalStyles: () => (resolvers_experimentalGetCurrentThemeBaseGlobalStyles),
   __experimentalGetCurrentThemeGlobalStylesVariations: () => (resolvers_experimentalGetCurrentThemeGlobalStylesVariations),
-  __experimentalGetTemplateForLink: () => (resolvers_experimentalGetTemplateForLink),
   canUser: () => (resolvers_canUser),
   canUserEditEntityRecord: () => (resolvers_canUserEditEntityRecord),
   getAuthors: () => (resolvers_getAuthors),
@@ -1493,6 +1491,8 @@ const rootEntitiesConfig = [{
   name: '__unstableBase',
   baseURL: '/',
   baseURLParams: {
+    // Please also change the preload path when changing this.
+    // @see lib/compat/wordpress-6.8/preload.php
     _fields: ['description', 'gmt_offset', 'home', 'name', 'site_icon', 'site_icon_url', 'site_logo', 'timezone_string', 'url'].join(',')
   },
   // The entity doesn't support selecting multiple records.
@@ -4043,24 +4043,6 @@ const hasFetchedAutosaves = (0,external_wp_data_namespaceObject.createRegistrySe
  */
 function getReferenceByDistinctEdits(state) {
   return state.editsReference;
-}
-
-/**
- * Retrieve the frontend template used for a given link.
- *
- * @param state Editor state.
- * @param link  Link.
- *
- * @return The template record.
- */
-function __experimentalGetTemplateForLink(state, link) {
-  const records = getEntityRecords(state, 'postType', 'wp_template', {
-    'find-template': link
-  });
-  if (records?.length) {
-    return getEditedEntityRecord(state, 'postType', 'wp_template', records[0].id);
-  }
-  return null;
 }
 
 /**
@@ -22388,6 +22370,9 @@ const forwardResolver = resolverName => (...args) => async ({
 };
 /* harmony default export */ const forward_resolver = (forwardResolver);
 
+;// ./packages/core-data/build-module/utils/receive-intermediate-results.js
+const RECEIVE_INTERMEDIATE_RESULTS = Symbol('RECEIVE_INTERMEDIATE_RESULTS');
+
 ;// ./packages/core-data/build-module/fetch/__experimental-fetch-link-suggestions.js
 /**
  * WordPress dependencies
@@ -22861,6 +22846,10 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
   const lock = await dispatch.__unstableAcquireStoreLock(STORE_NAME, ['entities', 'records', kind, name], {
     exclusive: false
   });
+  const key = entityConfig.key || DEFAULT_ENTITY_KEY;
+  function getResolutionsArgs(records) {
+    return records.filter(record => record?.[key]).map(record => [kind, name, record[key]]);
+  }
   try {
     if (query._fields) {
       // If requesting specific fields, items and query association to said
@@ -22875,7 +22864,8 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
       ...entityConfig.baseURLParams,
       ...query
     });
-    let records, meta;
+    let records = [],
+      meta;
     if (entityConfig.supportsPagination && query.per_page !== -1) {
       const response = await external_wp_apiFetch_default()({
         path,
@@ -22885,6 +22875,30 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
       meta = {
         totalItems: parseInt(response.headers.get('X-WP-Total')),
         totalPages: parseInt(response.headers.get('X-WP-TotalPages'))
+      };
+    } else if (query.per_page === -1 && query[RECEIVE_INTERMEDIATE_RESULTS] === true) {
+      let page = 1;
+      let totalPages;
+      do {
+        const response = await external_wp_apiFetch_default()({
+          path: (0,external_wp_url_namespaceObject.addQueryArgs)(path, {
+            page,
+            per_page: 100
+          }),
+          parse: false
+        });
+        const pageRecords = Object.values(await response.json());
+        totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
+        records.push(...pageRecords);
+        registry.batch(() => {
+          dispatch.receiveEntityRecords(kind, name, records, query);
+          dispatch.finishResolutions('getEntityRecord', getResolutionsArgs(pageRecords));
+        });
+        page++;
+      } while (page <= totalPages);
+      meta = {
+        totalItems: records.length,
+        totalPages: 1
       };
     } else {
       records = Object.values(await external_wp_apiFetch_default()({
@@ -22917,8 +22931,6 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
       // See https://github.com/WordPress/gutenberg/pull/26575
       // See https://github.com/WordPress/gutenberg/pull/64504
       if (!query?._fields && !query.context) {
-        const key = entityConfig.key || DEFAULT_ENTITY_KEY;
-        const resolutionsArgs = records.filter(record => record?.[key]).map(record => [kind, name, record[key]]);
         const targetHints = records.filter(record => record?.[key]).map(record => ({
           id: record[key],
           permissions: getUserPermissionsFromAllowHeader(record?._links?.self?.[0].targetHints.allow)
@@ -22940,7 +22952,7 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
           }
         }
         dispatch.receiveUserPermissions(receiveUserPermissionArgs);
-        dispatch.finishResolutions('getEntityRecord', resolutionsArgs);
+        dispatch.finishResolutions('getEntityRecord', getResolutionsArgs(records));
         dispatch.finishResolutions('canUser', canUserResolutionsArgs);
       }
       dispatch.__unstableReleaseStoreLock(lock);
@@ -23122,43 +23134,6 @@ const resolvers_getAutosave = (postType, postId) => async ({
 }) => {
   await resolveSelect.getAutosaves(postType, postId);
 };
-
-/**
- * Retrieve the frontend template used for a given link.
- *
- * @param {string} link Link.
- */
-const resolvers_experimentalGetTemplateForLink = link => async ({
-  dispatch,
-  resolveSelect
-}) => {
-  let template;
-  try {
-    // This is NOT calling a REST endpoint but rather ends up with a response from
-    // an Ajax function which has a different shape from a WP_REST_Response.
-    template = await external_wp_apiFetch_default()({
-      url: (0,external_wp_url_namespaceObject.addQueryArgs)(link, {
-        '_wp-find-template': true
-      })
-    }).then(({
-      data
-    }) => data);
-  } catch (e) {
-    // For non-FSE themes, it is possible that this request returns an error.
-  }
-  if (!template) {
-    return;
-  }
-  const record = await resolveSelect.getEntityRecord('postType', 'wp_template', template.id);
-  if (record) {
-    dispatch.receiveEntityRecords('postType', 'wp_template', [record], {
-      'find-template': link
-    });
-  }
-};
-resolvers_experimentalGetTemplateForLink.shouldInvalidate = action => {
-  return (action.type === 'RECEIVE_ITEMS' || action.type === 'REMOVE_ITEMS') && action.invalidateCache && action.kind === 'postType' && action.name === 'wp_template';
-};
 const resolvers_experimentalGetCurrentGlobalStylesId = () => async ({
   dispatch,
   resolveSelect
@@ -23291,14 +23266,24 @@ const resolvers_getNavigationFallbackId = () => async ({
   });
 };
 const resolvers_getDefaultTemplateId = query => async ({
-  dispatch
+  dispatch,
+  registry,
+  resolveSelect
 }) => {
   const template = await external_wp_apiFetch_default()({
     path: (0,external_wp_url_namespaceObject.addQueryArgs)('/wp/v2/templates/lookup', query)
   });
+  // Wait for the the entities config to be loaded, otherwise receiving
+  // the template as an entity will not work.
+  await resolveSelect.getEntitiesConfig('postType');
   // Endpoint may return an empty object if no template is found.
   if (template?.id) {
-    dispatch.receiveDefaultTemplateId(query, template.id);
+    registry.batch(() => {
+      dispatch.receiveDefaultTemplateId(query, template.id);
+      dispatch.receiveEntityRecords('postType', 'wp_template', [template]);
+      // Avoid further network requests.
+      dispatch.finishResolution('getEntityRecord', ['postType', 'wp_template', template.id]);
+    });
   }
 };
 
@@ -24966,9 +24951,11 @@ function useEntityProp(kind, name, prop, _id) {
  */
 
 
+
 const privateApis = {};
 lock(privateApis, {
-  useEntityRecordsWithPermissions: useEntityRecordsWithPermissions
+  useEntityRecordsWithPermissions: useEntityRecordsWithPermissions,
+  RECEIVE_INTERMEDIATE_RESULTS: RECEIVE_INTERMEDIATE_RESULTS
 });
 
 ;// ./packages/core-data/build-module/index.js
