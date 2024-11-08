@@ -16124,6 +16124,7 @@ const details_metadata = {
   supports: {
     __experimentalOnEnter: true,
     align: ["wide", "full"],
+    anchor: true,
     color: {
       gradients: true,
       link: true,
