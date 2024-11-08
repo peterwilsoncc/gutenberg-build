@@ -26160,12 +26160,14 @@ function ContentOnlyControls({
               setIsAltDialogOpen(true);
               onClose();
             },
+            "aria-haspopup": "dialog",
             children: (0,external_wp_i18n_namespaceObject._x)('Alternative text', 'Alternative text for an image. Block toolbar label, a low character count is preferred.')
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
             onClick: () => {
               setIsTitleDialogOpen(true);
               onClose();
             },
+            "aria-haspopup": "dialog",
             children: (0,external_wp_i18n_namespaceObject.__)('Title text')
           })]
         })
