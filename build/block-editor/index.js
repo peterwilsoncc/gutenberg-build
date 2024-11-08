@@ -69711,13 +69711,13 @@ function MediaPlaceholder({
       const isImage = isOneType && 'image' === firstAllowedType;
       const isVideo = isOneType && 'video' === firstAllowedType;
       if (instructions === undefined && mediaUpload) {
-        instructions = (0,external_wp_i18n_namespaceObject.__)('Upload a media file or pick one from your media library.');
+        instructions = (0,external_wp_i18n_namespaceObject.__)('Drag and drop an image or video, upload, or choose from your library.');
         if (isAudio) {
-          instructions = (0,external_wp_i18n_namespaceObject.__)('Upload or drag an audio file here, or pick one from your library.');
+          instructions = (0,external_wp_i18n_namespaceObject.__)('Drag and drop an audio file, upload, or choose from your library.');
         } else if (isImage) {
-          instructions = (0,external_wp_i18n_namespaceObject.__)('Upload or drag an image file here, or pick one from your library.');
+          instructions = (0,external_wp_i18n_namespaceObject.__)('Drag and drop an image, upload, or choose from your library.');
         } else if (isVideo) {
-          instructions = (0,external_wp_i18n_namespaceObject.__)('Upload or drag a video file here, or pick one from your library.');
+          instructions = (0,external_wp_i18n_namespaceObject.__)('Drag and drop a video, upload, or choose from your library.');
         }
       }
       if (title === undefined) {

@@ -14174,8 +14174,7 @@ function CoverPlaceholder({
       icon: library_cover
     }),
     labels: {
-      title: (0,external_wp_i18n_namespaceObject.__)('Cover'),
-      instructions: (0,external_wp_i18n_namespaceObject.__)('Drag and drop onto this block, upload, or select existing media from your library.')
+      title: (0,external_wp_i18n_namespaceObject.__)('Cover')
     },
     onSelect: onSelectMedia,
     accept: "image/*,video/*",
@@ -18452,7 +18451,7 @@ function FileEdit({
         }),
         labels: {
           title: (0,external_wp_i18n_namespaceObject.__)('File'),
-          instructions: (0,external_wp_i18n_namespaceObject.__)('Upload a file or pick one from your media library.')
+          instructions: (0,external_wp_i18n_namespaceObject.__)('Drag and drop a file, upload, or choose from your library.')
         },
         onSelect: onSelectFile,
         onError: onUploadError,
@@ -21713,7 +21712,7 @@ const LINK_OPTIONS = [{
   noticeText: (0,external_wp_i18n_namespaceObject.__)('None')
 }];
 const edit_ALLOWED_MEDIA_TYPES = ['image'];
-const PLACEHOLDER_TEXT = external_wp_element_namespaceObject.Platform.isNative ? (0,external_wp_i18n_namespaceObject.__)('Add media') : (0,external_wp_i18n_namespaceObject.__)('Drag images, upload new ones or select files from your library.');
+const PLACEHOLDER_TEXT = external_wp_element_namespaceObject.Platform.isNative ? (0,external_wp_i18n_namespaceObject.__)('Add media') : (0,external_wp_i18n_namespaceObject.__)('Drag and drop images, upload, or choose from your library.');
 const MOBILE_CONTROL_PROPS_RANGE_CONTROL = external_wp_element_namespaceObject.Platform.isNative ? {
   type: 'stepper'
 } : {};
@@ -27324,7 +27323,7 @@ function ImageEdit({
       icon: !isSmallContainer && (lockUrlControls ? library_plugins : library_image),
       withIllustration: !isSingleSelected || isSmallContainer,
       label: !isSmallContainer && (0,external_wp_i18n_namespaceObject.__)('Image'),
-      instructions: !lockUrlControls && !isSmallContainer && (0,external_wp_i18n_namespaceObject.__)('Upload or drag an image file here, or pick one from your library.'),
+      instructions: !lockUrlControls && !isSmallContainer && (0,external_wp_i18n_namespaceObject.__)('Drag and drop an image, upload, or choose from your library.'),
       style: {
         aspectRatio: !(width && height) && aspectRatio ? aspectRatio : undefined,
         width: height && aspectRatio ? '100%' : width,
@@ -63739,7 +63738,7 @@ function VideoEdit({
       withIllustration: !isSingleSelected,
       icon: library_video,
       label: (0,external_wp_i18n_namespaceObject.__)('Video'),
-      instructions: (0,external_wp_i18n_namespaceObject.__)('Upload a video file, pick one from your media library, or add one with a URL.'),
+      instructions: (0,external_wp_i18n_namespaceObject.__)('Drag and drop a video, upload, or choose from your library.'),
       children: content
     });
   };
