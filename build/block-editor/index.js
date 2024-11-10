@@ -10135,6 +10135,10 @@ const myPatternsCategory = {
   name: 'myPatterns',
   label: (0,external_wp_i18n_namespaceObject.__)('My patterns')
 };
+const starterPatternsCategory = {
+  name: 'core/starter-content',
+  label: (0,external_wp_i18n_namespaceObject.__)('Starter Content')
+};
 function isPatternFiltered(pattern, sourceFilter, syncFilter) {
   const isUserPattern = pattern.name.startsWith('core/block');
   const isDirectoryPattern = pattern.source === 'core' || pattern.source?.startsWith('pattern-directory');
@@ -51345,6 +51349,9 @@ function usePatternCategories(rootClientId, sourceFilter = 'all') {
         label: (0,external_wp_i18n_namespaceObject._x)('Uncategorized')
       });
     }
+    if (filteredPatterns.some(pattern => pattern.blockTypes?.includes('core/post-content'))) {
+      categories.unshift(starterPatternsCategory);
+    }
     if (filteredPatterns.some(pattern => pattern.type === INSERTER_PATTERN_TYPES.user)) {
       categories.unshift(myPatternsCategory);
     }
@@ -51657,6 +51664,9 @@ function PatternCategoryPreviews({
       return true;
     }
     if (category.name === myPatternsCategory.name && pattern.type === INSERTER_PATTERN_TYPES.user) {
+      return true;
+    }
+    if (category.name === starterPatternsCategory.name && pattern.blockTypes?.includes('core/post-content')) {
       return true;
     }
     if (category.name === 'uncategorized') {
