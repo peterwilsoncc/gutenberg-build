@@ -33959,6 +33959,7 @@ function overlayMiddlewares() {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -34236,7 +34237,8 @@ const UnforwardedPopover = (props, forwardedRef) => {
         className: "components-popover__close",
         size: "small",
         icon: library_close,
-        onClick: onClose
+        onClick: onClose,
+        label: (0,external_wp_i18n_namespaceObject.__)('Close')
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "components-popover__content",
