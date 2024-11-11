@@ -5941,6 +5941,20 @@ function DataFormCombinedEdit({
 
 
 
+const getValueFromId = id => ({
+  item
+}) => {
+  const path = id.split('.');
+  let value = item;
+  for (const segment of path) {
+    if (value.hasOwnProperty(segment)) {
+      value = value[segment];
+    } else {
+      value = undefined;
+    }
+  }
+  return value;
+};
 
 /**
  * Apply default values and normalize the fields config.
@@ -5952,9 +5966,7 @@ function normalizeFields(fields) {
   return fields.map(field => {
     var _field$sort, _field$isValid, _field$enableHiding, _field$enableSorting;
     const fieldTypeDefinition = getFieldTypeDefinition(field.type);
-    const getValue = field.getValue || (({
-      item
-    }) => item[field.id]);
+    const getValue = field.getValue || getValueFromId(field.id);
     const sort = (_field$sort = field.sort) !== null && _field$sort !== void 0 ? _field$sort : function sort(a, b, direction) {
       return fieldTypeDefinition.sort(getValue({
         item: a
