@@ -26614,11 +26614,10 @@ const STYLE_BOOK_IFRAME_STYLES = `
 	.edit-site-style-book__example-preview .block-list-appender {
 		display: none;
 	}
-
-	.edit-site-style-book__example-preview .is-root-container > .wp-block:first-child {
+	:where(.is-root-container > .wp-block:first-child) {
 		margin-top: 0;
 	}
-	.edit-site-style-book__example-preview .is-root-container > .wp-block:last-child {
+	:where(.is-root-container > .wp-block:last-child) {
 		margin-bottom: 0;
 	}
 `;
