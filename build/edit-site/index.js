@@ -26478,6 +26478,10 @@ const STYLE_BOOK_THEME_SUBCATEGORIES = [{
   blocks: ['core/comments-title', 'core/comments-pagination', 'core/comments-pagination-numbers', 'core/comments', 'core/comments-author-name', 'core/comment-content', 'core/comment-date', 'core/comment-edit-link', 'core/comment-reply-link', 'core/comment-template', 'core/post-comments-count', 'core/post-comments-link']
 }];
 const STYLE_BOOK_CATEGORIES = [{
+  slug: 'overview',
+  title: (0,external_wp_i18n_namespaceObject.__)('Overview'),
+  blocks: []
+}, {
   slug: 'text',
   title: (0,external_wp_i18n_namespaceObject.__)('Text'),
   blocks: ['core/post-content', 'core/home-link', 'core/navigation-link']
@@ -26608,6 +26612,10 @@ const STYLE_BOOK_IFRAME_STYLES = `
 
 	.edit-site-style-book__example-preview {
 		width: 100%;
+	}
+	
+	.is-wide .edit-site-style-book__example-preview {
+		width: calc(100% - 120px);
 	}
 
 	.edit-site-style-book__example-preview .block-editor-block-list__insertion-point,
@@ -26829,6 +26837,75 @@ function getColorExamples(colors) {
 }
 
 /**
+ * Returns examples for the overview page.
+ *
+ * @param {MultiOriginPalettes} colors Global Styles color palettes per origin.
+ * @return {BlockExample[]} An array of block examples.
+ */
+function getOverviewBlockExamples(colors) {
+  const examples = [];
+
+  // Get theme palette from colors.
+  const themePalette = colors.colors.find(origin => origin.slug === 'theme');
+  if (themePalette) {
+    const themeColorexample = {
+      name: 'theme-colors',
+      title: (0,external_wp_i18n_namespaceObject.__)('Colors'),
+      category: 'overview',
+      content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_examples, {
+        colors: themePalette.colors,
+        type: colors
+      })
+    };
+    examples.push(themeColorexample);
+  }
+  const headingBlock = (0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
+    content: (0,external_wp_i18n_namespaceObject.__)(`AaBbCcDdEeFfGgHhiiJjKkLIMmNnOoPpQakRrssTtUuVVWwXxxYyZzOl23356789X{(…)},2!*&:/A@HELFO™`),
+    level: 1
+  });
+  const firstParagraphBlock = (0,external_wp_blocks_namespaceObject.createBlock)('core/paragraph', {
+    content: (0,external_wp_i18n_namespaceObject.__)(`A paragraph in a website refers to a distinct block of text that is used to present and organize information. It is a fundamental unit of content in web design and is typically composed of a group of related sentences or thoughts focused on a particular topic or idea. Paragraphs play a crucial role in improving the readability and user experience of a website. They break down the text into smaller, manageable chunks, allowing readers to scan the content more easily.`)
+  });
+  const secondParagraphBlock = (0,external_wp_blocks_namespaceObject.createBlock)('core/paragraph', {
+    content: (0,external_wp_i18n_namespaceObject.__)(`Additionally, paragraphs help structure the flow of information and provide logical breaks between different concepts or pieces of information. In terms of formatting, paragraphs in websites are commonly denoted by a vertical gap or indentation between each block of text. This visual separation helps visually distinguish one paragraph from another, creating a clear and organized layout that guides the reader through the content smoothly.`)
+  });
+  const textExample = {
+    name: 'typography',
+    title: (0,external_wp_i18n_namespaceObject.__)('Typography'),
+    category: 'overview',
+    blocks: [headingBlock, (0,external_wp_blocks_namespaceObject.createBlock)('core/group', {
+      layout: {
+        type: 'grid',
+        columnCount: 2,
+        minimumColumnWidth: '12rem'
+      },
+      style: {
+        spacing: {
+          blockGap: '1.5rem'
+        }
+      }
+    }, [firstParagraphBlock, secondParagraphBlock])]
+  };
+  examples.push(textExample);
+  const otherBlockExamples = ['core/image', 'core/separator', 'core/buttons', 'core/pullquote', 'core/search'];
+
+  // Get examples for other blocks and put them in order of above array.
+  otherBlockExamples.forEach(blockName => {
+    const blockType = (0,external_wp_blocks_namespaceObject.getBlockType)(blockName);
+    if (blockType && blockType.example) {
+      const blockExample = {
+        name: blockName,
+        title: blockType.title,
+        category: 'overview',
+        blocks: (0,external_wp_blocks_namespaceObject.getBlockFromExample)(blockName, blockType.example)
+      };
+      examples.push(blockExample);
+    }
+  });
+  return examples;
+}
+
+/**
  * Returns a list of examples for registered block types.
  *
  * @param {MultiOriginPalettes} colors Global styles colors grouped by origin e.g. Core, Theme, and User.
@@ -26869,7 +26946,8 @@ function getExamples(colors) {
     })
   };
   const colorExamples = getColorExamples(colors);
-  return [headingsExample, ...colorExamples, ...nonHeadingBlockExamples];
+  const overviewBlockExamples = getOverviewBlockExamples(colors);
+  return [headingsExample, ...colorExamples, ...nonHeadingBlockExamples, ...overviewBlockExamples];
 }
 
 ;// ./packages/edit-site/build-module/components/style-book/index.js
@@ -27016,6 +27094,15 @@ function StyleBook({
   const colors = useMultiOriginPalettes();
   const examples = (0,external_wp_element_namespaceObject.useMemo)(() => getExamples(colors), [colors]);
   const tabs = (0,external_wp_element_namespaceObject.useMemo)(() => getTopLevelStyleBookCategories().filter(category => examples.some(example => example.category === category.slug)), [examples]);
+  const examplesForSinglePageUse = [];
+  const overviewCategoryExamples = getExamplesByCategory({
+    slug: 'overview'
+  }, examples);
+  examplesForSinglePageUse.push(...overviewCategoryExamples.examples);
+  const otherExamples = examples.filter(example => {
+    return example.category !== 'overview' && !overviewCategoryExamples.examples.find(overviewExample => overviewExample.name === example.name);
+  });
+  examplesForSinglePageUse.push(...otherExamples);
   const {
     base: baseConfig
   } = (0,external_wp_element_namespaceObject.useContext)(style_book_GlobalStylesContext);
@@ -27074,7 +27161,7 @@ function StyleBook({
           })
         }, tab.slug))]
       }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleBookBody, {
-        examples: examples,
+        examples: examplesForSinglePageUse,
         isSelected: isSelected,
         onClick: onClick,
         onSelect: onSelect,
@@ -28155,6 +28242,11 @@ function GlobalStylesStyleBook() {
       if (STYLE_BOOK_COLOR_GROUPS.find(group => group.slug === blockName)) {
         // Go to color palettes Global Styles.
         navigator.goTo('/colors/palette');
+        return;
+      }
+      if (blockName === 'typography') {
+        // Go to typography Global Styles.
+        navigator.goTo('/typography');
         return;
       }
 
@@ -31042,6 +31134,11 @@ function GlobalStylesUIWrapper() {
         if (STYLE_BOOK_COLOR_GROUPS.find(group => group.slug === blockName)) {
           // Go to color palettes Global Styles.
           onPathChange('/colors/palette');
+          return;
+        }
+        if (blockName === 'typography') {
+          // Go to typography Global Styles.
+          onPathChange('/typography');
           return;
         }
 
