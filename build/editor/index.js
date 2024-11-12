@@ -23728,6 +23728,36 @@ const pencil = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 /* harmony default export */ const edit = (library_pencil);
 
+;// ./packages/icons/build-module/library/rotate-right.js
+/**
+ * WordPress dependencies
+ */
+
+
+const rotateRight = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M15.1 4.8l-3-2.5V4c-4.4 0-8 3.6-8 8 0 3.7 2.5 6.9 6 7.7.3.1.6.1 1 .2l.2-1.5c-.4 0-.7-.1-1.1-.2l-.1.2v-.2c-2.6-.8-4.5-3.3-4.5-6.2 0-3.6 2.9-6.5 6.5-6.5v1.8l3-2.5zM20 11c-.2-1.4-.7-2.7-1.6-3.8l-1.2.8c.7.9 1.1 2 1.3 3.1L20 11zm-1.5 1.8c-.1.5-.2 1.1-.4 1.6s-.5 1-.8 1.5l1.2.9c.4-.5.8-1.1 1-1.8s.5-1.3.5-2l-1.5-.2zm-5.6 5.6l.2 1.5c1.4-.2 2.7-.7 3.8-1.6l-.9-1.1c-.9.7-2 1.1-3.1 1.2z"
+  })
+});
+/* harmony default export */ const rotate_right = (rotateRight);
+
+;// ./packages/icons/build-module/library/rotate-left.js
+/**
+ * WordPress dependencies
+ */
+
+
+const rotateLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M12 4V2.2L9 4.8l3 2.5V5.5c3.6 0 6.5 2.9 6.5 6.5 0 2.9-1.9 5.3-4.5 6.2v.2l-.1-.2c-.4.1-.7.2-1.1.2l.2 1.5c.3 0 .6-.1 1-.2 3.5-.9 6-4 6-7.7 0-4.4-3.6-8-8-8zm-7.9 7l1.5.2c.1-1.2.5-2.3 1.2-3.2l-1.1-.9C4.8 8.2 4.3 9.6 4.1 11zm1.5 1.8l-1.5.2c.1.7.3 1.4.5 2 .3.7.6 1.3 1 1.8l1.2-.8c-.3-.5-.6-1-.8-1.5s-.4-1.1-.4-1.7zm1.5 5.5c1.1.9 2.4 1.4 3.8 1.6l.2-1.5c-1.1-.1-2.2-.5-3.1-1.2l-.9 1.1z"
+  })
+});
+/* harmony default export */ const rotate_left = (rotateLeft);
+
 ;// ./packages/editor/build-module/components/pattern-rename-modal/index.js
 /**
  * WordPress dependencies
@@ -23845,9 +23875,12 @@ function PatternDuplicateModal() {
 
 
 
+
 /**
  * Internal dependencies
  */
+
+
 
 
 
@@ -24130,6 +24163,124 @@ const getEditedEntityContextualCommands = () => function useEditedEntityContextu
     commands
   };
 };
+const getPageContentFocusCommands = () => function usePageContentFocusCommands() {
+  const {
+    onNavigateToEntityRecord,
+    goBack,
+    templateId,
+    isPreviewMode
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getRenderingMode,
+      getEditorSettings: _getEditorSettings,
+      getCurrentTemplateId
+    } = unlock(select(store_store));
+    const editorSettings = _getEditorSettings();
+    return {
+      isTemplateHidden: getRenderingMode() === 'post-only',
+      onNavigateToEntityRecord: editorSettings.onNavigateToEntityRecord,
+      getEditorSettings: _getEditorSettings,
+      goBack: editorSettings.onNavigateToPreviousEntityRecord,
+      templateId: getCurrentTemplateId(),
+      isPreviewMode: editorSettings.isPreviewMode
+    };
+  }, []);
+  const {
+    editedRecord: template,
+    hasResolved
+  } = (0,external_wp_coreData_namespaceObject.useEntityRecord)('postType', 'wp_template', templateId);
+  if (isPreviewMode) {
+    return {
+      isLoading: false,
+      commands: []
+    };
+  }
+  const commands = [];
+  if (templateId && hasResolved) {
+    commands.push({
+      name: 'core/switch-to-template-focus',
+      label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: template title */
+      (0,external_wp_i18n_namespaceObject.__)('Edit template: %s'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(template.title)),
+      icon: library_layout,
+      callback: ({
+        close
+      }) => {
+        onNavigateToEntityRecord({
+          postId: templateId,
+          postType: 'wp_template'
+        });
+        close();
+      }
+    });
+  }
+  if (!!goBack) {
+    commands.push({
+      name: 'core/switch-to-previous-entity',
+      label: (0,external_wp_i18n_namespaceObject.__)('Go back'),
+      icon: library_page,
+      callback: ({
+        close
+      }) => {
+        goBack();
+        close();
+      }
+    });
+  }
+  return {
+    isLoading: false,
+    commands
+  };
+};
+const getManipulateDocumentCommands = () => function useManipulateDocumentCommands() {
+  const {
+    postType,
+    postId
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getCurrentPostId,
+      getCurrentPostType
+    } = select(store_store);
+    return {
+      postType: getCurrentPostType(),
+      postId: getCurrentPostId()
+    };
+  }, []);
+  const {
+    editedRecord: template,
+    hasResolved
+  } = (0,external_wp_coreData_namespaceObject.useEntityRecord)('postType', postType, postId);
+  // eslint-disable-next-line @wordpress/no-unused-vars-before-return
+  const {
+    revertTemplate
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));
+  if (!hasResolved || ![constants_TEMPLATE_PART_POST_TYPE, constants_TEMPLATE_POST_TYPE].includes(postType)) {
+    return {
+      isLoading: true,
+      commands: []
+    };
+  }
+  const commands = [];
+  if (isTemplateRevertable(template)) {
+    const label = template.type === constants_TEMPLATE_POST_TYPE ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: template title */
+    (0,external_wp_i18n_namespaceObject.__)('Reset template: %s'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(template.title)) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: template part title */
+    (0,external_wp_i18n_namespaceObject.__)('Reset template part: %s'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(template.title));
+    commands.push({
+      name: 'core/reset-template',
+      label,
+      icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? rotate_right : rotate_left,
+      callback: ({
+        close
+      }) => {
+        revertTemplate(template);
+        close();
+      }
+    });
+  }
+  return {
+    isLoading: !hasResolved,
+    commands
+  };
+};
 function useCommands() {
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/editor/edit-ui',
@@ -24139,6 +24290,15 @@ function useCommands() {
     name: 'core/editor/contextual-commands',
     hook: getEditedEntityContextualCommands(),
     context: 'entity-edit'
+  });
+  (0,external_wp_commands_namespaceObject.useCommandLoader)({
+    name: 'core/editor/page-content-focus',
+    hook: getPageContentFocusCommands(),
+    context: 'entity-edit'
+  });
+  (0,external_wp_commands_namespaceObject.useCommandLoader)({
+    name: 'core/edit-site/manipulate-document',
+    hook: getManipulateDocumentCommands()
   });
 }
 
