@@ -45803,6 +45803,42 @@ const parentField = {
  */
 /* harmony default export */ const fields_parent = (parentField);
 
+;// ./packages/fields/build-module/fields/comment-status/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+const commentStatusField = {
+  id: 'comment_status',
+  label: (0,external_wp_i18n_namespaceObject.__)('Discussion'),
+  type: 'text',
+  Edit: 'radio',
+  enableSorting: false,
+  filterBy: {
+    operators: []
+  },
+  elements: [{
+    value: 'open',
+    label: (0,external_wp_i18n_namespaceObject.__)('Open'),
+    description: (0,external_wp_i18n_namespaceObject.__)('Visitors can add new comments and replies.')
+  }, {
+    value: 'closed',
+    label: (0,external_wp_i18n_namespaceObject.__)('Closed'),
+    description: (0,external_wp_i18n_namespaceObject.__)('Visitors cannot add new comments or replies. Existing comments remain visible.')
+  }]
+};
+
+/**
+ * Comment status field for BasePost.
+ */
+/* harmony default export */ const comment_status = (commentStatusField);
+
 ;// ./packages/fields/build-module/fields/password/edit.js
 /**
  * WordPress dependencies
@@ -46064,25 +46100,7 @@ function usePostFields() {
         children: getFormattedDate(item.date)
       });
     }
-  }, slug, fields_parent, {
-    id: 'comment_status',
-    label: (0,external_wp_i18n_namespaceObject.__)('Discussion'),
-    type: 'text',
-    Edit: 'radio',
-    enableSorting: false,
-    filterBy: {
-      operators: []
-    },
-    elements: [{
-      value: 'open',
-      label: (0,external_wp_i18n_namespaceObject.__)('Open'),
-      description: (0,external_wp_i18n_namespaceObject.__)('Visitors can add new comments and replies.')
-    }, {
-      value: 'closed',
-      label: (0,external_wp_i18n_namespaceObject.__)('Closed'),
-      description: (0,external_wp_i18n_namespaceObject.__)('Visitors cannot add new comments or replies. Existing comments remain visible.')
-    }]
-  }, fields_password], [authors, frontPageId, postsPageId]);
+  }, slug, fields_parent, comment_status, fields_password], [authors, frontPageId, postsPageId]);
   return {
     isLoading: isLoadingAuthors,
     fields
