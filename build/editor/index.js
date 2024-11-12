@@ -6288,10 +6288,10 @@ function getItemTitle(item) {
   if (typeof item.title === 'string') {
     return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title);
   }
-  if ('rendered' in item.title) {
+  if (item.title && 'rendered' in item.title) {
     return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.rendered);
   }
-  if ('raw' in item.title) {
+  if (item.title && 'raw' in item.title) {
     return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.raw);
   }
   return '';
@@ -6313,6 +6313,62 @@ function isTemplateRemovable(template) {
   return [template.source, template.source].includes(utils_TEMPLATE_ORIGINS.custom) && !Boolean(template.type === 'wp_template' && template?.plugin) && !template.has_theme_file;
 }
 
+;// ./packages/fields/build-module/fields/title/title-view.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const TitleView = ({
+  item
+}) => {
+  const {
+    frontPageId,
+    postsPageId
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
+    const siteSettings = getEntityRecord('root', 'site', '');
+    return {
+      frontPageId: siteSettings?.page_on_front,
+      postsPageId: siteSettings?.page_for_posts
+    };
+  }, []);
+  const renderedTitle = getItemTitle(item);
+  let suffix;
+  if (item.id === frontPageId) {
+    suffix = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "edit-site-post-list__title-badge",
+      children: (0,external_wp_i18n_namespaceObject.__)('Homepage')
+    });
+  } else if (item.id === postsPageId) {
+    suffix = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "edit-site-post-list__title-badge",
+      children: (0,external_wp_i18n_namespaceObject.__)('Posts Page')
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+    className: "edit-site-post-list__title",
+    alignment: "center",
+    justify: "flex-start",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(renderedTitle) || (0,external_wp_i18n_namespaceObject.__)('(no title)')
+    }), suffix]
+  });
+};
+/* harmony default export */ const title_view = (TitleView);
+
 ;// ./packages/fields/build-module/fields/title/index.js
 /**
  * WordPress dependencies
@@ -6325,6 +6381,7 @@ function isTemplateRemovable(template) {
  */
 
 
+
 const titleField = {
   type: 'text',
   id: 'title',
@@ -6332,7 +6389,9 @@ const titleField = {
   placeholder: (0,external_wp_i18n_namespaceObject.__)('No title'),
   getValue: ({
     item
-  }) => getItemTitle(item)
+  }) => getItemTitle(item),
+  render: title_view,
+  enableHiding: false
 };
 /* harmony default export */ const title = (titleField);
 

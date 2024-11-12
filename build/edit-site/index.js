@@ -44918,6 +44918,143 @@ const featuredImageField = {
 };
 /* harmony default export */ const featured_image = (featuredImageField);
 
+;// ./packages/fields/build-module/actions/utils.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+const utils_TEMPLATE_POST_TYPE = 'wp_template';
+const utils_TEMPLATE_PART_POST_TYPE = 'wp_template_part';
+const utils_TEMPLATE_ORIGINS = {
+  custom: 'custom',
+  theme: 'theme',
+  plugin: 'plugin'
+};
+function isTemplate(post) {
+  return post.type === utils_TEMPLATE_POST_TYPE;
+}
+function isTemplatePart(post) {
+  return post.type === utils_TEMPLATE_PART_POST_TYPE;
+}
+function isTemplateOrTemplatePart(p) {
+  return p.type === utils_TEMPLATE_POST_TYPE || p.type === utils_TEMPLATE_PART_POST_TYPE;
+}
+function getItemTitle(item) {
+  if (typeof item.title === 'string') {
+    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title);
+  }
+  if (item.title && 'rendered' in item.title) {
+    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.rendered);
+  }
+  if (item.title && 'raw' in item.title) {
+    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.raw);
+  }
+  return '';
+}
+
+/**
+ * Check if a template is removable.
+ *
+ * @param template The template entity to check.
+ * @return Whether the template is removable.
+ */
+function isTemplateRemovable(template) {
+  if (!template) {
+    return false;
+  }
+  // In patterns list page we map the templates parts to a different object
+  // than the one returned from the endpoint. This is why we need to check for
+  // two props whether is custom or has a theme file.
+  return [template.source, template.source].includes(utils_TEMPLATE_ORIGINS.custom) && !Boolean(template.type === 'wp_template' && template?.plugin) && !template.has_theme_file;
+}
+
+;// ./packages/fields/build-module/fields/title/title-view.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const TitleView = ({
+  item
+}) => {
+  const {
+    frontPageId,
+    postsPageId
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
+    const siteSettings = getEntityRecord('root', 'site', '');
+    return {
+      frontPageId: siteSettings?.page_on_front,
+      postsPageId: siteSettings?.page_for_posts
+    };
+  }, []);
+  const renderedTitle = getItemTitle(item);
+  let suffix;
+  if (item.id === frontPageId) {
+    suffix = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "edit-site-post-list__title-badge",
+      children: (0,external_wp_i18n_namespaceObject.__)('Homepage')
+    });
+  } else if (item.id === postsPageId) {
+    suffix = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "edit-site-post-list__title-badge",
+      children: (0,external_wp_i18n_namespaceObject.__)('Posts Page')
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+    className: "edit-site-post-list__title",
+    alignment: "center",
+    justify: "flex-start",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(renderedTitle) || (0,external_wp_i18n_namespaceObject.__)('(no title)')
+    }), suffix]
+  });
+};
+/* harmony default export */ const title_view = (TitleView);
+
+;// ./packages/fields/build-module/fields/title/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const title_titleField = {
+  type: 'text',
+  id: 'title',
+  label: (0,external_wp_i18n_namespaceObject.__)('Title'),
+  placeholder: (0,external_wp_i18n_namespaceObject.__)('No title'),
+  getValue: ({
+    item
+  }) => getItemTitle(item),
+  render: title_view,
+  enableHiding: false
+};
+/* harmony default export */ const title = (title_titleField);
+
 ;// ./packages/fields/build-module/fields/status/status-elements.js
 /**
  * WordPress dependencies
@@ -45042,61 +45179,6 @@ const copySmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
   })
 });
 /* harmony default export */ const copy_small = (copySmall);
-
-;// ./packages/fields/build-module/actions/utils.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-const utils_TEMPLATE_POST_TYPE = 'wp_template';
-const utils_TEMPLATE_PART_POST_TYPE = 'wp_template_part';
-const utils_TEMPLATE_ORIGINS = {
-  custom: 'custom',
-  theme: 'theme',
-  plugin: 'plugin'
-};
-function isTemplate(post) {
-  return post.type === utils_TEMPLATE_POST_TYPE;
-}
-function isTemplatePart(post) {
-  return post.type === utils_TEMPLATE_PART_POST_TYPE;
-}
-function isTemplateOrTemplatePart(p) {
-  return p.type === utils_TEMPLATE_POST_TYPE || p.type === utils_TEMPLATE_PART_POST_TYPE;
-}
-function getItemTitle(item) {
-  if (typeof item.title === 'string') {
-    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title);
-  }
-  if ('rendered' in item.title) {
-    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.rendered);
-  }
-  if ('raw' in item.title) {
-    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.raw);
-  }
-  return '';
-}
-
-/**
- * Check if a template is removable.
- *
- * @param template The template entity to check.
- * @return Whether the template is removable.
- */
-function isTemplateRemovable(template) {
-  if (!template) {
-    return false;
-  }
-  // In patterns list page we map the templates parts to a different object
-  // than the one returned from the endpoint. This is why we need to check for
-  // two props whether is custom or has a theme file.
-  return [template.source, template.source].includes(utils_TEMPLATE_ORIGINS.custom) && !Boolean(template.type === 'wp_template' && template?.plugin) && !template.has_theme_file;
-}
 
 ;// ./packages/fields/build-module/fields/slug/utils.js
 /**
@@ -45729,7 +45811,6 @@ const passwordField = {
 
 
 
-
 const getFormattedDate = dateToDisplay => (0,external_wp_date_namespaceObject.dateI18n)((0,external_wp_date_namespaceObject.getSettings)().formats.datetimeAbbreviated, (0,external_wp_date_namespaceObject.getDate)(dateToDisplay));
 function PostAuthorField({
   item
@@ -45778,53 +45859,7 @@ function usePostFields() {
   } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('root', 'user', {
     per_page: -1
   });
-  const {
-    frontPageId,
-    postsPageId
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEntityRecord
-    } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEntityRecord('root', 'site');
-    return {
-      frontPageId: siteSettings?.page_on_front,
-      postsPageId: siteSettings?.page_for_posts
-    };
-  }, []);
-  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [featured_image, {
-    label: (0,external_wp_i18n_namespaceObject.__)('Title'),
-    id: 'title',
-    type: 'text',
-    getValue: ({
-      item
-    }) => typeof item.title === 'string' ? item.title : item.title?.raw,
-    render: ({
-      item
-    }) => {
-      const renderedTitle = typeof item.title === 'string' ? item.title : item.title?.rendered;
-      let suffix = '';
-      if (item.id === frontPageId) {
-        suffix = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          className: "edit-site-post-list__title-badge",
-          children: (0,external_wp_i18n_namespaceObject.__)('Homepage')
-        });
-      } else if (item.id === postsPageId) {
-        suffix = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          className: "edit-site-post-list__title-badge",
-          children: (0,external_wp_i18n_namespaceObject.__)('Posts Page')
-        });
-      }
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        className: "edit-site-post-list__title",
-        alignment: "center",
-        justify: "flex-start",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(renderedTitle) || (0,external_wp_i18n_namespaceObject.__)('(no title)')
-        }), suffix]
-      });
-    },
-    enableHiding: false
-  }, {
+  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [featured_image, title, {
     label: (0,external_wp_i18n_namespaceObject.__)('Author'),
     id: 'author',
     type: 'integer',
@@ -45889,7 +45924,7 @@ function usePostFields() {
         children: getFormattedDate(item.date)
       });
     }
-  }, slug, fields_parent, comment_status, fields_password], [authors, frontPageId, postsPageId]);
+  }, slug, fields_parent, comment_status, fields_password], [authors]);
   return {
     isLoading: isLoadingAuthors,
     fields
