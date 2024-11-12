@@ -15015,11 +15015,6 @@ function WelcomeGuideStyles() {
 
 
 
-/**
- * Internal dependencies
- */
-
-
 function WelcomeGuidePage() {
   const {
     toggle
@@ -15027,10 +15022,7 @@ function WelcomeGuidePage() {
   const isVisible = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const isPageActive = !!select(external_wp_preferences_namespaceObject.store).get('core/edit-site', 'welcomeGuidePage');
     const isEditorActive = !!select(external_wp_preferences_namespaceObject.store).get('core/edit-site', 'welcomeGuide');
-    const {
-      isPage
-    } = select(store);
-    return isPageActive && !isEditorActive && isPage();
+    return isPageActive && !isEditorActive;
   }, []);
   if (!isVisible) {
     return null;
@@ -15077,20 +15069,10 @@ function WelcomeGuidePage() {
 
 
 
-/**
- * Internal dependencies
- */
-
-
 function WelcomeGuideTemplate() {
   const {
     toggle
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_preferences_namespaceObject.store);
-  const {
-    isLoaded,
-    record
-  } = useEditedEntityRecord();
-  const isPostTypeTemplate = isLoaded && record.type === 'wp_template';
   const {
     isActive,
     hasPreviousEntity
@@ -15106,7 +15088,7 @@ function WelcomeGuideTemplate() {
       hasPreviousEntity: !!getEditorSettings().onNavigateToPreviousEntityRecord
     };
   }, []);
-  const isVisible = isActive && isPostTypeTemplate && hasPreviousEntity;
+  const isVisible = isActive && hasPreviousEntity;
   if (!isVisible) {
     return null;
   }
@@ -15151,9 +15133,11 @@ function WelcomeGuideTemplate() {
 
 
 
-function WelcomeGuide() {
+function WelcomeGuide({
+  postType
+}) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WelcomeGuideEditor, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WelcomeGuideStyles, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WelcomeGuidePage, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WelcomeGuideTemplate, {})]
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WelcomeGuideEditor, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WelcomeGuideStyles, {}), postType === 'page' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WelcomeGuidePage, {}), postType === 'wp_template' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WelcomeGuideTemplate, {})]
   });
 }
 
@@ -29184,7 +29168,9 @@ function EditSiteEditor({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesRenderer, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EditorKeyboardShortcutsRegister, {}), isEditMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockKeyboardShortcuts, {}), !isReady ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CanvasLoader, {
       id: loadingProgressId
-    }) : null, isEditMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WelcomeGuide, {}), isReady && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Editor, {
+    }) : null, isEditMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WelcomeGuide, {
+      postType: postWithTemplate ? contextPostType : editedPostType
+    }), isReady && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Editor, {
       postType: postWithTemplate ? contextPostType : editedPostType,
       postId: postWithTemplate ? contextPostId : editedPostId,
       templateId: postWithTemplate ? editedPostId : undefined,
