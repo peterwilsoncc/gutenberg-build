@@ -6676,13 +6676,14 @@ function isItemValid(item, fields, form) {
  */
 
 
+
 /**
  * Internal dependencies
  */
 
 const orderField = {
-  type: 'integer',
   id: 'menu_order',
+  type: 'integer',
   label: (0,external_wp_i18n_namespaceObject.__)('Order'),
   description: (0,external_wp_i18n_namespaceObject.__)('Determines the order of pages.')
 };

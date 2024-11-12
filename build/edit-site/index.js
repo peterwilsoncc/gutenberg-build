@@ -44979,11 +44979,10 @@ const lineSolid = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 
 
 
+
 /**
  * Internal dependencies
  */
-
-
 
 const FeaturedImageEdit = ({
   data,
@@ -45112,10 +45111,11 @@ const FeaturedImageView = ({
  * WordPress dependencies
  */
 
+
+
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -45123,9 +45123,6 @@ const featuredImageField = {
   id: 'featured_media',
   type: 'text',
   label: (0,external_wp_i18n_namespaceObject.__)('Featured Image'),
-  getValue: ({
-    item
-  }) => item.featured_media,
   Edit: FeaturedImageEdit,
   render: FeaturedImageView,
   enableSorting: false
@@ -45481,10 +45478,11 @@ const SlugView = ({
  * WordPress dependencies
  */
 
+
+
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -45492,9 +45490,6 @@ const slugField = {
   id: 'slug',
   type: 'text',
   label: (0,external_wp_i18n_namespaceObject.__)('Slug'),
-  getValue: ({
-    item
-  }) => item.slug,
   Edit: slug_edit,
   render: slug_view
 };
@@ -45517,6 +45512,11 @@ function getTitleWithFallbackName(post) {
 
 ;// ./packages/fields/build-module/fields/parent/parent-edit.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
 
@@ -45524,17 +45524,14 @@ function getTitleWithFallbackName(post) {
 
 // @ts-ignore
 
-/**
- * External dependencies
- */
+
+
+
 
 
 /**
  * Internal dependencies
  */
-
-
-
 
 
 
@@ -45753,10 +45750,10 @@ const ParentEdit = ({
 
 
 
+
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -45784,10 +45781,11 @@ const ParentView = ({
  * WordPress dependencies
  */
 
+
+
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -45795,9 +45793,6 @@ const parentField = {
   id: 'parent',
   type: 'text',
   label: (0,external_wp_i18n_namespaceObject.__)('Parent'),
-  getValue: ({
-    item
-  }) => item.parent,
   Edit: ParentEdit,
   render: ParentView,
   enableSorting: true
@@ -45880,9 +45875,6 @@ function PasswordEdit({
 const passwordField = {
   id: 'password',
   type: 'text',
-  getValue: ({
-    item
-  }) => item.password,
   Edit: password_edit,
   enableSorting: false,
   enableHiding: false,
