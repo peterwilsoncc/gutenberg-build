@@ -32752,6 +32752,8 @@ const DataViewsContext = (0,external_wp_element_namespaceObject.createContext)({
   setOpenedFilter: () => {},
   openedFilter: null,
   getItemId: item => item.id,
+  onClickItem: () => {},
+  isItemClickable: () => false,
   density: 0
 });
 /* harmony default export */ const dataviews_context = (DataViewsContext);
@@ -39066,6 +39068,26 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
 const ColumnHeaderMenu = _HeaderMenu;
 /* harmony default export */ const column_header_menu = (ColumnHeaderMenu);
 
+;// ./packages/dataviews/build-module/dataviews-layouts/utils/get-clickable-item-props.js
+function getClickableItemProps(item, isItemClickable, onClickItem, className) {
+  if (!isItemClickable(item)) {
+    return {
+      className
+    };
+  }
+  return {
+    className: `${className} ${className}--clickable`,
+    role: 'button',
+    tabIndex: 0,
+    onClick: () => onClickItem(item),
+    onKeyDown: event => {
+      if (event.key === 'Enter' || event.key === '') {
+        onClickItem(item);
+      }
+    }
+  };
+}
+
 ;// ./packages/dataviews/build-module/dataviews-layouts/table/index.js
 /**
  * External dependencies
@@ -39082,6 +39104,7 @@ const ColumnHeaderMenu = _HeaderMenu;
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -39116,14 +39139,22 @@ function TableColumn({
 function TableColumnField({
   primaryField,
   item,
-  field
+  field,
+  isItemClickable,
+  onClickItem
 }) {
+  const isPrimaryField = primaryField?.id === field.id;
+  const isItemClickableField = i => isItemClickable(i) && isPrimaryField;
+  const clickableProps = getClickableItemProps(item, isItemClickableField, onClickItem, 'dataviews-view-table__cell-content');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: dist_clsx('dataviews-view-table__cell-content-wrapper', {
-      'dataviews-view-table__primary-field': primaryField?.id === field.id
+      'dataviews-view-table__primary-field': isPrimaryField
     }),
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.render, {
-      item
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      ...clickableProps,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.render, {
+        item
+      })
     })
   });
 }
@@ -39156,6 +39187,8 @@ function TableRow({
   primaryField,
   selection,
   getItemId,
+  isItemClickable,
+  onClickItem,
   onChangeSelection
 }) {
   const hasPossibleBulkAction = useHasAPossibleBulkAction(actions, item);
@@ -39224,6 +39257,8 @@ function TableRow({
         },
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TableColumn, {
           primaryField: primaryField,
+          isItemClickable: isItemClickable,
+          onClickItem: onClickItem,
           fields: fields,
           item: item,
           column: column,
@@ -39259,6 +39294,8 @@ function ViewTable({
   onChangeSelection,
   selection,
   setOpenedFilter,
+  onClickItem,
+  isItemClickable,
   view
 }) {
   const headerMenuRefs = (0,external_wp_element_namespaceObject.useRef)(new Map());
@@ -39364,7 +39401,9 @@ function ViewTable({
           primaryField: primaryField,
           selection: selection,
           getItemId: getItemId,
-          onChangeSelection: onChangeSelection
+          onChangeSelection: onChangeSelection,
+          onClickItem: onClickItem,
+          isItemClickable: isItemClickable
         }, getItemId(item)))
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -39400,9 +39439,12 @@ function ViewTable({
 
 
 
+
 function GridItem({
   selection,
   onChangeSelection,
+  onClickItem,
+  isItemClickable,
   getItemId,
   item,
   actions,
@@ -39421,6 +39463,8 @@ function GridItem({
   const renderedPrimaryField = primaryField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(primaryField.render, {
     item: item
   }) : null;
+  const clickableMediaItemProps = getClickableItemProps(item, isItemClickable, onClickItem, 'dataviews-view-grid__media');
+  const clickablePrimaryItemProps = getClickableItemProps(item, isItemClickable, onClickItem, 'dataviews-view-grid__primary-field');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 0,
     className: dist_clsx('dataviews-view-grid__card', {
@@ -39437,7 +39481,7 @@ function GridItem({
       }
     },
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "dataviews-view-grid__media",
+      ...clickableMediaItemProps,
       children: renderedMediaField
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSelectionCheckbox, {
       item: item,
@@ -39450,8 +39494,10 @@ function GridItem({
       justify: "space-between",
       className: "dataviews-view-grid__title-actions",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
-        className: "dataviews-view-grid__primary-field",
-        children: renderedPrimaryField
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          ...clickablePrimaryItemProps,
+          children: renderedPrimaryField
+        })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemActions, {
         item: item,
         actions: actions,
@@ -39510,6 +39556,8 @@ function ViewGrid({
   getItemId,
   isLoading,
   onChangeSelection,
+  onClickItem,
+  isItemClickable,
   selection,
   view,
   density
@@ -39549,6 +39597,8 @@ function ViewGrid({
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItem, {
           selection: selection,
           onChangeSelection: onChangeSelection,
+          onClickItem: onClickItem,
+          isItemClickable: isItemClickable,
           getItemId: getItemId,
           item: item,
           actions: actions,
@@ -40017,7 +40067,9 @@ function DataViewsLayout() {
     selection,
     onChangeSelection,
     setOpenedFilter,
-    density
+    density,
+    onClickItem,
+    isItemClickable
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const ViewComponent = VIEW_LAYOUTS.find(v => v.type === view.type)?.component;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewComponent, {
@@ -40030,6 +40082,8 @@ function DataViewsLayout() {
     onChangeSelection: onChangeSelection,
     selection: selection,
     setOpenedFilter: setOpenedFilter,
+    onClickItem: onClickItem,
+    isItemClickable: isItemClickable,
     view: view,
     density: density
   });
@@ -40839,13 +40893,16 @@ const DataViewsViewConfig = (0,external_wp_element_namespaceObject.memo)(_DataVi
 
 
 const defaultGetItemId = item => item.id;
+const defaultIsItemClickable = () => false;
+const defaultOnClickItem = () => {};
+const dataviews_EMPTY_ARRAY = [];
 function DataViews({
   view,
   onChangeView,
   fields,
   search = true,
   searchLabel = undefined,
-  actions = [],
+  actions = dataviews_EMPTY_ARRAY,
   data,
   getItemId = defaultGetItemId,
   isLoading = false,
@@ -40853,6 +40910,8 @@ function DataViews({
   defaultLayouts,
   selection: selectionProperty,
   onChangeSelection,
+  onClickItem = defaultOnClickItem,
+  isItemClickable = defaultIsItemClickable,
   header
 }) {
   const [selectionState, setSelectionState] = (0,external_wp_element_namespaceObject.useState)([]);
@@ -40889,6 +40948,8 @@ function DataViews({
       openedFilter,
       setOpenedFilter,
       getItemId,
+      isItemClickable,
+      onClickItem,
       density
     },
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
@@ -45763,7 +45824,6 @@ const passwordField = {
  */
 
 
-
 // See https://github.com/WordPress/gutenberg/issues/55886
 // We do not support custom statutes at the moment.
 
@@ -45859,7 +45919,7 @@ function PostAuthorField({
     })]
   });
 }
-function usePostFields(viewType) {
+function usePostFields() {
   const {
     records: authors,
     isResolving: isLoadingAuthors
@@ -45889,18 +45949,7 @@ function usePostFields(viewType) {
     render: ({
       item
     }) => {
-      const addLink = [LAYOUT_TABLE, LAYOUT_GRID].includes(viewType) && item.status !== 'trash';
       const renderedTitle = typeof item.title === 'string' ? item.title : item.title?.rendered;
-      const title = addLink ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Link, {
-        params: {
-          postId: item.id,
-          postType: item.type,
-          canvas: 'edit'
-        },
-        children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(renderedTitle) || (0,external_wp_i18n_namespaceObject.__)('(no title)')
-      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(renderedTitle) || (0,external_wp_i18n_namespaceObject.__)('(no title)')
-      });
       let suffix = '';
       if (item.id === frontPageId) {
         suffix = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
@@ -45917,7 +45966,9 @@ function usePostFields(viewType) {
         className: "edit-site-post-list__title",
         alignment: "center",
         justify: "flex-start",
-        children: [title, suffix]
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(renderedTitle) || (0,external_wp_i18n_namespaceObject.__)('(no title)')
+        }), suffix]
       });
     },
     enableHiding: false
@@ -46015,7 +46066,7 @@ function usePostFields(viewType) {
       label: (0,external_wp_i18n_namespaceObject.__)('Closed'),
       description: (0,external_wp_i18n_namespaceObject.__)('Visitors cannot add new comments or replies. Existing comments remain visible.')
     }]
-  }, fields_password], [authors, viewType, frontPageId, postsPageId]);
+  }, fields_password], [authors, frontPageId, postsPageId]);
   return {
     isLoading: isLoadingAuthors,
     fields
@@ -46225,7 +46276,7 @@ function PostList({
   const {
     isLoading: isLoadingFields,
     fields: _fields
-  } = post_fields(view.type);
+  } = post_fields();
   const fields = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const activeViewFilters = getActiveViewFilters(defaultViews, activeView).map(({
       field
@@ -46370,6 +46421,16 @@ function PostList({
       onChangeView: setView,
       selection: selection,
       onChangeSelection: onChangeSelection,
+      isItemClickable: item => item.status !== 'trash',
+      onClickItem: ({
+        id
+      }) => {
+        history.push({
+          postId: id,
+          postType,
+          canvas: 'edit'
+        });
+      },
       getItemId: getItemId,
       defaultLayouts: default_views_defaultLayouts,
       header: window.__experimentalQuickEditDataViews && view.type !== LAYOUT_LIST && postType === 'page' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
