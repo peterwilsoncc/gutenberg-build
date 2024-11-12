@@ -45132,6 +45132,114 @@ const featuredImageField = {
 };
 /* harmony default export */ const featured_image = (featuredImageField);
 
+;// ./packages/fields/build-module/fields/status/status-elements.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+// See https://github.com/WordPress/gutenberg/issues/55886
+// We do not support custom statutes at the moment.
+const STATUSES = [{
+  value: 'draft',
+  label: (0,external_wp_i18n_namespaceObject.__)('Draft'),
+  icon: library_drafts,
+  description: (0,external_wp_i18n_namespaceObject.__)('Not ready to publish.')
+}, {
+  value: 'future',
+  label: (0,external_wp_i18n_namespaceObject.__)('Scheduled'),
+  icon: library_scheduled,
+  description: (0,external_wp_i18n_namespaceObject.__)('Publish automatically on a chosen date.')
+}, {
+  value: 'pending',
+  label: (0,external_wp_i18n_namespaceObject.__)('Pending Review'),
+  icon: library_pending,
+  description: (0,external_wp_i18n_namespaceObject.__)('Waiting for review before publishing.')
+}, {
+  value: 'private',
+  label: (0,external_wp_i18n_namespaceObject.__)('Private'),
+  icon: not_allowed,
+  description: (0,external_wp_i18n_namespaceObject.__)('Only visible to site admins and editors.')
+}, {
+  value: 'publish',
+  label: (0,external_wp_i18n_namespaceObject.__)('Published'),
+  icon: library_published,
+  description: (0,external_wp_i18n_namespaceObject.__)('Visible to everyone.')
+}, {
+  value: 'trash',
+  label: (0,external_wp_i18n_namespaceObject.__)('Trash'),
+  icon: library_trash
+}];
+/* harmony default export */ const status_elements = (STATUSES);
+
+;// ./packages/fields/build-module/fields/status/status-view.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function StatusView({
+  item
+}) {
+  const status = status_elements.find(({
+    value
+  }) => value === item.status);
+  const label = status?.label || item.status;
+  const icon = status?.icon;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+    alignment: "left",
+    spacing: 0,
+    children: [icon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "edit-site-post-list__status-icon",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+        icon: icon
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      children: label
+    })]
+  });
+}
+/* harmony default export */ const status_view = (StatusView);
+
+;// ./packages/fields/build-module/fields/status/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const status_OPERATOR_IS_ANY = 'isAny';
+const statusField = {
+  label: (0,external_wp_i18n_namespaceObject.__)('Status'),
+  id: 'status',
+  type: 'text',
+  elements: status_elements,
+  render: status_view,
+  Edit: 'radio',
+  enableSorting: false,
+  filterBy: {
+    operators: [status_OPERATOR_IS_ANY]
+  }
+};
+
+/**
+ * Status field for BasePost.
+ */
+/* harmony default export */ const fields_status = (statusField);
+
 ;// ./packages/icons/build-module/library/copy-small.js
 /**
  * WordPress dependencies
@@ -45805,66 +45913,7 @@ const passwordField = {
 
 
 
-/**
- * Internal dependencies
- */
-
-
-// See https://github.com/WordPress/gutenberg/issues/55886
-// We do not support custom statutes at the moment.
-
-const STATUSES = [{
-  value: 'draft',
-  label: (0,external_wp_i18n_namespaceObject.__)('Draft'),
-  icon: library_drafts,
-  description: (0,external_wp_i18n_namespaceObject.__)('Not ready to publish.')
-}, {
-  value: 'future',
-  label: (0,external_wp_i18n_namespaceObject.__)('Scheduled'),
-  icon: library_scheduled,
-  description: (0,external_wp_i18n_namespaceObject.__)('Publish automatically on a chosen date.')
-}, {
-  value: 'pending',
-  label: (0,external_wp_i18n_namespaceObject.__)('Pending Review'),
-  icon: library_pending,
-  description: (0,external_wp_i18n_namespaceObject.__)('Waiting for review before publishing.')
-}, {
-  value: 'private',
-  label: (0,external_wp_i18n_namespaceObject.__)('Private'),
-  icon: not_allowed,
-  description: (0,external_wp_i18n_namespaceObject.__)('Only visible to site admins and editors.')
-}, {
-  value: 'publish',
-  label: (0,external_wp_i18n_namespaceObject.__)('Published'),
-  icon: library_published,
-  description: (0,external_wp_i18n_namespaceObject.__)('Visible to everyone.')
-}, {
-  value: 'trash',
-  label: (0,external_wp_i18n_namespaceObject.__)('Trash'),
-  icon: library_trash
-}];
 const getFormattedDate = dateToDisplay => (0,external_wp_date_namespaceObject.dateI18n)((0,external_wp_date_namespaceObject.getSettings)().formats.datetimeAbbreviated, (0,external_wp_date_namespaceObject.getDate)(dateToDisplay));
-function PostStatusField({
-  item
-}) {
-  const status = STATUSES.find(({
-    value
-  }) => value === item.status);
-  const label = status?.label || item.status;
-  const icon = status?.icon;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-    alignment: "left",
-    spacing: 0,
-    children: [icon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "edit-site-post-list__status-icon",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-        icon: icon
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-      children: label
-    })]
-  });
-}
 function PostAuthorField({
   item
 }) {
@@ -45975,18 +46024,7 @@ function usePostFields() {
       const nameB = b._embedded?.author?.[0]?.name || '';
       return direction === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
     }
-  }, {
-    label: (0,external_wp_i18n_namespaceObject.__)('Status'),
-    id: 'status',
-    type: 'text',
-    elements: STATUSES,
-    render: PostStatusField,
-    Edit: 'radio',
-    enableSorting: false,
-    filterBy: {
-      operators: [OPERATOR_IS_ANY]
-    }
-  }, {
+  }, fields_status, {
     label: (0,external_wp_i18n_namespaceObject.__)('Date'),
     id: 'date',
     type: 'datetime',
