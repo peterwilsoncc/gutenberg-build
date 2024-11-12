@@ -18,7 +18,7 @@ function gutenberg_get_mime_types_6_8( $mime_types ) {
 	 * Only add support if there is existing support for 'wav'.
 	 * Some plugins may have deliberately disabled it.
 	*/
-	if ( ! $mime_types['wav'] && ! isset( $mime_types['wav|x-wav'] ) ) {
+	if ( ! isset( $mime_types['wav'] ) && ! isset( $mime_types['wav|x-wav'] ) ) {
 		return $mime_types;
 	}
 	/*
