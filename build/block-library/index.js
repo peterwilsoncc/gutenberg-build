@@ -5432,7 +5432,7 @@ const button_settings = {
   example: {
     attributes: {
       className: 'is-style-fill',
-      text: (0,external_wp_i18n_namespaceObject.__)('Call to Action')
+      text: (0,external_wp_i18n_namespaceObject.__)('Call to action')
     }
   },
   edit: button_edit,

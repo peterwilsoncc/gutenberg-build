@@ -10137,7 +10137,7 @@ const myPatternsCategory = {
 };
 const starterPatternsCategory = {
   name: 'core/starter-content',
-  label: (0,external_wp_i18n_namespaceObject.__)('Starter Content')
+  label: (0,external_wp_i18n_namespaceObject.__)('Starter content')
 };
 function isPatternFiltered(pattern, sourceFilter, syncFilter) {
   const isUserPattern = pattern.name.startsWith('core/block');
