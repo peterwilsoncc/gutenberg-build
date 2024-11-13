@@ -71413,7 +71413,7 @@ function RichTextWrapper({
       bindingsPlaceholder: blockAttributes?.placeholder || _bindingsPlaceholder,
       bindingsLabel: _bindingsLabel
     };
-  }, [blockBindings, identifier, blockName, blockContext, adjustedValue]);
+  }, [blockBindings, identifier, blockName, adjustedValue, clientId, blockContext]);
   const shouldDisableEditing = readOnly || disableBoundBlock;
   const {
     getSelectionStart,
