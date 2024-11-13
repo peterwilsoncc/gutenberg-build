@@ -8015,14 +8015,22 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
     navigate
   } = (0,external_wp_element_namespaceObject.useContext)(SidebarNavigationContext);
   const {
+    dashboardLink,
+    isBlockTheme,
     homeUrl,
     siteTitle
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getEntityRecord
+      getSettings
+    } = unlock(select(store));
+    const {
+      getEntityRecord,
+      getCurrentTheme
     } = select(external_wp_coreData_namespaceObject.store);
     const _site = getEntityRecord('root', 'site');
     return {
+      dashboardLink: getSettings().__experimentalDashboardLink || 'index.php',
+      isBlockTheme: getCurrentTheme()?.is_block_theme,
       homeUrl: getEntityRecord('root', '__unstableBase')?.home,
       siteTitle: !_site?.title && !!_site?.url ? (0,external_wp_url_namespaceObject.filterURLForDisplay)(_site?.url) : _site?.title
     };
@@ -8042,16 +8050,21 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           __next40pxDefaultSize: true,
           ref: ref,
-          label: (0,external_wp_i18n_namespaceObject.__)('Go to Site Editor'),
           className: "edit-site-layout__view-mode-toggle",
           style: {
             transform: 'scale(0.5)',
             borderRadius: 4
           },
-          onClick: () => {
-            history.push({});
-            navigate('back');
-          },
+          ...(!isBlockTheme ? {
+            href: dashboardLink,
+            label: (0,external_wp_i18n_namespaceObject.__)('Go to the Dashboard')
+          } : {
+            onClick: () => {
+              history.push({});
+              navigate('back');
+            },
+            label: (0,external_wp_i18n_namespaceObject.__)('Go to Site Editor')
+          }),
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(site_icon, {
             className: "edit-site-layout__view-mode-toggle-icon"
           })
