@@ -28479,60 +28479,6 @@ function useEditorIframeProps() {
   };
 }
 
-;// ./packages/edit-site/build-module/components/use-edited-entity-record/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-function useEditedEntityRecord(postType, postId) {
-  const {
-    record,
-    title,
-    description,
-    isLoaded,
-    icon
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEditedPostType,
-      getEditedPostId
-    } = select(store);
-    const {
-      getEditedEntityRecord,
-      hasFinishedResolution
-    } = select(external_wp_coreData_namespaceObject.store);
-    const {
-      __experimentalGetTemplateInfo: getTemplateInfo
-    } = select(external_wp_editor_namespaceObject.store);
-    const usedPostType = postType !== null && postType !== void 0 ? postType : getEditedPostType();
-    const usedPostId = postId !== null && postId !== void 0 ? postId : getEditedPostId();
-    const _record = getEditedEntityRecord('postType', usedPostType, usedPostId);
-    const _isLoaded = usedPostId && hasFinishedResolution('getEditedEntityRecord', ['postType', usedPostType, usedPostId]);
-    const templateInfo = getTemplateInfo(_record);
-    return {
-      record: _record,
-      title: templateInfo.title,
-      description: templateInfo.description,
-      isLoaded: _isLoaded,
-      icon: templateInfo.icon
-    };
-  }, [postType, postId]);
-  return {
-    isLoaded,
-    icon,
-    record,
-    getTitle: () => title ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title) : null,
-    getDescription: () => description ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(description) : null
-  };
-}
-
 ;// ./packages/edit-site/build-module/components/routes/use-title.js
 /**
  * WordPress dependencies
@@ -28582,29 +28528,46 @@ function useTitle(title) {
  */
 
 
+
+
+
+
 /**
  * Internal dependencies
  */
 
 
-
-function useEditorTitle() {
+function useEditorTitle(postType, postId) {
   const {
-    record: editedPost,
-    getTitle,
-    isLoaded: hasLoadedPost
-  } = useEditedEntityRecord();
-  let title;
-  if (hasLoadedPost) {
-    var _POST_TYPE_LABELS$edi;
-    title = (0,external_wp_i18n_namespaceObject.sprintf)(
+    title,
+    isLoaded
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEditedEntityRecord,
+      hasFinishedResolution
+    } = select(external_wp_coreData_namespaceObject.store);
+    const {
+      __experimentalGetTemplateInfo: getTemplateInfo
+    } = select(external_wp_editor_namespaceObject.store);
+    const _record = getEditedEntityRecord('postType', postType, postId);
+    const _isLoaded = hasFinishedResolution('getEditedEntityRecord', ['postType', postType, postId]);
+    const templateInfo = getTemplateInfo(_record);
+    return {
+      title: templateInfo.title,
+      isLoaded: _isLoaded
+    };
+  }, [postType, postId]);
+  let editorTitle;
+  if (isLoaded) {
+    var _POST_TYPE_LABELS$pos;
+    editorTitle = (0,external_wp_i18n_namespaceObject.sprintf)(
     // translators: A breadcrumb trail for the Admin document title. 1: title of template being edited, 2: type of template (Template or Template Part).
-    (0,external_wp_i18n_namespaceObject._x)('%1$s ‹ %2$s', 'breadcrumb trail'), getTitle(), (_POST_TYPE_LABELS$edi = POST_TYPE_LABELS[editedPost.type]) !== null && _POST_TYPE_LABELS$edi !== void 0 ? _POST_TYPE_LABELS$edi : POST_TYPE_LABELS[TEMPLATE_POST_TYPE]);
+    (0,external_wp_i18n_namespaceObject._x)('%1$s ‹ %2$s', 'breadcrumb trail'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title), (_POST_TYPE_LABELS$pos = POST_TYPE_LABELS[postType]) !== null && _POST_TYPE_LABELS$pos !== void 0 ? _POST_TYPE_LABELS$pos : POST_TYPE_LABELS[TEMPLATE_POST_TYPE]);
   }
 
   // Only announce the title once the editor is ready to prevent "Replace"
   // action in <URLQueryController> from double-announcing.
-  useTitle(hasLoadedPost && title);
+  useTitle(isLoaded && editorTitle);
 }
 /* harmony default export */ const use_editor_title = (useEditorTitle);
 
@@ -28787,12 +28750,12 @@ function EditSiteEditor({
       hasSiteIcon: !!siteData?.site_icon_url
     };
   }, []);
-  use_editor_title();
+  const postWithTemplate = !!contextPostId;
+  use_editor_title(postWithTemplate ? contextPostType : editedPostType, postWithTemplate ? contextPostId : editedPostId);
   const _isPreviewingTheme = isPreviewingTheme();
   const hasDefaultEditorCanvasView = !useHasEditorCanvasContainer();
   const iframeProps = useEditorIframeProps();
   const isEditMode = canvas === 'edit';
-  const postWithTemplate = !!contextPostId;
   const loadingProgressId = (0,external_wp_compose_namespaceObject.useInstanceId)(CanvasLoader, 'edit-site-editor__loading-progress');
   const settings = useSpecificEditorSettings();
   const styles = (0,external_wp_element_namespaceObject.useMemo)(() => [...settings.styles, {
