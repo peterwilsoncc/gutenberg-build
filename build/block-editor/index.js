@@ -50484,8 +50484,7 @@ function BlockPattern({
   pattern,
   onClick,
   onHover,
-  showTitle = true,
-  showTooltip,
+  showTitlesAsTooltip,
   category
 }) {
   const [isDragging, setIsDragging] = (0,external_wp_element_namespaceObject.useState)(false);
@@ -50495,6 +50494,7 @@ function BlockPattern({
   } = pattern;
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(BlockPattern);
   const descriptionId = `block-editor-block-patterns-list__item-description-${instanceId}`;
+  const isUserPattern = pattern.type === INSERTER_PATTERN_TYPES.user;
 
   // When we have a selected category and the pattern is draggable, we need to update the
   // pattern's categories in metadata to only contain the selected category, and pass this to
@@ -50537,7 +50537,7 @@ function BlockPattern({
         }
       },
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WithToolTip, {
-        showTooltip: showTooltip && !pattern.type !== INSERTER_PATTERN_TYPES.user,
+        showTooltip: showTitlesAsTooltip && !isUserPattern,
         title: pattern.title,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite.Item, {
           render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -50566,16 +50566,16 @@ function BlockPattern({
               blocks: blocks,
               viewportWidth: viewportWidth
             })
-          }), showTitle && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+          }), (!showTitlesAsTooltip || isUserPattern) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
             className: "block-editor-patterns__pattern-details",
             spacing: 2,
-            children: [pattern.type === INSERTER_PATTERN_TYPES.user && !pattern.syncStatus && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+            children: [isUserPattern && !pattern.syncStatus && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
               className: "block-editor-patterns__pattern-icon-wrapper",
               children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
                 className: "block-editor-patterns__pattern-icon",
                 icon: library_symbol
               })
-            }), (!showTooltip || pattern.type === INSERTER_PATTERN_TYPES.user) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
               className: "block-editor-block-patterns-list__item-title",
               children: pattern.title
             })]
@@ -50601,7 +50601,6 @@ function BlockPatternsList({
   orientation,
   label = (0,external_wp_i18n_namespaceObject.__)('Block patterns'),
   category,
-  showTitle = true,
   showTitlesAsTooltip,
   pagingProps
 }, ref) {
@@ -50627,8 +50626,7 @@ function BlockPatternsList({
       onClick: onClickPattern,
       onHover: onHover,
       isDraggable: isDraggable,
-      showTitle: showTitle,
-      showTooltip: showTitlesAsTooltip,
+      showTitlesAsTooltip: showTitlesAsTooltip,
       category: category
     }, pattern.name)), pagingProps && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Pagination, {
       ...pagingProps
@@ -51884,8 +51882,7 @@ function BlockPatternsTab({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternCategoryPreviews, {
           onInsert: onInsert,
           rootClientId: rootClientId,
-          category: category,
-          showTitlesAsTooltip: false
+          category: category
         }, category.name)
       })
     }), showPatternsExplorer && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_explorer, {
@@ -61716,7 +61713,7 @@ function ChangeDesign({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_list, {
         blockPatterns: sameCategoryPatternsWithSingleWrapper,
         onClickPattern: onClickPattern,
-        showTitle: false
+        showTitlesAsTooltip: true
       })
     })
   });

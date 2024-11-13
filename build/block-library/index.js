@@ -61941,7 +61941,7 @@ function TemplatesList({
       label: (0,external_wp_i18n_namespaceObject.__)('Templates'),
       blockPatterns: blockPatterns,
       onClickPattern: onSelect,
-      showTitle: false
+      showTitlesAsTooltip: true
     })
   });
 }
