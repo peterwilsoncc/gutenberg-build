@@ -38333,6 +38333,9 @@ function ActionsMenuGroup({
     })
   });
 }
+function hasOnlyOneActionAndIsPrimary(primaryActions, actions) {
+  return primaryActions.length === 1 && actions.length;
+}
 function ItemActions({
   item,
   actions,
@@ -38358,6 +38361,13 @@ function ItemActions({
       actions: eligibleActions
     });
   }
+  if (hasOnlyOneActionAndIsPrimary(primaryActions, actions)) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrimaryActions, {
+      item: item,
+      actions: primaryActions,
+      registry: registry
+    });
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
     spacing: 1,
     justify: "flex-end",
@@ -38366,23 +38376,10 @@ function ItemActions({
       flexShrink: '0',
       width: 'auto'
     },
-    children: [!!primaryActions.length && primaryActions.map(action => {
-      if ('RenderModal' in action) {
-        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionWithModal, {
-          action: action,
-          items: [item],
-          ActionTrigger: ButtonTrigger
-        }, action.id);
-      }
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ButtonTrigger, {
-        action: action,
-        onClick: () => {
-          action.callback([item], {
-            registry
-          });
-        },
-        items: [item]
-      }, action.id);
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrimaryActions, {
+      item: item,
+      actions: primaryActions,
+      registry: registry
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CompactItemActions, {
       item: item,
       actions: eligibleActions
@@ -38407,6 +38404,33 @@ function CompactItemActions({
       actions: actions,
       item: item
     })
+  });
+}
+function PrimaryActions({
+  item,
+  actions,
+  registry
+}) {
+  if (!Array.isArray(actions) || actions.length === 0) {
+    return null;
+  }
+  return actions.map(action => {
+    if ('RenderModal' in action) {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionWithModal, {
+        action: action,
+        items: [item],
+        ActionTrigger: ButtonTrigger
+      }, action.id);
+    }
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ButtonTrigger, {
+      action: action,
+      onClick: () => {
+        action.callback([item], {
+          registry
+        });
+      },
+      items: [item]
+    }, action.id);
   });
 }
 
