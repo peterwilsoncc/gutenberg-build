@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 19.6.2 =
+
+- Comments controller: fix issue where comments are allowed when closed [#66976](https://github.com/WordPress/gutenberg/pull/66976)
+
+
 = 19.7.0-rc.1 =
 
 
