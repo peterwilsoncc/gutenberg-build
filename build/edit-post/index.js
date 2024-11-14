@@ -2144,9 +2144,11 @@ function CustomFieldsConfirmation({
   });
 }
 function EnableCustomFieldsOption({
-  label,
-  areCustomFieldsEnabled
+  label
 }) {
+  const areCustomFieldsEnabled = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return !!select(external_wp_editor_namespaceObject.store).getEditorSettings().enableCustomFields;
+  }, []);
   const [isChecked, setIsChecked] = (0,external_wp_element_namespaceObject.useState)(areCustomFieldsEnabled);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreferenceBaseOption, {
     label: label,
@@ -2157,9 +2159,6 @@ function EnableCustomFieldsOption({
     })
   });
 }
-/* harmony default export */ const enable_custom_fields = ((0,external_wp_data_namespaceObject.withSelect)(select => ({
-  areCustomFieldsEnabled: !!select(external_wp_editor_namespaceObject.store).getEditorSettings().enableCustomFields
-}))(EnableCustomFieldsOption));
 
 ;// ./packages/edit-post/build-module/components/preferences-modal/enable-panel.js
 /**
@@ -2238,7 +2237,7 @@ function MetaBoxesSection({
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(PreferencesModalSection, {
     ...sectionProps,
-    children: [areCustomFieldsRegistered && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(enable_custom_fields, {
+    children: [areCustomFieldsRegistered && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EnableCustomFieldsOption, {
       label: (0,external_wp_i18n_namespaceObject.__)('Custom fields')
     }), thirdPartyMetaBoxes.map(({
       id,
