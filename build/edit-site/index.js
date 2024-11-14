@@ -39536,10 +39536,11 @@ function ListItem({
     const _eligibleActions = actions.filter(action => !action.isEligible || action.isEligible(item));
     const _primaryActions = _eligibleActions.filter(action => action.isPrimary && !!action.icon);
     return {
-      primaryAction: _primaryActions?.[0],
+      primaryAction: _primaryActions[0],
       eligibleActions: _eligibleActions
     };
   }, [actions, item]);
+  const hasOnlyOnePrimaryAction = primaryAction && actions.length === 1;
   const renderedMediaField = mediaField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "dataviews-view-list__media-wrapper",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(mediaField.render, {
@@ -39556,7 +39557,7 @@ function ListItem({
       idPrefix: idPrefix,
       primaryAction: primaryAction,
       item: item
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    }), !hasOnlyOnePrimaryAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       role: "gridcell",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_Menu, {
         trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
