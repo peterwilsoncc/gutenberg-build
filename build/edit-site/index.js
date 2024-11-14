@@ -28068,7 +28068,7 @@ function GlobalStylesSidebar() {
   } = (0,external_wp_data_namespaceObject.useDispatch)(global_styles_sidebar_interfaceStore);
   const previousActiveAreaRef = (0,external_wp_element_namespaceObject.useRef)(null);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (path === '/wp_global_styles' && canvas === 'edit') {
+    if (path?.startsWith('/wp_global_styles') && canvas === 'edit') {
       previousActiveAreaRef.current = getActiveComplementaryArea('core');
       enableComplementaryArea('core', 'edit-site/global-styles');
     } else if (previousActiveAreaRef.current) {
