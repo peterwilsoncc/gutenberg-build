@@ -31111,26 +31111,29 @@ function Editor({
 
 
 
-
 /**
  * Internal dependencies
  */
 
 
+
 const {
   PreferenceBaseOption: enable_publish_sidebar_PreferenceBaseOption
 } = unlock(external_wp_preferences_namespaceObject.privateApis);
-/* harmony default export */ const enable_publish_sidebar = ((0,external_wp_compose_namespaceObject.compose)((0,external_wp_data_namespaceObject.withSelect)(select => ({
-  isChecked: select(store_store).isPublishSidebarEnabled()
-})), (0,external_wp_data_namespaceObject.withDispatch)(dispatch => {
+function EnablePublishSidebarOption(props) {
+  const isChecked = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return select(store_store).isPublishSidebarEnabled();
+  }, []);
   const {
     enablePublishSidebar,
     disablePublishSidebar
-  } = dispatch(store_store);
-  return {
-    onChange: isEnabled => isEnabled ? enablePublishSidebar() : disablePublishSidebar()
-  };
-}))(enable_publish_sidebar_PreferenceBaseOption));
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(enable_publish_sidebar_PreferenceBaseOption, {
+    isChecked: isChecked,
+    onChange: isEnabled => isEnabled ? enablePublishSidebar() : disablePublishSidebar(),
+    ...props
+  });
+}
 
 ;// ./packages/editor/build-module/components/block-manager/checklist.js
 /**
@@ -31507,7 +31510,7 @@ function PreferencesModalContents({
         })]
       }), isLargeViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreferencesModalSection, {
         title: (0,external_wp_i18n_namespaceObject.__)('Publishing'),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(enable_publish_sidebar, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EnablePublishSidebarOption, {
           help: (0,external_wp_i18n_namespaceObject.__)('Review settings, such as visibility and tags.'),
           label: (0,external_wp_i18n_namespaceObject.__)('Enable pre-publish checks')
         })
