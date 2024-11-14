@@ -13676,33 +13676,41 @@ const external_wp_warning_namespaceObject = window["wp"]["warning"];
 
 
 
-
 /**
  * Internal dependencies
  */
 
 
+
 const {
   PreferenceBaseOption
 } = unlock(external_wp_preferences_namespaceObject.privateApis);
-/* harmony default export */ const enable_panel = ((0,external_wp_compose_namespaceObject.compose)((0,external_wp_data_namespaceObject.withSelect)((select, {
-  panelName
-}) => {
+function EnablePanelOption(props) {
   const {
-    isEditorPanelEnabled,
-    isEditorPanelRemoved
-  } = select(store_store);
-  return {
-    isRemoved: isEditorPanelRemoved(panelName),
-    isChecked: isEditorPanelEnabled(panelName)
-  };
-}), (0,external_wp_compose_namespaceObject.ifCondition)(({
-  isRemoved
-}) => !isRemoved), (0,external_wp_data_namespaceObject.withDispatch)((dispatch, {
-  panelName
-}) => ({
-  onChange: () => dispatch(store_store).toggleEditorPanelEnabled(panelName)
-})))(PreferenceBaseOption));
+    toggleEditorPanelEnabled
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
+  const {
+    isChecked,
+    isRemoved
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      isEditorPanelEnabled,
+      isEditorPanelRemoved
+    } = select(store_store);
+    return {
+      isChecked: isEditorPanelEnabled(props.panelName),
+      isRemoved: isEditorPanelRemoved(props.panelName)
+    };
+  }, [props.panelName]);
+  if (isRemoved) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreferenceBaseOption, {
+    isChecked: isChecked,
+    onChange: () => toggleEditorPanelEnabled(props.panelName),
+    ...props
+  });
+}
 
 ;// ./packages/editor/build-module/components/preferences-modal/enable-plugin-document-setting-panel.js
 /**
@@ -13723,7 +13731,7 @@ const EnablePluginDocumentSettingPanelOption = ({
   label,
   panelName
 }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Fill, {
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(enable_panel, {
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EnablePanelOption, {
     label: label,
     panelName: panelName
   })
@@ -31471,28 +31479,28 @@ function PreferencesModalContents({
         title: (0,external_wp_i18n_namespaceObject.__)('Document settings'),
         description: (0,external_wp_i18n_namespaceObject.__)('Select what settings are shown in the document panel.'),
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(enable_plugin_document_setting_panel.Slot, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_taxonomies, {
-          taxonomyWrapper: (content, taxonomy) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(enable_panel, {
+          taxonomyWrapper: (content, taxonomy) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EnablePanelOption, {
             label: taxonomy.labels.menu_name,
             panelName: `taxonomy-panel-${taxonomy.slug}`
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_featured_image_check, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(enable_panel, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EnablePanelOption, {
             label: (0,external_wp_i18n_namespaceObject.__)('Featured image'),
             panelName: "featured-image"
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_excerpt_check, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(enable_panel, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EnablePanelOption, {
             label: (0,external_wp_i18n_namespaceObject.__)('Excerpt'),
             panelName: "post-excerpt"
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_type_support_check, {
           supportKeys: ['comments', 'trackbacks'],
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(enable_panel, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EnablePanelOption, {
             label: (0,external_wp_i18n_namespaceObject.__)('Discussion'),
             panelName: "discussion-panel"
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(page_attributes_check, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(enable_panel, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EnablePanelOption, {
             label: (0,external_wp_i18n_namespaceObject.__)('Page attributes'),
             panelName: "page-attributes"
           })

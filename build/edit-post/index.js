@@ -2169,32 +2169,40 @@ function EnableCustomFieldsOption({
 
 
 
-
 /**
  * Internal dependencies
  */
 
+
 const {
   PreferenceBaseOption: enable_panel_PreferenceBaseOption
 } = unlock(external_wp_preferences_namespaceObject.privateApis);
-/* harmony default export */ const enable_panel = ((0,external_wp_compose_namespaceObject.compose)((0,external_wp_data_namespaceObject.withSelect)((select, {
-  panelName
-}) => {
+function EnablePanelOption(props) {
   const {
-    isEditorPanelEnabled,
-    isEditorPanelRemoved
-  } = select(external_wp_editor_namespaceObject.store);
-  return {
-    isRemoved: isEditorPanelRemoved(panelName),
-    isChecked: isEditorPanelEnabled(panelName)
-  };
-}), (0,external_wp_compose_namespaceObject.ifCondition)(({
-  isRemoved
-}) => !isRemoved), (0,external_wp_data_namespaceObject.withDispatch)((dispatch, {
-  panelName
-}) => ({
-  onChange: () => dispatch(external_wp_editor_namespaceObject.store).toggleEditorPanelEnabled(panelName)
-})))(enable_panel_PreferenceBaseOption));
+    toggleEditorPanelEnabled
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_editor_namespaceObject.store);
+  const {
+    isChecked,
+    isRemoved
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      isEditorPanelEnabled,
+      isEditorPanelRemoved
+    } = select(external_wp_editor_namespaceObject.store);
+    return {
+      isChecked: isEditorPanelEnabled(props.panelName),
+      isRemoved: isEditorPanelRemoved(props.panelName)
+    };
+  }, [props.panelName]);
+  if (isRemoved) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(enable_panel_PreferenceBaseOption, {
+    isChecked: isChecked,
+    onChange: () => toggleEditorPanelEnabled(props.panelName),
+    ...props
+  });
+}
 
 ;// ./packages/edit-post/build-module/components/preferences-modal/meta-boxes-section.js
 /**
@@ -2235,7 +2243,7 @@ function MetaBoxesSection({
     }), thirdPartyMetaBoxes.map(({
       id,
       title
-    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(enable_panel, {
+    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EnablePanelOption, {
       label: title,
       panelName: `meta-box-${id}`
     }, id))]
