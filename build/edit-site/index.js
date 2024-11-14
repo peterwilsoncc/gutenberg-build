@@ -27984,7 +27984,8 @@ function GlobalStylesSidebar() {
     params
   } = global_styles_sidebar_useLocation();
   const {
-    canvas = 'view'
+    canvas = 'view',
+    path
   } = params;
   const {
     shouldClearCanvasContainerView,
@@ -28059,6 +28060,21 @@ function GlobalStylesSidebar() {
     setIsListViewOpened(isStyleBookOpened && showListViewByDefault);
     setEditorCanvasContainerView(isStyleBookOpened ? undefined : 'style-book');
   };
+  const {
+    getActiveComplementaryArea
+  } = (0,external_wp_data_namespaceObject.useSelect)(global_styles_sidebar_interfaceStore);
+  const {
+    enableComplementaryArea
+  } = (0,external_wp_data_namespaceObject.useDispatch)(global_styles_sidebar_interfaceStore);
+  const previousActiveAreaRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (path === '/wp_global_styles' && canvas === 'edit') {
+      previousActiveAreaRef.current = getActiveComplementaryArea('core');
+      enableComplementaryArea('core', 'edit-site/global-styles');
+    } else if (previousActiveAreaRef.current) {
+      enableComplementaryArea('core', previousActiveAreaRef.current);
+    }
+  }, [path, enableComplementaryArea, canvas, getActiveComplementaryArea]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DefaultSidebar, {
     className: "edit-site-global-styles-sidebar",
     identifier: "edit-site/global-styles",
