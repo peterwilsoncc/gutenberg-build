@@ -6885,11 +6885,15 @@ const removeTemplate = template => ({
 /**
  * Action that sets a template part.
  *
+ * @deprecated
  * @param {string} templatePartId The template part ID.
  *
  * @return {Object} Action object.
  */
 function setTemplatePart(templatePartId) {
+  external_wp_deprecated_default()("dispatch( 'core/edit-site' ).setTemplatePart", {
+    since: '6.8'
+  });
   return {
     type: 'SET_EDITED_POST',
     postType: TEMPLATE_PART_POST_TYPE,
@@ -6900,11 +6904,15 @@ function setTemplatePart(templatePartId) {
 /**
  * Action that sets a navigation menu.
  *
+ * @deprecated
  * @param {string} navigationMenuId The Navigation Menu Post ID.
  *
  * @return {Object} Action object.
  */
 function setNavigationMenu(navigationMenuId) {
+  external_wp_deprecated_default()("dispatch( 'core/edit-site' ).setNavigationMenu", {
+    since: '6.8'
+  });
   return {
     type: 'SET_EDITED_POST',
     postType: NAVIGATION_POST_TYPE,
@@ -6915,6 +6923,7 @@ function setNavigationMenu(navigationMenuId) {
 /**
  * Action that sets an edited entity.
  *
+ * @deprecated
  * @param {string} postType The entity's post type.
  * @param {string} postId   The entity's ID.
  * @param {Object} context  The entity's context.
@@ -6946,11 +6955,15 @@ function setHomeTemplateId() {
 /**
  * Set's the current block editor context.
  *
+ * @deprecated
  * @param {Object} context The context object.
  *
  * @return {Object} Action object.
  */
 function setEditedPostContext(context) {
+  external_wp_deprecated_default()("dispatch( 'core/edit-site' ).setEditedPostContext", {
+    since: '6.8'
+  });
   return {
     type: 'SET_EDITED_POST_CONTEXT',
     context
@@ -7373,22 +7386,32 @@ function getHomeTemplateId() {
 /**
  * Returns the current edited post type (wp_template or wp_template_part).
  *
+ * @deprecated
  * @param {Object} state Global application state.
  *
  * @return {?TemplateType} Template type.
  */
 function getEditedPostType(state) {
+  external_wp_deprecated_default()("select( 'core/edit-site' ).getEditedPostType", {
+    since: '6.8',
+    alternative: "select( 'core/editor' ).getCurrentPostType"
+  });
   return state.editedPost.postType;
 }
 
 /**
  * Returns the ID of the currently edited template or template part.
  *
+ * @deprecated
  * @param {Object} state Global application state.
  *
  * @return {?string} Post ID.
  */
 function getEditedPostId(state) {
+  external_wp_deprecated_default()("select( 'core/edit-site' ).getEditedPostId", {
+    since: '6.8',
+    alternative: "select( 'core/editor' ).getCurrentPostId"
+  });
   return state.editedPost.id;
 }
 
@@ -7401,6 +7424,9 @@ function getEditedPostId(state) {
  * @return {Object} Page.
  */
 function getEditedPostContext(state) {
+  external_wp_deprecated_default()("select( 'core/edit-site' ).getEditedPostContext", {
+    since: '6.8'
+  });
   return state.editedPost.context;
 }
 
@@ -7413,6 +7439,9 @@ function getEditedPostContext(state) {
  * @return {Object} Page.
  */
 function getPage(state) {
+  external_wp_deprecated_default()("select( 'core/edit-site' ).getPage", {
+    since: '6.8'
+  });
   return {
     context: state.editedPost.context
   };
@@ -7551,12 +7580,16 @@ function isNavigationOpened() {
  * Whether or not the editor has a page loaded into it.
  *
  * @see setPage
- *
+ * @deprecated
  * @param {Object} state Global application state.
  *
  * @return {boolean} Whether or not the editor has a page loaded into it.
  */
 function isPage(state) {
+  external_wp_deprecated_default()("select( 'core/edit-site' ).isPage", {
+    since: '6.8',
+    alternative: "select( 'core/editor' ).getCurrentPostType"
+  });
   return !!state.editedPost.context?.postId;
 }
 
@@ -13907,219 +13940,6 @@ function useCommonCommands() {
   });
 }
 
-;// ./packages/edit-site/build-module/components/sync-state-with-url/use-init-edited-entity-from-url.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-const {
-  useLocation: use_init_edited_entity_from_url_useLocation
-} = unlock(external_wp_router_namespaceObject.privateApis);
-const postTypesWithoutParentTemplate = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE, NAVIGATION_POST_TYPE, PATTERN_TYPES.user];
-const authorizedPostTypes = ['page', 'post'];
-function useResolveEditedEntityAndContext({
-  postId,
-  postType
-}) {
-  const {
-    hasLoadedAllDependencies,
-    homepageId,
-    postsPageId
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEntityRecord
-    } = select(external_wp_coreData_namespaceObject.store);
-    const siteData = getEntityRecord('root', 'site');
-    const _homepageId = siteData?.show_on_front === 'page' && ['number', 'string'].includes(typeof siteData.page_on_front) && !!+siteData.page_on_front // We also need to check if it's not zero(`0`).
-    ? siteData.page_on_front.toString() : null;
-    const _postsPageId = siteData?.show_on_front === 'page' && ['number', 'string'].includes(typeof siteData.page_for_posts) ? siteData.page_for_posts.toString() : null;
-    return {
-      hasLoadedAllDependencies: !!siteData,
-      homepageId: _homepageId,
-      postsPageId: _postsPageId
-    };
-  }, []);
-
-  /**
-   * This is a hook that recreates the logic to resolve a template for a given WordPress postID postTypeId
-   * in order to match the frontend as closely as possible in the site editor.
-   *
-   * It is not possible to rely on the server logic because there maybe unsaved changes that impact the template resolution.
-   */
-  const resolvedTemplateId = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    // If we're rendering a post type that doesn't have a template
-    // no need to resolve its template.
-    if (postTypesWithoutParentTemplate.includes(postType) && postId) {
-      return undefined;
-    }
-
-    // Don't trigger resolution for multi-selected posts.
-    if (postId && postId.includes(',')) {
-      return undefined;
-    }
-    const {
-      getEditedEntityRecord,
-      getEntityRecords,
-      getDefaultTemplateId
-    } = select(external_wp_coreData_namespaceObject.store);
-    function resolveTemplateForPostTypeAndId(postTypeToResolve, postIdToResolve) {
-      // For the front page, we always use the front page template if existing.
-      if (postTypeToResolve === 'page' && homepageId === postIdToResolve) {
-        // The /lookup endpoint cannot currently handle a lookup
-        // when a page is set as the front page, so specifically in
-        // that case, we want to check if there is a front page
-        // template, and instead of falling back to the home
-        // template, we want to fall back to the page template.
-        const templates = getEntityRecords('postType', TEMPLATE_POST_TYPE, {
-          per_page: -1
-        });
-        if (templates) {
-          const id = templates?.find(({
-            slug
-          }) => slug === 'front-page')?.id;
-          if (id) {
-            return id;
-          }
-
-          // If no front page template is found, continue with the
-          // logic below (fetching the page template).
-        } else {
-          // Still resolving `templates`.
-          return undefined;
-        }
-      }
-      const editedEntity = getEditedEntityRecord('postType', postTypeToResolve, postIdToResolve);
-      if (!editedEntity) {
-        return undefined;
-      }
-      // Check if the current page is the posts page.
-      if (postTypeToResolve === 'page' && postsPageId === postIdToResolve) {
-        return getDefaultTemplateId({
-          slug: 'home'
-        });
-      }
-      // First see if the post/page has an assigned template and fetch it.
-      const currentTemplateSlug = editedEntity.template;
-      if (currentTemplateSlug) {
-        const currentTemplate = getEntityRecords('postType', TEMPLATE_POST_TYPE, {
-          per_page: -1
-        })?.find(({
-          slug
-        }) => slug === currentTemplateSlug);
-        if (currentTemplate) {
-          return currentTemplate.id;
-        }
-      }
-      // If no template is assigned, use the default template.
-      let slugToCheck;
-      // In `draft` status we might not have a slug available, so we use the `single`
-      // post type templates slug(ex page, single-post, single-product etc..).
-      // Pages do not need the `single` prefix in the slug to be prioritized
-      // through template hierarchy.
-      if (editedEntity.slug) {
-        slugToCheck = postTypeToResolve === 'page' ? `${postTypeToResolve}-${editedEntity.slug}` : `single-${postTypeToResolve}-${editedEntity.slug}`;
-      } else {
-        slugToCheck = postTypeToResolve === 'page' ? 'page' : `single-${postTypeToResolve}`;
-      }
-      return getDefaultTemplateId({
-        slug: slugToCheck
-      });
-    }
-    if (!hasLoadedAllDependencies) {
-      return undefined;
-    }
-
-    // If we're rendering a specific page, we need to resolve its template.
-    // The site editor only supports pages for now, not other CPTs.
-    if (postType && postId && authorizedPostTypes.includes(postType)) {
-      return resolveTemplateForPostTypeAndId(postType, postId);
-    }
-
-    // If we're rendering the home page, and we have a static home page, resolve its template.
-    if (homepageId) {
-      return resolveTemplateForPostTypeAndId('page', homepageId);
-    }
-
-    // If we're not rendering a specific page, use the front page template.
-    return getDefaultTemplateId({
-      slug: 'front-page'
-    });
-  }, [homepageId, postsPageId, hasLoadedAllDependencies, postId, postType]);
-  const context = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (postTypesWithoutParentTemplate.includes(postType) && postId) {
-      return {};
-    }
-    if (postType && postId && authorizedPostTypes.includes(postType)) {
-      return {
-        postType,
-        postId
-      };
-    }
-    // TODO: for post types lists we should probably not render the front page, but maybe a placeholder
-    // with a message like "Select a page" or something similar.
-    if (homepageId) {
-      return {
-        postType: 'page',
-        postId: homepageId
-      };
-    }
-    return {};
-  }, [homepageId, postType, postId]);
-  if (postTypesWithoutParentTemplate.includes(postType) && postId) {
-    return {
-      isReady: true,
-      postType,
-      postId,
-      context
-    };
-  }
-  if (hasLoadedAllDependencies) {
-    return {
-      isReady: resolvedTemplateId !== undefined,
-      postType: TEMPLATE_POST_TYPE,
-      postId: resolvedTemplateId,
-      context
-    };
-  }
-  return {
-    isReady: false
-  };
-}
-function useInitEditedEntityFromURL() {
-  const {
-    params = {}
-  } = use_init_edited_entity_from_url_useLocation();
-  const {
-    postType,
-    postId,
-    context,
-    isReady
-  } = useResolveEditedEntityAndContext(params);
-  const {
-    setEditedEntity
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const {
-    resetZoomLevel
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store));
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (isReady) {
-      resetZoomLevel();
-      setEditedEntity(postType, postId, context);
-    }
-  }, [isReady, postType, postId, context, setEditedEntity, resetZoomLevel]);
-}
-
 ;// ./packages/edit-site/build-module/components/layout/router.js
 /**
  * WordPress dependencies
@@ -14933,7 +14753,7 @@ function useNavigateToPreviousEntityRecord() {
   }, [location, history]);
   return goBack;
 }
-function useSpecificEditorSettings() {
+function useSpecificEditorSettings(shouldUseTemplateAsDefaultRenderingMode) {
   const {
     params
   } = use_site_editor_settings_useLocation();
@@ -14942,21 +14762,18 @@ function useSpecificEditorSettings() {
   } = params;
   const onNavigateToEntityRecord = useNavigateToEntityRecord();
   const {
-    settings,
-    shouldUseTemplateAsDefaultRenderingMode
+    settings
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getEditedPostContext,
       getSettings
-    } = unlock(select(store));
-    const _context = getEditedPostContext();
+    } = select(store);
     return {
-      settings: getSettings(),
-      // TODO: The `postType` check should be removed when the default rendering mode per post type is merged.
-      // @see https://github.com/WordPress/gutenberg/pull/62304/
-      shouldUseTemplateAsDefaultRenderingMode: _context?.postId && _context?.postType !== 'post'
+      settings: getSettings()
     };
   }, []);
+
+  // TODO: The `shouldUseTemplateAsDefaultRenderingMode` check should be removed when the default rendering mode per post type is merged.
+  // @see https://github.com/WordPress/gutenberg/pull/62304/
   const defaultRenderingMode = shouldUseTemplateAsDefaultRenderingMode ? 'template-locked' : 'post-only';
   const onNavigateToPreviousEntityRecord = useNavigateToPreviousEntityRecord();
   const defaultEditorSettings = (0,external_wp_element_namespaceObject.useMemo)(() => {
@@ -28627,6 +28444,214 @@ function useAdaptEditorToCanvas(canvas) {
   }, [canvas, registry, clearSelectedBlock, setDeviceType, closePublishSidebar, setIsInserterOpened, setIsListViewOpened, getPreference]);
 }
 
+;// ./packages/edit-site/build-module/components/editor/use-resolve-edited-entity.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const {
+  useLocation: use_resolve_edited_entity_useLocation
+} = unlock(external_wp_router_namespaceObject.privateApis);
+const postTypesWithoutParentTemplate = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE, NAVIGATION_POST_TYPE, PATTERN_TYPES.user];
+const authorizedPostTypes = ['page', 'post'];
+function useResolveEditedEntity() {
+  const {
+    params = {}
+  } = use_resolve_edited_entity_useLocation();
+  const {
+    postId,
+    postType
+  } = params;
+  const {
+    hasLoadedAllDependencies,
+    homepageId,
+    postsPageId
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
+    const siteData = getEntityRecord('root', 'site');
+    const _homepageId = siteData?.show_on_front === 'page' && ['number', 'string'].includes(typeof siteData.page_on_front) && !!+siteData.page_on_front // We also need to check if it's not zero(`0`).
+    ? siteData.page_on_front.toString() : null;
+    const _postsPageId = siteData?.show_on_front === 'page' && ['number', 'string'].includes(typeof siteData.page_for_posts) ? siteData.page_for_posts.toString() : null;
+    return {
+      hasLoadedAllDependencies: !!siteData,
+      homepageId: _homepageId,
+      postsPageId: _postsPageId
+    };
+  }, []);
+
+  /**
+   * This is a hook that recreates the logic to resolve a template for a given WordPress postID postTypeId
+   * in order to match the frontend as closely as possible in the site editor.
+   *
+   * It is not possible to rely on the server logic because there maybe unsaved changes that impact the template resolution.
+   */
+  const resolvedTemplateId = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    // If we're rendering a post type that doesn't have a template
+    // no need to resolve its template.
+    if (postTypesWithoutParentTemplate.includes(postType) && postId) {
+      return undefined;
+    }
+
+    // Don't trigger resolution for multi-selected posts.
+    if (postId && postId.includes(',')) {
+      return undefined;
+    }
+    const {
+      getEditedEntityRecord,
+      getEntityRecords,
+      getDefaultTemplateId
+    } = select(external_wp_coreData_namespaceObject.store);
+    function resolveTemplateForPostTypeAndId(postTypeToResolve, postIdToResolve) {
+      // For the front page, we always use the front page template if existing.
+      if (postTypeToResolve === 'page' && homepageId === postIdToResolve) {
+        // The /lookup endpoint cannot currently handle a lookup
+        // when a page is set as the front page, so specifically in
+        // that case, we want to check if there is a front page
+        // template, and instead of falling back to the home
+        // template, we want to fall back to the page template.
+        const templates = getEntityRecords('postType', TEMPLATE_POST_TYPE, {
+          per_page: -1
+        });
+        if (templates) {
+          const id = templates?.find(({
+            slug
+          }) => slug === 'front-page')?.id;
+          if (id) {
+            return id;
+          }
+
+          // If no front page template is found, continue with the
+          // logic below (fetching the page template).
+        } else {
+          // Still resolving `templates`.
+          return undefined;
+        }
+      }
+      const editedEntity = getEditedEntityRecord('postType', postTypeToResolve, postIdToResolve);
+      if (!editedEntity) {
+        return undefined;
+      }
+      // Check if the current page is the posts page.
+      if (postTypeToResolve === 'page' && postsPageId === postIdToResolve) {
+        return getDefaultTemplateId({
+          slug: 'home'
+        });
+      }
+      // First see if the post/page has an assigned template and fetch it.
+      const currentTemplateSlug = editedEntity.template;
+      if (currentTemplateSlug) {
+        const currentTemplate = getEntityRecords('postType', TEMPLATE_POST_TYPE, {
+          per_page: -1
+        })?.find(({
+          slug
+        }) => slug === currentTemplateSlug);
+        if (currentTemplate) {
+          return currentTemplate.id;
+        }
+      }
+      // If no template is assigned, use the default template.
+      let slugToCheck;
+      // In `draft` status we might not have a slug available, so we use the `single`
+      // post type templates slug(ex page, single-post, single-product etc..).
+      // Pages do not need the `single` prefix in the slug to be prioritized
+      // through template hierarchy.
+      if (editedEntity.slug) {
+        slugToCheck = postTypeToResolve === 'page' ? `${postTypeToResolve}-${editedEntity.slug}` : `single-${postTypeToResolve}-${editedEntity.slug}`;
+      } else {
+        slugToCheck = postTypeToResolve === 'page' ? 'page' : `single-${postTypeToResolve}`;
+      }
+      return getDefaultTemplateId({
+        slug: slugToCheck
+      });
+    }
+    if (!hasLoadedAllDependencies) {
+      return undefined;
+    }
+
+    // If we're rendering a specific page, we need to resolve its template.
+    // The site editor only supports pages for now, not other CPTs.
+    if (postType && postId && authorizedPostTypes.includes(postType)) {
+      return resolveTemplateForPostTypeAndId(postType, postId);
+    }
+
+    // If we're rendering the home page, and we have a static home page, resolve its template.
+    if (homepageId) {
+      return resolveTemplateForPostTypeAndId('page', homepageId);
+    }
+
+    // If we're not rendering a specific page, use the front page template.
+    return getDefaultTemplateId({
+      slug: 'front-page'
+    });
+  }, [homepageId, postsPageId, hasLoadedAllDependencies, postId, postType]);
+  const context = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (postTypesWithoutParentTemplate.includes(postType) && postId) {
+      return {};
+    }
+    if (postType && postId && authorizedPostTypes.includes(postType)) {
+      return {
+        postType,
+        postId
+      };
+    }
+    // TODO: for post types lists we should probably not render the front page, but maybe a placeholder
+    // with a message like "Select a page" or something similar.
+    if (homepageId) {
+      return {
+        postType: 'page',
+        postId: homepageId
+      };
+    }
+    return {};
+  }, [homepageId, postType, postId]);
+  if (postTypesWithoutParentTemplate.includes(postType) && postId) {
+    return {
+      isReady: true,
+      postType,
+      postId,
+      context
+    };
+  }
+  if (hasLoadedAllDependencies) {
+    return {
+      isReady: resolvedTemplateId !== undefined,
+      postType: TEMPLATE_POST_TYPE,
+      postId: resolvedTemplateId,
+      context
+    };
+  }
+  return {
+    isReady: false
+  };
+}
+function useSyncDeprecatedEntityIntoState({
+  postType,
+  postId,
+  context,
+  isReady
+}) {
+  const {
+    setEditedEntity
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (isReady) {
+      setEditedEntity(postType, postId, context);
+    }
+  }, [isReady, postType, postId, context, setEditedEntity]);
+}
+
 ;// ./packages/edit-site/build-module/components/editor/index.js
 /**
  * External dependencies
@@ -28654,6 +28679,7 @@ function useAdaptEditorToCanvas(canvas) {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -28719,12 +28745,15 @@ function EditSiteEditor({
   } = params;
   const isLoading = useIsSiteEditorLoading();
   useAdaptEditorToCanvas(canvas);
+  const entity = useResolveEditedEntity();
+  // deprecated sync state with url
+  useSyncDeprecatedEntityIntoState(entity);
   const {
-    editedPostType,
-    editedPostId,
-    contextPostType,
-    contextPostId,
-    isEditingPage,
+    postType,
+    postId,
+    context
+  } = entity;
+  const {
     supportsGlobalStyles,
     showIconLabels,
     editorCanvasView,
@@ -28732,11 +28761,7 @@ function EditSiteEditor({
     hasSiteIcon
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getEditorCanvasContainerView,
-      getEditedPostContext,
-      isPage,
-      getEditedPostType,
-      getEditedPostId
+      getEditorCanvasContainerView
     } = unlock(select(store));
     const {
       get
@@ -28745,17 +28770,8 @@ function EditSiteEditor({
       getCurrentTheme,
       getEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const _context = getEditedPostContext();
     const siteData = getEntityRecord('root', '__unstableBase', undefined);
-
-    // The currently selected entity to display.
-    // Typically template or template part in the site editor.
     return {
-      editedPostType: getEditedPostType(),
-      editedPostId: getEditedPostId(),
-      contextPostType: _context?.postId ? _context.postType : undefined,
-      contextPostId: _context?.postId ? _context.postId : undefined,
-      isEditingPage: isPage(),
       supportsGlobalStyles: getCurrentTheme()?.is_block_theme,
       showIconLabels: get('core', 'showIconLabels'),
       editorCanvasView: getEditorCanvasContainerView(),
@@ -28763,14 +28779,14 @@ function EditSiteEditor({
       hasSiteIcon: !!siteData?.site_icon_url
     };
   }, []);
-  const postWithTemplate = !!contextPostId;
-  use_editor_title(postWithTemplate ? contextPostType : editedPostType, postWithTemplate ? contextPostId : editedPostId);
+  const postWithTemplate = !!context?.postId;
+  use_editor_title(postWithTemplate ? context.postType : postType, postWithTemplate ? context.postId : postId);
   const _isPreviewingTheme = isPreviewingTheme();
   const hasDefaultEditorCanvasView = !useHasEditorCanvasContainer();
   const iframeProps = useEditorIframeProps();
   const isEditMode = canvas === 'edit';
   const loadingProgressId = (0,external_wp_compose_namespaceObject.useInstanceId)(CanvasLoader, 'edit-site-editor__loading-progress');
-  const settings = useSpecificEditorSettings();
+  const settings = useSpecificEditorSettings(!!context?.postId && context?.postType !== 'post');
   const styles = (0,external_wp_element_namespaceObject.useMemo)(() => [...settings.styles, {
     // Forming a "block formatting context" to prevent margin collapsing.
     // @see https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context
@@ -28826,15 +28842,15 @@ function EditSiteEditor({
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesRenderer, {
-      disableRootPadding: editedPostType !== TEMPLATE_POST_TYPE
+      disableRootPadding: postType !== TEMPLATE_POST_TYPE
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EditorKeyboardShortcutsRegister, {}), isEditMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockKeyboardShortcuts, {}), !isReady ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CanvasLoader, {
       id: loadingProgressId
     }) : null, isEditMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WelcomeGuide, {
-      postType: postWithTemplate ? contextPostType : editedPostType
+      postType: postWithTemplate ? context.postType : postType
     }), isReady && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Editor, {
-      postType: postWithTemplate ? contextPostType : editedPostType,
-      postId: postWithTemplate ? contextPostId : editedPostId,
-      templateId: postWithTemplate ? editedPostId : undefined,
+      postType: postWithTemplate ? context.postType : postType,
+      postId: postWithTemplate ? context.postId : postId,
+      templateId: postWithTemplate ? postId : undefined,
       settings: settings,
       className: dist_clsx('edit-site-editor__editor-interface', {
         'show-icon-labels': showIconLabels
@@ -28848,7 +28864,7 @@ function EditSiteEditor({
       title: title,
       iframeProps: iframeProps,
       onActionPerformed: onActionPerformed,
-      extraSidebarPanels: !isEditingPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(plugin_template_setting_panel.Slot, {}),
+      extraSidebarPanels: !postWithTemplate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(plugin_template_setting_panel.Slot, {}),
       children: [isEditMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackButton, {
         children: ({
           length
@@ -47326,7 +47342,6 @@ function useRegisterSiteEditorRoutes() {
 
 
 
-
 const {
   RouterProvider
 } = unlock(external_wp_router_namespaceObject.privateApis);
@@ -47334,8 +47349,6 @@ const {
   GlobalStylesProvider
 } = unlock(external_wp_editor_namespaceObject.privateApis);
 function AppLayout() {
-  // This ensures the edited entity id and type are initialized properly.
-  useInitEditedEntityFromURL();
   useCommonCommands();
   useSetCommandContext();
   useRegisterSiteEditorRoutes();
@@ -47512,7 +47525,6 @@ function router_useActiveRoute() {
 
 
 
-
 const {
   RouterProvider: posts_app_RouterProvider
 } = unlock(external_wp_router_namespaceObject.privateApis);
@@ -47520,8 +47532,6 @@ const {
   GlobalStylesProvider: posts_app_GlobalStylesProvider
 } = unlock(external_wp_editor_namespaceObject.privateApis);
 function PostsLayout() {
-  // This ensures the edited entity id and type are initialized properly.
-  useInitEditedEntityFromURL();
   const route = router_useActiveRoute();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Layout, {
     route: route
