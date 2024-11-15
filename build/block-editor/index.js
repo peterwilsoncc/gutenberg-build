@@ -49702,6 +49702,7 @@ const InserterDraggableBlocks = ({
     type: 'inserter',
     blocks
   };
+  const blocksContainMedia = blocks.filter(block => (block.name === 'core/image' || block.name === 'core/audio' || block.name === 'core/video') && (block.attributes.url || block.attributes.src)).length > 0;
   const blockTypeIcon = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockType
@@ -49727,7 +49728,7 @@ const InserterDraggableBlocks = ({
       const parsedBlocks = pattern?.type === INSERTER_PATTERN_TYPES.user && pattern?.syncStatus !== 'unsynced' ? [(0,external_wp_blocks_namespaceObject.createBlock)('core/block', {
         ref: pattern.id
       })] : blocks;
-      event.dataTransfer.setData('text/html', (0,external_wp_blocks_namespaceObject.serialize)(parsedBlocks));
+      event.dataTransfer.setData(blocksContainMedia ? 'default' : 'text/html', (0,external_wp_blocks_namespaceObject.serialize)(parsedBlocks));
     },
     onDragEnd: () => {
       stopDragging();
@@ -69682,9 +69683,9 @@ function MediaPlaceholder({
       onSelect(uploadedMediaList[0]);
     }
   }
-  async function onHTMLDrop(HTML) {
+  async function onDrop(event) {
     const blocks = (0,external_wp_blocks_namespaceObject.pasteHandler)({
-      HTML
+      HTML: event.dataTransfer?.getData('default')
     });
     return await handleBlocksDrop(blocks);
   }
@@ -69749,7 +69750,7 @@ function MediaPlaceholder({
     }
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropZone, {
       onFilesDrop: onFilesUpload,
-      onHTMLDrop: onHTMLDrop
+      onDrop: onDrop
     });
   };
   const renderCancelLink = () => {
