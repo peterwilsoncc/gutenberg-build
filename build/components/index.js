@@ -33153,7 +33153,7 @@ function useSlot(name) {
   const registry = (0,external_wp_element_namespaceObject.useContext)(slot_fill_context);
   const slot = (0,external_wp_compose_namespaceObject.useObservableValue)(registry.slots, name);
   const api = (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    updateSlot: fillProps => registry.updateSlot(name, fillProps),
+    updateSlot: (ref, fillProps) => registry.updateSlot(name, ref, fillProps),
     unregisterSlot: ref => registry.unregisterSlot(name, ref),
     registerFill: ref => registry.registerFill(name, ref),
     unregisterFill: ref => registry.unregisterFill(name, ref)
@@ -33597,7 +33597,6 @@ function slot_Slot(props, forwardedRef) {
     as,
     // `children` is not allowed. However, if it is passed,
     // it will be displayed as is, so remove `children`.
-    // @ts-ignore
     children,
     ...restProps
   } = props;
@@ -33607,20 +33606,23 @@ function slot_Slot(props, forwardedRef) {
     ...registry
   } = (0,external_wp_element_namespaceObject.useContext)(slot_fill_context);
   const ref = (0,external_wp_element_namespaceObject.useRef)(null);
+
+  // We don't want to unregister and register the slot whenever
+  // `fillProps` change, which would cause the fill to be re-mounted. Instead,
+  // we can just update the slot (see hook below).
+  // For more context, see https://github.com/WordPress/gutenberg/pull/44403#discussion_r994415973
+  const fillPropsRef = (0,external_wp_element_namespaceObject.useRef)(fillProps);
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    registerSlot(name, ref, fillProps);
+    fillPropsRef.current = fillProps;
+  }, [fillProps]);
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    registerSlot(name, ref, fillPropsRef.current);
     return () => {
       unregisterSlot(name, ref);
     };
-    // We don't want to unregister and register the slot whenever
-    // `fillProps` change, which would cause the fill to be re-mounted. Instead,
-    // we can just update the slot (see hook below).
-    // For more context, see https://github.com/WordPress/gutenberg/pull/44403#discussion_r994415973
   }, [registerSlot, unregisterSlot, name]);
-  // fillProps may be an update that interacts with the layout, so we
-  // useLayoutEffect.
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    registry.updateSlot(name, fillProps);
+    registry.updateSlot(name, ref, fillPropsRef.current);
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(component, {
     as: as,
@@ -33658,15 +33660,24 @@ function createSlotRegistry() {
     });
   };
   const unregisterSlot = (name, ref) => {
-    // Make sure we're not unregistering a slot registered by another element
-    // See https://github.com/WordPress/gutenberg/pull/19242#issuecomment-590295412
-    if (slots.get(name)?.ref === ref) {
-      slots.delete(name);
-    }
-  };
-  const updateSlot = (name, fillProps) => {
     const slot = slots.get(name);
     if (!slot) {
+      return;
+    }
+
+    // Make sure we're not unregistering a slot registered by another element
+    // See https://github.com/WordPress/gutenberg/pull/19242#issuecomment-590295412
+    if (slot.ref !== ref) {
+      return;
+    }
+    slots.delete(name);
+  };
+  const updateSlot = (name, ref, fillProps) => {
+    const slot = slots.get(name);
+    if (!slot) {
+      return;
+    }
+    if (slot.ref !== ref) {
       return;
     }
     if (external_wp_isShallowEqual_default()(slot.fillProps, fillProps)) {
