@@ -15872,6 +15872,11 @@ function PostFeaturedImageCheck({
 
 ;// ./packages/editor/build-module/components/post-featured-image/index.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
 
@@ -15937,7 +15942,8 @@ function PostFeaturedImage({
   media,
   postType,
   noticeUI,
-  noticeOperations
+  noticeOperations,
+  isRequestingFeaturedImageMedia
 }) {
   const toggleRef = (0,external_wp_element_namespaceObject.useRef)();
   const [isLoading, setIsLoading] = (0,external_wp_element_namespaceObject.useState)(false);
@@ -15947,6 +15953,12 @@ function PostFeaturedImage({
   const {
     mediaSourceUrl
   } = getMediaDetails(media, currentPostId);
+  const toggleFocusTimerRef = (0,external_wp_element_namespaceObject.useRef)();
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    return () => {
+      clearTimeout(toggleFocusTimerRef.current);
+    };
+  }, []);
   function onDropFiles(filesList) {
     getSettings().mediaUpload({
       allowedTypes: ALLOWED_MEDIA_TYPES,
@@ -15990,6 +16002,7 @@ function PostFeaturedImage({
     // Translators: %s: The selected image filename.
     (0,external_wp_i18n_namespaceObject.__)('The current image has no alternative text. The file name is: %s'), imageMedia.media_details.sizes?.full?.file || imageMedia.slug);
   }
+  const isMissingMedia = !isRequestingFeaturedImageMedia && !!featuredImageId && !media;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(post_featured_image_check, {
     children: [noticeUI, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "editor-post-featured-image",
@@ -16009,7 +16022,11 @@ function PostFeaturedImage({
             open
           }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
             className: "editor-post-featured-image__container",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
+            children: [isMissingMedia ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
+              status: "warning",
+              isDismissible: false,
+              children: (0,external_wp_i18n_namespaceObject.__)('Could not retrieve the featured image data.')
+            }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
               __next40pxDefaultSize: true,
               ref: toggleRef,
               className: !featuredImageId ? 'editor-post-featured-image__toggle' : 'editor-post-featured-image__preview',
@@ -16023,22 +16040,32 @@ function PostFeaturedImage({
                 className: "editor-post-featured-image__preview-image",
                 src: mediaSourceUrl,
                 alt: getImageDescription(media)
-              }), isLoading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}), !featuredImageId && !isLoading && (postType?.labels?.set_featured_image || DEFAULT_SET_FEATURE_IMAGE_LABEL)]
+              }), (isLoading || isRequestingFeaturedImageMedia) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}), !featuredImageId && !isLoading && (postType?.labels?.set_featured_image || DEFAULT_SET_FEATURE_IMAGE_LABEL)]
             }), !!featuredImageId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-              className: "editor-post-featured-image__actions",
+              className: dist_clsx('editor-post-featured-image__actions', {
+                'editor-post-featured-image__actions-missing-image': isMissingMedia,
+                'editor-post-featured-image__actions-is-requesting-image': isRequestingFeaturedImageMedia
+              }),
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
                 __next40pxDefaultSize: true,
                 className: "editor-post-featured-image__action",
                 onClick: open,
                 "aria-haspopup": "dialog",
+                variant: isMissingMedia ? 'secondary' : undefined,
                 children: (0,external_wp_i18n_namespaceObject.__)('Replace')
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
                 __next40pxDefaultSize: true,
                 className: "editor-post-featured-image__action",
                 onClick: () => {
                   onRemoveImage();
-                  toggleRef.current.focus();
+                  // The toggle button is rendered conditionally, we need
+                  // to wait it is rendered before moving focus to it.
+                  toggleFocusTimerRef.current = setTimeout(() => {
+                    toggleRef.current?.focus();
+                  });
                 },
+                variant: isMissingMedia ? 'secondary' : undefined,
+                isDestructive: isMissingMedia,
                 children: (0,external_wp_i18n_namespaceObject.__)('Remove')
               })]
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropZone, {
@@ -16054,7 +16081,8 @@ function PostFeaturedImage({
 const applyWithSelect = (0,external_wp_data_namespaceObject.withSelect)(select => {
   const {
     getMedia,
-    getPostType
+    getPostType,
+    hasFinishedResolution
   } = select(external_wp_coreData_namespaceObject.store);
   const {
     getCurrentPostId,
@@ -16067,7 +16095,10 @@ const applyWithSelect = (0,external_wp_data_namespaceObject.withSelect)(select =
     }) : null,
     currentPostId: getCurrentPostId(),
     postType: getPostType(getEditedPostAttribute('type')),
-    featuredImageId
+    featuredImageId,
+    isRequestingFeaturedImageMedia: !!featuredImageId && !hasFinishedResolution('getMedia', [featuredImageId, {
+      context: 'view'
+    }])
   };
 });
 const applyWithDispatch = (0,external_wp_data_namespaceObject.withDispatch)((dispatch, {
