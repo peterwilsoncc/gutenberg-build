@@ -60128,7 +60128,7 @@ const lock_lock = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 
 // Entity based blocks which allow edit locking
 
-const ALLOWS_EDIT_LOCKING = ['core/block', 'core/navigation'];
+const ALLOWS_EDIT_LOCKING = ['core/navigation'];
 function getTemplateLockValue(lock) {
   // Prevents all operations.
   if (lock.remove && lock.move) {
