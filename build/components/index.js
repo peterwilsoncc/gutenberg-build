@@ -55313,6 +55313,7 @@ const findSizeBySlug = (sizes, slug) => sizes.find(size => slug === size.slug);
 
 
 
+
 const dimension_control_CONTEXT_VALUE = {
   BaseControl: {
     // Temporary during deprecation grace period: Overrides the underlying `__associatedWPComponentName`
@@ -55337,6 +55338,7 @@ const dimension_control_CONTEXT_VALUE = {
  *
  * 	return (
  * 		<DimensionControl
+ * 			__next40pxDefaultSize
  * 			__nextHasNoMarginBottom
  * 			label={ 'Padding' }
  * 			icon={ 'desktop' }
@@ -55361,6 +55363,11 @@ function DimensionControl(props) {
   external_wp_deprecated_default()('wp.components.DimensionControl', {
     since: '6.7',
     version: '7.0'
+  });
+  maybeWarnDeprecated36pxSize({
+    componentName: 'DimensionControl',
+    __next40pxDefaultSize,
+    size: undefined
   });
   const onChangeSpacingSize = val => {
     const theSize = findSizeBySlug(sizes, val);
