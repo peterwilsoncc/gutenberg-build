@@ -19573,9 +19573,6 @@ const flexWrapOptions = ['wrap', 'nowrap'];
     onChange,
     layoutBlockSupport
   }) {
-    if (layoutBlockSupport?.allowSwitching) {
-      return null;
-    }
     const {
       allowVerticalAlignment = true
     } = layoutBlockSupport;
