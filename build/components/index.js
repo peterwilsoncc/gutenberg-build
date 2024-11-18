@@ -33218,10 +33218,7 @@ function Fill({
   name,
   children
 }) {
-  const {
-    registerFill,
-    unregisterFill
-  } = (0,external_wp_element_namespaceObject.useContext)(context);
+  const registry = (0,external_wp_element_namespaceObject.useContext)(context);
   const slot = use_slot(name);
   const ref = (0,external_wp_element_namespaceObject.useRef)({
     name,
@@ -33229,30 +33226,16 @@ function Fill({
   });
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     const refValue = ref.current;
-    registerFill(name, refValue);
-    return () => unregisterFill(name, refValue);
-    // The useLayoutEffects here are written to fire at specific times, and introducing new dependencies could cause unexpected changes in behavior.
-    // We'll leave them as-is until a more detailed investigation/refactor can be performed.
-  }, []);
+    refValue.name = name;
+    registry.registerFill(name, refValue);
+    return () => registry.unregisterFill(name, refValue);
+  }, [registry, name]);
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     ref.current.children = children;
     if (slot) {
       slot.forceUpdate();
     }
-    // The useLayoutEffects here are written to fire at specific times, and introducing new dependencies could cause unexpected changes in behavior.
-    // We'll leave them as-is until a more detailed investigation/refactor can be performed.
-  }, [children]);
-  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    if (name === ref.current.name) {
-      // Ignore initial effect.
-      return;
-    }
-    unregisterFill(ref.current.name, ref.current);
-    ref.current.name = name;
-    registerFill(name, ref.current);
-    // The useLayoutEffects here are written to fire at specific times, and introducing new dependencies could cause unexpected changes in behavior.
-    // We'll leave them as-is until a more detailed investigation/refactor can be performed.
-  }, [name]);
+  }, [slot, children]);
   return null;
 }
 
