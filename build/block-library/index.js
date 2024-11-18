@@ -39771,6 +39771,20 @@ const page_list_metadata = {
     },
     interactivity: {
       clientNavigation: true
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true
+    },
+    spacing: {
+      padding: true,
+      margin: true,
+      __experimentalDefaultControls: {
+        padding: false,
+        margin: false
+      }
     }
   },
   editorStyle: "wp-block-page-list-editor",
