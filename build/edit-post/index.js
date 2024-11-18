@@ -101,13 +101,6 @@ __webpack_require__.d(actions_namespaceObject, {
   updatePreferredStyleVariations: () => (updatePreferredStyleVariations)
 });
 
-// NAMESPACE OBJECT: ./packages/edit-post/build-module/store/private-selectors.js
-var private_selectors_namespaceObject = {};
-__webpack_require__.r(private_selectors_namespaceObject);
-__webpack_require__.d(private_selectors_namespaceObject, {
-  getEditedPostTemplateId: () => (getEditedPostTemplateId)
-});
-
 // NAMESPACE OBJECT: ./packages/edit-post/build-module/store/selectors.js
 var selectors_namespaceObject = {};
 __webpack_require__.r(selectors_namespaceObject);
@@ -1084,62 +1077,6 @@ const toggleFullscreenMode = () => ({
   });
 };
 
-;// ./packages/edit-post/build-module/store/private-selectors.js
-/**
- * WordPress dependencies
- */
-
-
-
-const getEditedPostTemplateId = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
-  const {
-    id: postId,
-    type: postType,
-    slug
-  } = select(external_wp_editor_namespaceObject.store).getCurrentPost();
-  const {
-    getEntityRecord,
-    getEntityRecords,
-    canUser
-  } = select(external_wp_coreData_namespaceObject.store);
-  const siteSettings = canUser('read', {
-    kind: 'root',
-    name: 'site'
-  }) ? getEntityRecord('root', 'site') : undefined;
-  // First check if the current page is set as the posts page.
-  const isPostsPage = +postId === siteSettings?.page_for_posts;
-  if (isPostsPage) {
-    return select(external_wp_coreData_namespaceObject.store).getDefaultTemplateId({
-      slug: 'home'
-    });
-  }
-  const currentTemplate = select(external_wp_editor_namespaceObject.store).getEditedPostAttribute('template');
-  if (currentTemplate) {
-    const templateWithSameSlug = getEntityRecords('postType', 'wp_template', {
-      per_page: -1
-    })?.find(template => template.slug === currentTemplate);
-    if (!templateWithSameSlug) {
-      return templateWithSameSlug;
-    }
-    return templateWithSameSlug.id;
-  }
-  let slugToCheck;
-  // In `draft` status we might not have a slug available, so we use the `single`
-  // post type templates slug(ex page, single-post, single-product etc..).
-  // Pages do not need the `single` prefix in the slug to be prioritized
-  // through template hierarchy.
-  if (slug) {
-    slugToCheck = postType === 'page' ? `${postType}-${slug}` : `single-${postType}-${slug}`;
-  } else {
-    slugToCheck = postType === 'page' ? 'page' : `single-${postType}`;
-  }
-  if (postType) {
-    return select(external_wp_coreData_namespaceObject.store).getDefaultTemplateId({
-      slug: slugToCheck
-    });
-  }
-});
-
 ;// ./packages/edit-post/build-module/store/selectors.js
 /**
  * WordPress dependencies
@@ -1153,7 +1090,6 @@ const getEditedPostTemplateId = (0,external_wp_data_namespaceObject.createRegist
 /**
  * Internal dependencies
  */
-
 
 const {
   interfaceStore: selectors_interfaceStore
@@ -1627,8 +1563,12 @@ function areMetaBoxesInitialized(state) {
  *
  * @return {Object?} Post Template.
  */
-const getEditedPostTemplate = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => state => {
-  const templateId = getEditedPostTemplateId(state);
+const getEditedPostTemplate = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
+  const {
+    id: postId,
+    type: postType
+  } = select(external_wp_editor_namespaceObject.store).getCurrentPost();
+  const templateId = unlock(select(external_wp_coreData_namespaceObject.store)).getTemplateId(postType, postId);
   if (!templateId) {
     return undefined;
   }
@@ -1649,8 +1589,6 @@ const getEditedPostTemplate = (0,external_wp_data_namespaceObject.createRegistry
 
 
 
-
-
 /**
  * Store definition for the edit post namespace.
  *
@@ -1664,7 +1602,6 @@ const store = (0,external_wp_data_namespaceObject.createReduxStore)(STORE_NAME, 
   selectors: selectors_namespaceObject
 });
 (0,external_wp_data_namespaceObject.register)(store);
-unlock(store).registerPrivateSelectors(private_selectors_namespaceObject);
 
 ;// ./packages/edit-post/build-module/components/keyboard-shortcuts/index.js
 /**
@@ -3127,13 +3064,13 @@ function Layout({
       get
     } = select(external_wp_preferences_namespaceObject.store);
     const {
-      isFeatureActive,
-      getEditedPostTemplateId
-    } = unlock(select(store));
+      isFeatureActive
+    } = select(store);
     const {
       canUser,
-      getPostType
-    } = select(external_wp_coreData_namespaceObject.store);
+      getPostType,
+      getTemplateId
+    } = unlock(select(external_wp_coreData_namespaceObject.store));
     const supportsTemplateMode = settings.supportsTemplateMode;
     const isViewable = (_getPostType$viewable = getPostType(currentPostType)?.viewable) !== null && _getPostType$viewable !== void 0 ? _getPostType$viewable : false;
     const canViewTemplate = canUser('read', {
@@ -3157,10 +3094,10 @@ function Layout({
       isDistractionFree: get('core', 'distractionFree'),
       showMetaBoxes: !DESIGN_POST_TYPES.includes(currentPostType) && !isZoomOut(),
       isWelcomeGuideVisible: isFeatureActive('welcomeGuide'),
-      templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate ? getEditedPostTemplateId() : null,
+      templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate ? getTemplateId(currentPostType, currentPostId) : null,
       enablePaddingAppender: !isZoomOut() && isRenderingPostOnly && !DESIGN_POST_TYPES.includes(currentPostType)
     };
-  }, [currentPostType, isEditingTemplate, settings.supportsTemplateMode]);
+  }, [currentPostType, currentPostId, isEditingTemplate, settings.supportsTemplateMode]);
   const [paddingAppenderRef, paddingStyle] = usePaddingAppender(enablePaddingAppender);
 
   // Set the right context for the command palette

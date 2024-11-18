@@ -577,8 +577,11 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   getBlockPatternsForPostType: () => (getBlockPatternsForPostType),
   getEntityRecordPermissions: () => (getEntityRecordPermissions),
   getEntityRecordsPermissions: () => (getEntityRecordsPermissions),
+  getHomePage: () => (getHomePage),
   getNavigationFallbackId: () => (getNavigationFallbackId),
+  getPostsPageId: () => (getPostsPageId),
   getRegisteredPostMeta: () => (getRegisteredPostMeta),
+  getTemplateId: () => (getTemplateId),
   getUndoManager: () => (getUndoManager)
 });
 
@@ -4211,6 +4214,18 @@ const getRevision = (0,external_wp_data_namespaceObject.createSelector)((state, 
   return [state.entities.records?.[kind]?.[name]?.revisions?.[recordKey]?.items?.[context]?.[revisionKey], state.entities.records?.[kind]?.[name]?.revisions?.[recordKey]?.itemIsComplete?.[context]?.[revisionKey]];
 });
 
+;// external ["wp","privateApis"]
+const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
+;// ./packages/core-data/build-module/lock-unlock.js
+/**
+ * WordPress dependencies
+ */
+
+const {
+  lock,
+  unlock
+} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/core-data');
+
 ;// ./packages/core-data/build-module/private-selectors.js
 /**
  * WordPress dependencies
@@ -4220,6 +4235,7 @@ const getRevision = (0,external_wp_data_namespaceObject.createSelector)((state, 
 /**
  * Internal dependencies
  */
+
 
 
 /**
@@ -4292,6 +4308,111 @@ function getRegisteredPostMeta(state, postType) {
   var _state$registeredPost;
   return (_state$registeredPost = state.registeredPostMeta?.[postType]) !== null && _state$registeredPost !== void 0 ? _state$registeredPost : {};
 }
+function normalizePageId(value) {
+  if (!value || !['number', 'string'].includes(typeof value)) {
+    return null;
+  }
+
+  // We also need to check if it's not zero (`'0'`).
+  if (Number(value) === 0) {
+    return null;
+  }
+  return value.toString();
+}
+const getHomePage = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(() => {
+  const siteData = select(STORE_NAME).getEntityRecord('root', 'site');
+  if (!siteData) {
+    return null;
+  }
+  const homepageId = siteData?.show_on_front === 'page' ? normalizePageId(siteData.page_on_front) : null;
+  if (homepageId) {
+    return {
+      postType: 'page',
+      postId: homepageId
+    };
+  }
+  const frontPageTemplateId = select(STORE_NAME).getDefaultTemplateId({
+    slug: 'front-page'
+  });
+  return {
+    postType: 'wp_template',
+    postId: frontPageTemplateId
+  };
+}, state => [
+// @ts-expect-error
+getEntityRecord(state, 'root', 'site'), getDefaultTemplateId(state, {
+  slug: 'front-page'
+})]));
+const getPostsPageId = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
+  const siteData = select(STORE_NAME).getEntityRecord('root', 'site');
+  return siteData?.show_on_front === 'page' ? normalizePageId(siteData.page_for_posts) : null;
+});
+const getTemplateId = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (state, postType, postId) => {
+  const homepage = unlock(select(STORE_NAME)).getHomePage();
+  if (!homepage) {
+    return;
+  }
+
+  // For the front page, we always use the front page template if existing.
+  if (postType === 'page' && postType === homepage?.postType && postId.toString() === homepage?.postId) {
+    // The /lookup endpoint cannot currently handle a lookup
+    // when a page is set as the front page, so specifically in
+    // that case, we want to check if there is a front page
+    // template, and instead of falling back to the home
+    // template, we want to fall back to the page template.
+    const templates = select(STORE_NAME).getEntityRecords('postType', 'wp_template', {
+      per_page: -1
+    });
+    if (!templates) {
+      return;
+    }
+    const id = templates.find(({
+      slug
+    }) => slug === 'front-page')?.id;
+    if (id) {
+      return id;
+    }
+    // If no front page template is found, continue with the
+    // logic below (fetching the page template).
+  }
+  const editedEntity = select(STORE_NAME).getEditedEntityRecord('postType', postType, postId);
+  if (!editedEntity) {
+    return;
+  }
+  const postsPageId = unlock(select(STORE_NAME)).getPostsPageId();
+  // Check if the current page is the posts page.
+  if (postType === 'page' && postsPageId === postId.toString()) {
+    return select(STORE_NAME).getDefaultTemplateId({
+      slug: 'home'
+    });
+  }
+  // First see if the post/page has an assigned template and fetch it.
+  const currentTemplateSlug = editedEntity.template;
+  if (currentTemplateSlug) {
+    const currentTemplate = select(STORE_NAME).getEntityRecords('postType', 'wp_template', {
+      per_page: -1
+    })?.find(({
+      slug
+    }) => slug === currentTemplateSlug);
+    if (currentTemplate) {
+      return currentTemplate.id;
+    }
+  }
+  // If no template is assigned, use the default template.
+  let slugToCheck;
+  // In `draft` status we might not have a slug available, so we use the `single`
+  // post type templates slug(ex page, single-post, single-product etc..).
+  // Pages do not need the `single` prefix in the slug to be prioritized
+  // through template hierarchy.
+  if (editedEntity.slug) {
+    slugToCheck = postType === 'page' ? `${postType}-${editedEntity.slug}` : `single-${postType}-${editedEntity.slug}`;
+  } else {
+    slugToCheck = postType === 'page' ? 'page' : `single-${postType}`;
+  }
+  return select(STORE_NAME).getDefaultTemplateId({
+    slug: slugToCheck
+  });
+});
 
 ;// ./packages/core-data/node_modules/uuid/dist/esm-browser/rng.js
 // Unique ID creation requires a high quality random # generator. In the browser we therefore
@@ -23718,18 +23839,6 @@ function createLocksActions() {
     __unstableReleaseStoreLock
   };
 }
-
-;// external ["wp","privateApis"]
-const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
-;// ./packages/core-data/build-module/lock-unlock.js
-/**
- * WordPress dependencies
- */
-
-const {
-  lock,
-  unlock
-} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/core-data');
 
 ;// external ["wp","element"]
 const external_wp_element_namespaceObject = window["wp"]["element"];
