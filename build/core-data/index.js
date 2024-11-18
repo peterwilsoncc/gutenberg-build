@@ -24265,6 +24265,8 @@ const use_entity_record_EMPTY_OBJECT = {};
  * 	return (
  * 		<form onSubmit={ onRename }>
  * 			<TextControl
+ *				__nextHasNoMarginBottom
+ *				__next40pxDefaultSize
  * 				label={ __( 'Name' ) }
  * 				value={ page.editedRecord.title }
  * 				onChange={ setTitle }

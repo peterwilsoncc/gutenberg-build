@@ -55430,7 +55430,14 @@ const {
  * const MyDisabled = () => {
  * 	const [ isDisabled, setIsDisabled ] = useState( true );
  *
- * 	let input = <TextControl label="Input" onChange={ () => {} } />;
+ *	let input = (
+ *		<TextControl
+ *			__next40pxDefaultSize
+ *			__nextHasNoMarginBottom
+ *			label="Input"
+ *			onChange={ () => {} }
+ *		/>
+ *	);
  * 	if ( isDisabled ) {
  * 		input = <Disabled>{ input }</Disabled>;
  * 	}
@@ -65800,6 +65807,7 @@ const tab_panel_TabPanel = (0,external_wp_element_namespaceObject.forwardRef)(Un
  */
 
 
+
 function UnforwardedTextControl(props, ref) {
   const {
     __nextHasNoMarginBottom,
@@ -65816,6 +65824,11 @@ function UnforwardedTextControl(props, ref) {
   } = props;
   const id = (0,external_wp_compose_namespaceObject.useInstanceId)(TextControl, 'inspector-text-control', idProp);
   const onChangeValue = event => onChange(event.target.value);
+  maybeWarnDeprecated36pxSize({
+    componentName: 'TextControl',
+    size: undefined,
+    __next40pxDefaultSize
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control, {
     __nextHasNoMarginBottom: __nextHasNoMarginBottom,
     __associatedWPComponentName: "TextControl",
@@ -65852,6 +65865,7 @@ function UnforwardedTextControl(props, ref) {
  *   return (
  *     <TextControl
  *       __nextHasNoMarginBottom
+ *       __next40pxDefaultSize
  *       label="Additional CSS Class"
  *       value={ className }
  *       onChange={ ( value ) => setClassName( value ) }
