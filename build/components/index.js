@@ -33152,15 +33152,8 @@ const SlotFillContext = (0,external_wp_element_namespaceObject.createContext)(in
 function useSlot(name) {
   const registry = (0,external_wp_element_namespaceObject.useContext)(slot_fill_context);
   const slot = (0,external_wp_compose_namespaceObject.useObservableValue)(registry.slots, name);
-  const api = (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    updateSlot: (ref, fillProps) => registry.updateSlot(name, ref, fillProps),
-    unregisterSlot: ref => registry.unregisterSlot(name, ref),
-    registerFill: ref => registry.registerFill(name, ref),
-    unregisterFill: ref => registry.unregisterFill(name, ref)
-  }), [name, registry]);
   return {
-    ...slot,
-    ...api
+    ...slot
   };
 }
 
@@ -33513,6 +33506,7 @@ function StyleProvider(props) {
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -33534,17 +33528,13 @@ function fill_useForceUpdate() {
     }
   };
 }
-function fill_Fill(props) {
+function fill_Fill({
+  name,
+  children
+}) {
   var _slot$fillProps;
-  const {
-    name,
-    children
-  } = props;
-  const {
-    registerFill,
-    unregisterFill,
-    ...slot
-  } = useSlot(name);
+  const registry = (0,external_wp_element_namespaceObject.useContext)(slot_fill_context);
+  const slot = (0,external_wp_compose_namespaceObject.useObservableValue)(registry.slots, name);
   const rerender = fill_useForceUpdate();
   const ref = (0,external_wp_element_namespaceObject.useRef)({
     rerender
@@ -33553,12 +33543,12 @@ function fill_Fill(props) {
     // We register fills so we can keep track of their existence.
     // Some Slot implementations need to know if there're already fills
     // registered so they can choose to render themselves or not.
-    registerFill(ref);
+    registry.registerFill(name, ref);
     return () => {
-      unregisterFill(ref);
+      registry.unregisterFill(name, ref);
     };
-  }, [registerFill, unregisterFill]);
-  if (!slot.ref || !slot.ref.current) {
+  }, [registry, name]);
+  if (!slot || !slot.ref.current) {
     return null;
   }
 
