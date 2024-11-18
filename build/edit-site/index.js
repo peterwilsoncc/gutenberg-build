@@ -31218,7 +31218,7 @@ const selectPatterns = (0,external_wp_data_namespaceObject.createSelector)((sele
       categoryId,
       hasCategory: (item, currentCategory) => {
         if (item.type === PATTERN_TYPES.user) {
-          return item.wp_pattern_category.some(catId => userPatternCategories.find(cat => cat.id === catId)?.slug === currentCategory);
+          return item.wp_pattern_category?.some(catId => userPatternCategories.find(cat => cat.id === catId)?.slug === currentCategory);
         }
         return item.categories?.includes(currentCategory);
       }
@@ -31227,7 +31227,7 @@ const selectPatterns = (0,external_wp_data_namespaceObject.createSelector)((sele
     patterns = searchItems(patterns, search, {
       hasCategory: item => {
         if (item.type === PATTERN_TYPES.user) {
-          return userPatternCategories?.length && (!item.wp_pattern_category?.length || !item.wp_pattern_category.some(catId => userPatternCategories.find(cat => cat.id === catId)));
+          return userPatternCategories?.length && (!item.wp_pattern_category?.length || !item.wp_pattern_category?.some(catId => userPatternCategories.find(cat => cat.id === catId)));
         }
         return !item.hasOwnProperty('categories');
       }
@@ -31387,7 +31387,7 @@ function usePatternCategories() {
         }
       });
       // If the pattern has no categories, add it to uncategorized.
-      if (!pattern.wp_pattern_category?.length || !pattern.wp_pattern_category.some(catId => userPatternCategories.find(cat => cat.id === catId))) {
+      if (!pattern.wp_pattern_category?.length || !pattern.wp_pattern_category?.some(catId => userPatternCategories.find(cat => cat.id === catId))) {
         categoryMap.uncategorized.count += 1;
       }
     });

@@ -684,7 +684,7 @@ function getTermLabels(pattern, categories) {
   if (pattern.type !== PATTERN_TYPES.user) {
     return categories.core?.filter(category => pattern.categories?.includes(category.name)).map(category => category.label);
   }
-  return categories.user?.filter(category => pattern.wp_pattern_category.includes(category.id)).map(category => category.label);
+  return categories.user?.filter(category => pattern.wp_pattern_category?.includes(category.id)).map(category => category.label);
 }
 function useDuplicatePatternProps({
   pattern,
