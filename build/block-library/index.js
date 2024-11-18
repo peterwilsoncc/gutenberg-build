@@ -12050,7 +12050,7 @@ function dimRatioToClass(ratio) {
   return ratio === 50 || ratio === undefined ? null : 'has-background-dim-' + 10 * Math.round(ratio / 10);
 }
 function attributesFromMedia(media) {
-  if (!media || !media.url) {
+  if (!media || !media.url && !media.src) {
     return {
       url: undefined,
       id: undefined
@@ -12065,19 +12065,18 @@ function attributesFromMedia(media) {
     if (media.media_type === IMAGE_BACKGROUND_TYPE) {
       mediaType = IMAGE_BACKGROUND_TYPE;
     } else {
-      // only images and videos are accepted so if the media_type is not an image we can assume it is a video.
+      // Only images and videos are accepted so if the media_type is not an image we can assume it is a video.
       // Videos contain the media type of 'file' in the object returned from the rest api.
       mediaType = VIDEO_BACKGROUND_TYPE;
     }
-  } else {
     // For media selections originated from existing files in the media library.
-    if (media.type !== IMAGE_BACKGROUND_TYPE && media.type !== VIDEO_BACKGROUND_TYPE) {
-      return;
-    }
+  } else if (media.type && (media.type === IMAGE_BACKGROUND_TYPE || media.type === VIDEO_BACKGROUND_TYPE)) {
     mediaType = media.type;
+  } else {
+    return;
   }
   return {
-    url: media.url,
+    url: media.url || media.src,
     id: media.id,
     alt: media?.alt,
     backgroundType: mediaType,
@@ -15049,7 +15048,7 @@ function CoverEdit({
     // See issue #52835 for context.
     const newDimRatio = originalUrl === undefined && dimRatio === 100 ? 50 : dimRatio;
     const newIsDark = compositeIsDark(newDimRatio, newOverlayColor, averageBackgroundColor);
-    if (backgroundType === IMAGE_BACKGROUND_TYPE && mediaAttributes.id) {
+    if (backgroundType === IMAGE_BACKGROUND_TYPE && mediaAttributes?.id) {
       const {
         imageDefaultSize
       } = getSettings();
