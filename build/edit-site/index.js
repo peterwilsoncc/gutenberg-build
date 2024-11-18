@@ -30907,32 +30907,6 @@ function GlobalStylesUIWrapper() {
   });
 }
 
-;// ./packages/edit-site/build-module/components/site-editor-routes/styles-edit.js
-/**
- * Internal dependencies
- */
-
-
-
-
-const stylesEditRoute = {
-  name: 'styles-edit',
-  match: params => {
-    return params.path && params.path.startsWith('/wp_global_styles') && params.canvas !== 'edit';
-  },
-  areas: {
-    content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesUIWrapper, {}),
-    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenGlobalStyles, {
-      backPath: {}
-    }),
-    preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
-    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {})
-  },
-  widths: {
-    content: 380
-  }
-};
-
 ;// ./packages/edit-site/build-module/components/site-editor-routes/styles-view.js
 /**
  * Internal dependencies
@@ -46133,8 +46107,7 @@ const pagesViewQuickEditRoute = {
 
 
 
-
-const site_editor_routes_routes = [pagesListViewQuickEditRoute, pagesListViewRoute, pagesViewQuickEditRoute, pagesViewRoute, pagesEditRoute, templatesEditRoute, templatesListViewRoute, templatesViewRoute, patternsViewRoute, patternsEditRoute, stylesViewRoute, stylesEditRoute, navigationItemViewRoute, navigationItemEditRoute, navigationViewRoute, navigationEditRoute, homeViewRoute, homeEditRoute];
+const site_editor_routes_routes = [pagesListViewQuickEditRoute, pagesListViewRoute, pagesViewQuickEditRoute, pagesViewRoute, pagesEditRoute, templatesEditRoute, templatesListViewRoute, templatesViewRoute, patternsViewRoute, patternsEditRoute, stylesViewRoute, navigationItemViewRoute, navigationItemEditRoute, navigationViewRoute, navigationEditRoute, homeViewRoute, homeEditRoute];
 function useRegisterSiteEditorRoutes() {
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const {
