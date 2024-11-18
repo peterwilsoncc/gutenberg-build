@@ -56081,6 +56081,7 @@ const getNameBySite = name => {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -56162,7 +56163,10 @@ const SocialLinkEdit = ({
     iconBackgroundColorValue
   } = context;
   const [showURLPopover, setPopover] = (0,external_wp_element_namespaceObject.useState)(false);
-  const classes = dist_clsx('wp-social-link', 'wp-social-link-' + service, {
+  const wrapperClasses = dist_clsx('wp-social-link',
+  // Manually adding this class for backwards compatibility of CSS when moving the
+  // blockProps from the li to the button: https://github.com/WordPress/gutenberg/pull/64883
+  'wp-block-social-link', 'wp-social-link-' + service, {
     'wp-social-link__is-incomplete': !url,
     [`has-${iconColor}-color`]: iconColor,
     [`has-${iconBackgroundColor}-background-color`]: iconBackgroundColor
@@ -56178,11 +56182,16 @@ const SocialLinkEdit = ({
   // the social name, even when users enter and save an empty string or only
   // spaces. The PHP render callback fallbacks to the social name as well.
   const socialLinkText = label.trim() === '' ? socialLinkName : label;
+  const ref = (0,external_wp_element_namespaceObject.useRef)();
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
-    className: classes,
-    style: {
-      color: iconColorValue,
-      backgroundColor: iconBackgroundColorValue
+    className: 'wp-block-social-link-anchor',
+    ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([setPopoverAnchor, ref]),
+    onClick: () => setPopover(true),
+    onKeyDown: event => {
+      if (event.keyCode === external_wp_keycodes_namespaceObject.ENTER) {
+        event.preventDefault();
+        setPopover(true);
+      }
     }
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -56215,12 +56224,16 @@ const SocialLinkEdit = ({
         })
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
-      ...blockProps,
+      role: "presentation",
+      className: wrapperClasses,
+      style: {
+        color: iconColorValue,
+        backgroundColor: iconBackgroundColorValue
+      },
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
-        className: "wp-block-social-link-anchor",
-        ref: setPopoverAnchor,
-        onClick: () => setPopover(true),
         "aria-haspopup": "dialog",
+        ...blockProps,
+        role: "button",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(IconComponent, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: dist_clsx('wp-block-social-link-label', {
             'screen-reader-text': !showLabels
