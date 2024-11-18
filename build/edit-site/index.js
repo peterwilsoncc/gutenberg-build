@@ -16176,6 +16176,7 @@ function Subtitle({
 /* harmony default export */ const subtitle = (Subtitle);
 
 ;// ./packages/edit-site/build-module/components/global-styles/screen-block.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -16269,12 +16270,13 @@ function ScreenBlock({
   });
   const [userSettings] = screen_block_useGlobalSetting('', name, 'user');
   const [rawSettings, setSettings] = screen_block_useGlobalSetting('', name);
-  const settings = screen_block_useSettingsForBlockElement(rawSettings, name);
+  const settingsForBlockElement = screen_block_useSettingsForBlockElement(rawSettings, name);
   const blockType = (0,external_wp_blocks_namespaceObject.getBlockType)(name);
 
   // Only allow `blockGap` support if serialization has not been skipped, to be sure global spacing can be applied.
-  if (settings?.spacing?.blockGap && blockType?.supports?.spacing?.blockGap && (blockType?.supports?.spacing?.__experimentalSkipSerialization === true || blockType?.supports?.spacing?.__experimentalSkipSerialization?.some?.(spacingType => spacingType === 'blockGap'))) {
-    settings.spacing.blockGap = false;
+  let disableBlockGap = false;
+  if (settingsForBlockElement?.spacing?.blockGap && blockType?.supports?.spacing?.blockGap && (blockType?.supports?.spacing?.__experimentalSkipSerialization === true || blockType?.supports?.spacing?.__experimentalSkipSerialization?.some?.(spacingType => spacingType === 'blockGap'))) {
+    disableBlockGap = true;
   }
 
   // Only allow `aspectRatio` support if the block is not the grouping block.
@@ -16283,9 +16285,20 @@ function ScreenBlock({
   // for all three at once. Until there is the ability to set a different aspect
   // ratio for each variation, we disable the aspect ratio controls for the
   // grouping block in global styles.
-  if (settings?.dimensions?.aspectRatio && name === 'core/group') {
-    settings.dimensions.aspectRatio = false;
+  let disableAspectRatio = false;
+  if (settingsForBlockElement?.dimensions?.aspectRatio && name === 'core/group') {
+    disableAspectRatio = true;
   }
+  const settings = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    const updatedSettings = structuredClone(settingsForBlockElement);
+    if (disableBlockGap) {
+      updatedSettings.spacing.blockGap = false;
+    }
+    if (disableAspectRatio) {
+      updatedSettings.dimensions.aspectRatio = false;
+    }
+    return updatedSettings;
+  }, [settingsForBlockElement, disableBlockGap, disableAspectRatio]);
   const blockVariations = useBlockVariations(name);
   const hasBackgroundPanel = screen_block_useHasBackgroundPanel(settings);
   const hasTypographyPanel = screen_block_useHasTypographyPanel(settings);
