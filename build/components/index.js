@@ -57310,6 +57310,7 @@ const FontSizePickerToggleGroup = props => {
 
 
 
+
 const DEFAULT_UNITS = ['px', 'em', 'rem', 'vw', 'vh'];
 const MAX_TOGGLE_GROUP_SIZES = 5;
 const UnforwardedFontSizePicker = (props, ref) => {
@@ -57370,6 +57371,11 @@ const UnforwardedFontSizePicker = (props, ref) => {
   const [valueQuantity, valueUnit] = parseQuantityAndUnitFromRawValue(value, units);
   const isValueUnitRelative = !!valueUnit && ['em', 'rem', 'vw', 'vh'].includes(valueUnit);
   const isDisabled = value === undefined;
+  maybeWarnDeprecated36pxSize({
+    componentName: 'FontSizePicker',
+    __next40pxDefaultSize,
+    size
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_Container, {
     ref: ref,
     className: "components-font-size-picker",
