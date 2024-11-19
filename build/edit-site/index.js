@@ -16099,16 +16099,14 @@ const BlockPreviewPanel = ({
     if (!blockExample) {
       return null;
     }
-    let example = blockExample;
-    if (variation) {
-      example = {
-        ...example,
-        attributes: {
-          ...example.attributes,
-          className: getVariationClassName(variation)
-        }
-      };
-    }
+    const example = {
+      ...blockExample,
+      attributes: {
+        ...blockExample.attributes,
+        style: undefined,
+        className: variation ? getVariationClassName(variation) : blockExample.attributes?.className
+      }
+    };
     return (0,external_wp_blocks_namespaceObject.getBlockFromExample)(name, example);
   }, [name, blockExample, variation]);
   const viewportWidth = (_blockExample$viewpor = blockExample?.viewportWidth) !== null && _blockExample$viewpor !== void 0 ? _blockExample$viewpor : 500;
