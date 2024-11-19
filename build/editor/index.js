@@ -11351,6 +11351,7 @@ const TableOfContentsItem = ({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -11514,6 +11515,7 @@ function DocumentOutline({
       isTitleSupported: (_postType$supports$ti = postType?.supports?.title) !== null && _postType$supports$ti !== void 0 ? _postType$supports$ti : false
     };
   });
+  const prevHeadingLevelRef = (0,external_wp_element_namespaceObject.useRef)(1);
   const headings = computeOutlineHeadings(blocks);
   if (headings.length < 1) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
@@ -11523,7 +11525,6 @@ function DocumentOutline({
       })]
     });
   }
-  let prevHeadingLevel = 1;
 
   // Not great but it's the simplest way to locate the title right now.
   const titleNode = document.querySelector('.editor-post-title__input');
@@ -11546,9 +11547,9 @@ function DocumentOutline({
       }), headings.map((item, index) => {
         // Headings remain the same, go up by one, or down by any amount.
         // Otherwise there are missing levels.
-        const isIncorrectLevel = item.level > prevHeadingLevel + 1;
+        const isIncorrectLevel = item.level > prevHeadingLevelRef.current + 1;
         const isValid = !item.isEmpty && !isIncorrectLevel && !!item.level && (item.level !== 1 || !hasMultipleH1 && !hasTitle);
-        prevHeadingLevel = item.level;
+        prevHeadingLevelRef.current = item.level;
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(document_outline_item, {
           level: `H${item.level}`,
           isValid: isValid,
