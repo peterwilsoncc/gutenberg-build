@@ -46777,6 +46777,7 @@ function SuggestionsList({
 
 
 
+
 const combobox_control_noop = () => {};
 const DetectOutside = with_focus_outside(class extends external_wp_element_namespaceObject.Component {
   handleFocusOutside(event) {
@@ -46818,6 +46819,7 @@ const getIndexOfMatchingSuggestion = (selectedSuggestion, matchingSuggestions) =
  * 	const [ filteredOptions, setFilteredOptions ] = useState( options );
  * 	return (
  * 		<ComboboxControl
+ * 			__next40pxDefaultSize
  * 			__nextHasNoMarginBottom
  * 			label="Font Size"
  * 			value={ fontSize }
@@ -46996,6 +46998,11 @@ function ComboboxControl(props) {
       (0,external_wp_a11y_namespaceObject.speak)(message, 'polite');
     }
   }, [matchingSuggestions, isExpanded]);
+  maybeWarnDeprecated36pxSize({
+    componentName: 'ComboboxControl',
+    __next40pxDefaultSize,
+    size: undefined
+  });
 
   // Disable reason: There is no appropriate role which describes the
   // input container intended accessible usability.
