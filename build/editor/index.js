@@ -5053,6 +5053,7 @@ const toggleDistractionFree = ({
       registry.dispatch(external_wp_preferences_namespaceObject.store).set('core', 'fixedToolbar', true);
       dispatch.setIsInserterOpened(false);
       dispatch.setIsListViewOpened(false);
+      unlock(registry.dispatch(external_wp_blockEditor_namespaceObject.store)).resetZoomLevel();
     });
   }
   registry.batch(() => {
@@ -27983,10 +27984,12 @@ const ZoomOutToggle = ({
 }) => {
   const {
     isZoomOut,
-    showIconLabels
+    showIconLabels,
+    isDistractionFree
   } = (0,external_wp_data_namespaceObject.useSelect)(select => ({
     isZoomOut: unlock(select(external_wp_blockEditor_namespaceObject.store)).isZoomOut(),
-    showIconLabels: select(external_wp_preferences_namespaceObject.store).get('core', 'showIconLabels')
+    showIconLabels: select(external_wp_preferences_namespaceObject.store).get('core', 'showIconLabels'),
+    isDistractionFree: select(external_wp_preferences_namespaceObject.store).get('core', 'distractionFree')
   }));
   const {
     resetZoomLevel,
@@ -28018,6 +28021,8 @@ const ZoomOutToggle = ({
     } else {
       setZoomLevel('auto-scaled');
     }
+  }, {
+    isDisabled: isDistractionFree
   });
   const handleZoomOut = () => {
     if (isZoomOut) {
@@ -28034,7 +28039,8 @@ const ZoomOutToggle = ({
     label: (0,external_wp_i18n_namespaceObject.__)('Zoom Out'),
     isPressed: isZoomOut,
     size: "compact",
-    showTooltip: !showIconLabels
+    showTooltip: !showIconLabels,
+    className: "editor-zoom-out-toggle"
   });
 };
 /* harmony default export */ const zoom_out_toggle = (ZoomOutToggle);
