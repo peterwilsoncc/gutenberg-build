@@ -38263,7 +38263,8 @@ function ItemActions({
   if (isCompact) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CompactItemActions, {
       item: item,
-      actions: eligibleActions
+      actions: eligibleActions,
+      isSmall: true
     });
   }
   if (hasOnlyOneActionAndIsPrimary(primaryActions, actions)) {
@@ -38293,11 +38294,12 @@ function ItemActions({
 }
 function CompactItemActions({
   item,
-  actions
+  actions,
+  isSmall
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_Menu, {
     trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      size: "compact",
+      size: isSmall ? 'small' : 'compact',
       icon: more_vertical,
       label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
       accessibleWhenDisabled: true,
