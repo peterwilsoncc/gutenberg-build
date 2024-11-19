@@ -63381,29 +63381,21 @@ function TrackList({
   tracks,
   onEditPress
 }) {
-  let content;
-  if (tracks.length === 0) {
-    content = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-      className: "block-library-video-tracks-editor__tracks-informative-message",
-      children: (0,external_wp_i18n_namespaceObject.__)('Tracks can be subtitles, captions, chapters, or descriptions. They help make your content more accessible to a wider range of users.')
-    });
-  } else {
-    content = tracks.map((track, index) => {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        className: "block-library-video-tracks-editor__track-list-track",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
-          children: [track.label, " "]
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          __next40pxDefaultSize: true,
-          variant: "tertiary",
-          onClick: () => onEditPress(index),
-          "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Label of the video text track e.g: "French subtitles" */
-          (0,external_wp_i18n_namespaceObject._x)('Edit %s', 'text tracks'), track.label),
-          children: (0,external_wp_i18n_namespaceObject.__)('Edit')
-        })]
-      }, index);
-    });
-  }
+  const content = tracks.map((track, index) => {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+      className: "block-library-video-tracks-editor__track-list-track",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        children: track.label
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
+        variant: "tertiary",
+        onClick: () => onEditPress(index),
+        "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Label of the video text track e.g: "French subtitles". */
+        (0,external_wp_i18n_namespaceObject._x)('Edit %s', 'text tracks'), track.label),
+        children: (0,external_wp_i18n_namespaceObject.__)('Edit')
+      })]
+    }, index);
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
     label: (0,external_wp_i18n_namespaceObject.__)('Text tracks'),
     className: "block-library-video-tracks-editor__track-list",
@@ -63423,98 +63415,93 @@ function SingleTrackEditor({
     kind = DEFAULT_KIND
   } = track;
   const fileName = src.startsWith('blob:') ? '' : (0,external_wp_url_namespaceObject.getFilename)(src) || '';
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.NavigableMenu, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-      className: "block-library-video-tracks-editor__single-track-editor",
-      spacing: "4",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        className: "block-library-video-tracks-editor__single-track-editor-edit-track-label",
-        children: (0,external_wp_i18n_namespaceObject.__)('Edit track')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
-        children: [(0,external_wp_i18n_namespaceObject.__)('File'), ": ", /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("b", {
-          children: fileName
-        })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalGrid, {
-        columns: 2,
-        gap: 4,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-          __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true
-          /* eslint-disable jsx-a11y/no-autofocus */,
-          autoFocus: true
-          /* eslint-enable jsx-a11y/no-autofocus */,
-          onChange: newLabel => onChange({
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    className: "block-library-video-tracks-editor__single-track-editor",
+    spacing: "4",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "block-library-video-tracks-editor__single-track-editor-edit-track-label",
+      children: (0,external_wp_i18n_namespaceObject.__)('Edit track')
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
+      children: [(0,external_wp_i18n_namespaceObject.__)('File'), ": ", /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("b", {
+        children: fileName
+      })]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalGrid, {
+      columns: 2,
+      gap: 4,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        onChange: newLabel => onChange({
+          ...track,
+          label: newLabel
+        }),
+        label: (0,external_wp_i18n_namespaceObject.__)('Label'),
+        value: label,
+        help: (0,external_wp_i18n_namespaceObject.__)('Title of track')
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        onChange: newSrcLang => onChange({
+          ...track,
+          srcLang: newSrcLang
+        }),
+        label: (0,external_wp_i18n_namespaceObject.__)('Source language'),
+        value: srcLang,
+        help: (0,external_wp_i18n_namespaceObject.__)('Language tag (en, fr, etc.)')
+      })]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      spacing: "8",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        className: "block-library-video-tracks-editor__single-track-editor-kind-select",
+        options: KIND_OPTIONS,
+        value: kind,
+        label: (0,external_wp_i18n_namespaceObject.__)('Kind'),
+        onChange: newKind => {
+          onChange({
             ...track,
-            label: newLabel
-          }),
-          label: (0,external_wp_i18n_namespaceObject.__)('Label'),
-          value: label,
-          help: (0,external_wp_i18n_namespaceObject.__)('Title of track')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+            kind: newKind
+          });
+        }
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        className: "block-library-video-tracks-editor__single-track-editor-buttons-container",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
-          onChange: newSrcLang => onChange({
-            ...track,
-            srcLang: newSrcLang
-          }),
-          label: (0,external_wp_i18n_namespaceObject.__)('Source language'),
-          value: srcLang,
-          help: (0,external_wp_i18n_namespaceObject.__)('Language tag (en, fr, etc.)')
-        })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-        spacing: "8",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+          isDestructive: true,
+          variant: "link",
+          onClick: onRemove,
+          children: (0,external_wp_i18n_namespaceObject.__)('Remove track')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
-          className: "block-library-video-tracks-editor__single-track-editor-kind-select",
-          options: KIND_OPTIONS,
-          value: kind,
-          label: (0,external_wp_i18n_namespaceObject.__)('Kind'),
-          onChange: newKind => {
-            onChange({
-              ...track,
-              kind: newKind
-            });
-          }
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-          className: "block-library-video-tracks-editor__single-track-editor-buttons-container",
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            __next40pxDefaultSize: true,
-            variant: "secondary",
-            onClick: () => {
-              const changes = {};
-              let hasChanges = false;
-              if (label === '') {
-                changes.label = (0,external_wp_i18n_namespaceObject.__)('English');
-                hasChanges = true;
-              }
-              if (srcLang === '') {
-                changes.srcLang = 'en';
-                hasChanges = true;
-              }
-              if (track.kind === undefined) {
-                changes.kind = DEFAULT_KIND;
-                hasChanges = true;
-              }
-              if (hasChanges) {
-                onChange({
-                  ...track,
-                  ...changes
-                });
-              }
-              onClose();
-            },
-            children: (0,external_wp_i18n_namespaceObject.__)('Close')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            __next40pxDefaultSize: true,
-            isDestructive: true,
-            variant: "link",
-            onClick: onRemove,
-            children: (0,external_wp_i18n_namespaceObject.__)('Remove track')
-          })]
+          variant: "primary",
+          onClick: () => {
+            const changes = {};
+            let hasChanges = false;
+            if (label === '') {
+              changes.label = (0,external_wp_i18n_namespaceObject.__)('English');
+              hasChanges = true;
+            }
+            if (srcLang === '') {
+              changes.srcLang = 'en';
+              hasChanges = true;
+            }
+            if (track.kind === undefined) {
+              changes.kind = DEFAULT_KIND;
+              hasChanges = true;
+            }
+            if (hasChanges) {
+              onChange({
+                ...track,
+                ...changes
+              });
+            }
+            onClose();
+          },
+          children: (0,external_wp_i18n_namespaceObject.__)('Apply')
         })]
       })]
-    })
+    })]
   });
 }
 function TracksEditor({
@@ -63525,22 +63512,40 @@ function TracksEditor({
     return select(external_wp_blockEditor_namespaceObject.store).getSettings().mediaUpload;
   }, []);
   const [trackBeingEdited, setTrackBeingEdited] = (0,external_wp_element_namespaceObject.useState)(null);
+  const dropdownPopoverRef = (0,external_wp_element_namespaceObject.useRef)();
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    dropdownPopoverRef.current?.focus();
+  }, [trackBeingEdited]);
   if (!mediaUpload) {
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
     contentClassName: "block-library-video-tracks-editor",
+    focusOnMount: true,
+    popoverProps: {
+      ref: dropdownPopoverRef
+    },
     renderToggle: ({
       isOpen,
       onToggle
-    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-        "aria-expanded": isOpen,
-        "aria-haspopup": "true",
-        onClick: onToggle,
-        children: (0,external_wp_i18n_namespaceObject.__)('Text tracks')
-      })
-    }),
+    }) => {
+      const handleOnToggle = () => {
+        if (!isOpen) {
+          // When the Popover opens make sure the initial view is
+          // always the track list rather than the edit track UI.
+          setTrackBeingEdited(null);
+        }
+        onToggle();
+      };
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+          "aria-expanded": isOpen,
+          "aria-haspopup": "true",
+          onClick: handleOnToggle,
+          children: (0,external_wp_i18n_namespaceObject.__)('Text tracks')
+        })
+      });
+    },
     renderContent: () => {
       if (trackBeingEdited !== null) {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SingleTrackEditor, {
@@ -63557,8 +63562,17 @@ function TracksEditor({
           }
         });
       }
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.NavigableMenu, {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+        children: [tracks.length === 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+          className: "block-library-video-tracks-editor__tracks-informative-message",
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
+            className: "block-library-video-tracks-editor__tracks-informative-message-title",
+            children: (0,external_wp_i18n_namespaceObject.__)('Text tracks')
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+            className: "block-library-video-tracks-editor__tracks-informative-message-description",
+            children: (0,external_wp_i18n_namespaceObject.__)('Tracks can be subtitles, captions, chapters, or descriptions. They help make your content more accessible to a wider range of users.')
+          })]
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.NavigableMenu, {
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TrackList, {
             tracks: tracks,
             onEditPress: setTrackBeingEdited
@@ -63622,7 +63636,7 @@ function TracksEditor({
               })
             })]
           })]
-        })
+        })]
       });
     }
   });
