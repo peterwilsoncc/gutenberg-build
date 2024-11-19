@@ -19547,17 +19547,18 @@ const flexWrapOptions = ['wrap', 'nowrap'];
     layoutBlockSupport = {}
   }) {
     const {
-      allowOrientation = true
+      allowOrientation = true,
+      allowJustification = true
     } = layoutBlockSupport;
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+        children: [allowJustification && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexLayoutJustifyContentControl, {
             layout: layout,
             onChange: onChange
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-          children: allowOrientation && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OrientationControl, {
+        }), allowOrientation && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OrientationControl, {
             layout: layout,
             onChange: onChange
           })
@@ -19574,12 +19575,16 @@ const flexWrapOptions = ['wrap', 'nowrap'];
     layoutBlockSupport
   }) {
     const {
-      allowVerticalAlignment = true
+      allowVerticalAlignment = true,
+      allowJustification = true
     } = layoutBlockSupport;
+    if (!allowJustification && !allowVerticalAlignment) {
+      return null;
+    }
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(block_controls, {
       group: "block",
       __experimentalShareWithChildBlocks: true,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexLayoutJustifyContentControl, {
+      children: [allowJustification && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexLayoutJustifyContentControl, {
         layout: layout,
         onChange: onChange,
         isToolbar: true
