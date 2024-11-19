@@ -25453,7 +25453,7 @@ const NON_CONTEXTUAL_POST_TYPES = ['wp_block', 'wp_navigation', 'wp_template_par
  * @return {Array} Block editor props.
  */
 function useBlockEditorProps(post, template, mode) {
-  const rootLevelPost = mode === 'post-only' || !template ? 'post' : 'template';
+  const rootLevelPost = mode === 'template-locked' ? 'template' : 'post';
   const [postBlocks, onInput, onChange] = (0,external_wp_coreData_namespaceObject.useEntityBlockEditor)('postType', post.type, {
     id: post.id
   });
@@ -25534,8 +25534,11 @@ const ExperimentalEditorProvider = with_registry_provider(({
     selection,
     isReady,
     mode,
-    postTypeEntities
+    defaultMode,
+    postTypeEntities,
+    hasLoadedPostObject
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _postTypeObject$defau;
     const {
       getEditorSettings,
       getEditorSelection,
@@ -25545,10 +25548,14 @@ const ExperimentalEditorProvider = with_registry_provider(({
     const {
       getEntitiesConfig
     } = select(external_wp_coreData_namespaceObject.store);
+    const postTypeObject = select(external_wp_coreData_namespaceObject.store).getPostType(post.type);
+    const _hasLoadedPostObject = select(external_wp_coreData_namespaceObject.store).hasFinishedResolution('getPostType', [post.type]);
     return {
+      hasLoadedPostObject: _hasLoadedPostObject,
       editorSettings: getEditorSettings(),
       isReady: __unstableIsEditorReady(),
       mode: getRenderingMode(),
+      defaultMode: (_postTypeObject$defau = postTypeObject?.default_rendering_mode) !== null && _postTypeObject$defau !== void 0 ? _postTypeObject$defau : 'post-only',
       selection: getEditorSelection(),
       postTypeEntities: post.type === 'wp_template' ? getEntitiesConfig('postType') : null
     };
@@ -25615,7 +25622,7 @@ const ExperimentalEditorProvider = with_registry_provider(({
         }]
       });
     }
-  }, []);
+  }, [createWarningNotice, initialEdits, settings, post, recovery, setupEditor, updatePostLock]);
 
   // Synchronizes the active post with the state
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -25634,14 +25641,13 @@ const ExperimentalEditorProvider = with_registry_provider(({
 
   // Sets the right rendering mode when loading the editor.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    var _settings$defaultRend;
-    setRenderingMode((_settings$defaultRend = settings.defaultRenderingMode) !== null && _settings$defaultRend !== void 0 ? _settings$defaultRend : 'post-only');
-  }, [settings.defaultRenderingMode, setRenderingMode]);
+    setRenderingMode(defaultMode);
+  }, [defaultMode, setRenderingMode]);
   useHideBlocksFromInserter(post.type, mode);
 
   // Register the editor commands.
   useCommands();
-  if (!isReady) {
+  if (!isReady || !mode || !hasLoadedPostObject) {
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_coreData_namespaceObject.EntityProvider, {

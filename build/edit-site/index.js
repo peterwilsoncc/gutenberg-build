@@ -14753,7 +14753,7 @@ function useNavigateToPreviousEntityRecord() {
   }, [location, history]);
   return goBack;
 }
-function useSpecificEditorSettings(shouldUseTemplateAsDefaultRenderingMode) {
+function useSpecificEditorSettings() {
   const {
     params
   } = use_site_editor_settings_useLocation();
@@ -14771,10 +14771,6 @@ function useSpecificEditorSettings(shouldUseTemplateAsDefaultRenderingMode) {
       settings: getSettings()
     };
   }, []);
-
-  // TODO: The `shouldUseTemplateAsDefaultRenderingMode` check should be removed when the default rendering mode per post type is merged.
-  // @see https://github.com/WordPress/gutenberg/pull/62304/
-  const defaultRenderingMode = shouldUseTemplateAsDefaultRenderingMode ? 'template-locked' : 'post-only';
   const onNavigateToPreviousEntityRecord = useNavigateToPreviousEntityRecord();
   const defaultEditorSettings = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return {
@@ -14782,12 +14778,11 @@ function useSpecificEditorSettings(shouldUseTemplateAsDefaultRenderingMode) {
       richEditingEnabled: true,
       supportsTemplateMode: true,
       focusMode: canvas !== 'view',
-      defaultRenderingMode,
       onNavigateToEntityRecord,
       onNavigateToPreviousEntityRecord,
       isPreviewMode: canvas === 'view'
     };
-  }, [settings, canvas, defaultRenderingMode, onNavigateToEntityRecord, onNavigateToPreviousEntityRecord]);
+  }, [settings, canvas, onNavigateToEntityRecord, onNavigateToPreviousEntityRecord]);
   return defaultEditorSettings;
 }
 
@@ -28733,7 +28728,7 @@ function EditSiteEditor({
   const iframeProps = useEditorIframeProps();
   const isEditMode = canvas === 'edit';
   const loadingProgressId = (0,external_wp_compose_namespaceObject.useInstanceId)(CanvasLoader, 'edit-site-editor__loading-progress');
-  const settings = useSpecificEditorSettings(!!context?.postId && context?.postType !== 'post');
+  const settings = useSpecificEditorSettings();
   const styles = (0,external_wp_element_namespaceObject.useMemo)(() => [...settings.styles, {
     // Forming a "block formatting context" to prevent margin collapsing.
     // @see https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context
