@@ -11480,15 +11480,13 @@ const isEmptyHeading = heading => !heading.attributes.content || heading.attribu
  * Renders a document outline component.
  *
  * @param {Object}   props                         Props.
- * @param {Function} props.onSelect                Function to be called when an outline item is selected.
- * @param {boolean}  props.isTitleSupported        Indicates whether the title is supported.
+ * @param {Function} props.onSelect                Function to be called when an outline item is selected
  * @param {boolean}  props.hasOutlineItemsDisabled Indicates whether the outline items are disabled.
  *
  * @return {Component} The component to be rendered.
  */
 function DocumentOutline({
   onSelect,
-  isTitleSupported,
   hasOutlineItemsDisabled
 }) {
   const {
@@ -11496,7 +11494,8 @@ function DocumentOutline({
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const {
     blocks,
-    title
+    title,
+    isTitleSupported
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _postType$supports$ti;
     const {
@@ -11592,7 +11591,7 @@ function DocumentOutlineCheck({
     } = select(external_wp_blockEditor_namespaceObject.store);
     return getGlobalBlockCount('core/heading') > 0;
   });
-  if (hasHeadings) {
+  if (!hasHeadings) {
     return null;
   }
   return children;
