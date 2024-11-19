@@ -15924,21 +15924,21 @@ const cover_settings = {
     attributes: {
       customOverlayColor: '#065174',
       dimRatio: 40,
-      url: 'https://s.w.org/images/core/5.3/Windbuchencom.jpg'
+      url: 'https://s.w.org/images/core/5.3/Windbuchencom.jpg',
+      style: {
+        typography: {
+          fontSize: 48
+        },
+        color: {
+          text: 'white'
+        }
+      }
     },
     innerBlocks: [{
       name: 'core/paragraph',
       attributes: {
         content: (0,external_wp_i18n_namespaceObject.__)('<strong>Snow Patrol</strong>'),
-        align: 'center',
-        style: {
-          typography: {
-            fontSize: 48
-          },
-          color: {
-            text: 'white'
-          }
-        }
+        align: 'center'
       }
     }]
   },

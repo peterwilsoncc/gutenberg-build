@@ -26347,7 +26347,18 @@ function getOverviewBlockExamples(colors) {
         name: blockName,
         title: blockType.title,
         category: 'overview',
-        blocks: (0,external_wp_blocks_namespaceObject.getBlockFromExample)(blockName, blockType.example)
+        /*
+         * CSS generated from style attributes will take precedence over global styles CSS,
+         * so remove the style attribute from the example to ensure the example
+         * demonstrates changes to global styles.
+         */
+        blocks: (0,external_wp_blocks_namespaceObject.getBlockFromExample)(blockName, {
+          ...blockType.example,
+          attributes: {
+            ...blockType.example.attributes,
+            style: undefined
+          }
+        })
       };
       examples.push(blockExample);
     }
@@ -26373,7 +26384,18 @@ function getExamples(colors) {
     name: blockType.name,
     title: blockType.title,
     category: blockType.category,
-    blocks: (0,external_wp_blocks_namespaceObject.getBlockFromExample)(blockType.name, blockType.example)
+    /*
+     * CSS generated from style attributes will take precedence over global styles CSS,
+     * so remove the style attribute from the example to ensure the example
+     * demonstrates changes to global styles.
+     */
+    blocks: (0,external_wp_blocks_namespaceObject.getBlockFromExample)(blockType.name, {
+      ...blockType.example,
+      attributes: {
+        ...blockType.example.attributes,
+        style: undefined
+      }
+    })
   }));
   const isHeadingBlockRegistered = !!(0,external_wp_blocks_namespaceObject.getBlockType)('core/heading');
   if (!isHeadingBlockRegistered) {
