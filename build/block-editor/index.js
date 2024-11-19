@@ -51768,14 +51768,13 @@ function CategoryTabs({
   const selectedTabId = selectedCategory ? selectedCategory.name : null;
   const [activeTabId, setActiveId] = (0,external_wp_element_namespaceObject.useState)();
   const firstTabId = categories?.[0]?.name;
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    // If there is no active tab, make the first tab the active tab, so that
-    // when focus is moved to the tablist, the first tab will be focused
-    // despite not being selected
-    if (selectedTabId === null && !activeTabId && firstTabId) {
-      setActiveId(firstTabId);
-    }
-  }, [selectedTabId, activeTabId, firstTabId, setActiveId]);
+
+  // If there is no active tab, make the first tab the active tab, so that
+  // when focus is moved to the tablist, the first tab will be focused
+  // despite not being selected
+  if (selectedTabId === null && !activeTabId && firstTabId) {
+    setActiveId(firstTabId);
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(category_tabs_Tabs, {
     selectOnMove: false,
     selectedTabId: selectedTabId,
