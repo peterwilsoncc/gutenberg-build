@@ -31221,7 +31221,7 @@ function BlockTypesChecklist({
         __nextHasNoMarginBottom: true,
         label: blockType.title,
         checked: value.includes(blockType.name),
-        onChange: (...args) => onItemChange(blockType.name, ...args)
+        onChange: (...args) => onItemChange(blockType, ...args)
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
         icon: blockType.icon
       })]
@@ -31238,74 +31238,46 @@ function BlockTypesChecklist({
 
 
 
-
-
 /**
  * Internal dependencies
  */
 
 
-
-
 function BlockManagerCategory({
   title,
-  blockTypes
+  blockTypes,
+  selectedBlockTypes,
+  onChange
 }) {
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(BlockManagerCategory);
-  const {
-    allowedBlockTypes,
-    hiddenBlockTypes
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEditorSettings
-    } = select(store_store);
-    const {
-      get
-    } = select(external_wp_preferences_namespaceObject.store);
-    return {
-      allowedBlockTypes: getEditorSettings().allowedBlockTypes,
-      hiddenBlockTypes: get('core', 'hiddenBlockTypes')
-    };
-  }, []);
-  const filteredBlockTypes = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (allowedBlockTypes === true) {
-      return blockTypes;
-    }
-    return blockTypes.filter(({
-      name
-    }) => {
-      return allowedBlockTypes?.includes(name);
-    });
-  }, [allowedBlockTypes, blockTypes]);
-  const {
-    showBlockTypes,
-    hideBlockTypes
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));
-  const toggleVisible = (0,external_wp_element_namespaceObject.useCallback)((blockName, nextIsChecked) => {
+  const toggleVisible = (0,external_wp_element_namespaceObject.useCallback)((blockType, nextIsChecked) => {
     if (nextIsChecked) {
-      showBlockTypes(blockName);
+      onChange([...selectedBlockTypes, blockType]);
     } else {
-      hideBlockTypes(blockName);
+      onChange(selectedBlockTypes.filter(({
+        name
+      }) => name !== blockType.name));
     }
-  }, [showBlockTypes, hideBlockTypes]);
+  }, [selectedBlockTypes, onChange]);
   const toggleAllVisible = (0,external_wp_element_namespaceObject.useCallback)(nextIsChecked => {
-    const blockNames = blockTypes.map(({
-      name
-    }) => name);
     if (nextIsChecked) {
-      showBlockTypes(blockNames);
+      onChange([...selectedBlockTypes, ...blockTypes.filter(blockType => !selectedBlockTypes.find(({
+        name
+      }) => name === blockType.name))]);
     } else {
-      hideBlockTypes(blockNames);
+      onChange(selectedBlockTypes.filter(selectedBlockType => !blockTypes.find(({
+        name
+      }) => name === selectedBlockType.name)));
     }
-  }, [blockTypes, showBlockTypes, hideBlockTypes]);
-  if (!filteredBlockTypes.length) {
+  }, [blockTypes, selectedBlockTypes, onChange]);
+  if (!blockTypes.length) {
     return null;
   }
-  const checkedBlockNames = filteredBlockTypes.map(({
+  const checkedBlockNames = blockTypes.map(({
     name
-  }) => name).filter(type => !(hiddenBlockTypes !== null && hiddenBlockTypes !== void 0 ? hiddenBlockTypes : []).includes(type));
+  }) => name).filter(type => (selectedBlockTypes !== null && selectedBlockTypes !== void 0 ? selectedBlockTypes : []).some(selectedBlockType => selectedBlockType.name === type));
   const titleId = 'editor-block-manager__category-title-' + instanceId;
-  const isAllChecked = checkedBlockNames.length === filteredBlockTypes.length;
+  const isAllChecked = checkedBlockNames.length === blockTypes.length;
   const isIndeterminate = !isAllChecked && checkedBlockNames.length > 0;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     role: "group",
@@ -31322,7 +31294,7 @@ function BlockManagerCategory({
         children: title
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(checklist, {
-      blockTypes: filteredBlockTypes,
+      blockTypes: blockTypes,
       value: checkedBlockNames,
       onItemChange: toggleVisible
     })]
@@ -31342,52 +31314,43 @@ function BlockManagerCategory({
 
 
 
-
 /**
  * Internal dependencies
  */
 
 
+/**
+ * Provides a list of blocks with checkboxes.
+ *
+ * @param {Object}   props                    Props.
+ * @param {Array}    props.blockTypes         An array of blocks.
+ * @param {Array}    props.selectedBlockTypes An array of selected blocks.
+ * @param {Function} props.onChange           Function to be called when the selected blocks change.
+ */
 
-
-function BlockManager() {
+function BlockManager({
+  blockTypes,
+  selectedBlockTypes,
+  onChange
+}) {
   const debouncedSpeak = (0,external_wp_compose_namespaceObject.useDebounce)(external_wp_a11y_namespaceObject.speak, 500);
   const [search, setSearch] = (0,external_wp_element_namespaceObject.useState)('');
   const {
-    showBlockTypes
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));
-  const {
-    blockTypes,
     categories,
-    hasBlockSupport,
-    isMatchingSearchTerm,
-    numberOfHiddenBlocks
+    isMatchingSearchTerm
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _select$get;
-    // Some hidden blocks become unregistered
-    // by removing for instance the plugin that registered them, yet
-    // they're still remain as hidden by the user's action.
-    // We consider "hidden", blocks which were hidden and
-    // are still registered.
-    const _blockTypes = select(external_wp_blocks_namespaceObject.store).getBlockTypes();
-    const hiddenBlockTypes = ((_select$get = select(external_wp_preferences_namespaceObject.store).get('core', 'hiddenBlockTypes')) !== null && _select$get !== void 0 ? _select$get : []).filter(hiddenBlock => {
-      return _blockTypes.some(registeredBlock => registeredBlock.name === hiddenBlock);
-    });
     return {
-      blockTypes: _blockTypes,
       categories: select(external_wp_blocks_namespaceObject.store).getCategories(),
-      hasBlockSupport: select(external_wp_blocks_namespaceObject.store).hasBlockSupport,
-      isMatchingSearchTerm: select(external_wp_blocks_namespaceObject.store).isMatchingSearchTerm,
-      numberOfHiddenBlocks: Array.isArray(hiddenBlockTypes) && hiddenBlockTypes.length
+      isMatchingSearchTerm: select(external_wp_blocks_namespaceObject.store).isMatchingSearchTerm
     };
   }, []);
-  function enableAllBlockTypes(newBlockTypes) {
-    const blockNames = newBlockTypes.map(({
-      name
-    }) => name);
-    showBlockTypes(blockNames);
+  function enableAllBlockTypes() {
+    onChange(blockTypes);
   }
-  const filteredBlockTypes = blockTypes.filter(blockType => hasBlockSupport(blockType, 'inserter', true) && (!search || isMatchingSearchTerm(blockType, search)) && (!blockType.parent || blockType.parent.includes('core/post-content')));
+  const filteredBlockTypes = blockTypes.filter(blockType => {
+    return !search || isMatchingSearchTerm(blockType, search);
+  });
+  const numberOfHiddenBlocks = blockTypes.length - selectedBlockTypes.length;
 
   // Announce search results on change
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -31407,7 +31370,7 @@ function BlockManager() {
       (0,external_wp_i18n_namespaceObject._n)('%d block is hidden.', '%d blocks are hidden.', numberOfHiddenBlocks), numberOfHiddenBlocks), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         __next40pxDefaultSize: true,
         variant: "link",
-        onClick: () => enableAllBlockTypes(filteredBlockTypes),
+        onClick: enableAllBlockTypes,
         children: (0,external_wp_i18n_namespaceObject.__)('Reset')
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SearchControl, {
@@ -31427,14 +31390,96 @@ function BlockManager() {
         children: (0,external_wp_i18n_namespaceObject.__)('No blocks found.')
       }), categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_manager_category, {
         title: category.title,
-        blockTypes: filteredBlockTypes.filter(blockType => blockType.category === category.slug)
+        blockTypes: filteredBlockTypes.filter(blockType => blockType.category === category.slug),
+        selectedBlockTypes: selectedBlockTypes,
+        onChange: onChange
       }, category.slug)), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_manager_category, {
         title: (0,external_wp_i18n_namespaceObject.__)('Uncategorized'),
         blockTypes: filteredBlockTypes.filter(({
           category
-        }) => !category)
+        }) => !category),
+        selectedBlockTypes: selectedBlockTypes,
+        onChange: onChange
       })]
     })]
+  });
+}
+
+;// ./packages/editor/build-module/components/preferences-modal/block-visibility.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+function BlockVisibility() {
+  const {
+    showBlockTypes,
+    hideBlockTypes
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));
+  const {
+    blockTypes,
+    allowedBlockTypes: _allowedBlockTypes,
+    hiddenBlockTypes: _hiddenBlockTypes
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _select$get;
+    return {
+      blockTypes: select(external_wp_blocks_namespaceObject.store).getBlockTypes(),
+      allowedBlockTypes: select(store_store).getEditorSettings().allowedBlockTypes,
+      hiddenBlockTypes: (_select$get = select(external_wp_preferences_namespaceObject.store).get('core', 'hiddenBlockTypes')) !== null && _select$get !== void 0 ? _select$get : []
+    };
+  }, []);
+  const allowedBlockTypes = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (_allowedBlockTypes === true) {
+      return blockTypes;
+    }
+    return blockTypes.filter(({
+      name
+    }) => {
+      return _allowedBlockTypes?.includes(name);
+    });
+  }, [_allowedBlockTypes, blockTypes]);
+  const filteredBlockTypes = allowedBlockTypes.filter(blockType => (0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockType, 'inserter', true) && (!blockType.parent || blockType.parent.includes('core/post-content')));
+
+  // Some hidden blocks become unregistered
+  // by removing for instance the plugin that registered them, yet
+  // they're still remain as hidden by the user's action.
+  // We consider "hidden", blocks which were hidden and
+  // are still registered.
+  const hiddenBlockTypes = _hiddenBlockTypes.filter(hiddenBlock => {
+    return filteredBlockTypes.some(registeredBlock => registeredBlock.name === hiddenBlock);
+  });
+  const selectedBlockTypes = filteredBlockTypes.filter(blockType => !hiddenBlockTypes.includes(blockType.name));
+  const onChangeSelectedBlockTypes = newSelectedBlockTypes => {
+    if (selectedBlockTypes.length > newSelectedBlockTypes.length) {
+      const blockTypesToHide = selectedBlockTypes.filter(blockType => !newSelectedBlockTypes.find(({
+        name
+      }) => name === blockType.name));
+      hideBlockTypes(blockTypesToHide.map(({
+        name
+      }) => name));
+    } else if (selectedBlockTypes.length < newSelectedBlockTypes.length) {
+      const blockTypesToShow = newSelectedBlockTypes.filter(blockType => !selectedBlockTypes.find(({
+        name
+      }) => name === blockType.name));
+      showBlockTypes(blockTypesToShow.map(({
+        name
+      }) => name));
+    }
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockManager, {
+    blockTypes: filteredBlockTypes,
+    selectedBlockTypes: selectedBlockTypes,
+    onChange: onChangeSelectedBlockTypes
   });
 }
 
@@ -31649,7 +31694,7 @@ function PreferencesModalContents({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreferencesModalSection, {
         title: (0,external_wp_i18n_namespaceObject.__)('Manage block visibility'),
         description: (0,external_wp_i18n_namespaceObject.__)("Disable blocks that you don't want to appear in the inserter. They can always be toggled back on later."),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockManager, {})
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockVisibility, {})
       })]
     })
   }, window.__experimentalMediaProcessing && {
