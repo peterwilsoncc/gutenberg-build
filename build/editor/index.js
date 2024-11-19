@@ -20068,7 +20068,7 @@ class PostPublishPanel extends external_wp_element_namespaceObject.Component {
   componentDidUpdate(prevProps) {
     // Automatically collapse the publish sidebar when a post
     // is published and the user makes an edit.
-    if (prevProps.isPublished && !this.props.isSaving && this.props.isDirty) {
+    if (prevProps.isPublished && !this.props.isSaving && this.props.isDirty || this.props.currentPostId !== prevProps.currentPostId) {
       this.props.onClose();
     }
   }
@@ -20095,6 +20095,7 @@ class PostPublishPanel extends external_wp_element_namespaceObject.Component {
       onTogglePublishSidebar,
       PostPublishExtension,
       PrePublishExtension,
+      currentPostId,
       ...additionalProps
     } = this.props;
     const {
@@ -20167,6 +20168,7 @@ class PostPublishPanel extends external_wp_element_namespaceObject.Component {
   } = select(external_wp_coreData_namespaceObject.store);
   const {
     getCurrentPost,
+    getCurrentPostId,
     getEditedPostAttribute,
     isCurrentPostPublished,
     isCurrentPostScheduled,
@@ -20189,7 +20191,8 @@ class PostPublishPanel extends external_wp_element_namespaceObject.Component {
     isPublishSidebarEnabled: isPublishSidebarEnabled(),
     isSaving: isSavingPost() && !isAutosavingPost(),
     isSavingNonPostEntityChanges: isSavingNonPostEntityChanges(),
-    isScheduled: isCurrentPostScheduled()
+    isScheduled: isCurrentPostScheduled(),
+    currentPostId: getCurrentPostId()
   };
 }), (0,external_wp_data_namespaceObject.withDispatch)((dispatch, {
   isPublishSidebarEnabled
