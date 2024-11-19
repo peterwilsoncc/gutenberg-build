@@ -24348,13 +24348,7 @@ const heading_metadata = {
       color: true,
       radius: true,
       style: true,
-      width: true,
-      __experimentalDefaultControls: {
-        color: true,
-        radius: true,
-        style: true,
-        width: true
-      }
+      width: true
     },
     color: {
       gradients: true,
