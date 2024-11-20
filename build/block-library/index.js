@@ -46971,21 +46971,19 @@ const getTransformedBlocksFromPattern = (blocks, queryBlockAttributes) => {
  * @return {string} The block name to be used in the patterns suggestions.
  */
 function useBlockNameForPatterns(clientId, attributes) {
-  const activeVariationName = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blocks_namespaceObject.store).getActiveBlockVariation('core/query', attributes)?.name, [attributes]);
-  const blockName = `core/query/${activeVariationName}`;
-  const hasActiveVariationPatterns = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  return (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const activeVariationName = select(external_wp_blocks_namespaceObject.store).getActiveBlockVariation('core/query', attributes)?.name;
     if (!activeVariationName) {
-      return false;
+      return 'core/query';
     }
     const {
       getBlockRootClientId,
       getPatternsByBlockTypes
     } = select(external_wp_blockEditor_namespaceObject.store);
     const rootClientId = getBlockRootClientId(clientId);
-    const activePatterns = getPatternsByBlockTypes(blockName, rootClientId);
-    return activePatterns.length > 0;
-  }, [clientId, activeVariationName, blockName]);
-  return hasActiveVariationPatterns ? blockName : 'core/query';
+    const activePatterns = getPatternsByBlockTypes(`core/query/${activeVariationName}`, rootClientId);
+    return activePatterns.length > 0 ? `core/query/${activeVariationName}` : 'core/query';
+  }, [clientId, attributes]);
 }
 
 /**
