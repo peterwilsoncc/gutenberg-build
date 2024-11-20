@@ -33233,7 +33233,7 @@ function Fill({
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     ref.current.children = children;
     if (slot) {
-      slot.forceUpdate();
+      slot.rerender();
     }
   }, [slot, children]);
   return null;
@@ -33263,86 +33263,46 @@ function Fill({
 function isFunction(maybeFunc) {
   return typeof maybeFunc === 'function';
 }
-class SlotComponent extends external_wp_element_namespaceObject.Component {
-  constructor(props) {
-    super(props);
-    this.isUnmounted = false;
-  }
-  componentDidMount() {
-    const {
-      registerSlot
-    } = this.props;
-    this.isUnmounted = false;
-    registerSlot(this.props.name, this);
-  }
-  componentWillUnmount() {
-    const {
-      unregisterSlot
-    } = this.props;
-    this.isUnmounted = true;
-    unregisterSlot(this.props.name, this);
-  }
-  componentDidUpdate(prevProps) {
-    const {
-      name,
-      unregisterSlot,
-      registerSlot
-    } = this.props;
-    if (prevProps.name !== name) {
-      unregisterSlot(prevProps.name, this);
-      registerSlot(name, this);
-    }
-  }
-  forceUpdate() {
-    if (this.isUnmounted) {
-      return;
-    }
-    super.forceUpdate();
-  }
-  render() {
-    var _getFills;
-    const {
-      children,
-      name,
-      fillProps = {},
-      getFills
-    } = this.props;
-    const fills = ((_getFills = getFills(name, this)) !== null && _getFills !== void 0 ? _getFills : []).map(fill => {
-      const fillChildren = isFunction(fill.children) ? fill.children(fillProps) : fill.children;
-      return external_wp_element_namespaceObject.Children.map(fillChildren, (child, childIndex) => {
-        if (!child || typeof child === 'string') {
-          return child;
-        }
-        let childKey = childIndex;
-        if (typeof child === 'object' && 'key' in child && child?.key) {
-          childKey = child.key;
-        }
-        return (0,external_wp_element_namespaceObject.cloneElement)(child, {
-          key: childKey
-        });
+function Slot(props) {
+  var _registry$getFills;
+  const registry = (0,external_wp_element_namespaceObject.useContext)(context);
+  const [, rerender] = (0,external_wp_element_namespaceObject.useReducer)(() => [], []);
+  const ref = (0,external_wp_element_namespaceObject.useRef)({
+    rerender
+  });
+  const {
+    name,
+    children,
+    fillProps = {}
+  } = props;
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    const refValue = ref.current;
+    registry.registerSlot(name, refValue);
+    return () => registry.unregisterSlot(name, refValue);
+  }, [registry, name]);
+  const fills = ((_registry$getFills = registry.getFills(name, ref.current)) !== null && _registry$getFills !== void 0 ? _registry$getFills : []).map(fill => {
+    const fillChildren = isFunction(fill.children) ? fill.children(fillProps) : fill.children;
+    return external_wp_element_namespaceObject.Children.map(fillChildren, (child, childIndex) => {
+      if (!child || typeof child === 'string') {
+        return child;
+      }
+      let childKey = childIndex;
+      if (typeof child === 'object' && 'key' in child && child?.key) {
+        childKey = child.key;
+      }
+      return (0,external_wp_element_namespaceObject.cloneElement)(child, {
+        key: childKey
       });
-    }).filter(
-    // In some cases fills are rendered only when some conditions apply.
-    // This ensures that we only use non-empty fills when rendering, i.e.,
-    // it allows us to render wrappers only when the fills are actually present.
-    element => !(0,external_wp_element_namespaceObject.isEmptyElement)(element));
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: isFunction(children) ? children(fills) : fills
     });
-  }
+  }).filter(
+  // In some cases fills are rendered only when some conditions apply.
+  // This ensures that we only use non-empty fills when rendering, i.e.,
+  // it allows us to render wrappers only when the fills are actually present.
+  element => !(0,external_wp_element_namespaceObject.isEmptyElement)(element));
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: isFunction(children) ? children(fills) : fills
+  });
 }
-const Slot = props => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(context.Consumer, {
-  children: ({
-    registerSlot,
-    unregisterSlot,
-    getFills
-  }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SlotComponent, {
-    ...props,
-    registerSlot: registerSlot,
-    unregisterSlot: unregisterSlot,
-    getFills: getFills
-  })
-});
 /* harmony default export */ const slot = (Slot);
 
 ;// ./packages/components/node_modules/uuid/dist/esm-browser/rng.js
@@ -33496,21 +33456,6 @@ function StyleProvider(props) {
 
 
 
-function fill_useForceUpdate() {
-  const [, setState] = (0,external_wp_element_namespaceObject.useState)({});
-  const mountedRef = (0,external_wp_element_namespaceObject.useRef)(true);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-    };
-  }, []);
-  return () => {
-    if (mountedRef.current) {
-      setState({});
-    }
-  };
-}
 function fill_Fill({
   name,
   children
@@ -33518,7 +33463,7 @@ function fill_Fill({
   var _slot$fillProps;
   const registry = (0,external_wp_element_namespaceObject.useContext)(slot_fill_context);
   const slot = (0,external_wp_compose_namespaceObject.useObservableValue)(registry.slots, name);
-  const rerender = fill_useForceUpdate();
+  const [, rerender] = (0,external_wp_element_namespaceObject.useReducer)(() => [], []);
   const ref = (0,external_wp_element_namespaceObject.useRef)({
     rerender
   });
@@ -33526,9 +33471,10 @@ function fill_Fill({
     // We register fills so we can keep track of their existence.
     // Some Slot implementations need to know if there're already fills
     // registered so they can choose to render themselves or not.
-    registry.registerFill(name, ref);
+    const refValue = ref.current;
+    registry.registerFill(name, refValue);
     return () => {
-      registry.unregisterFill(name, ref);
+      registry.unregisterFill(name, refValue);
     };
   }, [registry, name]);
   if (!slot || !slot.ref.current) {
@@ -33660,7 +33606,7 @@ function createSlotRegistry() {
     const slotFills = fills.get(name);
     if (slotFills) {
       // Force update fills.
-      slotFills.forEach(fill => fill.current.rerender());
+      slotFills.forEach(fill => fill.rerender());
     }
   };
   const registerFill = (name, ref) => {
@@ -33699,7 +33645,6 @@ function SlotFillProvider({
  */
 
 
-
 /**
  * Internal dependencies
  */
@@ -33723,7 +33668,7 @@ function provider_createSlotRegistry() {
     // assigned into the instance, such that its own rendering of children
     // will be empty (the new Slot will subsume all fills for this name).
     if (previousSlot) {
-      previousSlot.forceUpdate();
+      previousSlot.rerender();
     }
   }
   function registerFill(name, instance) {
@@ -33759,7 +33704,7 @@ function provider_createSlotRegistry() {
   function forceUpdateSlot(name) {
     const slot = getSlot(name);
     if (slot) {
-      slot.forceUpdate();
+      slot.rerender();
     }
   }
   function triggerListeners() {
