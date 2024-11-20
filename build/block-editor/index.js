@@ -51619,12 +51619,9 @@ function PatternsFilter({
 
 
 
-
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -51640,7 +51637,6 @@ function PatternCategoryPreviews({
   category,
   showTitlesAsTooltip
 }) {
-  const isZoomOutMode = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).isZoomOut(), []);
   const [allPatterns,, onClickPattern] = use_patterns_state(onInsert, rootClientId, category?.name);
   const [patternSyncFilter, setPatternSyncFilter] = (0,external_wp_element_namespaceObject.useState)('all');
   const [patternSourceFilter, setPatternSourceFilter] = (0,external_wp_element_namespaceObject.useState)('all');
@@ -51712,7 +51708,7 @@ function PatternCategoryPreviews({
         children: (0,external_wp_i18n_namespaceObject.__)('No results found')
       })]
     }), currentCategoryPatterns.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [isZoomOutMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
         size: "12",
         as: "p",
         className: "block-editor-inserter__help-text",
