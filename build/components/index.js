@@ -35737,6 +35737,27 @@ rect, {
 }
 /* eslint-enable jsdoc/require-param */
 
+;// ./packages/components/build-module/utils/deprecated-36px-size.js
+/**
+ * WordPress dependencies
+ */
+
+function maybeWarnDeprecated36pxSize({
+  componentName,
+  __next40pxDefaultSize,
+  size,
+  __shouldNotWarnDeprecated36pxSize
+}) {
+  if (__shouldNotWarnDeprecated36pxSize || __next40pxDefaultSize || size !== undefined && size !== 'default') {
+    return;
+  }
+  external_wp_deprecated_default()(`36px default size for wp.components.${componentName}`, {
+    since: '6.8',
+    version: '7.1',
+    hint: 'Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version.'
+  });
+}
+
 ;// ./packages/components/build-module/toggle-group-control/toggle-group-control/component.js
 /**
  * External dependencies
@@ -35762,10 +35783,12 @@ rect, {
 
 
 
+
 function UnconnectedToggleGroupControl(props, forwardedRef) {
   const {
     __nextHasNoMarginBottom = false,
     __next40pxDefaultSize = false,
+    __shouldNotWarnDeprecated36pxSize,
     className,
     isAdaptiveWidth = false,
     isBlock = false,
@@ -35797,6 +35820,12 @@ function UnconnectedToggleGroupControl(props, forwardedRef) {
     size: normalizedSize
   }), isBlock && toggle_group_control_styles_block, className), [className, cx, isBlock, isDeselectable, normalizedSize]);
   const MainControl = isDeselectable ? ToggleGroupControlAsButtonGroup : ToggleGroupControlAsRadioGroup;
+  maybeWarnDeprecated36pxSize({
+    componentName: 'ToggleGroupControl',
+    size,
+    __next40pxDefaultSize,
+    __shouldNotWarnDeprecated36pxSize
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(base_control, {
     help: help,
     __nextHasNoMarginBottom: __nextHasNoMarginBottom,
@@ -35846,6 +35875,7 @@ function UnconnectedToggleGroupControl(props, forwardedRef) {
  *       value="vertical"
  *       isBlock
  *       __nextHasNoMarginBottom
+ *       __next40pxDefaultSize
  *     >
  *       <ToggleGroupControlOption value="horizontal" label="Horizontal" />
  *       <ToggleGroupControlOption value="vertical" label="Vertical" />
@@ -36236,7 +36266,7 @@ function UnforwardedToggleGroupControlOptionIcon(props, ref) {
  *
  * function Example() {
  *  return (
- *    <ToggleGroupControl __nextHasNoMarginBottom>
+ *    <ToggleGroupControl __nextHasNoMarginBottom __next40pxDefaultSize>
  *      <ToggleGroupControlOptionIcon
  *        value="uppercase"
  *        label="Uppercase"
@@ -40593,26 +40623,6 @@ function UnforwardedUnitControl(unitControlProps, forwardedRef) {
 const UnitControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedUnitControl);
 
 /* harmony default export */ const unit_control = (UnitControl);
-
-;// ./packages/components/build-module/utils/deprecated-36px-size.js
-/**
- * WordPress dependencies
- */
-
-function maybeWarnDeprecated36pxSize({
-  componentName,
-  __next40pxDefaultSize,
-  size
-}) {
-  if (__next40pxDefaultSize || size !== undefined && size !== 'default') {
-    return;
-  }
-  external_wp_deprecated_default()(`36px default size for wp.components.${componentName}`, {
-    since: '6.8',
-    version: '7.1',
-    hint: 'Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version.'
-  });
-}
 
 ;// ./packages/components/build-module/border-control/border-control/hook.js
 /**
@@ -54633,6 +54643,7 @@ function UnforwardedToggleGroupControlOption(props, ref) {
  *       value="vertical"
  *       isBlock
  *       __nextHasNoMarginBottom
+ *       __next40pxDefaultSize
  *     >
  *       <ToggleGroupControlOption value="horizontal" label="Horizontal" />
  *       <ToggleGroupControlOption value="vertical" label="Vertical" />
@@ -57218,6 +57229,7 @@ const FontSizePickerToggleGroup = props => {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(toggle_group_control_component, {
     __nextHasNoMarginBottom: true,
     __next40pxDefaultSize: __next40pxDefaultSize,
+    __shouldNotWarnDeprecated36pxSize: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Font size'),
     hideLabelFromVision: true,
     value: value,
