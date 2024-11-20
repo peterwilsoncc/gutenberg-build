@@ -24470,20 +24470,17 @@ const home = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
 
 
 
-
 const preventDefault = event => event.preventDefault();
 function HomeEdit({
   attributes,
   setAttributes,
   context
 }) {
+  var _attributes$label;
   const homeUrl = (0,external_wp_data_namespaceObject.useSelect)(select => {
     // Site index.
     return select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.home;
   }, []);
-  const {
-    __unstableMarkNextChangeAsNotPersistent
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const {
     textColor,
     backgroundColor,
@@ -24501,38 +24498,25 @@ function HomeEdit({
       backgroundColor: style?.color?.background
     }
   });
-  const {
-    label
-  } = attributes;
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (label === undefined) {
-      __unstableMarkNextChangeAsNotPersistent();
-      setAttributes({
-        label: (0,external_wp_i18n_namespaceObject.__)('Home')
-      });
-    }
-  }, [label]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      ...blockProps,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
-        className: "wp-block-home-link__content wp-block-navigation-item__content",
-        href: homeUrl,
-        onClick: preventDefault,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
-          identifier: "label",
-          className: "wp-block-home-link__label",
-          value: label,
-          onChange: labelValue => {
-            setAttributes({
-              label: labelValue
-            });
-          },
-          "aria-label": (0,external_wp_i18n_namespaceObject.__)('Home link text'),
-          placeholder: (0,external_wp_i18n_namespaceObject.__)('Add home link'),
-          withoutInteractiveFormatting: true,
-          allowedFormats: ['core/bold', 'core/italic', 'core/image', 'core/strikethrough']
-        })
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    ...blockProps,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
+      className: "wp-block-home-link__content wp-block-navigation-item__content",
+      href: homeUrl,
+      onClick: preventDefault,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
+        identifier: "label",
+        className: "wp-block-home-link__label",
+        value: (_attributes$label = attributes.label) !== null && _attributes$label !== void 0 ? _attributes$label : (0,external_wp_i18n_namespaceObject.__)('Home'),
+        onChange: labelValue => {
+          setAttributes({
+            label: labelValue
+          });
+        },
+        "aria-label": (0,external_wp_i18n_namespaceObject.__)('Home link text'),
+        placeholder: (0,external_wp_i18n_namespaceObject.__)('Add home link'),
+        withoutInteractiveFormatting: true,
+        allowedFormats: ['core/bold', 'core/italic', 'core/image', 'core/strikethrough']
       })
     })
   });
