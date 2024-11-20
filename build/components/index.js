@@ -39513,6 +39513,8 @@ function UnforwardedColorPalette(props, forwardedRef) {
   };
   const actions = !!clearable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_circular_option_picker.ButtonAction, {
     onClick: clearColor,
+    accessibleWhenDisabled: true,
+    disabled: !value,
     children: (0,external_wp_i18n_namespaceObject.__)('Clear')
   });
   let metaProps;
@@ -45482,6 +45484,8 @@ function GradientPicker({
       value: value,
       actions: clearable && !disableCustomGradients && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_circular_option_picker.ButtonAction, {
         onClick: clearGradient,
+        accessibleWhenDisabled: true,
+        disabled: !value,
         children: (0,external_wp_i18n_namespaceObject.__)('Clear')
       }),
       headingLevel: headingLevel
@@ -56304,6 +56308,8 @@ function DuotonePicker({
     options: options,
     actions: !!clearable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_circular_option_picker.ButtonAction, {
       onClick: () => onChange(undefined),
+      accessibleWhenDisabled: true,
+      disabled: !value,
       children: (0,external_wp_i18n_namespaceObject.__)('Clear')
     }),
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {
