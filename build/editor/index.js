@@ -29585,7 +29585,6 @@ function VisualEditor({
 
 
 
-
 const interfaceLabels = {
   /* translators: accessibility text for the editor top bar landmark region. */
   header: (0,external_wp_i18n_namespaceObject.__)('Editor top bar'),
@@ -29620,8 +29619,7 @@ function EditorInterface({
     isDistractionFree,
     isPreviewMode,
     showBlockBreadcrumbs,
-    documentLabel,
-    isZoomOut
+    documentLabel
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       get
@@ -29632,9 +29630,6 @@ function EditorInterface({
     } = select(store_store);
     const editorSettings = getEditorSettings();
     const postTypeLabel = getPostTypeLabel();
-    const {
-      isZoomOut: _isZoomOut
-    } = unlock(select(external_wp_blockEditor_namespaceObject.store));
     return {
       mode: select(store_store).getEditorMode(),
       isRichEditingEnabled: editorSettings.richEditingEnabled,
@@ -29645,8 +29640,7 @@ function EditorInterface({
       showBlockBreadcrumbs: get('core', 'showBlockBreadcrumbs'),
       documentLabel:
       // translators: Default label for the Document in the Block Breadcrumb.
-      postTypeLabel || (0,external_wp_i18n_namespaceObject._x)('Document', 'noun, breadcrumb'),
-      isZoomOut: _isZoomOut()
+      postTypeLabel || (0,external_wp_i18n_namespaceObject._x)('Document', 'noun, breadcrumb')
     };
   }, []);
   const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
@@ -29706,7 +29700,7 @@ function EditorInterface({
         })
       })]
     }),
-    footer: !isPreviewMode && !isDistractionFree && isLargeViewport && showBlockBreadcrumbs && isRichEditingEnabled && !isZoomOut && mode === 'visual' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockBreadcrumb, {
+    footer: !isPreviewMode && !isDistractionFree && isLargeViewport && showBlockBreadcrumbs && isRichEditingEnabled && mode === 'visual' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockBreadcrumb, {
       rootLabelText: documentLabel
     }),
     actions: !isPreviewMode ? customSavePanel || /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SavePublishPanels, {
