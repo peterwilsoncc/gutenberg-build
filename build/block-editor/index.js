@@ -26418,7 +26418,7 @@ function BorderPanel({
 
 
 
-const BORDER_SUPPORT_KEY = '__experimentalBorder';
+const BORDER_SUPPORT_KEY = 'border';
 const SHADOW_SUPPORT_KEY = 'shadow';
 const getColorByProperty = (colors, property, value) => {
   let matchedColor;
@@ -34391,7 +34391,7 @@ const ELEMENT_CLASS_NAMES = {
 // List of block support features that can have their related styles
 // generated under their own feature level selector rather than the block's.
 const BLOCK_SUPPORT_FEATURE_LEVEL_SELECTORS = {
-  __experimentalBorder: 'border',
+  border: 'border',
   color: 'color',
   spacing: 'spacing',
   typography: 'typography'
@@ -59282,7 +59282,7 @@ __unstableBlockToolbarLastItem.Slot = block_toolbar_last_item_Slot;
 
 const ALIGN_SUPPORT_KEY = 'align';
 const ALIGN_WIDE_SUPPORT_KEY = 'alignWide';
-const supports_BORDER_SUPPORT_KEY = '__experimentalBorder';
+const supports_BORDER_SUPPORT_KEY = 'border';
 const supports_COLOR_SUPPORT_KEY = 'color';
 const CUSTOM_CLASS_NAME_SUPPORT_KEY = 'customClassName';
 const supports_FONT_FAMILY_SUPPORT_KEY = 'typography.fontFamily';

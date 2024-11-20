@@ -6563,12 +6563,12 @@ const __EXPERIMENTAL_STYLE_PROPERTY = {
   },
   borderColor: {
     value: ['border', 'color'],
-    support: ['__experimentalBorder', 'color'],
+    support: ['border', 'color'],
     useEngine: true
   },
   borderRadius: {
     value: ['border', 'radius'],
-    support: ['__experimentalBorder', 'radius'],
+    support: ['border', 'radius'],
     properties: {
       borderTopLeftRadius: 'topLeft',
       borderTopRightRadius: 'topRight',
@@ -6579,72 +6579,72 @@ const __EXPERIMENTAL_STYLE_PROPERTY = {
   },
   borderStyle: {
     value: ['border', 'style'],
-    support: ['__experimentalBorder', 'style'],
+    support: ['border', 'style'],
     useEngine: true
   },
   borderWidth: {
     value: ['border', 'width'],
-    support: ['__experimentalBorder', 'width'],
+    support: ['border', 'width'],
     useEngine: true
   },
   borderTopColor: {
     value: ['border', 'top', 'color'],
-    support: ['__experimentalBorder', 'color'],
+    support: ['border', 'color'],
     useEngine: true
   },
   borderTopStyle: {
     value: ['border', 'top', 'style'],
-    support: ['__experimentalBorder', 'style'],
+    support: ['border', 'style'],
     useEngine: true
   },
   borderTopWidth: {
     value: ['border', 'top', 'width'],
-    support: ['__experimentalBorder', 'width'],
+    support: ['border', 'width'],
     useEngine: true
   },
   borderRightColor: {
     value: ['border', 'right', 'color'],
-    support: ['__experimentalBorder', 'color'],
+    support: ['border', 'color'],
     useEngine: true
   },
   borderRightStyle: {
     value: ['border', 'right', 'style'],
-    support: ['__experimentalBorder', 'style'],
+    support: ['border', 'style'],
     useEngine: true
   },
   borderRightWidth: {
     value: ['border', 'right', 'width'],
-    support: ['__experimentalBorder', 'width'],
+    support: ['border', 'width'],
     useEngine: true
   },
   borderBottomColor: {
     value: ['border', 'bottom', 'color'],
-    support: ['__experimentalBorder', 'color'],
+    support: ['border', 'color'],
     useEngine: true
   },
   borderBottomStyle: {
     value: ['border', 'bottom', 'style'],
-    support: ['__experimentalBorder', 'style'],
+    support: ['border', 'style'],
     useEngine: true
   },
   borderBottomWidth: {
     value: ['border', 'bottom', 'width'],
-    support: ['__experimentalBorder', 'width'],
+    support: ['border', 'width'],
     useEngine: true
   },
   borderLeftColor: {
     value: ['border', 'left', 'color'],
-    support: ['__experimentalBorder', 'color'],
+    support: ['border', 'color'],
     useEngine: true
   },
   borderLeftStyle: {
     value: ['border', 'left', 'style'],
-    support: ['__experimentalBorder', 'style'],
+    support: ['border', 'style'],
     useEngine: true
   },
   borderLeftWidth: {
     value: ['border', 'left', 'width'],
-    support: ['__experimentalBorder', 'width'],
+    support: ['border', 'width'],
     useEngine: true
   },
   color: {
@@ -6800,13 +6800,16 @@ const __EXPERIMENTAL_PATHS_WITH_OVERRIDE = {
   'typography.fontSizes': true,
   'spacing.spacingSizes': true
 };
-const TYPOGRAPHY_SUPPORTS_EXPERIMENTAL_TO_STABLE = {
-  __experimentalFontFamily: 'fontFamily',
-  __experimentalFontStyle: 'fontStyle',
-  __experimentalFontWeight: 'fontWeight',
-  __experimentalLetterSpacing: 'letterSpacing',
-  __experimentalTextDecoration: 'textDecoration',
-  __experimentalTextTransform: 'textTransform'
+const EXPERIMENTAL_TO_STABLE_KEYS = {
+  typography: {
+    __experimentalFontFamily: 'fontFamily',
+    __experimentalFontStyle: 'fontStyle',
+    __experimentalFontWeight: 'fontWeight',
+    __experimentalLetterSpacing: 'letterSpacing',
+    __experimentalTextDecoration: 'textDecoration',
+    __experimentalTextTransform: 'textTransform'
+  },
+  __experimentalBorder: 'border'
 };
 
 ;// external ["wp","warning"]
@@ -9520,11 +9523,63 @@ function stabilizeSupports(rawSupports) {
   // custom block plugins that rely on immutable supports are not affected.
   // See: https://github.com/WordPress/gutenberg/pull/66849#issuecomment-2463614281
   const newSupports = {};
-  for (const [key, value] of Object.entries(rawSupports)) {
-    if (key === 'typography' && typeof value === 'object' && value !== null) {
-      newSupports.typography = Object.fromEntries(Object.entries(value).map(([typographyKey, typographyValue]) => [TYPOGRAPHY_SUPPORTS_EXPERIMENTAL_TO_STABLE[typographyKey] || typographyKey, typographyValue]));
-    } else {
-      newSupports[key] = value;
+  for (const [support, config] of Object.entries(rawSupports)) {
+    // Add the support's config as is when it's not in need of stabilization.
+    if (!EXPERIMENTAL_TO_STABLE_KEYS[support]) {
+      newSupports[support] = config;
+      continue;
+    }
+
+    // Stabilize the support's key if needed e.g. __experimentalBorder => border.
+    if (typeof EXPERIMENTAL_TO_STABLE_KEYS[support] === 'string') {
+      const stabilizedKey = EXPERIMENTAL_TO_STABLE_KEYS[support];
+
+      // If there is no stabilized key present, use the experimental config as is.
+      if (!Object.hasOwn(rawSupports, stabilizedKey)) {
+        newSupports[stabilizedKey] = config;
+        continue;
+      }
+
+      /*
+       * Determine the order of keys, so the last defined can be preferred.
+       *
+       * The reason for preferring the last defined key is that after filters
+       * are applied, the last inserted key is likely the most up-to-date value.
+       * We cannot determine with certainty which value was "last modified" so
+       * the insertion order is the best guess. The extreme edge case of multiple
+       * filters tweaking the same support property will become less over time as
+       * extenders migrate existing blocks and plugins to stable keys.
+       */
+      const entries = Object.entries(rawSupports);
+      const experimentalIndex = entries.findIndex(([key]) => key === support);
+      const stabilizedIndex = entries.findIndex(([key]) => key === stabilizedKey);
+
+      // Update support config, prefer the last defined value.
+      if (typeof config === 'object' && config !== null) {
+        newSupports[stabilizedKey] = experimentalIndex < stabilizedIndex ? {
+          ...config,
+          ...rawSupports[stabilizedKey]
+        } : {
+          ...rawSupports[stabilizedKey],
+          ...config
+        };
+      } else {
+        newSupports[stabilizedKey] = experimentalIndex < stabilizedIndex ? rawSupports[stabilizedKey] : config;
+      }
+      continue;
+    }
+
+    // Stabilize individual support feature keys
+    // e.g. __experimentalFontFamily => fontFamily.
+    const featureStabilizationRequired = typeof EXPERIMENTAL_TO_STABLE_KEYS[support] === 'object' && EXPERIMENTAL_TO_STABLE_KEYS[support] !== null;
+    const hasConfig = typeof config === 'object' && config !== null;
+    if (featureStabilizationRequired && hasConfig) {
+      const stableConfig = {};
+      for (const [key, value] of Object.entries(config)) {
+        const stableKey = EXPERIMENTAL_TO_STABLE_KEYS[support][key] || key;
+        stableConfig[stableKey] = value;
+      }
+      newSupports[support] = stableConfig;
     }
   }
   return newSupports;
