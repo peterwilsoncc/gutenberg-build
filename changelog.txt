@@ -1,13 +1,6 @@
 == Changelog ==
 
-= 19.7.0-rc.2 =
-
-
-- Comments controller: fix issue where comments are allowed when closed (https://github.com/WordPress/gutenberg/pull/66976)
-
-
-= 19.7.0-rc.1 =
-
+= 19.7.0 =
 
 ## Changelog
 
@@ -79,6 +72,7 @@
 - Site Editor: Fix template for page-on-front option. ([66739](https://github.com/WordPress/gutenberg/pull/66739))
 - WP Scripts: Make watch mode more resilient for developer errors. ([66752](https://github.com/WordPress/gutenberg/pull/66752))
 - getDefaultTemplateId: Ensure entity configuration is loaded. ([66650](https://github.com/WordPress/gutenberg/pull/66650))
+- Comments controller: fix issue where comments are allowed when closed (https://github.com/WordPress/gutenberg/pull/66976)
 
 #### Block Library
 - Cover: Fix media library image selection. ([66782](https://github.com/WordPress/gutenberg/pull/66782))
@@ -293,6 +287,8 @@ The following PRs were merged by first-time contributors:
 The following contributors merged PRs in this release:
 
 @aaronrobertshaw @adamsilverstein @afercia @Aljullu @amitraj2203 @andrewserong @benharri @benniledl @carolinan @cbravobernal @DAreRodz @dcalhoun @ellatrix @fabiankaegy @gigitux @gziolo @hbhalodia @Infinite-Null @jasmussen @jorgefilipecosta @jsnajdr @juanfra @karthick-murugan @kevin940726 @louwie17 @Mamaduka @manzoorwanijk @matiasbenedetto @mikachan @mirka @n2erjo00 @ntsekouras @oandregal @ramonjd @renatho @rinkalpagdar @Soean @stokesman @swissspidy @t-hamano @tellthemachines @tyxla @up1512001 @Vrishabhsk @yogeshbhutkar @youknowriad
+
+
 
 
 = 19.6.1 =
