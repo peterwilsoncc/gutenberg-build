@@ -25838,12 +25838,15 @@ const {
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function ScreenStyleVariations() {
   // Style Variations should only be previewed in with
-  // - a "zoomed out" editor
+  // - a "zoomed out" editor (but not when in preview mode)
   // - "Desktop" device preview
+  const isPreviewMode = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return select(external_wp_blockEditor_namespaceObject.store).getSettings().isPreviewMode;
+  }, []);
   const {
     setDeviceType
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_editor_namespaceObject.store);
-  useZoomOut();
+  useZoomOut(!isPreviewMode);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     setDeviceType('desktop');
   }, [setDeviceType]);
