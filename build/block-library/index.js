@@ -16190,6 +16190,25 @@ const details_settings = {
       }
     }]
   },
+  __experimentalLabel(attributes, {
+    context
+  }) {
+    const {
+      summary
+    } = attributes;
+    const customName = attributes?.metadata?.name;
+    const hasSummary = summary?.trim().length > 0;
+
+    // In the list view, use the block's summary as the label.
+    // If the summary is empty, fall back to the default label.
+    if (context === 'list-view' && (customName || hasSummary)) {
+      return customName || summary;
+    }
+    if (context === 'accessibility') {
+      return !hasSummary ? (0,external_wp_i18n_namespaceObject.__)('Details. Empty.') : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: accessibility text; summary title. */
+      (0,external_wp_i18n_namespaceObject.__)('Details. %s'), summary);
+    }
+  },
   save: details_save_save,
   edit: details_edit,
   transforms: details_transforms
