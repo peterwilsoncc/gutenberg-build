@@ -46337,11 +46337,51 @@ function PluginSidebarMoreMenuItem(props) {
 }
 /* eslint-enable jsdoc/require-param */
 
-;// ./packages/edit-site/build-module/components/posts-app/router.js
+;// ./packages/edit-site/build-module/components/posts-app-routes/home.js
 /**
  * WordPress dependencies
  */
 
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+const {
+  useLocation: home_useLocation
+} = unlock(external_wp_router_namespaceObject.privateApis);
+function HomeMobileView() {
+  const {
+    params = {}
+  } = home_useLocation();
+  const {
+    canvas = 'view'
+  } = params;
+  return canvas === 'edit' ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {
+    isPostsList: true
+  }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenMain, {});
+}
+const homeRoute = {
+  name: 'home',
+  match: () => {
+    return true;
+  },
+  areas: {
+    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenMain, {}),
+    preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {
+      isPostsList: true
+    }),
+    mobile: HomeMobileView
+  }
+};
+
+;// ./packages/edit-site/build-module/components/posts-app-routes/posts-list-view-quick-edit.js
+/**
+ * WordPress dependencies
+ */
 
 
 
@@ -46356,63 +46396,238 @@ function PluginSidebarMoreMenuItem(props) {
 
 
 const {
-  useLocation: posts_app_router_useLocation
+  useLocation: posts_list_view_quick_edit_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
-function router_useActiveRoute() {
+function PostQuickEdit() {
   const {
-    params = {}
-  } = posts_app_router_useLocation();
-  const {
-    postType,
-    layout,
-    canvas
-  } = params;
-  const labels = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    return select(external_wp_coreData_namespaceObject.store).getPostType(postType)?.labels;
-  }, [postType]);
-
-  // Posts list.
-  if (['post'].includes(postType)) {
-    const isListLayout = layout === 'list' || !layout;
-    return {
-      name: 'posts-list',
-      areas: {
-        sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreen, {
-          title: labels?.name,
-          isRoot: true,
-          content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSidebarContent, {})
-        }),
-        content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
-          postType: postType
-        }),
-        preview: (isListLayout || canvas === 'edit') && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {
-          isPostsList: true
-        }),
-        mobile: canvas === 'edit' ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {
-          isPostsList: true
-        }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
-          postType: postType
-        })
-      },
-      widths: {
-        content: isListLayout ? 380 : undefined
-      }
-    };
+    params
+  } = posts_list_view_quick_edit_useLocation();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostEdit, {
+    postType: "post",
+    postId: params.postId
+  });
+}
+const postsListViewQuickEditRoute = {
+  name: 'posts-list-view-quick-edit',
+  match: params => {
+    var _params$layout;
+    return params.isCustom !== 'true' && ((_params$layout = params.layout) !== null && _params$layout !== void 0 ? _params$layout : 'list') === 'list' && !!params.quickEdit && params.postType === 'post' && params.canvas !== 'edit';
+  },
+  areas: {
+    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreen, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Posts'),
+      isRoot: true,
+      content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSidebarContent, {})
+    }),
+    content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
+      postType: "post"
+    }),
+    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
+      postType: "post"
+    }),
+    preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
+    edit: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostQuickEdit, {})
+  },
+  widths: {
+    content: 380,
+    edit: 380
   }
+};
 
-  // Fallback shows the home page preview
-  return {
-    name: 'default',
-    areas: {
-      sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenMain, {}),
-      preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {
-        isPostsList: true
-      }),
-      mobile: canvas === 'edit' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {
-        isPostsList: true
-      })
-    }
-  };
+;// ./packages/edit-site/build-module/components/posts-app-routes/posts-list-view.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+const postsListViewRoute = {
+  name: 'posts-list-view',
+  match: params => {
+    var _params$layout;
+    return params.isCustom !== 'true' && ((_params$layout = params.layout) !== null && _params$layout !== void 0 ? _params$layout : 'list') === 'list' && !params.quickEdit && params.postType === 'post' && params.canvas !== 'edit';
+  },
+  areas: {
+    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreen, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Posts'),
+      isRoot: true,
+      content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSidebarContent, {})
+    }),
+    content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
+      postType: "post"
+    }),
+    preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {
+      isPostsList: true
+    }),
+    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
+      postType: "post"
+    })
+  },
+  widths: {
+    content: 380
+  }
+};
+
+;// ./packages/edit-site/build-module/components/posts-app-routes/posts-view-quick-edit.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+const {
+  useLocation: posts_view_quick_edit_useLocation
+} = unlock(external_wp_router_namespaceObject.privateApis);
+function posts_view_quick_edit_PostQuickEdit() {
+  const {
+    params
+  } = posts_view_quick_edit_useLocation();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostEdit, {
+    postType: "post",
+    postId: params.postId
+  });
+}
+const postsViewQuickEditRoute = {
+  name: 'posts-view-quick-edit',
+  match: params => {
+    var _params$layout;
+    return (params.isCustom === 'true' || ((_params$layout = params.layout) !== null && _params$layout !== void 0 ? _params$layout : 'list') !== 'list') && !!params.quickEdit && params.postType === 'post' && params.canvas !== 'edit';
+  },
+  areas: {
+    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreen, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Posts'),
+      isRoot: true,
+      content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSidebarContent, {})
+    }),
+    content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
+      postType: "post"
+    }),
+    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
+      postType: "post"
+    }),
+    edit: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(posts_view_quick_edit_PostQuickEdit, {})
+  },
+  widths: {
+    edit: 380
+  }
+};
+
+;// ./packages/edit-site/build-module/components/posts-app-routes/posts-view.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+const postsViewRoute = {
+  name: 'posts-view',
+  match: params => {
+    var _params$layout;
+    return (params.isCustom === 'true' || ((_params$layout = params.layout) !== null && _params$layout !== void 0 ? _params$layout : 'list') !== 'list') && !params.quickEdit && params.postType === 'post' && params.canvas !== 'edit';
+  },
+  areas: {
+    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreen, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Posts'),
+      isRoot: true,
+      content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSidebarContent, {})
+    }),
+    content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
+      postType: "post"
+    }),
+    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
+      postType: "post"
+    })
+  }
+};
+
+;// ./packages/edit-site/build-module/components/posts-app-routes/posts-edit.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+const postsEditRoute = {
+  name: 'posts-edit',
+  match: params => {
+    return params.postType === 'post' && params.canvas === 'edit';
+  },
+  areas: {
+    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreen, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Posts'),
+      isRoot: true,
+      content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSidebarContent, {})
+    }),
+    content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
+      postType: "post"
+    }),
+    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {
+      isPostsList: true
+    }),
+    preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {
+      isPostsList: true
+    })
+  }
+};
+
+;// ./packages/edit-site/build-module/components/posts-app-routes/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+
+const posts_app_routes_routes = [postsListViewQuickEditRoute, postsListViewRoute, postsViewQuickEditRoute, postsViewRoute, postsEditRoute, homeRoute];
+function useRegisterPostsAppRoutes() {
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
+  const {
+    registerRoute
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    registry.batch(() => {
+      posts_app_routes_routes.forEach(registerRoute);
+    });
+  }, [registry, registerRoute]);
 }
 
 ;// ./packages/edit-site/build-module/components/posts-app/index.js
@@ -46429,6 +46644,7 @@ function router_useActiveRoute() {
 
 
 
+
 const {
   RouterProvider: posts_app_RouterProvider
 } = unlock(external_wp_router_namespaceObject.privateApis);
@@ -46436,7 +46652,8 @@ const {
   GlobalStylesProvider: posts_app_GlobalStylesProvider
 } = unlock(external_wp_editor_namespaceObject.privateApis);
 function PostsLayout() {
-  const route = router_useActiveRoute();
+  useRegisterPostsAppRoutes();
+  const route = useActiveRoute();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Layout, {
     route: route
   });
