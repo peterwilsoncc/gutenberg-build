@@ -47154,11 +47154,9 @@ function EnhancedPaginationControl({
     hasUnsupportedBlocks
   } = useUnsupportedBlocks(clientId);
   const fullPageClientSideNavigation = window.__experimentalFullPageClientSideNavigation;
-  let help = (0,external_wp_i18n_namespaceObject.__)('Browsing between pages requires a full page reload.');
+  let help = (0,external_wp_i18n_namespaceObject.__)('Reload the full page—instead of just the posts list—when visitors navigate between pages.');
   if (fullPageClientSideNavigation) {
     help = (0,external_wp_i18n_namespaceObject.__)('Experimental full-page client-side navigation setting enabled.');
-  } else if (enhancedPagination) {
-    help = (0,external_wp_i18n_namespaceObject.__)('Reload the full page—instead of just the posts list—when visitors navigate between pages.');
   } else if (hasUnsupportedBlocks) {
     help = (0,external_wp_i18n_namespaceObject.__)('Enhancement disabled because there are non-compatible blocks inside the Query block.');
   }
