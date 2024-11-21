@@ -38783,6 +38783,7 @@ function TableColumnCombined({
   if (field.direction === 'horizontal') {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
       spacing: 3,
+      justify: "flex-start",
       children: children
     });
   }
