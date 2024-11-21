@@ -27340,7 +27340,7 @@ function DocumentTools({
       showIconLabels: get('core', 'showIconLabels'),
       isDistractionFree: get('core', 'distractionFree'),
       isVisualMode: getEditorMode() === 'visual',
-      showTools: getRenderingMode() !== 'post-only' || getCurrentPostType() === 'wp_template'
+      showTools: !!window?.__experimentalEditorWriteMode && (getRenderingMode() !== 'post-only' || getCurrentPostType() === 'wp_template')
     };
   }, []);
   const preventDefault = event => {

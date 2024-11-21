@@ -13338,6 +13338,9 @@ function isNavigationMode(state) {
  */
 const __unstableGetEditorMode = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => state => {
   var _state$settings$edito;
+  if (!window?.__experimentalEditorWriteMode) {
+    return 'edit';
+  }
   return (_state$settings$edito = state.settings.editorTool) !== null && _state$settings$edito !== void 0 ? _state$settings$edito : select(external_wp_preferences_namespaceObject.store).get('core', 'editorTool');
 });
 
