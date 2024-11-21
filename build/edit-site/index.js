@@ -38143,7 +38143,7 @@ function ActionsMenuGroup({
   });
 }
 function hasOnlyOneActionAndIsPrimary(primaryActions, actions) {
-  return primaryActions.length === 1 && actions.length;
+  return primaryActions.length === 1 && actions.length === 1;
 }
 function ItemActions({
   item,
