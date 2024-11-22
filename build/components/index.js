@@ -47605,9 +47605,9 @@ function UnforwardedModal(props, forwardedRef) {
             }), headerActions, isDismissible && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {
                 marginBottom: 0,
-                marginLeft: 3
+                marginLeft: 2
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-                size: "small",
+                size: "compact",
                 onClick: event => closeModal().then(() => onRequestClose(event)),
                 icon: library_close,
                 label: closeButtonLabel || (0,external_wp_i18n_namespaceObject.__)('Close')

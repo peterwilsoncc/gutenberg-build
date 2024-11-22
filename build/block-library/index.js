@@ -6575,7 +6575,7 @@ function ModalAuxiliaryActions({
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-    size: "small",
+    size: "compact",
     onClick: onClick,
     icon: library_fullscreen,
     isPressed: isModalFullScreen,
