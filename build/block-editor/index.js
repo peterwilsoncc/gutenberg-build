@@ -66870,9 +66870,11 @@ function __experimentalBlockVariationTransforms({
 
 /* harmony default export */ const with_color_context = ((0,external_wp_compose_namespaceObject.createHigherOrderComponent)(WrappedComponent => {
   return props => {
-    const [colorsFeature, enableCustomColors] = use_settings_useSettings('color.palette', 'color.custom');
+    // Get the default colors, theme colors, and custom colors
+    const [defaultColors, themeColors, customColors, enableCustomColors, enableDefaultColors] = use_settings_useSettings('color.palette.default', 'color.palette.theme', 'color.palette.custom', 'color.custom', 'color.defaultPalette');
+    const _colors = enableDefaultColors ? [...(themeColors || []), ...(defaultColors || []), ...(customColors || [])] : [...(themeColors || []), ...(customColors || [])];
     const {
-      colors = colorsFeature,
+      colors = _colors,
       disableCustomColors = !enableCustomColors
     } = props;
     const hasColorsToChoose = colors && colors.length > 0 || !disableCustomColors;
