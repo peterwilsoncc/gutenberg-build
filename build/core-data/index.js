@@ -22428,6 +22428,9 @@ const forwardResolver = resolverName => (...args) => async ({
 };
 /* harmony default export */ const forward_resolver = (forwardResolver);
 
+;// CONCATENATED MODULE: ./packages/core-data/build-module/utils/receive-intermediate-results.js
+const RECEIVE_INTERMEDIATE_RESULTS = Symbol('RECEIVE_INTERMEDIATE_RESULTS');
+
 ;// CONCATENATED MODULE: ./packages/core-data/build-module/fetch/__experimental-fetch-link-suggestions.js
 /**
  * WordPress dependencies
@@ -22898,6 +22901,10 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
   const lock = await dispatch.__unstableAcquireStoreLock(STORE_NAME, ['entities', 'records', kind, name], {
     exclusive: false
   });
+  const key = entityConfig.key || DEFAULT_ENTITY_KEY;
+  function getResolutionsArgs(records) {
+    return records.filter(record => record?.[key]).map(record => [kind, name, record[key]]);
+  }
   try {
     if (query._fields) {
       // If requesting specific fields, items and query association to said
@@ -22912,7 +22919,8 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
       ...entityConfig.baseURLParams,
       ...query
     });
-    let records, meta;
+    let records = [],
+      meta;
     if (entityConfig.supportsPagination && query.per_page !== -1) {
       const response = await external_wp_apiFetch_default()({
         path,
@@ -22922,6 +22930,30 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
       meta = {
         totalItems: parseInt(response.headers.get('X-WP-Total')),
         totalPages: parseInt(response.headers.get('X-WP-TotalPages'))
+      };
+    } else if (query.per_page === -1 && query[RECEIVE_INTERMEDIATE_RESULTS] === true) {
+      let page = 1;
+      let totalPages;
+      do {
+        const response = await external_wp_apiFetch_default()({
+          path: (0,external_wp_url_namespaceObject.addQueryArgs)(path, {
+            page,
+            per_page: 100
+          }),
+          parse: false
+        });
+        const pageRecords = Object.values(await response.json());
+        totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
+        records.push(...pageRecords);
+        registry.batch(() => {
+          dispatch.receiveEntityRecords(kind, name, records, query);
+          dispatch.finishResolutions('getEntityRecord', getResolutionsArgs(pageRecords));
+        });
+        page++;
+      } while (page <= totalPages);
+      meta = {
+        totalItems: records.length,
+        totalPages: 1
       };
     } else {
       records = Object.values(await external_wp_apiFetch_default()({
@@ -22954,8 +22986,6 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
       // See https://github.com/WordPress/gutenberg/pull/26575
       // See https://github.com/WordPress/gutenberg/pull/64504
       if (!query?._fields && !query.context) {
-        const key = entityConfig.key || DEFAULT_ENTITY_KEY;
-        const resolutionsArgs = records.filter(record => record?.[key]).map(record => [kind, name, record[key]]);
         const targetHints = records.filter(record => record?.[key]).map(record => ({
           id: record[key],
           permissions: getUserPermissionsFromAllowHeader(record?._links?.self?.[0].targetHints.allow)
@@ -22977,7 +23007,7 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
           }
         }
         dispatch.receiveUserPermissions(receiveUserPermissionArgs);
-        dispatch.finishResolutions('getEntityRecord', resolutionsArgs);
+        dispatch.finishResolutions('getEntityRecord', getResolutionsArgs(records));
         dispatch.finishResolutions('canUser', canUserResolutionsArgs);
       }
       dispatch.__unstableReleaseStoreLock(lock);
@@ -24978,9 +25008,11 @@ function useEntityProp(kind, name, prop, _id) {
  */
 
 
+
 const privateApis = {};
 lock(privateApis, {
-  useEntityRecordsWithPermissions: useEntityRecordsWithPermissions
+  useEntityRecordsWithPermissions: useEntityRecordsWithPermissions,
+  RECEIVE_INTERMEDIATE_RESULTS: RECEIVE_INTERMEDIATE_RESULTS
 });
 
 ;// CONCATENATED MODULE: ./packages/core-data/build-module/index.js
