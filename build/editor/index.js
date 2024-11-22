@@ -20985,7 +20985,7 @@ function usePostTitle() {
 
 
 
-function PostTitle(_, forwardedRef) {
+const PostTitle = (0,external_wp_element_namespaceObject.forwardRef)((_, forwardedRef) => {
   const {
     placeholder
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -21119,24 +21119,21 @@ function PostTitle(_, forwardedRef) {
   return (
     /*#__PURE__*/
     /* eslint-disable jsx-a11y/heading-has-content, jsx-a11y/no-noninteractive-element-to-interactive-role */
-    (0,external_ReactJSXRuntime_namespaceObject.jsx)(post_type_support_check, {
-      supportKeys: "title",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h1", {
-        ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([richTextRef, focusRef]),
-        contentEditable: true,
-        className: className,
-        "aria-label": decodedPlaceholder,
-        role: "textbox",
-        "aria-multiline": "true",
-        onFocus: onSelect,
-        onBlur: onUnselect,
-        onKeyDown: onKeyDown,
-        onPaste: onPaste
-      })
+    (0,external_ReactJSXRuntime_namespaceObject.jsx)("h1", {
+      ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([richTextRef, focusRef]),
+      contentEditable: true,
+      className: className,
+      "aria-label": decodedPlaceholder,
+      role: "textbox",
+      "aria-multiline": "true",
+      onFocus: onSelect,
+      onBlur: onUnselect,
+      onKeyDown: onKeyDown,
+      onPaste: onPaste
     })
     /* eslint-enable jsx-a11y/heading-has-content, jsx-a11y/no-noninteractive-element-to-interactive-role */
   );
-}
+});
 
 /**
  * Renders the `PostTitle` component.
@@ -21146,7 +21143,12 @@ function PostTitle(_, forwardedRef) {
  *
  * @return {Component} The rendered PostTitle component.
  */
-/* harmony default export */ const post_title = ((0,external_wp_element_namespaceObject.forwardRef)(PostTitle));
+/* harmony default export */ const post_title = ((0,external_wp_element_namespaceObject.forwardRef)((_, forwardedRef) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_type_support_check, {
+  supportKeys: "title",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTitle, {
+    ref: forwardedRef
+  })
+})));
 
 ;// CONCATENATED MODULE: ./packages/editor/build-module/components/post-title/post-title-raw.js
 /**
