@@ -61720,6 +61720,104 @@ function ChangeDesign({
   });
 }
 
+;// ./packages/block-editor/build-module/components/block-toolbar/switch-section-style.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+const styleIcon = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  width: "24",
+  height: "24",
+  "aria-hidden": "true",
+  focusable: "false",
+  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Path, {
+    d: "M17.2 10.9c-.5-1-1.2-2.1-2.1-3.2-.6-.9-1.3-1.7-2.1-2.6L12 4l-1 1.1c-.6.9-1.3 1.7-2 2.6-.8 1.2-1.5 2.3-2 3.2-.6 1.2-1 2.2-1 3 0 3.4 2.7 6.1 6.1 6.1s6.1-2.7 6.1-6.1c0-.8-.3-1.8-1-3z"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Path, {
+    stroke: "currentColor",
+    strokeWidth: "1.5",
+    d: "M17.2 10.9c-.5-1-1.2-2.1-2.1-3.2-.6-.9-1.3-1.7-2.1-2.6L12 4l-1 1.1c-.6.9-1.3 1.7-2 2.6-.8 1.2-1.5 2.3-2 3.2-.6 1.2-1 2.2-1 3 0 3.4 2.7 6.1 6.1 6.1s6.1-2.7 6.1-6.1c0-.8-.3-1.8-1-3z"
+  })]
+});
+function SwitchSectionStyle({
+  clientId
+}) {
+  var _mergedConfig$setting, _mergedConfig$styles;
+  const {
+    stylesToRender,
+    activeStyle,
+    className
+  } = useStylesForBlocks({
+    clientId
+  });
+  const {
+    updateBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+
+  // Get global styles data
+  const {
+    merged: mergedConfig
+  } = (0,external_wp_element_namespaceObject.useContext)(GlobalStylesContext);
+  const {
+    globalSettings,
+    globalStyles,
+    blockName
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const settings = select(store).getSettings();
+    return {
+      globalSettings: settings.__experimentalFeatures,
+      globalStyles: settings[globalStylesDataKey],
+      blockName: select(store).getBlockName(clientId)
+    };
+  }, [clientId]);
+
+  // Get the background color for the active style
+  const activeStyleBackground = activeStyle?.name ? getVariationStylesWithRefValues({
+    settings: (_mergedConfig$setting = mergedConfig?.settings) !== null && _mergedConfig$setting !== void 0 ? _mergedConfig$setting : globalSettings,
+    styles: (_mergedConfig$styles = mergedConfig?.styles) !== null && _mergedConfig$styles !== void 0 ? _mergedConfig$styles : globalStyles
+  }, blockName, activeStyle.name)?.color?.background : undefined;
+  if (!stylesToRender || stylesToRender.length === 0) {
+    return null;
+  }
+  const handleStyleSwitch = () => {
+    const currentIndex = stylesToRender.findIndex(style => style.name === activeStyle.name);
+    const nextIndex = (currentIndex + 1) % stylesToRender.length;
+    const nextStyle = stylesToRender[nextIndex];
+    const styleClassName = replaceActiveStyle(className, activeStyle, nextStyle);
+    updateBlockAttributes(clientId, {
+      className: styleClassName
+    });
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+      onClick: handleStyleSwitch,
+      label: (0,external_wp_i18n_namespaceObject.__)('Shuffle styles'),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+        icon: styleIcon,
+        style: {
+          fill: activeStyleBackground || 'transparent'
+        }
+      })
+    })
+  });
+}
+/* harmony default export */ const switch_section_style = (SwitchSectionStyle);
+
 ;// ./packages/block-editor/build-module/components/block-toolbar/index.js
 /**
  * External dependencies
@@ -61739,6 +61837,7 @@ function ChangeDesign({
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -61790,7 +61889,8 @@ function PrivateBlockToolbar({
     showShuffleButton,
     showSlots,
     showGroupButtons,
-    showLockButtons
+    showLockButtons,
+    showSwitchSectionStyleButton
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockName,
@@ -61836,7 +61936,8 @@ function PrivateBlockToolbar({
       showShuffleButton: isZoomOut(),
       showSlots: !isZoomOut(),
       showGroupButtons: !isZoomOut(),
-      showLockButtons: !isZoomOut()
+      showLockButtons: !isZoomOut(),
+      showSwitchSectionStyleButton: isZoomOut()
     };
   }, []);
   const toolbarWrapperRef = (0,external_wp_element_namespaceObject.useRef)(null);
@@ -61895,6 +61996,8 @@ function PrivateBlockToolbar({
           })]
         })
       }), !hasContentOnlyLocking && shouldShowVisualToolbar && isMultiToolbar && showGroupButtons && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(toolbar, {}), showShuffleButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ChangeDesign, {
+        clientId: blockClientIds[0]
+      }), showSwitchSectionStyleButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(switch_section_style, {
         clientId: blockClientIds[0]
       }), shouldShowVisualToolbar && showSlots && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_controls.Slot, {
