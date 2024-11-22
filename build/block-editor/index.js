@@ -28138,17 +28138,18 @@ function FontFamilyControl({
     return null;
   }
   const options = [{
-    value: '',
-    label: (0,external_wp_i18n_namespaceObject.__)('Default')
+    key: '',
+    name: (0,external_wp_i18n_namespaceObject.__)('Default')
   }, ...fontFamilies.map(({
     fontFamily,
     name
-  }) => {
-    return {
-      value: fontFamily,
-      label: name || fontFamily
-    };
-  })];
+  }) => ({
+    key: fontFamily,
+    name: name || fontFamily,
+    style: {
+      fontFamily
+    }
+  }))];
   if (!__nextHasNoMarginBottom) {
     external_wp_deprecated_default()('Bottom margin styles for wp.blockEditor.FontFamilyControl', {
       since: '6.7',
@@ -28156,14 +28157,14 @@ function FontFamilyControl({
       hint: 'Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version'
     });
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CustomSelectControl, {
     __next40pxDefaultSize: __next40pxDefaultSize,
-    __nextHasNoMarginBottom: __nextHasNoMarginBottom,
     label: (0,external_wp_i18n_namespaceObject.__)('Font'),
-    options: options,
     value: value,
-    onChange: onChange,
-    labelPosition: "top",
+    onChange: ({
+      selectedItem
+    }) => onChange(selectedItem.key),
+    options: options,
     ...props
   });
 }
