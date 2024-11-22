@@ -1600,10 +1600,12 @@ __webpack_require__.d(__webpack_exports__, {
   mediaUpload: () => (/* reexport */ mediaUpload),
   privateApis: () => (/* reexport */ privateApis),
   registerEntityAction: () => (/* reexport */ api_registerEntityAction),
+  registerEntityField: () => (/* reexport */ api_registerEntityField),
   store: () => (/* reexport */ store_store),
   storeConfig: () => (/* reexport */ storeConfig),
   transformStyles: () => (/* reexport */ external_wp_blockEditor_namespaceObject.transformStyles),
   unregisterEntityAction: () => (/* reexport */ api_unregisterEntityAction),
+  unregisterEntityField: () => (/* reexport */ api_unregisterEntityField),
   useEntitiesSavedStatesIsDirty: () => (/* reexport */ useIsDirty),
   usePostScheduleLabel: () => (/* reexport */ usePostScheduleLabel),
   usePostURLLabel: () => (/* reexport */ usePostURLLabel),
@@ -1825,14 +1827,16 @@ __webpack_require__.d(store_private_actions_namespaceObject, {
   createTemplate: () => (createTemplate),
   hideBlockTypes: () => (hideBlockTypes),
   registerEntityAction: () => (registerEntityAction),
-  registerPostTypeActions: () => (registerPostTypeActions),
+  registerEntityField: () => (registerEntityField),
+  registerPostTypeSchema: () => (registerPostTypeSchema),
   removeTemplates: () => (removeTemplates),
   revertTemplate: () => (private_actions_revertTemplate),
   saveDirtyEntities: () => (saveDirtyEntities),
   setCurrentTemplateId: () => (setCurrentTemplateId),
   setIsReady: () => (setIsReady),
   showBlockTypes: () => (showBlockTypes),
-  unregisterEntityAction: () => (unregisterEntityAction)
+  unregisterEntityAction: () => (unregisterEntityAction),
+  unregisterEntityField: () => (unregisterEntityField)
 });
 
 // NAMESPACE OBJECT: ./packages/editor/build-module/store/private-selectors.js
@@ -1840,6 +1844,7 @@ var store_private_selectors_namespaceObject = {};
 __webpack_require__.r(store_private_selectors_namespaceObject);
 __webpack_require__.d(store_private_selectors_namespaceObject, {
   getEntityActions: () => (private_selectors_getEntityActions),
+  getEntityFields: () => (private_selectors_getEntityFields),
   getInserter: () => (getInserter),
   getInserterSidebarToggleRef: () => (getInserterSidebarToggleRef),
   getListViewToggleRef: () => (getListViewToggleRef),
@@ -1979,8 +1984,31 @@ function actions(state = {}, action) {
   }
   return state;
 }
+function fields(state = {}, action) {
+  var _state$action$kind$ac3, _state$action$kind$ac4;
+  switch (action.type) {
+    case 'REGISTER_ENTITY_FIELD':
+      return {
+        ...state,
+        [action.kind]: {
+          ...state[action.kind],
+          [action.name]: [...((_state$action$kind$ac3 = state[action.kind]?.[action.name]) !== null && _state$action$kind$ac3 !== void 0 ? _state$action$kind$ac3 : []).filter(_field => _field.id !== action.config.id), action.config]
+        }
+      };
+    case 'UNREGISTER_ENTITY_FIELD':
+      return {
+        ...state,
+        [action.kind]: {
+          ...state[action.kind],
+          [action.name]: ((_state$action$kind$ac4 = state[action.kind]?.[action.name]) !== null && _state$action$kind$ac4 !== void 0 ? _state$action$kind$ac4 : []).filter(_field => _field.id !== action.fieldId)
+        }
+      };
+  }
+  return state;
+}
 /* harmony default export */ const reducer = ((0,external_wp_data_namespaceObject.combineReducers)({
   actions,
+  fields,
   isReady
 }));
 
@@ -6569,7 +6597,7 @@ const titleField = {
 
 
 
-const fields = [title];
+const duplicate_post_fields = [title];
 const formDuplicateAction = {
   fields: ['title']
 };
@@ -6661,7 +6689,7 @@ const duplicatePost = {
         spacing: 3,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
           data: item,
-          fields: fields,
+          fields: duplicate_post_fields,
           form: formDuplicateAction,
           onChange: changes => setItem(prev => ({
             ...prev,
@@ -8411,6 +8439,1212 @@ const permanentlyDeletePost = {
 };
 /* harmony default export */ const permanently_delete_post = (permanentlyDeletePost);
 
+;// external ["wp","mediaUtils"]
+const external_wp_mediaUtils_namespaceObject = window["wp"]["mediaUtils"];
+;// ./packages/icons/build-module/library/line-solid.js
+/**
+ * WordPress dependencies
+ */
+
+
+const lineSolid = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M5 11.25h14v1.5H5z"
+  })
+});
+/* harmony default export */ const line_solid = (lineSolid);
+
+;// ./packages/fields/build-module/fields/featured-image/featured-image-edit.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+// @ts-ignore
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+const FeaturedImageEdit = ({
+  data,
+  field,
+  onChange
+}) => {
+  const {
+    id
+  } = field;
+  const value = field.getValue({
+    item: data
+  });
+  const media = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
+    return getEntityRecord('root', 'media', value);
+  }, [value]);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: newValue
+  }), [id, onChange]);
+  const url = media?.source_url;
+  const title = media?.title?.rendered;
+  const ref = (0,external_wp_element_namespaceObject.useRef)(null);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("fieldset", {
+    className: "fields-controls__featured-image",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "fields-controls__featured-image-container",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_mediaUtils_namespaceObject.MediaUpload, {
+        onSelect: selectedMedia => {
+          onChangeControl(selectedMedia.id);
+        },
+        allowedTypes: ['image'],
+        render: ({
+          open
+        }) => {
+          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+            ref: ref,
+            role: "button",
+            tabIndex: -1,
+            onClick: () => {
+              open();
+            },
+            onKeyDown: open,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalGrid, {
+              rowGap: 0,
+              columnGap: 8,
+              templateColumns: "24px 1fr 24px",
+              children: [url && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+                  className: "fields-controls__featured-image-image",
+                  alt: "",
+                  width: 24,
+                  height: 24,
+                  src: url
+                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+                  className: "fields-controls__featured-image-title",
+                  children: title
+                })]
+              }), !url && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+                  className: "fields-controls__featured-image-placeholder",
+                  style: {
+                    width: '24px',
+                    height: '24px'
+                  }
+                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+                  className: "fields-controls__featured-image-title",
+                  children: (0,external_wp_i18n_namespaceObject.__)('Choose an image…')
+                })]
+              }), url && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+                  size: "small",
+                  className: "fields-controls__featured-image-remove-button",
+                  icon: line_solid,
+                  onClick: event => {
+                    event.stopPropagation();
+                    onChangeControl(0);
+                  }
+                })
+              })]
+            })
+          });
+        }
+      })
+    })
+  });
+};
+
+;// ./packages/fields/build-module/fields/featured-image/featured-image-view.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+const FeaturedImageView = ({
+  item
+}) => {
+  const mediaId = item.featured_media;
+  const media = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
+    return mediaId ? getEntityRecord('root', 'media', mediaId) : null;
+  }, [mediaId]);
+  const url = media?.source_url;
+  if (url) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+      className: "fields-controls__featured-image-image",
+      src: url,
+      alt: ""
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+    className: "fields-controls__featured-image-placeholder"
+  });
+};
+
+;// ./packages/fields/build-module/fields/featured-image/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const featuredImageField = {
+  id: 'featured_media',
+  type: 'text',
+  label: (0,external_wp_i18n_namespaceObject.__)('Featured Image'),
+  Edit: FeaturedImageEdit,
+  render: FeaturedImageView,
+  enableSorting: false
+};
+/* harmony default export */ const featured_image = (featuredImageField);
+
+;// ./node_modules/clsx/dist/clsx.mjs
+function clsx_r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=clsx_r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=clsx_r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
+;// ./packages/icons/build-module/library/comment-author-avatar.js
+/**
+ * WordPress dependencies
+ */
+
+
+const commentAuthorAvatar = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    d: "M7.25 16.437a6.5 6.5 0 1 1 9.5 0V16A2.75 2.75 0 0 0 14 13.25h-4A2.75 2.75 0 0 0 7.25 16v.437Zm1.5 1.193a6.47 6.47 0 0 0 3.25.87 6.47 6.47 0 0 0 3.25-.87V16c0-.69-.56-1.25-1.25-1.25h-4c-.69 0-1.25.56-1.25 1.25v1.63ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm10-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z",
+    clipRule: "evenodd"
+  })
+});
+/* harmony default export */ const comment_author_avatar = (commentAuthorAvatar);
+
+;// ./packages/fields/build-module/fields/author/author-view.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+function AuthorView({
+  item
+}) {
+  const {
+    text,
+    imageUrl
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
+    let user;
+    if (!!item.author) {
+      user = getEntityRecord('root', 'user', item.author);
+    }
+    return {
+      imageUrl: user?.avatar_urls?.[48],
+      text: user?.name
+    };
+  }, [item]);
+  const [isImageLoaded, setIsImageLoaded] = (0,external_wp_element_namespaceObject.useState)(false);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+    alignment: "left",
+    spacing: 0,
+    children: [!!imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: dist_clsx('page-templates-author-field__avatar', {
+        'is-loaded': isImageLoaded
+      }),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+        onLoad: () => setIsImageLoaded(true),
+        alt: (0,external_wp_i18n_namespaceObject.__)('Author avatar'),
+        src: imageUrl
+      })
+    }), !imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "page-templates-author-field__icon",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+        icon: comment_author_avatar
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "page-templates-author-field__name",
+      children: text
+    })]
+  });
+}
+/* harmony default export */ const author_view = (AuthorView);
+
+;// ./packages/fields/build-module/fields/author/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const authorField = {
+  label: (0,external_wp_i18n_namespaceObject.__)('Author'),
+  id: 'author',
+  type: 'integer',
+  elements: [],
+  render: author_view,
+  sort: (a, b, direction) => {
+    const nameA = a._embedded?.author?.[0]?.name || '';
+    const nameB = b._embedded?.author?.[0]?.name || '';
+    return direction === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+  }
+};
+
+/**
+ * Author field for BasePost.
+ */
+/* harmony default export */ const author = (authorField);
+
+;// ./packages/icons/build-module/library/drafts.js
+/**
+ * WordPress dependencies
+ */
+
+
+const drafts = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm8 4a4 4 0 0 0 4-4H8a4 4 0 0 0 4 4Z"
+  })
+});
+/* harmony default export */ const library_drafts = (drafts);
+
+;// ./packages/icons/build-module/library/scheduled.js
+/**
+ * WordPress dependencies
+ */
+
+
+const scheduled = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm9 1V8h-1.5v3.5h-2V13H13Z"
+  })
+});
+/* harmony default export */ const library_scheduled = (scheduled);
+
+;// ./packages/icons/build-module/library/pending.js
+/**
+ * WordPress dependencies
+ */
+
+
+const pending = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm8 4a4 4 0 0 1-4-4h4V8a4 4 0 0 1 0 8Z"
+  })
+});
+/* harmony default export */ const library_pending = (pending);
+
+;// ./packages/icons/build-module/library/not-allowed.js
+/**
+ * WordPress dependencies
+ */
+
+
+const notAllowed = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M12 18.5A6.5 6.5 0 0 1 6.93 7.931l9.139 9.138A6.473 6.473 0 0 1 12 18.5Zm5.123-2.498a6.5 6.5 0 0 0-9.124-9.124l9.124 9.124ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Z"
+  })
+});
+/* harmony default export */ const not_allowed = (notAllowed);
+
+;// ./packages/icons/build-module/library/published.js
+/**
+ * WordPress dependencies
+ */
+
+
+const published = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm11.53-1.47-1.06-1.06L11 12.94l-1.47-1.47-1.06 1.06L11 15.06l4.53-4.53Z"
+  })
+});
+/* harmony default export */ const library_published = (published);
+
+;// ./packages/fields/build-module/fields/status/status-elements.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+// See https://github.com/WordPress/gutenberg/issues/55886
+// We do not support custom statutes at the moment.
+const STATUSES = [{
+  value: 'draft',
+  label: (0,external_wp_i18n_namespaceObject.__)('Draft'),
+  icon: library_drafts,
+  description: (0,external_wp_i18n_namespaceObject.__)('Not ready to publish.')
+}, {
+  value: 'future',
+  label: (0,external_wp_i18n_namespaceObject.__)('Scheduled'),
+  icon: library_scheduled,
+  description: (0,external_wp_i18n_namespaceObject.__)('Publish automatically on a chosen date.')
+}, {
+  value: 'pending',
+  label: (0,external_wp_i18n_namespaceObject.__)('Pending Review'),
+  icon: library_pending,
+  description: (0,external_wp_i18n_namespaceObject.__)('Waiting for review before publishing.')
+}, {
+  value: 'private',
+  label: (0,external_wp_i18n_namespaceObject.__)('Private'),
+  icon: not_allowed,
+  description: (0,external_wp_i18n_namespaceObject.__)('Only visible to site admins and editors.')
+}, {
+  value: 'publish',
+  label: (0,external_wp_i18n_namespaceObject.__)('Published'),
+  icon: library_published,
+  description: (0,external_wp_i18n_namespaceObject.__)('Visible to everyone.')
+}, {
+  value: 'trash',
+  label: (0,external_wp_i18n_namespaceObject.__)('Trash'),
+  icon: library_trash
+}];
+/* harmony default export */ const status_elements = (STATUSES);
+
+;// ./packages/fields/build-module/fields/status/status-view.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function StatusView({
+  item
+}) {
+  const status = status_elements.find(({
+    value
+  }) => value === item.status);
+  const label = status?.label || item.status;
+  const icon = status?.icon;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+    alignment: "left",
+    spacing: 0,
+    children: [icon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "edit-site-post-list__status-icon",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+        icon: icon
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      children: label
+    })]
+  });
+}
+/* harmony default export */ const status_view = (StatusView);
+
+;// ./packages/fields/build-module/fields/status/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const OPERATOR_IS_ANY = 'isAny';
+const statusField = {
+  label: (0,external_wp_i18n_namespaceObject.__)('Status'),
+  id: 'status',
+  type: 'text',
+  elements: status_elements,
+  render: status_view,
+  Edit: 'radio',
+  enableSorting: false,
+  filterBy: {
+    operators: [OPERATOR_IS_ANY]
+  }
+};
+
+/**
+ * Status field for BasePost.
+ */
+/* harmony default export */ const fields_status = (statusField);
+
+;// ./packages/fields/build-module/fields/date/date-view.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+const getFormattedDate = dateToDisplay => (0,external_wp_date_namespaceObject.dateI18n)((0,external_wp_date_namespaceObject.getSettings)().formats.datetimeAbbreviated, (0,external_wp_date_namespaceObject.getDate)(dateToDisplay));
+const DateView = ({
+  item
+}) => {
+  var _item$status, _item$modified, _item$date4, _item$date5;
+  const isDraftOrPrivate = ['draft', 'private'].includes((_item$status = item.status) !== null && _item$status !== void 0 ? _item$status : '');
+  if (isDraftOrPrivate) {
+    var _item$date;
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: page creation or modification date. */
+    (0,external_wp_i18n_namespaceObject.__)('<span>Modified: <time>%s</time></span>'), getFormattedDate((_item$date = item.date) !== null && _item$date !== void 0 ? _item$date : null)), {
+      span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {}),
+      time: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {})
+    });
+  }
+  const isScheduled = item.status === 'future';
+  if (isScheduled) {
+    var _item$date2;
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: page creation date */
+    (0,external_wp_i18n_namespaceObject.__)('<span>Scheduled: <time>%s</time></span>'), getFormattedDate((_item$date2 = item.date) !== null && _item$date2 !== void 0 ? _item$date2 : null)), {
+      span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {}),
+      time: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {})
+    });
+  }
+  const isPublished = item.status === 'publish';
+  if (isPublished) {
+    var _item$date3;
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: page creation time */
+    (0,external_wp_i18n_namespaceObject.__)('<span>Published: <time>%s</time></span>'), getFormattedDate((_item$date3 = item.date) !== null && _item$date3 !== void 0 ? _item$date3 : null)), {
+      span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {}),
+      time: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {})
+    });
+  }
+
+  // Pending posts show the modified date if it's newer.
+  const dateToDisplay = (0,external_wp_date_namespaceObject.getDate)((_item$modified = item.modified) !== null && _item$modified !== void 0 ? _item$modified : null) > (0,external_wp_date_namespaceObject.getDate)((_item$date4 = item.date) !== null && _item$date4 !== void 0 ? _item$date4 : null) ? item.modified : item.date;
+  const isPending = item.status === 'pending';
+  if (isPending) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: page creation or modification date. */
+    (0,external_wp_i18n_namespaceObject.__)('<span>Modified: <time>%s</time></span>'), getFormattedDate(dateToDisplay !== null && dateToDisplay !== void 0 ? dateToDisplay : null)), {
+      span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {}),
+      time: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {})
+    });
+  }
+
+  // Unknow status.
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {
+    children: getFormattedDate((_item$date5 = item.date) !== null && _item$date5 !== void 0 ? _item$date5 : null)
+  });
+};
+/* harmony default export */ const date_view = (DateView);
+
+;// ./packages/fields/build-module/fields/date/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const dateField = {
+  id: 'date',
+  type: 'datetime',
+  label: (0,external_wp_i18n_namespaceObject.__)('Date'),
+  render: date_view
+};
+
+/**
+ * Date field for BasePost.
+ */
+/* harmony default export */ const date = (dateField);
+
+;// ./packages/icons/build-module/library/copy-small.js
+/**
+ * WordPress dependencies
+ */
+
+
+const copySmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M5.625 5.5h9.75c.069 0 .125.056.125.125v9.75a.125.125 0 0 1-.125.125h-9.75a.125.125 0 0 1-.125-.125v-9.75c0-.069.056-.125.125-.125ZM4 5.625C4 4.728 4.728 4 5.625 4h9.75C16.273 4 17 4.728 17 5.625v9.75c0 .898-.727 1.625-1.625 1.625h-9.75A1.625 1.625 0 0 1 4 15.375v-9.75Zm14.5 11.656v-9H20v9C20 18.8 18.77 20 17.251 20H6.25v-1.5h11.001c.69 0 1.249-.528 1.249-1.219Z"
+  })
+});
+/* harmony default export */ const copy_small = (copySmall);
+
+;// ./packages/fields/build-module/fields/slug/utils.js
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+const getSlug = item => {
+  return item.slug || (0,external_wp_url_namespaceObject.cleanForSlug)(getItemTitle(item)) || item.id.toString();
+};
+
+;// ./packages/fields/build-module/fields/slug/slug-edit.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const SlugEdit = ({
+  field,
+  onChange,
+  data
+}) => {
+  const {
+    id
+  } = field;
+  const slug = field.getValue({
+    item: data
+  }) || getSlug(data);
+  const permalinkTemplate = data.permalink_template || '';
+  const PERMALINK_POSTNAME_REGEX = /%(?:postname|pagename)%/;
+  const [prefix, suffix] = permalinkTemplate.split(PERMALINK_POSTNAME_REGEX);
+  const permalinkPrefix = prefix;
+  const permalinkSuffix = suffix;
+  const isEditable = PERMALINK_POSTNAME_REGEX.test(permalinkTemplate);
+  const originalSlugRef = (0,external_wp_element_namespaceObject.useRef)(slug);
+  const slugToDisplay = slug || originalSlugRef.current;
+  const permalink = isEditable ? `${permalinkPrefix}${slugToDisplay}${permalinkSuffix}` : (0,external_wp_url_namespaceObject.safeDecodeURIComponent)(data.link || '');
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (slug && originalSlugRef.current === undefined) {
+      originalSlugRef.current = slug;
+    }
+  }, [slug]);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: newValue
+  }), [id, onChange]);
+  const {
+    createNotice
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
+  const copyButtonRef = (0,external_wp_compose_namespaceObject.useCopyToClipboard)(permalink, () => {
+    createNotice('info', (0,external_wp_i18n_namespaceObject.__)('Copied Permalink to clipboard.'), {
+      isDismissible: true,
+      type: 'snackbar'
+    });
+  });
+  const postUrlSlugDescriptionId = 'editor-post-url__slug-description-' + (0,external_wp_compose_namespaceObject.useInstanceId)(SlugEdit);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
+    className: "fields-controls__slug",
+    children: [isEditable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        spacing: "0px",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          children: (0,external_wp_i18n_namespaceObject.__)('Customize the last part of the Permalink.')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
+          href: "https://wordpress.org/documentation/article/page-post-settings-sidebar/#permalink",
+          children: (0,external_wp_i18n_namespaceObject.__)('Learn more')
+        })]
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
+        __next40pxDefaultSize: true,
+        prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlPrefixWrapper, {
+          children: "/"
+        }),
+        suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
+          icon: copy_small,
+          ref: copyButtonRef,
+          label: (0,external_wp_i18n_namespaceObject.__)('Copy')
+        }),
+        label: (0,external_wp_i18n_namespaceObject.__)('Link'),
+        hideLabelFromVision: true,
+        value: slug,
+        autoComplete: "off",
+        spellCheck: "false",
+        type: "text",
+        className: "fields-controls__slug-input",
+        onChange: newValue => {
+          onChangeControl(newValue);
+        },
+        onBlur: () => {
+          if (slug === '') {
+            onChangeControl(originalSlugRef.current);
+          }
+        },
+        "aria-describedby": postUrlSlugDescriptionId
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+        className: "fields-controls__slug-help",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          className: "fields-controls__slug-help-visual-label",
+          children: (0,external_wp_i18n_namespaceObject.__)('Permalink:')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ExternalLink, {
+          className: "fields-controls__slug-help-link",
+          href: permalink,
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            className: "fields-controls__slug-help-prefix",
+            children: permalinkPrefix
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            className: "fields-controls__slug-help-slug",
+            children: slugToDisplay
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            className: "fields-controls__slug-help-suffix",
+            children: permalinkSuffix
+          })]
+        })]
+      })]
+    }), !isEditable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
+      className: "fields-controls__slug-help",
+      href: permalink,
+      children: permalink
+    })]
+  });
+};
+/* harmony default export */ const slug_edit = (SlugEdit);
+
+;// ./packages/fields/build-module/fields/slug/slug-view.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const SlugView = ({
+  item
+}) => {
+  const slug = typeof item === 'object' ? getSlug(item) : '';
+  const originalSlugRef = (0,external_wp_element_namespaceObject.useRef)(slug);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (slug && originalSlugRef.current === undefined) {
+      originalSlugRef.current = slug;
+    }
+  }, [slug]);
+  const slugToDisplay = slug || originalSlugRef.current;
+  return `${slugToDisplay}`;
+};
+/* harmony default export */ const slug_view = (SlugView);
+
+;// ./packages/fields/build-module/fields/slug/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const slugField = {
+  id: 'slug',
+  type: 'text',
+  label: (0,external_wp_i18n_namespaceObject.__)('Slug'),
+  Edit: slug_edit,
+  render: slug_view
+};
+/* harmony default export */ const slug = (slugField);
+
+// EXTERNAL MODULE: ./node_modules/remove-accents/index.js
+var remove_accents = __webpack_require__(9681);
+var remove_accents_default = /*#__PURE__*/__webpack_require__.n(remove_accents);
+;// ./packages/fields/build-module/fields/parent/utils.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+function getTitleWithFallbackName(post) {
+  return typeof post.title === 'object' && 'rendered' in post.title && post.title.rendered ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(post.title.rendered) : `#${post?.id} (${(0,external_wp_i18n_namespaceObject.__)('no title')})`;
+}
+
+;// ./packages/fields/build-module/fields/parent/parent-edit.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+// @ts-ignore
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function buildTermsTree(flatTerms) {
+  const flatTermsWithParentAndChildren = flatTerms.map(term => {
+    return {
+      children: [],
+      ...term
+    };
+  });
+
+  // All terms should have a `parent` because we're about to index them by it.
+  if (flatTermsWithParentAndChildren.some(({
+    parent
+  }) => parent === null || parent === undefined)) {
+    return flatTermsWithParentAndChildren;
+  }
+  const termsByParent = flatTermsWithParentAndChildren.reduce((acc, term) => {
+    const {
+      parent
+    } = term;
+    if (!acc[parent]) {
+      acc[parent] = [];
+    }
+    acc[parent].push(term);
+    return acc;
+  }, {});
+  const fillWithChildren = terms => {
+    return terms.map(term => {
+      const children = termsByParent[term.id];
+      return {
+        ...term,
+        children: children && children.length ? fillWithChildren(children) : []
+      };
+    });
+  };
+  return fillWithChildren(termsByParent['0'] || []);
+}
+const getItemPriority = (name, searchValue) => {
+  const normalizedName = remove_accents_default()(name || '').toLowerCase();
+  const normalizedSearch = remove_accents_default()(searchValue || '').toLowerCase();
+  if (normalizedName === normalizedSearch) {
+    return 0;
+  }
+  if (normalizedName.startsWith(normalizedSearch)) {
+    return normalizedName.length;
+  }
+  return Infinity;
+};
+function PageAttributesParent({
+  data,
+  onChangeControl
+}) {
+  const [fieldValue, setFieldValue] = (0,external_wp_element_namespaceObject.useState)(null);
+  const pageId = data.parent;
+  const postId = data.id;
+  const postTypeSlug = data.type;
+  const {
+    parentPostTitle,
+    pageItems,
+    isHierarchical
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    // @ts-expect-error getPostType is not typed
+    const {
+      getEntityRecord,
+      getEntityRecords,
+      getPostType
+    } = select(external_wp_coreData_namespaceObject.store);
+    const postTypeInfo = getPostType(postTypeSlug);
+    const postIsHierarchical = postTypeInfo?.hierarchical && postTypeInfo.viewable;
+    const parentPost = pageId ? getEntityRecord('postType', postTypeSlug, pageId) : null;
+    const query = {
+      per_page: 100,
+      exclude: postId,
+      parent_exclude: postId,
+      orderby: 'menu_order',
+      order: 'asc',
+      _fields: 'id,title,parent',
+      ...(fieldValue !== null && {
+        search: fieldValue
+      })
+    };
+    return {
+      isHierarchical: postIsHierarchical,
+      parentPostTitle: parentPost ? getTitleWithFallbackName(parentPost) : '',
+      pageItems: postIsHierarchical ? getEntityRecords('postType', postTypeSlug, query) : null
+    };
+  }, [fieldValue, pageId, postId, postTypeSlug]);
+
+  /**
+   * This logic has been copied from https://github.com/WordPress/gutenberg/blob/0249771b519d5646171fb9fae422006c8ab773f2/packages/editor/src/components/page-attributes/parent.js#L106.
+   */
+  const parentOptions = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    const getOptionsFromTree = (tree, level = 0) => {
+      const mappedNodes = tree.map(treeNode => [{
+        value: treeNode.id,
+        label: '— '.repeat(level) + (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(treeNode.name),
+        rawName: treeNode.name
+      }, ...getOptionsFromTree(treeNode.children || [], level + 1)]);
+      const sortedNodes = mappedNodes.sort(([a], [b]) => {
+        const priorityA = getItemPriority(a.rawName, fieldValue !== null && fieldValue !== void 0 ? fieldValue : '');
+        const priorityB = getItemPriority(b.rawName, fieldValue !== null && fieldValue !== void 0 ? fieldValue : '');
+        return priorityA >= priorityB ? 1 : -1;
+      });
+      return sortedNodes.flat();
+    };
+    if (!pageItems) {
+      return [];
+    }
+    let tree = pageItems.map(item => {
+      var _item$parent;
+      return {
+        id: item.id,
+        parent: (_item$parent = item.parent) !== null && _item$parent !== void 0 ? _item$parent : null,
+        name: getTitleWithFallbackName(item)
+      };
+    });
+
+    // Only build a hierarchical tree when not searching.
+    if (!fieldValue) {
+      tree = buildTermsTree(tree);
+    }
+    const opts = getOptionsFromTree(tree);
+
+    // Ensure the current parent is in the options list.
+    const optsHasParent = opts.find(item => item.value === pageId);
+    if (pageId && parentPostTitle && !optsHasParent) {
+      opts.unshift({
+        value: pageId,
+        label: parentPostTitle,
+        rawName: ''
+      });
+    }
+    return opts.map(option => ({
+      ...option,
+      value: option.value.toString()
+    }));
+  }, [pageItems, fieldValue, parentPostTitle, pageId]);
+  if (!isHierarchical) {
+    return null;
+  }
+
+  /**
+   * Handle user input.
+   *
+   * @param {string} inputValue The current value of the input field.
+   */
+  const handleKeydown = inputValue => {
+    setFieldValue(inputValue);
+  };
+
+  /**
+   * Handle author selection.
+   *
+   * @param {Object} selectedPostId The selected Author.
+   */
+  const handleChange = selectedPostId => {
+    if (selectedPostId) {
+      var _parseInt;
+      return onChangeControl((_parseInt = parseInt(selectedPostId, 10)) !== null && _parseInt !== void 0 ? _parseInt : 0);
+    }
+    onChangeControl(0);
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ComboboxControl, {
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
+    label: (0,external_wp_i18n_namespaceObject.__)('Parent'),
+    help: (0,external_wp_i18n_namespaceObject.__)('Choose a parent page.'),
+    value: pageId?.toString(),
+    options: parentOptions,
+    onFilterValueChange: (0,external_wp_compose_namespaceObject.debounce)(value => handleKeydown(value), 300),
+    onChange: handleChange,
+    hideLabelFromVision: true
+  });
+}
+const ParentEdit = ({
+  data,
+  field,
+  onChange
+}) => {
+  const {
+    id
+  } = field;
+  const homeUrl = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    // @ts-expect-error getEntityRecord is not typed with unstableBase as argument.
+    return select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.home;
+  }, []);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: newValue
+  }), [id, onChange]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("fieldset", {
+    className: "fields-controls__parent",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      children: [(0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %1$s The home URL of the WordPress installation without the scheme. */
+      (0,external_wp_i18n_namespaceObject.__)('Child pages inherit characteristics from their parent, such as URL structure. For instance, if "Pricing" is a child of "Services", its URL would be %1$s<wbr />/services<wbr />/pricing.'), (0,external_wp_url_namespaceObject.filterURLForDisplay)(homeUrl).replace(/([/.])/g, '<wbr />$1')), {
+        wbr: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("wbr", {})
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+        children: (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.__)('They also show up as sub-items in the default navigation menu. <a>Learn more.</a>'), {
+          a: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
+            href: (0,external_wp_i18n_namespaceObject.__)('https://wordpress.org/documentation/article/page-post-settings-sidebar/#page-attributes'),
+            children: undefined
+          })
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageAttributesParent, {
+        data: data,
+        onChangeControl: onChangeControl
+      })]
+    })
+  });
+};
+
+;// ./packages/fields/build-module/fields/parent/parent-view.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const ParentView = ({
+  item
+}) => {
+  const parent = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
+    return item?.parent ? getEntityRecord('postType', item.type, item.parent) : null;
+  }, [item.parent, item.type]);
+  if (parent) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: getTitleWithFallbackName(parent)
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: (0,external_wp_i18n_namespaceObject.__)('None')
+  });
+};
+
+;// ./packages/fields/build-module/fields/parent/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const parentField = {
+  id: 'parent',
+  type: 'text',
+  label: (0,external_wp_i18n_namespaceObject.__)('Parent'),
+  Edit: ParentEdit,
+  render: ParentView,
+  enableSorting: true
+};
+
+/**
+ * This field is used to display the post parent.
+ */
+/* harmony default export */ const fields_parent = (parentField);
+
+;// ./packages/fields/build-module/fields/comment-status/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+const commentStatusField = {
+  id: 'comment_status',
+  label: (0,external_wp_i18n_namespaceObject.__)('Discussion'),
+  type: 'text',
+  Edit: 'radio',
+  enableSorting: false,
+  filterBy: {
+    operators: []
+  },
+  elements: [{
+    value: 'open',
+    label: (0,external_wp_i18n_namespaceObject.__)('Open'),
+    description: (0,external_wp_i18n_namespaceObject.__)('Visitors can add new comments and replies.')
+  }, {
+    value: 'closed',
+    label: (0,external_wp_i18n_namespaceObject.__)('Closed'),
+    description: (0,external_wp_i18n_namespaceObject.__)('Visitors cannot add new comments or replies. Existing comments remain visible.')
+  }]
+};
+
+/**
+ * Comment status field for BasePost.
+ */
+/* harmony default export */ const comment_status = (commentStatusField);
+
+;// ./packages/fields/build-module/fields/password/edit.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+function PasswordEdit({
+  data,
+  onChange,
+  field
+}) {
+  const [showPassword, setShowPassword] = (0,external_wp_element_namespaceObject.useState)(!!field.getValue({
+    item: data
+  }));
+  const handleTogglePassword = value => {
+    setShowPassword(value);
+    if (!value) {
+      onChange({
+        password: ''
+      });
+    }
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    as: "fieldset",
+    spacing: 4,
+    className: "fields-controls__password",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+      __nextHasNoMarginBottom: true,
+      label: (0,external_wp_i18n_namespaceObject.__)('Password protected'),
+      help: (0,external_wp_i18n_namespaceObject.__)('Only visible to those who know the password'),
+      checked: showPassword,
+      onChange: handleTogglePassword
+    }), showPassword && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "fields-controls__password-input",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Password'),
+        onChange: value => onChange({
+          password: value
+        }),
+        value: field.getValue({
+          item: data
+        }) || '',
+        placeholder: (0,external_wp_i18n_namespaceObject.__)('Use a secure password'),
+        type: "text",
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        maxLength: 255
+      })
+    })]
+  });
+}
+/* harmony default export */ const edit = (PasswordEdit);
+
+;// ./packages/fields/build-module/fields/password/index.js
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+const passwordField = {
+  id: 'password',
+  type: 'text',
+  Edit: edit,
+  enableSorting: false,
+  enableHiding: false,
+  isVisible: item => item.status !== 'private'
+};
+
+/**
+ * This field is used to display the post password.
+ */
+/* harmony default export */ const fields_password = (passwordField);
+
 ;// ./packages/icons/build-module/library/check.js
 /**
  * WordPress dependencies
@@ -8783,6 +10017,22 @@ function unregisterEntityAction(kind, name, actionId) {
     actionId
   };
 }
+function registerEntityField(kind, name, config) {
+  return {
+    type: 'REGISTER_ENTITY_FIELD',
+    kind,
+    name,
+    config
+  };
+}
+function unregisterEntityField(kind, name, fieldId) {
+  return {
+    type: 'UNREGISTER_ENTITY_FIELD',
+    kind,
+    name,
+    fieldId
+  };
+}
 function setIsReady(kind, name) {
   return {
     type: 'SET_IS_READY',
@@ -8790,7 +10040,7 @@ function setIsReady(kind, name) {
     name
   };
 }
-const registerPostTypeActions = postType => async ({
+const registerPostTypeSchema = postType => async ({
   registry
 }) => {
   const isReady = unlock(registry.select(store_store)).isEntityReady('postType', postType);
@@ -8807,6 +10057,7 @@ const registerPostTypeActions = postType => async ({
   const actions = [postTypeConfig.viewable ? view_post : undefined, !!postTypeConfig?.supports?.revisions ? view_post_revisions : undefined,
   // @ts-ignore
    true ? !['wp_template', 'wp_block', 'wp_template_part'].includes(postTypeConfig.slug) && canCreate && duplicate_post : 0, postTypeConfig.slug === 'wp_template_part' && canCreate && currentTheme?.is_block_theme ? duplicate_template_part : undefined, canCreate && postTypeConfig.slug === 'wp_block' ? duplicate_pattern : undefined, postTypeConfig.supports?.title ? rename_post : undefined, postTypeConfig?.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, restore_post, reset_post, delete_post, trash_post, permanently_delete_post];
+  const fields = [featured_image, title, author, fields_status, date, slug, fields_parent, comment_status, fields_password];
   registry.batch(() => {
     actions.forEach(action => {
       if (!action) {
@@ -8814,8 +10065,11 @@ const registerPostTypeActions = postType => async ({
       }
       unlock(registry.dispatch(store_store)).registerEntityAction('postType', postType, action);
     });
+    fields.forEach(field => {
+      unlock(registry.dispatch(store_store)).registerEntityField('postType', postType, field);
+    });
   });
-  (0,external_wp_hooks_namespaceObject.doAction)('core.registerPostTypeActions', postType);
+  (0,external_wp_hooks_namespaceObject.doAction)('core.registerPostTypeSchema', postType);
 };
 
 ;// ./packages/editor/build-module/store/private-actions.js
@@ -9225,6 +10479,10 @@ function getEntityActions(state, kind, name) {
   var _state$actions$kind$n;
   return (_state$actions$kind$n = state.actions[kind]?.[name]) !== null && _state$actions$kind$n !== void 0 ? _state$actions$kind$n : EMPTY_ARRAY;
 }
+function getEntityFields(state, kind, name) {
+  var _state$fields$kind$na;
+  return (_state$fields$kind$na = state.fields[kind]?.[name]) !== null && _state$fields$kind$na !== void 0 ? _state$fields$kind$na : EMPTY_ARRAY;
+}
 function isEntityReady(state, kind, name) {
   return state.isReady[kind]?.[name];
 }
@@ -9347,6 +10605,9 @@ function private_selectors_getEntityActions(state, ...args) {
 }
 function private_selectors_isEntityReady(state, ...args) {
   return isEntityReady(state.dataviews, ...args);
+}
+function private_selectors_getEntityFields(state, ...args) {
+  return getEntityFields(state.dataviews, ...args);
 }
 
 /**
@@ -9585,8 +10846,6 @@ function setDefaultCompleters(completers = []) {
 }
 (0,external_wp_hooks_namespaceObject.addFilter)('editor.Autocomplete.completers', 'editor/autocompleters/set-default-completers', setDefaultCompleters);
 
-;// external ["wp","mediaUtils"]
-const external_wp_mediaUtils_namespaceObject = window["wp"]["mediaUtils"];
 ;// ./packages/editor/build-module/hooks/media-upload.js
 /**
  * WordPress dependencies
@@ -9689,8 +10948,6 @@ function ControlsWithStoreSubscription(props) {
 
 ;// external ["wp","keyboardShortcuts"]
 const external_wp_keyboardShortcuts_namespaceObject = window["wp"]["keyboardShortcuts"];
-;// ./node_modules/clsx/dist/clsx.mjs
-function clsx_r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=clsx_r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=clsx_r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
 ;// ./packages/icons/build-module/library/star-filled.js
 /**
  * WordPress dependencies
@@ -12991,9 +14248,6 @@ function PageAttributesOrderWithChecks() {
   });
 }
 
-// EXTERNAL MODULE: ./node_modules/remove-accents/index.js
-var remove_accents = __webpack_require__(9681);
-var remove_accents_default = /*#__PURE__*/__webpack_require__.n(remove_accents);
 ;// ./packages/editor/build-module/components/post-panel-row/index.js
 /**
  * External dependencies
@@ -13038,7 +14292,7 @@ const PostPanelRow = (0,external_wp_element_namespaceObject.forwardRef)(({
  *
  * @return {Array} Array of terms in tree format.
  */
-function buildTermsTree(flatTerms) {
+function terms_buildTermsTree(flatTerms) {
   const flatTermsWithParentAndChildren = flatTerms.map(term => {
     return {
       children: [],
@@ -13133,7 +14387,7 @@ const unescapeTerms = terms => {
 function getTitle(post) {
   return post?.title?.rendered ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(post.title.rendered) : `#${post.id} (${(0,external_wp_i18n_namespaceObject.__)('no title')})`;
 }
-const getItemPriority = (name, searchValue) => {
+const parent_getItemPriority = (name, searchValue) => {
   const normalizedName = remove_accents_default()(name || '').toLowerCase();
   const normalizedSearch = remove_accents_default()(searchValue || '').toLowerCase();
   if (normalizedName === normalizedSearch) {
@@ -13151,7 +14405,7 @@ const getItemPriority = (name, searchValue) => {
  *
  * @return {Component|null} The component to be rendered. Return null if post type is not hierarchical.
  */
-function PageAttributesParent() {
+function parent_PageAttributesParent() {
   const {
     editPost
   } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
@@ -13206,8 +14460,8 @@ function PageAttributesParent() {
         rawName: treeNode.name
       }, ...getOptionsFromTree(treeNode.children || [], level + 1)]);
       const sortedNodes = mappedNodes.sort(([a], [b]) => {
-        const priorityA = getItemPriority(a.rawName, fieldValue);
-        const priorityB = getItemPriority(b.rawName, fieldValue);
+        const priorityA = parent_getItemPriority(a.rawName, fieldValue);
+        const priorityB = parent_getItemPriority(b.rawName, fieldValue);
         return priorityA >= priorityB ? 1 : -1;
       });
       return sortedNodes.flat();
@@ -13223,7 +14477,7 @@ function PageAttributesParent() {
 
     // Only build a hierarchical tree when not searching.
     if (!fieldValue) {
-      tree = buildTermsTree(tree);
+      tree = terms_buildTermsTree(tree);
     }
     const opts = getOptionsFromTree(tree);
 
@@ -13353,12 +14607,12 @@ function ParentRow() {
               })
             })
           })]
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageAttributesParent, {})]
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(parent_PageAttributesParent, {})]
       })
     })
   });
 }
-/* harmony default export */ const page_attributes_parent = (PageAttributesParent);
+/* harmony default export */ const page_attributes_parent = (parent_PageAttributesParent);
 
 ;// ./packages/editor/build-module/components/page-attributes/panel.js
 /**
@@ -19198,7 +20452,7 @@ function HierarchicalTermSelector({
   const {
     saveEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  const availableTermsTree = (0,external_wp_element_namespaceObject.useMemo)(() => sortBySelected(buildTermsTree(availableTerms), terms),
+  const availableTermsTree = (0,external_wp_element_namespaceObject.useMemo)(() => sortBySelected(terms_buildTermsTree(availableTerms), terms),
   // Remove `terms` from the dependency list to avoid reordering every time
   // checking or unchecking a term.
   [availableTerms]);
@@ -20429,91 +21683,6 @@ const cloud = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
   })
 });
 /* harmony default export */ const library_cloud = (cloud);
-
-;// ./packages/icons/build-module/library/drafts.js
-/**
- * WordPress dependencies
- */
-
-
-const drafts = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm8 4a4 4 0 0 0 4-4H8a4 4 0 0 0 4 4Z"
-  })
-});
-/* harmony default export */ const library_drafts = (drafts);
-
-;// ./packages/icons/build-module/library/pending.js
-/**
- * WordPress dependencies
- */
-
-
-const pending = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm8 4a4 4 0 0 1-4-4h4V8a4 4 0 0 1 0 8Z"
-  })
-});
-/* harmony default export */ const library_pending = (pending);
-
-;// ./packages/icons/build-module/library/not-allowed.js
-/**
- * WordPress dependencies
- */
-
-
-const notAllowed = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M12 18.5A6.5 6.5 0 0 1 6.93 7.931l9.139 9.138A6.473 6.473 0 0 1 12 18.5Zm5.123-2.498a6.5 6.5 0 0 0-9.124-9.124l9.124 9.124ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Z"
-  })
-});
-/* harmony default export */ const not_allowed = (notAllowed);
-
-;// ./packages/icons/build-module/library/scheduled.js
-/**
- * WordPress dependencies
- */
-
-
-const scheduled = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm9 1V8h-1.5v3.5h-2V13H13Z"
-  })
-});
-/* harmony default export */ const library_scheduled = (scheduled);
-
-;// ./packages/icons/build-module/library/published.js
-/**
- * WordPress dependencies
- */
-
-
-const published = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm11.53-1.47-1.06-1.06L11 12.94l-1.47-1.47-1.06 1.06L11 15.06l4.53-4.53Z"
-  })
-});
-/* harmony default export */ const library_published = (published);
 
 ;// ./packages/editor/build-module/components/post-sticky/check.js
 /**
@@ -22124,23 +23293,6 @@ function PostTrash({
     })]
   });
 }
-
-;// ./packages/icons/build-module/library/copy-small.js
-/**
- * WordPress dependencies
- */
-
-
-const copySmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M5.625 5.5h9.75c.069 0 .125.056.125.125v9.75a.125.125 0 0 1-.125.125h-9.75a.125.125 0 0 1-.125-.125v-9.75c0-.069.056-.125.125-.125ZM4 5.625C4 4.728 4.728 4 5.625 4h9.75C16.273 4 17 4.728 17 5.625v9.75c0 .898-.727 1.625-1.625 1.625h-9.75A1.625 1.625 0 0 1 4 15.375v-9.75Zm14.5 11.656v-9H20v9C20 18.8 18.77 20 17.251 20H6.25v-1.5h11.001c.69 0 1.249-.528 1.249-1.219Z"
-  })
-});
-/* harmony default export */ const copy_small = (copySmall);
 
 ;// ./packages/editor/build-module/components/post-url/index.js
 /**
@@ -23985,7 +25137,7 @@ const pencil = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
  */
 
 
-/* harmony default export */ const edit = (library_pencil);
+/* harmony default export */ const library_edit = (library_pencil);
 
 ;// ./packages/icons/build-module/library/rotate-right.js
 /**
@@ -24397,7 +25549,7 @@ const getEditedEntityContextualCommands = () => function useEditedEntityContextu
     commands.push({
       name: 'core/rename-pattern',
       label: (0,external_wp_i18n_namespaceObject.__)('Rename pattern'),
-      icon: edit,
+      icon: library_edit,
       callback: ({
         close
       }) => {
@@ -29765,11 +30917,11 @@ function usePostActions({
     };
   }, [postType]);
   const {
-    registerPostTypeActions
+    registerPostTypeSchema
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    registerPostTypeActions(postType);
-  }, [registerPostTypeActions, postType]);
+    registerPostTypeSchema(postType);
+  }, [registerPostTypeSchema, postType]);
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
@@ -31879,1103 +33031,6 @@ function PreferencesModalContents({
   });
 }
 
-;// ./packages/icons/build-module/library/line-solid.js
-/**
- * WordPress dependencies
- */
-
-
-const lineSolid = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M5 11.25h14v1.5H5z"
-  })
-});
-/* harmony default export */ const line_solid = (lineSolid);
-
-;// ./packages/fields/build-module/fields/featured-image/featured-image-edit.js
-/**
- * WordPress dependencies
- */
-
-
-
-// @ts-ignore
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-const FeaturedImageEdit = ({
-  data,
-  field,
-  onChange
-}) => {
-  const {
-    id
-  } = field;
-  const value = field.getValue({
-    item: data
-  });
-  const media = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEntityRecord
-    } = select(external_wp_coreData_namespaceObject.store);
-    return getEntityRecord('root', 'media', value);
-  }, [value]);
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: newValue
-  }), [id, onChange]);
-  const url = media?.source_url;
-  const title = media?.title?.rendered;
-  const ref = (0,external_wp_element_namespaceObject.useRef)(null);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("fieldset", {
-    className: "fields-controls__featured-image",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "fields-controls__featured-image-container",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_mediaUtils_namespaceObject.MediaUpload, {
-        onSelect: selectedMedia => {
-          onChangeControl(selectedMedia.id);
-        },
-        allowedTypes: ['image'],
-        render: ({
-          open
-        }) => {
-          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-            ref: ref,
-            role: "button",
-            tabIndex: -1,
-            onClick: () => {
-              open();
-            },
-            onKeyDown: open,
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalGrid, {
-              rowGap: 0,
-              columnGap: 8,
-              templateColumns: "24px 1fr 24px",
-              children: [url && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
-                  className: "fields-controls__featured-image-image",
-                  alt: "",
-                  width: 24,
-                  height: 24,
-                  src: url
-                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-                  className: "fields-controls__featured-image-title",
-                  children: title
-                })]
-              }), !url && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-                  className: "fields-controls__featured-image-placeholder",
-                  style: {
-                    width: '24px',
-                    height: '24px'
-                  }
-                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-                  className: "fields-controls__featured-image-title",
-                  children: (0,external_wp_i18n_namespaceObject.__)('Choose an image…')
-                })]
-              }), url && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-                  size: "small",
-                  className: "fields-controls__featured-image-remove-button",
-                  icon: line_solid,
-                  onClick: event => {
-                    event.stopPropagation();
-                    onChangeControl(0);
-                  }
-                })
-              })]
-            })
-          });
-        }
-      })
-    })
-  });
-};
-
-;// ./packages/fields/build-module/fields/featured-image/featured-image-view.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-const FeaturedImageView = ({
-  item
-}) => {
-  const mediaId = item.featured_media;
-  const media = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEntityRecord
-    } = select(external_wp_coreData_namespaceObject.store);
-    return mediaId ? getEntityRecord('root', 'media', mediaId) : null;
-  }, [mediaId]);
-  const url = media?.source_url;
-  if (url) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
-      className: "fields-controls__featured-image-image",
-      src: url,
-      alt: ""
-    });
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-    className: "fields-controls__featured-image-placeholder"
-  });
-};
-
-;// ./packages/fields/build-module/fields/featured-image/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-const featuredImageField = {
-  id: 'featured_media',
-  type: 'text',
-  label: (0,external_wp_i18n_namespaceObject.__)('Featured Image'),
-  Edit: FeaturedImageEdit,
-  render: FeaturedImageView,
-  enableSorting: false
-};
-/* harmony default export */ const featured_image = (featuredImageField);
-
-;// ./packages/icons/build-module/library/comment-author-avatar.js
-/**
- * WordPress dependencies
- */
-
-
-const commentAuthorAvatar = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    d: "M7.25 16.437a6.5 6.5 0 1 1 9.5 0V16A2.75 2.75 0 0 0 14 13.25h-4A2.75 2.75 0 0 0 7.25 16v.437Zm1.5 1.193a6.47 6.47 0 0 0 3.25.87 6.47 6.47 0 0 0 3.25-.87V16c0-.69-.56-1.25-1.25-1.25h-4c-.69 0-1.25.56-1.25 1.25v1.63ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm10-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z",
-    clipRule: "evenodd"
-  })
-});
-/* harmony default export */ const comment_author_avatar = (commentAuthorAvatar);
-
-;// ./packages/fields/build-module/fields/author/author-view.js
-/**
- * External dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-function AuthorView({
-  item
-}) {
-  const {
-    text,
-    imageUrl
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEntityRecord
-    } = select(external_wp_coreData_namespaceObject.store);
-    let user;
-    if (!!item.author) {
-      user = getEntityRecord('root', 'user', item.author);
-    }
-    return {
-      imageUrl: user?.avatar_urls?.[48],
-      text: user?.name
-    };
-  }, [item]);
-  const [isImageLoaded, setIsImageLoaded] = (0,external_wp_element_namespaceObject.useState)(false);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-    alignment: "left",
-    spacing: 0,
-    children: [!!imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: dist_clsx('page-templates-author-field__avatar', {
-        'is-loaded': isImageLoaded
-      }),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
-        onLoad: () => setIsImageLoaded(true),
-        alt: (0,external_wp_i18n_namespaceObject.__)('Author avatar'),
-        src: imageUrl
-      })
-    }), !imageUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "page-templates-author-field__icon",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-        icon: comment_author_avatar
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-      className: "page-templates-author-field__name",
-      children: text
-    })]
-  });
-}
-/* harmony default export */ const author_view = (AuthorView);
-
-;// ./packages/fields/build-module/fields/author/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-const authorField = {
-  label: (0,external_wp_i18n_namespaceObject.__)('Author'),
-  id: 'author',
-  type: 'integer',
-  elements: [],
-  render: author_view,
-  sort: (a, b, direction) => {
-    const nameA = a._embedded?.author?.[0]?.name || '';
-    const nameB = b._embedded?.author?.[0]?.name || '';
-    return direction === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
-  }
-};
-
-/**
- * Author field for BasePost.
- */
-/* harmony default export */ const author = (authorField);
-
-;// ./packages/fields/build-module/fields/status/status-elements.js
-/**
- * WordPress dependencies
- */
-
-
-
-// See https://github.com/WordPress/gutenberg/issues/55886
-// We do not support custom statutes at the moment.
-const STATUSES = [{
-  value: 'draft',
-  label: (0,external_wp_i18n_namespaceObject.__)('Draft'),
-  icon: library_drafts,
-  description: (0,external_wp_i18n_namespaceObject.__)('Not ready to publish.')
-}, {
-  value: 'future',
-  label: (0,external_wp_i18n_namespaceObject.__)('Scheduled'),
-  icon: library_scheduled,
-  description: (0,external_wp_i18n_namespaceObject.__)('Publish automatically on a chosen date.')
-}, {
-  value: 'pending',
-  label: (0,external_wp_i18n_namespaceObject.__)('Pending Review'),
-  icon: library_pending,
-  description: (0,external_wp_i18n_namespaceObject.__)('Waiting for review before publishing.')
-}, {
-  value: 'private',
-  label: (0,external_wp_i18n_namespaceObject.__)('Private'),
-  icon: not_allowed,
-  description: (0,external_wp_i18n_namespaceObject.__)('Only visible to site admins and editors.')
-}, {
-  value: 'publish',
-  label: (0,external_wp_i18n_namespaceObject.__)('Published'),
-  icon: library_published,
-  description: (0,external_wp_i18n_namespaceObject.__)('Visible to everyone.')
-}, {
-  value: 'trash',
-  label: (0,external_wp_i18n_namespaceObject.__)('Trash'),
-  icon: library_trash
-}];
-/* harmony default export */ const status_elements = (STATUSES);
-
-;// ./packages/fields/build-module/fields/status/status-view.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-function StatusView({
-  item
-}) {
-  const status = status_elements.find(({
-    value
-  }) => value === item.status);
-  const label = status?.label || item.status;
-  const icon = status?.icon;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-    alignment: "left",
-    spacing: 0,
-    children: [icon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "edit-site-post-list__status-icon",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-        icon: icon
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-      children: label
-    })]
-  });
-}
-/* harmony default export */ const status_view = (StatusView);
-
-;// ./packages/fields/build-module/fields/status/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-const OPERATOR_IS_ANY = 'isAny';
-const statusField = {
-  label: (0,external_wp_i18n_namespaceObject.__)('Status'),
-  id: 'status',
-  type: 'text',
-  elements: status_elements,
-  render: status_view,
-  Edit: 'radio',
-  enableSorting: false,
-  filterBy: {
-    operators: [OPERATOR_IS_ANY]
-  }
-};
-
-/**
- * Status field for BasePost.
- */
-/* harmony default export */ const fields_status = (statusField);
-
-;// ./packages/fields/build-module/fields/date/date-view.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-const getFormattedDate = dateToDisplay => (0,external_wp_date_namespaceObject.dateI18n)((0,external_wp_date_namespaceObject.getSettings)().formats.datetimeAbbreviated, (0,external_wp_date_namespaceObject.getDate)(dateToDisplay));
-const DateView = ({
-  item
-}) => {
-  var _item$status, _item$modified, _item$date4, _item$date5;
-  const isDraftOrPrivate = ['draft', 'private'].includes((_item$status = item.status) !== null && _item$status !== void 0 ? _item$status : '');
-  if (isDraftOrPrivate) {
-    var _item$date;
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: page creation or modification date. */
-    (0,external_wp_i18n_namespaceObject.__)('<span>Modified: <time>%s</time></span>'), getFormattedDate((_item$date = item.date) !== null && _item$date !== void 0 ? _item$date : null)), {
-      span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {}),
-      time: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {})
-    });
-  }
-  const isScheduled = item.status === 'future';
-  if (isScheduled) {
-    var _item$date2;
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: page creation date */
-    (0,external_wp_i18n_namespaceObject.__)('<span>Scheduled: <time>%s</time></span>'), getFormattedDate((_item$date2 = item.date) !== null && _item$date2 !== void 0 ? _item$date2 : null)), {
-      span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {}),
-      time: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {})
-    });
-  }
-  const isPublished = item.status === 'publish';
-  if (isPublished) {
-    var _item$date3;
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: page creation time */
-    (0,external_wp_i18n_namespaceObject.__)('<span>Published: <time>%s</time></span>'), getFormattedDate((_item$date3 = item.date) !== null && _item$date3 !== void 0 ? _item$date3 : null)), {
-      span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {}),
-      time: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {})
-    });
-  }
-
-  // Pending posts show the modified date if it's newer.
-  const dateToDisplay = (0,external_wp_date_namespaceObject.getDate)((_item$modified = item.modified) !== null && _item$modified !== void 0 ? _item$modified : null) > (0,external_wp_date_namespaceObject.getDate)((_item$date4 = item.date) !== null && _item$date4 !== void 0 ? _item$date4 : null) ? item.modified : item.date;
-  const isPending = item.status === 'pending';
-  if (isPending) {
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: page creation or modification date. */
-    (0,external_wp_i18n_namespaceObject.__)('<span>Modified: <time>%s</time></span>'), getFormattedDate(dateToDisplay !== null && dateToDisplay !== void 0 ? dateToDisplay : null)), {
-      span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {}),
-      time: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {})
-    });
-  }
-
-  // Unknow status.
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {
-    children: getFormattedDate((_item$date5 = item.date) !== null && _item$date5 !== void 0 ? _item$date5 : null)
-  });
-};
-/* harmony default export */ const date_view = (DateView);
-
-;// ./packages/fields/build-module/fields/date/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-const dateField = {
-  id: 'date',
-  type: 'datetime',
-  label: (0,external_wp_i18n_namespaceObject.__)('Date'),
-  render: date_view
-};
-
-/**
- * Date field for BasePost.
- */
-/* harmony default export */ const date = (dateField);
-
-;// ./packages/fields/build-module/fields/slug/utils.js
-/**
- * WordPress dependencies
- */
-
-/**
- * Internal dependencies
- */
-
-
-const getSlug = item => {
-  return item.slug || (0,external_wp_url_namespaceObject.cleanForSlug)(getItemTitle(item)) || item.id.toString();
-};
-
-;// ./packages/fields/build-module/fields/slug/slug-edit.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-const SlugEdit = ({
-  field,
-  onChange,
-  data
-}) => {
-  const {
-    id
-  } = field;
-  const slug = field.getValue({
-    item: data
-  }) || getSlug(data);
-  const permalinkTemplate = data.permalink_template || '';
-  const PERMALINK_POSTNAME_REGEX = /%(?:postname|pagename)%/;
-  const [prefix, suffix] = permalinkTemplate.split(PERMALINK_POSTNAME_REGEX);
-  const permalinkPrefix = prefix;
-  const permalinkSuffix = suffix;
-  const isEditable = PERMALINK_POSTNAME_REGEX.test(permalinkTemplate);
-  const originalSlugRef = (0,external_wp_element_namespaceObject.useRef)(slug);
-  const slugToDisplay = slug || originalSlugRef.current;
-  const permalink = isEditable ? `${permalinkPrefix}${slugToDisplay}${permalinkSuffix}` : (0,external_wp_url_namespaceObject.safeDecodeURIComponent)(data.link || '');
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (slug && originalSlugRef.current === undefined) {
-      originalSlugRef.current = slug;
-    }
-  }, [slug]);
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: newValue
-  }), [id, onChange]);
-  const {
-    createNotice
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
-  const copyButtonRef = (0,external_wp_compose_namespaceObject.useCopyToClipboard)(permalink, () => {
-    createNotice('info', (0,external_wp_i18n_namespaceObject.__)('Copied Permalink to clipboard.'), {
-      isDismissible: true,
-      type: 'snackbar'
-    });
-  });
-  const postUrlSlugDescriptionId = 'editor-post-url__slug-description-' + (0,external_wp_compose_namespaceObject.useInstanceId)(SlugEdit);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
-    className: "fields-controls__slug",
-    children: [isEditable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-        spacing: "0px",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          children: (0,external_wp_i18n_namespaceObject.__)('Customize the last part of the Permalink.')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
-          href: "https://wordpress.org/documentation/article/page-post-settings-sidebar/#permalink",
-          children: (0,external_wp_i18n_namespaceObject.__)('Learn more')
-        })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
-        __next40pxDefaultSize: true,
-        prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlPrefixWrapper, {
-          children: "/"
-        }),
-        suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          __next40pxDefaultSize: true,
-          icon: copy_small,
-          ref: copyButtonRef,
-          label: (0,external_wp_i18n_namespaceObject.__)('Copy')
-        }),
-        label: (0,external_wp_i18n_namespaceObject.__)('Link'),
-        hideLabelFromVision: true,
-        value: slug,
-        autoComplete: "off",
-        spellCheck: "false",
-        type: "text",
-        className: "fields-controls__slug-input",
-        onChange: newValue => {
-          onChangeControl(newValue);
-        },
-        onBlur: () => {
-          if (slug === '') {
-            onChangeControl(originalSlugRef.current);
-          }
-        },
-        "aria-describedby": postUrlSlugDescriptionId
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-        className: "fields-controls__slug-help",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          className: "fields-controls__slug-help-visual-label",
-          children: (0,external_wp_i18n_namespaceObject.__)('Permalink:')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ExternalLink, {
-          className: "fields-controls__slug-help-link",
-          href: permalink,
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-            className: "fields-controls__slug-help-prefix",
-            children: permalinkPrefix
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-            className: "fields-controls__slug-help-slug",
-            children: slugToDisplay
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-            className: "fields-controls__slug-help-suffix",
-            children: permalinkSuffix
-          })]
-        })]
-      })]
-    }), !isEditable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
-      className: "fields-controls__slug-help",
-      href: permalink,
-      children: permalink
-    })]
-  });
-};
-/* harmony default export */ const slug_edit = (SlugEdit);
-
-;// ./packages/fields/build-module/fields/slug/slug-view.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-const SlugView = ({
-  item
-}) => {
-  const slug = typeof item === 'object' ? getSlug(item) : '';
-  const originalSlugRef = (0,external_wp_element_namespaceObject.useRef)(slug);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (slug && originalSlugRef.current === undefined) {
-      originalSlugRef.current = slug;
-    }
-  }, [slug]);
-  const slugToDisplay = slug || originalSlugRef.current;
-  return `${slugToDisplay}`;
-};
-/* harmony default export */ const slug_view = (SlugView);
-
-;// ./packages/fields/build-module/fields/slug/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-const slugField = {
-  id: 'slug',
-  type: 'text',
-  label: (0,external_wp_i18n_namespaceObject.__)('Slug'),
-  Edit: slug_edit,
-  render: slug_view
-};
-/* harmony default export */ const slug = (slugField);
-
-;// ./packages/fields/build-module/fields/parent/utils.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-function getTitleWithFallbackName(post) {
-  return typeof post.title === 'object' && 'rendered' in post.title && post.title.rendered ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(post.title.rendered) : `#${post?.id} (${(0,external_wp_i18n_namespaceObject.__)('no title')})`;
-}
-
-;// ./packages/fields/build-module/fields/parent/parent-edit.js
-/**
- * External dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-
-
-// @ts-ignore
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-function parent_edit_buildTermsTree(flatTerms) {
-  const flatTermsWithParentAndChildren = flatTerms.map(term => {
-    return {
-      children: [],
-      ...term
-    };
-  });
-
-  // All terms should have a `parent` because we're about to index them by it.
-  if (flatTermsWithParentAndChildren.some(({
-    parent
-  }) => parent === null || parent === undefined)) {
-    return flatTermsWithParentAndChildren;
-  }
-  const termsByParent = flatTermsWithParentAndChildren.reduce((acc, term) => {
-    const {
-      parent
-    } = term;
-    if (!acc[parent]) {
-      acc[parent] = [];
-    }
-    acc[parent].push(term);
-    return acc;
-  }, {});
-  const fillWithChildren = terms => {
-    return terms.map(term => {
-      const children = termsByParent[term.id];
-      return {
-        ...term,
-        children: children && children.length ? fillWithChildren(children) : []
-      };
-    });
-  };
-  return fillWithChildren(termsByParent['0'] || []);
-}
-const parent_edit_getItemPriority = (name, searchValue) => {
-  const normalizedName = remove_accents_default()(name || '').toLowerCase();
-  const normalizedSearch = remove_accents_default()(searchValue || '').toLowerCase();
-  if (normalizedName === normalizedSearch) {
-    return 0;
-  }
-  if (normalizedName.startsWith(normalizedSearch)) {
-    return normalizedName.length;
-  }
-  return Infinity;
-};
-function parent_edit_PageAttributesParent({
-  data,
-  onChangeControl
-}) {
-  const [fieldValue, setFieldValue] = (0,external_wp_element_namespaceObject.useState)(null);
-  const pageId = data.parent;
-  const postId = data.id;
-  const postTypeSlug = data.type;
-  const {
-    parentPostTitle,
-    pageItems,
-    isHierarchical
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    // @ts-expect-error getPostType is not typed
-    const {
-      getEntityRecord,
-      getEntityRecords,
-      getPostType
-    } = select(external_wp_coreData_namespaceObject.store);
-    const postTypeInfo = getPostType(postTypeSlug);
-    const postIsHierarchical = postTypeInfo?.hierarchical && postTypeInfo.viewable;
-    const parentPost = pageId ? getEntityRecord('postType', postTypeSlug, pageId) : null;
-    const query = {
-      per_page: 100,
-      exclude: postId,
-      parent_exclude: postId,
-      orderby: 'menu_order',
-      order: 'asc',
-      _fields: 'id,title,parent',
-      ...(fieldValue !== null && {
-        search: fieldValue
-      })
-    };
-    return {
-      isHierarchical: postIsHierarchical,
-      parentPostTitle: parentPost ? getTitleWithFallbackName(parentPost) : '',
-      pageItems: postIsHierarchical ? getEntityRecords('postType', postTypeSlug, query) : null
-    };
-  }, [fieldValue, pageId, postId, postTypeSlug]);
-
-  /**
-   * This logic has been copied from https://github.com/WordPress/gutenberg/blob/0249771b519d5646171fb9fae422006c8ab773f2/packages/editor/src/components/page-attributes/parent.js#L106.
-   */
-  const parentOptions = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const getOptionsFromTree = (tree, level = 0) => {
-      const mappedNodes = tree.map(treeNode => [{
-        value: treeNode.id,
-        label: '— '.repeat(level) + (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(treeNode.name),
-        rawName: treeNode.name
-      }, ...getOptionsFromTree(treeNode.children || [], level + 1)]);
-      const sortedNodes = mappedNodes.sort(([a], [b]) => {
-        const priorityA = parent_edit_getItemPriority(a.rawName, fieldValue !== null && fieldValue !== void 0 ? fieldValue : '');
-        const priorityB = parent_edit_getItemPriority(b.rawName, fieldValue !== null && fieldValue !== void 0 ? fieldValue : '');
-        return priorityA >= priorityB ? 1 : -1;
-      });
-      return sortedNodes.flat();
-    };
-    if (!pageItems) {
-      return [];
-    }
-    let tree = pageItems.map(item => {
-      var _item$parent;
-      return {
-        id: item.id,
-        parent: (_item$parent = item.parent) !== null && _item$parent !== void 0 ? _item$parent : null,
-        name: getTitleWithFallbackName(item)
-      };
-    });
-
-    // Only build a hierarchical tree when not searching.
-    if (!fieldValue) {
-      tree = parent_edit_buildTermsTree(tree);
-    }
-    const opts = getOptionsFromTree(tree);
-
-    // Ensure the current parent is in the options list.
-    const optsHasParent = opts.find(item => item.value === pageId);
-    if (pageId && parentPostTitle && !optsHasParent) {
-      opts.unshift({
-        value: pageId,
-        label: parentPostTitle,
-        rawName: ''
-      });
-    }
-    return opts.map(option => ({
-      ...option,
-      value: option.value.toString()
-    }));
-  }, [pageItems, fieldValue, parentPostTitle, pageId]);
-  if (!isHierarchical) {
-    return null;
-  }
-
-  /**
-   * Handle user input.
-   *
-   * @param {string} inputValue The current value of the input field.
-   */
-  const handleKeydown = inputValue => {
-    setFieldValue(inputValue);
-  };
-
-  /**
-   * Handle author selection.
-   *
-   * @param {Object} selectedPostId The selected Author.
-   */
-  const handleChange = selectedPostId => {
-    if (selectedPostId) {
-      var _parseInt;
-      return onChangeControl((_parseInt = parseInt(selectedPostId, 10)) !== null && _parseInt !== void 0 ? _parseInt : 0);
-    }
-    onChangeControl(0);
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ComboboxControl, {
-    __nextHasNoMarginBottom: true,
-    __next40pxDefaultSize: true,
-    label: (0,external_wp_i18n_namespaceObject.__)('Parent'),
-    help: (0,external_wp_i18n_namespaceObject.__)('Choose a parent page.'),
-    value: pageId?.toString(),
-    options: parentOptions,
-    onFilterValueChange: (0,external_wp_compose_namespaceObject.debounce)(value => handleKeydown(value), 300),
-    onChange: handleChange,
-    hideLabelFromVision: true
-  });
-}
-const ParentEdit = ({
-  data,
-  field,
-  onChange
-}) => {
-  const {
-    id
-  } = field;
-  const homeUrl = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    // @ts-expect-error getEntityRecord is not typed with unstableBase as argument.
-    return select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.home;
-  }, []);
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: newValue
-  }), [id, onChange]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("fieldset", {
-    className: "fields-controls__parent",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      children: [(0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %1$s The home URL of the WordPress installation without the scheme. */
-      (0,external_wp_i18n_namespaceObject.__)('Child pages inherit characteristics from their parent, such as URL structure. For instance, if "Pricing" is a child of "Services", its URL would be %1$s<wbr />/services<wbr />/pricing.'), (0,external_wp_url_namespaceObject.filterURLForDisplay)(homeUrl).replace(/([/.])/g, '<wbr />$1')), {
-        wbr: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("wbr", {})
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-        children: (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.__)('They also show up as sub-items in the default navigation menu. <a>Learn more.</a>'), {
-          a: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
-            href: (0,external_wp_i18n_namespaceObject.__)('https://wordpress.org/documentation/article/page-post-settings-sidebar/#page-attributes'),
-            children: undefined
-          })
-        })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(parent_edit_PageAttributesParent, {
-        data: data,
-        onChangeControl: onChangeControl
-      })]
-    })
-  });
-};
-
-;// ./packages/fields/build-module/fields/parent/parent-view.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-const ParentView = ({
-  item
-}) => {
-  const parent = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEntityRecord
-    } = select(external_wp_coreData_namespaceObject.store);
-    return item?.parent ? getEntityRecord('postType', item.type, item.parent) : null;
-  }, [item.parent, item.type]);
-  if (parent) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: getTitleWithFallbackName(parent)
-    });
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: (0,external_wp_i18n_namespaceObject.__)('None')
-  });
-};
-
-;// ./packages/fields/build-module/fields/parent/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-const parentField = {
-  id: 'parent',
-  type: 'text',
-  label: (0,external_wp_i18n_namespaceObject.__)('Parent'),
-  Edit: ParentEdit,
-  render: ParentView,
-  enableSorting: true
-};
-
-/**
- * This field is used to display the post parent.
- */
-/* harmony default export */ const fields_parent = (parentField);
-
-;// ./packages/fields/build-module/fields/comment-status/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-const commentStatusField = {
-  id: 'comment_status',
-  label: (0,external_wp_i18n_namespaceObject.__)('Discussion'),
-  type: 'text',
-  Edit: 'radio',
-  enableSorting: false,
-  filterBy: {
-    operators: []
-  },
-  elements: [{
-    value: 'open',
-    label: (0,external_wp_i18n_namespaceObject.__)('Open'),
-    description: (0,external_wp_i18n_namespaceObject.__)('Visitors can add new comments and replies.')
-  }, {
-    value: 'closed',
-    label: (0,external_wp_i18n_namespaceObject.__)('Closed'),
-    description: (0,external_wp_i18n_namespaceObject.__)('Visitors cannot add new comments or replies. Existing comments remain visible.')
-  }]
-};
-
-/**
- * Comment status field for BasePost.
- */
-/* harmony default export */ const comment_status = (commentStatusField);
-
-;// ./packages/fields/build-module/fields/password/edit.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-function PasswordEdit({
-  data,
-  onChange,
-  field
-}) {
-  const [showPassword, setShowPassword] = (0,external_wp_element_namespaceObject.useState)(!!field.getValue({
-    item: data
-  }));
-  const handleTogglePassword = value => {
-    setShowPassword(value);
-    if (!value) {
-      onChange({
-        password: ''
-      });
-    }
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-    as: "fieldset",
-    spacing: 4,
-    className: "fields-controls__password",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-      __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Password protected'),
-      help: (0,external_wp_i18n_namespaceObject.__)('Only visible to those who know the password'),
-      checked: showPassword,
-      onChange: handleTogglePassword
-    }), showPassword && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "fields-controls__password-input",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Password'),
-        onChange: value => onChange({
-          password: value
-        }),
-        value: field.getValue({
-          item: data
-        }) || '',
-        placeholder: (0,external_wp_i18n_namespaceObject.__)('Use a secure password'),
-        type: "text",
-        __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
-        maxLength: 255
-      })
-    })]
-  });
-}
-/* harmony default export */ const password_edit = (PasswordEdit);
-
-;// ./packages/fields/build-module/fields/password/index.js
-/**
- * WordPress dependencies
- */
-
-/**
- * Internal dependencies
- */
-
-
-const passwordField = {
-  id: 'password',
-  type: 'text',
-  Edit: password_edit,
-  enableSorting: false,
-  enableHiding: false,
-  isVisible: item => item.status !== 'private'
-};
-
-/**
- * This field is used to display the post password.
- */
-/* harmony default export */ const fields_password = (passwordField);
-
 ;// ./packages/editor/build-module/components/post-fields/index.js
 /**
  * WordPress dependencies
@@ -32983,23 +33038,51 @@ const passwordField = {
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 function usePostFields() {
+  const postType = 'page'; // TODO: this could be page or post (experimental).
+
+  const {
+    registerPostTypeSchema
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    registerPostTypeSchema(postType);
+  }, [registerPostTypeSchema, postType]);
+  const {
+    defaultFields
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityFields
+    } = unlock(select(store_store));
+    return {
+      defaultFields: getEntityFields('postType', postType)
+    };
+  }, [postType]);
   const {
     records: authors,
     isResolving: isLoadingAuthors
   } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('root', 'user', {
     per_page: -1
   });
-  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [featured_image, title, {
-    ...author,
-    elements: authors?.map(({
-      id,
-      name
-    }) => ({
-      value: id,
-      label: name
-    }))
-  }, fields_status, date, slug, fields_parent, comment_status, fields_password], [authors]);
+  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => defaultFields.map(field => {
+    if (field.id === 'author') {
+      return {
+        ...field,
+        elements: authors?.map(({
+          id,
+          name
+        }) => ({
+          value: id,
+          label: name
+        }))
+      };
+    }
+    return field;
+  }), [authors, defaultFields]);
   return {
     isLoading: isLoadingAuthors,
     fields
@@ -33350,6 +33433,7 @@ lock(privateApis, {
 
 /**
  * @typedef {import('@wordpress/dataviews').Action} Action
+ * @typedef {import('@wordpress/dataviews').Field} Field
  */
 
 /**
@@ -33388,6 +33472,44 @@ function api_unregisterEntityAction(kind, name, actionId) {
   } = unlock((0,external_wp_data_namespaceObject.dispatch)(store_store));
   if (true) {
     _unregisterEntityAction(kind, name, actionId);
+  }
+}
+
+/**
+ * Registers a new DataViews field.
+ *
+ * This is an experimental API and is subject to change.
+ * it's only available in the Gutenberg plugin for now.
+ *
+ * @param {string} kind   Entity kind.
+ * @param {string} name   Entity name.
+ * @param {Field}  config Field configuration.
+ */
+function api_registerEntityField(kind, name, config) {
+  const {
+    registerEntityField: _registerEntityField
+  } = unlock((0,external_wp_data_namespaceObject.dispatch)(store_store));
+  if (true) {
+    _registerEntityField(kind, name, config);
+  }
+}
+
+/**
+ * Unregisters a DataViews field.
+ *
+ * This is an experimental API and is subject to change.
+ * it's only available in the Gutenberg plugin for now.
+ *
+ * @param {string} kind    Entity kind.
+ * @param {string} name    Entity name.
+ * @param {string} fieldId Field ID.
+ */
+function api_unregisterEntityField(kind, name, fieldId) {
+  const {
+    unregisterEntityField: _unregisterEntityField
+  } = unlock((0,external_wp_data_namespaceObject.dispatch)(store_store));
+  if (true) {
+    _unregisterEntityField(kind, name, fieldId);
   }
 }
 
