@@ -1878,20 +1878,13 @@ function MetaBoxesArea({
 
 
 
-class MetaBoxVisibility extends external_wp_element_namespaceObject.Component {
-  componentDidMount() {
-    this.updateDOM();
-  }
-  componentDidUpdate(prevProps) {
-    if (this.props.isVisible !== prevProps.isVisible) {
-      this.updateDOM();
-    }
-  }
-  updateDOM() {
-    const {
-      id,
-      isVisible
-    } = this.props;
+function MetaBoxVisibility({
+  id
+}) {
+  const isVisible = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return select(external_wp_editor_namespaceObject.store).isEditorPanelEnabled(`meta-box-${id}`);
+  }, [id]);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
     const element = document.getElementById(id);
     if (!element) {
       return;
@@ -1901,16 +1894,9 @@ class MetaBoxVisibility extends external_wp_element_namespaceObject.Component {
     } else {
       element.classList.add('is-hidden');
     }
-  }
-  render() {
-    return null;
-  }
+  }, [id, isVisible]);
+  return null;
 }
-/* harmony default export */ const meta_box_visibility = ((0,external_wp_data_namespaceObject.withSelect)((select, {
-  id
-}) => ({
-  isVisible: select(external_wp_editor_namespaceObject.store).isEditorPanelEnabled(`meta-box-${id}`)
-}))(MetaBoxVisibility));
 
 ;// ./packages/edit-post/build-module/components/meta-boxes/index.js
 /**
@@ -1965,7 +1951,7 @@ function MetaBoxes({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [(metaBoxes !== null && metaBoxes !== void 0 ? metaBoxes : []).map(({
       id
-    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(meta_box_visibility, {
+    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MetaBoxVisibility, {
       id: id
     }, id)), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(meta_boxes_area, {
       location: location
