@@ -29284,9 +29284,10 @@ function SidebarNavigationScreenDetailsPanel({
 
 function SidebarNavigationScreenDetailsFooter({
   record,
+  revisionsCount,
   ...otherProps
 }) {
-  var _record$_links$predec, _record$_links$versio;
+  var _record$_links$predec;
   /*
    * There might be other items in the future,
    * but for now it's just modified date.
@@ -29295,8 +29296,17 @@ function SidebarNavigationScreenDetailsFooter({
    */
   const hrefProps = {};
   const lastRevisionId = (_record$_links$predec = record?._links?.['predecessor-version']?.[0]?.id) !== null && _record$_links$predec !== void 0 ? _record$_links$predec : null;
-  const revisionsCount = (_record$_links$versio = record?._links?.['version-history']?.[0]?.count) !== null && _record$_links$versio !== void 0 ? _record$_links$versio : 0;
-  // Enable the revisions link if there is a last revision and there are more than one revisions.
+
+  // Use incoming prop first, then the record's version history, if available.
+  revisionsCount = revisionsCount || record?._links?.['version-history']?.[0]?.count || 0;
+
+  /*
+   * Enable the revisions link if there is a last revision and there is more than one revision.
+   * This link is used for theme assets, e.g., templates, which have no database record until they're edited.
+   * For these files there's only a "revision" after they're edited twice,
+   * which means the revision.php page won't display a proper diff.
+   * See: https://github.com/WordPress/gutenberg/issues/49164.
+   */
   if (lastRevisionId && revisionsCount > 1) {
     hrefProps.href = (0,external_wp_url_namespaceObject.addQueryArgs)('revision.php', {
       revision: record?._links['predecessor-version'][0].id
@@ -29381,7 +29391,8 @@ function SidebarNavigationScreenGlobalStyles() {
   } = sidebar_navigation_screen_global_styles_useLocation();
   const {
     revisions,
-    isLoading: isLoadingRevisions
+    isLoading: isLoadingRevisions,
+    revisionsCount
   } = useGlobalStylesRevisions();
   const {
     openGeneralSidebar
@@ -29389,20 +29400,6 @@ function SidebarNavigationScreenGlobalStyles() {
   const {
     setEditorCanvasContainerView
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
-  const {
-    revisionsCount
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _globalStyles$_links$;
-    const {
-      getEntityRecord,
-      __experimentalGetCurrentGlobalStylesId
-    } = select(external_wp_coreData_namespaceObject.store);
-    const globalStylesId = __experimentalGetCurrentGlobalStylesId();
-    const globalStyles = globalStylesId ? getEntityRecord('root', 'globalStyles', globalStylesId) : undefined;
-    return {
-      revisionsCount: (_globalStyles$_links$ = globalStyles?._links?.['version-history']?.[0]?.count) !== null && _globalStyles$_links$ !== void 0 ? _globalStyles$_links$ : 0
-    };
-  }, []);
   const {
     set: setPreference
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_preferences_namespaceObject.store);
@@ -29425,9 +29422,8 @@ function SidebarNavigationScreenGlobalStyles() {
   }, [openGlobalStyles, setEditorCanvasContainerView]);
 
   // If there are no revisions, do not render a footer.
-  const hasRevisions = revisionsCount > 0;
   const modifiedDateTime = revisions?.[0]?.modified;
-  const shouldShowGlobalStylesFooter = hasRevisions && !isLoadingRevisions && modifiedDateTime;
+  const shouldShowGlobalStylesFooter = revisionsCount > 0 && !isLoadingRevisions && modifiedDateTime;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreen, {
       title: (0,external_wp_i18n_namespaceObject.__)('Design'),
@@ -29438,6 +29434,7 @@ function SidebarNavigationScreenGlobalStyles() {
       }),
       footer: shouldShowGlobalStylesFooter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenDetailsFooter, {
         record: revisions?.[0],
+        revisionsCount: revisionsCount,
         onClick: openRevisions
       })
     })
