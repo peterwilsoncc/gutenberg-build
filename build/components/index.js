@@ -34490,6 +34490,7 @@ function ListBox({
     children: items.map((option, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
       id: `components-autocomplete-item-${instanceId}-${option.key}`,
       role: "option",
+      __next40pxDefaultSize: true,
       "aria-selected": index === selectedIndex,
       accessibleWhenDisabled: true,
       disabled: option.isDisabled,
