@@ -32320,8 +32320,7 @@ const DataViewsContext = (0,external_wp_element_namespaceObject.createContext)({
   openedFilter: null,
   getItemId: item => item.id,
   onClickItem: () => {},
-  isItemClickable: () => false,
-  density: 0
+  isItemClickable: () => false
 });
 /* harmony default export */ const dataviews_context = (DataViewsContext);
 
@@ -38940,7 +38939,9 @@ function ViewTable({
   const primaryField = fields.find(field => field.id === view.layout?.primaryField);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("table", {
-      className: "dataviews-view-table",
+      className: dist_clsx('dataviews-view-table', {
+        [`has-${view.layout?.density}-density`]: view.layout?.density && ['compact', 'comfortable'].includes(view.layout.density)
+      }),
       "aria-busy": isLoading,
       "aria-describedby": tableNoticeId,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("thead", {
@@ -39032,6 +39033,128 @@ function ViewTable({
 }
 /* harmony default export */ const table = (ViewTable);
 
+;// ./packages/dataviews/build-module/dataviews-layouts/grid/preview-size-picker.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const viewportBreaks = {
+  xhuge: {
+    min: 3,
+    max: 6,
+    default: 5
+  },
+  huge: {
+    min: 2,
+    max: 4,
+    default: 4
+  },
+  xlarge: {
+    min: 2,
+    max: 3,
+    default: 3
+  },
+  large: {
+    min: 1,
+    max: 2,
+    default: 2
+  },
+  mobile: {
+    min: 1,
+    max: 2,
+    default: 2
+  }
+};
+function useViewPortBreakpoint() {
+  const isXHuge = (0,external_wp_compose_namespaceObject.useViewportMatch)('xhuge', '>=');
+  const isHuge = (0,external_wp_compose_namespaceObject.useViewportMatch)('huge', '>=');
+  const isXlarge = (0,external_wp_compose_namespaceObject.useViewportMatch)('xlarge', '>=');
+  const isLarge = (0,external_wp_compose_namespaceObject.useViewportMatch)('large', '>=');
+  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('mobile', '>=');
+  if (isXHuge) {
+    return 'xhuge';
+  }
+  if (isHuge) {
+    return 'huge';
+  }
+  if (isXlarge) {
+    return 'xlarge';
+  }
+  if (isLarge) {
+    return 'large';
+  }
+  if (isMobile) {
+    return 'mobile';
+  }
+  return null;
+}
+function useUpdatedPreviewSizeOnViewportChange() {
+  const viewport = useViewPortBreakpoint();
+  const view = (0,external_wp_element_namespaceObject.useContext)(dataviews_context).view;
+  return (0,external_wp_element_namespaceObject.useMemo)(() => {
+    const previewSize = view.layout?.previewSize;
+    let newPreviewSize;
+    if (!viewport || !previewSize) {
+      return;
+    }
+    const breakValues = viewportBreaks[viewport];
+    if (previewSize < breakValues.min) {
+      newPreviewSize = breakValues.min;
+    }
+    if (previewSize > breakValues.max) {
+      newPreviewSize = breakValues.max;
+    }
+    return newPreviewSize;
+  }, [viewport, view]);
+}
+function PreviewSizePicker() {
+  const viewport = useViewPortBreakpoint();
+  const context = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
+  const view = context.view;
+  const breakValues = viewportBreaks[viewport || 'mobile'];
+  const previewSizeToUse = view.layout?.previewSize || breakValues.default;
+  const marks = (0,external_wp_element_namespaceObject.useMemo)(() => Array.from({
+    length: breakValues.max - breakValues.min + 1
+  }, (_, i) => {
+    return {
+      value: breakValues.min + i
+    };
+  }), [breakValues]);
+  if (!viewport) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
+    showTooltip: false,
+    label: (0,external_wp_i18n_namespaceObject.__)('Preview size'),
+    value: breakValues.max + breakValues.min - previewSizeToUse,
+    marks: marks,
+    min: breakValues.min,
+    max: breakValues.max,
+    withInputField: false,
+    onChange: (value = 0) => {
+      context.onChangeView({
+        ...view,
+        layout: {
+          ...view.layout,
+          previewSize: breakValues.max + breakValues.min - value
+        }
+      });
+    },
+    step: 1
+  });
+}
+
 ;// ./packages/dataviews/build-module/dataviews-layouts/grid/index.js
 /**
  * External dependencies
@@ -39047,6 +39170,7 @@ function ViewTable({
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -39169,8 +39293,7 @@ function ViewGrid({
   onClickItem,
   isItemClickable,
   selection,
-  view,
-  density
+  view
 }) {
   const mediaField = fields.find(field => field.id === view.layout?.mediaField);
   const primaryField = fields.find(field => field.id === view.layout?.primaryField);
@@ -39192,8 +39315,10 @@ function ViewGrid({
     badgeFields: []
   });
   const hasData = !!data?.length;
-  const gridStyle = density ? {
-    gridTemplateColumns: `repeat(${density}, minmax(0, 1fr))`
+  const updatedPreviewSize = useUpdatedPreviewSizeOnViewportChange();
+  const usedPreviewSize = updatedPreviewSize || view.layout?.previewSize;
+  const gridStyle = usedPreviewSize ? {
+    gridTemplateColumns: `repeat(${usedPreviewSize}, minmax(0, 1fr))`
   } : {};
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [hasData && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalGrid, {
@@ -39562,6 +39687,50 @@ function ViewList(props) {
   });
 }
 
+;// ./packages/dataviews/build-module/dataviews-layouts/table/density-picker.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+function DensityPicker() {
+  const context = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
+  const view = context.view;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+    __nextHasNoMarginBottom: true,
+    size: "__unstable-large",
+    label: (0,external_wp_i18n_namespaceObject.__)('Density'),
+    value: view.layout?.density || 'balanced',
+    onChange: value => {
+      context.onChangeView({
+        ...view,
+        layout: {
+          ...view.layout,
+          density: value
+        }
+      });
+    },
+    isBlock: true,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+      value: "comfortable",
+      label: (0,external_wp_i18n_namespaceObject._x)('Comfortable', 'Density option for DataView layout')
+    }, "comfortable"), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+      value: "balanced",
+      label: (0,external_wp_i18n_namespaceObject._x)('Balanced', 'Density option for DataView layout')
+    }, "balanced"), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+      value: "compact",
+      label: (0,external_wp_i18n_namespaceObject._x)('Compact', 'Density option for DataView layout')
+    }, "compact")]
+  });
+}
+
 ;// ./packages/dataviews/build-module/dataviews-layouts/index.js
 /**
  * WordPress dependencies
@@ -39576,16 +39745,20 @@ function ViewList(props) {
 
 
 
+
+
 const VIEW_LAYOUTS = [{
   type: constants_LAYOUT_TABLE,
   label: (0,external_wp_i18n_namespaceObject.__)('Table'),
   component: table,
-  icon: block_table
+  icon: block_table,
+  viewConfigOptions: DensityPicker
 }, {
   type: constants_LAYOUT_GRID,
   label: (0,external_wp_i18n_namespaceObject.__)('Grid'),
   component: ViewGrid,
-  icon: library_category
+  icon: library_category,
+  viewConfigOptions: PreviewSizePicker
 }, {
   type: constants_LAYOUT_LIST,
   label: (0,external_wp_i18n_namespaceObject.__)('List'),
@@ -39678,7 +39851,6 @@ function DataViewsLayout() {
     selection,
     onChangeSelection,
     setOpenedFilter,
-    density,
     onClickItem,
     isItemClickable
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
@@ -39695,8 +39867,7 @@ function DataViewsLayout() {
     setOpenedFilter: setOpenedFilter,
     onClickItem: onClickItem,
     isItemClickable: isItemClickable,
-    view: view,
-    density: density
+    view: view
   });
 }
 
@@ -39913,114 +40084,6 @@ const cog = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(extern
 
 ;// external ["wp","warning"]
 const external_wp_warning_namespaceObject = window["wp"]["warning"];
-;// ./packages/dataviews/build-module/dataviews-layouts/grid/density-picker.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-const viewportBreaks = {
-  xhuge: {
-    min: 3,
-    max: 6,
-    default: 5
-  },
-  huge: {
-    min: 2,
-    max: 4,
-    default: 4
-  },
-  xlarge: {
-    min: 2,
-    max: 3,
-    default: 3
-  },
-  large: {
-    min: 1,
-    max: 2,
-    default: 2
-  },
-  mobile: {
-    min: 1,
-    max: 2,
-    default: 2
-  }
-};
-function useViewPortBreakpoint() {
-  const isXHuge = (0,external_wp_compose_namespaceObject.useViewportMatch)('xhuge', '>=');
-  const isHuge = (0,external_wp_compose_namespaceObject.useViewportMatch)('huge', '>=');
-  const isXlarge = (0,external_wp_compose_namespaceObject.useViewportMatch)('xlarge', '>=');
-  const isLarge = (0,external_wp_compose_namespaceObject.useViewportMatch)('large', '>=');
-  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('mobile', '>=');
-  if (isXHuge) {
-    return 'xhuge';
-  }
-  if (isHuge) {
-    return 'huge';
-  }
-  if (isXlarge) {
-    return 'xlarge';
-  }
-  if (isLarge) {
-    return 'large';
-  }
-  if (isMobile) {
-    return 'mobile';
-  }
-  return null;
-}
-function DensityPicker({
-  density,
-  setDensity
-}) {
-  const viewport = useViewPortBreakpoint();
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    setDensity(_density => {
-      if (!viewport || !_density) {
-        return 0;
-      }
-      const breakValues = viewportBreaks[viewport];
-      if (_density < breakValues.min) {
-        return breakValues.min;
-      }
-      if (_density > breakValues.max) {
-        return breakValues.max;
-      }
-      return _density;
-    });
-  }, [setDensity, viewport]);
-  const breakValues = viewportBreaks[viewport || 'mobile'];
-  const densityToUse = density || breakValues.default;
-  const marks = (0,external_wp_element_namespaceObject.useMemo)(() => Array.from({
-    length: breakValues.max - breakValues.min + 1
-  }, (_, i) => {
-    return {
-      value: breakValues.min + i
-    };
-  }), [breakValues]);
-  if (!viewport) {
-    return null;
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
-    __nextHasNoMarginBottom: true,
-    __next40pxDefaultSize: true,
-    showTooltip: false,
-    label: (0,external_wp_i18n_namespaceObject.__)('Preview size'),
-    value: breakValues.max + breakValues.min - densityToUse,
-    marks: marks,
-    min: breakValues.min,
-    max: breakValues.max,
-    withInputField: false,
-    onChange: (value = 0) => {
-      setDensity(breakValues.max + breakValues.min - value);
-    },
-    step: 1
-  });
-}
-
 ;// ./packages/dataviews/build-module/components/dataviews-view-config/index.js
 /**
  * External dependencies
@@ -40039,7 +40102,6 @@ function DensityPicker({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -40411,14 +40473,12 @@ function SettingsSection({
     })]
   });
 }
-function DataviewsViewConfigDropdown({
-  density,
-  setDensity
-}) {
+function DataviewsViewConfigDropdown() {
   const {
     view
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const popoverId = (0,external_wp_compose_namespaceObject.useInstanceId)(_DataViewsViewConfig, 'dataviews-view-config-dropdown');
+  const activeLayout = VIEW_LAYOUTS.find(layout => layout.type === view.type);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
     popoverProps: {
       ...DATAVIEWS_CONFIG_POPOVER_PROPS,
@@ -40448,10 +40508,7 @@ function DataviewsViewConfigDropdown({
             expanded: true,
             className: "is-divided-in-two",
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SortFieldControl, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SortDirectionControl, {})]
-          }), view.type === constants_LAYOUT_GRID && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DensityPicker, {
-            density: density,
-            setDensity: setDensity
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemsPerPageControl, {})]
+          }), !!activeLayout?.viewConfigOptions && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(activeLayout.viewConfigOptions, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemsPerPageControl, {})]
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SettingsSection, {
           title: (0,external_wp_i18n_namespaceObject.__)('Properties'),
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldControl, {})
@@ -40461,8 +40518,6 @@ function DataviewsViewConfigDropdown({
   });
 }
 function _DataViewsViewConfig({
-  density,
-  setDensity,
   defaultLayouts = {
     list: {},
     grid: {},
@@ -40472,10 +40527,7 @@ function _DataViewsViewConfig({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewTypeMenu, {
       defaultLayouts: defaultLayouts
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsViewConfigDropdown, {
-      density: density,
-      setDensity: setDensity
-    })]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsViewConfigDropdown, {})]
   });
 }
 const DataViewsViewConfig = (0,external_wp_element_namespaceObject.memo)(_DataViewsViewConfig);
@@ -40526,7 +40578,6 @@ function DataViews({
   header
 }) {
   const [selectionState, setSelectionState] = (0,external_wp_element_namespaceObject.useState)([]);
-  const [density, setDensity] = (0,external_wp_element_namespaceObject.useState)(0);
   const isUncontrolled = selectionProperty === undefined || onChangeSelection === undefined;
   const selection = isUncontrolled ? selectionState : selectionProperty;
   const [openedFilter, setOpenedFilter] = (0,external_wp_element_namespaceObject.useState)(null);
@@ -40560,8 +40611,7 @@ function DataViews({
       setOpenedFilter,
       getItemId,
       isItemClickable,
-      onClickItem,
-      density
+      onClickItem
     },
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "dataviews-wrapper",
@@ -40591,9 +40641,7 @@ function DataViews({
             flexShrink: 0
           },
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config, {
-            defaultLayouts: defaultLayouts,
-            density: density,
-            setDensity: setDensity
+            defaultLayouts: defaultLayouts
           }), header]
         })]
       }), isShowingFilter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_filters, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsLayout, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsFooter, {})]
