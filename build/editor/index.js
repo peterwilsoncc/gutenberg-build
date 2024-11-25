@@ -17360,7 +17360,7 @@ function PostFeaturedImage({
   noticeOperations,
   isRequestingFeaturedImageMedia
 }) {
-  const toggleRef = (0,external_wp_element_namespaceObject.useRef)();
+  const returnsFocusRef = (0,external_wp_element_namespaceObject.useRef)(false);
   const [isLoading, setIsLoading] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
     getSettings
@@ -17368,12 +17368,6 @@ function PostFeaturedImage({
   const {
     mediaSourceUrl
   } = getMediaDetails(media, currentPostId);
-  const toggleFocusTimerRef = (0,external_wp_element_namespaceObject.useRef)();
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    return () => {
-      clearTimeout(toggleFocusTimerRef.current);
-    };
-  }, []);
   function onDropFiles(filesList) {
     getSettings().mediaUpload({
       allowedTypes: ALLOWED_MEDIA_TYPES,
@@ -17417,6 +17411,12 @@ function PostFeaturedImage({
     // Translators: %s: The selected image filename.
     (0,external_wp_i18n_namespaceObject.__)('The current image has no alternative text. The file name is: %s'), imageMedia.media_details.sizes?.full?.file || imageMedia.slug);
   }
+  function returnFocus(node) {
+    if (returnsFocusRef.current && node) {
+      node.focus();
+      returnsFocusRef.current = false;
+    }
+  }
   const isMissingMedia = !isRequestingFeaturedImageMedia && !!featuredImageId && !media;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(post_featured_image_check, {
     children: [noticeUI, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
@@ -17443,7 +17443,7 @@ function PostFeaturedImage({
               children: (0,external_wp_i18n_namespaceObject.__)('Could not retrieve the featured image data.')
             }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
               __next40pxDefaultSize: true,
-              ref: toggleRef,
+              ref: returnFocus,
               className: !featuredImageId ? 'editor-post-featured-image__toggle' : 'editor-post-featured-image__preview',
               onClick: open,
               "aria-label": !featuredImageId ? null : (0,external_wp_i18n_namespaceObject.__)('Edit or replace the featured image'),
@@ -17473,11 +17473,10 @@ function PostFeaturedImage({
                 className: "editor-post-featured-image__action",
                 onClick: () => {
                   onRemoveImage();
-                  // The toggle button is rendered conditionally, we need
-                  // to wait it is rendered before moving focus to it.
-                  toggleFocusTimerRef.current = setTimeout(() => {
-                    toggleRef.current?.focus();
-                  });
+                  // Signal that the toggle button should be focused,
+                  // when it is rendered. Can't focus it directly here
+                  // because it's rendered conditionally.
+                  returnsFocusRef.current = true;
                 },
                 variant: isMissingMedia ? 'secondary' : undefined,
                 isDestructive: isMissingMedia,
