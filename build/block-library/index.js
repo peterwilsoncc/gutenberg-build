@@ -18378,6 +18378,7 @@ function FileEdit({
     // This effect should only run on mount.
   }, []);
   function onSelectFile(newMedia) {
+    var _attributes$displayPr, _attributes$previewHe;
     if (!newMedia || !newMedia.url) {
       // Reset attributes.
       setAttributes({
@@ -18397,15 +18398,18 @@ function FileEdit({
       return;
     }
     const isPdf = newMedia.url.endsWith('.pdf');
+    const pdfAttributes = {
+      displayPreview: isPdf ? (_attributes$displayPr = attributes.displayPreview) !== null && _attributes$displayPr !== void 0 ? _attributes$displayPr : true : undefined,
+      previewHeight: isPdf ? (_attributes$previewHe = attributes.previewHeight) !== null && _attributes$previewHe !== void 0 ? _attributes$previewHe : 600 : undefined
+    };
     setAttributes({
       href: newMedia.url,
       fileName: newMedia.title,
       textLinkHref: newMedia.url,
       id: newMedia.id,
-      displayPreview: isPdf ? true : undefined,
-      previewHeight: isPdf ? 600 : undefined,
       fileId: `wp-block-file--media-${clientId}`,
-      blob: undefined
+      blob: undefined,
+      ...pdfAttributes
     });
     setTemporaryURL();
   }
