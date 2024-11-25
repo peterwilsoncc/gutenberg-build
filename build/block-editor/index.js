@@ -17831,7 +17831,7 @@ function transformStyles(activeSupports, migrationPaths, result, source, index, 
  */
 function shouldSkipSerialization(blockNameOrType, featureSet, feature) {
   const support = (0,external_wp_blocks_namespaceObject.getBlockSupport)(blockNameOrType, featureSet);
-  const skipSerialization = support?.__experimentalSkipSerialization;
+  const skipSerialization = support?.skipSerialization;
   if (Array.isArray(skipSerialization)) {
     return skipSerialization.includes(feature);
   }
@@ -26554,8 +26554,8 @@ function border_BorderPanel({
     return null;
   }
   const defaultControls = {
-    ...(0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [BORDER_SUPPORT_KEY, '__experimentalDefaultControls']),
-    ...(0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [SHADOW_SUPPORT_KEY, '__experimentalDefaultControls'])
+    ...(0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [BORDER_SUPPORT_KEY, 'defaultControls']),
+    ...(0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [SHADOW_SUPPORT_KEY, 'defaultControls'])
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BorderPanel, {
     as: BordersInspectorControl,
@@ -28028,7 +28028,7 @@ function ColorEdit({
   if (!isEnabled) {
     return null;
   }
-  const defaultControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [COLOR_SUPPORT_KEY, '__experimentalDefaultControls']);
+  const defaultControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [COLOR_SUPPORT_KEY, 'defaultControls']);
   const enableContrastChecking = external_wp_element_namespaceObject.Platform.OS === 'web' && !value?.color?.gradient && (settings?.color?.text || settings?.color?.link) &&
   // Contrast checking is enabled by default.
   // Deactivating it requires `enableContrastChecker` to have
@@ -30175,7 +30175,7 @@ function typography_TypographyPanel({
   if (!isEnabled) {
     return null;
   }
-  const defaultControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [TYPOGRAPHY_SUPPORT_KEY, '__experimentalDefaultControls']);
+  const defaultControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [TYPOGRAPHY_SUPPORT_KEY, 'defaultControls']);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TypographyPanel, {
     as: TypographyInspectorControl,
     panelId: clientId,
@@ -32607,8 +32607,8 @@ function dimensions_DimensionsPanel({
   if (!isEnabled) {
     return null;
   }
-  const defaultDimensionsControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [DIMENSIONS_SUPPORT_KEY, '__experimentalDefaultControls']);
-  const defaultSpacingControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [SPACING_SUPPORT_KEY, '__experimentalDefaultControls']);
+  const defaultDimensionsControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [DIMENSIONS_SUPPORT_KEY, 'defaultControls']);
+  const defaultSpacingControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [SPACING_SUPPORT_KEY, 'defaultControls']);
   const defaultControls = {
     ...defaultDimensionsControls,
     ...defaultSpacingControls
@@ -32780,12 +32780,12 @@ function style_addAttribute(settings) {
  * @type {Record<string, string[]>}
  */
 const skipSerializationPathsEdit = {
-  [`${BORDER_SUPPORT_KEY}.__experimentalSkipSerialization`]: ['border'],
-  [`${COLOR_SUPPORT_KEY}.__experimentalSkipSerialization`]: [COLOR_SUPPORT_KEY],
-  [`${TYPOGRAPHY_SUPPORT_KEY}.__experimentalSkipSerialization`]: [TYPOGRAPHY_SUPPORT_KEY],
-  [`${DIMENSIONS_SUPPORT_KEY}.__experimentalSkipSerialization`]: [DIMENSIONS_SUPPORT_KEY],
-  [`${SPACING_SUPPORT_KEY}.__experimentalSkipSerialization`]: [SPACING_SUPPORT_KEY],
-  [`${SHADOW_SUPPORT_KEY}.__experimentalSkipSerialization`]: [SHADOW_SUPPORT_KEY]
+  [`${BORDER_SUPPORT_KEY}.skipSerialization`]: ['border'],
+  [`${COLOR_SUPPORT_KEY}.skipSerialization`]: [COLOR_SUPPORT_KEY],
+  [`${TYPOGRAPHY_SUPPORT_KEY}.skipSerialization`]: [TYPOGRAPHY_SUPPORT_KEY],
+  [`${DIMENSIONS_SUPPORT_KEY}.skipSerialization`]: [DIMENSIONS_SUPPORT_KEY],
+  [`${SPACING_SUPPORT_KEY}.skipSerialization`]: [SPACING_SUPPORT_KEY],
+  [`${SHADOW_SUPPORT_KEY}.skipSerialization`]: [SHADOW_SUPPORT_KEY]
 };
 
 /**
