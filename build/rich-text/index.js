@@ -896,7 +896,18 @@ function toTree({
         innerHTML
       } = replacement;
       const formatType = get_format_type_getFormatType(type);
-      if (!isEditableTree && type === 'script') {
+      if (isEditableTree && type === '#comment') {
+        pointer = append(getParent(pointer), {
+          type: 'span',
+          attributes: {
+            contenteditable: 'false',
+            'data-rich-text-comment': attributes['data-rich-text-comment']
+          }
+        });
+        append(append(pointer, {
+          type: 'span'
+        }), attributes['data-rich-text-comment'].trim());
+      } else if (!isEditableTree && type === 'script') {
         pointer = append(getParent(pointer), fromFormat({
           type: 'script',
           isEditableTree
@@ -1061,6 +1072,14 @@ function createElementHTML({
   object,
   children
 }) {
+  if (type === '#comment') {
+    // We can't restore the original comment delimiters, because once parsed
+    // into DOM nodes, we don't have the information. But in the future we
+    // could allow comment handlers to specify custom delimiters, for
+    // example `</{comment-content}>` for Bits, where `comment-content`
+    // would be `/{bit-name}` or `__{translatable-string}` (TBD).
+    return `<!--${attributes['data-rich-text-comment']}-->`;
+  }
   let attributeString = '';
   for (const key in attributes) {
     if (!(0,external_wp_escapeHtml_namespaceObject.isValidAttributeName)(key)) {
@@ -1554,6 +1573,21 @@ function createFromElement({
       accumulator.formats.length += text.length;
       accumulator.replacements.length += text.length;
       accumulator.text += text;
+      continue;
+    }
+    if (node.nodeType === node.COMMENT_NODE || node.nodeType === node.ELEMENT_NODE && node.tagName === 'SPAN' && node.hasAttribute('data-rich-text-comment')) {
+      const value = {
+        formats: [,],
+        replacements: [{
+          type: '#comment',
+          attributes: {
+            'data-rich-text-comment': node.nodeType === node.COMMENT_NODE ? node.nodeValue : node.getAttribute('data-rich-text-comment')
+          }
+        }],
+        text: OBJECT_REPLACEMENT_CHARACTER
+      };
+      accumulateSelection(accumulator, node, range, value);
+      mergePair(accumulator, value);
       continue;
     }
     if (node.nodeType !== node.ELEMENT_NODE) {
@@ -2380,9 +2414,13 @@ function to_dom_append(element, child) {
     attributes
   } = child;
   if (type) {
-    child = element.ownerDocument.createElement(type);
-    for (const key in attributes) {
-      child.setAttribute(key, attributes[key]);
+    if (type === '#comment') {
+      child = element.ownerDocument.createComment(attributes['data-rich-text-comment']);
+    } else {
+      child = element.ownerDocument.createElement(type);
+      for (const key in attributes) {
+        child.setAttribute(key, attributes[key]);
+      }
     }
   }
   return element.appendChild(child);
