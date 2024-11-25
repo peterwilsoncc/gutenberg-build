@@ -2422,25 +2422,6 @@ const external_wp_url_namespaceObject = window["wp"]["url"];
 ;// external ["wp","deprecated"]
 const external_wp_deprecated_namespaceObject = window["wp"]["deprecated"];
 var external_wp_deprecated_default = /*#__PURE__*/__webpack_require__.n(external_wp_deprecated_namespaceObject);
-;// external ["wp","primitives"]
-const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
-;// external "ReactJSXRuntime"
-const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
-;// ./packages/icons/build-module/library/layout.js
-/**
- * WordPress dependencies
- */
-
-
-const layout = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
-  })
-});
-/* harmony default export */ const library_layout = (layout);
-
 ;// external ["wp","preferences"]
 const external_wp_preferences_namespaceObject = window["wp"]["preferences"];
 ;// ./packages/editor/build-module/store/constants.js
@@ -2475,6 +2456,10 @@ const constants_TEMPLATE_ORIGINS = {
 const TEMPLATE_POST_TYPES = ['wp_template', 'wp_template_part'];
 const GLOBAL_POST_TYPES = [...TEMPLATE_POST_TYPES, 'wp_block', 'wp_navigation'];
 
+;// external ["wp","primitives"]
+const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
+;// external "ReactJSXRuntime"
+const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
 ;// ./packages/icons/build-module/library/header.js
 /**
  * WordPress dependencies
@@ -2571,11 +2556,77 @@ const {
   unlock
 } = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/editor');
 
-;// ./packages/editor/build-module/store/selectors.js
+;// ./packages/icons/build-module/library/layout.js
 /**
  * WordPress dependencies
  */
 
+
+const layout = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
+  })
+});
+/* harmony default export */ const library_layout = (layout);
+
+;// ./packages/editor/build-module/utils/get-template-info.js
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+const EMPTY_OBJECT = {};
+
+/**
+ * Helper function to retrieve the corresponding template info for a given template.
+ * @param {Object} params
+ * @param {Array}  params.templateTypes
+ * @param {Array}  [params.templateAreas]
+ * @param {Object} params.template
+ */
+const getTemplateInfo = params => {
+  var _Object$values$find;
+  if (!params) {
+    return EMPTY_OBJECT;
+  }
+  const {
+    templateTypes,
+    templateAreas,
+    template
+  } = params;
+  const {
+    description,
+    slug,
+    title,
+    area
+  } = template;
+  const {
+    title: defaultTitle,
+    description: defaultDescription
+  } = (_Object$values$find = Object.values(templateTypes).find(type => type.slug === slug)) !== null && _Object$values$find !== void 0 ? _Object$values$find : EMPTY_OBJECT;
+  const templateTitle = typeof title === 'string' ? title : title?.rendered;
+  const templateDescription = typeof description === 'string' ? description : description?.raw;
+  const templateAreasWithIcon = templateAreas?.map(item => ({
+    ...item,
+    icon: getTemplatePartIcon(item.icon)
+  }));
+  const templateIcon = templateAreasWithIcon?.find(item => area === item.area)?.icon || library_layout;
+  return {
+    title: templateTitle && templateTitle !== slug ? templateTitle : defaultTitle || slug,
+    description: templateDescription || defaultDescription,
+    icon: templateIcon
+  };
+};
+
+;// ./packages/editor/build-module/store/selectors.js
+/**
+ * WordPress dependencies
+ */
 
 
 
@@ -2594,6 +2645,7 @@ const {
 
 
 
+
 /**
  * Shared reference to an empty object for cases where it is important to avoid
  * returning a new object reference on every invocation, as in a connected or
@@ -2601,7 +2653,7 @@ const {
  * This should be used as a last resort, since the normalized data should be
  * maintained by the reducer result in state.
  */
-const EMPTY_OBJECT = {};
+const selectors_EMPTY_OBJECT = {};
 
 /**
  * Returns true if any past editor history snapshots exist, or false otherwise.
@@ -2716,7 +2768,7 @@ const getCurrentPost = (0,external_wp_data_namespaceObject.createRegistrySelecto
   // This exists for compatibility with the previous selector behavior
   // which would guarantee an object return based on the editor reducer's
   // default empty object state.
-  return EMPTY_OBJECT;
+  return selectors_EMPTY_OBJECT;
 });
 
 /**
@@ -2794,7 +2846,7 @@ function getCurrentPostLastRevisionId(state) {
 const getPostEdits = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => state => {
   const postType = getCurrentPostType(state);
   const postId = getCurrentPostId(state);
-  return select(external_wp_coreData_namespaceObject.store).getEntityRecordEdits('postType', postType, postId) || EMPTY_OBJECT;
+  return select(external_wp_coreData_namespaceObject.store).getEntityRecordEdits('postType', postType, postId) || selectors_EMPTY_OBJECT;
 });
 
 /**
@@ -4019,17 +4071,13 @@ const hasInserterItems = getBlockEditorSelector('hasInserterItems');
  * @see getBlockListSettings in core/block-editor store.
  */
 const getBlockListSettings = getBlockEditorSelector('getBlockListSettings');
-
-/**
- * Returns the default template types.
- *
- * @param {Object} state Global application state.
- *
- * @return {Object} The template types.
- */
-function __experimentalGetDefaultTemplateTypes(state) {
-  return getEditorSettings(state)?.defaultTemplateTypes;
-}
+const __experimentalGetDefaultTemplateTypes = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
+  external_wp_deprecated_default()("select('core/editor').__experimentalGetDefaultTemplateTypes", {
+    since: '6.7',
+    alternative: "select('core/core-data').getEntityRecord( 'root', '__unstableBase' )?.default_template_types"
+  });
+  return select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_types;
+});
 
 /**
  * Returns the default template part areas.
@@ -4038,16 +4086,19 @@ function __experimentalGetDefaultTemplateTypes(state) {
  *
  * @return {Array} The template part areas.
  */
-const __experimentalGetDefaultTemplatePartAreas = (0,external_wp_data_namespaceObject.createSelector)(state => {
-  var _getEditorSettings$de;
-  const areas = (_getEditorSettings$de = getEditorSettings(state)?.defaultTemplatePartAreas) !== null && _getEditorSettings$de !== void 0 ? _getEditorSettings$de : [];
+const __experimentalGetDefaultTemplatePartAreas = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(() => {
+  external_wp_deprecated_default()("select('core/editor').__experimentalGetDefaultTemplatePartAreas", {
+    since: '6.7',
+    alternative: "select('core/core-data').getEntityRecord( 'root', '__unstableBase' )?.default_template_part_areas"
+  });
+  const areas = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || [];
   return areas.map(item => {
     return {
       ...item,
       icon: getTemplatePartIcon(item.icon)
     };
   });
-}, state => [getEditorSettings(state)?.defaultTemplatePartAreas]);
+}));
 
 /**
  * Returns a default template type searched by slug.
@@ -4057,14 +4108,17 @@ const __experimentalGetDefaultTemplatePartAreas = (0,external_wp_data_namespaceO
  *
  * @return {Object} The template type.
  */
-const __experimentalGetDefaultTemplateType = (0,external_wp_data_namespaceObject.createSelector)((state, slug) => {
+const __experimentalGetDefaultTemplateType = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)((state, slug) => {
   var _Object$values$find;
-  const templateTypes = __experimentalGetDefaultTemplateTypes(state);
+  external_wp_deprecated_default()("select('core/editor').__experimentalGetDefaultTemplateType", {
+    since: '6.7'
+  });
+  const templateTypes = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_types;
   if (!templateTypes) {
-    return EMPTY_OBJECT;
+    return selectors_EMPTY_OBJECT;
   }
-  return (_Object$values$find = Object.values(templateTypes).find(type => type.slug === slug)) !== null && _Object$values$find !== void 0 ? _Object$values$find : EMPTY_OBJECT;
-}, state => [__experimentalGetDefaultTemplateTypes(state)]);
+  return (_Object$values$find = Object.values(templateTypes).find(type => type.slug === slug)) !== null && _Object$values$find !== void 0 ? _Object$values$find : selectors_EMPTY_OBJECT;
+}));
 
 /**
  * Given a template entity, return information about it which is ready to be
@@ -4074,29 +4128,21 @@ const __experimentalGetDefaultTemplateType = (0,external_wp_data_namespaceObject
  * @param {Object} template The template for which we need information.
  * @return {Object} Information about the template, including title, description, and icon.
  */
-const __experimentalGetTemplateInfo = (0,external_wp_data_namespaceObject.createSelector)((state, template) => {
+const __experimentalGetTemplateInfo = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)((state, template) => {
+  external_wp_deprecated_default()("select('core/editor').__experimentalGetTemplateInfo", {
+    since: '6.7'
+  });
   if (!template) {
-    return EMPTY_OBJECT;
+    return selectors_EMPTY_OBJECT;
   }
-  const {
-    description,
-    slug,
-    title,
-    area
-  } = template;
-  const {
-    title: defaultTitle,
-    description: defaultDescription
-  } = __experimentalGetDefaultTemplateType(state, slug);
-  const templateTitle = typeof title === 'string' ? title : title?.rendered;
-  const templateDescription = typeof description === 'string' ? description : description?.raw;
-  const templateIcon = __experimentalGetDefaultTemplatePartAreas(state).find(item => area === item.area)?.icon || library_layout;
-  return {
-    title: templateTitle && templateTitle !== slug ? templateTitle : defaultTitle || slug,
-    description: templateDescription || defaultDescription,
-    icon: templateIcon
-  };
-}, state => [__experimentalGetDefaultTemplateTypes(state), __experimentalGetDefaultTemplatePartAreas(state)]);
+  const templateTypes = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_types || [];
+  const templateAreas = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || [];
+  return getTemplateInfo({
+    template,
+    templateAreas,
+    templateTypes
+  });
+}));
 
 /**
  * Returns a post type label depending on the current post.
@@ -9736,7 +9782,6 @@ const getCleanTemplatePartSlug = title => {
 
 
 
-
 function CreateTemplatePartModal({
   modalTitle,
   ...restProps
@@ -9773,7 +9818,7 @@ function CreateTemplatePartModalContents({
   const [area, setArea] = (0,external_wp_element_namespaceObject.useState)(defaultArea);
   const [isSubmitting, setIsSubmitting] = (0,external_wp_element_namespaceObject.useState)(false);
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(CreateTemplatePartModal);
-  const templatePartAreas = (0,external_wp_data_namespaceObject.useSelect)(select => select(store_store).__experimentalGetDefaultTemplatePartAreas(), []);
+  const templatePartAreas = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || [], []);
   async function createTemplatePart() {
     if (!title || isSubmitting) {
       return;
@@ -10554,7 +10599,7 @@ const CARD_ICONS = {
 const getPostIcon = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (state, postType, options) => {
   {
     if (postType === 'wp_template_part' || postType === 'wp_template') {
-      return __experimentalGetDefaultTemplatePartAreas(state).find(item => options.area === item.area)?.icon || library_layout;
+      return (select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || []).find(item => options.area === item.area)?.icon || library_layout;
     }
     if (CARD_ICONS[postType]) {
       return CARD_ICONS[postType];
@@ -12564,6 +12609,7 @@ function usePageTypeBadge() {
 
 
 
+
 /** @typedef {import("@wordpress/components").IconType} IconType */
 
 const MotionButton = (0,external_wp_components_namespaceObject.__unstableMotion)(external_wp_components_namespaceObject.Button);
@@ -12595,11 +12641,11 @@ function DocumentBar(props) {
     onNavigateToPreviousEntityRecord,
     isTemplatePreview
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _select$getEntityReco;
     const {
       getCurrentPostType,
       getCurrentPostId,
       getEditorSettings,
-      __experimentalGetTemplateInfo: getTemplateInfo,
       getRenderingMode
     } = select(store_store);
     const {
@@ -12610,7 +12656,13 @@ function DocumentBar(props) {
     const _postType = getCurrentPostType();
     const _postId = getCurrentPostId();
     const _document = getEditedEntityRecord('postType', _postType, _postId);
-    const _templateInfo = getTemplateInfo(_document);
+    const {
+      default_template_types: templateTypes = []
+    } = (_select$getEntityReco = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')) !== null && _select$getEntityReco !== void 0 ? _select$getEntityReco : {};
+    const _templateInfo = getTemplateInfo({
+      templateTypes,
+      template: _document
+    });
     const _postTypeLabel = getPostType(_postType)?.labels?.singular_name;
     return {
       postType: _postType,
@@ -13433,6 +13485,7 @@ function EditorSnackbars() {
 
 
 
+
 function EntityRecordItem({
   record,
   checked,
@@ -13450,6 +13503,7 @@ function EntityRecordItem({
     entityRecordTitle,
     hasPostMetaChanges
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _select$getEntityReco;
     if ('postType' !== kind || 'wp_template' !== name) {
       return {
         entityRecordTitle: title,
@@ -13457,8 +13511,14 @@ function EntityRecordItem({
       };
     }
     const template = select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord(kind, name, key);
+    const {
+      default_template_types: templateTypes = []
+    } = (_select$getEntityReco = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')) !== null && _select$getEntityReco !== void 0 ? _select$getEntityReco : {};
     return {
-      entityRecordTitle: select(store_store).__experimentalGetTemplateInfo(template).title,
+      entityRecordTitle: getTemplateInfo({
+        template,
+        templateTypes
+      }).title,
       hasPostMetaChanges: unlock(select(store_store)).hasPostMetaChanges(name, key)
     };
   }, [name, kind, title, key]);
@@ -31161,6 +31221,7 @@ function ActionsDropdownMenuGroup({
 
 
 
+
 function PostCardPanel({
   postType,
   postId,
@@ -31170,14 +31231,18 @@ function PostCardPanel({
     title,
     icon
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      __experimentalGetTemplateInfo
-    } = select(store_store);
+    var _select$getEntityReco;
     const {
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
     const _record = getEditedEntityRecord('postType', postType, postId);
-    const _templateInfo = [constants_TEMPLATE_POST_TYPE, constants_TEMPLATE_PART_POST_TYPE].includes(postType) && __experimentalGetTemplateInfo(_record);
+    const {
+      default_template_types: templateTypes = []
+    } = (_select$getEntityReco = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')) !== null && _select$getEntityReco !== void 0 ? _select$getEntityReco : {};
+    const _templateInfo = [constants_TEMPLATE_POST_TYPE, constants_TEMPLATE_PART_POST_TYPE].includes(postType) ? getTemplateInfo({
+      template: _record,
+      templateTypes
+    }) : {};
     return {
       title: _templateInfo?.title || _record?.title,
       icon: unlock(select(store_store)).getPostIcon(postType, {
@@ -33190,6 +33255,7 @@ function registerCoreBlockBindingsSources() {
 
 
 
+
 const {
   store: interfaceStore,
   ...remainingInterfaceApis
@@ -33212,6 +33278,7 @@ lock(privateApis, {
   ViewMoreMenuGroup: view_more_menu_group,
   ResizableEditor: resizable_editor,
   registerCoreBlockBindingsSources: registerCoreBlockBindingsSources,
+  getTemplateInfo: getTemplateInfo,
   // This is a temporary private API while we're updating the site editor to use EditorProvider.
   interfaceStore,
   ...remainingInterfaceApis

@@ -34697,6 +34697,83 @@ function createTemplatePartId(theme, slug) {
   return theme && slug ? theme + '//' + slug : null;
 }
 
+;// ./packages/icons/build-module/library/header.js
+/**
+ * WordPress dependencies
+ */
+
+
+const header = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M18.5 10.5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
+  })
+});
+/* harmony default export */ const library_header = (header);
+
+;// ./packages/icons/build-module/library/footer.js
+/**
+ * WordPress dependencies
+ */
+
+
+const footer = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    d: "M18 5.5h-8v8h8.5V6a.5.5 0 00-.5-.5zm-9.5 8h-3V6a.5.5 0 01.5-.5h2.5v8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
+  })
+});
+/* harmony default export */ const library_footer = (footer);
+
+;// ./packages/icons/build-module/library/sidebar.js
+/**
+ * WordPress dependencies
+ */
+
+
+const sidebar = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
+  })
+});
+/* harmony default export */ const library_sidebar = (sidebar);
+
+;// ./packages/icons/build-module/library/symbol-filled.js
+/**
+ * WordPress dependencies
+ */
+
+
+const symbolFilled = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-17.6 1L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z"
+  })
+});
+/* harmony default export */ const symbol_filled = (symbolFilled);
+
+;// ./packages/block-library/build-module/template-part/edit/utils/get-template-part-icon.js
+/**
+ * WordPress dependencies
+ */
+
+const getTemplatePartIcon = iconName => {
+  if ('header' === iconName) {
+    return library_header;
+  } else if ('footer' === iconName) {
+    return library_footer;
+  } else if ('sidebar' === iconName) {
+    return library_sidebar;
+  }
+  return symbol_filled;
+};
+
 ;// ./packages/block-library/build-module/navigation/use-template-part-area-label.js
 /**
  * WordPress dependencies
@@ -34710,6 +34787,7 @@ function createTemplatePartId(theme, slug) {
  */
 
 // TODO: this util should perhaps be refactored somewhere like core-data.
+
 
 function useTemplatePartAreaLabel(clientId) {
   return (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -34727,14 +34805,11 @@ function useTemplatePartAreaLabel(clientId) {
     if (!parentTemplatePartClientIds?.length) {
       return;
     }
-
-    // FIXME: @wordpress/block-library should not depend on @wordpress/editor.
-    // Blocks can be loaded into a *non-post* block editor.
-    // This code is lifted from this file:
-    // packages/block-library/src/template-part/edit/advanced-controls.js
-    /* eslint-disable @wordpress/data-no-store-string-literals */
-    const definedAreas = select('core/editor').__experimentalGetDefaultTemplatePartAreas();
-    /* eslint-enable @wordpress/data-no-store-string-literals */
+    const defaultTemplatePartAreas = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || [];
+    const definedAreas = defaultTemplatePartAreas.map(item => ({
+      ...item,
+      icon: getTemplatePartIcon(item.icon)
+    }));
     const {
       getCurrentTheme,
       getEditedEntityRecord
@@ -61008,21 +61083,6 @@ function capitalCase(input, options) {
     return noCase(input, __assign({ delimiter: " ", transform: capitalCaseTransform }, options));
 }
 
-;// ./packages/icons/build-module/library/symbol-filled.js
-/**
- * WordPress dependencies
- */
-
-
-const symbolFilled = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M21.3 10.8l-5.6-5.6c-.7-.7-1.8-.7-2.5 0l-5.6 5.6c-.7.7-.7 1.8 0 2.5l5.6 5.6c.3.3.8.5 1.2.5s.9-.2 1.2-.5l5.6-5.6c.8-.7.8-1.9.1-2.5zm-17.6 1L10 5.5l-1-1-6.3 6.3c-.7.7-.7 1.8 0 2.5L9 19.5l1.1-1.1-6.3-6.3c-.2 0-.2-.2-.1-.3z"
-  })
-});
-/* harmony default export */ const symbol_filled = (symbolFilled);
-
 ;// ./node_modules/dot-case/dist.es2015/index.js
 
 
@@ -61156,12 +61216,7 @@ function useCreateTemplatePartFromBlocks(area, setAttributes) {
 function useTemplatePartArea(area) {
   return (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _selectedArea$area_ta;
-    // FIXME: @wordpress/block-library should not depend on @wordpress/editor.
-    // Blocks can be loaded into a *non-post* block editor.
-    /* eslint-disable @wordpress/data-no-store-string-literals */
-    const definedAreas = select('core/editor').__experimentalGetDefaultTemplatePartAreas();
-    /* eslint-enable @wordpress/data-no-store-string-literals */
-
+    const definedAreas = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || [];
     const selectedArea = definedAreas.find(definedArea => definedArea.area === area);
     const defaultArea = definedAreas.find(definedArea => definedArea.area === 'uncategorized');
     return {
@@ -61672,13 +61727,8 @@ function TemplatePartAdvancedControls({
 }) {
   const [area, setArea] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', 'wp_template_part', 'area', templatePartId);
   const [title, setTitle] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', 'wp_template_part', 'title', templatePartId);
-  const definedAreas = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    // FIXME: @wordpress/block-library should not depend on @wordpress/editor.
-    // Blocks can be loaded into a *non-post* block editor.
-    /* eslint-disable-next-line @wordpress/data-no-store-string-literals */
-    return select('core/editor').__experimentalGetDefaultTemplatePartAreas();
-  }, []);
-  const areaOptions = definedAreas.map(({
+  const defaultTemplatePartAreas = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || [], []);
+  const areaOptions = defaultTemplatePartAreas.map(({
     label,
     area: _area
   }) => ({
@@ -62145,52 +62195,6 @@ function TemplatePartEdit({
   });
 }
 
-;// ./packages/icons/build-module/library/header.js
-/**
- * WordPress dependencies
- */
-
-
-const header = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18.5 10.5H10v8h8a.5.5 0 00.5-.5v-7.5zm-10 0h-3V18a.5.5 0 00.5.5h2.5v-8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
-  })
-});
-/* harmony default export */ const library_header = (header);
-
-;// ./packages/icons/build-module/library/footer.js
-/**
- * WordPress dependencies
- */
-
-
-const footer = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    d: "M18 5.5h-8v8h8.5V6a.5.5 0 00-.5-.5zm-9.5 8h-3V6a.5.5 0 01.5-.5h2.5v8zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
-  })
-});
-/* harmony default export */ const library_footer = (footer);
-
-;// ./packages/icons/build-module/library/sidebar.js
-/**
- * WordPress dependencies
- */
-
-
-const sidebar = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M18 5.5H6a.5.5 0 00-.5.5v3h13V6a.5.5 0 00-.5-.5zm.5 5H10v8h8a.5.5 0 00.5-.5v-7.5zM6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"
-  })
-});
-/* harmony default export */ const library_sidebar = (sidebar);
-
 ;// ./packages/block-library/build-module/template-part/variations.js
 /**
  * WordPress dependencies
@@ -62198,16 +62202,10 @@ const sidebar = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
 
 
 
-function getTemplatePartIcon(iconName) {
-  if ('header' === iconName) {
-    return library_header;
-  } else if ('footer' === iconName) {
-    return library_footer;
-  } else if ('sidebar' === iconName) {
-    return library_sidebar;
-  }
-  return symbol_filled;
-}
+/**
+ * Internal dependencies
+ */
+
 function enhanceTemplatePartVariations(settings, name) {
   if (name !== 'core/template-part') {
     return settings;

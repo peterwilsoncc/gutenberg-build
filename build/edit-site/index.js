@@ -28417,21 +28417,29 @@ function useTitle(title) {
  */
 
 
+
+const {
+  getTemplateInfo
+} = unlock(external_wp_editor_namespaceObject.privateApis);
 function useEditorTitle(postType, postId) {
   const {
     title,
     isLoaded
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _select$getEntityReco;
     const {
       getEditedEntityRecord,
       hasFinishedResolution
     } = select(external_wp_coreData_namespaceObject.store);
-    const {
-      __experimentalGetTemplateInfo: getTemplateInfo
-    } = select(external_wp_editor_namespaceObject.store);
     const _record = getEditedEntityRecord('postType', postType, postId);
+    const {
+      default_template_types: templateTypes = []
+    } = (_select$getEntityReco = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')) !== null && _select$getEntityReco !== void 0 ? _select$getEntityReco : {};
+    const templateInfo = getTemplateInfo({
+      template: _record,
+      templateTypes
+    });
     const _isLoaded = hasFinishedResolution('getEditedEntityRecord', ['postType', postType, postId]);
-    const templateInfo = getTemplateInfo(_record);
     return {
       title: templateInfo.title,
       isLoaded: _isLoaded
@@ -31037,7 +31045,6 @@ function getItemSearchRank(item, searchTerm, config) {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -31053,9 +31060,6 @@ const selectTemplateParts = (0,external_wp_data_namespaceObject.createSelector)(
     getEntityRecords,
     isResolving: isResolvingSelector
   } = select(external_wp_coreData_namespaceObject.store);
-  const {
-    __experimentalGetDefaultTemplatePartAreas
-  } = select(external_wp_editor_namespaceObject.store);
   const query = {
     per_page: -1
   };
@@ -31064,7 +31068,7 @@ const selectTemplateParts = (0,external_wp_data_namespaceObject.createSelector)(
   // In the case where a custom template part area has been removed we need
   // the current list of areas to cross check against so orphaned template
   // parts can be treated as uncategorized.
-  const knownAreas = __experimentalGetDefaultTemplatePartAreas() || [];
+  const knownAreas = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || [];
   const templatePartAreas = knownAreas.map(area => area.area);
   const templatePartHasCategory = (item, category) => {
     if (category !== TEMPLATE_PART_AREA_DEFAULT_CATEGORY) {
@@ -31085,7 +31089,7 @@ const selectTemplateParts = (0,external_wp_data_namespaceObject.createSelector)(
   per_page: -1
 }), select(external_wp_coreData_namespaceObject.store).isResolving('getEntityRecords', ['postType', TEMPLATE_PART_POST_TYPE, {
   per_page: -1
-}]), select(external_wp_editor_namespaceObject.store).__experimentalGetDefaultTemplatePartAreas()]);
+}]), select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas]);
 const selectThemePatterns = (0,external_wp_data_namespaceObject.createSelector)(select => {
   var _settings$__experimen;
   const {
@@ -31340,14 +31344,13 @@ function usePatternCategories() {
 
 
 
-
 /**
  * Internal dependencies
  */
 
 const useTemplatePartsGroupedByArea = items => {
   const allItems = items || [];
-  const templatePartAreas = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_editor_namespaceObject.store).__experimentalGetDefaultTemplatePartAreas(), []);
+  const templatePartAreas = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || [], []);
 
   // Create map of template areas ensuring that default areas are displayed before
   // any custom registered template part areas.
@@ -31363,7 +31366,7 @@ const useTemplatePartsGroupedByArea = items => {
   });
   const groupedByArea = allItems.reduce((accumulator, item) => {
     const key = accumulator[item.area] ? item.area : TEMPLATE_PART_AREA_DEFAULT_CATEGORY;
-    accumulator[key].templateParts.push(item);
+    accumulator[key]?.templateParts?.push(item);
     return accumulator;
   }, knownAreas);
   return groupedByArea;
@@ -41008,7 +41011,7 @@ function PatternsHeader({
   const {
     patternCategories
   } = usePatternCategories();
-  const templatePartAreas = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_editor_namespaceObject.store).__experimentalGetDefaultTemplatePartAreas(), []);
+  const templatePartAreas = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || [], []);
   let title, description, patternCategory;
   if (type === TEMPLATE_PART_POST_TYPE) {
     const templatePartArea = templatePartAreas.find(area => area.area === categoryId);
@@ -41928,7 +41931,6 @@ const post_post = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -41977,7 +41979,7 @@ const useExistingTemplates = () => {
   }), []);
 };
 const useDefaultTemplateTypes = () => {
-  return (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_editor_namespaceObject.store).__experimentalGetDefaultTemplateTypes(), []);
+  return (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_types || [], []);
 };
 const usePublicPostTypes = () => {
   const postTypes = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getPostTypes({
@@ -46777,15 +46779,6 @@ function initializeEditor(id, settings) {
     });
   }
   (0,external_wp_data_namespaceObject.dispatch)(store).updateSettings(settings);
-
-  // Keep the defaultTemplateTypes in the core/editor settings too,
-  // so that they can be selected with core/editor selectors in any editor.
-  // This is needed because edit-site doesn't initialize with EditorProvider,
-  // which internally uses updateEditorSettings as well.
-  (0,external_wp_data_namespaceObject.dispatch)(external_wp_editor_namespaceObject.store).updateEditorSettings({
-    defaultTemplateTypes: settings.defaultTemplateTypes,
-    defaultTemplatePartAreas: settings.defaultTemplatePartAreas
-  });
 
   // Prevent the default browser action for files dropped outside of dropzones.
   window.addEventListener('dragover', e => e.preventDefault(), false);
