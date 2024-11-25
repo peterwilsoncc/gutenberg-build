@@ -47221,18 +47221,16 @@ function ComboboxControl(props) {
               selectedSuggestionIndex: getIndexOfMatchingSuggestion(selectedSuggestion, matchingSuggestions),
               onChange: onInputChange
             })
-          }), allowReset && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(flex_item_component, {
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-              className: "components-combobox-control__reset",
-              icon: close_small
-              // Disable reason: Focus returns to input field when reset is clicked.
-              // eslint-disable-next-line no-restricted-syntax
-              ,
-              disabled: !value,
-              onClick: handleOnReset,
-              onKeyDown: handleResetStopPropagation,
-              label: (0,external_wp_i18n_namespaceObject.__)('Reset')
-            })
+          }), allowReset && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+            size: "small",
+            icon: close_small
+            // Disable reason: Focus returns to input field when reset is clicked.
+            // eslint-disable-next-line no-restricted-syntax
+            ,
+            disabled: !value,
+            onClick: handleOnReset,
+            onKeyDown: handleResetStopPropagation,
+            label: (0,external_wp_i18n_namespaceObject.__)('Reset')
           })]
         }), isExpanded && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(suggestions_list, {
           instanceId: instanceId
