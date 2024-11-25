@@ -40517,25 +40517,28 @@ function DropCapControl({
   } else {
     helpText = (0,external_wp_i18n_namespaceObject.__)('Show a large initial letter.');
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-    hasValue: () => !!dropCap,
-    label: (0,external_wp_i18n_namespaceObject.__)('Drop cap'),
-    onDeselect: () => setAttributes({
-      dropCap: undefined
-    }),
-    resetAllFilter: () => ({
-      dropCap: undefined
-    }),
-    panelId: clientId,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-      __nextHasNoMarginBottom: true,
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+    group: "typography",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      hasValue: () => !!dropCap,
       label: (0,external_wp_i18n_namespaceObject.__)('Drop cap'),
-      checked: !!dropCap,
-      onChange: () => setAttributes({
-        dropCap: !dropCap
+      onDeselect: () => setAttributes({
+        dropCap: undefined
       }),
-      help: helpText,
-      disabled: hasDropCapDisabled(align)
+      resetAllFilter: () => ({
+        dropCap: undefined
+      }),
+      panelId: clientId,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Drop cap'),
+        checked: !!dropCap,
+        onChange: () => setAttributes({
+          dropCap: !dropCap
+        }),
+        help: helpText,
+        disabled: hasDropCapDisabled(align)
+      })
     })
   });
 }
@@ -40545,7 +40548,8 @@ function ParagraphBlock({
   onReplace,
   onRemove,
   setAttributes,
-  clientId
+  clientId,
+  isSelected: isSingleSelected
 }) {
   const {
     align,
@@ -40583,13 +40587,10 @@ function ParagraphBlock({
           direction: newDirection
         })
       })]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      group: "typography",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropCapControl, {
-        clientId: clientId,
-        attributes: attributes,
-        setAttributes: setAttributes
-      })
+    }), isSingleSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropCapControl, {
+      clientId: clientId,
+      attributes: attributes,
+      setAttributes: setAttributes
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
       identifier: "content",
       tagName: "p",
