@@ -47894,40 +47894,6 @@ function StickyControl({
   });
 }
 
-;// ./packages/block-library/build-module/query/edit/inspector-controls/create-new-post-link.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-const CreateNewPostLink = ({
-  postType
-}) => {
-  const newPostUrl = (0,external_wp_url_namespaceObject.addQueryArgs)('post-new.php', {
-    post_type: postType
-  });
-  const addNewItemLabel = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getPostType
-    } = select(external_wp_coreData_namespaceObject.store);
-    return getPostType(postType)?.labels?.add_new_item;
-  }, [postType]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    className: "wp-block-query__create-new-link",
-    children: (0,external_wp_element_namespaceObject.createInterpolateElement)('<a>' + addNewItemLabel + '</a>',
-    // eslint-disable-next-line jsx-a11y/anchor-has-content
-    {
-      a: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
-        href: newPostUrl
-      })
-    })
-  });
-};
-/* harmony default export */ const create_new_post_link = (CreateNewPostLink);
-
 ;// ./packages/block-library/build-module/query/edit/inspector-controls/per-page-control.js
 /**
  * WordPress dependencies
@@ -48032,7 +47998,6 @@ const PagesControl = ({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -48048,11 +48013,6 @@ const PagesControl = ({
 
 
 
-
-
-const {
-  BlockInfo
-} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function QueryInspectorControls(props) {
   const {
     attributes,
@@ -48158,11 +48118,7 @@ function QueryInspectorControls(props) {
   const showPagesControl = isControlAllowed(allowedControls, 'pages');
   const showDisplayPanel = showPostCountControl || showOffSetControl || showPagesControl;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [!!postType && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockInfo, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(create_new_post_link, {
-        postType: postType
-      })
-    }), showSettingsPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
+    children: [showSettingsPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
       title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
       children: [showInheritControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
         __next40pxDefaultSize: true,

@@ -73307,35 +73307,6 @@ function useBlockInspectorAnimationSettings(blockType) {
   }, [blockType]);
 }
 
-;// ./packages/block-editor/build-module/components/block-info-slot-fill/index.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-const {
-  Fill: block_info_slot_fill_Fill,
-  Slot: block_info_slot_fill_Slot
-} = (0,external_wp_components_namespaceObject.createSlotFill)(Symbol('BlockInformation'));
-const BlockInfo = props => {
-  const context = useBlockEditContext();
-  if (!context[mayDisplayControlsKey]) {
-    return null;
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_info_slot_fill_Fill, {
-    ...props
-  });
-};
-BlockInfo.Slot = props => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_info_slot_fill_Slot, {
-  ...props
-});
-/* harmony default export */ const block_info_slot_fill = (BlockInfo);
-
 ;// ./packages/block-editor/build-module/components/block-quick-navigation/index.js
 /**
  * WordPress dependencies
@@ -73427,7 +73398,6 @@ function BlockQuickNavigationItem({
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -73620,7 +73590,7 @@ const BlockInspectorSingleBlock = ({
       className: blockInformation.isSynced && 'is-synced'
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_variation_transforms, {
       blockClientId: clientId
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_info_slot_fill.Slot, {}), showTabs && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorControlsTabs, {
+    }), showTabs && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorControlsTabs, {
       hasBlockStyles: hasBlockStyles,
       clientId: clientId,
       blockName: blockName,
@@ -77923,7 +77893,6 @@ function ResolutionTool({
 
 
 
-
 /**
  * Private @wordpress/block-editor APIs.
  */
@@ -77940,7 +77909,6 @@ lock(privateApis, {
   normalizeString: normalizeString,
   PrivateListView: PrivateListView,
   ResizableBoxPopover: ResizableBoxPopover,
-  BlockInfo: block_info_slot_fill,
   useHasBlockToolbar: useHasBlockToolbar,
   cleanEmptyObject: utils_cleanEmptyObject,
   BlockQuickNavigation: BlockQuickNavigation,
