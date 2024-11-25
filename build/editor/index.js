@@ -27450,16 +27450,7 @@ function cleanForSlug(string) {
  * WordPress dependencies
  */
 
-
-/**
- * Internal dependencies
- */
-
-const {
-  createPrivateSlotFill
-} = unlock(external_wp_components_namespaceObject.privateApis);
-const SLOT_FILL_NAME = 'EditCanvasContainerSlot';
-const EditorContentSlotFill = createPrivateSlotFill(SLOT_FILL_NAME);
+const EditorContentSlotFill = (0,external_wp_components_namespaceObject.createSlotFill)(Symbol('EditCanvasContainerSlot'));
 /* harmony default export */ const content_slot_fill = (EditorContentSlotFill);
 
 ;// ./packages/editor/build-module/components/header/back-button.js

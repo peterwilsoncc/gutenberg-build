@@ -34024,20 +34024,17 @@ function createSlotFill(key) {
     ...props
   });
   SlotComponent.displayName = `${baseName}Slot`;
+  /**
+   * @deprecated 6.8.0
+   * Please use `slotFill.name` instead of `slotFill.Slot.__unstableName`.
+   */
   SlotComponent.__unstableName = key;
   return {
+    name: key,
     Fill: FillComponent,
     Slot: SlotComponent
   };
 }
-const createPrivateSlotFill = name => {
-  const privateKey = Symbol(name);
-  const privateSlotFill = createSlotFill(privateKey);
-  return {
-    privateKey,
-    ...privateSlotFill
-  };
-};
 
 ;// ./packages/components/build-module/popover/overlay-middlewares.js
 /**
@@ -71747,11 +71744,9 @@ const {
 
 
 
-
 const privateApis = {};
 lock(privateApis, {
   __experimentalPopoverLegacyPositionToPlacement: positionToPlacement,
-  createPrivateSlotFill: createPrivateSlotFill,
   ComponentsContext: ComponentsContext,
   Tabs: Tabs,
   Theme: theme,

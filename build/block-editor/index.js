@@ -18315,15 +18315,18 @@ function BlockControlsSlot({
       value: contextState
     }]]
   }), [toolbarState, contextState]);
-  const Slot = block_controls_groups[group]?.Slot;
-  const fills = (0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(Slot?.__unstableName);
-  if (!Slot) {
+  const slotFill = block_controls_groups[group];
+  const fills = (0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(slotFill.name);
+  if (!slotFill) {
      false ? 0 : void 0;
     return null;
   }
   if (!fills?.length) {
     return null;
   }
+  const {
+    Slot
+  } = slotFill;
   const slot = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Slot, {
     ...props,
     bubblesVirtually: true,
@@ -21544,25 +21547,28 @@ function InspectorControlsSlot({
     });
     group = __experimentalGroup;
   }
-  const Slot = inspector_controls_groups[group]?.Slot;
-  const fills = (0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(Slot?.__unstableName);
+  const slotFill = inspector_controls_groups[group];
+  const fills = (0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(slotFill?.name);
   const motionContextValue = (0,external_wp_element_namespaceObject.useContext)(external_wp_components_namespaceObject.__unstableMotionContext);
   const computedFillProps = (0,external_wp_element_namespaceObject.useMemo)(() => {
     var _fillProps$forwardedC;
     return {
-      ...(fillProps !== null && fillProps !== void 0 ? fillProps : {}),
+      ...fillProps,
       forwardedContext: [...((_fillProps$forwardedC = fillProps?.forwardedContext) !== null && _fillProps$forwardedC !== void 0 ? _fillProps$forwardedC : []), [external_wp_components_namespaceObject.__unstableMotionContext.Provider, {
         value: motionContextValue
       }]]
     };
   }, [motionContextValue, fillProps]);
-  if (!Slot) {
+  if (!slotFill) {
      false ? 0 : void 0;
     return null;
   }
   if (!fills?.length) {
     return null;
   }
+  const {
+    Slot
+  } = slotFill;
   if (label) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockSupportToolsPanel, {
       group: group,
@@ -72905,7 +72911,7 @@ const PositionControlsPanel = () => {
   });
 };
 const PositionControls = () => {
-  const fills = (0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(inspector_controls_groups.position.Slot.__unstableName);
+  const fills = (0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(inspector_controls_groups.position.name);
   const hasFills = Boolean(fills && fills.length);
   if (!hasFills) {
     return null;
@@ -73122,20 +73128,20 @@ function useInspectorControlsTabs(blockName) {
 
   // List View Tab: If there are any fills for the list group add that tab.
   const listViewDisabled = use_is_list_view_tab_disabled(blockName);
-  const listFills = (0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(listGroup.Slot.__unstableName);
+  const listFills = (0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(listGroup.name);
   const hasListFills = !listViewDisabled && !!listFills && listFills.length;
 
   // Styles Tab: Add this tab if there are any fills for block supports
   // e.g. border, color, spacing, typography, etc.
-  const styleFills = [...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(borderGroup.Slot.__unstableName) || []), ...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(colorGroup.Slot.__unstableName) || []), ...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(dimensionsGroup.Slot.__unstableName) || []), ...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(stylesGroup.Slot.__unstableName) || []), ...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(typographyGroup.Slot.__unstableName) || []), ...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(effectsGroup.Slot.__unstableName) || [])];
+  const styleFills = [...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(borderGroup.name) || []), ...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(colorGroup.name) || []), ...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(dimensionsGroup.name) || []), ...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(stylesGroup.name) || []), ...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(typographyGroup.name) || []), ...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(effectsGroup.name) || [])];
   const hasStyleFills = styleFills.length;
 
   // Settings Tab: If we don't have multiple tabs to display
   // (i.e. both list view and styles), check only the default and position
   // InspectorControls slots. If we have multiple tabs, we'll need to check
   // the advanced controls slot as well to ensure they are rendered.
-  const advancedFills = [...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(InspectorAdvancedControls.slotName) || []), ...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(bindingsGroup.Slot.__unstableName) || [])];
-  const settingsFills = [...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(defaultGroup.Slot.__unstableName) || []), ...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(positionGroup.Slot.__unstableName) || []), ...(hasListFills && hasStyleFills > 1 ? advancedFills : [])];
+  const advancedFills = [...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(InspectorAdvancedControls.slotName) || []), ...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(bindingsGroup.name) || [])];
+  const settingsFills = [...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(defaultGroup.name) || []), ...((0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(positionGroup.name) || []), ...(hasListFills && hasStyleFills > 1 ? advancedFills : [])];
 
   // Add the tabs in the order that they will default to if available.
   // List View > Settings > Styles.
@@ -73203,14 +73209,10 @@ function useBlockInspectorAnimationSettings(blockType) {
  */
 
 
-
-const {
-  createPrivateSlotFill
-} = unlock(external_wp_components_namespaceObject.privateApis);
 const {
   Fill: block_info_slot_fill_Fill,
   Slot: block_info_slot_fill_Slot
-} = createPrivateSlotFill('BlockInformation');
+} = (0,external_wp_components_namespaceObject.createSlotFill)(Symbol('BlockInformation'));
 const BlockInfo = props => {
   const context = useBlockEditContext();
   if (!context[mayDisplayControlsKey]) {

@@ -14156,7 +14156,7 @@ function EditorCanvasContainer({
   });
 }
 function useHasEditorCanvasContainer() {
-  const fills = (0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(EditorContentSlotFill.privateKey);
+  const fills = (0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(EditorContentSlotFill.name);
   return !!fills?.length;
 }
 /* harmony default export */ const editor_canvas_container = (EditorCanvasContainer);
