@@ -4073,7 +4073,7 @@ const hasInserterItems = getBlockEditorSelector('hasInserterItems');
 const getBlockListSettings = getBlockEditorSelector('getBlockListSettings');
 const __experimentalGetDefaultTemplateTypes = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
   external_wp_deprecated_default()("select('core/editor').__experimentalGetDefaultTemplateTypes", {
-    since: '6.7',
+    since: '6.8',
     alternative: "select('core/core-data').getEntityRecord( 'root', '__unstableBase' )?.default_template_types"
   });
   return select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_types;
@@ -4088,7 +4088,7 @@ const __experimentalGetDefaultTemplateTypes = (0,external_wp_data_namespaceObjec
  */
 const __experimentalGetDefaultTemplatePartAreas = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(() => {
   external_wp_deprecated_default()("select('core/editor').__experimentalGetDefaultTemplatePartAreas", {
-    since: '6.7',
+    since: '6.8',
     alternative: "select('core/core-data').getEntityRecord( 'root', '__unstableBase' )?.default_template_part_areas"
   });
   const areas = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || [];
@@ -4111,7 +4111,7 @@ const __experimentalGetDefaultTemplatePartAreas = (0,external_wp_data_namespaceO
 const __experimentalGetDefaultTemplateType = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)((state, slug) => {
   var _Object$values$find;
   external_wp_deprecated_default()("select('core/editor').__experimentalGetDefaultTemplateType", {
-    since: '6.7'
+    since: '6.8'
   });
   const templateTypes = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_types;
   if (!templateTypes) {
@@ -4130,7 +4130,7 @@ const __experimentalGetDefaultTemplateType = (0,external_wp_data_namespaceObject
  */
 const __experimentalGetTemplateInfo = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)((state, template) => {
   external_wp_deprecated_default()("select('core/editor').__experimentalGetTemplateInfo", {
-    since: '6.7'
+    since: '6.8'
   });
   if (!template) {
     return selectors_EMPTY_OBJECT;
