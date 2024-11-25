@@ -40865,12 +40865,14 @@ function useBorderControl(props) {
     width,
     __experimentalIsRenderedInSidebar = false,
     __next40pxDefaultSize,
+    __shouldNotWarnDeprecated36pxSize,
     ...otherProps
   } = useContextSystem(props, 'BorderControl');
   maybeWarnDeprecated36pxSize({
     componentName: 'BorderControl',
     __next40pxDefaultSize,
-    size
+    size,
+    __shouldNotWarnDeprecated36pxSize
   });
   const computedSize = size === 'default' && __next40pxDefaultSize ? '__unstable-large' : size;
   const [widthValue, originalWidthUnit] = parseQuantityAndUnitFromRawValue(border?.width);
@@ -41389,7 +41391,8 @@ const BorderBoxControlSplitControls = (props, forwardedRef) => {
     enableStyle,
     isCompact: true,
     __experimentalIsRenderedInSidebar,
-    size
+    size,
+    __shouldNotWarnDeprecated36pxSize: true
   };
   const mergedRef = (0,external_wp_compose_namespaceObject.useMergeRefs)([setPopoverAnchor, forwardedRef]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(grid_component, {
@@ -41840,6 +41843,7 @@ const UnconnectedBorderBoxControl = (props, forwardedRef) => {
         withSlider: true,
         width: size === '__unstable-large' ? '116px' : '110px',
         __experimentalIsRenderedInSidebar: __experimentalIsRenderedInSidebar,
+        __shouldNotWarnDeprecated36pxSize: true,
         size: size
       }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(border_box_control_split_controls_component, {
         colors: colors,
