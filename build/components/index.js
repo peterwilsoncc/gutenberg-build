@@ -37742,6 +37742,7 @@ function useTooltipPosition({
 
 
 
+
 const range_control_noop = () => {};
 
 /**
@@ -37793,6 +37794,7 @@ function UnforwardedRangeControl(props, forwardedRef) {
     trackColor,
     value: valueProp,
     withInputField = true,
+    __shouldNotWarnDeprecated36pxSize,
     ...otherProps
   } = props;
   const [value, setValue] = useControlledRangeValue({
@@ -37894,6 +37896,14 @@ function UnforwardedRangeControl(props, forwardedRef) {
   const offsetStyle = {
     [(0,external_wp_i18n_namespaceObject.isRTL)() ? 'right' : 'left']: fillValueOffset
   };
+
+  // Add default size deprecation warning.
+  maybeWarnDeprecated36pxSize({
+    componentName: 'RangeControl',
+    __next40pxDefaultSize,
+    size: undefined,
+    __shouldNotWarnDeprecated36pxSize
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control, {
     __nextHasNoMarginBottom: __nextHasNoMarginBottom,
     __associatedWPComponentName: "RangeControl",
@@ -38023,6 +38033,7 @@ function UnforwardedRangeControl(props, forwardedRef) {
  *   return (
  *     <RangeControl
  *       __nextHasNoMarginBottom
+ *       __next40pxDefaultSize
  *       help="Please select how transparent you would like this."
  *       initialPosition={50}
  *       label="Opacity"
@@ -41084,7 +41095,8 @@ const UnconnectedBorderControl = (props, forwardedRef) => {
         step: ['px', '%'].includes(widthUnit) ? 1 : 0.1,
         value: widthValue || undefined,
         withInputField: false,
-        __next40pxDefaultSize: __next40pxDefaultSize
+        __next40pxDefaultSize: __next40pxDefaultSize,
+        __shouldNotWarnDeprecated36pxSize: true
       })]
     })]
   });
@@ -42451,6 +42463,7 @@ function AllInputControl({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedRangeControl, {
       __nextHasNoMarginBottom: true,
       __next40pxDefaultSize: __next40pxDefaultSize,
+      __shouldNotWarnDeprecated36pxSize: true,
       "aria-controls": inputId,
       label: LABELS.all,
       hideLabelFromVision: true,
@@ -42570,6 +42583,7 @@ function BoxInputControls({
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedRangeControl, {
           __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: __next40pxDefaultSize,
+          __shouldNotWarnDeprecated36pxSize: true,
           "aria-controls": inputId,
           label: LABELS[side],
           hideLabelFromVision: true,
@@ -42687,6 +42701,7 @@ function AxialInputControls({
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedRangeControl, {
           __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: __next40pxDefaultSize,
+          __shouldNotWarnDeprecated36pxSize: true,
           "aria-controls": inputId,
           label: LABELS[side],
           hideLabelFromVision: true,
@@ -57421,6 +57436,7 @@ const UnforwardedFontSizePicker = (props, ref) => {
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(range_control, {
               __nextHasNoMarginBottom: true,
               __next40pxDefaultSize: __next40pxDefaultSize,
+              __shouldNotWarnDeprecated36pxSize: true,
               className: "components-font-size-picker__custom-input",
               label: (0,external_wp_i18n_namespaceObject.__)('Custom Size'),
               hideLabelFromVision: true,
