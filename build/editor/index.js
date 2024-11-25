@@ -1529,7 +1529,7 @@ __webpack_require__.d(__webpack_exports__, {
   PostFeaturedImageCheck: () => (/* reexport */ post_featured_image_check),
   PostFeaturedImagePanel: () => (/* reexport */ PostFeaturedImagePanel),
   PostFormat: () => (/* reexport */ PostFormat),
-  PostFormatCheck: () => (/* reexport */ post_format_check),
+  PostFormatCheck: () => (/* reexport */ PostFormatCheck),
   PostLastRevision: () => (/* reexport */ post_last_revision),
   PostLastRevisionCheck: () => (/* reexport */ post_last_revision_check),
   PostLastRevisionPanel: () => (/* reexport */ post_last_revision_panel),
@@ -1556,7 +1556,7 @@ __webpack_require__.d(__webpack_exports__, {
   PostTaxonomiesCheck: () => (/* reexport */ PostTaxonomiesCheck),
   PostTaxonomiesFlatTermSelector: () => (/* reexport */ FlatTermSelector),
   PostTaxonomiesHierarchicalTermSelector: () => (/* reexport */ HierarchicalTermSelector),
-  PostTaxonomiesPanel: () => (/* reexport */ post_taxonomies_panel),
+  PostTaxonomiesPanel: () => (/* reexport */ panel_PostTaxonomies),
   PostTemplatePanel: () => (/* reexport */ PostTemplatePanel),
   PostTextEditor: () => (/* reexport */ PostTextEditor),
   PostTitle: () => (/* reexport */ post_title),
@@ -4320,9 +4320,9 @@ function getNotificationArgumentsForTrashFail(data) {
  * Returns an action generator used in signalling that editor has initialized with
  * the specified post object and editor settings.
  *
- * @param {Object} post     Post object.
- * @param {Object} edits    Initial edited attributes object.
- * @param {Array?} template Block Template.
+ * @param {Object} post       Post object.
+ * @param {Object} edits      Initial edited attributes object.
+ * @param {Array}  [template] Block Template.
  */
 const setupEditor = (post, edits, template) => ({
   dispatch
@@ -4440,8 +4440,8 @@ function setEditedPost(postType, postId) {
  * Returns an action object used in signalling that attributes of the post have
  * been edited.
  *
- * @param {Object} edits   Post attributes to edit.
- * @param {Object} options Options for the edit.
+ * @param {Object} edits     Post attributes to edit.
+ * @param {Object} [options] Options for the edit.
  *
  * @example
  * ```js
@@ -4480,7 +4480,7 @@ const editPost = (edits, options) => ({
 /**
  * Action for saving the current post in the editor.
  *
- * @param {Object} options
+ * @param {Object} [options]
  */
 const savePost = (options = {}) => async ({
   select,
@@ -4631,7 +4631,8 @@ const trashPost = () => async ({
  * autosaving (e.g. on the Web, the post might be committed to Session
  * Storage).
  *
- * @param {Object?} options Extra flags to identify the autosave.
+ * @param {Object}  [options]       Extra flags to identify the autosave.
+ * @param {boolean} [options.local] Whether to perform a local autosave.
  */
 const autosave = ({
   local = false,
@@ -4858,8 +4859,8 @@ function unlockPostAutosaving(lockName) {
 /**
  * Returns an action object used to signal that the blocks have been updated.
  *
- * @param {Array}   blocks  Block Array.
- * @param {?Object} options Optional options.
+ * @param {Array}  blocks    Block Array.
+ * @param {Object} [options] Optional options.
  */
 const resetEditorBlocks = (blocks, options = {}) => ({
   select,
@@ -12582,7 +12583,7 @@ const MotionButton = (0,external_wp_components_namespaceObject.__unstableMotion)
  * @param {IconType} props.icon  An icon for the document, no default.
  *                               (A default icon indicating the document post type is no longer used.)
  *
- * @return {JSX.Element} The rendered DocumentBar component.
+ * @return {React.ReactNode} The rendered DocumentBar component.
  */
 function DocumentBar(props) {
   const {
@@ -12896,7 +12897,7 @@ const isEmptyHeading = heading => !heading.attributes.content || heading.attribu
  * @param {Function} props.onSelect                Function to be called when an outline item is selected
  * @param {boolean}  props.hasOutlineItemsDisabled Indicates whether the outline items are disabled.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 function DocumentOutline({
   onSelect,
@@ -12990,10 +12991,10 @@ function DocumentOutline({
 /**
  * Component check if there are any headings (core/heading blocks) present in the document.
  *
- * @param {Object}  props          Props.
- * @param {Element} props.children Children to be rendered.
+ * @param {Object}             props          Props.
+ * @param {React.ReactElement} props.children Children to be rendered.
  *
- * @return {Component|null} The component to be rendered or null if there are headings.
+ * @return {React.ReactElement} The component to be rendered or null if there are headings.
  */
 function DocumentOutlineCheck({
   children
@@ -13225,7 +13226,7 @@ function EditorHistoryRedo(props, ref) {
  * @param {Object} props - Props.
  * @param {Ref}    ref   - Forwarded ref.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 /* harmony default export */ const editor_history_redo = ((0,external_wp_element_namespaceObject.forwardRef)(EditorHistoryRedo));
 
@@ -13276,7 +13277,7 @@ function EditorHistoryUndo(props, ref) {
  * @param {Object} props - Props.
  * @param {Ref}    ref   - Forwarded ref.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 /* harmony default export */ const editor_history_undo = ((0,external_wp_element_namespaceObject.forwardRef)(EditorHistoryUndo));
 
@@ -13350,7 +13351,7 @@ function TemplateValidationNotice() {
  * <EditorNotices />
  * ```
  *
- * @return {JSX.Element} The rendered EditorNotices component.
+ * @return {React.ReactNode} The rendered EditorNotices component.
  */
 
 function EditorNotices() {
@@ -13399,7 +13400,7 @@ const MAX_VISIBLE_NOTICES = -3;
 /**
  * Renders the editor snackbars component.
  *
- * @return {JSX.Element} The rendered component.
+ * @return {React.ReactNode} The rendered component.
  */
 function EditorSnackbars() {
   const notices = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_notices_namespaceObject.store).getNotices(), []);
@@ -13677,7 +13678,7 @@ function identity(values) {
  * @param {Function} props.close        The function to close the dialog.
  * @param {Function} props.renderDialog The function to render the dialog.
  *
- * @return {JSX.Element} The rendered component.
+ * @return {React.ReactNode} The rendered component.
  */
 function EntitiesSavedStates({
   close,
@@ -13706,7 +13707,7 @@ function EntitiesSavedStates({
  * @param {Function} props.setUnselectedEntities Function to set unselected entities.
  * @param {Array}    props.unselectedEntities    Array of unselected entities.
  *
- * @return {JSX.Element} The rendered component.
+ * @return {React.ReactNode} The rendered component.
  */
 function EntitiesSavedStatesExtensible({
   additionalPrompt = undefined,
@@ -14108,10 +14109,10 @@ function LocalAutosaveMonitor() {
 /**
  * Wrapper component that renders its children only if the post type supports page attributes.
  *
- * @param {Object}  props          - The component props.
- * @param {Element} props.children - The child components to render.
+ * @param {Object}             props          - The component props.
+ * @param {React.ReactElement} props.children - The child components to render.
  *
- * @return {Component|null} The rendered child components or null if page attributes are not supported.
+ * @return {React.ReactElement} The rendered child components or null if page attributes are not supported.
  */
 function PageAttributesCheck({
   children
@@ -14151,13 +14152,13 @@ function PageAttributesCheck({
  * A component which renders its own children only if the current editor post
  * type supports one of the given `supportKeys` prop.
  *
- * @param {Object}            props             Props.
- * @param {Element}           props.children    Children to be rendered if post
- *                                              type supports.
- * @param {(string|string[])} props.supportKeys String or string array of keys
- *                                              to test.
+ * @param {Object}             props             Props.
+ * @param {React.ReactElement} props.children    Children to be rendered if post
+ *                                               type supports.
+ * @param {(string|string[])}  props.supportKeys String or string array of keys
+ *                                               to test.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactElement} The component to be rendered.
  */
 function PostTypeSupportCheck({
   children,
@@ -14239,7 +14240,7 @@ function PageAttributesOrder() {
  * for setting the order of a given page.
  * The component is now not used in core but was kept for backward compatibility.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 function PageAttributesOrderWithChecks() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_type_support_check, {
@@ -14403,7 +14404,7 @@ const parent_getItemPriority = (name, searchValue) => {
  * Renders the Page Attributes Parent component. A dropdown menu in an editor interface
  * for selecting the parent page of a given page.
  *
- * @return {Component|null} The component to be rendered. Return null if post type is not hierarchical.
+ * @return {React.ReactNode} The component to be rendered. Return null if post type is not hierarchical.
  */
 function parent_PageAttributesParent() {
   const {
@@ -14654,7 +14655,7 @@ function AttributesPanel() {
 /**
  * Renders the Page Attributes Panel component.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 function PageAttributesPanel() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(page_attributes_check, {
@@ -14939,7 +14940,7 @@ function PostTemplateToggle({
  * @param {Object}   props         The component props.
  * @param {Function} props.onClose The function to close the dropdown.
  *
- * @return {JSX.Element} The rendered dropdown content.
+ * @return {React.ReactNode} The rendered dropdown content.
  */
 function PostTemplateDropdownContent({
   onClose
@@ -15073,7 +15074,7 @@ function ClassicThemeControl() {
  *
  * The dropdown menu includes a button for toggling the menu, a list of available templates, and options for creating and editing templates.
  *
- * @return {JSX.Element} The rendered ClassicThemeControl component.
+ * @return {React.ReactNode} The rendered ClassicThemeControl component.
  */
 /* harmony default export */ const classic_theme = (ClassicThemeControl);
 
@@ -15177,7 +15178,7 @@ const {
  * @param {string}                [props.className]                     An optional class name added to the row.
  * @param {string}                [props.title]                         The title of the panel
  * @param {WPBlockTypeIconRender} [props.icon=inherits from the plugin] The [Dashicon](https://developer.wordpress.org/resource/dashicons/) icon slug string, or an SVG WP element, to be rendered when the sidebar is pinned to toolbar.
- * @param {Element}               props.children                        Children to be rendered
+ * @param {React.ReactNode}       props.children                        Children to be rendered
  *
  * @example
  * ```js
@@ -15219,7 +15220,7 @@ const {
  *  registerPlugin( 'document-setting-test', { render: MyDocumentSettingTest } );
  * ```
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The component to be rendered.
  */
 const PluginDocumentSettingPanel = ({
   name,
@@ -15346,7 +15347,7 @@ const shouldRenderItem = (selectedBlocks, allowedBlocks) => !Array.isArray(allow
  * );
  * ```
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 const PluginBlockSettingsMenuItem = ({
   allowedBlocks,
@@ -15387,6 +15388,7 @@ const PluginBlockSettingsMenuItem = ({
  * The text within the component appears as the menu item label.
  *
  * @param {Object}                props                                 Component properties.
+ * @param {React.ReactNode}       [props.children]                      Children to be rendered.
  * @param {string}                [props.href]                          When `href` is provided then the menu item is represented as an anchor rather than button. It corresponds to the `href` attribute of the anchor.
  * @param {WPBlockTypeIconRender} [props.icon=inherits from the plugin] The [Dashicon](https://developer.wordpress.org/resource/dashicons/) icon slug string, or an SVG WP element, to be rendered to the left of the menu item label.
  * @param {Function}              [props.onClick=noop]                  The callback function to be executed when the user clicks the menu item.
@@ -15436,7 +15438,7 @@ const PluginBlockSettingsMenuItem = ({
  * );
  * ```
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 
 function PluginMoreMenuItem(props) {
@@ -15471,7 +15473,7 @@ const {
  * @param {string}                [props.title]                         Title displayed at the top of the panel.
  * @param {boolean}               [props.initialOpen=false]             Whether to have the panel initially opened. When no title is provided it is always opened.
  * @param {WPBlockTypeIconRender} [props.icon=inherits from the plugin] The [Dashicon](https://developer.wordpress.org/resource/dashicons/) icon slug string, or an SVG WP element, to be rendered when the sidebar is pinned to toolbar.
- * @param {Element}               props.children                        Children to be rendered
+ * @param {React.ReactNode}       props.children                        Children to be rendered
  *
  * @example
  * ```jsx
@@ -15490,7 +15492,7 @@ const {
  * );
  * ```
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 const PluginPostPublishPanel = ({
   children,
@@ -15535,9 +15537,9 @@ const {
  * It should be noted that this is named and implemented around the function it serves
  * and not its location, which may change in future iterations.
  *
- * @param {Object}  props             Component properties.
- * @param {string}  [props.className] An optional class name added to the row.
- * @param {Element} props.children    Children to be rendered.
+ * @param {Object}          props             Component properties.
+ * @param {string}          [props.className] An optional class name added to the row.
+ * @param {React.ReactNode} props.children    Children to be rendered.
  *
  * @example
  * ```js
@@ -15571,7 +15573,7 @@ const {
  * );
  * ```
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 const PluginPostStatusInfo = ({
   children,
@@ -15609,7 +15611,7 @@ const {
  * @param {WPBlockTypeIconRender} [props.icon=inherits from the plugin] The [Dashicon](https://developer.wordpress.org/resource/dashicons/)
  *                                                                      icon slug string, or an SVG WP element, to be rendered when
  *                                                                      the sidebar is pinned to toolbar.
- * @param {Element}               props.children                        Children to be rendered
+ * @param {React.ReactNode}       props.children                        Children to be rendered
  *
  * @example
  * ```jsx
@@ -15628,7 +15630,7 @@ const {
  * );
  * ```
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 const PluginPrePublishPanel = ({
   children,
@@ -15666,6 +15668,7 @@ PluginPrePublishPanel.Slot = plugin_pre_publish_panel_Slot;
  * The text within the component appears as the menu item label.
  *
  * @param {Object}                props                                 Component properties.
+ * @param {React.ReactNode}       [props.children]                      Children to be rendered.
  * @param {string}                [props.href]                          When `href` is provided, the menu item is rendered as an anchor instead of a button. It corresponds to the `href` attribute of the anchor.
  * @param {WPBlockTypeIconRender} [props.icon=inherits from the plugin] The icon to be rendered to the left of the menu item label. Can be a Dashicon slug or an SVG WP element.
  * @param {Function}              [props.onClick]                       The callback function to be executed when the user clicks the menu item.
@@ -15694,7 +15697,7 @@ PluginPrePublishPanel.Slot = plugin_pre_publish_panel_Slot;
  * } );
  * ```
  *
- * @return {Component} The rendered menu item component.
+ * @return {React.ReactNode} The rendered menu item component.
  */
 
 function PluginPreviewMenuItem(props) {
@@ -15727,6 +15730,7 @@ function PluginPreviewMenuItem(props) {
  *
  * @param {Object}                props                                 Element props.
  * @param {string}                props.name                            A string identifying the sidebar. Must be unique for every sidebar registered within the scope of your plugin.
+ * @param {React.ReactNode}       [props.children]                      Children to be rendered.
  * @param {string}                [props.className]                     An optional class name added to the sidebar body.
  * @param {string}                props.title                           Title displayed at the top of the sidebar.
  * @param {boolean}               [props.isPinnable=true]               Whether to allow to pin sidebar to the toolbar. When set to `true` it also automatically renders a corresponding menu item.
@@ -15805,6 +15809,7 @@ function PluginSidebar({
  *
  * @param {Object}                props                                 Component props.
  * @param {string}                props.target                          A string identifying the target sidebar you wish to be activated by this menu item. Must be the same as the `name` prop you have given to that sidebar.
+ * @param {React.ReactNode}       [props.children]                      Children to be rendered.
  * @param {WPBlockTypeIconRender} [props.icon=inherits from the plugin] The [Dashicon](https://developer.wordpress.org/resource/dashicons/) icon slug string, or an SVG WP element, to be rendered to the left of the menu item label.
  *
  * @example
@@ -15843,7 +15848,7 @@ function PluginSidebar({
  * );
  * ```
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 
 function PluginSidebarMoreMenuItem(props) {
@@ -16181,7 +16186,7 @@ function BlockThemeControl({
 /**
  * Displays the template controls based on the current editor settings and user permissions.
  *
- * @return {JSX.Element|null} The rendered PostTemplatePanel component.
+ * @return {React.ReactNode} The rendered PostTemplatePanel component.
  */
 
 function PostTemplatePanel() {
@@ -16448,7 +16453,7 @@ const minimumUsersForCombobox = 25;
 /**
  * Renders the component for selecting the post author.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 function PostAuthor() {
   const showCombobox = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -16479,10 +16484,10 @@ function PostAuthor() {
 /**
  * Wrapper component that renders its children only if the post type supports the author.
  *
- * @param {Object}  props          The component props.
- * @param {Element} props.children Children to be rendered.
+ * @param {Object}          props          The component props.
+ * @param {React.ReactNode} props.children Children to be rendered.
  *
- * @return {Component|null} The component to be rendered. Return `null` if the post type doesn't
+ * @return {React.ReactNode} The component to be rendered. Return `null` if the post type doesn't
  * supports the author or if there are no authors available.
  */
 
@@ -16552,7 +16557,7 @@ function PostAuthorToggle({
 /**
  * Renders the Post Author Panel component.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 function panel_PostAuthor() {
   // Use internal state instead of a ref to make sure that the component
@@ -16650,7 +16655,7 @@ function PostComments() {
 /**
  * A form for managing comment status.
  *
- * @return {JSX.Element} The rendered PostComments component.
+ * @return {React.ReactNode} The rendered PostComments component.
  */
 /* harmony default export */ const post_comments = (PostComments);
 
@@ -16793,7 +16798,7 @@ function PostDiscussionToggle({
  * checks whether the current post has support for the
  * above and if the `discussion-panel` panel is enabled.
  *
- * @return {JSX.Element|null} The rendered PostDiscussionPanel component.
+ * @return {React.ReactNode} The rendered PostDiscussionPanel component.
  */
 function PostDiscussionPanel() {
   const {
@@ -16936,10 +16941,10 @@ function PostExcerpt({
 /**
  * Component for checking if the post type supports the excerpt field.
  *
- * @param {Object}  props          Props.
- * @param {Element} props.children Children to be rendered.
+ * @param {Object}          props          Props.
+ * @param {React.ReactNode} props.children Children to be rendered.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 
 function PostExcerptCheck({
@@ -16970,9 +16975,9 @@ const {
 /**
  * Renders a post excerpt panel in the post sidebar.
  *
- * @param {Object}  props             Component properties.
- * @param {string}  [props.className] An optional class name added to the row.
- * @param {Element} props.children    Children to be rendered.
+ * @param {Object}          props             Component properties.
+ * @param {string}          [props.className] An optional class name added to the row.
+ * @param {React.ReactNode} props.children    Children to be rendered.
  *
  * @example
  * ```js
@@ -17004,7 +17009,7 @@ const {
  * );
  * ```
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 const PluginPostExcerpt = ({
   children,
@@ -17088,7 +17093,7 @@ function ExcerptPanel() {
 /**
  * Is rendered if the post type supports excerpts and allows editing the excerpt.
  *
- * @return {JSX.Element} The rendered PostExcerptPanel component.
+ * @return {React.ReactNode} The rendered PostExcerptPanel component.
  */
 function PostExcerptPanel() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_excerpt_check, {
@@ -17213,11 +17218,11 @@ function PrivateExcerpt() {
 /**
  * Checks if the current theme supports specific features and renders the children if supported.
  *
- * @param {Object}          props             The component props.
- * @param {Element}         props.children    The children to render if the theme supports the specified features.
- * @param {string|string[]} props.supportKeys The key(s) of the theme support(s) to check.
+ * @param {Object}             props             The component props.
+ * @param {React.ReactElement} props.children    The children to render if the theme supports the specified features.
+ * @param {string|string[]}    props.supportKeys The key(s) of the theme support(s) to check.
  *
- * @return {JSX.Element|null} The rendered children if the theme supports the specified features, otherwise null.
+ * @return {React.ReactElement} The rendered children if the theme supports the specified features, otherwise null.
  */
 function ThemeSupportCheck({
   children,
@@ -17261,10 +17266,10 @@ function ThemeSupportCheck({
  * Wrapper component that renders its children only if the post type supports a featured image
  * and the theme supports post thumbnails.
  *
- * @param {Object}  props          Props.
- * @param {Element} props.children Children to be rendered.
+ * @param {Object}          props          Props.
+ * @param {React.ReactNode} props.children Children to be rendered.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 
 function PostFeaturedImageCheck({
@@ -17589,7 +17594,7 @@ const post_featured_image_panel_PANEL_NAME = 'featured-image';
  * @param {Object}  props               Props.
  * @param {boolean} props.withPanelBody Whether to include the panel body. Default true.
  *
- * @return {Component|null} The component to be rendered.
+ * @return {React.ReactNode} The component to be rendered.
  * Return Null if the editor panel is disabled for featured image.
  */
 function PostFeaturedImagePanel({
@@ -17648,6 +17653,15 @@ function PostFeaturedImagePanel({
 
 
 
+/**
+ * Component check if there are any post formats.
+ *
+ * @param {Object}          props          The component props.
+ * @param {React.ReactNode} props.children The child elements to render.
+ *
+ * @return {React.ReactNode} The rendered component or null if post formats are disabled.
+ */
+
 function PostFormatCheck({
   children
 }) {
@@ -17660,16 +17674,6 @@ function PostFormatCheck({
     children: children
   });
 }
-
-/**
- * Component check if there are any post formats.
- *
- * @param {Object}  props          The component props.
- * @param {Element} props.children The child elements to render.
- *
- * @return {Component|null} The rendered component or null if post formats are disabled.
- */
-/* harmony default export */ const post_format_check = (PostFormatCheck);
 
 ;// ./packages/editor/build-module/components/post-format/index.js
 /**
@@ -17739,7 +17743,7 @@ const POST_FORMATS = [{
  * <PostFormat />
  * ```
  *
- * @return {JSX.Element} The rendered PostFormat component.
+ * @return {React.ReactNode} The rendered PostFormat component.
  */
 function PostFormat() {
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(PostFormat);
@@ -17773,7 +17777,7 @@ function PostFormat() {
   const onUpdatePostFormat = format => editPost({
     format
   });
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_format_check, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostFormatCheck, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "editor-post-format",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
@@ -17816,10 +17820,10 @@ function PostFormat() {
 /**
  * Wrapper component that renders its children if the post has more than one revision.
  *
- * @param {Object}  props          Props.
- * @param {Element} props.children Children to be rendered.
+ * @param {Object}          props          Props.
+ * @param {React.ReactNode} props.children Children to be rendered.
  *
- * @return {Component|null} Rendered child components if post has more than one revision, otherwise null.
+ * @return {React.ReactNode} Rendered child components if post has more than one revision, otherwise null.
  */
 
 function PostLastRevisionCheck({
@@ -17881,7 +17885,7 @@ function usePostLastRevisionInfo() {
 /**
  * Renders the component for displaying the last revision of a post.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 function PostLastRevision() {
   const {
@@ -17939,7 +17943,7 @@ function PrivatePostLastRevision() {
 /**
  * Renders the panel for displaying the last revision of a post.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 
 function PostLastRevisionPanel() {
@@ -17974,7 +17978,7 @@ function PostLastRevisionPanel() {
  * A modal component that is displayed when a post is locked for editing by another user.
  * The modal provides information about the lock status and options to take over or exit the editor.
  *
- * @return {JSX.Element|null} The rendered PostLockedModal component.
+ * @return {React.ReactNode} The rendered PostLockedModal component.
  */
 
 function PostLockedModal() {
@@ -18192,10 +18196,10 @@ function PostLockedModal() {
  * If the post is already published or the user doesn't have the
  * capability to publish, it returns null.
  *
- * @param {Object}  props          Component properties.
- * @param {Element} props.children Children to be rendered.
+ * @param {Object}             props          Component properties.
+ * @param {React.ReactElement} props.children Children to be rendered.
  *
- * @return {JSX.Element|null} The rendered child elements or null if the post is already published or the user doesn't have the capability to publish.
+ * @return {React.ReactElement} The rendered child elements or null if the post is already published or the user doesn't have the capability to publish.
  */
 function PostPendingStatusCheck({
   children
@@ -18238,7 +18242,7 @@ function PostPendingStatusCheck({
 /**
  * A component for displaying and toggling the pending status of a post.
  *
- * @return {JSX.Element} The rendered component.
+ * @return {React.ReactNode} The rendered component.
  */
 
 function PostPendingStatus() {
@@ -18377,7 +18381,7 @@ function writeInterstitialMessage(targetDocument) {
  * @param {string}   props.role                The role attribute for the button.
  * @param {Function} props.onPreview           The callback function for preview event.
  *
- * @return {JSX.Element|null} The rendered button component.
+ * @return {React.ReactNode} The rendered button component.
  */
 function PostPreviewButton({
   className,
@@ -18802,7 +18806,7 @@ const visibilityOptions = {
  *
  * @param {Object}   props         The component props.
  * @param {Function} props.onClose Function to call when the popover is closed.
- * @return {JSX.Element} The rendered component.
+ * @return {React.ReactNode} The rendered component.
  */
 
 function PostVisibility({
@@ -19638,7 +19642,7 @@ const {
  * @param {Object}   props         Props.
  * @param {Function} props.onClose Function to close the component.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 function PostSchedule(props) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrivatePostSchedule, {
@@ -19721,7 +19725,7 @@ function PrivatePostSchedule({
  *
  * @param {Object} props Props.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 function PostScheduleLabel(props) {
   return usePostScheduleLabel(props);
@@ -19942,7 +19946,7 @@ const Wrapper = ({
  * @param {string}  props.slug                    The slug of the taxonomy.
  * @param {boolean} props.__nextHasNoMarginBottom Start opting into the new margin-free styles that will become the default in a future version, currently scheduled to be WordPress 7.0. (The prop can be safely removed once this happens.)
  *
- * @return {JSX.Element} The rendered flat term selector component.
+ * @return {React.ReactNode} The rendered flat term selector component.
  */
 function FlatTermSelector({
   slug,
@@ -21698,10 +21702,10 @@ const cloud = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 /**
  * Wrapper component that renders its children only if post has a sticky action.
  *
- * @param {Object}  props          Props.
- * @param {Element} props.children Children to be rendered.
+ * @param {Object}             props          Props.
+ * @param {React.ReactElement} props.children Children to be rendered.
  *
- * @return {Component} The component to be rendered or null if post type is not 'post' or hasStickyAction is false.
+ * @return {React.ReactElement} The component to be rendered or null if post type is not 'post' or hasStickyAction is false.
  */
 function PostStickyCheck({
   children
@@ -21740,7 +21744,7 @@ function PostStickyCheck({
 /**
  * Renders the PostSticky component. It provides a checkbox control for the sticky post feature.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 
 function PostSticky() {
@@ -22175,10 +22179,10 @@ function PostSavedState({
 /**
  * Wrapper component that renders its children only if post has a publish action.
  *
- * @param {Object}  props          Props.
- * @param {Element} props.children Children to be rendered.
+ * @param {Object}             props          Props.
+ * @param {React.ReactElement} props.children Children to be rendered.
  *
- * @return {Component} - The component to be rendered or null if there is no publish action.
+ * @return {React.ReactElement} - The component to be rendered or null if there is no publish action.
  */
 function PostScheduleCheck({
   children
@@ -22217,7 +22221,7 @@ const panel_DESIGN_POST_TYPES = [constants_TEMPLATE_POST_TYPE, constants_TEMPLAT
 /**
  * Renders the Post Schedule Panel component.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 function PostSchedulePanel() {
   const [popoverAnchor, setPopoverAnchor] = (0,external_wp_element_namespaceObject.useState)(null);
@@ -22284,10 +22288,10 @@ function PostSchedulePanel() {
 /**
  * Wrapper component that renders its children only if the post type supports the slug.
  *
- * @param {Object}  props          Props.
- * @param {Element} props.children Children to be rendered.
+ * @param {Object}          props          Props.
+ * @param {React.ReactNode} props.children Children to be rendered.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 
 function PostSlugCheck({
@@ -22363,7 +22367,7 @@ function PostSlugControl() {
 /**
  * Renders the PostSlug component. It provide a control for editing the post slug.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 function PostSlug() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSlugCheck, {
@@ -22389,7 +22393,7 @@ function PostSlug() {
 /**
  * Renders a button component that allows the user to switch a post to draft status.
  *
- * @return {JSX.Element} The rendered component.
+ * @return {React.ReactNode} The rendered component.
  */
 
 function PostSwitchToDraftButton() {
@@ -22477,7 +22481,7 @@ function PostSwitchToDraftButton() {
 /**
  * Renders the sync status of a post.
  *
- * @return {JSX.Element|null} The rendered sync status component.
+ * @return {React.ReactNode} The rendered sync status component.
  */
 
 function PostSyncStatus() {
@@ -22584,10 +22588,10 @@ function PostTaxonomies({
 /**
  * Renders the children components only if the current post type has taxonomies.
  *
- * @param {Object}  props          The component props.
- * @param {Element} props.children The children components to render.
+ * @param {Object}          props          The component props.
+ * @param {React.ReactNode} props.children The children components to render.
  *
- * @return {Component|null} The rendered children components or null if the current post type has no taxonomies.
+ * @return {React.ReactElement} The rendered children components or null if the current post type has no taxonomies.
  */
 function PostTaxonomiesCheck({
   children
@@ -22618,6 +22622,16 @@ function PostTaxonomiesCheck({
 
 
 
+
+/**
+ * Renders a panel for a specific taxonomy.
+ *
+ * @param {Object}          props          The component props.
+ * @param {Object}          props.taxonomy The taxonomy object.
+ * @param {React.ReactNode} props.children The child components.
+ *
+ * @return {React.ReactNode} The rendered taxonomy panel.
+ */
 
 function TaxonomyPanel({
   taxonomy,
@@ -22655,6 +22669,12 @@ function TaxonomyPanel({
     children: children
   });
 }
+
+/**
+ * Component that renders the post taxonomies panel.
+ *
+ * @return {React.ReactNode} The rendered component.
+ */
 function panel_PostTaxonomies() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTaxonomiesCheck, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_taxonomies, {
@@ -22667,17 +22687,6 @@ function panel_PostTaxonomies() {
     })
   });
 }
-
-/**
- * Renders a panel for a specific taxonomy.
- *
- * @param {Object}  props          The component props.
- * @param {Object}  props.taxonomy The taxonomy object.
- * @param {Element} props.children The child components.
- *
- * @return {Component} The rendered taxonomy panel.
- */
-/* harmony default export */ const post_taxonomies_panel = (panel_PostTaxonomies);
 
 // EXTERNAL MODULE: ./node_modules/react-autosize-textarea/lib/index.js
 var lib = __webpack_require__(4132);
@@ -22706,7 +22715,7 @@ var lib = __webpack_require__(4132);
 /**
  * Displays the Post Text Editor along with content in Visual and Text mode.
  *
- * @return {JSX.Element|null} The rendered PostTextEditor component.
+ * @return {React.ReactNode} The rendered PostTextEditor component.
  */
 
 function PostTextEditor() {
@@ -23065,7 +23074,7 @@ const PostTitle = (0,external_wp_element_namespaceObject.forwardRef)((_, forward
  * @param {Object}  _            Unused parameter.
  * @param {Element} forwardedRef Forwarded ref for the component.
  *
- * @return {Component} The rendered PostTitle component.
+ * @return {React.ReactNode} The rendered PostTitle component.
  */
 /* harmony default export */ const post_title = ((0,external_wp_element_namespaceObject.forwardRef)((_, forwardedRef) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_type_support_check, {
   supportKeys: "title",
@@ -23103,7 +23112,7 @@ const PostTitle = (0,external_wp_element_namespaceObject.forwardRef)((_, forward
  * @param {Object}  _            Unused parameter.
  * @param {Element} forwardedRef Reference to the component's DOM node.
  *
- * @return {Component} The rendered component.
+ * @return {React.ReactNode} The rendered component.
  */
 
 function PostTitleRaw(_, forwardedRef) {
@@ -23179,10 +23188,10 @@ function PostTitleRaw(_, forwardedRef) {
 /**
  * Wrapper component that renders its children only if the post can trashed.
  *
- * @param {Object}  props          - The component props.
- * @param {Element} props.children - The child components to render.
+ * @param {Object}        props          - The component props.
+ * @param {React.ReactEl} props.children - The child components to render.
  *
- * @return {Component|null} The rendered child components or null if the post can not trashed.
+ * @return {React.ReactElement} The rendered child components or null if the post can not trashed.
  */
 function PostTrashCheck({
   children
@@ -23235,7 +23244,7 @@ function PostTrashCheck({
  * Displays the Post Trash Button and Confirm Dialog in the Editor.
  *
  * @param {?{onActionPerformed: Object}} An object containing the onActionPerformed function.
- * @return {JSX.Element|null} The rendered PostTrash component.
+ * @return {React.ReactNode} The rendered PostTrash component.
  */
 
 function PostTrash({
@@ -23324,7 +23333,7 @@ function PostTrash({
  *
  * @param {Function} onClose Callback function to be executed when the popover is closed.
  *
- * @return {Component} The rendered PostURL component.
+ * @return {React.ReactNode} The rendered PostURL component.
  */
 
 function PostURL({
@@ -23482,10 +23491,10 @@ function PostURL({
 /**
  * Check if the post URL is valid and visible.
  *
- * @param {Object}  props          The component props.
- * @param {Element} props.children The child components.
+ * @param {Object}             props          The component props.
+ * @param {React.ReactElement} props.children The child components.
  *
- * @return {Component|null} The child components if the post URL is valid and visible, otherwise null.
+ * @return {React.ReactElement} The child components if the post URL is valid and visible, otherwise null.
  */
 function PostURLCheck({
   children
@@ -23527,7 +23536,7 @@ function PostURLCheck({
 /**
  * Represents a label component for a post URL.
  *
- * @return {Component} The PostURLLabel component.
+ * @return {React.ReactNode} The PostURLLabel component.
  */
 function PostURLLabel() {
   return usePostURLLabel();
@@ -23565,7 +23574,7 @@ function usePostURLLabel() {
 /**
  * Renders the `PostURLPanel` component.
  *
- * @return {JSX.Element} The rendered PostURLPanel component.
+ * @return {React.ReactNode} The rendered PostURLPanel component.
  */
 
 function PostURLPanel() {
@@ -23689,7 +23698,7 @@ function FrontPageLink() {
  * @param {Object}   props        The component props.
  * @param {Function} props.render Function to render the component.
  *                                Receives an object with a `canEdit` property.
- * @return {JSX.Element} The rendered component.
+ * @return {React.ReactNode} The rendered component.
  */
 function PostVisibilityCheck({
   render
@@ -23736,7 +23745,7 @@ const external_wp_wordcount_namespaceObject = window["wp"]["wordcount"];
 /**
  * Renders the word count of the post content.
  *
- * @return {JSX.Element|null} The rendered WordCount component.
+ * @return {React.ReactNode} The rendered WordCount component.
  */
 
 function WordCount() {
@@ -23781,7 +23790,7 @@ const AVERAGE_READING_RATE = 189;
 /**
  * Component for showing Time To Read in Content.
  *
- * @return {JSX.Element} The rendered TimeToRead component.
+ * @return {React.ReactNode} The rendered TimeToRead component.
  */
 function TimeToRead() {
   const content = (0,external_wp_data_namespaceObject.useSelect)(select => select(store_store).getEditedPostAttribute('content'), []);
@@ -23985,7 +23994,7 @@ function TableOfContents({
  * @param {boolean}     props.repositionDropdown      Whether to reposition the dropdown.
  * @param {Element.ref} ref                           The component's ref.
  *
- * @return {JSX.Element} The rendered table of contents component.
+ * @return {React.ReactNode} The rendered table of contents component.
  */
 /* harmony default export */ const table_of_contents = ((0,external_wp_element_namespaceObject.forwardRef)(TableOfContents));
 
@@ -24002,7 +24011,7 @@ function TableOfContents({
  * Warns the user if there are unsaved changes before leaving the editor.
  * Compatible with Post Editor and Site Editor.
  *
- * @return {Component} The component.
+ * @return {React.ReactNode} The component.
  */
 function UnsavedChangesWarning() {
   const {
@@ -27010,7 +27019,7 @@ const ExperimentalEditorProvider = with_registry_provider(({
  * </EditorProvider>
  * ```
  *
- * @return {JSX.Element} The rendered EditorProvider component.
+ * @return {React.ReactNode} The rendered EditorProvider component.
  */
 function EditorProvider(props) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ExperimentalEditorProvider, {
@@ -27536,7 +27545,7 @@ const moreVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
  * @param {string} props.name   - Name of the author.
  * @param {string} props.date   - Date of the comment.
  *
- * @return {JSX.Element} The JSX element representing the author's information.
+ * @return {React.ReactNode} The JSX element representing the author's information.
  */
 
 function CommentAuthorInfo({
@@ -27621,7 +27630,7 @@ function sanitizeCommentString(str) {
  * @param {Function} props.onCancel         - The function to call when canceling the comment update.
  * @param {Object}   props.thread           - The comment thread object.
  * @param {string}   props.submitButtonText - The text to display on the submit button.
- * @return {JSX.Element} The CommentForm component.
+ * @return {React.ReactNode} The CommentForm component.
  */
 
 function CommentForm({
@@ -27691,7 +27700,7 @@ function CommentForm({
  * @param {Function} props.onAddReply       - The function to add a reply to a comment.
  * @param {Function} props.onCommentDelete  - The function to delete a comment.
  * @param {Function} props.onCommentResolve - The function to mark a comment as resolved.
- * @return {JSX.Element} The rendered Comments component.
+ * @return {React.ReactNode} The rendered Comments component.
  */
 
 function Comments({
@@ -27857,7 +27866,7 @@ function Comments({
  * @param {Function} props.onDelete  - The function to delete the comment.
  * @param {Function} props.onReply   - The function to reply to the comment.
  * @param {string}   props.status    - The status of the comment.
- * @return {JSX.Element} The rendered comment header.
+ * @return {React.ReactNode} The rendered comment header.
  */
 function CommentHeader({
   thread,
@@ -27939,7 +27948,7 @@ function CommentHeader({
  * @param {Function} props.onSubmit            - A callback function to be called when the user submits a comment.
  * @param {boolean}  props.showCommentBoard    - The function to edit the comment.
  * @param {Function} props.setShowCommentBoard - The function to delete the comment.
- * @return {JSX.Element} The rendered comment input UI.
+ * @return {React.ReactNode} The rendered comment input UI.
  */
 
 function AddComment({
@@ -31312,7 +31321,7 @@ function PostContentInformation() {
 /**
  * Renders the Post Author Panel component.
  *
- * @return {Component} The component to be rendered.
+ * @return {React.ReactNode} The rendered component.
  */
 
 function panel_PostFormat() {
@@ -31341,7 +31350,7 @@ function panel_PostFormat() {
     offset: 36,
     shift: true
   }), [popoverAnchor]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_format_check, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostFormatCheck, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_panel_row, {
       label: (0,external_wp_i18n_namespaceObject.__)('Format'),
       ref: setPopoverAnchor,
@@ -32353,7 +32362,7 @@ const SidebarContent = ({
         focusable: false,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSummary, {
           onActionPerformed: onActionPerformed
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(plugin_document_setting_panel.Slot, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplateContentPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplatePartContentPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTransformPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_taxonomies_panel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternOverridesPanel, {}), extraPanels]
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(plugin_document_setting_panel.Slot, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplateContentPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplatePartContentPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTransformPanel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(panel_PostTaxonomies, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternOverridesPanel, {}), extraPanels]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(sidebar_Tabs.TabPanel, {
         tabId: sidebars.block,
         focusable: false,
