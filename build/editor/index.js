@@ -28056,12 +28056,12 @@ function AddComment({
 
 
 const {
-  __unstableCommentIconFill
+  CommentIconSlotFill
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const AddCommentButton = ({
   onClick
 }) => {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(__unstableCommentIconFill, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentIconSlotFill.Fill, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
       icon: library_comment,
       onClick: onClick,
@@ -28087,12 +28087,12 @@ const AddCommentButton = ({
 
 
 const {
-  __unstableCommentIconToolbarFill
+  CommentIconToolbarSlotFill
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const AddCommentToolbarButton = ({
   onClick
 }) => {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(__unstableCommentIconToolbarFill, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentIconToolbarSlotFill.Fill, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       accessibleWhenDisabled: true,
       icon: library_comment,

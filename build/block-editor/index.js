@@ -59961,12 +59961,8 @@ function BlockActions({
  * WordPress dependencies
  */
 
-const {
-  Fill: __unstableCommentIconFill,
-  Slot: block_comment_icon_slot_Slot
-} = (0,external_wp_components_namespaceObject.createSlotFill)('__unstableCommentIconFill');
-__unstableCommentIconFill.Slot = block_comment_icon_slot_Slot;
-/* harmony default export */ const block_comment_icon_slot = (__unstableCommentIconFill);
+const CommentIconSlotFill = (0,external_wp_components_namespaceObject.createSlotFill)(Symbol('CommentIconSlotFill'));
+/* harmony default export */ const block_comment_icon_slot = (CommentIconSlotFill);
 
 ;// ./packages/block-editor/build-module/components/block-settings-menu/block-html-convert-button.js
 /**
@@ -61167,12 +61163,8 @@ function BlockSettingsDropdown({
  * WordPress dependencies
  */
 
-const {
-  Fill: __unstableCommentIconToolbarFill,
-  Slot: block_comment_icon_toolbar_slot_Slot
-} = (0,external_wp_components_namespaceObject.createSlotFill)('__unstableCommentIconToolbarFill');
-__unstableCommentIconToolbarFill.Slot = block_comment_icon_toolbar_slot_Slot;
-/* harmony default export */ const block_comment_icon_toolbar_slot = (__unstableCommentIconToolbarFill);
+const CommentIconToolbarSlotFill = (0,external_wp_components_namespaceObject.createSlotFill)(Symbol('CommentIconToolbarSlotFill'));
+/* harmony default export */ const block_comment_icon_toolbar_slot = (CommentIconToolbarSlotFill);
 
 ;// ./packages/block-editor/build-module/components/block-settings-menu/index.js
 /**
@@ -77978,8 +77970,8 @@ lock(privateApis, {
   __unstableBlockStyleVariationOverridesWithConfig: __unstableBlockStyleVariationOverridesWithConfig,
   setBackgroundStyleDefaults: setBackgroundStyleDefaults,
   sectionRootClientIdKey: sectionRootClientIdKey,
-  __unstableCommentIconFill: block_comment_icon_slot,
-  __unstableCommentIconToolbarFill: block_comment_icon_toolbar_slot
+  CommentIconSlotFill: block_comment_icon_slot,
+  CommentIconToolbarSlotFill: block_comment_icon_toolbar_slot
 });
 
 ;// ./packages/block-editor/build-module/index.js
