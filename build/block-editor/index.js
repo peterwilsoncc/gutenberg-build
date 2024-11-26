@@ -62174,7 +62174,9 @@ function PrivateBlockToolbar({
     showSlots,
     showGroupButtons,
     showLockButtons,
-    showSwitchSectionStyleButton
+    showSwitchSectionStyleButton,
+    hasFixedToolbar,
+    isNavigationMode
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockName,
@@ -62186,8 +62188,10 @@ function PrivateBlockToolbar({
       getBlockAttributes,
       getBlockParentsByBlockName,
       getTemplateLock,
+      getSettings,
       getParentSectionBlock,
-      isZoomOut
+      isZoomOut,
+      isNavigationMode: _isNavigationMode
     } = unlock(select(store));
     const selectedBlockClientIds = getSelectedBlockClientIds();
     const selectedBlockClientId = selectedBlockClientIds[0];
@@ -62221,7 +62225,9 @@ function PrivateBlockToolbar({
       showSlots: !isZoomOut(),
       showGroupButtons: !isZoomOut(),
       showLockButtons: !isZoomOut(),
-      showSwitchSectionStyleButton: isZoomOut()
+      showSwitchSectionStyleButton: isZoomOut(),
+      hasFixedToolbar: getSettings().hasFixedToolbar,
+      isNavigationMode: _isNavigationMode()
     };
   }, []);
   const toolbarWrapperRef = (0,external_wp_element_namespaceObject.useRef)(null);
@@ -62242,7 +62248,8 @@ function PrivateBlockToolbar({
 
   // Shifts the toolbar to make room for the parent block selector.
   const classes = dist_clsx('block-editor-block-contextual-toolbar', {
-    'has-parent': showParentSelector
+    'has-parent': showParentSelector,
+    'is-inverted-toolbar': isNavigationMode && !hasFixedToolbar
   });
   const innerClasses = dist_clsx('block-editor-block-toolbar', {
     'is-synced': isSynced,
