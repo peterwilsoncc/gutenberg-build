@@ -32508,210 +32508,6 @@ function EnablePublishSidebarOption(props) {
   });
 }
 
-;// ./packages/editor/build-module/components/block-manager/checklist.js
-/**
- * WordPress dependencies
- */
-
-
-
-function BlockTypesChecklist({
-  blockTypes,
-  value,
-  onItemChange
-}) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
-    className: "editor-block-manager__checklist",
-    children: blockTypes.map(blockType => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
-      className: "editor-block-manager__checklist-item",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-        __nextHasNoMarginBottom: true,
-        label: blockType.title,
-        checked: value.includes(blockType.name),
-        onChange: (...args) => onItemChange(blockType, ...args)
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
-        icon: blockType.icon
-      })]
-    }, blockType.name))
-  });
-}
-/* harmony default export */ const checklist = (BlockTypesChecklist);
-
-;// ./packages/editor/build-module/components/block-manager/category.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-function BlockManagerCategory({
-  title,
-  blockTypes,
-  selectedBlockTypes,
-  onChange
-}) {
-  const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(BlockManagerCategory);
-  const toggleVisible = (0,external_wp_element_namespaceObject.useCallback)((blockType, nextIsChecked) => {
-    if (nextIsChecked) {
-      onChange([...selectedBlockTypes, blockType]);
-    } else {
-      onChange(selectedBlockTypes.filter(({
-        name
-      }) => name !== blockType.name));
-    }
-  }, [selectedBlockTypes, onChange]);
-  const toggleAllVisible = (0,external_wp_element_namespaceObject.useCallback)(nextIsChecked => {
-    if (nextIsChecked) {
-      onChange([...selectedBlockTypes, ...blockTypes.filter(blockType => !selectedBlockTypes.find(({
-        name
-      }) => name === blockType.name))]);
-    } else {
-      onChange(selectedBlockTypes.filter(selectedBlockType => !blockTypes.find(({
-        name
-      }) => name === selectedBlockType.name)));
-    }
-  }, [blockTypes, selectedBlockTypes, onChange]);
-  if (!blockTypes.length) {
-    return null;
-  }
-  const checkedBlockNames = blockTypes.map(({
-    name
-  }) => name).filter(type => (selectedBlockTypes !== null && selectedBlockTypes !== void 0 ? selectedBlockTypes : []).some(selectedBlockType => selectedBlockType.name === type));
-  const titleId = 'editor-block-manager__category-title-' + instanceId;
-  const isAllChecked = checkedBlockNames.length === blockTypes.length;
-  const isIndeterminate = !isAllChecked && checkedBlockNames.length > 0;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-    role: "group",
-    "aria-labelledby": titleId,
-    className: "editor-block-manager__category",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-      __nextHasNoMarginBottom: true,
-      checked: isAllChecked,
-      onChange: toggleAllVisible,
-      className: "editor-block-manager__category-title",
-      indeterminate: isIndeterminate,
-      label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        id: titleId,
-        children: title
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(checklist, {
-      blockTypes: blockTypes,
-      value: checkedBlockNames,
-      onItemChange: toggleVisible
-    })]
-  });
-}
-/* harmony default export */ const block_manager_category = (BlockManagerCategory);
-
-;// ./packages/editor/build-module/components/block-manager/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-/**
- * Provides a list of blocks with checkboxes.
- *
- * @param {Object}   props                    Props.
- * @param {Array}    props.blockTypes         An array of blocks.
- * @param {Array}    props.selectedBlockTypes An array of selected blocks.
- * @param {Function} props.onChange           Function to be called when the selected blocks change.
- */
-
-function BlockManager({
-  blockTypes,
-  selectedBlockTypes,
-  onChange
-}) {
-  const debouncedSpeak = (0,external_wp_compose_namespaceObject.useDebounce)(external_wp_a11y_namespaceObject.speak, 500);
-  const [search, setSearch] = (0,external_wp_element_namespaceObject.useState)('');
-  const {
-    categories,
-    isMatchingSearchTerm
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    return {
-      categories: select(external_wp_blocks_namespaceObject.store).getCategories(),
-      isMatchingSearchTerm: select(external_wp_blocks_namespaceObject.store).isMatchingSearchTerm
-    };
-  }, []);
-  function enableAllBlockTypes() {
-    onChange(blockTypes);
-  }
-  const filteredBlockTypes = blockTypes.filter(blockType => {
-    return !search || isMatchingSearchTerm(blockType, search);
-  });
-  const numberOfHiddenBlocks = blockTypes.length - selectedBlockTypes.length;
-
-  // Announce search results on change
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!search) {
-      return;
-    }
-    const count = filteredBlockTypes.length;
-    const resultsFoundMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of results. */
-    (0,external_wp_i18n_namespaceObject._n)('%d result found.', '%d results found.', count), count);
-    debouncedSpeak(resultsFoundMessage);
-  }, [filteredBlockTypes?.length, search, debouncedSpeak]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-    className: "editor-block-manager__content",
-    children: [!!numberOfHiddenBlocks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      className: "editor-block-manager__disabled-blocks-count",
-      children: [(0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of blocks. */
-      (0,external_wp_i18n_namespaceObject._n)('%d block is hidden.', '%d blocks are hidden.', numberOfHiddenBlocks), numberOfHiddenBlocks), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        __next40pxDefaultSize: true,
-        variant: "link",
-        onClick: enableAllBlockTypes,
-        children: (0,external_wp_i18n_namespaceObject.__)('Reset')
-      })]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SearchControl, {
-      __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Search for a block'),
-      placeholder: (0,external_wp_i18n_namespaceObject.__)('Search for a block'),
-      value: search,
-      onChange: nextSearch => setSearch(nextSearch),
-      className: "editor-block-manager__search"
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      tabIndex: "0",
-      role: "region",
-      "aria-label": (0,external_wp_i18n_namespaceObject.__)('Available block types'),
-      className: "editor-block-manager__results",
-      children: [filteredBlockTypes.length === 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-        className: "editor-block-manager__no-results",
-        children: (0,external_wp_i18n_namespaceObject.__)('No blocks found.')
-      }), categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_manager_category, {
-        title: category.title,
-        blockTypes: filteredBlockTypes.filter(blockType => blockType.category === category.slug),
-        selectedBlockTypes: selectedBlockTypes,
-        onChange: onChange
-      }, category.slug)), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_manager_category, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Uncategorized'),
-        blockTypes: filteredBlockTypes.filter(({
-          category
-        }) => !category),
-        selectedBlockTypes: selectedBlockTypes,
-        onChange: onChange
-      })]
-    })]
-  });
-}
-
 ;// ./packages/editor/build-module/components/preferences-modal/block-visibility.js
 /**
  * WordPress dependencies
@@ -32721,13 +32517,16 @@ function BlockManager({
 
 
 
+
 /**
  * Internal dependencies
  */
 
 
 
-
+const {
+  BlockManager
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function BlockVisibility() {
   const {
     showBlockTypes,
