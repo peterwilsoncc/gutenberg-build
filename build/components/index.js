@@ -38906,6 +38906,7 @@ function Option({
   const commonProps = {
     id,
     className: 'components-circular-option-picker__option',
+    __next40pxDefaultSize: true,
     ...additionalProps
   };
   const isListbox = setActiveId !== undefined;
@@ -38992,6 +38993,7 @@ function ButtonAction({
   ...additionalProps
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+    __next40pxDefaultSize: true,
     className: dist_clsx('components-circular-option-picker__clear', className),
     variant: "tertiary",
     ...additionalProps,
