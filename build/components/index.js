@@ -31701,6 +31701,15 @@ function Dashicon({
  */
 
 
+/**
+ * Renders a raw icon without any initial styling or wrappers.
+ *
+ * ```jsx
+ * import { wordpress } from '@wordpress/icons';
+ *
+ * <Icon icon={ wordpress } />
+ * ```
+ */
 function Icon({
   icon = null,
   size = 'string' === typeof icon ? 20 : 24,
