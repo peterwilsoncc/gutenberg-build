@@ -44681,6 +44681,7 @@ function ControlPointButton({
       "aria-describedby": descriptionId,
       "aria-haspopup": "true",
       "aria-expanded": isOpen,
+      __next40pxDefaultSize: true,
       className: dist_clsx('components-custom-gradient-picker__control-point-button', {
         'is-active': isOpen
       }),
@@ -44861,6 +44862,7 @@ function InsertPoint({
       isOpen,
       onToggle
     }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+      __next40pxDefaultSize: true,
       "aria-expanded": isOpen,
       "aria-haspopup": "true",
       onClick: () => {
