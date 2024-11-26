@@ -48084,6 +48084,378 @@ function getCompatibilityStyles() {
   return compatibilityStyles;
 }
 
+;// ./packages/block-editor/build-module/components/iframe/use-scale-canvas.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * @typedef {Object} TransitionState
+ * @property {number} scaleValue   Scale of the canvas.
+ * @property {number} frameSize    Size of the frame/offset around the canvas.
+ * @property {number} clientHeight ClientHeight of the iframe.
+ * @property {number} scrollTop    ScrollTop of the iframe.
+ * @property {number} scrollHeight ScrollHeight of the iframe.
+ */
+
+/**
+ * Calculate the scale of the canvas.
+ *
+ * @param {Object} options                     Object of options
+ * @param {number} options.frameSize           Size of the frame/offset around the canvas
+ * @param {number} options.containerWidth      Actual width of the canvas container
+ * @param {number} options.maxContainerWidth   Maximum width of the container to use for the scale calculation. This locks the canvas to a maximum width when zooming out.
+ * @param {number} options.scaleContainerWidth Width the of the container wrapping the canvas container
+ * @return {number} Scale value between 0 and/or equal to 1
+ */
+function calculateScale({
+  frameSize,
+  containerWidth,
+  maxContainerWidth,
+  scaleContainerWidth
+}) {
+  return (Math.min(containerWidth, maxContainerWidth) - frameSize * 2) / scaleContainerWidth;
+}
+
+/**
+ * Compute the next scrollTop position after scaling the iframe content.
+ *
+ * @param {TransitionState} transitionFrom Starting point of the transition
+ * @param {TransitionState} transitionTo   Ending state of the transition
+ * @return {number} Next scrollTop position after scaling the iframe content.
+ */
+function computeScrollTopNext(transitionFrom, transitionTo) {
+  const {
+    clientHeight: prevClientHeight,
+    frameSize: prevFrameSize,
+    scaleValue: prevScale,
+    scrollTop,
+    scrollHeight
+  } = transitionFrom;
+  const {
+    clientHeight,
+    frameSize,
+    scaleValue
+  } = transitionTo;
+  // Step 0: Start with the current scrollTop.
+  let scrollTopNext = scrollTop;
+  // Step 1: Undo the effects of the previous scale and frame around the
+  // midpoint of the visible area.
+  scrollTopNext = (scrollTopNext + prevClientHeight / 2 - prevFrameSize) / prevScale - prevClientHeight / 2;
+
+  // Step 2: Apply the new scale and frame around the midpoint of the
+  // visible area.
+  scrollTopNext = (scrollTopNext + clientHeight / 2) * scaleValue + frameSize - clientHeight / 2;
+
+  // Step 3: Handle an edge case so that you scroll to the top of the
+  // iframe if the top of the iframe content is visible in the container.
+  // The same edge case for the bottom is skipped because changing content
+  // makes calculating it impossible.
+  scrollTopNext = scrollTop <= prevFrameSize ? 0 : scrollTopNext;
+
+  // This is the scrollTop value if you are scrolled to the bottom of the
+  // iframe. We can't just let the browser handle it because we need to
+  // animate the scaling.
+  const maxScrollTop = scrollHeight * (scaleValue / prevScale) + frameSize * 2 - clientHeight;
+
+  // Step 4: Clamp the scrollTopNext between the minimum and maximum
+  // possible scrollTop positions. Round the value to avoid subpixel
+  // truncation by the browser which sometimes causes a 1px error.
+  return Math.round(Math.min(Math.max(0, scrollTopNext), Math.max(0, maxScrollTop)));
+}
+
+/**
+ * Generate the keyframes to use for the zoom out animation.
+ *
+ * @param {TransitionState} transitionFrom Starting transition state.
+ * @param {TransitionState} transitionTo   Ending transition state.
+ * @return {Object[]} An array of keyframes to use for the animation.
+ */
+function getAnimationKeyframes(transitionFrom, transitionTo) {
+  const {
+    scaleValue: prevScale,
+    frameSize: prevFrameSize,
+    scrollTop
+  } = transitionFrom;
+  const {
+    scaleValue,
+    frameSize,
+    scrollTop: scrollTopNext
+  } = transitionTo;
+  return [{
+    translate: `0 0`,
+    scale: prevScale,
+    paddingTop: `${prevFrameSize / prevScale}px`,
+    paddingBottom: `${prevFrameSize / prevScale}px`
+  }, {
+    translate: `0 ${scrollTop - scrollTopNext}px`,
+    scale: scaleValue,
+    paddingTop: `${frameSize / scaleValue}px`,
+    paddingBottom: `${frameSize / scaleValue}px`
+  }];
+}
+
+/**
+ * @typedef {Object} ScaleCanvasResult
+ * @property {boolean} isZoomedOut             A boolean indicating if the canvas is zoomed out.
+ * @property {number}  scaleContainerWidth     The width of the container used to calculate the scale.
+ * @property {Object}  contentResizeListener   A resize observer for the content.
+ * @property {Object}  containerResizeListener A resize observer for the container.
+ */
+
+/**
+ * Handles scaling the canvas for the zoom out mode and animating between
+ * the states.
+ *
+ * @param {Object}        options                   Object of options.
+ * @param {number}        options.frameSize         Size of the frame around the content.
+ * @param {Document}      options.iframeDocument    Document of the iframe.
+ * @param {number}        options.maxContainerWidth Max width of the canvas to use as the starting scale point. Defaults to 750.
+ * @param {number|string} options.scale             Scale of the canvas. Can be an decimal between 0 and 1, 1, or 'auto-scaled'.
+ * @return {ScaleCanvasResult} Properties of the result.
+ */
+function useScaleCanvas({
+  frameSize,
+  iframeDocument,
+  maxContainerWidth = 750,
+  scale
+}) {
+  const [contentResizeListener, {
+    height: contentHeight
+  }] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
+  const [containerResizeListener, {
+    width: containerWidth
+  }] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
+  const initialContainerWidthRef = (0,external_wp_element_namespaceObject.useRef)(0);
+  const isZoomedOut = scale !== 1;
+  const prefersReducedMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
+  const isAutoScaled = scale === 'auto-scaled';
+  // Track if the animation should start when the useEffect runs.
+  const startAnimationRef = (0,external_wp_element_namespaceObject.useRef)(false);
+  // Track the animation so we know if we have an animation running,
+  // and can cancel it, reverse it, call a finish event, etc.
+  const animationRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (!isZoomedOut) {
+      initialContainerWidthRef.current = containerWidth;
+    }
+  }, [containerWidth, isZoomedOut]);
+  const scaleContainerWidth = Math.max(initialContainerWidthRef.current, containerWidth);
+  const scaleValue = isAutoScaled ? calculateScale({
+    frameSize,
+    containerWidth,
+    maxContainerWidth,
+    scaleContainerWidth
+  }) : scale;
+
+  /**
+   * The starting transition state for the zoom out animation.
+   * @type {import('react').RefObject<TransitionState>}
+   */
+  const transitionFromRef = (0,external_wp_element_namespaceObject.useRef)({
+    scaleValue,
+    frameSize,
+    clientHeight: 0,
+    scrollTop: 0,
+    scrollHeight: 0
+  });
+
+  /**
+   * The ending transition state for the zoom out animation.
+   * @type {import('react').RefObject<TransitionState>}
+   */
+  const transitionToRef = (0,external_wp_element_namespaceObject.useRef)({
+    scaleValue,
+    frameSize,
+    clientHeight: 0,
+    scrollTop: 0,
+    scrollHeight: 0
+  });
+
+  /**
+   * Start the zoom out animation. This sets the necessary CSS variables
+   * for animating the canvas and returns the Animation object.
+   *
+   * @return {Animation} The animation object for the zoom out animation.
+   */
+  const startZoomOutAnimation = (0,external_wp_element_namespaceObject.useCallback)(() => {
+    const {
+      scrollTop
+    } = transitionFromRef.current;
+    const {
+      scrollTop: scrollTopNext
+    } = transitionToRef.current;
+    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scroll-top', `${scrollTop}px`);
+    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scroll-top-next', `${scrollTopNext}px`);
+    iframeDocument.documentElement.classList.add('zoom-out-animation');
+    return iframeDocument.documentElement.animate(getAnimationKeyframes(transitionFromRef.current, transitionToRef.current), {
+      easing: 'cubic-bezier(0.46, 0.03, 0.52, 0.96)',
+      duration: 400
+    });
+  }, [iframeDocument]);
+
+  /**
+   * Callback when the zoom out animation is finished.
+   * - Cleans up animations refs.
+   * - Adds final CSS vars for scale and frame size to preserve the state.
+   * - Removes the 'zoom-out-animation' class (which has the fixed positioning).
+   * - Sets the final scroll position after the canvas is no longer in fixed position.
+   * - Removes CSS vars related to the animation.
+   * - Sets the transitionFrom to the transitionTo state to be ready for the next animation.
+   */
+  const finishZoomOutAnimation = (0,external_wp_element_namespaceObject.useCallback)(() => {
+    startAnimationRef.current = false;
+    animationRef.current = null;
+
+    // Add our final scale and frame size now that the animation is done.
+    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scale', transitionToRef.current.scaleValue);
+    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-frame-size', `${transitionToRef.current.frameSize}px`);
+    iframeDocument.documentElement.classList.remove('zoom-out-animation');
+
+    // Set the final scroll position that was just animated to.
+    // Disable reason: Eslint isn't smart enough to know that this is a
+    // DOM element. https://github.com/facebook/react/issues/31483
+    // eslint-disable-next-line react-compiler/react-compiler
+    iframeDocument.documentElement.scrollTop = transitionToRef.current.scrollTop;
+    iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-scroll-top');
+    iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-scroll-top-next');
+
+    // Update previous values.
+    transitionFromRef.current = transitionToRef.current;
+  }, [iframeDocument]);
+
+  /**
+   * Runs when zoom out mode is toggled, and sets the startAnimation flag
+   * so the animation will start when the next useEffect runs. We _only_
+   * want to animate when the zoom out mode is toggled, not when the scale
+   * changes due to the container resizing.
+   */
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (!iframeDocument) {
+      return;
+    }
+    if (isZoomedOut) {
+      iframeDocument.documentElement.classList.add('is-zoomed-out');
+    }
+    startAnimationRef.current = true;
+    return () => {
+      iframeDocument.documentElement.classList.remove('is-zoomed-out');
+    };
+  }, [iframeDocument, isZoomedOut]);
+
+  /**
+   * This handles:
+   * 1. Setting the correct scale and vars of the canvas when zoomed out
+   * 2. If zoom out mode has been toggled, runs the animation of zooming in/out
+   */
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (!iframeDocument) {
+      return;
+    }
+
+    // We need to update the appropriate scale to exit from. If sidebars have been opened since setting the
+    // original scale, we will snap to a much smaller scale due to the scale container immediately changing sizes when exiting.
+    if (isAutoScaled && transitionFromRef.current.scaleValue !== 1) {
+      // We use containerWidth as the divisor, as scaleContainerWidth will always match the containerWidth when
+      // exiting.
+      transitionFromRef.current.scaleValue = calculateScale({
+        frameSize: transitionFromRef.current.frameSize,
+        containerWidth,
+        maxContainerWidth,
+        scaleContainerWidth: containerWidth
+      });
+    }
+
+    // If we are not going to animate the transition, set the scale and frame size directly.
+    // If we are animating, these values will be set when the animation is finished.
+    // Example: Opening sidebars that reduce the scale of the canvas, but we don't want to
+    // animate the transition.
+    if (!startAnimationRef.current) {
+      iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scale', scaleValue);
+      iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-frame-size', `${frameSize}px`);
+    }
+    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-content-height', `${contentHeight}px`);
+    const clientHeight = iframeDocument.documentElement.clientHeight;
+    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-inner-height', `${clientHeight}px`);
+    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-container-width', `${containerWidth}px`);
+    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scale-container-width', `${scaleContainerWidth}px`);
+
+    /**
+     * Handle the zoom out animation:
+     *
+     * - Get the current scrollTop position.
+     * - Calculate where the same scroll position is after scaling.
+     * - Apply fixed positioning to the canvas with a transform offset
+     *   to keep the canvas centered.
+     * - Animate the scale and padding to the new scale and frame size.
+     * - After the animation is complete, remove the fixed positioning
+     *   and set the scroll position that keeps everything centered.
+     */
+    if (startAnimationRef.current) {
+      // Don't allow a new transition to start again unless it was started by the zoom out mode changing.
+      startAnimationRef.current = false;
+
+      /**
+       * If we already have an animation running, reverse it.
+       */
+      if (animationRef.current) {
+        animationRef.current.reverse();
+        // Swap the transition to/from refs so that we set the correct values when
+        // finishZoomOutAnimation runs.
+        const tempTransitionFrom = transitionFromRef.current;
+        const tempTransitionTo = transitionToRef.current;
+        transitionFromRef.current = tempTransitionTo;
+        transitionToRef.current = tempTransitionFrom;
+      } else {
+        var _transitionFromRef$cu;
+        /**
+         * Start a new zoom animation.
+         */
+
+        // We can't trust the set value from contentHeight, as it was measured
+        // before the zoom out mode was changed. After zoom out mode is changed,
+        // appenders may appear or disappear, so we need to get the height from
+        // the iframe at this point when we're about to animate the zoom out.
+        // The iframe scrollTop, scrollHeight, and clientHeight will all be
+        // the most accurate.
+        transitionFromRef.current.clientHeight = (_transitionFromRef$cu = transitionFromRef.current.clientHeight) !== null && _transitionFromRef$cu !== void 0 ? _transitionFromRef$cu : clientHeight;
+        transitionFromRef.current.scrollTop = iframeDocument.documentElement.scrollTop;
+        transitionFromRef.current.scrollHeight = iframeDocument.documentElement.scrollHeight;
+        transitionToRef.current = {
+          scaleValue,
+          frameSize,
+          clientHeight
+        };
+        transitionToRef.current.scrollTop = computeScrollTopNext(transitionFromRef.current, transitionToRef.current);
+        animationRef.current = startZoomOutAnimation();
+
+        // If the user prefers reduced motion, finish the animation immediately and set the final state.
+        if (prefersReducedMotion) {
+          finishZoomOutAnimation();
+        } else {
+          animationRef.current.onfinish = finishZoomOutAnimation;
+        }
+      }
+    }
+    return () => {
+      iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-scale');
+      iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-frame-size');
+      iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-content-height');
+      iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-inner-height');
+      iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-container-width');
+      iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-scale-container-width');
+    };
+  }, [startZoomOutAnimation, finishZoomOutAnimation, prefersReducedMotion, isAutoScaled, scaleValue, frameSize, iframeDocument, contentHeight, containerWidth, maxContainerWidth, scaleContainerWidth]);
+  return {
+    isZoomedOut,
+    scaleContainerWidth,
+    contentResizeListener,
+    containerResizeListener
+  };
+}
+
 ;// ./packages/block-editor/build-module/components/iframe/index.js
 /* wp:polyfill */
 /**
@@ -48103,6 +48475,7 @@ function getCompatibilityStyles() {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -48206,17 +48579,9 @@ function Iframe({
   } = resolvedAssets;
   /** @type {[Document, import('react').Dispatch<Document>]} */
   const [iframeDocument, setIframeDocument] = (0,external_wp_element_namespaceObject.useState)();
-  const initialContainerWidthRef = (0,external_wp_element_namespaceObject.useRef)(0);
   const [bodyClasses, setBodyClasses] = (0,external_wp_element_namespaceObject.useState)([]);
   const clearerRef = useBlockSelectionClearer();
   const [before, writingFlowRef, after] = useWritingFlow();
-  const [contentResizeListener, {
-    height: contentHeight
-  }] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
-  const [containerResizeListener, {
-    width: containerWidth
-  }] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
-  const prefersReducedMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
   const setRef = (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
     node._load = () => {
       setIframeDocument(node.contentDocument);
@@ -48279,51 +48644,20 @@ function Iframe({
       iFrameDocument?.removeEventListener('drop', preventFileDropDefault);
     };
   }, []);
-  const [iframeWindowInnerHeight, setIframeWindowInnerHeight] = (0,external_wp_element_namespaceObject.useState)();
-  const iframeResizeRef = (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
-    const nodeWindow = node.ownerDocument.defaultView;
-    setIframeWindowInnerHeight(nodeWindow.innerHeight);
-    const onResize = () => {
-      setIframeWindowInnerHeight(nodeWindow.innerHeight);
-    };
-    nodeWindow.addEventListener('resize', onResize);
-    return () => {
-      nodeWindow.removeEventListener('resize', onResize);
-    };
-  }, []);
-  const [windowInnerWidth, setWindowInnerWidth] = (0,external_wp_element_namespaceObject.useState)();
-  const windowResizeRef = (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
-    const nodeWindow = node.ownerDocument.defaultView;
-    setWindowInnerWidth(nodeWindow.innerWidth);
-    const onResize = () => {
-      setWindowInnerWidth(nodeWindow.innerWidth);
-    };
-    nodeWindow.addEventListener('resize', onResize);
-    return () => {
-      nodeWindow.removeEventListener('resize', onResize);
-    };
-  }, []);
-  const isZoomedOut = scale !== 1;
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!isZoomedOut) {
-      initialContainerWidthRef.current = containerWidth;
-    }
-  }, [containerWidth, isZoomedOut]);
-  const scaleContainerWidth = Math.max(initialContainerWidthRef.current, containerWidth);
-  const frameSizeValue = parseInt(frameSize);
-  const maxWidth = 750;
-  const scaleValue = scale === 'auto-scaled' ? (Math.min(containerWidth, maxWidth) - frameSizeValue * 2) / scaleContainerWidth : scale;
-  const prevScaleRef = (0,external_wp_element_namespaceObject.useRef)(scaleValue);
-  const prevFrameSizeRef = (0,external_wp_element_namespaceObject.useRef)(frameSizeValue);
-  const prevClientHeightRef = (0,external_wp_element_namespaceObject.useRef)(/* Initialized in the useEffect. */);
+  const {
+    contentResizeListener,
+    containerResizeListener,
+    isZoomedOut,
+    scaleContainerWidth
+  } = useScaleCanvas({
+    scale,
+    frameSize: parseInt(frameSize),
+    iframeDocument
+  });
   const disabledRef = (0,external_wp_compose_namespaceObject.useDisabled)({
     isDisabled: !readonly
   });
-  const bodyRef = (0,external_wp_compose_namespaceObject.useMergeRefs)([useBubbleEvents(iframeDocument), contentRef, clearerRef, writingFlowRef, disabledRef,
-  // Avoid resize listeners when not needed, these will trigger
-  // unnecessary re-renders when animating the iframe width, or when
-  // expanding preview iframes.
-  isZoomedOut ? iframeResizeRef : null]);
+  const bodyRef = (0,external_wp_compose_namespaceObject.useMergeRefs)([useBubbleEvents(iframeDocument), contentRef, clearerRef, writingFlowRef, disabledRef]);
 
   // Correct doctype is required to enable rendering in standards
   // mode. Also preload the styles to avoid a flash of unstyled
@@ -48361,171 +48695,6 @@ function Iframe({
     return [_src, () => URL.revokeObjectURL(_src)];
   }, [html]);
   (0,external_wp_element_namespaceObject.useEffect)(() => cleanup, [cleanup]);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    var _prevClientHeightRef$;
-    if (!iframeDocument ||
-    // HACK: Checking if isZoomedOut differs from prevIsZoomedOut here
-    // instead of the dependency array to appease the linter.
-    scaleValue === 1 === (prevScaleRef.current === 1)) {
-      return;
-    }
-
-    // Unscaled height of the current iframe container.
-    const clientHeight = iframeDocument.documentElement.clientHeight;
-
-    // Scaled height of the current iframe content.
-    const scrollHeight = iframeDocument.documentElement.scrollHeight;
-
-    // Previous scale value.
-    const prevScale = prevScaleRef.current;
-
-    // Unscaled size of the previous padding around the iframe content.
-    const prevFrameSize = prevFrameSizeRef.current;
-
-    // Unscaled height of the previous iframe container.
-    const prevClientHeight = (_prevClientHeightRef$ = prevClientHeightRef.current) !== null && _prevClientHeightRef$ !== void 0 ? _prevClientHeightRef$ : clientHeight;
-
-    // We can't trust the set value from contentHeight, as it was measured
-    // before the zoom out mode was changed. After zoom out mode is changed,
-    // appenders may appear or disappear, so we need to get the height from
-    // the iframe at this point when we're about to animate the zoom out.
-    // The iframe scrollTop, scrollHeight, and clientHeight will all be
-    // accurate. The client height also does change when the zoom out mode
-    // is toggled, as the bottom bar about selecting the template is
-    // added/removed when toggling zoom out mode.
-    const scrollTop = iframeDocument.documentElement.scrollTop;
-
-    // Step 0: Start with the current scrollTop.
-    let scrollTopNext = scrollTop;
-
-    // Step 1: Undo the effects of the previous scale and frame around the
-    // midpoint of the visible area.
-    scrollTopNext = (scrollTopNext + prevClientHeight / 2 - prevFrameSize) / prevScale - prevClientHeight / 2;
-
-    // Step 2: Apply the new scale and frame around the midpoint of the
-    // visible area.
-    scrollTopNext = (scrollTopNext + clientHeight / 2) * scaleValue + frameSizeValue - clientHeight / 2;
-
-    // Step 3: Handle an edge case so that you scroll to the top of the
-    // iframe if the top of the iframe content is visible in the container.
-    // The same edge case for the bottom is skipped because changing content
-    // makes calculating it impossible.
-    scrollTopNext = scrollTop <= prevFrameSize ? 0 : scrollTopNext;
-
-    // This is the scrollTop value if you are scrolled to the bottom of the
-    // iframe. We can't just let the browser handle it because we need to
-    // animate the scaling.
-    const maxScrollTop = scrollHeight * (scaleValue / prevScale) + frameSizeValue * 2 - clientHeight;
-
-    // Step 4: Clamp the scrollTopNext between the minimum and maximum
-    // possible scrollTop positions. Round the value to avoid subpixel
-    // truncation by the browser which sometimes causes a 1px error.
-    scrollTopNext = Math.round(Math.min(Math.max(0, scrollTopNext), Math.max(0, maxScrollTop)));
-    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scroll-top', `${scrollTop}px`);
-    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scroll-top-next', `${scrollTopNext}px`);
-    iframeDocument.documentElement.classList.add('zoom-out-animation');
-    function onZoomOutTransitionEnd() {
-      // Remove the position fixed for the animation.
-      iframeDocument.documentElement.classList.remove('zoom-out-animation');
-
-      // Update previous values.
-      prevClientHeightRef.current = clientHeight;
-      prevFrameSizeRef.current = frameSizeValue;
-      prevScaleRef.current = scaleValue;
-
-      // Set the final scroll position that was just animated to.
-      // Disable reason: Eslint isn't smart enough to know that this is a
-      // DOM element. https://github.com/facebook/react/issues/31483
-      // eslint-disable-next-line react-compiler/react-compiler
-      iframeDocument.documentElement.scrollTop = scrollTopNext;
-    }
-    let raf;
-    if (prefersReducedMotion) {
-      // Hack: Wait for the window values to recalculate.
-      raf = iframeDocument.defaultView.requestAnimationFrame(onZoomOutTransitionEnd);
-    } else {
-      iframeDocument.documentElement.addEventListener('transitionend', onZoomOutTransitionEnd, {
-        once: true
-      });
-    }
-    return () => {
-      iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-scroll-top');
-      iframeDocument.documentElement.style.removeProperty('--wp-block-editor-iframe-zoom-out-scroll-top-next');
-      iframeDocument.documentElement.classList.remove('zoom-out-animation');
-      if (prefersReducedMotion) {
-        iframeDocument.defaultView.cancelAnimationFrame(raf);
-      } else {
-        iframeDocument.documentElement.removeEventListener('transitionend', onZoomOutTransitionEnd);
-      }
-    };
-  }, [iframeDocument, scaleValue, frameSizeValue, prefersReducedMotion]);
-
-  // Toggle zoom out CSS Classes only when zoom out mode changes. We could add these into the useEffect
-  // that controls settings the CSS variables, but then we would need to do more work to ensure we're
-  // only toggling these when the zoom out mode changes, as that useEffect is also triggered by a large
-  // number of dependencies.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!iframeDocument) {
-      return;
-    }
-    if (isZoomedOut) {
-      iframeDocument.documentElement.classList.add('is-zoomed-out');
-    } else {
-      // HACK: Since we can't remove this in the cleanup, we need to do it here.
-      iframeDocument.documentElement.classList.remove('is-zoomed-out');
-    }
-    return () => {
-      // HACK: Skipping cleanup because it causes issues with the zoom out
-      // animation. More refactoring is needed to fix this properly.
-      // iframeDocument.documentElement.classList.remove( 'is-zoomed-out' );
-    };
-  }, [iframeDocument, isZoomedOut]);
-
-  // Calculate the scaling and CSS variables for the zoom out canvas
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!iframeDocument) {
-      return;
-    }
-
-    // Note: When we initialize the zoom out when the canvas is smaller (sidebars open),
-    // initialContainerWidthRef will be smaller than the full page, and reflow will happen
-    // when the canvas area becomes larger due to sidebars closing. This is a known but
-    // minor divergence for now.
-
-    // This scaling calculation has to happen within the JS because CSS calc() can
-    // only divide and multiply by a unitless value. I.e. calc( 100px / 2 ) is valid
-    // but calc( 100px / 2px ) is not.
-    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scale', scaleValue);
-
-    // frameSize has to be a px value for the scaling and frame size to be computed correctly.
-    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-frame-size', typeof frameSize === 'number' ? `${frameSize}px` : frameSize);
-    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-content-height', `${contentHeight}px`);
-    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-inner-height', `${iframeWindowInnerHeight}px`);
-    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-container-width', `${containerWidth}px`);
-    iframeDocument.documentElement.style.setProperty('--wp-block-editor-iframe-zoom-out-scale-container-width', `${scaleContainerWidth}px`);
-    return () => {
-      // HACK: Skipping cleanup because it causes issues with the zoom out
-      // animation. More refactoring is needed to fix this properly.
-      // iframeDocument.documentElement.style.removeProperty(
-      // 	'--wp-block-editor-iframe-zoom-out-scale'
-      // );
-      // iframeDocument.documentElement.style.removeProperty(
-      // 	'--wp-block-editor-iframe-zoom-out-frame-size'
-      // );
-      // iframeDocument.documentElement.style.removeProperty(
-      // 	'--wp-block-editor-iframe-zoom-out-content-height'
-      // );
-      // iframeDocument.documentElement.style.removeProperty(
-      // 	'--wp-block-editor-iframe-zoom-out-inner-height'
-      // );
-      // iframeDocument.documentElement.style.removeProperty(
-      // 	'--wp-block-editor-iframe-zoom-out-container-width'
-      // );
-      // iframeDocument.documentElement.style.removeProperty(
-      // 	'--wp-block-editor-iframe-zoom-out-scale-container-width'
-      // );
-    };
-  }, [scaleValue, frameSize, iframeDocument, iframeWindowInnerHeight, contentHeight, containerWidth, windowInnerWidth, isZoomedOut, scaleContainerWidth]);
 
   // Make sure to not render the before and after focusable div elements in view
   // mode. They're only needed to capture focus in edit mode.
@@ -48588,7 +48757,6 @@ function Iframe({
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "block-editor-iframe__container",
-    ref: windowResizeRef,
     children: [containerResizeListener, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: dist_clsx('block-editor-iframe__scale-container', isZoomedOut && 'is-zoomed-out'),
       style: {
