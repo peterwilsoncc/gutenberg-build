@@ -67570,6 +67570,11 @@ const constants_POPOVER_PROPS = {
 
 
 
+const messages = {
+  crop: (0,external_wp_i18n_namespaceObject.__)('Image cropped.'),
+  rotate: (0,external_wp_i18n_namespaceObject.__)('Image rotated.'),
+  cropAndRotate: (0,external_wp_i18n_namespaceObject.__)('Image cropped and rotated.')
+};
 function useSaveImage({
   crop,
   rotation,
@@ -67579,7 +67584,8 @@ function useSaveImage({
   onFinishEditing
 }) {
   const {
-    createErrorNotice
+    createErrorNotice,
+    createSuccessNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   const [isInProgress, setIsInProgress] = (0,external_wp_element_namespaceObject.useState)(false);
   const cancel = (0,external_wp_element_namespaceObject.useCallback)(() => {
@@ -67617,6 +67623,7 @@ function useSaveImage({
       onFinishEditing();
       return;
     }
+    const modifierType = modifiers.length === 1 ? modifiers[0].type : 'cropAndRotate';
     external_wp_apiFetch_default()({
       path: `/wp/v2/media/${id}/edit`,
       method: 'POST',
@@ -67629,8 +67636,11 @@ function useSaveImage({
         id: response.id,
         url: response.source_url
       });
+      createSuccessNotice(messages[modifierType], {
+        type: 'snackbar'
+      });
     }).catch(error => {
-      createErrorNotice((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1. Error message */
+      createErrorNotice((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Error message. */
       (0,external_wp_i18n_namespaceObject.__)('Could not edit image. %s'), (0,external_wp_dom_namespaceObject.__unstableStripHTML)(error.message)), {
         id: 'image-editing-error',
         type: 'snackbar'
@@ -67639,7 +67649,7 @@ function useSaveImage({
       setIsInProgress(false);
       onFinishEditing();
     });
-  }, [crop, rotation, id, url, onSaveImage, createErrorNotice, onFinishEditing]);
+  }, [crop, rotation, id, url, onSaveImage, createErrorNotice, createSuccessNotice, onFinishEditing]);
   return (0,external_wp_element_namespaceObject.useMemo)(() => ({
     isInProgress,
     apply,
