@@ -10009,10 +10009,10 @@ const duplicateTemplatePart = {
     const {
       createSuccessNotice
     } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
-    function onTemplatePartSuccess() {
+    function onTemplatePartSuccess(templatePart) {
       createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: %s: The new template part's title e.g. 'Call to action (copy)'.
-      (0,external_wp_i18n_namespaceObject._x)('"%s" duplicated.', 'template part'), utils_getItemTitle(item)), {
+      (0,external_wp_i18n_namespaceObject._x)('"%s" duplicated.', 'template part'), utils_getItemTitle(templatePart)), {
         type: 'snackbar',
         id: 'edit-site-patterns-success'
       });
