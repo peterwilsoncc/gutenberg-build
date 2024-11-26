@@ -67637,7 +67637,16 @@ function useSaveImage({
         url: response.source_url
       });
       createSuccessNotice(messages[modifierType], {
-        type: 'snackbar'
+        type: 'snackbar',
+        actions: [{
+          label: (0,external_wp_i18n_namespaceObject.__)('Undo'),
+          onClick: () => {
+            onSaveImage({
+              id,
+              url
+            });
+          }
+        }]
       });
     }).catch(error => {
       createErrorNotice((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Error message. */
