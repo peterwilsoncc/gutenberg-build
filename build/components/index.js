@@ -56050,7 +56050,6 @@ function DuotoneSwatch({
 
 
 
-
 function ColorOption({
   label,
   value,
@@ -56065,23 +56064,19 @@ function ColorOption({
   const contentId = `${idRoot}__content`;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+      __next40pxDefaultSize: true,
       className: "components-color-list-picker__swatch-button",
+      id: labelId,
       onClick: () => setIsOpen(prev => !prev),
       "aria-expanded": isOpen,
       "aria-controls": contentId,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(h_stack_component, {
-        justify: "flex-start",
-        spacing: 2,
-        children: [value ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_indicator, {
-          colorValue: value,
-          className: "components-color-list-picker__swatch-color"
-        }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-          icon: library_swatch
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          id: labelId,
-          children: label
-        })]
-      })
+      icon: value ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_indicator, {
+        colorValue: value,
+        className: "components-color-list-picker__swatch-color"
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+        icon: library_swatch
+      }),
+      text: label
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       role: "group",
       id: contentId,
