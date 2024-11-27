@@ -50783,7 +50783,8 @@ function BlockPattern({
   onClick,
   onHover,
   showTitlesAsTooltip,
-  category
+  category,
+  isSelected
 }) {
   const [isDragging, setIsDragging] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
@@ -50843,7 +50844,8 @@ function BlockPattern({
             "aria-label": pattern.title,
             "aria-describedby": pattern.description ? descriptionId : undefined,
             className: dist_clsx('block-editor-block-patterns-list__item', {
-              'block-editor-block-patterns-list__list-item-synced': pattern.type === INSERTER_PATTERN_TYPES.user && !pattern.syncStatus
+              'block-editor-block-patterns-list__list-item-synced': pattern.type === INSERTER_PATTERN_TYPES.user && !pattern.syncStatus,
+              'is-selected': isSelected
             })
           }),
           id: id,
@@ -50903,6 +50905,8 @@ function BlockPatternsList({
   pagingProps
 }, ref) {
   const [activeCompositeId, setActiveCompositeId] = (0,external_wp_element_namespaceObject.useState)(undefined);
+  const [activePattern, setActivePattern] = (0,external_wp_element_namespaceObject.useState)(null); // State to track active pattern
+
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     // Reset the active composite item whenever the available patterns change,
     // to make sure that Composite widget can receive focus correctly when its
@@ -50910,6 +50914,10 @@ function BlockPatternsList({
     const firstCompositeItemId = blockPatterns[0]?.name;
     setActiveCompositeId(firstCompositeItemId);
   }, [blockPatterns]);
+  const handleClickPattern = (pattern, blocks) => {
+    setActivePattern(pattern.name);
+    onClickPattern(pattern, blocks);
+  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite, {
     orientation: orientation,
     activeId: activeCompositeId,
@@ -50921,11 +50929,12 @@ function BlockPatternsList({
     children: [blockPatterns.map(pattern => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockPattern, {
       id: pattern.name,
       pattern: pattern,
-      onClick: onClickPattern,
+      onClick: handleClickPattern,
       onHover: onHover,
       isDraggable: isDraggable,
       showTitlesAsTooltip: showTitlesAsTooltip,
-      category: category
+      category: category,
+      isSelected: !!activePattern && activePattern === pattern.name
     }, pattern.name)), pagingProps && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Pagination, {
       ...pagingProps
     })]
