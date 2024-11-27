@@ -13389,7 +13389,8 @@ const {
   useGlobalStyle: layout_useGlobalStyle
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
-  NavigableRegion: layout_NavigableRegion
+  NavigableRegion: layout_NavigableRegion,
+  GlobalStylesProvider
 } = unlock(external_wp_editor_namespaceObject.privateApis);
 const {
   useLocation: layout_useLocation
@@ -13430,7 +13431,7 @@ function Layout({
     // Should not depend on the previous canvas mode value but the next.
   }, [canvas]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_commands_namespaceObject.CommandMenu, {}), canvas === 'view' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SaveKeyboardShortcut, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.UnsavedChangesWarning, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_commands_namespaceObject.CommandMenu, {}), canvas === 'view' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SaveKeyboardShortcut, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...navigateRegionsProps,
       ref: navigateRegionsProps.ref,
       className: dist_clsx('edit-site-layout', navigateRegionsProps.className, {
@@ -13518,6 +13519,15 @@ function Layout({
         })]
       })
     })]
+  });
+}
+function LayoutWithGlobalStylesProvider(props) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SlotFillProvider, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesProvider, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Layout, {
+        ...props
+      })
+    })
   });
 }
 
@@ -46182,8 +46192,6 @@ function useRegisterSiteEditorRoutes() {
 
 
 
-
-
 /**
  * Internal dependencies
  */
@@ -46197,15 +46205,12 @@ function useRegisterSiteEditorRoutes() {
 const {
   RouterProvider
 } = unlock(external_wp_router_namespaceObject.privateApis);
-const {
-  GlobalStylesProvider
-} = unlock(external_wp_editor_namespaceObject.privateApis);
 function AppLayout() {
   useCommonCommands();
   useSetCommandContext();
   useRegisterSiteEditorRoutes();
   const route = useActiveRoute();
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Layout, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LayoutWithGlobalStylesProvider, {
     route: route
   });
 }
@@ -46217,14 +46222,10 @@ function App() {
     createErrorNotice((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: plugin name */
     (0,external_wp_i18n_namespaceObject.__)('The "%s" plugin has encountered an error and cannot be rendered.'), name));
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SlotFillProvider, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(GlobalStylesProvider, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.UnsavedChangesWarning, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(RouterProvider, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AppLayout, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_plugins_namespaceObject.PluginArea, {
-          onError: onPluginAreaError
-        })]
-      })]
-    })
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(RouterProvider, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AppLayout, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_plugins_namespaceObject.PluginArea, {
+      onError: onPluginAreaError
+    })]
   });
 }
 
@@ -46584,7 +46585,6 @@ function useRegisterPostsAppRoutes() {
  */
 
 
-
 /**
  * Internal dependencies
  */
@@ -46596,21 +46596,16 @@ function useRegisterPostsAppRoutes() {
 const {
   RouterProvider: posts_app_RouterProvider
 } = unlock(external_wp_router_namespaceObject.privateApis);
-const {
-  GlobalStylesProvider: posts_app_GlobalStylesProvider
-} = unlock(external_wp_editor_namespaceObject.privateApis);
 function PostsLayout() {
   useRegisterPostsAppRoutes();
   const route = useActiveRoute();
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Layout, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LayoutWithGlobalStylesProvider, {
     route: route
   });
 }
 function PostsApp() {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(posts_app_GlobalStylesProvider, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.UnsavedChangesWarning, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(posts_app_RouterProvider, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostsLayout, {})
-    })]
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(posts_app_RouterProvider, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostsLayout, {})
   });
 }
 
