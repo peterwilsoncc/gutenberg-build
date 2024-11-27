@@ -29527,7 +29527,7 @@ function header_Header({
   const canBeZoomedOut = ['post', 'page', 'wp_template'].includes(postType);
   const disablePreviewOption = [NAVIGATION_POST_TYPE, constants_TEMPLATE_PART_POST_TYPE, PATTERN_POST_TYPE].includes(postType);
   const [isBlockToolsCollapsed, setIsBlockToolsCollapsed] = (0,external_wp_element_namespaceObject.useState)(true);
-  const hasCenter = (!hasBlockSelection || isBlockToolsCollapsed) && !isTooNarrowForDocumentBar;
+  const hasCenter = !isTooNarrowForDocumentBar && (!hasFixedToolbar || hasFixedToolbar && (!hasBlockSelection || isBlockToolsCollapsed));
   const hasBackButton = useHasBackButton();
   /*
    * The edit-post-header classname is only kept for backward compatability
