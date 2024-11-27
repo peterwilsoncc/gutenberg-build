@@ -33175,10 +33175,9 @@ function getPostMetaFields(select, context) {
     if (context?.query || context?.queryId) {
       return false;
     }
-    const postType = context?.postType || select(store_store).getCurrentPostType();
 
-    // Check that editing is happening in the post editor and not a template.
-    if (postType === 'wp_template') {
+    // Lock editing when `postType` is not defined.
+    if (!context?.postType) {
       return false;
     }
     const fieldValue = getPostMetaFields(select, context)?.[args.key]?.value;
