@@ -56218,6 +56218,7 @@ const SocialLinkEdit = ({
   // Use internal state instead of a ref to make sure that the component
   // re-renders when the popover's anchor updates.
   const [popoverAnchor, setPopoverAnchor] = (0,external_wp_element_namespaceObject.useState)(null);
+  const isContentOnlyMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)() === 'contentOnly';
   const IconComponent = getIconBySite(service);
   const socialLinkName = getNameBySite(service);
   // The initial label (ie. the link text) is an empty string.
@@ -56238,7 +56239,40 @@ const SocialLinkEdit = ({
     }
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+    children: [isContentOnlyMode && showLabels &&
+    /*#__PURE__*/
+    // Add an extra control to modify the label attribute when content only mode is active.
+    // With content only mode active, the inspector is hidden, so users need another way
+    // to edit this attribute.
+    (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      group: "other",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
+        popoverProps: {
+          position: 'bottom right'
+        },
+        renderToggle: ({
+          isOpen,
+          onToggle
+        }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+          onClick: onToggle,
+          "aria-haspopup": "true",
+          "aria-expanded": isOpen,
+          children: (0,external_wp_i18n_namespaceObject.__)('Text')
+        }),
+        renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+          __next40pxDefaultSize: true,
+          __nextHasNoMarginBottom: true,
+          className: "wp-block-social-link__toolbar_content_text",
+          label: (0,external_wp_i18n_namespaceObject.__)('Text'),
+          help: (0,external_wp_i18n_namespaceObject.__)('Provide a text label or use the default.'),
+          value: label,
+          onChange: value => setAttributes({
+            label: value
+          }),
+          placeholder: socialLinkName
+        })
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
         title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelRow, {
@@ -56317,13 +56351,15 @@ const social_link_metadata = {
   textdomain: "default",
   attributes: {
     url: {
-      type: "string"
+      type: "string",
+      role: "content"
     },
     service: {
       type: "string"
     },
     label: {
-      type: "string"
+      type: "string",
+      role: "content"
     },
     rel: {
       type: "string"
