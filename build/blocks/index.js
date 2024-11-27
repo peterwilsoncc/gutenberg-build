@@ -5881,6 +5881,7 @@ __webpack_require__.d(__webpack_exports__, {
   parse: () => (/* reexport */ parser_parse),
   parseWithAttributeSchema: () => (/* reexport */ parseWithAttributeSchema),
   pasteHandler: () => (/* reexport */ pasteHandler),
+  privateApis: () => (/* reexport */ privateApis),
   rawHandler: () => (/* reexport */ rawHandler),
   registerBlockBindingsSource: () => (/* reexport */ registerBlockBindingsSource),
   registerBlockCollection: () => (/* reexport */ registerBlockCollection),
@@ -8022,6 +8023,13 @@ const __experimentalGetBlockAttributesNamesByRole = (...args) => {
   });
   return getBlockAttributesNamesByRole(...args);
 };
+function isContentBlock(name) {
+  const attributes = getBlockType(name)?.attributes;
+  return !!Object.keys(attributes)?.some(attributeKey => {
+    const attribute = attributes[attributeKey];
+    return attribute?.role === 'content' || attribute?.__experimentalRole === 'content';
+  });
+}
 
 /**
  * Return a new object with the specified keys omitted.
@@ -15680,6 +15688,12 @@ function synchronizeBlocksWithTemplate(blocks = [], template) {
 }
 
 ;// ./packages/blocks/build-module/api/index.js
+/**
+ * Internal dependencies
+ */
+
+
+
 // The blocktype is the most important concept within the block API. It defines
 // all aspects of the block configuration and its interfaces, including `edit`
 // and `save`. The transforms specification allows converting one blocktype to
@@ -15776,6 +15790,10 @@ function synchronizeBlocksWithTemplate(blocks = [], template) {
 
 
 
+const privateApis = {};
+lock(privateApis, {
+  isContentBlock: isContentBlock
+});
 
 ;// ./packages/blocks/build-module/deprecated.js
 /**
