@@ -49980,6 +49980,7 @@ function BlockDraggableChip({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -49995,11 +49996,6 @@ const InserterDraggableBlocks = ({
   children,
   pattern
 }) => {
-  const transferData = {
-    type: 'inserter',
-    blocks
-  };
-  const blocksContainMedia = blocks.filter(block => (block.name === 'core/image' || block.name === 'core/audio' || block.name === 'core/video') && (block.attributes.url || block.attributes.src)).length > 0;
   const blockTypeIcon = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockType
@@ -50010,6 +50006,11 @@ const InserterDraggableBlocks = ({
     startDragging,
     stopDragging
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  const patternBlock = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return pattern?.type === INSERTER_PATTERN_TYPES.user && pattern?.syncStatus !== 'unsynced' ? [(0,external_wp_blocks_namespaceObject.createBlock)('core/block', {
+      ref: pattern.id
+    })] : undefined;
+  }, [pattern?.type, pattern?.syncStatus, pattern?.id]);
   if (!isEnabled) {
     return children({
       draggable: false,
@@ -50017,15 +50018,23 @@ const InserterDraggableBlocks = ({
       onDragEnd: undefined
     });
   }
+  const draggableBlocks = patternBlock !== null && patternBlock !== void 0 ? patternBlock : blocks;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Draggable, {
     __experimentalTransferDataType: "wp-blocks",
-    transferData: transferData,
+    transferData: {
+      type: 'inserter',
+      blocks: draggableBlocks
+    },
     onDragStart: event => {
       startDragging();
-      const parsedBlocks = pattern?.type === INSERTER_PATTERN_TYPES.user && pattern?.syncStatus !== 'unsynced' ? [(0,external_wp_blocks_namespaceObject.createBlock)('core/block', {
-        ref: pattern.id
-      })] : blocks;
-      event.dataTransfer.setData(blocksContainMedia ? 'default' : 'text/html', (0,external_wp_blocks_namespaceObject.serialize)(parsedBlocks));
+      for (const block of draggableBlocks) {
+        const type = `wp-block:${block.name}`;
+        // This will fill in the dataTransfer.types array so that
+        // the drop zone can check if the draggable is eligible.
+        // Unfortuantely, on drag start, we don't have access to the
+        // actual data, only the data keys/types.
+        event.dataTransfer.items.add('', type);
+      }
     },
     onDragEnd: () => {
       stopDragging();
@@ -69882,10 +69891,10 @@ URLPopover.LinkViewer = LinkViewer;
 
 
 
-
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -70076,18 +70085,14 @@ function MediaPlaceholder({
       onError
     });
   };
-  async function handleBlocksDrop(blocks) {
-    if (!blocks || !Array.isArray(blocks)) {
+  async function handleBlocksDrop(event) {
+    const {
+      blocks
+    } = parseDropEvent(event);
+    if (!blocks?.length) {
       return;
     }
-    function recursivelyFindMediaFromBlocks(_blocks) {
-      return _blocks.flatMap(block => (block.name === 'core/image' || block.name === 'core/audio' || block.name === 'core/video') && (block.attributes.url || block.attributes.src) ? [block] : recursivelyFindMediaFromBlocks(block.innerBlocks));
-    }
-    const mediaBlocks = recursivelyFindMediaFromBlocks(blocks);
-    if (!mediaBlocks.length) {
-      return;
-    }
-    const uploadedMediaList = await Promise.all(mediaBlocks.map(block => {
+    const uploadedMediaList = await Promise.all(blocks.map(block => {
       const blockType = block.name.split('/')[1];
       if (block.attributes.id) {
         block.attributes.type = blockType;
@@ -70117,12 +70122,6 @@ function MediaPlaceholder({
     } else {
       onSelect(uploadedMediaList[0]);
     }
-  }
-  async function onDrop(event) {
-    const blocks = (0,external_wp_blocks_namespaceObject.pasteHandler)({
-      HTML: event.dataTransfer?.getData('default')
-    });
-    return await handleBlocksDrop(blocks);
   }
   const onUpload = event => {
     onFilesUpload(event.target.files);
@@ -70185,7 +70184,17 @@ function MediaPlaceholder({
     }
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropZone, {
       onFilesDrop: onFilesUpload,
-      onDrop: onDrop
+      onDrop: handleBlocksDrop,
+      isEligible: dataTransfer => {
+        const prefix = 'wp-block:core/';
+        const types = [];
+        for (const type of dataTransfer.types) {
+          if (type.startsWith(prefix)) {
+            types.push(type.slice(prefix.length));
+          }
+        }
+        return types.every(type => allowedTypes.includes(type)) && (multiple ? true : types.length === 1);
+      }
     });
   };
   const renderCancelLink = () => {

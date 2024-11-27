@@ -55801,15 +55801,19 @@ function DropZoneComponent({
   onFilesDrop,
   onHTMLDrop,
   onDrop,
+  isEligible = () => true,
   ...restProps
 }) {
   const [isDraggingOverDocument, setIsDraggingOverDocument] = (0,external_wp_element_namespaceObject.useState)();
   const [isDraggingOverElement, setIsDraggingOverElement] = (0,external_wp_element_namespaceObject.useState)();
-  const [type, setType] = (0,external_wp_element_namespaceObject.useState)();
+  const [isActive, setIsActive] = (0,external_wp_element_namespaceObject.useState)();
   const ref = (0,external_wp_compose_namespaceObject.__experimentalUseDropZone)({
     onDrop(event) {
-      const files = event.dataTransfer ? (0,external_wp_dom_namespaceObject.getFilesFromDataTransfer)(event.dataTransfer) : [];
-      const html = event.dataTransfer?.getData('text/html');
+      if (!event.dataTransfer) {
+        return;
+      }
+      const files = (0,external_wp_dom_namespaceObject.getFilesFromDataTransfer)(event.dataTransfer);
+      const html = event.dataTransfer.getData('text/html');
 
       /**
        * From Windows Chrome 96, the `event.dataTransfer` returns both file object and HTML.
@@ -55825,26 +55829,29 @@ function DropZoneComponent({
     },
     onDragStart(event) {
       setIsDraggingOverDocument(true);
-      let _type = 'default';
+      if (!event.dataTransfer) {
+        return;
+      }
 
       /**
        * From Windows Chrome 96, the `event.dataTransfer` returns both file object and HTML.
        * The order of the checks is important to recognize the HTML drop.
        */
-      if (event.dataTransfer?.types.includes('text/html')) {
-        _type = 'html';
+      if (event.dataTransfer.types.includes('text/html')) {
+        setIsActive(!!onHTMLDrop);
       } else if (
       // Check for the types because sometimes the files themselves
       // are only available on drop.
-      event.dataTransfer?.types.includes('Files') || (event.dataTransfer ? (0,external_wp_dom_namespaceObject.getFilesFromDataTransfer)(event.dataTransfer) : []).length > 0) {
-        _type = 'file';
+      event.dataTransfer.types.includes('Files') || (0,external_wp_dom_namespaceObject.getFilesFromDataTransfer)(event.dataTransfer).length > 0) {
+        setIsActive(!!onFilesDrop);
+      } else {
+        setIsActive(!!onDrop && isEligible(event.dataTransfer));
       }
-      setType(_type);
     },
     onDragEnd() {
       setIsDraggingOverElement(false);
       setIsDraggingOverDocument(false);
-      setType(undefined);
+      setIsActive(undefined);
     },
     onDragEnter() {
       setIsDraggingOverElement(true);
@@ -55854,10 +55861,9 @@ function DropZoneComponent({
     }
   });
   const classes = dist_clsx('components-drop-zone', className, {
-    'is-active': (isDraggingOverDocument || isDraggingOverElement) && (type === 'file' && onFilesDrop || type === 'html' && onHTMLDrop || type === 'default' && onDrop),
+    'is-active': isActive,
     'is-dragging-over-document': isDraggingOverDocument,
-    'is-dragging-over-element': isDraggingOverElement,
-    [`is-dragging-${type}`]: !!type
+    'is-dragging-over-element': isDraggingOverElement
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ...restProps,
