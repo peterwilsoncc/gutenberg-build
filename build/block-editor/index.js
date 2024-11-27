@@ -60982,7 +60982,7 @@ const BlockSettingsMenuControlsSlot = ({
     isGroupable,
     isUngroupable
   } = convertToGroupButtonProps;
-  const showConvertToGroupButton = isGroupable || isUngroupable;
+  const showConvertToGroupButton = (isGroupable || isUngroupable) && !isContentOnly;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_settings_menu_controls_Slot, {
     fillProps: {
       ...fillProps,
@@ -61144,7 +61144,8 @@ function BlockSettingsDropdown({
     previousBlockClientId,
     selectedBlockClientIds,
     openedBlockSettingsMenu,
-    isContentOnly
+    isContentOnly,
+    isZoomOut
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockName,
@@ -61153,7 +61154,8 @@ function BlockSettingsDropdown({
       getSelectedBlockClientIds,
       getBlockAttributes,
       getOpenedBlockSettingsMenu,
-      getBlockEditingMode
+      getBlockEditingMode,
+      isZoomOut: _isZoomOut
     } = unlock(select(store));
     const {
       getActiveBlockVariation
@@ -61166,7 +61168,8 @@ function BlockSettingsDropdown({
       previousBlockClientId: getPreviousBlockClientId(firstBlockClientId),
       selectedBlockClientIds: getSelectedBlockClientIds(),
       openedBlockSettingsMenu: getOpenedBlockSettingsMenu(),
-      isContentOnly: getBlockEditingMode(firstBlockClientId) === 'contentOnly'
+      isContentOnly: getBlockEditingMode(firstBlockClientId) === 'contentOnly',
+      isZoomOut: _isZoomOut()
     };
   }, [firstBlockClientId]);
   const {
@@ -61278,7 +61281,7 @@ function BlockSettingsDropdown({
               parentBlockType: parentBlockType
             }), count === 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_html_convert_button, {
               clientId: firstBlockClientId
-            }), !isContentOnly && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyMenuItem, {
+            }), (!isContentOnly || isZoomOut) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyMenuItem, {
               clientIds: clientIds,
               onCopy: onCopy,
               shortcut: external_wp_keycodes_namespaceObject.displayShortcut.primary('c')
