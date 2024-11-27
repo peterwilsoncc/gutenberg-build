@@ -37781,7 +37781,7 @@ function ActionModal({
     __experimentalHideHeader: !!action.hideModalHeader,
     onRequestClose: closeModal !== null && closeModal !== void 0 ? closeModal : () => {},
     focusOnMount: "firstContentElement",
-    size: "small",
+    size: "medium",
     overlayClassName: `dataviews-action-modal dataviews-action-modal__${dataviews_item_actions_kebabCase(action.id)}`,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(action.RenderModal, {
       items: items,

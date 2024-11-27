@@ -6570,7 +6570,7 @@ const TitleView = ({
     const {
       getEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEntityRecord('root', 'site', '');
+    const siteSettings = getEntityRecord('root', 'site');
     return {
       frontPageId: siteSettings?.page_on_front,
       postsPageId: siteSettings?.page_for_posts
@@ -30955,6 +30955,161 @@ function PatternOverridesPanel() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OverridesPanel, {});
 }
 
+;// ./packages/editor/build-module/components/post-actions/set-as-homepage.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const SetAsHomepageModal = ({
+  items,
+  closeModal
+}) => {
+  const [item] = items;
+  const pageTitle = utils_getItemTitle(item);
+  const {
+    showOnFront,
+    currentHomePage,
+    isSaving
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecord,
+      isSavingEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
+    const siteSettings = getEntityRecord('root', 'site');
+    const currentHomePageItem = getEntityRecord('postType', 'page', siteSettings?.page_on_front);
+    return {
+      showOnFront: siteSettings?.show_on_front,
+      currentHomePage: currentHomePageItem,
+      isSaving: isSavingEntityRecord('root', 'site')
+    };
+  });
+  const currentHomePageTitle = currentHomePage ? utils_getItemTitle(currentHomePage) : '';
+  const {
+    saveEditedEntityRecord,
+    saveEntityRecord
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
+  const {
+    createSuccessNotice,
+    createErrorNotice
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
+  async function onSetPageAsHomepage(event) {
+    event.preventDefault();
+    try {
+      // Save new home page settings.
+      await saveEditedEntityRecord('root', 'site', undefined, {
+        page_on_front: item.id,
+        show_on_front: 'page'
+      });
+
+      // This second call to a save function is a workaround for a bug in
+      // `saveEditedEntityRecord`. This forces the root site settings to be updated.
+      // See https://github.com/WordPress/gutenberg/issues/67161.
+      await saveEntityRecord('root', 'site', {
+        page_on_front: item.id,
+        show_on_front: 'page'
+      });
+      createSuccessNotice((0,external_wp_i18n_namespaceObject.__)('Homepage updated'), {
+        type: 'snackbar'
+      });
+    } catch (error) {
+      const typedError = error;
+      const errorMessage = typedError.message && typedError.code !== 'unknown_error' ? typedError.message : (0,external_wp_i18n_namespaceObject.__)('An error occurred while setting the homepage');
+      createErrorNotice(errorMessage, {
+        type: 'snackbar'
+      });
+    } finally {
+      closeModal?.();
+    }
+  }
+  const modalWarning = 'posts' === showOnFront ? (0,external_wp_i18n_namespaceObject.__)('This will replace the current homepage which is set to display latest posts.') : (0,external_wp_i18n_namespaceObject.sprintf)(
+  // translators: %s: title of the current home page.
+  (0,external_wp_i18n_namespaceObject.__)('This will replace the current homepage: "%s"'), currentHomePageTitle);
+  const modalText = (0,external_wp_i18n_namespaceObject.sprintf)(
+  // translators: %1$s: title of the page to be set as the homepage, %2$s: homepage replacement warning message.
+  (0,external_wp_i18n_namespaceObject.__)('Set "%1$s" as the site homepage? %2$s'), pageTitle, modalWarning);
+
+  // translators: Button label to confirm setting the specified page as the homepage.
+  const modalButtonLabel = (0,external_wp_i18n_namespaceObject.__)('Set homepage');
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
+    onSubmit: onSetPageAsHomepage,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      spacing: "5",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+        children: modalText
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        justify: "right",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
+          variant: "tertiary",
+          onClick: () => {
+            closeModal?.();
+          },
+          disabled: isSaving,
+          accessibleWhenDisabled: true,
+          children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
+          variant: "primary",
+          type: "submit",
+          disabled: isSaving,
+          accessibleWhenDisabled: true,
+          children: modalButtonLabel
+        })]
+      })]
+    })
+  });
+};
+const useSetAsHomepageAction = () => {
+  const {
+    pageOnFront,
+    pageForPosts
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
+    const siteSettings = getEntityRecord('root', 'site');
+    return {
+      pageOnFront: siteSettings?.page_on_front,
+      pageForPosts: siteSettings?.page_for_posts
+    };
+  });
+  return (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    id: 'set-as-homepage',
+    label: (0,external_wp_i18n_namespaceObject.__)('Set as homepage'),
+    isEligible(post) {
+      if (post.status !== 'publish') {
+        return false;
+      }
+      if (post.type !== 'page') {
+        return false;
+      }
+
+      // Don't show the action if the page is already set as the homepage.
+      if (pageOnFront === post.id) {
+        return false;
+      }
+
+      // Don't show the action if the page is already set as the page for posts.
+      if (pageForPosts === post.id) {
+        return false;
+      }
+      return true;
+    },
+    RenderModal: SetAsHomepageModal
+  }), [pageForPosts, pageOnFront]);
+};
+
 ;// ./packages/editor/build-module/components/post-actions/actions.js
 /**
  * WordPress dependencies
@@ -30962,9 +31117,11 @@ function PatternOverridesPanel() {
 
 
 
+
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -30984,19 +31141,40 @@ function usePostActions({
     };
   }, [postType]);
   const {
+    canManageOptions,
+    hasFrontPageTemplate
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecords
+    } = select(external_wp_coreData_namespaceObject.store);
+    const templates = getEntityRecords('postType', 'wp_template', {
+      per_page: -1
+    });
+    return {
+      canManageOptions: select(external_wp_coreData_namespaceObject.store).canUser('update', {
+        kind: 'root',
+        name: 'site'
+      }),
+      hasFrontPageTemplate: !!templates?.find(template => template?.slug === 'front-page')
+    };
+  });
+  const setAsHomepageAction = useSetAsHomepageAction();
+  const shouldShowSetAsHomepageAction = canManageOptions && !hasFrontPageTemplate;
+  const {
     registerPostTypeSchema
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     registerPostTypeSchema(postType);
   }, [registerPostTypeSchema, postType]);
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
+    let actions = [...defaultActions, shouldShowSetAsHomepageAction ? setAsHomepageAction : []];
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
     // and the consumer should provide the context to filter the actions, if needed.
     // Actions should also provide the `context` they support, if it's specific, to
     // compare with the provided context to get all the actions.
     // Right now the only supported context is `list`.
-    const actions = defaultActions.filter(action => {
+    actions = actions.filter(action => {
       if (!action.context) {
         return true;
       }
@@ -31041,7 +31219,7 @@ function usePostActions({
       }
     }
     return actions;
-  }, [defaultActions, onActionPerformed, context]);
+  }, [context, defaultActions, onActionPerformed, setAsHomepageAction, shouldShowSetAsHomepageAction]);
 }
 
 ;// ./packages/editor/build-module/components/post-actions/index.js
@@ -31172,7 +31350,7 @@ function ActionWithModal({
       },
       overlayClassName: `editor-action-modal editor-action-modal__${kebabCase(action.id)}`,
       focusOnMount: "firstContentElement",
-      size: "small",
+      size: "medium",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RenderModal, {
         items: [item],
         closeModal: () => {
