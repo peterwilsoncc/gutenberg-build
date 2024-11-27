@@ -98,6 +98,7 @@ require __DIR__ . '/compat/wordpress-6.8/preload.php';
 require __DIR__ . '/compat/wordpress-6.8/blocks.php';
 require __DIR__ . '/compat/wordpress-6.8/functions.php';
 require __DIR__ . '/compat/wordpress-6.8/post.php';
+require __DIR__ . '/compat/wordpress-6.8/site-editor.php';
 
 // Experimental features.
 require __DIR__ . '/experimental/block-editor-settings-mobile.php';
