@@ -10221,7 +10221,8 @@ function getDerivedBlockEditingModesForTree(state, isNavMode = false, treeClient
           derivedBlockEditingModes.set(clientId, 'disabled');
           return;
         }
-        derivedBlockEditingModes.set(clientId, 'contentOnly');
+
+        // Else do nothing, use the default block editing mode.
         return;
       }
 
