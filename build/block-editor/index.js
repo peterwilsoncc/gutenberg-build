@@ -46842,6 +46842,8 @@ function useTabNav() {
   // capturing on the focus capture elements.
   const noCaptureRef = (0,external_wp_element_namespaceObject.useRef)();
   function onFocusCapture(event) {
+    const canvasElement = container.current.ownerDocument === event.target.ownerDocument ? container.current : container.current.ownerDocument.defaultView.frameElement;
+
     // Do not capture incoming focus if set by us in WritingFlow.
     if (noCaptureRef.current) {
       noCaptureRef.current = null;
@@ -46865,11 +46867,13 @@ function useTabNav() {
         container.current.querySelector(`[data-block="${sectionBlocks[0]}"]`).focus();
       }
       // If we don't have any section blocks, focus the section root.
-      else {
+      else if (sectionRootClientId) {
         container.current.querySelector(`[data-block="${sectionRootClientId}"]`).focus();
+      } else {
+        // If we don't have any section root, focus the canvas.
+        canvasElement.focus();
       }
     } else {
-      const canvasElement = container.current.ownerDocument === event.target.ownerDocument ? container.current : container.current.ownerDocument.defaultView.frameElement;
       const isBefore =
       // eslint-disable-next-line no-bitwise
       event.target.compareDocumentPosition(canvasElement) & event.target.DOCUMENT_POSITION_FOLLOWING;
