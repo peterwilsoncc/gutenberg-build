@@ -42908,6 +42908,8 @@ function BoxControl({
     setIsDirty(false);
   };
   const inputControlProps = {
+    onMouseOver,
+    onMouseOut,
     ...inputProps,
     onChange: handleOnChange,
     onFocus: handleOnFocus,
@@ -42917,8 +42919,6 @@ function BoxControl({
     setSelectedUnits,
     sides,
     values: inputValues,
-    onMouseOver,
-    onMouseOut,
     __next40pxDefaultSize
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(grid_component, {

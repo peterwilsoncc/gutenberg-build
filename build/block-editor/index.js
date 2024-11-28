@@ -32278,16 +32278,6 @@ function DimensionsPanel({
     };
   }, []);
   const onMouseLeaveControls = () => onVisualize(false);
-  const inputProps = {
-    min: minMarginValue,
-    onDragStart: () => {
-      //Reset to 0 in case the value was negative.
-      setMinMarginValue(0);
-    },
-    onDragEnd: () => {
-      setMinMarginValue(minimumMargin);
-    }
-  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Wrapper, {
     resetAllFilter: resetAllFilter,
     value: value,
@@ -32358,8 +32348,10 @@ function DimensionsPanel({
         units: units,
         allowReset: false,
         splitOnAxis: isAxialPadding,
-        onMouseOver: onMouseOverPadding,
-        onMouseOut: onMouseLeaveControls
+        inputProps: {
+          onMouseOver: onMouseOverPadding,
+          onMouseOut: onMouseLeaveControls
+        }
       }), showSpacingPresetsControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SpacingSizesControl, {
         values: paddingValues,
         onChange: setPaddingValues,
@@ -32383,14 +32375,23 @@ function DimensionsPanel({
         __next40pxDefaultSize: true,
         values: marginValues,
         onChange: setMarginValues,
-        inputProps: inputProps,
+        inputProps: {
+          min: minMarginValue,
+          onDragStart: () => {
+            // Reset to 0 in case the value was negative.
+            setMinMarginValue(0);
+          },
+          onDragEnd: () => {
+            setMinMarginValue(minimumMargin);
+          },
+          onMouseOver: onMouseOverMargin,
+          onMouseOut: onMouseLeaveControls
+        },
         label: (0,external_wp_i18n_namespaceObject.__)('Margin'),
         sides: marginSides,
         units: units,
         allowReset: false,
-        splitOnAxis: isAxialMargin,
-        onMouseOver: onMouseOverMargin,
-        onMouseOut: onMouseLeaveControls
+        splitOnAxis: isAxialMargin
       }), showSpacingPresetsControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SpacingSizesControl, {
         values: marginValues,
         onChange: setMarginValues,
