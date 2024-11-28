@@ -70671,12 +70671,15 @@ const item_MenuItem = (0,external_wp_element_namespaceObject.forwardRef)(functio
   ...props
 }, ref) {
   const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+  if (!menuContext?.store) {
+    throw new Error('Menu.Item can only be rendered inside a Menu component');
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_MenuItem, {
     ref: ref,
     ...props,
     accessibleWhenDisabled: true,
     hideOnClick: hideOnClick,
-    store: menuContext?.store,
+    store: menuContext.store,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemPrefixWrapper, {
       children: prefix
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(MenuItemContentWrapper, {
@@ -70750,14 +70753,17 @@ const MenuCheckboxItem = (0,external_wp_element_namespaceObject.forwardRef)(func
   ...props
 }, ref) {
   const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+  if (!menuContext?.store) {
+    throw new Error('Menu.CheckboxItem can only be rendered inside a Menu component');
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_MenuCheckboxItem, {
     ref: ref,
     ...props,
     accessibleWhenDisabled: true,
     hideOnClick: hideOnClick,
-    store: menuContext?.store,
+    store: menuContext.store,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuItemCheck, {
-      store: menuContext?.store,
+      store: menuContext.store,
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemPrefixWrapper, {})
       // Override some ariakit inline styles
       ,
@@ -70815,14 +70821,17 @@ const MenuRadioItem = (0,external_wp_element_namespaceObject.forwardRef)(functio
   ...props
 }, ref) {
   const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+  if (!menuContext?.store) {
+    throw new Error('Menu.RadioItem can only be rendered inside a Menu component');
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_MenuRadioItem, {
     ref: ref,
     ...props,
     accessibleWhenDisabled: true,
     hideOnClick: hideOnClick,
-    store: menuContext?.store,
+    store: menuContext.store,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuItemCheck, {
-      store: menuContext?.store,
+      store: menuContext.store,
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemPrefixWrapper, {})
       // Override some ariakit inline styles
       ,
@@ -70859,10 +70868,13 @@ const MenuRadioItem = (0,external_wp_element_namespaceObject.forwardRef)(functio
 
 const group_MenuGroup = (0,external_wp_element_namespaceObject.forwardRef)(function MenuGroup(props, ref) {
   const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+  if (!menuContext?.store) {
+    throw new Error('Menu.Group can only be rendered inside a Menu component');
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_MenuGroup, {
     ref: ref,
     ...props,
-    store: menuContext?.store
+    store: menuContext.store
   });
 });
 
@@ -70882,6 +70894,9 @@ const group_MenuGroup = (0,external_wp_element_namespaceObject.forwardRef)(funct
 
 const group_label_MenuGroupLabel = (0,external_wp_element_namespaceObject.forwardRef)(function MenuGroup(props, ref) {
   const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+  if (!menuContext?.store) {
+    throw new Error('Menu.GroupLabel can only be rendered inside a Menu component');
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_MenuGroupLabel, {
     ref: ref,
     render:
@@ -70895,7 +70910,7 @@ const group_label_MenuGroupLabel = (0,external_wp_element_namespaceObject.forwar
       lineHeight: "16px"
     }),
     ...props,
-    store: menuContext?.store
+    store: menuContext.store
   });
 });
 
@@ -70914,11 +70929,14 @@ const group_label_MenuGroupLabel = (0,external_wp_element_namespaceObject.forwar
 
 const separator_MenuSeparator = (0,external_wp_element_namespaceObject.forwardRef)(function MenuSeparator(props, ref) {
   const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+  if (!menuContext?.store) {
+    throw new Error('Menu.Separator can only be rendered inside a Menu component');
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_MenuSeparator, {
     ref: ref,
     ...props,
-    store: menuContext?.store,
-    variant: menuContext?.variant
+    store: menuContext.store,
+    variant: menuContext.variant
   });
 });
 
@@ -70934,7 +70952,12 @@ const separator_MenuSeparator = (0,external_wp_element_namespaceObject.forwardRe
 
 
 
+
 const MenuItemLabel = (0,external_wp_element_namespaceObject.forwardRef)(function MenuItemLabel(props, ref) {
+  const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+  if (!menuContext?.store) {
+    throw new Error('Menu.ItemLabel can only be rendered inside a Menu component');
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_MenuItemLabel, {
     numberOfLines: 1,
     ref: ref,
@@ -70954,7 +70977,12 @@ const MenuItemLabel = (0,external_wp_element_namespaceObject.forwardRef)(functio
 
 
 
+
 const MenuItemHelpText = (0,external_wp_element_namespaceObject.forwardRef)(function MenuItemHelpText(props, ref) {
+  const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+  if (!menuContext?.store) {
+    throw new Error('Menu.ItemHelpText can only be rendered inside a Menu component');
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_MenuItemHelpText, {
     numberOfLines: 2,
     ref: ref,
