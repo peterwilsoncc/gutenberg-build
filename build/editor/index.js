@@ -21370,134 +21370,120 @@ const getFuturePostUrl = post => {
   return post.permalink_template;
 };
 function postpublish_CopyButton({
-  text,
-  onCopy,
-  children
+  text
 }) {
-  const ref = (0,external_wp_compose_namespaceObject.useCopyToClipboard)(text, onCopy);
+  const [showCopyConfirmation, setShowCopyConfirmation] = (0,external_wp_element_namespaceObject.useState)(false);
+  const timeoutIdRef = (0,external_wp_element_namespaceObject.useRef)();
+  const ref = (0,external_wp_compose_namespaceObject.useCopyToClipboard)(text, () => {
+    setShowCopyConfirmation(true);
+    if (timeoutIdRef.current) {
+      clearTimeout(timeoutIdRef.current);
+    }
+    timeoutIdRef.current = setTimeout(() => {
+      setShowCopyConfirmation(false);
+    }, 4000);
+  });
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    return () => {
+      if (timeoutIdRef.current) {
+        clearTimeout(timeoutIdRef.current);
+      }
+    };
+  }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     __next40pxDefaultSize: true,
     variant: "secondary",
     ref: ref,
-    children: children
+    children: showCopyConfirmation ? (0,external_wp_i18n_namespaceObject.__)('Copied!') : (0,external_wp_i18n_namespaceObject.__)('Copy')
   });
 }
-class PostPublishPanelPostpublish extends external_wp_element_namespaceObject.Component {
-  constructor() {
-    super(...arguments);
-    this.state = {
-      showCopyConfirmation: false
-    };
-    this.onCopy = this.onCopy.bind(this);
-    this.onSelectInput = this.onSelectInput.bind(this);
-    this.postLink = (0,external_wp_element_namespaceObject.createRef)();
-  }
-  componentDidMount() {
-    if (this.props.focusOnMount) {
-      this.postLink.current.focus();
-    }
-  }
-  componentWillUnmount() {
-    clearTimeout(this.dismissCopyConfirmation);
-  }
-  onCopy() {
-    this.setState({
-      showCopyConfirmation: true
-    });
-    clearTimeout(this.dismissCopyConfirmation);
-    this.dismissCopyConfirmation = setTimeout(() => {
-      this.setState({
-        showCopyConfirmation: false
-      });
-    }, 4000);
-  }
-  onSelectInput(event) {
-    event.target.select();
-  }
-  render() {
+function PostPublishPanelPostpublish({
+  focusOnMount,
+  children
+}) {
+  const {
+    post,
+    postType,
+    isScheduled
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      children,
-      isScheduled,
-      post,
-      postType
-    } = this.props;
-    const postLabel = postType?.labels?.singular_name;
-    const viewPostLabel = postType?.labels?.view_item;
-    const addNewPostLabel = postType?.labels?.add_new_item;
-    const link = post.status === 'future' ? getFuturePostUrl(post) : post.link;
-    const addLink = (0,external_wp_url_namespaceObject.addQueryArgs)('post-new.php', {
-      post_type: post.type
-    });
-    const postPublishNonLinkHeader = isScheduled ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [(0,external_wp_i18n_namespaceObject.__)('is now scheduled. It will go live on'), ' ', /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostScheduleLabel, {}), "."]
-    }) : (0,external_wp_i18n_namespaceObject.__)('is now live.');
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      className: "post-publish-panel__postpublish",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        className: "post-publish-panel__postpublish-header",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
-          ref: this.postLink,
-          href: link,
-          children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(post.title) || (0,external_wp_i18n_namespaceObject.__)('(no title)')
-        }), ' ', postPublishNonLinkHeader]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-          className: "post-publish-panel__postpublish-subheader",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {
-            children: (0,external_wp_i18n_namespaceObject.__)('What’s next?')
+      getEditedPostAttribute,
+      getCurrentPost,
+      isCurrentPostScheduled
+    } = select(store_store);
+    const {
+      getPostType
+    } = select(external_wp_coreData_namespaceObject.store);
+    return {
+      post: getCurrentPost(),
+      postType: getPostType(getEditedPostAttribute('type')),
+      isScheduled: isCurrentPostScheduled()
+    };
+  }, []);
+  const postLabel = postType?.labels?.singular_name;
+  const viewPostLabel = postType?.labels?.view_item;
+  const addNewPostLabel = postType?.labels?.add_new_item;
+  const link = post.status === 'future' ? getFuturePostUrl(post) : post.link;
+  const addLink = (0,external_wp_url_namespaceObject.addQueryArgs)('post-new.php', {
+    post_type: post.type
+  });
+  const postLinkRef = (0,external_wp_element_namespaceObject.useCallback)(node => {
+    if (focusOnMount && node) {
+      node.focus();
+    }
+  }, [focusOnMount]);
+  const postPublishNonLinkHeader = isScheduled ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [(0,external_wp_i18n_namespaceObject.__)('is now scheduled. It will go live on'), ' ', /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostScheduleLabel, {}), "."]
+  }) : (0,external_wp_i18n_namespaceObject.__)('is now live.');
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    className: "post-publish-panel__postpublish",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
+      className: "post-publish-panel__postpublish-header",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
+        ref: postLinkRef,
+        href: link,
+        children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(post.title) || (0,external_wp_i18n_namespaceObject.__)('(no title)')
+      }), ' ', postPublishNonLinkHeader]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+        className: "post-publish-panel__postpublish-subheader",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {
+          children: (0,external_wp_i18n_namespaceObject.__)('What’s next?')
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+        className: "post-publish-panel__postpublish-post-address-container",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+          __next40pxDefaultSize: true,
+          __nextHasNoMarginBottom: true,
+          className: "post-publish-panel__postpublish-post-address",
+          readOnly: true,
+          label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: post type singular name */
+          (0,external_wp_i18n_namespaceObject.__)('%s address'), postLabel),
+          value: (0,external_wp_url_namespaceObject.safeDecodeURIComponent)(link),
+          onFocus: event => event.target.select()
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          className: "post-publish-panel__postpublish-post-address__copy-button-wrap",
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(postpublish_CopyButton, {
+            text: link
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-          className: "post-publish-panel__postpublish-post-address-container",
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-            __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
-            className: "post-publish-panel__postpublish-post-address",
-            readOnly: true,
-            label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: post type singular name */
-            (0,external_wp_i18n_namespaceObject.__)('%s address'), postLabel),
-            value: (0,external_wp_url_namespaceObject.safeDecodeURIComponent)(link),
-            onFocus: this.onSelectInput
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-            className: "post-publish-panel__postpublish-post-address__copy-button-wrap",
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(postpublish_CopyButton, {
-              text: link,
-              onCopy: this.onCopy,
-              children: this.state.showCopyConfirmation ? (0,external_wp_i18n_namespaceObject.__)('Copied!') : (0,external_wp_i18n_namespaceObject.__)('Copy')
-            })
-          })]
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-          className: "post-publish-panel__postpublish-buttons",
-          children: [!isScheduled && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            variant: "primary",
-            href: link,
-            __next40pxDefaultSize: true,
-            children: viewPostLabel
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            variant: isScheduled ? 'primary' : 'secondary',
-            __next40pxDefaultSize: true,
-            href: addLink,
-            children: addNewPostLabel
-          })]
         })]
-      }), children]
-    });
-  }
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+        className: "post-publish-panel__postpublish-buttons",
+        children: [!isScheduled && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          variant: "primary",
+          href: link,
+          __next40pxDefaultSize: true,
+          children: viewPostLabel
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          variant: isScheduled ? 'primary' : 'secondary',
+          __next40pxDefaultSize: true,
+          href: addLink,
+          children: addNewPostLabel
+        })]
+      })]
+    }), children]
+  });
 }
-/* harmony default export */ const postpublish = ((0,external_wp_data_namespaceObject.withSelect)(select => {
-  const {
-    getEditedPostAttribute,
-    getCurrentPost,
-    isCurrentPostScheduled
-  } = select(store_store);
-  const {
-    getPostType
-  } = select(external_wp_coreData_namespaceObject.store);
-  return {
-    post: getCurrentPost(),
-    postType: getPostType(getEditedPostAttribute('type')),
-    isScheduled: isCurrentPostScheduled()
-  };
-})(PostPublishPanelPostpublish));
 
 ;// ./packages/editor/build-module/components/post-publish-panel/index.js
 /**
@@ -21612,7 +21598,7 @@ class PostPublishPanel extends external_wp_element_namespaceObject.Component {
         className: "editor-post-publish-panel__content",
         children: [isPrePublish && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(prepublish, {
           children: PrePublishExtension && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrePublishExtension, {})
-        }), isPostPublish && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(postpublish, {
+        }), isPostPublish && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostPublishPanelPostpublish, {
           focusOnMount: true,
           children: PostPublishExtension && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostPublishExtension, {})
         }), isSaving && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})]
