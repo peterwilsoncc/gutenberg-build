@@ -47275,35 +47275,6 @@ function EnhancedPaginationControl({
   });
 }
 
-;// ./packages/block-library/build-module/query/edit/query-toolbar.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-function QueryToolbar({
-  openPatternSelectionModal,
-  name,
-  clientId
-}) {
-  const hasPatterns = !!usePatterns(clientId, name).length;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: hasPatterns && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
-      className: "wp-block-template-part__block-control-group",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-        onClick: openPatternSelectionModal,
-        children: (0,external_wp_i18n_namespaceObject.__)('Replace')
-      })
-    })
-  });
-}
-
 ;// ./packages/block-library/build-module/query/edit/inspector-controls/order-control.js
 /**
  * WordPress dependencies
@@ -48366,6 +48337,211 @@ function EnhancedPaginationModal({
   });
 }
 
+;// ./packages/block-library/build-module/utils/search-patterns.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * Sanitizes the search input string.
+ *
+ * @param {string} input The search input to normalize.
+ *
+ * @return {string} The normalized search input.
+ */
+function normalizeSearchInput(input = '') {
+  // Disregard diacritics.
+  input = remove_accents_default()(input);
+
+  // Trim & Lowercase.
+  input = input.trim().toLowerCase();
+  return input;
+}
+
+/**
+ * Get the search rank for a given pattern and a specific search term.
+ *
+ * @param {Object} pattern     Pattern to rank
+ * @param {string} searchValue Search term
+ * @return {number} A pattern search rank
+ */
+function getPatternSearchRank(pattern, searchValue) {
+  const normalizedSearchValue = normalizeSearchInput(searchValue);
+  const normalizedTitle = normalizeSearchInput(pattern.title);
+  let rank = 0;
+  if (normalizedSearchValue === normalizedTitle) {
+    rank += 30;
+  } else if (normalizedTitle.startsWith(normalizedSearchValue)) {
+    rank += 20;
+  } else {
+    const searchTerms = normalizedSearchValue.split(' ');
+    const hasMatchedTerms = searchTerms.every(searchTerm => normalizedTitle.includes(searchTerm));
+
+    // Prefer pattern with every search word in the title.
+    if (hasMatchedTerms) {
+      rank += 10;
+    }
+  }
+  return rank;
+}
+
+/**
+ * Filters an pattern list given a search term.
+ *
+ * @param {Array}  patterns    Item list
+ * @param {string} searchValue Search input.
+ *
+ * @return {Array} Filtered pattern list.
+ */
+function searchPatterns(patterns = [], searchValue = '') {
+  if (!searchValue) {
+    return patterns;
+  }
+  const rankedPatterns = patterns.map(pattern => {
+    return [pattern, getPatternSearchRank(pattern, searchValue)];
+  }).filter(([, rank]) => rank > 0);
+  rankedPatterns.sort(([, rank1], [, rank2]) => rank2 - rank1);
+  return rankedPatterns.map(([pattern]) => pattern);
+}
+
+;// ./packages/block-library/build-module/query/edit/pattern-selection.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function PatternSelectionModal({
+  clientId,
+  attributes,
+  setIsPatternSelectionModalOpen
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
+    overlayClassName: "block-library-query-pattern__selection-modal",
+    title: (0,external_wp_i18n_namespaceObject.__)('Choose a pattern'),
+    onRequestClose: () => setIsPatternSelectionModalOpen(false),
+    isFullScreen: true,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternSelection, {
+      clientId: clientId,
+      attributes: attributes
+    })
+  });
+}
+function useBlockPatterns(clientId, attributes) {
+  const blockNameForPatterns = useBlockNameForPatterns(clientId, attributes);
+  return usePatterns(clientId, blockNameForPatterns);
+}
+function PatternSelection({
+  clientId,
+  attributes,
+  showTitlesAsTooltip = false,
+  showSearch = true
+}) {
+  const [searchValue, setSearchValue] = (0,external_wp_element_namespaceObject.useState)('');
+  const {
+    replaceBlock,
+    selectBlock
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  const blockPatterns = useBlockPatterns(clientId, attributes);
+  /*
+   * When we preview Query Loop blocks we should prefer the current
+   * block's postType, which is passed through block context.
+   */
+  const blockPreviewContext = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    previewPostType: attributes.query.postType
+  }), [attributes.query.postType]);
+  const filteredBlockPatterns = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return searchPatterns(blockPatterns, searchValue);
+  }, [blockPatterns, searchValue]);
+  const onBlockPatternSelect = (pattern, blocks) => {
+    const {
+      newBlocks,
+      queryClientIds
+    } = getTransformedBlocksFromPattern(blocks, attributes);
+    replaceBlock(clientId, newBlocks);
+    if (queryClientIds[0]) {
+      selectBlock(queryClientIds[0]);
+    }
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    className: "block-library-query-pattern__selection-content",
+    children: [showSearch && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "block-library-query-pattern__selection-search",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SearchControl, {
+        __nextHasNoMarginBottom: true,
+        onChange: setSearchValue,
+        value: searchValue,
+        label: (0,external_wp_i18n_namespaceObject.__)('Search'),
+        placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockContextProvider, {
+      value: blockPreviewContext,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockPatternsList, {
+        blockPatterns: filteredBlockPatterns,
+        onClickPattern: onBlockPatternSelect,
+        showTitlesAsTooltip: showTitlesAsTooltip
+      })
+    })]
+  });
+}
+
+;// ./packages/block-library/build-module/query/edit/query-toolbar.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+function QueryToolbar({
+  clientId,
+  attributes
+}) {
+  const hasPatterns = useBlockPatterns(clientId, attributes).length;
+  if (!hasPatterns) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+    className: "wp-block-template-part__block-control-group",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalDropdownContentWrapper, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
+        contentClassName: "block-editor-block-settings-menu__popover",
+        focusOnMount: "firstElement",
+        expandOnMobile: true,
+        renderToggle: ({
+          isOpen,
+          onToggle
+        }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+          "aria-haspopup": "true",
+          "aria-expanded": isOpen,
+          onClick: onToggle,
+          children: (0,external_wp_i18n_namespaceObject.__)('Change design')
+        }),
+        renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternSelection, {
+          clientId: clientId,
+          attributes: attributes,
+          showSearch: false,
+          showTitlesAsTooltip: true
+        })
+      })
+    })
+  });
+}
+
 ;// ./packages/block-library/build-module/query/edit/query-content.js
 /**
  * WordPress dependencies
@@ -48392,10 +48568,9 @@ const query_content_TEMPLATE = [['core/post-template']];
 function QueryContent({
   attributes,
   setAttributes,
-  openPatternSelectionModal,
-  name,
   clientId,
-  context
+  context,
+  name
 }) {
   const {
     queryId,
@@ -48507,6 +48682,7 @@ function QueryContent({
       clientId: clientId
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QueryInspectorControls, {
+        name: name,
         attributes: attributes,
         setQuery: updateQuery,
         setDisplayLayout: updateDisplayLayout,
@@ -48516,11 +48692,8 @@ function QueryContent({
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QueryToolbar, {
-        name: name,
-        clientId: clientId,
         attributes: attributes,
-        setQuery: updateQuery,
-        openPatternSelectionModal: openPatternSelectionModal
+        clientId: clientId
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       group: "advanced",
@@ -48573,6 +48746,7 @@ function QueryContent({
  */
 
 
+
 function QueryPlaceholder({
   attributes,
   clientId,
@@ -48581,27 +48755,20 @@ function QueryPlaceholder({
 }) {
   const [isStartingBlank, setIsStartingBlank] = (0,external_wp_element_namespaceObject.useState)(false);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
-  const blockNameForPatterns = useBlockNameForPatterns(clientId, attributes);
   const {
     blockType,
-    activeBlockVariation,
-    hasPatterns
+    activeBlockVariation
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getActiveBlockVariation,
       getBlockType
     } = select(external_wp_blocks_namespaceObject.store);
-    const {
-      getBlockRootClientId,
-      getPatternsByBlockTypes
-    } = select(external_wp_blockEditor_namespaceObject.store);
-    const rootClientId = getBlockRootClientId(clientId);
     return {
       blockType: getBlockType(name),
-      activeBlockVariation: getActiveBlockVariation(name, attributes),
-      hasPatterns: !!getPatternsByBlockTypes(blockNameForPatterns, rootClientId).length
+      activeBlockVariation: getActiveBlockVariation(name, attributes)
     };
-  }, [name, blockNameForPatterns, clientId, attributes]);
+  }, [name, attributes]);
+  const hasPatterns = !!useBlockPatterns(clientId, attributes).length;
   const icon = activeBlockVariation?.icon?.src || activeBlockVariation?.icon || blockType?.icon?.src;
   const label = activeBlockVariation?.title || blockType?.title;
   if (isStartingBlank) {
@@ -48656,147 +48823,6 @@ function QueryVariationPicker({
           replaceInnerBlocks(clientId, (0,external_wp_blocks_namespaceObject.createBlocksFromInnerBlocksTemplate)(variation.innerBlocks), false);
         }
       }
-    })
-  });
-}
-
-;// ./packages/block-library/build-module/utils/search-patterns.js
-/**
- * External dependencies
- */
-
-
-/**
- * Sanitizes the search input string.
- *
- * @param {string} input The search input to normalize.
- *
- * @return {string} The normalized search input.
- */
-function normalizeSearchInput(input = '') {
-  // Disregard diacritics.
-  input = remove_accents_default()(input);
-
-  // Trim & Lowercase.
-  input = input.trim().toLowerCase();
-  return input;
-}
-
-/**
- * Get the search rank for a given pattern and a specific search term.
- *
- * @param {Object} pattern     Pattern to rank
- * @param {string} searchValue Search term
- * @return {number} A pattern search rank
- */
-function getPatternSearchRank(pattern, searchValue) {
-  const normalizedSearchValue = normalizeSearchInput(searchValue);
-  const normalizedTitle = normalizeSearchInput(pattern.title);
-  let rank = 0;
-  if (normalizedSearchValue === normalizedTitle) {
-    rank += 30;
-  } else if (normalizedTitle.startsWith(normalizedSearchValue)) {
-    rank += 20;
-  } else {
-    const searchTerms = normalizedSearchValue.split(' ');
-    const hasMatchedTerms = searchTerms.every(searchTerm => normalizedTitle.includes(searchTerm));
-
-    // Prefer pattern with every search word in the title.
-    if (hasMatchedTerms) {
-      rank += 10;
-    }
-  }
-  return rank;
-}
-
-/**
- * Filters an pattern list given a search term.
- *
- * @param {Array}  patterns    Item list
- * @param {string} searchValue Search input.
- *
- * @return {Array} Filtered pattern list.
- */
-function searchPatterns(patterns = [], searchValue = '') {
-  if (!searchValue) {
-    return patterns;
-  }
-  const rankedPatterns = patterns.map(pattern => {
-    return [pattern, getPatternSearchRank(pattern, searchValue)];
-  }).filter(([, rank]) => rank > 0);
-  rankedPatterns.sort(([, rank1], [, rank2]) => rank2 - rank1);
-  return rankedPatterns.map(([pattern]) => pattern);
-}
-
-;// ./packages/block-library/build-module/query/edit/pattern-selection-modal.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-function PatternSelectionModal({
-  clientId,
-  attributes,
-  setIsPatternSelectionModalOpen
-}) {
-  const [searchValue, setSearchValue] = (0,external_wp_element_namespaceObject.useState)('');
-  const {
-    replaceBlock,
-    selectBlock
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
-  const onBlockPatternSelect = (pattern, blocks) => {
-    const {
-      newBlocks,
-      queryClientIds
-    } = getTransformedBlocksFromPattern(blocks, attributes);
-    replaceBlock(clientId, newBlocks);
-    if (queryClientIds[0]) {
-      selectBlock(queryClientIds[0]);
-    }
-  };
-  // When we preview Query Loop blocks we should prefer the current
-  // block's postType, which is passed through block context.
-  const blockPreviewContext = (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    previewPostType: attributes.query.postType
-  }), [attributes.query.postType]);
-  const blockNameForPatterns = useBlockNameForPatterns(clientId, attributes);
-  const blockPatterns = usePatterns(clientId, blockNameForPatterns);
-  const filteredBlockPatterns = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return searchPatterns(blockPatterns, searchValue);
-  }, [blockPatterns, searchValue]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
-    overlayClassName: "block-library-query-pattern__selection-modal",
-    title: (0,external_wp_i18n_namespaceObject.__)('Choose a pattern'),
-    onRequestClose: () => setIsPatternSelectionModalOpen(false),
-    isFullScreen: true,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      className: "block-library-query-pattern__selection-content",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "block-library-query-pattern__selection-search",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SearchControl, {
-          __nextHasNoMarginBottom: true,
-          onChange: setSearchValue,
-          value: searchValue,
-          label: (0,external_wp_i18n_namespaceObject.__)('Search'),
-          placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
-        })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockContextProvider, {
-        value: blockPreviewContext,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockPatternsList, {
-          blockPatterns: filteredBlockPatterns,
-          onClickPattern: onBlockPatternSelect
-        })
-      })]
     })
   });
 }
