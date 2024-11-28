@@ -38386,9 +38386,15 @@ function getClickableItemProps(item, isItemClickable, onClickItem, className) {
     className: `${className} ${className}--clickable`,
     role: 'button',
     tabIndex: 0,
-    onClick: () => onClickItem(item),
+    onClick: event => {
+      // Prevents onChangeSelection from triggering.
+      event.stopPropagation();
+      onClickItem(item);
+    },
     onKeyDown: event => {
       if (event.key === 'Enter' || event.key === '') {
+        // Prevents onChangeSelection from triggering.
+        event.stopPropagation();
         onClickItem(item);
       }
     }
