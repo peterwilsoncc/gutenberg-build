@@ -1546,8 +1546,6 @@ __webpack_require__.d(__webpack_exports__, {
   PostScheduleCheck: () => (/* reexport */ PostScheduleCheck),
   PostScheduleLabel: () => (/* reexport */ PostScheduleLabel),
   PostSchedulePanel: () => (/* reexport */ PostSchedulePanel),
-  PostSlug: () => (/* reexport */ PostSlug),
-  PostSlugCheck: () => (/* reexport */ PostSlugCheck),
   PostSticky: () => (/* reexport */ PostSticky),
   PostStickyCheck: () => (/* reexport */ PostStickyCheck),
   PostSwitchToDraftButton: () => (/* reexport */ PostSwitchToDraftButton),
@@ -22322,102 +22320,6 @@ function PostSchedulePanel() {
   });
 }
 
-;// ./packages/editor/build-module/components/post-slug/check.js
-/**
- * Internal dependencies
- */
-
-
-/**
- * Wrapper component that renders its children only if the post type supports the slug.
- *
- * @param {Object}          props          Props.
- * @param {React.ReactNode} props.children Children to be rendered.
- *
- * @return {React.ReactNode} The rendered component.
- */
-
-function PostSlugCheck({
-  children
-}) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_type_support_check, {
-    supportKeys: "slug",
-    children: children
-  });
-}
-
-;// ./packages/editor/build-module/components/post-slug/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-function PostSlugControl() {
-  const postSlug = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    return (0,external_wp_url_namespaceObject.safeDecodeURIComponent)(select(store_store).getEditedPostSlug());
-  }, []);
-  const {
-    editPost
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
-  const [forceEmptyField, setForceEmptyField] = (0,external_wp_element_namespaceObject.useState)(false);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-    __next40pxDefaultSize: true,
-    __nextHasNoMarginBottom: true,
-    label: (0,external_wp_i18n_namespaceObject.__)('Slug'),
-    autoComplete: "off",
-    spellCheck: "false",
-    value: forceEmptyField ? '' : postSlug,
-    onChange: newValue => {
-      editPost({
-        slug: newValue
-      });
-      // When we delete the field the permalink gets
-      // reverted to the original value.
-      // The forceEmptyField logic allows the user to have
-      // the field temporarily empty while typing.
-      if (!newValue) {
-        if (!forceEmptyField) {
-          setForceEmptyField(true);
-        }
-        return;
-      }
-      if (forceEmptyField) {
-        setForceEmptyField(false);
-      }
-    },
-    onBlur: event => {
-      editPost({
-        slug: (0,external_wp_url_namespaceObject.cleanForSlug)(event.target.value)
-      });
-      if (forceEmptyField) {
-        setForceEmptyField(false);
-      }
-    },
-    className: "editor-post-slug"
-  });
-}
-
-/**
- * Renders the PostSlug component. It provide a control for editing the post slug.
- *
- * @return {React.ReactNode} The rendered component.
- */
-function PostSlug() {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSlugCheck, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostSlugControl, {})
-  });
-}
-
 ;// ./packages/editor/build-module/components/post-switch-to-draft-button/index.js
 /**
  * WordPress dependencies
@@ -27345,8 +27247,6 @@ const withFontSizes = deprecateFunction('withFontSizes', external_wp_blockEditor
 
 
 // Post Related Components.
-
-
 
 
 
