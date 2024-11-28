@@ -42817,6 +42817,7 @@ function LinkedButton({
 
 
 
+
 const defaultInputProps = {
   min: 0
 };
@@ -42844,6 +42845,7 @@ function box_control_useUniqueId(idProp) {
  *
  *   return (
  *     <BoxControl
+ *       __next40pxDefaultSize
  *       values={ values }
  *       onChange={ setValues }
  *     />
@@ -42921,6 +42923,11 @@ function BoxControl({
     values: inputValues,
     __next40pxDefaultSize
   };
+  maybeWarnDeprecated36pxSize({
+    componentName: 'BoxControl',
+    __next40pxDefaultSize,
+    size: undefined
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(grid_component, {
     id: id,
     columns: 3,
