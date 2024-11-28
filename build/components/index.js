@@ -44231,9 +44231,11 @@ function ClipboardButton({
     }
   });
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (timeoutIdRef.current) {
-      clearTimeout(timeoutIdRef.current);
-    }
+    return () => {
+      if (timeoutIdRef.current) {
+        clearTimeout(timeoutIdRef.current);
+      }
+    };
   }, []);
   const classes = dist_clsx('components-clipboard-button', className);
 
