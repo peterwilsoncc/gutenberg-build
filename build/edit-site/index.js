@@ -41543,6 +41543,7 @@ const templatePartItemRoute = {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -41565,7 +41566,9 @@ function TemplateDataviewItem({
     icon
   } = useAddedBy(template.type, template.id);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItem, {
-    to: `/template?activeView=${text}`,
+    to: (0,external_wp_url_namespaceObject.addQueryArgs)('/template', {
+      activeView: text
+    }),
     icon: icon,
     "aria-current": isActive,
     children: text
