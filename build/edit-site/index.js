@@ -18304,6 +18304,36 @@ function ConfirmDeleteDialog({
 }
 /* harmony default export */ const installed_fonts = (InstalledFonts);
 
+;// ./packages/icons/build-module/library/next.js
+/**
+ * WordPress dependencies
+ */
+
+
+const next = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M6.6 6L5.4 7l4.5 5-4.5 5 1.1 1 5.5-6-5.4-6zm6 0l-1.1 1 4.5 5-4.5 5 1.1 1 5.5-6-5.5-6z"
+  })
+});
+/* harmony default export */ const library_next = (next);
+
+;// ./packages/icons/build-module/library/previous.js
+/**
+ * WordPress dependencies
+ */
+
+
+const previous = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M11.6 7l-1.1-1L5 12l5.5 6 1.1-1L7 12l4.6-5zm6 0l-1.1-1-5.5 6 5.5 6 1.1-1-4.6-5 4.6-5z"
+  })
+});
+/* harmony default export */ const library_previous = (previous);
+
 ;// ./packages/edit-site/build-module/components/global-styles/font-library-modal/utils/filter-fonts.js
 /**
  * Filters a list of fonts based on the specified filters.
@@ -18803,27 +18833,22 @@ function FontCollection({
           children: (0,external_wp_i18n_namespaceObject.__)('Install')
         })
       }), !selectedFont && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        spacing: 4,
-        justify: "center",
+        expanded: false,
         className: "font-library-modal__footer",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Previous page'),
-          size: "compact",
-          onClick: () => setPage(page - 1),
-          disabled: page === 1,
-          showTooltip: true,
-          accessibleWhenDisabled: true,
-          icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right : chevron_left,
-          tooltipPosition: "top"
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
+        justify: "end",
+        spacing: 6,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
           justify: "flex-start",
           expanded: false,
-          spacing: 2,
+          spacing: 1,
           className: "font-library-modal__page-selection",
           children: (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(
-          // translators: %s: Total number of pages.
-          (0,external_wp_i18n_namespaceObject._x)('Page <CurrentPageControl /> of %s', 'paging'), totalPages), {
-            CurrentPageControl: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+          // translators: 1: Current page number, 2: Total number of pages.
+          (0,external_wp_i18n_namespaceObject._x)('<div>Page</div>%1$s<div>of %2$s</div>', 'paging'), '<CurrentPage />', totalPages), {
+            div: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+              "aria-hidden": true
+            }),
+            CurrentPage: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
               "aria-label": (0,external_wp_i18n_namespaceObject.__)('Current page'),
               value: page,
               options: [...Array(totalPages)].map((e, i) => {
@@ -18833,18 +18858,33 @@ function FontCollection({
                 };
               }),
               onChange: newPage => setPage(parseInt(newPage)),
-              size: "compact",
-              __nextHasNoMarginBottom: true
+              size: "small",
+              __nextHasNoMarginBottom: true,
+              variant: "minimal"
             })
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Next page'),
-          size: "compact",
-          onClick: () => setPage(page + 1),
-          disabled: page === totalPages,
-          accessibleWhenDisabled: true,
-          icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_left : chevron_right,
-          tooltipPosition: "top"
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+          expanded: false,
+          spacing: 1,
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            onClick: () => setPage(page - 1),
+            disabled: page === 1,
+            accessibleWhenDisabled: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Previous page'),
+            icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? library_next : library_previous,
+            showTooltip: true,
+            size: "compact",
+            tooltipPosition: "top"
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            onClick: () => setPage(page + 1),
+            disabled: page === totalPages,
+            accessibleWhenDisabled: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Next page'),
+            icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? library_previous : library_next,
+            showTooltip: true,
+            size: "compact",
+            tooltipPosition: "top"
+          })]
         })]
       })]
     })]
@@ -27183,36 +27223,6 @@ function RevisionsButtons({
   });
 }
 /* harmony default export */ const revisions_buttons = (RevisionsButtons);
-
-;// ./packages/icons/build-module/library/next.js
-/**
- * WordPress dependencies
- */
-
-
-const next = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M6.6 6L5.4 7l4.5 5-4.5 5 1.1 1 5.5-6-5.4-6zm6 0l-1.1 1 4.5 5-4.5 5 1.1 1 5.5-6-5.5-6z"
-  })
-});
-/* harmony default export */ const library_next = (next);
-
-;// ./packages/icons/build-module/library/previous.js
-/**
- * WordPress dependencies
- */
-
-
-const previous = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M11.6 7l-1.1-1L5 12l5.5 6 1.1-1L7 12l4.6-5zm6 0l-1.1-1-5.5 6 5.5 6 1.1-1-4.6-5 4.6-5z"
-  })
-});
-/* harmony default export */ const library_previous = (previous);
 
 ;// ./packages/edit-site/build-module/components/pagination/index.js
 /**
