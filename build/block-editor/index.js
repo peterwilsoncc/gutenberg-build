@@ -42356,7 +42356,8 @@ function useMovingAnimation({
     isBlockSelected,
     isFirstMultiSelectedBlock,
     isBlockMultiSelected,
-    isAncestorMultiSelected
+    isAncestorMultiSelected,
+    isDraggingBlocks
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
 
   // Whenever the trigger changes, we need to take a snapshot of the current
@@ -42383,6 +42384,11 @@ function useMovingAnimation({
           scrollContainer.scrollTop += diff;
         }
       }
+    }
+
+    // Neither animate nor scroll.
+    if (isDraggingBlocks()) {
+      return;
     }
 
     // We disable the animation if the user has a preference for reduced
@@ -42448,7 +42454,7 @@ function useMovingAnimation({
         y: 0
       });
     };
-  }, [previous, prevRect, clientId, isTyping, getGlobalBlockCount, isBlockSelected, isFirstMultiSelectedBlock, isBlockMultiSelected, isAncestorMultiSelected]);
+  }, [previous, prevRect, clientId, isTyping, getGlobalBlockCount, isBlockSelected, isFirstMultiSelectedBlock, isBlockMultiSelected, isAncestorMultiSelected, isDraggingBlocks]);
   return ref;
 }
 /* harmony default export */ const use_moving_animation = (useMovingAnimation);
