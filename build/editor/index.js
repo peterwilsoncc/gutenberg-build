@@ -10100,15 +10100,12 @@ const registerPostTypeSchema = postType => async ({
     name: postType
   });
   const currentTheme = await registry.resolveSelect(external_wp_coreData_namespaceObject.store).getCurrentTheme();
-  const actions = [postTypeConfig.viewable ? view_post : undefined, !!postTypeConfig?.supports?.revisions ? view_post_revisions : undefined,
+  const actions = [postTypeConfig.viewable ? view_post : undefined, !!postTypeConfig.supports?.revisions ? view_post_revisions : undefined,
   // @ts-ignore
-   true ? !['wp_template', 'wp_block', 'wp_template_part'].includes(postTypeConfig.slug) && canCreate && duplicate_post : 0, postTypeConfig.slug === 'wp_template_part' && canCreate && currentTheme?.is_block_theme ? duplicate_template_part : undefined, canCreate && postTypeConfig.slug === 'wp_block' ? duplicate_pattern : undefined, postTypeConfig.supports?.title ? rename_post : undefined, postTypeConfig?.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, restore_post, reset_post, delete_post, trash_post, permanently_delete_post];
-  const fields = [featured_image, title, author, fields_status, date, slug, fields_parent, comment_status, fields_password];
+   true ? !['wp_template', 'wp_block', 'wp_template_part'].includes(postTypeConfig.slug) && canCreate && duplicate_post : 0, postTypeConfig.slug === 'wp_template_part' && canCreate && currentTheme?.is_block_theme ? duplicate_template_part : undefined, canCreate && postTypeConfig.slug === 'wp_block' ? duplicate_pattern : undefined, postTypeConfig.supports?.title ? rename_post : undefined, postTypeConfig.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, restore_post, reset_post, delete_post, trash_post, permanently_delete_post].filter(Boolean);
+  const fields = [postTypeConfig.supports?.thumbnail && currentTheme?.['theme-supports']?.['post-thumbnails'] && featured_image, title, postTypeConfig.supports?.author && author, fields_status, date, slug, postTypeConfig.supports?.['page-attributes'] && fields_parent, postTypeConfig.supports?.comments && comment_status, fields_password].filter(Boolean);
   registry.batch(() => {
     actions.forEach(action => {
-      if (!action) {
-        return;
-      }
       unlock(registry.dispatch(store_store)).registerEntityAction('postType', postType, action);
     });
     fields.forEach(field => {
@@ -33093,9 +33090,9 @@ function PreferencesModalContents({
  */
 
 
-function usePostFields() {
-  const postType = 'page'; // TODO: this could be page or post (experimental).
-
+function usePostFields({
+  postType
+}) {
   const {
     registerPostTypeSchema
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));

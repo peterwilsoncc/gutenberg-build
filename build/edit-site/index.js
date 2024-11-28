@@ -44891,7 +44891,9 @@ function PostList({
   const {
     isLoading: isLoadingFields,
     fields: _fields
-  } = usePostFields();
+  } = usePostFields({
+    postType
+  });
   const fields = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const activeViewFilters = getActiveViewFilters(defaultViews, activeView).map(({
       field
@@ -45587,7 +45589,9 @@ function PostEditForm({
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
   const {
     fields: _fields
-  } = post_edit_usePostFields();
+  } = post_edit_usePostFields({
+    postType
+  });
   const fields = (0,external_wp_element_namespaceObject.useMemo)(() => _fields?.map(field => {
     if (field.id === 'status') {
       return {
