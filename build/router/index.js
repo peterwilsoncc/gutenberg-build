@@ -1615,6 +1615,7 @@ function useHistory() {
     // @ts-expect-error
     !document.startViewTransition || !options.transition) {
       performPush();
+      return;
     }
     await new Promise(resolve => {
       var _options$transition;
