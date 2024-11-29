@@ -41530,7 +41530,7 @@ const BorderBoxControlSplitControls = (props, forwardedRef) => {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(grid_component, {
     ...otherProps,
     ref: mergedRef,
-    gap: 4,
+    gap: 3,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(border_box_control_visualizer_component, {
       value: value,
       size: size
