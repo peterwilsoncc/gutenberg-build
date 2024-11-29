@@ -28845,24 +28845,41 @@ function MoreMenu() {
 
 
 
+const IS_TOGGLE = 'toggle';
+const IS_BUTTON = 'button';
 function PostPublishButtonOrToggle({
   forceIsDirty,
-  hasPublishAction,
-  isBeingScheduled,
-  isPending,
-  isPublished,
-  isPublishSidebarEnabled,
-  isPublishSidebarOpened,
-  isScheduled,
-  togglePublishSidebar,
-  setEntitiesSavedStatesCallback,
-  postStatusHasChanged,
-  postStatus
+  setEntitiesSavedStatesCallback
 }) {
-  const IS_TOGGLE = 'toggle';
-  const IS_BUTTON = 'button';
-  const isSmallerThanMediumViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   let component;
+  const isSmallerThanMediumViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
+  const {
+    togglePublishSidebar
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
+  const {
+    hasPublishAction,
+    isBeingScheduled,
+    isPending,
+    isPublished,
+    isPublishSidebarEnabled,
+    isPublishSidebarOpened,
+    isScheduled,
+    postStatus,
+    postStatusHasChanged
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _select$getCurrentPos;
+    return {
+      hasPublishAction: (_select$getCurrentPos = !!select(store_store).getCurrentPost()?._links?.['wp:action-publish']) !== null && _select$getCurrentPos !== void 0 ? _select$getCurrentPos : false,
+      isBeingScheduled: select(store_store).isEditedPostBeingScheduled(),
+      isPending: select(store_store).isCurrentPostPending(),
+      isPublished: select(store_store).isCurrentPostPublished(),
+      isPublishSidebarEnabled: select(store_store).isPublishSidebarEnabled(),
+      isPublishSidebarOpened: select(store_store).isPublishSidebarOpened(),
+      isScheduled: select(store_store).isCurrentPostScheduled(),
+      postStatus: select(store_store).getEditedPostAttribute('status'),
+      postStatusHasChanged: select(store_store).getPostEdits()?.status
+    };
+  }, []);
 
   /**
    * Conditions to show a BUTTON (publish directly) or a TOGGLE (open publish sidebar):
@@ -28902,27 +28919,6 @@ function PostPublishButtonOrToggle({
     setEntitiesSavedStatesCallback: setEntitiesSavedStatesCallback
   });
 }
-/* harmony default export */ const post_publish_button_or_toggle = ((0,external_wp_compose_namespaceObject.compose)((0,external_wp_data_namespaceObject.withSelect)(select => {
-  var _select$getCurrentPos;
-  return {
-    hasPublishAction: (_select$getCurrentPos = select(store_store).getCurrentPost()?._links?.['wp:action-publish']) !== null && _select$getCurrentPos !== void 0 ? _select$getCurrentPos : false,
-    isBeingScheduled: select(store_store).isEditedPostBeingScheduled(),
-    isPending: select(store_store).isCurrentPostPending(),
-    isPublished: select(store_store).isCurrentPostPublished(),
-    isPublishSidebarEnabled: select(store_store).isPublishSidebarEnabled(),
-    isPublishSidebarOpened: select(store_store).isPublishSidebarOpened(),
-    isScheduled: select(store_store).isCurrentPostScheduled(),
-    postStatus: select(store_store).getEditedPostAttribute('status'),
-    postStatusHasChanged: select(store_store).getPostEdits()?.status
-  };
-}), (0,external_wp_data_namespaceObject.withDispatch)(dispatch => {
-  const {
-    togglePublishSidebar
-  } = dispatch(store_store);
-  return {
-    togglePublishSidebar
-  };
-}))(PostPublishButtonOrToggle));
 
 ;// ./packages/editor/build-module/components/post-view-link/index.js
 /**
@@ -29474,7 +29470,7 @@ function header_Header({
         disabled: forceDisableBlockTools
       }), (isWideViewport || !showIconLabels) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pinned_items.Slot, {
         scope: "core"
-      }), !customSaveButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_publish_button_or_toggle, {
+      }), !customSaveButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostPublishButtonOrToggle, {
         forceIsDirty: forceIsDirty,
         setEntitiesSavedStatesCallback: setEntitiesSavedStatesCallback
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollabSidebar, {}), customSaveButton, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MoreMenu, {})]
