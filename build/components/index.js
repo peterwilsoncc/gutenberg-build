@@ -40798,6 +40798,7 @@ function UnitSelectControl({
 
 
 
+
 function UnforwardedUnitControl(unitControlProps, forwardedRef) {
   const {
     __unstableStateReducer,
@@ -40818,8 +40819,15 @@ function UnforwardedUnitControl(unitControlProps, forwardedRef) {
     units: unitsProp = CSS_UNITS,
     value: valueProp,
     onFocus: onFocusProp,
+    __shouldNotWarnDeprecated36pxSize,
     ...props
   } = useDeprecated36pxDefaultSizeProp(unitControlProps);
+  maybeWarnDeprecated36pxSize({
+    componentName: 'UnitControl',
+    __next40pxDefaultSize: props.__next40pxDefaultSize,
+    size,
+    __shouldNotWarnDeprecated36pxSize
+  });
   if ('unit' in unitControlProps) {
     external_wp_deprecated_default()('UnitControl unit prop', {
       since: '5.6',
@@ -40952,7 +40960,7 @@ function UnforwardedUnitControl(unitControlProps, forwardedRef) {
  * const Example = () => {
  *   const [ value, setValue ] = useState( '10px' );
  *
- *   return <UnitControl onChange={ setValue } value={ value } />;
+ *   return <UnitControl __next40pxDefaultSize onChange={ setValue } value={ value } />;
  * };
  * ```
  */
@@ -41177,6 +41185,8 @@ const UnconnectedBorderControl = (props, forwardedRef) => {
       spacing: 4,
       className: innerWrapperClassName,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(unit_control, {
+        __next40pxDefaultSize: __next40pxDefaultSize,
+        __shouldNotWarnDeprecated36pxSize: true,
         prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {
           marginRight: 1,
           marginBottom: 0,
@@ -42568,6 +42578,7 @@ function AllInputControl({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledUnitControl, {
       ...props,
+      __shouldNotWarnDeprecated36pxSize: true,
       __next40pxDefaultSize: __next40pxDefaultSize,
       className: "component-box-control__unit-control",
       disableUnits: isMixed,
@@ -42689,6 +42700,7 @@ function BoxInputControls({
           text: LABELS[side],
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledUnitControl, {
             ...props,
+            __shouldNotWarnDeprecated36pxSize: true,
             __next40pxDefaultSize: __next40pxDefaultSize,
             className: "component-box-control__unit-control",
             id: inputId,
@@ -42806,6 +42818,7 @@ function AxialInputControls({
           text: LABELS[side],
           children: /*#__PURE__*/(0,external_React_.createElement)(StyledUnitControl, {
             ...props,
+            __shouldNotWarnDeprecated36pxSize: true,
             __next40pxDefaultSize: __next40pxDefaultSize,
             className: "component-box-control__unit-control",
             id: inputId,
@@ -57543,6 +57556,7 @@ const UnforwardedFontSizePicker = (props, ref) => {
           isBlock: true,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(unit_control, {
             __next40pxDefaultSize: __next40pxDefaultSize,
+            __shouldNotWarnDeprecated36pxSize: true,
             label: (0,external_wp_i18n_namespaceObject.__)('Custom'),
             labelPosition: "top",
             hideLabelFromVision: true,
@@ -67790,6 +67804,7 @@ const UnconnectedToolsPanel = (props, forwardedRef) => {
  *         onDeselect={ () => setHeight() }
  *       >
  *         <UnitControl
+ *           __next40pxDefaultSize
  *           label={ __( 'Height' ) }
  *           onChange={ setHeight }
  *           value={ height }
@@ -67801,6 +67816,7 @@ const UnconnectedToolsPanel = (props, forwardedRef) => {
  *         onDeselect={ () => setWidth() }
  *       >
  *         <UnitControl
+ *           __next40pxDefaultSize
  *           label={ __( 'Width' ) }
  *           onChange={ setWidth }
  *           value={ width }
