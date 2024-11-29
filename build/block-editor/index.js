@@ -28550,6 +28550,11 @@ function color_addTransforms(result, source, index, results) {
 
 ;// ./packages/block-editor/build-module/components/font-family/index.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
 
@@ -28569,6 +28574,7 @@ function FontFamilyControl({
   value = '',
   onChange,
   fontFamilies,
+  className,
   ...props
 }) {
   const [blockLevelFontFamilies] = use_settings_useSettings('typography.fontFamilies');
@@ -28606,6 +28612,9 @@ function FontFamilyControl({
       selectedItem
     }) => onChange(selectedItem.key),
     options: options,
+    className: dist_clsx('block-editor-font-family-control', className, {
+      'is-next-has-no-margin-bottom': __nextHasNoMarginBottom
+    }),
     ...props
   });
 }
