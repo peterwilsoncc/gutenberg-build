@@ -64517,7 +64517,15 @@ function UnforwardedResizableBox({
   ...props
 }, ref) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Resizable, {
-    className: dist_clsx('components-resizable-box__container', showHandle && 'has-show-handle', className),
+    className: dist_clsx('components-resizable-box__container', showHandle && 'has-show-handle', className)
+    // Add a focusable element within the drag handle. Unfortunately,
+    // `re-resizable` does not make them properly focusable by default,
+    // causing focus to move the the block wrapper which triggers block
+    // drag.
+    ,
+    handleComponent: Object.fromEntries(Object.keys(HANDLE_CLASSES).map(key => [key, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      tabIndex: -1
+    }, key)])),
     handleClasses: HANDLE_CLASSES,
     handleStyles: HANDLE_STYLES,
     ref: ref,

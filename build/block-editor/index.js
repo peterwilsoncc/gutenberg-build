@@ -42671,10 +42671,77 @@ function useFocusHandler(clientId) {
   }, [isBlockSelected, selectBlock]);
 }
 
+;// ./packages/icons/build-module/library/drag-handle.js
+/**
+ * WordPress dependencies
+ */
+
+
+const dragHandle = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  width: "24",
+  height: "24",
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M8 7h2V5H8v2zm0 6h2v-2H8v2zm0 6h2v-2H8v2zm6-14v2h2V5h-2zm0 8h2v-2h-2v2zm0 6h2v-2h-2v2z"
+  })
+});
+/* harmony default export */ const drag_handle = (dragHandle);
+
+;// ./packages/block-editor/build-module/components/block-draggable/draggable-chip.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+function BlockDraggableChip({
+  count,
+  icon,
+  isPattern,
+  fadeWhenDisabled
+}) {
+  const patternLabel = isPattern && (0,external_wp_i18n_namespaceObject.__)('Pattern');
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    className: "block-editor-block-draggable-chip-wrapper",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "block-editor-block-draggable-chip",
+      "data-testid": "block-draggable-chip",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
+        justify: "center",
+        className: "block-editor-block-draggable-chip__content",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+          children: icon ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
+            icon: icon
+          }) : patternLabel || (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: Number of blocks. */
+          (0,external_wp_i18n_namespaceObject._n)('%d block', '%d blocks', count), count)
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
+            icon: drag_handle
+          })
+        }), fadeWhenDisabled && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+          className: "block-editor-block-draggable-chip__disabled",
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            className: "block-editor-block-draggable-chip__disabled-icon"
+          })
+        })]
+      })
+    })
+  });
+}
+
 ;// ./packages/block-editor/build-module/components/block-list/use-block-props/use-selected-block-event-handlers.js
 /**
  * WordPress dependencies
  */
+
+
 
 
 
@@ -42686,6 +42753,7 @@ function useFocusHandler(clientId) {
 
 
 
+
 /**
  * Adds block behaviour:
  *   - Removes the block on BACKSPACE.
@@ -42694,19 +42762,26 @@ function useFocusHandler(clientId) {
  *
  * @param {string} clientId Block client ID.
  */
+
 function useEventHandlers({
   clientId,
   isSelected
 }) {
   const {
+    getBlockType
+  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blocks_namespaceObject.store);
+  const {
     getBlockRootClientId,
-    getBlockIndex,
-    isZoomOut
+    isZoomOut,
+    hasMultiSelection,
+    getBlockName
   } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const {
     insertAfterBlock,
     removeBlock,
-    resetZoomLevel
+    resetZoomLevel,
+    startDraggingBlocks,
+    stopDraggingBlocks
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   return (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
     if (!isSelected) {
@@ -42750,7 +42825,89 @@ function useEventHandlers({
      * @param {DragEvent} event Drag event.
      */
     function onDragStart(event) {
-      event.preventDefault();
+      if (node !== event.target || node.isContentEditable || node.ownerDocument.activeElement !== node || hasMultiSelection()) {
+        event.preventDefault();
+        return;
+      }
+      const data = JSON.stringify({
+        type: 'block',
+        srcClientIds: [clientId],
+        srcRootClientId: getBlockRootClientId(clientId)
+      });
+      event.dataTransfer.effectAllowed = 'move'; // remove "+" cursor
+      event.dataTransfer.clearData();
+      event.dataTransfer.setData('wp-blocks', data);
+      const {
+        ownerDocument
+      } = node;
+      const {
+        defaultView
+      } = ownerDocument;
+      const selection = defaultView.getSelection();
+      selection.removeAllRanges();
+      const domNode = document.createElement('div');
+      const root = (0,external_wp_element_namespaceObject.createRoot)(domNode);
+      root.render(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockDraggableChip, {
+        icon: getBlockType(getBlockName(clientId)).icon
+      }));
+      document.body.appendChild(domNode);
+      domNode.style.position = 'absolute';
+      domNode.style.top = '0';
+      domNode.style.left = '0';
+      domNode.style.zIndex = '1000';
+      domNode.style.pointerEvents = 'none';
+
+      // Setting the drag chip as the drag image actually works, but
+      // the behaviour is slightly different in every browser. In
+      // Safari, it animates, in Firefox it's slightly transparent...
+      // So we set a fake drag image and have to reposition it
+      // ourselves.
+      const dragElement = ownerDocument.createElement('div');
+      // Chrome will show a globe icon if the drag element does not
+      // have dimensions.
+      dragElement.style.width = '1px';
+      dragElement.style.height = '1px';
+      dragElement.style.position = 'fixed';
+      dragElement.style.visibility = 'hidden';
+      ownerDocument.body.appendChild(dragElement);
+      event.dataTransfer.setDragImage(dragElement, 0, 0);
+      let offset = {
+        x: 0,
+        y: 0
+      };
+      if (document !== ownerDocument) {
+        const frame = defaultView.frameElement;
+        if (frame) {
+          const rect = frame.getBoundingClientRect();
+          offset = {
+            x: rect.left,
+            y: rect.top
+          };
+        }
+      }
+
+      // chip handle offset
+      offset.x -= 58;
+      function over(e) {
+        domNode.style.transform = `translate( ${e.clientX + offset.x}px, ${e.clientY + offset.y}px )`;
+      }
+      over(event);
+      function end() {
+        ownerDocument.removeEventListener('dragover', over);
+        ownerDocument.removeEventListener('dragend', end);
+        domNode.remove();
+        dragElement.remove();
+        stopDraggingBlocks();
+        document.body.classList.remove('is-dragging-components-draggable');
+        ownerDocument.documentElement.classList.remove('is-dragging');
+      }
+      ownerDocument.addEventListener('dragover', over);
+      ownerDocument.addEventListener('dragend', end);
+      ownerDocument.addEventListener('drop', end);
+      startDraggingBlocks([clientId]);
+      // Important because it hides the block toolbar.
+      document.body.classList.add('is-dragging-components-draggable');
+      ownerDocument.documentElement.classList.add('is-dragging');
     }
     node.addEventListener('keydown', onKeyDown);
     node.addEventListener('dragstart', onDragStart);
@@ -42758,7 +42915,7 @@ function useEventHandlers({
       node.removeEventListener('keydown', onKeyDown);
       node.removeEventListener('dragstart', onDragStart);
     };
-  }, [clientId, isSelected, getBlockRootClientId, getBlockIndex, insertAfterBlock, removeBlock, isZoomOut, resetZoomLevel]);
+  }, [clientId, isSelected, getBlockRootClientId, insertAfterBlock, removeBlock, isZoomOut, resetZoomLevel, hasMultiSelection, startDraggingBlocks, stopDraggingBlocks]);
 }
 
 ;// ./packages/block-editor/build-module/components/block-list/use-block-props/use-intersection-observer.js
@@ -43129,6 +43286,35 @@ function shimAttributeSource(settings, name) {
 }
 (0,external_wp_hooks_namespaceObject.addFilter)('blocks.registerBlockType', 'core/editor/custom-sources-backwards-compatibility/shim-attribute-source', shimAttributeSource);
 
+;// ./packages/block-editor/build-module/components/block-list/use-block-props/use-firefox-draggable-compatibility.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * In Firefox, the `draggable` and `contenteditable` attributes don't play well
+ * together. When `contenteditable` is within a `draggable` element, selection
+ * doesn't get set in the right place. The only solution is to temporarily
+ * remove the `draggable` attribute clicking inside `contenteditable` elements.
+ *
+ * @return {Function} Cleanup function.
+ */
+function useFirefoxDraggableCompatibility() {
+  return (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
+    function onDown(event) {
+      node.draggable = !event.target.isContentEditable;
+    }
+    const {
+      ownerDocument
+    } = node;
+    ownerDocument.addEventListener('pointerdown', onDown);
+    return () => {
+      ownerDocument.removeEventListener('pointerdown', onDown);
+    };
+  }, []);
+}
+
 ;// ./packages/block-editor/build-module/components/block-list/use-block-props/index.js
 /**
  * External dependencies
@@ -43147,6 +43333,7 @@ function shimAttributeSource(settings, name) {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -43230,12 +43417,15 @@ function use_block_props_useBlockProps(props = {}, {
     hasEditableOutline,
     isTemporarilyEditingAsBlocks,
     defaultClassName,
-    isSectionBlock
+    isSectionBlock,
+    canMove
   } = (0,external_wp_element_namespaceObject.useContext)(PrivateBlockContext);
+  const canDrag = canMove && !hasChildSelected;
 
   // translators: %s: Type of block (i.e. Text, Image etc)
   const blockLabel = (0,external_wp_i18n_namespaceObject.sprintf)((0,external_wp_i18n_namespaceObject.__)('Block: %s'), blockTitle);
   const htmlSuffix = mode === 'html' && !__unstableIsHtml ? '-visual' : '';
+  const ffDragRef = useFirefoxDraggableCompatibility();
   const mergedRefs = (0,external_wp_compose_namespaceObject.useMergeRefs)([props.ref, useFocusFirstElement({
     clientId,
     initialPosition
@@ -43254,7 +43444,7 @@ function use_block_props_useBlockProps(props = {}, {
     isEnabled: isSectionBlock
   }), useScrollIntoView({
     isSelected
-  })]);
+  }), canDrag ? ffDragRef : undefined]);
   const blockEditContext = useBlockEditContext();
   const hasBlockBindings = !!blockEditContext[blockBindingsKey];
   const bindingsStyle = hasBlockBindings && canBindBlock(name) ? {
@@ -43272,6 +43462,7 @@ function use_block_props_useBlockProps(props = {}, {
   }
   return {
     tabIndex: blockEditingMode === 'disabled' ? -1 : 0,
+    draggable: canDrag ? true : undefined,
     ...wrapperProps,
     ...props,
     ref: mergedRefs,
@@ -43942,7 +44133,8 @@ function BlockListBlockProvider(props) {
     mayDisplayControls,
     mayDisplayParentControls,
     originalBlockClientId,
-    themeSupportsLayout
+    themeSupportsLayout,
+    canMove
   };
 
   // Here we separate between the props passed to BlockListBlock and any other
@@ -45786,7 +45978,8 @@ function useBlockDropZone({
     isDragging,
     isGroupable,
     isZoomOut,
-    getSectionRootClientId
+    getSectionRootClientId,
+    getBlockParents
   } = unlock((0,external_wp_data_namespaceObject.useSelect)(store));
   const {
     showInsertionPoint,
@@ -45804,9 +45997,17 @@ function useBlockDropZone({
       // So, ensure that the drag state is set when the user drags over a drop zone.
       startDragging();
     }
+    const draggedBlockClientIds = getDraggedBlockClientIds();
+    const targetParents = [targetRootClientId, ...getBlockParents(targetRootClientId, true)];
+
+    // Check if the target is within any of the dragged blocks.
+    const isTargetWithinDraggedBlocks = draggedBlockClientIds.some(clientId => targetParents.includes(clientId));
+    if (isTargetWithinDraggedBlocks) {
+      return;
+    }
     const allowedBlocks = getAllowedBlocks(targetRootClientId);
     const targetBlockName = getBlockNamesByClientId([targetRootClientId])[0];
-    const draggedBlockNames = getBlockNamesByClientId(getDraggedBlockClientIds());
+    const draggedBlockNames = getBlockNamesByClientId(draggedBlockClientIds);
     const isBlockDroppingAllowed = isDropTargetValid(getBlockType, allowedBlocks, draggedBlockNames, targetBlockName);
     if (!isBlockDroppingAllowed) {
       return;
@@ -47416,11 +47617,21 @@ function useDragSelection() {
         }
       });
     }
+    let lastMouseDownTarget;
+    function onMouseDown({
+      target
+    }) {
+      lastMouseDownTarget = target;
+    }
     function onMouseLeave({
       buttons,
       target,
       relatedTarget
     }) {
+      if (!target.contains(lastMouseDownTarget)) {
+        return;
+      }
+
       // If we're moving into a child element, ignore. We're tracking
       // the mouse leaving the element to a parent, no a child.
       if (target.contains(relatedTarget)) {
@@ -47478,6 +47689,7 @@ function useDragSelection() {
       setContentEditableWrapper(node, true);
     }
     node.addEventListener('mouseout', onMouseLeave);
+    node.addEventListener('mousedown', onMouseDown);
     return () => {
       node.removeEventListener('mouseout', onMouseLeave);
       defaultView.removeEventListener('mouseup', onMouseUp);
@@ -50368,71 +50580,6 @@ function InserterListboxItem({
   });
 }
 /* harmony default export */ const inserter_listbox_item = ((0,external_wp_element_namespaceObject.forwardRef)(InserterListboxItem));
-
-;// ./packages/icons/build-module/library/drag-handle.js
-/**
- * WordPress dependencies
- */
-
-
-const dragHandle = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  width: "24",
-  height: "24",
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M8 7h2V5H8v2zm0 6h2v-2H8v2zm0 6h2v-2H8v2zm6-14v2h2V5h-2zm0 8h2v-2h-2v2zm0 6h2v-2h-2v2z"
-  })
-});
-/* harmony default export */ const drag_handle = (dragHandle);
-
-;// ./packages/block-editor/build-module/components/block-draggable/draggable-chip.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-function BlockDraggableChip({
-  count,
-  icon,
-  isPattern,
-  fadeWhenDisabled
-}) {
-  const patternLabel = isPattern && (0,external_wp_i18n_namespaceObject.__)('Pattern');
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    className: "block-editor-block-draggable-chip-wrapper",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "block-editor-block-draggable-chip",
-      "data-testid": "block-draggable-chip",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
-        justify: "center",
-        className: "block-editor-block-draggable-chip__content",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-          children: icon ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
-            icon: icon
-          }) : patternLabel || (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: Number of blocks. */
-          (0,external_wp_i18n_namespaceObject._n)('%d block', '%d blocks', count), count)
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
-            icon: drag_handle
-          })
-        }), fadeWhenDisabled && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-          className: "block-editor-block-draggable-chip__disabled",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-            className: "block-editor-block-draggable-chip__disabled-icon"
-          })
-        })]
-      })
-    })
-  });
-}
 
 ;// ./packages/block-editor/build-module/components/inserter-draggable-blocks/index.js
 /**
@@ -72467,6 +72614,11 @@ function RichTextWrapper({
       "aria-multiline": !disableLineBreaks,
       "aria-readonly": shouldDisableEditing,
       ...props,
+      // Unset draggable (coming from block props) for contentEditable
+      // elements because it will interfere with multi block selection
+      // when the contentEditable and draggable elements are the same
+      // element.
+      draggable: undefined,
       "aria-label": bindingsLabel || props['aria-label'] || placeholder,
       ...autocompleteProps,
       ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([
