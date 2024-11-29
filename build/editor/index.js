@@ -23133,10 +23133,10 @@ function PostTitleRaw(_, forwardedRef) {
 /**
  * Wrapper component that renders its children only if the post can trashed.
  *
- * @param {Object}        props          - The component props.
- * @param {React.ReactEl} props.children - The child components to render.
+ * @param {Object}          props          - The component props.
+ * @param {React.ReactNode} props.children - The child components to render.
  *
- * @return {React.ReactElement} The rendered child components or null if the post can not trashed.
+ * @return {React.ReactNode} The rendered child components or null if the post can not trashed.
  */
 function PostTrashCheck({
   children
@@ -23276,7 +23276,8 @@ function PostTrash({
  * <PostURL />
  * ```
  *
- * @param {Function} onClose Callback function to be executed when the popover is closed.
+ * @param {{ onClose: () => void }} props         The props for the component.
+ * @param {() => void}              props.onClose Callback function to be executed when the popover is closed.
  *
  * @return {React.ReactNode} The rendered PostURL component.
  */
