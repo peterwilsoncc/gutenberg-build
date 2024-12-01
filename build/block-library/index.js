@@ -13755,7 +13755,8 @@ function CoverInspectorControls({
   setOverlayColor,
   coverRef,
   currentSettings,
-  updateDimRatio
+  updateDimRatio,
+  featuredImage
 }) {
   const {
     useFeaturedImage,
@@ -13788,8 +13789,9 @@ function CoverInspectorControls({
   const image = (0,external_wp_data_namespaceObject.useSelect)(select => id && isImageBackground ? select(external_wp_coreData_namespaceObject.store).getMedia(id, {
     context: 'view'
   }) : null, [id, isImageBackground]);
+  const currentBackgroundImage = useFeaturedImage ? featuredImage : image;
   function updateImage(newSizeSlug) {
-    const newUrl = image?.media_details?.sizes?.[newSizeSlug]?.source_url;
+    const newUrl = currentBackgroundImage?.media_details?.sizes?.[newSizeSlug]?.source_url;
     if (!newUrl) {
       return null;
     }
@@ -13800,7 +13802,7 @@ function CoverInspectorControls({
   }
   const imageSizeOptions = imageSizes?.filter(({
     slug
-  }) => image?.media_details?.sizes?.[slug]?.source_url)?.map(({
+  }) => currentBackgroundImage?.media_details?.sizes?.[slug]?.source_url)?.map(({
     name,
     slug
   }) => ({
@@ -13919,7 +13921,7 @@ function CoverInspectorControls({
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("br", {}), (0,external_wp_i18n_namespaceObject.__)('Leave empty if decorative.')]
             })
           })
-        }), !useFeaturedImage && !!imageSizeOptions?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResolutionTool, {
+        }), !!imageSizeOptions?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResolutionTool, {
           value: sizeSlug,
           onChange: updateImage,
           options: imageSizeOptions,
@@ -14957,6 +14959,7 @@ function CoverEdit({
     postType
   }
 }) {
+  var _media$media_details$;
   const {
     contentPosition,
     id,
@@ -14987,7 +14990,7 @@ function CoverEdit({
   const media = (0,external_wp_data_namespaceObject.useSelect)(select => featuredImage && select(external_wp_coreData_namespaceObject.store).getMedia(featuredImage, {
     context: 'view'
   }), [featuredImage]);
-  const mediaUrl = media?.source_url;
+  const mediaUrl = (_media$media_details$ = media?.media_details?.sizes?.[sizeSlug]?.source_url) !== null && _media$media_details$ !== void 0 ? _media$media_details$ : media?.source_url;
 
   // User can change the featured image outside of the block, but we still
   // need to update the block when that happens. This effect should only
@@ -15224,7 +15227,8 @@ function CoverEdit({
     currentSettings: currentSettings,
     toggleUseFeaturedImage: toggleUseFeaturedImage,
     updateDimRatio: onUpdateDimRatio,
-    onClearMedia: onClearMedia
+    onClearMedia: onClearMedia,
+    featuredImage: media
   });
   const resizableCoverProps = {
     className: 'block-library-cover__resize-container',
