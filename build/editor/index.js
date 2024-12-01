@@ -29336,6 +29336,7 @@ const ZoomOutToggle = ({
 
 
 
+
 const toolbarVariations = {
   distractionFreeDisabled: {
     y: '-50px'
@@ -29410,6 +29411,8 @@ function header_Header({
   const [isBlockToolsCollapsed, setIsBlockToolsCollapsed] = (0,external_wp_element_namespaceObject.useState)(true);
   const hasCenter = !isTooNarrowForDocumentBar && (!hasFixedToolbar || hasFixedToolbar && (!hasBlockSelection || isBlockToolsCollapsed));
   const hasBackButton = useHasBackButton();
+  const hasSectionRootClientId = (0,external_wp_data_namespaceObject.useSelect)(select => !!unlock(select(external_wp_blockEditor_namespaceObject.store)).getSectionRootClientId(), []);
+
   /*
    * The edit-post-header classname is only kept for backward compatability
    * as some plugins might be relying on its presence.
@@ -29467,7 +29470,7 @@ function header_Header({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostPreviewButton, {
         className: "editor-header__post-preview-button",
         forceIsAutosaveable: forceIsDirty
-      }), canBeZoomedOut && isWideViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_toggle, {
+      }), canBeZoomedOut && isWideViewport && hasSectionRootClientId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_toggle, {
         disabled: forceDisableBlockTools
       }), (isWideViewport || !showIconLabels) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pinned_items.Slot, {
         scope: "core"
