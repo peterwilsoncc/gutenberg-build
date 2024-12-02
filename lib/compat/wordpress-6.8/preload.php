@@ -10,18 +10,26 @@
  */
 function gutenberg_block_editor_preload_paths_6_8( $paths, $context ) {
 	if ( 'core/edit-site' === $context->name ) {
-		$post_id = null;
+		$post = null;
 		if ( isset( $_GET['postId'] ) && is_numeric( $_GET['postId'] ) ) {
-			$post_id = (int) $_GET['postId'];
+			$post = get_post( (int) $_GET['postId'] );
 		}
 		if ( isset( $_GET['p'] ) && preg_match( '/^\/page\/(\d+)$/', $_GET['p'], $matches ) ) {
-			$post_id = (int) $matches[1];
+			$post = get_post( (int) $matches[1] );
 		}
 
-		if ( $post_id ) {
-			$route_for_post = rest_get_route_for_post( $post_id );
+		if ( $post ) {
+			$route_for_post = rest_get_route_for_post( $post );
 			if ( $route_for_post ) {
 				$paths[] = add_query_arg( 'context', 'edit', $route_for_post );
+				if ( 'page' === $post->post_type ) {
+					$paths[] = add_query_arg(
+						'slug',
+						// @see https://github.com/WordPress/gutenberg/blob/489f6067c623926bce7151a76755bb68d8e22ea7/packages/edit-site/src/components/sync-state-with-url/use-init-edited-entity-from-url.js#L139-L140
+						'page-' . $post->post_name,
+						'/wp/v2/templates/lookup'
+					);
+				}
 			}
 		}
 
