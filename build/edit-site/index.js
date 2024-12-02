@@ -45798,7 +45798,7 @@ const pagesRoute = {
       query
     }) {
       var _query$layout;
-      const hasQuickEdit = ((_query$layout = query.layout) !== null && _query$layout !== void 0 ? _query$layout : 'list') === 'list' && !!query.quickEdit;
+      const hasQuickEdit = ((_query$layout = query.layout) !== null && _query$layout !== void 0 ? _query$layout : 'list') !== 'list' && !!query.quickEdit;
       return hasQuickEdit ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostEdit, {
         postType: "page",
         postId: query.postId
@@ -45816,7 +45816,7 @@ const pagesRoute = {
       query
     }) {
       var _query$layout2;
-      const hasQuickEdit = ((_query$layout2 = query.layout) !== null && _query$layout2 !== void 0 ? _query$layout2 : 'list') === 'list' && !!query.quickEdit;
+      const hasQuickEdit = ((_query$layout2 = query.layout) !== null && _query$layout2 !== void 0 ? _query$layout2 : 'list') !== 'list' && !!query.quickEdit;
       return hasQuickEdit ? 380 : undefined;
     }
   }
