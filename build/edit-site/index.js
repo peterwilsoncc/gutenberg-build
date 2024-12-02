@@ -41591,9 +41591,7 @@ const patternsRoute = {
       backPath: "/"
     }),
     content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsPatterns, {}),
-    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenPatterns, {
-      backPath: "/"
-    })
+    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsPatterns, {})
   }
 };
 
