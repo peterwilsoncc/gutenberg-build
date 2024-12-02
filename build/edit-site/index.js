@@ -14605,7 +14605,7 @@ const {
 function useNavigateToEntityRecord() {
   const history = use_navigate_to_entity_record_useHistory();
   const onNavigateToEntityRecord = (0,external_wp_element_namespaceObject.useCallback)(params => {
-    history.navigate(`/${params.postType}/${params.id}?canvas=edit&focusMode=true`);
+    history.navigate(`/${params.postType}/${params.postId}?canvas=edit&focusMode=true`);
   }, [history]);
   return onNavigateToEntityRecord;
 }

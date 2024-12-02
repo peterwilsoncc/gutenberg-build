@@ -1630,7 +1630,8 @@ function useHistory() {
     });
   });
   return (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    navigate
+    navigate,
+    back: router_history.back
   }), [navigate]);
 }
 function useMatch(location, matcher, pathArg) {
