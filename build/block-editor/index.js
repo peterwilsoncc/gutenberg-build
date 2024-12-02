@@ -56151,9 +56151,10 @@ const BlockBindingsPanel = ({
           bindings: filteredBindings,
           fieldsList: fieldsList
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-          variant: "muted",
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+        as: "div",
+        variant: "muted",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
           children: (0,external_wp_i18n_namespaceObject.__)('Attributes connected to custom fields or other dynamic data.')
         })
       })]
