@@ -49144,7 +49144,7 @@ function useScaleCanvas({
     // Update previous values.
     transitionFromRef.current = transitionToRef.current;
   }, [iframeDocument]);
-
+  const previousIsZoomedOut = (0,external_wp_compose_namespaceObject.usePrevious)(isZoomedOut);
   /**
    * Runs when zoom out mode is toggled, and sets the startAnimation flag
    * so the animation will start when the next useEffect runs. We _only_
@@ -49152,7 +49152,7 @@ function useScaleCanvas({
    * changes due to the container resizing.
    */
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!iframeDocument) {
+    if (!iframeDocument || previousIsZoomedOut === isZoomedOut) {
       return;
     }
     if (isZoomedOut) {
@@ -49162,7 +49162,7 @@ function useScaleCanvas({
     return () => {
       iframeDocument.documentElement.classList.remove('is-zoomed-out');
     };
-  }, [iframeDocument, isZoomedOut]);
+  }, [iframeDocument, isZoomedOut, previousIsZoomedOut]);
 
   /**
    * This handles:
