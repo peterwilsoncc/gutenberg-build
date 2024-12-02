@@ -28338,6 +28338,11 @@ function useEditorTitle(postType, postId) {
       getEditedEntityRecord,
       hasFinishedResolution
     } = select(external_wp_coreData_namespaceObject.store);
+    if (!postId) {
+      return {
+        isLoaded: false
+      };
+    }
     const _record = getEditedEntityRecord('postType', postType, postId);
     const {
       default_template_types: templateTypes = []
