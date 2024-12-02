@@ -27454,6 +27454,7 @@ const comment = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
 /* harmony default export */ const library_comment = (comment);
 
 ;// ./packages/editor/build-module/components/collab-sidebar/constants.js
+const collabHistorySidebarName = 'edit-post/collab-history-sidebar';
 const collabSidebarName = 'edit-post/collab-sidebar';
 
 ;// ./packages/icons/build-module/library/more-vertical.js
@@ -28023,6 +28024,7 @@ const AddCommentToolbarButton = ({
 
 
 
+
 const isBlockCommentExperimentEnabled = window?.__experimentalEnableBlockComment;
 const modifyBlockCommentAttributes = settings => {
   if (!settings.attributes.blockCommentId) {
@@ -28040,7 +28042,9 @@ const modifyBlockCommentAttributes = settings => {
 (0,external_wp_hooks_namespaceObject.addFilter)('blocks.registerBlockType', 'block-comment/modify-core-block-attributes', modifyBlockCommentAttributes);
 function CollabSidebarContent({
   showCommentBoard,
-  setShowCommentBoard
+  setShowCommentBoard,
+  styles,
+  comments
 }) {
   const {
     createNotice
@@ -28053,22 +28057,14 @@ function CollabSidebarContent({
     getEntityRecord
   } = (0,external_wp_data_namespaceObject.resolveSelect)(external_wp_coreData_namespaceObject.store);
   const {
-    postId,
-    threads
+    postId
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getCurrentPostId
     } = select(store_store);
     const _postId = getCurrentPostId();
-    const data = !!_postId ? select(external_wp_coreData_namespaceObject.store).getEntityRecords('root', 'comment', {
-      post: _postId,
-      type: 'block_comment',
-      status: 'any',
-      per_page: 100
-    }) : null;
     return {
-      postId: _postId,
-      threads: data
+      postId: _postId
     };
   }, []);
   const {
@@ -28077,34 +28073,6 @@ function CollabSidebarContent({
   const {
     updateBlockAttributes
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
-
-  // Process comments to build the tree structure
-  const resultComments = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    // Create a compare to store the references to all objects by id
-    const compare = {};
-    const result = [];
-    const filteredComments = (threads !== null && threads !== void 0 ? threads : []).filter(comment => comment.status !== 'trash');
-
-    // Initialize each object with an empty `reply` array
-    filteredComments.forEach(item => {
-      compare[item.id] = {
-        ...item,
-        reply: []
-      };
-    });
-
-    // Iterate over the data to build the tree structure
-    filteredComments.forEach(item => {
-      if (item.parent === 0) {
-        // If parent is 0, it's a root item, push it to the result array
-        result.push(compare[item.id]);
-      } else if (compare[item.parent]) {
-        // Otherwise, find its parent and push it to the parent's `reply` array
-        compare[item.parent].reply.push(compare[item.id]);
-      }
-    });
-    return result;
-  }, [threads]);
 
   // Function to save the comment.
   const addNewComment = async (comment, parentCommentId) => {
@@ -28197,12 +28165,13 @@ function CollabSidebarContent({
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "editor-collab-sidebar-panel",
+    style: styles,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddComment, {
       onSubmit: addNewComment,
       showCommentBoard: showCommentBoard,
       setShowCommentBoard: setShowCommentBoard
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Comments, {
-      threads: resultComments,
+      threads: comments,
       onEditComment: onEditComment,
       onAddReply: addNewComment,
       onCommentDelete: onCommentDelete,
@@ -28219,6 +28188,9 @@ function CollabSidebar() {
   const {
     enableComplementaryArea
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const {
+    getActiveComplementaryArea
+  } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const {
     postStatus
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -28242,6 +28214,67 @@ function CollabSidebar() {
     setShowCommentBoard(true);
     enableComplementaryArea('core', 'edit-post/collab-sidebar');
   };
+  const {
+    threads
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getCurrentPostId
+    } = select(store_store);
+    const _postId = getCurrentPostId();
+    const data = !!_postId ? select(external_wp_coreData_namespaceObject.store).getEntityRecords('root', 'comment', {
+      post: _postId,
+      type: 'block_comment',
+      status: 'any',
+      per_page: 100
+    }) : null;
+    return {
+      postId: _postId,
+      threads: data
+    };
+  }, []);
+
+  // Process comments to build the tree structure
+  const resultComments = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    // Create a compare to store the references to all objects by id
+    const compare = {};
+    const result = [];
+    const filteredComments = (threads !== null && threads !== void 0 ? threads : []).filter(comment => comment.status !== 'trash');
+
+    // Initialize each object with an empty `reply` array
+    filteredComments.forEach(item => {
+      compare[item.id] = {
+        ...item,
+        reply: []
+      };
+    });
+
+    // Iterate over the data to build the tree structure
+    filteredComments.forEach(item => {
+      if (item.parent === 0) {
+        // If parent is 0, it's a root item, push it to the result array
+        result.push(compare[item.id]);
+      } else if (compare[item.parent]) {
+        // Otherwise, find its parent and push it to the parent's `reply` array
+        compare[item.parent].reply.push(compare[item.id]);
+      }
+    });
+    return result;
+  }, [threads]);
+
+  // Get the global styles to set the background color of the sidebar.
+  const {
+    merged: GlobalStyles
+  } = useGlobalStylesContext();
+  const backgroundColor = GlobalStyles?.styles?.color?.background;
+  if (0 < resultComments.length) {
+    const unsubscribe = (0,external_wp_data_namespaceObject.subscribe)(() => {
+      const activeSidebar = getActiveComplementaryArea('core');
+      if (!activeSidebar) {
+        enableComplementaryArea('core', collabSidebarName);
+        unsubscribe();
+      }
+    });
+  }
 
   // Check if the experimental flag is enabled.
   if (!isBlockCommentExperimentEnabled || postStatus === 'publish') {
@@ -28252,14 +28285,29 @@ function CollabSidebar() {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddCommentComponent, {
       onClick: openCollabBoard
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PluginSidebar, {
-      identifier: collabSidebarName
+      identifier: collabHistorySidebarName
       // translators: Comments sidebar title
       ,
       title: (0,external_wp_i18n_namespaceObject.__)('Comments'),
       icon: library_comment,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollabSidebarContent, {
+        comments: resultComments,
         showCommentBoard: showCommentBoard,
         setShowCommentBoard: setShowCommentBoard
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PluginSidebar, {
+      isPinnable: false,
+      header: false,
+      identifier: collabSidebarName,
+      className: "editor-collab-sidebar",
+      headerClassName: "editor-collab-sidebar__header",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollabSidebarContent, {
+        comments: resultComments,
+        showCommentBoard: showCommentBoard,
+        setShowCommentBoard: setShowCommentBoard,
+        styles: {
+          backgroundColor
+        }
       })
     })]
   });
