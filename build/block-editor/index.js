@@ -28925,6 +28925,7 @@ const line_height_control_LineHeightControl = ({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -28958,8 +28959,16 @@ function LetterSpacingControl({
       rem: 0.2
     }
   });
+  if (!__next40pxDefaultSize && (otherProps.size === undefined || otherProps.size === 'default')) {
+    external_wp_deprecated_default()(`36px default size for wp.blockEditor.__experimentalLetterSpacingControl`, {
+      since: '6.8',
+      version: '7.1',
+      hint: 'Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version.'
+    });
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
     __next40pxDefaultSize: __next40pxDefaultSize,
+    __shouldNotWarnDeprecated36pxSize: true,
     ...otherProps,
     label: (0,external_wp_i18n_namespaceObject.__)('Letter spacing'),
     value: value,
