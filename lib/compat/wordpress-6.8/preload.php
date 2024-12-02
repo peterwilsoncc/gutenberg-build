@@ -10,8 +10,16 @@
  */
 function gutenberg_block_editor_preload_paths_6_8( $paths, $context ) {
 	if ( 'core/edit-site' === $context->name ) {
-		if ( ! empty( $_GET['postId'] ) ) {
-			$route_for_post = rest_get_route_for_post( $_GET['postId'] );
+		$post_id = null;
+		if ( isset( $_GET['postId'] ) && is_numeric( $_GET['postId'] ) ) {
+			$post_id = (int) $_GET['postId'];
+		}
+		if ( isset( $_GET['p'] ) && preg_match( '/^\/page\/(\d+)$/', $_GET['p'], $matches ) ) {
+			$post_id = (int) $matches[1];
+		}
+
+		if ( $post_id ) {
+			$route_for_post = rest_get_route_for_post( $post_id );
 			if ( $route_for_post ) {
 				$paths[] = add_query_arg( 'context', 'edit', $route_for_post );
 			}
