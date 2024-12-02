@@ -38692,6 +38692,9 @@ function NavigationSubmenuEdit({
               setOpenedBy(ref.current);
             }
           }
+        }), description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          className: "wp-block-navigation-item__description",
+          children: description
         }), !openSubmenusOnClick && isLinkOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUI, {
           clientId: clientId,
           link: attributes,
