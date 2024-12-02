@@ -13731,13 +13731,13 @@ function identity(values) {
  *
  * @param {Object}   props              The component props.
  * @param {Function} props.close        The function to close the dialog.
- * @param {Function} props.renderDialog The function to render the dialog.
+ * @param {boolean}  props.renderDialog Whether to render the component with modal dialog behavior.
  *
  * @return {React.ReactNode} The rendered component.
  */
 function EntitiesSavedStates({
   close,
-  renderDialog = undefined
+  renderDialog
 }) {
   const isDirtyProps = useIsDirty();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EntitiesSavedStatesExtensible, {
@@ -13756,7 +13756,7 @@ function EntitiesSavedStates({
  * @param {Function} props.onSave                Function to call when saving entities.
  * @param {boolean}  props.saveEnabled           Flag indicating if save is enabled.
  * @param {string}   props.saveLabel             Label for the save button.
- * @param {Function} props.renderDialog          Function to render a custom dialog.
+ * @param {boolean}  props.renderDialog          Whether to render the component with modal dialog behavior.
  * @param {Array}    props.dirtyEntityRecords    Array of dirty entity records.
  * @param {boolean}  props.isDirty               Flag indicating if there are dirty entities.
  * @param {Function} props.setUnselectedEntities Function to set unselected entities.
@@ -13770,7 +13770,7 @@ function EntitiesSavedStatesExtensible({
   onSave = identity,
   saveEnabled: saveEnabledProp = undefined,
   saveLabel = (0,external_wp_i18n_namespaceObject.__)('Save'),
-  renderDialog = undefined,
+  renderDialog,
   dirtyEntityRecords,
   isDirty,
   setUnselectedEntities,
@@ -13810,8 +13810,8 @@ function EntitiesSavedStatesExtensible({
   const dialogLabel = (0,external_wp_compose_namespaceObject.useInstanceId)(EntitiesSavedStatesExtensible, 'label');
   const dialogDescription = (0,external_wp_compose_namespaceObject.useInstanceId)(EntitiesSavedStatesExtensible, 'description');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-    ref: saveDialogRef,
-    ...saveDialogProps,
+    ref: renderDialog ? saveDialogRef : undefined,
+    ...(renderDialog && saveDialogProps),
     className: "entities-saved-states__panel",
     role: renderDialog ? 'dialog' : undefined,
     "aria-labelledby": renderDialog ? dialogLabel : undefined,
@@ -18725,7 +18725,8 @@ class PostPublishButton extends external_wp_element_namespaceObject.Component {
       className: 'editor-post-publish-button',
       isBusy: !isAutoSaving && isSaving,
       variant: 'primary',
-      onClick: this.createOnClick(onClickButton)
+      onClick: this.createOnClick(onClickButton),
+      'aria-haspopup': hasNonPostEntityChanges ? 'dialog' : undefined
     };
     const toggleProps = {
       'aria-disabled': isToggleDisabled,
@@ -18734,7 +18735,8 @@ class PostPublishButton extends external_wp_element_namespaceObject.Component {
       isBusy: isSaving && isPublished,
       variant: 'primary',
       size: 'compact',
-      onClick: this.createOnClick(onClickToggle)
+      onClick: this.createOnClick(onClickToggle),
+      'aria-haspopup': hasNonPostEntityChanges ? 'dialog' : undefined
     };
     const componentProps = isToggle ? toggleProps : buttonProps;
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -29850,6 +29852,7 @@ function SavePublishPanels({
         variant: "secondary",
         onClick: openEntitiesSavedStates,
         "aria-expanded": false,
+        "aria-haspopup": "dialog",
         disabled: !isDirty,
         accessibleWhenDisabled: true,
         children: (0,external_wp_i18n_namespaceObject.__)('Open save panel')
@@ -29861,7 +29864,8 @@ function SavePublishPanels({
   // always mounted to retain its own component state (such as checkboxes).
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [isEntitiesSavedStatesOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EntitiesSavedStates, {
-      close: closeEntitiesSavedStates
+      close: closeEntitiesSavedStates,
+      renderDialog: true
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(save_publish_panels_Slot, {
       bubblesVirtually: true
     }), !isEntitiesSavedStatesOpen && unmountableContent]

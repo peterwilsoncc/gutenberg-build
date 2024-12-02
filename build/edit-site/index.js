@@ -13239,7 +13239,8 @@ const {
   useLocation: save_panel_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
 const EntitiesSavedStatesForPreview = ({
-  onClose
+  onClose,
+  renderDialog
 }) => {
   var _currentTheme$name$re, _previewingTheme$name;
   const isDirtyProps = (0,external_wp_editor_namespaceObject.useEntitiesSavedStatesIsDirty)();
@@ -13266,16 +13267,18 @@ const EntitiesSavedStatesForPreview = ({
     close: onClose,
     onSave,
     saveEnabled: true,
-    saveLabel: activateSaveLabel
+    saveLabel: activateSaveLabel,
+    renderDialog
   });
 };
 const _EntitiesSavedStates = ({
   onClose,
-  renderDialog = undefined
+  renderDialog
 }) => {
   if (isPreviewingTheme()) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EntitiesSavedStatesForPreview, {
-      onClose: onClose
+      onClose: onClose,
+      renderDialog: renderDialog
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EntitiesSavedStates, {
