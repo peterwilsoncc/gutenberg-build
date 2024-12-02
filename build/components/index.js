@@ -45536,6 +45536,7 @@ const GradientTypePicker = ({
 function CustomGradientPicker({
   value,
   onChange,
+  enableAlpha = true,
   __experimentalIsRenderedInSidebar = false
 }) {
   const {
@@ -45564,6 +45565,7 @@ function CustomGradientPicker({
     className: "components-custom-gradient-picker",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CustomGradientBar, {
       __experimentalIsRenderedInSidebar: __experimentalIsRenderedInSidebar,
+      disableAlpha: !enableAlpha,
       background: background,
       hasGradient: hasGradient,
       value: controlPoints,
@@ -45782,6 +45784,7 @@ function GradientPicker({
   onChange,
   value,
   clearable = true,
+  enableAlpha = true,
   disableCustomGradients = false,
   __experimentalIsRenderedInSidebar,
   headingLevel = 2,
@@ -45792,6 +45795,7 @@ function GradientPicker({
     spacing: gradients.length ? 4 : 0,
     children: [!disableCustomGradients && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(custom_gradient_picker, {
       __experimentalIsRenderedInSidebar: __experimentalIsRenderedInSidebar,
+      enableAlpha: enableAlpha,
       value: value,
       onChange: onChange
     }), (gradients.length > 0 || clearable) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Component, {
