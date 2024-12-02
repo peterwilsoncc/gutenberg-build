@@ -10941,7 +10941,7 @@ function getEnabledClientIdsTreeUnmemoized(state, rootClientId) {
  *
  * @return {Object[]} Tree of block objects with only clientID and innerBlocks set.
  */
-const getEnabledClientIdsTree = (0,external_wp_data_namespaceObject.createSelector)(getEnabledClientIdsTreeUnmemoized, state => [state.blocks.order, state.derivedBlockEditingModes, state.derivedNavModeBlockEditingModes, state.blockEditingModes, state.settings.templateLock, state.blockListSettings]);
+const getEnabledClientIdsTree = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(getEnabledClientIdsTreeUnmemoized, state => [state.blocks.order, state.derivedBlockEditingModes, state.derivedNavModeBlockEditingModes, state.blockEditingModes, state.settings.templateLock, state.blockListSettings, select(STORE_NAME).__unstableGetEditorMode(state)]));
 
 /**
  * Returns a list of a given block's ancestors, from top to bottom. Blocks with
