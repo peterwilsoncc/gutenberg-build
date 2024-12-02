@@ -44458,6 +44458,10 @@ function BlockPopoverInbetween({
             left = previousRect ? previousRect.right : nextRect.left;
             width = previousRect && nextRect ? nextRect.left - previousRect.right : 0;
           }
+
+          // Avoid a negative width which happens when the next rect
+          // is on the next line.
+          width = Math.max(width, 0);
         }
         return new window.DOMRect(left, top, width, height);
       }
