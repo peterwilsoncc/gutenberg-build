@@ -31103,7 +31103,11 @@ function usePostActions({
     registerPostTypeSchema(postType);
   }, [registerPostTypeSchema, postType]);
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
-    let actions = [...defaultActions, shouldShowSetAsHomepageAction ? setAsHomepageAction : []];
+    let actions = [...defaultActions];
+    if (shouldShowSetAsHomepageAction) {
+      actions.push(setAsHomepageAction);
+    }
+
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
     // and the consumer should provide the context to filter the actions, if needed.
