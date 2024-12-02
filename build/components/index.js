@@ -57640,14 +57640,16 @@ const FontSizePicker = (0,external_wp_element_namespaceObject.forwardRef)(Unforw
  */
 
 
+
 /**
- * FormFileUpload is a component that allows users to select files from their local device.
+ * FormFileUpload allows users to select files from their local device.
  *
  * ```jsx
  * import { FormFileUpload } from '@wordpress/components';
  *
  * const MyFormFileUpload = () => (
  *   <FormFileUpload
+ *     __next40pxDefaultSize
  *     accept="image/*"
  *     onChange={ ( event ) => console.log( event.currentTarget.files ) }
  *   >
@@ -57656,6 +57658,7 @@ const FontSizePicker = (0,external_wp_element_namespaceObject.forwardRef)(Unforw
  * );
  * ```
  */
+
 function FormFileUpload({
   accept,
   children,
@@ -57669,6 +57672,14 @@ function FormFileUpload({
   const openFileDialog = () => {
     ref.current?.click();
   };
+  if (!render) {
+    maybeWarnDeprecated36pxSize({
+      componentName: 'FormFileUpload',
+      __next40pxDefaultSize: props.__next40pxDefaultSize,
+      // @ts-expect-error - We don't "officially" support all Button props but this likely happens.
+      size: props.size
+    });
+  }
   const ui = render ? render({
     openFileDialog
   }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
