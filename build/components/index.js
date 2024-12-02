@@ -33816,19 +33816,15 @@ function fill_Fill({
   var _slot$fillProps;
   const registry = (0,external_wp_element_namespaceObject.useContext)(slot_fill_context);
   const slot = (0,external_wp_compose_namespaceObject.useObservableValue)(registry.slots, name);
-  const [, rerender] = (0,external_wp_element_namespaceObject.useReducer)(() => [], []);
-  const ref = (0,external_wp_element_namespaceObject.useRef)({
-    rerender
-  });
+  const instanceRef = (0,external_wp_element_namespaceObject.useRef)({});
+
+  // We register fills so we can keep track of their existence.
+  // Slots can use the `useSlotFills` hook to know if there're already fills
+  // registered so they can choose to render themselves or not.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    // We register fills so we can keep track of their existence.
-    // Some Slot implementations need to know if there're already fills
-    // registered so they can choose to render themselves or not.
-    const refValue = ref.current;
-    registry.registerFill(name, refValue);
-    return () => {
-      registry.unregisterFill(name, refValue);
-    };
+    const instance = instanceRef.current;
+    registry.registerFill(name, instance);
+    return () => registry.unregisterFill(name, instance);
   }, [registry, name]);
   if (!slot || !slot.ref.current) {
     return null;
@@ -33872,11 +33868,7 @@ function slot_Slot(props, forwardedRef) {
     children,
     ...restProps
   } = props;
-  const {
-    registerSlot,
-    unregisterSlot,
-    ...registry
-  } = (0,external_wp_element_namespaceObject.useContext)(slot_fill_context);
+  const registry = (0,external_wp_element_namespaceObject.useContext)(slot_fill_context);
   const ref = (0,external_wp_element_namespaceObject.useRef)(null);
 
   // We don't want to unregister and register the slot whenever
@@ -33888,11 +33880,9 @@ function slot_Slot(props, forwardedRef) {
     fillPropsRef.current = fillProps;
   }, [fillProps]);
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    registerSlot(name, ref, fillPropsRef.current);
-    return () => {
-      unregisterSlot(name, ref);
-    };
-  }, [registerSlot, unregisterSlot, name]);
+    registry.registerSlot(name, ref, fillPropsRef.current);
+    return () => registry.unregisterSlot(name, ref);
+  }, [registry, name]);
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     registry.updateSlot(name, ref, fillPropsRef.current);
   });
@@ -33924,11 +33914,9 @@ function createSlotRegistry() {
   const slots = (0,external_wp_compose_namespaceObject.observableMap)();
   const fills = (0,external_wp_compose_namespaceObject.observableMap)();
   const registerSlot = (name, ref, fillProps) => {
-    const slot = slots.get(name);
     slots.set(name, {
-      ...slot,
-      ref: ref || slot?.ref,
-      fillProps: fillProps || slot?.fillProps || {}
+      ref,
+      fillProps
     });
   };
   const unregisterSlot = (name, ref) => {
@@ -33955,12 +33943,10 @@ function createSlotRegistry() {
     if (external_wp_isShallowEqual_default()(slot.fillProps, fillProps)) {
       return;
     }
-    slot.fillProps = fillProps;
-    const slotFills = fills.get(name);
-    if (slotFills) {
-      // Force update fills.
-      slotFills.forEach(fill => fill.rerender());
-    }
+    slots.set(name, {
+      ref,
+      fillProps
+    });
   };
   const registerFill = (name, ref) => {
     fills.set(name, [...(fills.get(name) || []), ref]);
