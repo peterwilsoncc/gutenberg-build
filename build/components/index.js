@@ -46216,6 +46216,7 @@ function UnconnectedDropdownMenu(dropdownMenuProps) {
         ...mergedMenuProps,
         role: "menu",
         children: [dropdown_menu_isFunction(children) ? children(props) : null, controlSets?.flatMap((controlSet, indexOfSet) => controlSet.map((control, indexOfControl) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+          __next40pxDefaultSize: true,
           onClick: event => {
             event.stopPropagation();
             props.onClose();
