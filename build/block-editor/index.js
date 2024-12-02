@@ -7542,7 +7542,6 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   isBlockInterfaceHidden: () => (private_selectors_isBlockInterfaceHidden),
   isBlockSubtreeDisabled: () => (isBlockSubtreeDisabled),
   isDragging: () => (private_selectors_isDragging),
-  isResolvingPatterns: () => (isResolvingPatterns),
   isSectionBlock: () => (isSectionBlock),
   isZoomOut: () => (isZoomOut)
 });
@@ -11147,11 +11146,6 @@ const getAllPatterns = (0,external_wp_data_namespaceObject.createRegistrySelecto
   return [...unlock(select(STORE_NAME)).getReusableBlocks().map(userPattern => mapUserPattern(userPattern, state.settings.__experimentalUserPatternCategories)),
   // This setting is left for back compat.
   ...((_state$settings$__exp2 = state.settings.__experimentalBlockPatterns) !== null && _state$settings$__exp2 !== void 0 ? _state$settings$__exp2 : []), ...((_state$settings$selec2 = state.settings[selectBlockPatternsKey]?.(select)) !== null && _state$settings$selec2 !== void 0 ? _state$settings$selec2 : [])].filter((x, index, arr) => index === arr.findIndex(y => x.name === y.name));
-}, getAllPatternsDependants(select)));
-const isResolvingPatterns = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(state => {
-  const blockPatternsSelect = state.settings[selectBlockPatternsKey];
-  const reusableBlocksSelect = state.settings[reusableBlocksSelectKey];
-  return (blockPatternsSelect ? blockPatternsSelect(select) === undefined : false) || (reusableBlocksSelect ? reusableBlocksSelect(select) === undefined : false);
 }, getAllPatternsDependants(select)));
 const EMPTY_ARRAY = [];
 const getReusableBlocks = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => state => {
@@ -52747,12 +52741,9 @@ function CategoryTabs({
 
 
 
-
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -52770,13 +52761,6 @@ function BlockPatternsTab({
   const [showPatternsExplorer, setShowPatternsExplorer] = (0,external_wp_element_namespaceObject.useState)(false);
   const categories = usePatternCategories(rootClientId);
   const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
-  const isResolvingPatterns = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).isResolvingPatterns(), []);
-  if (isResolvingPatterns) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "block-editor-inserter__patterns-loading",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
-    });
-  }
   if (!categories.length) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(no_results, {});
   }
