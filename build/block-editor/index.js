@@ -28600,6 +28600,7 @@ function FontFamilyControl({
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CustomSelectControl, {
     __next40pxDefaultSize: __next40pxDefaultSize,
+    __shouldNotWarnDeprecated36pxSize: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Font'),
     value: value,
     onChange: ({
@@ -28767,6 +28768,7 @@ function FontAppearanceControl(props) {
     ...otherProps,
     className: "components-font-appearance-control",
     __next40pxDefaultSize: __next40pxDefaultSize,
+    __shouldNotWarnDeprecated36pxSize: true,
     label: label,
     describedBy: getDescribedBy(),
     options: selectOptions,

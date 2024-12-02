@@ -49775,6 +49775,7 @@ CustomSelectItem.displayName = 'CustomSelectControlV2.Item';
 
 
 
+
 function custom_select_control_useDeprecatedProps({
   __experimentalShowSelectedHint,
   ...otherProps
@@ -49808,6 +49809,7 @@ function getDescribedBy(currentValue, describedBy) {
 function CustomSelectControl(props) {
   const {
     __next40pxDefaultSize = false,
+    __shouldNotWarnDeprecated36pxSize,
     describedBy,
     options,
     onChange,
@@ -49817,6 +49819,12 @@ function CustomSelectControl(props) {
     showSelectedHint = false,
     ...restProps
   } = custom_select_control_useDeprecatedProps(props);
+  maybeWarnDeprecated36pxSize({
+    componentName: 'CustomSelectControl',
+    __next40pxDefaultSize,
+    size,
+    __shouldNotWarnDeprecated36pxSize
+  });
   const descriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(CustomSelectControl, 'custom-select-control__description');
 
   // Forward props + store from v2 implementation
@@ -57314,6 +57322,7 @@ const FontSizePickerSelect = props => {
   const selectedOption = value ? (_options$find = options.find(option => option.value === value)) !== null && _options$find !== void 0 ? _options$find : CUSTOM_OPTION : DEFAULT_OPTION;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(custom_select_control, {
     __next40pxDefaultSize: __next40pxDefaultSize,
+    __shouldNotWarnDeprecated36pxSize: true,
     className: "components-font-size-picker__select",
     label: (0,external_wp_i18n_namespaceObject.__)('Font size'),
     hideLabelFromVision: true,
