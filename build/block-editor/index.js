@@ -14027,7 +14027,7 @@ const getBlockEditingMode = (0,external_wp_data_namespaceObject.createRegistrySe
   if (clientId === null) {
     clientId = '';
   }
-  const isNavMode = select(external_wp_preferences_namespaceObject.store)?.get('core', 'editorTool') === 'navigation';
+  const isNavMode = isNavigationMode(state);
 
   // If the editor is currently not in navigation mode, check if the clientId
   // has an editing mode set in the regular derived map.
