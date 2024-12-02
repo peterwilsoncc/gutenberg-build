@@ -32464,6 +32464,27 @@ function UnconnectedHStack(props, forwardedRef) {
 const HStack = contextConnect(UnconnectedHStack, 'HStack');
 /* harmony default export */ const h_stack_component = (HStack);
 
+;// ./packages/components/build-module/utils/deprecated-36px-size.js
+/**
+ * WordPress dependencies
+ */
+
+function maybeWarnDeprecated36pxSize({
+  componentName,
+  __next40pxDefaultSize,
+  size,
+  __shouldNotWarnDeprecated36pxSize
+}) {
+  if (__shouldNotWarnDeprecated36pxSize || __next40pxDefaultSize || size !== undefined && size !== 'default') {
+    return;
+  }
+  external_wp_deprecated_default()(`36px default size for wp.components.${componentName}`, {
+    since: '6.8',
+    version: '7.1',
+    hint: 'Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version.'
+  });
+}
+
 ;// ./packages/components/build-module/number-control/index.js
 /**
  * External dependencies
@@ -32481,6 +32502,7 @@ const HStack = contextConnect(UnconnectedHStack, 'HStack');
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -32512,8 +32534,15 @@ function UnforwardedNumberControl(props, forwardedRef) {
     size = 'default',
     suffix,
     onChange = number_control_noop,
+    __shouldNotWarnDeprecated36pxSize,
     ...restProps
   } = useDeprecated36pxDefaultSizeProp(props);
+  maybeWarnDeprecated36pxSize({
+    componentName: 'NumberControl',
+    size,
+    __next40pxDefaultSize: restProps.__next40pxDefaultSize,
+    __shouldNotWarnDeprecated36pxSize
+  });
   if (hideHTMLArrows) {
     external_wp_deprecated_default()('wp.components.NumberControl hideHTMLArrows prop ', {
       alternative: 'spinControls="none"',
@@ -32861,12 +32890,12 @@ function UnforwardedAnglePickerControl(props, ref) {
     gap: 2,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(flex_block_component, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(number_control, {
+        __next40pxDefaultSize: true,
         label: label,
         className: "components-angle-picker-control__input-field",
         max: 360,
         min: 0,
         onChange: handleOnNumberChange,
-        size: "__unstable-large",
         step: "1",
         value: value,
         spinControls: "none",
@@ -36059,27 +36088,6 @@ rect, {
 }
 /* eslint-enable jsdoc/require-param */
 
-;// ./packages/components/build-module/utils/deprecated-36px-size.js
-/**
- * WordPress dependencies
- */
-
-function maybeWarnDeprecated36pxSize({
-  componentName,
-  __next40pxDefaultSize,
-  size,
-  __shouldNotWarnDeprecated36pxSize
-}) {
-  if (__shouldNotWarnDeprecated36pxSize || __next40pxDefaultSize || size !== undefined && size !== 'default') {
-    return;
-  }
-  external_wp_deprecated_default()(`36px default size for wp.components.${componentName}`, {
-    since: '6.8',
-    version: '7.1',
-    hint: 'Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version.'
-  });
-}
-
 ;// ./packages/components/build-module/toggle-group-control/toggle-group-control/component.js
 /**
  * External dependencies
@@ -38114,7 +38122,8 @@ function UnforwardedRangeControl(props, forwardedRef) {
         step: step
         // @ts-expect-error TODO: Investigate if the `null` value is necessary
         ,
-        value: inputSliderValue
+        value: inputSliderValue,
+        __shouldNotWarnDeprecated36pxSize: true
       }), allowReset && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionRightWrapper, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
           className: "components-range-control__reset"
@@ -38371,6 +38380,7 @@ const InputWithSlider = ({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(h_stack_component, {
     spacing: 4,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NumberControlWrapper, {
+      __next40pxDefaultSize: true,
       min: min,
       max: max,
       label: label,
@@ -38384,8 +38394,7 @@ const InputWithSlider = ({
           children: abbreviation
         })
       }),
-      spinControls: "none",
-      size: "__unstable-large"
+      spinControls: "none"
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(styles_RangeControl, {
       __nextHasNoMarginBottom: true,
       __next40pxDefaultSize: true,
@@ -40930,6 +40939,7 @@ function UnforwardedUnitControl(unitControlProps, forwardedRef) {
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValueInput, {
     ...props,
+    __shouldNotWarnDeprecated36pxSize: true,
     autoComplete: autoComplete,
     className: classes,
     disabled: disabled,

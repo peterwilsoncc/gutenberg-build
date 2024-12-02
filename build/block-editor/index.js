@@ -28895,6 +28895,7 @@ const line_height_control_LineHeightControl = ({
     className: "block-editor-line-height-control",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
       ...otherProps,
+      __shouldNotWarnDeprecated36pxSize: true,
       __next40pxDefaultSize: __next40pxDefaultSize,
       __unstableInputWidth: __unstableInputWidth,
       __unstableStateReducer: stateReducer,
