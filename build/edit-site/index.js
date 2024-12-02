@@ -32033,8 +32033,7 @@ const DataViewsContext = (0,external_wp_element_namespaceObject.createContext)({
   setOpenedFilter: () => {},
   openedFilter: null,
   getItemId: item => item.id,
-  onClickItem: () => {},
-  isItemClickable: () => false
+  isItemClickable: () => true
 });
 /* harmony default export */ const dataviews_context = (DataViewsContext);
 
@@ -38448,8 +38447,13 @@ const ColumnHeaderMenu = _HeaderMenu;
 /* harmony default export */ const column_header_menu = (ColumnHeaderMenu);
 
 ;// ./packages/dataviews/build-module/dataviews-layouts/utils/get-clickable-item-props.js
-function getClickableItemProps(item, isItemClickable, onClickItem, className) {
-  if (!isItemClickable(item)) {
+function getClickableItemProps({
+  item,
+  isItemClickable,
+  onClickItem,
+  className
+}) {
+  if (!isItemClickable(item) || !onClickItem) {
     return {
       className
     };
@@ -38530,7 +38534,12 @@ function TableColumnField({
 }) {
   const isPrimaryField = primaryField?.id === field.id;
   const isItemClickableField = i => isItemClickable(i) && isPrimaryField;
-  const clickableProps = getClickableItemProps(item, isItemClickableField, onClickItem, 'dataviews-view-table__cell-content');
+  const clickableProps = getClickableItemProps({
+    item,
+    isItemClickable: isItemClickableField,
+    onClickItem,
+    className: 'dataviews-view-table__cell-content'
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: dist_clsx('dataviews-view-table__cell-content-wrapper', {
       'dataviews-view-table__primary-field': isPrimaryField
@@ -38974,8 +38983,18 @@ function GridItem({
   const renderedPrimaryField = primaryField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(primaryField.render, {
     item: item
   }) : null;
-  const clickableMediaItemProps = getClickableItemProps(item, isItemClickable, onClickItem, 'dataviews-view-grid__media');
-  const clickablePrimaryItemProps = getClickableItemProps(item, isItemClickable, onClickItem, 'dataviews-view-grid__primary-field');
+  const clickableMediaItemProps = getClickableItemProps({
+    item,
+    isItemClickable,
+    onClickItem,
+    className: 'dataviews-view-grid__media'
+  });
+  const clickablePrimaryItemProps = getClickableItemProps({
+    item,
+    isItemClickable,
+    onClickItem,
+    className: 'dataviews-view-grid__primary-field'
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 0,
     className: dist_clsx('dataviews-view-grid__card', {
@@ -40331,8 +40350,7 @@ const DataViewsViewConfig = (0,external_wp_element_namespaceObject.memo)(_DataVi
 
 
 const defaultGetItemId = item => item.id;
-const defaultIsItemClickable = () => false;
-const defaultOnClickItem = () => {};
+const defaultIsItemClickable = () => true;
 const dataviews_EMPTY_ARRAY = [];
 function DataViews({
   view,
@@ -40348,7 +40366,7 @@ function DataViews({
   defaultLayouts,
   selection: selectionProperty,
   onChangeSelection,
-  onClickItem = defaultOnClickItem,
+  onClickItem,
   isItemClickable = defaultIsItemClickable,
   header
 }) {
