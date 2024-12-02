@@ -66590,6 +66590,7 @@ function UnforwardedToolbarButton(props, ref) {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
         ref: ref,
         icon: restProps.icon,
+        size: "compact",
         label: title,
         shortcut: restProps.shortcut,
         "data-subscript": restProps.subscript,
@@ -66620,6 +66621,7 @@ function UnforwardedToolbarButton(props, ref) {
     ...restProps,
     ref: ref,
     children: toolbarItemProps => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+      size: "compact",
       label: title,
       isPressed: isActive,
       ...toolbarItemProps,
