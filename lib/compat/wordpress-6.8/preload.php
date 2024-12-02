@@ -86,6 +86,9 @@ function gutenberg_block_editor_preload_paths_6_8( $paths, $context ) {
 		 */
 		$context = current_user_can( 'edit_theme_options' ) ? 'edit' : 'view';
 		$paths[] = "/wp/v2/global-styles/$global_styles_id?context=$context";
+
+		// Used by getBlockPatternCategories in useBlockEditorSettings.
+		$paths[] = '/wp/v2/block-patterns/categories';
 	}
 	return $paths;
 }
