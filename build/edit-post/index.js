@@ -1903,8 +1903,6 @@ function MetaBoxVisibility({
  */
 
 
-
-
 /**
  * Internal dependencies
  */
@@ -1915,38 +1913,7 @@ function MetaBoxVisibility({
 function MetaBoxes({
   location
 }) {
-  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
-  const {
-    metaBoxes,
-    areMetaBoxesInitialized,
-    isEditorReady
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      __unstableIsEditorReady
-    } = select(external_wp_editor_namespaceObject.store);
-    const {
-      getMetaBoxesPerLocation,
-      areMetaBoxesInitialized: _areMetaBoxesInitialized
-    } = select(store);
-    return {
-      metaBoxes: getMetaBoxesPerLocation(location),
-      areMetaBoxesInitialized: _areMetaBoxesInitialized(),
-      isEditorReady: __unstableIsEditorReady()
-    };
-  }, [location]);
-  const hasMetaBoxes = !!metaBoxes?.length;
-
-  // When editor is ready, initialize postboxes (wp core script) and metabox
-  // saving. This initializes all meta box locations, not just this specific
-  // one.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (isEditorReady && hasMetaBoxes && !areMetaBoxesInitialized) {
-      registry.dispatch(store).initializeMetaBoxes();
-    }
-  }, [isEditorReady, hasMetaBoxes, areMetaBoxesInitialized]);
-  if (!areMetaBoxesInitialized) {
-    return null;
-  }
+  const metaBoxes = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getMetaBoxesPerLocation[location]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [(metaBoxes !== null && metaBoxes !== void 0 ? metaBoxes : []).map(({
       id
@@ -2701,6 +2668,38 @@ function useNavigateToEntityRecord(initialPostId, initialPostType, defaultRender
   };
 }
 
+;// ./packages/edit-post/build-module/components/meta-boxes/use-meta-box-initialization.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Initializes WordPress `postboxes` script and the logic for saving meta boxes.
+ *
+ * @param { boolean } enabled
+ */
+const useMetaBoxInitialization = enabled => {
+  const isEnabledAndEditorReady = (0,external_wp_data_namespaceObject.useSelect)(select => enabled && select(external_wp_editor_namespaceObject.store).__unstableIsEditorReady(), [enabled]);
+  const {
+    initializeMetaBoxes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  // The effect has to rerun when the editor is ready because initializeMetaBoxes
+  // will noop until then.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (isEnabledAndEditorReady) {
+      initializeMetaBoxes();
+    }
+  }, [isEnabledAndEditorReady, initializeMetaBoxes]);
+};
+
 ;// ./packages/edit-post/build-module/components/layout/index.js
 /**
  * External dependencies
@@ -2731,6 +2730,7 @@ function useNavigateToEntityRecord(initialPostId, initialPostType, defaultRender
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -3069,6 +3069,7 @@ function Layout({
       getRenderingMode
     } = select(external_wp_editor_namespaceObject.store);
     const isRenderingPostOnly = getRenderingMode() === 'post-only';
+    const isNotDesignPostType = !DESIGN_POST_TYPES.includes(currentPostType);
     return {
       mode: getEditorMode(),
       isFullscreenActive: select(store).isFeatureActive('fullscreenMode'),
@@ -3076,12 +3077,13 @@ function Layout({
       hasBlockSelected: !!select(external_wp_blockEditor_namespaceObject.store).getBlockSelectionStart(),
       showIconLabels: get('core', 'showIconLabels'),
       isDistractionFree: get('core', 'distractionFree'),
-      showMetaBoxes: !DESIGN_POST_TYPES.includes(currentPostType) && !isZoomOut(),
+      showMetaBoxes: isNotDesignPostType && !isZoomOut(),
       isWelcomeGuideVisible: isFeatureActive('welcomeGuide'),
       templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate ? getTemplateId(currentPostType, currentPostId) : null,
-      enablePaddingAppender: !isZoomOut() && isRenderingPostOnly && !DESIGN_POST_TYPES.includes(currentPostType)
+      enablePaddingAppender: !isZoomOut() && isRenderingPostOnly && isNotDesignPostType
     };
   }, [currentPostType, currentPostId, isEditingTemplate, settings.supportsTemplateMode]);
+  useMetaBoxInitialization(hasActiveMetaboxes);
   const [paddingAppenderRef, paddingStyle] = usePaddingAppender(enablePaddingAppender);
 
   // Set the right context for the command palette
