@@ -59908,6 +59908,7 @@ function pattern_transformations_menu_BlockPattern({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -60031,20 +60032,6 @@ function BlockSwitcherDropdownMenuContents({
     })]
   });
 }
-const BlockIndicator = ({
-  icon,
-  showTitle,
-  blockTitle
-}) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
-    className: "block-editor-block-switcher__toggle",
-    icon: icon,
-    showColors: true
-  }), showTitle && blockTitle && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-    className: "block-editor-block-switcher__toggle-text",
-    children: blockTitle
-  })]
-});
 const BlockSwitcher = ({
   clientIds
 }) => {
@@ -60112,11 +60099,13 @@ const BlockSwitcher = ({
     clientId: clientIds?.[0],
     maximumLength: 35
   });
+  const showIconLabels = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_preferences_namespaceObject.store).get('core', 'showIconLabels'), []);
   if (invalidBlocks) {
     return null;
   }
   const isSingleBlock = clientIds.length === 1;
   const blockSwitcherLabel = isSingleBlock ? blockTitle : (0,external_wp_i18n_namespaceObject.__)('Multiple blocks selected');
+  const blockIndicatorText = (isReusable || isTemplate) && !showIconLabels && blockTitle ? blockTitle : undefined;
   const hideDropdown = isDisabled || !hasBlockStyles && !canRemove || hasContentOnlyLocking;
   if (hideDropdown) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
@@ -60124,11 +60113,12 @@ const BlockSwitcher = ({
         disabled: true,
         className: "block-editor-block-switcher__no-switcher-icon",
         title: blockSwitcherLabel,
-        icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockIndicator, {
+        icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
+          className: "block-editor-block-switcher__toggle",
           icon: icon,
-          showTitle: isReusable || isTemplate,
-          blockTitle: blockTitle
-        })
+          showColors: true
+        }),
+        text: blockIndicatorText
       })
     });
   }
@@ -60143,11 +60133,12 @@ const BlockSwitcher = ({
           placement: 'bottom-start',
           className: 'block-editor-block-switcher__popover'
         },
-        icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockIndicator, {
+        icon: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
+          className: "block-editor-block-switcher__toggle",
           icon: icon,
-          showTitle: isReusable || isTemplate,
-          blockTitle: blockTitle
+          showColors: true
         }),
+        text: blockIndicatorText,
         toggleProps: {
           description: blockSwitcherDescription,
           ...toggleProps
