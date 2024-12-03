@@ -39020,7 +39020,6 @@ const nextpage_init = () => initBlock({
 });
 
 ;// ./packages/block-library/build-module/pattern/recursion-detector.js
-/* wp:polyfill */
 /**
  * THIS MODULE IS INTENTIONALLY KEPT WITHIN THE PATTERN BLOCK'S SOURCE.
  *
@@ -47334,7 +47333,6 @@ function OrderControl({
 /* harmony default export */ const order_control = (OrderControl);
 
 ;// ./packages/block-library/build-module/query/edit/inspector-controls/author-control.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -47418,7 +47416,6 @@ function AuthorControl({
 /* harmony default export */ const author_control = (AuthorControl);
 
 ;// ./packages/block-library/build-module/query/edit/inspector-controls/parent-control.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -47559,7 +47556,6 @@ function ParentControl({
 /* harmony default export */ const parent_control = (ParentControl);
 
 ;// ./packages/block-library/build-module/query/edit/inspector-controls/taxonomy-controls.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -61557,7 +61553,6 @@ function transformInnerBlocks(innerBlocks = []) {
 }
 
 ;// ./packages/block-library/build-module/template-part/edit/import-controls.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */

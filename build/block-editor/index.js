@@ -8140,7 +8140,6 @@ const {
 } = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/block-editor');
 
 ;// ./packages/block-editor/build-module/store/reducer.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -10647,7 +10646,6 @@ function isPatternFiltered(pattern, sourceFilter, syncFilter) {
 }
 
 ;// ./packages/block-editor/build-module/utils/object.js
-/* wp:polyfill */
 /**
  * Immutably sets a value inside an object. Like `lodash#set`, but returning a
  * new object. Treats nullish initial values as empty objects. Clones any
@@ -11517,7 +11515,6 @@ function orderBy(items, field, order = 'asc') {
 }
 
 ;// ./packages/block-editor/build-module/store/selectors.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -19268,7 +19265,6 @@ const sidesLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)
 /* harmony default export */ const sides_left = (sidesLeft);
 
 ;// ./packages/block-editor/build-module/components/spacing-sizes-control/utils.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -25751,7 +25747,6 @@ function addTransforms(result, source, index, results) {
 (0,external_wp_hooks_namespaceObject.addFilter)('blocks.switchToBlockType.transformedBlock', 'core/color/addTransforms', addTransforms);
 
 ;// ./packages/block-editor/build-module/hooks/generated-class-name.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -46391,7 +46386,6 @@ ForwardedInnerBlocks.Content = () => useInnerBlocksProps.save().children;
 /* harmony default export */ const inner_blocks = (ForwardedInnerBlocks);
 
 ;// ./packages/block-editor/build-module/components/observe-typing/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -46740,7 +46734,6 @@ function ZoomOutSeparator({
 }
 
 ;// ./packages/block-editor/build-module/components/block-list/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -59634,7 +59627,6 @@ function BlockStylesMenu({
 }
 
 ;// ./packages/block-editor/build-module/components/block-switcher/utils.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -59698,7 +59690,6 @@ const getRetainedBlockAttributes = (name, attributes) => {
 };
 
 ;// ./packages/block-editor/build-module/components/block-switcher/use-transformed-patterns.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -59908,7 +59899,6 @@ function pattern_transformations_menu_BlockPattern({
 /* harmony default export */ const pattern_transformations_menu = (PatternTransformationsMenu);
 
 ;// ./packages/block-editor/build-module/components/block-switcher/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -67698,7 +67688,6 @@ const BlockPatternSetup = ({
 /* harmony default export */ const block_pattern_setup = (BlockPatternSetup);
 
 ;// ./packages/block-editor/build-module/components/block-variation-transforms/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -67945,7 +67934,6 @@ function ColorPaletteControl({
 ;// external ["wp","date"]
 const external_wp_date_namespaceObject = window["wp"]["date"];
 ;// ./packages/block-editor/build-module/components/date-format-picker/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -71111,7 +71099,6 @@ function useMarkPersistent({
 }
 
 ;// ./packages/block-editor/build-module/components/rich-text/use-format-types.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -72269,7 +72256,6 @@ function withDeprecations(Component) {
 }
 
 ;// ./packages/block-editor/build-module/components/rich-text/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -74595,7 +74581,6 @@ function MultiSelectScrollIntoView() {
 }
 
 ;// ./packages/block-editor/build-module/components/typewriter/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -74816,7 +74801,6 @@ const TypewriterOrIEBypass = isIE ? props => props.children : Typewriter;
 /* harmony default export */ const typewriter = (TypewriterOrIEBypass);
 
 ;// ./packages/block-editor/build-module/components/recursion-provider/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -75470,7 +75454,6 @@ function memize(fn, options) {
 
 
 ;// ./packages/block-editor/build-module/components/global-styles/get-global-styles-changes.js
-/* wp:polyfill */
 /**
  * External dependencies
  */

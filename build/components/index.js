@@ -14842,7 +14842,6 @@ function useContextSystem(props, namespace) {
 }
 
 ;// ./packages/components/build-module/context/context-connect.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -33745,7 +33744,6 @@ function v4(options, buf, offset) {
 
 /* harmony default export */ const esm_browser_v4 = (v4);
 ;// ./packages/components/build-module/style-provider/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -34743,7 +34741,6 @@ function useOnClickOutside(ref, handler) {
 }
 
 ;// ./packages/components/build-module/autocomplete/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -47582,7 +47579,6 @@ function useCompositeState(legacyStateOptions = {}) {
 }
 
 ;// ./packages/components/build-module/modal/aria-helper.js
-/* wp:polyfill */
 const LIVE_REGION_ARIA_ROLES = new Set(['alert', 'status', 'log', 'marquee', 'timer']);
 const hiddenElementsByDepth = [];
 
@@ -47708,7 +47704,6 @@ function useModalExitAnimation() {
 }
 
 ;// ./packages/components/build-module/modal/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -56472,7 +56467,6 @@ function DuotonePicker({
 /* harmony default export */ const duotone_picker = (DuotonePicker);
 
 ;// ./packages/components/build-module/external-link/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -57885,7 +57879,6 @@ const TokensAndInputWrapperFlex = /*#__PURE__*/emotion_styled_base_browser_esm(f
 } : 0)("padding:7px;", boxSizingReset, " ", deprecatedPaddings, ";" + ( true ? "" : 0));
 
 ;// ./packages/components/build-module/form-token-field/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */

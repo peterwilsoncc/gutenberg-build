@@ -2423,7 +2423,6 @@ var external_wp_deprecated_default = /*#__PURE__*/__webpack_require__.n(external
 ;// external ["wp","preferences"]
 const external_wp_preferences_namespaceObject = window["wp"]["preferences"];
 ;// ./packages/editor/build-module/store/constants.js
-/* wp:polyfill */
 /**
  * Set of post properties for which edits should assume a merging behavior,
  * assuming an object value.
@@ -7999,7 +7998,6 @@ const backup = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 /* harmony default export */ const library_backup = (backup);
 
 ;// ./packages/fields/build-module/actions/restore-post.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -8320,7 +8318,6 @@ const trash = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 /* harmony default export */ const library_trash = (trash);
 
 ;// ./packages/fields/build-module/mutation/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -8576,7 +8573,6 @@ const deletePostAction = {
 /* harmony default export */ const delete_post = (deletePostAction);
 
 ;// ./packages/fields/build-module/actions/trash-post.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -8714,7 +8710,6 @@ const trash_post_trashPost = {
 /* harmony default export */ const trash_post = (trash_post_trashPost);
 
 ;// ./packages/fields/build-module/actions/permanently-delete-post.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -10272,7 +10267,6 @@ const registerPostTypeSchema = postType => async ({
 };
 
 ;// ./packages/editor/build-module/store/private-actions.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -21035,7 +21029,6 @@ function v4(options, buf, offset) {
 
 /* harmony default export */ const esm_browser_v4 = (v4);
 ;// ./packages/editor/build-module/components/post-publish-panel/media-util.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -21109,7 +21102,6 @@ function fetchMedia(urls) {
 }
 
 ;// ./packages/editor/build-module/components/post-publish-panel/maybe-upload-media.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */

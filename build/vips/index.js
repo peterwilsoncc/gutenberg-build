@@ -384,7 +384,6 @@ function supportsInterlace(type) {
 }
 
 ;// ./packages/vips/build-module/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */

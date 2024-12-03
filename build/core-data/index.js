@@ -4659,7 +4659,6 @@ async function defaultProcessor(requests) {
 }
 
 ;// ./packages/core-data/build-module/batch/create-batch.js
-/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -22775,7 +22774,6 @@ async function fetchBlockPatterns() {
 }
 
 ;// ./packages/core-data/build-module/resolvers.js
-/* wp:polyfill */
 /**
  * External dependencies
  */

@@ -667,7 +667,6 @@ function useShortcutEventMatch() {
 }
 
 ;// ./packages/keyboard-shortcuts/build-module/context.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -741,7 +740,6 @@ function useShortcut(name, callback, {
 ;// external "ReactJSXRuntime"
 const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
 ;// ./packages/keyboard-shortcuts/build-module/components/shortcut-provider.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */

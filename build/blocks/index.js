@@ -8044,7 +8044,6 @@ function omit(object, keys) {
 }
 
 ;// ./packages/blocks/build-module/store/reducer.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -10291,7 +10290,6 @@ function v4(options, buf, offset) {
 
 /* harmony default export */ const esm_browser_v4 = (v4);
 ;// ./packages/blocks/build-module/api/factory.js
-/* wp:polyfill */
 /**
  * External dependencies
  */

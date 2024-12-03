@@ -17328,7 +17328,6 @@ function toggleFont(font, face, initialfonts) {
 }
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-library-modal/context.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -17973,7 +17972,6 @@ function sortFontFaces(faces) {
 }
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-library-modal/installed-fonts.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -22794,7 +22792,6 @@ function makeFamiliesFromFaces(fontFaces) {
 }
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-library-modal/upload-fonts.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -41384,7 +41381,6 @@ const templatePartAuthorField = {
 };
 
 ;// ./packages/edit-site/build-module/components/page-patterns/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -43705,7 +43701,6 @@ const authorField = {
 };
 
 ;// ./packages/edit-site/build-module/components/page-templates/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
