@@ -57906,6 +57906,7 @@ const TokensAndInputWrapperFlex = /*#__PURE__*/emotion_styled_base_browser_esm(f
 
 
 
+
 const form_token_field_identity = value => value;
 
 /**
@@ -57959,6 +57960,11 @@ function FormTokenField(props) {
       hint: 'Set the `__nextHasNoMarginBottom` prop to true to start opting into the new styles, which will become the default in a future version.'
     });
   }
+  maybeWarnDeprecated36pxSize({
+    componentName: 'FormTokenField',
+    size: undefined,
+    __next40pxDefaultSize
+  });
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(FormTokenField);
 
   // We reset to these initial values again in the onBlur
