@@ -62186,7 +62186,7 @@ function PrivateBlockToolbar({
             clientIds: blockClientIds,
             disabled: !isDefaultEditingMode,
             isUsingBindings: isUsingBindings
-          }), !isMultiToolbar && showLockButtons && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockLockToolbar, {
+          }), !isMultiToolbar && showLockButtons && isDefaultEditingMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockLockToolbar, {
             clientId: blockClientId
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_mover, {
             clientIds: blockClientIds,
