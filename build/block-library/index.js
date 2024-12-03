@@ -53188,11 +53188,15 @@ function useDeprecatedOpacity(opacity, currentColor, setAttributes) {
 
 
 
+
 /**
  * Internal dependencies
  */
 
 
+const htmlElementMessages = {
+  div: (0,external_wp_i18n_namespaceObject.__)('The <div> element should only be used if the separator is a design element that should not be announced.')
+};
 function SeparatorEdit({
   attributes,
   setAttributes
@@ -53200,7 +53204,8 @@ function SeparatorEdit({
   const {
     backgroundColor,
     opacity,
-    style
+    style,
+    tagName
   } = attributes;
   const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseColorProps)(attributes);
   const currentColor = colorProps?.style?.backgroundColor;
@@ -53220,13 +53225,33 @@ function SeparatorEdit({
     color: currentColor,
     backgroundColor: currentColor
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.HorizontalRule, {
+  const Wrapper = tagName === 'hr' ? external_wp_components_namespaceObject.HorizontalRule : tagName;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      group: "advanced",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+        __nextHasNoMarginBottom: true,
+        __next40pxDefaultSize: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('HTML element'),
+        options: [{
+          label: (0,external_wp_i18n_namespaceObject.__)('Default (<hr>)'),
+          value: 'hr'
+        }, {
+          label: '<div>',
+          value: 'div'
+        }],
+        value: tagName,
+        onChange: value => setAttributes({
+          tagName: value
+        }),
+        help: htmlElementMessages[tagName]
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Wrapper, {
       ...(0,external_wp_blockEditor_namespaceObject.useBlockProps)({
         className,
         style: hasCustomColor ? styles : undefined
       })
-    })
+    })]
   });
 }
 
@@ -53247,7 +53272,8 @@ function separatorSave({
   const {
     backgroundColor,
     style,
-    opacity
+    opacity,
+    tagName: Tag
   } = attributes;
   const customColor = style?.color?.background;
   const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetColorClassesAndStyles)(attributes);
@@ -53267,7 +53293,7 @@ function separatorSave({
     backgroundColor: colorProps?.style?.backgroundColor,
     color: colorClass ? undefined : customColor
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("hr", {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tag, {
     ...external_wp_blockEditor_namespaceObject.useBlockProps.save({
       className,
       style: styles
@@ -53371,7 +53397,8 @@ const separator_deprecated_v1 = {
         color: {
           background: customColor
         }
-      } : undefined
+      } : undefined,
+      tagName: 'hr'
     };
   }
 };
@@ -53401,6 +53428,11 @@ const separator_metadata = {
     opacity: {
       type: "string",
       "default": "alpha-channel"
+    },
+    tagName: {
+      type: "string",
+      "enum": ["hr", "div"],
+      "default": "hr"
     }
   },
   supports: {
@@ -61709,7 +61741,7 @@ function TemplatePartImportControls({
  */
 
 
-const htmlElementMessages = {
+const advanced_controls_htmlElementMessages = {
   header: (0,external_wp_i18n_namespaceObject.__)('The <header> element should represent introductory content, typically a group of introductory or navigational aids.'),
   main: (0,external_wp_i18n_namespaceObject.__)('The <main> element should be used for the primary content of your document only.'),
   section: (0,external_wp_i18n_namespaceObject.__)("The <section> element should represent a standalone portion of the document that can't be better represented by another element."),
@@ -61789,7 +61821,7 @@ function TemplatePartAdvancedControls({
       onChange: value => setAttributes({
         tagName: value
       }),
-      help: htmlElementMessages[tagName]
+      help: advanced_controls_htmlElementMessages[tagName]
     }), !hasInnerBlocks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplatePartImportControls, {
       area: area,
       setAttributes: setAttributes
