@@ -7665,8 +7665,6 @@ const store = (0,external_wp_data_namespaceObject.createReduxStore)(STORE_NAME, 
 unlock(store).registerPrivateSelectors(private_selectors_namespaceObject);
 unlock(store).registerPrivateActions(private_actions_namespaceObject);
 
-;// external ["wp","plugins"]
-const external_wp_plugins_namespaceObject = window["wp"]["plugins"];
 ;// external ["wp","router"]
 const external_wp_router_namespaceObject = window["wp"]["router"];
 ;// ./node_modules/clsx/dist/clsx.mjs
@@ -7675,6 +7673,8 @@ function clsx_r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;e
 const external_wp_commands_namespaceObject = window["wp"]["commands"];
 ;// external ["wp","coreCommands"]
 const external_wp_coreCommands_namespaceObject = window["wp"]["coreCommands"];
+;// external ["wp","plugins"]
+const external_wp_plugins_namespaceObject = window["wp"]["plugins"];
 ;// ./packages/edit-site/build-module/components/error-boundary/warning.js
 /**
  * WordPress dependencies
@@ -13382,6 +13382,9 @@ function SavePanel() {
 
 
 
+
+
+
 /**
  * Internal dependencies
  */
@@ -13532,11 +13535,20 @@ function Layout() {
   });
 }
 function LayoutWithGlobalStylesProvider(props) {
+  const {
+    createErrorNotice
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
+  function onPluginAreaError(name) {
+    createErrorNotice((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: plugin name */
+    (0,external_wp_i18n_namespaceObject.__)('The "%s" plugin has encountered an error and cannot be rendered.'), name));
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SlotFillProvider, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesProvider, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Layout, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(GlobalStylesProvider, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_plugins_namespaceObject.PluginArea, {
+        onError: onPluginAreaError
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Layout, {
         ...props
-      })
+      })]
     })
   });
 }
@@ -45919,9 +45931,6 @@ function useRegisterSiteEditorRoutes() {
 
 
 
-
-
-
 /**
  * Internal dependencies
  */
@@ -45943,16 +45952,9 @@ function AppLayout() {
 }
 function App() {
   useRegisterSiteEditorRoutes();
-  const {
-    createErrorNotice
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   const routes = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return unlock(select(store)).getRoutes();
   }, []);
-  function onPluginAreaError(name) {
-    createErrorNotice((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: plugin name */
-    (0,external_wp_i18n_namespaceObject.__)('The "%s" plugin has encountered an error and cannot be rendered.'), name));
-  }
   const beforeNavigate = (0,external_wp_element_namespaceObject.useCallback)(({
     path,
     query
@@ -45971,13 +45973,11 @@ function App() {
       }
     };
   }, []);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(RouterProvider, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RouterProvider, {
     routes: routes,
     pathArg: "p",
     beforeNavigate: beforeNavigate,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AppLayout, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_plugins_namespaceObject.PluginArea, {
-      onError: onPluginAreaError
-    })]
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AppLayout, {})
   });
 }
 
