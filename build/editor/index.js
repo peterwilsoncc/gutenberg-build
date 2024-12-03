@@ -10023,6 +10023,173 @@ const passwordField = {
  */
 /* harmony default export */ const fields_password = (passwordField);
 
+;// ./packages/fields/build-module/fields/template/template-edit.js
+/**
+ * WordPress dependencies
+ */
+
+// @ts-ignore
+
+
+/**
+ * Internal dependencies
+ */
+// @ts-expect-error block-editor is not typed correctly.
+
+
+
+
+
+
+
+
+
+const TemplateEdit = ({
+  data,
+  field,
+  onChange
+}) => {
+  const {
+    id
+  } = field;
+  const postType = data.type;
+  const postId = typeof data.id === 'number' ? data.id : parseInt(data.id, 10);
+  const slug = data.slug;
+  const {
+    availableTemplates,
+    templates
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _select$getEntityReco;
+    const allTemplates = (_select$getEntityReco = select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_template', {
+      per_page: -1,
+      post_type: postType
+    })) !== null && _select$getEntityReco !== void 0 ? _select$getEntityReco : [];
+    const {
+      getHomePage,
+      getPostsPageId
+    } = lock_unlock_unlock(select(external_wp_coreData_namespaceObject.store));
+    const isPostsPage = getPostsPageId() === +postId;
+    const isFrontPage = postType === 'page' && getHomePage()?.postId === +postId;
+    const allowSwitchingTemplate = !isPostsPage && !isFrontPage;
+    return {
+      templates: allTemplates,
+      availableTemplates: allowSwitchingTemplate ? allTemplates.filter(template => template.is_custom && template.slug !== data.template && !!template.content.raw // Skip empty templates.
+      ) : []
+    };
+  }, [data.template, postId, postType]);
+  const templatesAsPatterns = (0,external_wp_element_namespaceObject.useMemo)(() => availableTemplates.map(template => ({
+    name: template.slug,
+    blocks: (0,external_wp_blocks_namespaceObject.parse)(template.content.raw),
+    title: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(template.title.rendered),
+    id: template.id
+  })), [availableTemplates]);
+  const shownTemplates = (0,external_wp_compose_namespaceObject.useAsyncList)(templatesAsPatterns);
+  const value = field.getValue({
+    item: data
+  });
+  const currentTemplate = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const foundTemplate = templates?.find(template => template.slug === value);
+    if (foundTemplate) {
+      return foundTemplate;
+    }
+    let slugToCheck;
+    // In `draft` status we might not have a slug available, so we use the `single`
+    // post type templates slug(ex page, single-post, single-product etc..).
+    // Pages do not need the `single` prefix in the slug to be prioritized
+    // through template hierarchy.
+    if (slug) {
+      slugToCheck = postType === 'page' ? `${postType}-${slug}` : `single-${postType}-${slug}`;
+    } else {
+      slugToCheck = postType === 'page' ? 'page' : `single-${postType}`;
+    }
+    if (postType) {
+      const templateId = select(external_wp_coreData_namespaceObject.store).getDefaultTemplateId({
+        slug: slugToCheck
+      });
+      return select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', 'wp_template', templateId);
+    }
+  }, [postType, slug, templates, value]);
+  const [showModal, setShowModal] = (0,external_wp_element_namespaceObject.useState)(false);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: newValue
+  }), [id, onChange]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
+    className: "fields-controls__template",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
+      popoverProps: {
+        placement: 'bottom-start'
+      },
+      renderToggle: ({
+        onToggle
+      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
+        variant: "tertiary",
+        size: "compact",
+        onClick: onToggle,
+        children: currentTemplate ? getItemTitle(currentTemplate) : ''
+      }),
+      renderContent: ({
+        onToggle
+      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuGroup, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+          onClick: () => {
+            setShowModal(true);
+            onToggle();
+          },
+          children: (0,external_wp_i18n_namespaceObject.__)('Swap template')
+        }),
+        // The default template in a post is indicated by an empty string
+        value !== '' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+          onClick: () => {
+            onChangeControl('');
+            onToggle();
+          },
+          children: (0,external_wp_i18n_namespaceObject.__)('Use default template')
+        })]
+      })
+    }), showModal && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Choose a template'),
+      onRequestClose: () => setShowModal(false),
+      overlayClassName: "fields-controls__template-modal",
+      isFullScreen: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        className: "fields-controls__template-content",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockPatternsList, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Templates'),
+          blockPatterns: templatesAsPatterns,
+          shownPatterns: shownTemplates,
+          onClickPattern: template => {
+            onChangeControl(template.name);
+            setShowModal(false);
+          }
+        })
+      })
+    })]
+  });
+};
+
+;// ./packages/fields/build-module/fields/template/index.js
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+const templateField = {
+  id: 'template',
+  type: 'text',
+  label: (0,external_wp_i18n_namespaceObject.__)('Template'),
+  getValue: ({
+    item
+  }) => item.template,
+  Edit: TemplateEdit,
+  enableSorting: false
+};
+/* harmony default export */ const fields_template = (templateField);
+
 ;// ./packages/editor/build-module/dataviews/store/private-actions.js
 /**
  * WordPress dependencies
@@ -10092,7 +10259,7 @@ const registerPostTypeSchema = postType => async ({
   const actions = [postTypeConfig.viewable ? view_post : undefined, !!postTypeConfig.supports?.revisions ? view_post_revisions : undefined,
   // @ts-ignore
    true ? !['wp_template', 'wp_block', 'wp_template_part'].includes(postTypeConfig.slug) && canCreate && duplicate_post : 0, postTypeConfig.slug === 'wp_template_part' && canCreate && currentTheme?.is_block_theme ? duplicate_template_part : undefined, canCreate && postTypeConfig.slug === 'wp_block' ? duplicate_pattern : undefined, postTypeConfig.supports?.title ? rename_post : undefined, postTypeConfig.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, restore_post, reset_post, delete_post, trash_post, permanently_delete_post].filter(Boolean);
-  const fields = [postTypeConfig.supports?.thumbnail && currentTheme?.['theme-supports']?.['post-thumbnails'] && featured_image, title, postTypeConfig.supports?.author && author, fields_status, date, slug, postTypeConfig.supports?.['page-attributes'] && fields_parent, postTypeConfig.supports?.comments && comment_status, fields_password].filter(Boolean);
+  const fields = [postTypeConfig.supports?.thumbnail && currentTheme?.['theme-supports']?.['post-thumbnails'] && featured_image, title, postTypeConfig.supports?.author && author, fields_status, date, slug, postTypeConfig.supports?.['page-attributes'] && fields_parent, postTypeConfig.supports?.comments && comment_status, fields_password, fields_template].filter(Boolean);
   registry.batch(() => {
     actions.forEach(action => {
       unlock(registry.dispatch(store_store)).registerEntityAction('postType', postType, action);

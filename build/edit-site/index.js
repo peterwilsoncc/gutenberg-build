@@ -45669,6 +45669,8 @@ function DataForm({
 
 
 
+
+
 const {
   PostCardPanel,
   usePostFields: post_edit_usePostFields
@@ -45713,7 +45715,12 @@ function PostEditForm({
       id: 'status',
       label: (0,external_wp_i18n_namespaceObject.__)('Status & Visibility'),
       children: ['status', 'password']
-    }, 'author', 'date', 'slug', 'parent', 'comment_status'].filter(field => ids.length === 1 || fieldsWithBulkEditSupport.includes(field))
+    }, 'author', 'date', 'slug', 'parent', 'comment_status', {
+      label: (0,external_wp_i18n_namespaceObject.__)('Template'),
+      labelPosition: 'side',
+      id: 'template',
+      layout: 'regular'
+    }].filter(field => ids.length === 1 || fieldsWithBulkEditSupport.includes(field))
   }), [ids]);
   const onChange = edits => {
     for (const id of ids) {
@@ -45735,6 +45742,32 @@ function PostEditForm({
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     setMultiEdits({});
   }, [ids]);
+  const {
+    ExperimentalBlockEditorProvider
+  } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
+  const settings = usePatternSettings();
+
+  /**
+   * The template field depends on the block editor settings.
+   * This is a workaround to ensure that the block editor settings are available.
+   * For more information, see: https://github.com/WordPress/gutenberg/issues/67521
+   */
+  const fieldsWithDependency = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return fields.map(field => {
+      if (field.id === 'template') {
+        return {
+          ...field,
+          Edit: data => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ExperimentalBlockEditorProvider, {
+            settings: settings,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.Edit, {
+              ...data
+            })
+          })
+        };
+      }
+      return field;
+    });
+  }, [fields, settings]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 4,
     children: [ids.length === 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostCardPanel, {
@@ -45742,7 +45775,7 @@ function PostEditForm({
       postId: ids[0]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
       data: ids.length === 1 ? record : multiEdits,
-      fields: fields,
+      fields: fieldsWithDependency,
       form: form,
       onChange: onChange
     })]
