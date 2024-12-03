@@ -27705,6 +27705,37 @@ function sanitizeCommentString(str) {
   return str.trim();
 }
 
+/**
+ * Extracts comment IDs from an array of blocks.
+ *
+ * This function recursively traverses the blocks and their inner blocks to
+ * collect all comment IDs found in the block attributes.
+ *
+ * @param {Array} blocks - The array of blocks to extract comment IDs from.
+ * @return {Array} An array of comment IDs extracted from the blocks.
+ */
+function getCommentIdsFromBlocks(blocks) {
+  // Recursive function to extract comment IDs from blocks
+  const extractCommentIds = items => {
+    return items.reduce((commentIds, block) => {
+      // Check for comment IDs in the current block's attributes
+      if (block.attributes && block.attributes.blockCommentId && !commentIds.includes(block.attributes.blockCommentId)) {
+        commentIds.push(block.attributes.blockCommentId);
+      }
+
+      // Recursively check inner blocks
+      if (block.innerBlocks && block.innerBlocks.length > 0) {
+        const innerCommentIds = extractCommentIds(block.innerBlocks);
+        commentIds.push(...innerCommentIds);
+      }
+      return commentIds;
+    }, []);
+  };
+
+  // Extract all comment IDs recursively
+  return extractCommentIds(blocks);
+}
+
 ;// ./packages/editor/build-module/components/collab-sidebar/comment-form.js
 /**
  * WordPress dependencies
@@ -28175,6 +28206,7 @@ const AddCommentToolbarButton = ({
 
 
 
+
 const isBlockCommentExperimentEnabled = window?.__experimentalEnableBlockComment;
 const modifyBlockCommentAttributes = settings => {
   if (!settings.attributes.blockCommentId) {
@@ -28342,10 +28374,27 @@ function CollabSidebar() {
     getActiveComplementaryArea
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const {
-    postStatus
+    postId,
+    postType,
+    postStatus,
+    threads
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getCurrentPostId,
+      getCurrentPostType
+    } = select(store_store);
+    const _postId = getCurrentPostId();
+    const data = !!_postId && typeof _postId === 'number' ? select(external_wp_coreData_namespaceObject.store).getEntityRecords('root', 'comment', {
+      post: _postId,
+      type: 'block_comment',
+      status: 'any',
+      per_page: 100
+    }) : null;
     return {
-      postStatus: select(store_store).getEditedPostAttribute('status')
+      postId: _postId,
+      postType: getCurrentPostType(),
+      postStatus: select(store_store).getEditedPostAttribute('status'),
+      threads: data
     };
   }, []);
   const {
@@ -28364,27 +28413,15 @@ function CollabSidebar() {
     setShowCommentBoard(true);
     enableComplementaryArea('core', 'edit-post/collab-sidebar');
   };
-  const {
-    threads
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getCurrentPostId
-    } = select(store_store);
-    const _postId = getCurrentPostId();
-    const data = !!_postId ? select(external_wp_coreData_namespaceObject.store).getEntityRecords('root', 'comment', {
-      post: _postId,
-      type: 'block_comment',
-      status: 'any',
-      per_page: 100
-    }) : null;
-    return {
-      postId: _postId,
-      threads: data
-    };
-  }, []);
+  const [blocks] = (0,external_wp_coreData_namespaceObject.useEntityBlockEditor)('postType', postType, {
+    id: postId
+  });
 
   // Process comments to build the tree structure
-  const resultComments = (0,external_wp_element_namespaceObject.useMemo)(() => {
+  const {
+    resultComments,
+    sortedThreads
+  } = (0,external_wp_element_namespaceObject.useMemo)(() => {
     // Create a compare to store the references to all objects by id
     const compare = {};
     const result = [];
@@ -28408,8 +28445,20 @@ function CollabSidebar() {
         compare[item.parent].reply.push(compare[item.id]);
       }
     });
-    return result;
-  }, [threads]);
+    if (0 === result?.length) {
+      return {
+        resultComments: [],
+        sortedThreads: []
+      };
+    }
+    const blockCommentIds = getCommentIdsFromBlocks(blocks);
+    const threadIdMap = new Map(result.map(thread => [thread.id, thread]));
+    const sortedComments = blockCommentIds.map(id => threadIdMap.get(id)).filter(thread => thread !== undefined);
+    return {
+      resultComments: result,
+      sortedThreads: sortedComments
+    };
+  }, [threads, blocks]);
 
   // Get the global styles to set the background color of the sidebar.
   const {
@@ -28452,7 +28501,7 @@ function CollabSidebar() {
       className: "editor-collab-sidebar",
       headerClassName: "editor-collab-sidebar__header",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollabSidebarContent, {
-        comments: resultComments,
+        comments: sortedThreads,
         showCommentBoard: showCommentBoard,
         setShowCommentBoard: setShowCommentBoard,
         styles: {
