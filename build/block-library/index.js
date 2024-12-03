@@ -35147,11 +35147,18 @@ function DeletedNavigationWarning({
   onCreateNew,
   isNotice = false
 }) {
+  const [isButtonDisabled, setIsButtonDisabled] = (0,external_wp_element_namespaceObject.useState)(false);
+  const handleButtonClick = () => {
+    setIsButtonDisabled(true);
+    onCreateNew();
+  };
   const message = (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.__)('Navigation Menu has been deleted or is unavailable. <button>Create a new Menu?</button>'), {
     button: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       __next40pxDefaultSize: true,
-      onClick: onCreateNew,
-      variant: "link"
+      onClick: handleButtonClick,
+      variant: "link",
+      disabled: isButtonDisabled,
+      accessibleWhenDisabled: true
     })
   });
   return isNotice ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
