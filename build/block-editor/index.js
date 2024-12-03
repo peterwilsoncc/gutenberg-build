@@ -63747,9 +63747,9 @@ function ExperimentalBlockCanvas({
   if (!shouldIframe) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(BlockTools, {
       __unstableContentRef: localRef,
+      className: "block-editor-block-canvas",
       style: {
-        height,
-        display: 'flex'
+        height
       },
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(editor_styles, {
         styles: styles,
@@ -63759,16 +63759,13 @@ function ExperimentalBlockCanvas({
         ref: contentRef,
         className: "editor-styles-wrapper",
         tabIndex: -1,
-        style: {
-          height: '100%',
-          width: '100%'
-        },
         children: children
       })]
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockTools, {
     __unstableContentRef: localRef,
+    className: "block-editor-block-canvas",
     style: {
       height,
       display: 'flex'
@@ -73598,7 +73595,7 @@ function useResizeCanvas(deviceType) {
           marginLeft: marginHorizontal,
           marginRight: marginHorizontal,
           height,
-          overflowY: 'auto'
+          maxWidth: '100%'
         };
       default:
         return {
