@@ -5881,7 +5881,6 @@ __webpack_require__.d(__webpack_exports__, {
   parse: () => (/* reexport */ parser_parse),
   parseWithAttributeSchema: () => (/* reexport */ parseWithAttributeSchema),
   pasteHandler: () => (/* reexport */ pasteHandler),
-  privateApis: () => (/* reexport */ privateApis),
   rawHandler: () => (/* reexport */ rawHandler),
   registerBlockBindingsSource: () => (/* reexport */ registerBlockBindingsSource),
   registerBlockCollection: () => (/* reexport */ registerBlockCollection),
@@ -8023,13 +8022,6 @@ const __experimentalGetBlockAttributesNamesByRole = (...args) => {
   });
   return getBlockAttributesNamesByRole(...args);
 };
-function isContentBlock(name) {
-  const attributes = getBlockType(name)?.attributes;
-  return !!Object.keys(attributes)?.some(attributeKey => {
-    const attribute = attributes[attributeKey];
-    return attribute?.role === 'content' || attribute?.__experimentalRole === 'content';
-  });
-}
 
 /**
  * Return a new object with the specified keys omitted.
@@ -8044,6 +8036,7 @@ function omit(object, keys) {
 }
 
 ;// ./packages/blocks/build-module/store/reducer.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -9058,7 +9051,7 @@ function getCollections(state) {
  * };
  * ```
  *
- * @return {?string} Default block name.
+ * @return {string?} Default block name.
  */
 function selectors_getDefaultBlockName(state) {
   return state.defaultBlockName;
@@ -9094,7 +9087,7 @@ function selectors_getDefaultBlockName(state) {
  * };
  * ```
  *
- * @return {?string} Name of the block for handling non-block content.
+ * @return {string?} Name of the block for handling non-block content.
  */
 function getFreeformFallbackBlockName(state) {
   return state.freeformFallbackBlockName;
@@ -9130,7 +9123,7 @@ function getFreeformFallbackBlockName(state) {
  * };
  * ```
  *
- * @return {?string} Name of the block for handling unregistered blocks.
+ * @return {string?} Name of the block for handling unregistered blocks.
  */
 function getUnregisteredFallbackBlockName(state) {
   return state.unregisteredFallbackBlockName;
@@ -9166,7 +9159,7 @@ function getUnregisteredFallbackBlockName(state) {
  * };
  * ```
  *
- * @return {?string} Name of the block for handling the grouping of blocks.
+ * @return {string?} Name of the block for handling the grouping of blocks.
  */
 function selectors_getGroupingBlockName(state) {
   return state.groupingBlockName;
@@ -10290,6 +10283,7 @@ function v4(options, buf, offset) {
 
 /* harmony default export */ const esm_browser_v4 = (v4);
 ;// ./packages/blocks/build-module/api/factory.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -15686,12 +15680,6 @@ function synchronizeBlocksWithTemplate(blocks = [], template) {
 }
 
 ;// ./packages/blocks/build-module/api/index.js
-/**
- * Internal dependencies
- */
-
-
-
 // The blocktype is the most important concept within the block API. It defines
 // all aspects of the block configuration and its interfaces, including `edit`
 // and `save`. The transforms specification allows converting one blocktype to
@@ -15788,10 +15776,6 @@ function synchronizeBlocksWithTemplate(blocks = [], template) {
 
 
 
-const privateApis = {};
-lock(privateApis, {
-  isContentBlock: isContentBlock
-});
 
 ;// ./packages/blocks/build-module/deprecated.js
 /**

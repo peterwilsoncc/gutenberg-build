@@ -137,11 +137,10 @@ function lock(object, privateData) {
   if (!object) {
     throw new Error('Cannot lock an undefined object.');
   }
-  const _object = object;
-  if (!(__private in _object)) {
-    _object[__private] = {};
+  if (!(__private in object)) {
+    object[__private] = {};
   }
-  lockedData.set(_object[__private], privateData);
+  lockedData.set(object[__private], privateData);
 }
 
 /**
@@ -171,11 +170,10 @@ function unlock(object) {
   if (!object) {
     throw new Error('Cannot unlock an undefined object.');
   }
-  const _object = object;
-  if (!(__private in _object)) {
+  if (!(__private in object)) {
     throw new Error('Cannot unlock an object that was not locked before. ');
   }
-  return lockedData.get(_object[__private]);
+  return lockedData.get(object[__private]);
 }
 const lockedData = new WeakMap();
 

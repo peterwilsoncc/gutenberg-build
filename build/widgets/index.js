@@ -618,6 +618,7 @@ function serializeForm(form) {
 }
 
 ;// ./packages/widgets/build-module/blocks/legacy-widget/edit/form.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
