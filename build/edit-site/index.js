@@ -29232,7 +29232,9 @@ function SidebarNavigationItemGlobalStyles(props) {
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItem, {
-    ...props
+    ...props,
+    to: "/styles",
+    "aria-current": name === 'styles'
   });
 }
 function SidebarNavigationScreenGlobalStyles() {
