@@ -29588,12 +29588,33 @@ function GlobalStylesUIWrapper() {
 
 ;// ./packages/edit-site/build-module/components/site-editor-routes/styles.js
 /**
+ * WordPress dependencies
+ */
+
+
+/**
  * Internal dependencies
  */
 
 
 
 
+
+const {
+  useLocation: styles_useLocation
+} = unlock(external_wp_router_namespaceObject.privateApis);
+function MobileGlobalStylesUI() {
+  const {
+    query = {}
+  } = styles_useLocation();
+  const {
+    canvas
+  } = query;
+  if (canvas === 'edit') {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {});
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesUIWrapper, {});
+}
 const stylesRoute = {
   name: 'styles',
   path: '/styles',
@@ -29603,7 +29624,7 @@ const stylesRoute = {
       backPath: "/"
     }),
     preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
-    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesUIWrapper, {})
+    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MobileGlobalStylesUI, {})
   },
   widths: {
     content: 380
