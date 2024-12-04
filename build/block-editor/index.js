@@ -43592,6 +43592,7 @@ function BlockListBlock({
   wrapperProps,
   setAttributes,
   onReplace,
+  onRemove,
   onInsertBlocksAfter,
   onMerge,
   toggleSelection
@@ -43603,10 +43604,6 @@ function BlockListBlock({
     themeSupportsLayout,
     ...context
   } = (0,external_wp_element_namespaceObject.useContext)(PrivateBlockContext);
-  const {
-    removeBlock
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const onRemove = (0,external_wp_element_namespaceObject.useCallback)(() => removeBlock(clientId), [clientId, removeBlock]);
   const parentLayout = useLayout() || {};
 
   // We wrap the BlockEdit component in a div that hides it when editing in
@@ -43915,6 +43912,9 @@ const applyWithDispatch = (0,external_wp_data_namespaceObject.withDispatch)((dis
       //Unsynced patterns are nested in an array so we need to flatten them.
       const replacementBlocks = blocks?.length === 1 && Array.isArray(blocks[0]) ? blocks[0] : blocks;
       replaceBlocks([ownProps.clientId], replacementBlocks, indexToSelect, initialPosition);
+    },
+    onRemove() {
+      removeBlock(ownProps.clientId);
     },
     toggleSelection(selectionEnabled) {
       toggleSelection(selectionEnabled);
