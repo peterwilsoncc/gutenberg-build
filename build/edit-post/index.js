@@ -1972,8 +1972,6 @@ class MetaBoxVisibility extends external_wp_element_namespaceObject.Component {
  */
 
 
-
-
 /**
  * Internal dependencies
  */
@@ -1986,38 +1984,7 @@ class MetaBoxVisibility extends external_wp_element_namespaceObject.Component {
 function MetaBoxes({
   location
 }) {
-  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
-  const {
-    metaBoxes,
-    areMetaBoxesInitialized,
-    isEditorReady
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      __unstableIsEditorReady
-    } = select(external_wp_editor_namespaceObject.store);
-    const {
-      getMetaBoxesPerLocation,
-      areMetaBoxesInitialized: _areMetaBoxesInitialized
-    } = select(store);
-    return {
-      metaBoxes: getMetaBoxesPerLocation(location),
-      areMetaBoxesInitialized: _areMetaBoxesInitialized(),
-      isEditorReady: __unstableIsEditorReady()
-    };
-  }, [location]);
-  const hasMetaBoxes = !!metaBoxes?.length;
-
-  // When editor is ready, initialize postboxes (wp core script) and metabox
-  // saving. This initializes all meta box locations, not just this specific
-  // one.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (isEditorReady && hasMetaBoxes && !areMetaBoxesInitialized) {
-      registry.dispatch(store).initializeMetaBoxes();
-    }
-  }, [isEditorReady, hasMetaBoxes, areMetaBoxesInitialized]);
-  if (!areMetaBoxesInitialized) {
-    return null;
-  }
+  const metaBoxes = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getMetaBoxesPerLocation(location), [location]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [(metaBoxes !== null && metaBoxes !== void 0 ? metaBoxes : []).map(({
       id
@@ -2785,6 +2752,38 @@ function useNavigateToEntityRecord(initialPostId, initialPostType, defaultRender
   };
 }
 
+;// CONCATENATED MODULE: ./packages/edit-post/build-module/components/meta-boxes/use-meta-box-initialization.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Initializes WordPress `postboxes` script and the logic for saving meta boxes.
+ *
+ * @param { boolean } enabled
+ */
+const useMetaBoxInitialization = enabled => {
+  const isEnabledAndEditorReady = (0,external_wp_data_namespaceObject.useSelect)(select => enabled && select(external_wp_editor_namespaceObject.store).__unstableIsEditorReady(), [enabled]);
+  const {
+    initializeMetaBoxes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  // The effect has to rerun when the editor is ready because initializeMetaBoxes
+  // will noop until then.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (isEnabledAndEditorReady) {
+      initializeMetaBoxes();
+    }
+  }, [isEnabledAndEditorReady, initializeMetaBoxes]);
+};
+
 ;// CONCATENATED MODULE: ./packages/edit-post/build-module/components/layout/index.js
 /**
  * External dependencies
@@ -2815,6 +2814,7 @@ function useNavigateToEntityRecord(initialPostId, initialPostType, defaultRender
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -3180,6 +3180,7 @@ function Layout({
       templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate ? getEditedPostTemplateId() : null
     };
   }, [currentPostType, isEditingTemplate, settings.supportsTemplateMode]);
+  useMetaBoxInitialization(hasActiveMetaboxes);
 
   // Set the right context for the command palette
   const commandContext = hasBlockSelected ? 'block-selection-edit' : 'entity-edit';
