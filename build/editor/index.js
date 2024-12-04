@@ -9413,6 +9413,9 @@ const copySmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 
 
 const getSlug = item => {
+  if (typeof item !== 'object') {
+    return '';
+  }
   return item.slug || (0,external_wp_url_namespaceObject.cleanForSlug)(getItemTitle(item)) || item.id.toString();
 };
 
@@ -9554,7 +9557,7 @@ const SlugEdit = ({
 const SlugView = ({
   item
 }) => {
-  const slug = typeof item === 'object' ? getSlug(item) : '';
+  const slug = getSlug(item);
   const originalSlugRef = (0,external_wp_element_namespaceObject.useRef)(slug);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (slug && originalSlugRef.current === undefined) {
