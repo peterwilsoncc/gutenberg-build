@@ -62840,6 +62840,7 @@ function PrivateBlockToolbar({
 
     // If one or more selected blocks are locked, do not show the BlockGroupToolbar.
     const _hasTemplateLock = selectedBlockClientIds.some(id => getTemplateLock(id) === 'contentOnly');
+    const _isZoomOut = isZoomOut();
     return {
       blockClientId: selectedBlockClientId,
       blockClientIds: selectedBlockClientIds,
@@ -62847,15 +62848,15 @@ function PrivateBlockToolbar({
       blockType: selectedBlockClientId && (0,external_wp_blocks_namespaceObject.getBlockType)(_blockName),
       shouldShowVisualToolbar: isValid && isVisual,
       toolbarKey: `${selectedBlockClientId}${parentClientId}`,
-      showParentSelector: !isZoomOut() && parentBlockType && getBlockEditingMode(parentClientId) !== 'disabled' && (0,external_wp_blocks_namespaceObject.hasBlockSupport)(parentBlockType, '__experimentalParentSelector', true) && selectedBlockClientIds.length === 1,
+      showParentSelector: !_isZoomOut && parentBlockType && getBlockEditingMode(parentClientId) !== 'disabled' && (0,external_wp_blocks_namespaceObject.hasBlockSupport)(parentBlockType, '__experimentalParentSelector', true) && selectedBlockClientIds.length === 1,
       isUsingBindings: _isUsingBindings,
       hasParentPattern: _hasParentPattern,
       hasContentOnlyLocking: _hasTemplateLock,
-      showShuffleButton: isZoomOut(),
-      showSlots: !isZoomOut(),
-      showGroupButtons: !isZoomOut(),
-      showLockButtons: !isZoomOut(),
-      showSwitchSectionStyleButton: isZoomOut(),
+      showShuffleButton: _isZoomOut,
+      showSlots: !_isZoomOut,
+      showGroupButtons: !_isZoomOut,
+      showLockButtons: !_isZoomOut,
+      showSwitchSectionStyleButton: _isZoomOut,
       hasFixedToolbar: getSettings().hasFixedToolbar,
       isNavigationMode: _isNavigationMode()
     };
