@@ -29255,7 +29255,6 @@ function SidebarNavigationScreenDetailsFooter({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -29275,19 +29274,12 @@ function SidebarNavigationItemGlobalStyles(props) {
   const {
     params
   } = sidebar_navigation_screen_global_styles_useLocation();
-  const hasGlobalStyleVariations = (0,external_wp_data_namespaceObject.useSelect)(select => !!select(external_wp_coreData_namespaceObject.store).__experimentalGetCurrentThemeGlobalStylesVariations()?.length, []);
-  if (hasGlobalStyleVariations) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItem, {
-      ...props,
-      params: {
-        path: '/wp_global_styles'
-      },
-      uid: "global-styles-navigation-item",
-      "aria-current": params.path && params.path.startsWith('/wp_global_styles')
-    });
-  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItem, {
-    ...props
+    ...props,
+    params: {
+      path: '/wp_global_styles'
+    },
+    "aria-current": params.path && params.path.startsWith('/wp_global_styles')
   });
 }
 function SidebarNavigationScreenGlobalStyles() {
@@ -29377,7 +29369,7 @@ function MainSidebarNavigationContent() {
       icon: library_navigation,
       children: (0,external_wp_i18n_namespaceObject.__)('Navigation')
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItemGlobalStyles, {
-      uid: "styles-navigation-item",
+      uid: "global-styles-navigation-item",
       icon: library_styles,
       children: (0,external_wp_i18n_namespaceObject.__)('Styles')
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItem, {
