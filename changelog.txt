@@ -1,5 +1,31 @@
 == Changelog ==
 
+= 19.8.0-rc.2 =
+
+
+## Changelog
+
+### Bug Fixes
+
+#### Site Editor
+- 19.8 Edit Site: Styles nav item does not open on mobile for themes without style variations. ([67550](https://github.com/WordPress/gutenberg/pull/67550))
+
+#### Zoom Out
+- Disable Zoom Out if no section root to allow for Theme opt in. ([67232](https://github.com/WordPress/gutenberg/pull/67232))
+
+#### Meta Boxes
+- Split view with meta boxes even with legacy canvas. ([66706](https://github.com/WordPress/gutenberg/pull/66706))
+
+
+
+
+## Contributors
+
+The following contributors merged PRs in this release:
+
+@getdave @ramonjd @stokesman
+
+
 = 19.7.0 =
 
 ## Changelog
