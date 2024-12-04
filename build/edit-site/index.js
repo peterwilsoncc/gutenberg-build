@@ -43889,32 +43889,12 @@ function PageTemplates() {
 
 ;// ./packages/edit-site/build-module/components/site-editor-routes/templates.js
 /**
- * WordPress dependencies
- */
-
-
-/**
  * Internal dependencies
  */
 
 
 
 
-
-const {
-  useLocation: templates_useLocation
-} = unlock(external_wp_router_namespaceObject.privateApis);
-function MobileTemplatesView() {
-  const {
-    query = {}
-  } = templates_useLocation();
-  const {
-    canvas = 'view'
-  } = query;
-  return canvas === 'edit' ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenTemplatesBrowse, {
-    backPath: "/"
-  });
-}
 const templatesRoute = {
   name: 'templates',
   path: '/template',
@@ -43929,7 +43909,7 @@ const templatesRoute = {
       const isListView = query.layout === 'list';
       return isListView ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : undefined;
     },
-    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MobileTemplatesView, {})
+    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageTemplates, {})
   },
   widths: {
     content({
