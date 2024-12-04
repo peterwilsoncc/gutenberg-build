@@ -10971,8 +10971,6 @@ function shimAttributeSource(settings) {
 
 
 
-/** @typedef {import('@wordpress/components').WPCompleter} WPCompleter */
-
 function getUserLabel(user) {
   const avatar = user.avatar_urls && user.avatar_urls[24] ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
     className: "editor-autocompleters__user-avatar",
@@ -10995,7 +10993,7 @@ function getUserLabel(user) {
 /**
  * A user mentions completer.
  *
- * @type {WPCompleter}
+ * @type {Object}
  */
 /* harmony default export */ const user = ({
   name: 'users',
@@ -23286,12 +23284,12 @@ function PostTitleRaw(_, forwardedRef) {
 
 
 /**
- * Wrapper component that renders its children only if the post can trashed.
+ * Wrapper component that renders its children only if the post can be trashed.
  *
- * @param {Object}          props          - The component props.
- * @param {React.ReactNode} props.children - The child components to render.
+ * @param {Object}             props          The component props.
+ * @param {React.ReactElement} props.children The child components.
  *
- * @return {React.ReactNode} The rendered child components or null if the post can not trashed.
+ * @return {React.ReactElement | null} The rendered child components or null if the post can't be trashed.
  */
 function PostTrashCheck({
   children

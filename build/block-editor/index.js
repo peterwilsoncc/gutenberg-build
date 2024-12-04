@@ -57249,12 +57249,10 @@ const with_font_sizes_upperFirst = ([firstLetter, ...rest]) => firstLetter.toUpp
 const block_noop = () => {};
 const block_SHOWN_BLOCK_TYPES = 9;
 
-/** @typedef {import('@wordpress/components').WPCompleter} WPCompleter */
-
 /**
  * Creates a blocks repeater for replacing the current block with a selected block type.
  *
- * @return {WPCompleter} A blocks completer.
+ * @return {Object} A blocks completer.
  */
 function createBlockCompleter() {
   return {
@@ -57338,7 +57336,7 @@ function createBlockCompleter() {
 /**
  * Creates a blocks repeater for replacing the current block with a selected block type.
  *
- * @return {WPCompleter} A blocks completer.
+ * @return {Object} A blocks completer.
  */
 /* harmony default export */ const autocompleters_block = (createBlockCompleter());
 
@@ -57373,12 +57371,10 @@ const post = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
 
 const SHOWN_SUGGESTIONS = 10;
 
-/** @typedef {import('@wordpress/components').WPCompleter} WPCompleter */
-
 /**
  * Creates a suggestion list for links to posts or pages.
  *
- * @return {WPCompleter} A links completer.
+ * @return {Object} A links completer.
  */
 function createLinkCompleter() {
   return {
@@ -57420,7 +57416,7 @@ function createLinkCompleter() {
 /**
  * Creates a suggestion list for links to posts or pages..
  *
- * @return {WPCompleter} A link completer.
+ * @return {Object} A link completer.
  */
 /* harmony default export */ const autocompleters_link = (createLinkCompleter());
 
