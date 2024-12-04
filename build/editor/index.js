@@ -5487,6 +5487,10 @@ const viewPost = {
     }
   }
 };
+
+/**
+ * View post action for BasePost.
+ */
 /* harmony default export */ const view_post = (viewPost);
 
 ;// ./packages/fields/build-module/actions/view-post-revisions.js
@@ -5531,6 +5535,10 @@ const viewPostRevisions = {
     }
   }
 };
+
+/**
+ * View post revisions action for Post.
+ */
 /* harmony default export */ const view_post_revisions = (viewPostRevisions);
 
 ;// ./packages/dataviews/build-module/components/dataform-context/index.js
@@ -6614,6 +6622,10 @@ const titleField = {
   render: title_view,
   enableHiding: false
 };
+
+/**
+ * Title field for BasePost.
+ */
 /* harmony default export */ const title = (titleField);
 
 ;// ./packages/fields/build-module/actions/duplicate-post.js
@@ -6653,8 +6665,8 @@ const duplicatePost = {
   }) => {
     const [item, setItem] = (0,external_wp_element_namespaceObject.useState)({
       ...items[0],
-      title: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Existing template title */
-      (0,external_wp_i18n_namespaceObject._x)('%s (Copy)', 'template'), getItemTitle(items[0]))
+      title: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Existing post title */
+      (0,external_wp_i18n_namespaceObject._x)('%s (Copy)', 'post'), getItemTitle(items[0]))
     });
     const [isCreatingPage, setIsCreatingPage] = (0,external_wp_element_namespaceObject.useState)(false);
     const {
@@ -6701,7 +6713,7 @@ const duplicatePost = {
           throwOnError: true
         });
         createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
-        // translators: %s: Title of the created post or template, e.g: "Hello world".
+        // translators: %s: Title of the created post, e.g: "Hello world".
         (0,external_wp_i18n_namespaceObject.__)('"%s" successfully created.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(newItem.title?.rendered || item.title)), {
           id: 'duplicate-post-action',
           type: 'snackbar'
@@ -6753,6 +6765,10 @@ const duplicatePost = {
     });
   }
 };
+
+/**
+ * Duplicate action for BasePost.
+ */
 /* harmony default export */ const duplicate_post = (duplicatePost);
 
 ;// ./packages/icons/build-module/library/check.js
@@ -7584,6 +7600,9 @@ const duplicateTemplatePart = {
     });
   }
 };
+/**
+ * Duplicate action for TemplatePart.
+ */
 /* harmony default export */ const duplicate_template_part = (duplicateTemplatePart);
 
 ;// external ["wp","patterns"]
@@ -7636,6 +7655,10 @@ const duplicatePattern = {
     });
   }
 };
+
+/**
+ * Duplicate action for Pattern.
+ */
 /* harmony default export */ const duplicate_pattern = (duplicatePattern);
 
 ;// ./packages/fields/build-module/actions/rename-post.js
@@ -7754,6 +7777,10 @@ const renamePost = {
     });
   }
 };
+
+/**
+ * Rename action for PostWithPermissions.
+ */
 /* harmony default export */ const rename_post = (renamePost);
 
 ;// ./packages/dataviews/build-module/validation.js
@@ -7798,6 +7825,10 @@ const orderField = {
   label: (0,external_wp_i18n_namespaceObject.__)('Order'),
   description: (0,external_wp_i18n_namespaceObject.__)('Determines the order of pages.')
 };
+
+/**
+ * Order field for BasePost.
+ */
 /* harmony default export */ const order = (orderField);
 
 ;// ./packages/fields/build-module/actions/reorder-page.js
@@ -7909,6 +7940,10 @@ const reorderPage = {
   },
   RenderModal: ReorderModal
 };
+
+/**
+ * Reorder action for BasePost.
+ */
 /* harmony default export */ const reorder_page = (reorderPage);
 
 ;// ./node_modules/client-zip/index.js
@@ -7980,6 +8015,10 @@ const exportPattern = {
     return (0,external_wp_blob_namespaceObject.downloadBlob)((0,external_wp_i18n_namespaceObject.__)('patterns-export') + '.zip', await A(filesToZip).blob(), 'application/zip');
   }
 };
+
+/**
+ * Export action as JSON for Pattern.
+ */
 /* harmony default export */ const export_pattern = (exportPattern);
 
 ;// ./packages/icons/build-module/library/backup.js
@@ -8100,6 +8139,10 @@ const restorePost = {
     }
   }
 };
+
+/**
+ * Restore action for PostWithPermissions.
+ */
 /* harmony default export */ const restore_post = (restorePost);
 
 ;// ./packages/fields/build-module/actions/reset-post.js
@@ -8298,6 +8341,10 @@ const resetPostAction = {
     });
   }
 };
+
+/**
+ * Reset action for Template and TemplatePart.
+ */
 /* harmony default export */ const reset_post = (resetPostAction);
 
 ;// ./packages/icons/build-module/library/trash.js
@@ -8570,6 +8617,10 @@ const deletePostAction = {
     });
   }
 };
+
+/**
+ * Delete action for Templates, Patterns and Template Parts.
+ */
 /* harmony default export */ const delete_post = (deletePostAction);
 
 ;// ./packages/fields/build-module/actions/trash-post.js
@@ -8707,6 +8758,10 @@ const trash_post_trashPost = {
     });
   }
 };
+
+/**
+ * Trash action for PostWithPermissions.
+ */
 /* harmony default export */ const trash_post = (trash_post_trashPost);
 
 ;// ./packages/fields/build-module/actions/permanently-delete-post.js
@@ -8810,6 +8865,10 @@ const permanentlyDeletePost = {
     }
   }
 };
+
+/**
+ * Delete action for PostWithPermissions.
+ */
 /* harmony default export */ const permanently_delete_post = (permanentlyDeletePost);
 
 ;// external ["wp","mediaUtils"]
@@ -8989,6 +9048,10 @@ const featuredImageField = {
   render: FeaturedImageView,
   enableSorting: false
 };
+
+/**
+ * Featured Image field for BasePost.
+ */
 /* harmony default export */ const featured_image = (featuredImageField);
 
 ;// ./node_modules/clsx/dist/clsx.mjs
@@ -9589,6 +9652,10 @@ const slugField = {
   Edit: slug_edit,
   render: slug_view
 };
+
+/**
+ * Slug field for BasePost.
+ */
 /* harmony default export */ const slug = (slugField);
 
 // EXTERNAL MODULE: ./node_modules/remove-accents/index.js
@@ -9898,7 +9965,7 @@ const parentField = {
 };
 
 /**
- * This field is used to display the post parent.
+ * Parent field for BasePost.
  */
 /* harmony default export */ const fields_parent = (parentField);
 
@@ -10017,7 +10084,7 @@ const passwordField = {
 };
 
 /**
- * This field is used to display the post password.
+ * Password field for BasePost.
  */
 /* harmony default export */ const fields_password = (passwordField);
 
@@ -10180,12 +10247,13 @@ const templateField = {
   id: 'template',
   type: 'text',
   label: (0,external_wp_i18n_namespaceObject.__)('Template'),
-  getValue: ({
-    item
-  }) => item.template,
   Edit: TemplateEdit,
   enableSorting: false
 };
+
+/**
+ * Template field for BasePost.
+ */
 /* harmony default export */ const fields_template = (templateField);
 
 ;// ./packages/editor/build-module/dataviews/store/private-actions.js
