@@ -175,7 +175,6 @@ const getServerContext = namespace => {
 };
 
 ;// ./packages/interactivity/build-module/utils.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -486,7 +485,6 @@ const warn = message => {
 const isPlainObject = candidate => Boolean(candidate && typeof candidate === 'object' && candidate.constructor === Object);
 
 ;// ./packages/interactivity/build-module/proxies/registry.js
-/* wp:polyfill */
 /**
  * Proxies for each object.
  */
@@ -702,7 +700,6 @@ class PropSignal {
 }
 
 ;// ./packages/interactivity/build-module/proxies/state.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -1104,7 +1101,6 @@ const proxifyStore = (namespace, obj, isRoot = true) => {
 };
 
 ;// ./packages/interactivity/build-module/proxies/context.js
-/* wp:polyfill */
 const contextObjectToProxy = new WeakMap();
 const contextObjectToFallback = new WeakMap();
 const contextProxies = new WeakSet();
@@ -1619,7 +1615,6 @@ preact_module/* options */.fF.vnode = vnode => {
 };
 
 ;// ./packages/interactivity/build-module/directives.js
-/* wp:polyfill */
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable react-hooks/exhaustive-deps */
 
