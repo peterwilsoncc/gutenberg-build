@@ -53184,6 +53184,7 @@ function InserterMenu({
   __experimentalInitialCategory
 }, ref) {
   const isZoomOutMode = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).isZoomOut(), []);
+  const hasSectionRootClientId = (0,external_wp_data_namespaceObject.useSelect)(select => !!unlock(select(store)).getSectionRootClientId(), []);
   const [filterValue, setFilterValue, delayedFilterValue] = (0,external_wp_compose_namespaceObject.useDebouncedInput)(__experimentalFilterValue);
   const [hoveredItem, setHoveredItem] = (0,external_wp_element_namespaceObject.useState)(null);
   const [selectedPatternCategory, setSelectedPatternCategory] = (0,external_wp_element_namespaceObject.useState)(__experimentalInitialCategory);
@@ -53199,7 +53200,7 @@ function InserterMenu({
     }
   }
   const [selectedTab, setSelectedTab] = (0,external_wp_element_namespaceObject.useState)(getInitialTab());
-  const shouldUseZoomOut = selectedTab === 'patterns' || selectedTab === 'media';
+  const shouldUseZoomOut = hasSectionRootClientId && (selectedTab === 'patterns' || selectedTab === 'media');
   useZoomOut(shouldUseZoomOut && isLargeViewport);
   const [destinationRootClientId, onInsertBlocks, onToggleInsertionPoint] = use_insertion_point({
     rootClientId,
