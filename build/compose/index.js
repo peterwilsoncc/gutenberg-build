@@ -2946,7 +2946,6 @@ const throttle = (func, wait, options) => {
 };
 
 ;// ./packages/compose/build-module/utils/observable-map/index.js
-/* wp:polyfill */
 /**
  * A constructor (factory) for `ObservableMap`, a map-like key/value data structure
  * where the individual entries are observable: using the `subscribe` method, you can
@@ -4503,7 +4502,6 @@ var mousetrap_default = /*#__PURE__*/__webpack_require__.n(mousetrap_mousetrap);
 // EXTERNAL MODULE: ./node_modules/mousetrap/plugins/global-bind/mousetrap-global-bind.js
 var mousetrap_global_bind = __webpack_require__(5760);
 ;// ./packages/compose/build-module/hooks/use-keyboard-shortcut/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */

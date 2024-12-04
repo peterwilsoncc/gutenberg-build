@@ -3352,7 +3352,7 @@ function getEntityConfig(state, kind, name) {
  * @param state State tree
  * @param kind  Entity kind.
  * @param name  Entity name.
- * @param key   Record's key
+ * @param key   Optional record's key. If requesting a global record (e.g. site settings), the key can be omitted. If requesting a specific item, the key must always be included.
  * @param query Optional query. If requesting specific
  *              fields, fields must always include the ID. For valid query parameters see the [Reference](https://developer.wordpress.org/rest-api/reference/) in the REST API Handbook and select the entity kind. Then see the arguments available "Retrieve a [Entity kind]".
  *
@@ -4338,9 +4338,7 @@ const getHomePage = (0,external_wp_data_namespaceObject.createRegistrySelector)(
     postType: 'wp_template',
     postId: frontPageTemplateId
   };
-}, state => [
-// @ts-expect-error
-getEntityRecord(state, 'root', 'site'), getDefaultTemplateId(state, {
+}, state => [getEntityRecord(state, 'root', 'site'), getDefaultTemplateId(state, {
   slug: 'front-page'
 })]));
 const getPostsPageId = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
@@ -4661,7 +4659,6 @@ async function defaultProcessor(requests) {
 }
 
 ;// ./packages/core-data/build-module/batch/create-batch.js
-/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -22655,8 +22652,16 @@ function sortResults(results, search) {
   for (const result of results) {
     if (result.title) {
       const titleTokens = tokenize(result.title);
-      const matchingTokens = titleTokens.filter(titleToken => searchTokens.some(searchToken => titleToken.includes(searchToken)));
-      scores[result.id] = matchingTokens.length / titleTokens.length;
+      const exactMatchingTokens = titleTokens.filter(titleToken => searchTokens.some(searchToken => titleToken === searchToken));
+      const subMatchingTokens = titleTokens.filter(titleToken => searchTokens.some(searchToken => titleToken !== searchToken && titleToken.includes(searchToken)));
+
+      // The score is a combination of exact matches and sub-matches.
+      // More weight is given to exact matches, as they are more relevant (e.g. "cat" vs "caterpillar").
+      // Diving by the total number of tokens in the title normalizes the score and skews
+      // the results towards shorter titles.
+      const exactMatchScore = exactMatchingTokens.length / titleTokens.length * 10;
+      const subMatchScore = subMatchingTokens.length / titleTokens.length;
+      scores[result.id] = exactMatchScore + subMatchScore;
     } else {
       scores[result.id] = 0;
     }
@@ -22769,7 +22774,6 @@ async function fetchBlockPatterns() {
 }
 
 ;// ./packages/core-data/build-module/resolvers.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
