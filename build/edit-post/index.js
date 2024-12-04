@@ -1913,7 +1913,7 @@ function MetaBoxVisibility({
 function MetaBoxes({
   location
 }) {
-  const metaBoxes = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getMetaBoxesPerLocation[location]);
+  const metaBoxes = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getMetaBoxesPerLocation(location), [location]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [(metaBoxes !== null && metaBoxes !== void 0 ? metaBoxes : []).map(({
       id
