@@ -1,33 +1,6 @@
 == Changelog ==
 
-= 19.8.0-rc.2 =
-
-
-## Changelog
-
-### Bug Fixes
-
-#### Site Editor
-- 19.8 Edit Site: Styles nav item does not open on mobile for themes without style variations. ([67550](https://github.com/WordPress/gutenberg/pull/67550))
-
-#### Zoom Out
-- Disable Zoom Out if no section root to allow for Theme opt in. ([67232](https://github.com/WordPress/gutenberg/pull/67232))
-
-#### Meta Boxes
-- Split view with meta boxes even with legacy canvas. ([66706](https://github.com/WordPress/gutenberg/pull/66706))
-
-
-
-
-## Contributors
-
-The following contributors merged PRs in this release:
-
-@getdave @ramonjd @stokesman
-
-
-= 19.8.0-rc.1 =
-
+= 19.8.0 =
 
 ## Changelog
 
@@ -88,9 +61,6 @@ The following contributors merged PRs in this release:
 
 ### Bug Fixes
 
-
-
-
 #### Block Library
 - Fix block mover clickable area. ([67261](https://github.com/WordPress/gutenberg/pull/67261))
 - Fix dropping media from inserter into Cover block. ([67056](https://github.com/WordPress/gutenberg/pull/67056))
@@ -114,6 +84,8 @@ The following contributors merged PRs in this release:
 - Rich text: Preserve comments. ([62128](https://github.com/WordPress/gutenberg/pull/62128))
 - Fix TS types for the editor package. ([67196](https://github.com/WordPress/gutenberg/pull/67196))
 - PostTitle: Exit early when post type doesn't support titles. ([67086](https://github.com/WordPress/gutenberg/pull/67086))
+- Split view with meta boxes even with legacy canvas. ([66706](https://github.com/WordPress/gutenberg/pull/66706))
+- Edit Site: Styles nav item does not open on mobile for themes without style variations. ([67550](https://github.com/WordPress/gutenberg/pull/67550))
 
 #### Global Styles
 - Avoid zooming out when browsing styles if the preview mode is active. ([67190](https://github.com/WordPress/gutenberg/pull/67190))
@@ -141,6 +113,7 @@ The following contributors merged PRs in this release:
 - Zoom In/Out to correct canvas location. ([66917](https://github.com/WordPress/gutenberg/pull/66917))
 - Zoom in/out to correct location. ([67126](https://github.com/WordPress/gutenberg/pull/67126))
 - Zoom Out: Disable zooming out when Distraction Free mode is activated. ([67028](https://github.com/WordPress/gutenberg/pull/67028))
+- Disable Zoom Out if no section root to allow for Theme opt in. ([67232](https://github.com/WordPress/gutenberg/pull/67232))
 
 #### Layout
 - Allow flex justification controls to be disabled at the block level. ([67059](https://github.com/WordPress/gutenberg/pull/67059))
@@ -271,7 +244,9 @@ The following PRs were merged by first-time contributors:
 
 The following contributors merged PRs in this release:
 
-@aaronrobertshaw @afercia @ajlende @akasunil @AKSHAT2802 @benazeer-ben @benniledl @carolinan @cbravobernal @desrosj @dhruvang21 @dougwollison @ellatrix @getdave @gigitux @gziolo @hbhalodia @himanshupathak95 @Infinite-Null @jeryj @jsnajdr @juanfra @louwie17 @Mamaduka @manzoorwanijk @matiasbenedetto @mcsf @michalczaplinski @miminari @mirka @ndiego @ntsekouras @oandregal @ockham @PARTHVATALIYA @ramonjd @SainathPoojary @SantosGuillamot @sarthaknagoshe2002 @snehapatil2001 @Soean @Sukhendu2002 @t-hamano @talldan @tellthemachines @TylerB24890 @tyxla @up1512001 @vipul0425 @yogeshbhutkar @youknowriad
+@aaronrobertshaw @afercia @ajlende @akasunil @AKSHAT2802 @benazeer-ben @benniledl @carolinan @cbravobernal @desrosj @dhruvang21 @dougwollison @ellatrix @getdave @gigitux @gziolo @hbhalodia @himanshupathak95 @Infinite-Null @jeryj @jsnajdr @juanfra @louwie17 @Mamaduka @manzoorwanijk @matiasbenedetto @mcsf @michalczaplinski @miminari @mirka @ndiego @ntsekouras @oandregal @ockham @PARTHVATALIYA @ramonjd @SainathPoojary @SantosGuillamot @sarthaknagoshe2002 @snehapatil2001 @Soean @stokesman @Sukhendu2002 @t-hamano @talldan @tellthemachines @TylerB24890 @tyxla @up1512001 @vipul0425 @yogeshbhutkar @youknowriad
+
+
 
 
 = 19.7.0 =
