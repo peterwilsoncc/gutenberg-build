@@ -1422,6 +1422,7 @@ function RawHTML({
 }
 
 ;// ./packages/element/build-module/serialize.js
+/* wp:polyfill */
 /**
  * Parts of this source were derived and modified from fast-react-render,
  * released under the MIT license.

@@ -159,16 +159,7 @@ function gutenberg_render_block_core_navigation_submenu( $attributes, $content, 
 		$html .= '>';
 		// End appending HTML attributes to anchor tag.
 
-		$html .= '<span class="wp-block-navigation-item__label">';
 		$html .= $label;
-		$html .= '</span>';
-
-		// Add description if available.
-		if ( ! empty( $attributes['description'] ) ) {
-			$html .= '<span class="wp-block-navigation-item__description">';
-			$html .= wp_kses_post( $attributes['description'] );
-			$html .= '</span>';
-		}
 
 		$html .= '</a>';
 		// End anchor tag content.
@@ -188,13 +179,6 @@ function gutenberg_render_block_core_navigation_submenu( $attributes, $content, 
 		$html .= $label;
 
 		$html .= '</span>';
-
-		// Add description if available.
-		if ( ! empty( $attributes['description'] ) ) {
-			$html .= '<span class="wp-block-navigation-item__description">';
-			$html .= wp_kses_post( $attributes['description'] );
-			$html .= '</span>';
-		}
 
 		$html .= '</button>';
 
@@ -238,7 +222,7 @@ function gutenberg_render_block_core_navigation_submenu( $attributes, $content, 
 
 		if ( strpos( $inner_blocks_html, 'current-menu-item' ) ) {
 			$tag_processor = new WP_HTML_Tag_Processor( $html );
-			while ( $tag_processor->next_tag( array( 'class_name' => 'wp-block-navigation-item' ) ) ) {
+			while ( $tag_processor->next_tag( array( 'class_name' => 'wp-block-navigation-item__content' ) ) ) {
 				$tag_processor->add_class( 'current-menu-ancestor' );
 			}
 			$html = $tag_processor->get_updated_html();

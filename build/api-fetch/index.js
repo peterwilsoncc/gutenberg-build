@@ -321,6 +321,7 @@ const fetchAllMiddleware = async (options, next) => {
 /* harmony default export */ const fetch_all_middleware = (fetchAllMiddleware);
 
 ;// ./packages/api-fetch/build-module/middlewares/http-v1.js
+/* wp:polyfill */
 /**
  * Set of HTTP methods which are eligible to be overridden.
  *

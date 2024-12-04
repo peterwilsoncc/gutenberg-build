@@ -13755,8 +13755,7 @@ function CoverInspectorControls({
   setOverlayColor,
   coverRef,
   currentSettings,
-  updateDimRatio,
-  featuredImage
+  updateDimRatio
 }) {
   const {
     useFeaturedImage,
@@ -13789,9 +13788,8 @@ function CoverInspectorControls({
   const image = (0,external_wp_data_namespaceObject.useSelect)(select => id && isImageBackground ? select(external_wp_coreData_namespaceObject.store).getMedia(id, {
     context: 'view'
   }) : null, [id, isImageBackground]);
-  const currentBackgroundImage = useFeaturedImage ? featuredImage : image;
   function updateImage(newSizeSlug) {
-    const newUrl = currentBackgroundImage?.media_details?.sizes?.[newSizeSlug]?.source_url;
+    const newUrl = image?.media_details?.sizes?.[newSizeSlug]?.source_url;
     if (!newUrl) {
       return null;
     }
@@ -13802,7 +13800,7 @@ function CoverInspectorControls({
   }
   const imageSizeOptions = imageSizes?.filter(({
     slug
-  }) => currentBackgroundImage?.media_details?.sizes?.[slug]?.source_url)?.map(({
+  }) => image?.media_details?.sizes?.[slug]?.source_url)?.map(({
     name,
     slug
   }) => ({
@@ -13921,7 +13919,7 @@ function CoverInspectorControls({
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("br", {}), (0,external_wp_i18n_namespaceObject.__)('Leave empty if decorative.')]
             })
           })
-        }), !!imageSizeOptions?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResolutionTool, {
+        }), !useFeaturedImage && !!imageSizeOptions?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResolutionTool, {
           value: sizeSlug,
           onChange: updateImage,
           options: imageSizeOptions,
@@ -14959,7 +14957,6 @@ function CoverEdit({
     postType
   }
 }) {
-  var _media$media_details$;
   const {
     contentPosition,
     id,
@@ -14990,7 +14987,7 @@ function CoverEdit({
   const media = (0,external_wp_data_namespaceObject.useSelect)(select => featuredImage && select(external_wp_coreData_namespaceObject.store).getMedia(featuredImage, {
     context: 'view'
   }), [featuredImage]);
-  const mediaUrl = (_media$media_details$ = media?.media_details?.sizes?.[sizeSlug]?.source_url) !== null && _media$media_details$ !== void 0 ? _media$media_details$ : media?.source_url;
+  const mediaUrl = media?.source_url;
 
   // User can change the featured image outside of the block, but we still
   // need to update the block when that happens. This effect should only
@@ -15227,8 +15224,7 @@ function CoverEdit({
     currentSettings: currentSettings,
     toggleUseFeaturedImage: toggleUseFeaturedImage,
     updateDimRatio: onUpdateDimRatio,
-    onClearMedia: onClearMedia,
-    featuredImage: media
+    onClearMedia: onClearMedia
   });
   const resizableCoverProps = {
     className: 'block-library-cover__resize-container',
@@ -30358,7 +30354,7 @@ function useMerge(clientId, onMerge) {
    * return the next list item of the parent list item if it exists.
    *
    * @param {string} id A list item client ID.
-   * @return {?string} The client ID of the next list item.
+   * @return {string?} The client ID of the next list item.
    */
   function _getNextId(id) {
     const next = getNextBlockClientId(id);
@@ -30377,7 +30373,7 @@ function useMerge(clientId, onMerge) {
    * line, regardless of indentation level.
    *
    * @param {string} id The client ID of the current list item.
-   * @return {?string} The client ID of the next list item.
+   * @return {string?} The client ID of the next list item.
    */
   function getNextId(id) {
     const order = getBlockOrder(id);
@@ -35147,18 +35143,11 @@ function DeletedNavigationWarning({
   onCreateNew,
   isNotice = false
 }) {
-  const [isButtonDisabled, setIsButtonDisabled] = (0,external_wp_element_namespaceObject.useState)(false);
-  const handleButtonClick = () => {
-    setIsButtonDisabled(true);
-    onCreateNew();
-  };
   const message = (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.__)('Navigation Menu has been deleted or is unavailable. <button>Create a new Menu?</button>'), {
     button: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       __next40pxDefaultSize: true,
-      onClick: handleButtonClick,
-      variant: "link",
-      disabled: isButtonDisabled,
-      accessibleWhenDisabled: true
+      onClick: onCreateNew,
+      variant: "link"
     })
   });
   return isNotice ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
@@ -38692,9 +38681,6 @@ function NavigationSubmenuEdit({
               setOpenedBy(ref.current);
             }
           }
-        }), description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          className: "wp-block-navigation-item__description",
-          children: description
         }), !openSubmenusOnClick && isLinkOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUI, {
           clientId: clientId,
           link: attributes,
@@ -39020,6 +39006,7 @@ const nextpage_init = () => initBlock({
 });
 
 ;// ./packages/block-library/build-module/pattern/recursion-detector.js
+/* wp:polyfill */
 /**
  * THIS MODULE IS INTENTIONALLY KEPT WITHIN THE PATTERN BLOCK'S SOURCE.
  *
@@ -47288,6 +47275,35 @@ function EnhancedPaginationControl({
   });
 }
 
+;// ./packages/block-library/build-module/query/edit/query-toolbar.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+function QueryToolbar({
+  openPatternSelectionModal,
+  name,
+  clientId
+}) {
+  const hasPatterns = !!usePatterns(clientId, name).length;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: hasPatterns && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+      className: "wp-block-template-part__block-control-group",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+        onClick: openPatternSelectionModal,
+        children: (0,external_wp_i18n_namespaceObject.__)('Replace')
+      })
+    })
+  });
+}
+
 ;// ./packages/block-library/build-module/query/edit/inspector-controls/order-control.js
 /**
  * WordPress dependencies
@@ -47333,6 +47349,7 @@ function OrderControl({
 /* harmony default export */ const order_control = (OrderControl);
 
 ;// ./packages/block-library/build-module/query/edit/inspector-controls/author-control.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -47416,6 +47433,7 @@ function AuthorControl({
 /* harmony default export */ const author_control = (AuthorControl);
 
 ;// ./packages/block-library/build-module/query/edit/inspector-controls/parent-control.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -47556,6 +47574,7 @@ function ParentControl({
 /* harmony default export */ const parent_control = (ParentControl);
 
 ;// ./packages/block-library/build-module/query/edit/inspector-controls/taxonomy-controls.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -48347,211 +48366,6 @@ function EnhancedPaginationModal({
   });
 }
 
-;// ./packages/block-library/build-module/utils/search-patterns.js
-/**
- * External dependencies
- */
-
-
-/**
- * Sanitizes the search input string.
- *
- * @param {string} input The search input to normalize.
- *
- * @return {string} The normalized search input.
- */
-function normalizeSearchInput(input = '') {
-  // Disregard diacritics.
-  input = remove_accents_default()(input);
-
-  // Trim & Lowercase.
-  input = input.trim().toLowerCase();
-  return input;
-}
-
-/**
- * Get the search rank for a given pattern and a specific search term.
- *
- * @param {Object} pattern     Pattern to rank
- * @param {string} searchValue Search term
- * @return {number} A pattern search rank
- */
-function getPatternSearchRank(pattern, searchValue) {
-  const normalizedSearchValue = normalizeSearchInput(searchValue);
-  const normalizedTitle = normalizeSearchInput(pattern.title);
-  let rank = 0;
-  if (normalizedSearchValue === normalizedTitle) {
-    rank += 30;
-  } else if (normalizedTitle.startsWith(normalizedSearchValue)) {
-    rank += 20;
-  } else {
-    const searchTerms = normalizedSearchValue.split(' ');
-    const hasMatchedTerms = searchTerms.every(searchTerm => normalizedTitle.includes(searchTerm));
-
-    // Prefer pattern with every search word in the title.
-    if (hasMatchedTerms) {
-      rank += 10;
-    }
-  }
-  return rank;
-}
-
-/**
- * Filters an pattern list given a search term.
- *
- * @param {Array}  patterns    Item list
- * @param {string} searchValue Search input.
- *
- * @return {Array} Filtered pattern list.
- */
-function searchPatterns(patterns = [], searchValue = '') {
-  if (!searchValue) {
-    return patterns;
-  }
-  const rankedPatterns = patterns.map(pattern => {
-    return [pattern, getPatternSearchRank(pattern, searchValue)];
-  }).filter(([, rank]) => rank > 0);
-  rankedPatterns.sort(([, rank1], [, rank2]) => rank2 - rank1);
-  return rankedPatterns.map(([pattern]) => pattern);
-}
-
-;// ./packages/block-library/build-module/query/edit/pattern-selection.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-function PatternSelectionModal({
-  clientId,
-  attributes,
-  setIsPatternSelectionModalOpen
-}) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
-    overlayClassName: "block-library-query-pattern__selection-modal",
-    title: (0,external_wp_i18n_namespaceObject.__)('Choose a pattern'),
-    onRequestClose: () => setIsPatternSelectionModalOpen(false),
-    isFullScreen: true,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternSelection, {
-      clientId: clientId,
-      attributes: attributes
-    })
-  });
-}
-function useBlockPatterns(clientId, attributes) {
-  const blockNameForPatterns = useBlockNameForPatterns(clientId, attributes);
-  return usePatterns(clientId, blockNameForPatterns);
-}
-function PatternSelection({
-  clientId,
-  attributes,
-  showTitlesAsTooltip = false,
-  showSearch = true
-}) {
-  const [searchValue, setSearchValue] = (0,external_wp_element_namespaceObject.useState)('');
-  const {
-    replaceBlock,
-    selectBlock
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
-  const blockPatterns = useBlockPatterns(clientId, attributes);
-  /*
-   * When we preview Query Loop blocks we should prefer the current
-   * block's postType, which is passed through block context.
-   */
-  const blockPreviewContext = (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    previewPostType: attributes.query.postType
-  }), [attributes.query.postType]);
-  const filteredBlockPatterns = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return searchPatterns(blockPatterns, searchValue);
-  }, [blockPatterns, searchValue]);
-  const onBlockPatternSelect = (pattern, blocks) => {
-    const {
-      newBlocks,
-      queryClientIds
-    } = getTransformedBlocksFromPattern(blocks, attributes);
-    replaceBlock(clientId, newBlocks);
-    if (queryClientIds[0]) {
-      selectBlock(queryClientIds[0]);
-    }
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-    className: "block-library-query-pattern__selection-content",
-    children: [showSearch && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "block-library-query-pattern__selection-search",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SearchControl, {
-        __nextHasNoMarginBottom: true,
-        onChange: setSearchValue,
-        value: searchValue,
-        label: (0,external_wp_i18n_namespaceObject.__)('Search'),
-        placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockContextProvider, {
-      value: blockPreviewContext,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockPatternsList, {
-        blockPatterns: filteredBlockPatterns,
-        onClickPattern: onBlockPatternSelect,
-        showTitlesAsTooltip: showTitlesAsTooltip
-      })
-    })]
-  });
-}
-
-;// ./packages/block-library/build-module/query/edit/query-toolbar.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-function QueryToolbar({
-  clientId,
-  attributes
-}) {
-  const hasPatterns = useBlockPatterns(clientId, attributes).length;
-  if (!hasPatterns) {
-    return null;
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
-    className: "wp-block-template-part__block-control-group",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalDropdownContentWrapper, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
-        contentClassName: "block-editor-block-settings-menu__popover",
-        focusOnMount: "firstElement",
-        expandOnMobile: true,
-        renderToggle: ({
-          isOpen,
-          onToggle
-        }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-          "aria-haspopup": "true",
-          "aria-expanded": isOpen,
-          onClick: onToggle,
-          children: (0,external_wp_i18n_namespaceObject.__)('Change design')
-        }),
-        renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternSelection, {
-          clientId: clientId,
-          attributes: attributes,
-          showSearch: false,
-          showTitlesAsTooltip: true
-        })
-      })
-    })
-  });
-}
-
 ;// ./packages/block-library/build-module/query/edit/query-content.js
 /**
  * WordPress dependencies
@@ -48578,9 +48392,10 @@ const query_content_TEMPLATE = [['core/post-template']];
 function QueryContent({
   attributes,
   setAttributes,
+  openPatternSelectionModal,
+  name,
   clientId,
-  context,
-  name
+  context
 }) {
   const {
     queryId,
@@ -48692,7 +48507,6 @@ function QueryContent({
       clientId: clientId
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QueryInspectorControls, {
-        name: name,
         attributes: attributes,
         setQuery: updateQuery,
         setDisplayLayout: updateDisplayLayout,
@@ -48702,8 +48516,11 @@ function QueryContent({
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QueryToolbar, {
+        name: name,
+        clientId: clientId,
         attributes: attributes,
-        clientId: clientId
+        setQuery: updateQuery,
+        openPatternSelectionModal: openPatternSelectionModal
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       group: "advanced",
@@ -48756,7 +48573,6 @@ function QueryContent({
  */
 
 
-
 function QueryPlaceholder({
   attributes,
   clientId,
@@ -48765,20 +48581,27 @@ function QueryPlaceholder({
 }) {
   const [isStartingBlank, setIsStartingBlank] = (0,external_wp_element_namespaceObject.useState)(false);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+  const blockNameForPatterns = useBlockNameForPatterns(clientId, attributes);
   const {
     blockType,
-    activeBlockVariation
+    activeBlockVariation,
+    hasPatterns
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getActiveBlockVariation,
       getBlockType
     } = select(external_wp_blocks_namespaceObject.store);
+    const {
+      getBlockRootClientId,
+      getPatternsByBlockTypes
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    const rootClientId = getBlockRootClientId(clientId);
     return {
       blockType: getBlockType(name),
-      activeBlockVariation: getActiveBlockVariation(name, attributes)
+      activeBlockVariation: getActiveBlockVariation(name, attributes),
+      hasPatterns: !!getPatternsByBlockTypes(blockNameForPatterns, rootClientId).length
     };
-  }, [name, attributes]);
-  const hasPatterns = !!useBlockPatterns(clientId, attributes).length;
+  }, [name, blockNameForPatterns, clientId, attributes]);
   const icon = activeBlockVariation?.icon?.src || activeBlockVariation?.icon || blockType?.icon?.src;
   const label = activeBlockVariation?.title || blockType?.title;
   if (isStartingBlank) {
@@ -48833,6 +48656,147 @@ function QueryVariationPicker({
           replaceInnerBlocks(clientId, (0,external_wp_blocks_namespaceObject.createBlocksFromInnerBlocksTemplate)(variation.innerBlocks), false);
         }
       }
+    })
+  });
+}
+
+;// ./packages/block-library/build-module/utils/search-patterns.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * Sanitizes the search input string.
+ *
+ * @param {string} input The search input to normalize.
+ *
+ * @return {string} The normalized search input.
+ */
+function normalizeSearchInput(input = '') {
+  // Disregard diacritics.
+  input = remove_accents_default()(input);
+
+  // Trim & Lowercase.
+  input = input.trim().toLowerCase();
+  return input;
+}
+
+/**
+ * Get the search rank for a given pattern and a specific search term.
+ *
+ * @param {Object} pattern     Pattern to rank
+ * @param {string} searchValue Search term
+ * @return {number} A pattern search rank
+ */
+function getPatternSearchRank(pattern, searchValue) {
+  const normalizedSearchValue = normalizeSearchInput(searchValue);
+  const normalizedTitle = normalizeSearchInput(pattern.title);
+  let rank = 0;
+  if (normalizedSearchValue === normalizedTitle) {
+    rank += 30;
+  } else if (normalizedTitle.startsWith(normalizedSearchValue)) {
+    rank += 20;
+  } else {
+    const searchTerms = normalizedSearchValue.split(' ');
+    const hasMatchedTerms = searchTerms.every(searchTerm => normalizedTitle.includes(searchTerm));
+
+    // Prefer pattern with every search word in the title.
+    if (hasMatchedTerms) {
+      rank += 10;
+    }
+  }
+  return rank;
+}
+
+/**
+ * Filters an pattern list given a search term.
+ *
+ * @param {Array}  patterns    Item list
+ * @param {string} searchValue Search input.
+ *
+ * @return {Array} Filtered pattern list.
+ */
+function searchPatterns(patterns = [], searchValue = '') {
+  if (!searchValue) {
+    return patterns;
+  }
+  const rankedPatterns = patterns.map(pattern => {
+    return [pattern, getPatternSearchRank(pattern, searchValue)];
+  }).filter(([, rank]) => rank > 0);
+  rankedPatterns.sort(([, rank1], [, rank2]) => rank2 - rank1);
+  return rankedPatterns.map(([pattern]) => pattern);
+}
+
+;// ./packages/block-library/build-module/query/edit/pattern-selection-modal.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function PatternSelectionModal({
+  clientId,
+  attributes,
+  setIsPatternSelectionModalOpen
+}) {
+  const [searchValue, setSearchValue] = (0,external_wp_element_namespaceObject.useState)('');
+  const {
+    replaceBlock,
+    selectBlock
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  const onBlockPatternSelect = (pattern, blocks) => {
+    const {
+      newBlocks,
+      queryClientIds
+    } = getTransformedBlocksFromPattern(blocks, attributes);
+    replaceBlock(clientId, newBlocks);
+    if (queryClientIds[0]) {
+      selectBlock(queryClientIds[0]);
+    }
+  };
+  // When we preview Query Loop blocks we should prefer the current
+  // block's postType, which is passed through block context.
+  const blockPreviewContext = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    previewPostType: attributes.query.postType
+  }), [attributes.query.postType]);
+  const blockNameForPatterns = useBlockNameForPatterns(clientId, attributes);
+  const blockPatterns = usePatterns(clientId, blockNameForPatterns);
+  const filteredBlockPatterns = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return searchPatterns(blockPatterns, searchValue);
+  }, [blockPatterns, searchValue]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
+    overlayClassName: "block-library-query-pattern__selection-modal",
+    title: (0,external_wp_i18n_namespaceObject.__)('Choose a pattern'),
+    onRequestClose: () => setIsPatternSelectionModalOpen(false),
+    isFullScreen: true,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      className: "block-library-query-pattern__selection-content",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        className: "block-library-query-pattern__selection-search",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SearchControl, {
+          __nextHasNoMarginBottom: true,
+          onChange: setSearchValue,
+          value: searchValue,
+          label: (0,external_wp_i18n_namespaceObject.__)('Search'),
+          placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockContextProvider, {
+        value: blockPreviewContext,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockPatternsList, {
+          blockPatterns: filteredBlockPatterns,
+          onClickPattern: onBlockPatternSelect
+        })
+      })]
     })
   });
 }
@@ -51618,10 +51582,12 @@ const external_wp_patterns_namespaceObject = window["wp"]["patterns"];
  */
 
 
+
 const {
   useLayoutClasses
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
+  isOverridableBlock,
   hasOverridableBlocks
 } = unlock(external_wp_patterns_namespaceObject.privateApis);
 const fullAlignments = ['full', 'wide', 'left', 'right'];
@@ -51649,6 +51615,15 @@ const useInferredLayout = (blocks, parentLayout) => {
     };
   }, [blocks, parentLayout]);
 };
+function setBlockEditMode(setEditMode, blocks, mode) {
+  blocks.forEach(block => {
+    const editMode = mode || (isOverridableBlock(block) ? 'contentOnly' : 'disabled');
+    setEditMode(block.clientId, editMode);
+    setBlockEditMode(setEditMode, block.innerBlocks,
+    // Disable editing for nested patterns.
+    block.name === block_name ? 'disabled' : mode);
+  });
+}
 function RecursionWarning() {
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -51716,6 +51691,7 @@ function ReusableBlockEdit({
     content
   },
   __unstableParentLayout: parentLayout,
+  clientId: patternClientId,
   setAttributes
 }) {
   const {
@@ -51727,21 +51703,35 @@ function ReusableBlockEdit({
   });
   const isMissing = hasResolved && !record;
   const {
+    setBlockEditingMode,
     __unstableMarkLastChangeAsPersistent
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const {
+    innerBlocks,
     onNavigateToEntityRecord,
+    editingMode,
     hasPatternOverridesSource
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getSettings
+      getBlocks,
+      getSettings,
+      getBlockEditingMode
     } = select(external_wp_blockEditor_namespaceObject.store);
     // For editing link to the site editor if the theme and user permissions support it.
     return {
+      innerBlocks: getBlocks(patternClientId),
       onNavigateToEntityRecord: getSettings().onNavigateToEntityRecord,
+      editingMode: getBlockEditingMode(patternClientId),
       hasPatternOverridesSource: !!(0,external_wp_blocks_namespaceObject.getBlockBindingsSource)('core/pattern-overrides')
     };
-  }, []);
+  }, [patternClientId]);
+
+  // Sync the editing mode of the pattern block with the inner blocks.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    setBlockEditMode(setBlockEditingMode, innerBlocks,
+    // Disable editing if the pattern itself is disabled.
+    editingMode === 'disabled' || !hasPatternOverridesSource ? 'disabled' : undefined);
+  }, [editingMode, innerBlocks, setBlockEditingMode, hasPatternOverridesSource]);
   const canOverrideBlocks = (0,external_wp_element_namespaceObject.useMemo)(() => hasPatternOverridesSource && hasOverridableBlocks(blocks), [hasPatternOverridesSource, blocks]);
   const {
     alignment,
@@ -51756,6 +51746,7 @@ function ReusableBlockEdit({
     })
   });
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
+    templateLock: 'all',
     layout,
     value: blocks,
     onInput: edit_NOOP,
@@ -53188,15 +53179,11 @@ function useDeprecatedOpacity(opacity, currentColor, setAttributes) {
 
 
 
-
 /**
  * Internal dependencies
  */
 
 
-const htmlElementMessages = {
-  div: (0,external_wp_i18n_namespaceObject.__)('The <div> element should only be used if the separator is a design element that should not be announced.')
-};
 function SeparatorEdit({
   attributes,
   setAttributes
@@ -53204,8 +53191,7 @@ function SeparatorEdit({
   const {
     backgroundColor,
     opacity,
-    style,
-    tagName
+    style
   } = attributes;
   const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseColorProps)(attributes);
   const currentColor = colorProps?.style?.backgroundColor;
@@ -53225,33 +53211,13 @@ function SeparatorEdit({
     color: currentColor,
     backgroundColor: currentColor
   };
-  const Wrapper = tagName === 'hr' ? external_wp_components_namespaceObject.HorizontalRule : tagName;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      group: "advanced",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('HTML element'),
-        options: [{
-          label: (0,external_wp_i18n_namespaceObject.__)('Default (<hr>)'),
-          value: 'hr'
-        }, {
-          label: '<div>',
-          value: 'div'
-        }],
-        value: tagName,
-        onChange: value => setAttributes({
-          tagName: value
-        }),
-        help: htmlElementMessages[tagName]
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Wrapper, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.HorizontalRule, {
       ...(0,external_wp_blockEditor_namespaceObject.useBlockProps)({
         className,
         style: hasCustomColor ? styles : undefined
       })
-    })]
+    })
   });
 }
 
@@ -53272,8 +53238,7 @@ function separatorSave({
   const {
     backgroundColor,
     style,
-    opacity,
-    tagName: Tag
+    opacity
   } = attributes;
   const customColor = style?.color?.background;
   const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetColorClassesAndStyles)(attributes);
@@ -53293,7 +53258,7 @@ function separatorSave({
     backgroundColor: colorProps?.style?.backgroundColor,
     color: colorClass ? undefined : customColor
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tag, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("hr", {
     ...external_wp_blockEditor_namespaceObject.useBlockProps.save({
       className,
       style: styles
@@ -53397,8 +53362,7 @@ const separator_deprecated_v1 = {
         color: {
           background: customColor
         }
-      } : undefined,
-      tagName: 'hr'
+      } : undefined
     };
   }
 };
@@ -53428,11 +53392,6 @@ const separator_metadata = {
     opacity: {
       type: "string",
       "default": "alpha-channel"
-    },
-    tagName: {
-      type: "string",
-      "enum": ["hr", "div"],
-      "default": "hr"
     }
   },
   supports: {
@@ -61585,6 +61544,7 @@ function transformInnerBlocks(innerBlocks = []) {
 }
 
 ;// ./packages/block-library/build-module/template-part/edit/import-controls.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -61741,7 +61701,7 @@ function TemplatePartImportControls({
  */
 
 
-const advanced_controls_htmlElementMessages = {
+const htmlElementMessages = {
   header: (0,external_wp_i18n_namespaceObject.__)('The <header> element should represent introductory content, typically a group of introductory or navigational aids.'),
   main: (0,external_wp_i18n_namespaceObject.__)('The <main> element should be used for the primary content of your document only.'),
   section: (0,external_wp_i18n_namespaceObject.__)("The <section> element should represent a standalone portion of the document that can't be better represented by another element."),
@@ -61821,7 +61781,7 @@ function TemplatePartAdvancedControls({
       onChange: value => setAttributes({
         tagName: value
       }),
-      help: advanced_controls_htmlElementMessages[tagName]
+      help: htmlElementMessages[tagName]
     }), !hasInnerBlocks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplatePartImportControls, {
       area: area,
       setAttributes: setAttributes
