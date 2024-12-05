@@ -19261,8 +19261,7 @@ const form_metadata = {
       }
     },
     __experimentalSelector: "form"
-  },
-  viewScript: "file:./view.min.js"
+  }
 };
 
 
