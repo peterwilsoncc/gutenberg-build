@@ -1945,7 +1945,6 @@ __webpack_require__.d(__webpack_exports__, {
   __unstableDisclosureContent: () => (/* reexport */ disclosure_DisclosureContent),
   __unstableGetAnimateClassName: () => (/* reexport */ getAnimateClassName),
   __unstableMotion: () => (/* reexport */ motion),
-  __unstableMotionContext: () => (/* reexport */ MotionContext),
   __unstableUseAutocompleteProps: () => (/* reexport */ useAutocompleteProps),
   __unstableUseCompositeState: () => (/* reexport */ useCompositeState),
   __unstableUseNavigateRegions: () => (/* reexport */ useNavigateRegions),
