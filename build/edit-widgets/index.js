@@ -3133,7 +3133,8 @@ function WidgetAreasBlockEditorProvider({
       templateLock: 'all',
       __experimentalSetIsInserterOpened: setIsInserterOpened,
       pageOnFront,
-      pageForPosts
+      pageForPosts,
+      editorTool: 'edit'
     };
   }, [hasUploadPermissions, blockEditorSettings, isFixedToolbarActive, isLargeViewport, keepCaretInsideBlock, reusableBlocks, setIsInserterOpened, pageOnFront, pageForPosts]);
   const widgetAreaId = use_last_selected_widget_area();
