@@ -40462,6 +40462,189 @@ function DataViews({
   });
 }
 
+;// ./packages/fields/build-module/actions/utils.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+function isTemplate(post) {
+  return post.type === 'wp_template';
+}
+function isTemplatePart(post) {
+  return post.type === 'wp_template_part';
+}
+function isTemplateOrTemplatePart(p) {
+  return p.type === 'wp_template' || p.type === 'wp_template_part';
+}
+function getItemTitle(item) {
+  if (typeof item.title === 'string') {
+    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title);
+  }
+  if (item.title && 'rendered' in item.title) {
+    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.rendered);
+  }
+  if (item.title && 'raw' in item.title) {
+    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.raw);
+  }
+  return '';
+}
+
+/**
+ * Check if a template is removable.
+ *
+ * @param template The template entity to check.
+ * @return Whether the template is removable.
+ */
+function isTemplateRemovable(template) {
+  if (!template) {
+    return false;
+  }
+  // In patterns list page we map the templates parts to a different object
+  // than the one returned from the endpoint. This is why we need to check for
+  // two props whether is custom or has a theme file.
+  return [template.source, template.source].includes('custom') && !Boolean(template.type === 'wp_template' && template?.plugin) && !template.has_theme_file;
+}
+
+;// ./packages/icons/build-module/library/lock-small.js
+/**
+ * WordPress dependencies
+ */
+
+
+const lockSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M15 11h-.2V9c0-1.5-1.2-2.8-2.8-2.8S9.2 7.5 9.2 9v2H9c-.6 0-1 .4-1 1v4c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-4c0-.6-.4-1-1-1zm-1.8 0h-2.5V9c0-.7.6-1.2 1.2-1.2s1.2.6 1.2 1.2v2z"
+  })
+});
+/* harmony default export */ const lock_small = (lockSmall);
+
+;// ./packages/fields/build-module/fields/title/view.js
+/**
+ * External dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function BaseTitleView({
+  item,
+  className,
+  children
+}) {
+  const renderedTitle = getItemTitle(item);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+    className: dist_clsx('fields-field__title', className),
+    alignment: "center",
+    justify: "flex-start",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      children: renderedTitle || (0,external_wp_i18n_namespaceObject.__)('(no title)')
+    }), children]
+  });
+}
+function TitleView({
+  item
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BaseTitleView, {
+    item: item
+  });
+}
+
+;// ./packages/fields/build-module/lock-unlock.js
+/**
+ * WordPress dependencies
+ */
+
+const {
+  lock: build_module_lock_unlock_lock,
+  unlock: build_module_lock_unlock_unlock
+} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/fields');
+
+;// ./packages/fields/build-module/fields/pattern-title/view.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+// @ts-ignore
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+const {
+  PATTERN_TYPES: view_PATTERN_TYPES
+} = build_module_lock_unlock_unlock(external_wp_patterns_namespaceObject.privateApis);
+function PatternTitleView({
+  item
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BaseTitleView, {
+    item: item,
+    className: "fields-field__pattern-title",
+    children: item.type === view_PATTERN_TYPES.theme && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
+      placement: "top",
+      text: (0,external_wp_i18n_namespaceObject.__)('This pattern cannot be edited.'),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+        icon: lock_small,
+        size: 24
+      })
+    })
+  });
+}
+
+;// ./packages/fields/build-module/fields/pattern-title/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const patternTitleField = {
+  type: 'text',
+  id: 'title',
+  label: (0,external_wp_i18n_namespaceObject.__)('Title'),
+  placeholder: (0,external_wp_i18n_namespaceObject.__)('No title'),
+  getValue: ({
+    item
+  }) => getItemTitle(item),
+  render: PatternTitleView,
+  enableHiding: false,
+  enableGlobalSearch: true
+};
+
+/**
+ * Title for the pattern entity.
+ */
+/* harmony default export */ const pattern_title = (patternTitleField);
+
 ;// ./packages/edit-site/build-module/components/page-patterns/use-pattern-settings.js
 /**
  * WordPress dependencies
@@ -41030,23 +41213,6 @@ const useEditPostAction = () => {
   }), [history]);
 };
 
-;// ./packages/icons/build-module/library/lock-small.js
-/**
- * WordPress dependencies
- */
-
-
-const lockSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M15 11h-.2V9c0-1.5-1.2-2.8-2.8-2.8S9.2 7.5 9.2 9v2H9c-.6 0-1 .4-1 1v4c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-4c0-.6-.4-1-1-1zm-1.8 0h-2.5V9c0-.7.6-1.2 1.2-1.2s1.2.6 1.2 1.2v2z"
-  })
-});
-/* harmony default export */ const lock_small = (lockSmall);
-
 ;// ./packages/icons/build-module/library/plugins.js
 /**
  * WordPress dependencies
@@ -41197,7 +41363,6 @@ function useAddedBy(postType, postId) {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -41273,51 +41438,6 @@ const previewField = {
   id: 'preview',
   render: PreviewField,
   enableSorting: false
-};
-function TitleField({
-  item
-}) {
-  const isUserPattern = item.type === PATTERN_TYPES.user;
-  const isTemplatePart = item.type === TEMPLATE_PART_POST_TYPE;
-  const {
-    onClick
-  } = fields_useLink(`/${item.type}/${isUserPattern || isTemplatePart ? item.id : item.name}?canvas=edit`);
-  const title = (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(defaultGetTitle(item));
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-    alignment: "center",
-    justify: "flex-start",
-    spacing: 2,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexBlock, {
-      className: "edit-site-patterns__pattern-title",
-      children: item.type === PATTERN_TYPES.theme ? title : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        __next40pxDefaultSize: true,
-        variant: "link",
-        onClick: onClick
-        // Required for the grid's roving tab index system.
-        // See https://github.com/WordPress/gutenberg/pull/51898#discussion_r1243399243.
-        ,
-        tabIndex: "-1",
-        children: title
-      })
-    }), item.type === PATTERN_TYPES.theme && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
-      placement: "top",
-      text: (0,external_wp_i18n_namespaceObject.__)('This pattern cannot be edited.'),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-        className: "edit-site-patterns__pattern-lock-icon",
-        icon: lock_small,
-        size: 24
-      })
-    })]
-  });
-}
-const titleField = {
-  label: (0,external_wp_i18n_namespaceObject.__)('Title'),
-  id: 'title',
-  getValue: ({
-    item
-  }) => item.title?.raw || item.title,
-  render: TitleField,
-  enableHiding: false
 };
 const SYNC_FILTERS = [{
   value: PATTERN_SYNC_TYPES.full,
@@ -41408,6 +41528,7 @@ const templatePartAuthorField = {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -41427,7 +41548,8 @@ const {
   usePostActions
 } = unlock(external_wp_editor_namespaceObject.privateApis);
 const {
-  useLocation: page_patterns_useLocation
+  useLocation: page_patterns_useLocation,
+  useHistory: page_patterns_useHistory
 } = unlock(external_wp_router_namespaceObject.privateApis);
 const page_patterns_EMPTY_ARRAY = [];
 const defaultLayouts = {
@@ -41468,6 +41590,7 @@ function DataviewsPatterns() {
       categoryId: categoryIdFromURL
     }
   } = page_patterns_useLocation();
+  const history = page_patterns_useHistory();
   const categoryId = categoryIdFromURL || PATTERN_DEFAULT_CATEGORY;
   const [view, setView] = (0,external_wp_element_namespaceObject.useState)(DEFAULT_VIEW);
   const previousCategoryId = (0,external_wp_compose_namespaceObject.usePrevious)(categoryId);
@@ -41501,7 +41624,7 @@ function DataviewsPatterns() {
     }));
   }, [records]);
   const fields = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const _fields = [previewField, titleField];
+    const _fields = [previewField, pattern_title];
     if (postType === PATTERN_TYPES.user) {
       _fields.push(patternStatusField);
     } else if (postType === TEMPLATE_PART_POST_TYPE) {
@@ -41579,6 +41702,10 @@ function DataviewsPatterns() {
           return (_item$name = item.name) !== null && _item$name !== void 0 ? _item$name : item.id;
         },
         isLoading: isResolving,
+        isItemClickable: item => item.type !== PATTERN_TYPES.theme,
+        onClickItem: item => {
+          history.navigate(`/${item.type}/${[PATTERN_TYPES.user, TEMPLATE_PART_POST_TYPE].includes(item.type) ? item.id : item.name}?canvas=edit`);
+        },
         view: view,
         onChangeView: setView,
         defaultLayouts: defaultLayouts
@@ -41744,6 +41871,37 @@ function SidebarNavigationScreenTemplatesBrowse({
     content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsTemplatesSidebarContent, {})
   });
 }
+
+;// ./packages/fields/build-module/fields/template-title/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const templateTitleField = {
+  type: 'text',
+  label: (0,external_wp_i18n_namespaceObject.__)('Template'),
+  placeholder: (0,external_wp_i18n_namespaceObject.__)('No title'),
+  id: 'title',
+  getValue: ({
+    item
+  }) => getItemTitle(item),
+  render: TitleView,
+  enableHiding: false,
+  enableGlobalSearch: true
+};
+
+/**
+ * Title for the template entity.
+ */
+/* harmony default export */ const template_title = (templateTitleField);
 
 ;// ./packages/icons/build-module/library/home.js
 /**
@@ -43589,8 +43747,7 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
 
 
 const {
-  useLink: page_templates_fields_useLink,
-  Link
+  useLink: page_templates_fields_useLink
 } = unlock(external_wp_router_namespaceObject.privateApis);
 const {
   useGlobalStyle: page_templates_fields_useGlobalStyle
@@ -43641,24 +43798,6 @@ const fields_previewField = {
   id: 'preview',
   render: fields_PreviewField,
   enableSorting: false
-};
-function fields_TitleField({
-  item
-}) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Link, {
-    to: `/${item.type}/${item.id}?canvas=edit`,
-    children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title?.rendered) || (0,external_wp_i18n_namespaceObject.__)('(no title)')
-  });
-}
-const fields_titleField = {
-  label: (0,external_wp_i18n_namespaceObject.__)('Template'),
-  id: 'title',
-  getValue: ({
-    item
-  }) => item.title?.rendered,
-  render: fields_TitleField,
-  enableHiding: false,
-  enableGlobalSearch: true
 };
 const descriptionField = {
   label: (0,external_wp_i18n_namespaceObject.__)('Description'),
@@ -43719,6 +43858,7 @@ const authorField = {
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -43867,7 +44007,7 @@ function PageTemplates() {
       label: author
     }));
   }, [records]);
-  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [fields_previewField, fields_titleField, descriptionField, {
+  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [fields_previewField, template_title, descriptionField, {
     ...authorField,
     elements: authors
   }], [authors]);
@@ -43904,6 +44044,12 @@ function PageTemplates() {
       view: view,
       onChangeView: onChangeView,
       onChangeSelection: onChangeSelection,
+      isItemClickable: () => true,
+      onClickItem: ({
+        id
+      }) => {
+        history.navigate(`/wp_template/${id}?canvas=edit`);
+      },
       selection: selection,
       defaultLayouts: page_templates_defaultLayouts
     }, activeView)
