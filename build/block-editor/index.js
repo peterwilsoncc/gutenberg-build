@@ -21949,7 +21949,6 @@ function BlockSupportSlotContainer({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -21974,16 +21973,6 @@ function InspectorControlsSlot({
   }
   const slotFill = inspector_controls_groups[group];
   const fills = (0,external_wp_components_namespaceObject.__experimentalUseSlotFills)(slotFill?.name);
-  const motionContextValue = (0,external_wp_element_namespaceObject.useContext)(external_wp_components_namespaceObject.__unstableMotionContext);
-  const computedFillProps = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    var _fillProps$forwardedC;
-    return {
-      ...fillProps,
-      forwardedContext: [...((_fillProps$forwardedC = fillProps?.forwardedContext) !== null && _fillProps$forwardedC !== void 0 ? _fillProps$forwardedC : []), [external_wp_components_namespaceObject.__unstableMotionContext.Provider, {
-        value: motionContextValue
-      }]]
-    };
-  }, [motionContextValue, fillProps]);
   if (!slotFill) {
      false ? 0 : void 0;
     return null;
@@ -22000,14 +21989,14 @@ function InspectorControlsSlot({
       label: label,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockSupportSlotContainer, {
         ...props,
-        fillProps: computedFillProps,
+        fillProps: fillProps,
         Slot: Slot
       })
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Slot, {
     ...props,
-    fillProps: computedFillProps,
+    fillProps: fillProps,
     bubblesVirtually: true
   });
 }
