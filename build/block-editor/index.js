@@ -73694,13 +73694,10 @@ function SkipToSelectedBlock() {
   }) : null;
 }
 
-;// external ["wp","wordcount"]
-const external_wp_wordcount_namespaceObject = window["wp"]["wordcount"];
 ;// ./packages/block-editor/build-module/components/multi-selection-inspector/index.js
 /**
  * WordPress dependencies
  */
-
 
 
 
@@ -73713,33 +73710,18 @@ const external_wp_wordcount_namespaceObject = window["wp"]["wordcount"];
 
 
 function MultiSelectionInspector() {
-  const {
-    blocks
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getMultiSelectedBlocks
-    } = select(store);
-    return {
-      blocks: getMultiSelectedBlocks()
-    };
-  }, []);
-  const words = (0,external_wp_wordcount_namespaceObject.count)((0,external_wp_blocks_namespaceObject.serialize)(blocks), 'words');
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+  const selectedBlockCount = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getSelectedBlockCount(), []);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+    justify: "flex-start",
+    spacing: 2,
     className: "block-editor-multi-selection-inspector__card",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_icon, {
       icon: library_copy,
       showColors: true
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      className: "block-editor-multi-selection-inspector__card-content",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "block-editor-multi-selection-inspector__card-title",
-        children: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of blocks */
-        (0,external_wp_i18n_namespaceObject._n)('%d Block', '%d Blocks', blocks.length), blocks.length)
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "block-editor-multi-selection-inspector__card-description",
-        children: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of words */
-        (0,external_wp_i18n_namespaceObject._n)('%d word selected.', '%d words selected.', words), words)
-      })]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "block-editor-multi-selection-inspector__card-title",
+      children: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of blocks */
+      (0,external_wp_i18n_namespaceObject._n)('%d Block', '%d Blocks', selectedBlockCount), selectedBlockCount)
     })]
   });
 }
