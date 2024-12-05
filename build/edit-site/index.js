@@ -37908,23 +37908,11 @@ function ActionsMenuGroup({
 }) {
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_Menu.Group, {
-    children: actions.map(action => {
-      if ('RenderModal' in action) {
-        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionWithModal, {
-          action: action,
-          items: [item],
-          ActionTrigger: MenuItemTrigger
-        }, action.id);
-      }
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuItemTrigger, {
-        action: action,
-        onClick: () => {
-          action.callback([item], {
-            registry
-          });
-        },
-        items: [item]
-      }, action.id);
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsList, {
+      actions: actions,
+      item: item,
+      registry: registry,
+      ActionTrigger: MenuItemTrigger
     })
   });
 }
@@ -38011,15 +37999,28 @@ function PrimaryActions({
   if (!Array.isArray(actions) || actions.length === 0) {
     return null;
   }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsList, {
+    actions: actions,
+    item: item,
+    registry: registry,
+    ActionTrigger: ButtonTrigger
+  });
+}
+function ActionsList({
+  item,
+  actions,
+  registry,
+  ActionTrigger
+}) {
   return actions.map(action => {
     if ('RenderModal' in action) {
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionWithModal, {
         action: action,
         items: [item],
-        ActionTrigger: ButtonTrigger
+        ActionTrigger: ActionTrigger
       }, action.id);
     }
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ButtonTrigger, {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionTrigger, {
       action: action,
       onClick: () => {
         action.callback([item], {
