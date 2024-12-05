@@ -37805,8 +37805,7 @@ function NavigationLinkEdit({
               __unstableOnSplitAtEnd: () => insertBlocksAfter((0,external_wp_blocks_namespaceObject.createBlock)('core/navigation-link')),
               "aria-label": (0,external_wp_i18n_namespaceObject.__)('Navigation link text'),
               placeholder: itemLabelPlaceholder,
-              withoutInteractiveFormatting: true,
-              allowedFormats: ['core/bold', 'core/italic', 'core/image', 'core/strikethrough']
+              withoutInteractiveFormatting: true
             }), description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
               className: "wp-block-navigation-item__description",
               children: description
@@ -38685,7 +38684,6 @@ function NavigationSubmenuEdit({
           "aria-label": (0,external_wp_i18n_namespaceObject.__)('Navigation link text'),
           placeholder: itemLabelPlaceholder,
           withoutInteractiveFormatting: true,
-          allowedFormats: ['core/bold', 'core/italic', 'core/image', 'core/strikethrough'],
           onClick: () => {
             if (!openSubmenusOnClick && !url) {
               setIsLinkOpen(true);
