@@ -1245,6 +1245,13 @@ class RichTextData {
       html
     }));
   }
+  /**
+   * Create a RichTextData instance from an HTML element.
+   *
+   * @param {HTMLElement}                    htmlElement The HTML element to create the instance from.
+   * @param {{preserveWhiteSpace?: boolean}} options     Options.
+   * @return {RichTextData} The RichTextData instance.
+   */
   static fromHTMLElement(htmlElement, options = {}) {
     const {
       preserveWhiteSpace = false
@@ -1266,6 +1273,12 @@ class RichTextData {
   }
   // We could expose `toHTMLElement` at some point as well, but we'd only use
   // it internally.
+  /**
+   * Convert the rich text value to an HTML string.
+   *
+   * @param {{preserveWhiteSpace?: boolean}} options Options.
+   * @return {string} The HTML string.
+   */
   toHTMLString({
     preserveWhiteSpace
   } = {}) {

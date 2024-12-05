@@ -68539,7 +68539,10 @@ function UnforwardedTreeGridCell({
     ...props,
     role: "gridcell",
     children: withoutGridItem ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: children
+      children: typeof children === 'function' ? children({
+        ...props,
+        ref
+      }) : children
     }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tree_grid_item, {
       ref: ref,
       children: children

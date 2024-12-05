@@ -1611,9 +1611,7 @@ function useHistory() {
      * See: https://github.com/WordPress/gutenberg/pull/63002.
      */
     const isMediumOrBigger = window.matchMedia('(min-width: 782px)').matches;
-    if (!isMediumOrBigger ||
-    // @ts-expect-error
-    !document.startViewTransition || !options.transition) {
+    if (!isMediumOrBigger || !document.startViewTransition || !options.transition) {
       performPush();
       return;
     }
@@ -1621,7 +1619,6 @@ function useHistory() {
       var _options$transition;
       const classname = (_options$transition = options.transition) !== null && _options$transition !== void 0 ? _options$transition : '';
       document.documentElement.classList.add(classname);
-      // @ts-expect-error
       const transition = document.startViewTransition(() => performPush());
       transition.finished.finally(() => {
         document.documentElement.classList.remove(classname);
