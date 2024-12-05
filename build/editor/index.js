@@ -12979,26 +12979,19 @@ const external_wp_commands_namespaceObject = window["wp"]["commands"];
 
 
 /**
- * Internal dependencies
- */
-
-
-/**
  * Custom hook to get the page type badge for the current post on edit site view.
+ *
+ * @param {number} postId postId of the current post being edited.
  */
-function usePageTypeBadge() {
+function usePageTypeBadge(postId) {
   const {
     isFrontPage,
     isPostsPage
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getCurrentPostId
-    } = select(store_store);
-    const {
       canUser,
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const postId = getCurrentPostId();
     const siteSettings = canUser('read', {
       kind: 'root',
       name: 'site'
@@ -13068,6 +13061,7 @@ const MotionButton = (0,external_wp_components_namespaceObject.__unstableMotion)
  */
 function DocumentBar(props) {
   const {
+    postId,
     postType,
     postTypeLabel,
     documentTitle,
@@ -13100,6 +13094,7 @@ function DocumentBar(props) {
     });
     const _postTypeLabel = getPostType(_postType)?.labels?.singular_name;
     return {
+      postId: _postId,
       postType: _postType,
       postTypeLabel: _postTypeLabel,
       documentTitle: _document.title,
@@ -13118,7 +13113,7 @@ function DocumentBar(props) {
   const entityTitle = isTemplate ? templateTitle : documentTitle;
   const title = props.title || entityTitle;
   const icon = props.icon;
-  const pageTypeBadge = usePageTypeBadge();
+  const pageTypeBadge = usePageTypeBadge(postId);
   const mountedRef = (0,external_wp_element_namespaceObject.useRef)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     mountedRef.current = true;
@@ -31840,7 +31835,7 @@ function PostCardPanel({
       })
     };
   }, [postId, postType]);
-  const pageTypeBadge = usePageTypeBadge();
+  const pageTypeBadge = usePageTypeBadge(postId);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "editor-post-card-panel",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -31854,9 +31849,7 @@ function PostCardPanel({
         numberOfLines: 2,
         truncate: true,
         className: "editor-post-card-panel__title",
-        weight: 500,
         as: "h2",
-        lineHeight: "20px",
         children: [title ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title) : (0,external_wp_i18n_namespaceObject.__)('No title'), pageTypeBadge && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: "editor-post-card-panel__title-badge",
           children: pageTypeBadge

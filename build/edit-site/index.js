@@ -45793,6 +45793,83 @@ function DataForm({
   });
 }
 
+;// ./packages/edit-site/build-module/components/post-edit/header.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const {
+  PostCardPanel
+} = unlock(external_wp_editor_namespaceObject.privateApis);
+function PostEditHeader({
+  postType,
+  postId
+}) {
+  const ids = (0,external_wp_element_namespaceObject.useMemo)(() => postId.split(','), [postId]);
+  const {
+    icon,
+    labels
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEditedEntityRecord,
+      getPostType
+    } = select(external_wp_coreData_namespaceObject.store);
+    const {
+      getPostIcon
+    } = unlock(select(external_wp_editor_namespaceObject.store));
+    const _record = getEditedEntityRecord('postType', postType, ids[0]);
+    return {
+      icon: getPostIcon(postType, {
+        area: _record?.area
+      }),
+      labels: getPostType(postType)?.labels
+    };
+  }, [ids, postType]);
+  if (ids.length === 1) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostCardPanel, {
+      postType: postType,
+      postId: parseInt(ids[0], 10)
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: 1,
+    className: "edit-site-post-edit-header",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+      spacing: 2,
+      align: "center",
+      justify: "normal",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+        className: "edit-site-post-edit-header__icon",
+        icon: icon
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+        numberOfLines: 2,
+        truncate: true,
+        className: "edit-site-post-edit-header__title",
+        as: "h2",
+        children: labels?.name && (0,external_wp_i18n_namespaceObject.sprintf)(
+        // translators: %i number of selected items %s: Name of the plural post type e.g: "Posts".
+        (0,external_wp_i18n_namespaceObject.__)('%i %s'), ids.length, labels?.name)
+      })]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+      className: "edit-site-post-edit-header__description",
+      children: (0,external_wp_i18n_namespaceObject.sprintf)(
+      // translators: %s: Name of the plural post type e.g: "Posts".
+      (0,external_wp_i18n_namespaceObject.__)('Changes will be applied to all selected %s.'), labels?.name.toLowerCase())
+    })]
+  });
+}
+
 ;// ./packages/edit-site/build-module/components/post-edit/index.js
 /**
  * External dependencies
@@ -45818,8 +45895,8 @@ function DataForm({
 
 
 
+
 const {
-  PostCardPanel,
   usePostFields: post_edit_usePostFields
 } = unlock(external_wp_editor_namespaceObject.privateApis);
 const fieldsWithBulkEditSupport = ['title', 'status', 'date', 'author', 'comment_status'];
@@ -45858,7 +45935,7 @@ function PostEditForm({
     fields: [{
       id: 'featured_media',
       layout: 'regular'
-    }, 'title', {
+    }, {
       id: 'status',
       label: (0,external_wp_i18n_namespaceObject.__)('Status & Visibility'),
       children: ['status', 'password']
@@ -45917,9 +45994,9 @@ function PostEditForm({
   }, [fields, settings]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 4,
-    children: [ids.length === 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostCardPanel, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostEditHeader, {
       postType: postType,
-      postId: ids[0]
+      postId: postId
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
       data: ids.length === 1 ? record : multiEdits,
       fields: fieldsWithDependency,
