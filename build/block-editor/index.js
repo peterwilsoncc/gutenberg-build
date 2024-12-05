@@ -59050,7 +59050,6 @@ function useShowHoveredOrFocusedGestures({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -59072,28 +59071,19 @@ function BlockParentSelector() {
     selectBlock
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const {
-    parentClientId,
-    isVisible
+    parentClientId
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getBlockName,
       getBlockParents,
       getSelectedBlockClientId,
-      getBlockEditingMode,
       getParentSectionBlock
     } = unlock(select(store));
-    const {
-      hasBlockSupport
-    } = select(external_wp_blocks_namespaceObject.store);
     const selectedBlockClientId = getSelectedBlockClientId();
     const parentSection = getParentSectionBlock(selectedBlockClientId);
     const parents = getBlockParents(selectedBlockClientId);
     const _parentClientId = parentSection !== null && parentSection !== void 0 ? parentSection : parents[parents.length - 1];
-    const parentBlockName = getBlockName(_parentClientId);
-    const _parentBlockType = (0,external_wp_blocks_namespaceObject.getBlockType)(parentBlockName);
     return {
-      parentClientId: _parentClientId,
-      isVisible: _parentClientId && getBlockEditingMode(_parentClientId) !== 'disabled' && hasBlockSupport(_parentBlockType, '__experimentalParentSelector', true)
+      parentClientId: _parentClientId
     };
   }, []);
   const blockInformation = useBlockDisplayInformation(parentClientId);
@@ -59105,9 +59095,6 @@ function BlockParentSelector() {
     ref: nodeRef,
     highlightParent: true
   });
-  if (!isVisible) {
-    return null;
-  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "block-editor-block-parent-selector",
     ref: nodeRef,
@@ -62888,7 +62875,7 @@ function PrivateBlockToolbar({
       blockType: selectedBlockClientId && (0,external_wp_blocks_namespaceObject.getBlockType)(_blockName),
       shouldShowVisualToolbar: isValid && isVisual,
       toolbarKey: `${selectedBlockClientId}${parentClientId}`,
-      showParentSelector: !_isZoomOut && parentBlockType && getBlockEditingMode(parentClientId) !== 'disabled' && (0,external_wp_blocks_namespaceObject.hasBlockSupport)(parentBlockType, '__experimentalParentSelector', true) && selectedBlockClientIds.length === 1,
+      showParentSelector: !_isZoomOut && parentBlockType && editingMode !== 'contentOnly' && getBlockEditingMode(parentClientId) !== 'disabled' && (0,external_wp_blocks_namespaceObject.hasBlockSupport)(parentBlockType, '__experimentalParentSelector', true) && selectedBlockClientIds.length === 1,
       isUsingBindings: _isUsingBindings,
       hasParentPattern: _hasParentPattern,
       hasContentOnlyLocking: _hasTemplateLock,
