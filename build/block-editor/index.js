@@ -43292,6 +43292,64 @@ function shimAttributeSource(settings, name) {
  * WordPress dependencies
  */
 
+const nodesByDocument = new Map();
+function add(doc, node) {
+  let set = nodesByDocument.get(doc);
+  if (!set) {
+    set = new Set();
+    nodesByDocument.set(doc, set);
+    doc.addEventListener('pointerdown', down);
+  }
+  set.add(node);
+}
+function remove(doc, node) {
+  const set = nodesByDocument.get(doc);
+  if (set) {
+    set.delete(node);
+    restore(node);
+    if (set.size === 0) {
+      nodesByDocument.delete(doc);
+      doc.removeEventListener('pointerdown', down);
+    }
+  }
+}
+function restore(node) {
+  const prevDraggable = node.getAttribute('data-draggable');
+  if (prevDraggable) {
+    node.removeAttribute('data-draggable');
+    // Only restore if `draggable` is still removed. It could have been
+    // changed by React in the meantime.
+    if (prevDraggable === 'true' && !node.getAttribute('draggable')) {
+      node.setAttribute('draggable', 'true');
+    }
+  }
+}
+function down(event) {
+  const {
+    target
+  } = event;
+  const {
+    ownerDocument,
+    isContentEditable
+  } = target;
+  const nodes = nodesByDocument.get(ownerDocument);
+  if (isContentEditable) {
+    // Whenever an editable element is clicked, check which draggable
+    // blocks contain this element, and temporarily disable draggability.
+    for (const node of nodes) {
+      if (node.getAttribute('draggable') === 'true' && node.contains(target)) {
+        node.removeAttribute('draggable');
+        node.setAttribute('data-draggable', 'true');
+      }
+    }
+  } else {
+    // Whenever a non-editable element is clicked, re-enable draggability
+    // for any blocks that were previously disabled.
+    for (const node of nodes) {
+      restore(node);
+    }
+  }
+}
 
 /**
  * In Firefox, the `draggable` and `contenteditable` attributes don't play well
@@ -43303,15 +43361,9 @@ function shimAttributeSource(settings, name) {
  */
 function useFirefoxDraggableCompatibility() {
   return (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
-    function onDown(event) {
-      node.draggable = !event.target.isContentEditable;
-    }
-    const {
-      ownerDocument
-    } = node;
-    ownerDocument.addEventListener('pointerdown', onDown);
+    add(node.ownerDocument, node);
     return () => {
-      ownerDocument.removeEventListener('pointerdown', onDown);
+      remove(node.ownerDocument, node);
     };
   }, []);
 }
@@ -43421,7 +43473,6 @@ function use_block_props_useBlockProps(props = {}, {
     isSectionBlock,
     canMove
   } = (0,external_wp_element_namespaceObject.useContext)(PrivateBlockContext);
-  const canDrag = canMove && !hasChildSelected;
 
   // translators: %s: Type of block (i.e. Text, Image etc)
   const blockLabel = (0,external_wp_i18n_namespaceObject.sprintf)((0,external_wp_i18n_namespaceObject.__)('Block: %s'), blockTitle);
@@ -43445,7 +43496,7 @@ function use_block_props_useBlockProps(props = {}, {
     isEnabled: isSectionBlock
   }), useScrollIntoView({
     isSelected
-  }), canDrag ? ffDragRef : undefined]);
+  }), canMove ? ffDragRef : undefined]);
   const blockEditContext = useBlockEditContext();
   const hasBlockBindings = !!blockEditContext[blockBindingsKey];
   const bindingsStyle = hasBlockBindings && canBindBlock(name) ? {
@@ -43463,7 +43514,7 @@ function use_block_props_useBlockProps(props = {}, {
   }
   return {
     tabIndex: blockEditingMode === 'disabled' ? -1 : 0,
-    draggable: canDrag ? true : undefined,
+    draggable: canMove && !hasChildSelected ? true : undefined,
     ...wrapperProps,
     ...props,
     ref: mergedRefs,
