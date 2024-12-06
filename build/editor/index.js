@@ -21724,7 +21724,7 @@ function PostPublishPanelPrepublish({
   let prePublishTitle, prePublishBodyText;
   if (!hasPublishAction) {
     prePublishTitle = (0,external_wp_i18n_namespaceObject.__)('Are you ready to submit for review?');
-    prePublishBodyText = (0,external_wp_i18n_namespaceObject.__)('When you’re ready, submit your work for review, and an Editor will be able to approve it for you.');
+    prePublishBodyText = (0,external_wp_i18n_namespaceObject.__)('Your work will be reviewed and then approved.');
   } else if (isBeingScheduled) {
     prePublishTitle = (0,external_wp_i18n_namespaceObject.__)('Are you ready to schedule?');
     prePublishBodyText = (0,external_wp_i18n_namespaceObject.__)('Your work will be published at the specified date and time.');
