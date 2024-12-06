@@ -37475,28 +37475,16 @@ const trackBackgroundColor = ({
 };
 const Track = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1epgpqk9"
-} : 0)("background-color:currentColor;border-radius:", config_values.radiusFull, ";height:", railHeight, "px;pointer-events:none;display:block;position:absolute;margin-top:", (rangeHeightValue - railHeight) / 2, "px;top:0;", trackBackgroundColor, ";" + ( true ? "" : 0));
+} : 0)("background-color:currentColor;border-radius:", config_values.radiusFull, ";height:", railHeight, "px;pointer-events:none;display:block;position:absolute;margin-top:", (rangeHeightValue - railHeight) / 2, "px;top:0;@media not ( prefers-reduced-motion ){transition:width ease 0.1s;}", trackBackgroundColor, ";" + ( true ? "" : 0));
 const MarksWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1epgpqk8"
 } : 0)( true ? {
-  name: "l7tjj5",
-  styles: "display:block;pointer-events:none;position:relative;width:100%;user-select:none"
+  name: "g5kg28",
+  styles: "display:block;pointer-events:none;position:relative;width:100%;user-select:none;margin-top:17px"
 } : 0);
-const markFill = ({
-  disabled,
-  isFilled
-}) => {
-  let backgroundColor = isFilled ? 'currentColor' : COLORS.gray[300];
-  if (disabled) {
-    backgroundColor = COLORS.gray[400];
-  }
-  return /*#__PURE__*/emotion_react_browser_esm_css({
-    backgroundColor
-  },  true ? "" : 0,  true ? "" : 0);
-};
 const Mark = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1epgpqk7"
-} : 0)("height:", thumbSize, "px;left:0;position:absolute;top:9px;width:1px;", markFill, ";" + ( true ? "" : 0));
+} : 0)("position:absolute;left:0;top:-4px;height:4px;width:2px;transform:translateX( -50% );background-color:", COLORS.ui.background, ";z-index:1;" + ( true ? "" : 0));
 const markLabelFill = ({
   isFilled
 }) => {
@@ -37506,7 +37494,7 @@ const markLabelFill = ({
 };
 const MarkLabel = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1epgpqk6"
-} : 0)("color:", COLORS.gray[300], ";font-size:11px;position:absolute;top:22px;white-space:nowrap;", rtl({
+} : 0)("color:", COLORS.gray[300], ";font-size:11px;position:absolute;top:8px;white-space:nowrap;", rtl({
   left: 0
 }), ";", rtl({
   transform: 'translateX( -50% )'
@@ -37518,7 +37506,7 @@ const thumbColor = ({
 }) => disabled ? /*#__PURE__*/emotion_react_browser_esm_css("background-color:", COLORS.gray[400], ";" + ( true ? "" : 0),  true ? "" : 0) : /*#__PURE__*/emotion_react_browser_esm_css("background-color:", COLORS.theme.accent, ";" + ( true ? "" : 0),  true ? "" : 0);
 const ThumbWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1epgpqk5"
-} : 0)("align-items:center;display:flex;height:", thumbSize, "px;justify-content:center;margin-top:", (rangeHeightValue - thumbSize) / 2, "px;outline:0;pointer-events:none;position:absolute;top:0;user-select:none;width:", thumbSize, "px;border-radius:", config_values.radiusRound, ";", thumbColor, ";", rtl({
+} : 0)("align-items:center;display:flex;height:", thumbSize, "px;justify-content:center;margin-top:", (rangeHeightValue - thumbSize) / 2, "px;outline:0;pointer-events:none;position:absolute;top:0;user-select:none;width:", thumbSize, "px;border-radius:", config_values.radiusRound, ";z-index:3;@media not ( prefers-reduced-motion ){transition:left ease 0.1s;}", thumbColor, ";", rtl({
   marginLeft: -10
 }), ";", rtl({
   transform: 'translateX( 4.5px )'
@@ -37637,7 +37625,6 @@ function RangeMark(props) {
       ...otherProps,
       "aria-hidden": "true",
       className: classes,
-      isFilled: isFilled,
       style: style
     }), label && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MarkLabel, {
       "aria-hidden": "true",
