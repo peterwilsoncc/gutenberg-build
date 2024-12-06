@@ -7675,81 +7675,6 @@ const external_wp_commands_namespaceObject = window["wp"]["commands"];
 const external_wp_coreCommands_namespaceObject = window["wp"]["coreCommands"];
 ;// external ["wp","plugins"]
 const external_wp_plugins_namespaceObject = window["wp"]["plugins"];
-;// ./packages/edit-site/build-module/components/error-boundary/warning.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-function CopyButton({
-  text,
-  children
-}) {
-  const ref = (0,external_wp_compose_namespaceObject.useCopyToClipboard)(text);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-    __next40pxDefaultSize: true,
-    variant: "secondary",
-    ref: ref,
-    children: children
-  });
-}
-function ErrorBoundaryWarning({
-  message,
-  error
-}) {
-  const actions = [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyButton, {
-    text: error.stack,
-    children: (0,external_wp_i18n_namespaceObject.__)('Copy Error')
-  }, "copy-error")];
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.Warning, {
-    className: "editor-error-boundary",
-    actions: actions,
-    children: message
-  });
-}
-
-;// ./packages/edit-site/build-module/components/error-boundary/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-class ErrorBoundary extends external_wp_element_namespaceObject.Component {
-  constructor() {
-    super(...arguments);
-    this.state = {
-      error: null
-    };
-  }
-  componentDidCatch(error) {
-    (0,external_wp_hooks_namespaceObject.doAction)('editor.ErrorBoundary.errorLogged', error);
-  }
-  static getDerivedStateFromError(error) {
-    return {
-      error
-    };
-  }
-  render() {
-    if (!this.state.error) {
-      return this.props.children;
-    }
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ErrorBoundaryWarning, {
-      message: (0,external_wp_i18n_namespaceObject.__)('The editor has encountered an unexpected error.'),
-      error: this.state.error
-    });
-  }
-}
-
 ;// external ["wp","htmlEntities"]
 const external_wp_htmlEntities_namespaceObject = window["wp"]["htmlEntities"];
 ;// external ["wp","primitives"]
@@ -13398,7 +13323,6 @@ function SavePanel() {
 
 
 
-
 const {
   useCommands
 } = unlock(external_wp_coreCommands_namespaceObject.privateApis);
@@ -13480,7 +13404,9 @@ function Layout() {
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarContent, {
                 shouldAnimate: routeKey !== 'styles-view',
                 routeKey: routeKey,
-                children: areas.sidebar
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.ErrorBoundary, {
+                  children: areas.sidebar
+                })
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SaveHub, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SavePanel, {})]
             })
           })
@@ -13492,19 +13418,25 @@ function Layout() {
               ref: toggleRef,
               isTransparent: isResizableFrameOversized
             })
-          }), areas.mobile]
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.ErrorBoundary, {
+            children: areas.mobile
+          })]
         }), !isMobileViewport && areas.content && canvas !== 'edit' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "edit-site-layout__area",
           style: {
             maxWidth: widths?.content
           },
-          children: areas.content
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.ErrorBoundary, {
+            children: areas.content
+          })
         }), !isMobileViewport && areas.edit && canvas !== 'edit' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "edit-site-layout__area",
           style: {
             maxWidth: widths?.edit
           },
-          children: areas.edit
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.ErrorBoundary, {
+            children: areas.edit
+          })
         }), !isMobileViewport && areas.preview && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
           className: "edit-site-layout__canvas-container",
           children: [canvasResizer, !!canvasSize.width && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -13512,7 +13444,7 @@ function Layout() {
               'is-right-aligned': isResizableFrameOversized
             }),
             ref: animationRef,
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ErrorBoundary, {
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.ErrorBoundary, {
               children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(resizable_frame, {
                 isReady: !isEditorLoading,
                 isFullWidth: canvas === 'edit',

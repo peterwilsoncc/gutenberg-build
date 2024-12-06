@@ -14315,7 +14315,6 @@ function EntitiesSavedStatesExtensible({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -14334,12 +14333,13 @@ function getContent() {
 }
 function CopyButton({
   text,
-  children
+  children,
+  variant = 'secondary'
 }) {
   const ref = (0,external_wp_compose_namespaceObject.useCopyToClipboard)(text);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     __next40pxDefaultSize: true,
-    variant: "secondary",
+    variant: variant,
     ref: ref,
     children: children
   });
@@ -14363,20 +14363,33 @@ class ErrorBoundary extends external_wp_element_namespaceObject.Component {
     const {
       error
     } = this.state;
+    const {
+      canCopyContent = false
+    } = this.props;
     if (!error) {
       return this.props.children;
     }
-    const actions = [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyButton, {
-      text: getContent,
-      children: (0,external_wp_i18n_namespaceObject.__)('Copy Post Text')
-    }, "copy-post"), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyButton, {
-      text: error.stack,
-      children: (0,external_wp_i18n_namespaceObject.__)('Copy Error')
-    }, "copy-error")];
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.Warning, {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       className: "editor-error-boundary",
-      actions: actions,
-      children: (0,external_wp_i18n_namespaceObject.__)('The editor has encountered an unexpected error.')
+      alignment: "baseline",
+      spacing: 4,
+      justify: "space-between",
+      expanded: false,
+      wrap: true,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+        as: "p",
+        children: (0,external_wp_i18n_namespaceObject.__)('The editor has encountered an unexpected error.')
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        expanded: false,
+        children: [canCopyContent && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyButton, {
+          text: getContent,
+          children: (0,external_wp_i18n_namespaceObject.__)('Copy contents')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyButton, {
+          variant: "primary",
+          text: error?.stack,
+          children: (0,external_wp_i18n_namespaceObject.__)('Copy error')
+        })]
+      })]
     });
   }
 }
