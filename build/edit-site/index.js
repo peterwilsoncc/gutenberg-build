@@ -26409,10 +26409,10 @@ function isObjectEmpty(object) {
  * @param {HTMLIFrameElement} iframe   The target iframe.
  */
 const scrollToSection = (anchorId, iframe) => {
-  if (!iframe || !iframe?.contentDocument) {
+  if (!anchorId || !iframe || !iframe?.contentDocument) {
     return;
   }
-  const element = iframe.contentDocument.getElementById(anchorId);
+  const element = anchorId === 'top' ? iframe.contentDocument.body : iframe.contentDocument.getElementById(anchorId);
   if (element) {
     element.scrollIntoView({
       behavior: 'smooth'
@@ -26430,6 +26430,11 @@ const scrollToSection = (anchorId, iframe) => {
  */
 const getStyleBookNavigationFromPath = path => {
   if (path && typeof path === 'string') {
+    if (path === '/') {
+      return {
+        top: true
+      };
+    }
     if (path.startsWith('/typography')) {
       return {
         block: 'typography'
@@ -26631,10 +26636,16 @@ const StyleBookBody = ({
   };
   const handleLoad = () => setHasIframeLoaded(true);
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    if (goTo?.block && hasIframeLoaded && iframeRef?.current) {
-      scrollToSection(`example-${goTo?.block}`, iframeRef?.current);
+    if (hasIframeLoaded && iframeRef?.current) {
+      if (goTo?.top) {
+        scrollToSection('top', iframeRef?.current);
+        return;
+      }
+      if (goTo?.block) {
+        scrollToSection(`example-${goTo?.block}`, iframeRef?.current);
+      }
     }
-  }, [iframeRef?.current, goTo?.block, scrollToSection, hasIframeLoaded]);
+  }, [iframeRef?.current, goTo, scrollToSection, hasIframeLoaded]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.__unstableIframe, {
     onLoad: handleLoad,
     ref: iframeRef,
