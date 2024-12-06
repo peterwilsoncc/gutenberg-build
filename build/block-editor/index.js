@@ -37567,7 +37567,6 @@ const moreVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 
 
 
-
 function Warning({
   className,
   actions,
@@ -37586,9 +37585,9 @@ function Warning({
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
           className: "block-editor-warning__message",
           children: children
-        }), (external_wp_element_namespaceObject.Children.count(actions) > 0 || secondaryActions) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+        }), (actions?.length > 0 || secondaryActions) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
           className: "block-editor-warning__actions",
-          children: [external_wp_element_namespaceObject.Children.count(actions) > 0 && external_wp_element_namespaceObject.Children.map(actions, (action, i) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          children: [actions?.length > 0 && actions.map((action, i) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             className: "block-editor-warning__action",
             children: action
           }, i)), secondaryActions && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
