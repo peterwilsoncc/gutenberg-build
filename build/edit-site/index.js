@@ -44859,7 +44859,7 @@ function AddNewPostModal({
       const newPage = await saveEntityRecord('postType', postType, {
         status: 'draft',
         title,
-        slug: title || (0,external_wp_i18n_namespaceObject.__)('No title'),
+        slug: title !== null && title !== void 0 ? title : undefined,
         content: !!postTypeObject.template && postTypeObject.template.length ? (0,external_wp_blocks_namespaceObject.serialize)((0,external_wp_blocks_namespaceObject.synchronizeBlocksWithTemplate)([], postTypeObject.template)) : undefined
       }, {
         throwOnError: true
