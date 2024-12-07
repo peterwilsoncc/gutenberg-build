@@ -7334,7 +7334,7 @@ const getCleanTemplatePartSlug = title => {
 
 
 
-// @ts-ignore
+// @ts-expect-error serialize is not typed
 
 
 /**
@@ -7353,7 +7353,7 @@ function CreateTemplatePartModal({
   ...restProps
 }) {
   const defaultModalTitle = (0,external_wp_data_namespaceObject.useSelect)(select =>
-  // @ts-ignore
+  // @ts-expect-error getPostType is not typed with 'wp_template_part' as argument.
   select(external_wp_coreData_namespaceObject.store).getPostType('wp_template_part')?.labels?.add_new_item, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
     title: modalTitle || defaultModalTitle,
