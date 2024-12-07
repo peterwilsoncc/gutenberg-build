@@ -61178,7 +61178,7 @@ function BlockLockModal({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
         className: "block-editor-block-lock-modal__options",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("legend", {
-          children: (0,external_wp_i18n_namespaceObject.__)('Choose specific attributes to restrict or lock all available options.')
+          children: (0,external_wp_i18n_namespaceObject.__)('Select the features you want to lock')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
           role: "list",
           className: "block-editor-block-lock-modal__checklist",
@@ -61203,7 +61203,7 @@ function BlockLockModal({
                 className: "block-editor-block-lock-modal__checklist-item",
                 children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
                   __nextHasNoMarginBottom: true,
-                  label: (0,external_wp_i18n_namespaceObject.__)('Restrict editing'),
+                  label: (0,external_wp_i18n_namespaceObject.__)('Lock editing'),
                   checked: !!lock.edit,
                   onChange: edit => setLock(prevLock => ({
                     ...prevLock,
@@ -61217,7 +61217,7 @@ function BlockLockModal({
                 className: "block-editor-block-lock-modal__checklist-item",
                 children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
                   __nextHasNoMarginBottom: true,
-                  label: (0,external_wp_i18n_namespaceObject.__)('Disable movement'),
+                  label: (0,external_wp_i18n_namespaceObject.__)('Lock movement'),
                   checked: lock.move,
                   onChange: move => setLock(prevLock => ({
                     ...prevLock,
@@ -61231,7 +61231,7 @@ function BlockLockModal({
                 className: "block-editor-block-lock-modal__checklist-item",
                 children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
                   __nextHasNoMarginBottom: true,
-                  label: (0,external_wp_i18n_namespaceObject.__)('Prevent removal'),
+                  label: (0,external_wp_i18n_namespaceObject.__)('Lock removal'),
                   checked: lock.remove,
                   onChange: remove => setLock(prevLock => ({
                     ...prevLock,
