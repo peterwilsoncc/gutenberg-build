@@ -26140,34 +26140,49 @@ function getOverviewBlockExamples(colors) {
     };
     examples.push(themeColorexample);
   }
-  const headingBlock = (0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
-    content: (0,external_wp_i18n_namespaceObject.__)(`AaBbCcDdEeFfGgHhiiJjKkLIMmNnOoPpQakRrssTtUuVVWwXxxYyZzOl23356789X{(…)},2!*&:/A@HELFO™`),
-    level: 1
-  });
-  const firstParagraphBlock = (0,external_wp_blocks_namespaceObject.createBlock)('core/paragraph', {
-    content: (0,external_wp_i18n_namespaceObject.__)(`A paragraph in a website refers to a distinct block of text that is used to present and organize information. It is a fundamental unit of content in web design and is typically composed of a group of related sentences or thoughts focused on a particular topic or idea. Paragraphs play a crucial role in improving the readability and user experience of a website. They break down the text into smaller, manageable chunks, allowing readers to scan the content more easily.`)
-  });
-  const secondParagraphBlock = (0,external_wp_blocks_namespaceObject.createBlock)('core/paragraph', {
-    content: (0,external_wp_i18n_namespaceObject.__)(`Additionally, paragraphs help structure the flow of information and provide logical breaks between different concepts or pieces of information. In terms of formatting, paragraphs in websites are commonly denoted by a vertical gap or indentation between each block of text. This visual separation helps visually distinguish one paragraph from another, creating a clear and organized layout that guides the reader through the content smoothly.`)
-  });
-  const textExample = {
-    name: 'typography',
-    title: (0,external_wp_i18n_namespaceObject.__)('Typography'),
-    category: 'overview',
-    blocks: [headingBlock, (0,external_wp_blocks_namespaceObject.createBlock)('core/group', {
-      layout: {
-        type: 'grid',
-        columnCount: 2,
-        minimumColumnWidth: '12rem'
-      },
-      style: {
-        spacing: {
-          blockGap: '1.5rem'
+
+  // Get examples for typography blocks.
+  const typographyBlockExamples = [];
+  if ((0,external_wp_blocks_namespaceObject.getBlockType)('core/heading')) {
+    const headingBlock = (0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
+      content: (0,external_wp_i18n_namespaceObject.__)(`AaBbCcDdEeFfGgHhiiJjKkLIMmNnOoPpQakRrssTtUuVVWwXxxYyZzOl23356789X{(…)},2!*&:/A@HELFO™`),
+      level: 1
+    });
+    typographyBlockExamples.push(headingBlock);
+  }
+  if ((0,external_wp_blocks_namespaceObject.getBlockType)('core/paragraph')) {
+    const firstParagraphBlock = (0,external_wp_blocks_namespaceObject.createBlock)('core/paragraph', {
+      content: (0,external_wp_i18n_namespaceObject.__)(`A paragraph in a website refers to a distinct block of text that is used to present and organize information. It is a fundamental unit of content in web design and is typically composed of a group of related sentences or thoughts focused on a particular topic or idea. Paragraphs play a crucial role in improving the readability and user experience of a website. They break down the text into smaller, manageable chunks, allowing readers to scan the content more easily.`)
+    });
+    const secondParagraphBlock = (0,external_wp_blocks_namespaceObject.createBlock)('core/paragraph', {
+      content: (0,external_wp_i18n_namespaceObject.__)(`Additionally, paragraphs help structure the flow of information and provide logical breaks between different concepts or pieces of information. In terms of formatting, paragraphs in websites are commonly denoted by a vertical gap or indentation between each block of text. This visual separation helps visually distinguish one paragraph from another, creating a clear and organized layout that guides the reader through the content smoothly.`)
+    });
+    if ((0,external_wp_blocks_namespaceObject.getBlockType)('core/group')) {
+      const groupBlock = (0,external_wp_blocks_namespaceObject.createBlock)('core/group', {
+        layout: {
+          type: 'grid',
+          columnCount: 2,
+          minimumColumnWidth: '12rem'
+        },
+        style: {
+          spacing: {
+            blockGap: '1.5rem'
+          }
         }
-      }
-    }, [firstParagraphBlock, secondParagraphBlock])]
-  };
-  examples.push(textExample);
+      }, [firstParagraphBlock, secondParagraphBlock]);
+      typographyBlockExamples.push(groupBlock);
+    } else {
+      typographyBlockExamples.push(firstParagraphBlock);
+    }
+  }
+  if (!!typographyBlockExamples.length) {
+    examples.push({
+      name: 'typography',
+      title: (0,external_wp_i18n_namespaceObject.__)('Typography'),
+      category: 'overview',
+      blocks: typographyBlockExamples
+    });
+  }
   const otherBlockExamples = ['core/image', 'core/separator', 'core/buttons', 'core/pullquote', 'core/search'];
 
   // Get examples for other blocks and put them in order of above array.
