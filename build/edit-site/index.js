@@ -15167,6 +15167,7 @@ function getFontFamilies(themeJson) {
 
 
 const {
+  useGlobalStyle: typography_example_useGlobalStyle,
   GlobalStylesContext: typography_example_GlobalStylesContext
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
@@ -15183,9 +15184,14 @@ function PreviewTypography({
   if (variation) {
     config = mergeBaseAndUserConfigs(base, variation);
   }
+  const [textColor] = typography_example_useGlobalStyle('color.text');
   const [bodyFontFamilies, headingFontFamilies] = getFontFamilies(config);
   const bodyPreviewStyle = bodyFontFamilies ? getFamilyPreviewStyle(bodyFontFamilies) : {};
   const headingPreviewStyle = headingFontFamilies ? getFamilyPreviewStyle(headingFontFamilies) : {};
+  if (textColor) {
+    bodyPreviewStyle.color = textColor;
+    headingPreviewStyle.color = textColor;
+  }
   if (fontSize) {
     bodyPreviewStyle.fontSize = fontSize;
     headingPreviewStyle.fontSize = fontSize;
@@ -15204,7 +15210,8 @@ function PreviewTypography({
       type: 'tween'
     },
     style: {
-      textAlign: 'center'
+      textAlign: 'center',
+      lineHeight: 1
     },
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
       style: headingPreviewStyle,
@@ -15259,7 +15266,7 @@ function HighlightedColors({
   }, `${slug}-${index}`));
 }
 
-;// ./packages/edit-site/build-module/components/global-styles/preview-iframe.js
+;// ./packages/edit-site/build-module/components/global-styles/preview-wrapper.js
 /**
  * WordPress dependencies
  */
@@ -15274,8 +15281,7 @@ function HighlightedColors({
 
 
 const {
-  useGlobalStyle: preview_iframe_useGlobalStyle,
-  useGlobalStylesOutput: preview_iframe_useGlobalStylesOutput
+  useGlobalStyle: preview_wrapper_useGlobalStyle
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const normalizedWidth = 248;
 const normalizedHeight = 152;
@@ -15286,15 +15292,14 @@ const THROTTLE_OPTIONS = {
   leading: true,
   trailing: true
 };
-function PreviewIframe({
+function PreviewWrapper({
   children,
   label,
   isFocused,
   withHoverView
 }) {
-  const [backgroundColor = 'white'] = preview_iframe_useGlobalStyle('color.background');
-  const [gradientValue] = preview_iframe_useGlobalStyle('color.gradient');
-  const [styles] = preview_iframe_useGlobalStylesOutput();
+  const [backgroundColor = 'white'] = preview_wrapper_useGlobalStyle('color.background');
+  const [gradientValue] = preview_wrapper_useGlobalStyle('color.gradient');
   const disableMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
   const [isHovered, setIsHovered] = (0,external_wp_element_namespaceObject.useState)(false);
   const [containerResizeListener, {
@@ -15304,7 +15309,7 @@ function PreviewIframe({
   const [ratioState, setRatioState] = (0,external_wp_element_namespaceObject.useState)();
   const setThrottledWidth = (0,external_wp_compose_namespaceObject.useThrottle)(setThrottledWidthState, 250, THROTTLE_OPTIONS);
 
-  // Must use useLayoutEffect to avoid a flash of the iframe at the wrong
+  // Must use useLayoutEffect to avoid a flash of the container  at the wrong
   // size before the width is set.
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     if (width) {
@@ -15312,7 +15317,7 @@ function PreviewIframe({
     }
   }, [width, setThrottledWidth]);
 
-  // Must use useLayoutEffect to avoid a flash of the iframe at the wrong
+  // Must use useLayoutEffect to avoid a flash of the container at the wrong
   // size before the width is set.
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     const newRatio = throttledWidth ? throttledWidth / normalizedWidth : 1;
@@ -15337,21 +15342,6 @@ function PreviewIframe({
    * See: https://github.com/WordPress/gutenberg/issues/55112
    */
   const ratio = ratioState ? ratioState : fallbackRatio;
-
-  /*
-   * Reset leaked styles from WP common.css and remove main content layout padding and border.
-   * Add pointer cursor to the body to indicate the iframe is interactive,
-   * similar to Typography variation previews.
-   */
-  const editorStyles = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (styles) {
-      return [...styles, {
-        css: 'html{overflow:hidden}body{min-width: 0;padding: 0;border: none;cursor: pointer;}',
-        isGlobalStyles: true
-      }];
-    }
-    return styles;
-  }, [styles]);
   const isReady = !!width;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -15359,17 +15349,15 @@ function PreviewIframe({
         position: 'relative'
       },
       children: containerResizeListener
-    }), isReady && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.__unstableIframe, {
-      className: "edit-site-global-styles-preview__iframe",
+    }), isReady && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "edit-site-global-styles-preview__wrapper",
       style: {
         height: normalizedHeight * ratio
       },
       onMouseEnter: () => setIsHovered(true),
       onMouseLeave: () => setIsHovered(false),
       tabIndex: -1,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__unstableEditorStyles, {
-        styles: editorStyles
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
         style: {
           height: normalizedHeight * ratio,
           width: '100%',
@@ -15383,7 +15371,7 @@ function PreviewIframe({
           ratio,
           key
         }))
-      })]
+      })
     })]
   });
 }
@@ -15450,7 +15438,7 @@ const PreviewStyles = ({
   const {
     paletteColors
   } = useStylesPreviewColors();
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(PreviewIframe, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(PreviewWrapper, {
     label: label,
     isFocused: isFocused,
     withHoverView: withHoverView,
@@ -16424,7 +16412,7 @@ const StylesPreviewTypography = ({
   isFocused,
   withHoverView
 }) => {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreviewIframe, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreviewWrapper, {
     label: variation.title,
     isFocused: isFocused,
     withHoverView: withHoverView,
@@ -24277,7 +24265,7 @@ const StylesPreviewColors = ({
   isFocused,
   withHoverView
 }) => {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreviewIframe, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreviewWrapper, {
     label: label,
     isFocused: isFocused,
     withHoverView: withHoverView,
@@ -25641,8 +25629,6 @@ function StyleVariationsContainer({
 
 
 
-
-
 /**
  * Internal dependencies
  */
@@ -25650,44 +25636,20 @@ function StyleVariationsContainer({
 
 
 
-
-
-const content_noop = () => {};
 function SidebarNavigationScreenGlobalStylesContent() {
-  const {
-    storedSettings
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getSettings
-    } = unlock(select(store));
-    return {
-      storedSettings: getSettings()
-    };
-  }, []);
   const gap = 3;
-
-  // Wrap in a BlockEditorProvider to ensure that the Iframe's dependencies are
-  // loaded. This is necessary because the Iframe component waits until
-  // the block editor store's `__internalIsInitialized` is true before
-  // rendering the iframe. Without this, the iframe previews will not render
-  // in mobile viewport sizes, where the editor canvas is hidden.
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockEditorProvider, {
-    settings: storedSettings,
-    onChange: content_noop,
-    onInput: content_noop,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-      spacing: 10,
-      className: "edit-site-global-styles-variation-container",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleVariationsContainer, {
-        gap: gap
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ColorVariations, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Palettes'),
-        gap: gap
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TypographyVariations, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Typography'),
-        gap: gap
-      })]
-    })
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: 10,
+    className: "edit-site-global-styles-variation-container",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleVariationsContainer, {
+      gap: gap
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ColorVariations, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Palettes'),
+      gap: gap
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TypographyVariations, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Typography'),
+      gap: gap
+    })]
   });
 }
 
@@ -41403,7 +41365,7 @@ const {
 const {
   useGlobalStyle: fields_useGlobalStyle
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
-function PreviewWrapper({
+function fields_PreviewWrapper({
   item,
   onClick,
   ariaDescribedBy,
@@ -41442,7 +41404,7 @@ function PreviewField({
     style: {
       backgroundColor
     },
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(PreviewWrapper, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(fields_PreviewWrapper, {
       item: item,
       onClick: onClick,
       ariaDescribedBy: !!description ? descriptionId : undefined,
