@@ -25871,7 +25871,6 @@ const STYLE_BOOK_IFRAME_STYLES = `
 	}
 
 	.edit-site-style-book__color-example {
-		height: 32px;
 		border: 1px solid color-mix( in srgb, currentColor 10%, transparent );
 	}
 
@@ -25995,20 +25994,25 @@ function getTopLevelStyleBookCategories() {
 
 const ColorExamples = ({
   colors,
-  type
+  type,
+  templateColumns = '1fr 1fr',
+  itemHeight = '52px'
 }) => {
   if (!colors) {
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalGrid, {
-    columns: 2,
+    templateColumns: templateColumns,
     rowGap: 8,
     columnGap: 16,
     children: colors.map(color => {
       const className = type === 'gradients' ? (0,external_wp_blockEditor_namespaceObject.__experimentalGetGradientClass)(color.slug) : (0,external_wp_blockEditor_namespaceObject.getColorClassName)('background-color', color.slug);
       const classes = dist_clsx('edit-site-style-book__color-example', className);
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.View, {
-        className: classes
+        className: classes,
+        style: {
+          height: itemHeight
+        }
       }, color.slug);
     })
   });
@@ -26135,7 +26139,9 @@ function getOverviewBlockExamples(colors) {
       category: 'overview',
       content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_examples, {
         colors: themePalette.colors,
-        type: colors
+        type: colors,
+        templateColumns: "repeat(auto-fill, minmax( 200px, 1fr ))",
+        itemHeight: "32px"
       })
     };
     examples.push(themeColorexample);
