@@ -29223,6 +29223,7 @@ function SidebarNavigationScreenGlobalStyles() {
 
 function MainSidebarNavigationContent() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+    className: "edit-site-sidebar-navigation-screen-main",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItem, {
       uid: "navigation-navigation-item",
       to: "/navigation",
@@ -30424,6 +30425,7 @@ function SidebarNavigationScreenNavigationMenus({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenWrapper, {
     backPath: backPath,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+      className: "edit-site-sidebar-navigation-screen-navigation-menus",
       children: navigationMenus?.map(({
         id,
         title,
@@ -41834,6 +41836,7 @@ function DataviewsTemplatesSidebarContent() {
     return (_ref = firstItemPerAuthor && Object.values(firstItemPerAuthor)) !== null && _ref !== void 0 ? _ref : content_EMPTY_ARRAY;
   }, [records]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+    className: "edit-site-sidebar-navigation-screen-templates-browse",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItem, {
       to: "/template",
       icon: library_layout,
@@ -44757,6 +44760,7 @@ function DataViewsSidebarContent({
   const isCustomBoolean = isCustom === 'true';
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+      className: "edit-site-sidebar-dataviews",
       children: defaultViews.map(dataview => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewItem, {
           slug: dataview.slug,
