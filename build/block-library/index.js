@@ -49655,7 +49655,7 @@ const query_no_results_metadata = {
   title: "No results",
   category: "theme",
   description: "Contains the block elements used to render content when no query results are found.",
-  parent: ["core/query"],
+  ancestor: ["core/query"],
   textdomain: "default",
   usesContext: ["queryId", "query"],
   example: {
