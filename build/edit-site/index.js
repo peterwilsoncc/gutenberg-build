@@ -13410,7 +13410,7 @@ function Layout() {
                 ref: toggleRef,
                 isTransparent: isResizableFrameOversized
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarContent, {
-                shouldAnimate: routeKey !== 'styles-view',
+                shouldAnimate: routeKey !== 'styles',
                 routeKey: routeKey,
                 children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.ErrorBoundary, {
                   children: areas.sidebar
