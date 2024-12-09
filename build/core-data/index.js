@@ -4293,7 +4293,7 @@ const getEntityRecordsPermissions = (0,external_wp_data_namespaceObject.createRe
  * @return The entity record permissions.
  */
 function getEntityRecordPermissions(state, kind, name, id) {
-  return getEntityRecordsPermissions(state, kind, name, [id])[0];
+  return getEntityRecordsPermissions(state, kind, name, id)[0];
 }
 
 /**
