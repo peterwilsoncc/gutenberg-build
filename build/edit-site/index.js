@@ -38982,11 +38982,11 @@ function GridItem({
     onClickItem,
     className: 'dataviews-view-grid__media'
   });
-  const clickablePrimaryItemProps = getClickableItemProps({
+  const clickableTitleItemProps = getClickableItemProps({
     item,
     isItemClickable,
     onClickItem,
-    className: 'dataviews-view-grid__primary-field dataviews-title-field'
+    className: 'dataviews-view-grid__title-field dataviews-title-field'
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 0,
@@ -39017,7 +39017,7 @@ function GridItem({
       justify: "space-between",
       className: "dataviews-view-grid__title-actions",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        ...clickablePrimaryItemProps,
+        ...clickableTitleItemProps,
         children: renderedTitleField
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemActions, {
         item: item,
