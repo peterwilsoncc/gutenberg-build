@@ -12981,7 +12981,7 @@ const external_wp_commands_namespaceObject = window["wp"]["commands"];
 /**
  * Custom hook to get the page type badge for the current post on edit site view.
  *
- * @param {number} postId postId of the current post being edited.
+ * @param {number|string} postId postId of the current post being edited.
  */
 function usePageTypeBadge(postId) {
   const {
@@ -12996,9 +12996,10 @@ function usePageTypeBadge(postId) {
       kind: 'root',
       name: 'site'
     }) ? getEditedEntityRecord('root', 'site') : undefined;
+    const _postId = parseInt(postId, 10);
     return {
-      isFrontPage: siteSettings?.page_on_front === postId,
-      isPostsPage: siteSettings?.page_for_posts === postId
+      isFrontPage: siteSettings?.page_on_front === _postId,
+      isPostsPage: siteSettings?.page_for_posts === _postId
     };
   });
   if (isFrontPage) {
@@ -31682,14 +31683,9 @@ const {
   Menu,
   kebabCase
 } = unlock(external_wp_components_namespaceObject.privateApis);
-function PostActions({
-  postType,
-  postId,
-  onActionPerformed
-}) {
-  const [activeModalAction, setActiveModalAction] = (0,external_wp_element_namespaceObject.useState)(null);
+function useEditedEntityRecordsWithPermissions(postType, postIds) {
   const {
-    item,
+    items,
     permissions
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
@@ -31697,25 +31693,39 @@ function PostActions({
       getEntityRecordPermissions
     } = unlock(select(external_wp_coreData_namespaceObject.store));
     return {
-      item: getEditedEntityRecord('postType', postType, postId),
-      permissions: getEntityRecordPermissions('postType', postType, postId)
+      items: postIds.map(postId => getEditedEntityRecord('postType', postType, postId)),
+      permissions: postIds.map(postId => getEntityRecordPermissions('postType', postType, postId))
     };
-  }, [postId, postType]);
-  const itemWithPermissions = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return {
+  }, [postIds, postType]);
+  return (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return items.map((item, index) => ({
       ...item,
-      permissions
-    };
-  }, [item, permissions]);
+      permissions: permissions[index]
+    }));
+  }, [items, permissions]);
+}
+function PostActions({
+  postType,
+  postId,
+  onActionPerformed
+}) {
+  const [activeModalAction, setActiveModalAction] = (0,external_wp_element_namespaceObject.useState)(null);
+  const _postIds = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (Array.isArray(postId)) {
+      return postId;
+    }
+    return postId ? [postId] : [];
+  }, [postId]);
+  const itemsWithPermissions = useEditedEntityRecordsWithPermissions(postType, _postIds);
   const allActions = usePostActions({
     postType,
     onActionPerformed
   });
   const actions = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return allActions.filter(action => {
-      return !action.isEligible || action.isEligible(itemWithPermissions);
+      return (!action.isEligible || itemsWithPermissions.some(itemWithPermissions => action.isEligible(itemWithPermissions))) && (itemsWithPermissions.length < 2 || action.supportsBulk);
     });
-  }, [allActions, itemWithPermissions]);
+  }, [allActions, itemsWithPermissions]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu, {
       trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -31729,12 +31739,12 @@ function PostActions({
       placement: "bottom-end",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsDropdownMenuGroup, {
         actions: actions,
-        item: itemWithPermissions,
+        items: itemsWithPermissions,
         setActiveModalAction: setActiveModalAction
       })
     }), !!activeModalAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionModal, {
       action: activeModalAction,
-      items: [item],
+      items: itemsWithPermissions,
       closeModal: () => setActiveModalAction(null)
     })]
   });
@@ -31779,7 +31789,7 @@ function ActionModal({
 }
 function ActionsDropdownMenuGroup({
   actions,
-  item,
+  items,
   setActiveModalAction
 }) {
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
@@ -31792,11 +31802,11 @@ function ActionsDropdownMenuGroup({
             setActiveModalAction(action);
             return;
           }
-          action.callback([item], {
+          action.callback(items, {
             registry
           });
         },
-        items: [item]
+        items: items
       }, action.id);
     })
   });
@@ -31806,6 +31816,7 @@ function ActionsDropdownMenuGroup({
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -31822,38 +31833,69 @@ function ActionsDropdownMenuGroup({
 
 
 
+/**
+ * Renders a title of the post type and the available quick actions available within a 3-dot dropdown.
+ *
+ * @param {Object}          props                     - Component props.
+ * @param {string}          [props.postType]          - The post type string.
+ * @param {string|string[]} [props.postId]            - The post id or list of post ids.
+ * @param {Function}        [props.onActionPerformed] - A callback function for when a quick action is performed.
+ * @return {React.ReactNode} The rendered component.
+ */
+
 function PostCardPanel({
   postType,
   postId,
   onActionPerformed
 }) {
+  const postIds = (0,external_wp_element_namespaceObject.useMemo)(() => Array.isArray(postId) ? postId : [postId], [postId]);
   const {
-    title,
-    icon
+    postTitle,
+    icon,
+    labels
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _select$getEntityReco;
     const {
-      getEditedEntityRecord
+      getEditedEntityRecord,
+      getEntityRecord,
+      getPostType
     } = select(external_wp_coreData_namespaceObject.store);
-    const _record = getEditedEntityRecord('postType', postType, postId);
     const {
-      default_template_types: templateTypes = []
-    } = (_select$getEntityReco = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')) !== null && _select$getEntityReco !== void 0 ? _select$getEntityReco : {};
-    const _templateInfo = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE].includes(postType) ? getTemplateInfo({
-      template: _record,
-      templateTypes
-    }) : {};
+      getPostIcon
+    } = unlock(select(store_store));
+    let _title = '';
+    const _record = getEditedEntityRecord('postType', postType, postIds[0]);
+    if (postIds.length === 1) {
+      var _getEntityRecord;
+      const {
+        default_template_types: templateTypes = []
+      } = (_getEntityRecord = getEntityRecord('root', '__unstableBase')) !== null && _getEntityRecord !== void 0 ? _getEntityRecord : {};
+      const _templateInfo = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE].includes(postType) ? getTemplateInfo({
+        template: _record,
+        templateTypes
+      }) : {};
+      _title = _templateInfo?.title || _record?.title;
+    }
     return {
-      title: _templateInfo?.title || _record?.title,
-      icon: unlock(select(store_store)).getPostIcon(postType, {
+      postTitle: _title,
+      icon: getPostIcon(postType, {
         area: _record?.area
-      })
+      }),
+      labels: getPostType(postType)?.labels
     };
-  }, [postId, postType]);
+  }, [postIds, postType]);
   const pageTypeBadge = usePageTypeBadge(postId);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+  let title = (0,external_wp_i18n_namespaceObject.__)('No title');
+  if (labels?.name && postIds.length > 1) {
+    title = (0,external_wp_i18n_namespaceObject.sprintf)(
+    // translators: %i number of selected items %s: Name of the plural post type e.g: "Posts".
+    (0,external_wp_i18n_namespaceObject.__)('%i %s'), postId.length, labels?.name);
+  } else if (postTitle) {
+    title = (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(postTitle);
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: 1,
     className: "editor-post-card-panel",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       spacing: 2,
       className: "editor-post-card-panel__header",
       align: "flex-start",
@@ -31865,7 +31907,7 @@ function PostCardPanel({
         truncate: true,
         className: "editor-post-card-panel__title",
         as: "h2",
-        children: [title ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title) : (0,external_wp_i18n_namespaceObject.__)('No title'), pageTypeBadge && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        children: [title, pageTypeBadge && postIds.length === 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: "editor-post-card-panel__title-badge",
           children: pageTypeBadge
         })]
@@ -31874,7 +31916,12 @@ function PostCardPanel({
         postId: postId,
         onActionPerformed: onActionPerformed
       })]
-    })
+    }), postIds.length > 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+      className: "editor-post-card-panel__description",
+      children: (0,external_wp_i18n_namespaceObject.sprintf)(
+      // translators: %s: Name of the plural post type e.g: "Posts".
+      (0,external_wp_i18n_namespaceObject.__)('Changes will be applied to all selected %s.'), labels?.name.toLowerCase())
+    })]
   });
 }
 
