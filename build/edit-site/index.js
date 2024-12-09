@@ -45038,34 +45038,41 @@ function useView(postType) {
       type
     };
   });
-  const setViewWithUrlUpdate = (0,external_wp_element_namespaceObject.useCallback)(newView => {
-    if (newView.type === LAYOUT_LIST && !layout) {
-      // Skip updating the layout URL param if
-      // it is not present and the newView.type is LAYOUT_LIST.
-    } else if (newView.type !== layout) {
-      history.navigate((0,external_wp_url_namespaceObject.addQueryArgs)(path, {
-        layout: newView.type
-      }));
-    }
+  const setViewWithUrlUpdate = (0,external_wp_compose_namespaceObject.useEvent)(newView => {
     setView(newView);
     if (isCustom === 'true' && editedEntityRecord?.id) {
       editEntityRecord('postType', 'wp_dataviews', editedEntityRecord?.id, {
         content: JSON.stringify(newView)
       });
     }
-  }, [history, isCustom, editEntityRecord, editedEntityRecord?.id, layout, path]);
+    const currentUrlLayout = layout !== null && layout !== void 0 ? layout : LAYOUT_LIST;
+    if (newView.type !== currentUrlLayout) {
+      history.navigate((0,external_wp_url_namespaceObject.addQueryArgs)(path, {
+        layout: newView.type
+      }));
+    }
+  });
 
   // When layout URL param changes, update the view type
   // without affecting any other config.
+  const onUrlLayoutChange = (0,external_wp_compose_namespaceObject.useEvent)(() => {
+    setView(prevView => {
+      const layoutToApply = layout !== null && layout !== void 0 ? layout : LAYOUT_LIST;
+      if (layoutToApply === prevView.type) {
+        return prevView;
+      }
+      return {
+        ...prevView,
+        type: layout !== null && layout !== void 0 ? layout : LAYOUT_LIST
+      };
+    });
+  });
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    setView(prevView => ({
-      ...prevView,
-      type: layout !== null && layout !== void 0 ? layout : LAYOUT_LIST
-    }));
-  }, [layout]);
+    onUrlLayoutChange();
+  }, [onUrlLayoutChange, layout]);
 
   // When activeView or isCustom URL parameters change, reset the view.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
+  const onUrlActiveViewChange = (0,external_wp_compose_namespaceObject.useEvent)(() => {
     let newView;
     if (isCustom === 'true') {
       newView = getCustomView(editedEntityRecord);
@@ -45079,8 +45086,11 @@ function useView(postType) {
         type
       });
     }
-  }, [activeView, isCustom, layout, defaultViews, editedEntityRecord]);
-  return [view, setViewWithUrlUpdate, setViewWithUrlUpdate];
+  });
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    onUrlActiveViewChange();
+  }, [onUrlActiveViewChange, activeView, isCustom, defaultViews, editedEntityRecord]);
+  return [view, setViewWithUrlUpdate];
 }
 const DEFAULT_STATUSES = 'draft,future,pending,private,publish'; // All but 'trash'.
 
