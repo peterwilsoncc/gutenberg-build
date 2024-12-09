@@ -40560,6 +40560,7 @@ function useOnEnter(props) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -40584,7 +40585,8 @@ function hasDropCapDisabled(align) {
 function DropCapControl({
   clientId,
   attributes,
-  setAttributes
+  setAttributes,
+  name
 }) {
   // Please do not add a useSelect call to the paragraph block unconditionally.
   // Every useSelect added to a (frequently used) block will degrade load
@@ -40606,11 +40608,13 @@ function DropCapControl({
   } else {
     helpText = (0,external_wp_i18n_namespaceObject.__)('Show a large initial letter.');
   }
+  const isDropCapControlEnabledByDefault = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, 'typography.defaultControls.dropCap', false);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
     group: "typography",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       hasValue: () => !!dropCap,
       label: (0,external_wp_i18n_namespaceObject.__)('Drop cap'),
+      isShownByDefault: isDropCapControlEnabledByDefault,
       onDeselect: () => setAttributes({
         dropCap: undefined
       }),
@@ -40638,7 +40642,8 @@ function ParagraphBlock({
   onRemove,
   setAttributes,
   clientId,
-  isSelected: isSingleSelected
+  isSelected: isSingleSelected,
+  name
 }) {
   const {
     align,
@@ -40677,6 +40682,7 @@ function ParagraphBlock({
         })
       })]
     }), isSingleSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropCapControl, {
+      name: name,
       clientId: clientId,
       attributes: attributes,
       setAttributes: setAttributes
