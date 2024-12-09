@@ -53913,6 +53913,7 @@ function InserterMenu({
     if (isZoomOutMode) {
       return 'patterns';
     }
+    return 'blocks';
   }
   const [selectedTab, setSelectedTab] = (0,external_wp_element_namespaceObject.useState)(getInitialTab());
   const shouldUseZoomOut = hasSectionRootClientId && (selectedTab === 'patterns' || selectedTab === 'media');
