@@ -3600,6 +3600,15 @@ function useAsyncMode() {
 
 
 const renderQueue = (0,external_wp_priorityQueue_namespaceObject.createQueue)();
+function warnOnUnstableReference(a, b) {
+  if (!a || !b) {
+    return;
+  }
+  const keys = typeof a === 'object' && typeof b === 'object' ? Object.keys(a).filter(k => a[k] !== b[k]) : [];
+
+  // eslint-disable-next-line no-console
+  console.warn('The `useSelect` hook returns different values when called with the same state and parameters.\n' + 'This can lead to unnecessary re-renders and performance issues if not fixed.\n\n' + 'Non-equal value keys: %s\n\n', keys.join(', '));
+}
 
 /**
  * @typedef {import('../../types').StoreDescriptor<C>} StoreDescriptor
