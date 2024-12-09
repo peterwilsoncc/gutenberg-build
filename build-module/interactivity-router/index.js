@@ -313,6 +313,7 @@ const {
   state: {
     url: window.location.href,
     navigation: {
+      isLoading: false,
       hasStarted: false,
       hasFinished: false
     }
@@ -364,6 +365,7 @@ const {
         if (navigatingTo !== href) {
           return;
         }
+        navigation.isLoading = true;
         if (loadingAnimation) {
           navigation.hasStarted = true;
           navigation.hasFinished = false;
@@ -392,6 +394,7 @@ const {
 
         // Update the navigation status once the the new page rendering
         // has been completed.
+        navigation.isLoading = false;
         if (loadingAnimation) {
           navigation.hasStarted = false;
           navigation.hasFinished = true;
