@@ -42030,6 +42030,317 @@ const UnconnectedBorderBoxControl = (props, forwardedRef) => {
 const BorderBoxControl = contextConnect(UnconnectedBorderBoxControl, 'BorderBoxControl');
 /* harmony default export */ const border_box_control_component = (BorderBoxControl);
 
+;// ./packages/components/build-module/box-control/utils.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const CUSTOM_VALUE_SETTINGS = {
+  px: {
+    max: 300,
+    step: 1
+  },
+  '%': {
+    max: 100,
+    step: 1
+  },
+  vw: {
+    max: 100,
+    step: 1
+  },
+  vh: {
+    max: 100,
+    step: 1
+  },
+  em: {
+    max: 10,
+    step: 0.1
+  },
+  rm: {
+    max: 10,
+    step: 0.1
+  },
+  svw: {
+    max: 100,
+    step: 1
+  },
+  lvw: {
+    max: 100,
+    step: 1
+  },
+  dvw: {
+    max: 100,
+    step: 1
+  },
+  svh: {
+    max: 100,
+    step: 1
+  },
+  lvh: {
+    max: 100,
+    step: 1
+  },
+  dvh: {
+    max: 100,
+    step: 1
+  },
+  vi: {
+    max: 100,
+    step: 1
+  },
+  svi: {
+    max: 100,
+    step: 1
+  },
+  lvi: {
+    max: 100,
+    step: 1
+  },
+  dvi: {
+    max: 100,
+    step: 1
+  },
+  vb: {
+    max: 100,
+    step: 1
+  },
+  svb: {
+    max: 100,
+    step: 1
+  },
+  lvb: {
+    max: 100,
+    step: 1
+  },
+  dvb: {
+    max: 100,
+    step: 1
+  },
+  vmin: {
+    max: 100,
+    step: 1
+  },
+  svmin: {
+    max: 100,
+    step: 1
+  },
+  lvmin: {
+    max: 100,
+    step: 1
+  },
+  dvmin: {
+    max: 100,
+    step: 1
+  },
+  vmax: {
+    max: 100,
+    step: 1
+  },
+  svmax: {
+    max: 100,
+    step: 1
+  },
+  lvmax: {
+    max: 100,
+    step: 1
+  },
+  dvmax: {
+    max: 100,
+    step: 1
+  }
+};
+const LABELS = {
+  all: (0,external_wp_i18n_namespaceObject.__)('All sides'),
+  top: (0,external_wp_i18n_namespaceObject.__)('Top side'),
+  bottom: (0,external_wp_i18n_namespaceObject.__)('Bottom side'),
+  left: (0,external_wp_i18n_namespaceObject.__)('Left side'),
+  right: (0,external_wp_i18n_namespaceObject.__)('Right side'),
+  vertical: (0,external_wp_i18n_namespaceObject.__)('Top and bottom sides'),
+  horizontal: (0,external_wp_i18n_namespaceObject.__)('Left and right sides')
+};
+const DEFAULT_VALUES = {
+  top: undefined,
+  right: undefined,
+  bottom: undefined,
+  left: undefined
+};
+const ALL_SIDES = ['top', 'right', 'bottom', 'left'];
+
+/**
+ * Gets an items with the most occurrence within an array
+ * https://stackoverflow.com/a/20762713
+ *
+ * @param arr Array of items to check.
+ * @return The item with the most occurrences.
+ */
+function utils_mode(arr) {
+  return arr.sort((a, b) => arr.filter(v => v === a).length - arr.filter(v => v === b).length).pop();
+}
+
+/**
+ * Gets the merged input value and unit from values data.
+ *
+ * @param values         Box values.
+ * @param availableSides Available box sides to evaluate.
+ *
+ * @return A value + unit for the 'all' input.
+ */
+function getMergedValue(values = {}, availableSides = ALL_SIDES) {
+  const sides = normalizeSides(availableSides);
+  if (sides.every(side => values[side] === values[sides[0]])) {
+    return values[sides[0]];
+  }
+  return undefined;
+}
+
+/**
+ * Checks if the values are mixed.
+ *
+ * @param values         Box values.
+ * @param availableSides Available box sides to evaluate.
+ * @return Whether the values are mixed.
+ */
+function isValueMixed(values = {}, availableSides = ALL_SIDES) {
+  const sides = normalizeSides(availableSides);
+  return sides.some(side => values[side] !== values[sides[0]]);
+}
+
+/**
+ * Determine the most common unit selection to use as a fallback option.
+ *
+ * @param selectedUnits Current unit selections for individual sides.
+ * @return  Most common unit selection.
+ */
+function getAllUnitFallback(selectedUnits) {
+  if (!selectedUnits || typeof selectedUnits !== 'object') {
+    return undefined;
+  }
+  const filteredUnits = Object.values(selectedUnits).filter(Boolean);
+  return utils_mode(filteredUnits);
+}
+
+/**
+ * Checks to determine if values are defined.
+ *
+ * @param values Box values.
+ *
+ * @return  Whether values are mixed.
+ */
+function isValuesDefined(values) {
+  return values && Object.values(values).filter(
+  // Switching units when input is empty causes values only
+  // containing units. This gives false positive on mixed values
+  // unless filtered.
+  value => !!value && /\d/.test(value)).length > 0;
+}
+
+/**
+ * Get initial selected side, factoring in whether the sides are linked,
+ * and whether the vertical / horizontal directions are grouped via splitOnAxis.
+ *
+ * @param isLinked    Whether the box control's fields are linked.
+ * @param splitOnAxis Whether splitting by horizontal or vertical axis.
+ * @return The initial side.
+ */
+function getInitialSide(isLinked, splitOnAxis) {
+  let initialSide = 'all';
+  if (!isLinked) {
+    initialSide = splitOnAxis ? 'vertical' : 'top';
+  }
+  return initialSide;
+}
+
+/**
+ * Normalizes provided sides configuration to an array containing only top,
+ * right, bottom and left. This essentially just maps `horizontal` or `vertical`
+ * to their appropriate sides to facilitate correctly determining value for
+ * all input control.
+ *
+ * @param sides Available sides for box control.
+ * @return Normalized sides configuration.
+ */
+function normalizeSides(sides) {
+  const filteredSides = [];
+  if (!sides?.length) {
+    return ALL_SIDES;
+  }
+  if (sides.includes('vertical')) {
+    filteredSides.push(...['top', 'bottom']);
+  } else if (sides.includes('horizontal')) {
+    filteredSides.push(...['left', 'right']);
+  } else {
+    const newSides = ALL_SIDES.filter(side => sides.includes(side));
+    filteredSides.push(...newSides);
+  }
+  return filteredSides;
+}
+
+/**
+ * Applies a value to an object representing top, right, bottom and left sides
+ * while taking into account any custom side configuration.
+ *
+ * @deprecated
+ *
+ * @param currentValues The current values for each side.
+ * @param newValue      The value to apply to the sides object.
+ * @param sides         Array defining valid sides.
+ *
+ * @return Object containing the updated values for each side.
+ */
+function applyValueToSides(currentValues, newValue, sides) {
+  external_wp_deprecated_default()('applyValueToSides', {
+    since: '6.8',
+    version: '7.0'
+  });
+  const newValues = {
+    ...currentValues
+  };
+  if (sides?.length) {
+    sides.forEach(side => {
+      if (side === 'vertical') {
+        newValues.top = newValue;
+        newValues.bottom = newValue;
+      } else if (side === 'horizontal') {
+        newValues.left = newValue;
+        newValues.right = newValue;
+      } else {
+        newValues[side] = newValue;
+      }
+    });
+  } else {
+    ALL_SIDES.forEach(side => newValues[side] = newValue);
+  }
+  return newValues;
+}
+
+/**
+ * Return the allowed sides based on the sides configuration.
+ *
+ * @param sides Sides configuration.
+ * @return Allowed sides.
+ */
+function getAllowedSides(sides) {
+  const allowedSides = new Set(!sides ? ALL_SIDES : []);
+  sides?.forEach(allowedSide => {
+    if (allowedSide === 'vertical') {
+      allowedSides.add('top');
+      allowedSides.add('bottom');
+    } else if (allowedSide === 'horizontal') {
+      allowedSides.add('right');
+      allowedSides.add('left');
+    } else {
+      allowedSides.add(allowedSide);
+    }
+  });
+  return allowedSides;
+}
+
 ;// ./packages/components/build-module/box-control/styles/box-control-icon-styles.js
 
 function box_control_icon_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
@@ -42194,320 +42505,12 @@ const FlexedRangeControl = /*#__PURE__*/emotion_styled_base_browser_esm(range_co
   target: "e1jovhle0"
 } : 0)("width:100%;margin-inline-end:", space(2), ";" + ( true ? "" : 0));
 
-;// ./packages/components/build-module/box-control/utils.js
+;// ./packages/components/build-module/box-control/input-control.js
 /**
  * WordPress dependencies
  */
 
 
-/**
- * Internal dependencies
- */
-
-const CUSTOM_VALUE_SETTINGS = {
-  px: {
-    max: 300,
-    step: 1
-  },
-  '%': {
-    max: 100,
-    step: 1
-  },
-  vw: {
-    max: 100,
-    step: 1
-  },
-  vh: {
-    max: 100,
-    step: 1
-  },
-  em: {
-    max: 10,
-    step: 0.1
-  },
-  rm: {
-    max: 10,
-    step: 0.1
-  },
-  svw: {
-    max: 100,
-    step: 1
-  },
-  lvw: {
-    max: 100,
-    step: 1
-  },
-  dvw: {
-    max: 100,
-    step: 1
-  },
-  svh: {
-    max: 100,
-    step: 1
-  },
-  lvh: {
-    max: 100,
-    step: 1
-  },
-  dvh: {
-    max: 100,
-    step: 1
-  },
-  vi: {
-    max: 100,
-    step: 1
-  },
-  svi: {
-    max: 100,
-    step: 1
-  },
-  lvi: {
-    max: 100,
-    step: 1
-  },
-  dvi: {
-    max: 100,
-    step: 1
-  },
-  vb: {
-    max: 100,
-    step: 1
-  },
-  svb: {
-    max: 100,
-    step: 1
-  },
-  lvb: {
-    max: 100,
-    step: 1
-  },
-  dvb: {
-    max: 100,
-    step: 1
-  },
-  vmin: {
-    max: 100,
-    step: 1
-  },
-  svmin: {
-    max: 100,
-    step: 1
-  },
-  lvmin: {
-    max: 100,
-    step: 1
-  },
-  dvmin: {
-    max: 100,
-    step: 1
-  },
-  vmax: {
-    max: 100,
-    step: 1
-  },
-  svmax: {
-    max: 100,
-    step: 1
-  },
-  lvmax: {
-    max: 100,
-    step: 1
-  },
-  dvmax: {
-    max: 100,
-    step: 1
-  }
-};
-const LABELS = {
-  all: (0,external_wp_i18n_namespaceObject.__)('All sides'),
-  top: (0,external_wp_i18n_namespaceObject.__)('Top side'),
-  bottom: (0,external_wp_i18n_namespaceObject.__)('Bottom side'),
-  left: (0,external_wp_i18n_namespaceObject.__)('Left side'),
-  right: (0,external_wp_i18n_namespaceObject.__)('Right side'),
-  mixed: (0,external_wp_i18n_namespaceObject.__)('Mixed'),
-  vertical: (0,external_wp_i18n_namespaceObject.__)('Top and bottom sides'),
-  horizontal: (0,external_wp_i18n_namespaceObject.__)('Left and right sides')
-};
-const DEFAULT_VALUES = {
-  top: undefined,
-  right: undefined,
-  bottom: undefined,
-  left: undefined
-};
-const ALL_SIDES = ['top', 'right', 'bottom', 'left'];
-
-/**
- * Gets an items with the most occurrence within an array
- * https://stackoverflow.com/a/20762713
- *
- * @param arr Array of items to check.
- * @return The item with the most occurrences.
- */
-function utils_mode(arr) {
-  return arr.sort((a, b) => arr.filter(v => v === a).length - arr.filter(v => v === b).length).pop();
-}
-
-/**
- * Gets the 'all' input value and unit from values data.
- *
- * @param values         Box values.
- * @param selectedUnits  Box units.
- * @param availableSides Available box sides to evaluate.
- *
- * @return A value + unit for the 'all' input.
- */
-function getAllValue(values = {}, selectedUnits, availableSides = ALL_SIDES) {
-  const sides = normalizeSides(availableSides);
-  const parsedQuantitiesAndUnits = sides.map(side => parseQuantityAndUnitFromRawValue(values[side]));
-  const allParsedQuantities = parsedQuantitiesAndUnits.map(value => {
-    var _value$;
-    return (_value$ = value[0]) !== null && _value$ !== void 0 ? _value$ : '';
-  });
-  const allParsedUnits = parsedQuantitiesAndUnits.map(value => value[1]);
-  const commonQuantity = allParsedQuantities.every(v => v === allParsedQuantities[0]) ? allParsedQuantities[0] : '';
-
-  /**
-   * The typeof === 'number' check is important. On reset actions, the incoming value
-   * may be null or an empty string.
-   *
-   * Also, the value may also be zero (0), which is considered a valid unit value.
-   *
-   * typeof === 'number' is more specific for these cases, rather than relying on a
-   * simple truthy check.
-   */
-  let commonUnit;
-  if (typeof commonQuantity === 'number') {
-    commonUnit = utils_mode(allParsedUnits);
-  } else {
-    var _getAllUnitFallback;
-    // Set meaningful unit selection if no commonQuantity and user has previously
-    // selected units without assigning values while controls were unlinked.
-    commonUnit = (_getAllUnitFallback = getAllUnitFallback(selectedUnits)) !== null && _getAllUnitFallback !== void 0 ? _getAllUnitFallback : utils_mode(allParsedUnits);
-  }
-  return [commonQuantity, commonUnit].join('');
-}
-
-/**
- * Determine the most common unit selection to use as a fallback option.
- *
- * @param selectedUnits Current unit selections for individual sides.
- * @return  Most common unit selection.
- */
-function getAllUnitFallback(selectedUnits) {
-  if (!selectedUnits || typeof selectedUnits !== 'object') {
-    return undefined;
-  }
-  const filteredUnits = Object.values(selectedUnits).filter(Boolean);
-  return utils_mode(filteredUnits);
-}
-
-/**
- * Checks to determine if values are mixed.
- *
- * @param values        Box values.
- * @param selectedUnits Box units.
- * @param sides         Available box sides to evaluate.
- *
- * @return Whether values are mixed.
- */
-function isValuesMixed(values = {}, selectedUnits, sides = ALL_SIDES) {
-  const allValue = getAllValue(values, selectedUnits, sides);
-  const isMixed = isNaN(parseFloat(allValue));
-  return isMixed;
-}
-
-/**
- * Checks to determine if values are defined.
- *
- * @param values Box values.
- *
- * @return  Whether values are mixed.
- */
-function isValuesDefined(values) {
-  return values && Object.values(values).filter(
-  // Switching units when input is empty causes values only
-  // containing units. This gives false positive on mixed values
-  // unless filtered.
-  value => !!value && /\d/.test(value)).length > 0;
-}
-
-/**
- * Get initial selected side, factoring in whether the sides are linked,
- * and whether the vertical / horizontal directions are grouped via splitOnAxis.
- *
- * @param isLinked    Whether the box control's fields are linked.
- * @param splitOnAxis Whether splitting by horizontal or vertical axis.
- * @return The initial side.
- */
-function getInitialSide(isLinked, splitOnAxis) {
-  let initialSide = 'all';
-  if (!isLinked) {
-    initialSide = splitOnAxis ? 'vertical' : 'top';
-  }
-  return initialSide;
-}
-
-/**
- * Normalizes provided sides configuration to an array containing only top,
- * right, bottom and left. This essentially just maps `horizontal` or `vertical`
- * to their appropriate sides to facilitate correctly determining value for
- * all input control.
- *
- * @param sides Available sides for box control.
- * @return Normalized sides configuration.
- */
-function normalizeSides(sides) {
-  const filteredSides = [];
-  if (!sides?.length) {
-    return ALL_SIDES;
-  }
-  if (sides.includes('vertical')) {
-    filteredSides.push(...['top', 'bottom']);
-  } else if (sides.includes('horizontal')) {
-    filteredSides.push(...['left', 'right']);
-  } else {
-    const newSides = ALL_SIDES.filter(side => sides.includes(side));
-    filteredSides.push(...newSides);
-  }
-  return filteredSides;
-}
-
-/**
- * Applies a value to an object representing top, right, bottom and left sides
- * while taking into account any custom side configuration.
- *
- * @param currentValues The current values for each side.
- * @param newValue      The value to apply to the sides object.
- * @param sides         Array defining valid sides.
- *
- * @return Object containing the updated values for each side.
- */
-function applyValueToSides(currentValues, newValue, sides) {
-  const newValues = {
-    ...currentValues
-  };
-  if (sides?.length) {
-    sides.forEach(side => {
-      if (side === 'vertical') {
-        newValues.top = newValue;
-        newValues.bottom = newValue;
-      } else if (side === 'horizontal') {
-        newValues.left = newValue;
-        newValues.right = newValue;
-      } else {
-        newValues[side] = newValue;
-      }
-    });
-  } else {
-    ALL_SIDES.forEach(side => newValues[side] = newValue);
-  }
-  return newValues;
-}
-
-;// ./packages/components/build-module/box-control/all-input-control.js
-/**
- * WordPress dependencies
- */
 
 /**
  * Internal dependencies
@@ -42517,104 +42520,55 @@ function applyValueToSides(currentValues, newValue, sides) {
 
 
 
-const all_input_control_noop = () => {};
-function AllInputControl({
+const box_control_input_control_noop = () => {};
+function getSidesToModify(side, sides, isAlt) {
+  const allowedSides = getAllowedSides(sides);
+  let modifiedSides = [];
+  switch (side) {
+    case 'all':
+      modifiedSides = ['top', 'bottom', 'left', 'right'];
+      break;
+    case 'horizontal':
+      modifiedSides = ['left', 'right'];
+      break;
+    case 'vertical':
+      modifiedSides = ['top', 'bottom'];
+      break;
+    default:
+      modifiedSides = [side];
+  }
+  if (isAlt) {
+    switch (side) {
+      case 'top':
+        modifiedSides.push('bottom');
+        break;
+      case 'bottom':
+        modifiedSides.push('top');
+        break;
+      case 'left':
+        modifiedSides.push('left');
+        break;
+      case 'right':
+        modifiedSides.push('right');
+        break;
+    }
+  }
+  return modifiedSides.filter(s => allowedSides.has(s));
+}
+function BoxInputControl({
   __next40pxDefaultSize,
-  onChange = all_input_control_noop,
-  onFocus = all_input_control_noop,
+  onChange = box_control_input_control_noop,
+  onFocus = box_control_input_control_noop,
   values,
-  sides,
   selectedUnits,
   setSelectedUnits,
+  sides,
+  side,
   ...props
 }) {
   var _CUSTOM_VALUE_SETTING, _CUSTOM_VALUE_SETTING2;
-  const inputId = (0,external_wp_compose_namespaceObject.useInstanceId)(AllInputControl, 'box-control-input-all');
-  const allValue = getAllValue(values, selectedUnits, sides);
-  const hasValues = isValuesDefined(values);
-  const isMixed = hasValues && isValuesMixed(values, selectedUnits, sides);
-  const allPlaceholder = isMixed ? LABELS.mixed : undefined;
-  const [parsedQuantity, parsedUnit] = parseQuantityAndUnitFromRawValue(allValue);
+  const defaultValuesToModify = getSidesToModify(side, sides);
   const handleOnFocus = event => {
-    onFocus(event, {
-      side: 'all'
-    });
-  };
-  const onValueChange = next => {
-    const isNumeric = next !== undefined && !isNaN(parseFloat(next));
-    const nextValue = isNumeric ? next : undefined;
-    const nextValues = applyValueToSides(values, nextValue, sides);
-    onChange(nextValues);
-  };
-  const sliderOnChange = next => {
-    onValueChange(next !== undefined ? [next, parsedUnit].join('') : undefined);
-  };
-
-  // Set selected unit so it can be used as fallback by unlinked controls
-  // when individual sides do not have a value containing a unit.
-  const handleOnUnitChange = unit => {
-    const newUnits = applyValueToSides(selectedUnits, unit, sides);
-    setSelectedUnits(newUnits);
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledUnitControl, {
-      ...props,
-      __shouldNotWarnDeprecated36pxSize: true,
-      __next40pxDefaultSize: __next40pxDefaultSize,
-      className: "component-box-control__unit-control",
-      disableUnits: isMixed,
-      id: inputId,
-      isPressEnterToChange: true,
-      value: allValue,
-      onChange: onValueChange,
-      onUnitChange: handleOnUnitChange,
-      onFocus: handleOnFocus,
-      placeholder: allPlaceholder,
-      label: LABELS.all,
-      hideLabelFromVision: true
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedRangeControl, {
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: __next40pxDefaultSize,
-      __shouldNotWarnDeprecated36pxSize: true,
-      "aria-controls": inputId,
-      label: LABELS.all,
-      hideLabelFromVision: true,
-      onChange: sliderOnChange,
-      min: 0,
-      max: (_CUSTOM_VALUE_SETTING = CUSTOM_VALUE_SETTINGS[parsedUnit !== null && parsedUnit !== void 0 ? parsedUnit : 'px']?.max) !== null && _CUSTOM_VALUE_SETTING !== void 0 ? _CUSTOM_VALUE_SETTING : 10,
-      step: (_CUSTOM_VALUE_SETTING2 = CUSTOM_VALUE_SETTINGS[parsedUnit !== null && parsedUnit !== void 0 ? parsedUnit : 'px']?.step) !== null && _CUSTOM_VALUE_SETTING2 !== void 0 ? _CUSTOM_VALUE_SETTING2 : 0.1,
-      value: parsedQuantity !== null && parsedQuantity !== void 0 ? parsedQuantity : 0,
-      withInputField: false
-    })]
-  });
-}
-
-;// ./packages/components/build-module/box-control/input-controls.js
-/**
- * WordPress dependencies
- */
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-const input_controls_noop = () => {};
-function BoxInputControls({
-  __next40pxDefaultSize,
-  onChange = input_controls_noop,
-  onFocus = input_controls_noop,
-  values,
-  selectedUnits,
-  setSelectedUnits,
-  sides,
-  ...props
-}) {
-  const generatedId = (0,external_wp_compose_namespaceObject.useInstanceId)(BoxInputControls, 'box-control-input');
-  const createHandleOnFocus = side => event => {
     onFocus(event, {
       side
     });
@@ -42622,14 +42576,13 @@ function BoxInputControls({
   const handleOnChange = nextValues => {
     onChange(nextValues);
   };
-  const handleOnValueChange = (side, next, extra) => {
+  const handleOnValueChange = (next, extra) => {
     const nextValues = {
       ...values
     };
     const isNumeric = next !== undefined && !isNaN(parseFloat(next));
     const nextValue = isNumeric ? next : undefined;
-    nextValues[side] = nextValue;
-
+    const modifiedSides = getSidesToModify(side, sides,
     /**
      * Supports changing pair sides. For example, holding the ALT key
      * when changing the TOP will also update BOTTOM.
@@ -42637,198 +42590,72 @@ function BoxInputControls({
     // @ts-expect-error - TODO: event.altKey is only present when the change event was
     // triggered by a keyboard event. Should this feature be implemented differently so
     // it also works with drag events?
-    if (extra?.event.altKey) {
-      switch (side) {
-        case 'top':
-          nextValues.bottom = nextValue;
-          break;
-        case 'bottom':
-          nextValues.top = nextValue;
-          break;
-        case 'left':
-          nextValues.right = nextValue;
-          break;
-        case 'right':
-          nextValues.left = nextValue;
-          break;
-      }
-    }
+    !!extra?.event.altKey);
+    modifiedSides.forEach(modifiedSide => {
+      nextValues[modifiedSide] = nextValue;
+    });
     handleOnChange(nextValues);
   };
-  const createHandleOnUnitChange = side => next => {
+  const handleOnUnitChange = next => {
     const newUnits = {
       ...selectedUnits
     };
-    newUnits[side] = next;
-    setSelectedUnits(newUnits);
-  };
-
-  // Filter sides if custom configuration provided, maintaining default order.
-  const filteredSides = sides?.length ? ALL_SIDES.filter(side => sides.includes(side)) : ALL_SIDES;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: filteredSides.map(side => {
-      var _CUSTOM_VALUE_SETTING, _CUSTOM_VALUE_SETTING2;
-      const [parsedQuantity, parsedUnit] = parseQuantityAndUnitFromRawValue(values[side]);
-      const computedUnit = values[side] ? parsedUnit : selectedUnits[side];
-      const inputId = [generatedId, side].join('-');
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(InputWrapper, {
-        expanded: true,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedBoxControlIcon, {
-          side: side,
-          sides: sides
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tooltip, {
-          placement: "top-end",
-          text: LABELS[side],
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledUnitControl, {
-            ...props,
-            __shouldNotWarnDeprecated36pxSize: true,
-            __next40pxDefaultSize: __next40pxDefaultSize,
-            className: "component-box-control__unit-control",
-            id: inputId,
-            isPressEnterToChange: true,
-            value: [parsedQuantity, computedUnit].join(''),
-            onChange: (nextValue, extra) => handleOnValueChange(side, nextValue, extra),
-            onUnitChange: createHandleOnUnitChange(side),
-            onFocus: createHandleOnFocus(side),
-            label: LABELS[side],
-            hideLabelFromVision: true
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedRangeControl, {
-          __nextHasNoMarginBottom: true,
-          __next40pxDefaultSize: __next40pxDefaultSize,
-          __shouldNotWarnDeprecated36pxSize: true,
-          "aria-controls": inputId,
-          label: LABELS[side],
-          hideLabelFromVision: true,
-          onChange: newValue => {
-            handleOnValueChange(side, newValue !== undefined ? [newValue, computedUnit].join('') : undefined);
-          },
-          min: 0,
-          max: (_CUSTOM_VALUE_SETTING = CUSTOM_VALUE_SETTINGS[computedUnit !== null && computedUnit !== void 0 ? computedUnit : 'px']?.max) !== null && _CUSTOM_VALUE_SETTING !== void 0 ? _CUSTOM_VALUE_SETTING : 10,
-          step: (_CUSTOM_VALUE_SETTING2 = CUSTOM_VALUE_SETTINGS[computedUnit !== null && computedUnit !== void 0 ? computedUnit : 'px']?.step) !== null && _CUSTOM_VALUE_SETTING2 !== void 0 ? _CUSTOM_VALUE_SETTING2 : 0.1,
-          value: parsedQuantity !== null && parsedQuantity !== void 0 ? parsedQuantity : 0,
-          withInputField: false
-        })]
-      }, `box-control-${side}`);
-    })
-  });
-}
-
-;// ./packages/components/build-module/box-control/axial-input-controls.js
-/**
- * WordPress dependencies
- */
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-const groupedSides = ['vertical', 'horizontal'];
-function AxialInputControls({
-  __next40pxDefaultSize,
-  onChange,
-  onFocus,
-  values,
-  selectedUnits,
-  setSelectedUnits,
-  sides,
-  ...props
-}) {
-  const generatedId = (0,external_wp_compose_namespaceObject.useInstanceId)(AxialInputControls, `box-control-input`);
-  const createHandleOnFocus = side => event => {
-    if (!onFocus) {
-      return;
-    }
-    onFocus(event, {
-      side
+    defaultValuesToModify.forEach(modifiedSide => {
+      newUnits[modifiedSide] = next;
     });
-  };
-  const handleOnValueChange = (side, next) => {
-    if (!onChange) {
-      return;
-    }
-    const nextValues = {
-      ...values
-    };
-    const isNumeric = next !== undefined && !isNaN(parseFloat(next));
-    const nextValue = isNumeric ? next : undefined;
-    if (side === 'vertical') {
-      nextValues.top = nextValue;
-      nextValues.bottom = nextValue;
-    }
-    if (side === 'horizontal') {
-      nextValues.left = nextValue;
-      nextValues.right = nextValue;
-    }
-    onChange(nextValues);
-  };
-  const createHandleOnUnitChange = side => next => {
-    const newUnits = {
-      ...selectedUnits
-    };
-    if (side === 'vertical') {
-      newUnits.top = next;
-      newUnits.bottom = next;
-    }
-    if (side === 'horizontal') {
-      newUnits.left = next;
-      newUnits.right = next;
-    }
     setSelectedUnits(newUnits);
   };
-
-  // Filter sides if custom configuration provided, maintaining default order.
-  const filteredSides = sides?.length ? groupedSides.filter(side => sides.includes(side)) : groupedSides;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: filteredSides.map(side => {
-      var _CUSTOM_VALUE_SETTING, _CUSTOM_VALUE_SETTING2;
-      const [parsedQuantity, parsedUnit] = parseQuantityAndUnitFromRawValue(side === 'vertical' ? values.top : values.left);
-      const selectedUnit = side === 'vertical' ? selectedUnits.top : selectedUnits.left;
-      const inputId = [generatedId, side].join('-');
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(InputWrapper, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedBoxControlIcon, {
-          side: side,
-          sides: sides
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tooltip, {
-          placement: "top-end",
-          text: LABELS[side],
-          children: /*#__PURE__*/(0,external_React_.createElement)(StyledUnitControl, {
-            ...props,
-            __shouldNotWarnDeprecated36pxSize: true,
-            __next40pxDefaultSize: __next40pxDefaultSize,
-            className: "component-box-control__unit-control",
-            id: inputId,
-            isPressEnterToChange: true,
-            value: [parsedQuantity, selectedUnit !== null && selectedUnit !== void 0 ? selectedUnit : parsedUnit].join(''),
-            onChange: newValue => handleOnValueChange(side, newValue),
-            onUnitChange: createHandleOnUnitChange(side),
-            onFocus: createHandleOnFocus(side),
-            label: LABELS[side],
-            hideLabelFromVision: true,
-            key: side
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedRangeControl, {
-          __nextHasNoMarginBottom: true,
-          __next40pxDefaultSize: __next40pxDefaultSize,
-          __shouldNotWarnDeprecated36pxSize: true,
-          "aria-controls": inputId,
-          label: LABELS[side],
-          hideLabelFromVision: true,
-          onChange: newValue => handleOnValueChange(side, newValue !== undefined ? [newValue, selectedUnit !== null && selectedUnit !== void 0 ? selectedUnit : parsedUnit].join('') : undefined),
-          min: 0,
-          max: (_CUSTOM_VALUE_SETTING = CUSTOM_VALUE_SETTINGS[selectedUnit !== null && selectedUnit !== void 0 ? selectedUnit : 'px']?.max) !== null && _CUSTOM_VALUE_SETTING !== void 0 ? _CUSTOM_VALUE_SETTING : 10,
-          step: (_CUSTOM_VALUE_SETTING2 = CUSTOM_VALUE_SETTINGS[selectedUnit !== null && selectedUnit !== void 0 ? selectedUnit : 'px']?.step) !== null && _CUSTOM_VALUE_SETTING2 !== void 0 ? _CUSTOM_VALUE_SETTING2 : 0.1,
-          value: parsedQuantity !== null && parsedQuantity !== void 0 ? parsedQuantity : 0,
-          withInputField: false
-        })]
-      }, side);
-    })
-  });
+  const mergedValue = getMergedValue(values, defaultValuesToModify);
+  const hasValues = isValuesDefined(values);
+  const isMixed = hasValues && defaultValuesToModify.length > 1 && isValueMixed(values, defaultValuesToModify);
+  const [parsedQuantity, parsedUnit] = parseQuantityAndUnitFromRawValue(mergedValue);
+  const computedUnit = hasValues ? parsedUnit : selectedUnits[defaultValuesToModify[0]];
+  const generatedId = (0,external_wp_compose_namespaceObject.useInstanceId)(BoxInputControl, 'box-control-input');
+  const inputId = [generatedId, side].join('-');
+  const isMixedUnit = defaultValuesToModify.length > 1 && mergedValue === undefined && defaultValuesToModify.some(s => selectedUnits[s] !== computedUnit);
+  const usedValue = mergedValue === undefined && computedUnit ? computedUnit : mergedValue;
+  const mixedPlaceholder = isMixed || isMixedUnit ? (0,external_wp_i18n_namespaceObject.__)('Mixed') : undefined;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(InputWrapper, {
+    expanded: true,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedBoxControlIcon, {
+      side: side,
+      sides: sides
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tooltip, {
+      placement: "top-end",
+      text: LABELS[side],
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledUnitControl, {
+        ...props,
+        __shouldNotWarnDeprecated36pxSize: true,
+        __next40pxDefaultSize: __next40pxDefaultSize,
+        className: "component-box-control__unit-control",
+        id: inputId,
+        isPressEnterToChange: true,
+        disableUnits: isMixed || isMixedUnit,
+        value: usedValue,
+        onChange: handleOnValueChange,
+        onUnitChange: handleOnUnitChange,
+        onFocus: handleOnFocus,
+        label: LABELS[side],
+        placeholder: mixedPlaceholder,
+        hideLabelFromVision: true
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedRangeControl, {
+      __nextHasNoMarginBottom: true,
+      __next40pxDefaultSize: __next40pxDefaultSize,
+      __shouldNotWarnDeprecated36pxSize: true,
+      "aria-controls": inputId,
+      label: LABELS[side],
+      hideLabelFromVision: true,
+      onChange: newValue => {
+        handleOnValueChange(newValue !== undefined ? [newValue, computedUnit].join('') : undefined);
+      },
+      min: 0,
+      max: (_CUSTOM_VALUE_SETTING = CUSTOM_VALUE_SETTINGS[computedUnit !== null && computedUnit !== void 0 ? computedUnit : 'px']?.max) !== null && _CUSTOM_VALUE_SETTING !== void 0 ? _CUSTOM_VALUE_SETTING : 10,
+      step: (_CUSTOM_VALUE_SETTING2 = CUSTOM_VALUE_SETTINGS[computedUnit !== null && computedUnit !== void 0 ? computedUnit : 'px']?.step) !== null && _CUSTOM_VALUE_SETTING2 !== void 0 ? _CUSTOM_VALUE_SETTING2 : 0.1,
+      value: parsedQuantity !== null && parsedQuantity !== void 0 ? parsedQuantity : 0,
+      withInputField: false
+    })]
+  }, `box-control-${side}`);
 }
 
 ;// ./packages/components/build-module/box-control/linked-button.js
@@ -42873,8 +42700,6 @@ function LinkedButton({
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -42942,7 +42767,7 @@ function BoxControl({
   const hasInitialValue = isValuesDefined(valuesProp);
   const hasOneSide = sides?.length === 1;
   const [isDirty, setIsDirty] = (0,external_wp_element_namespaceObject.useState)(hasInitialValue);
-  const [isLinked, setIsLinked] = (0,external_wp_element_namespaceObject.useState)(!hasInitialValue || !isValuesMixed(inputValues) || hasOneSide);
+  const [isLinked, setIsLinked] = (0,external_wp_element_namespaceObject.useState)(!hasInitialValue || !isValueMixed(inputValues) || hasOneSide);
   const [side, setSide] = (0,external_wp_element_namespaceObject.useState)(getInitialSide(isLinked, splitOnAxis));
 
   // Tracking selected units via internal state allows filtering of CSS unit
@@ -42995,6 +42820,7 @@ function BoxControl({
     __next40pxDefaultSize,
     size: undefined
   });
+  const sidesToRender = getAllowedSides(sides);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(grid_component, {
     id: id,
     columns: 3,
@@ -43004,23 +42830,23 @@ function BoxControl({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BaseControl.VisualLabel, {
       id: headingId,
       children: label
-    }), isLinked && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(InputWrapper, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedBoxControlIcon, {
-        side: side,
-        sides: sides
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AllInputControl, {
+    }), isLinked && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InputWrapper, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BoxInputControl, {
+        side: "all",
         ...inputControlProps
-      })]
+      })
     }), !hasOneSide && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkedButtonWrapper, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkedButton, {
         onClick: toggleLinked,
         isLinked: isLinked
       })
-    }), !isLinked && splitOnAxis && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AxialInputControls, {
+    }), !isLinked && splitOnAxis && ['vertical', 'horizontal'].map(axis => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BoxInputControl, {
+      side: axis,
       ...inputControlProps
-    }), !isLinked && !splitOnAxis && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BoxInputControls, {
+    }, axis)), !isLinked && !splitOnAxis && Array.from(sidesToRender).map(axis => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BoxInputControl, {
+      side: axis,
       ...inputControlProps
-    }), allowReset && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResetButton, {
+    }, axis)), allowReset && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResetButton, {
       className: "component-box-control__reset-button",
       variant: "secondary",
       size: "small",
