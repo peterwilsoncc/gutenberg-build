@@ -31660,7 +31660,7 @@ function PostActions({
   postId,
   onActionPerformed
 }) {
-  const [isActionsMenuOpen, setIsActionsMenuOpen] = (0,external_wp_element_namespaceObject.useState)(false);
+  const [activeModalAction, setActiveModalAction] = (0,external_wp_element_namespaceObject.useState)(null);
   const {
     item,
     permissions
@@ -31689,26 +31689,27 @@ function PostActions({
       return !action.isEligible || action.isEligible(itemWithPermissions);
     });
   }, [allActions, itemWithPermissions]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu, {
-    open: isActionsMenuOpen,
-    trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      size: "small",
-      icon: more_vertical,
-      label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
-      disabled: !actions.length,
-      accessibleWhenDisabled: true,
-      className: "editor-all-actions-button",
-      onClick: () => setIsActionsMenuOpen(!isActionsMenuOpen)
-    }),
-    onOpenChange: setIsActionsMenuOpen,
-    placement: "bottom-end",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsDropdownMenuGroup, {
-      actions: actions,
-      item: itemWithPermissions,
-      onClose: () => {
-        setIsActionsMenuOpen(false);
-      }
-    })
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu, {
+      trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        size: "small",
+        icon: more_vertical,
+        label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
+        disabled: !actions.length,
+        accessibleWhenDisabled: true,
+        className: "editor-all-actions-button"
+      }),
+      placement: "bottom-end",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsDropdownMenuGroup, {
+        actions: actions,
+        item: itemWithPermissions,
+        setActiveModalAction: setActiveModalAction
+      })
+    }), !!activeModalAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionModal, {
+      action: activeModalAction,
+      items: [item],
+      closeModal: () => setActiveModalAction(null)
+    })]
   });
 }
 
@@ -31717,7 +31718,6 @@ function PostActions({
 // and the dataviews package should not be using the editor packages directly,
 // so duplicating the code here seems like the least bad option.
 
-// Copied as is from packages/dataviews/src/item-actions.js
 function DropdownMenuItemTrigger({
   action,
   onClick,
@@ -31726,74 +31726,49 @@ function DropdownMenuItemTrigger({
   const label = typeof action.label === 'string' ? action.label : action.label(items);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Item, {
     onClick: onClick,
-    hideOnClick: !action.RenderModal,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.ItemLabel, {
       children: label
     })
   });
 }
-
-// Copied as is from packages/dataviews/src/item-actions.js
-// With an added onClose prop.
-function ActionWithModal({
+function ActionModal({
   action,
-  item,
-  ActionTrigger,
-  onClose
+  items,
+  closeModal
 }) {
-  const [isModalOpen, setIsModalOpen] = (0,external_wp_element_namespaceObject.useState)(false);
-  const actionTriggerProps = {
-    action,
-    onClick: () => setIsModalOpen(true),
-    items: [item]
-  };
-  const {
-    RenderModal,
-    hideModalHeader
-  } = action;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionTrigger, {
-      ...actionTriggerProps
-    }), isModalOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
-      title: action.modalHeader || action.label,
-      __experimentalHideHeader: !!hideModalHeader,
-      onRequestClose: () => {
-        setIsModalOpen(false);
-      },
-      overlayClassName: `editor-action-modal editor-action-modal__${kebabCase(action.id)}`,
-      focusOnMount: "firstContentElement",
-      size: "medium",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RenderModal, {
-        items: [item],
-        closeModal: () => {
-          setIsModalOpen(false);
-          onClose();
-        }
-      })
-    })]
+  const label = typeof action.label === 'string' ? action.label : action.label(items);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
+    title: action.modalHeader || label,
+    __experimentalHideHeader: !!action.hideModalHeader,
+    onRequestClose: closeModal !== null && closeModal !== void 0 ? closeModal : () => {},
+    focusOnMount: "firstContentElement",
+    size: "medium",
+    overlayClassName: `editor-action-modal editor-action-modal__${kebabCase(action.id)}`,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(action.RenderModal, {
+      items: items,
+      closeModal: closeModal
+    })
   });
 }
-
-// Copied as is from packages/dataviews/src/item-actions.js
-// With an added onClose prop.
 function ActionsDropdownMenuGroup({
   actions,
   item,
-  onClose
+  setActiveModalAction
 }) {
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Group, {
     children: actions.map(action => {
-      if (action.RenderModal) {
-        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionWithModal, {
-          action: action,
-          item: item,
-          ActionTrigger: DropdownMenuItemTrigger,
-          onClose: onClose
-        }, action.id);
-      }
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItemTrigger, {
         action: action,
-        onClick: () => action.callback([item]),
+        onClick: () => {
+          if ('RenderModal' in action) {
+            setActiveModalAction(action);
+            return;
+          }
+          action.callback([item], {
+            registry
+          });
+        },
         items: [item]
       }, action.id);
     })

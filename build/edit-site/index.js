@@ -37774,7 +37774,6 @@ function MenuItemTrigger({
   const label = typeof action.label === 'string' ? action.label : action.label(items);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_Menu.Item, {
     onClick: onClick,
-    hideOnClick: !('RenderModal' in action),
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_Menu.ItemLabel, {
       children: label
     })
@@ -37789,7 +37788,7 @@ function ActionModal({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
     title: action.modalHeader || label,
     __experimentalHideHeader: !!action.hideModalHeader,
-    onRequestClose: closeModal !== null && closeModal !== void 0 ? closeModal : () => {},
+    onRequestClose: closeModal,
     focusOnMount: "firstContentElement",
     size: "medium",
     overlayClassName: `dataviews-action-modal dataviews-action-modal__${dataviews_item_actions_kebabCase(action.id)}`,
@@ -37799,43 +37798,26 @@ function ActionModal({
     })
   });
 }
-function ActionWithModal({
-  action,
-  items,
-  ActionTrigger,
-  isBusy
-}) {
-  const [isModalOpen, setIsModalOpen] = (0,external_wp_element_namespaceObject.useState)(false);
-  const actionTriggerProps = {
-    action,
-    onClick: () => {
-      setIsModalOpen(true);
-    },
-    items,
-    isBusy
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionTrigger, {
-      ...actionTriggerProps
-    }), isModalOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionModal, {
-      action: action,
-      items: items,
-      closeModal: () => setIsModalOpen(false)
-    })]
-  });
-}
 function ActionsMenuGroup({
   actions,
-  item
+  item,
+  registry,
+  setActiveModalAction
 }) {
-  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_Menu.Group, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsList, {
-      actions: actions,
-      item: item,
-      registry: registry,
-      ActionTrigger: MenuItemTrigger
-    })
+    children: actions.map(action => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuItemTrigger, {
+      action: action,
+      onClick: () => {
+        if ('RenderModal' in action) {
+          setActiveModalAction(action);
+          return;
+        }
+        action.callback([item], {
+          registry
+        });
+      },
+      items: [item]
+    }, action.id))
   });
 }
 function hasOnlyOneActionAndIsPrimary(primaryActions, actions) {
@@ -37864,7 +37846,8 @@ function ItemActions({
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CompactItemActions, {
       item: item,
       actions: eligibleActions,
-      isSmall: true
+      isSmall: true,
+      registry: registry
     });
   }
   if (hasOnlyOneActionAndIsPrimary(primaryActions, actions)) {
@@ -37888,29 +37871,40 @@ function ItemActions({
       registry: registry
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CompactItemActions, {
       item: item,
-      actions: eligibleActions
+      actions: eligibleActions,
+      registry: registry
     })]
   });
 }
 function CompactItemActions({
   item,
   actions,
-  isSmall
+  isSmall,
+  registry
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_Menu, {
-    trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      size: isSmall ? 'small' : 'compact',
-      icon: more_vertical,
-      label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
-      accessibleWhenDisabled: true,
-      disabled: !actions.length,
-      className: "dataviews-all-actions-button"
-    }),
-    placement: "bottom-end",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsMenuGroup, {
-      actions: actions,
-      item: item
-    })
+  const [activeModalAction, setActiveModalAction] = (0,external_wp_element_namespaceObject.useState)(null);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_Menu, {
+      trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        size: isSmall ? 'small' : 'compact',
+        icon: more_vertical,
+        label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
+        accessibleWhenDisabled: true,
+        disabled: !actions.length,
+        className: "dataviews-all-actions-button"
+      }),
+      placement: "bottom-end",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsMenuGroup, {
+        actions: actions,
+        item: item,
+        registry: registry,
+        setActiveModalAction: setActiveModalAction
+      })
+    }), !!activeModalAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionModal, {
+      action: activeModalAction,
+      items: [item],
+      closeModal: () => setActiveModalAction(null)
+    })]
   });
 }
 function PrimaryActions({
@@ -37918,43 +37912,36 @@ function PrimaryActions({
   actions,
   registry
 }) {
+  const [activeModalAction, setActiveModalAction] = (0,external_wp_element_namespaceObject.useState)(null);
   if (!Array.isArray(actions) || actions.length === 0) {
     return null;
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsList, {
-    actions: actions,
-    item: item,
-    registry: registry,
-    ActionTrigger: ButtonTrigger
-  });
-}
-function ActionsList({
-  item,
-  actions,
-  registry,
-  ActionTrigger
-}) {
-  return actions.map(action => {
-    if ('RenderModal' in action) {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionWithModal, {
-        action: action,
-        items: [item],
-        ActionTrigger: ActionTrigger
-      }, action.id);
-    }
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionTrigger, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [actions.map(action => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ButtonTrigger, {
       action: action,
       onClick: () => {
+        if ('RenderModal' in action) {
+          setActiveModalAction(action);
+          return;
+        }
         action.callback([item], {
           registry
         });
       },
       items: [item]
-    }, action.id);
+    }, action.id)), !!activeModalAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionModal, {
+      action: activeModalAction,
+      items: [item],
+      closeModal: () => setActiveModalAction(null)
+    })]
   });
 }
 
 ;// ./packages/dataviews/build-module/components/dataviews-bulk-actions/index.js
+/**
+ * External dependencies
+ */
+
 /**
  * WordPress dependencies
  */
@@ -37970,6 +37957,29 @@ function ActionsList({
 
 
 
+function ActionWithModal({
+  action,
+  items,
+  ActionTriggerComponent
+}) {
+  const [isModalOpen, setIsModalOpen] = (0,external_wp_element_namespaceObject.useState)(false);
+  const actionTriggerProps = {
+    action,
+    onClick: () => {
+      setIsModalOpen(true);
+    },
+    items
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionTriggerComponent, {
+      ...actionTriggerProps
+    }), isModalOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionModal, {
+      action: action,
+      items: items,
+      closeModal: () => setIsModalOpen(false)
+    })]
+  });
+}
 function useHasAPossibleBulkAction(actions, item) {
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
     return actions.some(action => {
@@ -38051,7 +38061,7 @@ function ActionButton({
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionWithModal, {
       action: action,
       items: selectedEligibleItems,
-      ActionTrigger: ActionTrigger
+      ActionTriggerComponent: ActionTrigger
     }, action.id);
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionTrigger, {
@@ -39234,7 +39244,9 @@ function ListItem({
   const itemRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const labelId = `${idPrefix}-label`;
   const descriptionId = `${idPrefix}-description`;
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const [isHovered, setIsHovered] = (0,external_wp_element_namespaceObject.useState)(false);
+  const [activeModalAction, setActiveModalAction] = (0,external_wp_element_namespaceObject.useState)(null);
   const handleHover = ({
     type
   }) => {
@@ -39280,9 +39292,9 @@ function ListItem({
       idPrefix: idPrefix,
       primaryAction: primaryAction,
       item: item
-    }), !hasOnlyOnePrimaryAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    }), !hasOnlyOnePrimaryAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       role: "gridcell",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_Menu, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_Menu, {
         trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
           id: generateDropdownTriggerCompositeId(idPrefix),
           render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -39297,9 +39309,15 @@ function ListItem({
         placement: "bottom-end",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsMenuGroup, {
           actions: eligibleActions,
-          item: item
+          item: item,
+          registry: registry,
+          setActiveModalAction: setActiveModalAction
         })
-      })
+      }), !!activeModalAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionModal, {
+        action: activeModalAction,
+        items: [item],
+        closeModal: () => setActiveModalAction(null)
+      })]
     })]
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Row, {
