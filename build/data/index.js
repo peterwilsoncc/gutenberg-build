@@ -1002,6 +1002,10 @@ function combine_reducers_combineReducers(reducers) {
 
 ;// ./packages/data/build-module/factory.js
 /**
+ * Internal dependencies
+ */
+
+/**
  * Creates a selector function that takes additional curried argument with the
  * registry `select` function. While a regular selector has signature
  * ```js
@@ -1036,10 +1040,10 @@ function combine_reducers_combineReducers(reducers) {
  * registry as argument. The registry binding happens automatically when registering the selector
  * with a store.
  *
- * @param {Function} registrySelector Function receiving a registry `select`
- *                                    function and returning a state selector.
+ * @param registrySelector Function receiving a registry `select`
+ *                         function and returning a state selector.
  *
- * @return {Function} Registry selector that can be registered with a store.
+ * @return Registry selector that can be registered with a store.
  */
 function createRegistrySelector(registrySelector) {
   const selectorsByRegistry = new WeakMap();
@@ -1063,8 +1067,6 @@ function createRegistrySelector(registrySelector) {
    * Flag indicating that the selector is a registry selector that needs the correct registry
    * reference to be assigned to `selector.registry` to make it work correctly.
    * be mapped as a registry selector.
-   *
-   * @type {boolean}
    */
   wrappedSelector.isRegistrySelector = true;
   return wrappedSelector;
@@ -1086,9 +1088,9 @@ function createRegistrySelector(registrySelector) {
  * When registering a control created with `createRegistryControl` with a store, the store
  * knows which calling convention to use when executing the control.
  *
- * @param {Function} registryControl Function receiving a registry object and returning a control.
+ * @param registryControl Function receiving a registry object and returning a control.
  *
- * @return {Function} Registry control that can be registered with a store.
+ * @return Registry control that can be registered with a store.
  */
 function createRegistryControl(registryControl) {
   registryControl.isRegistryControl = true;
