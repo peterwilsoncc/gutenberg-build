@@ -33149,6 +33149,7 @@ function useCustomSides() {
 }
 
 ;// ./packages/block-editor/build-module/hooks/style.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -33363,7 +33364,7 @@ function omitStyle(style, paths, preserveReference = false) {
   }
   let newStyle = style;
   if (!preserveReference) {
-    newStyle = JSON.parse(JSON.stringify(style));
+    newStyle = structuredClone(style);
   }
   if (!Array.isArray(paths)) {
     paths = [paths];
@@ -34802,6 +34803,7 @@ function position_useBlockProps({
 }
 
 ;// ./packages/block-editor/build-module/components/global-styles/use-global-styles-output.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -35249,7 +35251,7 @@ function pickStyleKeys(treeToPickFrom) {
   const entries = Object.entries(treeToPickFrom);
   const pickedEntries = entries.filter(([key]) => STYLE_KEYS.includes(key));
   // clone the style objects so that `getFeatureDeclarations` can remove consumed keys from it
-  const clonedEntries = pickedEntries.map(([key, style]) => [key, JSON.parse(JSON.stringify(style))]);
+  const clonedEntries = pickedEntries.map(([key, style]) => [key, structuredClone(style)]);
   return Object.fromEntries(clonedEntries);
 }
 const getNodesWithStyles = (tree, blockSelectors) => {
