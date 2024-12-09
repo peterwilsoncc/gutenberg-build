@@ -44048,6 +44048,7 @@ const authorField = {
 
 
 
+
 const {
   usePostActions: page_templates_usePostActions
 } = unlock(external_wp_editor_namespaceObject.privateApis);
@@ -44118,18 +44119,26 @@ function PageTemplates() {
     };
   }, [layout, activeView]);
   const [view, setView] = (0,external_wp_element_namespaceObject.useState)(defaultView);
+
+  // Sync the layout from the URL to the view state.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    const usedType = layout !== null && layout !== void 0 ? layout : page_templates_DEFAULT_VIEW.type;
     setView(currentView => ({
       ...currentView,
-      type: usedType,
+      type: layout !== null && layout !== void 0 ? layout : page_templates_DEFAULT_VIEW.type
+    }));
+  }, [setView, layout]);
+
+  // Sync the active view from the URL to the view state.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    setView(currentView => ({
+      ...currentView,
       filters: activeView !== 'all' ? [{
         field: 'author',
         operator: OPERATOR_IS_ANY,
         value: [activeView]
       }] : []
     }));
-  }, [activeView, layout]);
+  }, [setView, activeView]);
   const {
     records,
     isResolving: isLoadingData
@@ -44174,14 +44183,14 @@ function PageTemplates() {
   });
   const editAction = useEditPostAction();
   const actions = (0,external_wp_element_namespaceObject.useMemo)(() => [editAction, ...postTypeActions], [postTypeActions, editAction]);
-  const onChangeView = (0,external_wp_element_namespaceObject.useCallback)(newView => {
-    if (newView.type !== view.type) {
+  const onChangeView = (0,external_wp_compose_namespaceObject.useEvent)(newView => {
+    setView(newView);
+    if (newView.type !== layout) {
       history.navigate((0,external_wp_url_namespaceObject.addQueryArgs)(path, {
         layout: newView.type
       }));
     }
-    setView(newView);
-  }, [view.type, setView, history, path]);
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Page, {
     className: "edit-site-page-templates",
     title: (0,external_wp_i18n_namespaceObject.__)('Templates'),
