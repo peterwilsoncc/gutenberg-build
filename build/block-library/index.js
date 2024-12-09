@@ -44709,7 +44709,7 @@ const post_template_metadata = {
   name: "core/post-template",
   title: "Post Template",
   category: "theme",
-  parent: ["core/query"],
+  ancestor: ["core/query"],
   description: "Contains the block elements used to render a post, like the title, date, featured image, content or excerpt, and more.",
   textdomain: "default",
   usesContext: ["queryId", "query", "displayLayout", "templateSlug", "previewPostType", "enhancedPagination", "postType"],
