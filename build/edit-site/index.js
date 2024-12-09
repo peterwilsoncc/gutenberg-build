@@ -39230,13 +39230,14 @@ function ViewGrid({
   const {
     regularFields,
     badgeFields
-  } = fields.reduce((accumulator, field) => {
-    if (!otherFields.includes(field.id) || [view?.mediaField, view?.titleField, view?.descriptionField].includes(field.id)) {
+  } = otherFields.reduce((accumulator, fieldId) => {
+    const field = fields.find(f => f.id === fieldId);
+    if (!field) {
       return accumulator;
     }
     // If the field is a badge field, add it to the badgeFields array
     // otherwise add it to the rest visibleFields array.
-    const key = view.layout?.badgeFields?.includes(field.id) ? 'badgeFields' : 'regularFields';
+    const key = view.layout?.badgeFields?.includes(fieldId) ? 'badgeFields' : 'regularFields';
     accumulator[key].push(field);
     return accumulator;
   }, {
@@ -39525,7 +39526,11 @@ function ListItem({
     })
   });
 }
+function isDefined(item) {
+  return !!item;
+}
 function ViewList(props) {
+  var _view$fields;
   const {
     actions,
     data,
@@ -39541,10 +39546,7 @@ function ViewList(props) {
   const titleField = fields.find(field => field.id === view.titleField);
   const mediaField = fields.find(field => field.id === view.mediaField);
   const descriptionField = fields.find(field => field.id === view.descriptionField);
-  const otherFields = fields.filter(field => {
-    var _view$fields;
-    return ((_view$fields = view.fields) !== null && _view$fields !== void 0 ? _view$fields : []).includes(field.id) && ![view.titleField, view.mediaField, view.descriptionField].includes(field.id);
-  });
+  const otherFields = ((_view$fields = view?.fields) !== null && _view$fields !== void 0 ? _view$fields : []).map(fieldId => fields.find(f => fieldId === f.id)).filter(isDefined);
   const onSelect = item => onChangeSelection([getItemId(item)]);
   const generateCompositeItemIdPrefix = (0,external_wp_element_namespaceObject.useCallback)(item => `${baseId}-${getItemId(item)}`, [baseId, getItemId]);
   const isActiveCompositeItem = (0,external_wp_element_namespaceObject.useCallback)((item, idToCheck) => {
@@ -40303,7 +40305,7 @@ function RegularFieldItem({
     } : undefined
   });
 }
-function isDefined(item) {
+function dataviews_view_config_isDefined(item) {
   return !!item;
 }
 function FieldControl() {
@@ -40316,7 +40318,7 @@ function FieldControl() {
   const togglableFields = [view?.titleField, view?.mediaField, view?.descriptionField].filter(Boolean);
   const visibleFieldIds = (_view$fields2 = view.fields) !== null && _view$fields2 !== void 0 ? _view$fields2 : [];
   const hiddenFields = fields.filter(f => !visibleFieldIds.includes(f.id) && !togglableFields.includes(f.id));
-  const visibleFields = visibleFieldIds.map(fieldId => fields.find(f => f.id === fieldId)).filter(isDefined);
+  const visibleFields = visibleFieldIds.map(fieldId => fields.find(f => f.id === fieldId)).filter(dataviews_view_config_isDefined);
   if (!visibleFields?.length && !hiddenFields?.length) {
     return null;
   }
@@ -40334,7 +40336,7 @@ function FieldControl() {
     isVisibleFlag: 'showDescription'
   }].filter(({
     field
-  }) => isDefined(field));
+  }) => dataviews_view_config_isDefined(field));
   const visibleLockedFields = lockedFields.filter(({
     field,
     isVisibleFlag
@@ -40342,7 +40344,7 @@ function FieldControl() {
     var _view$isVisibleFlag;
     return (
       // @ts-expect-error
-      isDefined(field) && ((_view$isVisibleFlag = view[isVisibleFlag]) !== null && _view$isVisibleFlag !== void 0 ? _view$isVisibleFlag : true)
+      dataviews_view_config_isDefined(field) && ((_view$isVisibleFlag = view[isVisibleFlag]) !== null && _view$isVisibleFlag !== void 0 ? _view$isVisibleFlag : true)
     );
   });
   const hiddenLockedFields = lockedFields.filter(({
@@ -40352,7 +40354,7 @@ function FieldControl() {
     var _view$isVisibleFlag2;
     return (
       // @ts-expect-error
-      isDefined(field) && !((_view$isVisibleFlag2 = view[isVisibleFlag]) !== null && _view$isVisibleFlag2 !== void 0 ? _view$isVisibleFlag2 : true)
+      dataviews_view_config_isDefined(field) && !((_view$isVisibleFlag2 = view[isVisibleFlag]) !== null && _view$isVisibleFlag2 !== void 0 ? _view$isVisibleFlag2 : true)
     );
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
