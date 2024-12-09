@@ -39865,6 +39865,7 @@ const {
   Menu: dataviews_view_config_Menu
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 const DATAVIEWS_CONFIG_POPOVER_PROPS = {
+  className: 'dataviews-config__popover',
   placement: 'bottom-end',
   offset: 9
 };
@@ -40299,6 +40300,7 @@ function DataviewsViewConfigDropdown() {
   const popoverId = (0,external_wp_compose_namespaceObject.useInstanceId)(_DataViewsViewConfig, 'dataviews-view-config-dropdown');
   const activeLayout = VIEW_LAYOUTS.find(layout => layout.type === view.type);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
+    expandOnMobile: true,
     popoverProps: {
       ...DATAVIEWS_CONFIG_POPOVER_PROPS,
       id: popoverId
@@ -40318,6 +40320,7 @@ function DataviewsViewConfigDropdown() {
     },
     renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalDropdownContentWrapper, {
       paddingSize: "medium",
+      className: "dataviews-config__popover-content-wrapper",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
         className: "dataviews-view-config",
         spacing: 6,
