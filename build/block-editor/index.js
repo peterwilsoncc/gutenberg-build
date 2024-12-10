@@ -27436,6 +27436,21 @@ function ColorGradientControl(props) {
 }
 /* harmony default export */ const control = (ColorGradientControl);
 
+;// ./packages/icons/build-module/library/reset.js
+/**
+ * WordPress dependencies
+ */
+
+
+const reset_reset = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M7 11.5h10V13H7z"
+  })
+});
+/* harmony default export */ const library_reset = (reset_reset);
+
 ;// ./packages/block-editor/build-module/components/global-styles/color-panel.js
 /**
  * External dependencies
@@ -27452,6 +27467,7 @@ function ColorGradientControl(props) {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -27593,6 +27609,7 @@ function ColorPanelDropdown({
     key: firstTabKey,
     ...firstTab
   } = (_tabs$ = tabs[0]) !== null && _tabs$ !== void 0 ? _tabs$ : {};
+  const colorGradientDropdownButtonRef = (0,external_wp_element_namespaceObject.useRef)(undefined);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
     className: "block-editor-tools-panel-color-gradient-settings__item",
     hasValue: hasValue,
@@ -27612,15 +27629,29 @@ function ColorPanelDropdown({
           className: dist_clsx('block-editor-panel-color-gradient-settings__dropdown', {
             'is-open': isOpen
           }),
-          'aria-expanded': isOpen
+          'aria-expanded': isOpen,
+          ref: colorGradientDropdownButtonRef
         };
-        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          __next40pxDefaultSize: true,
-          ...toggleProps,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LabeledColorIndicators, {
-            indicators: indicators,
-            label: label
-          })
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            ...toggleProps,
+            __next40pxDefaultSize: true,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LabeledColorIndicators, {
+              indicators: indicators,
+              label: label
+            })
+          }), hasValue() && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Reset'),
+            className: "block-editor-panel-color-gradient-settings__reset",
+            size: "small",
+            icon: library_reset,
+            onClick: () => {
+              resetValue();
+              // Return focus to parent button
+              colorGradientDropdownButtonRef.current?.focus();
+            }
+          })]
         });
       },
       renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalDropdownContentWrapper, {
@@ -29095,21 +29126,6 @@ function TextAlignmentControl({
     })
   });
 }
-
-;// ./packages/icons/build-module/library/reset.js
-/**
- * WordPress dependencies
- */
-
-
-const reset_reset = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M7 11.5h10V13H7z"
-  })
-});
-/* harmony default export */ const library_reset = (reset_reset);
 
 ;// ./packages/icons/build-module/library/format-uppercase.js
 /**
