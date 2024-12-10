@@ -7387,6 +7387,7 @@ __webpack_require__.d(__webpack_exports__, {
   JustifyContentControl: () => (/* reexport */ JustifyContentControl),
   JustifyToolbar: () => (/* reexport */ JustifyToolbar),
   LineHeightControl: () => (/* reexport */ line_height_control),
+  LinkControl: () => (/* reexport */ link_control),
   MediaPlaceholder: () => (/* reexport */ media_placeholder),
   MediaReplaceFlow: () => (/* reexport */ media_replace_flow),
   MediaUpload: () => (/* reexport */ media_upload),
@@ -7436,10 +7437,10 @@ __webpack_require__.d(__webpack_exports__, {
   __experimentalInspectorPopoverHeader: () => (/* reexport */ InspectorPopoverHeader),
   __experimentalLetterSpacingControl: () => (/* reexport */ LetterSpacingControl),
   __experimentalLibrary: () => (/* reexport */ library),
-  __experimentalLinkControl: () => (/* reexport */ link_control),
-  __experimentalLinkControlSearchInput: () => (/* reexport */ search_input),
-  __experimentalLinkControlSearchItem: () => (/* reexport */ search_item),
-  __experimentalLinkControlSearchResults: () => (/* reexport */ LinkControlSearchResults),
+  __experimentalLinkControl: () => (/* reexport */ DeprecatedExperimentalLinkControl),
+  __experimentalLinkControlSearchInput: () => (/* reexport */ __experimentalLinkControlSearchInput),
+  __experimentalLinkControlSearchItem: () => (/* reexport */ __experimentalLinkControlSearchItem),
+  __experimentalLinkControlSearchResults: () => (/* reexport */ __experimentalLinkControlSearchResults),
   __experimentalListView: () => (/* reexport */ components_list_view),
   __experimentalPanelColorGradientSettings: () => (/* reexport */ panel_color_gradient_settings),
   __experimentalPreviewOptions: () => (/* reexport */ PreviewOptions),
@@ -22948,6 +22949,7 @@ const verse = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 
 
 
+
 const ICONS_MAP = {
   post: post_list,
   page: library_page,
@@ -23061,6 +23063,14 @@ function getVisualTypeName(suggestion) {
   return suggestion.type === 'post_tag' ? 'tag' : suggestion.type;
 }
 /* harmony default export */ const search_item = (LinkControlSearchItem);
+const __experimentalLinkControlSearchItem = props => {
+  external_wp_deprecated_default()('wp.blockEditor.__experimentalLinkControlSearchItem', {
+    since: '6.8'
+  });
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkControlSearchItem, {
+    ...props
+  });
+};
 
 ;// ./packages/block-editor/build-module/components/link-control/constants.js
 /**
@@ -23098,6 +23108,7 @@ const DEFAULT_LINK_SETTINGS = [{
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -23171,6 +23182,15 @@ function LinkControlSearchResults({
     })
   });
 }
+/* harmony default export */ const search_results = (LinkControlSearchResults);
+const __experimentalLinkControlSearchResults = props => {
+  external_wp_deprecated_default()('wp.blockEditor.__experimentalLinkControlSearchResults', {
+    since: '6.8'
+  });
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkControlSearchResults, {
+    ...props
+  });
+};
 
 ;// ./packages/block-editor/build-module/components/link-control/is-url-like.js
 /**
@@ -23348,6 +23368,7 @@ function useSearchHandler(suggestionsQuery, allowDirectEntry, withCreateSuggesti
 
 
 
+
 // Must be a function as otherwise URLInput will default
 // to the fetchLinkSuggestions passed in block editor settings
 // which will cause an unintended http request.
@@ -23365,7 +23386,7 @@ const LinkControlSearchInput = (0,external_wp_element_namespaceObject.forwardRef
   onChange = noop,
   onSelect = noop,
   showSuggestions = true,
-  renderSuggestions = props => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkControlSearchResults, {
+  renderSuggestions = props => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(search_results, {
     ...props
   }),
   fetchSuggestions = null,
@@ -23464,6 +23485,14 @@ const LinkControlSearchInput = (0,external_wp_element_namespaceObject.forwardRef
   });
 });
 /* harmony default export */ const search_input = (LinkControlSearchInput);
+const __experimentalLinkControlSearchInput = props => {
+  external_wp_deprecated_default()('wp.blockEditor.__experimentalLinkControlSearchInput', {
+    since: '6.8'
+  });
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkControlSearchInput, {
+    ...props
+  });
+};
 
 ;// ./packages/icons/build-module/library/info.js
 /**
@@ -23990,6 +24019,7 @@ function useInternalValue(value) {
 
 
 
+
 /**
  * Default properties associated with a link control value.
  *
@@ -24362,6 +24392,15 @@ function LinkControl({
 }
 LinkControl.ViewerFill = ViewerFill;
 LinkControl.DEFAULT_LINK_SETTINGS = DEFAULT_LINK_SETTINGS;
+const DeprecatedExperimentalLinkControl = props => {
+  external_wp_deprecated_default()('wp.blockEditor.__experimentalLinkControl', {
+    since: '6.8',
+    alternative: 'wp.blockEditor.LinkControl'
+  });
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkControl, {
+    ...props
+  });
+};
 /* harmony default export */ const link_control = (LinkControl);
 
 ;// ./packages/block-editor/build-module/components/media-replace-flow/index.js
@@ -53815,7 +53854,7 @@ function InserterSearchResults({
     })]
   });
 }
-/* harmony default export */ const search_results = (InserterSearchResults);
+/* harmony default export */ const inserter_search_results = (InserterSearchResults);
 
 ;// ./packages/icons/build-module/library/close-small.js
 /**
@@ -54093,7 +54132,7 @@ function InserterMenu({
         value: filterValue,
         label: (0,external_wp_i18n_namespaceObject.__)('Search'),
         placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
-      }), !!delayedFilterValue && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(search_results, {
+      }), !!delayedFilterValue && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inserter_search_results, {
         filterValue: delayedFilterValue,
         onSelect: onSelect,
         onHover: onHover,
@@ -54329,7 +54368,7 @@ function QuickInserter({
       placeholder: (0,external_wp_i18n_namespaceObject.__)('Search')
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "block-editor-inserter__quick-inserter-results",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(search_results, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inserter_search_results, {
         filterValue: filterValue,
         onSelect: onSelect,
         rootClientId: rootClientId,
