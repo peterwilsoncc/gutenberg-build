@@ -580,6 +580,7 @@ const getMetaBoxContainer = location => {
 };
 
 ;// ./packages/edit-post/build-module/store/actions.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -1078,6 +1079,7 @@ const toggleFullscreenMode = () => ({
 };
 
 ;// ./packages/edit-post/build-module/store/selectors.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -1898,6 +1900,7 @@ function MetaBoxVisibility({
 }
 
 ;// ./packages/edit-post/build-module/components/meta-boxes/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -2093,6 +2096,7 @@ function EnablePanelOption(props) {
 }
 
 ;// ./packages/edit-post/build-module/components/preferences-modal/meta-boxes-section.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -2547,6 +2551,7 @@ function usePaddingAppender(enabled) {
 }
 
 ;// ./packages/edit-post/build-module/components/layout/use-should-iframe.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */

@@ -885,6 +885,7 @@ const ComplementaryAreaHeader = ({
 /* harmony default export */ const complementary_area_header = (ComplementaryAreaHeader);
 
 ;// ./packages/interface/build-module/components/action-item/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -1712,6 +1713,7 @@ const createStubPost = (id, blocks) => ({
 const constants_STORE_NAME = 'core/edit-widgets';
 
 ;// ./packages/edit-widgets/build-module/store/actions.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -2149,6 +2151,7 @@ const getWidgets = () => async ({
 };
 
 ;// ./packages/edit-widgets/build-module/store/selectors.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -3816,6 +3819,7 @@ const textFormattingShortcuts = [{
 }];
 
 ;// ./packages/edit-widgets/build-module/components/keyboard-shortcut-help-modal/shortcut.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -3912,6 +3916,7 @@ function DynamicShortcut({
 /* harmony default export */ const dynamic_shortcut = (DynamicShortcut);
 
 ;// ./packages/edit-widgets/build-module/components/keyboard-shortcut-help-modal/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -4211,6 +4216,7 @@ function Header() {
 /* harmony default export */ const header = (Header);
 
 ;// ./packages/edit-widgets/build-module/components/notices/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -4687,6 +4693,7 @@ function UnsavedChangesWarning() {
 }
 
 ;// ./packages/edit-widgets/build-module/components/welcome-guide/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -4874,6 +4881,7 @@ function Layout({
 /* harmony default export */ const layout = (Layout);
 
 ;// ./packages/edit-widgets/build-module/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */

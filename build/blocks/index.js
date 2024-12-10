@@ -6834,6 +6834,7 @@ const {
 } = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/blocks');
 
 ;// ./packages/blocks/build-module/api/registration.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -7719,6 +7720,7 @@ function getBlockBindingsSources() {
 }
 
 ;// ./packages/blocks/build-module/api/utils.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -8044,6 +8046,7 @@ function omit(object, keys) {
 }
 
 ;// ./packages/blocks/build-module/store/reducer.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -8425,6 +8428,7 @@ function blockBindingsSources(state = {}, action) {
 var remove_accents = __webpack_require__(9681);
 var remove_accents_default = /*#__PURE__*/__webpack_require__.n(remove_accents);
 ;// ./packages/blocks/build-module/store/utils.js
+/* wp:polyfill */
 /**
  * Helper util to return a value from a certain path of the object.
  * Path is specified as either:
@@ -8469,6 +8473,7 @@ function matchesAttributes(blockAttributes, variationAttributes) {
 }
 
 ;// ./packages/blocks/build-module/store/private-selectors.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -8646,6 +8651,7 @@ const hasContentRoleAttribute = (state, blockTypeName) => {
 };
 
 ;// ./packages/blocks/build-module/store/selectors.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -9470,6 +9476,7 @@ var react_is = __webpack_require__(4398);
 ;// external ["wp","hooks"]
 const external_wp_hooks_namespaceObject = window["wp"]["hooks"];
 ;// ./packages/blocks/build-module/store/process-block-type.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -10290,6 +10297,7 @@ function v4(options, buf, offset) {
 
 /* harmony default export */ const esm_browser_v4 = (v4);
 ;// ./packages/blocks/build-module/api/factory.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -10745,6 +10753,7 @@ const external_wp_autop_namespaceObject = window["wp"]["autop"];
 const external_wp_isShallowEqual_namespaceObject = window["wp"]["isShallowEqual"];
 var external_wp_isShallowEqual_default = /*#__PURE__*/__webpack_require__.n(external_wp_isShallowEqual_namespaceObject);
 ;// ./packages/blocks/build-module/api/parser/serialize-raw-block.js
+/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -10797,6 +10806,7 @@ function serializeRawBlock(rawBlock, options = {}) {
 ;// external "ReactJSXRuntime"
 const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
 ;// ./packages/blocks/build-module/api/serializer.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -11863,6 +11873,7 @@ function createQueuedLogger() {
 }
 
 ;// ./packages/blocks/build-module/api/validation/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -13349,6 +13360,7 @@ function children_matcher(selector) {
 });
 
 ;// ./packages/blocks/build-module/api/parser/get-block-attributes.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -13587,6 +13599,7 @@ function getBlockAttributes(blockTypeOrName, innerHTML, attributes = {}) {
 }
 
 ;// ./packages/blocks/build-module/api/parser/fix-custom-classname.js
+/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -13789,6 +13802,7 @@ function applyBlockDeprecatedVersions(block, rawBlock, blockType) {
 }
 
 ;// ./packages/blocks/build-module/api/parser/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -14070,6 +14084,7 @@ function parser_parse(content, options) {
 }
 
 ;// ./packages/blocks/build-module/api/raw-handling/get-raw-transforms.js
+/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -14086,6 +14101,7 @@ function getRawTransforms() {
 }
 
 ;// ./packages/blocks/build-module/api/raw-handling/html-to-blocks.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -14204,6 +14220,7 @@ function normaliseBlocks(HTML, options = {}) {
 }
 
 ;// ./packages/blocks/build-module/api/raw-handling/special-comment-converter.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -14302,6 +14319,7 @@ function createNextpage(doc) {
 }
 
 ;// ./packages/blocks/build-module/api/raw-handling/list-reducer.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -14464,6 +14482,7 @@ function figureContentReducer(node, doc, schema) {
 ;// external ["wp","shortcode"]
 const external_wp_shortcode_namespaceObject = window["wp"]["shortcode"];
 ;// ./packages/blocks/build-module/api/raw-handling/shortcode-converter.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -14556,6 +14575,7 @@ function segmentHTMLToShortcodeBlock(HTML, lastIndex = 0, excludedBlockNames = [
 /* harmony default export */ const shortcode_converter = (segmentHTMLToShortcodeBlock);
 
 ;// ./packages/blocks/build-module/api/raw-handling/utils.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -14741,6 +14761,7 @@ function getSibling(node, which) {
 }
 
 ;// ./packages/blocks/build-module/api/raw-handling/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -14840,6 +14861,7 @@ function commentRemover(node) {
 }
 
 ;// ./packages/blocks/build-module/api/raw-handling/is-inline-content.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -14947,6 +14969,7 @@ function headRemover(node) {
 }
 
 ;// ./packages/blocks/build-module/api/raw-handling/ms-list-ignore.js
+/* wp:polyfill */
 /**
  * Looks for comments, and removes them.
  *
@@ -15307,6 +15330,7 @@ function slackParagraphCorrector(node) {
 }
 
 ;// ./packages/blocks/build-module/api/raw-handling/paste-handler.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -15585,6 +15609,7 @@ function categories_updateCategory(slug, category) {
 }
 
 ;// ./packages/blocks/build-module/api/templates.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */

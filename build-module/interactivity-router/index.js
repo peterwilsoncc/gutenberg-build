@@ -9,6 +9,7 @@ import * as __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__ from "
 /* harmony export */   ed: () => (/* binding */ headElements),
 /* harmony export */   yp: () => (/* binding */ updateHead)
 /* harmony export */ });
+/* wp:polyfill */
 /**
  * The cache of prefetched stylesheets and scripts.
  */

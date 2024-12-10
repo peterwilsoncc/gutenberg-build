@@ -6156,6 +6156,7 @@ const {
 } = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/edit-site');
 
 ;// ./packages/edit-site/build-module/components/global-styles/hooks.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -6239,6 +6240,7 @@ function useSupportedStyles(name, element) {
 }
 
 ;// ./packages/edit-site/build-module/utils/set-nested-value.js
+/* wp:polyfill */
 /**
  * Sets the value at path of object.
  * If a portion of path doesn’t exist, it’s created.
@@ -6617,6 +6619,7 @@ const withPushChangesToGlobalStyles = (0,external_wp_compose_namespaceObject.cre
 
 
 ;// ./packages/edit-site/build-module/store/reducer.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -7219,6 +7222,7 @@ function unregisterRoute(name) {
 }
 
 ;// ./packages/edit-site/build-module/utils/get-filtered-template-parts.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -7768,6 +7772,7 @@ function SiteIcon({
 ;// external ["wp","dom"]
 const external_wp_dom_namespaceObject = window["wp"]["dom"];
 ;// ./packages/edit-site/build-module/components/sidebar/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -8380,6 +8385,7 @@ function ResizableFrame({
 ;// external ["wp","keyboardShortcuts"]
 const external_wp_keyboardShortcuts_namespaceObject = window["wp"]["keyboardShortcuts"];
 ;// ./packages/edit-site/build-module/components/save-keyboard-shortcut/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -12881,6 +12887,7 @@ function currentlyPreviewingTheme() {
 }
 
 ;// ./packages/edit-site/build-module/components/save-button/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -13017,6 +13024,7 @@ function SaveButton({
 }
 
 ;// ./packages/edit-site/build-module/components/save-hub/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -13139,6 +13147,7 @@ function useActualCurrentTheme() {
 }
 
 ;// ./packages/edit-site/build-module/components/save-panel/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -13892,6 +13901,7 @@ const closeSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 /* harmony default export */ const close_small = (closeSmall);
 
 ;// ./packages/edit-site/build-module/components/editor-canvas-container/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -14438,6 +14448,7 @@ function SidebarNavigationItem({
 }
 
 ;// ./packages/edit-site/build-module/components/global-styles/screen-revisions/use-global-styles-revisions.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -15140,6 +15151,7 @@ function WelcomeGuide({
 }
 
 ;// ./packages/edit-site/build-module/components/global-styles-renderer/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -15613,6 +15625,7 @@ function RootMenu() {
 /* harmony default export */ const root_menu = (RootMenu);
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-library-modal/utils/preview-styles.js
+/* wp:polyfill */
 function findNearest(input, numbers) {
   // If the numbers array is empty, return null
   if (numbers.length === 0) {
@@ -15741,6 +15754,7 @@ function getFacePreviewStyle(face) {
 }
 
 ;// ./packages/edit-site/build-module/components/global-styles/utils.js
+/* wp:polyfill */
 /**
  *
  * @param {string} variation The variation name.
@@ -15886,6 +15900,7 @@ function PreviewTypography({
 }
 
 ;// ./packages/edit-site/build-module/components/global-styles/highlighted-colors.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -15929,6 +15944,7 @@ function HighlightedColors({
 }
 
 ;// ./packages/edit-site/build-module/components/global-styles/preview-wrapper.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -16039,6 +16055,7 @@ function PreviewWrapper({
 }
 
 ;// ./packages/edit-site/build-module/components/global-styles/preview-styles.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -16322,6 +16339,7 @@ function ScreenRoot() {
 ;// external ["wp","a11y"]
 const external_wp_a11y_namespaceObject = window["wp"]["a11y"];
 ;// ./packages/edit-site/build-module/components/global-styles/variations/variations-panel.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -16421,6 +16439,7 @@ function ScreenHeader({
 /* harmony default export */ const header = (ScreenHeader);
 
 ;// ./packages/edit-site/build-module/components/global-styles/screen-block-list.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -17342,6 +17361,7 @@ function Variation({
 }
 
 ;// ./packages/edit-site/build-module/components/global-styles/variations/variations-typography.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -17541,6 +17561,7 @@ const FONT_STYLES = {
 };
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-library-modal/utils/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -17835,6 +17856,7 @@ function checkFontFaceInstalled(fontFace, collection) {
 }
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-library-modal/utils/toggleFont.js
+/* wp:polyfill */
 /**
  * Toggles the activation of a given font or font variant within a list of custom fonts.
  *
@@ -17922,6 +17944,7 @@ function toggleFont(font, face, initialfonts) {
 }
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-library-modal/context.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -18315,6 +18338,7 @@ function FontLibraryProvider({
 /* harmony default export */ const context = (FontLibraryProvider);
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-library-modal/font-demo.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -18566,6 +18590,7 @@ function sortFontFaces(faces) {
 }
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-library-modal/installed-fonts.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -18930,6 +18955,7 @@ const previous = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(e
 /* harmony default export */ const library_previous = (previous);
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-library-modal/utils/filter-fonts.js
+/* wp:polyfill */
 /**
  * Filters a list of fonts based on the specified filters.
  *
@@ -18961,6 +18987,7 @@ function filterFonts(fonts, filters) {
 }
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-library-modal/utils/fonts-outline.js
+/* wp:polyfill */
 function getFontsOutline(fonts) {
   return fonts.reduce((acc, font) => ({
     ...acc,
@@ -19077,6 +19104,7 @@ function CollectionFontVariant({
 /* harmony default export */ const collection_font_variant = (CollectionFontVariant);
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-library-modal/font-collection.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -23357,6 +23385,7 @@ var vmtx$1 = Object.freeze( { __proto__: null, vmtx: vmtx } );
 /* eslint-enable */
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-library-modal/utils/make-families-from-faces.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -23386,6 +23415,7 @@ function makeFamiliesFromFaces(fontFaces) {
 }
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-library-modal/upload-fonts.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -23596,6 +23626,7 @@ function UploadFonts() {
 /* harmony default export */ const upload_fonts = (UploadFonts);
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-library-modal/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -23740,6 +23771,7 @@ function FontFamilyItem({
 /* harmony default export */ const font_family_item = (FontFamilyItem);
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-families.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -24299,6 +24331,7 @@ function SizeControl({
 /* harmony default export */ const size_control = (SizeControl);
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-sizes/font-size.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -24560,6 +24593,7 @@ function ConfirmResetFontSizesDialog({
 /* harmony default export */ const confirm_reset_font_sizes_dialog = (ConfirmResetFontSizesDialog);
 
 ;// ./packages/edit-site/build-module/components/global-styles/font-sizes/font-sizes.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -24751,6 +24785,7 @@ function ColorIndicatorWrapper({
 /* harmony default export */ const color_indicator_wrapper = (ColorIndicatorWrapper);
 
 ;// ./packages/edit-site/build-module/components/global-styles/palette.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -24879,6 +24914,7 @@ function ScreenColors() {
 /* harmony default export */ const screen_colors = (ScreenColors);
 
 ;// ./packages/edit-site/build-module/components/global-styles/preset-colors.js
+/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -24954,6 +24990,7 @@ const StylesPreviewColors = ({
 /* harmony default export */ const preview_colors = (StylesPreviewColors);
 
 ;// ./packages/edit-site/build-module/components/global-styles/variations/variations-color.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -25278,6 +25315,7 @@ function ScreenBackground() {
 /* harmony default export */ const screen_background = (ScreenBackground);
 
 ;// ./packages/edit-site/build-module/components/global-styles/shadows-panel.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -25410,6 +25448,7 @@ const reset_reset = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
 /* harmony default export */ const library_reset = (reset_reset);
 
 ;// ./packages/edit-site/build-module/components/global-styles/shadow-utils.js
+/* wp:polyfill */
 const CUSTOM_VALUE_SETTINGS = {
   px: {
     max: 20,
@@ -25632,6 +25671,7 @@ function shadowObjectToString(shadowObj) {
 }
 
 ;// ./packages/edit-site/build-module/components/global-styles/shadows-edit-panel.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -26173,6 +26213,7 @@ function ScreenLayout() {
 /* harmony default export */ const screen_layout = (ScreenLayout);
 
 ;// ./packages/edit-site/build-module/components/global-styles/style-variations-container.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -26566,6 +26607,7 @@ const STYLE_BOOK_IFRAME_STYLES = `
 `;
 
 ;// ./packages/edit-site/build-module/components/style-book/categories.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -26631,6 +26673,7 @@ function getTopLevelStyleBookCategories() {
 }
 
 ;// ./packages/edit-site/build-module/components/style-book/color-examples.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -26675,6 +26718,7 @@ const ColorExamples = ({
 /* harmony default export */ const color_examples = (ColorExamples);
 
 ;// ./packages/edit-site/build-module/components/style-book/duotone-examples.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -26724,6 +26768,7 @@ const DuotoneExamples = ({
 /* harmony default export */ const duotone_examples = (DuotoneExamples);
 
 ;// ./packages/edit-site/build-module/components/style-book/examples.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -26930,6 +26975,7 @@ function getExamples(colors) {
 }
 
 ;// ./packages/edit-site/build-module/components/style-book/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -27560,6 +27606,7 @@ function Revisions({
 ;// external ["wp","date"]
 const external_wp_date_namespaceObject = window["wp"]["date"];
 ;// ./packages/edit-site/build-module/components/global-styles/screen-revisions/revisions-buttons.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -27977,6 +28024,7 @@ function ScreenRevisions() {
 /* harmony default export */ const screen_revisions = (ScreenRevisions);
 
 ;// ./packages/edit-site/build-module/components/global-styles/ui.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -29358,6 +29406,7 @@ function EditSiteEditor({
 }
 
 ;// ./packages/edit-site/build-module/components/maybe-editor/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -29520,6 +29569,7 @@ function Page({
 }
 
 ;// ./packages/edit-site/build-module/components/sidebar-global-styles-wrapper/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -30768,6 +30818,7 @@ function useDefaultPatternCategories() {
 const filterOutDuplicatesByName = (currentItem, index, items) => index === items.findIndex(item => currentItem.name === item.name);
 
 ;// ./packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-theme-patterns.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -30796,6 +30847,7 @@ function useThemePatterns() {
 }
 
 ;// ./packages/edit-site/build-module/components/page-patterns/search-items.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -30938,6 +30990,7 @@ function getItemSearchRank(item, searchTerm, config) {
 }
 
 ;// ./packages/edit-site/build-module/components/page-patterns/use-patterns.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -31139,6 +31192,7 @@ const usePatterns = (postType, categoryId, {
 /* harmony default export */ const use_patterns = (usePatterns);
 
 ;// ./packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-pattern-categories.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -31239,6 +31293,7 @@ function usePatternCategories() {
 }
 
 ;// ./packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/use-template-part-areas.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -31287,6 +31342,7 @@ function useTemplatePartAreas() {
 }
 
 ;// ./packages/edit-site/build-module/components/sidebar-navigation-screen-patterns/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -31877,6 +31933,7 @@ function getControlByType(type) {
 }
 
 ;// ./packages/dataviews/build-module/normalize-fields.js
+/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -31948,6 +32005,7 @@ function normalizeFields(fields) {
 }
 
 ;// ./packages/dataviews/build-module/filter-and-sort-data-view.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -36988,6 +37046,7 @@ var ComboboxItemValue = forwardRef2(function ComboboxItemValue2(props) {
 
 
 ;// ./packages/dataviews/build-module/components/dataviews-filters/search-widget.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -37220,6 +37279,7 @@ function SearchWidget(props) {
 }
 
 ;// ./packages/dataviews/build-module/components/dataviews-filters/filter-summary.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -37449,6 +37509,7 @@ const {
 } = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/dataviews');
 
 ;// ./packages/dataviews/build-module/components/dataviews-filters/add-filter.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -37530,6 +37591,7 @@ function AddFilter({
 /* harmony default export */ const add_filter = ((0,external_wp_element_namespaceObject.forwardRef)(AddFilter));
 
 ;// ./packages/dataviews/build-module/components/dataviews-filters/reset-filters.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -37566,6 +37628,7 @@ function ResetFilter({
 }
 
 ;// ./packages/dataviews/build-module/utils.js
+/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -37590,6 +37653,7 @@ function sanitizeOperators(field) {
 }
 
 ;// ./packages/dataviews/build-module/components/dataviews-filters/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -37826,6 +37890,7 @@ const formatListBullets = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
 /* harmony default export */ const format_list_bullets = (formatListBullets);
 
 ;// ./packages/dataviews/build-module/components/dataviews-selection-checkbox/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -37871,6 +37936,7 @@ function DataViewsSelectionCheckbox({
 }
 
 ;// ./packages/dataviews/build-module/components/dataviews-item-actions/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -38079,6 +38145,7 @@ function PrimaryActions({
 }
 
 ;// ./packages/dataviews/build-module/components/dataviews-bulk-actions/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -38355,6 +38422,7 @@ const unseen = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 /* harmony default export */ const library_unseen = (unseen);
 
 ;// ./packages/dataviews/build-module/dataviews-layouts/table/column-header-menu.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -38615,6 +38683,7 @@ function ColumnPrimary({
 /* harmony default export */ const column_primary = (ColumnPrimary);
 
 ;// ./packages/dataviews/build-module/dataviews-layouts/table/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -39062,6 +39131,7 @@ function PreviewSizePicker() {
 }
 
 ;// ./packages/dataviews/build-module/dataviews-layouts/grid/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -39288,6 +39358,7 @@ function ViewGrid({
 }
 
 ;// ./packages/dataviews/build-module/dataviews-layouts/list/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -39724,6 +39795,7 @@ const VIEW_LAYOUTS = [{
 }];
 
 ;// ./packages/dataviews/build-module/components/dataviews-layout/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -39772,6 +39844,7 @@ function DataViewsLayout() {
 }
 
 ;// ./packages/dataviews/build-module/components/dataviews-pagination/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -40000,6 +40073,7 @@ const cog = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(extern
 ;// external ["wp","warning"]
 const external_wp_warning_namespaceObject = window["wp"]["warning"];
 ;// ./packages/dataviews/build-module/components/dataviews-view-config/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -40517,6 +40591,7 @@ const DataViewsViewConfig = (0,external_wp_element_namespaceObject.memo)(_DataVi
 /* harmony default export */ const dataviews_view_config = (DataViewsViewConfig);
 
 ;// ./packages/dataviews/build-module/components/dataviews/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -40815,6 +40890,7 @@ const patternTitleField = {
 /* harmony default export */ const pattern_title = (patternTitleField);
 
 ;// ./packages/edit-site/build-module/components/page-patterns/use-pattern-settings.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -40887,6 +40963,7 @@ const upload = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 /* harmony default export */ const library_upload = (upload);
 
 ;// ./packages/edit-site/build-module/components/add-new-pattern/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -41233,6 +41310,7 @@ function DeleteCategoryMenuItem({
 }
 
 ;// ./packages/edit-site/build-module/components/page-patterns/header.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -41516,6 +41594,7 @@ function useAddedBy(postType, postId) {
 }
 
 ;// ./packages/edit-site/build-module/components/page-patterns/fields.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -41685,6 +41764,7 @@ const templatePartAuthorField = {
 };
 
 ;// ./packages/edit-site/build-module/components/page-patterns/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -41937,6 +42017,7 @@ const templatePartItemRoute = {
 };
 
 ;// ./packages/edit-site/build-module/components/sidebar-navigation-screen-templates-browse/content.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -42243,6 +42324,7 @@ const post_post = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 /* harmony default export */ const library_post = (post_post);
 
 ;// ./packages/edit-site/build-module/components/add-new-template/utils.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -42813,6 +42895,7 @@ const useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters
 };
 
 ;// ./packages/edit-site/build-module/components/add-new-template/add-custom-template-modal-content.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -43580,6 +43663,7 @@ function AddCustomGenericTemplateModalContent({
 /* harmony default export */ const add_custom_generic_template_modal_content = (AddCustomGenericTemplateModalContent);
 
 ;// ./packages/edit-site/build-module/components/add-new-template/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -44021,6 +44105,7 @@ const authorField = {
 };
 
 ;// ./packages/edit-site/build-module/components/page-templates/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -44503,6 +44588,7 @@ function useDefaultViews({
 }
 
 ;// ./packages/edit-site/build-module/components/sidebar-dataviews/dataview-item.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -44693,6 +44779,7 @@ function AddNewItem({
 }
 
 ;// ./packages/edit-site/build-module/components/sidebar-dataviews/custom-dataviews-list.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -44898,6 +44985,7 @@ function CustomDataViewsList({
 }
 
 ;// ./packages/edit-site/build-module/components/sidebar-dataviews/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -45074,6 +45162,7 @@ function AddNewPostModal({
 }
 
 ;// ./packages/edit-site/build-module/components/post-list/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -45480,6 +45569,7 @@ function isCombinedField(field) {
 }
 
 ;// ./packages/dataviews/build-module/dataforms-layouts/regular/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -45584,6 +45674,7 @@ function FormRegularField({
 }
 
 ;// ./packages/dataviews/build-module/dataforms-layouts/panel/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -45797,6 +45888,7 @@ function FormPanelField({
 }
 
 ;// ./packages/dataviews/build-module/dataforms-layouts/index.js
+/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -45814,6 +45906,7 @@ function getFormFieldLayout(type) {
 }
 
 ;// ./packages/dataviews/build-module/normalize-form-fields.js
+/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -45845,6 +45938,7 @@ function normalizeFormFields(form) {
 }
 
 ;// ./packages/dataviews/build-module/dataforms-layouts/data-form-layout.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -45932,6 +46026,7 @@ function DataForm({
 }
 
 ;// ./packages/edit-site/build-module/components/post-edit/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -46220,6 +46315,7 @@ const stylebookRoute = {
 };
 
 ;// ./packages/edit-site/build-module/components/site-editor-routes/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -46487,6 +46583,7 @@ const postItemRoute = {
 };
 
 ;// ./packages/edit-site/build-module/components/posts-app-routes/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -46544,6 +46641,7 @@ function PostsApp() {
 }
 
 ;// ./packages/edit-site/build-module/posts.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -46627,6 +46725,7 @@ function initializePostsDashboard(id, settings) {
 }
 
 ;// ./packages/edit-site/build-module/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
