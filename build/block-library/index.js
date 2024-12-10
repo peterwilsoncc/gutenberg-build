@@ -26948,7 +26948,7 @@ function image_Image({
       selectedClientIds
     }) => selectedClientIds.length === 1 && !isDescendentOfQueryLoop && postId && id && clientId === selectedClientIds[0] && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
       onClick: setPostFeatureImage,
-      children: (0,external_wp_i18n_namespaceObject.__)('Set featured image')
+      children: (0,external_wp_i18n_namespaceObject.__)('Set as featured image')
     })
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
