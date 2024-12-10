@@ -25859,6 +25859,7 @@ function ShadowEditor({
   shadow,
   onChange
 }) {
+  const addShadowButtonRef = (0,external_wp_element_namespaceObject.useRef)();
   const shadowParts = (0,external_wp_element_namespaceObject.useMemo)(() => getShadowParts(shadow), [shadow]);
   const onChangeShadowPart = (index, part) => {
     const newShadowParts = [...shadowParts];
@@ -25870,6 +25871,7 @@ function ShadowEditor({
   };
   const onRemoveShadowPart = index => {
     onChange(shadowParts.filter((p, i) => i !== index).join(', '));
+    addShadowButtonRef.current.focus();
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
@@ -25891,7 +25893,8 @@ function ShadowEditor({
             label: (0,external_wp_i18n_namespaceObject.__)('Add shadow'),
             onClick: () => {
               onAddShadowPart();
-            }
+            },
+            ref: addShadowButtonRef
           })
         })]
       })
@@ -25943,26 +25946,16 @@ function shadows_edit_panel_ShadowItem({
         }),
         label: (0,external_wp_i18n_namespaceObject.__)('Remove shadow')
       };
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        align: "center",
-        justify: "flex-start",
-        spacing: 0,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-          style: {
-            flexGrow: 1
-          },
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            __next40pxDefaultSize: true,
-            icon: library_shadow,
-            ...toggleProps,
-            children: shadowObj.inset ? (0,external_wp_i18n_namespaceObject.__)('Inner shadow') : (0,external_wp_i18n_namespaceObject.__)('Drop shadow')
-          })
-        }), canRemove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            __next40pxDefaultSize: true,
-            icon: library_reset,
-            ...removeButtonProps
-          })
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
+          icon: library_shadow,
+          ...toggleProps,
+          children: shadowObj.inset ? (0,external_wp_i18n_namespaceObject.__)('Inner shadow') : (0,external_wp_i18n_namespaceObject.__)('Drop shadow')
+        }), canRemove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          size: "small",
+          icon: library_reset,
+          ...removeButtonProps
         })]
       });
     },
