@@ -12908,11 +12908,11 @@ function getTemplateLock(state, rootClientId) {
  * @param {string|Object} blockNameOrType The block type object, e.g., the response
  *                                        from the block directory; or a string name of
  *                                        an installed block type, e.g.' core/paragraph'.
- * @param {Set}           checkedBlocks   Set of block names that have already been checked.
+ * @param {?string}       rootClientId    Optional root client ID of block list.
  *
  * @return {boolean} Whether the given block type is allowed to be inserted.
  */
-const isBlockVisibleInTheInserter = (state, blockNameOrType, checkedBlocks = new Set()) => {
+const isBlockVisibleInTheInserter = (state, blockNameOrType, rootClientId = null) => {
   let blockType;
   let blockName;
   if (blockNameOrType && 'object' === typeof blockNameOrType) {
@@ -12932,18 +12932,14 @@ const isBlockVisibleInTheInserter = (state, blockNameOrType, checkedBlocks = new
   if (!isBlockAllowedInEditor) {
     return false;
   }
-  if (checkedBlocks.has(blockName)) {
-    return false;
-  }
-  checkedBlocks.add(blockName);
 
   // If parent blocks are not visible, child blocks should be hidden too.
-  if (Array.isArray(blockType.parent)) {
-    return blockType.parent.some(name => blockName !== name && isBlockVisibleInTheInserter(state, name, checkedBlocks) ||
-    // Exception for blocks with post-content parent,
-    // the root level is often consider as "core/post-content".
-    // This exception should only apply to the post editor ideally though.
-    name === 'core/post-content');
+  const parents = (Array.isArray(blockType.parent) ? blockType.parent : []).concat(Array.isArray(blockType.ancestor) ? blockType.ancestor : []);
+  if (parents.length > 0) {
+    const rootBlockName = getBlockName(state, rootClientId);
+    // This is an exception to the rule that says that all blocks are visible in the inserter.
+    // Blocks that require a given parent or ancestor are only visible if we're within that parent.
+    return parents.includes('core/post-content') || parents.includes(rootBlockName) || getBlockParentsByBlockName(state, rootClientId, parents).length > 0;
   }
   return true;
 };
@@ -12962,7 +12958,7 @@ const isBlockVisibleInTheInserter = (state, blockNameOrType, checkedBlocks = new
  * @return {boolean} Whether the given block type is allowed to be inserted.
  */
 const canInsertBlockTypeUnmemoized = (state, blockName, rootClientId = null) => {
-  if (!isBlockVisibleInTheInserter(state, blockName)) {
+  if (!isBlockVisibleInTheInserter(state, blockName, rootClientId)) {
     return false;
   }
   let blockType;
@@ -13313,6 +13309,7 @@ const buildBlockTypeItem = (state, {
     category: blockType.category,
     keywords: blockType.keywords,
     parent: blockType.parent,
+    ancestor: blockType.ancestor,
     variations: inserterVariations,
     example: blockType.example,
     utility: 1 // Deprecated.
@@ -13386,7 +13383,7 @@ const getInserterItems = (0,external_wp_data_namespaceObject.createRegistrySelec
   if (options[isFiltered] !== false) {
     blockTypeInserterItems = blockTypeInserterItems.filter(blockType => canIncludeBlockTypeInInserter(state, blockType, rootClientId));
   } else {
-    blockTypeInserterItems = blockTypeInserterItems.filter(blockType => isBlockVisibleInTheInserter(state, blockType)).map(blockType => ({
+    blockTypeInserterItems = blockTypeInserterItems.filter(blockType => isBlockVisibleInTheInserter(state, blockType, rootClientId)).map(blockType => ({
       ...blockType,
       isAllowedInCurrentRoot: canIncludeBlockTypeInInserter(state, blockType, rootClientId)
     }));
@@ -13598,7 +13595,7 @@ const __experimentalGetAllowedPatterns = (0,external_wp_data_namespaceObject.cre
     const availableParsedPatterns = parsedPatterns.filter(pattern => checkAllowListRecursive(getGrammar(pattern), allowedBlockTypes));
     const patternsAllowed = availableParsedPatterns.filter(pattern => getGrammar(pattern).every(({
       blockName: name
-    }) => options[isFiltered] !== false ? canInsertBlockType(state, name, rootClientId) : isBlockVisibleInTheInserter(state, name)));
+    }) => options[isFiltered] !== false ? canInsertBlockType(state, name, rootClientId) : isBlockVisibleInTheInserter(state, name, rootClientId)));
     return patternsAllowed;
   }, getAllowedPatternsDependants(select));
 });
@@ -51373,7 +51370,7 @@ function BlockTypesTab({
     if (item.category === 'reusable') {
       continue;
     }
-    if (rootClientId && item.isAllowedInCurrentRoot) {
+    if (item.isAllowedInCurrentRoot) {
       itemsForCurrentRoot.push(item);
     } else {
       itemsRemaining.push(item);
