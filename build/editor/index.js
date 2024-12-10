@@ -28046,7 +28046,10 @@ function CommentForm({
         __next40pxDefaultSize: true,
         accessibleWhenDisabled: true,
         variant: "primary",
-        onClick: () => onSubmit(inputComment),
+        onClick: () => {
+          onSubmit(inputComment);
+          setInputComment('');
+        },
         disabled: 0 === sanitizeCommentString(inputComment).length,
         text: submitButtonText
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -28085,12 +28088,14 @@ function CommentForm({
 /**
  * Renders the Comments component.
  *
- * @param {Object}   props                  - The component props.
- * @param {Array}    props.threads          - The array of comment threads.
- * @param {Function} props.onEditComment    - The function to handle comment editing.
- * @param {Function} props.onAddReply       - The function to add a reply to a comment.
- * @param {Function} props.onCommentDelete  - The function to delete a comment.
- * @param {Function} props.onCommentResolve - The function to mark a comment as resolved.
+ * @param {Object}   props                     - The component props.
+ * @param {Array}    props.threads             - The array of comment threads.
+ * @param {Function} props.onEditComment       - The function to handle comment editing.
+ * @param {Function} props.onAddReply          - The function to add a reply to a comment.
+ * @param {Function} props.onCommentDelete     - The function to delete a comment.
+ * @param {Function} props.onCommentResolve    - The function to mark a comment as resolved.
+ * @param {boolean}  props.showCommentBoard    - Whether to show the comment board.
+ * @param {Function} props.setShowCommentBoard - The function to set the comment board visibility.
  * @return {React.ReactNode} The rendered Comments component.
  */
 
@@ -28099,101 +28104,26 @@ function Comments({
   onEditComment,
   onAddReply,
   onCommentDelete,
-  onCommentResolve
+  onCommentResolve,
+  showCommentBoard,
+  setShowCommentBoard
 }) {
-  const [actionState, setActionState] = (0,external_wp_element_namespaceObject.useState)(false);
-  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = (0,external_wp_element_namespaceObject.useState)(false);
-  const handleConfirmDelete = () => {
-    onCommentDelete(actionState.id);
-    setActionState(false);
-    setIsConfirmDialogOpen(false);
-  };
-  const handleConfirmResolve = () => {
-    onCommentResolve(actionState.id);
-    setActionState(false);
-    setIsConfirmDialogOpen(false);
-  };
-  const handleCancelDelete = () => {
-    setActionState(false);
-    setIsConfirmDialogOpen(false);
-  };
-  const blockCommentId = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _select$getBlock$attr;
-    const clientID = select(external_wp_blockEditor_namespaceObject.store).getSelectedBlockClientId();
-    return (_select$getBlock$attr = select(external_wp_blockEditor_namespaceObject.store).getBlock(clientID)?.attributes?.blockCommentId) !== null && _select$getBlock$attr !== void 0 ? _select$getBlock$attr : false;
+  const {
+    blockCommentId
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockAttributes,
+      getSelectedBlockClientId
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    const _clientId = getSelectedBlockClientId();
+    return {
+      blockCommentId: _clientId ? getBlockAttributes(_clientId)?.blockCommentId : null
+    };
   }, []);
-  const CommentBoard = ({
-    thread,
-    parentThread
-  }) => {
-    var _parentThread$status;
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentHeader, {
-        thread: thread,
-        onResolve: () => {
-          var _parentThread$id;
-          setActionState({
-            action: 'resolve',
-            id: (_parentThread$id = parentThread?.id) !== null && _parentThread$id !== void 0 ? _parentThread$id : thread.id
-          });
-          setIsConfirmDialogOpen(true);
-        },
-        onEdit: () => setActionState({
-          action: 'edit',
-          id: thread.id
-        }),
-        onDelete: () => {
-          setActionState({
-            action: 'delete',
-            id: thread.id
-          });
-          setIsConfirmDialogOpen(true);
-        },
-        onReply: !parentThread ? () => setActionState({
-          action: 'reply',
-          id: thread.id
-        }) : undefined,
-        status: (_parentThread$status = parentThread?.status) !== null && _parentThread$status !== void 0 ? _parentThread$status : thread.status
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
-        alignment: "left",
-        spacing: "3",
-        justify: "flex-start",
-        className: "editor-collab-sidebar-panel__user-comment",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-          spacing: "3",
-          className: "editor-collab-sidebar-panel__comment-field",
-          children: ['edit' === actionState?.action && thread.id === actionState?.id && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_form, {
-            onSubmit: value => {
-              onEditComment(thread.id, value);
-              setActionState(false);
-            },
-            onCancel: () => setActionState(false),
-            thread: thread,
-            submitButtonText: (0,external_wp_i18n_namespaceObject._x)('Update', 'verb')
-          }), (!actionState || 'edit' !== actionState?.action) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.RawHTML, {
-            children: thread?.content?.raw
-          })]
-        })
-      }), 'resolve' === actionState?.action && thread.id === actionState?.id && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalConfirmDialog, {
-        isOpen: isConfirmDialogOpen,
-        onConfirm: handleConfirmResolve,
-        onCancel: handleCancelDelete,
-        confirmButtonText: "Yes",
-        cancelButtonText: "No",
-        children:
-        // translators: message displayed when confirming an action
-        (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to mark this comment as resolved?')
-      }), 'delete' === actionState?.action && thread.id === actionState?.id && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalConfirmDialog, {
-        isOpen: isConfirmDialogOpen,
-        onConfirm: handleConfirmDelete,
-        onCancel: handleCancelDelete,
-        confirmButtonText: "Yes",
-        cancelButtonText: "No",
-        children:
-        // translators: message displayed when confirming an action
-        (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to delete this comment?')
-      })]
-    });
+  const [focusThread, setFocusThread] = (0,external_wp_element_namespaceObject.useState)(showCommentBoard && blockCommentId ? blockCommentId : null);
+  const clearThreadFocus = () => {
+    setFocusThread(null);
+    setShowCommentBoard(false);
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [
@@ -28206,116 +28136,202 @@ function Comments({
       children:
       // translators: message displayed when there are no comments available
       (0,external_wp_i18n_namespaceObject.__)('No comments available')
-    }), Array.isArray(threads) && threads.length > 0 && threads.map(thread => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    }), Array.isArray(threads) && threads.length > 0 && threads.map(thread => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
       className: dist_clsx('editor-collab-sidebar-panel__thread', {
-        'editor-collab-sidebar-panel__active-thread': blockCommentId && blockCommentId === thread.id
+        'editor-collab-sidebar-panel__active-thread': blockCommentId && blockCommentId === thread.id,
+        'editor-collab-sidebar-panel__focus-thread': focusThread && focusThread === thread.id
       }),
       id: thread.id,
       spacing: "3",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
-        thread: thread
-      }), 0 < thread?.reply?.length && thread.reply.map(reply => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
-        className: "editor-collab-sidebar-panel__child-thread",
-        id: reply.id,
-        spacing: "2",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
-          thread: reply,
-          parentThread: thread
-        })
-      }, reply.id)), 'reply' === actionState?.action && thread.id === actionState?.id && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-        className: "editor-collab-sidebar-panel__child-thread",
-        spacing: "2",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
-          alignment: "left",
-          spacing: "3",
-          justify: "flex-start",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_author_info, {})
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
-          spacing: "3",
-          className: "editor-collab-sidebar-panel__comment-field",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_form, {
-            onSubmit: inputComment => {
-              onAddReply(inputComment, thread.id);
-              setActionState(false);
-            },
-            onCancel: () => setActionState(false),
-            submitButtonText: (0,external_wp_i18n_namespaceObject._x)('Reply', 'Add reply comment')
-          })
-        })]
-      })]
+      onClick: () => setFocusThread(thread.id),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Thread, {
+        thread: thread,
+        onAddReply: onAddReply,
+        onCommentDelete: onCommentDelete,
+        onCommentResolve: onCommentResolve,
+        onEditComment: onEditComment,
+        isFocused: focusThread === thread.id,
+        clearThreadFocus: clearThreadFocus
+      })
     }, thread.id))]
   });
 }
-
-/**
- * Renders the header of a comment in the collaboration sidebar.
- *
- * @param {Object}   props           - The component props.
- * @param {Object}   props.thread    - The comment thread object.
- * @param {Function} props.onResolve - The function to resolve the comment.
- * @param {Function} props.onEdit    - The function to edit the comment.
- * @param {Function} props.onDelete  - The function to delete the comment.
- * @param {Function} props.onReply   - The function to reply to the comment.
- * @param {string}   props.status    - The status of the comment.
- * @return {React.ReactNode} The rendered comment header.
- */
-function CommentHeader({
+function Thread({
   thread,
-  onResolve,
-  onEdit,
-  onDelete,
-  onReply,
-  status
+  onEditComment,
+  onAddReply,
+  onCommentDelete,
+  onCommentResolve,
+  isFocused,
+  clearThreadFocus
 }) {
-  const actions = [{
-    title: (0,external_wp_i18n_namespaceObject._x)('Edit', 'Edit comment'),
-    onClick: onEdit
-  }, {
-    title: (0,external_wp_i18n_namespaceObject._x)('Delete', 'Delete comment'),
-    onClick: onDelete
-  }, {
-    title: (0,external_wp_i18n_namespaceObject._x)('Reply', 'Reply on a comment'),
-    onClick: onReply
-  }];
-  const moreActions = actions.filter(item => item.onClick);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-    alignment: "left",
-    spacing: "3",
-    justify: "flex-start",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_author_info, {
-      avatar: thread?.author_avatar_urls?.[48],
-      name: thread?.author_name,
-      date: thread?.date
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
-      className: "editor-collab-sidebar-panel__comment-status",
-      children: [status !== 'approved' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        alignment: "right",
-        justify: "flex-end",
-        spacing: "0",
-        children: [0 === thread?.parent && onResolve && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          label: (0,external_wp_i18n_namespaceObject._x)('Resolve', 'Mark comment as resolved'),
-          __next40pxDefaultSize: true,
-          icon: library_published,
-          onClick: onResolve,
-          showTooltip: true
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
-          icon: more_vertical,
-          label: (0,external_wp_i18n_namespaceObject._x)('Select an action', 'Select comment action'),
-          className: "editor-collab-sidebar-panel__comment-dropdown-menu",
-          controls: moreActions
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
+      thread: thread,
+      onResolve: onCommentResolve,
+      onEdit: onEditComment,
+      onDelete: onCommentDelete,
+      status: thread.status
+    }), 0 < thread?.reply?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: [!isFocused && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+        className: "editor-collab-sidebar-panel__show-more-reply",
+        children: (0,external_wp_i18n_namespaceObject.sprintf)(
+        // translators: 1: number of replies.
+        (0,external_wp_i18n_namespaceObject._x)('%s more replies..', 'Show replies button'), thread?.reply?.length)
+      }), isFocused && thread.reply.map(reply => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        className: "editor-collab-sidebar-panel__child-thread",
+        id: reply.id,
+        spacing: "2",
+        children: ['approved' !== thread.status && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
+          thread: reply,
+          onEdit: onEditComment,
+          onDelete: onCommentDelete
+        }), 'approved' === thread.status && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
+          thread: reply
         })]
-      }), status === 'approved' &&
-      /*#__PURE__*/
-      // translators: tooltip for resolved comment
-      (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
-        text: (0,external_wp_i18n_namespaceObject.__)('Resolved'),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icon, {
-          icon: library_check
+      }, reply.id))]
+    }), 'approved' !== thread.status && isFocused && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      className: "editor-collab-sidebar-panel__child-thread",
+      spacing: "2",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
+        alignment: "left",
+        spacing: "3",
+        justify: "flex-start",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_author_info, {})
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+        spacing: "3",
+        className: "editor-collab-sidebar-panel__comment-field",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_form, {
+          onSubmit: inputComment => {
+            onAddReply(inputComment, thread.id);
+          },
+          onCancel: event => {
+            event.stopPropagation(); // Prevent the parent onClick from being triggered
+            clearThreadFocus();
+          },
+          submitButtonText: (0,external_wp_i18n_namespaceObject._x)('Reply', 'Add reply comment')
         })
       })]
     })]
   });
 }
+const CommentBoard = ({
+  thread,
+  onResolve,
+  onEdit,
+  onDelete,
+  status
+}) => {
+  const [actionState, setActionState] = (0,external_wp_element_namespaceObject.useState)(false);
+  const [showConfirmDialog, setShowConfirmDialog] = (0,external_wp_element_namespaceObject.useState)(false);
+  const handleConfirmDelete = () => {
+    onDelete(thread.id);
+    setActionState(false);
+    setShowConfirmDialog(false);
+  };
+  const handleConfirmResolve = () => {
+    onResolve(thread.id);
+    setActionState(false);
+    setShowConfirmDialog(false);
+  };
+  const handleCancel = () => {
+    setActionState(false);
+    setShowConfirmDialog(false);
+  };
+  const actions = [onEdit && {
+    title: (0,external_wp_i18n_namespaceObject._x)('Edit', 'Edit comment'),
+    onClick: () => {
+      setActionState('edit');
+    }
+  }, onDelete && {
+    title: (0,external_wp_i18n_namespaceObject._x)('Delete', 'Delete comment'),
+    onClick: () => {
+      setActionState('delete');
+      setShowConfirmDialog(true);
+    }
+  }];
+  const moreActions = actions.filter(item => item?.onClick);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+      alignment: "left",
+      spacing: "3",
+      justify: "flex-start",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_author_info, {
+        avatar: thread?.author_avatar_urls?.[48],
+        name: thread?.author_name,
+        date: thread?.date
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
+        className: "editor-collab-sidebar-panel__comment-status",
+        children: [status !== 'approved' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+          alignment: "right",
+          justify: "flex-end",
+          spacing: "0",
+          children: [0 === thread?.parent && onResolve && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            label: (0,external_wp_i18n_namespaceObject._x)('Resolve', 'Mark comment as resolved'),
+            __next40pxDefaultSize: true,
+            icon: library_published,
+            onClick: () => {
+              setActionState('resolve');
+              setShowConfirmDialog(true);
+            },
+            showTooltip: true
+          }), 0 < moreActions.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
+            icon: more_vertical,
+            label: (0,external_wp_i18n_namespaceObject._x)('Select an action', 'Select comment action'),
+            className: "editor-collab-sidebar-panel__comment-dropdown-menu",
+            controls: moreActions
+          })]
+        }), status === 'approved' &&
+        /*#__PURE__*/
+        // translators: tooltip for resolved comment
+        (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
+          text: (0,external_wp_i18n_namespaceObject.__)('Resolved'),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icon, {
+            icon: library_check
+          })
+        })]
+      })]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
+      alignment: "left",
+      spacing: "3",
+      justify: "flex-start",
+      className: "editor-collab-sidebar-panel__user-comment",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        spacing: "3",
+        className: "editor-collab-sidebar-panel__comment-field",
+        children: ['edit' === actionState && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_form, {
+          onSubmit: value => {
+            onEdit(thread.id, value);
+            setActionState(false);
+          },
+          onCancel: () => handleCancel(),
+          thread: thread,
+          submitButtonText: (0,external_wp_i18n_namespaceObject._x)('Update', 'verb')
+        }), 'edit' !== actionState && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.RawHTML, {
+          children: thread?.content?.raw
+        })]
+      })
+    }), 'resolve' === actionState && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalConfirmDialog, {
+      isOpen: showConfirmDialog,
+      onConfirm: handleConfirmResolve,
+      onCancel: handleCancel,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+      children:
+      // translators: message displayed when confirming an action
+      (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to mark this comment as resolved?')
+    }), 'delete' === actionState && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalConfirmDialog, {
+      isOpen: showConfirmDialog,
+      onConfirm: handleConfirmDelete,
+      onCancel: handleCancel,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+      children:
+      // translators: message displayed when confirming an action
+      (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to delete this comment?')
+    })]
+  });
+};
 
 ;// ./packages/editor/build-module/components/collab-sidebar/add-comment.js
 /**
@@ -28365,7 +28381,7 @@ function AddComment({
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: "3",
-    className: "editor-collab-sidebar-panel__thread editor-collab-sidebar-panel__active-thread",
+    className: "editor-collab-sidebar-panel__thread editor-collab-sidebar-panel__active-thread editor-collab-sidebar-panel__focus-thread",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
       alignment: "left",
       spacing: "3",
@@ -28403,9 +28419,14 @@ const AddCommentButton = ({
   onClick
 }) => {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentIconSlotFill.Fill, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+    children: ({
+      onClose
+    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
       icon: library_comment,
-      onClick: onClick,
+      onClick: () => {
+        onClick();
+        onClose();
+      },
       "aria-haspopup": "dialog",
       children: (0,external_wp_i18n_namespaceObject._x)('Comment', 'Add comment button')
     })
@@ -28621,8 +28642,10 @@ function CollabSidebarContent({
       onEditComment: onEditComment,
       onAddReply: addNewComment,
       onCommentDelete: onCommentDelete,
-      onCommentResolve: onCommentResolve
-    })]
+      onCommentResolve: onCommentResolve,
+      showCommentBoard: showCommentBoard,
+      setShowCommentBoard: setShowCommentBoard
+    }, getSelectedBlockClientId())]
   });
 }
 
@@ -28715,11 +28738,15 @@ function CollabSidebar() {
         sortedThreads: []
       };
     }
+    const updatedResult = result.map(item => ({
+      ...item,
+      reply: [...item.reply].reverse()
+    }));
     const blockCommentIds = getCommentIdsFromBlocks(blocks);
-    const threadIdMap = new Map(result.map(thread => [thread.id, thread]));
+    const threadIdMap = new Map(updatedResult.map(thread => [thread.id, thread]));
     const sortedComments = blockCommentIds.map(id => threadIdMap.get(id)).filter(thread => thread !== undefined);
     return {
-      resultComments: result,
+      resultComments: updatedResult,
       sortedThreads: sortedComments
     };
   }, [threads, blocks]);
