@@ -37586,6 +37586,261 @@ function BlockContextProvider({
 }
 /* harmony default export */ const block_context = (block_context_Context);
 
+;// ./packages/block-editor/build-module/utils/block-bindings.js
+/* wp:polyfill */
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const DEFAULT_ATTRIBUTE = '__default';
+const PATTERN_OVERRIDES_SOURCE = 'core/pattern-overrides';
+const BLOCK_BINDINGS_ALLOWED_BLOCKS = {
+  'core/paragraph': ['content'],
+  'core/heading': ['content'],
+  'core/image': ['id', 'url', 'title', 'alt'],
+  'core/button': ['url', 'text', 'linkTarget', 'rel']
+};
+
+/**
+ * Checks if the given object is empty.
+ *
+ * @param {?Object} object The object to check.
+ *
+ * @return {boolean} Whether the object is empty.
+ */
+function isObjectEmpty(object) {
+  return !object || Object.keys(object).length === 0;
+}
+
+/**
+ * Based on the given block name, checks if it is possible to bind the block.
+ *
+ * @param {string} blockName The name of the block.
+ *
+ * @return {boolean} Whether it is possible to bind the block to sources.
+ */
+function canBindBlock(blockName) {
+  return blockName in BLOCK_BINDINGS_ALLOWED_BLOCKS;
+}
+
+/**
+ * Based on the given block name and attribute name, checks if it is possible to bind the block attribute.
+ *
+ * @param {string} blockName     The name of the block.
+ * @param {string} attributeName The name of attribute.
+ *
+ * @return {boolean} Whether it is possible to bind the block attribute.
+ */
+function canBindAttribute(blockName, attributeName) {
+  return canBindBlock(blockName) && BLOCK_BINDINGS_ALLOWED_BLOCKS[blockName].includes(attributeName);
+}
+
+/**
+ * Gets the bindable attributes for a given block.
+ *
+ * @param {string} blockName The name of the block.
+ *
+ * @return {string[]} The bindable attributes for the block.
+ */
+function getBindableAttributes(blockName) {
+  return BLOCK_BINDINGS_ALLOWED_BLOCKS[blockName];
+}
+
+/**
+ * Checks if the block has the `__default` binding for pattern overrides.
+ *
+ * @param {?Record<string, object>} bindings A block's bindings from the metadata attribute.
+ *
+ * @return {boolean} Whether the block has the `__default` binding for pattern overrides.
+ */
+function hasPatternOverridesDefaultBinding(bindings) {
+  return bindings?.[DEFAULT_ATTRIBUTE]?.source === PATTERN_OVERRIDES_SOURCE;
+}
+
+/**
+ * Returns the bindings with the `__default` binding for pattern overrides
+ * replaced with the full-set of supported attributes. e.g.:
+ *
+ * - bindings passed in: `{ __default: { source: 'core/pattern-overrides' } }`
+ * - bindings returned: `{ content: { source: 'core/pattern-overrides' } }`
+ *
+ * @param {string}                  blockName The block name (e.g. 'core/paragraph').
+ * @param {?Record<string, object>} bindings  A block's bindings from the metadata attribute.
+ *
+ * @return {Object} The bindings with default replaced for pattern overrides.
+ */
+function replacePatternOverridesDefaultBinding(blockName, bindings) {
+  // The `__default` binding currently only works for pattern overrides.
+  if (hasPatternOverridesDefaultBinding(bindings)) {
+    const supportedAttributes = BLOCK_BINDINGS_ALLOWED_BLOCKS[blockName];
+    const bindingsWithDefaults = {};
+    for (const attributeName of supportedAttributes) {
+      // If the block has mixed binding sources, retain any non pattern override bindings.
+      const bindingSource = bindings[attributeName] ? bindings[attributeName] : {
+        source: PATTERN_OVERRIDES_SOURCE
+      };
+      bindingsWithDefaults[attributeName] = bindingSource;
+    }
+    return bindingsWithDefaults;
+  }
+  return bindings;
+}
+
+/**
+ * Contains utils to update the block `bindings` metadata.
+ *
+ * @typedef {Object} WPBlockBindingsUtils
+ *
+ * @property {Function} updateBlockBindings    Updates the value of the bindings connected to block attributes.
+ * @property {Function} removeAllBlockBindings Removes the bindings property of the `metadata` attribute.
+ */
+
+/**
+ * Retrieves the existing utils needed to update the block `bindings` metadata.
+ * They can be used to create, modify, or remove connections from the existing block attributes.
+ *
+ * It contains the following utils:
+ * - `updateBlockBindings`: Updates the value of the bindings connected to block attributes. It can be used to remove a specific binding by setting the value to `undefined`.
+ * - `removeAllBlockBindings`: Removes the bindings property of the `metadata` attribute.
+ *
+ * @since 6.7.0 Introduced in WordPress core.
+ *
+ * @param {?string} clientId Optional block client ID. If not set, it will use the current block client ID from the context.
+ *
+ * @return {?WPBlockBindingsUtils} Object containing the block bindings utils.
+ *
+ * @example
+ * ```js
+ * import { useBlockBindingsUtils } from '@wordpress/block-editor'
+ * const { updateBlockBindings, removeAllBlockBindings } = useBlockBindingsUtils();
+ *
+ * // Update url and alt attributes.
+ * updateBlockBindings( {
+ *     url: {
+ *         source: 'core/post-meta',
+ *         args: {
+ *             key: 'url_custom_field',
+ *         },
+ *     },
+ *     alt: {
+ *         source: 'core/post-meta',
+ *         args: {
+ *             key: 'text_custom_field',
+ *         },
+ *     },
+ * } );
+ *
+ * // Remove binding from url attribute.
+ * updateBlockBindings( { url: undefined } );
+ *
+ * // Remove bindings from all attributes.
+ * removeAllBlockBindings();
+ * ```
+ */
+function useBlockBindingsUtils(clientId) {
+  const {
+    clientId: contextClientId
+  } = useBlockEditContext();
+  const blockClientId = clientId || contextClientId;
+  const {
+    updateBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const {
+    getBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useRegistry)().select(store);
+
+  /**
+   * Updates the value of the bindings connected to block attributes.
+   * It removes the binding when the new value is `undefined`.
+   *
+   * @param {Object} bindings        Bindings including the attributes to update and the new object.
+   * @param {string} bindings.source The source name to connect to.
+   * @param {Object} [bindings.args] Object containing the arguments needed by the source.
+   *
+   * @example
+   * ```js
+   * import { useBlockBindingsUtils } from '@wordpress/block-editor'
+   *
+   * const { updateBlockBindings } = useBlockBindingsUtils();
+   * updateBlockBindings( {
+   *     url: {
+   *         source: 'core/post-meta',
+   *         args: {
+   *             key: 'url_custom_field',
+   *         },
+   * 	   },
+   *     alt: {
+   *         source: 'core/post-meta',
+   *         args: {
+   *             key: 'text_custom_field',
+   *         },
+   * 	   }
+   * } );
+   * ```
+   */
+  const updateBlockBindings = bindings => {
+    const {
+      metadata: {
+        bindings: currentBindings,
+        ...metadata
+      } = {}
+    } = getBlockAttributes(blockClientId);
+    const newBindings = {
+      ...currentBindings
+    };
+    Object.entries(bindings).forEach(([attribute, binding]) => {
+      if (!binding && newBindings[attribute]) {
+        delete newBindings[attribute];
+        return;
+      }
+      newBindings[attribute] = binding;
+    });
+    const newMetadata = {
+      ...metadata,
+      bindings: newBindings
+    };
+    if (isObjectEmpty(newMetadata.bindings)) {
+      delete newMetadata.bindings;
+    }
+    updateBlockAttributes(blockClientId, {
+      metadata: isObjectEmpty(newMetadata) ? undefined : newMetadata
+    });
+  };
+
+  /**
+   * Removes the bindings property of the `metadata` attribute.
+   *
+   * @example
+   * ```js
+   * import { useBlockBindingsUtils } from '@wordpress/block-editor'
+   *
+   * const { removeAllBlockBindings } = useBlockBindingsUtils();
+   * removeAllBlockBindings();
+   * ```
+   */
+  const removeAllBlockBindings = () => {
+    const {
+      metadata: {
+        bindings,
+        ...metadata
+      } = {}
+    } = getBlockAttributes(blockClientId);
+    updateBlockAttributes(blockClientId, {
+      metadata: isObjectEmpty(metadata) ? undefined : metadata
+    });
+  };
+  return {
+    updateBlockBindings,
+    removeAllBlockBindings
+  };
+}
+
 ;// ./packages/block-editor/build-module/components/block-edit/edit.js
 /* wp:polyfill */
 /**
@@ -37600,9 +37855,13 @@ function BlockContextProvider({
 
 
 
+
 /**
  * Internal dependencies
  */
+
+
+
 
 
 /**
@@ -37635,33 +37894,166 @@ const Edit = props => {
 const EditWithFilters = (0,external_wp_components_namespaceObject.withFilters)('editor.BlockEdit')(Edit);
 const EditWithGeneratedProps = props => {
   const {
-    attributes = {},
-    name
+    name,
+    clientId,
+    attributes,
+    setAttributes
   } = props;
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const blockType = (0,external_wp_blocks_namespaceObject.getBlockType)(name);
   const blockContext = (0,external_wp_element_namespaceObject.useContext)(block_context);
+  const registeredSources = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(external_wp_blocks_namespaceObject.store)).getAllBlockBindingsSources(), []);
+  const {
+    blockBindings,
+    context,
+    hasPatternOverrides
+  } = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    // Assign context values using the block type's declared context needs.
+    const computedContext = blockType?.usesContext ? Object.fromEntries(Object.entries(blockContext).filter(([key]) => blockType.usesContext.includes(key))) : DEFAULT_BLOCK_CONTEXT;
+    // Add context requested by Block Bindings sources.
+    if (attributes?.metadata?.bindings) {
+      Object.values(attributes?.metadata?.bindings || {}).forEach(binding => {
+        registeredSources[binding?.source]?.usesContext?.forEach(key => {
+          computedContext[key] = blockContext[key];
+        });
+      });
+    }
+    return {
+      blockBindings: replacePatternOverridesDefaultBinding(name, attributes?.metadata?.bindings),
+      context: computedContext,
+      hasPatternOverrides: hasPatternOverridesDefaultBinding(attributes?.metadata?.bindings)
+    };
+  }, [name, blockType?.usesContext, blockContext, attributes?.metadata?.bindings, registeredSources]);
+  const computedAttributes = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    if (!blockBindings) {
+      return attributes;
+    }
+    const attributesFromSources = {};
+    const blockBindingsBySource = new Map();
+    for (const [attributeName, binding] of Object.entries(blockBindings)) {
+      const {
+        source: sourceName,
+        args: sourceArgs
+      } = binding;
+      const source = registeredSources[sourceName];
+      if (!source || !canBindAttribute(name, attributeName)) {
+        continue;
+      }
+      blockBindingsBySource.set(source, {
+        ...blockBindingsBySource.get(source),
+        [attributeName]: {
+          args: sourceArgs
+        }
+      });
+    }
+    if (blockBindingsBySource.size) {
+      for (const [source, bindings] of blockBindingsBySource) {
+        // Get values in batch if the source supports it.
+        let values = {};
+        if (!source.getValues) {
+          Object.keys(bindings).forEach(attr => {
+            // Default to the the source label when `getValues` doesn't exist.
+            values[attr] = source.label;
+          });
+        } else {
+          values = source.getValues({
+            select,
+            context,
+            clientId,
+            bindings
+          });
+        }
+        for (const [attributeName, value] of Object.entries(values)) {
+          if (attributeName === 'url' && (!value || !isURLLike(value))) {
+            // Return null if value is not a valid URL.
+            attributesFromSources[attributeName] = null;
+          } else {
+            attributesFromSources[attributeName] = value;
+          }
+        }
+      }
+    }
+    return {
+      ...attributes,
+      ...attributesFromSources
+    };
+  }, [attributes, blockBindings, clientId, context, name, registeredSources]);
+  const setBoundAttributes = (0,external_wp_element_namespaceObject.useCallback)(nextAttributes => {
+    if (!blockBindings) {
+      setAttributes(nextAttributes);
+      return;
+    }
+    registry.batch(() => {
+      const keptAttributes = {
+        ...nextAttributes
+      };
+      const blockBindingsBySource = new Map();
 
-  // Assign context values using the block type's declared context needs.
-  const context = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return blockType && blockType.usesContext ? Object.fromEntries(Object.entries(blockContext).filter(([key]) => blockType.usesContext.includes(key))) : DEFAULT_BLOCK_CONTEXT;
-  }, [blockType, blockContext]);
+      // Loop only over the updated attributes to avoid modifying the bound ones that haven't changed.
+      for (const [attributeName, newValue] of Object.entries(keptAttributes)) {
+        if (!blockBindings[attributeName] || !canBindAttribute(name, attributeName)) {
+          continue;
+        }
+        const binding = blockBindings[attributeName];
+        const source = registeredSources[binding?.source];
+        if (!source?.setValues) {
+          continue;
+        }
+        blockBindingsBySource.set(source, {
+          ...blockBindingsBySource.get(source),
+          [attributeName]: {
+            args: binding.args,
+            newValue
+          }
+        });
+        delete keptAttributes[attributeName];
+      }
+      if (blockBindingsBySource.size) {
+        for (const [source, bindings] of blockBindingsBySource) {
+          source.setValues({
+            select: registry.select,
+            dispatch: registry.dispatch,
+            context,
+            clientId,
+            bindings
+          });
+        }
+      }
+      const hasParentPattern = !!context['pattern/overrides'];
+      if (
+      // Don't update non-connected attributes if the block is using pattern overrides
+      // and the editing is happening while overriding the pattern (not editing the original).
+      !(hasPatternOverrides && hasParentPattern) && Object.keys(keptAttributes).length) {
+        // Don't update caption and href until they are supported.
+        if (hasPatternOverrides) {
+          delete keptAttributes.caption;
+          delete keptAttributes.href;
+        }
+        setAttributes(keptAttributes);
+      }
+    });
+  }, [blockBindings, clientId, context, hasPatternOverrides, setAttributes, registeredSources, name, registry]);
   if (!blockType) {
     return null;
   }
   if (blockType.apiVersion > 1) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditWithFilters, {
       ...props,
-      context: context
+      attributes: computedAttributes,
+      context: context,
+      setAttributes: setBoundAttributes
     });
   }
 
   // Generate a class name for the block's editable form.
   const generatedClassName = (0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockType, 'className', true) ? (0,external_wp_blocks_namespaceObject.getBlockDefaultClassName)(name) : null;
-  const className = dist_clsx(generatedClassName, attributes.className, props.className);
+  const className = dist_clsx(generatedClassName, attributes?.className, props.className);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditWithFilters, {
     ...props,
+    attributes: computedAttributes,
+    className: className,
     context: context,
-    className: className
+    setAttributes: setBoundAttributes
   });
 };
 /* harmony default export */ const block_edit_edit = (EditWithGeneratedProps);
@@ -43153,260 +43545,6 @@ function useFlashEditableBlocks({
     return () => element.removeEventListener('click', handleClick);
   }, [isEnabled]);
 }
-
-;// ./packages/block-editor/build-module/hooks/use-bindings-attributes.js
-/* wp:polyfill */
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-/** @typedef {import('@wordpress/compose').WPHigherOrderComponent} WPHigherOrderComponent */
-/** @typedef {import('@wordpress/blocks').WPBlockSettings} WPBlockSettings */
-
-/**
- * Given a binding of block attributes, returns a higher order component that
- * overrides its `attributes` and `setAttributes` props to sync any changes needed.
- *
- * @return {WPHigherOrderComponent} Higher-order component.
- */
-
-const BLOCK_BINDINGS_ALLOWED_BLOCKS = {
-  'core/paragraph': ['content'],
-  'core/heading': ['content'],
-  'core/image': ['id', 'url', 'title', 'alt'],
-  'core/button': ['url', 'text', 'linkTarget', 'rel']
-};
-const DEFAULT_ATTRIBUTE = '__default';
-
-/**
- * Returns the bindings with the `__default` binding for pattern overrides
- * replaced with the full-set of supported attributes. e.g.:
- *
- * bindings passed in: `{ __default: { source: 'core/pattern-overrides' } }`
- * bindings returned: `{ content: { source: 'core/pattern-overrides' } }`
- *
- * @param {string} blockName The block name (e.g. 'core/paragraph').
- * @param {Object} bindings  A block's bindings from the metadata attribute.
- *
- * @return {Object} The bindings with default replaced for pattern overrides.
- */
-function replacePatternOverrideDefaultBindings(blockName, bindings) {
-  // The `__default` binding currently only works for pattern overrides.
-  if (bindings?.[DEFAULT_ATTRIBUTE]?.source === 'core/pattern-overrides') {
-    const supportedAttributes = BLOCK_BINDINGS_ALLOWED_BLOCKS[blockName];
-    const bindingsWithDefaults = {};
-    for (const attributeName of supportedAttributes) {
-      // If the block has mixed binding sources, retain any non pattern override bindings.
-      const bindingSource = bindings[attributeName] ? bindings[attributeName] : {
-        source: 'core/pattern-overrides'
-      };
-      bindingsWithDefaults[attributeName] = bindingSource;
-    }
-    return bindingsWithDefaults;
-  }
-  return bindings;
-}
-
-/**
- * Based on the given block name,
- * check if it is possible to bind the block.
- *
- * @param {string} blockName - The block name.
- * @return {boolean} Whether it is possible to bind the block to sources.
- */
-function canBindBlock(blockName) {
-  return blockName in BLOCK_BINDINGS_ALLOWED_BLOCKS;
-}
-
-/**
- * Based on the given block name and attribute name,
- * check if it is possible to bind the block attribute.
- *
- * @param {string} blockName     - The block name.
- * @param {string} attributeName - The attribute name.
- * @return {boolean} Whether it is possible to bind the block attribute.
- */
-function canBindAttribute(blockName, attributeName) {
-  return canBindBlock(blockName) && BLOCK_BINDINGS_ALLOWED_BLOCKS[blockName].includes(attributeName);
-}
-function getBindableAttributes(blockName) {
-  return BLOCK_BINDINGS_ALLOWED_BLOCKS[blockName];
-}
-const withBlockBindingSupport = (0,external_wp_compose_namespaceObject.createHigherOrderComponent)(BlockEdit => props => {
-  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
-  const blockContext = (0,external_wp_element_namespaceObject.useContext)(block_context);
-  const sources = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(external_wp_blocks_namespaceObject.store)).getAllBlockBindingsSources());
-  const {
-    name,
-    clientId,
-    context,
-    setAttributes
-  } = props;
-  const blockBindings = (0,external_wp_element_namespaceObject.useMemo)(() => replacePatternOverrideDefaultBindings(name, props.attributes.metadata?.bindings), [props.attributes.metadata?.bindings, name]);
-
-  // While this hook doesn't directly call any selectors, `useSelect` is
-  // used purposely here to ensure `boundAttributes` is updated whenever
-  // there are attribute updates.
-  // `source.getValues` may also call a selector via `registry.select`.
-  const updatedContext = {};
-  const boundAttributes = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    if (!blockBindings) {
-      return;
-    }
-    const attributes = {};
-    const blockBindingsBySource = new Map();
-    for (const [attributeName, binding] of Object.entries(blockBindings)) {
-      const {
-        source: sourceName,
-        args: sourceArgs
-      } = binding;
-      const source = sources[sourceName];
-      if (!source || !canBindAttribute(name, attributeName)) {
-        continue;
-      }
-
-      // Populate context.
-      for (const key of source.usesContext || []) {
-        updatedContext[key] = blockContext[key];
-      }
-      blockBindingsBySource.set(source, {
-        ...blockBindingsBySource.get(source),
-        [attributeName]: {
-          args: sourceArgs
-        }
-      });
-    }
-    if (blockBindingsBySource.size) {
-      for (const [source, bindings] of blockBindingsBySource) {
-        // Get values in batch if the source supports it.
-        let values = {};
-        if (!source.getValues) {
-          Object.keys(bindings).forEach(attr => {
-            // Default to the the source label when `getValues` doesn't exist.
-            values[attr] = source.label;
-          });
-        } else {
-          values = source.getValues({
-            select,
-            context: updatedContext,
-            clientId,
-            bindings
-          });
-        }
-        for (const [attributeName, value] of Object.entries(values)) {
-          if (attributeName === 'url' && (!value || !isURLLike(value))) {
-            // Return null if value is not a valid URL.
-            attributes[attributeName] = null;
-          } else {
-            attributes[attributeName] = value;
-          }
-        }
-      }
-    }
-    return attributes;
-  }, [blockBindings, name, clientId, updatedContext, sources]);
-  const hasParentPattern = !!updatedContext['pattern/overrides'];
-  const hasPatternOverridesDefaultBinding = props.attributes.metadata?.bindings?.[DEFAULT_ATTRIBUTE]?.source === 'core/pattern-overrides';
-  const _setAttributes = (0,external_wp_element_namespaceObject.useCallback)(nextAttributes => {
-    registry.batch(() => {
-      if (!blockBindings) {
-        setAttributes(nextAttributes);
-        return;
-      }
-      const keptAttributes = {
-        ...nextAttributes
-      };
-      const blockBindingsBySource = new Map();
-
-      // Loop only over the updated attributes to avoid modifying the bound ones that haven't changed.
-      for (const [attributeName, newValue] of Object.entries(keptAttributes)) {
-        if (!blockBindings[attributeName] || !canBindAttribute(name, attributeName)) {
-          continue;
-        }
-        const binding = blockBindings[attributeName];
-        const source = sources[binding?.source];
-        if (!source?.setValues) {
-          continue;
-        }
-        blockBindingsBySource.set(source, {
-          ...blockBindingsBySource.get(source),
-          [attributeName]: {
-            args: binding.args,
-            newValue
-          }
-        });
-        delete keptAttributes[attributeName];
-      }
-      if (blockBindingsBySource.size) {
-        for (const [source, bindings] of blockBindingsBySource) {
-          source.setValues({
-            select: registry.select,
-            dispatch: registry.dispatch,
-            context: updatedContext,
-            clientId,
-            bindings
-          });
-        }
-      }
-      if (
-      // Don't update non-connected attributes if the block is using pattern overrides
-      // and the editing is happening while overriding the pattern (not editing the original).
-      !(hasPatternOverridesDefaultBinding && hasParentPattern) && Object.keys(keptAttributes).length) {
-        // Don't update caption and href until they are supported.
-        if (hasPatternOverridesDefaultBinding) {
-          delete keptAttributes?.caption;
-          delete keptAttributes?.href;
-        }
-        setAttributes(keptAttributes);
-      }
-    });
-  }, [registry, blockBindings, name, clientId, updatedContext, setAttributes, sources, hasPatternOverridesDefaultBinding, hasParentPattern]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockEdit, {
-      ...props,
-      attributes: {
-        ...props.attributes,
-        ...boundAttributes
-      },
-      setAttributes: _setAttributes,
-      context: {
-        ...context,
-        ...updatedContext
-      }
-    })
-  });
-}, 'withBlockBindingSupport');
-
-/**
- * Filters a registered block's settings to enhance a block's `edit` component
- * to upgrade bound attributes.
- *
- * @param {WPBlockSettings} settings - Registered block settings.
- * @param {string}          name     - Block name.
- * @return {WPBlockSettings} Filtered block settings.
- */
-function shimAttributeSource(settings, name) {
-  if (!canBindBlock(name)) {
-    return settings;
-  }
-  return {
-    ...settings,
-    edit: withBlockBindingSupport(settings.edit)
-  };
-}
-(0,external_wp_hooks_namespaceObject.addFilter)('blocks.registerBlockType', 'core/editor/custom-sources-backwards-compatibility/shim-attribute-source', shimAttributeSource);
 
 ;// ./packages/block-editor/build-module/components/block-list/use-block-props/use-firefox-draggable-compatibility.js
 /**
@@ -56001,171 +56139,6 @@ function BlockHooksControlPure({
   }
 });
 
-;// ./packages/block-editor/build-module/utils/block-bindings.js
-/* wp:polyfill */
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-function isObjectEmpty(object) {
-  return !object || Object.keys(object).length === 0;
-}
-
-/**
- * Contains utils to update the block `bindings` metadata.
- *
- * @typedef {Object} WPBlockBindingsUtils
- *
- * @property {Function} updateBlockBindings    Updates the value of the bindings connected to block attributes.
- * @property {Function} removeAllBlockBindings Removes the bindings property of the `metadata` attribute.
- */
-
-/**
- * Retrieves the existing utils needed to update the block `bindings` metadata.
- * They can be used to create, modify, or remove connections from the existing block attributes.
- *
- * It contains the following utils:
- * - `updateBlockBindings`: Updates the value of the bindings connected to block attributes. It can be used to remove a specific binding by setting the value to `undefined`.
- * - `removeAllBlockBindings`: Removes the bindings property of the `metadata` attribute.
- *
- * @since 6.7.0 Introduced in WordPress core.
- *
- * @param {?string} clientId Optional block client ID. If not set, it will use the current block client ID from the context.
- *
- * @return {?WPBlockBindingsUtils} Object containing the block bindings utils.
- *
- * @example
- * ```js
- * import { useBlockBindingsUtils } from '@wordpress/block-editor'
- * const { updateBlockBindings, removeAllBlockBindings } = useBlockBindingsUtils();
- *
- * // Update url and alt attributes.
- * updateBlockBindings( {
- *     url: {
- *         source: 'core/post-meta',
- *         args: {
- *             key: 'url_custom_field',
- *         },
- *     },
- *     alt: {
- *         source: 'core/post-meta',
- *         args: {
- *             key: 'text_custom_field',
- *         },
- *     },
- * } );
- *
- * // Remove binding from url attribute.
- * updateBlockBindings( { url: undefined } );
- *
- * // Remove bindings from all attributes.
- * removeAllBlockBindings();
- * ```
- */
-function useBlockBindingsUtils(clientId) {
-  const {
-    clientId: contextClientId
-  } = useBlockEditContext();
-  const blockClientId = clientId || contextClientId;
-  const {
-    updateBlockAttributes
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const {
-    getBlockAttributes
-  } = (0,external_wp_data_namespaceObject.useRegistry)().select(store);
-
-  /**
-   * Updates the value of the bindings connected to block attributes.
-   * It removes the binding when the new value is `undefined`.
-   *
-   * @param {Object} bindings        Bindings including the attributes to update and the new object.
-   * @param {string} bindings.source The source name to connect to.
-   * @param {Object} [bindings.args] Object containing the arguments needed by the source.
-   *
-   * @example
-   * ```js
-   * import { useBlockBindingsUtils } from '@wordpress/block-editor'
-   *
-   * const { updateBlockBindings } = useBlockBindingsUtils();
-   * updateBlockBindings( {
-   *     url: {
-   *         source: 'core/post-meta',
-   *         args: {
-   *             key: 'url_custom_field',
-   *         },
-   * 	   },
-   *     alt: {
-   *         source: 'core/post-meta',
-   *         args: {
-   *             key: 'text_custom_field',
-   *         },
-   * 	   }
-   * } );
-   * ```
-   */
-  const updateBlockBindings = bindings => {
-    const {
-      metadata: {
-        bindings: currentBindings,
-        ...metadata
-      } = {}
-    } = getBlockAttributes(blockClientId);
-    const newBindings = {
-      ...currentBindings
-    };
-    Object.entries(bindings).forEach(([attribute, binding]) => {
-      if (!binding && newBindings[attribute]) {
-        delete newBindings[attribute];
-        return;
-      }
-      newBindings[attribute] = binding;
-    });
-    const newMetadata = {
-      ...metadata,
-      bindings: newBindings
-    };
-    if (isObjectEmpty(newMetadata.bindings)) {
-      delete newMetadata.bindings;
-    }
-    updateBlockAttributes(blockClientId, {
-      metadata: isObjectEmpty(newMetadata) ? undefined : newMetadata
-    });
-  };
-
-  /**
-   * Removes the bindings property of the `metadata` attribute.
-   *
-   * @example
-   * ```js
-   * import { useBlockBindingsUtils } from '@wordpress/block-editor'
-   *
-   * const { removeAllBlockBindings } = useBlockBindingsUtils();
-   * removeAllBlockBindings();
-   * ```
-   */
-  const removeAllBlockBindings = () => {
-    const {
-      metadata: {
-        bindings,
-        ...metadata
-      } = {}
-    } = getBlockAttributes(blockClientId);
-    updateBlockAttributes(blockClientId, {
-      metadata: isObjectEmpty(metadata) ? undefined : metadata
-    });
-  };
-  return {
-    updateBlockBindings,
-    removeAllBlockBindings
-  };
-}
-
 ;// ./packages/block-editor/build-module/hooks/block-bindings.js
 /* wp:polyfill */
 /**
@@ -56181,7 +56154,6 @@ function useBlockBindingsUtils(clientId) {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -57066,7 +57038,6 @@ function useCachedTruthy(value) {
 /**
  * Internal dependencies
  */
-
 
 
 
