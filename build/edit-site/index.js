@@ -41630,7 +41630,6 @@ function useAddedBy(postType, postId) {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -41638,40 +41637,16 @@ function useAddedBy(postType, postId) {
 
 
 
-
-const {
-  useLink: fields_useLink
-} = unlock(external_wp_router_namespaceObject.privateApis);
 const {
   useGlobalStyle: fields_useGlobalStyle
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
-function fields_PreviewWrapper({
-  item,
-  onClick,
-  ariaDescribedBy,
-  children
-}) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("button", {
-    className: "page-patterns-preview-field__button",
-    type: "button",
-    onClick: item.type !== PATTERN_TYPES.theme ? onClick : undefined,
-    "aria-label": defaultGetTitle(item),
-    "aria-describedby": ariaDescribedBy,
-    "aria-disabled": item.type === PATTERN_TYPES.theme,
-    children: children
-  });
-}
 function PreviewField({
   item
 }) {
   const descriptionId = (0,external_wp_element_namespaceObject.useId)();
   const description = item.description || item?.excerpt?.raw;
-  const isUserPattern = item.type === PATTERN_TYPES.user;
   const isTemplatePart = item.type === TEMPLATE_PART_POST_TYPE;
   const [backgroundColor] = fields_useGlobalStyle('color.background');
-  const {
-    onClick
-  } = fields_useLink(`/${item.type}/${isUserPattern || isTemplatePart ? item.id : item.name}?canvas=edit`);
   const blocks = (0,external_wp_element_namespaceObject.useMemo)(() => {
     var _item$blocks;
     return (_item$blocks = item.blocks) !== null && _item$blocks !== void 0 ? _item$blocks : (0,external_wp_blocks_namespaceObject.parse)(item.content.raw, {
@@ -41684,16 +41659,12 @@ function PreviewField({
     style: {
       backgroundColor
     },
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(fields_PreviewWrapper, {
-      item: item,
-      onClick: onClick,
-      ariaDescribedBy: !!description ? descriptionId : undefined,
-      children: [isEmpty && isTemplatePart && (0,external_wp_i18n_namespaceObject.__)('Empty template part'), isEmpty && !isTemplatePart && (0,external_wp_i18n_namespaceObject.__)('Empty pattern'), !isEmpty && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview.Async, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview, {
-          blocks: blocks,
-          viewportWidth: item.viewportWidth
-        })
-      })]
+    "aria-describedby": !!description ? descriptionId : undefined,
+    children: [isEmpty && isTemplatePart && (0,external_wp_i18n_namespaceObject.__)('Empty template part'), isEmpty && !isTemplatePart && (0,external_wp_i18n_namespaceObject.__)('Empty pattern'), !isEmpty && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview.Async, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview, {
+        blocks: blocks,
+        viewportWidth: item.viewportWidth
+      })
     }), !!description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       hidden: true,
       id: descriptionId,
@@ -44008,7 +43979,6 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -44016,9 +43986,6 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
 
 
 
-const {
-  useLink: page_templates_fields_useLink
-} = unlock(external_wp_router_namespaceObject.privateApis);
 const {
   useGlobalStyle: page_templates_fields_useGlobalStyle
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
@@ -44030,9 +43997,6 @@ function fields_PreviewField({
   const blocks = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return (0,external_wp_blocks_namespaceObject.parse)(item.content.raw);
   }, [item.content.raw]);
-  const {
-    onClick
-  } = page_templates_fields_useLink(`/${item.type}/${item.id}?canvas=edit`);
   const isEmpty = !blocks?.length;
   // Wrap everything in a block editor provider to ensure 'styles' that are needed
   // for the previews are synced between the site editor store and the block editor store.
@@ -44044,22 +44008,16 @@ function fields_PreviewField({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EditorProvider, {
     post: item,
     settings: settings,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "page-templates-preview-field",
       style: {
         backgroundColor
       },
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
-        className: "page-templates-preview-field__button",
-        type: "button",
-        onClick: onClick,
-        "aria-label": item.title?.rendered || item.title,
-        children: [isEmpty && (0,external_wp_i18n_namespaceObject.__)('Empty template'), !isEmpty && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview.Async, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview, {
-            blocks: blocks
-          })
-        })]
-      })
+      children: [isEmpty && (0,external_wp_i18n_namespaceObject.__)('Empty template'), !isEmpty && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview.Async, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockPreview, {
+          blocks: blocks
+        })
+      })]
     })
   });
 }
