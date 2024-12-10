@@ -1464,6 +1464,16 @@ __webpack_require__.d(query_title_namespaceObject, {
   settings: () => (query_title_settings)
 });
 
+// NAMESPACE OBJECT: ./packages/block-library/build-module/query-total/index.js
+var query_total_namespaceObject = {};
+__webpack_require__.r(query_total_namespaceObject);
+__webpack_require__.d(query_total_namespaceObject, {
+  init: () => (query_total_init),
+  metadata: () => (query_total_metadata),
+  name: () => (query_total_name),
+  settings: () => (query_total_settings)
+});
+
 // NAMESPACE OBJECT: ./packages/block-library/build-module/quote/index.js
 var build_module_quote_namespaceObject = {};
 __webpack_require__.r(build_module_quote_namespaceObject);
@@ -50749,6 +50759,200 @@ const query_title_init = () => initBlock({
   settings: query_title_settings
 });
 
+;// ./packages/block-library/build-module/query-total/icons.js
+/**
+ * WordPress dependencies
+ */
+
+
+const resultsFound = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  width: "24",
+  height: "24",
+  "aria-hidden": "true",
+  focusable: "false",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Path, {
+    d: "M4 11h4v2H4v-2zm6 0h6v2h-6v-2zm8 0h2v2h-2v-2z"
+  })
+});
+const displayingResults = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  width: "24",
+  height: "24",
+  "aria-hidden": "true",
+  focusable: "false",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Path, {
+    d: "M4 13h2v-2H4v2zm4 0h10v-2H8v2zm12 0h2v-2h-2v2z"
+  })
+});
+const queryTotal = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  width: "24",
+  height: "24",
+  "aria-hidden": "true",
+  focusable: "false",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Path, {
+    d: "M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm.5 14c0 .3-.2.5-.5.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h12c.3 0 .5.2.5.5v12Zm-7-6-4.1 5h8.8v-3h-1.5v1.5h-4.2l2.9-3.5-2.9-3.5h4.2V10h1.5V7H7.4l4.1 5Z"
+  })
+});
+
+;// ./packages/block-library/build-module/query-total/edit.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+function QueryTotalEdit({
+  attributes,
+  setAttributes
+}) {
+  const {
+    displayType
+  } = attributes;
+
+  // Block properties and classes.
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+  const getButtonPositionIcon = () => {
+    switch (displayType) {
+      case 'total-results':
+        return resultsFound;
+      case 'range-display':
+        return displayingResults;
+    }
+  };
+  const buttonPositionControls = [{
+    role: 'menuitemradio',
+    title: (0,external_wp_i18n_namespaceObject.__)('Total results'),
+    isActive: displayType === 'total-results',
+    icon: resultsFound,
+    onClick: () => {
+      setAttributes({
+        displayType: 'total-results'
+      });
+    }
+  }, {
+    role: 'menuitemradio',
+    title: (0,external_wp_i18n_namespaceObject.__)('Range display'),
+    isActive: displayType === 'range-display',
+    icon: displayingResults,
+    onClick: () => {
+      setAttributes({
+        displayType: 'range-display'
+      });
+    }
+  }];
+
+  // Controls for the block.
+  const controls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarDropdownMenu, {
+          icon: getButtonPositionIcon(),
+          label: (0,external_wp_i18n_namespaceObject.__)('Change display type'),
+          controls: buttonPositionControls
+        })
+      })
+    })
+  });
+
+  // Render output based on the selected display type.
+  const renderDisplay = () => {
+    if (displayType === 'total-results') {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        children: (0,external_wp_i18n_namespaceObject.__)('12 results found')
+      });
+    }
+    if (displayType === 'range-display') {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        children: (0,external_wp_i18n_namespaceObject.__)('Displaying 1 – 10 of 12')
+      });
+    }
+    return null;
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    ...blockProps,
+    children: [controls, renderDisplay()]
+  });
+}
+
+;// ./packages/block-library/build-module/query-total/index.js
+/**
+ * Internal dependencies
+ */
+const query_total_metadata = {
+  $schema: "https://schemas.wp.org/trunk/block.json",
+  apiVersion: 3,
+  name: "core/query-total",
+  title: "Query Total",
+  category: "theme",
+  ancestor: ["core/query"],
+  description: "Display the total number of results in a query.",
+  textdomain: "default",
+  attributes: {
+    displayType: {
+      type: "string",
+      "default": "total-results"
+    }
+  },
+  usesContext: ["queryId", "query"],
+  supports: {
+    align: ["wide", "full"],
+    html: false,
+    spacing: {
+      margin: true,
+      padding: true
+    },
+    color: {
+      gradients: true,
+      text: true,
+      __experimentalDefaultControls: {
+        background: true
+      }
+    },
+    typography: {
+      fontSize: true,
+      lineHeight: true,
+      __experimentalFontFamily: true,
+      __experimentalFontWeight: true,
+      __experimentalFontStyle: true,
+      __experimentalTextTransform: true,
+      __experimentalTextDecoration: true,
+      __experimentalLetterSpacing: true,
+      __experimentalDefaultControls: {
+        fontSize: true
+      }
+    }
+  }
+};
+
+
+
+
+/* Block settings */
+const {
+  name: query_total_name
+} = query_total_metadata;
+
+const query_total_settings = {
+  icon: queryTotal,
+  edit: QueryTotalEdit
+};
+const query_total_init = () => initBlock({
+  name: query_total_name,
+  metadata: query_total_metadata,
+  settings: query_total_settings
+});
+
 ;// ./packages/icons/build-module/library/quote.js
 /**
  * WordPress dependencies
@@ -64890,6 +65094,7 @@ lock(privateApis, {
 
 
 
+
 /**
  * Function to get all the block-library blocks in an array
  */
@@ -64901,7 +65106,7 @@ const getAllBlocks = () => {
   // Register all remaining core blocks.
   archives_namespaceObject, build_module_audio_namespaceObject, build_module_button_namespaceObject, build_module_buttons_namespaceObject, build_module_calendar_namespaceObject, categories_namespaceObject, build_module_code_namespaceObject, build_module_column_namespaceObject, build_module_columns_namespaceObject, build_module_comment_author_avatar_namespaceObject, build_module_cover_namespaceObject, build_module_details_namespaceObject, embed_namespaceObject, build_module_file_namespaceObject, build_module_group_namespaceObject, build_module_html_namespaceObject, latest_comments_namespaceObject, latest_posts_namespaceObject, media_text_namespaceObject, missing_namespaceObject, build_module_more_namespaceObject, nextpage_namespaceObject, page_list_namespaceObject, page_list_item_namespaceObject, pattern_namespaceObject, build_module_preformatted_namespaceObject, build_module_pullquote_namespaceObject, block_namespaceObject, build_module_rss_namespaceObject, build_module_search_namespaceObject, build_module_separator_namespaceObject, build_module_shortcode_namespaceObject, social_link_namespaceObject, social_links_namespaceObject, spacer_namespaceObject, build_module_table_namespaceObject, tag_cloud_namespaceObject, text_columns_namespaceObject, build_module_verse_namespaceObject, build_module_video_namespaceObject, footnotes_namespaceObject,
   // theme blocks
-  build_module_navigation_namespaceObject, navigation_link_namespaceObject, navigation_submenu_namespaceObject, build_module_site_logo_namespaceObject, site_title_namespaceObject, site_tagline_namespaceObject, query_namespaceObject, template_part_namespaceObject, avatar_namespaceObject, post_title_namespaceObject, build_module_post_excerpt_namespaceObject, build_module_post_featured_image_namespaceObject, build_module_post_content_namespaceObject, build_module_post_author_namespaceObject, post_author_name_namespaceObject, post_comment_namespaceObject, build_module_post_comments_count_namespaceObject, post_comments_link_namespaceObject, build_module_post_date_namespaceObject, build_module_post_terms_namespaceObject, post_navigation_link_namespaceObject, post_template_namespaceObject, post_time_to_read_namespaceObject, build_module_query_pagination_namespaceObject, build_module_query_pagination_next_namespaceObject, build_module_query_pagination_numbers_namespaceObject, build_module_query_pagination_previous_namespaceObject, query_no_results_namespaceObject, read_more_namespaceObject, comments_namespaceObject, build_module_comment_author_name_namespaceObject, build_module_comment_content_namespaceObject, comment_date_namespaceObject, build_module_comment_edit_link_namespaceObject, build_module_comment_reply_link_namespaceObject, comment_template_namespaceObject, comments_title_namespaceObject, comments_pagination_namespaceObject, comments_pagination_next_namespaceObject, comments_pagination_numbers_namespaceObject, comments_pagination_previous_namespaceObject, build_module_post_comments_form_namespaceObject, build_module_table_of_contents_namespaceObject, home_link_namespaceObject, loginout_namespaceObject, build_module_term_description_namespaceObject, query_title_namespaceObject, post_author_biography_namespaceObject];
+  build_module_navigation_namespaceObject, navigation_link_namespaceObject, navigation_submenu_namespaceObject, build_module_site_logo_namespaceObject, site_title_namespaceObject, site_tagline_namespaceObject, query_namespaceObject, template_part_namespaceObject, avatar_namespaceObject, post_title_namespaceObject, build_module_post_excerpt_namespaceObject, build_module_post_featured_image_namespaceObject, build_module_post_content_namespaceObject, build_module_post_author_namespaceObject, post_author_name_namespaceObject, post_comment_namespaceObject, build_module_post_comments_count_namespaceObject, post_comments_link_namespaceObject, build_module_post_date_namespaceObject, build_module_post_terms_namespaceObject, post_navigation_link_namespaceObject, post_template_namespaceObject, post_time_to_read_namespaceObject, build_module_query_pagination_namespaceObject, build_module_query_pagination_next_namespaceObject, build_module_query_pagination_numbers_namespaceObject, build_module_query_pagination_previous_namespaceObject, query_no_results_namespaceObject, query_total_namespaceObject, read_more_namespaceObject, comments_namespaceObject, build_module_comment_author_name_namespaceObject, build_module_comment_content_namespaceObject, comment_date_namespaceObject, build_module_comment_edit_link_namespaceObject, build_module_comment_reply_link_namespaceObject, comment_template_namespaceObject, comments_title_namespaceObject, comments_pagination_namespaceObject, comments_pagination_next_namespaceObject, comments_pagination_numbers_namespaceObject, comments_pagination_previous_namespaceObject, build_module_post_comments_form_namespaceObject, build_module_table_of_contents_namespaceObject, home_link_namespaceObject, loginout_namespaceObject, build_module_term_description_namespaceObject, query_title_namespaceObject, post_author_biography_namespaceObject];
   if (window?.__experimentalEnableFormBlocks) {
     blocks.push(build_module_form_namespaceObject);
     blocks.push(form_input_namespaceObject);
