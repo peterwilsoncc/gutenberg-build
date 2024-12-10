@@ -34140,8 +34140,8 @@ function FiltersPanel({
           return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
             isBordered: true,
             isSeparated: true,
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-              __next40pxDefaultSize: true,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {
+              as: "button",
               ...toggleProps,
               children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LabeledColorIndicator, {
                 indicator: duotone,
