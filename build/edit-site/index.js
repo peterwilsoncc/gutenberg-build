@@ -46082,10 +46082,17 @@ function PostEditForm({
 }) {
   const ids = (0,external_wp_element_namespaceObject.useMemo)(() => postId.split(','), [postId]);
   const {
-    record
+    record,
+    hasFinishedResolution
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const args = ['postType', postType, ids[0]];
+    const {
+      getEditedEntityRecord,
+      hasFinishedResolution: hasFinished
+    } = select(external_wp_coreData_namespaceObject.store);
     return {
-      record: ids.length === 1 ? select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', postType, ids[0]) : null
+      record: ids.length === 1 ? getEditedEntityRecord(...args) : null,
+      hasFinishedResolution: hasFinished('getEditedEntityRecord', args)
     };
   }, [postType, ids]);
   const [multiEdits, setMultiEdits] = (0,external_wp_element_namespaceObject.useState)({});
@@ -46173,7 +46180,7 @@ function PostEditForm({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostCardPanel, {
       postType: postType,
       postId: ids
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
+    }), hasFinishedResolution && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataForm, {
       data: ids.length === 1 ? record : multiEdits,
       fields: fieldsWithDependency,
       form: form,
