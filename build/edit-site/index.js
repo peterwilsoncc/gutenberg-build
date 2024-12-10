@@ -39143,6 +39143,7 @@ function PreviewSizePicker() {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -39174,6 +39175,7 @@ function GridItem({
   } = view;
   const hasBulkAction = useHasAPossibleBulkAction(actions, item);
   const id = getItemId(item);
+  const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(GridItem);
   const isSelected = selection.includes(id);
   const renderedMediaField = mediaField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(mediaField.render, {
     item: item
@@ -39193,6 +39195,22 @@ function GridItem({
     onClickItem,
     className: 'dataviews-view-grid__title-field dataviews-title-field'
   });
+  let mediaA11yProps;
+  let titleA11yProps;
+  if (isItemClickable(item) && onClickItem) {
+    if (renderedTitleField) {
+      mediaA11yProps = {
+        'aria-labelledby': `dataviews-view-grid__title-field-${instanceId}`
+      };
+      titleA11yProps = {
+        id: `dataviews-view-grid__title-field-${instanceId}`
+      };
+    } else {
+      mediaA11yProps = {
+        'aria-label': (0,external_wp_i18n_namespaceObject.__)('Navigate to item')
+      };
+    }
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 0,
     className: dist_clsx('dataviews-view-grid__card', {
@@ -39210,6 +39228,7 @@ function GridItem({
     },
     children: [showMedia && renderedMediaField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...clickableMediaItemProps,
+      ...mediaA11yProps,
       children: renderedMediaField
     }), showMedia && renderedMediaField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSelectionCheckbox, {
       item: item,
@@ -39223,6 +39242,7 @@ function GridItem({
       className: "dataviews-view-grid__title-actions",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         ...clickableTitleItemProps,
+        ...titleA11yProps,
         children: renderedTitleField
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemActions, {
         item: item,
