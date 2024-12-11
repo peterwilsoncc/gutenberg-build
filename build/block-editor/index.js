@@ -46962,14 +46962,16 @@ function ZoomOutSeparator({
     sectionClientIds,
     insertionPoint,
     blockInsertionPointVisible,
-    blockInsertionPoint
+    blockInsertionPoint,
+    blocksBeingDragged
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getInsertionPoint,
       getBlockOrder,
       getSectionRootClientId,
       isBlockInsertionPointVisible,
-      getBlockInsertionPoint
+      getBlockInsertionPoint,
+      getDraggedBlockClientIds
     } = unlock(select(store));
     const root = getSectionRootClientId();
     const sectionRootClientIds = getBlockOrder(root);
@@ -46979,7 +46981,8 @@ function ZoomOutSeparator({
       blockOrder: getBlockOrder(root),
       insertionPoint: getInsertionPoint(),
       blockInsertionPoint: getBlockInsertionPoint(),
-      blockInsertionPointVisible: isBlockInsertionPointVisible()
+      blockInsertionPointVisible: isBlockInsertionPointVisible(),
+      blocksBeingDragged: getDraggedBlockClientIds()
     };
   }, []);
   const isReducedMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
@@ -46993,6 +46996,7 @@ function ZoomOutSeparator({
   }
   const hasTopInsertionPoint = insertionPoint?.index === 0 && clientId === sectionClientIds[insertionPoint.index];
   const hasBottomInsertionPoint = insertionPoint && insertionPoint.hasOwnProperty('index') && clientId === sectionClientIds[insertionPoint.index - 1];
+
   // We want to show the zoom out separator in either of these conditions:
   // 1. If the inserter has an insertion index set
   // 2. We are dragging a pattern over an insertion point
@@ -47001,6 +47005,19 @@ function ZoomOutSeparator({
   }
   if (position === 'bottom') {
     isVisible = hasBottomInsertionPoint || blockInsertionPointVisible && clientId === sectionClientIds[blockInsertionPoint.index - 1];
+  }
+  const blockBeingDraggedClientId = blocksBeingDragged[0];
+  const isCurrentBlockBeingDragged = blocksBeingDragged.includes(clientId);
+  const blockBeingDraggedIndex = sectionClientIds.indexOf(blockBeingDraggedClientId);
+  const blockBeingDraggedPreviousSiblingClientId = blockBeingDraggedIndex > 0 ? sectionClientIds[blockBeingDraggedIndex - 1] : null;
+  const isCurrentBlockPreviousSiblingOfBlockBeingDragged = blockBeingDraggedPreviousSiblingClientId === clientId;
+
+  // The separators are visually top/bottom of the block, but in actual fact
+  // the "top" separator is the "bottom" separator of the previous block.
+  // Therefore, this logic hides the separator if the current block is being dragged
+  // or if the current block is the previous sibling of the block being dragged.
+  if (isCurrentBlockBeingDragged || isCurrentBlockPreviousSiblingOfBlockBeingDragged) {
+    isVisible = false;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableAnimatePresence, {
     children: isVisible && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
