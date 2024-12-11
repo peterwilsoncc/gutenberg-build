@@ -42611,6 +42611,7 @@ function BoxInputControl({
   setSelectedUnits,
   sides,
   side,
+  min = 0,
   ...props
 }) {
   var _CUSTOM_VALUE_SETTING, _CUSTOM_VALUE_SETTING2;
@@ -42672,6 +42673,7 @@ function BoxInputControl({
       text: LABELS[side],
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledUnitControl, {
         ...props,
+        min: min,
         __shouldNotWarnDeprecated36pxSize: true,
         __next40pxDefaultSize: __next40pxDefaultSize,
         className: "component-box-control__unit-control",
@@ -42696,7 +42698,7 @@ function BoxInputControl({
       onChange: newValue => {
         handleOnValueChange(newValue !== undefined ? [newValue, computedUnit].join('') : undefined);
       },
-      min: 0,
+      min: isFinite(min) ? min : 0,
       max: (_CUSTOM_VALUE_SETTING = CUSTOM_VALUE_SETTINGS[computedUnit !== null && computedUnit !== void 0 ? computedUnit : 'px']?.max) !== null && _CUSTOM_VALUE_SETTING !== void 0 ? _CUSTOM_VALUE_SETTING : 10,
       step: (_CUSTOM_VALUE_SETTING2 = CUSTOM_VALUE_SETTINGS[computedUnit !== null && computedUnit !== void 0 ? computedUnit : 'px']?.step) !== null && _CUSTOM_VALUE_SETTING2 !== void 0 ? _CUSTOM_VALUE_SETTING2 : 0.1,
       value: parsedQuantity !== null && parsedQuantity !== void 0 ? parsedQuantity : 0,
