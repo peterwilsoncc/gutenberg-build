@@ -14750,6 +14750,7 @@ function MainSidebarNavigationContent({
   isBlockBasedTheme = true
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+    className: "edit-site-sidebar-navigation-screen-main",
     children: [isBlockBasedTheme && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItem, {
         uid: "navigation-navigation-item",
