@@ -31667,6 +31667,7 @@ function useGetNumberOfBlocksBeforeCell(gridClientId, numColumns) {
 
 
 
+
 function helpText(selfStretch, parentLayout) {
   const {
     orientation = 'horizontal'
@@ -31743,6 +31744,10 @@ function FlexControls({
   } = parentLayout !== null && parentLayout !== void 0 ? parentLayout : {};
   const hasFlexValue = () => !!selfStretch;
   const flexResetLabel = orientation === 'horizontal' ? (0,external_wp_i18n_namespaceObject.__)('Width') : (0,external_wp_i18n_namespaceObject.__)('Height');
+  const [availableUnits] = use_settings_useSettings('spacing.units');
+  const units = (0,external_wp_components_namespaceObject.__experimentalUseCustomUnits)({
+    availableUnits: availableUnits || ['%', 'px', 'em', 'rem', 'vh', 'vw']
+  });
   const resetFlex = () => {
     onChange({
       selfStretch: undefined,
@@ -31791,6 +31796,7 @@ function FlexControls({
       }, "fixed")]
     }), selfStretch === 'fixed' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
       size: "__unstable-large",
+      units: units,
       onChange: value => {
         onChange({
           selfStretch,
