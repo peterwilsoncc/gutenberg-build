@@ -31493,7 +31493,6 @@ const SetAsHomepageModal = ({
       isSaving: isSavingEntityRecord('root', 'site')
     };
   });
-  const currentHomePageTitle = currentHomePage ? set_as_homepage_getItemTitle(currentHomePage) : '';
   const {
     saveEditedEntityRecord,
     saveEntityRecord
@@ -31531,12 +31530,17 @@ const SetAsHomepageModal = ({
       closeModal?.();
     }
   }
-  const modalWarning = 'posts' === showOnFront ? (0,external_wp_i18n_namespaceObject.__)('This will replace the current homepage which is set to display latest posts.') : (0,external_wp_i18n_namespaceObject.sprintf)(
-  // translators: %s: title of the current home page.
-  (0,external_wp_i18n_namespaceObject.__)('This will replace the current homepage: "%s"'), currentHomePageTitle);
+  let modalWarning = '';
+  if ('posts' === showOnFront) {
+    modalWarning = (0,external_wp_i18n_namespaceObject.__)('This will replace the current homepage which is set to display latest posts.');
+  } else if (currentHomePage) {
+    modalWarning = (0,external_wp_i18n_namespaceObject.sprintf)(
+    // translators: %s: title of the current home page.
+    (0,external_wp_i18n_namespaceObject.__)('This will replace the current homepage: "%s"'), set_as_homepage_getItemTitle(currentHomePage));
+  }
   const modalText = (0,external_wp_i18n_namespaceObject.sprintf)(
   // translators: %1$s: title of the page to be set as the homepage, %2$s: homepage replacement warning message.
-  (0,external_wp_i18n_namespaceObject.__)('Set "%1$s" as the site homepage? %2$s'), pageTitle, modalWarning);
+  (0,external_wp_i18n_namespaceObject.__)('Set "%1$s" as the site homepage? %2$s'), pageTitle, modalWarning).trim();
 
   // translators: Button label to confirm setting the specified page as the homepage.
   const modalButtonLabel = (0,external_wp_i18n_namespaceObject.__)('Set homepage');
