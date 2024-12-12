@@ -49758,15 +49758,13 @@ function CustomSelectControl(props) {
       })
     }, key);
   });
-  const {
-    value: currentValue
-  } = store.getState();
+  const currentValue = useStoreState(store, 'value');
   const renderSelectedValueHint = () => {
     const selectedOptionHint = options?.map(applyOptionDeprecations)?.find(({
       name
-    }) => store.getState().value === name)?.hint;
+    }) => currentValue === name)?.hint;
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(SelectedExperimentalHintWrapper, {
-      children: [store.getState().value, selectedOptionHint && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SelectedExperimentalHintItem, {
+      children: [currentValue, selectedOptionHint && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SelectedExperimentalHintItem, {
         // Keeping the classname for legacy reasons
         className: "components-custom-select-control__hint",
         children: selectedOptionHint
