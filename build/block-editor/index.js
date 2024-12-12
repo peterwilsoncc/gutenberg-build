@@ -28926,6 +28926,7 @@ function isLineHeightDefined(lineHeight) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -29002,6 +29003,13 @@ const line_height_control_LineHeightControl = ({
     }
     onChange(`${nextValue}`);
   };
+  if (!__next40pxDefaultSize && (otherProps.size === undefined || otherProps.size === 'default')) {
+    external_wp_deprecated_default()(`36px default size for wp.blockEditor.LineHeightControl`, {
+      since: '6.8',
+      version: '7.1',
+      hint: 'Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version.'
+    });
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "block-editor-line-height-control",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
