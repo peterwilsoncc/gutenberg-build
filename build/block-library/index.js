@@ -1776,49 +1776,89 @@ function ArchivesEdit({
   } = attributes;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            displayAsDropdown: false,
+            showLabel: false,
+            showPostCounts: false,
+            type: 'monthly'
+          });
+        },
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Display as dropdown'),
-          checked: displayAsDropdown,
-          onChange: () => setAttributes({
-            displayAsDropdown: !displayAsDropdown
+          isShownByDefault: true,
+          hasValue: () => displayAsDropdown,
+          onDeselect: () => setAttributes({
+            displayAsDropdown: false
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Display as dropdown'),
+            checked: displayAsDropdown,
+            onChange: () => setAttributes({
+              displayAsDropdown: !displayAsDropdown
+            })
           })
-        }), displayAsDropdown && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+        }), displayAsDropdown && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Show label'),
-          checked: showLabel,
-          onChange: () => setAttributes({
-            showLabel: !showLabel
+          isShownByDefault: true,
+          hasValue: () => showLabel,
+          onDeselect: () => setAttributes({
+            showLabel: false
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show label'),
+            checked: showLabel,
+            onChange: () => setAttributes({
+              showLabel: !showLabel
+            })
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Show post counts'),
-          checked: showPostCounts,
-          onChange: () => setAttributes({
-            showPostCounts: !showPostCounts
+          isShownByDefault: true,
+          hasValue: () => showPostCounts,
+          onDeselect: () => setAttributes({
+            showPostCounts: false
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show post counts'),
+            checked: showPostCounts,
+            onChange: () => setAttributes({
+              showPostCounts: !showPostCounts
+            })
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-          __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Group by'),
-          options: [{
-            label: (0,external_wp_i18n_namespaceObject.__)('Year'),
-            value: 'yearly'
-          }, {
-            label: (0,external_wp_i18n_namespaceObject.__)('Month'),
-            value: 'monthly'
-          }, {
-            label: (0,external_wp_i18n_namespaceObject.__)('Week'),
-            value: 'weekly'
-          }, {
-            label: (0,external_wp_i18n_namespaceObject.__)('Day'),
-            value: 'daily'
-          }],
-          value: type,
-          onChange: value => setAttributes({
-            type: value
+          isShownByDefault: true,
+          hasValue: () => !!type,
+          onDeselect: () => setAttributes({
+            type: 'monthly'
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+            __next40pxDefaultSize: true,
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Group by'),
+            options: [{
+              label: (0,external_wp_i18n_namespaceObject.__)('Year'),
+              value: 'yearly'
+            }, {
+              label: (0,external_wp_i18n_namespaceObject.__)('Month'),
+              value: 'monthly'
+            }, {
+              label: (0,external_wp_i18n_namespaceObject.__)('Week'),
+              value: 'weekly'
+            }, {
+              label: (0,external_wp_i18n_namespaceObject.__)('Day'),
+              value: 'daily'
+            }],
+            value: type,
+            onChange: value => setAttributes({
+              type: value
+            })
           })
         })]
       })
