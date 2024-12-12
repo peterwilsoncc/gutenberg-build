@@ -42817,31 +42817,64 @@ function PostDateEdit({
         })
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalDateFormatPicker, {
-          format: format,
-          defaultFormat: siteFormat,
-          onChange: nextFormat => setAttributes({
-            format: nextFormat
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            format: undefined,
+            isLink: false,
+            displayType: 'date'
+          });
+        },
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => format !== undefined && format !== siteFormat,
+          label: (0,external_wp_i18n_namespaceObject.__)('Date Format'),
+          onDeselect: () => setAttributes({
+            format: undefined
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalDateFormatPicker, {
+            format: format,
+            defaultFormat: siteFormat,
+            onChange: nextFormat => setAttributes({
+              format: nextFormat
+            })
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => isLink !== false,
           label: postType?.labels.singular_name ? (0,external_wp_i18n_namespaceObject.sprintf)(
           // translators: %s: Name of the post type e.g: "post".
           (0,external_wp_i18n_namespaceObject.__)('Link to %s'), postType.labels.singular_name.toLowerCase()) : (0,external_wp_i18n_namespaceObject.__)('Link to post'),
-          onChange: () => setAttributes({
-            isLink: !isLink
+          onDeselect: () => setAttributes({
+            isLink: false
           }),
-          checked: isLink
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: postType?.labels.singular_name ? (0,external_wp_i18n_namespaceObject.sprintf)(
+            // translators: %s: Name of the post type e.g: "post".
+            (0,external_wp_i18n_namespaceObject.__)('Link to %s'), postType.labels.singular_name.toLowerCase()) : (0,external_wp_i18n_namespaceObject.__)('Link to post'),
+            onChange: () => setAttributes({
+              isLink: !isLink
+            }),
+            checked: isLink
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => displayType !== 'date',
           label: (0,external_wp_i18n_namespaceObject.__)('Display last modified date'),
-          onChange: value => setAttributes({
-            displayType: value ? 'modified' : 'date'
+          onDeselect: () => setAttributes({
+            displayType: 'date'
           }),
-          checked: displayType === 'modified',
-          help: (0,external_wp_i18n_namespaceObject.__)('Only shows if the post has been modified')
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Display last modified date'),
+            onChange: value => setAttributes({
+              displayType: value ? 'modified' : 'date'
+            }),
+            checked: displayType === 'modified',
+            help: (0,external_wp_i18n_namespaceObject.__)('Only shows if the post has been modified')
+          })
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
