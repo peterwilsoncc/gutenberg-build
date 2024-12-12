@@ -42075,6 +42075,23 @@ const UnconnectedBorderBoxControl = (props, forwardedRef) => {
 const BorderBoxControl = contextConnect(UnconnectedBorderBoxControl, 'BorderBoxControl');
 /* harmony default export */ const border_box_control_component = (BorderBoxControl);
 
+;// ./packages/icons/build-module/library/settings.js
+/**
+ * WordPress dependencies
+ */
+
+
+const settings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "m19 7.5h-7.628c-.3089-.87389-1.1423-1.5-2.122-1.5-.97966 0-1.81309.62611-2.12197 1.5h-2.12803v1.5h2.12803c.30888.87389 1.14231 1.5 2.12197 1.5.9797 0 1.8131-.62611 2.122-1.5h7.628z"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "m19 15h-2.128c-.3089-.8739-1.1423-1.5-2.122-1.5s-1.8131.6261-2.122 1.5h-7.628v1.5h7.628c.3089.8739 1.1423 1.5 2.122 1.5s1.8131-.6261 2.122-1.5h2.128z"
+  })]
+});
+/* harmony default export */ const library_settings = (settings);
+
 ;// ./packages/components/build-module/box-control/utils.js
 /* wp:polyfill */
 /**
@@ -42387,6 +42404,53 @@ function getAllowedSides(sides) {
   return allowedSides;
 }
 
+/**
+ * Checks if a value is a preset value.
+ *
+ * @param value     The value to check.
+ * @param presetKey The preset key to check against.
+ * @return Whether the value is a preset value.
+ */
+function isValuePreset(value, presetKey) {
+  return value.startsWith(`var:preset|${presetKey}|`);
+}
+
+/**
+ * Returns the index of the preset value in the presets array.
+ *
+ * @param value     The value to check.
+ * @param presetKey The preset key to check against.
+ * @param presets   The array of presets to search.
+ * @return The index of the preset value in the presets array.
+ */
+function getPresetIndexFromValue(value, presetKey, presets) {
+  if (!isValuePreset(value, presetKey)) {
+    return undefined;
+  }
+  const match = value.match(new RegExp(`^var:preset\\|${presetKey}\\|(.+)$`));
+  if (!match) {
+    return undefined;
+  }
+  const slug = match[1];
+  const index = presets.findIndex(preset => {
+    return preset.slug === slug;
+  });
+  return index !== -1 ? index : undefined;
+}
+
+/**
+ * Returns the preset value from the index.
+ *
+ * @param index     The index of the preset value in the presets array.
+ * @param presetKey The preset key to check against.
+ * @param presets   The array of presets to search.
+ * @return The preset value from the index.
+ */
+function getPresetValueFromIndex(index, presetKey, presets) {
+  const preset = presets[index];
+  return `var:preset|${presetKey}|${preset.slug}`;
+}
+
 ;// ./packages/components/build-module/box-control/styles/box-control-icon-styles.js
 
 function box_control_icon_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
@@ -42559,9 +42623,12 @@ const FlexedRangeControl = /*#__PURE__*/emotion_styled_base_browser_esm(range_co
 
 
 
+
+
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -42612,6 +42679,8 @@ function BoxInputControl({
   sides,
   side,
   min = 0,
+  presets,
+  presetKey,
   ...props
 }) {
   var _CUSTOM_VALUE_SETTING, _CUSTOM_VALUE_SETTING2;
@@ -42623,6 +42692,15 @@ function BoxInputControl({
   };
   const handleOnChange = nextValues => {
     onChange(nextValues);
+  };
+  const handleRawOnValueChange = next => {
+    const nextValues = {
+      ...values
+    };
+    defaultValuesToModify.forEach(modifiedSide => {
+      nextValues[modifiedSide] = next;
+    });
+    handleOnChange(nextValues);
   };
   const handleOnValueChange = (next, extra) => {
     const nextValues = {
@@ -42663,46 +42741,91 @@ function BoxInputControl({
   const isMixedUnit = defaultValuesToModify.length > 1 && mergedValue === undefined && defaultValuesToModify.some(s => selectedUnits[s] !== computedUnit);
   const usedValue = mergedValue === undefined && computedUnit ? computedUnit : mergedValue;
   const mixedPlaceholder = isMixed || isMixedUnit ? (0,external_wp_i18n_namespaceObject.__)('Mixed') : undefined;
+  const hasPresets = presets && presets.length > 0 && presetKey;
+  const hasPresetValue = hasPresets && mergedValue !== undefined && !isMixed && isValuePreset(mergedValue, presetKey);
+  const [showCustomValueControl, setShowCustomValueControl] = (0,external_wp_element_namespaceObject.useState)(!hasPresets || !hasPresetValue && !isMixed && mergedValue !== undefined);
+  const presetIndex = hasPresetValue ? getPresetIndexFromValue(mergedValue, presetKey, presets) : undefined;
+  const marks = hasPresets ? [{
+    value: 0,
+    label: '',
+    tooltip: (0,external_wp_i18n_namespaceObject.__)('None')
+  }].concat(presets.map((preset, index) => {
+    var _preset$name;
+    return {
+      value: index + 1,
+      label: '',
+      tooltip: (_preset$name = preset.name) !== null && _preset$name !== void 0 ? _preset$name : preset.slug
+    };
+  })) : [];
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(InputWrapper, {
     expanded: true,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedBoxControlIcon, {
       side: side,
       sides: sides
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tooltip, {
-      placement: "top-end",
-      text: LABELS[side],
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledUnitControl, {
-        ...props,
-        min: min,
-        __shouldNotWarnDeprecated36pxSize: true,
+    }), showCustomValueControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tooltip, {
+        placement: "top-end",
+        text: LABELS[side],
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledUnitControl, {
+          ...props,
+          min: min,
+          __shouldNotWarnDeprecated36pxSize: true,
+          __next40pxDefaultSize: __next40pxDefaultSize,
+          className: "component-box-control__unit-control",
+          id: inputId,
+          isPressEnterToChange: true,
+          disableUnits: isMixed || isMixedUnit,
+          value: usedValue,
+          onChange: handleOnValueChange,
+          onUnitChange: handleOnUnitChange,
+          onFocus: handleOnFocus,
+          label: LABELS[side],
+          placeholder: mixedPlaceholder,
+          hideLabelFromVision: true
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedRangeControl, {
+        __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: __next40pxDefaultSize,
-        className: "component-box-control__unit-control",
-        id: inputId,
-        isPressEnterToChange: true,
-        disableUnits: isMixed || isMixedUnit,
-        value: usedValue,
-        onChange: handleOnValueChange,
-        onUnitChange: handleOnUnitChange,
-        onFocus: handleOnFocus,
+        __shouldNotWarnDeprecated36pxSize: true,
+        "aria-controls": inputId,
         label: LABELS[side],
-        placeholder: mixedPlaceholder,
-        hideLabelFromVision: true
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedRangeControl, {
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: __next40pxDefaultSize,
-      __shouldNotWarnDeprecated36pxSize: true,
-      "aria-controls": inputId,
+        hideLabelFromVision: true,
+        onChange: newValue => {
+          handleOnValueChange(newValue !== undefined ? [newValue, computedUnit].join('') : undefined);
+        },
+        min: isFinite(min) ? min : 0,
+        max: (_CUSTOM_VALUE_SETTING = CUSTOM_VALUE_SETTINGS[computedUnit !== null && computedUnit !== void 0 ? computedUnit : 'px']?.max) !== null && _CUSTOM_VALUE_SETTING !== void 0 ? _CUSTOM_VALUE_SETTING : 10,
+        step: (_CUSTOM_VALUE_SETTING2 = CUSTOM_VALUE_SETTINGS[computedUnit !== null && computedUnit !== void 0 ? computedUnit : 'px']?.step) !== null && _CUSTOM_VALUE_SETTING2 !== void 0 ? _CUSTOM_VALUE_SETTING2 : 0.1,
+        value: parsedQuantity !== null && parsedQuantity !== void 0 ? parsedQuantity : 0,
+        withInputField: false
+      })]
+    }), hasPresets && !showCustomValueControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedRangeControl, {
+      __next40pxDefaultSize: true,
+      className: "spacing-sizes-control__range-control",
+      value: presetIndex !== undefined ? presetIndex + 1 : 0,
+      onChange: newIndex => {
+        const newValue = newIndex === 0 || newIndex === undefined ? undefined : getPresetValueFromIndex(newIndex - 1, presetKey, presets);
+        handleRawOnValueChange(newValue);
+      },
+      withInputField: false,
+      "aria-valuenow": presetIndex !== undefined ? presetIndex + 1 : 0,
+      "aria-valuetext": marks[presetIndex !== undefined ? presetIndex + 1 : 0].label,
+      renderTooltipContent: index => marks[!index ? 0 : index].tooltip,
+      min: 0,
+      max: marks.length - 1,
+      marks: marks,
       label: LABELS[side],
       hideLabelFromVision: true,
-      onChange: newValue => {
-        handleOnValueChange(newValue !== undefined ? [newValue, computedUnit].join('') : undefined);
+      __nextHasNoMarginBottom: true
+    }), hasPresets && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+      label: showCustomValueControl ? (0,external_wp_i18n_namespaceObject.__)('Use size preset') : (0,external_wp_i18n_namespaceObject.__)('Set custom size'),
+      icon: library_settings,
+      onClick: () => {
+        setShowCustomValueControl(!showCustomValueControl);
       },
-      min: isFinite(min) ? min : 0,
-      max: (_CUSTOM_VALUE_SETTING = CUSTOM_VALUE_SETTINGS[computedUnit !== null && computedUnit !== void 0 ? computedUnit : 'px']?.max) !== null && _CUSTOM_VALUE_SETTING !== void 0 ? _CUSTOM_VALUE_SETTING : 10,
-      step: (_CUSTOM_VALUE_SETTING2 = CUSTOM_VALUE_SETTINGS[computedUnit !== null && computedUnit !== void 0 ? computedUnit : 'px']?.step) !== null && _CUSTOM_VALUE_SETTING2 !== void 0 ? _CUSTOM_VALUE_SETTING2 : 0.1,
-      value: parsedQuantity !== null && parsedQuantity !== void 0 ? parsedQuantity : 0,
-      withInputField: false
+      isPressed: showCustomValueControl,
+      size: "small",
+      iconSize: 24
     })]
   }, `box-control-${side}`);
 }
@@ -42807,6 +42930,8 @@ function BoxControl({
   splitOnAxis = false,
   allowReset = true,
   resetValues = DEFAULT_VALUES,
+  presets,
+  presetKey,
   onMouseOver,
   onMouseOut
 }) {
@@ -42863,7 +42988,9 @@ function BoxControl({
     setSelectedUnits,
     sides,
     values: inputValues,
-    __next40pxDefaultSize
+    __next40pxDefaultSize,
+    presets,
+    presetKey
   };
   maybeWarnDeprecated36pxSize({
     componentName: 'BoxControl',
@@ -57062,23 +57189,6 @@ function FocusableIframe({
     ...props
   });
 }
-
-;// ./packages/icons/build-module/library/settings.js
-/**
- * WordPress dependencies
- */
-
-
-const settings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m19 7.5h-7.628c-.3089-.87389-1.1423-1.5-2.122-1.5-.97966 0-1.81309.62611-2.12197 1.5h-2.12803v1.5h2.12803c.30888.87389 1.14231 1.5 2.12197 1.5.9797 0 1.8131-.62611 2.122-1.5h7.628z"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m19 15h-2.128c-.3089-.8739-1.1423-1.5-2.122-1.5s-1.8131.6261-2.122 1.5h-7.628v1.5h7.628c.3089.8739 1.1423 1.5 2.122 1.5s1.8131-.6261 2.122-1.5h2.128z"
-  })]
-});
-/* harmony default export */ const library_settings = (settings);
 
 ;// ./packages/components/build-module/font-size-picker/utils.js
 /* wp:polyfill */
