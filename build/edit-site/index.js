@@ -45250,7 +45250,8 @@ function useView(postType) {
     const type = layout !== null && layout !== void 0 ? layout : initialView.type;
     return {
       ...initialView,
-      type
+      type,
+      ...default_views_defaultLayouts[type]
     };
   });
   const setViewWithUrlUpdate = (0,external_wp_compose_namespaceObject.useEvent)(newView => {
@@ -45272,13 +45273,14 @@ function useView(postType) {
   // without affecting any other config.
   const onUrlLayoutChange = (0,external_wp_compose_namespaceObject.useEvent)(() => {
     setView(prevView => {
-      const layoutToApply = layout !== null && layout !== void 0 ? layout : LAYOUT_LIST;
-      if (layoutToApply === prevView.type) {
+      const newType = layout !== null && layout !== void 0 ? layout : LAYOUT_LIST;
+      if (newType === prevView.type) {
         return prevView;
       }
       return {
         ...prevView,
-        type: layout !== null && layout !== void 0 ? layout : LAYOUT_LIST
+        type: newType,
+        ...default_views_defaultLayouts[newType]
       };
     });
   });
@@ -45298,7 +45300,8 @@ function useView(postType) {
       const type = layout !== null && layout !== void 0 ? layout : newView.type;
       setView({
         ...newView,
-        type
+        type,
+        ...default_views_defaultLayouts[type]
       });
     }
   });
