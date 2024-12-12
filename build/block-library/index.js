@@ -5031,17 +5031,27 @@ function WidthPanel({
       width
     });
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
-    title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ButtonGroup, {
-      "aria-label": (0,external_wp_i18n_namespaceObject.__)('Button width'),
-      children: [25, 50, 75, 100].map(widthValue => {
-        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
-          size: "small",
-          variant: widthValue === selectedWidth ? 'primary' : undefined,
-          onClick: () => handleChange(widthValue),
-          children: [widthValue, "%"]
-        }, widthValue);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+    label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+    resetAll: () => {
+      handleChange(undefined);
+    },
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Button width'),
+      __nextHasNoMarginBottom: true,
+      isShownByDefault: true,
+      hasValue: () => !!selectedWidth,
+      onDeselect: () => handleChange(undefined),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ButtonGroup, {
+        "aria-label": (0,external_wp_i18n_namespaceObject.__)('Button width'),
+        children: [25, 50, 75, 100].map(widthValue => {
+          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
+            size: "small",
+            variant: widthValue === selectedWidth ? 'primary' : undefined,
+            onClick: () => handleChange(widthValue),
+            children: [widthValue, "%"]
+          }, widthValue);
+        })
       })
     })
   });
