@@ -28731,6 +28731,7 @@ function FontFamilyControl({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -28873,6 +28874,13 @@ function FontAppearanceControl(props) {
     // translators: %s: Currently selected font appearance.
     (0,external_wp_i18n_namespaceObject.__)('Currently selected font appearance: %s'), currentSelection.name);
   };
+  if (!__next40pxDefaultSize && (otherProps.size === undefined || otherProps.size === 'default')) {
+    external_wp_deprecated_default()(`36px default size for wp.blockEditor.__experimentalFontAppearanceControl`, {
+      since: '6.8',
+      version: '7.1',
+      hint: 'Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version.'
+    });
+  }
   return hasStylesOrWeights && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CustomSelectControl, {
     ...otherProps,
     className: "components-font-appearance-control",
