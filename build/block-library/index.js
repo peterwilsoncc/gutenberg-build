@@ -7465,20 +7465,33 @@ function ColumnInspectorControls({
   const units = (0,external_wp_components_namespaceObject.__experimentalUseCustomUnits)({
     availableUnits: availableUnits || ['%', 'px', 'em', 'rem', 'vw']
   });
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
-    title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+    label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+    resetAll: () => {
+      setAttributes({
+        width: undefined
+      });
+    },
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      hasValue: () => width !== undefined,
       label: (0,external_wp_i18n_namespaceObject.__)('Width'),
-      __unstableInputWidth: "calc(50% - 8px)",
-      __next40pxDefaultSize: true,
-      value: width || '',
-      onChange: nextWidth => {
-        nextWidth = 0 > parseFloat(nextWidth) ? '0' : nextWidth;
-        setAttributes({
-          width: nextWidth
-        });
-      },
-      units: units
+      onDeselect: () => setAttributes({
+        width: undefined
+      }),
+      isShownByDefault: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Width'),
+        __unstableInputWidth: "calc(50% - 8px)",
+        __next40pxDefaultSize: true,
+        value: width || '',
+        onChange: nextWidth => {
+          nextWidth = 0 > parseFloat(nextWidth) ? '0' : nextWidth;
+          setAttributes({
+            width: nextWidth
+          });
+        },
+        units: units
+      })
     })
   });
 }
