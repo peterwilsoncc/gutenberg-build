@@ -43290,27 +43290,49 @@ function PostExcerptEditor({
         })
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            showMoreOnNewLine: true,
+            excerptLength: 55
+          });
+        },
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => showMoreOnNewLine !== true,
           label: (0,external_wp_i18n_namespaceObject.__)('Show link on new line'),
-          checked: showMoreOnNewLine,
-          onChange: newShowMoreOnNewLine => setAttributes({
-            showMoreOnNewLine: newShowMoreOnNewLine
+          onDeselect: () => setAttributes({
+            showMoreOnNewLine: true
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show link on new line'),
+            checked: showMoreOnNewLine,
+            onChange: newShowMoreOnNewLine => setAttributes({
+              showMoreOnNewLine: newShowMoreOnNewLine
+            })
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
-          __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => excerptLength !== 55,
           label: (0,external_wp_i18n_namespaceObject.__)('Max number of words'),
-          value: excerptLength,
-          onChange: value => {
-            setAttributes({
-              excerptLength: value
-            });
-          },
-          min: "10",
-          max: "100"
+          onDeselect: () => setAttributes({
+            excerptLength: 55
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+            __next40pxDefaultSize: true,
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Max number of words'),
+            value: excerptLength,
+            onChange: value => {
+              setAttributes({
+                excerptLength: value
+              });
+            },
+            min: "10",
+            max: "100"
+          })
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
