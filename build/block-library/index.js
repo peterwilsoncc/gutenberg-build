@@ -60965,12 +60965,25 @@ function TagCloudEdit({
     }
   };
   const inspectorControls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-        spacing: 4,
-        className: "wp-block-tag-cloud__inspector-settings",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+      resetAll: () => {
+        setAttributes({
+          taxonomy: 'post_tag',
+          showTagCounts: false,
+          numberOfTags: 45,
+          smallestFontSize: '8pt',
+          largestFontSize: '22pt'
+        });
+      },
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => taxonomy !== 'post_tag',
+        label: (0,external_wp_i18n_namespaceObject.__)('Taxonomy'),
+        onDeselect: () => setAttributes({
+          taxonomy: 'post_tag'
+        }),
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
           __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Taxonomy'),
@@ -60979,7 +60992,16 @@ function TagCloudEdit({
           onChange: selectedTaxonomy => setAttributes({
             taxonomy: selectedTaxonomy
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => smallestFontSize !== '8pt' || largestFontSize !== '22pt',
+        label: (0,external_wp_i18n_namespaceObject.__)('Font size'),
+        onDeselect: () => setAttributes({
+          smallestFontSize: '8pt',
+          largestFontSize: '22pt'
+        }),
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
           gap: 4,
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
             isBlock: true,
@@ -61008,7 +61030,15 @@ function TagCloudEdit({
               size: "__unstable-large"
             })
           })]
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => numberOfTags !== 45,
+        label: (0,external_wp_i18n_namespaceObject.__)('Number of tags'),
+        onDeselect: () => setAttributes({
+          numberOfTags: 45
+        }),
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
           __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Number of tags'),
@@ -61019,15 +61049,23 @@ function TagCloudEdit({
           min: MIN_TAGS,
           max: MAX_TAGS,
           required: true
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => showTagCounts !== false,
+        label: (0,external_wp_i18n_namespaceObject.__)('Show tag counts'),
+        onDeselect: () => setAttributes({
+          showTagCounts: false
+        }),
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
           __nextHasNoMarginBottom: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Show tag counts'),
           checked: showTagCounts,
           onChange: () => setAttributes({
             showTagCounts: !showTagCounts
           })
-        })]
-      })
+        })
+      })]
     })
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
