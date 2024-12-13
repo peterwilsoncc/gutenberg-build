@@ -8201,9 +8201,19 @@ function edit_ColumnInspectorControls({
     }
     replaceInnerBlocks(clientId, innerBlocks);
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-    title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-    children: [canInsertColumnBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+    label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+    resetAll: () => {
+      updateColumns(count, minCount);
+      setAttributes({
+        isStackedOnMobile: true
+      });
+    },
+    children: [canInsertColumnBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Columns'),
+      isShownByDefault: true,
+      hasValue: () => count,
+      onDeselect: () => updateColumns(count, minCount),
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
         __nextHasNoMarginBottom: true,
         __next40pxDefaultSize: true,
@@ -8217,12 +8227,20 @@ function edit_ColumnInspectorControls({
         isDismissible: false,
         children: (0,external_wp_i18n_namespaceObject.__)('This column count exceeds the recommended amount and may cause visual breakage.')
       })]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-      __nextHasNoMarginBottom: true,
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Stack on mobile'),
-      checked: isStackedOnMobile,
-      onChange: () => setAttributes({
-        isStackedOnMobile: !isStackedOnMobile
+      isShownByDefault: true,
+      hasValue: () => isStackedOnMobile !== true,
+      onDeselect: () => setAttributes({
+        isStackedOnMobile: true
+      }),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Stack on mobile'),
+        checked: isStackedOnMobile,
+        onChange: () => setAttributes({
+          isStackedOnMobile: !isStackedOnMobile
+        })
       })
     })]
   });
