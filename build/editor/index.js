@@ -31433,6 +31433,33 @@ function PatternOverridesPanel() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OverridesPanel, {});
 }
 
+;// ./packages/editor/build-module/utils/get-item-title.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Helper function to get the title of a post item.
+ * This is duplicated from the `@wordpress/fields` package.
+ * `packages/fields/src/actions/utils.ts`
+ *
+ * @param {Object} item The post item.
+ * @return {string} The title of the item, or an empty string if the title is not found.
+ */
+function get_item_title_getItemTitle(item) {
+  if (typeof item.title === 'string') {
+    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title);
+  }
+  if (item.title && 'rendered' in item.title) {
+    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.rendered);
+  }
+  if (item.title && 'raw' in item.title) {
+    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.raw);
+  }
+  return '';
+}
+
 ;// ./packages/editor/build-module/components/post-actions/set-as-homepage.js
 /**
  * WordPress dependencies
@@ -31444,25 +31471,17 @@ function PatternOverridesPanel() {
 
 
 
+/**
+ * Internal dependencies
+ */
 
-const set_as_homepage_getItemTitle = item => {
-  if (typeof item.title === 'string') {
-    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title);
-  }
-  if (item.title && 'rendered' in item.title) {
-    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.rendered);
-  }
-  if (item.title && 'raw' in item.title) {
-    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.raw);
-  }
-  return '';
-};
+
 const SetAsHomepageModal = ({
   items,
   closeModal
 }) => {
   const [item] = items;
-  const pageTitle = set_as_homepage_getItemTitle(item);
+  const pageTitle = get_item_title_getItemTitle(item);
   const {
     showOnFront,
     currentHomePage,
@@ -31481,7 +31500,6 @@ const SetAsHomepageModal = ({
     };
   });
   const {
-    saveEditedEntityRecord,
     saveEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
   const {
@@ -31491,25 +31509,15 @@ const SetAsHomepageModal = ({
   async function onSetPageAsHomepage(event) {
     event.preventDefault();
     try {
-      // Save new home page settings.
-      await saveEditedEntityRecord('root', 'site', undefined, {
-        page_on_front: item.id,
-        show_on_front: 'page'
-      });
-
-      // This second call to a save function is a workaround for a bug in
-      // `saveEditedEntityRecord`. This forces the root site settings to be updated.
-      // See https://github.com/WordPress/gutenberg/issues/67161.
       await saveEntityRecord('root', 'site', {
         page_on_front: item.id,
         show_on_front: 'page'
       });
-      createSuccessNotice((0,external_wp_i18n_namespaceObject.__)('Homepage updated'), {
+      createSuccessNotice((0,external_wp_i18n_namespaceObject.__)('Homepage updated.'), {
         type: 'snackbar'
       });
     } catch (error) {
-      const typedError = error;
-      const errorMessage = typedError.message && typedError.code !== 'unknown_error' ? typedError.message : (0,external_wp_i18n_namespaceObject.__)('An error occurred while setting the homepage');
+      const errorMessage = error.message && error.code !== 'unknown_error' ? error.message : (0,external_wp_i18n_namespaceObject.__)('An error occurred while setting the homepage.');
       createErrorNotice(errorMessage, {
         type: 'snackbar'
       });
@@ -31523,7 +31531,7 @@ const SetAsHomepageModal = ({
   } else if (currentHomePage) {
     modalWarning = (0,external_wp_i18n_namespaceObject.sprintf)(
     // translators: %s: title of the current home page.
-    (0,external_wp_i18n_namespaceObject.__)('This will replace the current homepage: "%s"'), set_as_homepage_getItemTitle(currentHomePage));
+    (0,external_wp_i18n_namespaceObject.__)('This will replace the current homepage: "%s"'), get_item_title_getItemTitle(currentHomePage));
   }
   const modalText = (0,external_wp_i18n_namespaceObject.sprintf)(
   // translators: %1$s: title of the page to be set as the homepage, %2$s: homepage replacement warning message.
@@ -31600,6 +31608,149 @@ const useSetAsHomepageAction = () => {
   }), [pageForPosts, pageOnFront]);
 };
 
+;// ./packages/editor/build-module/components/post-actions/set-as-posts-page.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const SetAsPostsPageModal = ({
+  items,
+  closeModal
+}) => {
+  const [item] = items;
+  const pageTitle = get_item_title_getItemTitle(item);
+  const {
+    currentPostsPage,
+    isPageForPostsSet,
+    isSaving
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecord,
+      isSavingEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
+    const siteSettings = getEntityRecord('root', 'site');
+    const currentPostsPageItem = getEntityRecord('postType', 'page', siteSettings?.page_for_posts);
+    return {
+      currentPostsPage: currentPostsPageItem,
+      isPageForPostsSet: siteSettings?.page_for_posts !== 0,
+      isSaving: isSavingEntityRecord('root', 'site')
+    };
+  });
+  const {
+    saveEntityRecord
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
+  const {
+    createSuccessNotice,
+    createErrorNotice
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
+  async function onSetPageAsPostsPage(event) {
+    event.preventDefault();
+    try {
+      await saveEntityRecord('root', 'site', {
+        page_for_posts: item.id,
+        show_on_front: 'page'
+      });
+      createSuccessNotice((0,external_wp_i18n_namespaceObject.__)('Posts page updated.'), {
+        type: 'snackbar'
+      });
+    } catch (error) {
+      const errorMessage = error.message && error.code !== 'unknown_error' ? error.message : (0,external_wp_i18n_namespaceObject.__)('An error occurred while setting the posts page.');
+      createErrorNotice(errorMessage, {
+        type: 'snackbar'
+      });
+    } finally {
+      closeModal?.();
+    }
+  }
+  const modalWarning = isPageForPostsSet && currentPostsPage ? (0,external_wp_i18n_namespaceObject.sprintf)(
+  // translators: %s: title of the current posts page.
+  (0,external_wp_i18n_namespaceObject.__)('This will replace the current posts page: "%s"'), get_item_title_getItemTitle(currentPostsPage)) : (0,external_wp_i18n_namespaceObject.__)('This page will show the latest posts.');
+  const modalText = (0,external_wp_i18n_namespaceObject.sprintf)(
+  // translators: %1$s: title of the page to be set as the posts page, %2$s: posts page replacement warning message.
+  (0,external_wp_i18n_namespaceObject.__)('Set "%1$s" as the posts page? %2$s'), pageTitle, modalWarning);
+
+  // translators: Button label to confirm setting the specified page as the posts page.
+  const modalButtonLabel = (0,external_wp_i18n_namespaceObject.__)('Set posts page');
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
+    onSubmit: onSetPageAsPostsPage,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      spacing: "5",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+        children: modalText
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        justify: "right",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
+          variant: "tertiary",
+          onClick: () => {
+            closeModal?.();
+          },
+          disabled: isSaving,
+          accessibleWhenDisabled: true,
+          children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
+          variant: "primary",
+          type: "submit",
+          disabled: isSaving,
+          accessibleWhenDisabled: true,
+          children: modalButtonLabel
+        })]
+      })]
+    })
+  });
+};
+const useSetAsPostsPageAction = () => {
+  const {
+    pageOnFront,
+    pageForPosts
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
+    const siteSettings = getEntityRecord('root', 'site');
+    return {
+      pageOnFront: siteSettings?.page_on_front,
+      pageForPosts: siteSettings?.page_for_posts
+    };
+  });
+  return (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    id: 'set-as-posts-page',
+    label: (0,external_wp_i18n_namespaceObject.__)('Set as posts page'),
+    isEligible(post) {
+      if (post.status !== 'publish') {
+        return false;
+      }
+      if (post.type !== 'page') {
+        return false;
+      }
+
+      // Don't show the action if the page is already set as the homepage.
+      if (pageOnFront === post.id) {
+        return false;
+      }
+
+      // Don't show the action if the page is already set as the page for posts.
+      if (pageForPosts === post.id) {
+        return false;
+      }
+      return true;
+    },
+    RenderModal: SetAsPostsPageModal
+  }), [pageForPosts, pageOnFront]);
+};
+
 ;// ./packages/editor/build-module/components/post-actions/actions.js
 /* wp:polyfill */
 /**
@@ -31612,6 +31763,7 @@ const useSetAsHomepageAction = () => {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -31650,7 +31802,8 @@ function usePostActions({
     };
   });
   const setAsHomepageAction = useSetAsHomepageAction();
-  const shouldShowSetAsHomepageAction = canManageOptions && !hasFrontPageTemplate;
+  const setAsPostsPageAction = useSetAsPostsPageAction();
+  const shouldShowHomepageActions = canManageOptions && !hasFrontPageTemplate;
   const {
     registerPostTypeSchema
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));
@@ -31659,9 +31812,12 @@ function usePostActions({
   }, [registerPostTypeSchema, postType]);
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
     let actions = [...defaultActions];
-    if (shouldShowSetAsHomepageAction) {
-      actions.push(setAsHomepageAction);
+    if (shouldShowHomepageActions) {
+      actions.push(setAsHomepageAction, setAsPostsPageAction);
     }
+
+    // Ensure "Move to trash" is always the last action.
+    actions = actions.sort((a, b) => b.id === 'move-to-trash' ? -1 : 0);
 
     // Filter actions based on provided context. If not provided
     // all actions are returned. We'll have a single entry for getting the actions
@@ -31714,7 +31870,7 @@ function usePostActions({
       }
     }
     return actions;
-  }, [context, defaultActions, onActionPerformed, setAsHomepageAction, shouldShowSetAsHomepageAction]);
+  }, [context, defaultActions, onActionPerformed, setAsHomepageAction, setAsPostsPageAction, shouldShowHomepageActions]);
 }
 
 ;// ./packages/editor/build-module/components/post-actions/index.js
