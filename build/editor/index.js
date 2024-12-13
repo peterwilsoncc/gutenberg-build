@@ -14272,6 +14272,7 @@ function EntitiesSavedStatesExtensible({
   });
   const dialogLabel = (0,external_wp_compose_namespaceObject.useInstanceId)(EntitiesSavedStatesExtensible, 'label');
   const dialogDescription = (0,external_wp_compose_namespaceObject.useInstanceId)(EntitiesSavedStatesExtensible, 'description');
+  const selectItemsToSaveDescription = !!dirtyEntityRecords.length ? (0,external_wp_i18n_namespaceObject.__)('Select the items you want to save.') : undefined;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     ref: renderDialog ? saveDialogRef : undefined,
     ...(renderDialog && saveDialogProps),
@@ -14320,7 +14321,7 @@ function EntitiesSavedStatesExtensible({
         children: isDirty ? (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of site changes waiting to be saved. */
         (0,external_wp_i18n_namespaceObject._n)('There is <strong>%d site change</strong> waiting to be saved.', 'There are <strong>%d site changes</strong> waiting to be saved.', dirtyEntityRecords.length), dirtyEntityRecords.length), {
           strong: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {})
-        }) : (0,external_wp_i18n_namespaceObject.__)('Select the items you want to save.')
+        }) : selectItemsToSaveDescription
       })]
     }), sortedPartitionedSavables.map(list => {
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EntityTypeList, {
