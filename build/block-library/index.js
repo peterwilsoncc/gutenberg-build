@@ -39932,33 +39932,50 @@ function PageListEdit({
     });
   }, [isNested, setAttributes]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: [pagesTree.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ComboboxControl, {
-          __nextHasNoMarginBottom: true,
-          __next40pxDefaultSize: true,
-          className: "editor-page-attributes__parent",
-          label: (0,external_wp_i18n_namespaceObject.__)('Parent'),
-          value: parentPageID,
-          options: pagesTree,
-          onChange: value => setAttributes({
-            parentPageID: value !== null && value !== void 0 ? value : 0
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            parentPageID: 0
+          });
+        },
+        children: [pagesTree.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Parent Page'),
+          hasValue: () => parentPageID !== 0,
+          onDeselect: () => setAttributes({
+            parentPageID: 0
           }),
-          help: (0,external_wp_i18n_namespaceObject.__)('Choose a page to show only its subpages.')
-        })
-      }), allowConvertToLinks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Edit this menu'),
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-          children: convertDescription
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-          __next40pxDefaultSize: true,
-          variant: "primary",
-          accessibleWhenDisabled: true,
-          disabled: !hasResolvedPages,
-          onClick: convertToNavigationLinks,
-          children: (0,external_wp_i18n_namespaceObject.__)('Edit')
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ComboboxControl, {
+            __nextHasNoMarginBottom: true,
+            __next40pxDefaultSize: true,
+            className: "editor-page-attributes__parent",
+            label: (0,external_wp_i18n_namespaceObject.__)('Parent'),
+            value: parentPageID,
+            options: pagesTree,
+            onChange: value => setAttributes({
+              parentPageID: value !== null && value !== void 0 ? value : 0
+            }),
+            help: (0,external_wp_i18n_namespaceObject.__)('Choose a page to show only its subpages.')
+          })
+        }), allowConvertToLinks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Edit Menu'),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+              children: convertDescription
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              __next40pxDefaultSize: true,
+              variant: "primary",
+              accessibleWhenDisabled: true,
+              disabled: !hasResolvedPages,
+              onClick: convertToNavigationLinks,
+              children: (0,external_wp_i18n_namespaceObject.__)('Edit')
+            })]
+          })
         })]
-      })]
+      })
     }), allowConvertToLinks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
         group: "other",
