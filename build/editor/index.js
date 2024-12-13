@@ -27091,23 +27091,15 @@ function TemplatePartConverterMenuItem({
   onClose
 }) {
   const {
-    isContentOnly,
     blocks
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getBlocksByClientId,
-      getBlockEditingMode
+      getBlocksByClientId
     } = select(external_wp_blockEditor_namespaceObject.store);
     return {
-      blocks: getBlocksByClientId(clientIds),
-      isContentOnly: clientIds.length === 1 && getBlockEditingMode(clientIds[0]) === 'contentOnly'
+      blocks: getBlocksByClientId(clientIds)
     };
   }, [clientIds]);
-
-  // Do not show the convert button if the block is in content-only mode.
-  if (isContentOnly) {
-    return null;
-  }
 
   // Allow converting a single template part to standard blocks.
   if (blocks.length === 1 && blocks[0]?.name === 'core/template-part') {
