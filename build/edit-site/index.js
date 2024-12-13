@@ -44952,6 +44952,7 @@ function CustomDataViewsList({
         children: (0,external_wp_i18n_namespaceObject.__)('Custom Views')
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+      className: "edit-site-sidebar-navigation-screen-dataviews__custom-items",
       children: [customDataViews.map(customViewRecord => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CustomDataViewItem, {
           dataviewId: customViewRecord.id,
