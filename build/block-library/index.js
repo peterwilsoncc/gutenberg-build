@@ -5022,34 +5022,32 @@ function WidthPanel({
   selectedWidth,
   setAttributes
 }) {
-  function handleChange(newWidth) {
-    // Check if we are toggling the width off
-    const width = selectedWidth === newWidth ? undefined : newWidth;
-
-    // Update attributes.
-    setAttributes({
-      width
-    });
-  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
     label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-    resetAll: () => {
-      handleChange(undefined);
-    },
+    resetAll: () => setAttributes({
+      width: undefined
+    }),
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Button width'),
-      __nextHasNoMarginBottom: true,
       isShownByDefault: true,
       hasValue: () => !!selectedWidth,
-      onDeselect: () => handleChange(undefined),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ButtonGroup, {
-        "aria-label": (0,external_wp_i18n_namespaceObject.__)('Button width'),
+      onDeselect: () => setAttributes({
+        width: undefined
+      }),
+      __nextHasNoMarginBottom: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Button width'),
+        value: selectedWidth,
+        onChange: newWidth => setAttributes({
+          width: newWidth
+        }),
+        isBlock: true,
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
         children: [25, 50, 75, 100].map(widthValue => {
-          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
-            size: "small",
-            variant: widthValue === selectedWidth ? 'primary' : undefined,
-            onClick: () => handleChange(widthValue),
-            children: [widthValue, "%"]
+          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+            value: widthValue,
+            label: `${widthValue}%`
           }, widthValue);
         })
       })
