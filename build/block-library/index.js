@@ -30847,21 +30847,43 @@ function LoginOutEdit({
   } = attributes;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            displayLoginAsForm: false,
+            redirectToCurrent: true
+          });
+        },
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Display login as form'),
-          checked: displayLoginAsForm,
-          onChange: () => setAttributes({
-            displayLoginAsForm: !displayLoginAsForm
+          isShownByDefault: true,
+          hasValue: () => displayLoginAsForm,
+          onDeselect: () => setAttributes({
+            displayLoginAsForm: false
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Display login as form'),
+            checked: displayLoginAsForm,
+            onChange: () => setAttributes({
+              displayLoginAsForm: !displayLoginAsForm
+            })
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Redirect to current URL'),
-          checked: redirectToCurrent,
-          onChange: () => setAttributes({
-            redirectToCurrent: !redirectToCurrent
+          isShownByDefault: true,
+          hasValue: () => !redirectToCurrent,
+          onDeselect: () => setAttributes({
+            redirectToCurrent: true
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Redirect to current URL'),
+            checked: redirectToCurrent,
+            onChange: () => setAttributes({
+              redirectToCurrent: !redirectToCurrent
+            })
           })
         })]
       })
