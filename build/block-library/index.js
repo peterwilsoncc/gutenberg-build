@@ -8140,21 +8140,20 @@ function edit_ColumnInspectorControls({
     const {
       canInsertBlockType,
       canRemoveBlock,
-      getBlocks,
-      getBlockCount
+      getBlockOrder
     } = select(external_wp_blockEditor_namespaceObject.store);
-    const innerBlocks = getBlocks(clientId);
+    const blockOrder = getBlockOrder(clientId);
 
     // Get the indexes of columns for which removal is prevented.
     // The highest index will be used to determine the minimum column count.
-    const preventRemovalBlockIndexes = innerBlocks.reduce((acc, block, index) => {
-      if (!canRemoveBlock(block.clientId)) {
+    const preventRemovalBlockIndexes = blockOrder.reduce((acc, blockId, index) => {
+      if (!canRemoveBlock(blockId)) {
         acc.push(index);
       }
       return acc;
     }, []);
     return {
-      count: getBlockCount(clientId),
+      count: blockOrder.length,
       canInsertColumnBlock: canInsertBlockType('core/column', clientId),
       minCount: Math.max(...preventRemovalBlockIndexes) + 1
     };
