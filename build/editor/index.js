@@ -31959,21 +31959,24 @@ function PostActions({
     });
   }, [allActions, itemsWithPermissions]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu, {
-      trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        size: "small",
-        icon: more_vertical,
-        label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
-        disabled: !actions.length,
-        accessibleWhenDisabled: true,
-        className: "editor-all-actions-button"
-      }),
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Menu, {
       placement: "bottom-end",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsDropdownMenuGroup, {
-        actions: actions,
-        items: itemsWithPermissions,
-        setActiveModalAction: setActiveModalAction
-      })
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.TriggerButton, {
+        render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          size: "small",
+          icon: more_vertical,
+          label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
+          disabled: !actions.length,
+          accessibleWhenDisabled: true,
+          className: "editor-all-actions-button"
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Popover, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsDropdownMenuGroup, {
+          actions: actions,
+          items: itemsWithPermissions,
+          setActiveModalAction: setActiveModalAction
+        })
+      })]
     }), !!activeModalAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionModal, {
       action: activeModalAction,
       items: itemsWithPermissions,

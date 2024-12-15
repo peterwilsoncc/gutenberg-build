@@ -24488,21 +24488,24 @@ function FontSize() {
             marginBottom: 0,
             paddingX: 4,
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Menu, {
-              trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-                size: "small",
-                icon: more_vertical,
-                label: (0,external_wp_i18n_namespaceObject.__)('Font size options')
-              }),
-              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Item, {
-                onClick: toggleRenameDialog,
-                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.ItemLabel, {
-                  children: (0,external_wp_i18n_namespaceObject.__)('Rename')
+              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.TriggerButton, {
+                render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+                  size: "small",
+                  icon: more_vertical,
+                  label: (0,external_wp_i18n_namespaceObject.__)('Font size options')
                 })
-              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Item, {
-                onClick: toggleDeleteConfirm,
-                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.ItemLabel, {
-                  children: (0,external_wp_i18n_namespaceObject.__)('Delete')
-                })
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Menu.Popover, {
+                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Item, {
+                  onClick: toggleRenameDialog,
+                  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.ItemLabel, {
+                    children: (0,external_wp_i18n_namespaceObject.__)('Rename')
+                  })
+                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Item, {
+                  onClick: toggleDeleteConfirm,
+                  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.ItemLabel, {
+                    children: (0,external_wp_i18n_namespaceObject.__)('Delete')
+                  })
+                })]
               })]
             })
           })
@@ -24617,18 +24620,18 @@ function ConfirmResetFontSizesDialog({
  * Internal dependencies
  */
 
+
+
+
+
+
+
 const {
   Menu: font_sizes_Menu
 } = unlock(external_wp_components_namespaceObject.privateApis);
 const {
   useGlobalSetting: font_sizes_useGlobalSetting
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
-
-
-
-
-
-
 function FontSizeGroup({
   label,
   origin,
@@ -24660,18 +24663,21 @@ function FontSizeGroup({
             icon: library_plus,
             size: "small",
             onClick: handleAddFontSize
-          }), !!handleResetFontSizes && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_Menu, {
-            trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-              size: "small",
-              icon: more_vertical,
-              label: (0,external_wp_i18n_namespaceObject.__)('Font size presets options')
-            }),
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_Menu.Item, {
-              onClick: toggleResetDialog,
-              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_Menu.ItemLabel, {
-                children: origin === 'custom' ? (0,external_wp_i18n_namespaceObject.__)('Remove font size presets') : (0,external_wp_i18n_namespaceObject.__)('Reset font size presets')
+          }), !!handleResetFontSizes && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(font_sizes_Menu, {
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_Menu.TriggerButton, {
+              render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+                size: "small",
+                icon: more_vertical,
+                label: (0,external_wp_i18n_namespaceObject.__)('Font size presets options')
               })
-            })
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_Menu.Popover, {
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_Menu.Item, {
+                onClick: toggleResetDialog,
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(font_sizes_Menu.ItemLabel, {
+                  children: origin === 'custom' ? (0,external_wp_i18n_namespaceObject.__)('Remove font size presets') : (0,external_wp_i18n_namespaceObject.__)('Reset font size presets')
+                })
+              })
+            })]
           })]
         })]
       }), !!sizes.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
@@ -25807,19 +25813,22 @@ function ShadowsEditPanel() {
           marginTop: 2,
           marginBottom: 0,
           paddingX: 4,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_edit_panel_Menu, {
-            trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-              size: "small",
-              icon: more_vertical,
-              label: (0,external_wp_i18n_namespaceObject.__)('Menu')
-            }),
-            children: (category === 'custom' ? customShadowMenuItems : presetShadowMenuItems).map(item => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_edit_panel_Menu.Item, {
-              onClick: () => onMenuClick(item.action),
-              disabled: item.action === 'reset' && selectedShadow.shadow === baseSelectedShadow.shadow,
-              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_edit_panel_Menu.ItemLabel, {
-                children: item.label
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(shadows_edit_panel_Menu, {
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_edit_panel_Menu.TriggerButton, {
+              render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+                size: "small",
+                icon: more_vertical,
+                label: (0,external_wp_i18n_namespaceObject.__)('Menu')
               })
-            }, item.action))
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_edit_panel_Menu.Popover, {
+              children: (category === 'custom' ? customShadowMenuItems : presetShadowMenuItems).map(item => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_edit_panel_Menu.Item, {
+                onClick: () => onMenuClick(item.action),
+                disabled: item.action === 'reset' && selectedShadow.shadow === baseSelectedShadow.shadow,
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_edit_panel_Menu.ItemLabel, {
+                  children: item.label
+                })
+              }, item.action))
+            })]
           })
         })
       })]
@@ -37514,30 +37523,33 @@ function AddFilterMenu({
   view,
   onChangeView,
   setOpenedFilter,
-  trigger
+  triggerProps
 }) {
   const inactiveFilters = filters.filter(filter => !filter.isVisible);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_Menu, {
-    trigger: trigger,
-    children: inactiveFilters.map(filter => {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_Menu.Item, {
-        onClick: () => {
-          setOpenedFilter(filter.field);
-          onChangeView({
-            ...view,
-            page: 1,
-            filters: [...(view.filters || []), {
-              field: filter.field,
-              value: undefined,
-              operator: filter.operators[0]
-            }]
-          });
-        },
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_Menu.ItemLabel, {
-          children: filter.name
-        })
-      }, filter.field);
-    })
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(add_filter_Menu, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_Menu.TriggerButton, {
+      ...triggerProps
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_Menu.Popover, {
+      children: inactiveFilters.map(filter => {
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_Menu.Item, {
+          onClick: () => {
+            setOpenedFilter(filter.field);
+            onChangeView({
+              ...view,
+              page: 1,
+              filters: [...(view.filters || []), {
+                field: filter.field,
+                value: undefined,
+                operator: filter.operators[0]
+              }]
+            });
+          },
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_Menu.ItemLabel, {
+            children: filter.name
+          })
+        }, filter.field);
+      })
+    })]
   });
 }
 function AddFilter({
@@ -37553,15 +37565,17 @@ function AddFilter({
   }
   const inactiveFilters = filters.filter(filter => !filter.isVisible);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddFilterMenu, {
-    trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      accessibleWhenDisabled: true,
-      size: "compact",
-      className: "dataviews-filters-button",
-      variant: "tertiary",
-      disabled: !inactiveFilters.length,
-      ref: ref,
+    triggerProps: {
+      render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        accessibleWhenDisabled: true,
+        size: "compact",
+        className: "dataviews-filters-button",
+        variant: "tertiary",
+        disabled: !inactiveFilters.length,
+        ref: ref
+      }),
       children: (0,external_wp_i18n_namespaceObject.__)('Add filter')
-    }),
+    },
     filters,
     view,
     onChangeView,
@@ -37736,7 +37750,9 @@ function FiltersToggle({
       view: view,
       onChangeView: onChangeViewWithFilterVisibility,
       setOpenedFilter: setOpenedFilter,
-      trigger: buttonComponent
+      triggerProps: {
+        render: buttonComponent
+      }
     }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FilterVisibilityToggle, {
       buttonRef: buttonRef,
       filtersCount: view.filters?.length,
@@ -38071,22 +38087,25 @@ function CompactItemActions({
 }) {
   const [activeModalAction, setActiveModalAction] = (0,external_wp_element_namespaceObject.useState)(null);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_Menu, {
-      trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        size: isSmall ? 'small' : 'compact',
-        icon: more_vertical,
-        label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
-        accessibleWhenDisabled: true,
-        disabled: !actions.length,
-        className: "dataviews-all-actions-button"
-      }),
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(dataviews_item_actions_Menu, {
       placement: "bottom-end",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsMenuGroup, {
-        actions: actions,
-        item: item,
-        registry: registry,
-        setActiveModalAction: setActiveModalAction
-      })
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_Menu.TriggerButton, {
+        render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          size: isSmall ? 'small' : 'compact',
+          icon: more_vertical,
+          label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
+          accessibleWhenDisabled: true,
+          disabled: !actions.length,
+          className: "dataviews-all-actions-button"
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_Menu.Popover, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsMenuGroup, {
+          actions: actions,
+          item: item,
+          registry: registry,
+          setActiveModalAction: setActiveModalAction
+        })
+      })]
     }), !!activeModalAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionModal, {
       action: activeModalAction,
       items: [item],
@@ -38463,118 +38482,120 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
   // 2. If the field meets the type and operator requirements.
   // 3. If it's not primary. If it is, it should be already visible.
   canAddFilter = !view.filters?.some(_filter => fieldId === _filter.field) && !!field.elements?.length && !!operators.length && !field.filterBy?.isPrimary;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu, {
-    align: "start",
-    trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
-      size: "compact",
-      className: "dataviews-view-table-header-button",
-      ref: ref,
-      variant: "tertiary",
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(column_header_menu_Menu, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(column_header_menu_Menu.TriggerButton, {
+      render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        size: "compact",
+        className: "dataviews-view-table-header-button",
+        ref: ref,
+        variant: "tertiary"
+      }),
       children: [header, view.sort && isSorted && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         "aria-hidden": "true",
         children: sortArrows[view.sort.direction]
       })]
-    }),
-    style: {
-      minWidth: '240px'
-    },
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(WithMenuSeparators, {
-      children: [isSortable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.Group, {
-        children: SORTING_DIRECTIONS.map(direction => {
-          const isChecked = view.sort && isSorted && view.sort.direction === direction;
-          const value = `${fieldId}-${direction}`;
-          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.RadioItem, {
-            // All sorting radio items share the same name, so that
-            // selecting a sorting option automatically deselects the
-            // previously selected one, even if it is displayed in
-            // another submenu. The field and direction are passed via
-            // the `value` prop.
-            name: "view-table-sorting",
-            value: value,
-            checked: isChecked,
-            onChange: () => {
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.Popover, {
+      style: {
+        minWidth: '240px'
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(WithMenuSeparators, {
+        children: [isSortable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.Group, {
+          children: SORTING_DIRECTIONS.map(direction => {
+            const isChecked = view.sort && isSorted && view.sort.direction === direction;
+            const value = `${fieldId}-${direction}`;
+            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.RadioItem, {
+              // All sorting radio items share the same name, so that
+              // selecting a sorting option automatically deselects the
+              // previously selected one, even if it is displayed in
+              // another submenu. The field and direction are passed via
+              // the `value` prop.
+              name: "view-table-sorting",
+              value: value,
+              checked: isChecked,
+              onChange: () => {
+                onChangeView({
+                  ...view,
+                  sort: {
+                    field: fieldId,
+                    direction
+                  }
+                });
+              },
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.ItemLabel, {
+                children: sortLabels[direction]
+              })
+            }, value);
+          })
+        }), canAddFilter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.Group, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.Item, {
+            prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+              icon: library_funnel
+            }),
+            onClick: () => {
+              setOpenedFilter(fieldId);
               onChangeView({
                 ...view,
-                sort: {
+                page: 1,
+                filters: [...(view.filters || []), {
                   field: fieldId,
-                  direction
-                }
+                  value: undefined,
+                  operator: operators[0]
+                }]
               });
             },
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.ItemLabel, {
-              children: sortLabels[direction]
+              children: (0,external_wp_i18n_namespaceObject.__)('Add filter')
             })
-          }, value);
-        })
-      }), canAddFilter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.Group, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.Item, {
-          prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-            icon: library_funnel
-          }),
-          onClick: () => {
-            setOpenedFilter(fieldId);
-            onChangeView({
-              ...view,
-              page: 1,
-              filters: [...(view.filters || []), {
-                field: fieldId,
-                value: undefined,
-                operator: operators[0]
-              }]
-            });
-          },
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.ItemLabel, {
-            children: (0,external_wp_i18n_namespaceObject.__)('Add filter')
           })
-        })
-      }), (canMove || isHidable) && field && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(column_header_menu_Menu.Group, {
-        children: [canMove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.Item, {
-          prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-            icon: arrow_left
-          }),
-          disabled: index < 1,
-          onClick: () => {
-            var _visibleFieldIds$slic;
-            onChangeView({
-              ...view,
-              fields: [...((_visibleFieldIds$slic = visibleFieldIds.slice(0, index - 1)) !== null && _visibleFieldIds$slic !== void 0 ? _visibleFieldIds$slic : []), fieldId, visibleFieldIds[index - 1], ...visibleFieldIds.slice(index + 1)]
-            });
-          },
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.ItemLabel, {
-            children: (0,external_wp_i18n_namespaceObject.__)('Move left')
-          })
-        }), canMove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.Item, {
-          prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-            icon: arrow_right
-          }),
-          disabled: index >= visibleFieldIds.length - 1,
-          onClick: () => {
-            var _visibleFieldIds$slic2;
-            onChangeView({
-              ...view,
-              fields: [...((_visibleFieldIds$slic2 = visibleFieldIds.slice(0, index)) !== null && _visibleFieldIds$slic2 !== void 0 ? _visibleFieldIds$slic2 : []), visibleFieldIds[index + 1], fieldId, ...visibleFieldIds.slice(index + 2)]
-            });
-          },
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.ItemLabel, {
-            children: (0,external_wp_i18n_namespaceObject.__)('Move right')
-          })
-        }), isHidable && field && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.Item, {
-          prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-            icon: library_unseen
-          }),
-          onClick: () => {
-            onHide(field);
-            onChangeView({
-              ...view,
-              fields: visibleFieldIds.filter(id => id !== fieldId)
-            });
-          },
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.ItemLabel, {
-            children: (0,external_wp_i18n_namespaceObject.__)('Hide column')
-          })
+        }), (canMove || isHidable) && field && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(column_header_menu_Menu.Group, {
+          children: [canMove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.Item, {
+            prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+              icon: arrow_left
+            }),
+            disabled: index < 1,
+            onClick: () => {
+              var _visibleFieldIds$slic;
+              onChangeView({
+                ...view,
+                fields: [...((_visibleFieldIds$slic = visibleFieldIds.slice(0, index - 1)) !== null && _visibleFieldIds$slic !== void 0 ? _visibleFieldIds$slic : []), fieldId, visibleFieldIds[index - 1], ...visibleFieldIds.slice(index + 1)]
+              });
+            },
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.ItemLabel, {
+              children: (0,external_wp_i18n_namespaceObject.__)('Move left')
+            })
+          }), canMove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.Item, {
+            prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+              icon: arrow_right
+            }),
+            disabled: index >= visibleFieldIds.length - 1,
+            onClick: () => {
+              var _visibleFieldIds$slic2;
+              onChangeView({
+                ...view,
+                fields: [...((_visibleFieldIds$slic2 = visibleFieldIds.slice(0, index)) !== null && _visibleFieldIds$slic2 !== void 0 ? _visibleFieldIds$slic2 : []), visibleFieldIds[index + 1], fieldId, ...visibleFieldIds.slice(index + 2)]
+              });
+            },
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.ItemLabel, {
+              children: (0,external_wp_i18n_namespaceObject.__)('Move right')
+            })
+          }), isHidable && field && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.Item, {
+            prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+              icon: library_unseen
+            }),
+            onClick: () => {
+              onHide(field);
+              onChangeView({
+                ...view,
+                fields: visibleFieldIds.filter(id => id !== fieldId)
+              });
+            },
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.ItemLabel, {
+              children: (0,external_wp_i18n_namespaceObject.__)('Hide column')
+            })
+          })]
         })]
-      })]
-    })
+      })
+    })]
   });
 });
 
@@ -39507,25 +39528,28 @@ function ListItem({
       item: item
     }), !hasOnlyOnePrimaryAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       role: "gridcell",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_Menu, {
-        trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
-          id: generateDropdownTriggerCompositeId(idPrefix),
-          render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            size: "small",
-            icon: more_vertical,
-            label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
-            accessibleWhenDisabled: true,
-            disabled: !actions.length,
-            onKeyDown: onDropdownTriggerKeyDown
-          })
-        }),
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(list_Menu, {
         placement: "bottom-end",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsMenuGroup, {
-          actions: eligibleActions,
-          item: item,
-          registry: registry,
-          setActiveModalAction: setActiveModalAction
-        })
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_Menu.TriggerButton, {
+          render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
+            id: generateDropdownTriggerCompositeId(idPrefix),
+            render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              size: "small",
+              icon: more_vertical,
+              label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
+              accessibleWhenDisabled: true,
+              disabled: !actions.length,
+              onKeyDown: onDropdownTriggerKeyDown
+            })
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(list_Menu.Popover, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsMenuGroup, {
+            actions: eligibleActions,
+            item: item,
+            registry: registry,
+            setActiveModalAction: setActiveModalAction
+          })
+        })]
       }), !!activeModalAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionModal, {
         action: activeModalAction,
         items: [item],
@@ -40120,47 +40144,50 @@ function ViewTypeMenu({
     return null;
   }
   const activeView = VIEW_LAYOUTS.find(v => view.type === v.type);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_Menu, {
-    trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      size: "compact",
-      icon: activeView?.icon,
-      label: (0,external_wp_i18n_namespaceObject.__)('Layout')
-    }),
-    children: availableLayouts.map(layout => {
-      const config = VIEW_LAYOUTS.find(v => v.type === layout);
-      if (!config) {
-        return null;
-      }
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_Menu.RadioItem, {
-        value: layout,
-        name: "view-actions-available-view",
-        checked: layout === view.type,
-        hideOnClick: true,
-        onChange: e => {
-          switch (e.target.value) {
-            case 'list':
-            case 'grid':
-            case 'table':
-              const viewWithoutLayout = {
-                ...view
-              };
-              if ('layout' in viewWithoutLayout) {
-                delete viewWithoutLayout.layout;
-              }
-              // @ts-expect-error
-              return onChangeView({
-                ...viewWithoutLayout,
-                type: e.target.value,
-                ...defaultLayouts[e.target.value]
-              });
-          }
-           false ? 0 : void 0;
-        },
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_Menu.ItemLabel, {
-          children: config.label
-        })
-      }, layout);
-    })
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(dataviews_view_config_Menu, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_Menu.TriggerButton, {
+      render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        size: "compact",
+        icon: activeView?.icon,
+        label: (0,external_wp_i18n_namespaceObject.__)('Layout')
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_Menu.Popover, {
+      children: availableLayouts.map(layout => {
+        const config = VIEW_LAYOUTS.find(v => v.type === layout);
+        if (!config) {
+          return null;
+        }
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_Menu.RadioItem, {
+          value: layout,
+          name: "view-actions-available-view",
+          checked: layout === view.type,
+          hideOnClick: true,
+          onChange: e => {
+            switch (e.target.value) {
+              case 'list':
+              case 'grid':
+              case 'table':
+                const viewWithoutLayout = {
+                  ...view
+                };
+                if ('layout' in viewWithoutLayout) {
+                  delete viewWithoutLayout.layout;
+                }
+                // @ts-expect-error
+                return onChangeView({
+                  ...viewWithoutLayout,
+                  type: e.target.value,
+                  ...defaultLayouts[e.target.value]
+                });
+            }
+             false ? 0 : void 0;
+          },
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_Menu.ItemLabel, {
+            children: config.label
+          })
+        }, layout);
+      })
+    })]
   });
 }
 function SortFieldControl() {

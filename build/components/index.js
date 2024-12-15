@@ -69428,565 +69428,17 @@ function useMenuStore(props = {}) {
 
 
 
-;// ./node_modules/@ariakit/react-core/esm/menu/menu-button.js
-"use client";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// src/menu/menu-button.tsx
-
-
-
-
-var menu_button_TagName = "button";
-function getInitialFocus(event, dir) {
-  const keyMap = {
-    ArrowDown: dir === "bottom" || dir === "top" ? "first" : false,
-    ArrowUp: dir === "bottom" || dir === "top" ? "last" : false,
-    ArrowRight: dir === "right" ? "first" : false,
-    ArrowLeft: dir === "left" ? "first" : false
-  };
-  return keyMap[event.key];
-}
-function hasActiveItem(items, excludeElement) {
-  return !!(items == null ? void 0 : items.some((item) => {
-    if (!item.element) return false;
-    if (item.element === excludeElement) return false;
-    return item.element.getAttribute("aria-expanded") === "true";
-  }));
-}
-var useMenuButton = createHook(
-  function useMenuButton2(_a) {
-    var _b = _a, {
-      store,
-      focusable,
-      accessibleWhenDisabled,
-      showOnHover
-    } = _b, props = __objRest(_b, [
-      "store",
-      "focusable",
-      "accessibleWhenDisabled",
-      "showOnHover"
-    ]);
-    const context = useMenuProviderContext();
-    store = store || context;
-    invariant(
-      store,
-       false && 0
-    );
-    const ref = (0,external_React_.useRef)(null);
-    const parentMenu = store.parent;
-    const parentMenubar = store.menubar;
-    const hasParentMenu = !!parentMenu;
-    const parentIsMenubar = !!parentMenubar && !hasParentMenu;
-    const disabled = disabledFromProps(props);
-    const showMenu = () => {
-      const trigger = ref.current;
-      if (!trigger) return;
-      store == null ? void 0 : store.setDisclosureElement(trigger);
-      store == null ? void 0 : store.setAnchorElement(trigger);
-      store == null ? void 0 : store.show();
-    };
-    const onFocusProp = props.onFocus;
-    const onFocus = useEvent((event) => {
-      onFocusProp == null ? void 0 : onFocusProp(event);
-      if (disabled) return;
-      if (event.defaultPrevented) return;
-      store == null ? void 0 : store.setAutoFocusOnShow(false);
-      store == null ? void 0 : store.setActiveId(null);
-      if (!parentMenubar) return;
-      if (!parentIsMenubar) return;
-      const { items } = parentMenubar.getState();
-      if (hasActiveItem(items, event.currentTarget)) {
-        showMenu();
-      }
-    });
-    const dir = useStoreState(
-      store,
-      (state) => state.placement.split("-")[0]
-    );
-    const onKeyDownProp = props.onKeyDown;
-    const onKeyDown = useEvent((event) => {
-      onKeyDownProp == null ? void 0 : onKeyDownProp(event);
-      if (disabled) return;
-      if (event.defaultPrevented) return;
-      const initialFocus = getInitialFocus(event, dir);
-      if (initialFocus) {
-        event.preventDefault();
-        showMenu();
-        store == null ? void 0 : store.setAutoFocusOnShow(true);
-        store == null ? void 0 : store.setInitialFocus(initialFocus);
-      }
-    });
-    const onClickProp = props.onClick;
-    const onClick = useEvent((event) => {
-      onClickProp == null ? void 0 : onClickProp(event);
-      if (event.defaultPrevented) return;
-      if (!store) return;
-      const isKeyboardClick = !event.detail;
-      const { open } = store.getState();
-      if (!open || isKeyboardClick) {
-        if (!hasParentMenu || isKeyboardClick) {
-          store.setAutoFocusOnShow(true);
-        }
-        store.setInitialFocus(isKeyboardClick ? "first" : "container");
-      }
-      if (hasParentMenu) {
-        showMenu();
-      }
-    });
-    props = useWrapElement(
-      props,
-      (element) => /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuContextProvider, { value: store, children: element }),
-      [store]
-    );
-    if (hasParentMenu) {
-      props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props), {
-        render: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(Role.div, { render: props.render })
-      });
-    }
-    const id = useId(props.id);
-    const parentContentElement = useStoreState(
-      (parentMenu == null ? void 0 : parentMenu.combobox) || parentMenu,
-      "contentElement"
-    );
-    const role = hasParentMenu || parentIsMenubar ? getPopupItemRole(parentContentElement, "menuitem") : void 0;
-    const contentElement = store.useState("contentElement");
-    props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({
-      id,
-      role,
-      "aria-haspopup": getPopupRole(contentElement, "menu")
-    }, props), {
-      ref: useMergeRefs(ref, props.ref),
-      onFocus,
-      onKeyDown,
-      onClick
-    });
-    props = useHovercardAnchor(_3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({
-      store,
-      focusable,
-      accessibleWhenDisabled
-    }, props), {
-      showOnHover: (event) => {
-        const getShowOnHover = () => {
-          if (typeof showOnHover === "function") return showOnHover(event);
-          if (showOnHover != null) return showOnHover;
-          if (hasParentMenu) return true;
-          if (!parentMenubar) return false;
-          const { items } = parentMenubar.getState();
-          return parentIsMenubar && hasActiveItem(items);
-        };
-        const canShowOnHover = getShowOnHover();
-        if (!canShowOnHover) return false;
-        const parent = parentIsMenubar ? parentMenubar : parentMenu;
-        if (!parent) return true;
-        parent.setActiveId(event.currentTarget.id);
-        return true;
-      }
-    }));
-    props = usePopoverDisclosure(_3YLGPPWQ_spreadValues({
-      store,
-      toggleOnClick: !hasParentMenu,
-      focusable,
-      accessibleWhenDisabled
-    }, props));
-    props = useCompositeTypeahead(_3YLGPPWQ_spreadValues({
-      store,
-      typeahead: parentIsMenubar
-    }, props));
-    return props;
-  }
-);
-var MenuButton = forwardRef2(function MenuButton2(props) {
-  const htmlProps = useMenuButton(props);
-  return LMDWO4NN_createElement(menu_button_TagName, htmlProps);
-});
-
-
-;// ./node_modules/@ariakit/react-core/esm/__chunks/ASGALOAX.js
-"use client";
-
-
-
-
-
-
-
-
-
-// src/menu/menu-list.tsx
-
-
-
-var ASGALOAX_TagName = "div";
-function useAriaLabelledBy(_a) {
-  var _b = _a, { store } = _b, props = __objRest(_b, ["store"]);
-  const [id, setId] = (0,external_React_.useState)(void 0);
-  const label = props["aria-label"];
-  const disclosureElement = useStoreState(store, "disclosureElement");
-  const contentElement = useStoreState(store, "contentElement");
-  (0,external_React_.useEffect)(() => {
-    const disclosure = disclosureElement;
-    if (!disclosure) return;
-    const menu = contentElement;
-    if (!menu) return;
-    const menuLabel = label || menu.hasAttribute("aria-label");
-    if (menuLabel) {
-      setId(void 0);
-    } else if (disclosure.id) {
-      setId(disclosure.id);
-    }
-  }, [label, disclosureElement, contentElement]);
-  return id;
-}
-var useMenuList = createHook(
-  function useMenuList2(_a) {
-    var _b = _a, { store, alwaysVisible, composite } = _b, props = __objRest(_b, ["store", "alwaysVisible", "composite"]);
-    const context = useMenuProviderContext();
-    store = store || context;
-    invariant(
-      store,
-       false && 0
-    );
-    const parentMenu = store.parent;
-    const parentMenubar = store.menubar;
-    const hasParentMenu = !!parentMenu;
-    const id = useId(props.id);
-    const onKeyDownProp = props.onKeyDown;
-    const dir = store.useState(
-      (state) => state.placement.split("-")[0]
-    );
-    const orientation = store.useState(
-      (state) => state.orientation === "both" ? void 0 : state.orientation
-    );
-    const isHorizontal = orientation !== "vertical";
-    const isMenubarHorizontal = useStoreState(
-      parentMenubar,
-      (state) => !!state && state.orientation !== "vertical"
-    );
-    const onKeyDown = useEvent((event) => {
-      onKeyDownProp == null ? void 0 : onKeyDownProp(event);
-      if (event.defaultPrevented) return;
-      if (hasParentMenu || parentMenubar && !isHorizontal) {
-        const hideMap = {
-          ArrowRight: () => dir === "left" && !isHorizontal,
-          ArrowLeft: () => dir === "right" && !isHorizontal,
-          ArrowUp: () => dir === "bottom" && isHorizontal,
-          ArrowDown: () => dir === "top" && isHorizontal
-        };
-        const action = hideMap[event.key];
-        if (action == null ? void 0 : action()) {
-          event.stopPropagation();
-          event.preventDefault();
-          return store == null ? void 0 : store.hide();
-        }
-      }
-      if (parentMenubar) {
-        const keyMap = {
-          ArrowRight: () => {
-            if (!isMenubarHorizontal) return;
-            return parentMenubar.next();
-          },
-          ArrowLeft: () => {
-            if (!isMenubarHorizontal) return;
-            return parentMenubar.previous();
-          },
-          ArrowDown: () => {
-            if (isMenubarHorizontal) return;
-            return parentMenubar.next();
-          },
-          ArrowUp: () => {
-            if (isMenubarHorizontal) return;
-            return parentMenubar.previous();
-          }
-        };
-        const action = keyMap[event.key];
-        const id2 = action == null ? void 0 : action();
-        if (id2 !== void 0) {
-          event.stopPropagation();
-          event.preventDefault();
-          parentMenubar.move(id2);
-        }
-      }
-    });
-    props = useWrapElement(
-      props,
-      (element) => /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuScopedContextProvider, { value: store, children: element }),
-      [store]
-    );
-    const ariaLabelledBy = useAriaLabelledBy(_3YLGPPWQ_spreadValues({ store }, props));
-    const mounted = store.useState("mounted");
-    const hidden = isHidden(mounted, props.hidden, alwaysVisible);
-    const style = hidden ? _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props.style), { display: "none" }) : props.style;
-    props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({
-      id,
-      "aria-labelledby": ariaLabelledBy,
-      hidden
-    }, props), {
-      ref: useMergeRefs(id ? store.setContentElement : null, props.ref),
-      style,
-      onKeyDown
-    });
-    const hasCombobox = !!store.combobox;
-    composite = composite != null ? composite : !hasCombobox;
-    if (composite) {
-      props = _3YLGPPWQ_spreadValues({
-        role: "menu",
-        "aria-orientation": orientation
-      }, props);
-    }
-    props = useComposite(_3YLGPPWQ_spreadValues({ store, composite }, props));
-    props = useCompositeTypeahead(_3YLGPPWQ_spreadValues({ store, typeahead: !hasCombobox }, props));
-    return props;
-  }
-);
-var MenuList = forwardRef2(function MenuList2(props) {
-  const htmlProps = useMenuList(props);
-  return LMDWO4NN_createElement(ASGALOAX_TagName, htmlProps);
-});
-
-
-
-;// ./node_modules/@ariakit/react-core/esm/menu/menu.js
-"use client";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// src/menu/menu.tsx
-
-
-
-
-var menu_TagName = "div";
-var useMenu = createHook(function useMenu2(_a) {
-  var _b = _a, {
-    store,
-    modal: modalProp = false,
-    portal = !!modalProp,
-    hideOnEscape = true,
-    autoFocusOnShow = true,
-    hideOnHoverOutside,
-    alwaysVisible
-  } = _b, props = __objRest(_b, [
-    "store",
-    "modal",
-    "portal",
-    "hideOnEscape",
-    "autoFocusOnShow",
-    "hideOnHoverOutside",
-    "alwaysVisible"
-  ]);
-  const context = useMenuProviderContext();
-  store = store || context;
-  invariant(
-    store,
-     false && 0
-  );
-  const ref = (0,external_React_.useRef)(null);
-  const parentMenu = store.parent;
-  const parentMenubar = store.menubar;
-  const hasParentMenu = !!parentMenu;
-  const parentIsMenubar = !!parentMenubar && !hasParentMenu;
-  props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props), {
-    ref: useMergeRefs(ref, props.ref)
-  });
-  const _a2 = useMenuList(_3YLGPPWQ_spreadValues({
-    store,
-    alwaysVisible
-  }, props)), { "aria-labelledby": ariaLabelledBy } = _a2, menuListProps = __objRest(_a2, ["aria-labelledby"]);
-  props = menuListProps;
-  const [initialFocusRef, setInitialFocusRef] = (0,external_React_.useState)();
-  const autoFocusOnShowState = store.useState("autoFocusOnShow");
-  const initialFocus = store.useState("initialFocus");
-  const baseElement = store.useState("baseElement");
-  const items = store.useState("renderedItems");
-  (0,external_React_.useEffect)(() => {
-    let cleaning = false;
-    setInitialFocusRef((prevInitialFocusRef) => {
-      var _a3, _b2, _c;
-      if (cleaning) return;
-      if (!autoFocusOnShowState) return;
-      if ((_a3 = prevInitialFocusRef == null ? void 0 : prevInitialFocusRef.current) == null ? void 0 : _a3.isConnected) return prevInitialFocusRef;
-      const ref2 = (0,external_React_.createRef)();
-      switch (initialFocus) {
-        case "first":
-          ref2.current = ((_b2 = items.find((item) => !item.disabled && item.element)) == null ? void 0 : _b2.element) || null;
-          break;
-        case "last":
-          ref2.current = ((_c = [...items].reverse().find((item) => !item.disabled && item.element)) == null ? void 0 : _c.element) || null;
-          break;
-        default:
-          ref2.current = baseElement;
-      }
-      return ref2;
-    });
-    return () => {
-      cleaning = true;
-    };
-  }, [store, autoFocusOnShowState, initialFocus, items, baseElement]);
-  const modal = hasParentMenu ? false : modalProp;
-  const mayAutoFocusOnShow = !!autoFocusOnShow;
-  const canAutoFocusOnShow = !!initialFocusRef || !!props.initialFocus || !!modal;
-  const contentElement = useStoreState(
-    store.combobox || store,
-    "contentElement"
-  );
-  const parentContentElement = useStoreState(
-    (parentMenu == null ? void 0 : parentMenu.combobox) || parentMenu,
-    "contentElement"
-  );
-  const preserveTabOrderAnchor = (0,external_React_.useMemo)(() => {
-    if (!parentContentElement) return;
-    if (!contentElement) return;
-    const role = contentElement.getAttribute("role");
-    const parentRole = parentContentElement.getAttribute("role");
-    const parentIsMenuOrMenubar = parentRole === "menu" || parentRole === "menubar";
-    if (parentIsMenuOrMenubar && role === "menu") return;
-    return parentContentElement;
-  }, [contentElement, parentContentElement]);
-  if (preserveTabOrderAnchor !== void 0) {
-    props = _3YLGPPWQ_spreadValues({
-      preserveTabOrderAnchor
-    }, props);
-  }
-  props = useHovercard(_3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({
-    store,
-    alwaysVisible,
-    initialFocus: initialFocusRef,
-    autoFocusOnShow: mayAutoFocusOnShow ? canAutoFocusOnShow && autoFocusOnShow : autoFocusOnShowState || !!modal
-  }, props), {
-    hideOnEscape(event) {
-      if (isFalsyBooleanCallback(hideOnEscape, event)) return false;
-      store == null ? void 0 : store.hideAll();
-      return true;
-    },
-    hideOnHoverOutside(event) {
-      const disclosureElement = store == null ? void 0 : store.getState().disclosureElement;
-      const getHideOnHoverOutside = () => {
-        if (typeof hideOnHoverOutside === "function") {
-          return hideOnHoverOutside(event);
-        }
-        if (hideOnHoverOutside != null) return hideOnHoverOutside;
-        if (hasParentMenu) return true;
-        if (!parentIsMenubar) return false;
-        if (!disclosureElement) return true;
-        if (hasFocusWithin(disclosureElement)) return false;
-        return true;
-      };
-      if (!getHideOnHoverOutside()) return false;
-      if (event.defaultPrevented) return true;
-      if (!hasParentMenu) return true;
-      if (!disclosureElement) return true;
-      fireEvent(disclosureElement, "mouseout", event);
-      if (!hasFocusWithin(disclosureElement)) return true;
-      requestAnimationFrame(() => {
-        if (hasFocusWithin(disclosureElement)) return;
-        store == null ? void 0 : store.hide();
-      });
-      return false;
-    },
-    modal,
-    portal,
-    backdrop: hasParentMenu ? false : props.backdrop
-  }));
-  props = _3YLGPPWQ_spreadValues({
-    "aria-labelledby": ariaLabelledBy
-  }, props);
-  return props;
-});
-var Menu = createDialogComponent(
-  forwardRef2(function Menu2(props) {
-    const htmlProps = useMenu(props);
-    return LMDWO4NN_createElement(menu_TagName, htmlProps);
-  }),
-  useMenuProviderContext
-);
-
-
-;// ./packages/icons/build-module/library/chevron-right-small.js
+;// ./packages/components/build-module/menu/context.js
 /**
  * WordPress dependencies
  */
 
 
-const chevronRightSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M10.8622 8.04053L14.2805 12.0286L10.8622 16.0167L9.72327 15.0405L12.3049 12.0286L9.72327 9.01672L10.8622 8.04053Z"
-  })
-});
-/* harmony default export */ const chevron_right_small = (chevronRightSmall);
+/**
+ * Internal dependencies
+ */
+
+const MenuContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
 
 ;// ./node_modules/@ariakit/react-core/esm/__chunks/MVIULMNR.js
 "use client";
@@ -70764,18 +70216,6 @@ const styles_MenuItemHelpText = /*#__PURE__*/emotion_styled_base_browser_esm(tru
   target: "e1wg7tti0"
 } : 0)("font-size:", font('helpText.fontSize'), ";line-height:16px;color:", LIGHTER_TEXT_COLOR, ";overflow-wrap:anywhere;[data-active-item]:not( [data-focus-visible] ) *:not( ", MenuPopoverInnerWrapper, " ) &,[aria-disabled='true'] *:not( ", MenuPopoverInnerWrapper, " ) &{color:inherit;}" + ( true ? "" : 0));
 
-;// ./packages/components/build-module/menu/context.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-const MenuContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
-
 ;// ./packages/components/build-module/menu/item.js
 /**
  * WordPress dependencies
@@ -70794,18 +70234,25 @@ const item_MenuItem = (0,external_wp_element_namespaceObject.forwardRef)(functio
   suffix,
   children,
   hideOnClick = true,
+  store,
   ...props
 }, ref) {
   const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
   if (!menuContext?.store) {
     throw new Error('Menu.Item can only be rendered inside a Menu component');
   }
+
+  // In most cases, the menu store will be retrieved from context (ie. the store
+  // created by the top-level menu component). But in rare cases (ie.
+  // `Menu.SubmenuTriggerItem`), the context store wouldn't be correct. This is
+  // why the component accepts a `store` prop to override the context store.
+  const computedStore = store !== null && store !== void 0 ? store : menuContext.store;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_MenuItem, {
     ref: ref,
     ...props,
     accessibleWhenDisabled: true,
     hideOnClick: hideOnClick,
-    store: menuContext.store,
+    store: computedStore,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemPrefixWrapper, {
       children: prefix
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(MenuItemContentWrapper, {
@@ -71116,7 +70563,205 @@ const MenuItemHelpText = (0,external_wp_element_namespaceObject.forwardRef)(func
   });
 });
 
-;// ./packages/components/build-module/menu/index.js
+;// ./node_modules/@ariakit/react-core/esm/menu/menu-button.js
+"use client";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// src/menu/menu-button.tsx
+
+
+
+
+var menu_button_TagName = "button";
+function getInitialFocus(event, dir) {
+  const keyMap = {
+    ArrowDown: dir === "bottom" || dir === "top" ? "first" : false,
+    ArrowUp: dir === "bottom" || dir === "top" ? "last" : false,
+    ArrowRight: dir === "right" ? "first" : false,
+    ArrowLeft: dir === "left" ? "first" : false
+  };
+  return keyMap[event.key];
+}
+function hasActiveItem(items, excludeElement) {
+  return !!(items == null ? void 0 : items.some((item) => {
+    if (!item.element) return false;
+    if (item.element === excludeElement) return false;
+    return item.element.getAttribute("aria-expanded") === "true";
+  }));
+}
+var useMenuButton = createHook(
+  function useMenuButton2(_a) {
+    var _b = _a, {
+      store,
+      focusable,
+      accessibleWhenDisabled,
+      showOnHover
+    } = _b, props = __objRest(_b, [
+      "store",
+      "focusable",
+      "accessibleWhenDisabled",
+      "showOnHover"
+    ]);
+    const context = useMenuProviderContext();
+    store = store || context;
+    invariant(
+      store,
+       false && 0
+    );
+    const ref = (0,external_React_.useRef)(null);
+    const parentMenu = store.parent;
+    const parentMenubar = store.menubar;
+    const hasParentMenu = !!parentMenu;
+    const parentIsMenubar = !!parentMenubar && !hasParentMenu;
+    const disabled = disabledFromProps(props);
+    const showMenu = () => {
+      const trigger = ref.current;
+      if (!trigger) return;
+      store == null ? void 0 : store.setDisclosureElement(trigger);
+      store == null ? void 0 : store.setAnchorElement(trigger);
+      store == null ? void 0 : store.show();
+    };
+    const onFocusProp = props.onFocus;
+    const onFocus = useEvent((event) => {
+      onFocusProp == null ? void 0 : onFocusProp(event);
+      if (disabled) return;
+      if (event.defaultPrevented) return;
+      store == null ? void 0 : store.setAutoFocusOnShow(false);
+      store == null ? void 0 : store.setActiveId(null);
+      if (!parentMenubar) return;
+      if (!parentIsMenubar) return;
+      const { items } = parentMenubar.getState();
+      if (hasActiveItem(items, event.currentTarget)) {
+        showMenu();
+      }
+    });
+    const dir = useStoreState(
+      store,
+      (state) => state.placement.split("-")[0]
+    );
+    const onKeyDownProp = props.onKeyDown;
+    const onKeyDown = useEvent((event) => {
+      onKeyDownProp == null ? void 0 : onKeyDownProp(event);
+      if (disabled) return;
+      if (event.defaultPrevented) return;
+      const initialFocus = getInitialFocus(event, dir);
+      if (initialFocus) {
+        event.preventDefault();
+        showMenu();
+        store == null ? void 0 : store.setAutoFocusOnShow(true);
+        store == null ? void 0 : store.setInitialFocus(initialFocus);
+      }
+    });
+    const onClickProp = props.onClick;
+    const onClick = useEvent((event) => {
+      onClickProp == null ? void 0 : onClickProp(event);
+      if (event.defaultPrevented) return;
+      if (!store) return;
+      const isKeyboardClick = !event.detail;
+      const { open } = store.getState();
+      if (!open || isKeyboardClick) {
+        if (!hasParentMenu || isKeyboardClick) {
+          store.setAutoFocusOnShow(true);
+        }
+        store.setInitialFocus(isKeyboardClick ? "first" : "container");
+      }
+      if (hasParentMenu) {
+        showMenu();
+      }
+    });
+    props = useWrapElement(
+      props,
+      (element) => /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuContextProvider, { value: store, children: element }),
+      [store]
+    );
+    if (hasParentMenu) {
+      props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props), {
+        render: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(Role.div, { render: props.render })
+      });
+    }
+    const id = useId(props.id);
+    const parentContentElement = useStoreState(
+      (parentMenu == null ? void 0 : parentMenu.combobox) || parentMenu,
+      "contentElement"
+    );
+    const role = hasParentMenu || parentIsMenubar ? getPopupItemRole(parentContentElement, "menuitem") : void 0;
+    const contentElement = store.useState("contentElement");
+    props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({
+      id,
+      role,
+      "aria-haspopup": getPopupRole(contentElement, "menu")
+    }, props), {
+      ref: useMergeRefs(ref, props.ref),
+      onFocus,
+      onKeyDown,
+      onClick
+    });
+    props = useHovercardAnchor(_3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({
+      store,
+      focusable,
+      accessibleWhenDisabled
+    }, props), {
+      showOnHover: (event) => {
+        const getShowOnHover = () => {
+          if (typeof showOnHover === "function") return showOnHover(event);
+          if (showOnHover != null) return showOnHover;
+          if (hasParentMenu) return true;
+          if (!parentMenubar) return false;
+          const { items } = parentMenubar.getState();
+          return parentIsMenubar && hasActiveItem(items);
+        };
+        const canShowOnHover = getShowOnHover();
+        if (!canShowOnHover) return false;
+        const parent = parentIsMenubar ? parentMenubar : parentMenu;
+        if (!parent) return true;
+        parent.setActiveId(event.currentTarget.id);
+        return true;
+      }
+    }));
+    props = usePopoverDisclosure(_3YLGPPWQ_spreadValues({
+      store,
+      toggleOnClick: !hasParentMenu,
+      focusable,
+      accessibleWhenDisabled
+    }, props));
+    props = useCompositeTypeahead(_3YLGPPWQ_spreadValues({
+      store,
+      typeahead: parentIsMenubar
+    }, props));
+    return props;
+  }
+);
+var MenuButton = forwardRef2(function MenuButton2(props) {
+  const htmlProps = useMenuButton(props);
+  return LMDWO4NN_createElement(menu_button_TagName, htmlProps);
+});
+
+
+;// ./packages/components/build-module/menu/trigger-button.js
 /**
  * External dependencies
  */
@@ -71126,6 +70771,538 @@ const MenuItemHelpText = (0,external_wp_element_namespaceObject.forwardRef)(func
  * WordPress dependencies
  */
 
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const MenuTriggerButton = (0,external_wp_element_namespaceObject.forwardRef)(function MenuTriggerButton({
+  children,
+  disabled = false,
+  ...props
+}, ref) {
+  const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+  if (!menuContext?.store) {
+    throw new Error('Menu.TriggerButton can only be rendered inside a Menu component');
+  }
+  if (menuContext.store.parent) {
+    throw new Error('Menu.TriggerButton should not be rendered inside a nested Menu component. Use Menu.SubmenuTriggerItem instead.');
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuButton, {
+    ref: ref,
+    ...props,
+    disabled: disabled,
+    store: menuContext.store,
+    children: children
+  });
+});
+
+;// ./packages/icons/build-module/library/chevron-right-small.js
+/**
+ * WordPress dependencies
+ */
+
+
+const chevronRightSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M10.8622 8.04053L14.2805 12.0286L10.8622 16.0167L9.72327 15.0405L12.3049 12.0286L9.72327 9.01672L10.8622 8.04053Z"
+  })
+});
+/* harmony default export */ const chevron_right_small = (chevronRightSmall);
+
+;// ./packages/components/build-module/menu/submenu-trigger-item.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+const MenuSubmenuTriggerItem = (0,external_wp_element_namespaceObject.forwardRef)(function MenuSubmenuTriggerItem({
+  suffix,
+  ...otherProps
+}, ref) {
+  const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+  if (!menuContext?.store.parent) {
+    throw new Error('Menu.SubmenuTriggerItem can only be rendered inside a nested Menu component');
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuButton, {
+    ref: ref,
+    accessibleWhenDisabled: true,
+    store: menuContext.store,
+    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(item_MenuItem, {
+      ...otherProps,
+      // The menu item needs to register and be part of the parent menu.
+      // Without specifying the store explicitly, the `MenuItem` component
+      // would otherwise read the store via context and pick up the one from
+      // the sub-menu `Menu` component.
+      store: menuContext.store.parent,
+      suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+        children: [suffix, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SubmenuChevronIcon, {
+          "aria-hidden": "true",
+          icon: chevron_right_small,
+          size: 24,
+          preserveAspectRatio: "xMidYMid slice"
+        })]
+      })
+    })
+  });
+});
+
+;// ./node_modules/@ariakit/react-core/esm/__chunks/ASGALOAX.js
+"use client";
+
+
+
+
+
+
+
+
+
+// src/menu/menu-list.tsx
+
+
+
+var ASGALOAX_TagName = "div";
+function useAriaLabelledBy(_a) {
+  var _b = _a, { store } = _b, props = __objRest(_b, ["store"]);
+  const [id, setId] = (0,external_React_.useState)(void 0);
+  const label = props["aria-label"];
+  const disclosureElement = useStoreState(store, "disclosureElement");
+  const contentElement = useStoreState(store, "contentElement");
+  (0,external_React_.useEffect)(() => {
+    const disclosure = disclosureElement;
+    if (!disclosure) return;
+    const menu = contentElement;
+    if (!menu) return;
+    const menuLabel = label || menu.hasAttribute("aria-label");
+    if (menuLabel) {
+      setId(void 0);
+    } else if (disclosure.id) {
+      setId(disclosure.id);
+    }
+  }, [label, disclosureElement, contentElement]);
+  return id;
+}
+var useMenuList = createHook(
+  function useMenuList2(_a) {
+    var _b = _a, { store, alwaysVisible, composite } = _b, props = __objRest(_b, ["store", "alwaysVisible", "composite"]);
+    const context = useMenuProviderContext();
+    store = store || context;
+    invariant(
+      store,
+       false && 0
+    );
+    const parentMenu = store.parent;
+    const parentMenubar = store.menubar;
+    const hasParentMenu = !!parentMenu;
+    const id = useId(props.id);
+    const onKeyDownProp = props.onKeyDown;
+    const dir = store.useState(
+      (state) => state.placement.split("-")[0]
+    );
+    const orientation = store.useState(
+      (state) => state.orientation === "both" ? void 0 : state.orientation
+    );
+    const isHorizontal = orientation !== "vertical";
+    const isMenubarHorizontal = useStoreState(
+      parentMenubar,
+      (state) => !!state && state.orientation !== "vertical"
+    );
+    const onKeyDown = useEvent((event) => {
+      onKeyDownProp == null ? void 0 : onKeyDownProp(event);
+      if (event.defaultPrevented) return;
+      if (hasParentMenu || parentMenubar && !isHorizontal) {
+        const hideMap = {
+          ArrowRight: () => dir === "left" && !isHorizontal,
+          ArrowLeft: () => dir === "right" && !isHorizontal,
+          ArrowUp: () => dir === "bottom" && isHorizontal,
+          ArrowDown: () => dir === "top" && isHorizontal
+        };
+        const action = hideMap[event.key];
+        if (action == null ? void 0 : action()) {
+          event.stopPropagation();
+          event.preventDefault();
+          return store == null ? void 0 : store.hide();
+        }
+      }
+      if (parentMenubar) {
+        const keyMap = {
+          ArrowRight: () => {
+            if (!isMenubarHorizontal) return;
+            return parentMenubar.next();
+          },
+          ArrowLeft: () => {
+            if (!isMenubarHorizontal) return;
+            return parentMenubar.previous();
+          },
+          ArrowDown: () => {
+            if (isMenubarHorizontal) return;
+            return parentMenubar.next();
+          },
+          ArrowUp: () => {
+            if (isMenubarHorizontal) return;
+            return parentMenubar.previous();
+          }
+        };
+        const action = keyMap[event.key];
+        const id2 = action == null ? void 0 : action();
+        if (id2 !== void 0) {
+          event.stopPropagation();
+          event.preventDefault();
+          parentMenubar.move(id2);
+        }
+      }
+    });
+    props = useWrapElement(
+      props,
+      (element) => /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuScopedContextProvider, { value: store, children: element }),
+      [store]
+    );
+    const ariaLabelledBy = useAriaLabelledBy(_3YLGPPWQ_spreadValues({ store }, props));
+    const mounted = store.useState("mounted");
+    const hidden = isHidden(mounted, props.hidden, alwaysVisible);
+    const style = hidden ? _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props.style), { display: "none" }) : props.style;
+    props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({
+      id,
+      "aria-labelledby": ariaLabelledBy,
+      hidden
+    }, props), {
+      ref: useMergeRefs(id ? store.setContentElement : null, props.ref),
+      style,
+      onKeyDown
+    });
+    const hasCombobox = !!store.combobox;
+    composite = composite != null ? composite : !hasCombobox;
+    if (composite) {
+      props = _3YLGPPWQ_spreadValues({
+        role: "menu",
+        "aria-orientation": orientation
+      }, props);
+    }
+    props = useComposite(_3YLGPPWQ_spreadValues({ store, composite }, props));
+    props = useCompositeTypeahead(_3YLGPPWQ_spreadValues({ store, typeahead: !hasCombobox }, props));
+    return props;
+  }
+);
+var MenuList = forwardRef2(function MenuList2(props) {
+  const htmlProps = useMenuList(props);
+  return LMDWO4NN_createElement(ASGALOAX_TagName, htmlProps);
+});
+
+
+
+;// ./node_modules/@ariakit/react-core/esm/menu/menu.js
+"use client";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// src/menu/menu.tsx
+
+
+
+
+var menu_TagName = "div";
+var useMenu = createHook(function useMenu2(_a) {
+  var _b = _a, {
+    store,
+    modal: modalProp = false,
+    portal = !!modalProp,
+    hideOnEscape = true,
+    autoFocusOnShow = true,
+    hideOnHoverOutside,
+    alwaysVisible
+  } = _b, props = __objRest(_b, [
+    "store",
+    "modal",
+    "portal",
+    "hideOnEscape",
+    "autoFocusOnShow",
+    "hideOnHoverOutside",
+    "alwaysVisible"
+  ]);
+  const context = useMenuProviderContext();
+  store = store || context;
+  invariant(
+    store,
+     false && 0
+  );
+  const ref = (0,external_React_.useRef)(null);
+  const parentMenu = store.parent;
+  const parentMenubar = store.menubar;
+  const hasParentMenu = !!parentMenu;
+  const parentIsMenubar = !!parentMenubar && !hasParentMenu;
+  props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props), {
+    ref: useMergeRefs(ref, props.ref)
+  });
+  const _a2 = useMenuList(_3YLGPPWQ_spreadValues({
+    store,
+    alwaysVisible
+  }, props)), { "aria-labelledby": ariaLabelledBy } = _a2, menuListProps = __objRest(_a2, ["aria-labelledby"]);
+  props = menuListProps;
+  const [initialFocusRef, setInitialFocusRef] = (0,external_React_.useState)();
+  const autoFocusOnShowState = store.useState("autoFocusOnShow");
+  const initialFocus = store.useState("initialFocus");
+  const baseElement = store.useState("baseElement");
+  const items = store.useState("renderedItems");
+  (0,external_React_.useEffect)(() => {
+    let cleaning = false;
+    setInitialFocusRef((prevInitialFocusRef) => {
+      var _a3, _b2, _c;
+      if (cleaning) return;
+      if (!autoFocusOnShowState) return;
+      if ((_a3 = prevInitialFocusRef == null ? void 0 : prevInitialFocusRef.current) == null ? void 0 : _a3.isConnected) return prevInitialFocusRef;
+      const ref2 = (0,external_React_.createRef)();
+      switch (initialFocus) {
+        case "first":
+          ref2.current = ((_b2 = items.find((item) => !item.disabled && item.element)) == null ? void 0 : _b2.element) || null;
+          break;
+        case "last":
+          ref2.current = ((_c = [...items].reverse().find((item) => !item.disabled && item.element)) == null ? void 0 : _c.element) || null;
+          break;
+        default:
+          ref2.current = baseElement;
+      }
+      return ref2;
+    });
+    return () => {
+      cleaning = true;
+    };
+  }, [store, autoFocusOnShowState, initialFocus, items, baseElement]);
+  const modal = hasParentMenu ? false : modalProp;
+  const mayAutoFocusOnShow = !!autoFocusOnShow;
+  const canAutoFocusOnShow = !!initialFocusRef || !!props.initialFocus || !!modal;
+  const contentElement = useStoreState(
+    store.combobox || store,
+    "contentElement"
+  );
+  const parentContentElement = useStoreState(
+    (parentMenu == null ? void 0 : parentMenu.combobox) || parentMenu,
+    "contentElement"
+  );
+  const preserveTabOrderAnchor = (0,external_React_.useMemo)(() => {
+    if (!parentContentElement) return;
+    if (!contentElement) return;
+    const role = contentElement.getAttribute("role");
+    const parentRole = parentContentElement.getAttribute("role");
+    const parentIsMenuOrMenubar = parentRole === "menu" || parentRole === "menubar";
+    if (parentIsMenuOrMenubar && role === "menu") return;
+    return parentContentElement;
+  }, [contentElement, parentContentElement]);
+  if (preserveTabOrderAnchor !== void 0) {
+    props = _3YLGPPWQ_spreadValues({
+      preserveTabOrderAnchor
+    }, props);
+  }
+  props = useHovercard(_3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({
+    store,
+    alwaysVisible,
+    initialFocus: initialFocusRef,
+    autoFocusOnShow: mayAutoFocusOnShow ? canAutoFocusOnShow && autoFocusOnShow : autoFocusOnShowState || !!modal
+  }, props), {
+    hideOnEscape(event) {
+      if (isFalsyBooleanCallback(hideOnEscape, event)) return false;
+      store == null ? void 0 : store.hideAll();
+      return true;
+    },
+    hideOnHoverOutside(event) {
+      const disclosureElement = store == null ? void 0 : store.getState().disclosureElement;
+      const getHideOnHoverOutside = () => {
+        if (typeof hideOnHoverOutside === "function") {
+          return hideOnHoverOutside(event);
+        }
+        if (hideOnHoverOutside != null) return hideOnHoverOutside;
+        if (hasParentMenu) return true;
+        if (!parentIsMenubar) return false;
+        if (!disclosureElement) return true;
+        if (hasFocusWithin(disclosureElement)) return false;
+        return true;
+      };
+      if (!getHideOnHoverOutside()) return false;
+      if (event.defaultPrevented) return true;
+      if (!hasParentMenu) return true;
+      if (!disclosureElement) return true;
+      fireEvent(disclosureElement, "mouseout", event);
+      if (!hasFocusWithin(disclosureElement)) return true;
+      requestAnimationFrame(() => {
+        if (hasFocusWithin(disclosureElement)) return;
+        store == null ? void 0 : store.hide();
+      });
+      return false;
+    },
+    modal,
+    portal,
+    backdrop: hasParentMenu ? false : props.backdrop
+  }));
+  props = _3YLGPPWQ_spreadValues({
+    "aria-labelledby": ariaLabelledBy
+  }, props);
+  return props;
+});
+var Menu = createDialogComponent(
+  forwardRef2(function Menu2(props) {
+    const htmlProps = useMenu(props);
+    return LMDWO4NN_createElement(menu_TagName, htmlProps);
+  }),
+  useMenuProviderContext
+);
+
+
+;// ./packages/components/build-module/menu/popover.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+const MenuPopover = (0,external_wp_element_namespaceObject.forwardRef)(function MenuPopover({
+  gutter,
+  children,
+  shift,
+  modal = true,
+  ...otherProps
+}, ref) {
+  const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
+
+  // Extract the side from the applied placement — useful for animations.
+  // Using `currentPlacement` instead of `placement` to make sure that we
+  // use the final computed placement (including "flips" etc).
+  const appliedPlacementSide = useStoreState(menuContext?.store, 'currentPlacement')?.split('-')[0];
+  const hideOnEscape = (0,external_wp_element_namespaceObject.useCallback)(event => {
+    // Pressing Escape can cause unexpected consequences (ie. exiting
+    // full screen mode on MacOs, close parent modals...).
+    event.preventDefault();
+    // Returning `true` causes the menu to hide.
+    return true;
+  }, []);
+  const computedDirection = useStoreState(menuContext?.store, 'rtl') ? 'rtl' : 'ltr';
+  const wrapperProps = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    dir: computedDirection,
+    style: {
+      direction: computedDirection
+    }
+  }), [computedDirection]);
+  if (!menuContext?.store) {
+    throw new Error('Menu.Popover can only be rendered inside a Menu component');
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu, {
+    ...otherProps,
+    ref: ref,
+    modal: modal,
+    store: menuContext.store
+    // Root menu has an 8px distance from its trigger,
+    // otherwise 0 (which causes the submenu to slightly overlap)
+    ,
+    gutter: gutter !== null && gutter !== void 0 ? gutter : menuContext.store.parent ? 0 : 8
+    // Align nested menu by the same (but opposite) amount
+    // as the menu container's padding.
+    ,
+    shift: shift !== null && shift !== void 0 ? shift : menuContext.store.parent ? -4 : 0,
+    hideOnHoverOutside: false,
+    "data-side": appliedPlacementSide,
+    wrapperProps: wrapperProps,
+    hideOnEscape: hideOnEscape,
+    unmountOnHide: true,
+    render: renderProps =>
+    /*#__PURE__*/
+    // Two wrappers are needed for the entry animation, where the menu
+    // container scales with a different factor than its contents.
+    // The {...renderProps} are passed to the inner wrapper, so that the
+    // menu element is the direct parent of the menu item elements.
+    (0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuPopoverOuterWrapper, {
+      variant: menuContext.variant,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuPopoverInnerWrapper, {
+        ...renderProps
+      })
+    }),
+    children: children
+  });
+});
+
+;// ./packages/components/build-module/menu/index.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
 
 
 
@@ -71144,35 +71321,27 @@ const MenuItemHelpText = (0,external_wp_element_namespaceObject.forwardRef)(func
 
 
 
-const UnconnectedMenu = (props, ref) => {
-  var _props$placement;
+
+
+const UnconnectedMenu = props => {
   const {
-    // Store props
-    open,
+    children,
     defaultOpen = false,
+    open,
     onOpenChange,
     placement,
-    // Menu trigger props
-    trigger,
-    // Menu props
-    gutter,
-    children,
-    shift,
-    modal = true,
     // From internal components context
-    variant,
-    // Rest
-    ...otherProps
+    variant
   } = useContextSystem(props, 'Menu');
   const parentContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
-  const computedDirection = (0,external_wp_i18n_namespaceObject.isRTL)() ? 'rtl' : 'ltr';
+  const rtl = (0,external_wp_i18n_namespaceObject.isRTL)();
 
   // If an explicit value for the `placement` prop is not passed,
   // apply a default placement of `bottom-start` for the root menu popover,
   // and of `right-start` for nested menu popovers.
-  let computedPlacement = (_props$placement = props.placement) !== null && _props$placement !== void 0 ? _props$placement : parentContext?.store ? 'right-start' : 'bottom-start';
+  let computedPlacement = placement !== null && placement !== void 0 ? placement : parentContext?.store ? 'right-start' : 'bottom-start';
   // Swap left/right in case of RTL direction
-  if (computedDirection === 'rtl') {
+  if (rtl) {
     if (/right/.test(computedPlacement)) {
       computedPlacement = computedPlacement.replace('right', 'left');
     } else if (/left/.test(computedPlacement)) {
@@ -71188,86 +71357,18 @@ const UnconnectedMenu = (props, ref) => {
     setOpen(willBeOpen) {
       onOpenChange?.(willBeOpen);
     },
-    rtl: computedDirection === 'rtl'
+    rtl
   });
   const contextValue = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     store: menuStore,
     variant
   }), [menuStore, variant]);
-
-  // Extract the side from the applied placement — useful for animations.
-  // Using `currentPlacement` instead of `placement` to make sure that we
-  // use the final computed placement (including "flips" etc).
-  const appliedPlacementSide = useStoreState(menuStore, 'currentPlacement').split('-')[0];
-  if (menuStore.parent && !((0,external_wp_element_namespaceObject.isValidElement)(trigger) && item_MenuItem === trigger.type)) {
-    // eslint-disable-next-line no-console
-    console.warn('For nested Menus, the `trigger` should always be a `MenuItem`.');
-  }
-  const hideOnEscape = (0,external_wp_element_namespaceObject.useCallback)(event => {
-    // Pressing Escape can cause unexpected consequences (ie. exiting
-    // full screen mode on MacOs, close parent modals...).
-    event.preventDefault();
-    // Returning `true` causes the menu to hide.
-    return true;
-  }, []);
-  const wrapperProps = (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    dir: computedDirection,
-    style: {
-      direction: computedDirection
-    }
-  }), [computedDirection]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuButton, {
-      ref: ref,
-      store: menuStore,
-      render: menuStore.parent ? (0,external_wp_element_namespaceObject.cloneElement)(trigger, {
-        // Add submenu arrow, unless a `suffix` is explicitly specified
-        suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: [trigger.props.suffix, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SubmenuChevronIcon, {
-            "aria-hidden": "true",
-            icon: chevron_right_small,
-            size: 24,
-            preserveAspectRatio: "xMidYMid slice"
-          })]
-        })
-      }) : trigger
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu, {
-      ...otherProps,
-      modal: modal,
-      store: menuStore
-      // Root menu has an 8px distance from its trigger,
-      // otherwise 0 (which causes the submenu to slightly overlap)
-      ,
-      gutter: gutter !== null && gutter !== void 0 ? gutter : menuStore.parent ? 0 : 8
-      // Align nested menu by the same (but opposite) amount
-      // as the menu container's padding.
-      ,
-      shift: shift !== null && shift !== void 0 ? shift : menuStore.parent ? -4 : 0,
-      hideOnHoverOutside: false,
-      "data-side": appliedPlacementSide,
-      wrapperProps: wrapperProps,
-      hideOnEscape: hideOnEscape,
-      unmountOnHide: true,
-      render: renderProps =>
-      /*#__PURE__*/
-      // Two wrappers are needed for the entry animation, where the menu
-      // container scales with a different factor than its contents.
-      // The {...renderProps} are passed to the inner wrapper, so that the
-      // menu element is the direct parent of the menu item elements.
-      (0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuPopoverOuterWrapper, {
-        variant: variant,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuPopoverInnerWrapper, {
-          ...renderProps
-        })
-      }),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuContext.Provider, {
-        value: contextValue,
-        children: children
-      })
-    })]
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuContext.Provider, {
+    value: contextValue,
+    children: children
   });
 };
-const menu_Menu = Object.assign(contextConnect(UnconnectedMenu, 'Menu'), {
+const menu_Menu = Object.assign(contextConnectWithoutRef(UnconnectedMenu, 'Menu'), {
   Context: Object.assign(MenuContext, {
     displayName: 'Menu.Context'
   }),
@@ -71294,6 +71395,15 @@ const menu_Menu = Object.assign(contextConnect(UnconnectedMenu, 'Menu'), {
   }),
   ItemHelpText: Object.assign(MenuItemHelpText, {
     displayName: 'Menu.ItemHelpText'
+  }),
+  Popover: Object.assign(MenuPopover, {
+    displayName: 'Menu.Popover'
+  }),
+  TriggerButton: Object.assign(MenuTriggerButton, {
+    displayName: 'Menu.TriggerButton'
+  }),
+  SubmenuTriggerItem: Object.assign(MenuSubmenuTriggerItem, {
+    displayName: 'Menu.SubmenuTriggerItem'
   })
 });
 /* harmony default export */ const build_module_menu = ((/* unused pure expression or super */ null && (menu_Menu)));

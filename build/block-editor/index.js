@@ -56312,7 +56312,7 @@ const block_bindings_useToolsPanelDropdownMenuProps = () => {
     }
   } : {};
 };
-function BlockBindingsPanelDropdown({
+function BlockBindingsPanelMenuContent({
   fieldsList,
   attribute,
   binding
@@ -56418,21 +56418,23 @@ function EditableBlockBindingsPanelItems({
             [attribute]: undefined
           });
         },
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Menu, {
           placement: isMobile ? 'bottom-start' : 'left-start',
-          gutter: isMobile ? 8 : 36,
-          trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.TriggerButton, {
+            render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {}),
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockBindingsAttribute, {
               attribute: attribute,
               binding: binding,
               fieldsList: fieldsList
             })
-          }),
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockBindingsPanelDropdown, {
-            fieldsList: fieldsList,
-            attribute: attribute,
-            binding: binding
-          })
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Popover, {
+            gutter: isMobile ? 8 : 36,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockBindingsPanelMenuContent, {
+              fieldsList: fieldsList,
+              attribute: attribute,
+              binding: binding
+            })
+          })]
         })
       }, attribute);
     })
