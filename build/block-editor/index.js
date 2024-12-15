@@ -14211,7 +14211,7 @@ const castArray = maybeArray => Array.isArray(maybeArray) ? maybeArray : [maybeA
  *
  * @see https://github.com/WordPress/gutenberg/pull/46131
  */
-const privateSettings = ['inserterMediaCategories', 'blockInspectorAnimation'];
+const privateSettings = ['inserterMediaCategories', 'blockInspectorAnimation', 'mediaSideload'];
 
 /**
  * Action that updates the block editor settings and
@@ -37063,6 +37063,8 @@ function BlockCard({
 }
 /* harmony default export */ const block_card = (BlockCard);
 
+;// external ["wp","uploadMedia"]
+const external_wp_uploadMedia_namespaceObject = window["wp"]["uploadMedia"];
 ;// ./packages/block-editor/build-module/components/provider/with-registry-provider.js
 /**
  * WordPress dependencies
@@ -37524,12 +37526,37 @@ function KeyboardShortcutsRegister() {
 KeyboardShortcuts.Register = KeyboardShortcutsRegister;
 /* harmony default export */ const keyboard_shortcuts = (KeyboardShortcuts);
 
+;// ./packages/block-editor/build-module/components/provider/use-media-upload-settings.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * React hook used to compute the media upload settings to use in the post editor.
+ *
+ * @param {Object} settings Media upload settings prop.
+ *
+ * @return {Object} Media upload settings.
+ */
+function useMediaUploadSettings(settings) {
+  return (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    mediaUpload: settings.mediaUpload,
+    mediaSideload: settings.mediaSideload,
+    maxUploadFileSize: settings.maxUploadFileSize,
+    allowedMimeTypes: settings.allowedMimeTypes
+  }), [settings]);
+}
+/* harmony default export */ const use_media_upload_settings = (useMediaUploadSettings);
+
 ;// ./packages/block-editor/build-module/components/provider/index.js
 /**
  * WordPress dependencies
  */
 
 
+
+//eslint-disable-next-line import/no-extraneous-dependencies -- Experimental package, not published.
 
 
 /**
@@ -37542,14 +37569,61 @@ KeyboardShortcuts.Register = KeyboardShortcutsRegister;
 
 
 
+
 /** @typedef {import('@wordpress/data').WPDataRegistry} WPDataRegistry */
 
+const provider_noop = () => {};
+
+/**
+ * Upload a media file when the file upload button is activated
+ * or when adding a file to the editor via drag & drop.
+ *
+ * @param {WPDataRegistry} registry
+ * @param {Object}         $3                Parameters object passed to the function.
+ * @param {Array}          $3.allowedTypes   Array with the types of media that can be uploaded, if unset all types are allowed.
+ * @param {Object}         $3.additionalData Additional data to include in the request.
+ * @param {Array<File>}    $3.filesList      List of files.
+ * @param {Function}       $3.onError        Function called when an error happens.
+ * @param {Function}       $3.onFileChange   Function called each time a file or a temporary representation of the file is available.
+ * @param {Function}       $3.onSuccess      Function called once a file has completely finished uploading, including thumbnails.
+ * @param {Function}       $3.onBatchSuccess Function called once all files in a group have completely finished uploading, including thumbnails.
+ */
+function mediaUpload(registry, {
+  allowedTypes,
+  additionalData = {},
+  filesList,
+  onError = provider_noop,
+  onFileChange,
+  onSuccess,
+  onBatchSuccess
+}) {
+  void registry.dispatch(external_wp_uploadMedia_namespaceObject.store).addItems({
+    files: filesList,
+    onChange: onFileChange,
+    onSuccess,
+    onBatchSuccess,
+    onError: ({
+      message
+    }) => onError(message),
+    additionalData,
+    allowedTypes
+  });
+}
 const ExperimentalBlockEditorProvider = with_registry_provider(props => {
   const {
-    children,
-    settings,
+    settings: _settings,
+    registry,
     stripExperimentalSettings = false
   } = props;
+  const mediaUploadSettings = use_media_upload_settings(_settings);
+  let settings = _settings;
+  if (window.__experimentalMediaProcessing && _settings.mediaUpload) {
+    // Create a new variable so that the original props.settings.mediaUpload is not modified.
+    settings = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+      ..._settings,
+      mediaUpload: mediaUpload.bind(null, registry)
+    }), [_settings, registry]);
+  }
   const {
     __experimentalUpdateSettings
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
@@ -37565,12 +37639,20 @@ const ExperimentalBlockEditorProvider = with_registry_provider(props => {
 
   // Syncs the entity provider with changes in the block-editor store.
   useBlockSync(props);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.SlotFillProvider, {
+  const children = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.SlotFillProvider, {
     passthrough: true,
     children: [!settings?.isPreviewMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(keyboard_shortcuts.Register, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockRefsProvider, {
-      children: children
+      children: props.children
     })]
   });
+  if (window.__experimentalMediaProcessing) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_uploadMedia_namespaceObject.MediaUploadProvider, {
+      settings: mediaUploadSettings,
+      useSubRegistry: false,
+      children: children
+    });
+  }
+  return children;
 });
 const BlockEditorProvider = props => {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ExperimentalBlockEditorProvider, {

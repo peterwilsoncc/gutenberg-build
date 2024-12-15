@@ -24718,6 +24718,7 @@ const media_upload_noop = () => {};
  * @param {?number}  $0.maxUploadFileSize Maximum upload size in bytes allowed for the site.
  * @param {Function} $0.onError           Function called when an error happens.
  * @param {Function} $0.onFileChange      Function called each time a file or a temporary representation of the file is available.
+ * @param {Function} $0.onSuccess         Function called after the final representation of the file is available.
  */
 function mediaUpload({
   additionalData = {},
@@ -24725,7 +24726,8 @@ function mediaUpload({
   filesList,
   maxUploadFileSize,
   onError = media_upload_noop,
-  onFileChange
+  onFileChange,
+  onSuccess
 }) {
   const {
     getCurrentPost,
@@ -24766,8 +24768,9 @@ function mediaUpload({
       } else {
         clearSaveLock();
       }
-      onFileChange(file);
+      onFileChange?.(file);
     },
+    onSuccess,
     additionalData: {
       ...postData,
       ...additionalData
@@ -24782,6 +24785,21 @@ function mediaUpload({
     wpAllowedMimeTypes
   });
 }
+
+;// ./packages/editor/build-module/utils/media-sideload/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+const {
+  sideloadMedia: mediaSideload
+} = unlock(external_wp_mediaUtils_namespaceObject.privateApis);
+/* harmony default export */ const media_sideload = (mediaSideload);
 
 // EXTERNAL MODULE: ./node_modules/deepmerge/dist/cjs.js
 var cjs = __webpack_require__(66);
@@ -25033,6 +25051,7 @@ function GlobalStylesProvider({
 
 
 
+
 const use_block_editor_settings_EMPTY_OBJECT = {};
 function __experimentalReusableBlocksSelect(select) {
   const {
@@ -25046,7 +25065,7 @@ function __experimentalReusableBlocksSelect(select) {
     [RECEIVE_INTERMEDIATE_RESULTS]: true
   });
 }
-const BLOCK_EDITOR_SETTINGS = ['__experimentalBlockDirectory', '__experimentalDiscussionSettings', '__experimentalFeatures', '__experimentalGlobalStylesBaseStyles', 'alignWide', 'blockInspectorTabs', 'allowedMimeTypes', 'bodyPlaceholder', 'canLockBlocks', 'canUpdateBlockBindings', 'capabilities', 'clearBlockSelection', 'codeEditingEnabled', 'colors', 'disableCustomColors', 'disableCustomFontSizes', 'disableCustomSpacingSizes', 'disableCustomGradients', 'disableLayoutStyles', 'enableCustomLineHeight', 'enableCustomSpacing', 'enableCustomUnits', 'enableOpenverseMediaCategory', 'fontSizes', 'gradients', 'generateAnchors', 'onNavigateToEntityRecord', 'imageDefaultSize', 'imageDimensions', 'imageEditing', 'imageSizes', 'isPreviewMode', 'isRTL', 'locale', 'maxWidth', 'postContentAttributes', 'postsPerPage', 'readOnly', 'styles', 'titlePlaceholder', 'supportsLayout', 'widgetTypesToHideFromLegacyWidgetBlock', '__unstableHasCustomAppender', '__unstableResolvedAssets', '__unstableIsBlockBasedTheme'];
+const BLOCK_EDITOR_SETTINGS = ['__experimentalBlockDirectory', '__experimentalDiscussionSettings', '__experimentalFeatures', '__experimentalGlobalStylesBaseStyles', 'alignWide', 'blockInspectorTabs', 'maxUploadFileSize', 'allowedMimeTypes', 'bodyPlaceholder', 'canLockBlocks', 'canUpdateBlockBindings', 'capabilities', 'clearBlockSelection', 'codeEditingEnabled', 'colors', 'disableCustomColors', 'disableCustomFontSizes', 'disableCustomSpacingSizes', 'disableCustomGradients', 'disableLayoutStyles', 'enableCustomLineHeight', 'enableCustomSpacing', 'enableCustomUnits', 'enableOpenverseMediaCategory', 'fontSizes', 'gradients', 'generateAnchors', 'onNavigateToEntityRecord', 'imageDefaultSize', 'imageDimensions', 'imageEditing', 'imageSizes', 'isPreviewMode', 'isRTL', 'locale', 'maxWidth', 'postContentAttributes', 'postsPerPage', 'readOnly', 'styles', 'titlePlaceholder', 'supportsLayout', 'widgetTypesToHideFromLegacyWidgetBlock', '__unstableHasCustomAppender', '__unstableResolvedAssets', '__unstableIsBlockBasedTheme'];
 const {
   globalStylesDataKey,
   globalStylesLinksDataKey,
@@ -25206,6 +25225,7 @@ function useBlockEditorSettings(settings, postType, postId, renderingMode) {
       isDistractionFree,
       keepCaretInsideBlock,
       mediaUpload: hasUploadPermissions ? mediaUpload : undefined,
+      mediaSideload: hasUploadPermissions ? media_sideload : undefined,
       __experimentalBlockPatterns: blockPatterns,
       [selectBlockPatternsKey]: select => {
         const {
