@@ -1755,6 +1755,113 @@ const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
 ;// external ["wp","serverSideRender"]
 const external_wp_serverSideRender_namespaceObject = window["wp"]["serverSideRender"];
 var external_wp_serverSideRender_default = /*#__PURE__*/__webpack_require__.n(external_wp_serverSideRender_namespaceObject);
+;// external ["wp","data"]
+const external_wp_data_namespaceObject = window["wp"]["data"];
+;// external ["wp","element"]
+const external_wp_element_namespaceObject = window["wp"]["element"];
+;// external ["wp","blob"]
+const external_wp_blob_namespaceObject = window["wp"]["blob"];
+;// external ["wp","coreData"]
+const external_wp_coreData_namespaceObject = window["wp"]["coreData"];
+;// external ["wp","compose"]
+const external_wp_compose_namespaceObject = window["wp"]["compose"];
+;// ./packages/block-library/build-module/utils/hooks.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+/**
+ * Returns whether the current user can edit the given entity.
+ *
+ * @param {string} kind     Entity kind.
+ * @param {string} name     Entity name.
+ * @param {string} recordId Record's id.
+ */
+function useCanEditEntity(kind, name, recordId) {
+  return (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).canUser('update', {
+    kind,
+    name,
+    id: recordId
+  }), [kind, name, recordId]);
+}
+
+/**
+ * Handles uploading a media file from a blob URL on mount.
+ *
+ * @param {Object}   args              Upload media arguments.
+ * @param {string}   args.url          Blob URL.
+ * @param {?Array}   args.allowedTypes Array of allowed media types.
+ * @param {Function} args.onChange     Function called when the media is uploaded.
+ * @param {Function} args.onError      Function called when an error happens.
+ */
+function useUploadMediaFromBlobURL(args = {}) {
+  const latestArgsRef = (0,external_wp_element_namespaceObject.useRef)(args);
+  const hasUploadStartedRef = (0,external_wp_element_namespaceObject.useRef)(false);
+  const {
+    getSettings
+  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    latestArgsRef.current = args;
+  });
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    // Uploading is a special effect that can't be canceled via the cleanup method.
+    // The extra check avoids duplicate uploads in development mode (React.StrictMode).
+    if (hasUploadStartedRef.current) {
+      return;
+    }
+    if (!latestArgsRef.current.url || !(0,external_wp_blob_namespaceObject.isBlobURL)(latestArgsRef.current.url)) {
+      return;
+    }
+    const file = (0,external_wp_blob_namespaceObject.getBlobByURL)(latestArgsRef.current.url);
+    if (!file) {
+      return;
+    }
+    const {
+      url,
+      allowedTypes,
+      onChange,
+      onError
+    } = latestArgsRef.current;
+    const {
+      mediaUpload
+    } = getSettings();
+    hasUploadStartedRef.current = true;
+    mediaUpload({
+      filesList: [file],
+      allowedTypes,
+      onFileChange: ([media]) => {
+        if ((0,external_wp_blob_namespaceObject.isBlobURL)(media?.url)) {
+          return;
+        }
+        (0,external_wp_blob_namespaceObject.revokeBlobURL)(url);
+        onChange(media);
+        hasUploadStartedRef.current = false;
+      },
+      onError: message => {
+        (0,external_wp_blob_namespaceObject.revokeBlobURL)(url);
+        onError(message);
+        hasUploadStartedRef.current = false;
+      }
+    });
+  }, [getSettings]);
+}
+function useToolsPanelDropdownMenuProps() {
+  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
+  return !isMobile ? {
+    popoverProps: {
+      placement: 'left-start',
+      // For non-mobile, inner sidebar width (248px) - button width (24px) - border (1px) + padding (16px) + spacing (20px)
+      offset: 259
+    }
+  } : {};
+}
+
 ;// ./packages/block-library/build-module/archives/edit.js
 /**
  * WordPress dependencies
@@ -1762,6 +1869,11 @@ var external_wp_serverSideRender_default = /*#__PURE__*/__webpack_require__.n(ex
 
 
 
+
+
+/**
+ * Internal dependencies
+ */
 
 
 function ArchivesEdit({
@@ -1774,6 +1886,7 @@ function ArchivesEdit({
     displayAsDropdown,
     type
   } = attributes;
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
@@ -1786,6 +1899,7 @@ function ArchivesEdit({
             type: 'monthly'
           });
         },
+        dropdownMenuProps: dropdownMenuProps,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Display as dropdown'),
           isShownByDefault: true,
@@ -1984,10 +2098,6 @@ const commentAuthorAvatar = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceOb
 function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
 ;// external ["wp","url"]
 const external_wp_url_namespaceObject = window["wp"]["url"];
-;// external ["wp","coreData"]
-const external_wp_coreData_namespaceObject = window["wp"]["coreData"];
-;// external ["wp","data"]
-const external_wp_data_namespaceObject = window["wp"]["data"];
 ;// ./packages/block-library/build-module/avatar/hooks.js
 /**
  * WordPress dependencies
@@ -2079,8 +2189,6 @@ function useUserAvatar({
   };
 }
 
-;// external ["wp","element"]
-const external_wp_element_namespaceObject = window["wp"]["element"];
 ;// ./packages/block-library/build-module/avatar/user-control.js
 /* wp:polyfill */
 /**
@@ -2502,8 +2610,6 @@ const audio = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
   }
 }]);
 
-;// external ["wp","blob"]
-const external_wp_blob_namespaceObject = window["wp"]["blob"];
 ;// external ["wp","notices"]
 const external_wp_notices_namespaceObject = window["wp"]["notices"];
 ;// ./node_modules/memize/dist/index.js
@@ -3066,105 +3172,6 @@ const getMergedAttributesWithPreview = (currentAttributes, preview, title, isRes
     ...getAttributesFromPreview(preview, title, className, isResponsive, allowResponsive)
   };
 };
-
-;// external ["wp","compose"]
-const external_wp_compose_namespaceObject = window["wp"]["compose"];
-;// ./packages/block-library/build-module/utils/hooks.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-
-/**
- * Returns whether the current user can edit the given entity.
- *
- * @param {string} kind     Entity kind.
- * @param {string} name     Entity name.
- * @param {string} recordId Record's id.
- */
-function useCanEditEntity(kind, name, recordId) {
-  return (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).canUser('update', {
-    kind,
-    name,
-    id: recordId
-  }), [kind, name, recordId]);
-}
-
-/**
- * Handles uploading a media file from a blob URL on mount.
- *
- * @param {Object}   args              Upload media arguments.
- * @param {string}   args.url          Blob URL.
- * @param {?Array}   args.allowedTypes Array of allowed media types.
- * @param {Function} args.onChange     Function called when the media is uploaded.
- * @param {Function} args.onError      Function called when an error happens.
- */
-function useUploadMediaFromBlobURL(args = {}) {
-  const latestArgsRef = (0,external_wp_element_namespaceObject.useRef)(args);
-  const hasUploadStartedRef = (0,external_wp_element_namespaceObject.useRef)(false);
-  const {
-    getSettings
-  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
-  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    latestArgsRef.current = args;
-  });
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    // Uploading is a special effect that can't be canceled via the cleanup method.
-    // The extra check avoids duplicate uploads in development mode (React.StrictMode).
-    if (hasUploadStartedRef.current) {
-      return;
-    }
-    if (!latestArgsRef.current.url || !(0,external_wp_blob_namespaceObject.isBlobURL)(latestArgsRef.current.url)) {
-      return;
-    }
-    const file = (0,external_wp_blob_namespaceObject.getBlobByURL)(latestArgsRef.current.url);
-    if (!file) {
-      return;
-    }
-    const {
-      url,
-      allowedTypes,
-      onChange,
-      onError
-    } = latestArgsRef.current;
-    const {
-      mediaUpload
-    } = getSettings();
-    hasUploadStartedRef.current = true;
-    mediaUpload({
-      filesList: [file],
-      allowedTypes,
-      onFileChange: ([media]) => {
-        if ((0,external_wp_blob_namespaceObject.isBlobURL)(media?.url)) {
-          return;
-        }
-        (0,external_wp_blob_namespaceObject.revokeBlobURL)(url);
-        onChange(media);
-        hasUploadStartedRef.current = false;
-      },
-      onError: message => {
-        (0,external_wp_blob_namespaceObject.revokeBlobURL)(url);
-        onError(message);
-        hasUploadStartedRef.current = false;
-      }
-    });
-  }, [getSettings]);
-}
-function useToolsPanelDropdownMenuProps() {
-  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
-  return !isMobile ? {
-    popoverProps: {
-      placement: 'left-start',
-      // For non-mobile, inner sidebar width (248px) - button width (24px) - border (1px) + padding (16px) + spacing (20px)
-      offset: 259
-    }
-  } : {};
-}
 
 ;// ./packages/icons/build-module/library/caption.js
 /**
