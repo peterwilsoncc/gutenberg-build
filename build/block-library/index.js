@@ -39758,6 +39758,7 @@ function ConvertToLinksModal({
 
 
 
+
 // We only show the edit option when page count is <= MAX_PAGE_COUNT
 // Performance of Navigation Links is not good past this value.
 
@@ -39841,6 +39842,7 @@ function PageListEdit({
   const [isOpen, setOpen] = (0,external_wp_element_namespaceObject.useState)(false);
   const openModal = (0,external_wp_element_namespaceObject.useCallback)(() => setOpen(true), []);
   const closeModal = () => setOpen(false);
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const {
     records: pages,
     hasResolved: hasResolvedPages
@@ -39994,6 +39996,7 @@ function PageListEdit({
             parentPageID: 0
           });
         },
+        dropdownMenuProps: dropdownMenuProps,
         children: [pagesTree.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Parent Page'),
           hasValue: () => parentPageID !== 0,
