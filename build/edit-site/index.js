@@ -39557,7 +39557,7 @@ function ListItem({
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Row, {
     ref: itemRef,
-    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {}),
+    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {}),
     role: "row",
     className: dist_clsx({
       'is-selected': isSelected,
@@ -39713,7 +39713,7 @@ function ViewList(props) {
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
     id: baseId,
-    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {}),
+    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {}),
     className: "dataviews-view-list",
     role: "grid",
     activeId: activeCompositeId,
