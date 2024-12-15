@@ -50440,6 +50440,11 @@ const query_pagination_next_init = () => initBlock({
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 const createPaginationItem = (content, Tag = 'a', extraClass = '') => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Tag, {
   className: `page-numbers ${extraClass}`,
   children: content
@@ -50477,6 +50482,7 @@ function QueryPaginationNumbersEdit({
     midSize
   } = attributes;
   const paginationNumbers = previewPaginationNumbers(parseInt(midSize, 10));
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
@@ -50484,6 +50490,7 @@ function QueryPaginationNumbersEdit({
         resetAll: () => setAttributes({
           midSize: 2
         }),
+        dropdownMenuProps: dropdownMenuProps,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Number of links'),
           hasValue: () => midSize !== undefined,
