@@ -39167,7 +39167,8 @@ function GridItem({
   titleField,
   descriptionField,
   regularFields,
-  badgeFields
+  badgeFields,
+  hasBulkActions
 }) {
   const {
     showTitle = true,
@@ -39231,7 +39232,7 @@ function GridItem({
       ...clickableMediaItemProps,
       ...mediaA11yProps,
       children: renderedMediaField
-    }), showMedia && renderedMediaField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSelectionCheckbox, {
+    }), hasBulkActions && showMedia && renderedMediaField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSelectionCheckbox, {
       item: item,
       selection: selection,
       onChangeSelection: onChangeSelection,
@@ -39245,7 +39246,7 @@ function GridItem({
         ...clickableTitleItemProps,
         ...titleA11yProps,
         children: renderedTitleField
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemActions, {
+      }), !!actions?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemActions, {
         item: item,
         actions: actions,
         isCompact: true
@@ -39337,6 +39338,7 @@ function ViewGrid({
   });
   const hasData = !!data?.length;
   const updatedPreviewSize = useUpdatedPreviewSizeOnViewportChange();
+  const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data);
   const usedPreviewSize = updatedPreviewSize || view.layout?.previewSize;
   const gridStyle = usedPreviewSize ? {
     gridTemplateColumns: `repeat(${usedPreviewSize}, minmax(0, 1fr))`
@@ -39363,7 +39365,8 @@ function ViewGrid({
           titleField: titleField,
           descriptionField: descriptionField,
           regularFields: regularFields,
-          badgeFields: badgeFields
+          badgeFields: badgeFields,
+          hasBulkActions: hasBulkActions
         }, getItemId(item));
       })
     }), !hasData && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
