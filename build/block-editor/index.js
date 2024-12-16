@@ -54568,17 +54568,13 @@ function PublicInserterMenu(props, ref) {
 
 
 
-
 const SEARCH_THRESHOLD = 6;
 const SHOWN_BLOCK_TYPES = 6;
-const SHOWN_BLOCK_PATTERNS = 2;
-const SHOWN_BLOCK_PATTERNS_WITH_PRIORITIZATION = 4;
 function QuickInserter({
   onSelect,
   rootClientId,
   clientId,
   isAppender,
-  prioritizePatterns,
   selectBlockOnInsert,
   hasSearch = true
 }) {
@@ -54591,7 +54587,6 @@ function QuickInserter({
     selectBlockOnInsert
   });
   const [blockTypes] = use_block_types_state(destinationRootClientId, onInsertBlocks, true);
-  const [patterns] = use_patterns_state(onInsertBlocks, destinationRootClientId, undefined, true);
   const {
     setInserterIsOpened,
     insertionIndex
@@ -54609,8 +54604,7 @@ function QuickInserter({
       insertionIndex: index === -1 ? blockCount : index
     };
   }, [clientId]);
-  const showPatterns = patterns.length && (!!filterValue || prioritizePatterns);
-  const showSearch = hasSearch && (showPatterns && patterns.length > SEARCH_THRESHOLD || blockTypes.length > SEARCH_THRESHOLD);
+  const showSearch = hasSearch && blockTypes.length > SEARCH_THRESHOLD;
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (setInserterIsOpened) {
       setInserterIsOpened(false);
@@ -54627,10 +54621,6 @@ function QuickInserter({
       insertionIndex
     });
   };
-  let maxBlockPatterns = 0;
-  if (showPatterns) {
-    maxBlockPatterns = prioritizePatterns ? SHOWN_BLOCK_PATTERNS_WITH_PRIORITIZATION : SHOWN_BLOCK_PATTERNS;
-  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: dist_clsx('block-editor-inserter__quick-inserter', {
       'has-search': showSearch,
@@ -54653,10 +54643,9 @@ function QuickInserter({
         rootClientId: rootClientId,
         clientId: clientId,
         isAppender: isAppender,
-        maxBlockPatterns: maxBlockPatterns,
+        maxBlockPatterns: 0,
         maxBlockTypes: SHOWN_BLOCK_TYPES,
         isDraggable: false,
-        prioritizePatterns: prioritizePatterns,
         selectBlockOnInsert: selectBlockOnInsert,
         isQuick: true
       })
@@ -54702,8 +54691,7 @@ const defaultRenderToggle = ({
   isOpen,
   blockTitle,
   hasSingleBlockType,
-  toggleProps = {},
-  prioritizePatterns
+  toggleProps = {}
 }) => {
   const {
     as: Wrapper = external_wp_components_namespaceObject.Button,
@@ -54716,8 +54704,6 @@ const defaultRenderToggle = ({
     label = (0,external_wp_i18n_namespaceObject.sprintf)(
     // translators: %s: the name of the block when there is only one
     (0,external_wp_i18n_namespaceObject._x)('Add %s', 'directly add the only allowed block'), blockTitle);
-  } else if (!label && prioritizePatterns) {
-    label = (0,external_wp_i18n_namespaceObject.__)('Add pattern');
   } else if (!label) {
     label = (0,external_wp_i18n_namespaceObject._x)('Add block', 'Generic label for block inserter button');
   }
@@ -54782,8 +54768,7 @@ class Inserter extends external_wp_element_namespaceObject.Component {
       directInsertBlock,
       toggleProps,
       hasItems,
-      renderToggle = defaultRenderToggle,
-      prioritizePatterns
+      renderToggle = defaultRenderToggle
     } = this.props;
     return renderToggle({
       onToggle,
@@ -54792,8 +54777,7 @@ class Inserter extends external_wp_element_namespaceObject.Component {
       blockTitle,
       hasSingleBlockType,
       directInsertBlock,
-      toggleProps,
-      prioritizePatterns
+      toggleProps
     });
   }
 
@@ -54817,7 +54801,6 @@ class Inserter extends external_wp_element_namespaceObject.Component {
       // This prop is experimental to give some time for the quick inserter to mature
       // Feel free to make them stable after a few releases.
       __experimentalIsQuick: isQuick,
-      prioritizePatterns,
       onSelectOrClose,
       selectBlockOnInsert
     } = this.props;
@@ -54833,7 +54816,6 @@ class Inserter extends external_wp_element_namespaceObject.Component {
         rootClientId: rootClientId,
         clientId: clientId,
         isAppender: isAppender,
-        prioritizePatterns: prioritizePatterns,
         selectBlockOnInsert: selectBlockOnInsert
       });
     }
@@ -54888,8 +54870,7 @@ class Inserter extends external_wp_element_namespaceObject.Component {
     getBlockRootClientId,
     hasInserterItems,
     getAllowedBlocks,
-    getDirectInsertBlock,
-    getSettings
+    getDirectInsertBlock
   } = select(store);
   const {
     getBlockVariations
@@ -54897,7 +54878,6 @@ class Inserter extends external_wp_element_namespaceObject.Component {
   rootClientId = rootClientId || getBlockRootClientId(clientId) || undefined;
   const allowedBlocks = getAllowedBlocks(rootClientId);
   const directInsertBlock = shouldDirectInsert && getDirectInsertBlock(rootClientId);
-  const settings = getSettings();
   const hasSingleBlockType = allowedBlocks?.length === 1 && getBlockVariations(allowedBlocks[0].name, 'inserter')?.length === 0;
   let allowedBlockType = false;
   if (hasSingleBlockType) {
@@ -54909,8 +54889,7 @@ class Inserter extends external_wp_element_namespaceObject.Component {
     blockTitle: allowedBlockType ? allowedBlockType.title : '',
     allowedBlockType,
     directInsertBlock,
-    rootClientId,
-    prioritizePatterns: settings.__experimentalPreferPatternsOnRoot && !rootClientId
+    rootClientId
   };
 }), (0,external_wp_data_namespaceObject.withDispatch)((dispatch, ownProps, {
   select
