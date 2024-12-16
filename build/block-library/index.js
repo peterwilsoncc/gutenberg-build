@@ -27648,7 +27648,7 @@ const schema = ({
       ...imageSchema,
       a: {
         attributes: ['href', 'rel', 'target'],
-        classes: [/[\w-]*/],
+        classes: ['*'],
         children: imageSchema
       },
       figcaption: {
