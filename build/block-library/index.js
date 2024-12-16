@@ -50152,6 +50152,7 @@ function QueryPaginationLabelControl({
 
 
 
+
 const query_pagination_edit_TEMPLATE = [['core/query-pagination-previous'], ['core/query-pagination-numbers'], ['core/query-pagination-next']];
 function edit_QueryPaginationEdit({
   attributes: {
@@ -50186,24 +50187,48 @@ function edit_QueryPaginationEdit({
       });
     }
   }, [paginationArrow, setAttributes, showLabel]);
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [hasNextPreviousBlocks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QueryPaginationArrowControls, {
-          value: paginationArrow,
-          onChange: value => {
-            setAttributes({
-              paginationArrow: value
-            });
-          }
-        }), paginationArrow !== 'none' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QueryPaginationLabelControl, {
-          value: showLabel,
-          onChange: value => {
-            setAttributes({
-              showLabel: value
-            });
-          }
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            paginationArrow: 'none',
+            showLabel: true
+          });
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => paginationArrow !== 'none',
+          label: (0,external_wp_i18n_namespaceObject.__)('Pagination arrow'),
+          onDeselect: () => setAttributes({
+            paginationArrow: 'none'
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QueryPaginationArrowControls, {
+            value: paginationArrow,
+            onChange: value => {
+              setAttributes({
+                paginationArrow: value
+              });
+            }
+          })
+        }), paginationArrow !== 'none' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !showLabel,
+          label: (0,external_wp_i18n_namespaceObject.__)('Show text'),
+          onDeselect: () => setAttributes({
+            showLabel: true
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QueryPaginationLabelControl, {
+            value: showLabel,
+            onChange: value => {
+              setAttributes({
+                showLabel: value
+              });
+            }
+          })
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("nav", {
