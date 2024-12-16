@@ -46495,7 +46495,8 @@ function useBlockDropZone({
       rootBlockIndex: getBlockIndex(targetRootClientId)
     });
     const [targetIndex, operation, nearestSide] = dropTargetPosition;
-    if (isZoomOut() && operation !== 'insert') {
+    const isTargetIndexEmptyDefaultBlock = blocksData[targetIndex]?.isUnmodifiedDefaultBlock;
+    if (isZoomOut() && !isTargetIndexEmptyDefaultBlock && operation !== 'insert') {
       return;
     }
     if (operation === 'group') {
