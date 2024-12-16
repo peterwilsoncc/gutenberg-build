@@ -7356,6 +7356,12 @@ const getCleanTemplatePartSlug = title => {
  */
 
 
+function getAreaRadioId(value, instanceId) {
+  return `fields-create-template-part-modal__area-option-${value}-${instanceId}`;
+}
+function getAreaRadioDescriptionId(value, instanceId) {
+  return `fields-create-template-part-modal__area-option-description-${value}-${instanceId}`;
+}
 /**
  * A React component that renders a modal for creating a template part. The modal displays a title and the contents for creating the template part.
  * This component should not live in this package, it should be moved to a dedicated package responsible for managing template.
@@ -7470,45 +7476,44 @@ function CreateTemplatePartModalContents({
         value: title,
         onChange: setTitle,
         required: true
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
-        __nextHasNoMarginBottom: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Area'),
-        id: `fields-create-template-part-modal__area-selection-${instanceId}`,
-        className: "fields-create-template-part-modal__area-base-control",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalRadioGroup, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Area'),
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
+          as: "legend",
+          children: (0,external_wp_i18n_namespaceObject.__)('Area')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "fields-create-template-part-modal__area-radio-group",
-          id: `fields-create-template-part-modal__area-selection-${instanceId}`,
-          onChange: value => value && typeof value === 'string' ? setArea(value) : () => void 0,
-          checked: area,
           children: (defaultTemplatePartAreas !== null && defaultTemplatePartAreas !== void 0 ? defaultTemplatePartAreas : []).map(item => {
             const icon = create_template_part_modal_getTemplatePartIcon(item.icon);
-            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalRadio, {
-              __next40pxDefaultSize: true,
-              value: item.area,
-              className: "fields-create-template-part-modal__area-radio",
-              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
-                align: "start",
-                justify: "start",
-                children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-                  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-                    icon: icon
-                  })
-                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.FlexBlock, {
-                  className: "fields-create-template-part-modal__option-label",
-                  children: [item.label, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-                    children: item.description
-                  })]
-                }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-                  className: "fields-create-template-part-modal__checkbox",
-                  children: area === item.area && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-                    icon: library_check
-                  })
-                })]
-              })
-            }, item.label);
+            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+              className: "fields-create-template-part-modal__area-radio-wrapper",
+              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
+                type: "radio",
+                id: getAreaRadioId(item.area, instanceId),
+                name: `fields-create-template-part-modal__area-${instanceId}`,
+                value: item.area,
+                checked: area === item.area,
+                onChange: () => {
+                  setArea(item.area);
+                },
+                "aria-describedby": getAreaRadioDescriptionId(item.area, instanceId)
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+                icon: icon,
+                className: "fields-create-template-part-modal__area-radio-icon"
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("label", {
+                htmlFor: getAreaRadioId(item.area, instanceId),
+                className: "fields-create-template-part-modal__area-radio-label",
+                children: item.label
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+                icon: library_check,
+                className: "fields-create-template-part-modal__area-radio-checkmark"
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+                className: "fields-create-template-part-modal__area-radio-description",
+                id: getAreaRadioDescriptionId(item.area, instanceId),
+                children: item.description
+              })]
+            }, item.area);
           })
-        })
+        })]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         justify: "right",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
