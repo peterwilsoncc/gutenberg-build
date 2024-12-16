@@ -13327,6 +13327,7 @@ function SavePanel() {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -13375,6 +13376,13 @@ function Layout() {
   const animationRef = animation({
     triggerAnimationOnChange: routeKey + '-' + canvas
   });
+  const {
+    showIconLabels
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return {
+      showIconLabels: select(external_wp_preferences_namespaceObject.store).get('core', 'showIconLabels')
+    };
+  });
   const [backgroundColor] = layout_useGlobalStyle('color.background');
   const [gradientValue] = layout_useGlobalStyle('color.gradient');
   const previousCanvaMode = (0,external_wp_compose_namespaceObject.usePrevious)(canvas);
@@ -13389,7 +13397,8 @@ function Layout() {
       ...navigateRegionsProps,
       ref: navigateRegionsProps.ref,
       className: dist_clsx('edit-site-layout', navigateRegionsProps.className, {
-        'is-full-canvas': canvas === 'edit'
+        'is-full-canvas': canvas === 'edit',
+        'show-icon-labels': showIconLabels
       }),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
         className: "edit-site-layout__content",
@@ -29144,7 +29153,6 @@ function useSyncDeprecatedEntityIntoState({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -29252,7 +29260,6 @@ function EditSiteEditor({
   } = entity;
   const {
     supportsGlobalStyles,
-    showIconLabels,
     editorCanvasView,
     currentPostIsTrashed,
     hasSiteIcon
@@ -29261,16 +29268,12 @@ function EditSiteEditor({
       getEditorCanvasContainerView
     } = unlock(select(store));
     const {
-      get
-    } = select(external_wp_preferences_namespaceObject.store);
-    const {
       getCurrentTheme,
       getEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
     const siteData = getEntityRecord('root', '__unstableBase', undefined);
     return {
       supportsGlobalStyles: getCurrentTheme()?.is_block_theme,
-      showIconLabels: get('core', 'showIconLabels'),
       editorCanvasView: getEditorCanvasContainerView(),
       currentPostIsTrashed: select(external_wp_editor_namespaceObject.store).getCurrentPostAttribute('status') === 'trash',
       hasSiteIcon: !!siteData?.site_icon_url
@@ -29343,9 +29346,7 @@ function EditSiteEditor({
       postId: postWithTemplate ? context.postId : postId,
       templateId: postWithTemplate ? postId : undefined,
       settings: settings,
-      className: dist_clsx('edit-site-editor__editor-interface', {
-        'show-icon-labels': showIconLabels
-      }),
+      className: "edit-site-editor__editor-interface",
       styles: styles,
       customSaveButton: _isPreviewingTheme && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SaveButton, {
         size: "compact"
@@ -29582,6 +29583,7 @@ function Page({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -29595,42 +29597,18 @@ const {
   useLocation: sidebar_global_styles_wrapper_useLocation,
   useHistory: sidebar_global_styles_wrapper_useHistory
 } = unlock(external_wp_router_namespaceObject.privateApis);
-const {
-  Menu: sidebar_global_styles_wrapper_Menu
-} = unlock(external_wp_components_namespaceObject.privateApis);
 const GlobalStylesPageActions = ({
   isStyleBookOpened,
   setIsStyleBookOpened
 }) => {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(sidebar_global_styles_wrapper_Menu, {
-    trigger: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      __next40pxDefaultSize: true,
-      variant: "tertiary",
-      size: "compact",
-      children: (0,external_wp_i18n_namespaceObject.__)('Preview')
-    }),
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(sidebar_global_styles_wrapper_Menu.RadioItem, {
-      value: true,
-      checked: isStyleBookOpened,
-      name: "styles-preview-actions",
-      onChange: () => setIsStyleBookOpened(true),
-      defaultChecked: true,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(sidebar_global_styles_wrapper_Menu.ItemLabel, {
-        children: (0,external_wp_i18n_namespaceObject.__)('Style book')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(sidebar_global_styles_wrapper_Menu.ItemHelpText, {
-        children: (0,external_wp_i18n_namespaceObject.__)('Preview blocks and styles.')
-      })]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(sidebar_global_styles_wrapper_Menu.RadioItem, {
-      value: false,
-      checked: !isStyleBookOpened,
-      name: "styles-preview-actions",
-      onChange: () => setIsStyleBookOpened(false),
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(sidebar_global_styles_wrapper_Menu.ItemLabel, {
-        children: (0,external_wp_i18n_namespaceObject.__)('Site')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(sidebar_global_styles_wrapper_Menu.ItemHelpText, {
-        children: (0,external_wp_i18n_namespaceObject.__)('Preview your site.')
-      })]
-    })]
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    isPressed: isStyleBookOpened,
+    icon: library_seen,
+    label: (0,external_wp_i18n_namespaceObject.__)('Style Book'),
+    onClick: () => {
+      setIsStyleBookOpened(!isStyleBookOpened);
+    },
+    size: "compact"
   });
 };
 function GlobalStylesUIWrapper() {
