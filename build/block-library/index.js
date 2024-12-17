@@ -4960,6 +4960,7 @@ const linkOff = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
 
 
 
+
 /**
  * WordPress dependencies
  */
@@ -5029,11 +5030,13 @@ function WidthPanel({
   selectedWidth,
   setAttributes
 }) {
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
     label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
     resetAll: () => setAttributes({
       width: undefined
     }),
+    dropdownMenuProps: dropdownMenuProps,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Button width'),
       isShownByDefault: true,
@@ -7462,6 +7465,11 @@ const column_deprecated_deprecated = [{
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 function ColumnInspectorControls({
   width,
   setAttributes
@@ -7470,6 +7478,7 @@ function ColumnInspectorControls({
   const units = (0,external_wp_components_namespaceObject.__experimentalUseCustomUnits)({
     availableUnits: availableUnits || ['%', 'px', 'em', 'rem', 'vw']
   });
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
     label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
     resetAll: () => {
@@ -7477,6 +7486,7 @@ function ColumnInspectorControls({
         width: undefined
       });
     },
+    dropdownMenuProps: dropdownMenuProps,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       hasValue: () => width !== undefined,
       label: (0,external_wp_i18n_namespaceObject.__)('Width'),
@@ -8131,6 +8141,7 @@ function isPercentageUnit(unit) {
  */
 
 
+
 const edit_DEFAULT_BLOCK = {
   name: 'core/column'
 };
@@ -8218,6 +8229,7 @@ function edit_ColumnInspectorControls({
     }
     replaceInnerBlocks(clientId, innerBlocks);
   }
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
     label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
     resetAll: () => {
@@ -8226,6 +8238,7 @@ function edit_ColumnInspectorControls({
         isStackedOnMobile: true
       });
     },
+    dropdownMenuProps: dropdownMenuProps,
     children: [canInsertColumnBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Columns'),
       isShownByDefault: true,
@@ -16094,6 +16107,11 @@ const details = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(e
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 const details_edit_TEMPLATE = [['core/paragraph', {
   placeholder: (0,external_wp_i18n_namespaceObject.__)('Type / to add a hidden block')
 }]];
@@ -16111,6 +16129,7 @@ function DetailsEdit({
     template: details_edit_TEMPLATE,
     __experimentalCaptureToolbars: true
   });
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 
   // Check if either the block or the inner blocks are selected.
   const hasSelection = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -16130,6 +16149,7 @@ function DetailsEdit({
             showContent: false
           });
         },
+        dropdownMenuProps: dropdownMenuProps,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           isShownByDefault: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Open by default'),
@@ -43287,6 +43307,7 @@ function PostExcerptEditor({
     rendered: renderedExcerpt,
     protected: isProtected
   } = {}] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', postType, 'excerpt', postId);
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 
   /**
    * Check if the post type supports excerpts.
@@ -43428,6 +43449,7 @@ function PostExcerptEditor({
             excerptLength: 55
           });
         },
+        dropdownMenuProps: dropdownMenuProps,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           hasValue: () => showMoreOnNewLine !== true,
           label: (0,external_wp_i18n_namespaceObject.__)('Show link on new line'),
@@ -56820,6 +56842,7 @@ const getNameBySite = name => {
  */
 
 
+
 const SocialLinkURLPopover = ({
   url,
   setAttributes,
@@ -56888,6 +56911,7 @@ const SocialLinkEdit = ({
     label = '',
     rel
   } = attributes;
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const {
     showLabels,
     iconColor,
@@ -56970,6 +56994,7 @@ const SocialLinkEdit = ({
             label: undefined
           });
         },
+        dropdownMenuProps: dropdownMenuProps,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           isShownByDefault: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Text'),
@@ -57245,6 +57270,11 @@ const check = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 const sizeOptions = [{
   name: (0,external_wp_i18n_namespaceObject.__)('Small'),
   value: 'has-small-icon-size'
@@ -57281,6 +57311,7 @@ function SocialLinksEdit(props) {
   const hasSelectedChild = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).hasSelectedInnerBlock(clientId), [clientId]);
   const hasAnySelected = isSelected || hasSelectedChild;
   const logosOnly = attributes.className?.includes('is-style-logos-only');
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 
   // Remove icon background color when logos only style is selected or
   // restore it when any other style is selected.
@@ -57412,6 +57443,7 @@ function SocialLinksEdit(props) {
             showLabels: false
           });
         },
+        dropdownMenuProps: dropdownMenuProps,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           isShownByDefault: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Open links in new tab'),
@@ -59517,6 +59549,7 @@ function isEmptyRow(row) {
 
 
 
+
 const ALIGNMENT_CONTROLS = [{
   icon: align_left,
   title: (0,external_wp_i18n_namespaceObject.__)('Align column left'),
@@ -59566,6 +59599,7 @@ function TableEdit({
   const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseBorderProps)(attributes);
   const tableRef = (0,external_wp_element_namespaceObject.useRef)();
   const [hasTableCreated, setHasTableCreated] = (0,external_wp_element_namespaceObject.useState)(false);
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 
   /**
    * Updates the initial column count used for table creation.
@@ -59897,6 +59931,7 @@ function TableEdit({
             foot: []
           });
         },
+        dropdownMenuProps: dropdownMenuProps,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           hasValue: () => hasFixedLayout !== true,
           label: (0,external_wp_i18n_namespaceObject.__)('Fixed width table cells'),
@@ -61081,6 +61116,11 @@ const tag_cloud_transforms_transforms = {
 
 
 /**
+ * Internal dependencies
+ */
+
+
+/**
  * Minimum number of tags a user can show using this block.
  *
  * @type {number}
@@ -61108,6 +61148,7 @@ function TagCloudEdit({
     largestFontSize
   } = attributes;
   const [availableUnits] = (0,external_wp_blockEditor_namespaceObject.useSettings)('spacing.units');
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 
   // The `pt` unit is used as the default value and is therefore
   // always considered an available unit.
@@ -61175,6 +61216,7 @@ function TagCloudEdit({
           largestFontSize: '22pt'
         });
       },
+      dropdownMenuProps: dropdownMenuProps,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         hasValue: () => taxonomy !== 'post_tag',
         label: (0,external_wp_i18n_namespaceObject.__)('Taxonomy'),
