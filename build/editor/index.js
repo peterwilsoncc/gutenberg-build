@@ -25737,6 +25737,7 @@ function PatternDuplicateModal() {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -25812,6 +25813,18 @@ const getEditorCommandLoader = () => function useEditorCommandLoader() {
   const {
     getCurrentPostId
   } = (0,external_wp_data_namespaceObject.useSelect)(store_store);
+  const {
+    isBlockBasedTheme,
+    canCreateTemplate
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return {
+      isBlockBasedTheme: select(external_wp_coreData_namespaceObject.store).getCurrentTheme()?.is_block_theme,
+      canCreateTemplate: select(external_wp_coreData_namespaceObject.store).canUser('create', {
+        kind: 'postType',
+        name: 'wp_template'
+      })
+    };
+  }, []);
   const allowSwitchEditorMode = isCodeEditingEnabled && isRichEditingEnabled;
   if (isPreviewMode) {
     return {
@@ -25974,6 +25987,21 @@ const getEditorCommandLoader = () => function useEditorCommandLoader() {
         window.open(link, `wp-preview-${postId}`);
       }
     });
+  }
+  if (canCreateTemplate && isBlockBasedTheme) {
+    const isSiteEditor = (0,external_wp_url_namespaceObject.getPath)(window.location.href)?.includes('site-editor.php');
+    if (!isSiteEditor) {
+      commands.push({
+        name: 'core/go-to-site-editor',
+        label: (0,external_wp_i18n_namespaceObject.__)('Open Site Editor'),
+        callback: ({
+          close
+        }) => {
+          close();
+          document.location = 'site-editor.php';
+        }
+      });
+    }
   }
   return {
     commands,
