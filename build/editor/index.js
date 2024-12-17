@@ -12028,7 +12028,7 @@ const ComplementaryAreaHeader = ({
 const noop = () => {};
 function ActionItemSlot({
   name,
-  as: Component = external_wp_components_namespaceObject.ButtonGroup,
+  as: Component = external_wp_components_namespaceObject.MenuGroup,
   fillProps = {},
   bubblesVirtually,
   ...props
@@ -29411,7 +29411,6 @@ function MoreMenu() {
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(mode_switcher, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(action_item.Slot, {
           name: "core/plugin-more-menu",
           label: (0,external_wp_i18n_namespaceObject.__)('Plugins'),
-          as: external_wp_components_namespaceObject.MenuGroup,
           fillProps: {
             onClick: onClose
           }
@@ -29806,7 +29805,6 @@ function PreviewDropdown({
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(action_item.Slot, {
         name: "core/plugin-preview-menu",
-        as: external_wp_components_namespaceObject.MenuGroup,
         fillProps: {
           onClick: onClose
         }

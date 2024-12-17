@@ -895,7 +895,7 @@ const ComplementaryAreaHeader = ({
 const noop = () => {};
 function ActionItemSlot({
   name,
-  as: Component = external_wp_components_namespaceObject.ButtonGroup,
+  as: Component = external_wp_components_namespaceObject.MenuGroup,
   fillProps = {},
   bubblesVirtually,
   ...props
