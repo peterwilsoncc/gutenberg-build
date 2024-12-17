@@ -36987,12 +36987,17 @@ function BlockIcon({
 
 
 
+
 /**
  * Internal dependencies
  */
 
 
 
+
+const {
+  Badge
+} = unlock(external_wp_components_namespaceObject.privateApis);
 function BlockCard({
   title,
   icon,
@@ -37051,9 +37056,14 @@ function BlockCard({
       spacing: 1,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
         className: "block-editor-block-card__title",
-        children: name?.length ? (0,external_wp_i18n_namespaceObject.sprintf)(
+        children: name?.length ? (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(
         // translators:  1: Custom block name. 2: Block title.
-        (0,external_wp_i18n_namespaceObject._x)('%1$s (%2$s)', 'block label'), name, title) : title
+        (0,external_wp_i18n_namespaceObject._x)('<span>%1$s</span> <badge>%2$s</badge>', 'block label'), name, title), {
+          span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            className: "block-editor-block-card__name"
+          }),
+          badge: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Badge, {})
+        }) : title
       }), description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
         className: "block-editor-block-card__description",
         children: description
