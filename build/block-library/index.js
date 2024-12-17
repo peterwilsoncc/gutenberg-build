@@ -33884,8 +33884,9 @@ function NavigationMenuSelector({
     isResolvingNavigationMenus,
     hasResolvedNavigationMenus,
     canUserCreateNavigationMenus,
-    canSwitchNavigationMenu
-  } = useNavigationMenu();
+    canSwitchNavigationMenu,
+    isNavigationMenuMissing
+  } = useNavigationMenu(currentMenuId);
   const [currentTitle] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', 'wp_navigation', 'title');
   const menuChoices = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return navigationMenus?.map(({
@@ -33909,10 +33910,11 @@ function NavigationMenuSelector({
   const noMenuSelected = hasNavigationMenus && !currentMenuId;
   const noBlockMenus = !hasNavigationMenus && hasResolvedNavigationMenus;
   const menuUnavailable = hasResolvedNavigationMenus && currentMenuId === null;
+  const navMenuHasBeenDeleted = currentMenuId && isNavigationMenuMissing;
   let selectorLabel = '';
   if (isResolvingNavigationMenus) {
     selectorLabel = (0,external_wp_i18n_namespaceObject.__)('Loading…');
-  } else if (noMenuSelected || noBlockMenus || menuUnavailable) {
+  } else if (noMenuSelected || noBlockMenus || menuUnavailable || navMenuHasBeenDeleted) {
     // Note: classic Menus may be available.
     selectorLabel = (0,external_wp_i18n_namespaceObject.__)('Choose or create a Navigation Menu');
   } else {
