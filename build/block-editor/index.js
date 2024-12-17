@@ -63453,14 +63453,18 @@ function ZoomOutModeInserters() {
     blockOrder,
     setInserterIsOpened,
     sectionRootClientId,
-    selectedBlockClientId
+    selectedBlockClientId,
+    blockInsertionPoint,
+    insertionPointVisible
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getSettings,
       getBlockOrder,
       getSelectionStart,
       getSelectedBlockClientId,
-      getSectionRootClientId
+      getSectionRootClientId,
+      getBlockInsertionPoint,
+      isBlockInsertionPointVisible
     } = unlock(select(store));
     const root = getSectionRootClientId();
     return {
@@ -63468,7 +63472,9 @@ function ZoomOutModeInserters() {
       blockOrder: getBlockOrder(root),
       sectionRootClientId: root,
       setInserterIsOpened: getSettings().__experimentalSetIsInserterOpened,
-      selectedBlockClientId: getSelectedBlockClientId()
+      selectedBlockClientId: getSelectedBlockClientId(),
+      blockInsertionPoint: getBlockInsertionPoint(),
+      insertionPointVisible: isBlockInsertionPointVisible()
     };
   }, []);
 
@@ -63491,7 +63497,14 @@ function ZoomOutModeInserters() {
   }
   const previousClientId = selectedBlockClientId;
   const index = blockOrder.findIndex(clientId => selectedBlockClientId === clientId);
-  const nextClientId = blockOrder[index + 1];
+  const insertionIndex = index + 1;
+  const nextClientId = blockOrder[insertionIndex];
+
+  // If the block insertion point is visible, and the insertion
+  // indicies match then we don't need to render the inserter.
+  if (insertionPointVisible && blockInsertionPoint?.index === insertionIndex) {
+    return null;
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inbetween, {
     previousClientId: previousClientId,
     nextClientId: nextClientId,
@@ -63499,11 +63512,11 @@ function ZoomOutModeInserters() {
       onClick: () => {
         setInserterIsOpened({
           rootClientId: sectionRootClientId,
-          insertionIndex: index + 1,
+          insertionIndex,
           tab: 'patterns',
           category: 'all'
         });
-        showInsertionPoint(sectionRootClientId, index + 1, {
+        showInsertionPoint(sectionRootClientId, insertionIndex, {
           operation: 'insert'
         });
       }
