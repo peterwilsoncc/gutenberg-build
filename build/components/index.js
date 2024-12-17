@@ -43012,6 +43012,7 @@ function BoxControl({
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -43022,6 +43023,10 @@ function UnforwardedButtonGroup(props, ref) {
     ...restProps
   } = props;
   const classes = dist_clsx('components-button-group', className);
+  external_wp_deprecated_default()('wp.components.ButtonGroup', {
+    since: '6.8',
+    alternative: 'wp.components.ToggleGroupControl'
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ref: ref,
     role: "group",
@@ -43033,6 +43038,8 @@ function UnforwardedButtonGroup(props, ref) {
 /**
  * ButtonGroup can be used to group any related buttons together. To emphasize
  * related buttons, a group should share a common container.
+ *
+ * @deprecated Use `ToggleGroupControl` instead.
  *
  * ```jsx
  * import { Button, ButtonGroup } from '@wordpress/components';
