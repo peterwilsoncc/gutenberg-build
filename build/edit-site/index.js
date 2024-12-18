@@ -38536,7 +38536,8 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
                   sort: {
                     field: fieldId,
                     direction
-                  }
+                  },
+                  showLevels: false
                 });
               },
               children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_header_menu_Menu.ItemLabel, {
@@ -38666,6 +38667,7 @@ function getClickableItemProps({
 
 function ColumnPrimary({
   item,
+  level,
   titleField,
   mediaField,
   descriptionField,
@@ -38688,11 +38690,14 @@ function ColumnPrimary({
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       spacing: 0,
-      children: [titleField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      children: [titleField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
         ...clickableProps,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(titleField.render, {
+        children: [level !== undefined && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
+          className: "dataviews-view-table__level",
+          children: ['—'.repeat(level), "\xA0"]
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(titleField.render, {
           item: item
-        })
+        })]
       }), descriptionField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(descriptionField.render, {
         item: item
       })]
@@ -38744,6 +38749,7 @@ function TableColumnField({
 function TableRow({
   hasBulkActions,
   item,
+  level,
   actions,
   fields,
   id,
@@ -38817,6 +38823,7 @@ function TableRow({
     }), hasPrimaryColumn && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("td", {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(column_primary, {
         item: item,
+        level: level,
         titleField: showTitle ? titleField : undefined,
         mediaField: showMedia ? mediaField : undefined,
         descriptionField: showDescription ? descriptionField : undefined,
@@ -38867,6 +38874,7 @@ function ViewTable({
   data,
   fields,
   getItemId,
+  getItemLevel,
   isLoading = false,
   onChangeView,
   onChangeSelection,
@@ -38998,6 +39006,7 @@ function ViewTable({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("tbody", {
         children: hasData && data.map((item, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TableRow, {
           item: item,
+          level: view.showLevels && typeof getItemLevel === 'function' ? getItemLevel(item) : undefined,
           hasBulkActions: hasBulkActions,
           actions: actions,
           fields: fields,
@@ -39862,6 +39871,7 @@ function DataViewsLayout() {
     data,
     fields,
     getItemId,
+    getItemLevel,
     isLoading,
     view,
     onChangeView,
@@ -39877,6 +39887,7 @@ function DataViewsLayout() {
     data: data,
     fields: fields,
     getItemId: getItemId,
+    getItemLevel: getItemLevel,
     isLoading: isLoading,
     onChangeView: onChangeView,
     onChangeSelection: onChangeSelection,
@@ -40238,7 +40249,8 @@ function SortFieldControl() {
         sort: {
           direction: view?.sort?.direction || 'desc',
           field: value
-        }
+        },
+        showLevels: false
       });
     }
   });
@@ -40273,7 +40285,8 @@ function SortDirectionControl() {
             field: view.sort?.field ||
             // If there is no field assigned as the sorting field assign the first sortable field.
             fields.find(field => field.enableSorting !== false)?.id || ''
-          }
+          },
+          showLevels: false
         });
         return;
       }
@@ -40673,6 +40686,7 @@ function DataViews({
   actions = dataviews_EMPTY_ARRAY,
   data,
   getItemId = defaultGetItemId,
+  getItemLevel,
   isLoading = false,
   paginationInfo,
   defaultLayouts,
@@ -40715,6 +40729,7 @@ function DataViews({
       openedFilter,
       setOpenedFilter,
       getItemId,
+      getItemLevel,
       isItemClickable,
       onClickItem
     },
@@ -44502,9 +44517,10 @@ const DEFAULT_POST_BASE = {
   page: 1,
   perPage: 20,
   sort: {
-    field: 'date',
-    direction: 'desc'
+    field: 'title',
+    direction: 'asc'
   },
+  showLevels: true,
   titleField: 'title',
   mediaField: 'featured_media',
   fields: ['author', 'status'],
@@ -45342,6 +45358,9 @@ const DEFAULT_STATUSES = 'draft,future,pending,private,publish'; // All but 'tra
 function getItemId(item) {
   return item.id.toString();
 }
+function getItemLevel(item) {
+  return item.level;
+}
 function PostList({
   postType
 }) {
@@ -45427,6 +45446,7 @@ function PostList({
       _embed: 'author',
       order: view.sort?.direction,
       orderby: view.sort?.field,
+      orderby_hierarchy: !!view.showLevels,
       search: view.search,
       ...filters
     };
@@ -45527,6 +45547,7 @@ function PostList({
         history.navigate(`/${postType}/${id}?canvas=edit`);
       },
       getItemId: getItemId,
+      getItemLevel: getItemLevel,
       defaultLayouts: default_views_defaultLayouts,
       header: window.__experimentalQuickEditDataViews && view.type !== LAYOUT_LIST && postType === 'page' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         size: "compact",
