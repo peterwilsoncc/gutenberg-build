@@ -32183,7 +32183,8 @@ const DataViewsContext = (0,external_wp_element_namespaceObject.createContext)({
   setOpenedFilter: () => {},
   openedFilter: null,
   getItemId: item => item.id,
-  isItemClickable: () => true
+  isItemClickable: () => true,
+  containerWidth: 0
 });
 /* harmony default export */ const dataviews_context = (DataViewsContext);
 
@@ -39047,7 +39048,6 @@ function ViewTable({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -39080,36 +39080,34 @@ const viewportBreaks = {
     default: 2
   }
 };
+
+/**
+ * Breakpoints were adjusted from media queries breakpoints to account for
+ * the sidebar width. This was done to match the existing styles we had.
+ */
+const BREAKPOINTS = {
+  xhuge: 1520,
+  huge: 1140,
+  xlarge: 780,
+  large: 480,
+  mobile: 0
+};
 function useViewPortBreakpoint() {
-  const isXHuge = (0,external_wp_compose_namespaceObject.useViewportMatch)('xhuge', '>=');
-  const isHuge = (0,external_wp_compose_namespaceObject.useViewportMatch)('huge', '>=');
-  const isXlarge = (0,external_wp_compose_namespaceObject.useViewportMatch)('xlarge', '>=');
-  const isLarge = (0,external_wp_compose_namespaceObject.useViewportMatch)('large', '>=');
-  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('mobile', '>=');
-  if (isXHuge) {
-    return 'xhuge';
+  const containerWidth = (0,external_wp_element_namespaceObject.useContext)(dataviews_context).containerWidth;
+  for (const [key, value] of Object.entries(BREAKPOINTS)) {
+    if (containerWidth >= value) {
+      return key;
+    }
   }
-  if (isHuge) {
-    return 'huge';
-  }
-  if (isXlarge) {
-    return 'xlarge';
-  }
-  if (isLarge) {
-    return 'large';
-  }
-  if (isMobile) {
-    return 'mobile';
-  }
-  return null;
+  return 'mobile';
 }
 function useUpdatedPreviewSizeOnViewportChange() {
-  const viewport = useViewPortBreakpoint();
   const view = (0,external_wp_element_namespaceObject.useContext)(dataviews_context).view;
+  const viewport = useViewPortBreakpoint();
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
     const previewSize = view.layout?.previewSize;
     let newPreviewSize;
-    if (!viewport || !previewSize) {
+    if (!previewSize) {
       return;
     }
     const breakValues = viewportBreaks[viewport];
@@ -39126,7 +39124,7 @@ function PreviewSizePicker() {
   const viewport = useViewPortBreakpoint();
   const context = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const view = context.view;
-  const breakValues = viewportBreaks[viewport || 'mobile'];
+  const breakValues = viewportBreaks[viewport];
   const previewSizeToUse = view.layout?.previewSize || breakValues.default;
   const marks = (0,external_wp_element_namespaceObject.useMemo)(() => Array.from({
     length: breakValues.max - breakValues.min + 1
@@ -39135,7 +39133,7 @@ function PreviewSizePicker() {
       value: breakValues.min + i
     };
   }), [breakValues]);
-  if (!viewport) {
+  if (viewport === 'mobile') {
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
@@ -40670,6 +40668,7 @@ const DataViewsViewConfig = (0,external_wp_element_namespaceObject.memo)(_DataVi
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -40703,6 +40702,12 @@ function DataViews({
   isItemClickable = defaultIsItemClickable,
   header
 }) {
+  const [containerWidth, setContainerWidth] = (0,external_wp_element_namespaceObject.useState)(0);
+  const containerRef = (0,external_wp_compose_namespaceObject.useResizeObserver)(resizeObserverEntries => {
+    setContainerWidth(resizeObserverEntries[0].borderBoxSize[0].inlineSize);
+  }, {
+    box: 'border-box'
+  });
   const [selectionState, setSelectionState] = (0,external_wp_element_namespaceObject.useState)([]);
   const isUncontrolled = selectionProperty === undefined || onChangeSelection === undefined;
   const selection = isUncontrolled ? selectionState : selectionProperty;
@@ -40738,10 +40743,12 @@ function DataViews({
       getItemId,
       getItemLevel,
       isItemClickable,
-      onClickItem
+      onClickItem,
+      containerWidth
     },
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "dataviews-wrapper",
+      ref: containerRef,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         alignment: "top",
         justify: "space-between",
