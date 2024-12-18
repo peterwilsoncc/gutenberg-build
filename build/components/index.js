@@ -43020,13 +43020,16 @@ function BoxControl({
 function UnforwardedButtonGroup(props, ref) {
   const {
     className,
+    __shouldNotWarnDeprecated,
     ...restProps
   } = props;
   const classes = dist_clsx('components-button-group', className);
-  external_wp_deprecated_default()('wp.components.ButtonGroup', {
-    since: '6.8',
-    alternative: 'wp.components.ToggleGroupControl'
-  });
+  if (!__shouldNotWarnDeprecated) {
+    external_wp_deprecated_default()('wp.components.ButtonGroup', {
+      since: '6.8',
+      alternative: 'wp.components.__experimentalToggleGroupControl'
+    });
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ref: ref,
     role: "group",
@@ -63060,6 +63063,7 @@ const radio_Radio = (0,external_wp_element_namespaceObject.forwardRef)(Unforward
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -63087,11 +63091,16 @@ function UnforwardedRadioGroup({
     store: radioStore,
     disabled
   }), [radioStore, disabled]);
+  external_wp_deprecated_default()('wp.components.__experimentalRadioGroup', {
+    alternative: 'wp.components.RadioControl or wp.components.__experimentalToggleGroupControl',
+    since: '6.8'
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RadioGroupContext.Provider, {
     value: contextValue,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RadioGroup, {
       store: radioStore,
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(button_group, {
+        __shouldNotWarnDeprecated: true,
         children: children
       }),
       "aria-label": label,
