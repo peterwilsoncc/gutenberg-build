@@ -11619,6 +11619,7 @@ const computePopoverPosition = c => c === null || Number.isNaN(c) ? undefined : 
 
 
 
+
 /**
  * WordPress dependencies
  */
@@ -31632,27 +31633,6 @@ const BaseControl = Object.assign(contextConnectWithoutRef(UnconnectedBaseContro
 });
 /* harmony default export */ const base_control = (BaseControl);
 
-;// ./packages/components/build-module/utils/deprecated-36px-size.js
-/**
- * WordPress dependencies
- */
-
-function maybeWarnDeprecated36pxSize({
-  componentName,
-  __next40pxDefaultSize,
-  size,
-  __shouldNotWarnDeprecated36pxSize
-}) {
-  if (__shouldNotWarnDeprecated36pxSize || __next40pxDefaultSize || size !== undefined && size !== 'default') {
-    return;
-  }
-  external_wp_deprecated_default()(`36px default size for wp.components.${componentName}`, {
-    since: '6.8',
-    version: '7.1',
-    hint: 'Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version.'
-  });
-}
-
 ;// ./packages/components/build-module/input-control/index.js
 /**
  * External dependencies
@@ -31674,7 +31654,6 @@ function maybeWarnDeprecated36pxSize({
 
 
 
-
 const input_control_noop = () => {};
 function input_control_useUniqueId(idProp) {
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(InputControl);
@@ -31684,7 +31663,6 @@ function input_control_useUniqueId(idProp) {
 function UnforwardedInputControl(props, ref) {
   const {
     __next40pxDefaultSize,
-    __shouldNotWarnDeprecated36pxSize,
     __unstableStateReducer: stateReducer = state => state,
     __unstableInputWidth,
     className,
@@ -31715,12 +31693,6 @@ function UnforwardedInputControl(props, ref) {
   const helpProp = !!help ? {
     'aria-describedby': `${id}__help`
   } : {};
-  maybeWarnDeprecated36pxSize({
-    componentName: 'InputControl',
-    __next40pxDefaultSize,
-    size,
-    __shouldNotWarnDeprecated36pxSize
-  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control, {
     className: classes,
     help: help,
@@ -31774,7 +31746,6 @@ function UnforwardedInputControl(props, ref) {
  *
  *   return (
  *  	<InputControl
- * 			__next40pxDefaultSize
  *  		value={ value }
  *  		onChange={ ( nextValue ) => setValue( nextValue ?? '' ) }
  *  	/>
@@ -32504,6 +32475,27 @@ function UnconnectedHStack(props, forwardedRef) {
 const HStack = contextConnect(UnconnectedHStack, 'HStack');
 /* harmony default export */ const h_stack_component = (HStack);
 
+;// ./packages/components/build-module/utils/deprecated-36px-size.js
+/**
+ * WordPress dependencies
+ */
+
+function maybeWarnDeprecated36pxSize({
+  componentName,
+  __next40pxDefaultSize,
+  size,
+  __shouldNotWarnDeprecated36pxSize
+}) {
+  if (__shouldNotWarnDeprecated36pxSize || __next40pxDefaultSize || size !== undefined && size !== 'default') {
+    return;
+  }
+  external_wp_deprecated_default()(`36px default size for wp.components.${componentName}`, {
+    since: '6.8',
+    version: '7.1',
+    hint: 'Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version.'
+  });
+}
+
 ;// ./packages/components/build-module/number-control/index.js
 /**
  * External dependencies
@@ -32701,7 +32693,6 @@ function UnforwardedNumberControl(props, forwardedRef) {
       return (_stateReducerProp = stateReducerProp?.(baseState, action)) !== null && _stateReducerProp !== void 0 ? _stateReducerProp : baseState;
     },
     size: size,
-    __shouldNotWarnDeprecated36pxSize: true,
     suffix: spinControls === 'custom' ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [suffix, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {
         marginBottom: 0,
@@ -33536,23 +33527,46 @@ function useSlot(name) {
  * WordPress dependencies
  */
 
+/**
+ * Internal dependencies
+ */
+
+const initialValue = {
+  registerSlot: () => {},
+  unregisterSlot: () => {},
+  registerFill: () => {},
+  unregisterFill: () => {},
+  getSlot: () => undefined,
+  getFills: () => [],
+  subscribe: () => () => {}
+};
+const context_SlotFillContext = (0,external_wp_element_namespaceObject.createContext)(initialValue);
+/* harmony default export */ const context = (context_SlotFillContext);
+
+;// ./packages/components/build-module/slot-fill/use-slot.js
+/**
+ * WordPress dependencies
+ */
 
 
 /**
  * Internal dependencies
  */
 
-const initialValue = {
-  slots: (0,external_wp_compose_namespaceObject.observableMap)(),
-  fills: (0,external_wp_compose_namespaceObject.observableMap)(),
-  registerSlot: () => {},
-  unregisterSlot: () => {},
-  registerFill: () => {},
-  unregisterFill: () => {},
-  updateFill: () => {}
+/**
+ * React hook returning the active slot given a name.
+ *
+ * @param name Slot name.
+ * @return Slot object.
+ */
+const use_slot_useSlot = name => {
+  const {
+    getSlot,
+    subscribe
+  } = (0,external_wp_element_namespaceObject.useContext)(context);
+  return (0,external_wp_element_namespaceObject.useSyncExternalStore)(subscribe, () => getSlot(name), () => getSlot(name));
 };
-const context_SlotFillContext = (0,external_wp_element_namespaceObject.createContext)(initialValue);
-/* harmony default export */ const context = (context_SlotFillContext);
+/* harmony default export */ const use_slot = (use_slot_useSlot);
 
 ;// ./packages/components/build-module/slot-fill/fill.js
 /**
@@ -33564,24 +33578,29 @@ const context_SlotFillContext = (0,external_wp_element_namespaceObject.createCon
  * Internal dependencies
  */
 
+
 function Fill({
   name,
   children
 }) {
   const registry = (0,external_wp_element_namespaceObject.useContext)(context);
-  const instanceRef = (0,external_wp_element_namespaceObject.useRef)({});
-  const childrenRef = (0,external_wp_element_namespaceObject.useRef)(children);
+  const slot = use_slot(name);
+  const ref = (0,external_wp_element_namespaceObject.useRef)({
+    name,
+    children
+  });
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    childrenRef.current = children;
-  }, [children]);
-  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    const instance = instanceRef.current;
-    registry.registerFill(name, instance, childrenRef.current);
-    return () => registry.unregisterFill(name, instance);
+    const refValue = ref.current;
+    refValue.name = name;
+    registry.registerFill(name, refValue);
+    return () => registry.unregisterFill(name, refValue);
   }, [registry, name]);
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    registry.updateFill(name, instanceRef.current, childrenRef.current);
-  });
+    ref.current.children = children;
+    if (slot) {
+      slot.rerender();
+    }
+  }, [slot, children]);
   return null;
 }
 
@@ -33594,7 +33613,6 @@ function Fill({
 /**
  * WordPress dependencies
  */
-
 
 
 /**
@@ -33611,51 +33629,44 @@ function Fill({
 function isFunction(maybeFunc) {
   return typeof maybeFunc === 'function';
 }
-function addKeysToChildren(children) {
-  return external_wp_element_namespaceObject.Children.map(children, (child, childIndex) => {
-    if (!child || typeof child === 'string') {
-      return child;
-    }
-    let childKey = childIndex;
-    if (typeof child === 'object' && 'key' in child && child?.key) {
-      childKey = child.key;
-    }
-    return (0,external_wp_element_namespaceObject.cloneElement)(child, {
-      key: childKey
-    });
-  });
-}
 function Slot(props) {
-  var _useObservableValue;
+  var _registry$getFills;
   const registry = (0,external_wp_element_namespaceObject.useContext)(context);
-  const instanceRef = (0,external_wp_element_namespaceObject.useRef)({});
+  const [, rerender] = (0,external_wp_element_namespaceObject.useReducer)(() => [], []);
+  const ref = (0,external_wp_element_namespaceObject.useRef)({
+    rerender
+  });
   const {
     name,
     children,
     fillProps = {}
   } = props;
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    const instance = instanceRef.current;
-    registry.registerSlot(name, instance);
-    return () => registry.unregisterSlot(name, instance);
+    const refValue = ref.current;
+    registry.registerSlot(name, refValue);
+    return () => registry.unregisterSlot(name, refValue);
   }, [registry, name]);
-  let fills = (_useObservableValue = (0,external_wp_compose_namespaceObject.useObservableValue)(registry.fills, name)) !== null && _useObservableValue !== void 0 ? _useObservableValue : [];
-  const currentSlot = (0,external_wp_compose_namespaceObject.useObservableValue)(registry.slots, name);
-
-  // Fills should only be rendered in the currently registered instance of the slot.
-  if (currentSlot !== instanceRef.current) {
-    fills = [];
-  }
-  const renderedFills = fills.map(fill => {
+  const fills = ((_registry$getFills = registry.getFills(name, ref.current)) !== null && _registry$getFills !== void 0 ? _registry$getFills : []).map(fill => {
     const fillChildren = isFunction(fill.children) ? fill.children(fillProps) : fill.children;
-    return addKeysToChildren(fillChildren);
+    return external_wp_element_namespaceObject.Children.map(fillChildren, (child, childIndex) => {
+      if (!child || typeof child === 'string') {
+        return child;
+      }
+      let childKey = childIndex;
+      if (typeof child === 'object' && 'key' in child && child?.key) {
+        childKey = child.key;
+      }
+      return (0,external_wp_element_namespaceObject.cloneElement)(child, {
+        key: childKey
+      });
+    });
   }).filter(
   // In some cases fills are rendered only when some conditions apply.
   // This ensures that we only use non-empty fills when rendering, i.e.,
   // it allows us to render wrappers only when the fills are actually present.
   element => !(0,external_wp_element_namespaceObject.isEmptyElement)(element));
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: isFunction(children) ? children(renderedFills) : renderedFills
+    children: isFunction(children) ? children(fills) : fills
   });
 }
 /* harmony default export */ const slot = (Slot);
@@ -33992,66 +34003,80 @@ function SlotFillProvider({
  */
 
 
-
 function provider_createSlotRegistry() {
-  const slots = (0,external_wp_compose_namespaceObject.observableMap)();
-  const fills = (0,external_wp_compose_namespaceObject.observableMap)();
-  function registerSlot(name, instance) {
-    slots.set(name, instance);
+  const slots = {};
+  const fills = {};
+  let listeners = [];
+  function registerSlot(name, slot) {
+    const previousSlot = slots[name];
+    slots[name] = slot;
+    triggerListeners();
+
+    // Sometimes the fills are registered after the initial render of slot
+    // But before the registerSlot call, we need to rerender the slot.
+    forceUpdateSlot(name);
+
+    // If a new instance of a slot is being mounted while another with the
+    // same name exists, force its update _after_ the new slot has been
+    // assigned into the instance, such that its own rendering of children
+    // will be empty (the new Slot will subsume all fills for this name).
+    if (previousSlot) {
+      previousSlot.rerender();
+    }
+  }
+  function registerFill(name, instance) {
+    fills[name] = [...(fills[name] || []), instance];
+    forceUpdateSlot(name);
   }
   function unregisterSlot(name, instance) {
     // If a previous instance of a Slot by this name unmounts, do nothing,
     // as the slot and its fills should only be removed for the current
     // known instance.
-    if (slots.get(name) !== instance) {
+    if (slots[name] !== instance) {
       return;
     }
-    slots.delete(name);
-  }
-  function registerFill(name, instance, children) {
-    fills.set(name, [...(fills.get(name) || []), {
-      instance,
-      children
-    }]);
+    delete slots[name];
+    triggerListeners();
   }
   function unregisterFill(name, instance) {
-    const fillsForName = fills.get(name);
-    if (!fillsForName) {
-      return;
-    }
-    fills.set(name, fillsForName.filter(fill => fill.instance !== instance));
+    var _fills$name$filter;
+    fills[name] = (_fills$name$filter = fills[name]?.filter(fill => fill !== instance)) !== null && _fills$name$filter !== void 0 ? _fills$name$filter : [];
+    forceUpdateSlot(name);
   }
-  function updateFill(name, instance, children) {
-    const fillsForName = fills.get(name);
-    if (!fillsForName) {
-      return;
+  function getSlot(name) {
+    return slots[name];
+  }
+  function getFills(name, slotInstance) {
+    // Fills should only be returned for the current instance of the slot
+    // in which they occupy.
+    if (slots[name] !== slotInstance) {
+      return [];
     }
-    const fillForInstance = fillsForName.find(f => f.instance === instance);
-    if (!fillForInstance) {
-      return;
+    return fills[name];
+  }
+  function forceUpdateSlot(name) {
+    const slot = getSlot(name);
+    if (slot) {
+      slot.rerender();
     }
-    if (fillForInstance.children === children) {
-      return;
-    }
-    fills.set(name, fillsForName.map(f => {
-      if (f.instance === instance) {
-        // Replace with new record with updated `children`.
-        return {
-          instance,
-          children
-        };
-      }
-      return f;
-    }));
+  }
+  function triggerListeners() {
+    listeners.forEach(listener => listener());
+  }
+  function subscribe(listener) {
+    listeners.push(listener);
+    return () => {
+      listeners = listeners.filter(l => l !== listener);
+    };
   }
   return {
-    slots,
-    fills,
     registerSlot,
     unregisterSlot,
     registerFill,
     unregisterFill,
-    updateFill
+    getSlot,
+    getFills,
+    subscribe
   };
 }
 function provider_SlotFillProvider({
@@ -35628,6 +35653,7 @@ function useComputeControlledOrUncontrolledValue(valueProp) {
 
 
 
+
 /**
  * WordPress dependencies
  */
@@ -37103,7 +37129,6 @@ const SelectControlChevronDown = () => {
 
 
 
-
 function select_control_useUniqueId(idProp) {
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(SelectControl);
   const id = `inspector-select-control-${instanceId}`;
@@ -37146,7 +37171,6 @@ function UnforwardedSelectControl(props, ref) {
     variant = 'default',
     __next40pxDefaultSize = false,
     __nextHasNoMarginBottom = false,
-    __shouldNotWarnDeprecated36pxSize,
     ...restProps
   } = useDeprecated36pxDefaultSizeProp(props);
   const id = select_control_useUniqueId(idProp);
@@ -37174,12 +37198,6 @@ function UnforwardedSelectControl(props, ref) {
     });
   };
   const classes = dist_clsx('components-select-control', className);
-  maybeWarnDeprecated36pxSize({
-    componentName: 'SelectControl',
-    __next40pxDefaultSize,
-    size,
-    __shouldNotWarnDeprecated36pxSize
-  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control, {
     help: help,
     id: id,
@@ -37233,7 +37251,6 @@ function UnforwardedSelectControl(props, ref) {
  *
  *   return (
  *     <SelectControl
- *       __next40pxDefaultSize
  *       __nextHasNoMarginBottom
  *       label="Size"
  *       value={ size }
@@ -37480,7 +37497,7 @@ const trackBackgroundColor = ({
 };
 const Track = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1epgpqk9"
-} : 0)("background-color:currentColor;border-radius:", config_values.radiusFull, ";height:", railHeight, "px;pointer-events:none;display:block;position:absolute;margin-top:", (rangeHeightValue - railHeight) / 2, "px;top:0;.is-marked &{@media not ( prefers-reduced-motion ){transition:width ease 0.1s;}}", trackBackgroundColor, ";" + ( true ? "" : 0));
+} : 0)("background-color:currentColor;border-radius:", config_values.radiusFull, ";height:", railHeight, "px;pointer-events:none;display:block;position:absolute;margin-top:", (rangeHeightValue - railHeight) / 2, "px;top:0;@media not ( prefers-reduced-motion ){transition:width ease 0.1s;}", trackBackgroundColor, ";" + ( true ? "" : 0));
 const MarksWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1epgpqk8"
 } : 0)( true ? {
@@ -37511,7 +37528,7 @@ const thumbColor = ({
 }) => disabled ? /*#__PURE__*/emotion_react_browser_esm_css("background-color:", COLORS.gray[400], ";" + ( true ? "" : 0),  true ? "" : 0) : /*#__PURE__*/emotion_react_browser_esm_css("background-color:", COLORS.theme.accent, ";" + ( true ? "" : 0),  true ? "" : 0);
 const ThumbWrapper = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1epgpqk5"
-} : 0)("align-items:center;display:flex;height:", thumbSize, "px;justify-content:center;margin-top:", (rangeHeightValue - thumbSize) / 2, "px;outline:0;pointer-events:none;position:absolute;top:0;user-select:none;width:", thumbSize, "px;border-radius:", config_values.radiusRound, ";z-index:3;.is-marked &{@media not ( prefers-reduced-motion ){transition:left ease 0.1s;}}", thumbColor, ";", rtl({
+} : 0)("align-items:center;display:flex;height:", thumbSize, "px;justify-content:center;margin-top:", (rangeHeightValue - thumbSize) / 2, "px;outline:0;pointer-events:none;position:absolute;top:0;user-select:none;width:", thumbSize, "px;border-radius:", config_values.radiusRound, ";z-index:3;@media not ( prefers-reduced-motion ){transition:left ease 0.1s;}", thumbColor, ";", rtl({
   marginLeft: -10
 }), ";", rtl({
   transform: 'translateX( 4.5px )'
@@ -42041,23 +42058,6 @@ const UnconnectedBorderBoxControl = (props, forwardedRef) => {
 const BorderBoxControl = contextConnect(UnconnectedBorderBoxControl, 'BorderBoxControl');
 /* harmony default export */ const border_box_control_component = (BorderBoxControl);
 
-;// ./packages/icons/build-module/library/settings.js
-/**
- * WordPress dependencies
- */
-
-
-const settings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m19 7.5h-7.628c-.3089-.87389-1.1423-1.5-2.122-1.5-.97966 0-1.81309.62611-2.12197 1.5h-2.12803v1.5h2.12803c.30888.87389 1.14231 1.5 2.12197 1.5.9797 0 1.8131-.62611 2.122-1.5h7.628z"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m19 15h-2.128c-.3089-.8739-1.1423-1.5-2.122-1.5s-1.8131.6261-2.122 1.5h-7.628v1.5h7.628c.3089.8739 1.1423 1.5 2.122 1.5s1.8131-.6261 2.122-1.5h2.128z"
-  })]
-});
-/* harmony default export */ const library_settings = (settings);
-
 ;// ./packages/components/build-module/box-control/utils.js
 /* wp:polyfill */
 /**
@@ -42370,53 +42370,6 @@ function getAllowedSides(sides) {
   return allowedSides;
 }
 
-/**
- * Checks if a value is a preset value.
- *
- * @param value     The value to check.
- * @param presetKey The preset key to check against.
- * @return Whether the value is a preset value.
- */
-function isValuePreset(value, presetKey) {
-  return value.startsWith(`var:preset|${presetKey}|`);
-}
-
-/**
- * Returns the index of the preset value in the presets array.
- *
- * @param value     The value to check.
- * @param presetKey The preset key to check against.
- * @param presets   The array of presets to search.
- * @return The index of the preset value in the presets array.
- */
-function getPresetIndexFromValue(value, presetKey, presets) {
-  if (!isValuePreset(value, presetKey)) {
-    return undefined;
-  }
-  const match = value.match(new RegExp(`^var:preset\\|${presetKey}\\|(.+)$`));
-  if (!match) {
-    return undefined;
-  }
-  const slug = match[1];
-  const index = presets.findIndex(preset => {
-    return preset.slug === slug;
-  });
-  return index !== -1 ? index : undefined;
-}
-
-/**
- * Returns the preset value from the index.
- *
- * @param index     The index of the preset value in the presets array.
- * @param presetKey The preset key to check against.
- * @param presets   The array of presets to search.
- * @return The preset value from the index.
- */
-function getPresetValueFromIndex(index, presetKey, presets) {
-  const preset = presets[index];
-  return `var:preset|${presetKey}|${preset.slug}`;
-}
-
 ;// ./packages/components/build-module/box-control/styles/box-control-icon-styles.js
 
 function box_control_icon_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
@@ -42589,12 +42542,9 @@ const FlexedRangeControl = /*#__PURE__*/emotion_styled_base_browser_esm(range_co
 
 
 
-
-
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -42644,9 +42594,6 @@ function BoxInputControl({
   setSelectedUnits,
   sides,
   side,
-  min = 0,
-  presets,
-  presetKey,
   ...props
 }) {
   var _CUSTOM_VALUE_SETTING, _CUSTOM_VALUE_SETTING2;
@@ -42658,15 +42605,6 @@ function BoxInputControl({
   };
   const handleOnChange = nextValues => {
     onChange(nextValues);
-  };
-  const handleRawOnValueChange = next => {
-    const nextValues = {
-      ...values
-    };
-    defaultValuesToModify.forEach(modifiedSide => {
-      nextValues[modifiedSide] = next;
-    });
-    handleOnChange(nextValues);
   };
   const handleOnValueChange = (next, extra) => {
     const nextValues = {
@@ -42707,91 +42645,45 @@ function BoxInputControl({
   const isMixedUnit = defaultValuesToModify.length > 1 && mergedValue === undefined && defaultValuesToModify.some(s => selectedUnits[s] !== computedUnit);
   const usedValue = mergedValue === undefined && computedUnit ? computedUnit : mergedValue;
   const mixedPlaceholder = isMixed || isMixedUnit ? (0,external_wp_i18n_namespaceObject.__)('Mixed') : undefined;
-  const hasPresets = presets && presets.length > 0 && presetKey;
-  const hasPresetValue = hasPresets && mergedValue !== undefined && !isMixed && isValuePreset(mergedValue, presetKey);
-  const [showCustomValueControl, setShowCustomValueControl] = (0,external_wp_element_namespaceObject.useState)(!hasPresets || !hasPresetValue && !isMixed && mergedValue !== undefined);
-  const presetIndex = hasPresetValue ? getPresetIndexFromValue(mergedValue, presetKey, presets) : undefined;
-  const marks = hasPresets ? [{
-    value: 0,
-    label: '',
-    tooltip: (0,external_wp_i18n_namespaceObject.__)('None')
-  }].concat(presets.map((preset, index) => {
-    var _preset$name;
-    return {
-      value: index + 1,
-      label: '',
-      tooltip: (_preset$name = preset.name) !== null && _preset$name !== void 0 ? _preset$name : preset.slug
-    };
-  })) : [];
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(InputWrapper, {
     expanded: true,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedBoxControlIcon, {
       side: side,
       sides: sides
-    }), showCustomValueControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tooltip, {
-        placement: "top-end",
-        text: LABELS[side],
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledUnitControl, {
-          ...props,
-          min: min,
-          __shouldNotWarnDeprecated36pxSize: true,
-          __next40pxDefaultSize: __next40pxDefaultSize,
-          className: "component-box-control__unit-control",
-          id: inputId,
-          isPressEnterToChange: true,
-          disableUnits: isMixed || isMixedUnit,
-          value: usedValue,
-          onChange: handleOnValueChange,
-          onUnitChange: handleOnUnitChange,
-          onFocus: handleOnFocus,
-          label: LABELS[side],
-          placeholder: mixedPlaceholder,
-          hideLabelFromVision: true
-        })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedRangeControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: __next40pxDefaultSize,
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tooltip, {
+      placement: "top-end",
+      text: LABELS[side],
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledUnitControl, {
+        ...props,
         __shouldNotWarnDeprecated36pxSize: true,
-        "aria-controls": inputId,
+        __next40pxDefaultSize: __next40pxDefaultSize,
+        className: "component-box-control__unit-control",
+        id: inputId,
+        isPressEnterToChange: true,
+        disableUnits: isMixed || isMixedUnit,
+        value: usedValue,
+        onChange: handleOnValueChange,
+        onUnitChange: handleOnUnitChange,
+        onFocus: handleOnFocus,
         label: LABELS[side],
-        hideLabelFromVision: true,
-        onChange: newValue => {
-          handleOnValueChange(newValue !== undefined ? [newValue, computedUnit].join('') : undefined);
-        },
-        min: isFinite(min) ? min : 0,
-        max: (_CUSTOM_VALUE_SETTING = CUSTOM_VALUE_SETTINGS[computedUnit !== null && computedUnit !== void 0 ? computedUnit : 'px']?.max) !== null && _CUSTOM_VALUE_SETTING !== void 0 ? _CUSTOM_VALUE_SETTING : 10,
-        step: (_CUSTOM_VALUE_SETTING2 = CUSTOM_VALUE_SETTINGS[computedUnit !== null && computedUnit !== void 0 ? computedUnit : 'px']?.step) !== null && _CUSTOM_VALUE_SETTING2 !== void 0 ? _CUSTOM_VALUE_SETTING2 : 0.1,
-        value: parsedQuantity !== null && parsedQuantity !== void 0 ? parsedQuantity : 0,
-        withInputField: false
-      })]
-    }), hasPresets && !showCustomValueControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedRangeControl, {
-      __next40pxDefaultSize: true,
-      className: "spacing-sizes-control__range-control",
-      value: presetIndex !== undefined ? presetIndex + 1 : 0,
-      onChange: newIndex => {
-        const newValue = newIndex === 0 || newIndex === undefined ? undefined : getPresetValueFromIndex(newIndex - 1, presetKey, presets);
-        handleRawOnValueChange(newValue);
-      },
-      withInputField: false,
-      "aria-valuenow": presetIndex !== undefined ? presetIndex + 1 : 0,
-      "aria-valuetext": marks[presetIndex !== undefined ? presetIndex + 1 : 0].label,
-      renderTooltipContent: index => marks[!index ? 0 : index].tooltip,
-      min: 0,
-      max: marks.length - 1,
-      marks: marks,
+        placeholder: mixedPlaceholder,
+        hideLabelFromVision: true
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedRangeControl, {
+      __nextHasNoMarginBottom: true,
+      __next40pxDefaultSize: __next40pxDefaultSize,
+      __shouldNotWarnDeprecated36pxSize: true,
+      "aria-controls": inputId,
       label: LABELS[side],
       hideLabelFromVision: true,
-      __nextHasNoMarginBottom: true
-    }), hasPresets && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-      label: showCustomValueControl ? (0,external_wp_i18n_namespaceObject.__)('Use size preset') : (0,external_wp_i18n_namespaceObject.__)('Set custom size'),
-      icon: library_settings,
-      onClick: () => {
-        setShowCustomValueControl(!showCustomValueControl);
+      onChange: newValue => {
+        handleOnValueChange(newValue !== undefined ? [newValue, computedUnit].join('') : undefined);
       },
-      isPressed: showCustomValueControl,
-      size: "small",
-      iconSize: 24
+      min: 0,
+      max: (_CUSTOM_VALUE_SETTING = CUSTOM_VALUE_SETTINGS[computedUnit !== null && computedUnit !== void 0 ? computedUnit : 'px']?.max) !== null && _CUSTOM_VALUE_SETTING !== void 0 ? _CUSTOM_VALUE_SETTING : 10,
+      step: (_CUSTOM_VALUE_SETTING2 = CUSTOM_VALUE_SETTINGS[computedUnit !== null && computedUnit !== void 0 ? computedUnit : 'px']?.step) !== null && _CUSTOM_VALUE_SETTING2 !== void 0 ? _CUSTOM_VALUE_SETTING2 : 0.1,
+      value: parsedQuantity !== null && parsedQuantity !== void 0 ? parsedQuantity : 0,
+      withInputField: false
     })]
   }, `box-control-${side}`);
 }
@@ -42896,8 +42788,6 @@ function BoxControl({
   splitOnAxis = false,
   allowReset = true,
   resetValues = DEFAULT_VALUES,
-  presets,
-  presetKey,
   onMouseOver,
   onMouseOut
 }) {
@@ -42954,9 +42844,7 @@ function BoxControl({
     setSelectedUnits,
     sides,
     values: inputValues,
-    __next40pxDefaultSize,
-    presets,
-    presetKey
+    __next40pxDefaultSize
   };
   maybeWarnDeprecated36pxSize({
     componentName: 'BoxControl',
@@ -43012,7 +42900,6 @@ function BoxControl({
  */
 
 
-
 /**
  * Internal dependencies
  */
@@ -43023,10 +42910,6 @@ function UnforwardedButtonGroup(props, ref) {
     ...restProps
   } = props;
   const classes = dist_clsx('components-button-group', className);
-  external_wp_deprecated_default()('wp.components.ButtonGroup', {
-    since: '6.8',
-    alternative: 'wp.components.ToggleGroupControl'
-  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ref: ref,
     role: "group",
@@ -43038,8 +42921,6 @@ function UnforwardedButtonGroup(props, ref) {
 /**
  * ButtonGroup can be used to group any related buttons together. To emphasize
  * related buttons, a group should share a common container.
- *
- * @deprecated Use `ToggleGroupControl` instead.
  *
  * ```jsx
  * import { Button, ButtonGroup } from '@wordpress/components';
@@ -46392,7 +46273,6 @@ function NameInput({
   label
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NameInputControl, {
-    size: "compact",
     label: label,
     hideLabelFromVision: true,
     value: value,
@@ -49583,6 +49463,7 @@ const SelectedItemCheck = /*#__PURE__*/emotion_styled_base_browser_esm(SelectIte
  */
 
 
+
 /**
  * WordPress dependencies
  */
@@ -49860,13 +49741,15 @@ function CustomSelectControl(props) {
       })
     }, key);
   });
-  const currentValue = useStoreState(store, 'value');
+  const {
+    value: currentValue
+  } = store.getState();
   const renderSelectedValueHint = () => {
     const selectedOptionHint = options?.map(applyOptionDeprecations)?.find(({
       name
-    }) => currentValue === name)?.hint;
+    }) => store.getState().value === name)?.hint;
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(SelectedExperimentalHintWrapper, {
-      children: [currentValue, selectedOptionHint && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SelectedExperimentalHintItem, {
+      children: [store.getState().value, selectedOptionHint && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SelectedExperimentalHintItem, {
         // Keeping the classname for legacy reasons
         className: "components-custom-select-control__hint",
         children: selectedOptionHint
@@ -55483,7 +55366,6 @@ function DimensionControl(props) {
     value: dimension_control_CONTEXT_VALUE,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(select_control, {
       __next40pxDefaultSize: __next40pxDefaultSize,
-      __shouldNotWarnDeprecated36pxSize: true,
       __nextHasNoMarginBottom: __nextHasNoMarginBottom,
       className: dist_clsx(className, 'block-editor-dimension-control'),
       label: selectLabel,
@@ -57162,6 +57044,23 @@ function FocusableIframe({
     ...props
   });
 }
+
+;// ./packages/icons/build-module/library/settings.js
+/**
+ * WordPress dependencies
+ */
+
+
+const settings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "m19 7.5h-7.628c-.3089-.87389-1.1423-1.5-2.122-1.5-.97966 0-1.81309.62611-2.12197 1.5h-2.12803v1.5h2.12803c.30888.87389 1.14231 1.5 2.12197 1.5.9797 0 1.8131-.62611 2.122-1.5h7.628z"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "m19 15h-2.128c-.3089-.8739-1.1423-1.5-2.122-1.5s-1.8131.6261-2.122 1.5h-7.628v1.5h7.628c.3089.8739 1.1423 1.5 2.122 1.5s1.8131-.6261 2.122-1.5h2.128z"
+  })]
+});
+/* harmony default export */ const library_settings = (settings);
 
 ;// ./packages/components/build-module/font-size-picker/utils.js
 /* wp:polyfill */
@@ -62669,7 +62568,6 @@ const external_wp_htmlEntities_namespaceObject = window["wp"]["htmlEntities"];
 
 
 
-
 const tree_select_CONTEXT_VALUE = {
   BaseControl: {
     // Temporary during deprecation grace period: Overrides the underlying `__associatedWPComponentName`
@@ -62687,11 +62585,11 @@ function getSelectOptions(tree, level = 0) {
 }
 
 /**
- * Generates a hierarchical select input.
+ * TreeSelect component is used to generate select input fields.
  *
  * ```jsx
- * import { useState } from 'react';
  * import { TreeSelect } from '@wordpress/components';
+ * import { useState } from '@wordpress/element';
  *
  * const MyTreeSelect = () => {
  * 	const [ page, setPage ] = useState( 'p21' );
@@ -62699,7 +62597,6 @@ function getSelectOptions(tree, level = 0) {
  * 	return (
  * 		<TreeSelect
  * 			__nextHasNoMarginBottom
- * 			__next40pxDefaultSize
  * 			label="Parent page"
  * 			noOptionLabel="No parent page"
  * 			onChange={ ( newPage ) => setPage( newPage ) }
@@ -62750,15 +62647,9 @@ function TreeSelect(props) {
       label: noOptionLabel
     }, ...getSelectOptions(tree)].filter(option => !!option);
   }, [noOptionLabel, tree]);
-  maybeWarnDeprecated36pxSize({
-    componentName: 'TreeSelect',
-    size: restProps.size,
-    __next40pxDefaultSize: restProps.__next40pxDefaultSize
-  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ContextSystemProvider, {
     value: tree_select_CONTEXT_VALUE,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SelectControl, {
-      __shouldNotWarnDeprecated36pxSize: true,
       label,
       options,
       onChange,
@@ -63004,6 +62895,7 @@ const RadioGroupContext = (0,external_wp_element_namespaceObject.createContext)(
 /**
  * External dependencies
  */
+
 
 
 /**
@@ -65819,6 +65711,7 @@ var TabPanel = forwardRef2(function TabPanel2(props) {
 /**
  * External dependencies
  */
+
 
 
 /**
@@ -69435,17 +69328,565 @@ function useMenuStore(props = {}) {
 
 
 
-;// ./packages/components/build-module/menu/context.js
+;// ./node_modules/@ariakit/react-core/esm/menu/menu-button.js
+"use client";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// src/menu/menu-button.tsx
+
+
+
+
+var menu_button_TagName = "button";
+function getInitialFocus(event, dir) {
+  const keyMap = {
+    ArrowDown: dir === "bottom" || dir === "top" ? "first" : false,
+    ArrowUp: dir === "bottom" || dir === "top" ? "last" : false,
+    ArrowRight: dir === "right" ? "first" : false,
+    ArrowLeft: dir === "left" ? "first" : false
+  };
+  return keyMap[event.key];
+}
+function hasActiveItem(items, excludeElement) {
+  return !!(items == null ? void 0 : items.some((item) => {
+    if (!item.element) return false;
+    if (item.element === excludeElement) return false;
+    return item.element.getAttribute("aria-expanded") === "true";
+  }));
+}
+var useMenuButton = createHook(
+  function useMenuButton2(_a) {
+    var _b = _a, {
+      store,
+      focusable,
+      accessibleWhenDisabled,
+      showOnHover
+    } = _b, props = __objRest(_b, [
+      "store",
+      "focusable",
+      "accessibleWhenDisabled",
+      "showOnHover"
+    ]);
+    const context = useMenuProviderContext();
+    store = store || context;
+    invariant(
+      store,
+       false && 0
+    );
+    const ref = (0,external_React_.useRef)(null);
+    const parentMenu = store.parent;
+    const parentMenubar = store.menubar;
+    const hasParentMenu = !!parentMenu;
+    const parentIsMenubar = !!parentMenubar && !hasParentMenu;
+    const disabled = disabledFromProps(props);
+    const showMenu = () => {
+      const trigger = ref.current;
+      if (!trigger) return;
+      store == null ? void 0 : store.setDisclosureElement(trigger);
+      store == null ? void 0 : store.setAnchorElement(trigger);
+      store == null ? void 0 : store.show();
+    };
+    const onFocusProp = props.onFocus;
+    const onFocus = useEvent((event) => {
+      onFocusProp == null ? void 0 : onFocusProp(event);
+      if (disabled) return;
+      if (event.defaultPrevented) return;
+      store == null ? void 0 : store.setAutoFocusOnShow(false);
+      store == null ? void 0 : store.setActiveId(null);
+      if (!parentMenubar) return;
+      if (!parentIsMenubar) return;
+      const { items } = parentMenubar.getState();
+      if (hasActiveItem(items, event.currentTarget)) {
+        showMenu();
+      }
+    });
+    const dir = useStoreState(
+      store,
+      (state) => state.placement.split("-")[0]
+    );
+    const onKeyDownProp = props.onKeyDown;
+    const onKeyDown = useEvent((event) => {
+      onKeyDownProp == null ? void 0 : onKeyDownProp(event);
+      if (disabled) return;
+      if (event.defaultPrevented) return;
+      const initialFocus = getInitialFocus(event, dir);
+      if (initialFocus) {
+        event.preventDefault();
+        showMenu();
+        store == null ? void 0 : store.setAutoFocusOnShow(true);
+        store == null ? void 0 : store.setInitialFocus(initialFocus);
+      }
+    });
+    const onClickProp = props.onClick;
+    const onClick = useEvent((event) => {
+      onClickProp == null ? void 0 : onClickProp(event);
+      if (event.defaultPrevented) return;
+      if (!store) return;
+      const isKeyboardClick = !event.detail;
+      const { open } = store.getState();
+      if (!open || isKeyboardClick) {
+        if (!hasParentMenu || isKeyboardClick) {
+          store.setAutoFocusOnShow(true);
+        }
+        store.setInitialFocus(isKeyboardClick ? "first" : "container");
+      }
+      if (hasParentMenu) {
+        showMenu();
+      }
+    });
+    props = useWrapElement(
+      props,
+      (element) => /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuContextProvider, { value: store, children: element }),
+      [store]
+    );
+    if (hasParentMenu) {
+      props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props), {
+        render: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(Role.div, { render: props.render })
+      });
+    }
+    const id = useId(props.id);
+    const parentContentElement = useStoreState(
+      (parentMenu == null ? void 0 : parentMenu.combobox) || parentMenu,
+      "contentElement"
+    );
+    const role = hasParentMenu || parentIsMenubar ? getPopupItemRole(parentContentElement, "menuitem") : void 0;
+    const contentElement = store.useState("contentElement");
+    props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({
+      id,
+      role,
+      "aria-haspopup": getPopupRole(contentElement, "menu")
+    }, props), {
+      ref: useMergeRefs(ref, props.ref),
+      onFocus,
+      onKeyDown,
+      onClick
+    });
+    props = useHovercardAnchor(_3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({
+      store,
+      focusable,
+      accessibleWhenDisabled
+    }, props), {
+      showOnHover: (event) => {
+        const getShowOnHover = () => {
+          if (typeof showOnHover === "function") return showOnHover(event);
+          if (showOnHover != null) return showOnHover;
+          if (hasParentMenu) return true;
+          if (!parentMenubar) return false;
+          const { items } = parentMenubar.getState();
+          return parentIsMenubar && hasActiveItem(items);
+        };
+        const canShowOnHover = getShowOnHover();
+        if (!canShowOnHover) return false;
+        const parent = parentIsMenubar ? parentMenubar : parentMenu;
+        if (!parent) return true;
+        parent.setActiveId(event.currentTarget.id);
+        return true;
+      }
+    }));
+    props = usePopoverDisclosure(_3YLGPPWQ_spreadValues({
+      store,
+      toggleOnClick: !hasParentMenu,
+      focusable,
+      accessibleWhenDisabled
+    }, props));
+    props = useCompositeTypeahead(_3YLGPPWQ_spreadValues({
+      store,
+      typeahead: parentIsMenubar
+    }, props));
+    return props;
+  }
+);
+var MenuButton = forwardRef2(function MenuButton2(props) {
+  const htmlProps = useMenuButton(props);
+  return LMDWO4NN_createElement(menu_button_TagName, htmlProps);
+});
+
+
+;// ./node_modules/@ariakit/react-core/esm/__chunks/ASGALOAX.js
+"use client";
+
+
+
+
+
+
+
+
+
+// src/menu/menu-list.tsx
+
+
+
+var ASGALOAX_TagName = "div";
+function useAriaLabelledBy(_a) {
+  var _b = _a, { store } = _b, props = __objRest(_b, ["store"]);
+  const [id, setId] = (0,external_React_.useState)(void 0);
+  const label = props["aria-label"];
+  const disclosureElement = useStoreState(store, "disclosureElement");
+  const contentElement = useStoreState(store, "contentElement");
+  (0,external_React_.useEffect)(() => {
+    const disclosure = disclosureElement;
+    if (!disclosure) return;
+    const menu = contentElement;
+    if (!menu) return;
+    const menuLabel = label || menu.hasAttribute("aria-label");
+    if (menuLabel) {
+      setId(void 0);
+    } else if (disclosure.id) {
+      setId(disclosure.id);
+    }
+  }, [label, disclosureElement, contentElement]);
+  return id;
+}
+var useMenuList = createHook(
+  function useMenuList2(_a) {
+    var _b = _a, { store, alwaysVisible, composite } = _b, props = __objRest(_b, ["store", "alwaysVisible", "composite"]);
+    const context = useMenuProviderContext();
+    store = store || context;
+    invariant(
+      store,
+       false && 0
+    );
+    const parentMenu = store.parent;
+    const parentMenubar = store.menubar;
+    const hasParentMenu = !!parentMenu;
+    const id = useId(props.id);
+    const onKeyDownProp = props.onKeyDown;
+    const dir = store.useState(
+      (state) => state.placement.split("-")[0]
+    );
+    const orientation = store.useState(
+      (state) => state.orientation === "both" ? void 0 : state.orientation
+    );
+    const isHorizontal = orientation !== "vertical";
+    const isMenubarHorizontal = useStoreState(
+      parentMenubar,
+      (state) => !!state && state.orientation !== "vertical"
+    );
+    const onKeyDown = useEvent((event) => {
+      onKeyDownProp == null ? void 0 : onKeyDownProp(event);
+      if (event.defaultPrevented) return;
+      if (hasParentMenu || parentMenubar && !isHorizontal) {
+        const hideMap = {
+          ArrowRight: () => dir === "left" && !isHorizontal,
+          ArrowLeft: () => dir === "right" && !isHorizontal,
+          ArrowUp: () => dir === "bottom" && isHorizontal,
+          ArrowDown: () => dir === "top" && isHorizontal
+        };
+        const action = hideMap[event.key];
+        if (action == null ? void 0 : action()) {
+          event.stopPropagation();
+          event.preventDefault();
+          return store == null ? void 0 : store.hide();
+        }
+      }
+      if (parentMenubar) {
+        const keyMap = {
+          ArrowRight: () => {
+            if (!isMenubarHorizontal) return;
+            return parentMenubar.next();
+          },
+          ArrowLeft: () => {
+            if (!isMenubarHorizontal) return;
+            return parentMenubar.previous();
+          },
+          ArrowDown: () => {
+            if (isMenubarHorizontal) return;
+            return parentMenubar.next();
+          },
+          ArrowUp: () => {
+            if (isMenubarHorizontal) return;
+            return parentMenubar.previous();
+          }
+        };
+        const action = keyMap[event.key];
+        const id2 = action == null ? void 0 : action();
+        if (id2 !== void 0) {
+          event.stopPropagation();
+          event.preventDefault();
+          parentMenubar.move(id2);
+        }
+      }
+    });
+    props = useWrapElement(
+      props,
+      (element) => /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuScopedContextProvider, { value: store, children: element }),
+      [store]
+    );
+    const ariaLabelledBy = useAriaLabelledBy(_3YLGPPWQ_spreadValues({ store }, props));
+    const mounted = store.useState("mounted");
+    const hidden = isHidden(mounted, props.hidden, alwaysVisible);
+    const style = hidden ? _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props.style), { display: "none" }) : props.style;
+    props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({
+      id,
+      "aria-labelledby": ariaLabelledBy,
+      hidden
+    }, props), {
+      ref: useMergeRefs(id ? store.setContentElement : null, props.ref),
+      style,
+      onKeyDown
+    });
+    const hasCombobox = !!store.combobox;
+    composite = composite != null ? composite : !hasCombobox;
+    if (composite) {
+      props = _3YLGPPWQ_spreadValues({
+        role: "menu",
+        "aria-orientation": orientation
+      }, props);
+    }
+    props = useComposite(_3YLGPPWQ_spreadValues({ store, composite }, props));
+    props = useCompositeTypeahead(_3YLGPPWQ_spreadValues({ store, typeahead: !hasCombobox }, props));
+    return props;
+  }
+);
+var MenuList = forwardRef2(function MenuList2(props) {
+  const htmlProps = useMenuList(props);
+  return LMDWO4NN_createElement(ASGALOAX_TagName, htmlProps);
+});
+
+
+
+;// ./node_modules/@ariakit/react-core/esm/menu/menu.js
+"use client";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// src/menu/menu.tsx
+
+
+
+
+var menu_TagName = "div";
+var useMenu = createHook(function useMenu2(_a) {
+  var _b = _a, {
+    store,
+    modal: modalProp = false,
+    portal = !!modalProp,
+    hideOnEscape = true,
+    autoFocusOnShow = true,
+    hideOnHoverOutside,
+    alwaysVisible
+  } = _b, props = __objRest(_b, [
+    "store",
+    "modal",
+    "portal",
+    "hideOnEscape",
+    "autoFocusOnShow",
+    "hideOnHoverOutside",
+    "alwaysVisible"
+  ]);
+  const context = useMenuProviderContext();
+  store = store || context;
+  invariant(
+    store,
+     false && 0
+  );
+  const ref = (0,external_React_.useRef)(null);
+  const parentMenu = store.parent;
+  const parentMenubar = store.menubar;
+  const hasParentMenu = !!parentMenu;
+  const parentIsMenubar = !!parentMenubar && !hasParentMenu;
+  props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props), {
+    ref: useMergeRefs(ref, props.ref)
+  });
+  const _a2 = useMenuList(_3YLGPPWQ_spreadValues({
+    store,
+    alwaysVisible
+  }, props)), { "aria-labelledby": ariaLabelledBy } = _a2, menuListProps = __objRest(_a2, ["aria-labelledby"]);
+  props = menuListProps;
+  const [initialFocusRef, setInitialFocusRef] = (0,external_React_.useState)();
+  const autoFocusOnShowState = store.useState("autoFocusOnShow");
+  const initialFocus = store.useState("initialFocus");
+  const baseElement = store.useState("baseElement");
+  const items = store.useState("renderedItems");
+  (0,external_React_.useEffect)(() => {
+    let cleaning = false;
+    setInitialFocusRef((prevInitialFocusRef) => {
+      var _a3, _b2, _c;
+      if (cleaning) return;
+      if (!autoFocusOnShowState) return;
+      if ((_a3 = prevInitialFocusRef == null ? void 0 : prevInitialFocusRef.current) == null ? void 0 : _a3.isConnected) return prevInitialFocusRef;
+      const ref2 = (0,external_React_.createRef)();
+      switch (initialFocus) {
+        case "first":
+          ref2.current = ((_b2 = items.find((item) => !item.disabled && item.element)) == null ? void 0 : _b2.element) || null;
+          break;
+        case "last":
+          ref2.current = ((_c = [...items].reverse().find((item) => !item.disabled && item.element)) == null ? void 0 : _c.element) || null;
+          break;
+        default:
+          ref2.current = baseElement;
+      }
+      return ref2;
+    });
+    return () => {
+      cleaning = true;
+    };
+  }, [store, autoFocusOnShowState, initialFocus, items, baseElement]);
+  const modal = hasParentMenu ? false : modalProp;
+  const mayAutoFocusOnShow = !!autoFocusOnShow;
+  const canAutoFocusOnShow = !!initialFocusRef || !!props.initialFocus || !!modal;
+  const contentElement = useStoreState(
+    store.combobox || store,
+    "contentElement"
+  );
+  const parentContentElement = useStoreState(
+    (parentMenu == null ? void 0 : parentMenu.combobox) || parentMenu,
+    "contentElement"
+  );
+  const preserveTabOrderAnchor = (0,external_React_.useMemo)(() => {
+    if (!parentContentElement) return;
+    if (!contentElement) return;
+    const role = contentElement.getAttribute("role");
+    const parentRole = parentContentElement.getAttribute("role");
+    const parentIsMenuOrMenubar = parentRole === "menu" || parentRole === "menubar";
+    if (parentIsMenuOrMenubar && role === "menu") return;
+    return parentContentElement;
+  }, [contentElement, parentContentElement]);
+  if (preserveTabOrderAnchor !== void 0) {
+    props = _3YLGPPWQ_spreadValues({
+      preserveTabOrderAnchor
+    }, props);
+  }
+  props = useHovercard(_3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({
+    store,
+    alwaysVisible,
+    initialFocus: initialFocusRef,
+    autoFocusOnShow: mayAutoFocusOnShow ? canAutoFocusOnShow && autoFocusOnShow : autoFocusOnShowState || !!modal
+  }, props), {
+    hideOnEscape(event) {
+      if (isFalsyBooleanCallback(hideOnEscape, event)) return false;
+      store == null ? void 0 : store.hideAll();
+      return true;
+    },
+    hideOnHoverOutside(event) {
+      const disclosureElement = store == null ? void 0 : store.getState().disclosureElement;
+      const getHideOnHoverOutside = () => {
+        if (typeof hideOnHoverOutside === "function") {
+          return hideOnHoverOutside(event);
+        }
+        if (hideOnHoverOutside != null) return hideOnHoverOutside;
+        if (hasParentMenu) return true;
+        if (!parentIsMenubar) return false;
+        if (!disclosureElement) return true;
+        if (hasFocusWithin(disclosureElement)) return false;
+        return true;
+      };
+      if (!getHideOnHoverOutside()) return false;
+      if (event.defaultPrevented) return true;
+      if (!hasParentMenu) return true;
+      if (!disclosureElement) return true;
+      fireEvent(disclosureElement, "mouseout", event);
+      if (!hasFocusWithin(disclosureElement)) return true;
+      requestAnimationFrame(() => {
+        if (hasFocusWithin(disclosureElement)) return;
+        store == null ? void 0 : store.hide();
+      });
+      return false;
+    },
+    modal,
+    portal,
+    backdrop: hasParentMenu ? false : props.backdrop
+  }));
+  props = _3YLGPPWQ_spreadValues({
+    "aria-labelledby": ariaLabelledBy
+  }, props);
+  return props;
+});
+var Menu = createDialogComponent(
+  forwardRef2(function Menu2(props) {
+    const htmlProps = useMenu(props);
+    return LMDWO4NN_createElement(menu_TagName, htmlProps);
+  }),
+  useMenuProviderContext
+);
+
+
+;// ./packages/icons/build-module/library/chevron-right-small.js
 /**
  * WordPress dependencies
  */
 
 
-/**
- * Internal dependencies
- */
-
-const MenuContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
+const chevronRightSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M10.8622 8.04053L14.2805 12.0286L10.8622 16.0167L9.72327 15.0405L12.3049 12.0286L9.72327 9.01672L10.8622 8.04053Z"
+  })
+});
+/* harmony default export */ const chevron_right_small = (chevronRightSmall);
 
 ;// ./node_modules/@ariakit/react-core/esm/__chunks/MVIULMNR.js
 "use client";
@@ -70223,6 +70664,18 @@ const styles_MenuItemHelpText = /*#__PURE__*/emotion_styled_base_browser_esm(tru
   target: "e1wg7tti0"
 } : 0)("font-size:", font('helpText.fontSize'), ";line-height:16px;color:", LIGHTER_TEXT_COLOR, ";overflow-wrap:anywhere;[data-active-item]:not( [data-focus-visible] ) *:not( ", MenuPopoverInnerWrapper, " ) &,[aria-disabled='true'] *:not( ", MenuPopoverInnerWrapper, " ) &{color:inherit;}" + ( true ? "" : 0));
 
+;// ./packages/components/build-module/menu/context.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+const MenuContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
+
 ;// ./packages/components/build-module/menu/item.js
 /**
  * WordPress dependencies
@@ -70241,25 +70694,18 @@ const item_MenuItem = (0,external_wp_element_namespaceObject.forwardRef)(functio
   suffix,
   children,
   hideOnClick = true,
-  store,
   ...props
 }, ref) {
   const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
   if (!menuContext?.store) {
     throw new Error('Menu.Item can only be rendered inside a Menu component');
   }
-
-  // In most cases, the menu store will be retrieved from context (ie. the store
-  // created by the top-level menu component). But in rare cases (ie.
-  // `Menu.SubmenuTriggerItem`), the context store wouldn't be correct. This is
-  // why the component accepts a `store` prop to override the context store.
-  const computedStore = store !== null && store !== void 0 ? store : menuContext.store;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_MenuItem, {
     ref: ref,
     ...props,
     accessibleWhenDisabled: true,
     hideOnClick: hideOnClick,
-    store: computedStore,
+    store: menuContext.store,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemPrefixWrapper, {
       children: prefix
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(MenuItemContentWrapper, {
@@ -70570,746 +71016,17 @@ const MenuItemHelpText = (0,external_wp_element_namespaceObject.forwardRef)(func
   });
 });
 
-;// ./node_modules/@ariakit/react-core/esm/menu/menu-button.js
-"use client";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// src/menu/menu-button.tsx
-
-
-
-
-var menu_button_TagName = "button";
-function getInitialFocus(event, dir) {
-  const keyMap = {
-    ArrowDown: dir === "bottom" || dir === "top" ? "first" : false,
-    ArrowUp: dir === "bottom" || dir === "top" ? "last" : false,
-    ArrowRight: dir === "right" ? "first" : false,
-    ArrowLeft: dir === "left" ? "first" : false
-  };
-  return keyMap[event.key];
-}
-function hasActiveItem(items, excludeElement) {
-  return !!(items == null ? void 0 : items.some((item) => {
-    if (!item.element) return false;
-    if (item.element === excludeElement) return false;
-    return item.element.getAttribute("aria-expanded") === "true";
-  }));
-}
-var useMenuButton = createHook(
-  function useMenuButton2(_a) {
-    var _b = _a, {
-      store,
-      focusable,
-      accessibleWhenDisabled,
-      showOnHover
-    } = _b, props = __objRest(_b, [
-      "store",
-      "focusable",
-      "accessibleWhenDisabled",
-      "showOnHover"
-    ]);
-    const context = useMenuProviderContext();
-    store = store || context;
-    invariant(
-      store,
-       false && 0
-    );
-    const ref = (0,external_React_.useRef)(null);
-    const parentMenu = store.parent;
-    const parentMenubar = store.menubar;
-    const hasParentMenu = !!parentMenu;
-    const parentIsMenubar = !!parentMenubar && !hasParentMenu;
-    const disabled = disabledFromProps(props);
-    const showMenu = () => {
-      const trigger = ref.current;
-      if (!trigger) return;
-      store == null ? void 0 : store.setDisclosureElement(trigger);
-      store == null ? void 0 : store.setAnchorElement(trigger);
-      store == null ? void 0 : store.show();
-    };
-    const onFocusProp = props.onFocus;
-    const onFocus = useEvent((event) => {
-      onFocusProp == null ? void 0 : onFocusProp(event);
-      if (disabled) return;
-      if (event.defaultPrevented) return;
-      store == null ? void 0 : store.setAutoFocusOnShow(false);
-      store == null ? void 0 : store.setActiveId(null);
-      if (!parentMenubar) return;
-      if (!parentIsMenubar) return;
-      const { items } = parentMenubar.getState();
-      if (hasActiveItem(items, event.currentTarget)) {
-        showMenu();
-      }
-    });
-    const dir = useStoreState(
-      store,
-      (state) => state.placement.split("-")[0]
-    );
-    const onKeyDownProp = props.onKeyDown;
-    const onKeyDown = useEvent((event) => {
-      onKeyDownProp == null ? void 0 : onKeyDownProp(event);
-      if (disabled) return;
-      if (event.defaultPrevented) return;
-      const initialFocus = getInitialFocus(event, dir);
-      if (initialFocus) {
-        event.preventDefault();
-        showMenu();
-        store == null ? void 0 : store.setAutoFocusOnShow(true);
-        store == null ? void 0 : store.setInitialFocus(initialFocus);
-      }
-    });
-    const onClickProp = props.onClick;
-    const onClick = useEvent((event) => {
-      onClickProp == null ? void 0 : onClickProp(event);
-      if (event.defaultPrevented) return;
-      if (!store) return;
-      const isKeyboardClick = !event.detail;
-      const { open } = store.getState();
-      if (!open || isKeyboardClick) {
-        if (!hasParentMenu || isKeyboardClick) {
-          store.setAutoFocusOnShow(true);
-        }
-        store.setInitialFocus(isKeyboardClick ? "first" : "container");
-      }
-      if (hasParentMenu) {
-        showMenu();
-      }
-    });
-    props = useWrapElement(
-      props,
-      (element) => /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuContextProvider, { value: store, children: element }),
-      [store]
-    );
-    if (hasParentMenu) {
-      props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props), {
-        render: /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(Role.div, { render: props.render })
-      });
-    }
-    const id = useId(props.id);
-    const parentContentElement = useStoreState(
-      (parentMenu == null ? void 0 : parentMenu.combobox) || parentMenu,
-      "contentElement"
-    );
-    const role = hasParentMenu || parentIsMenubar ? getPopupItemRole(parentContentElement, "menuitem") : void 0;
-    const contentElement = store.useState("contentElement");
-    props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({
-      id,
-      role,
-      "aria-haspopup": getPopupRole(contentElement, "menu")
-    }, props), {
-      ref: useMergeRefs(ref, props.ref),
-      onFocus,
-      onKeyDown,
-      onClick
-    });
-    props = useHovercardAnchor(_3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({
-      store,
-      focusable,
-      accessibleWhenDisabled
-    }, props), {
-      showOnHover: (event) => {
-        const getShowOnHover = () => {
-          if (typeof showOnHover === "function") return showOnHover(event);
-          if (showOnHover != null) return showOnHover;
-          if (hasParentMenu) return true;
-          if (!parentMenubar) return false;
-          const { items } = parentMenubar.getState();
-          return parentIsMenubar && hasActiveItem(items);
-        };
-        const canShowOnHover = getShowOnHover();
-        if (!canShowOnHover) return false;
-        const parent = parentIsMenubar ? parentMenubar : parentMenu;
-        if (!parent) return true;
-        parent.setActiveId(event.currentTarget.id);
-        return true;
-      }
-    }));
-    props = usePopoverDisclosure(_3YLGPPWQ_spreadValues({
-      store,
-      toggleOnClick: !hasParentMenu,
-      focusable,
-      accessibleWhenDisabled
-    }, props));
-    props = useCompositeTypeahead(_3YLGPPWQ_spreadValues({
-      store,
-      typeahead: parentIsMenubar
-    }, props));
-    return props;
-  }
-);
-var MenuButton = forwardRef2(function MenuButton2(props) {
-  const htmlProps = useMenuButton(props);
-  return LMDWO4NN_createElement(menu_button_TagName, htmlProps);
-});
-
-
-;// ./packages/components/build-module/menu/trigger-button.js
-/**
- * External dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-const MenuTriggerButton = (0,external_wp_element_namespaceObject.forwardRef)(function MenuTriggerButton({
-  children,
-  disabled = false,
-  ...props
-}, ref) {
-  const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
-  if (!menuContext?.store) {
-    throw new Error('Menu.TriggerButton can only be rendered inside a Menu component');
-  }
-  if (menuContext.store.parent) {
-    throw new Error('Menu.TriggerButton should not be rendered inside a nested Menu component. Use Menu.SubmenuTriggerItem instead.');
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuButton, {
-    ref: ref,
-    ...props,
-    disabled: disabled,
-    store: menuContext.store,
-    children: children
-  });
-});
-
-;// ./packages/icons/build-module/library/chevron-right-small.js
-/**
- * WordPress dependencies
- */
-
-
-const chevronRightSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M10.8622 8.04053L14.2805 12.0286L10.8622 16.0167L9.72327 15.0405L12.3049 12.0286L9.72327 9.01672L10.8622 8.04053Z"
-  })
-});
-/* harmony default export */ const chevron_right_small = (chevronRightSmall);
-
-;// ./packages/components/build-module/menu/submenu-trigger-item.js
-/**
- * External dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-const MenuSubmenuTriggerItem = (0,external_wp_element_namespaceObject.forwardRef)(function MenuSubmenuTriggerItem({
-  suffix,
-  ...otherProps
-}, ref) {
-  const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
-  if (!menuContext?.store.parent) {
-    throw new Error('Menu.SubmenuTriggerItem can only be rendered inside a nested Menu component');
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuButton, {
-    ref: ref,
-    accessibleWhenDisabled: true,
-    store: menuContext.store,
-    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(item_MenuItem, {
-      ...otherProps,
-      // The menu item needs to register and be part of the parent menu.
-      // Without specifying the store explicitly, the `MenuItem` component
-      // would otherwise read the store via context and pick up the one from
-      // the sub-menu `Menu` component.
-      store: menuContext.store.parent,
-      suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: [suffix, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SubmenuChevronIcon, {
-          "aria-hidden": "true",
-          icon: chevron_right_small,
-          size: 24,
-          preserveAspectRatio: "xMidYMid slice"
-        })]
-      })
-    })
-  });
-});
-
-;// ./node_modules/@ariakit/react-core/esm/__chunks/ASGALOAX.js
-"use client";
-
-
-
-
-
-
-
-
-
-// src/menu/menu-list.tsx
-
-
-
-var ASGALOAX_TagName = "div";
-function useAriaLabelledBy(_a) {
-  var _b = _a, { store } = _b, props = __objRest(_b, ["store"]);
-  const [id, setId] = (0,external_React_.useState)(void 0);
-  const label = props["aria-label"];
-  const disclosureElement = useStoreState(store, "disclosureElement");
-  const contentElement = useStoreState(store, "contentElement");
-  (0,external_React_.useEffect)(() => {
-    const disclosure = disclosureElement;
-    if (!disclosure) return;
-    const menu = contentElement;
-    if (!menu) return;
-    const menuLabel = label || menu.hasAttribute("aria-label");
-    if (menuLabel) {
-      setId(void 0);
-    } else if (disclosure.id) {
-      setId(disclosure.id);
-    }
-  }, [label, disclosureElement, contentElement]);
-  return id;
-}
-var useMenuList = createHook(
-  function useMenuList2(_a) {
-    var _b = _a, { store, alwaysVisible, composite } = _b, props = __objRest(_b, ["store", "alwaysVisible", "composite"]);
-    const context = useMenuProviderContext();
-    store = store || context;
-    invariant(
-      store,
-       false && 0
-    );
-    const parentMenu = store.parent;
-    const parentMenubar = store.menubar;
-    const hasParentMenu = !!parentMenu;
-    const id = useId(props.id);
-    const onKeyDownProp = props.onKeyDown;
-    const dir = store.useState(
-      (state) => state.placement.split("-")[0]
-    );
-    const orientation = store.useState(
-      (state) => state.orientation === "both" ? void 0 : state.orientation
-    );
-    const isHorizontal = orientation !== "vertical";
-    const isMenubarHorizontal = useStoreState(
-      parentMenubar,
-      (state) => !!state && state.orientation !== "vertical"
-    );
-    const onKeyDown = useEvent((event) => {
-      onKeyDownProp == null ? void 0 : onKeyDownProp(event);
-      if (event.defaultPrevented) return;
-      if (hasParentMenu || parentMenubar && !isHorizontal) {
-        const hideMap = {
-          ArrowRight: () => dir === "left" && !isHorizontal,
-          ArrowLeft: () => dir === "right" && !isHorizontal,
-          ArrowUp: () => dir === "bottom" && isHorizontal,
-          ArrowDown: () => dir === "top" && isHorizontal
-        };
-        const action = hideMap[event.key];
-        if (action == null ? void 0 : action()) {
-          event.stopPropagation();
-          event.preventDefault();
-          return store == null ? void 0 : store.hide();
-        }
-      }
-      if (parentMenubar) {
-        const keyMap = {
-          ArrowRight: () => {
-            if (!isMenubarHorizontal) return;
-            return parentMenubar.next();
-          },
-          ArrowLeft: () => {
-            if (!isMenubarHorizontal) return;
-            return parentMenubar.previous();
-          },
-          ArrowDown: () => {
-            if (isMenubarHorizontal) return;
-            return parentMenubar.next();
-          },
-          ArrowUp: () => {
-            if (isMenubarHorizontal) return;
-            return parentMenubar.previous();
-          }
-        };
-        const action = keyMap[event.key];
-        const id2 = action == null ? void 0 : action();
-        if (id2 !== void 0) {
-          event.stopPropagation();
-          event.preventDefault();
-          parentMenubar.move(id2);
-        }
-      }
-    });
-    props = useWrapElement(
-      props,
-      (element) => /* @__PURE__ */ (0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuScopedContextProvider, { value: store, children: element }),
-      [store]
-    );
-    const ariaLabelledBy = useAriaLabelledBy(_3YLGPPWQ_spreadValues({ store }, props));
-    const mounted = store.useState("mounted");
-    const hidden = isHidden(mounted, props.hidden, alwaysVisible);
-    const style = hidden ? _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props.style), { display: "none" }) : props.style;
-    props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({
-      id,
-      "aria-labelledby": ariaLabelledBy,
-      hidden
-    }, props), {
-      ref: useMergeRefs(id ? store.setContentElement : null, props.ref),
-      style,
-      onKeyDown
-    });
-    const hasCombobox = !!store.combobox;
-    composite = composite != null ? composite : !hasCombobox;
-    if (composite) {
-      props = _3YLGPPWQ_spreadValues({
-        role: "menu",
-        "aria-orientation": orientation
-      }, props);
-    }
-    props = useComposite(_3YLGPPWQ_spreadValues({ store, composite }, props));
-    props = useCompositeTypeahead(_3YLGPPWQ_spreadValues({ store, typeahead: !hasCombobox }, props));
-    return props;
-  }
-);
-var MenuList = forwardRef2(function MenuList2(props) {
-  const htmlProps = useMenuList(props);
-  return LMDWO4NN_createElement(ASGALOAX_TagName, htmlProps);
-});
-
-
-
-;// ./node_modules/@ariakit/react-core/esm/menu/menu.js
-"use client";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// src/menu/menu.tsx
-
-
-
-
-var menu_TagName = "div";
-var useMenu = createHook(function useMenu2(_a) {
-  var _b = _a, {
-    store,
-    modal: modalProp = false,
-    portal = !!modalProp,
-    hideOnEscape = true,
-    autoFocusOnShow = true,
-    hideOnHoverOutside,
-    alwaysVisible
-  } = _b, props = __objRest(_b, [
-    "store",
-    "modal",
-    "portal",
-    "hideOnEscape",
-    "autoFocusOnShow",
-    "hideOnHoverOutside",
-    "alwaysVisible"
-  ]);
-  const context = useMenuProviderContext();
-  store = store || context;
-  invariant(
-    store,
-     false && 0
-  );
-  const ref = (0,external_React_.useRef)(null);
-  const parentMenu = store.parent;
-  const parentMenubar = store.menubar;
-  const hasParentMenu = !!parentMenu;
-  const parentIsMenubar = !!parentMenubar && !hasParentMenu;
-  props = _3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({}, props), {
-    ref: useMergeRefs(ref, props.ref)
-  });
-  const _a2 = useMenuList(_3YLGPPWQ_spreadValues({
-    store,
-    alwaysVisible
-  }, props)), { "aria-labelledby": ariaLabelledBy } = _a2, menuListProps = __objRest(_a2, ["aria-labelledby"]);
-  props = menuListProps;
-  const [initialFocusRef, setInitialFocusRef] = (0,external_React_.useState)();
-  const autoFocusOnShowState = store.useState("autoFocusOnShow");
-  const initialFocus = store.useState("initialFocus");
-  const baseElement = store.useState("baseElement");
-  const items = store.useState("renderedItems");
-  (0,external_React_.useEffect)(() => {
-    let cleaning = false;
-    setInitialFocusRef((prevInitialFocusRef) => {
-      var _a3, _b2, _c;
-      if (cleaning) return;
-      if (!autoFocusOnShowState) return;
-      if ((_a3 = prevInitialFocusRef == null ? void 0 : prevInitialFocusRef.current) == null ? void 0 : _a3.isConnected) return prevInitialFocusRef;
-      const ref2 = (0,external_React_.createRef)();
-      switch (initialFocus) {
-        case "first":
-          ref2.current = ((_b2 = items.find((item) => !item.disabled && item.element)) == null ? void 0 : _b2.element) || null;
-          break;
-        case "last":
-          ref2.current = ((_c = [...items].reverse().find((item) => !item.disabled && item.element)) == null ? void 0 : _c.element) || null;
-          break;
-        default:
-          ref2.current = baseElement;
-      }
-      return ref2;
-    });
-    return () => {
-      cleaning = true;
-    };
-  }, [store, autoFocusOnShowState, initialFocus, items, baseElement]);
-  const modal = hasParentMenu ? false : modalProp;
-  const mayAutoFocusOnShow = !!autoFocusOnShow;
-  const canAutoFocusOnShow = !!initialFocusRef || !!props.initialFocus || !!modal;
-  const contentElement = useStoreState(
-    store.combobox || store,
-    "contentElement"
-  );
-  const parentContentElement = useStoreState(
-    (parentMenu == null ? void 0 : parentMenu.combobox) || parentMenu,
-    "contentElement"
-  );
-  const preserveTabOrderAnchor = (0,external_React_.useMemo)(() => {
-    if (!parentContentElement) return;
-    if (!contentElement) return;
-    const role = contentElement.getAttribute("role");
-    const parentRole = parentContentElement.getAttribute("role");
-    const parentIsMenuOrMenubar = parentRole === "menu" || parentRole === "menubar";
-    if (parentIsMenuOrMenubar && role === "menu") return;
-    return parentContentElement;
-  }, [contentElement, parentContentElement]);
-  if (preserveTabOrderAnchor !== void 0) {
-    props = _3YLGPPWQ_spreadValues({
-      preserveTabOrderAnchor
-    }, props);
-  }
-  props = useHovercard(_3YLGPPWQ_spreadProps(_3YLGPPWQ_spreadValues({
-    store,
-    alwaysVisible,
-    initialFocus: initialFocusRef,
-    autoFocusOnShow: mayAutoFocusOnShow ? canAutoFocusOnShow && autoFocusOnShow : autoFocusOnShowState || !!modal
-  }, props), {
-    hideOnEscape(event) {
-      if (isFalsyBooleanCallback(hideOnEscape, event)) return false;
-      store == null ? void 0 : store.hideAll();
-      return true;
-    },
-    hideOnHoverOutside(event) {
-      const disclosureElement = store == null ? void 0 : store.getState().disclosureElement;
-      const getHideOnHoverOutside = () => {
-        if (typeof hideOnHoverOutside === "function") {
-          return hideOnHoverOutside(event);
-        }
-        if (hideOnHoverOutside != null) return hideOnHoverOutside;
-        if (hasParentMenu) return true;
-        if (!parentIsMenubar) return false;
-        if (!disclosureElement) return true;
-        if (hasFocusWithin(disclosureElement)) return false;
-        return true;
-      };
-      if (!getHideOnHoverOutside()) return false;
-      if (event.defaultPrevented) return true;
-      if (!hasParentMenu) return true;
-      if (!disclosureElement) return true;
-      fireEvent(disclosureElement, "mouseout", event);
-      if (!hasFocusWithin(disclosureElement)) return true;
-      requestAnimationFrame(() => {
-        if (hasFocusWithin(disclosureElement)) return;
-        store == null ? void 0 : store.hide();
-      });
-      return false;
-    },
-    modal,
-    portal,
-    backdrop: hasParentMenu ? false : props.backdrop
-  }));
-  props = _3YLGPPWQ_spreadValues({
-    "aria-labelledby": ariaLabelledBy
-  }, props);
-  return props;
-});
-var Menu = createDialogComponent(
-  forwardRef2(function Menu2(props) {
-    const htmlProps = useMenu(props);
-    return LMDWO4NN_createElement(menu_TagName, htmlProps);
-  }),
-  useMenuProviderContext
-);
-
-
-;// ./packages/components/build-module/menu/popover.js
-/**
- * External dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-const MenuPopover = (0,external_wp_element_namespaceObject.forwardRef)(function MenuPopover({
-  gutter,
-  children,
-  shift,
-  modal = true,
-  ...otherProps
-}, ref) {
-  const menuContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
-
-  // Extract the side from the applied placement — useful for animations.
-  // Using `currentPlacement` instead of `placement` to make sure that we
-  // use the final computed placement (including "flips" etc).
-  const appliedPlacementSide = useStoreState(menuContext?.store, 'currentPlacement')?.split('-')[0];
-  const hideOnEscape = (0,external_wp_element_namespaceObject.useCallback)(event => {
-    // Pressing Escape can cause unexpected consequences (ie. exiting
-    // full screen mode on MacOs, close parent modals...).
-    event.preventDefault();
-    // Returning `true` causes the menu to hide.
-    return true;
-  }, []);
-  const computedDirection = useStoreState(menuContext?.store, 'rtl') ? 'rtl' : 'ltr';
-  const wrapperProps = (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    dir: computedDirection,
-    style: {
-      direction: computedDirection
-    }
-  }), [computedDirection]);
-  if (!menuContext?.store) {
-    throw new Error('Menu.Popover can only be rendered inside a Menu component');
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu, {
-    ...otherProps,
-    ref: ref,
-    modal: modal,
-    store: menuContext.store
-    // Root menu has an 8px distance from its trigger,
-    // otherwise 0 (which causes the submenu to slightly overlap)
-    ,
-    gutter: gutter !== null && gutter !== void 0 ? gutter : menuContext.store.parent ? 0 : 8
-    // Align nested menu by the same (but opposite) amount
-    // as the menu container's padding.
-    ,
-    shift: shift !== null && shift !== void 0 ? shift : menuContext.store.parent ? -4 : 0,
-    hideOnHoverOutside: false,
-    "data-side": appliedPlacementSide,
-    wrapperProps: wrapperProps,
-    hideOnEscape: hideOnEscape,
-    unmountOnHide: true,
-    render: renderProps =>
-    /*#__PURE__*/
-    // Two wrappers are needed for the entry animation, where the menu
-    // container scales with a different factor than its contents.
-    // The {...renderProps} are passed to the inner wrapper, so that the
-    // menu element is the direct parent of the menu item elements.
-    (0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuPopoverOuterWrapper, {
-      variant: menuContext.variant,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuPopoverInnerWrapper, {
-        ...renderProps
-      })
-    }),
-    children: children
-  });
-});
-
 ;// ./packages/components/build-module/menu/index.js
 /**
  * External dependencies
  */
 
 
+
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -71328,27 +71045,35 @@ const MenuPopover = (0,external_wp_element_namespaceObject.forwardRef)(function 
 
 
 
-
-
-const UnconnectedMenu = props => {
+const UnconnectedMenu = (props, ref) => {
+  var _props$placement;
   const {
-    children,
-    defaultOpen = false,
+    // Store props
     open,
+    defaultOpen = false,
     onOpenChange,
     placement,
+    // Menu trigger props
+    trigger,
+    // Menu props
+    gutter,
+    children,
+    shift,
+    modal = true,
     // From internal components context
-    variant
+    variant,
+    // Rest
+    ...otherProps
   } = useContextSystem(props, 'Menu');
   const parentContext = (0,external_wp_element_namespaceObject.useContext)(MenuContext);
-  const rtl = (0,external_wp_i18n_namespaceObject.isRTL)();
+  const computedDirection = (0,external_wp_i18n_namespaceObject.isRTL)() ? 'rtl' : 'ltr';
 
   // If an explicit value for the `placement` prop is not passed,
   // apply a default placement of `bottom-start` for the root menu popover,
   // and of `right-start` for nested menu popovers.
-  let computedPlacement = placement !== null && placement !== void 0 ? placement : parentContext?.store ? 'right-start' : 'bottom-start';
+  let computedPlacement = (_props$placement = props.placement) !== null && _props$placement !== void 0 ? _props$placement : parentContext?.store ? 'right-start' : 'bottom-start';
   // Swap left/right in case of RTL direction
-  if (rtl) {
+  if (computedDirection === 'rtl') {
     if (/right/.test(computedPlacement)) {
       computedPlacement = computedPlacement.replace('right', 'left');
     } else if (/left/.test(computedPlacement)) {
@@ -71364,18 +71089,86 @@ const UnconnectedMenu = props => {
     setOpen(willBeOpen) {
       onOpenChange?.(willBeOpen);
     },
-    rtl
+    rtl: computedDirection === 'rtl'
   });
   const contextValue = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     store: menuStore,
     variant
   }), [menuStore, variant]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuContext.Provider, {
-    value: contextValue,
-    children: children
+
+  // Extract the side from the applied placement — useful for animations.
+  // Using `currentPlacement` instead of `placement` to make sure that we
+  // use the final computed placement (including "flips" etc).
+  const appliedPlacementSide = useStoreState(menuStore, 'currentPlacement').split('-')[0];
+  if (menuStore.parent && !((0,external_wp_element_namespaceObject.isValidElement)(trigger) && item_MenuItem === trigger.type)) {
+    // eslint-disable-next-line no-console
+    console.warn('For nested Menus, the `trigger` should always be a `MenuItem`.');
+  }
+  const hideOnEscape = (0,external_wp_element_namespaceObject.useCallback)(event => {
+    // Pressing Escape can cause unexpected consequences (ie. exiting
+    // full screen mode on MacOs, close parent modals...).
+    event.preventDefault();
+    // Returning `true` causes the menu to hide.
+    return true;
+  }, []);
+  const wrapperProps = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    dir: computedDirection,
+    style: {
+      direction: computedDirection
+    }
+  }), [computedDirection]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuButton, {
+      ref: ref,
+      store: menuStore,
+      render: menuStore.parent ? (0,external_wp_element_namespaceObject.cloneElement)(trigger, {
+        // Add submenu arrow, unless a `suffix` is explicitly specified
+        suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+          children: [trigger.props.suffix, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SubmenuChevronIcon, {
+            "aria-hidden": "true",
+            icon: chevron_right_small,
+            size: 24,
+            preserveAspectRatio: "xMidYMid slice"
+          })]
+        })
+      }) : trigger
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu, {
+      ...otherProps,
+      modal: modal,
+      store: menuStore
+      // Root menu has an 8px distance from its trigger,
+      // otherwise 0 (which causes the submenu to slightly overlap)
+      ,
+      gutter: gutter !== null && gutter !== void 0 ? gutter : menuStore.parent ? 0 : 8
+      // Align nested menu by the same (but opposite) amount
+      // as the menu container's padding.
+      ,
+      shift: shift !== null && shift !== void 0 ? shift : menuStore.parent ? -4 : 0,
+      hideOnHoverOutside: false,
+      "data-side": appliedPlacementSide,
+      wrapperProps: wrapperProps,
+      hideOnEscape: hideOnEscape,
+      unmountOnHide: true,
+      render: renderProps =>
+      /*#__PURE__*/
+      // Two wrappers are needed for the entry animation, where the menu
+      // container scales with a different factor than its contents.
+      // The {...renderProps} are passed to the inner wrapper, so that the
+      // menu element is the direct parent of the menu item elements.
+      (0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuPopoverOuterWrapper, {
+        variant: variant,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuPopoverInnerWrapper, {
+          ...renderProps
+        })
+      }),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuContext.Provider, {
+        value: contextValue,
+        children: children
+      })
+    })]
   });
 };
-const menu_Menu = Object.assign(contextConnectWithoutRef(UnconnectedMenu, 'Menu'), {
+const menu_Menu = Object.assign(contextConnect(UnconnectedMenu, 'Menu'), {
   Context: Object.assign(MenuContext, {
     displayName: 'Menu.Context'
   }),
@@ -71402,15 +71195,6 @@ const menu_Menu = Object.assign(contextConnectWithoutRef(UnconnectedMenu, 'Menu'
   }),
   ItemHelpText: Object.assign(MenuItemHelpText, {
     displayName: 'Menu.ItemHelpText'
-  }),
-  Popover: Object.assign(MenuPopover, {
-    displayName: 'Menu.Popover'
-  }),
-  TriggerButton: Object.assign(MenuTriggerButton, {
-    displayName: 'Menu.TriggerButton'
-  }),
-  SubmenuTriggerItem: Object.assign(MenuSubmenuTriggerItem, {
-    displayName: 'Menu.SubmenuTriggerItem'
   })
 });
 /* harmony default export */ const build_module_menu = ((/* unused pure expression or super */ null && (menu_Menu)));
@@ -72078,133 +71862,10 @@ const {
   unlock
 } = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/components');
 
-;// ./packages/icons/build-module/library/info.js
-/**
- * WordPress dependencies
- */
-
-
-const info = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm.75 4v1.5h-1.5V8h1.5Zm0 8v-5h-1.5v5h1.5Z"
-  })
-});
-/* harmony default export */ const library_info = (info);
-
-;// ./packages/icons/build-module/library/published.js
-/**
- * WordPress dependencies
- */
-
-
-const published = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M12 18.5a6.5 6.5 0 1 1 0-13 6.5 6.5 0 0 1 0 13ZM4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm11.53-1.47-1.06-1.06L11 12.94l-1.47-1.47-1.06 1.06L11 15.06l4.53-4.53Z"
-  })
-});
-/* harmony default export */ const library_published = (published);
-
-;// ./packages/icons/build-module/library/caution.js
-/**
- * WordPress dependencies
- */
-
-
-const caution = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M5.5 12a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0ZM12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm-.75 12v-1.5h1.5V16h-1.5Zm0-8v5h1.5V8h-1.5Z"
-  })
-});
-/* harmony default export */ const library_caution = (caution);
-
-;// ./packages/icons/build-module/library/error.js
-/**
- * WordPress dependencies
- */
-
-
-const error = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M12.218 5.377a.25.25 0 0 0-.436 0l-7.29 12.96a.25.25 0 0 0 .218.373h14.58a.25.25 0 0 0 .218-.372l-7.29-12.96Zm-1.743-.735c.669-1.19 2.381-1.19 3.05 0l7.29 12.96a1.75 1.75 0 0 1-1.525 2.608H4.71a1.75 1.75 0 0 1-1.525-2.608l7.29-12.96ZM12.75 17.46h-1.5v-1.5h1.5v1.5Zm-1.5-3h1.5v-5h-1.5v5Z"
-  })
-});
-/* harmony default export */ const library_error = (error);
-
-;// ./packages/components/build-module/badge/index.js
-/**
- * External dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-function Badge({
-  className,
-  intent = 'default',
-  children,
-  ...props
-}) {
-  /**
-   * Returns an icon based on the badge context.
-   *
-   * @return The corresponding icon for the provided context.
-   */
-  function contextBasedIcon() {
-    switch (intent) {
-      case 'info':
-        return library_info;
-      case 'success':
-        return library_published;
-      case 'warning':
-        return library_caution;
-      case 'error':
-        return library_error;
-      default:
-        return null;
-    }
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
-    className: dist_clsx('components-badge', `is-${intent}`, intent !== 'default' && 'has-icon', className),
-    ...props,
-    children: [intent !== 'default' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-      icon: contextBasedIcon(),
-      size: 16,
-      fill: "currentColor"
-    }), children]
-  });
-}
-/* harmony default export */ const badge = (Badge);
-
 ;// ./packages/components/build-module/private-apis.js
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -72219,8 +71880,7 @@ lock(privateApis, {
   Tabs: Tabs,
   Theme: theme,
   Menu: menu_Menu,
-  kebabCase: kebabCase,
-  Badge: badge
+  kebabCase: kebabCase
 });
 
 ;// ./packages/components/build-module/index.js
