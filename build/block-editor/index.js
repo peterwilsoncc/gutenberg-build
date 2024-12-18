@@ -55039,7 +55039,6 @@ class Inserter extends external_wp_element_namespaceObject.Component {
  */
 
 
-
 function button_block_appender_ButtonBlockAppender({
   rootClientId,
   className,
@@ -55047,8 +55046,6 @@ function button_block_appender_ButtonBlockAppender({
   tabIndex,
   onSelect
 }, ref) {
-  const inserterButtonRef = (0,external_wp_element_namespaceObject.useRef)();
-  const mergedInserterButtonRef = (0,external_wp_compose_namespaceObject.useMergeRefs)([inserterButtonRef, ref]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inserter, {
     position: "bottom center",
     rootClientId: rootClientId,
@@ -55057,7 +55054,6 @@ function button_block_appender_ButtonBlockAppender({
       if (onSelect && typeof onSelect === 'function') {
         onSelect(...args);
       }
-      inserterButtonRef.current?.focus();
     },
     renderToggle: ({
       onToggle,
@@ -55072,7 +55068,7 @@ function button_block_appender_ButtonBlockAppender({
       (0,external_wp_i18n_namespaceObject._x)('Add %s', 'directly add the only allowed block'), blockTitle) : (0,external_wp_i18n_namespaceObject._x)('Add block', 'Generic label for block inserter button');
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         __next40pxDefaultSize: true,
-        ref: mergedInserterButtonRef,
+        ref: ref,
         onFocus: onFocus,
         tabIndex: tabIndex,
         className: dist_clsx(className, 'block-editor-button-block-appender'),
