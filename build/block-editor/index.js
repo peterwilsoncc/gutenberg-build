@@ -25466,6 +25466,7 @@ function background_BackgroundImagePanel({
       backgroundSize: settings?.background?.backgroundSize && hasBackgroundSupport(name, 'backgroundSize')
     }
   };
+  const defaultControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [BACKGROUND_SUPPORT_KEY, 'defaultControls']);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(background_panel_BackgroundImagePanel, {
     inheritedValue: inheritedValue,
     as: BackgroundInspectorControl,
@@ -25473,6 +25474,7 @@ function background_BackgroundImagePanel({
     defaultValues: BACKGROUND_BLOCK_DEFAULT_VALUES,
     settings: updatedSettings,
     onChange: onChange,
+    defaultControls: defaultControls,
     value: style
   });
 }
