@@ -11639,7 +11639,7 @@ function isBlockValid(state, clientId) {
  * @param {Object} state    Editor state.
  * @param {string} clientId Block client ID.
  *
- * @return {Object?} Block attributes.
+ * @return {?Object} Block attributes.
  */
 function getBlockAttributes(state, clientId) {
   const block = state.blocks.byClientId.get(clientId);
@@ -17199,7 +17199,7 @@ function getFontStylesAndWeights(fontFamilyFaces) {
  * @param {Preset}                     preset
  * @param {Object}                     settings
  * @param {boolean|TypographySettings} settings.typography.fluid  Whether fluid typography is enabled, and, optionally, fluid font size options.
- * @param {Object?}                    settings.typography.layout Layout options.
+ * @param {?Object}                    settings.typography.layout Layout options.
  *
  * @return {string|*} A font-size value or the value of preset.size.
  */
@@ -19654,7 +19654,7 @@ function getInitialView(values = {}, sides) {
  * The string check is for backwards compatibility before Gutenberg supported
  * split gap values (row and column) and the value was a string n + unit.
  *
- * @param {string? | Object?} blockGapValue A block gap string or axial object value, e.g., '10px' or { top: '10px', left: '10px'}.
+ * @param {?string | ?Object} blockGapValue A block gap string or axial object value, e.g., '10px' or { top: '10px', left: '10px'}.
  * @return {Object|null}                    A value to pass to the BoxControl component.
  */
 function getGapBoxControlValueFromStyle(blockGapValue) {
@@ -19671,7 +19671,7 @@ function getGapBoxControlValueFromStyle(blockGapValue) {
 /**
  * Returns a CSS value for the `gap` property from a given blockGap style.
  *
- * @param {string? | Object?} blockGapValue A block gap string or axial object value, e.g., '10px' or { top: '10px', left: '10px'}.
+ * @param {?string | ?Object} blockGapValue A block gap string or axial object value, e.g., '10px' or { top: '10px', left: '10px'}.
  * @param {?string}           defaultValue  A default gap value.
  * @return {string|null}                    The concatenated gap value (row and column).
  */
@@ -59746,7 +59746,7 @@ function BlockTranformationItem({
  * @param {Array}  styles    Block styles.
  * @param {string} className Class name
  *
- * @return {Object?} The active style.
+ * @return {?Object} The active style.
  */
 function getActiveStyle(styles, className) {
   for (const style of new (external_wp_tokenList_default())(className).values()) {
@@ -59768,7 +59768,7 @@ function getActiveStyle(styles, className) {
  * Replaces the active style in the block's className.
  *
  * @param {string}  className   Class name.
- * @param {Object?} activeStyle The replaced style.
+ * @param {?Object} activeStyle The replaced style.
  * @param {Object}  newStyle    The replacing style.
  *
  * @return {string} The updated className.
@@ -59808,7 +59808,7 @@ function getRenderedStyles(styles) {
  *
  * @param {Array} styles Block styles.
  *
- * @return {Object?}        The default style object, if found.
+ * @return {?Object}        The default style object, if found.
  */
 function getDefaultStyle(styles) {
   return styles?.find(style => style.isDefault);

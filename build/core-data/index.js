@@ -22723,7 +22723,7 @@ const CACHE = new Map();
  *
  * @async
  * @param {string}  url     the URL to request details from.
- * @param {Object?} options any options to pass to the underlying fetch.
+ * @param {?Object} options any options to pass to the underlying fetch.
  * @example
  * ```js
  * import { __experimentalFetchUrlData as fetchUrlData } from '@wordpress/core-data';
@@ -22972,7 +22972,7 @@ const resolvers_getEditedEntityRecord = forward_resolver('getEntityRecord');
  *
  * @param {string}  kind  Entity kind.
  * @param {string}  name  Entity name.
- * @param {Object?} query Query Object. If requesting specific fields, fields
+ * @param {?Object} query Query Object. If requesting specific fields, fields
  *                        must always include the ID.
  */
 const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
