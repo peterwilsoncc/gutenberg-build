@@ -39181,6 +39181,10 @@ function PreviewSizePicker() {
 
 
 
+
+const {
+  Badge
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function GridItem({
   view,
   selection,
@@ -39289,7 +39293,7 @@ function GridItem({
         alignment: "top",
         justify: "flex-start",
         children: badgeFields.map(field => {
-          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Badge, {
             className: "dataviews-view-grid__field-value",
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.render, {
               item: item
