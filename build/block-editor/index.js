@@ -37549,7 +37549,7 @@ KeyboardShortcuts.Register = KeyboardShortcutsRegister;
  *
  * @return {Object} Media upload settings.
  */
-function useMediaUploadSettings(settings) {
+function useMediaUploadSettings(settings = {}) {
   return (0,external_wp_element_namespaceObject.useMemo)(() => ({
     mediaUpload: settings.mediaUpload,
     mediaSideload: settings.mediaSideload,
