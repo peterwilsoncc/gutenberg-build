@@ -41348,18 +41348,22 @@ function PostAuthorEdit({
   const {
     authorId,
     authorDetails,
-    authors
+    authors,
+    supportsAuthor
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _getPostType$supports;
     const {
       getEditedEntityRecord,
       getUser,
-      getUsers
+      getUsers,
+      getPostType
     } = select(external_wp_coreData_namespaceObject.store);
     const _authorId = getEditedEntityRecord('postType', postType, postId)?.author;
     return {
       authorId: _authorId,
       authorDetails: _authorId ? getUser(_authorId) : null,
-      authors: getUsers(edit_AUTHORS_QUERY)
+      authors: getUsers(edit_AUTHORS_QUERY),
+      supportsAuthor: (_getPostType$supports = getPostType(postType)?.supports?.author) !== null && _getPostType$supports !== void 0 ? _getPostType$supports : false
     };
   }, [postType, postId]);
   const {
@@ -41404,6 +41408,14 @@ function PostAuthorEdit({
   };
   const showCombobox = authorOptions.length >= minimumUsersForCombobox;
   const showAuthorControl = !!postId && !isDescendentOfQueryLoop && authorOptions.length > 0;
+  if (!supportsAuthor) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      ...blockProps,
+      children: (0,external_wp_i18n_namespaceObject.sprintf)(
+      // translators: %s: Name of the post type e.g: "post".
+      (0,external_wp_i18n_namespaceObject.__)('This post type (%s) does not support the author.'), postType)
+    });
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
@@ -41661,15 +41673,19 @@ function PostAuthorNameEdit({
   setAttributes
 }) {
   const {
-    authorName
+    authorName,
+    supportsAuthor
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _getPostType$supports;
     const {
       getEditedEntityRecord,
-      getUser
+      getUser,
+      getPostType
     } = select(external_wp_coreData_namespaceObject.store);
     const _authorId = getEditedEntityRecord('postType', postType, postId)?.author;
     return {
-      authorName: _authorId ? getUser(_authorId) : null
+      authorName: _authorId ? getUser(_authorId) : null,
+      supportsAuthor: (_getPostType$supports = getPostType(postType)?.supports?.author) !== null && _getPostType$supports !== void 0 ? _getPostType$supports : false
     };
   }, [postType, postId]);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
@@ -41714,9 +41730,11 @@ function PostAuthorNameEdit({
           checked: linkTarget === '_blank'
         })]
       })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
-      children: [" ", displayAuthor, " "]
+      children: supportsAuthor ? displayAuthor : (0,external_wp_i18n_namespaceObject.sprintf)(
+      // translators: %s: Name of the post type e.g: "post".
+      (0,external_wp_i18n_namespaceObject.__)('This post type (%s) does not support the author.'), postType)
     })]
   });
 }
