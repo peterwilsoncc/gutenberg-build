@@ -28348,6 +28348,18 @@ const latest_posts_deprecated_metadata = {
         fontSize: true
       }
     },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true,
+      __experimentalDefaultControls: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
+      }
+    },
     interactivity: {
       clientNavigation: true
     }
@@ -29032,6 +29044,18 @@ const latest_posts_metadata = {
       __experimentalLetterSpacing: true,
       __experimentalDefaultControls: {
         fontSize: true
+      }
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true,
+      __experimentalDefaultControls: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
       }
     },
     interactivity: {
