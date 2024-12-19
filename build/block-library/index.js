@@ -57937,22 +57937,44 @@ function SpacerControls({
   isResizing
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-      children: [orientation === 'horizontal' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DimensionInput, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+      resetAll: () => {
+        setAttributes({
+          width: undefined,
+          height: '100px'
+        });
+      },
+      children: [orientation === 'horizontal' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         label: (0,external_wp_i18n_namespaceObject.__)('Width'),
-        value: width,
-        onChange: nextWidth => setAttributes({
-          width: nextWidth
+        isShownByDefault: true,
+        hasValue: () => width !== undefined,
+        onDeselect: () => setAttributes({
+          width: undefined
         }),
-        isResizing: isResizing
-      }), orientation !== 'horizontal' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DimensionInput, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DimensionInput, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Width'),
+          value: width,
+          onChange: nextWidth => setAttributes({
+            width: nextWidth
+          }),
+          isResizing: isResizing
+        })
+      }), orientation !== 'horizontal' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         label: (0,external_wp_i18n_namespaceObject.__)('Height'),
-        value: height,
-        onChange: nextHeight => setAttributes({
-          height: nextHeight
+        isShownByDefault: true,
+        hasValue: () => height !== '100px',
+        onDeselect: () => setAttributes({
+          height: '100px'
         }),
-        isResizing: isResizing
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DimensionInput, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Height'),
+          value: height,
+          onChange: nextHeight => setAttributes({
+            height: nextHeight
+          }),
+          isResizing: isResizing
+        })
       })]
     })
   });
