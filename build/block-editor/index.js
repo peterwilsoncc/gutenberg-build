@@ -38216,17 +38216,12 @@ const moreVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 
 
 
-
 function Warning({
   className,
   actions,
   children,
   secondaryActions
 }) {
-  const alertRef = (0,external_wp_element_namespaceObject.useRef)();
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    alertRef.current?.focus();
-  }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     style: {
       display: 'contents',
@@ -38234,9 +38229,6 @@ function Warning({
     },
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: dist_clsx(className, 'block-editor-warning'),
-      tabIndex: "0",
-      ref: alertRef,
-      role: "alert",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
         className: "block-editor-warning__contents",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
