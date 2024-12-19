@@ -36989,7 +36989,6 @@ function BlockIcon({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -37056,16 +37055,14 @@ function BlockCard({
       showColors: true
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       spacing: 1,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("h2", {
         className: "block-editor-block-card__title",
-        children: name?.length ? (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(
-        // translators:  1: Custom block name. 2: Block title.
-        (0,external_wp_i18n_namespaceObject._x)('<span>%1$s</span> <badge>%2$s</badge>', 'block label'), name, title), {
-          span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-            className: "block-editor-block-card__name"
-          }),
-          badge: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Badge, {})
-        }) : title
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          className: "block-editor-block-card__name",
+          children: !!name?.length ? name : title
+        }), !!name?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Badge, {
+          children: title
+        })]
       }), description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
         className: "block-editor-block-card__description",
         children: description
