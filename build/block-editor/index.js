@@ -73297,7 +73297,7 @@ function ResponsiveBlockControl(props) {
   }
   const toggleControlLabel = toggleLabel || (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Property value for the control (eg: margin, padding, etc.). */
   (0,external_wp_i18n_namespaceObject.__)('Use the same %s on all screen sizes.'), property);
-  const toggleHelpText = (0,external_wp_i18n_namespaceObject.__)('Toggle between using the same value for all screen sizes or using a unique value per screen size.');
+  const toggleHelpText = (0,external_wp_i18n_namespaceObject.__)('Choose whether to use the same value for all screen sizes or a unique value for each screen size.');
   const defaultControl = renderDefaultControl(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResponsiveBlockControlLabel, {
     property: property,
     viewport: defaultLabel

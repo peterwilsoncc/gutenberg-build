@@ -60904,7 +60904,7 @@ function TableOfContentsEdit({
         onChange: value => setAttributes({
           onlyIncludeCurrentPage: value
         }),
-        help: onlyIncludeCurrentPage ? (0,external_wp_i18n_namespaceObject.__)('Only including headings from the current page (if the post is paginated).') : (0,external_wp_i18n_namespaceObject.__)('Toggle to only include headings from the current page (if the post is paginated).')
+        help: onlyIncludeCurrentPage ? (0,external_wp_i18n_namespaceObject.__)('Only including headings from the current page (if the post is paginated).') : (0,external_wp_i18n_namespaceObject.__)('Include headings from all pages (if the post is paginated).')
       })
     })
   });
