@@ -37735,66 +37735,106 @@ function Controls({
     title,
     rel
   } = attributes;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-    title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: true,
-      value: label ? (0,external_wp_dom_namespaceObject.__unstableStripHTML)(label) : '',
-      onChange: labelValue => {
-        setAttributes({
-          label: labelValue
-        });
-      },
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+    label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      hasValue: () => !!label,
       label: (0,external_wp_i18n_namespaceObject.__)('Text'),
-      autoComplete: "off",
-      onFocus: () => setIsLabelFieldFocused(true),
-      onBlur: () => setIsLabelFieldFocused(false)
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: true,
-      value: url ? (0,external_wp_url_namespaceObject.safeDecodeURI)(url) : '',
-      onChange: urlValue => {
-        updateAttributes({
-          url: urlValue
-        }, setAttributes, attributes);
-      },
+      onDeselect: () => setAttributes({
+        label: ''
+      }),
+      isShownByDefault: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        __nextHasNoMarginBottom: true,
+        __next40pxDefaultSize: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Text'),
+        value: label ? (0,external_wp_dom_namespaceObject.__unstableStripHTML)(label) : '',
+        onChange: labelValue => {
+          setAttributes({
+            label: labelValue
+          });
+        },
+        autoComplete: "off",
+        onFocus: () => setIsLabelFieldFocused(true),
+        onBlur: () => setIsLabelFieldFocused(false)
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      hasValue: () => !!url,
       label: (0,external_wp_i18n_namespaceObject.__)('Link'),
-      autoComplete: "off"
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextareaControl, {
-      __nextHasNoMarginBottom: true,
-      value: description || '',
-      onChange: descriptionValue => {
-        setAttributes({
-          description: descriptionValue
-        });
-      },
+      onDeselect: () => setAttributes({
+        url: ''
+      }),
+      isShownByDefault: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        __nextHasNoMarginBottom: true,
+        __next40pxDefaultSize: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Link'),
+        value: url ? (0,external_wp_url_namespaceObject.safeDecodeURI)(url) : '',
+        onChange: urlValue => {
+          updateAttributes({
+            url: urlValue
+          }, setAttributes, attributes);
+        },
+        autoComplete: "off"
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      hasValue: () => !!description,
       label: (0,external_wp_i18n_namespaceObject.__)('Description'),
-      help: (0,external_wp_i18n_namespaceObject.__)('The description will be displayed in the menu if the current theme supports it.')
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: true,
-      value: title || '',
-      onChange: titleValue => {
-        setAttributes({
-          title: titleValue
-        });
-      },
+      onDeselect: () => setAttributes({
+        description: ''
+      }),
+      isShownByDefault: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextareaControl, {
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Description'),
+        value: description || '',
+        onChange: descriptionValue => {
+          setAttributes({
+            description: descriptionValue
+          });
+        },
+        help: (0,external_wp_i18n_namespaceObject.__)('The description will be displayed in the menu if the current theme supports it.')
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      hasValue: () => !!title,
       label: (0,external_wp_i18n_namespaceObject.__)('Title attribute'),
-      autoComplete: "off",
-      help: (0,external_wp_i18n_namespaceObject.__)('Additional information to help clarify the purpose of the link.')
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: true,
-      value: rel || '',
-      onChange: relValue => {
-        setAttributes({
-          rel: relValue
-        });
-      },
+      onDeselect: () => setAttributes({
+        title: ''
+      }),
+      isShownByDefault: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        __nextHasNoMarginBottom: true,
+        __next40pxDefaultSize: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Title attribute'),
+        value: title || '',
+        onChange: titleValue => {
+          setAttributes({
+            title: titleValue
+          });
+        },
+        autoComplete: "off",
+        help: (0,external_wp_i18n_namespaceObject.__)('Additional information to help clarify the purpose of the link.')
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      hasValue: () => !!rel,
       label: (0,external_wp_i18n_namespaceObject.__)('Rel attribute'),
-      autoComplete: "off",
-      help: (0,external_wp_i18n_namespaceObject.__)('The relationship of the linked URL as space-separated link types.')
+      onDeselect: () => setAttributes({
+        rel: ''
+      }),
+      isShownByDefault: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        __nextHasNoMarginBottom: true,
+        __next40pxDefaultSize: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Rel attribute'),
+        value: rel || '',
+        onChange: relValue => {
+          setAttributes({
+            rel: relValue
+          });
+        },
+        autoComplete: "off",
+        help: (0,external_wp_i18n_namespaceObject.__)('The relationship of the linked URL as space-separated link types.')
+      })
     })]
   });
 }
