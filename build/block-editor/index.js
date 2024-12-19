@@ -33520,7 +33520,7 @@ function omitStyle(style, paths, preserveReference = false) {
   }
   let newStyle = style;
   if (!preserveReference) {
-    newStyle = structuredClone(style);
+    newStyle = JSON.parse(JSON.stringify(style));
   }
   if (!Array.isArray(paths)) {
     paths = [paths];
@@ -35411,7 +35411,7 @@ function pickStyleKeys(treeToPickFrom) {
   const entries = Object.entries(treeToPickFrom);
   const pickedEntries = entries.filter(([key]) => STYLE_KEYS.includes(key));
   // clone the style objects so that `getFeatureDeclarations` can remove consumed keys from it
-  const clonedEntries = pickedEntries.map(([key, style]) => [key, structuredClone(style)]);
+  const clonedEntries = pickedEntries.map(([key, style]) => [key, JSON.parse(JSON.stringify(style))]);
   return Object.fromEntries(clonedEntries);
 }
 const getNodesWithStyles = (tree, blockSelectors) => {
