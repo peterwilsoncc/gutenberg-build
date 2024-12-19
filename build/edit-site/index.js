@@ -27198,6 +27198,7 @@ function GlobalStylesUIWrapper() {
 
 
 
+
 const {
   ExperimentalBlockEditorProvider,
   useGlobalStyle: style_book_useGlobalStyle,
@@ -27476,16 +27477,18 @@ const StyleBookPreview = ({
   }), [globalStyles, siteEditorSettings, userConfig]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "edit-site-style-book",
-    children: [resizeObserver, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockEditorProvider, {
+    children: [resizeObserver, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockEditorProvider, {
       settings: settings,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleBookBody, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesRenderer, {
+        disableRootPadding: true
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleBookBody, {
         examples: examplesForSinglePageUse,
         settings: settings,
         goTo: goTo,
         sizes: sizes,
         isSelected: !isStatic ? isSelected : null,
         onSelect: !isStatic ? onSelect : null
-      })
+      })]
     })]
   });
 };
