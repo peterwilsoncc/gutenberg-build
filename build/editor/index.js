@@ -10270,12 +10270,17 @@ const passwordField = {
 
 
 
+
 /**
  * Internal dependencies
  */
 
 
 
+
+const {
+  Badge
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function PageTitleView({
   item
 }) {
@@ -10295,8 +10300,7 @@ function PageTitleView({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BaseTitleView, {
     item: item,
     className: "fields-field__page-title",
-    children: [frontPageId, postsPageId].includes(item.id) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-      className: "fields-field__page-title__badge",
+    children: [frontPageId, postsPageId].includes(item.id) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Badge, {
       children: item.id === frontPageId ? (0,external_wp_i18n_namespaceObject.__)('Homepage') : (0,external_wp_i18n_namespaceObject.__)('Posts Page')
     })
   });
@@ -32099,6 +32103,10 @@ function ActionsDropdownMenuGroup({
 
 
 
+const {
+  Badge: post_card_panel_Badge
+} = unlock(external_wp_components_namespaceObject.privateApis);
+
 /**
  * Renders a title of the post type and the available quick actions available within a 3-dot dropdown.
  *
@@ -32108,7 +32116,6 @@ function ActionsDropdownMenuGroup({
  * @param {Function}        [props.onActionPerformed] - A callback function for when a quick action is performed.
  * @return {React.ReactNode} The rendered component.
  */
-
 function PostCardPanel({
   postType,
   postId,
@@ -32173,8 +32180,10 @@ function PostCardPanel({
         truncate: true,
         className: "editor-post-card-panel__title",
         as: "h2",
-        children: [title, pageTypeBadge && postIds.length === 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          className: "editor-post-card-panel__title-badge",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          className: "editor-post-card-panel__title-name",
+          children: title
+        }), pageTypeBadge && postIds.length === 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_card_panel_Badge, {
           children: pageTypeBadge
         })]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostActions, {
