@@ -50173,7 +50173,7 @@ function QueryPaginationLabelControl({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
     __nextHasNoMarginBottom: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Show label text'),
-    help: (0,external_wp_i18n_namespaceObject.__)('Toggle off to hide the label text, e.g. "Next Page".'),
+    help: (0,external_wp_i18n_namespaceObject.__)('Make label text visible, e.g. "Next Page".'),
     onChange: onChange,
     checked: value === true
   });
