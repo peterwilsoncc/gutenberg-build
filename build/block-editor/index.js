@@ -52803,7 +52803,7 @@ function PatternsExplorer({
   rootClientId
 }) {
   const [searchValue, setSearchValue] = (0,external_wp_element_namespaceObject.useState)('');
-  const [selectedCategory, setSelectedCategory] = (0,external_wp_element_namespaceObject.useState)(initialCategory?.name);
+  const [selectedCategory, setSelectedCategory] = (0,external_wp_element_namespaceObject.useState)(initialCategory);
   const patternCategories = usePatternCategories(rootClientId);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "block-editor-block-patterns-explorer",
@@ -52927,7 +52927,7 @@ function MobileTabNavigation({
 
 const getShouldDisableSyncFilter = sourceFilter => sourceFilter !== 'all' && sourceFilter !== 'user';
 const getShouldHideSourcesFilter = category => {
-  return category.name === myPatternsCategory.name;
+  return category?.name === myPatternsCategory.name;
 };
 const PATTERN_SOURCE_MENU_OPTIONS = [{
   value: 'all',
@@ -52954,7 +52954,7 @@ function PatternsFilter({
   // we do this by deriving from props rather than calling setPatternSourceFilter otherwise
   // the user may be confused when switching to another category if the haven't explicity set
   // this filter themselves.
-  const currentPatternSourceFilter = category.name === myPatternsCategory.name ? INSERTER_PATTERN_TYPES.user : patternSourceFilter;
+  const currentPatternSourceFilter = category?.name === myPatternsCategory.name ? INSERTER_PATTERN_TYPES.user : patternSourceFilter;
 
   // We need to disable the sync filter option if the source filter is not 'all' or 'user'
   // otherwise applying them will just result in no patterns being shown.
@@ -53073,13 +53073,13 @@ function PatternCategoryPreviews({
     if (isPatternFiltered(pattern, patternSourceFilter, patternSyncFilter)) {
       return false;
     }
-    if (category.name === allPatternsCategory.name) {
+    if (category.name === allPatternsCategory?.name) {
       return true;
     }
-    if (category.name === myPatternsCategory.name && pattern.type === INSERTER_PATTERN_TYPES.user) {
+    if (category.name === myPatternsCategory?.name && pattern.type === INSERTER_PATTERN_TYPES.user) {
       return true;
     }
-    if (category.name === starterPatternsCategory.name && pattern.blockTypes?.includes('core/post-content')) {
+    if (category.name === starterPatternsCategory?.name && pattern.blockTypes?.includes('core/post-content')) {
       return true;
     }
     if (category.name === 'uncategorized') {
@@ -53119,7 +53119,7 @@ function PatternCategoryPreviews({
             size: 13,
             level: 4,
             as: "div",
-            children: category.label
+            children: category?.label
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternsFilter, {
           patternSyncFilter: patternSyncFilter,
@@ -53213,7 +53213,7 @@ function CategoryTabs({
       className: "block-editor-inserter__category-tablist",
       children: categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(category_tabs_Tabs.Tab, {
         tabId: category.name,
-        "aria-current": category === selectedCategory ? 'true' : undefined,
+        "aria-current": category.name === selectedCategory?.name ? 'true' : undefined,
         children: category.label
       }, category.name))
     }), categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(category_tabs_Tabs.TabPanel, {
@@ -53301,7 +53301,7 @@ function BlockPatternsTab({
         }, category.name)
       })
     }), showPatternsExplorer && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_explorer, {
-      initialCategory: selectedCategory || categories[0],
+      initialCategory: selectedCategory?.name || categories[0]?.name,
       patternCategories: categories,
       onModalClose: () => setShowPatternsExplorer(false),
       rootClientId: rootClientId
@@ -54231,6 +54231,7 @@ function TabbedSidebar({
 
 
 
+
 /**
  * A hook used to set the editor mode to zoomed out mode, invoking the hook sets the mode.
  * Concepts:
@@ -54240,6 +54241,9 @@ function TabbedSidebar({
  * @param {boolean} enabled If we should enter into zoomOut mode or not
  */
 function useZoomOut(enabled = true) {
+  const {
+    postId
+  } = (0,external_wp_element_namespaceObject.useContext)(block_context);
   const {
     setZoomLevel,
     resetZoomLevel
@@ -54263,6 +54267,7 @@ function useZoomOut(enabled = true) {
   }, []);
   const controlZoomLevelRef = (0,external_wp_element_namespaceObject.useRef)(false);
   const isEnabledRef = (0,external_wp_element_namespaceObject.useRef)(enabled);
+  const postIdRef = (0,external_wp_element_namespaceObject.useRef)(postId);
 
   /**
    * This hook tracks if the zoom state was changed manually by the user via clicking
@@ -54279,6 +54284,11 @@ function useZoomOut(enabled = true) {
   }, [isZoomedOut]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     isEnabledRef.current = enabled;
+
+    // If the user created a new post/page, we should take control of the zoom level.
+    if (postIdRef.current !== postId) {
+      controlZoomLevelRef.current = true;
+    }
     if (enabled !== isZoomOut()) {
       controlZoomLevelRef.current = true;
       if (enabled) {
@@ -54293,7 +54303,7 @@ function useZoomOut(enabled = true) {
         resetZoomLevel();
       }
     };
-  }, [enabled, isZoomOut, resetZoomLevel, setZoomLevel]);
+  }, [enabled, isZoomOut, postId, resetZoomLevel, setZoomLevel]);
 }
 
 ;// ./packages/block-editor/build-module/components/inserter/menu.js
