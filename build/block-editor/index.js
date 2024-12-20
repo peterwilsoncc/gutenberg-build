@@ -53213,7 +53213,6 @@ function CategoryTabs({
       className: "block-editor-inserter__category-tablist",
       children: categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(category_tabs_Tabs.Tab, {
         tabId: category.name,
-        "aria-label": category.label,
         "aria-current": category === selectedCategory ? 'true' : undefined,
         children: category.label
       }, category.name))
