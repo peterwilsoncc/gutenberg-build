@@ -40923,6 +40923,7 @@ function useOnEnter(props) {
  */
 
 
+
 function ParagraphRTLControl({
   direction,
   setDirection
@@ -41002,12 +41003,12 @@ function ParagraphBlock({
   isSelected: isSingleSelected,
   name
 }) {
+  const isZoomOut = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(external_wp_blockEditor_namespaceObject.store)).isZoomOut());
   const {
     align,
     content,
     direction,
-    dropCap,
-    placeholder
+    dropCap
   } = attributes;
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     ref: useOnEnter({
@@ -41023,6 +41024,14 @@ function ParagraphBlock({
     }
   });
   const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
+  let {
+    placeholder
+  } = attributes;
+  if (isZoomOut) {
+    placeholder = '';
+  } else if (!placeholder) {
+    placeholder = (0,external_wp_i18n_namespaceObject.__)('Type / to choose a block');
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [blockEditingMode === 'default' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
       group: "block",
@@ -41056,8 +41065,8 @@ function ParagraphBlock({
       onRemove: onRemove,
       "aria-label": external_wp_blockEditor_namespaceObject.RichText.isEmpty(content) ? (0,external_wp_i18n_namespaceObject.__)('Empty block; start writing or type forward slash to choose a block') : (0,external_wp_i18n_namespaceObject.__)('Block: Paragraph'),
       "data-empty": external_wp_blockEditor_namespaceObject.RichText.isEmpty(content),
-      placeholder: placeholder || (0,external_wp_i18n_namespaceObject.__)('Type / to choose a block'),
-      "data-custom-placeholder": placeholder ? true : undefined,
+      placeholder: placeholder,
+      "data-custom-placeholder": placeholder && !isZoomOut ? true : undefined,
       __unstableEmbedURLOnPaste: true,
       __unstableAllowPrefixTransformations: true
     })]
