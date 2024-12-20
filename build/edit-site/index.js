@@ -25324,6 +25324,39 @@ function ScreenBackground() {
 }
 /* harmony default export */ const screen_background = (ScreenBackground);
 
+;// ./packages/edit-site/build-module/components/global-styles/confirm-reset-shadow-dialog.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+function ConfirmResetShadowDialog({
+  text,
+  confirmButtonText,
+  isOpen,
+  toggleOpen,
+  onConfirm
+}) {
+  const handleConfirm = async () => {
+    toggleOpen();
+    onConfirm();
+  };
+  const handleCancel = () => {
+    toggleOpen();
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalConfirmDialog, {
+    isOpen: isOpen,
+    cancelButtonText: (0,external_wp_i18n_namespaceObject.__)('Cancel'),
+    confirmButtonText: confirmButtonText,
+    onCancel: handleCancel,
+    onConfirm: handleConfirm,
+    size: "medium",
+    children: text
+  });
+}
+/* harmony default export */ const confirm_reset_shadow_dialog = (ConfirmResetShadowDialog);
+
 ;// ./packages/edit-site/build-module/components/global-styles/shadows-panel.js
 /* wp:polyfill */
 /**
@@ -25343,9 +25376,14 @@ function ScreenBackground() {
 
 
 
+
+
 const {
   useGlobalSetting: shadows_panel_useGlobalSetting
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
+const {
+  Menu: shadows_panel_Menu
+} = unlock(external_wp_components_namespaceObject.privateApis);
 const defaultShadow = '6px 6px 9px rgba(0, 0, 0, 0.2)';
 function ShadowsPanel() {
   const [defaultShadows] = shadows_panel_useGlobalSetting('shadow.presets.default');
@@ -25355,8 +25393,19 @@ function ShadowsPanel() {
   const onCreateShadow = shadow => {
     setCustomShadows([...(customShadows || []), shadow]);
   };
+  const handleResetShadows = () => {
+    setCustomShadows([]);
+  };
+  const [isResetDialogOpen, setIsResetDialogOpen] = (0,external_wp_element_namespaceObject.useState)(false);
+  const toggleResetDialog = () => setIsResetDialogOpen(!isResetDialogOpen);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header, {
+    children: [isResetDialogOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(confirm_reset_shadow_dialog, {
+      text: (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to remove all custom shadows?'),
+      confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Remove'),
+      isOpen: isResetDialogOpen,
+      toggleOpen: toggleResetDialog,
+      onConfirm: handleResetShadows
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header, {
       title: (0,external_wp_i18n_namespaceObject.__)('Shadows'),
       description: (0,external_wp_i18n_namespaceObject.__)('Manage and create shadow styles for use across the site.')
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -25377,7 +25426,8 @@ function ShadowsPanel() {
           shadows: customShadows || [],
           category: "custom",
           canCreate: true,
-          onCreate: onCreateShadow
+          onCreate: onCreateShadow,
+          onReset: toggleResetDialog
         })]
       })
     })]
@@ -25388,7 +25438,8 @@ function ShadowList({
   shadows,
   category,
   canCreate,
-  onCreate
+  onCreate,
+  onReset
 }) {
   const handleAddShadow = () => {
     const newIndex = getNewIndexFromPresets(shadows, 'shadow-');
@@ -25420,6 +25471,21 @@ function ShadowList({
             handleAddShadow();
           }
         })
+      }), !!shadows?.length && category === 'custom' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(shadows_panel_Menu, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_panel_Menu.TriggerButton, {
+          render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            size: "small",
+            icon: more_vertical,
+            label: (0,external_wp_i18n_namespaceObject.__)('Shadow options')
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_panel_Menu.Popover, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_panel_Menu.Item, {
+            onClick: onReset,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_panel_Menu.ItemLabel, {
+              children: (0,external_wp_i18n_namespaceObject.__)('Remove all custom shadows')
+            })
+          })
+        })]
       })]
     }), shadows.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
       isBordered: true,
@@ -25440,11 +25506,8 @@ function ShadowItem({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
         children: shadow.name
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-        display: "flex",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-          icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_left : chevron_right
-        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+        icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_left : chevron_right
       })]
     })
   });
