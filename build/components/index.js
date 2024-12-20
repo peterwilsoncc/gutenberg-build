@@ -33634,7 +33634,7 @@ function Slot(props) {
     children,
     fillProps = {}
   } = props;
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     const instance = instanceRef.current;
     registry.registerSlot(name, instance);
     return () => registry.unregisterSlot(name, instance);
