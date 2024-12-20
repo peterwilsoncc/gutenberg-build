@@ -55398,6 +55398,11 @@ const mapMarker = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 function SiteTitleEdit({
   attributes,
   setAttributes,
@@ -55433,6 +55438,7 @@ function SiteTitleEdit({
   const {
     editEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   function setTitle(newTitle) {
     editEntityRecord('root', 'site', undefined, {
       title: newTitle
@@ -55494,6 +55500,7 @@ function SiteTitleEdit({
             linkTarget: '_self'
           });
         },
+        dropdownMenuProps: dropdownMenuProps,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           hasValue: () => isLink !== false,
           label: (0,external_wp_i18n_namespaceObject.__)('Make title link to home'),
