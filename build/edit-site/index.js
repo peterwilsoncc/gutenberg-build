@@ -38119,9 +38119,6 @@ function ActionsMenuGroup({
     }, action.id))
   });
 }
-function hasOnlyOneActionAndIsPrimary(primaryActions, actions) {
-  return primaryActions.length === 1 && actions.length === 1;
-}
 function ItemActions({
   item,
   actions,
@@ -38149,7 +38146,9 @@ function ItemActions({
       registry: registry
     });
   }
-  if (hasOnlyOneActionAndIsPrimary(primaryActions, actions)) {
+
+  // If all actions are primary, there is no need to render the dropdown.
+  if (primaryActions.length === eligibleActions.length) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrimaryActions, {
       item: item,
       actions: primaryActions,
