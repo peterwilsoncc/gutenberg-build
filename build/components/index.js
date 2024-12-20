@@ -59541,6 +59541,7 @@ function UnforwardedNavigationBackButton({
   };
   const icon = (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right : chevron_left;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(MenuBackButtonUI, {
+    __next40pxDefaultSize: true,
     className: classes,
     href: href,
     variant: "tertiary",
@@ -59850,6 +59851,7 @@ function NavigationItem(props) {
   };
   const itemProps = isText ? restProps : {
     as: build_module_button,
+    __next40pxDefaultSize: 'as' in restProps ? restProps.as === undefined : true,
     href,
     onClick: onItemClick,
     'aria-current': isActive ? 'page' : undefined,
