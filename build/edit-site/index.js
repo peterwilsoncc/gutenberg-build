@@ -26421,6 +26421,8 @@ function ScreenStyleVariations() {
 }
 /* harmony default export */ const screen_style_variations = (ScreenStyleVariations);
 
+;// external ["wp","mediaUtils"]
+const external_wp_mediaUtils_namespaceObject = window["wp"]["mediaUtils"];
 ;// ./packages/edit-site/build-module/components/style-book/constants.js
 /**
  * WordPress dependencies
@@ -27186,6 +27188,8 @@ function GlobalStylesUIWrapper() {
 
 
 
+
+
 /**
  * Internal dependencies
  */
@@ -27428,11 +27432,18 @@ const StyleBookPreview = ({
   isStatic = false
 }) => {
   const siteEditorSettings = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getSettings(), []);
+  const canUserUploadMedia = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).canUser('create', {
+    kind: 'root',
+    name: 'media'
+  }), []);
 
   // Update block editor settings because useMultipleOriginColorsAndGradients fetch colours from there.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    (0,external_wp_data_namespaceObject.dispatch)(external_wp_blockEditor_namespaceObject.store).updateSettings(siteEditorSettings);
-  }, [siteEditorSettings]);
+    (0,external_wp_data_namespaceObject.dispatch)(external_wp_blockEditor_namespaceObject.store).updateSettings({
+      ...siteEditorSettings,
+      mediaUpload: canUserUploadMedia ? external_wp_mediaUtils_namespaceObject.uploadMedia : undefined
+    });
+  }, [siteEditorSettings, canUserUploadMedia]);
   const [section, onChangeSection] = useSection();
   const isSelected = blockName => {
     // Match '/blocks/core%2Fbutton' and
