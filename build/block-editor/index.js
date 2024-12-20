@@ -54735,6 +54735,7 @@ const defaultRenderToggle = ({
     }
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Wrapper, {
+    __next40pxDefaultSize: toggleProps.as ? undefined : true,
     icon: library_plus,
     label: label,
     tooltipPosition: "bottom",
