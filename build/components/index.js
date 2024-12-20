@@ -59356,6 +59356,7 @@ const useCreateNavigationTree = () => {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -59420,6 +59421,11 @@ function Navigation({
   const [slideOrigin, setSlideOrigin] = (0,external_wp_element_namespaceObject.useState)();
   const navigationTree = useCreateNavigationTree();
   const defaultSlideOrigin = (0,external_wp_i18n_namespaceObject.isRTL)() ? 'right' : 'left';
+  external_wp_deprecated_default()('wp.components.Navigation (and all subcomponents)', {
+    since: '6.8',
+    version: '7.1',
+    alternative: 'wp.components.Navigator'
+  });
   const setActiveMenu = (menuId, slideInOrigin = defaultSlideOrigin) => {
     if (!navigationTree.getMenu(menuId)) {
       return;
