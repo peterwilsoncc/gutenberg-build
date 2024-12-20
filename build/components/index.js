@@ -54557,6 +54557,7 @@ function date_Day({
     // an already focused element.
   }, [isFocusable]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DayButton, {
+    __next40pxDefaultSize: true,
     ref: ref,
     className: "components-datetime__date__day" // Unused, for backwards compatibility.
     ,
