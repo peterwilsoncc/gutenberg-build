@@ -26581,6 +26581,41 @@ const STYLE_BOOK_CATEGORIES = [{
   include: []
 }];
 
+// Style book preview subcategories for all blocks section.
+const STYLE_BOOK_ALL_BLOCKS_SUBCATEGORIES = [...STYLE_BOOK_THEME_SUBCATEGORIES, {
+  slug: 'media',
+  title: (0,external_wp_i18n_namespaceObject.__)('Media'),
+  blocks: ['core/post-featured-image']
+}, {
+  slug: 'widgets',
+  title: (0,external_wp_i18n_namespaceObject.__)('Widgets'),
+  blocks: []
+}, {
+  slug: 'embed',
+  title: (0,external_wp_i18n_namespaceObject.__)('Embeds'),
+  include: []
+}];
+
+// Style book preview categories are organised slightly differently to the editor ones.
+const STYLE_BOOK_PREVIEW_CATEGORIES = [{
+  slug: 'overview',
+  title: (0,external_wp_i18n_namespaceObject.__)('Overview'),
+  blocks: []
+}, {
+  slug: 'text',
+  title: (0,external_wp_i18n_namespaceObject.__)('Text'),
+  blocks: ['core/post-content', 'core/home-link', 'core/navigation-link']
+}, {
+  slug: 'colors',
+  title: (0,external_wp_i18n_namespaceObject.__)('Colors'),
+  blocks: []
+}, {
+  slug: 'blocks',
+  title: (0,external_wp_i18n_namespaceObject.__)('All Blocks'),
+  blocks: [],
+  subcategories: STYLE_BOOK_ALL_BLOCKS_SUBCATEGORIES
+}];
+
 // Forming a "block formatting context" to prevent margin collapsing.
 // @see https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context
 const ROOT_CONTAINER = `
@@ -27301,31 +27336,19 @@ const scrollToSection = (anchorId, iframe) => {
 };
 
 /**
- * Parses a Block Editor navigation path to extract the block name and
- * build a style book navigation path. The object can be extended to include a category,
- * representing a style book tab/section.
+ * Parses a Block Editor navigation path to build a style book navigation path.
+ * The object can be extended to include a category, representing a style book tab/section.
  *
  * @param {string} path An internal Block Editor navigation path.
  * @return {null|{block: string}} An object containing the example to navigate to.
  */
 const getStyleBookNavigationFromPath = path => {
   if (path && typeof path === 'string') {
-    if (path === '/') {
+    if (path === '/' || path.startsWith('/typography') || path.startsWith('/colors') || path.startsWith('/blocks')) {
       return {
         top: true
       };
     }
-    if (path.startsWith('/typography')) {
-      return {
-        block: 'typography'
-      };
-    }
-    let block = path.includes('/blocks/') ? decodeURIComponent(path.split('/blocks/')[1]) : null;
-    // Default to theme-colors if the path ends with /colors.
-    block = path.endsWith('/colors') ? 'theme-colors' : block;
-    return {
-      block
-    };
   }
   return null;
 };
@@ -27454,23 +27477,31 @@ function StyleBook({
               children: tab.title
             }, tab.slug))
           })
-        }), tabs.map(tab => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.TabPanel, {
-          tabId: tab.slug,
-          focusable: false,
-          className: "edit-site-style-book__tabpanel",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleBookBody, {
-            category: tab.slug,
-            examples: examples,
-            isSelected: isSelected,
-            onSelect: onSelect,
-            settings: settings,
-            sizes: sizes,
-            title: tab.title,
-            goTo: goTo
-          })
-        }, tab.slug))]
+        }), tabs.map(tab => {
+          const categoryDefinition = tab.slug ? getTopLevelStyleBookCategories().find(_category => _category.slug === tab.slug) : null;
+          const filteredExamples = categoryDefinition ? getExamplesByCategory(categoryDefinition, examples) : {
+            examples
+          };
+          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.TabPanel, {
+            tabId: tab.slug,
+            focusable: false,
+            className: "edit-site-style-book__tabpanel",
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleBookBody, {
+              category: tab.slug,
+              examples: filteredExamples,
+              isSelected: isSelected,
+              onSelect: onSelect,
+              settings: settings,
+              sizes: sizes,
+              title: tab.title,
+              goTo: goTo
+            })
+          }, tab.slug);
+        })]
       }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleBookBody, {
-        examples: examplesForSinglePageUse,
+        examples: {
+          examples: examplesForSinglePageUse
+        },
         isSelected: isSelected,
         onClick: onClick,
         onSelect: onSelect,
@@ -27533,6 +27564,31 @@ const StyleBookPreview = ({
   const colors = useMultiOriginPalettes();
   const examples = getExamples(colors);
   const examplesForSinglePageUse = getExamplesForSinglePageUse(examples);
+  let previewCategory = null;
+  if (section.includes('/colors')) {
+    previewCategory = 'colors';
+  } else if (section.includes('/typography')) {
+    previewCategory = 'text';
+  } else if (section.includes('/blocks')) {
+    previewCategory = 'blocks';
+    const blockName = decodeURIComponent(section).split('/blocks/')[1];
+    if (blockName && examples.find(example => example.name === blockName)) {
+      previewCategory = blockName;
+    }
+  } else if (!isStatic) {
+    previewCategory = 'overview';
+  }
+  const categoryDefinition = STYLE_BOOK_PREVIEW_CATEGORIES.find(category => category.slug === previewCategory);
+
+  // If there's no category definition there may be a single block.
+  const filteredExamples = categoryDefinition ? getExamplesByCategory(categoryDefinition, examples) : {
+    examples: [examples.find(example => example.name === previewCategory)]
+  };
+
+  // If there's no preview category, show all examples.
+  const displayedExamples = previewCategory ? filteredExamples : {
+    examples: examplesForSinglePageUse
+  };
   const {
     base: baseConfig
   } = (0,external_wp_element_namespaceObject.useContext)(style_book_GlobalStylesContext);
@@ -27556,7 +27612,7 @@ const StyleBookPreview = ({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesRenderer, {
         disableRootPadding: true
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleBookBody, {
-        examples: examplesForSinglePageUse,
+        examples: displayedExamples,
         settings: settings,
         goTo: goTo,
         sizes: sizes,
@@ -27567,7 +27623,6 @@ const StyleBookPreview = ({
   });
 };
 const StyleBookBody = ({
-  category,
   examples,
   isSelected,
   onClick,
@@ -27614,10 +27669,6 @@ const StyleBookBody = ({
     if (hasIframeLoaded && iframeRef?.current) {
       if (goTo?.top) {
         scrollToSection('top', iframeRef?.current);
-        return;
-      }
-      if (goTo?.block) {
-        scrollToSection(`example-${goTo?.block}`, iframeRef?.current);
       }
     }
   }, [iframeRef?.current, goTo, scrollToSection, hasIframeLoaded]);
@@ -27639,28 +27690,22 @@ const StyleBookBody = ({
       className: dist_clsx('edit-site-style-book__examples', {
         'is-wide': sizes.width > 600
       }),
-      examples: examples,
-      category: category,
+      filteredExamples: examples,
       label: title ? (0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: %s: Category of blocks, e.g. Text.
       (0,external_wp_i18n_namespaceObject.__)('Examples of blocks in the %s category'), title) : (0,external_wp_i18n_namespaceObject.__)('Examples of blocks'),
       isSelected: isSelected,
       onSelect: onSelect
-    }, category)]
+    }, title)]
   });
 };
 const Examples = (0,external_wp_element_namespaceObject.memo)(({
   className,
-  examples,
-  category,
+  filteredExamples,
   label,
   isSelected,
   onSelect
 }) => {
-  const categoryDefinition = category ? getTopLevelStyleBookCategories().find(_category => _category.slug === category) : null;
-  const filteredExamples = categoryDefinition ? getExamplesByCategory(categoryDefinition, examples) : {
-    examples
-  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite, {
     orientation: "vertical",
     className: className,
