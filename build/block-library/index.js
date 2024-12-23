@@ -43010,6 +43010,11 @@ const post_content_init = () => initBlock({
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 function PostDateEdit({
   attributes: {
     textAlign,
@@ -43030,6 +43035,7 @@ function PostDateEdit({
       [`wp-block-post-date__modified-date`]: displayType === 'modified'
     })
   });
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 
   // Use internal state instead of a ref to make sure that the component
   // re-renders when the popover's anchor updates.
@@ -43110,6 +43116,7 @@ function PostDateEdit({
             displayType: 'date'
           });
         },
+        dropdownMenuProps: dropdownMenuProps,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           hasValue: () => format !== undefined && format !== siteFormat,
           label: (0,external_wp_i18n_namespaceObject.__)('Date Format'),
