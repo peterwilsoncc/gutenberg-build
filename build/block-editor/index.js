@@ -36840,6 +36840,14 @@ function getGridItemRect(gridItemElement) {
 function getGridInfo(gridElement) {
   const gridTemplateColumns = utils_getComputedCSS(gridElement, 'grid-template-columns');
   const gridTemplateRows = utils_getComputedCSS(gridElement, 'grid-template-rows');
+  const borderTopWidth = utils_getComputedCSS(gridElement, 'border-top-width');
+  const borderRightWidth = utils_getComputedCSS(gridElement, 'border-right-width');
+  const borderBottomWidth = utils_getComputedCSS(gridElement, 'border-bottom-width');
+  const borderLeftWidth = utils_getComputedCSS(gridElement, 'border-left-width');
+  const paddingTop = utils_getComputedCSS(gridElement, 'padding-top');
+  const paddingRight = utils_getComputedCSS(gridElement, 'padding-right');
+  const paddingBottom = utils_getComputedCSS(gridElement, 'padding-bottom');
+  const paddingLeft = utils_getComputedCSS(gridElement, 'padding-left');
   const numColumns = gridTemplateColumns.split(' ').length;
   const numRows = gridTemplateRows.split(' ').length;
   const numItems = numColumns * numRows;
@@ -36852,7 +36860,10 @@ function getGridInfo(gridElement) {
       gridTemplateColumns,
       gridTemplateRows,
       gap: utils_getComputedCSS(gridElement, 'gap'),
-      padding: utils_getComputedCSS(gridElement, 'padding')
+      paddingTop: `calc(${paddingTop} + ${borderTopWidth})`,
+      paddingRight: `calc(${paddingRight} + ${borderRightWidth})`,
+      paddingBottom: `calc(${paddingBottom} + ${borderBottomWidth})`,
+      paddingLeft: `calc(${paddingLeft} + ${borderLeftWidth})`
     }
   };
 }
@@ -55175,6 +55186,15 @@ const GridVisualizerGrid = (0,external_wp_element_namespaceObject.forwardRef)(({
       observer.observe(element);
       observers.push(observer);
     }
+    const mutationObserver = new window.MutationObserver(() => {
+      setGridInfo(getGridInfo(gridElement));
+    });
+    mutationObserver.observe(gridElement, {
+      attributeFilter: ['style', 'class'],
+      childList: true,
+      subtree: true
+    });
+    observers.push(mutationObserver);
     return () => {
       for (const observer of observers) {
         observer.disconnect();
