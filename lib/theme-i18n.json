@@ -76,6 +76,18 @@
 						{
 							"name": "Gradient name"
 						}
+					],
+					"duotone": [
+						{
+							"name": "Duotone name"
+						}
+					]
+				},
+				"dimensions": {
+					"aspectRatios": [
+						{
+							"name": "Aspect ratio name"
+						}
 					]
 				},
 				"spacing": {
