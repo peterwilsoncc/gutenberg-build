@@ -33385,6 +33385,10 @@ const more = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
 
 
 
+/**
+ * Internal dependencies
+ */
+
 
 const DEFAULT_TEXT = (0,external_wp_i18n_namespaceObject.__)('Read more');
 function MoreEdit({
@@ -33414,6 +33418,7 @@ function MoreEdit({
   const style = {
     width: `${(customText ? customText : DEFAULT_TEXT).length + 1.2}em`
   };
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
@@ -33423,6 +33428,7 @@ function MoreEdit({
             noTeaser: false
           });
         },
+        dropdownMenuProps: dropdownMenuProps,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Hide excerpt'),
           isShownByDefault: true,
