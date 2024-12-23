@@ -23664,7 +23664,7 @@ const DEFAULT_TAB = {
 };
 const UPLOAD_TAB = {
   id: 'upload-fonts',
-  title: (0,external_wp_i18n_namespaceObject.__)('Upload')
+  title: (0,external_wp_i18n_namespaceObject._x)('Upload', 'noun')
 };
 const tabsFromCollections = collections => collections.map(({
   slug,

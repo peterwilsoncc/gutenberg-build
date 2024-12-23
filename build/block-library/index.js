@@ -64602,7 +64602,7 @@ function TracksEditor({
                     onClick: () => {
                       openFileDialog();
                     },
-                    children: (0,external_wp_i18n_namespaceObject.__)('Upload')
+                    children: (0,external_wp_i18n_namespaceObject._x)('Upload', 'verb')
                   });
                 }
               })

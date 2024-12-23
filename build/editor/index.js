@@ -21739,7 +21739,7 @@ function MaybeUploadMediaPanel() {
         size: "compact",
         variant: "primary",
         onClick: uploadImages,
-        children: (0,external_wp_i18n_namespaceObject.__)('Upload')
+        children: (0,external_wp_i18n_namespaceObject._x)('Upload', 'verb')
       })]
     }), hadUploadError && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
       children: (0,external_wp_i18n_namespaceObject.__)('Upload failed, try again.')

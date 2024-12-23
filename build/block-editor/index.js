@@ -24581,7 +24581,7 @@ const MediaReplaceFlow = ({
                 onClick: () => {
                   openFileDialog();
                 },
-                children: (0,external_wp_i18n_namespaceObject.__)('Upload')
+                children: (0,external_wp_i18n_namespaceObject._x)('Upload', 'verb')
               });
             }
           })]
@@ -71286,7 +71286,7 @@ function MediaPlaceholder({
                 variant: "primary",
                 className: dist_clsx('block-editor-media-placeholder__button', 'block-editor-media-placeholder__upload-button'),
                 onClick: openFileDialog,
-                children: (0,external_wp_i18n_namespaceObject.__)('Upload')
+                children: (0,external_wp_i18n_namespaceObject._x)('Upload', 'verb')
               }), uploadMediaLibraryButton, renderUrlSelectionUI(), renderFeaturedImageToggle(), renderCancelLink()]
             });
             return renderPlaceholder(content);
@@ -71304,7 +71304,7 @@ function MediaPlaceholder({
             onClick: openFileDialog,
             variant: "primary",
             className: dist_clsx('block-editor-media-placeholder__button', 'block-editor-media-placeholder__upload-button'),
-            children: (0,external_wp_i18n_namespaceObject.__)('Upload')
+            children: (0,external_wp_i18n_namespaceObject._x)('Upload', 'verb')
           }),
           onChange: onUpload,
           accept: accept,
