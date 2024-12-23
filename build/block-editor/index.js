@@ -27744,6 +27744,9 @@ function ColorPanelDropdown({
             icon: library_reset,
             onClick: () => {
               resetValue();
+              if (isOpen) {
+                onToggle();
+              }
               // Return focus to parent button
               colorGradientDropdownButtonRef.current?.focus();
             }
@@ -68516,6 +68519,13 @@ function NonDefaultControls({
  */
 
 
+
+
+/**
+ * Internal dependencies
+ */
+
+
 /**
  * Internal dependencies
  */
@@ -68577,23 +68587,53 @@ const renderToggle = settings => ({
   isOpen
 }) => {
   const {
+    clearable,
     colorValue,
+    gradientValue,
+    onColorChange,
+    onGradientChange,
     label
   } = settings;
+  const colorButtonRef = (0,external_wp_element_namespaceObject.useRef)(undefined);
   const toggleProps = {
     onClick: onToggle,
     className: dist_clsx('block-editor-panel-color-gradient-settings__dropdown', {
       'is-open': isOpen
     }),
-    'aria-expanded': isOpen
+    'aria-expanded': isOpen,
+    ref: colorButtonRef
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-    __next40pxDefaultSize: true,
-    ...toggleProps,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dropdown_LabeledColorIndicator, {
-      colorValue: colorValue,
-      label: label
-    })
+  const clearValue = () => {
+    if (colorValue) {
+      onColorChange();
+    } else if (gradientValue) {
+      onGradientChange();
+    }
+  };
+  const value = colorValue !== null && colorValue !== void 0 ? colorValue : gradientValue;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
+      ...toggleProps,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dropdown_LabeledColorIndicator, {
+        colorValue: value,
+        label: label
+      })
+    }), clearable && value && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
+      label: (0,external_wp_i18n_namespaceObject.__)('Reset'),
+      className: "block-editor-panel-color-gradient-settings__reset",
+      size: "small",
+      icon: library_reset,
+      onClick: () => {
+        clearValue();
+        if (isOpen) {
+          onToggle();
+        }
+        // Return focus to parent button
+        colorButtonRef.current?.focus();
+      }
+    })]
   });
 };
 
@@ -68624,7 +68664,6 @@ function ColorGradientSettingsDropdown({
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: settings.map((setting, index) => {
-      var _setting$gradientValu;
       const controlProps = {
         clearable: false,
         colorValue: setting.colorValue,
@@ -68642,8 +68681,12 @@ function ColorGradientSettingsDropdown({
         ...setting
       };
       const toggleSettings = {
-        colorValue: (_setting$gradientValu = setting.gradientValue) !== null && _setting$gradientValu !== void 0 ? _setting$gradientValu : setting.colorValue,
-        label: setting.label
+        clearable: setting.clearable,
+        label: setting.label,
+        colorValue: setting.colorValue,
+        gradientValue: setting.gradientValue,
+        onColorChange: setting.onColorChange,
+        onGradientChange: setting.onGradientChange
       };
       return setting &&
       /*#__PURE__*/

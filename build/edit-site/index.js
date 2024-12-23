@@ -26064,7 +26064,12 @@ function shadows_edit_panel_ShadowItem({
         'aria-expanded': isOpen
       };
       const removeButtonProps = {
-        onClick: onRemove,
+        onClick: () => {
+          if (isOpen) {
+            onToggle();
+          }
+          onRemove();
+        },
         className: dist_clsx('edit-site-global-styles__shadow-editor__remove-button', {
           'is-open': isOpen
         }),
