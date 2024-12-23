@@ -70258,6 +70258,7 @@ const item_MenuItem = (0,external_wp_element_namespaceObject.forwardRef)(functio
   prefix,
   suffix,
   children,
+  disabled = false,
   hideOnClick = true,
   store,
   ...props
@@ -70276,6 +70277,7 @@ const item_MenuItem = (0,external_wp_element_namespaceObject.forwardRef)(functio
     ref: ref,
     ...props,
     accessibleWhenDisabled: true,
+    disabled: disabled,
     hideOnClick: hideOnClick,
     store: computedStore,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemPrefixWrapper, {
@@ -70347,6 +70349,7 @@ var MenuItemCheck = forwardRef2(function MenuItemCheck2(props) {
 const MenuCheckboxItem = (0,external_wp_element_namespaceObject.forwardRef)(function MenuCheckboxItem({
   suffix,
   children,
+  disabled = false,
   hideOnClick = false,
   ...props
 }, ref) {
@@ -70358,6 +70361,7 @@ const MenuCheckboxItem = (0,external_wp_element_namespaceObject.forwardRef)(func
     ref: ref,
     ...props,
     accessibleWhenDisabled: true,
+    disabled: disabled,
     hideOnClick: hideOnClick,
     store: menuContext.store,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuItemCheck, {
@@ -70415,6 +70419,7 @@ const radioCheck = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 const MenuRadioItem = (0,external_wp_element_namespaceObject.forwardRef)(function MenuRadioItem({
   suffix,
   children,
+  disabled = false,
   hideOnClick = false,
   ...props
 }, ref) {
@@ -70426,6 +70431,7 @@ const MenuRadioItem = (0,external_wp_element_namespaceObject.forwardRef)(functio
     ref: ref,
     ...props,
     accessibleWhenDisabled: true,
+    disabled: disabled,
     hideOnClick: hideOnClick,
     store: menuContext.store,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuItemCheck, {
