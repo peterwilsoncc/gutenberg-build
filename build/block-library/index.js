@@ -5038,7 +5038,7 @@ function WidthPanel({
     }),
     dropdownMenuProps: dropdownMenuProps,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-      label: (0,external_wp_i18n_namespaceObject.__)('Button width'),
+      label: (0,external_wp_i18n_namespaceObject.__)('Width'),
       isShownByDefault: true,
       hasValue: () => !!selectedWidth,
       onDeselect: () => setAttributes({
@@ -5046,7 +5046,7 @@ function WidthPanel({
       }),
       __nextHasNoMarginBottom: true,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Button width'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Width'),
         value: selectedWidth,
         onChange: newWidth => setAttributes({
           width: newWidth
