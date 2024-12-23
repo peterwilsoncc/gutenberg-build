@@ -38604,6 +38604,7 @@ const ItemSubmenuIcon = () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespace
 
 
 
+
 const ALLOWED_BLOCKS = ['core/navigation-link', 'core/navigation-submenu', 'core/page-list'];
 const navigation_submenu_edit_DEFAULT_BLOCK = {
   name: 'core/navigation-link'
@@ -38712,6 +38713,7 @@ function NavigationSubmenuEdit({
   const isDraggingWithin = edit_useIsDraggingWithin(listItemRef);
   const itemLabelPlaceholder = (0,external_wp_i18n_namespaceObject.__)('Add text…');
   const ref = (0,external_wp_element_namespaceObject.useRef)();
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const {
     parentCount,
     isParentOfSelectedBlock,
@@ -38901,6 +38903,7 @@ function NavigationSubmenuEdit({
             rel: ''
           });
         },
+        dropdownMenuProps: dropdownMenuProps,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Text'),
           isShownByDefault: true,
