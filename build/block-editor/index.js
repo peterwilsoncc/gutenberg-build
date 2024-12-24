@@ -24507,11 +24507,6 @@ const DeprecatedExperimentalLinkControl = props => {
 ;// ./packages/block-editor/build-module/components/media-replace-flow/index.js
 /* wp:polyfill */
 /**
- * External dependencies
- */
-
-
-/**
  * WordPress dependencies
  */
 
@@ -24557,10 +24552,9 @@ const MediaReplaceFlow = ({
   handleUpload = true,
   popoverProps
 }) => {
-  const mediaUpload = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    return select(store).getSettings().mediaUpload;
-  }, []);
-  const canUpload = !!mediaUpload;
+  const {
+    getSettings
+  } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const editMediaButtonRef = (0,external_wp_element_namespaceObject.useRef)();
   const errorNoticeID = `block-editor/media-replace-flow/error-notice/${++uniqueId}`;
   const onUploadError = message => {
@@ -24600,7 +24594,7 @@ const MediaReplaceFlow = ({
       return onSelect(files);
     }
     onFilesUpload(files);
-    mediaUpload({
+    getSettings().mediaUpload({
       allowedTypes,
       filesList: files,
       onFileChange: ([media]) => {
@@ -24692,9 +24686,7 @@ const MediaReplaceFlow = ({
       /*#__PURE__*/
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       (0,external_ReactJSXRuntime_namespaceObject.jsxs)("form", {
-        className: dist_clsx('block-editor-media-flow__url-input', {
-          'has-siblings': canUpload || onToggleFeaturedImage
-        }),
+        className: "block-editor-media-flow__url-input",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: "block-editor-media-replace-flow__image-url-label",
           children: (0,external_wp_i18n_namespaceObject.__)('Current media URL:')
