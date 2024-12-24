@@ -28686,6 +28686,7 @@ function FontFamilyControl({
   className,
   ...props
 }) {
+  var _options$find;
   const [blockLevelFontFamilies] = use_settings_useSettings('typography.fontFamilies');
   if (!fontFamilies) {
     fontFamilies = blockLevelFontFamilies;
@@ -28720,11 +28721,12 @@ function FontFamilyControl({
       hint: 'Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version.'
     });
   }
+  const selectedValue = (_options$find = options.find(option => option.key === value)) !== null && _options$find !== void 0 ? _options$find : '';
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CustomSelectControl, {
     __next40pxDefaultSize: __next40pxDefaultSize,
     __shouldNotWarnDeprecated36pxSize: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Font'),
-    value: value,
+    value: selectedValue,
     onChange: ({
       selectedItem
     }) => onChange(selectedItem.key),
