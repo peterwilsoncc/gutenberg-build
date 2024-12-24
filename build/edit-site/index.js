@@ -38110,6 +38110,8 @@ function ButtonTrigger({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     label: label,
     icon: action.icon,
+    disabled: !!action.disabled,
+    accessibleWhenDisabled: true,
     isDestructive: action.isDestructive,
     size: "compact",
     onClick: onClick
@@ -38122,6 +38124,7 @@ function MenuItemTrigger({
 }) {
   const label = typeof action.label === 'string' ? action.label : action.label(items);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_Menu.Item, {
+    disabled: action.disabled,
     onClick: onClick,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_item_actions_Menu.ItemLabel, {
       children: label
@@ -39586,6 +39589,8 @@ function PrimaryActionGridCell({
       id: compositeItemId,
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         label: label,
+        disabled: !!primaryAction.disabled,
+        accessibleWhenDisabled: true,
         icon: primaryAction.icon,
         isDestructive: primaryAction.isDestructive,
         size: "small",
@@ -39603,6 +39608,8 @@ function PrimaryActionGridCell({
       id: compositeItemId,
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         label: label,
+        disabled: !!primaryAction.disabled,
+        accessibleWhenDisabled: true,
         icon: primaryAction.icon,
         isDestructive: primaryAction.isDestructive,
         size: "small",
