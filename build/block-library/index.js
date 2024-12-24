@@ -40132,22 +40132,20 @@ function PageListEdit({
             }),
             help: (0,external_wp_i18n_namespaceObject.__)('Choose a page to show only its subpages.')
           })
-        }), allowConvertToLinks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Edit Menu'),
-          isShownByDefault: true,
-          hasValue: () => false,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-              children: convertDescription
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-              __next40pxDefaultSize: true,
-              variant: "primary",
-              accessibleWhenDisabled: true,
-              disabled: !hasResolvedPages,
-              onClick: convertToNavigationLinks,
-              children: (0,external_wp_i18n_namespaceObject.__)('Edit')
-            })]
-          })
+        }), allowConvertToLinks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+          style: {
+            gridColumn: '1 / -1'
+          },
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+            children: convertDescription
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
+            variant: "primary",
+            accessibleWhenDisabled: true,
+            disabled: !hasResolvedPages,
+            onClick: convertToNavigationLinks,
+            children: (0,external_wp_i18n_namespaceObject.__)('Edit')
+          })]
         })]
       })
     }), allowConvertToLinks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
