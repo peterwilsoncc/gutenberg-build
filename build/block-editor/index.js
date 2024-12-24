@@ -18281,7 +18281,7 @@ function transformStyles(activeSupports, migrationPaths, result, source, index, 
  */
 function shouldSkipSerialization(blockNameOrType, featureSet, feature) {
   const support = (0,external_wp_blocks_namespaceObject.getBlockSupport)(blockNameOrType, featureSet);
-  const skipSerialization = support?.skipSerialization;
+  const skipSerialization = support?.__experimentalSkipSerialization;
   if (Array.isArray(skipSerialization)) {
     return skipSerialization.includes(feature);
   }
@@ -26935,7 +26935,7 @@ function BorderPanel({
 
 
 
-const BORDER_SUPPORT_KEY = 'border';
+const BORDER_SUPPORT_KEY = '__experimentalBorder';
 const SHADOW_SUPPORT_KEY = 'shadow';
 const getColorByProperty = (colors, property, value) => {
   let matchedColor;
@@ -27068,8 +27068,8 @@ function border_BorderPanel({
     return null;
   }
   const defaultControls = {
-    ...(0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [BORDER_SUPPORT_KEY, 'defaultControls']),
-    ...(0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [SHADOW_SUPPORT_KEY, 'defaultControls'])
+    ...(0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [BORDER_SUPPORT_KEY, '__experimentalDefaultControls']),
+    ...(0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [SHADOW_SUPPORT_KEY, '__experimentalDefaultControls'])
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BorderPanel, {
     as: BordersInspectorControl,
@@ -28577,7 +28577,7 @@ function ColorEdit({
   if (!isEnabled) {
     return null;
   }
-  const defaultControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [COLOR_SUPPORT_KEY, 'defaultControls']);
+  const defaultControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [COLOR_SUPPORT_KEY, '__experimentalDefaultControls']);
   const enableContrastChecking = external_wp_element_namespaceObject.Platform.OS === 'web' && !value?.color?.gradient && (settings?.color?.text || settings?.color?.link) &&
   // Contrast checking is enabled by default.
   // Deactivating it requires `enableContrastChecker` to have
@@ -30055,7 +30055,7 @@ var external_wp_tokenList_default = /*#__PURE__*/__webpack_require__.n(external_
 
 
 
-const FONT_FAMILY_SUPPORT_KEY = 'typography.fontFamily';
+const FONT_FAMILY_SUPPORT_KEY = 'typography.__experimentalFontFamily';
 const {
   kebabCase: font_family_kebabCase
 } = unlock(external_wp_components_namespaceObject.privateApis);
@@ -30672,12 +30672,12 @@ function addAssignedTextAlign(props, blockType, attributes) {
 function omit(object, keys) {
   return Object.fromEntries(Object.entries(object).filter(([key]) => !keys.includes(key)));
 }
-const LETTER_SPACING_SUPPORT_KEY = 'typography.letterSpacing';
-const TEXT_TRANSFORM_SUPPORT_KEY = 'typography.textTransform';
-const TEXT_DECORATION_SUPPORT_KEY = 'typography.textDecoration';
+const LETTER_SPACING_SUPPORT_KEY = 'typography.__experimentalLetterSpacing';
+const TEXT_TRANSFORM_SUPPORT_KEY = 'typography.__experimentalTextTransform';
+const TEXT_DECORATION_SUPPORT_KEY = 'typography.__experimentalTextDecoration';
 const TEXT_COLUMNS_SUPPORT_KEY = 'typography.textColumns';
-const FONT_STYLE_SUPPORT_KEY = 'typography.fontStyle';
-const FONT_WEIGHT_SUPPORT_KEY = 'typography.fontWeight';
+const FONT_STYLE_SUPPORT_KEY = 'typography.__experimentalFontStyle';
+const FONT_WEIGHT_SUPPORT_KEY = 'typography.__experimentalFontWeight';
 const WRITING_MODE_SUPPORT_KEY = 'typography.__experimentalWritingMode';
 const TYPOGRAPHY_SUPPORT_KEY = 'typography';
 const TYPOGRAPHY_SUPPORT_KEYS = [LINE_HEIGHT_SUPPORT_KEY, FONT_SIZE_SUPPORT_KEY, FONT_STYLE_SUPPORT_KEY, FONT_WEIGHT_SUPPORT_KEY, FONT_FAMILY_SUPPORT_KEY, TEXT_ALIGN_SUPPORT_KEY, TEXT_COLUMNS_SUPPORT_KEY, TEXT_DECORATION_SUPPORT_KEY, WRITING_MODE_SUPPORT_KEY, TEXT_TRANSFORM_SUPPORT_KEY, LETTER_SPACING_SUPPORT_KEY];
@@ -30762,7 +30762,7 @@ function typography_TypographyPanel({
   if (!isEnabled) {
     return null;
   }
-  const defaultControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [TYPOGRAPHY_SUPPORT_KEY, 'defaultControls']);
+  const defaultControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [TYPOGRAPHY_SUPPORT_KEY, '__experimentalDefaultControls']);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TypographyPanel, {
     as: TypographyInspectorControl,
     panelId: clientId,
@@ -33207,8 +33207,8 @@ function dimensions_DimensionsPanel({
   if (!isEnabled) {
     return null;
   }
-  const defaultDimensionsControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [DIMENSIONS_SUPPORT_KEY, 'defaultControls']);
-  const defaultSpacingControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [SPACING_SUPPORT_KEY, 'defaultControls']);
+  const defaultDimensionsControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [DIMENSIONS_SUPPORT_KEY, '__experimentalDefaultControls']);
+  const defaultSpacingControls = (0,external_wp_blocks_namespaceObject.getBlockSupport)(name, [SPACING_SUPPORT_KEY, '__experimentalDefaultControls']);
   const defaultControls = {
     ...defaultDimensionsControls,
     ...defaultSpacingControls
@@ -33381,12 +33381,12 @@ function style_addAttribute(settings) {
  * @type {Record<string, string[]>}
  */
 const skipSerializationPathsEdit = {
-  [`${BORDER_SUPPORT_KEY}.skipSerialization`]: ['border'],
-  [`${COLOR_SUPPORT_KEY}.skipSerialization`]: [COLOR_SUPPORT_KEY],
-  [`${TYPOGRAPHY_SUPPORT_KEY}.skipSerialization`]: [TYPOGRAPHY_SUPPORT_KEY],
-  [`${DIMENSIONS_SUPPORT_KEY}.skipSerialization`]: [DIMENSIONS_SUPPORT_KEY],
-  [`${SPACING_SUPPORT_KEY}.skipSerialization`]: [SPACING_SUPPORT_KEY],
-  [`${SHADOW_SUPPORT_KEY}.skipSerialization`]: [SHADOW_SUPPORT_KEY]
+  [`${BORDER_SUPPORT_KEY}.__experimentalSkipSerialization`]: ['border'],
+  [`${COLOR_SUPPORT_KEY}.__experimentalSkipSerialization`]: [COLOR_SUPPORT_KEY],
+  [`${TYPOGRAPHY_SUPPORT_KEY}.__experimentalSkipSerialization`]: [TYPOGRAPHY_SUPPORT_KEY],
+  [`${DIMENSIONS_SUPPORT_KEY}.__experimentalSkipSerialization`]: [DIMENSIONS_SUPPORT_KEY],
+  [`${SPACING_SUPPORT_KEY}.__experimentalSkipSerialization`]: [SPACING_SUPPORT_KEY],
+  [`${SHADOW_SUPPORT_KEY}.__experimentalSkipSerialization`]: [SHADOW_SUPPORT_KEY]
 };
 
 /**
@@ -35001,7 +35001,7 @@ const ELEMENT_CLASS_NAMES = {
 // List of block support features that can have their related styles
 // generated under their own feature level selector rather than the block's.
 const BLOCK_SUPPORT_FEATURE_LEVEL_SELECTORS = {
-  border: 'border',
+  __experimentalBorder: 'border',
   color: 'color',
   spacing: 'spacing',
   typography: 'typography'
@@ -60606,20 +60606,20 @@ __unstableBlockToolbarLastItem.Slot = block_toolbar_last_item_Slot;
 
 const ALIGN_SUPPORT_KEY = 'align';
 const ALIGN_WIDE_SUPPORT_KEY = 'alignWide';
-const supports_BORDER_SUPPORT_KEY = 'border';
+const supports_BORDER_SUPPORT_KEY = '__experimentalBorder';
 const supports_COLOR_SUPPORT_KEY = 'color';
 const CUSTOM_CLASS_NAME_SUPPORT_KEY = 'customClassName';
-const supports_FONT_FAMILY_SUPPORT_KEY = 'typography.fontFamily';
+const supports_FONT_FAMILY_SUPPORT_KEY = 'typography.__experimentalFontFamily';
 const supports_FONT_SIZE_SUPPORT_KEY = 'typography.fontSize';
 const supports_LINE_HEIGHT_SUPPORT_KEY = 'typography.lineHeight';
 /**
  * Key within block settings' support array indicating support for font style.
  */
-const supports_FONT_STYLE_SUPPORT_KEY = 'typography.fontStyle';
+const supports_FONT_STYLE_SUPPORT_KEY = 'typography.__experimentalFontStyle';
 /**
  * Key within block settings' support array indicating support for font weight.
  */
-const supports_FONT_WEIGHT_SUPPORT_KEY = 'typography.fontWeight';
+const supports_FONT_WEIGHT_SUPPORT_KEY = 'typography.__experimentalFontWeight';
 /**
  * Key within block settings' supports array indicating support for text
  * align e.g. settings found in `block.json`.
@@ -60634,7 +60634,7 @@ const supports_TEXT_COLUMNS_SUPPORT_KEY = 'typography.textColumns';
  * Key within block settings' supports array indicating support for text
  * decorations e.g. settings found in `block.json`.
  */
-const supports_TEXT_DECORATION_SUPPORT_KEY = 'typography.textDecoration';
+const supports_TEXT_DECORATION_SUPPORT_KEY = 'typography.__experimentalTextDecoration';
 /**
  * Key within block settings' supports array indicating support for writing mode
  * e.g. settings found in `block.json`.
@@ -60644,13 +60644,13 @@ const supports_WRITING_MODE_SUPPORT_KEY = 'typography.__experimentalWritingMode'
  * Key within block settings' supports array indicating support for text
  * transforms e.g. settings found in `block.json`.
  */
-const supports_TEXT_TRANSFORM_SUPPORT_KEY = 'typography.textTransform';
+const supports_TEXT_TRANSFORM_SUPPORT_KEY = 'typography.__experimentalTextTransform';
 
 /**
  * Key within block settings' supports array indicating support for letter-spacing
  * e.g. settings found in `block.json`.
  */
-const supports_LETTER_SPACING_SUPPORT_KEY = 'typography.letterSpacing';
+const supports_LETTER_SPACING_SUPPORT_KEY = 'typography.__experimentalLetterSpacing';
 const LAYOUT_SUPPORT_KEY = 'layout';
 const supports_TYPOGRAPHY_SUPPORT_KEYS = [supports_LINE_HEIGHT_SUPPORT_KEY, supports_FONT_SIZE_SUPPORT_KEY, supports_FONT_STYLE_SUPPORT_KEY, supports_FONT_WEIGHT_SUPPORT_KEY, supports_FONT_FAMILY_SUPPORT_KEY, supports_TEXT_ALIGN_SUPPORT_KEY, supports_TEXT_COLUMNS_SUPPORT_KEY, supports_TEXT_DECORATION_SUPPORT_KEY, supports_TEXT_TRANSFORM_SUPPORT_KEY, supports_WRITING_MODE_SUPPORT_KEY, supports_LETTER_SPACING_SUPPORT_KEY];
 const EFFECTS_SUPPORT_KEYS = ['shadow'];
