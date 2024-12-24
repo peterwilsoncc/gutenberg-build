@@ -2975,7 +2975,9 @@ function MetaBoxesMain() {
         pointerId,
         target
       }) => {
-        target.setPointerCapture(pointerId);
+        if (separatorRef.current.parentElement.contains(target)) {
+          target.setPointerCapture(pointerId);
+        }
       },
       onResizeStart: (event, direction, elementRef) => {
         if (isAutoHeight) {
