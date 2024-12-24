@@ -8008,8 +8008,20 @@ const __experimentalGetBlockAttributesNamesByRole = (...args) => {
   });
   return getBlockAttributesNamesByRole(...args);
 };
+
+/**
+ * Checks if a block is a content block by examining its attributes.
+ * A block is considered a content block if it has at least one attribute
+ * with a role of 'content'.
+ *
+ * @param {string} name The name of the block to check.
+ * @return {boolean}    Whether the block is a content block.
+ */
 function isContentBlock(name) {
   const attributes = getBlockType(name)?.attributes;
+  if (!attributes) {
+    return false;
+  }
   return !!Object.keys(attributes)?.some(attributeKey => {
     const attribute = attributes[attributeKey];
     return attribute?.role === 'content' || attribute?.__experimentalRole === 'content';

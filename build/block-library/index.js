@@ -41648,11 +41648,13 @@ const post_author_metadata = {
     },
     isLink: {
       type: "boolean",
-      "default": false
+      "default": false,
+      role: "content"
     },
     linkTarget: {
       type: "string",
-      "default": "_self"
+      "default": "_self",
+      role: "content"
     }
   },
   usesContext: ["postType", "postId", "queryId"],
@@ -41871,11 +41873,13 @@ const post_author_name_metadata = {
     },
     isLink: {
       type: "boolean",
-      "default": false
+      "default": false,
+      role: "content"
     },
     linkTarget: {
       type: "string",
-      "default": "_self"
+      "default": "_self",
+      role: "content"
     }
   },
   usesContext: ["postType", "postId"],
@@ -43282,7 +43286,8 @@ const post_date_metadata = {
     },
     isLink: {
       type: "boolean",
-      "default": false
+      "default": false,
+      role: "content"
     },
     displayType: {
       type: "string",
@@ -44449,7 +44454,8 @@ const post_featured_image_metadata = {
   attributes: {
     isLink: {
       type: "boolean",
-      "default": false
+      "default": false,
+      role: "content"
     },
     aspectRatio: {
       type: "string"
@@ -44470,11 +44476,13 @@ const post_featured_image_metadata = {
     rel: {
       type: "string",
       attribute: "rel",
-      "default": ""
+      "default": "",
+      role: "content"
     },
     linkTarget: {
       type: "string",
-      "default": "_self"
+      "default": "_self",
+      role: "content"
     },
     overlayColor: {
       type: "string"
@@ -46063,16 +46071,19 @@ const post_title_metadata = {
     },
     isLink: {
       type: "boolean",
-      "default": false
+      "default": false,
+      role: "content"
     },
     rel: {
       type: "string",
       attribute: "rel",
-      "default": ""
+      "default": "",
+      role: "content"
     },
     linkTarget: {
       type: "string",
-      "default": "_self"
+      "default": "_self",
+      role: "content"
     }
   },
   example: {
@@ -55066,11 +55077,13 @@ const site_logo_metadata = {
     },
     isLink: {
       type: "boolean",
-      "default": true
+      "default": true,
+      role: "content"
     },
     linkTarget: {
       type: "string",
-      "default": "_self"
+      "default": "_self",
+      role: "content"
     },
     shouldSyncIcon: {
       type: "boolean"
@@ -55679,11 +55692,13 @@ const site_title_metadata = {
     },
     isLink: {
       type: "boolean",
-      "default": true
+      "default": true,
+      role: "content"
     },
     linkTarget: {
       type: "string",
-      "default": "_self"
+      "default": "_self",
+      role: "content"
     }
   },
   example: {

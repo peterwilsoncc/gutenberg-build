@@ -25362,11 +25362,18 @@ function usePostContentBlocks() {
  */
 function DisableNonPageContentBlocks() {
   const contentOnlyIds = usePostContentBlocks();
-  const templateParts = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const {
+    templateParts,
+    isNavigationMode
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getBlocksByName
+      getBlocksByName,
+      isNavigationMode: _isNavigationMode
     } = select(external_wp_blockEditor_namespaceObject.store);
-    return getBlocksByName('core/template-part');
+    return {
+      templateParts: getBlocksByName('core/template-part'),
+      isNavigationMode: _isNavigationMode()
+    };
   }, []);
   const disabledIds = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
@@ -25375,38 +25382,83 @@ function DisableNonPageContentBlocks() {
     return templateParts.flatMap(clientId => getBlockOrder(clientId));
   }, [templateParts]);
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
+
+  // The code here is split into multiple `useEffects` calls.
+  // This is done to avoid setting/unsetting block editing modes multiple times unnecessarily.
+  //
+  // For example, the block editing mode of the root block (clientId: '') only
+  // needs to be set once, not when `contentOnlyIds` or `disabledIds` change.
+  //
+  // It's also unlikely that these different types of blocks are being inserted
+  // or removed at the same time, so using different effects reflects that.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    const {
+      setBlockEditingMode,
+      unsetBlockEditingMode
+    } = registry.dispatch(external_wp_blockEditor_namespaceObject.store);
+    setBlockEditingMode('', 'disabled');
+    return () => {
+      unsetBlockEditingMode('');
+    };
+  }, [registry]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     const {
       setBlockEditingMode,
       unsetBlockEditingMode
     } = registry.dispatch(external_wp_blockEditor_namespaceObject.store);
     registry.batch(() => {
-      setBlockEditingMode('', 'disabled');
       for (const clientId of contentOnlyIds) {
         setBlockEditingMode(clientId, 'contentOnly');
       }
-      for (const clientId of templateParts) {
-        setBlockEditingMode(clientId, 'contentOnly');
+    });
+    return () => {
+      registry.batch(() => {
+        for (const clientId of contentOnlyIds) {
+          unsetBlockEditingMode(clientId);
+        }
+      });
+    };
+  }, [contentOnlyIds, registry]);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    const {
+      setBlockEditingMode,
+      unsetBlockEditingMode
+    } = registry.dispatch(external_wp_blockEditor_namespaceObject.store);
+    registry.batch(() => {
+      if (!isNavigationMode) {
+        for (const clientId of templateParts) {
+          setBlockEditingMode(clientId, 'contentOnly');
+        }
       }
+    });
+    return () => {
+      registry.batch(() => {
+        if (!isNavigationMode) {
+          for (const clientId of templateParts) {
+            unsetBlockEditingMode(clientId);
+          }
+        }
+      });
+    };
+  }, [templateParts, isNavigationMode, registry]);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    const {
+      setBlockEditingMode,
+      unsetBlockEditingMode
+    } = registry.dispatch(external_wp_blockEditor_namespaceObject.store);
+    registry.batch(() => {
       for (const clientId of disabledIds) {
         setBlockEditingMode(clientId, 'disabled');
       }
     });
     return () => {
       registry.batch(() => {
-        unsetBlockEditingMode('');
-        for (const clientId of contentOnlyIds) {
-          unsetBlockEditingMode(clientId);
-        }
-        for (const clientId of templateParts) {
-          unsetBlockEditingMode(clientId);
-        }
         for (const clientId of disabledIds) {
           unsetBlockEditingMode(clientId);
         }
       });
     };
-  }, [templateParts, contentOnlyIds, disabledIds, registry]);
+  }, [disabledIds, registry]);
   return null;
 }
 

@@ -9891,9 +9891,15 @@ function temporarilyEditingFocusModeRevert(state = '', action) {
 function blockEditingModes(state = new Map(), action) {
   switch (action.type) {
     case 'SET_BLOCK_EDITING_MODE':
+      if (state.get(action.clientId) === action.mode) {
+        return state;
+      }
       return new Map(state).set(action.clientId, action.mode);
     case 'UNSET_BLOCK_EDITING_MODE':
       {
+        if (!state.has(action.clientId)) {
+          return state;
+        }
         const newState = new Map(state);
         newState.delete(action.clientId);
         return newState;
@@ -10105,16 +10111,16 @@ function getBlockTreeBlock(state, clientId) {
  *                            The callback receives the current block as its argument.
  */
 function traverseBlockTree(state, clientId, callback) {
-  const parentTree = getBlockTreeBlock(state, clientId);
-  if (!parentTree) {
+  const tree = getBlockTreeBlock(state, clientId);
+  if (!tree) {
     return;
   }
-  callback(parentTree);
-  if (!parentTree?.innerBlocks?.length) {
+  callback(tree);
+  if (!tree?.innerBlocks?.length) {
     return;
   }
-  for (const block of parentTree?.innerBlocks) {
-    traverseBlockTree(state, block.clientId, callback);
+  for (const innerBlock of tree?.innerBlocks) {
+    traverseBlockTree(state, innerBlock.clientId, callback);
   }
 }
 
@@ -10128,8 +10134,11 @@ function traverseBlockTree(state, clientId, callback) {
  * @return {string|undefined} The client ID of the parent block if found, undefined otherwise.
  */
 function findParentInClientIdsList(state, clientId, clientIds) {
+  if (!clientIds.length) {
+    return;
+  }
   let parent = state.blocks.parents.get(clientId);
-  while (parent) {
+  while (parent !== undefined) {
     if (clientIds.includes(parent)) {
       return parent;
     }
@@ -10166,12 +10175,59 @@ function getDerivedBlockEditingModesForTree(state, isNavMode = false, treeClient
   // so the default block editing mode is set to disabled.
   const sectionRootClientId = state.settings?.[sectionRootClientIdKey];
   const sectionClientIds = state.blocks.order.get(sectionRootClientId);
-  const syncedPatternClientIds = Object.keys(state.blocks.controlledInnerBlocks).filter(clientId => state.blocks.byClientId?.get(clientId)?.name === 'core/block');
+  const hasDisabledBlocks = Array.from(state.blockEditingModes).some(([, mode]) => mode === 'disabled');
+  const templatePartClientIds = [];
+  const syncedPatternClientIds = [];
+  Object.keys(state.blocks.controlledInnerBlocks).forEach(clientId => {
+    const block = state.blocks.byClientId?.get(clientId);
+    if (block?.name === 'core/template-part') {
+      templatePartClientIds.push(clientId);
+    }
+    if (block?.name === 'core/block') {
+      syncedPatternClientIds.push(clientId);
+    }
+  });
   traverseBlockTree(state, treeClientId, block => {
     const {
       clientId,
       name: blockName
     } = block;
+
+    // If the block already has an explicit block editing mode set,
+    // don't override it.
+    if (state.blockEditingModes.has(clientId)) {
+      return;
+    }
+
+    // Disabled explicit block editing modes are inherited by children.
+    // It's an expensive calculation, so only do it if there are disabled blocks.
+    if (hasDisabledBlocks) {
+      // Look through parents to find one with an explicit block editing mode.
+      let ancestorBlockEditingMode;
+      let parent = state.blocks.parents.get(clientId);
+      while (parent !== undefined) {
+        // There's a chance we only just calculated this for the parent,
+        // if so we can return that value for a faster lookup.
+        if (derivedBlockEditingModes.has(parent)) {
+          ancestorBlockEditingMode = derivedBlockEditingModes.get(parent);
+        } else if (state.blockEditingModes.has(parent)) {
+          // Checking the explicit block editing mode will be slower,
+          // as the block editing mode is more likely to be set on a
+          // distant ancestor.
+          ancestorBlockEditingMode = state.blockEditingModes.get(parent);
+        }
+        if (ancestorBlockEditingMode) {
+          break;
+        }
+        parent = state.blocks.parents.get(parent);
+      }
+
+      // If the ancestor block editing mode is disabled, it's inherited by the child.
+      if (ancestorBlockEditingMode === 'disabled') {
+        derivedBlockEditingModes.set(clientId, 'disabled');
+        return;
+      }
+    }
     if (isZoomedOut || isNavMode) {
       // If the root block is the section root set its editing mode to contentOnly.
       if (clientId === sectionRootClientId) {
@@ -10191,10 +10247,29 @@ function getDerivedBlockEditingModesForTree(state, isNavMode = false, treeClient
 
       // If zoomed out, all blocks that aren't sections or the section root are
       // disabled.
-      // If the tree root is not in a section, set its editing mode to disabled.
-      if (isZoomedOut || !findParentInClientIdsList(state, clientId, sectionClientIds)) {
+      if (isZoomedOut) {
         derivedBlockEditingModes.set(clientId, 'disabled');
         return;
+      }
+      const isInSection = !!findParentInClientIdsList(state, clientId, sectionClientIds);
+      if (!isInSection) {
+        if (clientId === '') {
+          derivedBlockEditingModes.set(clientId, 'disabled');
+          return;
+        }
+
+        // Allow selection of template parts outside of sections.
+        if (blockName === 'core/template-part') {
+          derivedBlockEditingModes.set(clientId, 'contentOnly');
+          return;
+        }
+        const isInTemplatePart = !!findParentInClientIdsList(state, clientId, templatePartClientIds);
+        // Allow contentOnly blocks in template parts outside of sections
+        // to be editable. Only disable blocks that don't fit this criteria.
+        if (!isInTemplatePart && !isContentBlock(blockName)) {
+          derivedBlockEditingModes.set(clientId, 'disabled');
+          return;
+        }
       }
 
       // Handle synced pattern content so the inner blocks of a synced pattern are
@@ -10389,22 +10464,28 @@ function withDerivedBlockEditingModes(reducer) {
           }
           break;
         }
+      case 'SET_BLOCK_EDITING_MODE':
+      case 'UNSET_BLOCK_EDITING_MODE':
       case 'SET_HAS_CONTROLLED_INNER_BLOCKS':
         {
-          const updatedBlock = nextState.blocks.tree.get(action.clientId);
-          // The block might have been removed.
+          const updatedBlock = getBlockTreeBlock(nextState, action.clientId);
+
+          // The block might have been removed in which case it'll be
+          // handled by the `REMOVE_BLOCKS` action.
           if (!updatedBlock) {
             break;
           }
           const nextDerivedBlockEditingModes = getDerivedBlockEditingModesUpdates({
             prevState: state,
             nextState,
+            removedClientIds: [action.clientId],
             addedBlocks: [updatedBlock],
             isNavMode: false
           });
           const nextDerivedNavModeBlockEditingModes = getDerivedBlockEditingModesUpdates({
             prevState: state,
             nextState,
+            removedClientIds: [action.clientId],
             addedBlocks: [updatedBlock],
             isNavMode: true
           });
@@ -11253,9 +11334,19 @@ const getParentSectionBlock = (state, clientId) => {
  * @return {boolean} Whether the block is a content locking parent.
  */
 function isSectionBlock(state, clientId) {
+  const blockName = getBlockName(state, clientId);
+  if (blockName === 'core/block' || getTemplateLock(state, clientId) === 'contentOnly') {
+    return true;
+  }
+
+  // Template parts become sections in navigation mode.
+  const _isNavigationMode = isNavigationMode(state);
+  if (_isNavigationMode && blockName === 'core/template-part') {
+    return true;
+  }
   const sectionRootClientId = getSectionRootClientId(state);
   const sectionClientIds = getBlockOrder(state, sectionRootClientId);
-  return getBlockName(state, clientId) === 'core/block' || getTemplateLock(state, clientId) === 'contentOnly' || isNavigationMode(state) && sectionClientIds.includes(clientId);
+  return _isNavigationMode && sectionClientIds.includes(clientId);
 }
 
 /**
@@ -14078,9 +14169,7 @@ const getBlockEditingMode = (0,external_wp_data_namespaceObject.createRegistrySe
     const isContent = hasContentRoleAttribute(name);
     return isContent ? 'contentOnly' : 'disabled';
   }
-  // Otherwise, check if there's an ancestor that is contentOnly
-  const parentMode = getBlockEditingMode(state, rootClientId);
-  return parentMode === 'contentOnly' ? 'default' : parentMode;
+  return 'default';
 });
 
 /**
