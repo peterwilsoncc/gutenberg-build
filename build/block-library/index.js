@@ -32325,7 +32325,8 @@ function edit_attributesFromMedia({
         mediaUrl: undefined,
         mediaLink: undefined,
         href: undefined,
-        focalPoint: undefined
+        focalPoint: undefined,
+        useFeaturedImage: false
       });
       return;
     }
@@ -32371,7 +32372,8 @@ function edit_attributesFromMedia({
       mediaUrl: src || media.url,
       mediaLink: media.link || undefined,
       href: newHref,
-      focalPoint: undefined
+      focalPoint: undefined,
+      useFeaturedImage: false
     });
   };
 }
