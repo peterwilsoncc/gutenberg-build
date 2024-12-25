@@ -15111,9 +15111,15 @@ function CoverEdit({
   const {
     __unstableMarkNextChangeAsNotPersistent
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
-  const media = (0,external_wp_data_namespaceObject.useSelect)(select => featuredImage && select(external_wp_coreData_namespaceObject.store).getMedia(featuredImage, {
-    context: 'view'
-  }), [featuredImage]);
+  const {
+    media
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return {
+      media: featuredImage && useFeaturedImage ? select(external_wp_coreData_namespaceObject.store).getMedia(featuredImage, {
+        context: 'view'
+      }) : undefined
+    };
+  }, [featuredImage, useFeaturedImage]);
   const mediaUrl = (_media$media_details$ = media?.media_details?.sizes?.[sizeSlug]?.source_url) !== null && _media$media_details$ !== void 0 ? _media$media_details$ : media?.source_url;
 
   // User can change the featured image outside of the block, but we still
@@ -32410,9 +32416,15 @@ function MediaTextEdit({
   } = attributes;
   const mediaSizeSlug = attributes.mediaSizeSlug || constants_DEFAULT_MEDIA_SIZE_SLUG;
   const [featuredImage] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', postType, 'featured_media', postId);
-  const featuredImageMedia = (0,external_wp_data_namespaceObject.useSelect)(select => featuredImage && select(external_wp_coreData_namespaceObject.store).getMedia(featuredImage, {
-    context: 'view'
-  }), [featuredImage]);
+  const {
+    featuredImageMedia
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return {
+      featuredImageMedia: featuredImage && useFeaturedImage ? select(external_wp_coreData_namespaceObject.store).getMedia(featuredImage, {
+        context: 'view'
+      }) : undefined
+    };
+  }, [featuredImage, useFeaturedImage]);
   const featuredImageURL = useFeaturedImage ? featuredImageMedia?.source_url : '';
   const featuredImageAlt = useFeaturedImage ? featuredImageMedia?.alt_text : '';
   const toggleUseFeaturedImage = () => {
