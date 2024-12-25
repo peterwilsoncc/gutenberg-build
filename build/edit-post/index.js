@@ -3066,6 +3066,7 @@ function Layout({
     } = select(external_wp_editor_namespaceObject.store);
     const isRenderingPostOnly = getRenderingMode() === 'post-only';
     const isNotDesignPostType = !DESIGN_POST_TYPES.includes(currentPostType);
+    const isDirectlyEditingPattern = currentPostType === 'wp_block' && !onNavigateToPreviousEntityRecord;
     return {
       mode: getEditorMode(),
       isFullscreenActive: select(store).isFeatureActive('fullscreenMode'),
@@ -3073,12 +3074,12 @@ function Layout({
       hasBlockSelected: !!select(external_wp_blockEditor_namespaceObject.store).getBlockSelectionStart(),
       showIconLabels: get('core', 'showIconLabels'),
       isDistractionFree: get('core', 'distractionFree'),
-      showMetaBoxes: isNotDesignPostType && !isZoomOut(),
+      showMetaBoxes: isNotDesignPostType && !isZoomOut() || isDirectlyEditingPattern,
       isWelcomeGuideVisible: isFeatureActive('welcomeGuide'),
       templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate ? getTemplateId(currentPostType, currentPostId) : null,
       enablePaddingAppender: !isZoomOut() && isRenderingPostOnly && isNotDesignPostType
     };
-  }, [currentPostType, currentPostId, isEditingTemplate, settings.supportsTemplateMode]);
+  }, [currentPostType, currentPostId, isEditingTemplate, settings.supportsTemplateMode, onNavigateToPreviousEntityRecord]);
   useMetaBoxInitialization(hasActiveMetaboxes);
   const [paddingAppenderRef, paddingStyle] = usePaddingAppender(enablePaddingAppender);
 
