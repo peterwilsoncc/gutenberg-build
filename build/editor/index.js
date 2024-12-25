@@ -27414,7 +27414,11 @@ const ExperimentalEditorProvider = with_registry_provider(({
         }]
       });
     }
-  }, [createWarningNotice, initialEdits, settings, post, recovery, setupEditor, updatePostLock]);
+
+    // The dependencies of the hook are omitted deliberately
+    // We only want to run setupEditor (with initialEdits) only once per post.
+    // A better solution in the future would be to split this effect into multiple ones.
+  }, []);
 
   // Synchronizes the active post with the state
   (0,external_wp_element_namespaceObject.useEffect)(() => {
