@@ -31638,9 +31638,13 @@ const useSetAsHomepageAction = () => {
     pageForPosts
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getEntityRecord
+      getEntityRecord,
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEntityRecord('root', 'site');
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEntityRecord('root', 'site') : undefined;
     return {
       pageOnFront: siteSettings?.page_on_front,
       pageForPosts: siteSettings?.page_for_posts
@@ -31781,9 +31785,13 @@ const useSetAsPostsPageAction = () => {
     pageForPosts
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getEntityRecord
+      getEntityRecord,
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
-    const siteSettings = getEntityRecord('root', 'site');
+    const siteSettings = canUser('read', {
+      kind: 'root',
+      name: 'site'
+    }) ? getEntityRecord('root', 'site') : undefined;
     return {
       pageOnFront: siteSettings?.page_on_front,
       pageForPosts: siteSettings?.page_for_posts
