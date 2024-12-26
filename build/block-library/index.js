@@ -51435,14 +51435,12 @@ function QueryTotalEdit({
   }];
 
   // Controls for the block.
-  const controls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarDropdownMenu, {
-          icon: getButtonPositionIcon(),
-          label: (0,external_wp_i18n_namespaceObject.__)('Change display type'),
-          controls: buttonPositionControls
-        })
+  const controls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarDropdownMenu, {
+        icon: getButtonPositionIcon(),
+        label: (0,external_wp_i18n_namespaceObject.__)('Change display type'),
+        controls: buttonPositionControls
       })
     })
   });
@@ -51450,12 +51448,12 @@ function QueryTotalEdit({
   // Render output based on the selected display type.
   const renderDisplay = () => {
     if (displayType === 'total-results') {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: (0,external_wp_i18n_namespaceObject.__)('12 results found')
       });
     }
     if (displayType === 'range-display') {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: (0,external_wp_i18n_namespaceObject.__)('Displaying 1 – 10 of 12')
       });
     }
