@@ -79289,7 +79289,8 @@ function ResolutionTool({
   onChange,
   options = DEFAULT_SIZE_OPTIONS,
   defaultValue = DEFAULT_SIZE_OPTIONS[0].value,
-  isShownByDefault = true
+  isShownByDefault = true,
+  resetAllFilter
 }) {
   const displayValue = value !== null && value !== void 0 ? value : defaultValue;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
@@ -79298,6 +79299,7 @@ function ResolutionTool({
     onDeselect: () => onChange(defaultValue),
     isShownByDefault: isShownByDefault,
     panelId: panelId,
+    resetAllFilter: resetAllFilter,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
       __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Resolution'),
