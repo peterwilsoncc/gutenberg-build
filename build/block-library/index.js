@@ -43773,6 +43773,14 @@ const postFeaturedImage = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
+const {
+  ResolutionTool: dimension_controls_ResolutionTool
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const SCALE_OPTIONS = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
   children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
     value: "cover",
@@ -43941,27 +43949,17 @@ const DimensionControls = ({
         isBlock: true,
         children: SCALE_OPTIONS
       })
-    }), !!imageSizeOptions.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-      hasValue: () => !!sizeSlug,
-      label: (0,external_wp_i18n_namespaceObject.__)('Resolution'),
-      onDeselect: () => setAttributes({
-        sizeSlug: undefined
-      }),
-      resetAllFilter: () => ({
-        sizeSlug: undefined
+    }), !!imageSizeOptions.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dimension_controls_ResolutionTool, {
+      panelId: clientId,
+      value: sizeSlug,
+      defaultValue: DEFAULT_SIZE,
+      options: imageSizeOptions,
+      onChange: nextSizeSlug => setAttributes({
+        sizeSlug: nextSizeSlug
       }),
       isShownByDefault: false,
-      panelId: clientId,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-        __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Resolution'),
-        value: sizeSlug || DEFAULT_SIZE,
-        options: imageSizeOptions,
-        onChange: nextSizeSlug => setAttributes({
-          sizeSlug: nextSizeSlug
-        }),
-        help: (0,external_wp_i18n_namespaceObject.__)('Select the size of the source image.')
+      resetAllFilter: () => ({
+        sizeSlug: DEFAULT_SIZE
       })
     })]
   });
@@ -55557,16 +55555,16 @@ function SiteTitleEdit({
         label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
         resetAll: () => {
           setAttributes({
-            isLink: false,
+            isLink: true,
             linkTarget: '_self'
           });
         },
         dropdownMenuProps: dropdownMenuProps,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          hasValue: () => isLink !== false,
+          hasValue: () => !isLink,
           label: (0,external_wp_i18n_namespaceObject.__)('Make title link to home'),
           onDeselect: () => setAttributes({
-            isLink: false
+            isLink: true
           }),
           isShownByDefault: true,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
