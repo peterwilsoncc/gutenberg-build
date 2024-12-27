@@ -64277,6 +64277,81 @@ const video_deprecated_v1 = {
 const video_deprecated_deprecated = [video_deprecated_v1];
 /* harmony default export */ const video_deprecated = (video_deprecated_deprecated);
 
+;// ./packages/block-library/build-module/video/poster-image.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+function PosterImage({
+  poster,
+  setAttributes,
+  instanceId
+}) {
+  const posterImageButton = (0,external_wp_element_namespaceObject.useRef)();
+  const VIDEO_POSTER_ALLOWED_MEDIA_TYPES = ['image'];
+  const videoPosterDescription = `video-block__poster-image-description-${instanceId}`;
+  function onSelectPoster(image) {
+    setAttributes({
+      poster: image.url
+    });
+  }
+  function onRemovePoster() {
+    setAttributes({
+      poster: undefined
+    });
+
+    // Move focus back to the Media Upload button.
+    posterImageButton.current.focus();
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+    label: (0,external_wp_i18n_namespaceObject.__)('Poster image'),
+    isShownByDefault: true,
+    hasValue: () => !!poster,
+    onDeselect: () => {
+      setAttributes({
+        poster: ''
+      });
+    },
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUploadCheck, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+        className: "editor-video-poster-control",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
+          children: (0,external_wp_i18n_namespaceObject.__)('Poster image')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUpload, {
+          title: (0,external_wp_i18n_namespaceObject.__)('Select poster image'),
+          onSelect: onSelectPoster,
+          allowedTypes: VIDEO_POSTER_ALLOWED_MEDIA_TYPES,
+          render: ({
+            open
+          }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+            __next40pxDefaultSize: true,
+            variant: "primary",
+            onClick: open,
+            ref: posterImageButton,
+            "aria-describedby": videoPosterDescription,
+            children: !poster ? (0,external_wp_i18n_namespaceObject.__)('Select') : (0,external_wp_i18n_namespaceObject.__)('Replace')
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+          id: videoPosterDescription,
+          hidden: true,
+          children: poster ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: poster image URL. */
+          (0,external_wp_i18n_namespaceObject.__)('The current poster image url is %s'), poster) : (0,external_wp_i18n_namespaceObject.__)('There is no poster image currently selected')
+        }), !!poster && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
+          onClick: onRemovePoster,
+          variant: "tertiary",
+          children: (0,external_wp_i18n_namespaceObject.__)('Remove')
+        })]
+      })
+    })
+  });
+}
+/* harmony default export */ const poster_image = (PosterImage);
+
 ;// ./packages/block-library/build-module/video/edit-common-settings.js
 /**
  * WordPress dependencies
@@ -64336,42 +64411,102 @@ const VideoSettings = ({
     });
   }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-      __nextHasNoMarginBottom: true,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Autoplay'),
-      onChange: toggleFactory.autoplay,
-      checked: !!autoplay,
-      help: getAutoplayHelp
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-      __nextHasNoMarginBottom: true,
+      isShownByDefault: true,
+      hasValue: () => !!autoplay,
+      onDeselect: () => {
+        setAttributes({
+          autoplay: false
+        });
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Autoplay'),
+        onChange: toggleFactory.autoplay,
+        checked: !!autoplay,
+        help: getAutoplayHelp
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Loop'),
-      onChange: toggleFactory.loop,
-      checked: !!loop
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-      __nextHasNoMarginBottom: true,
+      isShownByDefault: true,
+      hasValue: () => !!loop,
+      onDeselect: () => {
+        setAttributes({
+          loop: false
+        });
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Loop'),
+        onChange: toggleFactory.loop,
+        checked: !!loop
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Muted'),
-      onChange: toggleFactory.muted,
-      checked: !!muted
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-      __nextHasNoMarginBottom: true,
+      isShownByDefault: true,
+      hasValue: () => !!muted,
+      onDeselect: () => {
+        setAttributes({
+          muted: false
+        });
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Muted'),
+        onChange: toggleFactory.muted,
+        checked: !!muted
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Playback controls'),
-      onChange: toggleFactory.controls,
-      checked: !!controls
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-      __nextHasNoMarginBottom: true
-      /* translators: Setting to play videos within the webpage on mobile browsers rather than opening in a fullscreen player. */,
+      isShownByDefault: true,
+      hasValue: () => !controls,
+      onDeselect: () => {
+        setAttributes({
+          controls: true
+        });
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Playback controls'),
+        onChange: toggleFactory.controls,
+        checked: !!controls
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Play inline'),
-      onChange: toggleFactory.playsInline,
-      checked: !!playsInline,
-      help: (0,external_wp_i18n_namespaceObject.__)('When enabled, videos will play directly within the webpage on mobile browsers, instead of opening in a fullscreen player.')
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-      __next40pxDefaultSize: true,
-      __nextHasNoMarginBottom: true,
+      isShownByDefault: true,
+      hasValue: () => !!playsInline,
+      onDeselect: () => {
+        setAttributes({
+          playsInline: false
+        });
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        __nextHasNoMarginBottom: true
+        /* translators: Setting to play videos within the webpage on mobile browsers rather than opening in a fullscreen player. */,
+        label: (0,external_wp_i18n_namespaceObject.__)('Play inline'),
+        onChange: toggleFactory.playsInline,
+        checked: playsInline,
+        help: (0,external_wp_i18n_namespaceObject.__)('When enabled, videos will play directly within the webpage on mobile browsers, instead of opening in a fullscreen player.')
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Preload'),
-      value: preload,
-      onChange: onChangePreload,
-      options: options,
-      hideCancelButton: true
+      isShownByDefault: true,
+      hasValue: () => preload !== 'metadata',
+      onDeselect: () => {
+        setAttributes({
+          preload: 'metadata'
+        });
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Preload'),
+        value: preload,
+        onChange: onChangePreload,
+        options: options,
+        hideCancelButton: true
+      })
     })]
   });
 };
@@ -64702,8 +64837,8 @@ function TracksEditor({
 
 
 
+
 const video_edit_ALLOWED_MEDIA_TYPES = ['video'];
-const VIDEO_POSTER_ALLOWED_MEDIA_TYPES = ['image'];
 function VideoEdit({
   isSelected: isSingleSelected,
   attributes,
@@ -64714,7 +64849,6 @@ function VideoEdit({
 }) {
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(VideoEdit);
   const videoPlayer = (0,external_wp_element_namespaceObject.useRef)();
-  const posterImageButton = (0,external_wp_element_namespaceObject.useRef)();
   const {
     id,
     controls,
@@ -64723,6 +64857,7 @@ function VideoEdit({
     tracks
   } = attributes;
   const [temporaryURL, setTemporaryURL] = (0,external_wp_element_namespaceObject.useState)(attributes.blob);
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   useUploadMediaFromBlobURL({
     url: temporaryURL,
     allowedTypes: video_edit_ALLOWED_MEDIA_TYPES,
@@ -64830,20 +64965,6 @@ function VideoEdit({
       })
     });
   }
-  function onSelectPoster(image) {
-    setAttributes({
-      poster: image.url
-    });
-  }
-  function onRemovePoster() {
-    setAttributes({
-      poster: undefined
-    });
-
-    // Move focus back to the Media Upload button.
-    posterImageButton.current.focus();
-  }
-  const videoPosterDescription = `video-block__poster-image-description-${instanceId}`;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [isSingleSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
@@ -64869,42 +64990,27 @@ function VideoEdit({
         })
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            autoplay: false,
+            controls: true,
+            loop: false,
+            muted: false,
+            playsInline: false,
+            preload: 'metadata',
+            poster: ''
+          });
+        },
+        dropdownMenuProps: dropdownMenuProps,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(edit_common_settings, {
           setAttributes: setAttributes,
           attributes: attributes
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUploadCheck, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-            className: "editor-video-poster-control",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
-              children: (0,external_wp_i18n_namespaceObject.__)('Poster image')
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUpload, {
-              title: (0,external_wp_i18n_namespaceObject.__)('Select poster image'),
-              onSelect: onSelectPoster,
-              allowedTypes: VIDEO_POSTER_ALLOWED_MEDIA_TYPES,
-              render: ({
-                open
-              }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-                __next40pxDefaultSize: true,
-                variant: "primary",
-                onClick: open,
-                ref: posterImageButton,
-                "aria-describedby": videoPosterDescription,
-                children: !poster ? (0,external_wp_i18n_namespaceObject.__)('Select') : (0,external_wp_i18n_namespaceObject.__)('Replace')
-              })
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-              id: videoPosterDescription,
-              hidden: true,
-              children: poster ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: poster image URL. */
-              (0,external_wp_i18n_namespaceObject.__)('The current poster image url is %s'), poster) : (0,external_wp_i18n_namespaceObject.__)('There is no poster image currently selected')
-            }), !!poster && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-              __next40pxDefaultSize: true,
-              onClick: onRemovePoster,
-              variant: "tertiary",
-              children: (0,external_wp_i18n_namespaceObject.__)('Remove')
-            })]
-          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(poster_image, {
+          poster: poster,
+          setAttributes: setAttributes,
+          instanceId: instanceId
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("figure", {
