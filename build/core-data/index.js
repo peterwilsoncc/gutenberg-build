@@ -4330,6 +4330,13 @@ function normalizePageId(value) {
   return value.toString();
 }
 const getHomePage = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(() => {
+  const canReadSiteData = select(STORE_NAME).canUser('read', {
+    kind: 'root',
+    name: 'site'
+  });
+  if (!canReadSiteData) {
+    return null;
+  }
   const siteData = select(STORE_NAME).getEntityRecord('root', 'site');
   if (!siteData) {
     return null;
@@ -4348,10 +4355,20 @@ const getHomePage = (0,external_wp_data_namespaceObject.createRegistrySelector)(
     postType: 'wp_template',
     postId: frontPageTemplateId
   };
-}, state => [getEntityRecord(state, 'root', 'site'), getDefaultTemplateId(state, {
+}, state => [canUser(state, 'read', {
+  kind: 'root',
+  name: 'site'
+}) && getEntityRecord(state, 'root', 'site'), getDefaultTemplateId(state, {
   slug: 'front-page'
 })]));
 const getPostsPageId = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
+  const canReadSiteData = select(STORE_NAME).canUser('read', {
+    kind: 'root',
+    name: 'site'
+  });
+  if (!canReadSiteData) {
+    return null;
+  }
   const siteData = select(STORE_NAME).getEntityRecord('root', 'site');
   return siteData?.show_on_front === 'page' ? normalizePageId(siteData.page_for_posts) : null;
 });

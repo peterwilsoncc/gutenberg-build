@@ -27321,6 +27321,7 @@ const ExperimentalEditorProvider = with_registry_provider(({
   BlockEditorProviderComponent = ExperimentalBlockEditorProvider,
   __unstableTemplate: template
 }) => {
+  const hasTemplate = !!template;
   const {
     editorSettings,
     selection,
@@ -27330,7 +27331,6 @@ const ExperimentalEditorProvider = with_registry_provider(({
     postTypeEntities,
     hasLoadedPostObject
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _postTypeObject$defau;
     const {
       getEditorSettings,
       getEditorSelection,
@@ -27347,11 +27347,11 @@ const ExperimentalEditorProvider = with_registry_provider(({
       editorSettings: getEditorSettings(),
       isReady: __unstableIsEditorReady(),
       mode: getRenderingMode(),
-      defaultMode: (_postTypeObject$defau = postTypeObject?.default_rendering_mode) !== null && _postTypeObject$defau !== void 0 ? _postTypeObject$defau : 'post-only',
+      defaultMode: hasTemplate && postTypeObject?.default_rendering_mode ? postTypeObject?.default_rendering_mode : 'post-only',
       selection: getEditorSelection(),
       postTypeEntities: post.type === 'wp_template' ? getEntitiesConfig('postType') : null
     };
-  }, [post.type]);
+  }, [post.type, hasTemplate]);
   const shouldRenderTemplate = !!template && mode !== 'post-only';
   const rootLevelPost = shouldRenderTemplate ? template : post;
   const defaultBlockContext = (0,external_wp_element_namespaceObject.useMemo)(() => {
