@@ -13039,6 +13039,8 @@ const chevronLeftSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObjec
 const external_wp_keycodes_namespaceObject = window["wp"]["keycodes"];
 ;// external ["wp","commands"]
 const external_wp_commands_namespaceObject = window["wp"]["commands"];
+;// external ["wp","dom"]
+const external_wp_dom_namespaceObject = window["wp"]["dom"];
 ;// ./packages/editor/build-module/utils/pageTypeBadge.js
 /**
  * WordPress dependencies
@@ -13088,6 +13090,7 @@ function usePageTypeBadge(postId) {
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -13252,7 +13255,7 @@ function DocumentBar(props) {
           as: "h1",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             className: "editor-document-bar__post-title",
-            children: title ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title) : (0,external_wp_i18n_namespaceObject.__)('No title')
+            children: title ? (0,external_wp_dom_namespaceObject.__unstableStripHTML)(title) : (0,external_wp_i18n_namespaceObject.__)('No title')
           }), pageTypeBadge && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             className: "editor-document-bar__post-type-label",
             children: `· ${pageTypeBadge}`
@@ -23242,8 +23245,6 @@ function PostTextEditor() {
   });
 }
 
-;// external ["wp","dom"]
-const external_wp_dom_namespaceObject = window["wp"]["dom"];
 ;// ./packages/editor/build-module/components/post-title/constants.js
 const DEFAULT_CLASSNAMES = 'wp-block wp-block-post-title block-editor-block-list__block editor-post-title editor-post-title__input rich-text';
 const REGEXP_NEWLINES = /[\r\n]+/g;
@@ -32177,7 +32178,7 @@ function PostCardPanel({
     // translators: %i number of selected items %s: Name of the plural post type e.g: "Posts".
     (0,external_wp_i18n_namespaceObject.__)('%i %s'), postId.length, labels?.name);
   } else if (postTitle) {
-    title = (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(postTitle);
+    title = (0,external_wp_dom_namespaceObject.__unstableStripHTML)(postTitle);
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 1,
