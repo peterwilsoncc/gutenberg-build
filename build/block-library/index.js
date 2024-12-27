@@ -60647,10 +60647,13 @@ const table_metadata = {
         width: true
       }
     },
-    __experimentalSelector: ".wp-block-table > table",
     interactivity: {
       clientNavigation: true
     }
+  },
+  selectors: {
+    root: ".wp-block-table > table",
+    spacing: ".wp-block-table"
   },
   styles: [{
     name: "regular",
