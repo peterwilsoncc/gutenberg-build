@@ -51509,8 +51509,15 @@ const query_total_metadata = {
       __experimentalDefaultControls: {
         fontSize: true
       }
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true
     }
-  }
+  },
+  style: "wp-block-query-total"
 };
 
 
