@@ -45858,21 +45858,21 @@ function useNestedSettingsUpdate(clientId, parentLock, allowedBlocks, prioritize
 function useInnerBlockTemplateSync(clientId, template, templateLock, templateInsertUpdatesSelection) {
   // Instead of adding a useSelect mapping here, please add to the useSelect
   // mapping in InnerBlocks! Every subscription impacts performance.
-
-  const {
-    getBlocks,
-    getSelectedBlocksInitialCaretPosition,
-    isBlockSelected
-  } = (0,external_wp_data_namespaceObject.useSelect)(store);
-  const {
-    replaceInnerBlocks,
-    __unstableMarkNextChangeAsNotPersistent
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
 
   // Maintain a reference to the previous value so we can do a deep equality check.
   const existingTemplateRef = (0,external_wp_element_namespaceObject.useRef)(null);
   (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     let isCancelled = false;
+    const {
+      getBlocks,
+      getSelectedBlocksInitialCaretPosition,
+      isBlockSelected
+    } = registry.select(store);
+    const {
+      replaceInnerBlocks,
+      __unstableMarkNextChangeAsNotPersistent
+    } = registry.dispatch(store);
 
     // There's an implicit dependency between useInnerBlockTemplateSync and useNestedSettingsUpdate
     // The former needs to happen after the latter and since the latter is using microtasks to batch updates (performance optimization),
@@ -45906,7 +45906,7 @@ function useInnerBlockTemplateSync(clientId, template, templateLock, templateIns
     return () => {
       isCancelled = true;
     };
-  }, [template, templateLock, clientId]);
+  }, [template, templateLock, clientId, registry, templateInsertUpdatesSelection]);
 }
 
 ;// ./packages/block-editor/build-module/components/inner-blocks/use-block-context.js
