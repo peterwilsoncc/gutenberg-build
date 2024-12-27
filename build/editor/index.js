@@ -29136,9 +29136,8 @@ function DocumentTools({
       variant: "unstyled",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
         className: "editor-document-tools__left",
-        children: [!isDistractionFree && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
+        children: [!isDistractionFree && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
           ref: inserterSidebarToggleRef,
-          as: external_wp_components_namespaceObject.Button,
           className: "editor-document-tools__inserter-toggle",
           variant: "primary",
           isPressed: isInserterOpened,
@@ -29166,8 +29165,7 @@ function DocumentTools({
             showTooltip: !showIconLabels,
             variant: showIconLabels ? 'tertiary' : undefined,
             size: "compact"
-          }), !isDistractionFree && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarItem, {
-            as: external_wp_components_namespaceObject.Button,
+          }), !isDistractionFree && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
             className: "editor-document-tools__document-overview-toggle",
             icon: list_view,
             disabled: disableBlockTools,
@@ -29179,8 +29177,7 @@ function DocumentTools({
             showTooltip: !showIconLabels,
             variant: showIconLabels ? 'tertiary' : undefined,
             "aria-expanded": isListViewOpen,
-            ref: listViewToggleRef,
-            size: "compact"
+            ref: listViewToggleRef
           })]
         })]
       })
