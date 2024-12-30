@@ -41192,7 +41192,8 @@ const upload = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 const {
-  useHistory: add_new_pattern_useHistory
+  useHistory: add_new_pattern_useHistory,
+  useLocation: add_new_pattern_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
 const {
   CreatePatternModal,
@@ -41203,6 +41204,7 @@ const {
 } = unlock(external_wp_editor_namespaceObject.privateApis);
 function AddNewPattern() {
   const history = add_new_pattern_useHistory();
+  const location = add_new_pattern_useLocation();
   const [showPatternModal, setShowPatternModal] = (0,external_wp_element_namespaceObject.useState)(false);
   const [showTemplatePartModal, setShowTemplatePartModal] = (0,external_wp_element_namespaceObject.useState)(false);
   // eslint-disable-next-line @wordpress/no-unused-vars-before-return
@@ -41317,22 +41319,16 @@ function AddNewPattern() {
           return;
         }
         try {
-          const {
-            params: {
-              postType,
-              categoryId
-            }
-          } = history.getLocationWithParams();
           let currentCategoryId;
           // When we're not handling template parts, we should
           // add or create the proper pattern category.
-          if (postType !== TEMPLATE_PART_POST_TYPE) {
+          if (location.query.postType !== TEMPLATE_PART_POST_TYPE) {
             /*
              * categoryMap.values() returns an iterator.
              * Iterator.prototype.find() is not yet widely supported.
              * Convert to array to use the Array.prototype.find method.
              */
-            const currentCategory = Array.from(categoryMap.values()).find(term => term.name === categoryId);
+            const currentCategory = Array.from(categoryMap.values()).find(term => term.name === location.query.categoryId);
             if (currentCategory) {
               currentCategoryId = currentCategory.id || (await findOrCreateTerm(currentCategory.label));
             }
@@ -41342,7 +41338,7 @@ function AddNewPattern() {
           // Navigate to the All patterns category for the newly created pattern
           // if we're not on that page already and if we're not in the `my-patterns`
           // category.
-          if (!currentCategoryId && categoryId !== 'my-patterns') {
+          if (!currentCategoryId && location.query.categoryId !== 'my-patterns') {
             history.navigate(`/pattern?categoryId=${PATTERN_DEFAULT_CATEGORY}`);
           }
           createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
@@ -44965,7 +44961,8 @@ function AddNewItem({
 
 
 const {
-  useHistory: custom_dataviews_list_useHistory
+  useHistory: custom_dataviews_list_useHistory,
+  useLocation: custom_dataviews_list_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
 const custom_dataviews_list_EMPTY_ARRAY = [];
 function RenameItemModalContent({
@@ -45020,6 +45017,7 @@ function CustomDataViewItem({
   isActive
 }) {
   const history = custom_dataviews_list_useHistory();
+  const location = custom_dataviews_list_useLocation();
   const {
     dataview
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -45070,13 +45068,8 @@ function CustomDataViewItem({
                 force: true
               });
               if (isActive) {
-                const {
-                  params: {
-                    postType
-                  }
-                } = history.getLocationWithParams();
                 history.replace({
-                  postType
+                  postType: location.query.postType
                 });
               }
               onClose();
