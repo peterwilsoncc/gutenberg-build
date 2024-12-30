@@ -9410,6 +9410,7 @@ const {
 
 const comments_settings = {
   icon: post_comments,
+  example: {},
   edit: CommentsEdit,
   save: comments_save_save,
   deprecated: comments_deprecated
