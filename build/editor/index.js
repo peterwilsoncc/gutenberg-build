@@ -2437,8 +2437,6 @@ const EDIT_MERGE_PROPERTIES = new Set(['meta']);
  * Constant for the store module (or reducer) key.
  */
 const STORE_NAME = 'core/editor';
-const SAVE_POST_NOTICE_ID = 'SAVE_POST_NOTICE_ID';
-const TRASH_POST_NOTICE_ID = 'TRASH_POST_NOTICE_ID';
 const PERMALINK_POSTNAME_REGEX = /%(?:postname|pagename)%/;
 const ONE_MINUTE_IN_MS = 60 * 1000;
 const AUTOSAVE_PROPERTIES = ['title', 'excerpt', 'content'];
@@ -4219,11 +4217,6 @@ function localAutosaveClear(postId, isPostNew) {
 
 
 /**
- * Internal dependencies
- */
-
-
-/**
  * Builds the arguments for a success notification dispatch.
  *
  * @param {Object} data Incoming data to build the arguments from.
@@ -4282,7 +4275,7 @@ function getNotificationArgumentsForSaveSuccess(data) {
     });
   }
   return [noticeMessage, {
-    id: SAVE_POST_NOTICE_ID,
+    id: 'editor-save',
     type: 'snackbar',
     actions
   }];
@@ -4324,7 +4317,7 @@ function getNotificationArgumentsForSaveFail(data) {
     noticeMessage = [noticeMessage, error.message].join(' ');
   }
   return [noticeMessage, {
-    id: SAVE_POST_NOTICE_ID
+    id: 'editor-save'
   }];
 }
 
@@ -4337,7 +4330,7 @@ function getNotificationArgumentsForSaveFail(data) {
  */
 function getNotificationArgumentsForTrashFail(data) {
   return [data.error.message && data.error.code !== 'unknown_error' ? data.error.message : (0,external_wp_i18n_namespaceObject.__)('Trashing failed'), {
-    id: TRASH_POST_NOTICE_ID
+    id: 'editor-trash-fail'
   }];
 }
 
@@ -4360,7 +4353,6 @@ function getNotificationArgumentsForTrashFail(data) {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -4648,7 +4640,6 @@ const trashPost = () => async ({
 }) => {
   const postTypeSlug = select.getCurrentPostType();
   const postType = await registry.resolveSelect(external_wp_coreData_namespaceObject.store).getPostType(postTypeSlug);
-  registry.dispatch(external_wp_notices_namespaceObject.store).removeNotice(TRASH_POST_NOTICE_ID);
   const {
     rest_base: restBase,
     rest_namespace: restNamespace = 'wp/v2'
