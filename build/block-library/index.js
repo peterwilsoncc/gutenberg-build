@@ -52866,6 +52866,7 @@ function ReadMore({
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -52936,7 +52937,12 @@ const {
 
 const read_more_settings = {
   icon: library_link,
-  edit: ReadMore
+  edit: ReadMore,
+  example: {
+    attributes: {
+      content: (0,external_wp_i18n_namespaceObject.__)('Read more')
+    }
+  }
 };
 const read_more_init = () => initBlock({
   name: read_more_name,
