@@ -28137,7 +28137,7 @@ function text_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried t
  * Internal dependencies
  */
 
-const Text = /*#__PURE__*/emotion_react_browser_esm_css("color:", COLORS.gray[900], ";line-height:", config_values.fontLineHeightBase, ";margin:0;text-wrap:balance;text-wrap:pretty;" + ( true ? "" : 0),  true ? "" : 0);
+const Text = /*#__PURE__*/emotion_react_browser_esm_css("color:", COLORS.theme.foreground, ";line-height:", config_values.fontLineHeightBase, ";margin:0;text-wrap:balance;text-wrap:pretty;" + ( true ? "" : 0),  true ? "" : 0);
 const styles_block =  true ? {
   name: "4zleql",
   styles: "display:block"
@@ -28465,9 +28465,9 @@ function useText(props) {
     if (optimizeReadabilityFor) {
       const isOptimalTextColorDark = getOptimalTextShade(optimizeReadabilityFor) === 'dark';
       sx.optimalTextColor = isOptimalTextColorDark ? /*#__PURE__*/emotion_react_browser_esm_css({
-        color: COLORS.gray[900]
+        color: COLORS.theme.foreground
       },  true ? "" : 0,  true ? "" : 0) : /*#__PURE__*/emotion_react_browser_esm_css({
-        color: COLORS.white
+        color: COLORS.theme.foregroundInverted
       },  true ? "" : 0,  true ? "" : 0);
     }
     return cx(Text, sx.Base, sx.optimalTextColor, isDestructive && destructive, !!isHighlighter && highlighterText, isBlock && styles_block, isCaption && muted, variant && text_styles_namespaceObject[variant], upperCase && sx.upperCase, className);
@@ -39386,7 +39386,7 @@ function useHeading(props) {
   const {
     as: asProp,
     level = 2,
-    color = COLORS.gray[900],
+    color = COLORS.theme.foreground,
     isBlock = true,
     weight = config_values.fontWeightHeading,
     ...otherProps
