@@ -42775,7 +42775,7 @@ function BoxInputControl({
       },
       withInputField: false,
       "aria-valuenow": presetIndex !== undefined ? presetIndex + 1 : 0,
-      "aria-valuetext": marks[presetIndex !== undefined ? presetIndex + 1 : 0].label,
+      "aria-valuetext": marks[presetIndex !== undefined ? presetIndex + 1 : 0].tooltip,
       renderTooltipContent: index => marks[!index ? 0 : index].tooltip,
       min: 0,
       max: marks.length - 1,
