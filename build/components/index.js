@@ -57225,8 +57225,8 @@ function font_size_picker_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You 
 const styles_Container = /*#__PURE__*/emotion_styled_base_browser_esm("fieldset",  true ? {
   target: "e8tqeku4"
 } : 0)( true ? {
-  name: "1t1ytme",
-  styles: "border:0;margin:0;padding:0"
+  name: "k2q51s",
+  styles: "border:0;margin:0;padding:0;display:contents"
 } : 0);
 const styles_Header = /*#__PURE__*/emotion_styled_base_browser_esm(h_stack_component,  true ? {
   target: "e8tqeku3"
