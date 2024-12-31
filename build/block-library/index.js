@@ -3885,6 +3885,187 @@ const blockAttributes = {
     selector: 'a'
   }
 };
+const v12 = {
+  attributes: {
+    tagName: {
+      type: 'string',
+      enum: ['a', 'button'],
+      default: 'a'
+    },
+    type: {
+      type: 'string',
+      default: 'button'
+    },
+    textAlign: {
+      type: 'string'
+    },
+    url: {
+      type: 'string',
+      source: 'attribute',
+      selector: 'a',
+      attribute: 'href'
+    },
+    title: {
+      type: 'string',
+      source: 'attribute',
+      selector: 'a,button',
+      attribute: 'title',
+      role: 'content'
+    },
+    text: {
+      type: 'rich-text',
+      source: 'rich-text',
+      selector: 'a,button',
+      role: 'content'
+    },
+    linkTarget: {
+      type: 'string',
+      source: 'attribute',
+      selector: 'a',
+      attribute: 'target',
+      role: 'content'
+    },
+    rel: {
+      type: 'string',
+      source: 'attribute',
+      selector: 'a',
+      attribute: 'rel',
+      role: 'content'
+    },
+    placeholder: {
+      type: 'string'
+    },
+    backgroundColor: {
+      type: 'string'
+    },
+    textColor: {
+      type: 'string'
+    },
+    gradient: {
+      type: 'string'
+    },
+    width: {
+      type: 'number'
+    }
+  },
+  supports: {
+    anchor: true,
+    align: true,
+    alignWide: false,
+    color: {
+      __experimentalSkipSerialization: true,
+      gradients: true,
+      __experimentalDefaultControls: {
+        background: true,
+        text: true
+      }
+    },
+    typography: {
+      fontSize: true,
+      lineHeight: true,
+      __experimentalFontFamily: true,
+      __experimentalFontWeight: true,
+      __experimentalFontStyle: true,
+      __experimentalTextTransform: true,
+      __experimentalTextDecoration: true,
+      __experimentalLetterSpacing: true,
+      __experimentalWritingMode: true,
+      __experimentalDefaultControls: {
+        fontSize: true
+      }
+    },
+    reusable: false,
+    shadow: {
+      __experimentalSkipSerialization: true
+    },
+    spacing: {
+      __experimentalSkipSerialization: true,
+      padding: ['horizontal', 'vertical'],
+      __experimentalDefaultControls: {
+        padding: true
+      }
+    },
+    __experimentalBorder: {
+      color: true,
+      radius: true,
+      style: true,
+      width: true,
+      __experimentalSkipSerialization: true,
+      __experimentalDefaultControls: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      }
+    },
+    __experimentalSelector: '.wp-block-button__link',
+    interactivity: {
+      clientNavigation: true
+    }
+  },
+  save({
+    attributes,
+    className
+  }) {
+    const {
+      tagName,
+      type,
+      textAlign,
+      fontSize,
+      linkTarget,
+      rel,
+      style,
+      text,
+      title,
+      url,
+      width
+    } = attributes;
+    const TagName = tagName || 'a';
+    const isButtonTag = 'button' === TagName;
+    const buttonType = type || 'button';
+    const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetBorderClassesAndStyles)(attributes);
+    const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetColorClassesAndStyles)(attributes);
+    const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
+    const shadowProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetShadowClassesAndStyles)(attributes);
+    const buttonClasses = dist_clsx('wp-block-button__link', colorProps.className, borderProps.className, {
+      [`has-text-align-${textAlign}`]: textAlign,
+      // For backwards compatibility add style that isn't provided via
+      // block support.
+      'no-border-radius': style?.border?.radius === 0
+    }, (0,external_wp_blockEditor_namespaceObject.__experimentalGetElementClassName)('button'));
+    const buttonStyle = {
+      ...borderProps.style,
+      ...colorProps.style,
+      ...spacingProps.style,
+      ...shadowProps.style
+    };
+
+    // The use of a `title` attribute here is soft-deprecated, but still applied
+    // if it had already been assigned, for the sake of backward-compatibility.
+    // A title will no longer be assigned for new or updated button block links.
+
+    const wrapperClasses = dist_clsx(className, {
+      [`has-custom-width wp-block-button__width-${width}`]: width,
+      [`has-custom-font-size`]: fontSize || style?.typography?.fontSize
+    });
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      ...external_wp_blockEditor_namespaceObject.useBlockProps.save({
+        className: wrapperClasses
+      }),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText.Content, {
+        tagName: TagName,
+        type: isButtonTag ? buttonType : null,
+        className: buttonClasses,
+        href: isButtonTag ? null : url,
+        title: title,
+        style: buttonStyle,
+        value: text,
+        target: isButtonTag ? null : linkTarget,
+        rel: isButtonTag ? null : rel
+      })
+    });
+  }
+};
 const v11 = {
   attributes: {
     url: {
@@ -4159,7 +4340,7 @@ const v10 = {
     return style?.typography?.fontFamily;
   }
 };
-const deprecated_deprecated = [v11, v10, {
+const deprecated_deprecated = [v12, v11, v10, {
   supports: {
     anchor: true,
     align: true,
@@ -5161,12 +5342,20 @@ function ButtonEdit(props) {
       })
     };
   }, [context, isSelected, metadata?.bindings?.url]);
+  const [fluidTypographySettings, layout] = (0,external_wp_blockEditor_namespaceObject.useSettings)('typography.fluid', 'layout');
+  const typographyProps = (0,external_wp_blockEditor_namespaceObject.getTypographyClassesAndStyles)(attributes, {
+    typography: {
+      fluid: fluidTypographySettings
+    },
+    layout: {
+      wideSize: layout?.wideSize
+    }
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
       className: dist_clsx(blockProps.className, {
-        [`has-custom-width wp-block-button__width-${width}`]: width,
-        [`has-custom-font-size`]: blockProps.style.fontSize
+        [`has-custom-width wp-block-button__width-${width}`]: width
       }),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
         ref: mergedRef,
@@ -5177,17 +5366,20 @@ function ButtonEdit(props) {
           text: removeAnchorTag(value)
         }),
         withoutInteractiveFormatting: true,
-        className: dist_clsx(className, 'wp-block-button__link', colorProps.className, borderProps.className, {
+        className: dist_clsx(className, 'wp-block-button__link', colorProps.className, borderProps.className, typographyProps.className, {
           [`has-text-align-${textAlign}`]: textAlign,
           // For backwards compatibility add style that isn't
           // provided via block support.
-          'no-border-radius': style?.border?.radius === 0
+          'no-border-radius': style?.border?.radius === 0,
+          [`has-custom-font-size`]: blockProps.style.fontSize
         }, (0,external_wp_blockEditor_namespaceObject.__experimentalGetElementClassName)('button')),
         style: {
           ...borderProps.style,
           ...colorProps.style,
           ...spacingProps.style,
-          ...shadowProps.style
+          ...shadowProps.style,
+          ...typographyProps.style,
+          writingMode: undefined
         },
         onReplace: onReplace,
         onMerge: mergeBlocks,
@@ -5301,17 +5493,21 @@ function save_save({
   const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetColorClassesAndStyles)(attributes);
   const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
   const shadowProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetShadowClassesAndStyles)(attributes);
-  const buttonClasses = dist_clsx('wp-block-button__link', colorProps.className, borderProps.className, {
+  const typographyProps = (0,external_wp_blockEditor_namespaceObject.getTypographyClassesAndStyles)(attributes);
+  const buttonClasses = dist_clsx('wp-block-button__link', colorProps.className, borderProps.className, typographyProps.className, {
     [`has-text-align-${textAlign}`]: textAlign,
     // For backwards compatibility add style that isn't provided via
     // block support.
-    'no-border-radius': style?.border?.radius === 0
+    'no-border-radius': style?.border?.radius === 0,
+    [`has-custom-font-size`]: fontSize || style?.typography?.fontSize
   }, (0,external_wp_blockEditor_namespaceObject.__experimentalGetElementClassName)('button'));
   const buttonStyle = {
     ...borderProps.style,
     ...colorProps.style,
     ...spacingProps.style,
-    ...shadowProps.style
+    ...shadowProps.style,
+    ...typographyProps.style,
+    writingMode: undefined
   };
 
   // The use of a `title` attribute here is soft-deprecated, but still applied
@@ -5319,8 +5515,7 @@ function save_save({
   // A title will no longer be assigned for new or updated button block links.
 
   const wrapperClasses = dist_clsx(className, {
-    [`has-custom-width wp-block-button__width-${width}`]: width,
-    [`has-custom-font-size`]: fontSize || style?.typography?.fontSize
+    [`has-custom-width wp-block-button__width-${width}`]: width
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ...external_wp_blockEditor_namespaceObject.useBlockProps.save({
@@ -5440,6 +5635,7 @@ const button_metadata = {
       }
     },
     typography: {
+      __experimentalSkipSerialization: ["fontSize", "lineHeight", "fontFamily", "fontWeight", "fontStyle", "textTransform", "textDecoration", "letterSpacing"],
       fontSize: true,
       lineHeight: true,
       __experimentalFontFamily: true,
@@ -5477,7 +5673,6 @@ const button_metadata = {
         width: true
       }
     },
-    __experimentalSelector: ".wp-block-button .wp-block-button__link",
     interactivity: {
       clientNavigation: true
     }
@@ -5491,7 +5686,13 @@ const button_metadata = {
     label: "Outline"
   }],
   editorStyle: "wp-block-button-editor",
-  style: "wp-block-button"
+  style: "wp-block-button",
+  selectors: {
+    root: ".wp-block-button .wp-block-button__link",
+    typography: {
+      writingMode: ".wp-block-button"
+    }
+  }
 };
 
 const {
@@ -12709,7 +12910,7 @@ const v13 = {
 };
 
 // Deprecation for blocks to prevent auto overlay color from overriding previously set values.
-const v12 = {
+const deprecated_v12 = {
   attributes: v12toV13BlockAttributes,
   supports: v12BlockSupports,
   isEligible(attributes) {
@@ -13799,7 +14000,7 @@ const cover_deprecated_v1 = {
     })]];
   }
 };
-/* harmony default export */ const cover_deprecated = ([v14, v13, v12, deprecated_v11, deprecated_v10, v9, v8, v7, v6, v5, v4, v3, v2, cover_deprecated_v1]);
+/* harmony default export */ const cover_deprecated = ([v14, v13, deprecated_v12, deprecated_v11, deprecated_v10, v9, v8, v7, v6, v5, v4, v3, v2, cover_deprecated_v1]);
 
 ;// ./packages/block-library/build-module/cover/constants.js
 const DEFAULT_MEDIA_SIZE_SLUG = 'full';
