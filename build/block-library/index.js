@@ -42774,7 +42774,12 @@ const post_comments_form_metadata = {
     }
   },
   editorStyle: "wp-block-post-comments-form-editor",
-  style: ["wp-block-post-comments-form", "wp-block-buttons", "wp-block-button"]
+  style: ["wp-block-post-comments-form", "wp-block-buttons", "wp-block-button"],
+  example: {
+    attributes: {
+      textAlign: "center"
+    }
+  }
 };
 
 const {
