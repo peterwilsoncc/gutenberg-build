@@ -24519,7 +24519,6 @@ const DeprecatedExperimentalLinkControl = props => {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -24550,12 +24549,12 @@ const MediaReplaceFlow = ({
   multiple = false,
   addToGallery,
   handleUpload = true,
-  popoverProps
+  popoverProps,
+  renderToggle
 }) => {
   const {
     getSettings
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
-  const editMediaButtonRef = (0,external_wp_element_namespaceObject.useRef)();
   const errorNoticeID = `block-editor/media-replace-flow/error-notice/${++uniqueId}`;
   const onUploadError = message => {
     const safeMessage = (0,external_wp_dom_namespaceObject.__unstableStripHTML)(message);
@@ -24622,14 +24621,24 @@ const MediaReplaceFlow = ({
     renderToggle: ({
       isOpen,
       onToggle
-    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-      ref: editMediaButtonRef,
-      "aria-expanded": isOpen,
-      "aria-haspopup": "true",
-      onClick: onToggle,
-      onKeyDown: openOnArrowDown,
-      children: name
-    }),
+    }) => {
+      if (renderToggle) {
+        return renderToggle({
+          'aria-expanded': isOpen,
+          'aria-haspopup': 'true',
+          onClick: onToggle,
+          onKeyDown: openOnArrowDown,
+          children: name
+        });
+      }
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+        "aria-expanded": isOpen,
+        "aria-haspopup": "true",
+        onClick: onToggle,
+        onKeyDown: openOnArrowDown,
+        children: name
+      });
+    },
     renderContent: ({
       onClose
     }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -24700,7 +24709,6 @@ const MediaReplaceFlow = ({
             url
           }) => {
             onSelectURL(url);
-            editMediaButtonRef.current.focus();
           }
         })]
       })]
@@ -25029,6 +25037,10 @@ function BackgroundImageControls({
         label: imgLabel
       }),
       variant: "secondary",
+      renderToggle: props => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        ...props,
+        __next40pxDefaultSize: true
+      }),
       onError: onUploadError,
       onReset: () => {
         closeAndFocus();
