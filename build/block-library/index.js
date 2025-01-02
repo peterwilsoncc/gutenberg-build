@@ -50419,6 +50419,7 @@ function query_no_results_save_save() {
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -50433,14 +50434,6 @@ const query_no_results_metadata = {
   ancestor: ["core/query"],
   textdomain: "default",
   usesContext: ["queryId", "query"],
-  example: {
-    innerBlocks: [{
-      name: "core/paragraph",
-      attributes: {
-        content: "No posts were found."
-      }
-    }]
-  },
   supports: {
     align: true,
     reusable: false,
@@ -50476,7 +50469,15 @@ const {
 const query_no_results_settings = {
   icon: library_loop,
   edit: QueryNoResultsEdit,
-  save: query_no_results_save_save
+  save: query_no_results_save_save,
+  example: {
+    innerBlocks: [{
+      name: 'core/paragraph',
+      attributes: {
+        content: (0,external_wp_i18n_namespaceObject.__)('No posts were found.')
+      }
+    }]
+  }
 };
 const query_no_results_init = () => initBlock({
   name: query_no_results_name,
