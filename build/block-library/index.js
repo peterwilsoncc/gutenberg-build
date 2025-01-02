@@ -45027,7 +45027,7 @@ const post_navigation_link_variations_variations = [{
   scope: ['inserter', 'transform'],
   example: {
     attributes: {
-      label: 'Next post',
+      label: (0,external_wp_i18n_namespaceObject.__)('Next post'),
       arrow: 'arrow'
     }
   }
@@ -45042,7 +45042,7 @@ const post_navigation_link_variations_variations = [{
   scope: ['inserter', 'transform'],
   example: {
     attributes: {
-      label: 'Previous post',
+      label: (0,external_wp_i18n_namespaceObject.__)('Previous post'),
       arrow: 'arrow'
     }
   }
@@ -45062,6 +45062,11 @@ post_navigation_link_variations_variations.forEach(variation => {
 /* harmony default export */ const post_navigation_link_variations = (post_navigation_link_variations_variations);
 
 ;// ./packages/block-library/build-module/post-navigation-link/index.js
+/**
+ * WordPress dependencies
+ */
+
+
 /**
  * Internal dependencies
  */
@@ -45102,12 +45107,6 @@ const post_navigation_link_metadata = {
       "default": ""
     }
   },
-  example: {
-    attributes: {
-      label: "Next post",
-      arrow: "arrow"
-    }
-  },
   usesContext: ["postType"],
   supports: {
     reusable: false,
@@ -45143,7 +45142,13 @@ const {
 
 const post_navigation_link_settings = {
   edit: PostNavigationLinkEdit,
-  variations: post_navigation_link_variations
+  variations: post_navigation_link_variations,
+  example: {
+    attributes: {
+      label: (0,external_wp_i18n_namespaceObject.__)('Next post'),
+      arrow: 'arrow'
+    }
+  }
 };
 const post_navigation_link_init = () => initBlock({
   name: post_navigation_link_name,
