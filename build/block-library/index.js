@@ -61380,6 +61380,7 @@ function table_of_contents_save_save({
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -61448,48 +61449,6 @@ const table_of_contents_metadata = {
       }
     }
   },
-  example: {
-    innerBlocks: [{
-      name: "core/heading",
-      attributes: {
-        level: 2,
-        content: "Heading"
-      }
-    }, {
-      name: "core/heading",
-      attributes: {
-        level: 3,
-        content: "Subheading"
-      }
-    }, {
-      name: "core/heading",
-      attributes: {
-        level: 2,
-        content: "Heading"
-      }
-    }, {
-      name: "core/heading",
-      attributes: {
-        level: 3,
-        content: "Subheading"
-      }
-    }],
-    attributes: {
-      headings: [{
-        content: "Heading",
-        level: 2
-      }, {
-        content: "Subheading",
-        level: 3
-      }, {
-        content: "Heading",
-        level: 2
-      }, {
-        content: "Subheading",
-        level: 3
-      }]
-    }
-  },
   style: "wp-block-table-of-contents"
 };
 
@@ -61501,7 +61460,49 @@ const {
 const table_of_contents_settings = {
   icon: table_of_contents,
   edit: TableOfContentsEdit,
-  save: table_of_contents_save_save
+  save: table_of_contents_save_save,
+  example: {
+    innerBlocks: [{
+      name: 'core/heading',
+      attributes: {
+        level: 2,
+        content: (0,external_wp_i18n_namespaceObject.__)('Heading')
+      }
+    }, {
+      name: 'core/heading',
+      attributes: {
+        level: 3,
+        content: (0,external_wp_i18n_namespaceObject.__)('Subheading')
+      }
+    }, {
+      name: 'core/heading',
+      attributes: {
+        level: 2,
+        content: (0,external_wp_i18n_namespaceObject.__)('Heading')
+      }
+    }, {
+      name: 'core/heading',
+      attributes: {
+        level: 3,
+        content: (0,external_wp_i18n_namespaceObject.__)('Subheading')
+      }
+    }],
+    attributes: {
+      headings: [{
+        content: (0,external_wp_i18n_namespaceObject.__)('Heading'),
+        level: 2
+      }, {
+        content: (0,external_wp_i18n_namespaceObject.__)('Subheading'),
+        level: 3
+      }, {
+        content: (0,external_wp_i18n_namespaceObject.__)('Heading'),
+        level: 2
+      }, {
+        content: (0,external_wp_i18n_namespaceObject.__)('Subheading'),
+        level: 3
+      }]
+    }
+  }
 };
 const table_of_contents_init = () => initBlock({
   name: table_of_contents_name,
