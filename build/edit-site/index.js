@@ -26736,6 +26736,8 @@ const STYLE_BOOK_IFRAME_STYLES = `
 /**
  * WordPress dependencies
  */
+// @wordpress/blocks imports are not typed.
+// @ts-expect-error
 
 
 /**
@@ -26751,20 +26753,24 @@ const STYLE_BOOK_IFRAME_STYLES = `
  * @return {CategoryExamples|undefined} An object containing the category examples.
  */
 function getExamplesByCategory(categoryDefinition, examples) {
+  var _categoryDefinition$s;
   if (!categoryDefinition?.slug || !examples?.length) {
     return;
   }
-  if (categoryDefinition?.subcategories?.length) {
-    return categoryDefinition.subcategories.reduce((acc, subcategoryDefinition) => {
+  const categories = (_categoryDefinition$s = categoryDefinition?.subcategories) !== null && _categoryDefinition$s !== void 0 ? _categoryDefinition$s : [];
+  if (categories.length) {
+    return categories.reduce((acc, subcategoryDefinition) => {
       const subcategoryExamples = getExamplesByCategory(subcategoryDefinition, examples);
       if (subcategoryExamples) {
+        if (!acc.subcategories) {
+          acc.subcategories = [];
+        }
         acc.subcategories = [...acc.subcategories, subcategoryExamples];
       }
       return acc;
     }, {
       title: categoryDefinition.title,
-      slug: categoryDefinition.slug,
-      subcategories: []
+      slug: categoryDefinition.slug
     });
   }
   const blocksToInclude = categoryDefinition?.blocks || [];
@@ -26791,10 +26797,11 @@ function getTopLevelStyleBookCategories() {
   const reservedCategories = [...STYLE_BOOK_THEME_SUBCATEGORIES, ...STYLE_BOOK_CATEGORIES].map(({
     slug
   }) => slug);
-  const extraCategories = (0,external_wp_blocks_namespaceObject.getCategories)().filter(({
+  const extraCategories = (0,external_wp_blocks_namespaceObject.getCategories)();
+  const extraCategoriesFiltered = extraCategories.filter(({
     slug
   }) => !reservedCategories.includes(slug));
-  return [...STYLE_BOOK_CATEGORIES, ...extraCategories];
+  return [...STYLE_BOOK_CATEGORIES, ...extraCategoriesFiltered];
 }
 
 ;// ./packages/edit-site/build-module/components/style-book/color-examples.js
@@ -26922,8 +26929,9 @@ function getColorExamples(colors) {
   }
   const examples = [];
   STYLE_BOOK_COLOR_GROUPS.forEach(group => {
-    const palette = colors[group.type].find(origin => origin.slug === group.origin);
-    if (palette?.[group.type]) {
+    const palette = colors[group.type];
+    const paletteFiltered = Array.isArray(palette) ? palette.find(origin => origin.slug === group.origin) : undefined;
+    if (paletteFiltered?.[group.type]) {
       const example = {
         name: group.slug,
         title: group.title,
@@ -26931,12 +26939,12 @@ function getColorExamples(colors) {
       };
       if (group.type === 'duotones') {
         example.content = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(duotone_examples, {
-          duotones: palette[group.type]
+          duotones: paletteFiltered[group.type]
         });
         examples.push(example);
       } else {
         example.content = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_examples, {
-          colors: palette[group.type],
+          colors: paletteFiltered[group.type],
           type: group.type
         });
         examples.push(example);
@@ -26956,7 +26964,7 @@ function getOverviewBlockExamples(colors) {
   const examples = [];
 
   // Get theme palette from colors if they exist.
-  const themePalette = colors?.colors.find(origin => origin.slug === 'theme');
+  const themePalette = Array.isArray(colors?.colors) ? colors.colors.find(origin => origin.slug === 'theme') : undefined;
   if (themePalette) {
     const themeColorexample = {
       name: 'theme-colors',
@@ -26964,7 +26972,7 @@ function getOverviewBlockExamples(colors) {
       category: 'overview',
       content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_examples, {
         colors: themePalette.colors,
-        type: colors,
+        type: "colors",
         templateColumns: "repeat(auto-fill, minmax( 200px, 1fr ))",
         itemHeight: "32px"
       })
