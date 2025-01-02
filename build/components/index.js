@@ -72235,8 +72235,12 @@ function Badge({
     children: [intent !== 'default' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
       icon: contextBasedIcon(),
       size: 16,
-      fill: "currentColor"
-    }), children]
+      fill: "currentColor",
+      className: "components-badge__icon"
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "components-badge__content",
+      children: children
+    })]
   });
 }
 /* harmony default export */ const badge = (Badge);
