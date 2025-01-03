@@ -38061,15 +38061,11 @@ function DataViewsSelectionCheckbox({
 }) {
   const id = getItemId(item);
   const checked = !disabled && selection.includes(id);
-  let selectionLabel;
-  if (titleField?.getValue && item) {
-    // eslint-disable-next-line @wordpress/valid-sprintf
-    selectionLabel = (0,external_wp_i18n_namespaceObject.sprintf)(checked ? /* translators: %s: item title. */(0,external_wp_i18n_namespaceObject.__)('Deselect item: %s') : /* translators: %s: item title. */(0,external_wp_i18n_namespaceObject.__)('Select item: %s'), titleField.getValue({
-      item
-    }));
-  } else {
-    selectionLabel = checked ? (0,external_wp_i18n_namespaceObject.__)('Select a new item') : (0,external_wp_i18n_namespaceObject.__)('Deselect item');
-  }
+
+  // Fallback label to ensure accessibility
+  const selectionLabel = titleField?.getValue?.({
+    item
+  }) || (0,external_wp_i18n_namespaceObject.__)('(no title)');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
     className: "dataviews-selection-checkbox",
     __nextHasNoMarginBottom: true,
