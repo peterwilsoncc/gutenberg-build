@@ -11409,6 +11409,7 @@ function CommentsPaginationPreviousEdit({
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -11425,11 +11426,6 @@ const comments_pagination_previous_metadata = {
   attributes: {
     label: {
       type: "string"
-    }
-  },
-  example: {
-    attributes: {
-      label: "Comments Previous Page"
     }
   },
   usesContext: ["postId", "comments/paginationArrow"],
@@ -11468,7 +11464,12 @@ const {
 
 const comments_pagination_previous_settings = {
   icon: query_pagination_previous,
-  edit: CommentsPaginationPreviousEdit
+  edit: CommentsPaginationPreviousEdit,
+  example: {
+    attributes: {
+      label: (0,external_wp_i18n_namespaceObject.__)('Older Comments')
+    }
+  }
 };
 const comments_pagination_previous_init = () => initBlock({
   name: comments_pagination_previous_name,
