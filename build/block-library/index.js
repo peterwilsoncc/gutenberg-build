@@ -5238,7 +5238,8 @@ function WidthPanel({
         children: [25, 50, 75, 100].map(widthValue => {
           return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
             value: widthValue,
-            label: `${widthValue}%`
+            label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: Percentage value. */
+            (0,external_wp_i18n_namespaceObject.__)('%1$d%%'), widthValue)
           }, widthValue);
         })
       })
@@ -53925,7 +53926,8 @@ function SearchEdit({
             children: PERCENTAGE_WIDTHS.map(widthValue => {
               return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
                 value: widthValue,
-                label: `${widthValue}%`
+                label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: Percentage value. */
+                (0,external_wp_i18n_namespaceObject.__)('%1$d%%'), widthValue)
               }, widthValue);
             })
           })]

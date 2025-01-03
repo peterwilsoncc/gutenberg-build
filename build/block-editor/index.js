@@ -70902,7 +70902,8 @@ function ImageSizeControl({
         children: IMAGE_SIZE_PRESETS.map(scale => {
           return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
             value: scale,
-            label: `${scale}%`
+            label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: Percentage value. */
+            (0,external_wp_i18n_namespaceObject.__)('%1$d%%'), scale)
           }, scale);
         })
       })]
