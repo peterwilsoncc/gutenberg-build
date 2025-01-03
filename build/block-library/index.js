@@ -11761,6 +11761,7 @@ function CommentsPaginationNextEdit({
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -11777,11 +11778,6 @@ const comments_pagination_next_metadata = {
   attributes: {
     label: {
       type: "string"
-    }
-  },
-  example: {
-    attributes: {
-      label: "Comments Next Page"
     }
   },
   usesContext: ["postId", "comments/paginationArrow"],
@@ -11820,7 +11816,12 @@ const {
 
 const comments_pagination_next_settings = {
   icon: query_pagination_next,
-  edit: CommentsPaginationNextEdit
+  edit: CommentsPaginationNextEdit,
+  example: {
+    attributes: {
+      label: (0,external_wp_i18n_namespaceObject.__)('Newer Comments')
+    }
+  }
 };
 const comments_pagination_next_init = () => initBlock({
   name: comments_pagination_next_name,
