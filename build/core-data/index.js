@@ -23880,6 +23880,35 @@ function createLocksActions() {
   };
 }
 
+;// ./packages/core-data/build-module/dynamic-entities.js
+/**
+ * Internal dependencies
+ */
+
+/**
+ * A simple utility that pluralizes a string.
+ * Converts:
+ * - "post" to "posts"
+ * - "taxonomy" to "taxonomies"
+ * - "media" to "mediaItems"
+ * - "status" to "statuses"
+ *
+ * It does not pluralize "GlobalStyles" due to lack of clarity about it at time of writing.
+ */
+
+/**
+ * A simple utility that singularizes a string.
+ *
+ * Converts:
+ * - "posts" to "post"
+ * - "taxonomies" to "taxonomy"
+ * - "mediaItems" to "media"
+ * - "statuses" to "status"
+ */
+
+let dynamicActions;
+let dynamicSelectors;
+
 ;// external ["wp","element"]
 const external_wp_element_namespaceObject = window["wp"]["element"];
 ;// ./packages/core-data/build-module/entity-context.js
@@ -25132,6 +25161,7 @@ lock(privateApis, {
 
 
 
+
 // The entity selectors/resolvers and actions are shortcuts to their generic equivalents
 // (getEntityRecord, getEntityRecords, updateEntityRecord, updateEntityRecords)
 // Instead of getEntityRecord, the consumer could use more user-friendly named selector: getPostType, getTaxonomy...
@@ -25175,11 +25205,13 @@ const entityActions = build_module_entitiesConfig.reduce((result, entity) => {
 const storeConfig = () => ({
   reducer: build_module_reducer,
   actions: {
+    ...dynamicActions,
     ...build_module_actions_namespaceObject,
     ...entityActions,
     ...createLocksActions()
   },
   selectors: {
+    ...dynamicSelectors,
     ...build_module_selectors_namespaceObject,
     ...entitySelectors
   },

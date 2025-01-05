@@ -7363,9 +7363,7 @@ function CreateTemplatePartModal({
   modalTitle,
   ...restProps
 }) {
-  const defaultModalTitle = (0,external_wp_data_namespaceObject.useSelect)(select =>
-  // @ts-expect-error getPostType is not typed with 'wp_template_part' as argument.
-  select(external_wp_coreData_namespaceObject.store).getPostType('wp_template_part')?.labels?.add_new_item, []);
+  const defaultModalTitle = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getPostType('wp_template_part')?.labels?.add_new_item, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
     title: modalTitle || defaultModalTitle,
     onRequestClose: restProps.closeModal,
@@ -7421,9 +7419,7 @@ function CreateTemplatePartModalContents({
   const [area, setArea] = (0,external_wp_element_namespaceObject.useState)(defaultArea);
   const [isSubmitting, setIsSubmitting] = (0,external_wp_element_namespaceObject.useState)(false);
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(CreateTemplatePartModal);
-  const defaultTemplatePartAreas = (0,external_wp_data_namespaceObject.useSelect)(select =>
-  // @ts-expect-error getEntityRecord is not typed with unstableBase as argument.
-  select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas, []);
+  const defaultTemplatePartAreas = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas, []);
   async function createTemplatePart() {
     if (!title || isSubmitting) {
       return;
@@ -9795,7 +9791,6 @@ function PageAttributesParent({
     pageItems,
     isHierarchical
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    // @ts-expect-error getPostType is not typed
     const {
       getEntityRecord,
       getEntityRecords,
@@ -9917,7 +9912,6 @@ const ParentEdit = ({
     id
   } = field;
   const homeUrl = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    // @ts-expect-error getEntityRecord is not typed with unstableBase as argument.
     return select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.home;
   }, []);
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
