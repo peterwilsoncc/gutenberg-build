@@ -74928,9 +74928,7 @@ function BlockStylesPanel({
     })
   });
 }
-const BlockInspector = ({
-  showNoBlockSelectedMessage = true
-}) => {
+function BlockInspector() {
   const {
     count,
     selectedBlockName,
@@ -75005,13 +75003,10 @@ const BlockInspector = ({
    * because we want the user to focus on the unregistered block warning, not block settings.
    */
   if (!blockType || !selectedBlockClientId || isSelectedBlockUnregistered) {
-    if (showNoBlockSelectedMessage) {
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        className: "block-editor-block-inspector__no-blocks",
-        children: (0,external_wp_i18n_namespaceObject.__)('No block selected.')
-      });
-    }
-    return null;
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "block-editor-block-inspector__no-blocks",
+      children: (0,external_wp_i18n_namespaceObject.__)('No block selected.')
+    });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockInspectorSingleBlockWrapper, {
     animate: blockInspectorAnimationSettings,
@@ -75026,7 +75021,7 @@ const BlockInspector = ({
       isSectionBlock: isSectionBlock
     })
   });
-};
+}
 const BlockInspectorSingleBlockWrapper = ({
   animate,
   wrapper,
