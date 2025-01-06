@@ -13309,7 +13309,7 @@ const canIncludeBlockTypeInInserter = (state, blockType, rootClientId) => {
 };
 
 /**
- * Return a function to be used to tranform a block variation to an inserter item
+ * Return a function to be used to transform a block variation to an inserter item
  *
  * @param {Object} state Global State
  * @param {Object} item  Denormalized inserter item
@@ -13373,7 +13373,7 @@ const calculateFrecency = (time, count) => {
 /**
  * Returns a function that accepts a block type and builds an item to be shown
  * in a specific context. It's used for building items for Inserter and available
- * block Transfroms list.
+ * block Transforms list.
  *
  * @param {Object} state              Editor state.
  * @param {Object} options            Options object for handling the building of a block type.
@@ -13712,7 +13712,7 @@ const __experimentalGetAllowedPatterns = (0,external_wp_data_namespaceObject.cre
  * or blocks transformations.
  *
  * @param {Object}          state        Editor state.
- * @param {string|string[]} blockNames   Block's name or array of block names to find matching pattens.
+ * @param {string|string[]} blockNames   Block's name or array of block names to find matching patterns.
  * @param {?string}         rootClientId Optional target root client ID.
  *
  * @return {Array} The list of matched block patterns based on declared `blockTypes` and block name.
@@ -14048,7 +14048,7 @@ const __unstableGetVisibleBlocks = (0,external_wp_data_namespaceObject.createSel
   return visibleBlocks;
 }, state => [state.blockVisibility]);
 function __unstableHasActiveBlockOverlayActive(state, clientId) {
-  // Prevent overlay on blocks with a non-default editing mode. If the mdoe is
+  // Prevent overlay on blocks with a non-default editing mode. If the mode is
   // 'disabled' then the overlay is redundant since the block can't be
   // selected. If the mode is 'contentOnly' then the overlay is redundant
   // since there will be no controls to interact with once selected.
@@ -14148,7 +14148,7 @@ const getBlockEditingMode = (0,external_wp_data_namespaceObject.createRegistrySe
     return state.derivedNavModeBlockEditingModes.get(clientId);
   }
 
-  // In normal mode, consider that an explicitely set editing mode takes over.
+  // In normal mode, consider that an explicitly set editing mode takes over.
   const blockEditingMode = state.blockEditingModes.get(clientId);
   if (blockEditingMode) {
     return blockEditingMode;
@@ -15822,7 +15822,7 @@ const mergeBlocks = (firstBlockClientId, secondBlockClientId) => ({
   const canRestoreTextSelection = (clientId === clientIdA || clientId === clientIdB) && attributeKey !== undefined && offset !== undefined &&
   // We cannot restore text selection if the RichText identifier
   // is not a defined block attribute key. This can be the case if the
-  // fallback intance ID is used to store selection (and no RichText
+  // fallback instance ID is used to store selection (and no RichText
   // identifier is set), or when the identifier is wrong.
   !!attributeDefinition;
   if (!attributeDefinition) {
@@ -20488,7 +20488,7 @@ function OrientationControl({
  * Return an SVG icon.
  *
  * @param {IconProps}                                 props icon is the SVG component to render
- *                                                          size is a number specifiying the icon size in pixels
+ *                                                          size is a number specifying the icon size in pixels
  *                                                          Other props will be passed to wrapped SVG component
  * @param {import('react').ForwardedRef<HTMLElement>} ref   The forwarded ref to the SVG element.
  *
@@ -23414,7 +23414,7 @@ const handleEntitySearch = async (val, suggestionsQuery, fetchSearchSuggestions,
   // when creating the suggestion. Similarly `url` is used when using keyboard to select
   // the suggestion (the <form> `onSubmit` handler falls-back to `url`).
   return isURLLike(val) || !withCreateSuggestion ? results : results.concat({
-    // the `id` prop is intentionally ommitted here because it
+    // the `id` prop is intentionally omitted here because it
     // is never exposed as part of the component's public API.
     // see: https://github.com/WordPress/gutenberg/pull/19775#discussion_r378931316.
     title: val,
@@ -24324,7 +24324,7 @@ function LinkControl({
   };
   const handleSelectSuggestion = updatedValue => {
     // Suggestions may contains "settings" values (e.g. `opensInNewTab`)
-    // which should not overide any existing settings values set by the
+    // which should not override any existing settings values set by the
     // user. This filters out any settings values from the suggestion.
     const nonSettingsChanges = Object.keys(updatedValue).reduce((acc, key) => {
       if (!settingsKeys.includes(key)) {
@@ -34242,8 +34242,8 @@ function FiltersPanel({
     }) => {
       return colors === newValue;
     });
-    const settedValue = duotonePreset ? `var:preset|duotone|${duotonePreset.slug}` : newValue;
-    onChange(setImmutably(value, ['filter', 'duotone'], settedValue));
+    const duotoneValue = duotonePreset ? `var:preset|duotone|${duotonePreset.slug}` : newValue;
+    onChange(setImmutably(value, ['filter', 'duotone'], duotoneValue));
   };
   const hasDuotone = () => !!value?.filter?.duotone;
   const resetDuotone = () => setDuotone(undefined);
@@ -35994,11 +35994,11 @@ function processCSSNesting(css, blockSelector) {
       processedCSS += `:root :where(${blockSelector}){${part.trim()}}`;
     } else {
       // If the part contains braces, it's a nested CSS rule.
-      const splittedPart = part.replace('}', '').split('{');
-      if (splittedPart.length !== 2) {
+      const splitPart = part.replace('}', '').split('{');
+      if (splitPart.length !== 2) {
         return;
       }
-      const [nestedSelector, cssValue] = splittedPart;
+      const [nestedSelector, cssValue] = splitPart;
 
       // Handle pseudo elements such as ::before, ::after, etc. Regex will also
       // capture any leading combinator such as >, +, or ~, as well as spaces.
@@ -37298,7 +37298,7 @@ const use_block_sync_noop = () => {};
  * the template part in the block editor back to the entity and vice-versa.
  *
  * Here are some of its basic functions:
- * - Initalizes the block-editor store for the given clientID to the blocks
+ * - Initializes the block-editor store for the given clientID to the blocks
  *   given via props.
  * - Adds incoming changes (like undo) to the block-editor store.
  * - Adds outgoing changes (like editing content) to the controlling entity,
@@ -37314,7 +37314,7 @@ const use_block_sync_noop = () => {};
  *                                        root controller rather than an inner block
  *                                        controller.
  * @param {Object[]}      props.value     The control value for the blocks. This value
- *                                        is used to initalize the block-editor store
+ *                                        is used to initialize the block-editor store
  *                                        and for resetting the blocks to incoming
  *                                        changes like undo.
  * @param {Object}        props.selection The selection state responsible to restore the selection on undo/redo.
@@ -43183,7 +43183,7 @@ function useMovingAnimation({
     // motion, if the user is typing (insertion by Enter), or if the block
     // count exceeds the threshold (insertion caused all the blocks that
     // follow to animate).
-    // To do: consider enableing the _moving_ animation even for large
+    // To do: consider enabling the _moving_ animation even for large
     // posts, while only disabling the _insertion_ animation?
     const disableAnimation = window.matchMedia('(prefers-reduced-motion: reduce)').matches || isTyping() || getGlobalBlockCount() > BLOCK_ANIMATION_THRESHOLD;
     if (disableAnimation) {
@@ -43437,7 +43437,7 @@ function useFocusHandler(clientId) {
         return;
       }
 
-      // If an inner block is focussed, that block is resposible for
+      // If an inner block is focussed, that block is responsible for
       // setting the selected block.
       if (!isInsideRootBlock(node, event.target)) {
         return;
@@ -47058,7 +47058,7 @@ function useMouseMoveTypingReset() {
  * Sets and removes the `isTyping` flag based on user actions:
  *
  * - Sets the flag if the user types within the given element.
- * - Removes the flag when the user selects some text, focusses a non-text
+ * - Removes the flag when the user selects some text, focuses a non-text
  *   field, presses ESC or TAB, or moves the mouse in the document.
  */
 function useTypingObserver() {
@@ -49280,7 +49280,7 @@ let compatibilityStyles = null;
 
 /**
  * Returns a list of stylesheets that target the editor canvas. A stylesheet is
- * considered targetting the editor a canvas if it contains the
+ * considered targeting the editor a canvas if it contains the
  * `editor-styles-wrapper`, `wp-block`, or `wp-block-*` class selectors.
  *
  * Ideally, this hook should be removed in the future and styles should be added
@@ -50048,7 +50048,7 @@ function Iframe({
       },
       children: iframeDocument && (0,external_wp_element_namespaceObject.createPortal)(
       /*#__PURE__*/
-      // We want to prevent React events from bubbling throught the iframe
+      // We want to prevent React events from bubbling through the iframe
       // we bubble these manually.
       /* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */
       (0,external_ReactJSXRuntime_namespaceObject.jsxs)("body", {
@@ -50636,7 +50636,7 @@ function transformStyle({
 /**
  * @typedef {Object} EditorStyle
  * @property {string}    css              the CSS block(s), as a single string.
- * @property {?string}   baseURL          the base URL to be used as the reference when rewritting urls.
+ * @property {?string}   baseURL          the base URL to be used as the reference when rewriting urls.
  * @property {?string[]} ignoredSelectors the selectors not to wrap.
  */
 
@@ -53091,7 +53091,7 @@ function PatternsFilter({
 }) {
   // If the category is `myPatterns` then we need to set the source filter to `user`, but
   // we do this by deriving from props rather than calling setPatternSourceFilter otherwise
-  // the user may be confused when switching to another category if the haven't explicity set
+  // the user may be confused when switching to another category if the haven't explicitly set
   // this filter themselves.
   const currentPatternSourceFilter = category?.name === myPatternsCategory.name ? INSERTER_PATTERN_TYPES.user : patternSourceFilter;
 
@@ -59768,14 +59768,14 @@ const BlockVariationTransformations = ({
       blocks: (0,external_wp_blocks_namespaceObject.cloneBlock)(blocks[0], transformations.find(({
         name
       }) => name === hoveredTransformItemName).attributes)
-    }), transformations?.map(item => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockVariationTranformationItem, {
+    }), transformations?.map(item => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockVariationTransformationItem, {
       item: item,
       onSelect: onSelect,
       setHoveredTransformItemName: setHoveredTransformItemName
     }, item.name))]
   });
 };
-function BlockVariationTranformationItem({
+function BlockVariationTransformationItem({
   item,
   onSelect,
   setHoveredTransformItemName
@@ -59830,19 +59830,19 @@ function BlockVariationTranformationItem({
  */
 
 function useGroupedTransforms(possibleBlockTransformations) {
-  const priorityContentTranformationBlocks = {
+  const priorityContentTransformationBlocks = {
     'core/paragraph': 1,
     'core/heading': 2,
     'core/list': 3,
     'core/quote': 4
   };
   const transformations = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const priorityTextTranformsNames = Object.keys(priorityContentTranformationBlocks);
+    const priorityTextTransformsNames = Object.keys(priorityContentTransformationBlocks);
     const groupedPossibleTransforms = possibleBlockTransformations.reduce((accumulator, item) => {
       const {
         name
       } = item;
-      if (priorityTextTranformsNames.includes(name)) {
+      if (priorityTextTransformsNames.includes(name)) {
         accumulator.priorityTextTransformations.push(item);
       } else {
         accumulator.restTransformations.push(item);
@@ -59871,7 +59871,7 @@ function useGroupedTransforms(possibleBlockTransformations) {
   }, {
     name: nextName
   }) => {
-    return priorityContentTranformationBlocks[currentName] < priorityContentTranformationBlocks[nextName] ? -1 : 1;
+    return priorityContentTransformationBlocks[currentName] < priorityContentTransformationBlocks[nextName] ? -1 : 1;
   });
   return transformations;
 }
@@ -59906,7 +59906,7 @@ const BlockTransformationsMenu = ({
         transformations: possibleBlockVariationTransformations,
         blocks: blocks,
         onSelect: onSelectVariation
-      }), priorityTextTransformations.map(item => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockTranformationItem, {
+      }), priorityTextTransformations.map(item => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockTransformationItem, {
         item: item,
         onSelect: onSelect,
         setHoveredTransformItemName: setHoveredTransformItemName
@@ -59922,13 +59922,13 @@ function RestTransformationItems({
   onSelect,
   setHoveredTransformItemName
 }) {
-  return restTransformations.map(item => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockTranformationItem, {
+  return restTransformations.map(item => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockTransformationItem, {
     item: item,
     onSelect: onSelect,
     setHoveredTransformItemName: setHoveredTransformItemName
   }, item.name));
 }
-function BlockTranformationItem({
+function BlockTransformationItem({
   item,
   onSelect,
   setHoveredTransformItemName
@@ -60339,7 +60339,7 @@ const getPatternTransformedBlocks = (selectedBlocks, patternBlocks) => {
       // No need to loop through other pattern's blocks.
       break;
     }
-    // Bail eary if a selected block has not been matched.
+    // Bail early if a selected block has not been matched.
     if (!isMatch) {
       return;
     }
@@ -60551,7 +60551,7 @@ function BlockSwitcherDropdownMenuContents({
       multiSelect(insertedBlocks[0].clientId, insertedBlocks[insertedBlocks.length - 1].clientId);
     }
   }
-  // Simple block tranformation based on the `Block Transforms` API.
+  // Simple block transformation based on the `Block Transforms` API.
   function onBlockTransform(name) {
     const newBlocks = (0,external_wp_blocks_namespaceObject.switchToBlockType)(blocks, name);
     replaceBlocks(clientIds, newBlocks);
@@ -64104,7 +64104,7 @@ const getTransformCommands = () => function useTransformCommands() {
     }
   }
 
-  // Simple block tranformation based on the `Block Transforms` API.
+  // Simple block transformation based on the `Block Transforms` API.
   function onBlockTransform(name) {
     const newBlocks = (0,external_wp_blocks_namespaceObject.switchToBlockType)(blocks, name);
     replaceBlocks(clientIds, newBlocks);
@@ -68558,7 +68558,7 @@ const external_wp_date_namespaceObject = window["wp"]["date"];
 
 
 // So that we illustrate the different formats in the dropdown properly, show a date that is
-// somwhat recent, has a day greater than 12, and a month with more than three letters.
+// somewhat recent, has a day greater than 12, and a month with more than three letters.
 
 const exampleDate = new Date();
 exampleDate.setDate(20);
@@ -71794,7 +71794,7 @@ function getPrefixedSelectKeys(selected, prefix) {
  * @param {Object}  $0                              Options
  * @param {string}  $0.clientId                     Block client ID.
  * @param {string}  $0.identifier                   Block attribute.
- * @param {boolean} $0.withoutInteractiveFormatting Whether to clean the interactive formattings or not.
+ * @param {boolean} $0.withoutInteractiveFormatting Whether to clean the interactive formatting or not.
  * @param {Array}   $0.allowedFormats               Allowed formats
  */
 function useFormatTypes({
@@ -72088,13 +72088,13 @@ function findSelection(blocks) {
       return;
     }
     const value = getValue();
-    const transformed = formatTypes.reduce((accumlator, {
+    const transformed = formatTypes.reduce((accumulator, {
       __unstableInputRule
     }) => {
       if (__unstableInputRule) {
-        accumlator = __unstableInputRule(accumlator);
+        accumulator = __unstableInputRule(accumulator);
       }
-      return accumlator;
+      return accumulator;
     }, preventEventDiscovery(value));
     const {
       __unstableMarkLastChangeAsPersistent,
@@ -75423,7 +75423,7 @@ function useTypewriter() {
     }
 
     /**
-     * Checks if the current situation is elegible for scroll:
+     * Checks if the current situation is eligible for scroll:
      * - There should be one and only one block selected.
      * - The component must contain the selection.
      * - The active element must be contenteditable.

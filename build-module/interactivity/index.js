@@ -163,7 +163,7 @@ const getContext = namespace => {
 
 /**
  * Retrieves a representation of the element where a function from the store
- * is being evalutated. Such representation is read-only, and contains a
+ * is being evaluated. Such representation is read-only, and contains a
  * reference to the DOM element, its props and a local reactive state.
  *
  * @return Element representation.
@@ -315,7 +315,7 @@ function utils_useSignalEffect(callback) {
  * accessible whenever the function runs. This is primarily to make the scope
  * available inside hook callbacks.
  *
- * Asyncronous functions should use generators that yield promises instead of awaiting them.
+ * Asynchronous functions should use generators that yield promises instead of awaiting them.
  * See the documentation for details: https://developer.wordpress.org/block-editor/reference-guides/packages/packages-interactivity/packages-interactivity-api-reference/#the-store
  *
  * @param func The passed function.
@@ -384,7 +384,7 @@ function useWatch(callback) {
 
 /**
  * Accepts a function that contains imperative code which runs only after the
- * element's first render, mainly useful for intialization logic.
+ * element's first render, mainly useful for initialization logic.
  *
  * This hook makes the element's scope available so functions like
  * `getElement()` and `getContext()` can be used inside the passed callback.
@@ -768,7 +768,7 @@ const wellKnownSymbols = new Set(Object.getOwnPropertyNames(Symbol).map(key => S
 const proxyToProps = new WeakMap();
 
 /**
- *  Checks wether a {@link PropSignal | `PropSignal`} instance exists for the
+ *  Checks whether a {@link PropSignal | `PropSignal`} instance exists for the
  *  given property in the passed proxy.
  *
  * @param proxy Proxy of a state object or array.
@@ -1241,7 +1241,7 @@ const getConfig = namespace => storeConfigs.get(namespace || getNamespace()) || 
  *
  * The object returned is read-only, and includes the state defined in PHP with
  * `wp_interactivity_state()`. When using `actions.navigate()`, this object is
- * updated to reflect the changes in its properites, without affecting the state
+ * updated to reflect the changes in its properties, without affecting the state
  * returned by `store()`. Directives can subscribe to those changes to update
  * the state if needed.
  *
@@ -2229,7 +2229,7 @@ const directiveParser = new RegExp(`^data-${directivePrefix}-` +
 // segments. It excludes underscore intentionally to prevent confusion.
 // E.g., "custom-directive".
 '([a-z0-9]+(?:-[a-z0-9]+)*)' +
-// (Optional) Match '--' followed by any alphanumeric charachters. It
+// (Optional) Match '--' followed by any alphanumeric characters. It
 // excludes underscore intentionally to prevent confusion, but it can
 // contain multiple hyphens. E.g., "--custom-prefix--with-more-info".
 '(?:--([a-z0-9_-]+))?$', 'i' // Case insensitive.

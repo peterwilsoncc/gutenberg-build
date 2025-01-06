@@ -5572,7 +5572,7 @@ function sort(a, b, direction) {
   return direction === 'asc' ? a - b : b - a;
 }
 function isValid(value, context) {
-  // TODO: this implicitely means the value is required.
+  // TODO: this implicitly means the value is required.
   if (value === '') {
     return false;
   }
@@ -6673,7 +6673,7 @@ const duplicatePost = {
       if (isCreatingPage) {
         return;
       }
-      const newItemOject = {
+      const newItemObject = {
         status: 'draft',
         title: item.title,
         slug: item.title || (0,external_wp_i18n_namespaceObject.__)('No title'),
@@ -6696,12 +6696,12 @@ const duplicatePost = {
       assignableProperties.forEach(property => {
         if (item.hasOwnProperty(property)) {
           // @ts-ignore
-          newItemOject[property] = item[property];
+          newItemObject[property] = item[property];
         }
       });
       setIsCreatingPage(true);
       try {
-        const newItem = await saveEntityRecord('postType', item.type, newItemOject, {
+        const newItem = await saveEntityRecord('postType', item.type, newItemObject, {
           throwOnError: true
         });
         createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
@@ -10404,7 +10404,7 @@ const templateTitleField = {
  * Return an SVG icon.
  *
  * @param {IconProps}                                 props icon is the SVG component to render
- *                                                          size is a number specifiying the icon size in pixels
+ *                                                          size is a number specifying the icon size in pixels
  *                                                          Other props will be passed to wrapped SVG component
  * @param {import('react').ForwardedRef<HTMLElement>} ref   The forwarded ref to the SVG element.
  *
@@ -10871,7 +10871,7 @@ const removeTemplates = items => async ({
     });
   }));
 
-  // If all the promises were fulfilled with sucess.
+  // If all the promises were fulfilled with success.
   if (promiseResult.every(({
     status
   }) => status === 'fulfilled')) {
@@ -17472,7 +17472,7 @@ function PostExcerpt({
     } = select(store_store);
     const postType = getCurrentPostType();
     // This special case is unfortunate, but the REST API of wp_template and wp_template_part
-    // support the excerpt field throught the "description" field rather than "excerpt".
+    // support the excerpt field through the "description" field rather than "excerpt".
     const _usedAttribute = ['wp_template', 'wp_template_part'].includes(postType) ? 'description' : 'excerpt';
     return {
       excerpt: getEditedPostAttribute(_usedAttribute),
@@ -19215,10 +19215,10 @@ class PostPublishButton extends external_wp_element_namespaceObject.Component {
     const isButtonDisabled = (isSaving || !isSaveable || isPostSavingLocked || !isPublishable && !forceIsDirty) && (!hasNonPostEntityChanges || isSavingNonPostEntityChanges);
     const isToggleDisabled = (isPublished || isSaving || !isSaveable || !isPublishable && !forceIsDirty) && (!hasNonPostEntityChanges || isSavingNonPostEntityChanges);
 
-    // If the new status has not changed explicitely, we derive it from
+    // If the new status has not changed explicitly, we derive it from
     // other factors, like having a publish action, etc.. We need to preserve
     // this because it affects when to show the pre and post publish panels.
-    // If it has changed though explicitely, we need to respect that.
+    // If it has changed though explicitly, we need to respect that.
     let publishStatus = 'publish';
     if (postStatusHasChanged) {
       publishStatus = postStatus;
@@ -20253,7 +20253,7 @@ function PrivatePostSchedule({
   });
   const [previewedMonth, setPreviewedMonth] = (0,external_wp_element_namespaceObject.useState)(startOfMonth(new Date(postDate)));
 
-  // Pick up published and schduled site posts.
+  // Pick up published and scheduled site posts.
   const eventsByPostType = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', postType, {
     status: 'publish,future',
     after: startOfMonth(previewedMonth).toISOString(),
@@ -29526,7 +29526,7 @@ function PostPublishButtonOrToggle({
    * for a particular role (see https://wordpress.org/documentation/article/post-status/):
    *
    * - is published
-   * - post status has changed explicitely to something different than 'future' or 'publish'
+   * - post status has changed explicitly to something different than 'future' or 'publish'
    * - is scheduled to be published
    * - is pending and can't be published (but only for viewports >= medium).
    * 	 Originally, we considered showing a button for pending posts that couldn't be published
@@ -30050,7 +30050,7 @@ function header_Header({
   const hasSectionRootClientId = (0,external_wp_data_namespaceObject.useSelect)(select => !!unlock(select(external_wp_blockEditor_namespaceObject.store)).getSectionRootClientId(), []);
 
   /*
-   * The edit-post-header classname is only kept for backward compatability
+   * The edit-post-header classname is only kept for backward compatibility
    * as some plugins might be relying on its presence.
    */
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
@@ -30596,7 +30596,7 @@ function TextEditor({
  *   user is focusing on editing page content and clicks on a disabled template
  *   block.
  * - Displays a 'Edit your template to edit this block' dialog when the user
- *   is focusing on editing page conetnt and double clicks on a disabled
+ *   is focusing on editing page content and double clicks on a disabled
  *   template block.
  *
  * @param {Object}                                 props
@@ -31195,7 +31195,7 @@ function VisualEditor({
   !isPreview &&
   // Disable resizing in mobile viewport.
   !isMobileViewport &&
-  // Dsiable resizing in zoomed-out mode.
+  // Disable resizing in zoomed-out mode.
   !isZoomedOut;
   const iframeStyles = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return [...(styles !== null && styles !== void 0 ? styles : []), {
@@ -31257,7 +31257,7 @@ function VisualEditor({
           })]
         }), renderingMode === 'post-only' && !isDesignPostType && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: dist_clsx('editor-visual-editor__post-title-wrapper',
-          // The following class is only here for backward comapatibility
+          // The following class is only here for backward compatibility
           // some themes might be using it to style the post title.
           'edit-post-visual-editor__post-title-wrapper', {
             'has-global-padding': hasRootPaddingAwareAlignments
@@ -32795,7 +32795,7 @@ function PostSummary({
     postType,
     postId
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    // We use isEditorPanelRemoved to hide the panel if it was programatically removed. We do
+    // We use isEditorPanelRemoved to hide the panel if it was programmatically removed. We do
     // not use isEditorPanelEnabled since this panel should not be disabled through the UI.
     const {
       isEditorPanelRemoved,
@@ -33906,7 +33906,7 @@ const CONTENT = 'content';
     for (const attributeName of Object.keys(bindings)) {
       const overridableValue = patternOverridesContent?.[currentBlockAttributes?.metadata?.name]?.[attributeName];
 
-      // If it has not been overriden, return the original value.
+      // If it has not been overridden, return the original value.
       // Check undefined because empty string is a valid value.
       if (overridableValue === undefined) {
         overridesValues[attributeName] = currentBlockAttributes[attributeName];

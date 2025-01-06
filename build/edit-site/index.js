@@ -8145,7 +8145,7 @@ function ResizableFrame({
   setIsOversized,
   isReady,
   children,
-  /** The default (unresized) width/height of the frame, based on the space availalbe in the viewport. */
+  /** The default (unresized) width/height of the frame, based on the space available in the viewport. */
   defaultSize,
   innerContentStyle
 }) {
@@ -14327,7 +14327,7 @@ function SidebarNavigationScreen({
  * Return an SVG icon.
  *
  * @param {IconProps}                                 props icon is the SVG component to render
- *                                                          size is a number specifiying the icon size in pixels
+ *                                                          size is a number specifying the icon size in pixels
  *                                                          Other props will be passed to wrapped SVG component
  * @param {import('react').ForwardedRef<HTMLElement>} ref   The forwarded ref to the SVG element.
  *
@@ -16300,7 +16300,7 @@ function ScreenRoot() {
         paddingTop: 2
         /*
          * 13px matches the text inset of the NavigationButton (12px padding, plus the width of the button's border).
-         * This is an ad hoc override for this instance and the Addtional CSS option below. Other options for matching the
+         * This is an ad hoc override for this instance and the Additional CSS option below. Other options for matching the
          * the nav button inset should be looked at before reusing further.
          */,
         paddingX: "13px",
@@ -31705,7 +31705,7 @@ function sort(a, b, direction) {
   return direction === 'asc' ? a - b : b - a;
 }
 function isValid(value, context) {
-  // TODO: this implicitely means the value is required.
+  // TODO: this implicitly means the value is required.
   if (value === '') {
     return false;
   }
@@ -38966,7 +38966,7 @@ function TableRow({
       })
     }), columns.map(column => {
       var _view$layout$styles$c;
-      // Explicits picks the supported styles.
+      // Explicit picks the supported styles.
       const {
         width,
         maxWidth,
@@ -39105,7 +39105,7 @@ function ViewTable({
             })
           }), columns.map((column, index) => {
             var _view$layout$styles$c2;
-            // Explicits picks the supported styles.
+            // Explicit picks the supported styles.
             const {
               width,
               maxWidth,
@@ -42540,7 +42540,7 @@ const utils_getValueFromObjectPath = (object, path) => {
  *
  * @param {Object[]} entities The array of entities.
  * @param {string}   path     The path to map a `name` property from the entity.
- * @return {IHasNameAndId[]} An array of enitities that now implement the `IHasNameAndId` interface.
+ * @return {IHasNameAndId[]} An array of entities that now implement the `IHasNameAndId` interface.
  */
 const mapToIHasNameAndId = (entities, path) => {
   return (entities || []).map(entity => ({

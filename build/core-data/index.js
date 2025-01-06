@@ -4738,7 +4738,7 @@ function createBatch(processor = defaultProcessor) {
      * rejected when the input is processed by `batch.run()`.
      *
      * You may also pass a thunk which allows inputs to be added
-     * asychronously.
+     * asynchronously.
      *
      * ```
      * // Both are allowed:
@@ -19138,7 +19138,7 @@ const createSyncProvider = (connectLocal, connectRemote) => {
   const docs = {};
 
   /**
-   * Registeres an object type.
+   * Registers an object type.
    *
    * @param {ObjectType}   objectType   Object type to register.
    * @param {ObjectConfig} objectConfig Object config.
@@ -22023,7 +22023,7 @@ const undo = () => ({
 };
 
 /**
- * Action triggered to redo the last undoed
+ * Action triggered to redo the last undone
  * edit to an entity record, if any.
  */
 const redo = () => ({
@@ -22893,7 +22893,7 @@ const resolvers_getEntityRecord = (kind, name, key = '', query) => async ({
           dispatch.receiveEntityRecords(kind, name, record, query);
         });
 
-        // Boostraps the edited document as well (and load from peers).
+        // Bootstraps the edited document as well (and load from peers).
         await getSyncProvider().bootstrap(entityConfig.syncObjectType + '--edit', objectId, record => {
           dispatch({
             type: 'EDIT_ENTITY_RECORD',
@@ -25006,7 +25006,7 @@ function useEntityBlockEditor(kind, name, {
     }
 
     // If there's an edit, cache the parsed blocks by the edit.
-    // If not, cache by the original enity record.
+    // If not, cache by the original entity record.
     const edits = getEntityRecordEdits(kind, name, id);
     const isUnedited = !edits || !Object.keys(edits).length;
     const cackeKey = isUnedited ? getEntityRecord(kind, name, id) : edits;
