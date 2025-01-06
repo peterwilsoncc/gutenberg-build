@@ -28464,10 +28464,12 @@ function useText(props) {
     sx.optimalTextColor = null;
     if (optimizeReadabilityFor) {
       const isOptimalTextColorDark = getOptimalTextShade(optimizeReadabilityFor) === 'dark';
+
+      // Should not use theme colors
       sx.optimalTextColor = isOptimalTextColorDark ? /*#__PURE__*/emotion_react_browser_esm_css({
-        color: COLORS.theme.foreground
+        color: COLORS.gray[900]
       },  true ? "" : 0,  true ? "" : 0) : /*#__PURE__*/emotion_react_browser_esm_css({
-        color: COLORS.theme.foregroundInverted
+        color: COLORS.white
       },  true ? "" : 0,  true ? "" : 0);
     }
     return cx(Text, sx.Base, sx.optimalTextColor, isDestructive && destructive, !!isHighlighter && highlighterText, isBlock && styles_block, isCaption && muted, variant && text_styles_namespaceObject[variant], upperCase && sx.upperCase, className);
