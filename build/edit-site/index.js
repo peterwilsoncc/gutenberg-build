@@ -40274,6 +40274,8 @@ const external_wp_warning_namespaceObject = window["wp"]["warning"];
  * External dependencies
  */
 
+
+
 /**
  * WordPress dependencies
  */
@@ -40470,16 +40472,67 @@ function ItemsPerPageControl() {
     })
   });
 }
+function PreviewOptions({
+  previewOptions,
+  onChangePreviewOption,
+  onMenuOpenChange,
+  activeOption
+}) {
+  const focusPreviewOptionsField = id => {
+    // Focus the visibility button to avoid focus loss.
+    // Our code is safe against the component being unmounted, so we don't need to worry about cleaning the timeout.
+    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+    setTimeout(() => {
+      const element = document.querySelector(`.dataviews-field-control__field-${id} .dataviews-field-control__field-preview-options-button`);
+      if (element instanceof HTMLElement) {
+        element.focus();
+      }
+    }, 50);
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(dataviews_view_config_Menu, {
+    onOpenChange: onMenuOpenChange,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_Menu.TriggerButton, {
+      render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        className: "dataviews-field-control__field-preview-options-button",
+        size: "compact",
+        icon: more_vertical,
+        label: (0,external_wp_i18n_namespaceObject.__)('Preview')
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_Menu.Popover, {
+      children: previewOptions?.map(({
+        id,
+        label
+      }) => {
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_Menu.RadioItem, {
+          value: id,
+          checked: id === activeOption,
+          onChange: () => {
+            onChangePreviewOption?.(id);
+            focusPreviewOptionsField(id);
+          },
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config_Menu.ItemLabel, {
+            children: label
+          })
+        }, id);
+      })
+    })]
+  });
+}
 function FieldItem({
   field,
+  label,
+  description,
   isVisible,
   isFirst,
   isLast,
   canMove = true,
   onToggleVisibility,
   onMoveUp,
-  onMoveDown
+  onMoveDown,
+  previewOptions,
+  onChangePreviewOption
 }) {
+  const [isChangingPreviewOption, setIsChangingPreviewOption] = (0,external_wp_element_namespaceObject.useState)(false);
   const focusVisibilityField = () => {
     // Focus the visibility button to avoid focus loss.
     // Our code is safe against the component being unmounted, so we don't need to worry about cleaning the timeout.
@@ -40494,16 +40547,31 @@ function FieldItem({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       expanded: true,
-      className: `dataviews-field-control__field dataviews-field-control__field-${field.id}`,
+      className: dist_clsx('dataviews-field-control__field', `dataviews-field-control__field-${field.id}`,
+      // The actions are hidden when the mouse is not hovering the item, or focus
+      // is outside the item.
+      // For actions that require a popover, a menu etc, that would mean that when the interactive element
+      // opens and the focus goes there the actions would be hidden.
+      // To avoid that we add a class to the item, that makes sure actions are visible while there is some
+      // interaction with the item.
+      {
+        'is-interacting': isChangingPreviewOption
+      }),
       justify: "flex-start",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "dataviews-field-control__icon",
         children: !canMove && !field.enableHiding && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
           icon: library_lock
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        className: "dataviews-field-control__label",
-        children: field.label
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
+        className: "dataviews-field-control__label-sub-label-container",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          className: "dataviews-field-control__label",
+          children: label || field.label
+        }), description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          className: "dataviews-field-control__sub-label",
+          children: description
+        })]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         justify: "flex-end",
         expanded: false,
@@ -40539,6 +40607,11 @@ function FieldItem({
           label: isVisible ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: field label */
           (0,external_wp_i18n_namespaceObject._x)('Hide %s', 'field'), field.label) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: field label */
           (0,external_wp_i18n_namespaceObject._x)('Show %s', 'field'), field.label)
+        }), previewOptions && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreviewOptions, {
+          previewOptions: previewOptions,
+          onChangePreviewOption: onChangePreviewOption,
+          onMenuOpenChange: setIsChangingPreviewOption,
+          activeOption: field.id
         })]
       })]
     })
@@ -40592,20 +40665,48 @@ function FieldControl() {
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const togglableFields = [view?.titleField, view?.mediaField, view?.descriptionField].filter(Boolean);
   const visibleFieldIds = (_view$fields2 = view.fields) !== null && _view$fields2 !== void 0 ? _view$fields2 : [];
-  const hiddenFields = fields.filter(f => !visibleFieldIds.includes(f.id) && !togglableFields.includes(f.id));
+  const hiddenFields = fields.filter(f => !visibleFieldIds.includes(f.id) && !togglableFields.includes(f.id) && f.type !== 'media');
   const visibleFields = visibleFieldIds.map(fieldId => fields.find(f => f.id === fieldId)).filter(dataviews_view_config_isDefined);
   if (!visibleFields?.length && !hiddenFields?.length) {
     return null;
   }
   const titleField = fields.find(f => f.id === view.titleField);
-  const mediaField = fields.find(f => f.id === view.mediaField);
+  const previewField = fields.find(f => f.id === view.mediaField);
   const descriptionField = fields.find(f => f.id === view.descriptionField);
+  const previewFields = fields.filter(f => f.type === 'media');
+  let previewFieldUI;
+  if (previewFields.length > 1) {
+    var _view$showMedia;
+    const isPreviewFieldVisible = dataviews_view_config_isDefined(previewField) && ((_view$showMedia = view.showMedia) !== null && _view$showMedia !== void 0 ? _view$showMedia : true);
+    previewFieldUI = dataviews_view_config_isDefined(previewField) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldItem, {
+      field: previewField,
+      label: (0,external_wp_i18n_namespaceObject.__)('Preview'),
+      description: previewField.label,
+      isVisible: isPreviewFieldVisible,
+      onToggleVisibility: () => {
+        onChangeView({
+          ...view,
+          showMedia: !isPreviewFieldVisible
+        });
+      },
+      canMove: false,
+      previewOptions: previewFields.map(field => ({
+        label: field.label,
+        id: field.id
+      })),
+      onChangePreviewOption: newPreviewId => onChangeView({
+        ...view,
+        mediaField: newPreviewId
+      })
+    }, previewField.id);
+  }
   const lockedFields = [{
     field: titleField,
     isVisibleFlag: 'showTitle'
   }, {
-    field: mediaField,
-    isVisibleFlag: 'showMedia'
+    field: previewField,
+    isVisibleFlag: 'showMedia',
+    ui: previewFieldUI
   }, {
     field: descriptionField,
     isVisibleFlag: 'showDescription'
@@ -40643,9 +40744,10 @@ function FieldControl() {
         isSeparated: true,
         children: [visibleLockedFields.map(({
           field,
-          isVisibleFlag
+          isVisibleFlag,
+          ui
         }) => {
-          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldItem, {
+          return ui !== null && ui !== void 0 ? ui : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldItem, {
             field: field,
             isVisible: true,
             onToggleVisibility: () => {
@@ -40678,9 +40780,10 @@ function FieldControl() {
           isSeparated: true,
           children: [hiddenLockedFields.length > 0 && hiddenLockedFields.map(({
             field,
-            isVisibleFlag
+            isVisibleFlag,
+            ui
           }) => {
-            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldItem, {
+            return ui !== null && ui !== void 0 ? ui : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldItem, {
               field: field,
               isVisible: false,
               onToggleVisibility: () => {
