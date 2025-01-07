@@ -53424,6 +53424,12 @@ const rss_metadata = {
     html: false,
     interactivity: {
       clientNavigation: true
+    },
+    color: {
+      background: true,
+      text: true,
+      gradients: true,
+      link: true
     }
   },
   editorStyle: "wp-block-rss-editor",
