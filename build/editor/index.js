@@ -13498,7 +13498,7 @@ function DocumentOutline({
         href: `#${titleNode.id}`,
         isDisabled: hasOutlineItemsDisabled,
         children: title
-      }), headings.map((item, index) => {
+      }), headings.map(item => {
         // Headings remain the same, go up by one, or down by any amount.
         // Otherwise there are missing levels.
         const isIncorrectLevel = item.level > prevHeadingLevelRef.current + 1;
@@ -13516,7 +13516,7 @@ function DocumentOutline({
           children: [item.isEmpty ? emptyHeadingContent : (0,external_wp_richText_namespaceObject.getTextContent)((0,external_wp_richText_namespaceObject.create)({
             html: item.attributes.content
           })), isIncorrectLevel && incorrectLevelContent, item.level === 1 && hasMultipleH1 && multipleH1Headings, hasTitle && item.level === 1 && !hasMultipleH1 && singleH1Headings]
-        }, index);
+        }, item.clientId);
       })]
     })
   });
