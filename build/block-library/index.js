@@ -42963,7 +42963,13 @@ const post_comments_link_metadata = {
       radius: true,
       color: true,
       width: true,
-      style: true
+      style: true,
+      __experimentalDefaultControls: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
+      }
     }
   },
   style: "wp-block-post-comments-link"
