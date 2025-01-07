@@ -18883,12 +18883,15 @@ function FileEdit({
       ...blockProps,
       children: [displayPreviewInEditor && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ResizableBox, {
         size: {
-          height: previewHeight
+          height: previewHeight,
+          width: '100%'
         },
         minHeight: MIN_PREVIEW_HEIGHT,
-        maxHeight: MAX_PREVIEW_HEIGHT,
-        minWidth: "100%",
-        grid: [10, 10],
+        maxHeight: MAX_PREVIEW_HEIGHT
+        // The horizontal grid value must be 1 or else the width may snap during a
+        // resize even though only vertical resizing is enabled.
+        ,
+        grid: [1, 10],
         enable: {
           top: false,
           right: false,
