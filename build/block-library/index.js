@@ -16336,12 +16336,14 @@ function DetailsEdit({
 }) {
   const {
     showContent,
-    summary
+    summary,
+    allowedBlocks
   } = attributes;
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
     template: details_edit_TEMPLATE,
-    __experimentalCaptureToolbars: true
+    __experimentalCaptureToolbars: true,
+    allowedBlocks
   });
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
 
@@ -16479,6 +16481,9 @@ const details_metadata = {
       type: "rich-text",
       source: "rich-text",
       selector: "summary"
+    },
+    allowedBlocks: {
+      type: "array"
     }
   },
   supports: {
