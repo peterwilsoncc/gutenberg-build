@@ -50082,25 +50082,33 @@ function useNotifyCopy() {
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   return (0,external_wp_element_namespaceObject.useCallback)((eventType, selectedBlockClientIds) => {
     let notice = '';
-    if (selectedBlockClientIds.length === 1) {
+    if (eventType === 'copyStyles') {
+      notice = (0,external_wp_i18n_namespaceObject.__)('Styles copied to clipboard.');
+    } else if (selectedBlockClientIds.length === 1) {
       const clientId = selectedBlockClientIds[0];
       const title = getBlockType(getBlockName(clientId))?.title;
-      notice = eventType === 'copy' ? (0,external_wp_i18n_namespaceObject.sprintf)(
-      // Translators: Name of the block being copied, e.g. "Paragraph".
-      (0,external_wp_i18n_namespaceObject.__)('Copied "%s" to clipboard.'), title) : (0,external_wp_i18n_namespaceObject.sprintf)(
-      // Translators: Name of the block being cut, e.g. "Paragraph".
-      (0,external_wp_i18n_namespaceObject.__)('Moved "%s" to clipboard.'), title);
-    } else {
-      notice = eventType === 'copy' ? (0,external_wp_i18n_namespaceObject.sprintf)(
+      if (eventType === 'copy') {
+        notice = (0,external_wp_i18n_namespaceObject.sprintf)(
+        // Translators: Name of the block being copied, e.g. "Paragraph".
+        (0,external_wp_i18n_namespaceObject.__)('Copied "%s" to clipboard.'), title);
+      } else {
+        notice = (0,external_wp_i18n_namespaceObject.sprintf)(
+        // Translators: Name of the block being cut, e.g. "Paragraph".
+        (0,external_wp_i18n_namespaceObject.__)('Moved "%s" to clipboard.'), title);
+      }
+    } else if (eventType === 'copy') {
+      notice = (0,external_wp_i18n_namespaceObject.sprintf)(
       // Translators: %d: Number of blocks being copied.
-      (0,external_wp_i18n_namespaceObject._n)('Copied %d block to clipboard.', 'Copied %d blocks to clipboard.', selectedBlockClientIds.length), selectedBlockClientIds.length) : (0,external_wp_i18n_namespaceObject.sprintf)(
-      // Translators: %d: Number of blocks being cut.
+      (0,external_wp_i18n_namespaceObject._n)('Copied %d block to clipboard.', 'Copied %d blocks to clipboard.', selectedBlockClientIds.length), selectedBlockClientIds.length);
+    } else {
+      notice = (0,external_wp_i18n_namespaceObject.sprintf)(
+      // Translators: %d: Number of blocks being moved.
       (0,external_wp_i18n_namespaceObject._n)('Moved %d block to clipboard.', 'Moved %d blocks to clipboard.', selectedBlockClientIds.length), selectedBlockClientIds.length);
     }
     createSuccessNotice(notice, {
       type: 'snackbar'
     });
-  }, []);
+  }, [createSuccessNotice, getBlockName, getBlockType]);
 }
 
 ;// ./packages/block-editor/build-module/utils/pasting.js
@@ -62533,7 +62541,6 @@ function usePasteStyles() {
  */
 
 
-
 function BlockActions({
   clientIds,
   children,
@@ -62584,7 +62591,6 @@ function BlockActions({
     insertBeforeBlock,
     flashBlock
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const notifyCopy = useNotifyCopy();
   const pasteStyles = usePasteStyles();
   return children({
     canCopyStyles,
@@ -62630,7 +62636,6 @@ function BlockActions({
       if (clientIds.length === 1) {
         flashBlock(clientIds[0]);
       }
-      notifyCopy('copy', clientIds);
     },
     async onPasteStyles() {
       await pasteStyles(getBlocksByClientId(clientIds));
@@ -63614,6 +63619,7 @@ function BlockParentSelectorMenuItem({
 
 
 
+
 const block_settings_dropdown_POPOVER_PROPS = {
   className: 'block-editor-block-settings-menu__popover',
   placement: 'bottom-start'
@@ -63622,12 +63628,19 @@ function CopyMenuItem({
   clientIds,
   onCopy,
   label,
-  shortcut
+  shortcut,
+  eventType = 'copy'
 }) {
   const {
     getBlocksByClientId
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
-  const ref = (0,external_wp_compose_namespaceObject.useCopyToClipboard)(() => (0,external_wp_blocks_namespaceObject.serialize)(getBlocksByClientId(clientIds)), onCopy);
+  const notifyCopy = useNotifyCopy();
+  const ref = (0,external_wp_compose_namespaceObject.useCopyToClipboard)(() => (0,external_wp_blocks_namespaceObject.serialize)(getBlocksByClientId(clientIds)), () => {
+    if (onCopy && eventType === 'copy') {
+      onCopy();
+    }
+    notifyCopy(eventType, clientIds);
+  });
   const copyMenuItemLabel = label ? label : (0,external_wp_i18n_namespaceObject.__)('Copy');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
     ref: ref,
@@ -63813,7 +63826,8 @@ function BlockSettingsDropdown({
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyMenuItem, {
               clientIds: clientIds,
               onCopy: onCopy,
-              label: (0,external_wp_i18n_namespaceObject.__)('Copy styles')
+              label: (0,external_wp_i18n_namespaceObject.__)('Copy styles'),
+              eventType: "copyStyles"
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
               onClick: onPasteStyles,
               children: (0,external_wp_i18n_namespaceObject.__)('Paste styles')
