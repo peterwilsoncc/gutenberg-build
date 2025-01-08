@@ -75474,14 +75474,14 @@ const ImageURLInputUI = ({
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
           className: "text",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-            children: (0,external_wp_i18n_namespaceObject.__)('Expand on click')
+            children: (0,external_wp_i18n_namespaceObject.__)('Enlarge on click')
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
             className: "description",
             children: (0,external_wp_i18n_namespaceObject.__)('Scales the image with a lightbox effect')
           })]
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           icon: link_off,
-          label: (0,external_wp_i18n_namespaceObject.__)('Disable expand on click'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Disable enlarge on click'),
           onClick: () => {
             onSetLightbox?.(false);
           },
@@ -75554,7 +75554,7 @@ const ImageURLInputUI = ({
             onSetLightbox?.(true);
             stopEditLink();
           },
-          children: (0,external_wp_i18n_namespaceObject.__)('Expand on click')
+          children: (0,external_wp_i18n_namespaceObject.__)('Enlarge on click')
         }, "expand-on-click")]
       }),
       offset: 13,
@@ -77221,13 +77221,13 @@ function ImageSettingsPanel({
       // Global Styles.
       , {
         hasValue: () => !!value?.lightbox,
-        label: (0,external_wp_i18n_namespaceObject.__)('Expand on click'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Enlarge on click'),
         onDeselect: resetLightbox,
         isShownByDefault: true,
         panelId: panelId,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
           __nextHasNoMarginBottom: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Expand on click'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Enlarge on click'),
           checked: lightboxChecked,
           onChange: onChangeLightbox
         })

@@ -22099,7 +22099,7 @@ const LINK_OPTIONS = [{
   noticeText: (0,external_wp_i18n_namespaceObject.__)('Media Files')
 }, {
   icon: library_fullscreen,
-  label: (0,external_wp_i18n_namespaceObject.__)('Expand on click'),
+  label: (0,external_wp_i18n_namespaceObject.__)('Enlarge on click'),
   value: LINK_DESTINATION_LIGHTBOX,
   noticeText: (0,external_wp_i18n_namespaceObject.__)('Lightbox effect'),
   infoText: (0,external_wp_i18n_namespaceObject.__)('Scale images with a lightbox effect')
