@@ -57940,7 +57940,8 @@ function SocialLinksEdit(props) {
           onColorChange: onChange,
           isShownByDefault: true,
           resetAllFilter,
-          enableAlpha: true
+          enableAlpha: true,
+          clearable: true
         }],
         panelId: clientId,
         ...colorGradientSettings
