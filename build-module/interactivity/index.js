@@ -1019,7 +1019,8 @@ const deepMergeRecursive = (target, source, override = true) => {
 
       // Handle nested objects
     } else if (isPlainObject(source[key])) {
-      if (isNew || override && !isPlainObject(target[key])) {
+      const targetValue = Object.getOwnPropertyDescriptor(target, key)?.value;
+      if (isNew || override && !isPlainObject(targetValue)) {
         // Create a new object if the property is new or needs to be overridden
         target[key] = {};
         if (propSignal) {
@@ -1027,9 +1028,10 @@ const deepMergeRecursive = (target, source, override = true) => {
           const ns = getNamespaceFromProxy(proxy);
           propSignal.setValue(proxifyState(ns, target[key]));
         }
+        deepMergeRecursive(target[key], source[key], override);
       }
       // Both target and source are plain objects, merge them recursively
-      if (isPlainObject(target[key])) {
+      else if (isPlainObject(targetValue)) {
         deepMergeRecursive(target[key], source[key], override);
       }
 
