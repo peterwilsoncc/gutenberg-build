@@ -5239,7 +5239,7 @@ function WidthPanel({
           return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
             value: widthValue,
             label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: Percentage value. */
-            (0,external_wp_i18n_namespaceObject.__)('%1$d%%'), widthValue)
+            (0,external_wp_i18n_namespaceObject.__)('%d%%'), widthValue)
           }, widthValue);
         })
       })
@@ -53970,7 +53970,7 @@ function SearchEdit({
               return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
                 value: widthValue,
                 label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: Percentage value. */
-                (0,external_wp_i18n_namespaceObject.__)('%1$d%%'), widthValue)
+                (0,external_wp_i18n_namespaceObject.__)('%d%%'), widthValue)
               }, widthValue);
             })
           })]
