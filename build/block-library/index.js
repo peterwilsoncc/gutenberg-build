@@ -36529,22 +36529,26 @@ function ColorTools({
         colorValue: textColor.color,
         label: (0,external_wp_i18n_namespaceObject.__)('Text'),
         onColorChange: setTextColor,
-        resetAllFilter: () => setTextColor()
+        resetAllFilter: () => setTextColor(),
+        clearable: true
       }, {
         colorValue: backgroundColor.color,
         label: (0,external_wp_i18n_namespaceObject.__)('Background'),
         onColorChange: setBackgroundColor,
-        resetAllFilter: () => setBackgroundColor()
+        resetAllFilter: () => setBackgroundColor(),
+        clearable: true
       }, {
         colorValue: overlayTextColor.color,
         label: (0,external_wp_i18n_namespaceObject.__)('Submenu & overlay text'),
         onColorChange: setOverlayTextColor,
-        resetAllFilter: () => setOverlayTextColor()
+        resetAllFilter: () => setOverlayTextColor(),
+        clearable: true
       }, {
         colorValue: overlayBackgroundColor.color,
         label: (0,external_wp_i18n_namespaceObject.__)('Submenu & overlay background'),
         onColorChange: setOverlayBackgroundColor,
-        resetAllFilter: () => setOverlayBackgroundColor()
+        resetAllFilter: () => setOverlayBackgroundColor(),
+        clearable: true
       }],
       panelId: clientId,
       ...colorGradientSettings,
