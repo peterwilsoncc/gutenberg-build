@@ -72279,36 +72279,42 @@ const error = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 
 
 
+/**
+ * Returns an icon based on the badge context.
+ *
+ * @return The corresponding icon for the provided context.
+ */
+
+function contextBasedIcon(intent = 'default') {
+  switch (intent) {
+    case 'info':
+      return library_info;
+    case 'success':
+      return library_published;
+    case 'warning':
+      return library_caution;
+    case 'error':
+      return library_error;
+    default:
+      return null;
+  }
+}
 function Badge({
   className,
   intent = 'default',
   children,
   ...props
 }) {
-  /**
-   * Returns an icon based on the badge context.
-   *
-   * @return The corresponding icon for the provided context.
-   */
-  function contextBasedIcon() {
-    switch (intent) {
-      case 'info':
-        return library_info;
-      case 'success':
-        return library_published;
-      case 'warning':
-        return library_caution;
-      case 'error':
-        return library_error;
-      default:
-        return null;
-    }
-  }
+  const icon = contextBasedIcon(intent);
+  const hasIcon = !!icon;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
-    className: dist_clsx('components-badge', `is-${intent}`, intent !== 'default' && 'has-icon', className),
+    className: dist_clsx('components-badge', className, {
+      [`is-${intent}`]: intent,
+      'has-icon': hasIcon
+    }),
     ...props,
-    children: [intent !== 'default' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-      icon: contextBasedIcon(),
+    children: [hasIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+      icon: icon,
       size: 16,
       fill: "currentColor",
       className: "components-badge__icon"
