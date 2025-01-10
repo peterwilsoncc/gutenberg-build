@@ -66268,6 +66268,10 @@ function useListViewImages({
 
 
 
+
+const {
+  Badge: block_select_button_Badge
+} = unlock(external_wp_components_namespaceObject.privateApis);
 function ListViewBlockSelectButton({
   className,
   block: {
@@ -66356,9 +66360,8 @@ function ListViewBlockSelectButton({
         })
       }), blockInformation?.anchor && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "block-editor-list-view-block-select-button__anchor-wrapper",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalTruncate, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_select_button_Badge, {
           className: "block-editor-list-view-block-select-button__anchor",
-          ellipsizeMode: "auto",
           children: blockInformation.anchor
         })
       }), isSticky && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
