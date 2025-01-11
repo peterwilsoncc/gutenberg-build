@@ -63278,9 +63278,11 @@ function isEmptyString(testString) {
 }
 
 ;// ./packages/block-editor/build-module/components/block-rename/modal.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -63291,29 +63293,51 @@ function isEmptyString(testString) {
  */
 
 
+
+
 function BlockRenameModal({
-  blockName,
-  originalBlockName,
-  onClose,
-  onSave,
+  clientId,
+  onClose
+}) {
+  const [editedBlockName, setEditedBlockName] = (0,external_wp_element_namespaceObject.useState)();
+  const blockInformation = useBlockDisplayInformation(clientId);
+  const {
+    metadata
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockAttributes
+    } = select(store);
+    return {
+      metadata: getBlockAttributes(clientId)?.metadata
+    };
+  }, [clientId]);
+  const {
+    updateBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const blockName = metadata?.name || '';
+  const originalBlockName = blockInformation?.title;
   // Pattern Overrides is a WordPress-only feature but it also uses the Block Binding API.
   // Ideally this should not be inside the block editor package, but we keep it here for simplicity.
-  hasOverridesWarning
-}) {
-  const [editedBlockName, setEditedBlockName] = (0,external_wp_element_namespaceObject.useState)(blockName);
-  const nameHasChanged = editedBlockName !== blockName;
+  const hasOverridesWarning = !!blockName && !!metadata?.bindings && Object.values(metadata.bindings).some(binding => binding.source === 'core/pattern-overrides');
+  const nameHasChanged = editedBlockName !== undefined && editedBlockName !== blockName;
   const nameIsOriginal = editedBlockName === originalBlockName;
   const nameIsEmpty = isEmptyString(editedBlockName);
   const isNameValid = nameHasChanged || nameIsOriginal;
   const autoSelectInputText = event => event.target.select();
   const handleSubmit = () => {
+    const newName = nameIsOriginal || nameIsEmpty ? undefined : editedBlockName;
     const message = nameIsOriginal || nameIsEmpty ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: new name/label for the block */
     (0,external_wp_i18n_namespaceObject.__)('Block name reset to: "%s".'), editedBlockName) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: new name/label for the block */
     (0,external_wp_i18n_namespaceObject.__)('Block name changed to: "%s".'), editedBlockName);
 
     // Must be assertive to immediately announce change.
     (0,external_wp_a11y_namespaceObject.speak)(message, 'assertive');
-    onSave(editedBlockName);
+    updateBlockAttributes([clientId], {
+      metadata: {
+        ...metadata,
+        name: newName
+      }
+    });
 
     // Immediate close avoids ability to hit save multiple times.
     onClose();
@@ -63337,7 +63361,7 @@ function BlockRenameModal({
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
           __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: true,
-          value: editedBlockName,
+          value: editedBlockName !== null && editedBlockName !== void 0 ? editedBlockName : blockName,
           label: (0,external_wp_i18n_namespaceObject.__)('Name'),
           help: hasOverridesWarning ? (0,external_wp_i18n_namespaceObject.__)('This block allows overrides. Changing the name can cause problems with content entered into instances of this pattern.') : undefined,
           placeholder: originalBlockName,
@@ -63352,7 +63376,8 @@ function BlockRenameModal({
             children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
             __next40pxDefaultSize: true,
-            "aria-disabled": !isNameValid,
+            accessibleWhenDisabled: true,
+            disabled: !isNameValid,
             variant: "primary",
             type: "submit",
             children: (0,external_wp_i18n_namespaceObject.__)('Save')
@@ -63364,11 +63389,9 @@ function BlockRenameModal({
 }
 
 ;// ./packages/block-editor/build-module/components/block-rename/rename-control.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
-
 
 
 
@@ -63378,38 +63401,10 @@ function BlockRenameModal({
  */
 
 
-
-
-
 function BlockRenameControl({
   clientId
 }) {
   const [renamingBlock, setRenamingBlock] = (0,external_wp_element_namespaceObject.useState)(false);
-  const {
-    metadata
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getBlockAttributes
-    } = select(store);
-    const _metadata = getBlockAttributes(clientId)?.metadata;
-    return {
-      metadata: _metadata
-    };
-  }, [clientId]);
-  const {
-    updateBlockAttributes
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const customName = metadata?.name;
-  const hasPatternOverrides = !!customName && !!metadata?.bindings && Object.values(metadata.bindings).some(binding => binding.source === 'core/pattern-overrides');
-  function onChange(newName) {
-    updateBlockAttributes([clientId], {
-      metadata: {
-        ...metadata,
-        name: newName
-      }
-    });
-  }
-  const blockInformation = useBlockDisplayInformation(clientId);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
       onClick: () => {
@@ -63419,19 +63414,8 @@ function BlockRenameControl({
       "aria-haspopup": "dialog",
       children: (0,external_wp_i18n_namespaceObject.__)('Rename')
     }), renamingBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockRenameModal, {
-      blockName: customName || '',
-      originalBlockName: blockInformation?.title,
-      hasOverridesWarning: hasPatternOverrides,
-      onClose: () => setRenamingBlock(false),
-      onSave: newName => {
-        // If the new value is the block's original name (e.g. `Group`)
-        // or it is an empty string then assume the intent is to reset
-        // the value. Therefore reset the metadata.
-        if (newName === blockInformation?.title || isEmptyString(newName)) {
-          newName = undefined;
-        }
-        onChange(newName);
-      }
+      clientId: clientId,
+      onClose: () => setRenamingBlock(false)
     })]
   });
 }
