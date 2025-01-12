@@ -25084,7 +25084,6 @@ function BackgroundImageControls({
         filename: title,
         label: imgLabel
       }),
-      variant: "secondary",
       renderToggle: props => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         ...props,
         __next40pxDefaultSize: true
