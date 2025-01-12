@@ -37663,6 +37663,9 @@ const navigation_deprecated_deprecated = [navigation_deprecated_v6, navigation_d
 
 
 
+
+
+
 /**
  * Internal dependencies
  */
@@ -37838,6 +37841,18 @@ const navigation_settings = {
   },
   edit: navigation_edit,
   save: navigation_save_save,
+  __experimentalLabel: ({
+    ref
+  }) => {
+    if (!ref) {
+      return;
+    }
+    const navigation = (0,external_wp_data_namespaceObject.select)(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', 'wp_navigation', ref);
+    if (!navigation?.title) {
+      return;
+    }
+    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(navigation.title);
+  },
   deprecated: navigation_deprecated
 };
 const navigation_init = () => initBlock({
