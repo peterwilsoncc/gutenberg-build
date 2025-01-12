@@ -55262,8 +55262,7 @@ function LogoEdit({
         }
         onInitialSelectLogo(image);
       },
-      onError: onUploadError,
-      onRemoveLogo
+      onError: onUploadError
     });
   };
   const mediaReplaceFlowProps = {
