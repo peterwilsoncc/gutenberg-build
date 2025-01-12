@@ -48913,71 +48913,120 @@ function QueryInspectorControls(props) {
   const showPagesControl = isControlAllowed(allowedControls, 'pages');
   const showDisplayPanel = showPostCountControl || showOffSetControl || showPagesControl;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [showSettingsPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-      children: [showInheritControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
-        __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
+    children: [showSettingsPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+      resetAll: () => {
+        setQuery({
+          postType: 'post',
+          order: 'desc',
+          orderBy: 'date',
+          sticky: '',
+          inherit: true
+        });
+      },
+      dropdownMenuProps: dropdownMenuProps,
+      children: [showInheritControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => !inherit,
         label: (0,external_wp_i18n_namespaceObject.__)('Query type'),
-        isBlock: true,
-        onChange: value => {
-          setQuery({
-            inherit: value === 'default'
-          });
-        },
-        help: inherit ? (0,external_wp_i18n_namespaceObject.__)('Display a list of posts or custom post types based on the current template.') : (0,external_wp_i18n_namespaceObject.__)('Display a list of posts or custom post types based on specific criteria.'),
-        value: !!inherit ? 'default' : 'custom',
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-          value: "default",
-          label: (0,external_wp_i18n_namespaceObject.__)('Default')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-          value: "custom",
-          label: (0,external_wp_i18n_namespaceObject.__)('Custom')
-        })]
-      }), showPostTypeControl && (postTypesSelectOptions.length > 2 ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
-        options: postTypesSelectOptions,
-        value: postType,
+        onDeselect: () => setQuery({
+          inherit: true
+        }),
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+          __next40pxDefaultSize: true,
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Query type'),
+          isBlock: true,
+          onChange: value => {
+            setQuery({
+              inherit: value === 'default'
+            });
+          },
+          help: inherit ? (0,external_wp_i18n_namespaceObject.__)('Display a list of posts or custom post types based on the current template.') : (0,external_wp_i18n_namespaceObject.__)('Display a list of posts or custom post types based on specific criteria.'),
+          value: !!inherit ? 'default' : 'custom',
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+            value: "default",
+            label: (0,external_wp_i18n_namespaceObject.__)('Default')
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+            value: "custom",
+            label: (0,external_wp_i18n_namespaceObject.__)('Custom')
+          })]
+        })
+      }), showPostTypeControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => postType !== 'post',
         label: postTypeControlLabel,
-        onChange: onPostTypeChange,
-        help: postTypeControlHelp
-      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
-        isBlock: true,
-        value: postType,
-        label: postTypeControlLabel,
-        onChange: onPostTypeChange,
-        help: postTypeControlHelp,
-        children: postTypesSelectOptions.map(option => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-          value: option.value,
-          label: option.label
-        }, option.value))
-      })), showColumnsControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+        onDeselect: () => onPostTypeChange('post'),
+        isShownByDefault: true,
+        children: postTypesSelectOptions.length > 2 ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
           __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Columns'),
-          value: displayLayout.columns,
-          onChange: value => setDisplayLayout({
-            columns: value
-          }),
-          min: 2,
-          max: Math.max(6, displayLayout.columns)
-        }), displayLayout.columns > 6 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
-          status: "warning",
-          isDismissible: false,
-          children: (0,external_wp_i18n_namespaceObject.__)('This column count exceeds the recommended amount and may cause visual breakage.')
-        })]
-      }), showOrderControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(order_control, {
-        order,
-        orderBy,
-        onChange: setQuery
-      }), showStickyControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StickyControl, {
-        value: sticky,
-        onChange: value => setQuery({
-          sticky: value
+          options: postTypesSelectOptions,
+          value: postType,
+          label: postTypeControlLabel,
+          onChange: onPostTypeChange,
+          help: postTypeControlHelp
+        }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+          __nextHasNoMarginBottom: true,
+          __next40pxDefaultSize: true,
+          isBlock: true,
+          value: postType,
+          label: postTypeControlLabel,
+          onChange: onPostTypeChange,
+          help: postTypeControlHelp,
+          children: postTypesSelectOptions.map(option => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+            value: option.value,
+            label: option.label
+          }, option.value))
+        })
+      }), showColumnsControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => displayLayout?.columns !== 2,
+        label: (0,external_wp_i18n_namespaceObject.__)('Columns'),
+        onDeselect: () => setDisplayLayout({
+          columns: 2
+        }),
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+            __nextHasNoMarginBottom: true,
+            __next40pxDefaultSize: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Columns'),
+            value: displayLayout.columns,
+            onChange: value => setDisplayLayout({
+              columns: value
+            }),
+            min: 2,
+            max: Math.max(6, displayLayout.columns)
+          }), displayLayout.columns > 6 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
+            status: "warning",
+            isDismissible: false,
+            children: (0,external_wp_i18n_namespaceObject.__)('This column count exceeds the recommended amount and may cause visual breakage.')
+          })]
+        })
+      }), showOrderControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => order !== 'desc' || orderBy !== 'date',
+        label: (0,external_wp_i18n_namespaceObject.__)('Order by'),
+        onDeselect: () => setQuery({
+          order: 'desc',
+          orderBy: 'date'
+        }),
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(order_control, {
+          order,
+          orderBy,
+          onChange: setQuery
+        })
+      }), showStickyControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => !!sticky,
+        label: (0,external_wp_i18n_namespaceObject.__)('Sticky posts'),
+        onDeselect: () => setQuery({
+          sticky: ''
+        }),
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StickyControl, {
+          value: sticky,
+          onChange: value => setQuery({
+            sticky: value
+          })
         })
       })]
     }), !inherit && showDisplayPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
