@@ -1251,7 +1251,9 @@ const resolvers_getDownloadableBlocks = filterValue => async ({
     });
     const blocks = results.map(result => Object.fromEntries(Object.entries(result).map(([key, value]) => [camelCase(key), value])));
     dispatch(receiveDownloadableBlocks(blocks, filterValue));
-  } catch {}
+  } catch {
+    dispatch(receiveDownloadableBlocks([], filterValue));
+  }
 };
 
 ;// ./packages/block-directory/build-module/store/index.js
