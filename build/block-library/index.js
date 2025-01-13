@@ -16331,8 +16331,7 @@ const details_edit_TEMPLATE = [['core/paragraph', {
 }]];
 function DetailsEdit({
   attributes,
-  setAttributes,
-  clientId
+  setAttributes
 }) {
   const {
     showContent,
@@ -16345,17 +16344,8 @@ function DetailsEdit({
     __experimentalCaptureToolbars: true,
     allowedBlocks
   });
+  const [isOpen, setIsOpen] = (0,external_wp_element_namespaceObject.useState)(showContent);
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-
-  // Check if either the block or the inner blocks are selected.
-  const hasSelection = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      isBlockSelected,
-      hasSelectedInnerBlock
-    } = select(external_wp_blockEditor_namespaceObject.store);
-    /* Sets deep to true to also find blocks inside the details content block. */
-    return hasSelectedInnerBlock(clientId, true) || isBlockSelected(clientId);
-  }, [clientId]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
@@ -16387,9 +16377,12 @@ function DetailsEdit({
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("details", {
       ...innerBlocksProps,
-      open: hasSelection || showContent,
+      open: isOpen,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("summary", {
-        onClick: event => event.preventDefault(),
+        onClick: event => {
+          event.preventDefault();
+          setIsOpen(!isOpen);
+        },
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
           identifier: "summary",
           "aria-label": (0,external_wp_i18n_namespaceObject.__)('Write summary'),
