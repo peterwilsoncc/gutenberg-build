@@ -30568,7 +30568,7 @@ function useDeleteNavigationMenu() {
       createSuccessNotice((0,external_wp_i18n_namespaceObject.__)('Navigation Menu successfully deleted.'), {
         type: 'snackbar'
       });
-      history.navivate('/navigation');
+      history.navigate('/navigation');
     } catch (error) {
       createErrorNotice((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: error message describing why the navigation menu could not be deleted. */
       (0,external_wp_i18n_namespaceObject.__)(`Unable to delete Navigation Menu (%s).`), error?.message), {
