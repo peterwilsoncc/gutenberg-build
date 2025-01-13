@@ -38944,16 +38944,17 @@ const check = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 
 
 
-
 function UnforwardedOptionAsButton(props, forwardedRef) {
   const {
     isPressed,
+    label,
     ...additionalProps
   } = props;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
     ...additionalProps,
     "aria-pressed": isPressed,
-    ref: forwardedRef
+    ref: forwardedRef,
+    label: label
   });
 }
 const OptionAsButton = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedOptionAsButton);
@@ -38961,6 +38962,7 @@ function UnforwardedOptionAsOption(props, forwardedRef) {
   const {
     id,
     isSelected,
+    label,
     ...additionalProps
   } = props;
   const {
@@ -38980,7 +38982,8 @@ function UnforwardedOptionAsOption(props, forwardedRef) {
       ...additionalProps,
       role: "option",
       "aria-selected": !!isSelected,
-      ref: forwardedRef
+      ref: forwardedRef,
+      label: label
     }),
     id: id
   });
@@ -39007,17 +39010,16 @@ function Option({
   const isListbox = setActiveId !== undefined;
   const optionControl = isListbox ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OptionAsOption, {
     ...commonProps,
+    label: tooltipText,
     isSelected: isSelected
   }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OptionAsButton, {
     ...commonProps,
+    label: tooltipText,
     isPressed: isSelected
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: dist_clsx(className, 'components-circular-option-picker__option-wrapper'),
-    children: [tooltipText ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(tooltip, {
-      text: tooltipText,
-      children: optionControl
-    }) : optionControl, isSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icons_build_module_icon, {
+    children: [optionControl, isSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(icons_build_module_icon, {
       icon: library_check,
       ...selectedIconProps
     })]
@@ -39142,7 +39144,6 @@ function ButtonAction({
  * 						style={ { backgroundColor: color, color } }
  * 						isSelected={ index === currentColor }
  * 						onClick={ () => setCurrentColor( index ) }
- * 						aria-label={ name }
  * 					/>
  * 				);
  * 			} ) }
@@ -39686,12 +39687,7 @@ function SinglePalette({
           backgroundColor: color,
           color
         },
-        onClick: isSelected ? clearColor : () => onChange(color, index),
-        "aria-label": name ?
-        // translators: %s: The name of the color e.g: "vivid red".
-        (0,external_wp_i18n_namespaceObject.sprintf)((0,external_wp_i18n_namespaceObject.__)('Color: %s'), name) :
-        // translators: %s: color hex code e.g: "#f00".
-        (0,external_wp_i18n_namespaceObject.sprintf)((0,external_wp_i18n_namespaceObject.__)('Color code: %s'), color)
+        onClick: isSelected ? clearColor : () => onChange(color, index)
       }, `${color}-${index}`);
     });
   }, [colors, value, onChange, clearColor]);
