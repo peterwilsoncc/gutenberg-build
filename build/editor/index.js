@@ -10148,7 +10148,7 @@ const TemplateEdit = ({
             setShowModal(true);
             onToggle();
           },
-          children: (0,external_wp_i18n_namespaceObject.__)('Swap template')
+          children: (0,external_wp_i18n_namespaceObject.__)('Change template')
         }),
         // The default template in a post is indicated by an empty string
         value !== '' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
@@ -19689,7 +19689,7 @@ function SwapTemplateButton({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
       onClick: () => setShowModal(true),
-      children: (0,external_wp_i18n_namespaceObject.__)('Swap template')
+      children: (0,external_wp_i18n_namespaceObject.__)('Change template')
     }), showModal && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
       title: (0,external_wp_i18n_namespaceObject.__)('Choose a template'),
       onRequestClose: () => setShowModal(false),
