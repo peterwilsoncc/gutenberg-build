@@ -55138,19 +55138,17 @@ const SiteLogo = ({
 // different MediaReplaceFlows, one for the inspector and one for the toolbar.
 function SiteLogoReplaceFlow({
   mediaURL,
-  onRemoveLogo,
   ...mediaReplaceProps
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaReplaceFlow, {
     ...mediaReplaceProps,
     mediaURL: mediaURL,
     allowedTypes: site_logo_edit_ALLOWED_MEDIA_TYPES,
-    accept: ACCEPT_MEDIA_STRING,
-    onReset: onRemoveLogo
+    accept: ACCEPT_MEDIA_STRING
   });
 }
 const InspectorLogoPreview = ({
-  mediaItemData = {},
+  media,
   itemGroupProps
 }) => {
   const {
@@ -55158,7 +55156,7 @@ const InspectorLogoPreview = ({
     source_url: logoUrl,
     slug: logoSlug,
     media_details: logoMediaDetails
-  } = mediaItemData;
+  } = media !== null && media !== void 0 ? media : {};
   const logoLabel = logoMediaDetails?.sizes?.full?.file || logoSlug;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
     ...itemGroupProps,
@@ -55318,7 +55316,7 @@ function LogoEdit({
     name: !logoUrl ? (0,external_wp_i18n_namespaceObject.__)('Choose logo') : (0,external_wp_i18n_namespaceObject.__)('Replace'),
     onSelect: onSelectLogo,
     onError: onUploadError,
-    onRemoveLogo
+    onReset: onRemoveLogo
   };
   const controls = canUserEdit && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
     group: "other",
@@ -55380,39 +55378,29 @@ function LogoEdit({
   const mediaInspectorPanel = (canUserEdit || logoUrl) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
       title: (0,external_wp_i18n_namespaceObject.__)('Media'),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "block-library-site-logo__inspector-media-replace-container",
-        children: [!canUserEdit && !!logoUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorLogoPreview, {
-          mediaItemData: mediaItemData,
+        children: !canUserEdit ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorLogoPreview, {
+          media: mediaItemData,
           itemGroupProps: {
             isBordered: true,
             className: 'block-library-site-logo__inspector-readonly-logo-preview'
           }
-        }), canUserEdit && !!logoUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SiteLogoReplaceFlow, {
-          ...mediaReplaceFlowProps,
-          name: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorLogoPreview, {
-            mediaItemData: mediaItemData
-          }),
-          popoverProps: {}
-        }), canUserEdit && !logoUrl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUploadCheck, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUpload, {
-            onSelect: onInitialSelectLogo,
-            allowedTypes: site_logo_edit_ALLOWED_MEDIA_TYPES,
-            render: ({
-              open
-            }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-              className: "block-library-site-logo__inspector-upload-container",
-              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-                __next40pxDefaultSize: true,
-                onClick: open,
-                variant: "secondary",
-                children: isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : (0,external_wp_i18n_namespaceObject.__)('Choose logo')
-              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropZone, {
-                onFilesDrop: onFilesDrop
-              })]
+        }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SiteLogoReplaceFlow, {
+            ...mediaReplaceFlowProps,
+            name: !!logoUrl ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorLogoPreview, {
+              media: mediaItemData
+            }) : (0,external_wp_i18n_namespaceObject.__)('Choose logo'),
+            renderToggle: props => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              ...props,
+              __next40pxDefaultSize: true,
+              children: temporaryURL ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : props.children
             })
-          })
-        })]
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropZone, {
+            onFilesDrop: onFilesDrop
+          })]
+        })
       })
     })
   });
