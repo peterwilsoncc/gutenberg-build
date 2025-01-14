@@ -51381,6 +51381,7 @@ function useArchiveLabel() {
  */
 
 
+
 const SUPPORTED_TYPES = ['archive', 'search'];
 function QueryTitleEdit({
   attributes: {
@@ -51397,6 +51398,7 @@ function QueryTitleEdit({
     archiveTypeLabel,
     archiveNameLabel
   } = useArchiveLabel();
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const TagName = `h${level}`;
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: dist_clsx('wp-block-query-title__placeholder', {
@@ -51434,15 +51436,27 @@ function QueryTitleEdit({
     }
     titleElement = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
-          title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-            __nextHasNoMarginBottom: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+          resetAll: () => setAttributes({
+            showPrefix: true
+          }),
+          dropdownMenuProps: dropdownMenuProps,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+            hasValue: () => !showPrefix,
             label: (0,external_wp_i18n_namespaceObject.__)('Show archive type in title'),
-            onChange: () => setAttributes({
-              showPrefix: !showPrefix
+            onDeselect: () => setAttributes({
+              showPrefix: true
             }),
-            checked: showPrefix
+            isShownByDefault: true,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+              __nextHasNoMarginBottom: true,
+              label: (0,external_wp_i18n_namespaceObject.__)('Show archive type in title'),
+              onChange: () => setAttributes({
+                showPrefix: !showPrefix
+              }),
+              checked: showPrefix
+            })
           })
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
@@ -51454,15 +51468,26 @@ function QueryTitleEdit({
   if (type === 'search') {
     titleElement = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
-          title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-            __nextHasNoMarginBottom: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+          resetAll: () => setAttributes({
+            showSearchTerm: true
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+            hasValue: () => !showSearchTerm,
             label: (0,external_wp_i18n_namespaceObject.__)('Show search term in title'),
-            onChange: () => setAttributes({
-              showSearchTerm: !showSearchTerm
+            onDeselect: () => setAttributes({
+              showSearchTerm: true
             }),
-            checked: showSearchTerm
+            isShownByDefault: true,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+              __nextHasNoMarginBottom: true,
+              label: (0,external_wp_i18n_namespaceObject.__)('Show search term in title'),
+              onChange: () => setAttributes({
+                showSearchTerm: !showSearchTerm
+              }),
+              checked: showSearchTerm
+            })
           })
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
