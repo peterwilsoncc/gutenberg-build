@@ -28707,7 +28707,6 @@ const AddCommentToolbarButton = ({
 
 
 
-const isBlockCommentExperimentEnabled = window?.__experimentalEnableBlockComment;
 const modifyBlockCommentAttributes = settings => {
   if (!settings.attributes.blockCommentId) {
     settings.attributes = {
@@ -28980,9 +28979,7 @@ function CollabSidebar() {
       }
     });
   }
-
-  // Check if the experimental flag is enabled.
-  if (!isBlockCommentExperimentEnabled || postStatus === 'publish') {
+  if (postStatus === 'publish') {
     return null; // or maybe return some message indicating no threads are available.
   }
   const AddCommentComponent = blockCommentId ? comment_button_toolbar : comment_button;
@@ -30088,6 +30085,7 @@ const ZoomOutToggle = ({
 
 
 
+const isBlockCommentExperimentEnabled = window?.__experimentalEnableBlockComment;
 const toolbarVariations = {
   distractionFreeDisabled: {
     y: '-50px'
@@ -30228,7 +30226,7 @@ function header_Header({
       }), !customSaveButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostPublishButtonOrToggle, {
         forceIsDirty: forceIsDirty,
         setEntitiesSavedStatesCallback: setEntitiesSavedStatesCallback
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollabSidebar, {}), customSaveButton, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MoreMenu, {})]
+      }), isBlockCommentExperimentEnabled ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollabSidebar, {}) : undefined, customSaveButton, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MoreMenu, {})]
     })]
   });
 }
