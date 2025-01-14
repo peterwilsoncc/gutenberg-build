@@ -36047,8 +36047,7 @@ function getSuggestionsQuery(type, kind) {
 }
 function LinkUIBlockInserter({
   clientId,
-  onBack,
-  onSelectBlock
+  onBack
 }) {
   const {
     rootBlockClientId
@@ -36095,8 +36094,7 @@ function LinkUIBlockInserter({
       isAppender: false,
       prioritizePatterns: false,
       selectBlockOnInsert: true,
-      hasSearch: false,
-      onSelect: onSelectBlock
+      hasSearch: false
     })]
   });
 }
@@ -36151,12 +36149,6 @@ function UnforwardedLinkUI(props, ref) {
   }), [label, opensInNewTab, url]);
   const dialogTitleId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkUI, `link-ui-link-control__title`);
   const dialogDescriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkUI, `link-ui-link-control__description`);
-
-  // Selecting a block should close the popover and also remove the (previously) automatically inserted
-  // link block so that the newly selected block can be inserted in its place.
-  const {
-    onClose: onSelectBlock
-  } = props;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Popover, {
     ref: ref,
     placement: "bottom",
@@ -36214,8 +36206,7 @@ function UnforwardedLinkUI(props, ref) {
       onBack: () => {
         setAddingBlock(false);
         setFocusAddBlockButton(true);
-      },
-      onSelectBlock: onSelectBlock
+      }
     })]
   });
 }
