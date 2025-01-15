@@ -22192,12 +22192,18 @@ function PostPreviewButton({
     const editor = select(store_store);
     const core = select(external_wp_coreData_namespaceObject.store);
     const postType = core.getPostType(editor.getCurrentPostType('type'));
+    const canView = (_postType$viewable = postType?.viewable) !== null && _postType$viewable !== void 0 ? _postType$viewable : false;
+    if (!canView) {
+      return {
+        isViewable: canView
+      };
+    }
     return {
       postId: editor.getCurrentPostId(),
       currentPostLink: editor.getCurrentPostAttribute('link'),
       previewLink: editor.getEditedPostPreviewLink(),
       isSaveable: editor.isEditedPostSaveable(),
-      isViewable: (_postType$viewable = postType?.viewable) !== null && _postType$viewable !== void 0 ? _postType$viewable : false
+      isViewable: canView
     };
   }, []);
   const {
