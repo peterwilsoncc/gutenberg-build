@@ -55853,8 +55853,19 @@ function InserterMenu({
   __experimentalInitialTab,
   __experimentalInitialCategory
 }, ref) {
-  const isZoomOutMode = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).isZoomOut(), []);
-  const hasSectionRootClientId = (0,external_wp_data_namespaceObject.useSelect)(select => !!unlock(select(store)).getSectionRootClientId(), []);
+  const {
+    isZoomOutMode,
+    hasSectionRootClientId
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      isZoomOut,
+      getSectionRootClientId
+    } = unlock(select(store));
+    return {
+      isZoomOutMode: isZoomOut(),
+      hasSectionRootClientId: !!getSectionRootClientId()
+    };
+  }, []);
   const [filterValue, setFilterValue, delayedFilterValue] = (0,external_wp_compose_namespaceObject.useDebouncedInput)(__experimentalFilterValue);
   const [hoveredItem, setHoveredItem] = (0,external_wp_element_namespaceObject.useState)(null);
   const [selectedPatternCategory, setSelectedPatternCategory] = (0,external_wp_element_namespaceObject.useState)(__experimentalInitialCategory);
