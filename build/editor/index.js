@@ -14692,6 +14692,7 @@ function TemplatePartConverterMenuItem({
 }
 
 ;// ./packages/editor/build-module/components/provider/index.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -14740,6 +14741,11 @@ const provider_noop = () => {};
  * (post content, post title) to be used within them without issues.
  */
 const NON_CONTEXTUAL_POST_TYPES = ['wp_block', 'wp_navigation', 'wp_template_part'];
+
+/**
+ * These are rendering modes that the editor supports.
+ */
+const RENDERING_MODES = ['post-only', 'template-locked'];
 
 /**
  * Depending on the post, template and template mode,
@@ -14840,8 +14846,7 @@ const ExperimentalEditorProvider = with_registry_provider(({
     isReady,
     mode,
     defaultMode,
-    postTypeEntities,
-    hasLoadedPostObject
+    postTypeEntities
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEditorSettings,
@@ -14850,16 +14855,19 @@ const ExperimentalEditorProvider = with_registry_provider(({
       __unstableIsEditorReady
     } = select(store_store);
     const {
-      getEntitiesConfig
+      getEntitiesConfig,
+      getPostType,
+      hasFinishedResolution
     } = select(external_wp_coreData_namespaceObject.store);
-    const postTypeObject = select(external_wp_coreData_namespaceObject.store).getPostType(post.type);
-    const _hasLoadedPostObject = select(external_wp_coreData_namespaceObject.store).hasFinishedResolution('getPostType', [post.type]);
+    const postTypeSupports = getPostType(post.type)?.supports;
+    const hasLoadedPostObject = hasFinishedResolution('getPostType', [post.type]);
+    const _defaultMode = Array.isArray(postTypeSupports?.editor) ? postTypeSupports.editor.find(features => 'default_mode' in features)?.default_mode : undefined;
+    const hasDefaultMode = RENDERING_MODES.includes(_defaultMode);
     return {
-      hasLoadedPostObject: _hasLoadedPostObject,
       editorSettings: getEditorSettings(),
-      isReady: __unstableIsEditorReady(),
+      isReady: __unstableIsEditorReady() && hasLoadedPostObject,
       mode: getRenderingMode(),
-      defaultMode: hasTemplate && postTypeObject?.default_rendering_mode ? postTypeObject?.default_rendering_mode : 'post-only',
+      defaultMode: hasTemplate && hasDefaultMode ? _defaultMode : 'post-only',
       selection: getEditorSelection(),
       postTypeEntities: post.type === 'wp_template' ? getEntitiesConfig('postType') : null
     };
@@ -14955,7 +14963,7 @@ const ExperimentalEditorProvider = with_registry_provider(({
 
   // Register the editor commands.
   useCommands();
-  if (!isReady || !mode || !hasLoadedPostObject) {
+  if (!isReady || !mode) {
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_coreData_namespaceObject.EntityProvider, {
