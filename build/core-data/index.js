@@ -23269,8 +23269,12 @@ const resolvers_getAutosaves = (postType, postId) => async ({
 }) => {
   const {
     rest_base: restBase,
-    rest_namespace: restNamespace = 'wp/v2'
+    rest_namespace: restNamespace = 'wp/v2',
+    supports
   } = await resolveSelect.getPostType(postType);
+  if (!supports?.autosave) {
+    return;
+  }
   const autosaves = await external_wp_apiFetch_default()({
     path: `/${restNamespace}/${restBase}/${postId}/autosaves?context=edit`
   });
