@@ -45774,6 +45774,7 @@ function PostTermsEdit({
       }), hasPost && !isLoading && hasPostTerms && postTerms.map(postTerm => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
         href: postTerm.link,
         onClick: event => event.preventDefault(),
+        rel: "tag",
         children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(postTerm.name)
       }, postTerm.id)).reduce((prev, curr) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [prev, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
