@@ -24917,8 +24917,7 @@ function HomeEdit({
         },
         "aria-label": (0,external_wp_i18n_namespaceObject.__)('Home link text'),
         placeholder: (0,external_wp_i18n_namespaceObject.__)('Add home link'),
-        withoutInteractiveFormatting: true,
-        allowedFormats: ['core/bold', 'core/italic', 'core/image', 'core/strikethrough']
+        withoutInteractiveFormatting: true
       })
     })
   });
