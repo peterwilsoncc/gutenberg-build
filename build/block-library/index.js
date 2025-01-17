@@ -16344,6 +16344,7 @@ function DetailsEdit({
   setAttributes
 }) {
   const {
+    name,
     showContent,
     summary,
     allowedBlocks
@@ -16385,6 +16386,18 @@ function DetailsEdit({
           })
         })
       })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      group: "advanced",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Name attribute'),
+        value: name || '',
+        onChange: newName => setAttributes({
+          name: newName
+        }),
+        help: (0,external_wp_i18n_namespaceObject.__)('Enables multiple Details blocks with the same name attribute to be connected, with only one open at a time.')
+      })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("details", {
       ...innerBlocksProps,
       open: isOpen,
@@ -16420,12 +16433,14 @@ function details_save_save({
   attributes
 }) {
   const {
+    name,
     showContent
   } = attributes;
   const summary = attributes.summary ? attributes.summary : 'Details';
   const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("details", {
     ...blockProps,
+    name: name || undefined,
     open: showContent,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("summary", {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText.Content, {
@@ -16484,6 +16499,12 @@ const details_metadata = {
       type: "rich-text",
       source: "rich-text",
       selector: "summary"
+    },
+    name: {
+      type: "string",
+      source: "attribute",
+      attribute: "name",
+      selector: ".wp-block-details"
     },
     allowedBlocks: {
       type: "array"
