@@ -43257,6 +43257,7 @@ const post_content_metadata = {
     },
     color: {
       gradients: true,
+      heading: true,
       link: true,
       __experimentalDefaultControls: {
         background: false,
