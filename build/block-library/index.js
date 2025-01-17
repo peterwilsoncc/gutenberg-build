@@ -53757,6 +53757,7 @@ function utils_isPercentageUnit(unit) {
 
 
 
+
 // Used to calculate border radius adjustment to avoid "fat" corners when
 // button is placed inside wrapper.
 
@@ -54000,6 +54001,7 @@ function SearchEdit({
       })]
     });
   };
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const controls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
@@ -54028,55 +54030,71 @@ function SearchEdit({
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-          className: "wp-block-search__inspector-controls",
-          spacing: 4,
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
-            __next40pxDefaultSize: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Width'),
-            id: unitControlInputId // unused, kept for backwards compatibility
-            ,
-            min: utils_isPercentageUnit(widthUnit) ? 0 : MIN_WIDTH,
-            max: utils_isPercentageUnit(widthUnit) ? 100 : undefined,
-            step: 1,
-            onChange: newWidth => {
-              const parsedNewWidth = newWidth === '' ? undefined : parseInt(newWidth, 10);
-              setAttributes({
-                width: parsedNewWidth
-              });
-            },
-            onUnitChange: newUnit => {
-              setAttributes({
-                width: '%' === newUnit ? PC_WIDTH_DEFAULT : PX_WIDTH_DEFAULT,
-                widthUnit: newUnit
-              });
-            },
-            __unstableInputWidth: "80px",
-            value: `${width}${widthUnit}`,
-            units: units
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
-            label: (0,external_wp_i18n_namespaceObject.__)('Percentage Width'),
-            value: PERCENTAGE_WIDTHS.includes(width) && widthUnit === '%' ? width : undefined,
-            hideLabelFromVision: true,
-            onChange: newWidth => {
-              setAttributes({
-                width: newWidth,
-                widthUnit: '%'
-              });
-            },
-            isBlock: true,
-            __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
-            children: PERCENTAGE_WIDTHS.map(widthValue => {
-              return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-                value: widthValue,
-                label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: Percentage value. */
-                (0,external_wp_i18n_namespaceObject.__)('%d%%'), widthValue)
-              }, widthValue);
-            })
-          })]
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            width: undefined,
+            widthUnit: undefined
+          });
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !!width,
+          label: (0,external_wp_i18n_namespaceObject.__)('Width'),
+          onDeselect: () => {
+            setAttributes({
+              width: undefined,
+              widthUnit: undefined
+            });
+          },
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+              __next40pxDefaultSize: true,
+              label: (0,external_wp_i18n_namespaceObject.__)('Width'),
+              id: unitControlInputId // Unused, kept for backwards compatibility
+              ,
+              min: utils_isPercentageUnit(widthUnit) ? 0 : MIN_WIDTH,
+              max: utils_isPercentageUnit(widthUnit) ? 100 : undefined,
+              step: 1,
+              onChange: newWidth => {
+                const parsedNewWidth = newWidth === '' ? undefined : parseInt(newWidth, 10);
+                setAttributes({
+                  width: parsedNewWidth
+                });
+              },
+              onUnitChange: newUnit => {
+                setAttributes({
+                  width: '%' === newUnit ? PC_WIDTH_DEFAULT : PX_WIDTH_DEFAULT,
+                  widthUnit: newUnit
+                });
+              },
+              __unstableInputWidth: "80px",
+              value: `${width}${widthUnit}`,
+              units: units
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+              label: (0,external_wp_i18n_namespaceObject.__)('Percentage Width'),
+              value: PERCENTAGE_WIDTHS.includes(width) && widthUnit === '%' ? width : undefined,
+              hideLabelFromVision: true,
+              onChange: newWidth => {
+                setAttributes({
+                  width: newWidth,
+                  widthUnit: '%'
+                });
+              },
+              isBlock: true,
+              __next40pxDefaultSize: true,
+              __nextHasNoMarginBottom: true,
+              children: PERCENTAGE_WIDTHS.map(widthValue => {
+                return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+                  value: widthValue,
+                  label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: Percentage value. */
+                  (0,external_wp_i18n_namespaceObject.__)('%d%%'), widthValue)
+                }, widthValue);
+              })
+            })]
+          })
         })
       })
     })]
