@@ -51199,7 +51199,7 @@ function QueryPaginationNumbersEdit({
         dropdownMenuProps: dropdownMenuProps,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Number of links'),
-          hasValue: () => midSize !== undefined,
+          hasValue: () => midSize !== 2,
           onDeselect: () => setAttributes({
             midSize: 2
           }),
