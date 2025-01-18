@@ -17614,6 +17614,7 @@ const transforms_metadata = {
   editorStyle: "wp-block-embed-editor",
   style: "wp-block-embed"
 };
+
 const {
   name: EMBED_BLOCK
 } = transforms_metadata;
@@ -17639,14 +17640,16 @@ const embed_transforms_transforms = {
     }) => !!url,
     transform: ({
       url,
-      caption
+      caption,
+      className
     }) => {
       let value = `<a href="${url}">${url}</a>`;
       if (caption?.trim()) {
         value += `<br />${caption}`;
       }
       return (0,external_wp_blocks_namespaceObject.createBlock)('core/paragraph', {
-        content: value
+        content: value,
+        className: removeAspectRatioClasses(className)
       });
     }
   }]
