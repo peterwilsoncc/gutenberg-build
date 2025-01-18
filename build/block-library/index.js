@@ -1918,7 +1918,7 @@ function ArchivesEdit({
         }), displayAsDropdown && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Show label'),
           isShownByDefault: true,
-          hasValue: () => showLabel,
+          hasValue: () => !showLabel,
           onDeselect: () => setAttributes({
             showLabel: false
           }),
@@ -1948,7 +1948,7 @@ function ArchivesEdit({
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Group by'),
           isShownByDefault: true,
-          hasValue: () => !!type,
+          hasValue: () => type !== 'monthly',
           onDeselect: () => setAttributes({
             type: 'monthly'
           }),
