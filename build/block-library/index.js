@@ -43580,7 +43580,7 @@ function PostDateEdit({
         },
         dropdownMenuProps: dropdownMenuProps,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          hasValue: () => format !== undefined && format !== siteFormat,
+          hasValue: () => !!format,
           label: (0,external_wp_i18n_namespaceObject.__)('Date Format'),
           onDeselect: () => setAttributes({
             format: undefined
