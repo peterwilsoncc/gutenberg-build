@@ -51610,6 +51610,7 @@ function QueryTitleEdit({
           resetAll: () => setAttributes({
             showSearchTerm: true
           }),
+          dropdownMenuProps: dropdownMenuProps,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
             hasValue: () => !showSearchTerm,
             label: (0,external_wp_i18n_namespaceObject.__)('Show search term in title'),
@@ -58511,6 +58512,7 @@ const MIN_SPACER_SIZE = 0;
 
 
 
+
 const {
   useSpacingSizes
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
@@ -58578,6 +58580,7 @@ function SpacerControls({
   width,
   isResizing
 }) {
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
       label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
@@ -58587,6 +58590,7 @@ function SpacerControls({
           height: '100px'
         });
       },
+      dropdownMenuProps: dropdownMenuProps,
       children: [orientation === 'horizontal' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         label: (0,external_wp_i18n_namespaceObject.__)('Width'),
         isShownByDefault: true,
