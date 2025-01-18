@@ -19546,7 +19546,7 @@ const form_variations_variations = [{
   isActive: blockAttributes => !blockAttributes?.type || blockAttributes?.type === 'text'
 }, {
   name: 'wp-privacy-form',
-  title: (0,external_wp_i18n_namespaceObject.__)('Experimental privacy request form'),
+  title: (0,external_wp_i18n_namespaceObject.__)('Experimental Privacy Request Form'),
   keywords: ['GDPR'],
   description: (0,external_wp_i18n_namespaceObject.__)('A form to request data exports and/or deletion.'),
   attributes: {
@@ -31010,7 +31010,7 @@ const list_item_metadata = {
   $schema: "https://schemas.wp.org/trunk/block.json",
   apiVersion: 3,
   name: "core/list-item",
-  title: "List item",
+  title: "List Item",
   category: "text",
   parent: ["core/list"],
   allowedBlocks: ["core/list"],
@@ -39903,7 +39903,7 @@ const pattern_metadata = {
   $schema: "https://schemas.wp.org/trunk/block.json",
   apiVersion: 3,
   name: "core/pattern",
-  title: "Pattern placeholder",
+  title: "Pattern Placeholder",
   category: "theme",
   description: "Show a block pattern.",
   supports: {
@@ -45108,7 +45108,7 @@ const previous = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(e
 const post_navigation_link_variations_variations = [{
   isDefault: true,
   name: 'post-next',
-  title: (0,external_wp_i18n_namespaceObject.__)('Next post'),
+  title: (0,external_wp_i18n_namespaceObject.__)('Next Post'),
   description: (0,external_wp_i18n_namespaceObject.__)('Displays the post link that follows the current post.'),
   icon: library_next,
   attributes: {
@@ -45123,7 +45123,7 @@ const post_navigation_link_variations_variations = [{
   }
 }, {
   name: 'post-previous',
-  title: (0,external_wp_i18n_namespaceObject.__)('Previous post'),
+  title: (0,external_wp_i18n_namespaceObject.__)('Previous Post'),
   description: (0,external_wp_i18n_namespaceObject.__)('Displays the post link that precedes the current post.'),
   icon: library_previous,
   attributes: {
@@ -46090,7 +46090,7 @@ const post_time_to_read_metadata = {
   apiVersion: 3,
   __experimental: true,
   name: "core/post-time-to-read",
-  title: "Time To Read",
+  title: "Time to Read",
   category: "theme",
   description: "Show minutes required to finish reading the post.",
   textdomain: "default",
@@ -50564,7 +50564,7 @@ const query_no_results_metadata = {
   $schema: "https://schemas.wp.org/trunk/block.json",
   apiVersion: 3,
   name: "core/query-no-results",
-  title: "No results",
+  title: "No Results",
   category: "theme",
   description: "Contains the block elements used to render content when no query results are found.",
   ancestor: ["core/query"],
