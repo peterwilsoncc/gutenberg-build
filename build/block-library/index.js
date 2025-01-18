@@ -6436,6 +6436,11 @@ const pin = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(extern
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 function CategoriesEdit({
   attributes: {
     displayAsDropdown,
@@ -6559,54 +6564,127 @@ function CategoriesEdit({
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: classes
   });
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(TagName, {
     ...blockProps,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: [Array.isArray(taxonomies) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-          __nextHasNoMarginBottom: true,
-          __next40pxDefaultSize: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            taxonomy: 'category',
+            displayAsDropdown: false,
+            showHierarchy: false,
+            showPostCounts: false,
+            showOnlyTopLevel: false,
+            showEmpty: false,
+            showLabel: true
+          });
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: [Array.isArray(taxonomies) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => {
+            return taxonomySlug !== 'category';
+          },
           label: (0,external_wp_i18n_namespaceObject.__)('Taxonomy'),
-          options: taxonomies.map(t => ({
-            label: t.name,
-            value: t.slug
-          })),
-          value: taxonomySlug,
-          onChange: selectedTaxonomy => setAttributes({
-            taxonomy: selectedTaxonomy
+          onDeselect: () => {
+            setAttributes({
+              taxonomy: 'category'
+            });
+          },
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+            __nextHasNoMarginBottom: true,
+            __next40pxDefaultSize: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Taxonomy'),
+            options: taxonomies.map(t => ({
+              label: t.name,
+              value: t.slug
+            })),
+            value: taxonomySlug,
+            onChange: selectedTaxonomy => setAttributes({
+              taxonomy: selectedTaxonomy
+            })
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !!displayAsDropdown,
           label: (0,external_wp_i18n_namespaceObject.__)('Display as dropdown'),
-          checked: displayAsDropdown,
-          onChange: toggleAttribute('displayAsDropdown')
-        }), displayAsDropdown && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
-          className: "wp-block-categories__indentation",
+          onDeselect: () => setAttributes({
+            displayAsDropdown: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Display as dropdown'),
+            checked: displayAsDropdown,
+            onChange: toggleAttribute('displayAsDropdown')
+          })
+        }), displayAsDropdown && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !showLabel,
           label: (0,external_wp_i18n_namespaceObject.__)('Show label'),
-          checked: showLabel,
-          onChange: toggleAttribute('showLabel')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+          onDeselect: () => setAttributes({
+            showLabel: true
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            className: "wp-block-categories__indentation",
+            label: (0,external_wp_i18n_namespaceObject.__)('Show label'),
+            checked: showLabel,
+            onChange: toggleAttribute('showLabel')
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !!showPostCounts,
           label: (0,external_wp_i18n_namespaceObject.__)('Show post counts'),
-          checked: showPostCounts,
-          onChange: toggleAttribute('showPostCounts')
-        }), isHierarchicalTaxonomy && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+          onDeselect: () => setAttributes({
+            showPostCounts: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show post counts'),
+            checked: showPostCounts,
+            onChange: toggleAttribute('showPostCounts')
+          })
+        }), isHierarchicalTaxonomy && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !!showOnlyTopLevel,
           label: (0,external_wp_i18n_namespaceObject.__)('Show only top level terms'),
-          checked: showOnlyTopLevel,
-          onChange: toggleAttribute('showOnlyTopLevel')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+          onDeselect: () => setAttributes({
+            showOnlyTopLevel: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show only top level terms'),
+            checked: showOnlyTopLevel,
+            onChange: toggleAttribute('showOnlyTopLevel')
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !!showEmpty,
           label: (0,external_wp_i18n_namespaceObject.__)('Show empty terms'),
-          checked: showEmpty,
-          onChange: toggleAttribute('showEmpty')
-        }), isHierarchicalTaxonomy && !showOnlyTopLevel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+          onDeselect: () => setAttributes({
+            showEmpty: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show empty terms'),
+            checked: showEmpty,
+            onChange: toggleAttribute('showEmpty')
+          })
+        }), isHierarchicalTaxonomy && !showOnlyTopLevel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !!showHierarchy,
           label: (0,external_wp_i18n_namespaceObject.__)('Show hierarchy'),
-          checked: showHierarchy,
-          onChange: toggleAttribute('showHierarchy')
+          onDeselect: () => setAttributes({
+            showHierarchy: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show hierarchy'),
+            checked: showHierarchy,
+            onChange: toggleAttribute('showHierarchy')
+          })
         })]
       })
     }), isResolving && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
