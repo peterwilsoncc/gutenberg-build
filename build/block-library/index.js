@@ -65070,7 +65070,7 @@ const VideoSettings = ({
         /* translators: Setting to play videos within the webpage on mobile browsers rather than opening in a fullscreen player. */,
         label: (0,external_wp_i18n_namespaceObject.__)('Play inline'),
         onChange: toggleFactory.playsInline,
-        checked: playsInline,
+        checked: !!playsInline,
         help: (0,external_wp_i18n_namespaceObject.__)('When enabled, videos will play directly within the webpage on mobile browsers, instead of opening in a fullscreen player.')
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
