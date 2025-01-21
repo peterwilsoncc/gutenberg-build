@@ -28841,6 +28841,7 @@ const list = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
 const MIN_EXCERPT_LENGTH = 10;
 const MAX_EXCERPT_LENGTH = 100;
 const MAX_POSTS_COLUMNS = 6;
+const DEFAULT_EXCERPT_LENGTH = 55;
 
 ;// ./packages/block-library/build-module/latest-posts/edit.js
 /* wp:polyfill */
@@ -28866,6 +28867,7 @@ const MAX_POSTS_COLUMNS = 6;
 /**
  * Internal dependencies
  */
+
 
 
 /**
@@ -28895,6 +28897,7 @@ function LatestPostsEdit({
 }) {
   var _categoriesList$reduc;
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(LatestPostsEdit);
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const {
     postsToShow,
     order,
@@ -29010,54 +29013,105 @@ function LatestPostsEdit({
   }];
   const hasPosts = !!latestPosts?.length;
   const inspectorControls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Post content'),
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-        __nextHasNoMarginBottom: true,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Post content'),
+      resetAll: () => setAttributes({
+        displayPostContent: false,
+        displayPostContentRadio: 'excerpt',
+        excerptLength: DEFAULT_EXCERPT_LENGTH
+      }),
+      dropdownMenuProps: dropdownMenuProps,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => !!displayPostContent,
         label: (0,external_wp_i18n_namespaceObject.__)('Post content'),
-        checked: displayPostContent,
-        onChange: value => setAttributes({
-          displayPostContent: value
-        })
-      }), displayPostContent && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Show'),
-        selected: displayPostContentRadio,
-        options: [{
-          label: (0,external_wp_i18n_namespaceObject.__)('Excerpt'),
-          value: 'excerpt'
-        }, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Full post'),
-          value: 'full_post'
-        }],
-        onChange: value => setAttributes({
-          displayPostContentRadio: value
-        })
-      }), displayPostContent && displayPostContentRadio === 'excerpt' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Max number of words'),
-        value: excerptLength,
-        onChange: value => setAttributes({
-          excerptLength: value
+        onDeselect: () => setAttributes({
+          displayPostContent: false
         }),
-        min: MIN_EXCERPT_LENGTH,
-        max: MAX_EXCERPT_LENGTH
-      })]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Post meta'),
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-        __nextHasNoMarginBottom: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Display author name'),
-        checked: displayAuthor,
-        onChange: value => setAttributes({
-          displayAuthor: value
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Post content'),
+          checked: displayPostContent,
+          onChange: value => setAttributes({
+            displayPostContent: value
+          })
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-        __nextHasNoMarginBottom: true,
+      }), displayPostContent && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => displayPostContentRadio !== 'excerpt',
+        label: (0,external_wp_i18n_namespaceObject.__)('Show'),
+        onDeselect: () => setAttributes({
+          displayPostContentRadio: 'excerpt'
+        }),
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Show'),
+          selected: displayPostContentRadio,
+          options: [{
+            label: (0,external_wp_i18n_namespaceObject.__)('Excerpt'),
+            value: 'excerpt'
+          }, {
+            label: (0,external_wp_i18n_namespaceObject.__)('Full post'),
+            value: 'full_post'
+          }],
+          onChange: value => setAttributes({
+            displayPostContentRadio: value
+          })
+        })
+      }), displayPostContent && displayPostContentRadio === 'excerpt' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => excerptLength !== DEFAULT_EXCERPT_LENGTH,
+        label: (0,external_wp_i18n_namespaceObject.__)('Max number of words'),
+        onDeselect: () => setAttributes({
+          excerptLength: DEFAULT_EXCERPT_LENGTH
+        }),
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+          __nextHasNoMarginBottom: true,
+          __next40pxDefaultSize: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Max number of words'),
+          value: excerptLength,
+          onChange: value => setAttributes({
+            excerptLength: value
+          }),
+          min: MIN_EXCERPT_LENGTH,
+          max: MAX_EXCERPT_LENGTH
+        })
+      })]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Post meta'),
+      resetAll: () => setAttributes({
+        displayAuthor: false,
+        displayPostDate: false
+      }),
+      dropdownMenuProps: dropdownMenuProps,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => !!displayAuthor,
+        label: (0,external_wp_i18n_namespaceObject.__)('Display author name'),
+        onDeselect: () => setAttributes({
+          displayAuthor: false
+        }),
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Display author name'),
+          checked: displayAuthor,
+          onChange: value => setAttributes({
+            displayAuthor: value
+          })
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => !!displayPostDate,
         label: (0,external_wp_i18n_namespaceObject.__)('Display post date'),
-        checked: displayPostDate,
-        onChange: value => setAttributes({
-          displayPostDate: value
+        onDeselect: () => setAttributes({
+          displayPostDate: false
+        }),
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Display post date'),
+          checked: displayPostDate,
+          onChange: value => setAttributes({
+            displayPostDate: value
+          })
         })
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
