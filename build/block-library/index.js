@@ -44576,10 +44576,6 @@ const post_featured_image_edit_ALLOWED_MEDIA_TYPES = ['image'];
 function getMediaSourceUrlBySizeSlug(media, slug) {
   return media?.media_details?.sizes?.[slug]?.source_url || media?.source_url;
 }
-const disabledClickProps = {
-  onClick: event => event.preventDefault(),
-  'aria-disabled': true
-};
 function PostFeaturedImageEdit({
   clientId,
   attributes,
@@ -44788,7 +44784,6 @@ function PostFeaturedImageEdit({
         children: [!!isLink ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
           href: postPermalink,
           target: linkTarget,
-          ...disabledClickProps,
           children: placeholder()
         }) : placeholder(), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(overlay, {
           attributes: attributes,
@@ -44874,7 +44869,6 @@ function PostFeaturedImageEdit({
       children: [!!isLink ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
         href: postPermalink,
         target: linkTarget,
-        ...disabledClickProps,
         children: image
       }) : image, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(overlay, {
         attributes: attributes,
