@@ -1,7 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 7973:
+/***/ 1933:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*global define:false */
@@ -1067,7 +1067,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*global define:false */
 
 /***/ }),
 
-/***/ 5538:
+/***/ 5760:
 /***/ (() => {
 
 /**
@@ -1120,7 +1120,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*global define:false */
 
 /***/ }),
 
-/***/ 6207:
+/***/ 5359:
 /***/ (function(module) {
 
 /*!
@@ -2132,7 +2132,7 @@ __webpack_require__.d(__webpack_exports__, {
   withState: () => (/* reexport */ withState)
 });
 
-;// CONCATENATED MODULE: ./node_modules/tslib/tslib.es6.mjs
+;// ./node_modules/tslib/tslib.es6.mjs
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -2507,7 +2507,7 @@ function __disposeResources(env) {
   __disposeResources,
 });
 
-;// CONCATENATED MODULE: ./node_modules/lower-case/dist.es2015/index.js
+;// ./node_modules/lower-case/dist.es2015/index.js
 /**
  * Source: ftp://ftp.unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt
  */
@@ -2556,7 +2556,7 @@ function lowerCase(str) {
     return str.toLowerCase();
 }
 
-;// CONCATENATED MODULE: ./node_modules/no-case/dist.es2015/index.js
+;// ./node_modules/no-case/dist.es2015/index.js
 
 // Support camel case ("camelCase" -> "camel Case" and "CAMELCase" -> "CAMEL Case").
 var DEFAULT_SPLIT_REGEXP = [/([a-z0-9])([A-Z])/g, /([A-Z])([A-Z][a-z])/g];
@@ -2588,7 +2588,7 @@ function replace(input, re, value) {
     return re.reduce(function (input, re) { return input.replace(re, value); }, input);
 }
 
-;// CONCATENATED MODULE: ./node_modules/pascal-case/dist.es2015/index.js
+;// ./node_modules/pascal-case/dist.es2015/index.js
 
 
 function pascalCaseTransform(input, index) {
@@ -2607,7 +2607,7 @@ function pascalCase(input, options) {
     return noCase(input, __assign({ delimiter: "", transform: pascalCaseTransform }, options));
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/utils/create-higher-order-component/index.js
+;// ./packages/compose/build-module/utils/create-higher-order-component/index.js
 /**
  * External dependencies
  */
@@ -2646,7 +2646,7 @@ const hocName = (name, Inner) => {
   return `${outer}(${inner})`;
 };
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/utils/debounce/index.js
+;// ./packages/compose/build-module/utils/debounce/index.js
 /**
  * Parts of this source were derived and modified from lodash,
  * released under the MIT license.
@@ -2840,7 +2840,7 @@ const debounce = (func, wait, options) => {
   return debounced;
 };
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/utils/throttle/index.js
+;// ./packages/compose/build-module/utils/throttle/index.js
 /**
  * Parts of this source were derived and modified from lodash,
  * released under the MIT license.
@@ -2926,7 +2926,8 @@ const throttle = (func, wait, options) => {
   });
 };
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/utils/observable-map/index.js
+;// ./packages/compose/build-module/utils/observable-map/index.js
+/* wp:polyfill */
 /**
  * A constructor (factory) for `ObservableMap`, a map-like key/value data structure
  * where the individual entries are observable: using the `subscribe` method, you can
@@ -2979,7 +2980,7 @@ function observableMap() {
   };
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/higher-order/pipe.js
+;// ./packages/compose/build-module/higher-order/pipe.js
 /**
  * Parts of this source were derived and modified from lodash,
  * released under the MIT license.
@@ -3049,7 +3050,7 @@ const pipe = basePipe();
 
 /* harmony default export */ const higher_order_pipe = (pipe);
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/higher-order/compose.js
+;// ./packages/compose/build-module/higher-order/compose.js
 /**
  * Internal dependencies
  */
@@ -3066,9 +3067,9 @@ const pipe = basePipe();
 const compose = basePipe(true);
 /* harmony default export */ const higher_order_compose = (compose);
 
-;// CONCATENATED MODULE: external "ReactJSXRuntime"
+;// external "ReactJSXRuntime"
 const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
-;// CONCATENATED MODULE: ./packages/compose/build-module/higher-order/if-condition/index.js
+;// ./packages/compose/build-module/higher-order/if-condition/index.js
 /**
  * External dependencies
  */
@@ -3108,12 +3109,12 @@ function ifCondition(predicate) {
 }
 /* harmony default export */ const if_condition = (ifCondition);
 
-;// CONCATENATED MODULE: external ["wp","isShallowEqual"]
+;// external ["wp","isShallowEqual"]
 const external_wp_isShallowEqual_namespaceObject = window["wp"]["isShallowEqual"];
 var external_wp_isShallowEqual_default = /*#__PURE__*/__webpack_require__.n(external_wp_isShallowEqual_namespaceObject);
-;// CONCATENATED MODULE: external ["wp","element"]
+;// external ["wp","element"]
 const external_wp_element_namespaceObject = window["wp"]["element"];
-;// CONCATENATED MODULE: ./packages/compose/build-module/higher-order/pure/index.js
+;// ./packages/compose/build-module/higher-order/pure/index.js
 /**
  * External dependencies
  */
@@ -3157,10 +3158,10 @@ const pure = createHigherOrderComponent(function (WrappedComponent) {
 }, 'pure');
 /* harmony default export */ const higher_order_pure = (pure);
 
-;// CONCATENATED MODULE: external ["wp","deprecated"]
+;// external ["wp","deprecated"]
 const external_wp_deprecated_namespaceObject = window["wp"]["deprecated"];
 var external_wp_deprecated_default = /*#__PURE__*/__webpack_require__.n(external_wp_deprecated_namespaceObject);
-;// CONCATENATED MODULE: ./packages/compose/build-module/higher-order/with-global-events/listener.js
+;// ./packages/compose/build-module/higher-order/with-global-events/listener.js
 /**
  * Class responsible for orchestrating event handling on the global window,
  * binding a single event to be shared across all handling instances, and
@@ -3199,7 +3200,7 @@ class Listener {
 }
 /* harmony default export */ const listener = (Listener);
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/higher-order/with-global-events/index.js
+;// ./packages/compose/build-module/higher-order/with-global-events/index.js
 /**
  * WordPress dependencies
  */
@@ -3296,7 +3297,7 @@ function withGlobalEvents(eventTypesToHandlers) {
   }, 'withGlobalEvents');
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-instance-id/index.js
+;// ./packages/compose/build-module/hooks/use-instance-id/index.js
 /**
  * WordPress dependencies
  */
@@ -3347,7 +3348,7 @@ function useInstanceId(object, prefix, preferredId) {
 }
 /* harmony default export */ const use_instance_id = (useInstanceId);
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/higher-order/with-instance-id/index.js
+;// ./packages/compose/build-module/higher-order/with-instance-id/index.js
 /**
  * Internal dependencies
  */
@@ -3370,7 +3371,7 @@ const withInstanceId = createHigherOrderComponent(WrappedComponent => {
 }, 'instanceId');
 /* harmony default export */ const with_instance_id = (withInstanceId);
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/higher-order/with-safe-timeout/index.js
+;// ./packages/compose/build-module/higher-order/with-safe-timeout/index.js
 /**
  * WordPress dependencies
  */
@@ -3433,7 +3434,7 @@ const withSafeTimeout = createHigherOrderComponent(OriginalComponent => {
 }, 'withSafeTimeout');
 /* harmony default export */ const with_safe_timeout = (withSafeTimeout);
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/higher-order/with-state/index.js
+;// ./packages/compose/build-module/higher-order/with-state/index.js
 /**
  * WordPress dependencies
  */
@@ -3479,9 +3480,9 @@ function withState(initialState = {}) {
   }, 'withState');
 }
 
-;// CONCATENATED MODULE: external ["wp","dom"]
+;// external ["wp","dom"]
 const external_wp_dom_namespaceObject = window["wp"]["dom"];
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-ref-effect/index.js
+;// ./packages/compose/build-module/hooks/use-ref-effect/index.js
 /**
  * External dependencies
  */
@@ -3521,7 +3522,7 @@ function useRefEffect(callback, dependencies) {
   }, dependencies);
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-constrained-tabbing/index.js
+;// ./packages/compose/build-module/hooks/use-constrained-tabbing/index.js
 /**
  * WordPress dependencies
  */
@@ -3611,9 +3612,9 @@ function useConstrainedTabbing() {
 /* harmony default export */ const use_constrained_tabbing = (useConstrainedTabbing);
 
 // EXTERNAL MODULE: ./packages/compose/node_modules/clipboard/dist/clipboard.js
-var dist_clipboard = __webpack_require__(6207);
+var dist_clipboard = __webpack_require__(5359);
 var clipboard_default = /*#__PURE__*/__webpack_require__.n(dist_clipboard);
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-copy-on-click/index.js
+;// ./packages/compose/build-module/hooks/use-copy-on-click/index.js
 /**
  * External dependencies
  */
@@ -3689,7 +3690,7 @@ function useCopyOnClick(ref, text, timeout = 4000) {
   return hasCopied;
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-copy-to-clipboard/index.js
+;// ./packages/compose/build-module/hooks/use-copy-to-clipboard/index.js
 /**
  * External dependencies
  */
@@ -3755,9 +3756,9 @@ function useCopyToClipboard(text, onSuccess) {
   }, []);
 }
 
-;// CONCATENATED MODULE: external ["wp","keycodes"]
+;// external ["wp","keycodes"]
 const external_wp_keycodes_namespaceObject = window["wp"]["keycodes"];
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-focus-on-mount/index.js
+;// ./packages/compose/build-module/hooks/use-focus-on-mount/index.js
 /**
  * WordPress dependencies
  */
@@ -3839,7 +3840,7 @@ function useFocusOnMount(focusOnMount = 'firstElement') {
   }, []);
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-focus-return/index.js
+;// ./packages/compose/build-module/hooks/use-focus-return/index.js
 /**
  * WordPress dependencies
  */
@@ -3912,7 +3913,7 @@ function useFocusReturn(onFocusReturn) {
 }
 /* harmony default export */ const use_focus_return = (useFocusReturn);
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-focus-outside/index.js
+;// ./packages/compose/build-module/hooks/use-focus-outside/index.js
 /**
  * WordPress dependencies
  */
@@ -4065,7 +4066,7 @@ function useFocusOutside(onFocusOutside) {
   };
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-merge-refs/index.js
+;// ./packages/compose/build-module/hooks/use-merge-refs/index.js
 /**
  * WordPress dependencies
  */
@@ -4192,7 +4193,7 @@ function useMergeRefs(refs) {
   }, []);
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-dialog/index.js
+;// ./packages/compose/build-module/hooks/use-dialog/index.js
 /**
  * External dependencies
  */
@@ -4259,7 +4260,7 @@ function useDialog(options) {
 }
 /* harmony default export */ const use_dialog = (useDialog);
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-disabled/index.js
+;// ./packages/compose/build-module/hooks/use-disabled/index.js
 /**
  * Internal dependencies
  */
@@ -4342,7 +4343,7 @@ function useDisabled({
   }, [isDisabledProp]);
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-event/index.js
+;// ./packages/compose/build-module/hooks/use-event/index.js
 /**
  * WordPress dependencies
  */
@@ -4388,7 +4389,7 @@ callback) {
   return (0,external_wp_element_namespaceObject.useCallback)((...args) => ref.current?.(...args), []);
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-isomorphic-layout-effect/index.js
+;// ./packages/compose/build-module/hooks/use-isomorphic-layout-effect/index.js
 /**
  * WordPress dependencies
  */
@@ -4402,7 +4403,7 @@ callback) {
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? external_wp_element_namespaceObject.useLayoutEffect : external_wp_element_namespaceObject.useEffect;
 /* harmony default export */ const use_isomorphic_layout_effect = (useIsomorphicLayoutEffect);
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-dragging/index.js
+;// ./packages/compose/build-module/hooks/use-dragging/index.js
 /**
  * WordPress dependencies
  */
@@ -4476,11 +4477,12 @@ function useDragging({
 }
 
 // EXTERNAL MODULE: ./node_modules/mousetrap/mousetrap.js
-var mousetrap_mousetrap = __webpack_require__(7973);
+var mousetrap_mousetrap = __webpack_require__(1933);
 var mousetrap_default = /*#__PURE__*/__webpack_require__.n(mousetrap_mousetrap);
 // EXTERNAL MODULE: ./node_modules/mousetrap/plugins/global-bind/mousetrap-global-bind.js
-var mousetrap_global_bind = __webpack_require__(5538);
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-keyboard-shortcut/index.js
+var mousetrap_global_bind = __webpack_require__(5760);
+;// ./packages/compose/build-module/hooks/use-keyboard-shortcut/index.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -4563,7 +4565,7 @@ shortcuts, callback, {
 }
 /* harmony default export */ const use_keyboard_shortcut = (useKeyboardShortcut);
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-media-query/index.js
+;// ./packages/compose/build-module/hooks/use-media-query/index.js
 /**
  * WordPress dependencies
  */
@@ -4623,7 +4625,7 @@ function useMediaQuery(query) {
   return (0,external_wp_element_namespaceObject.useSyncExternalStore)(source.subscribe, source.getValue, () => false);
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-previous/index.js
+;// ./packages/compose/build-module/hooks/use-previous/index.js
 /**
  * WordPress dependencies
  */
@@ -4649,7 +4651,7 @@ function usePrevious(value) {
   return ref.current;
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-reduced-motion/index.js
+;// ./packages/compose/build-module/hooks/use-reduced-motion/index.js
 /**
  * Internal dependencies
  */
@@ -4663,7 +4665,7 @@ function usePrevious(value) {
 const useReducedMotion = () => useMediaQuery('(prefers-reduced-motion: reduce)');
 /* harmony default export */ const use_reduced_motion = (useReducedMotion);
 
-;// CONCATENATED MODULE: ./packages/undo-manager/build-module/index.js
+;// ./packages/undo-manager/build-module/index.js
 /**
  * WordPress dependencies
  */
@@ -4835,7 +4837,7 @@ function createUndoManager() {
   };
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-state-with-history/index.js
+;// ./packages/compose/build-module/hooks/use-state-with-history/index.js
 /**
  * WordPress dependencies
  */
@@ -4923,7 +4925,7 @@ function useStateWithHistory(initialValue) {
   };
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-viewport-match/index.js
+;// ./packages/compose/build-module/hooks/use-viewport-match/index.js
 /**
  * WordPress dependencies
  */
@@ -5008,7 +5010,7 @@ const useViewportMatch = (breakpoint, operator = '>=') => {
 useViewportMatch.__experimentalWidthProvider = ViewportMatchWidthContext.Provider;
 /* harmony default export */ const use_viewport_match = (useViewportMatch);
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-resize-observer/use-resize-observer.js
+;// ./packages/compose/build-module/hooks/use-resize-observer/use-resize-observer.js
 /**
  * WordPress dependencies
  */
@@ -5052,7 +5054,7 @@ function useResizeObserver(callback, resizeObserverOptions = {}) {
   });
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-resize-observer/legacy/index.js
+;// ./packages/compose/build-module/hooks/use-resize-observer/legacy/index.js
 /**
  * External dependencies
  */
@@ -5183,7 +5185,7 @@ function useLegacyResizeObserver() {
   return [resizeElement, size];
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-resize-observer/index.js
+;// ./packages/compose/build-module/hooks/use-resize-observer/index.js
 /**
  * Internal dependencies
  */
@@ -5247,9 +5249,9 @@ function use_resize_observer_useResizeObserver(callback, options = {}) {
   return callback ? useResizeObserver(callback, options) : useLegacyResizeObserver();
 }
 
-;// CONCATENATED MODULE: external ["wp","priorityQueue"]
+;// external ["wp","priorityQueue"]
 const external_wp_priorityQueue_namespaceObject = window["wp"]["priorityQueue"];
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-async-list/index.js
+;// ./packages/compose/build-module/hooks/use-async-list/index.js
 /**
  * WordPress dependencies
  */
@@ -5311,7 +5313,7 @@ function useAsyncList(list, config = {
 }
 /* harmony default export */ const use_async_list = (useAsyncList);
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-warn-on-change/index.js
+;// ./packages/compose/build-module/hooks/use-warn-on-change/index.js
 /**
  * Internal dependencies
  */
@@ -5350,9 +5352,9 @@ function useWarnOnChange(object, prefix = 'Change detection') {
 }
 /* harmony default export */ const use_warn_on_change = (useWarnOnChange);
 
-;// CONCATENATED MODULE: external "React"
+;// external "React"
 const external_React_namespaceObject = window["React"];
-;// CONCATENATED MODULE: ./node_modules/use-memo-one/dist/use-memo-one.esm.js
+;// ./node_modules/use-memo-one/dist/use-memo-one.esm.js
 
 
 function areInputsEqual(newInputs, lastInputs) {
@@ -5397,7 +5399,7 @@ var useCallback = (/* unused pure expression or super */ null && (useCallbackOne
 
 
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-debounce/index.js
+;// ./packages/compose/build-module/hooks/use-debounce/index.js
 /**
  * External dependencies
  */
@@ -5434,7 +5436,7 @@ function useDebounce(fn, wait, options) {
   return debounced;
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-debounced-input/index.js
+;// ./packages/compose/build-module/hooks/use-debounced-input/index.js
 /**
  * WordPress dependencies
  */
@@ -5461,7 +5463,7 @@ function useDebouncedInput(defaultValue = '') {
   return [input, setInput, debouncedInput];
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-throttle/index.js
+;// ./packages/compose/build-module/hooks/use-throttle/index.js
 /**
  * External dependencies
  */
@@ -5498,7 +5500,7 @@ function useThrottle(fn, wait, options) {
   return throttled;
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-drop-zone/index.js
+;// ./packages/compose/build-module/hooks/use-drop-zone/index.js
 /**
  * WordPress dependencies
  */
@@ -5709,7 +5711,7 @@ function useDropZone({
   );
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-focusable-iframe/index.js
+;// ./packages/compose/build-module/hooks/use-focusable-iframe/index.js
 /**
  * External dependencies
  */
@@ -5756,7 +5758,7 @@ function useFocusableIframe() {
   }, []);
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-fixed-window-list/index.js
+;// ./packages/compose/build-module/hooks/use-fixed-window-list/index.js
 /**
  * WordPress dependencies
  */
@@ -5892,7 +5894,7 @@ function useFixedWindowList(elementRef, itemHeight, totalItems, options) {
   return [fixedListWindow, setFixedListWindow];
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/hooks/use-observable-value/index.js
+;// ./packages/compose/build-module/hooks/use-observable-value/index.js
 /**
  * WordPress dependencies
  */
@@ -5919,7 +5921,7 @@ function useObservableValue(map, name) {
   return (0,external_wp_element_namespaceObject.useSyncExternalStore)(subscribe, getValue, getValue);
 }
 
-;// CONCATENATED MODULE: ./packages/compose/build-module/index.js
+;// ./packages/compose/build-module/index.js
 // The `createHigherOrderComponent` helper and helper types.
 
 // The `debounce` helper and its types.

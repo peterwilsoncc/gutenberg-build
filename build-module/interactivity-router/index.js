@@ -1,12 +1,12 @@
 import * as __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__ from "@wordpress/interactivity";
 /******/ var __webpack_modules__ = ({
 
-/***/ 343:
+/***/ 195:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   B: () => (/* binding */ updateHead),
-/* harmony export */   J: () => (/* binding */ fetchHeadAssets)
+/* harmony export */   U: () => (/* binding */ fetchHeadAssets),
+/* harmony export */   y: () => (/* binding */ updateHead)
 /* harmony export */ });
 /**
  * Helper to update only the necessary tags in the head.
@@ -107,16 +107,16 @@ const fetchHeadAssets = async (doc, headElements) => {
 
 /***/ }),
 
-/***/ 126:
+/***/ 873:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   N: () => (/* binding */ actions),
-/* harmony export */   S: () => (/* binding */ state)
+/* harmony export */   o: () => (/* binding */ actions),
+/* harmony export */   w: () => (/* binding */ state)
 /* harmony export */ });
-/* harmony import */ var _wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(998);
-/* harmony import */ var _head__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(343);
+/* harmony import */ var _wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(833);
+/* harmony import */ var _head__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(195);
 var _getConfig$navigation;
 /**
  * WordPress dependencies
@@ -181,7 +181,7 @@ const regionsToVdom = async (dom, {
   let head;
   if (true) {
     if (navigationMode === 'fullPage') {
-      head = await (0,_head__WEBPACK_IMPORTED_MODULE_1__/* .fetchHeadAssets */ .J)(dom, headElements);
+      head = await (0,_head__WEBPACK_IMPORTED_MODULE_1__/* .fetchHeadAssets */ .U)(dom, headElements);
       regions.body = vdom ? vdom.get(document.body) : toVdom(dom.body);
     }
   }
@@ -208,7 +208,7 @@ const renderRegions = page => {
     if (true) {
       if (navigationMode === 'fullPage') {
         // Once this code is tested and more mature, the head should be updated for region based navigation as well.
-        (0,_head__WEBPACK_IMPORTED_MODULE_1__/* .updateHead */ .B)(page.head);
+        (0,_head__WEBPACK_IMPORTED_MODULE_1__/* .updateHead */ .y)(page.head);
         const fragment = getRegionRootFragment(document.body);
         render(page.regions.body, fragment);
       }
@@ -269,7 +269,7 @@ if (true) {
         text: script.textContent
       });
     });
-    await (0,_head__WEBPACK_IMPORTED_MODULE_1__/* .fetchHeadAssets */ .J)(document, headElements);
+    await (0,_head__WEBPACK_IMPORTED_MODULE_1__/* .fetchHeadAssets */ .U)(document, headElements);
   }
 }
 pages.set(getPagePath(window.location.href), Promise.resolve(regionsToVdom(document, {
@@ -469,7 +469,7 @@ function a11ySpeak(messageKey) {
     }
   }
   const message = navigationTexts[messageKey];
-  Promise.resolve(/* import() */).then(__webpack_require__.bind(__webpack_require__, 105)).then(({
+  Promise.resolve(/* import() */).then(__webpack_require__.bind(__webpack_require__, 317)).then(({
     speak
   }) => speak(message),
   // Ignore failures to load the a11y module.
@@ -504,19 +504,21 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 105:
+/***/ 317:
 /***/ ((module) => {
 
 module.exports = import("@wordpress/a11y");;
 
 /***/ }),
 
-/***/ 998:
+/***/ 833:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var x = y => { var x = {}; __webpack_require__.d(x, y); return x; }
-var y = x => () => x
-module.exports = x({ ["getConfig"]: () => __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__.getConfig, ["privateApis"]: () => __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__.privateApis, ["store"]: () => __WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__.store });
+var x = (y) => {
+	var x = {}; __webpack_require__.d(x, y); return x
+} 
+var y = (x) => (() => (x))
+module.exports = x({ ["getConfig"]: () => (__WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__.getConfig), ["privateApis"]: () => (__WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__.privateApis), ["store"]: () => (__WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__.store) });
 
 /***/ })
 
@@ -638,9 +640,9 @@ module.exports = x({ ["getConfig"]: () => __WEBPACK_EXTERNAL_MODULE__wordpress_i
 /******/ // startup
 /******/ // Load entry module and return exports
 /******/ // This entry module used 'module' so it can't be inlined
-/******/ var __webpack_exports__ = __webpack_require__(126);
+/******/ var __webpack_exports__ = __webpack_require__(873);
 /******/ __webpack_exports__ = await __webpack_exports__;
-/******/ var __webpack_exports__actions = __webpack_exports__.N;
-/******/ var __webpack_exports__state = __webpack_exports__.S;
+/******/ var __webpack_exports__actions = __webpack_exports__.o;
+/******/ var __webpack_exports__state = __webpack_exports__.w;
 /******/ export { __webpack_exports__actions as actions, __webpack_exports__state as state };
 /******/ 

@@ -90,19 +90,19 @@ __webpack_require__.d(resolvers_namespaceObject, {
   getDownloadableBlocks: () => (resolvers_getDownloadableBlocks)
 });
 
-;// CONCATENATED MODULE: external ["wp","plugins"]
+;// external ["wp","plugins"]
 const external_wp_plugins_namespaceObject = window["wp"]["plugins"];
-;// CONCATENATED MODULE: external ["wp","hooks"]
+;// external ["wp","hooks"]
 const external_wp_hooks_namespaceObject = window["wp"]["hooks"];
-;// CONCATENATED MODULE: external ["wp","blocks"]
+;// external ["wp","blocks"]
 const external_wp_blocks_namespaceObject = window["wp"]["blocks"];
-;// CONCATENATED MODULE: external ["wp","data"]
+;// external ["wp","data"]
 const external_wp_data_namespaceObject = window["wp"]["data"];
-;// CONCATENATED MODULE: external ["wp","element"]
+;// external ["wp","element"]
 const external_wp_element_namespaceObject = window["wp"]["element"];
-;// CONCATENATED MODULE: external ["wp","editor"]
+;// external ["wp","editor"]
 const external_wp_editor_namespaceObject = window["wp"]["editor"];
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/store/reducer.js
+;// ./packages/block-directory/build-module/store/reducer.js
 /**
  * WordPress dependencies
  */
@@ -205,9 +205,9 @@ const errorNotices = (state = {}, action) => {
   errorNotices
 }));
 
-;// CONCATENATED MODULE: external ["wp","blockEditor"]
+;// external ["wp","blockEditor"]
 const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/store/utils/has-block-type.js
+;// ./packages/block-directory/build-module/store/utils/has-block-type.js
 /**
  * Check if a block list contains a specific block type. Recursively searches
  * through `innerBlocks` if they exist.
@@ -234,7 +234,7 @@ function hasBlockType(blockType, blocks = []) {
   return false;
 }
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/store/selectors.js
+;// ./packages/block-directory/build-module/store/selectors.js
 /**
  * WordPress dependencies
  */
@@ -347,16 +347,16 @@ function getErrorNoticeForBlock(state, blockId) {
   return state.errorNotices[blockId];
 }
 
-;// CONCATENATED MODULE: external ["wp","i18n"]
+;// external ["wp","i18n"]
 const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
-;// CONCATENATED MODULE: external ["wp","apiFetch"]
+;// external ["wp","apiFetch"]
 const external_wp_apiFetch_namespaceObject = window["wp"]["apiFetch"];
 var external_wp_apiFetch_default = /*#__PURE__*/__webpack_require__.n(external_wp_apiFetch_namespaceObject);
-;// CONCATENATED MODULE: external ["wp","notices"]
+;// external ["wp","notices"]
 const external_wp_notices_namespaceObject = window["wp"]["notices"];
-;// CONCATENATED MODULE: external ["wp","url"]
+;// external ["wp","url"]
 const external_wp_url_namespaceObject = window["wp"]["url"];
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/store/load-assets.js
+;// ./packages/block-directory/build-module/store/load-assets.js
 /**
  * WordPress dependencies
  */
@@ -428,7 +428,7 @@ async function loadAssets() {
   }
 }
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/store/utils/get-plugin-url.js
+;// ./packages/block-directory/build-module/store/utils/get-plugin-url.js
 /**
  * Get the plugin's direct API link out of a block-directory response.
  *
@@ -447,7 +447,7 @@ function getPluginUrl(block) {
   return false;
 }
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/store/actions.js
+;// ./packages/block-directory/build-module/store/actions.js
 /**
  * WordPress dependencies
  */
@@ -705,7 +705,7 @@ function clearErrorNotice(blockId) {
   };
 }
 
-;// CONCATENATED MODULE: ./node_modules/tslib/tslib.es6.mjs
+;// ./node_modules/tslib/tslib.es6.mjs
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -1080,7 +1080,7 @@ function __disposeResources(env) {
   __disposeResources,
 });
 
-;// CONCATENATED MODULE: ./node_modules/lower-case/dist.es2015/index.js
+;// ./node_modules/lower-case/dist.es2015/index.js
 /**
  * Source: ftp://ftp.unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt
  */
@@ -1129,7 +1129,7 @@ function lowerCase(str) {
     return str.toLowerCase();
 }
 
-;// CONCATENATED MODULE: ./node_modules/no-case/dist.es2015/index.js
+;// ./node_modules/no-case/dist.es2015/index.js
 
 // Support camel case ("camelCase" -> "camel Case" and "CAMELCase" -> "CAMEL Case").
 var DEFAULT_SPLIT_REGEXP = [/([a-z0-9])([A-Z])/g, /([A-Z])([A-Z][a-z])/g];
@@ -1161,7 +1161,7 @@ function replace(input, re, value) {
     return re.reduce(function (input, re) { return input.replace(re, value); }, input);
 }
 
-;// CONCATENATED MODULE: ./node_modules/pascal-case/dist.es2015/index.js
+;// ./node_modules/pascal-case/dist.es2015/index.js
 
 
 function pascalCaseTransform(input, index) {
@@ -1180,7 +1180,7 @@ function pascalCase(input, options) {
     return noCase(input, __assign({ delimiter: "", transform: pascalCaseTransform }, options));
 }
 
-;// CONCATENATED MODULE: ./node_modules/camel-case/dist.es2015/index.js
+;// ./node_modules/camel-case/dist.es2015/index.js
 
 
 function camelCaseTransform(input, index) {
@@ -1198,7 +1198,7 @@ function camelCase(input, options) {
     return pascalCase(input, __assign({ transform: camelCaseTransform }, options));
 }
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/store/resolvers.js
+;// ./packages/block-directory/build-module/store/resolvers.js
 /**
  * External dependencies
  */
@@ -1229,7 +1229,7 @@ const resolvers_getDownloadableBlocks = filterValue => async ({
   } catch {}
 };
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/store/index.js
+;// ./packages/block-directory/build-module/store/index.js
 /**
  * WordPress dependencies
  */
@@ -1272,7 +1272,7 @@ const storeConfig = {
 const store = (0,external_wp_data_namespaceObject.createReduxStore)(STORE_NAME, storeConfig);
 (0,external_wp_data_namespaceObject.register)(store);
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/components/auto-block-uninstaller/index.js
+;// ./packages/block-directory/build-module/components/auto-block-uninstaller/index.js
 /**
  * WordPress dependencies
  */
@@ -1308,17 +1308,17 @@ function AutoBlockUninstaller() {
   return null;
 }
 
-;// CONCATENATED MODULE: external ["wp","compose"]
+;// external ["wp","compose"]
 const external_wp_compose_namespaceObject = window["wp"]["compose"];
-;// CONCATENATED MODULE: external ["wp","components"]
+;// external ["wp","components"]
 const external_wp_components_namespaceObject = window["wp"]["components"];
-;// CONCATENATED MODULE: external ["wp","coreData"]
+;// external ["wp","coreData"]
 const external_wp_coreData_namespaceObject = window["wp"]["coreData"];
-;// CONCATENATED MODULE: ./node_modules/clsx/dist/clsx.mjs
+;// ./node_modules/clsx/dist/clsx.mjs
 function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
-;// CONCATENATED MODULE: external ["wp","htmlEntities"]
+;// external ["wp","htmlEntities"]
 const external_wp_htmlEntities_namespaceObject = window["wp"]["htmlEntities"];
-;// CONCATENATED MODULE: ./packages/icons/build-module/icon/index.js
+;// ./packages/icons/build-module/icon/index.js
 /**
  * WordPress dependencies
  */
@@ -1350,11 +1350,11 @@ function Icon({
 }
 /* harmony default export */ const icon = ((0,external_wp_element_namespaceObject.forwardRef)(Icon));
 
-;// CONCATENATED MODULE: external ["wp","primitives"]
+;// external ["wp","primitives"]
 const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
-;// CONCATENATED MODULE: external "ReactJSXRuntime"
+;// external "ReactJSXRuntime"
 const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/star-filled.js
+;// ./packages/icons/build-module/library/star-filled.js
 /**
  * WordPress dependencies
  */
@@ -1369,7 +1369,7 @@ const starFilled = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 });
 /* harmony default export */ const star_filled = (starFilled);
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/star-half.js
+;// ./packages/icons/build-module/library/star-half.js
 /**
  * WordPress dependencies
  */
@@ -1384,7 +1384,7 @@ const starHalf = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(e
 });
 /* harmony default export */ const star_half = (starHalf);
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/star-empty.js
+;// ./packages/icons/build-module/library/star-empty.js
 /**
  * WordPress dependencies
  */
@@ -1401,7 +1401,7 @@ const starEmpty = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 });
 /* harmony default export */ const star_empty = (starEmpty);
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/components/block-ratings/stars.js
+;// ./packages/block-directory/build-module/components/block-ratings/stars.js
 /**
  * WordPress dependencies
  */
@@ -1442,7 +1442,7 @@ function Stars({
 }
 /* harmony default export */ const stars = (Stars);
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/components/block-ratings/index.js
+;// ./packages/block-directory/build-module/components/block-ratings/index.js
 /**
  * Internal dependencies
  */
@@ -1458,7 +1458,7 @@ const BlockRatings = ({
 });
 /* harmony default export */ const block_ratings = (BlockRatings);
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/components/downloadable-block-icon/index.js
+;// ./packages/block-directory/build-module/components/downloadable-block-icon/index.js
 /**
  * WordPress dependencies
  */
@@ -1480,7 +1480,7 @@ function DownloadableBlockIcon({
 }
 /* harmony default export */ const downloadable_block_icon = (DownloadableBlockIcon);
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/components/downloadable-block-notice/index.js
+;// ./packages/block-directory/build-module/components/downloadable-block-notice/index.js
 /**
  * WordPress dependencies
  */
@@ -1510,7 +1510,7 @@ const DownloadableBlockNotice = ({
 };
 /* harmony default export */ const downloadable_block_notice = (DownloadableBlockNotice);
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/components/downloadable-block-list-item/index.js
+;// ./packages/block-directory/build-module/components/downloadable-block-list-item/index.js
 /**
  * External dependencies
  */
@@ -1661,7 +1661,7 @@ function DownloadableBlockListItem({
 }
 /* harmony default export */ const downloadable_block_list_item = (DownloadableBlockListItem);
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/components/downloadable-blocks-list/index.js
+;// ./packages/block-directory/build-module/components/downloadable-blocks-list/index.js
 /**
  * WordPress dependencies
  */
@@ -1717,9 +1717,9 @@ function DownloadableBlocksList({
 }
 /* harmony default export */ const downloadable_blocks_list = (DownloadableBlocksList);
 
-;// CONCATENATED MODULE: external ["wp","a11y"]
+;// external ["wp","a11y"]
 const external_wp_a11y_namespaceObject = window["wp"]["a11y"];
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/components/downloadable-blocks-panel/inserter-panel.js
+;// ./packages/block-directory/build-module/components/downloadable-blocks-panel/inserter-panel.js
 /**
  * WordPress dependencies
  */
@@ -1762,7 +1762,7 @@ function DownloadableBlocksInserterPanel({
 }
 /* harmony default export */ const inserter_panel = (DownloadableBlocksInserterPanel);
 
-;// CONCATENATED MODULE: ./packages/icons/build-module/library/block-default.js
+;// ./packages/icons/build-module/library/block-default.js
 /**
  * WordPress dependencies
  */
@@ -1777,7 +1777,7 @@ const blockDefault = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 });
 /* harmony default export */ const block_default = (blockDefault);
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/components/downloadable-blocks-panel/no-results.js
+;// ./packages/block-directory/build-module/components/downloadable-blocks-panel/no-results.js
 /**
  * WordPress dependencies
  */
@@ -1810,7 +1810,7 @@ function DownloadableBlocksNoResults() {
 }
 /* harmony default export */ const no_results = (DownloadableBlocksNoResults);
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/components/downloadable-blocks-panel/index.js
+;// ./packages/block-directory/build-module/components/downloadable-blocks-panel/index.js
 /**
  * WordPress dependencies
  */
@@ -1919,7 +1919,7 @@ function DownloadableBlocksPanel({
   });
 }
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/plugins/inserter-menu-downloadable-blocks-panel/index.js
+;// ./packages/block-directory/build-module/plugins/inserter-menu-downloadable-blocks-panel/index.js
 /**
  * WordPress dependencies
  */
@@ -1960,7 +1960,7 @@ function InserterMenuDownloadableBlocksPanel() {
 }
 /* harmony default export */ const inserter_menu_downloadable_blocks_panel = (InserterMenuDownloadableBlocksPanel);
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/components/compact-list/index.js
+;// ./packages/block-directory/build-module/components/compact-list/index.js
 /**
  * WordPress dependencies
  */
@@ -2005,7 +2005,7 @@ function CompactList({
   });
 }
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/plugins/installed-blocks-pre-publish-panel/index.js
+;// ./packages/block-directory/build-module/plugins/installed-blocks-pre-publish-panel/index.js
 /**
  * WordPress dependencies
  */
@@ -2041,7 +2041,7 @@ function InstalledBlocksPrePublishPanel() {
   });
 }
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/plugins/get-install-missing/install-button.js
+;// ./packages/block-directory/build-module/plugins/get-install-missing/install-button.js
 /**
  * WordPress dependencies
  */
@@ -2088,7 +2088,7 @@ function InstallButton({
   });
 }
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/plugins/get-install-missing/index.js
+;// ./packages/block-directory/build-module/plugins/get-install-missing/index.js
 /**
  * WordPress dependencies
  */
@@ -2194,7 +2194,7 @@ const ModifiedWarning = ({
 };
 /* harmony default export */ const get_install_missing = (getInstallMissing);
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/plugins/index.js
+;// ./packages/block-directory/build-module/plugins/index.js
 /**
  * WordPress dependencies
  */
@@ -2226,7 +2226,7 @@ const ModifiedWarning = ({
   return settings;
 });
 
-;// CONCATENATED MODULE: ./packages/block-directory/build-module/index.js
+;// ./packages/block-directory/build-module/index.js
 /**
  * Internal dependencies
  */
