@@ -75797,11 +75797,9 @@ const AdvancedControls = () => {
 /* harmony default export */ const advanced_controls_panel = (AdvancedControls);
 
 ;// ./packages/block-editor/build-module/components/inspector-controls-tabs/position-controls-panel.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
-
 
 
 
@@ -75813,37 +75811,67 @@ const AdvancedControls = () => {
 
 
 
-const PositionControlsPanel = () => {
-  const [initialOpen, setInitialOpen] = (0,external_wp_element_namespaceObject.useState)();
 
-  // Determine whether the panel should be expanded.
+
+const PositionControlsPanel = () => {
   const {
-    multiSelectedBlocks
+    selectedClientIds,
+    selectedBlocks,
+    hasPositionAttribute
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlocksByClientId,
       getSelectedBlockClientIds
     } = select(store);
-    const clientIds = getSelectedBlockClientIds();
+    const selectedBlockClientIds = getSelectedBlockClientIds();
+    const _selectedBlocks = getBlocksByClientId(selectedBlockClientIds);
     return {
-      multiSelectedBlocks: getBlocksByClientId(clientIds)
+      selectedClientIds: selectedBlockClientIds,
+      selectedBlocks: _selectedBlocks,
+      hasPositionAttribute: _selectedBlocks?.some(({
+        attributes
+      }) => !!attributes?.style?.position?.type)
     };
   }, []);
-  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    // If any selected block has a position set, open the panel by default.
-    // The first block's value will still be used within the control though.
-    if (initialOpen === undefined) {
-      setInitialOpen(multiSelectedBlocks.some(({
-        attributes
-      }) => !!attributes?.style?.position?.type));
+  const {
+    updateBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  function resetPosition() {
+    if (!selectedClientIds?.length || !selectedBlocks?.length) {
+      return;
     }
-  }, [initialOpen, multiSelectedBlocks, setInitialOpen]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
+    const attributesByClientId = Object.fromEntries(selectedBlocks?.map(({
+      clientId,
+      attributes
+    }) => [clientId, {
+      style: utils_cleanEmptyObject({
+        ...attributes?.style,
+        position: {
+          ...attributes?.style?.position,
+          type: undefined,
+          top: undefined,
+          right: undefined,
+          bottom: undefined,
+          left: undefined
+        }
+      })
+    }]));
+    updateBlockAttributes(selectedClientIds, attributesByClientId, true);
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
     className: "block-editor-block-inspector__position",
-    title: (0,external_wp_i18n_namespaceObject.__)('Position'),
-    initialOpen: initialOpen !== null && initialOpen !== void 0 ? initialOpen : false,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-      group: "position"
+    label: (0,external_wp_i18n_namespaceObject.__)('Position'),
+    resetAll: resetPosition,
+    dropdownMenuProps: dropdownMenuProps,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      isShownByDefault: hasPositionAttribute,
+      label: (0,external_wp_i18n_namespaceObject.__)('Position'),
+      hasValue: () => hasPositionAttribute,
+      onDeselect: resetPosition,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
+        group: "position"
+      })
     })
   });
 };
