@@ -19584,54 +19584,6 @@ function getSliderValueFromPreset(presetValue, spacingSizes) {
 }
 
 /**
- * Gets an items with the most occurrence within an array
- * https://stackoverflow.com/a/20762713
- *
- * @param {Array<any>} arr Array of items to check.
- * @return {any} The item with the most occurrences.
- */
-function mode(arr) {
-  return arr.sort((a, b) => arr.filter(v => v === a).length - arr.filter(v => v === b).length).pop();
-}
-
-/**
- * Gets the 'all' input value from values data.
- *
- * @param {Object} values Box spacing values
- *
- * @return {string} The most common value from all sides of box.
- */
-function getAllRawValue(values = {}) {
-  return mode(Object.values(values));
-}
-
-/**
- * Checks to determine if values are mixed.
- *
- * @param {Object} values Box values.
- * @param {Array}  sides  Sides that values relate to.
- *
- * @return {boolean} Whether values are mixed.
- */
-function isValuesMixed(values = {}, sides = ALL_SIDES) {
-  return Object.values(values).length >= 1 && Object.values(values).length < sides.length || new Set(Object.values(values)).size > 1;
-}
-
-/**
- * Checks to determine if values are defined.
- *
- * @param {Object} values Box values.
- *
- * @return {boolean} Whether values are defined.
- */
-function isValuesDefined(values) {
-  if (values === undefined || values === null) {
-    return false;
-  }
-  return Object.values(values).filter(value => !!value).length > 0;
-}
-
-/**
  * Determines whether a particular axis has support. If no axis is
  * specified, this function checks if either axis is supported.
  *
@@ -19653,62 +19605,6 @@ function hasAxisSupport(sides, axis) {
     return hasVerticalSupport;
   }
   return hasHorizontalSupport || hasVerticalSupport;
-}
-
-/**
- * Determines which menu options should be included in the SidePicker.
- *
- * @param {Array} sides Supported sides.
- *
- * @return {Object} Menu options with each option containing label & icon.
- */
-function getSupportedMenuItems(sides) {
-  if (!sides || !sides.length) {
-    return {};
-  }
-  const menuItems = {};
-
-  // Determine the primary "side" menu options.
-  const hasHorizontalSupport = hasAxisSupport(sides, 'horizontal');
-  const hasVerticalSupport = hasAxisSupport(sides, 'vertical');
-  if (hasHorizontalSupport && hasVerticalSupport) {
-    menuItems.axial = {
-      label: LABELS.axial,
-      icon: ICONS.axial
-    };
-  } else if (hasHorizontalSupport) {
-    menuItems.axial = {
-      label: LABELS.horizontal,
-      icon: ICONS.horizontal
-    };
-  } else if (hasVerticalSupport) {
-    menuItems.axial = {
-      label: LABELS.vertical,
-      icon: ICONS.vertical
-    };
-  }
-
-  // Track whether we have any individual sides so we can omit the custom
-  // option if required.
-  let numberOfIndividualSides = 0;
-  ALL_SIDES.forEach(side => {
-    if (sides.includes(side)) {
-      numberOfIndividualSides += 1;
-      menuItems[side] = {
-        label: LABELS[side],
-        icon: ICONS[side]
-      };
-    }
-  });
-
-  // Add custom item if there are enough sides to warrant a separated view.
-  if (numberOfIndividualSides > 1) {
-    menuItems.custom = {
-      label: LABELS.custom,
-      icon: ICONS.custom
-    };
-  }
-  return menuItems;
 }
 
 /**
@@ -25948,7 +25844,8 @@ function addTransforms(result, source, index, results) {
   // if source N does not exists we do nothing.
   if (source[index]) {
     const originClassName = source[index]?.attributes.className;
-    if (originClassName) {
+    // Avoid overriding classes if the transformed block already includes them.
+    if (originClassName && result.attributes.className === undefined) {
       return {
         ...result,
         attributes: {
@@ -26200,7 +26097,7 @@ function useMultipleOriginColorsAndGradients() {
  * @param {Array<any>} inputArray Array of items to check.
  * @return {any}                  The item with the most occurrences.
  */
-function utils_mode(inputArray) {
+function mode(inputArray) {
   const arr = [...inputArray];
   return arr.sort((a, b) => inputArray.filter(v => v === b).length - inputArray.filter(v => v === a).length).shift();
 }
@@ -26220,7 +26117,7 @@ function getAllUnit(selectedUnits = {}) {
     flat,
     ...cornerUnits
   } = selectedUnits;
-  return flat || utils_mode(Object.values(cornerUnits).filter(Boolean)) || 'px';
+  return flat || mode(Object.values(cornerUnits).filter(Boolean)) || 'px';
 }
 
 /**
@@ -26245,7 +26142,7 @@ function getAllValue(values = {}) {
   });
   const allUnits = parsedQuantitiesAndUnits.map(value => value[1]);
   const value = allValues.every(v => v === allValues[0]) ? allValues[0] : '';
-  const unit = utils_mode(allUnits);
+  const unit = mode(allUnits);
   const allValue = value === 0 || value ? `${value}${unit}` : undefined;
   return allValue;
 }
@@ -55853,8 +55750,19 @@ function InserterMenu({
   __experimentalInitialTab,
   __experimentalInitialCategory
 }, ref) {
-  const isZoomOutMode = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).isZoomOut(), []);
-  const hasSectionRootClientId = (0,external_wp_data_namespaceObject.useSelect)(select => !!unlock(select(store)).getSectionRootClientId(), []);
+  const {
+    isZoomOutMode,
+    hasSectionRootClientId
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      isZoomOut,
+      getSectionRootClientId
+    } = unlock(select(store));
+    return {
+      isZoomOutMode: isZoomOut(),
+      hasSectionRootClientId: !!getSectionRootClientId()
+    };
+  }, []);
   const [filterValue, setFilterValue, delayedFilterValue] = (0,external_wp_compose_namespaceObject.useDebouncedInput)(__experimentalFilterValue);
   const [hoveredItem, setHoveredItem] = (0,external_wp_element_namespaceObject.useState)(null);
   const [selectedPatternCategory, setSelectedPatternCategory] = (0,external_wp_element_namespaceObject.useState)(__experimentalInitialCategory);
@@ -75785,11 +75693,9 @@ const AdvancedControls = () => {
 /* harmony default export */ const advanced_controls_panel = (AdvancedControls);
 
 ;// ./packages/block-editor/build-module/components/inspector-controls-tabs/position-controls-panel.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
-
 
 
 
@@ -75801,37 +75707,67 @@ const AdvancedControls = () => {
 
 
 
-const PositionControlsPanel = () => {
-  const [initialOpen, setInitialOpen] = (0,external_wp_element_namespaceObject.useState)();
 
-  // Determine whether the panel should be expanded.
+
+const PositionControlsPanel = () => {
   const {
-    multiSelectedBlocks
+    selectedClientIds,
+    selectedBlocks,
+    hasPositionAttribute
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlocksByClientId,
       getSelectedBlockClientIds
     } = select(store);
-    const clientIds = getSelectedBlockClientIds();
+    const selectedBlockClientIds = getSelectedBlockClientIds();
+    const _selectedBlocks = getBlocksByClientId(selectedBlockClientIds);
     return {
-      multiSelectedBlocks: getBlocksByClientId(clientIds)
+      selectedClientIds: selectedBlockClientIds,
+      selectedBlocks: _selectedBlocks,
+      hasPositionAttribute: _selectedBlocks?.some(({
+        attributes
+      }) => !!attributes?.style?.position?.type)
     };
   }, []);
-  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    // If any selected block has a position set, open the panel by default.
-    // The first block's value will still be used within the control though.
-    if (initialOpen === undefined) {
-      setInitialOpen(multiSelectedBlocks.some(({
-        attributes
-      }) => !!attributes?.style?.position?.type));
+  const {
+    updateBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  function resetPosition() {
+    if (!selectedClientIds?.length || !selectedBlocks?.length) {
+      return;
     }
-  }, [initialOpen, multiSelectedBlocks, setInitialOpen]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
+    const attributesByClientId = Object.fromEntries(selectedBlocks?.map(({
+      clientId,
+      attributes
+    }) => [clientId, {
+      style: utils_cleanEmptyObject({
+        ...attributes?.style,
+        position: {
+          ...attributes?.style?.position,
+          type: undefined,
+          top: undefined,
+          right: undefined,
+          bottom: undefined,
+          left: undefined
+        }
+      })
+    }]));
+    updateBlockAttributes(selectedClientIds, attributesByClientId, true);
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
     className: "block-editor-block-inspector__position",
-    title: (0,external_wp_i18n_namespaceObject.__)('Position'),
-    initialOpen: initialOpen !== null && initialOpen !== void 0 ? initialOpen : false,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-      group: "position"
+    label: (0,external_wp_i18n_namespaceObject.__)('Position'),
+    resetAll: resetPosition,
+    dropdownMenuProps: dropdownMenuProps,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      isShownByDefault: hasPositionAttribute,
+      label: (0,external_wp_i18n_namespaceObject.__)('Position'),
+      hasValue: () => hasPositionAttribute,
+      onDeselect: resetPosition,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
+        group: "position"
+      })
     })
   });
 };
