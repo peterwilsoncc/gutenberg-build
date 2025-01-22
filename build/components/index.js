@@ -42834,6 +42834,7 @@ function LinkedButton({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -42962,6 +42963,11 @@ function BoxControl({
     size: undefined
   });
   const sidesToRender = getAllowedSides(sides);
+  if (presets && !presetKey || !presets && presetKey) {
+    const definedProp = presets ? 'presets' : 'presetKey';
+    const missingProp = presets ? 'presetKey' : 'presets';
+     false ? 0 : void 0;
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(grid_component, {
     id: id,
     columns: 3,
