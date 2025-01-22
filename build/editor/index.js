@@ -14861,7 +14861,7 @@ const ExperimentalEditorProvider = with_registry_provider(({
     } = select(external_wp_coreData_namespaceObject.store);
     const postTypeSupports = getPostType(post.type)?.supports;
     const hasLoadedPostObject = hasFinishedResolution('getPostType', [post.type]);
-    const _defaultMode = Array.isArray(postTypeSupports?.editor) ? postTypeSupports.editor.find(features => 'default-mode' in features)?.['default-mode'] : undefined;
+    const _defaultMode = Array.isArray(postTypeSupports?.editor) ? postTypeSupports.editor.find(features => 'default_mode' in features)?.default_mode : undefined;
     const hasDefaultMode = RENDERING_MODES.includes(_defaultMode);
     return {
       editorSettings: getEditorSettings(),
@@ -30156,8 +30156,7 @@ function header_Header({
     isPublishSidebarOpened,
     showIconLabels,
     hasFixedToolbar,
-    hasBlockSelection,
-    hasSectionRootClientId
+    hasBlockSelection
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       get: getPreference
@@ -30167,25 +30166,21 @@ function header_Header({
       getCurrentPostType,
       isPublishSidebarOpened: _isPublishSidebarOpened
     } = select(store_store);
-    const {
-      getBlockSelectionStart,
-      getSectionRootClientId
-    } = unlock(select(external_wp_blockEditor_namespaceObject.store));
     return {
       postType: getCurrentPostType(),
       isTextEditor: getEditorMode() === 'text',
       isPublishSidebarOpened: _isPublishSidebarOpened(),
       showIconLabels: getPreference('core', 'showIconLabels'),
       hasFixedToolbar: getPreference('core', 'fixedToolbar'),
-      hasBlockSelection: !!getBlockSelectionStart(),
-      hasSectionRootClientId: !!getSectionRootClientId()
+      hasBlockSelection: !!select(external_wp_blockEditor_namespaceObject.store).getBlockSelectionStart()
     };
   }, []);
-  const canBeZoomedOut = ['post', 'page', 'wp_template'].includes(postType) && hasSectionRootClientId;
+  const canBeZoomedOut = ['post', 'page', 'wp_template'].includes(postType);
   const disablePreviewOption = [NAVIGATION_POST_TYPE, TEMPLATE_PART_POST_TYPE, PATTERN_POST_TYPE].includes(postType);
   const [isBlockToolsCollapsed, setIsBlockToolsCollapsed] = (0,external_wp_element_namespaceObject.useState)(true);
   const hasCenter = !isTooNarrowForDocumentBar && (!hasFixedToolbar || hasFixedToolbar && (!hasBlockSelection || isBlockToolsCollapsed));
   const hasBackButton = useHasBackButton();
+  const hasSectionRootClientId = (0,external_wp_data_namespaceObject.useSelect)(select => !!unlock(select(external_wp_blockEditor_namespaceObject.store)).getSectionRootClientId(), []);
 
   /*
    * The edit-post-header classname is only kept for backward compatibility
@@ -30244,7 +30239,7 @@ function header_Header({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostPreviewButton, {
         className: "editor-header__post-preview-button",
         forceIsAutosaveable: forceIsDirty
-      }), isWideViewport && canBeZoomedOut && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_toggle, {
+      }), canBeZoomedOut && isWideViewport && hasSectionRootClientId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(zoom_out_toggle, {
         disabled: forceDisableBlockTools
       }), (isWideViewport || !showIconLabels) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(pinned_items.Slot, {
         scope: "core"

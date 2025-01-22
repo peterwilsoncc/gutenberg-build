@@ -26601,7 +26601,7 @@ const STYLE_BOOK_ALL_BLOCKS_SUBCATEGORIES = [...STYLE_BOOK_THEME_SUBCATEGORIES, 
   include: []
 }];
 
-// Style book preview categories are organized slightly differently to the editor ones.
+// Style book preview categories are organised slightly differently to the editor ones.
 const STYLE_BOOK_PREVIEW_CATEGORIES = [{
   slug: 'overview',
   title: (0,external_wp_i18n_namespaceObject.__)('Overview'),

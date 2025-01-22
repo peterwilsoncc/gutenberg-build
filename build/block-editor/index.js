@@ -25948,8 +25948,7 @@ function addTransforms(result, source, index, results) {
   // if source N does not exists we do nothing.
   if (source[index]) {
     const originClassName = source[index]?.attributes.className;
-    // Avoid overriding classes if the transformed block already includes them.
-    if (originClassName && result.attributes.className === undefined) {
+    if (originClassName) {
       return {
         ...result,
         attributes: {
@@ -55854,19 +55853,8 @@ function InserterMenu({
   __experimentalInitialTab,
   __experimentalInitialCategory
 }, ref) {
-  const {
-    isZoomOutMode,
-    hasSectionRootClientId
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      isZoomOut,
-      getSectionRootClientId
-    } = unlock(select(store));
-    return {
-      isZoomOutMode: isZoomOut(),
-      hasSectionRootClientId: !!getSectionRootClientId()
-    };
-  }, []);
+  const isZoomOutMode = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(store)).isZoomOut(), []);
+  const hasSectionRootClientId = (0,external_wp_data_namespaceObject.useSelect)(select => !!unlock(select(store)).getSectionRootClientId(), []);
   const [filterValue, setFilterValue, delayedFilterValue] = (0,external_wp_compose_namespaceObject.useDebouncedInput)(__experimentalFilterValue);
   const [hoveredItem, setHoveredItem] = (0,external_wp_element_namespaceObject.useState)(null);
   const [selectedPatternCategory, setSelectedPatternCategory] = (0,external_wp_element_namespaceObject.useState)(__experimentalInitialCategory);
@@ -75797,9 +75785,11 @@ const AdvancedControls = () => {
 /* harmony default export */ const advanced_controls_panel = (AdvancedControls);
 
 ;// ./packages/block-editor/build-module/components/inspector-controls-tabs/position-controls-panel.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -75811,67 +75801,37 @@ const AdvancedControls = () => {
 
 
 
-
-
 const PositionControlsPanel = () => {
+  const [initialOpen, setInitialOpen] = (0,external_wp_element_namespaceObject.useState)();
+
+  // Determine whether the panel should be expanded.
   const {
-    selectedClientIds,
-    selectedBlocks,
-    hasPositionAttribute
+    multiSelectedBlocks
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlocksByClientId,
       getSelectedBlockClientIds
     } = select(store);
-    const selectedBlockClientIds = getSelectedBlockClientIds();
-    const _selectedBlocks = getBlocksByClientId(selectedBlockClientIds);
+    const clientIds = getSelectedBlockClientIds();
     return {
-      selectedClientIds: selectedBlockClientIds,
-      selectedBlocks: _selectedBlocks,
-      hasPositionAttribute: _selectedBlocks?.some(({
-        attributes
-      }) => !!attributes?.style?.position?.type)
+      multiSelectedBlocks: getBlocksByClientId(clientIds)
     };
   }, []);
-  const {
-    updateBlockAttributes
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-  function resetPosition() {
-    if (!selectedClientIds?.length || !selectedBlocks?.length) {
-      return;
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    // If any selected block has a position set, open the panel by default.
+    // The first block's value will still be used within the control though.
+    if (initialOpen === undefined) {
+      setInitialOpen(multiSelectedBlocks.some(({
+        attributes
+      }) => !!attributes?.style?.position?.type));
     }
-    const attributesByClientId = Object.fromEntries(selectedBlocks?.map(({
-      clientId,
-      attributes
-    }) => [clientId, {
-      style: utils_cleanEmptyObject({
-        ...attributes?.style,
-        position: {
-          ...attributes?.style?.position,
-          type: undefined,
-          top: undefined,
-          right: undefined,
-          bottom: undefined,
-          left: undefined
-        }
-      })
-    }]));
-    updateBlockAttributes(selectedClientIds, attributesByClientId, true);
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+  }, [initialOpen, multiSelectedBlocks, setInitialOpen]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
     className: "block-editor-block-inspector__position",
-    label: (0,external_wp_i18n_namespaceObject.__)('Position'),
-    resetAll: resetPosition,
-    dropdownMenuProps: dropdownMenuProps,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-      isShownByDefault: hasPositionAttribute,
-      label: (0,external_wp_i18n_namespaceObject.__)('Position'),
-      hasValue: () => hasPositionAttribute,
-      onDeselect: resetPosition,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-        group: "position"
-      })
+    title: (0,external_wp_i18n_namespaceObject.__)('Position'),
+    initialOpen: initialOpen !== null && initialOpen !== void 0 ? initialOpen : false,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
+      group: "position"
     })
   });
 };
