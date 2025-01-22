@@ -58894,7 +58894,7 @@ const SpacerEdit = ({
     });
   };
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (isFlexLayout && selfStretch !== 'fill' && selfStretch !== 'fit' && !flexSize) {
+    if (isFlexLayout && selfStretch !== 'fill' && selfStretch !== 'fit' && flexSize === undefined) {
       if (inheritedOrientation === 'horizontal') {
         // If spacer is moving from a vertical container to a horizontal container,
         // it might not have width but have height instead.
