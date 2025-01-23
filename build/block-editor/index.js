@@ -28340,6 +28340,7 @@ function useBlockElement(clientId) {
 }
 
 ;// ./packages/block-editor/build-module/hooks/contrast-checker.js
+/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -28351,41 +28352,59 @@ function useBlockElement(clientId) {
 
 
 
-function getComputedStyle(node) {
-  return node.ownerDocument.defaultView.getComputedStyle(node);
+function getComputedValue(node, property) {
+  return node.ownerDocument.defaultView.getComputedStyle(node).getPropertyValue(property);
+}
+function getBlockElementColors(blockEl) {
+  if (!blockEl) {
+    return {};
+  }
+  const firstLinkElement = blockEl.querySelector('a');
+  const linkColor = !!firstLinkElement?.innerText ? getComputedValue(firstLinkElement, 'color') : undefined;
+  const textColor = getComputedValue(blockEl, 'color');
+  let backgroundColorNode = blockEl;
+  let backgroundColor = getComputedValue(backgroundColorNode, 'background-color');
+  while (backgroundColor === 'rgba(0, 0, 0, 0)' && backgroundColorNode.parentNode && backgroundColorNode.parentNode.nodeType === backgroundColorNode.parentNode.ELEMENT_NODE) {
+    backgroundColorNode = backgroundColorNode.parentNode;
+    backgroundColor = getComputedValue(backgroundColorNode, 'background-color');
+  }
+  return {
+    textColor,
+    backgroundColor,
+    linkColor
+  };
+}
+function contrast_checker_reducer(prevColors, newColors) {
+  const hasChanged = Object.keys(newColors).some(key => prevColors[key] !== newColors[key]);
+
+  // Do not re-render if the colors have not changed.
+  return hasChanged ? newColors : prevColors;
 }
 function BlockColorContrastChecker({
   clientId
 }) {
-  const [detectedBackgroundColor, setDetectedBackgroundColor] = (0,external_wp_element_namespaceObject.useState)();
-  const [detectedColor, setDetectedColor] = (0,external_wp_element_namespaceObject.useState)();
-  const [detectedLinkColor, setDetectedLinkColor] = (0,external_wp_element_namespaceObject.useState)();
   const blockEl = useBlockElement(clientId);
+  const [colors, setColors] = (0,external_wp_element_namespaceObject.useReducer)(contrast_checker_reducer, {});
 
   // There are so many things that can change the color of a block
   // So we perform this check on every render.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
     if (!blockEl) {
       return;
     }
-    setDetectedColor(getComputedStyle(blockEl).color);
-    const firstLinkElement = blockEl.querySelector('a');
-    if (firstLinkElement && !!firstLinkElement.innerText) {
-      setDetectedLinkColor(getComputedStyle(firstLinkElement).color);
+    function updateColors() {
+      setColors(getBlockElementColors(blockEl));
     }
-    let backgroundColorNode = blockEl;
-    let backgroundColor = getComputedStyle(backgroundColorNode).backgroundColor;
-    while (backgroundColor === 'rgba(0, 0, 0, 0)' && backgroundColorNode.parentNode && backgroundColorNode.parentNode.nodeType === backgroundColorNode.parentNode.ELEMENT_NODE) {
-      backgroundColorNode = backgroundColorNode.parentNode;
-      backgroundColor = getComputedStyle(backgroundColorNode).backgroundColor;
-    }
-    setDetectedBackgroundColor(backgroundColor);
-  }, [blockEl]);
+
+    // Combine `useLayoutEffect` and two rAF calls to ensure that values are read
+    // after the current paint but before the next paint.
+    window.requestAnimationFrame(() => window.requestAnimationFrame(updateColors));
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(contrast_checker, {
-    backgroundColor: detectedBackgroundColor,
-    textColor: detectedColor,
-    enableAlphaChecker: true,
-    linkColor: detectedLinkColor
+    backgroundColor: colors.backgroundColor,
+    textColor: colors.textColor,
+    linkColor: colors.linkColor,
+    enableAlphaChecker: true
   });
 }
 
