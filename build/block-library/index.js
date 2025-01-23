@@ -11735,6 +11735,11 @@ const comments_pagination_metadata = {
       "default": "none"
     }
   },
+  example: {
+    attributes: {
+      paginationArrow: "none"
+    }
+  },
   providesContext: {
     "comments/paginationArrow": "paginationArrow"
   },
