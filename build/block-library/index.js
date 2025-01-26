@@ -39596,6 +39596,7 @@ const navigation_submenu_transforms_transforms = {
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -39698,6 +39699,12 @@ const navigation_submenu_settings = {
     return label;
   },
   edit: NavigationSubmenuEdit,
+  example: {
+    attributes: {
+      label: (0,external_wp_i18n_namespaceObject._x)('About', 'Example link text for Navigation Submenu'),
+      type: 'page'
+    }
+  },
   save: navigation_submenu_save_save,
   transforms: navigation_submenu_transforms
 };
