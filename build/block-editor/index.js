@@ -36918,10 +36918,12 @@ function getGridInfo(gridElement) {
       gridTemplateColumns,
       gridTemplateRows,
       gap: utils_getComputedCSS(gridElement, 'gap'),
-      paddingTop: `calc(${paddingTop} + ${borderTopWidth})`,
-      paddingRight: `calc(${paddingRight} + ${borderRightWidth})`,
-      paddingBottom: `calc(${paddingBottom} + ${borderBottomWidth})`,
-      paddingLeft: `calc(${paddingLeft} + ${borderLeftWidth})`
+      inset: `
+				calc(${paddingTop} + ${borderTopWidth})
+				calc(${paddingRight} + ${borderRightWidth})
+				calc(${paddingBottom} + ${borderBottomWidth})
+				calc(${paddingLeft} + ${borderLeftWidth})
+			`
     }
   };
 }
@@ -56591,27 +56593,19 @@ const GridVisualizerGrid = (0,external_wp_element_namespaceObject.forwardRef)(({
   const [gridInfo, setGridInfo] = (0,external_wp_element_namespaceObject.useState)(() => getGridInfo(gridElement));
   const [isDroppingAllowed, setIsDroppingAllowed] = (0,external_wp_element_namespaceObject.useState)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    const observers = [];
-    for (const element of [gridElement, ...gridElement.children]) {
-      const observer = new window.ResizeObserver(() => {
-        setGridInfo(getGridInfo(gridElement));
-      });
-      observer.observe(element);
-      observers.push(observer);
-    }
-    const mutationObserver = new window.MutationObserver(() => {
-      setGridInfo(getGridInfo(gridElement));
+    const resizeCallback = () => setGridInfo(getGridInfo(gridElement));
+    // Both border-box and content-box are observed as they may change
+    // independently. This requires two observers because a single one
+    // can’t be made to monitor both on the same element.
+    const borderBoxSpy = new window.ResizeObserver(resizeCallback);
+    borderBoxSpy.observe(gridElement, {
+      box: 'border-box'
     });
-    mutationObserver.observe(gridElement, {
-      attributeFilter: ['style', 'class'],
-      childList: true,
-      subtree: true
-    });
-    observers.push(mutationObserver);
+    const contentBoxSpy = new window.ResizeObserver(resizeCallback);
+    contentBoxSpy.observe(gridElement);
     return () => {
-      for (const observer of observers) {
-        observer.disconnect();
-      }
+      borderBoxSpy.disconnect();
+      contentBoxSpy.disconnect();
     };
   }, [gridElement]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
