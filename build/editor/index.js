@@ -16753,10 +16753,10 @@ function DocumentOutline({
 /**
  * Component check if there are any headings (core/heading blocks) present in the document.
  *
- * @param {Object}             props          Props.
- * @param {React.ReactElement} props.children Children to be rendered.
+ * @param {Object}          props          Props.
+ * @param {React.ReactNode} props.children Children to be rendered.
  *
- * @return {React.ReactElement} The component to be rendered or null if there are headings.
+ * @return {React.ReactNode} The component to be rendered or null if there are headings.
  */
 function DocumentOutlineCheck({
   children
@@ -17899,10 +17899,10 @@ function LocalAutosaveMonitor() {
 /**
  * Wrapper component that renders its children only if the post type supports page attributes.
  *
- * @param {Object}             props          - The component props.
- * @param {React.ReactElement} props.children - The child components to render.
+ * @param {Object}          props          - The component props.
+ * @param {React.ReactNode} props.children - The child components to render.
  *
- * @return {React.ReactElement} The rendered child components or null if page attributes are not supported.
+ * @return {React.ReactNode} The rendered child components or null if page attributes are not supported.
  */
 function PageAttributesCheck({
   children
@@ -17943,13 +17943,13 @@ function PageAttributesCheck({
  * A component which renders its own children only if the current editor post
  * type supports one of the given `supportKeys` prop.
  *
- * @param {Object}             props             Props.
- * @param {React.ReactElement} props.children    Children to be rendered if post
- *                                               type supports.
- * @param {(string|string[])}  props.supportKeys String or string array of keys
- *                                               to test.
+ * @param {Object}            props             Props.
+ * @param {React.ReactNode}   props.children    Children to be rendered if post
+ *                                              type supports.
+ * @param {(string|string[])} props.supportKeys String or string array of keys
+ *                                              to test.
  *
- * @return {React.ReactElement} The component to be rendered.
+ * @return {React.ReactNode} The component to be rendered.
  */
 function PostTypeSupportCheck({
   children,
@@ -21017,11 +21017,11 @@ function PrivateExcerpt() {
 /**
  * Checks if the current theme supports specific features and renders the children if supported.
  *
- * @param {Object}             props             The component props.
- * @param {React.ReactElement} props.children    The children to render if the theme supports the specified features.
- * @param {string|string[]}    props.supportKeys The key(s) of the theme support(s) to check.
+ * @param {Object}          props             The component props.
+ * @param {React.ReactNode} props.children    The children to render if the theme supports the specified features.
+ * @param {string|string[]} props.supportKeys The key(s) of the theme support(s) to check.
  *
- * @return {React.ReactElement} The rendered children if the theme supports the specified features, otherwise null.
+ * @return {React.ReactNode} The rendered children if the theme supports the specified features, otherwise null.
  */
 function ThemeSupportCheck({
   children,
@@ -21995,10 +21995,10 @@ function PostLockedModal() {
  * If the post is already published or the user doesn't have the
  * capability to publish, it returns null.
  *
- * @param {Object}             props          Component properties.
- * @param {React.ReactElement} props.children Children to be rendered.
+ * @param {Object}          props          Component properties.
+ * @param {React.ReactNode} props.children Children to be rendered.
  *
- * @return {React.ReactElement} The rendered child elements or null if the post is already published or the user doesn't have the capability to publish.
+ * @return {React.ReactNode} The rendered child elements or null if the post is already published or the user doesn't have the capability to publish.
  */
 function PostPendingStatusCheck({
   children
@@ -25382,10 +25382,10 @@ const cloud = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 /**
  * Wrapper component that renders its children only if post has a sticky action.
  *
- * @param {Object}             props          Props.
- * @param {React.ReactElement} props.children Children to be rendered.
+ * @param {Object}          props          Props.
+ * @param {React.ReactNode} props.children Children to be rendered.
  *
- * @return {React.ReactElement} The component to be rendered or null if post type is not 'post' or hasStickyAction is false.
+ * @return {React.ReactNode} The component to be rendered or null if post type is not 'post' or hasStickyAction is false.
  */
 function PostStickyCheck({
   children
@@ -25860,10 +25860,10 @@ function PostSavedState({
 /**
  * Wrapper component that renders its children only if post has a publish action.
  *
- * @param {Object}             props          Props.
- * @param {React.ReactElement} props.children Children to be rendered.
+ * @param {Object}          props          Props.
+ * @param {React.ReactNode} props.children Children to be rendered.
  *
- * @return {React.ReactElement} - The component to be rendered or null if there is no publish action.
+ * @return {React.ReactNode} - The component to be rendered or null if there is no publish action.
  */
 function PostScheduleCheck({
   children
@@ -26177,7 +26177,7 @@ function PostTaxonomies({
  * @param {Object}          props          The component props.
  * @param {React.ReactNode} props.children The children components to render.
  *
- * @return {React.ReactElement} The rendered children components or null if the current post type has no taxonomies.
+ * @return {React.ReactNode} The rendered children components or null if the current post type has no taxonomies.
  */
 function PostTaxonomiesCheck({
   children
@@ -26772,10 +26772,10 @@ function PostTitleRaw(_, forwardedRef) {
 /**
  * Wrapper component that renders its children only if the post can be trashed.
  *
- * @param {Object}             props          The component props.
- * @param {React.ReactElement} props.children The child components.
+ * @param {Object}          props          The component props.
+ * @param {React.ReactNode} props.children The child components.
  *
- * @return {React.ReactElement | null} The rendered child components or null if the post can't be trashed.
+ * @return {React.ReactNode} The rendered child components or null if the post can't be trashed.
  */
 function PostTrashCheck({
   children
@@ -27076,10 +27076,10 @@ function PostURL({
 /**
  * Check if the post URL is valid and visible.
  *
- * @param {Object}             props          The component props.
- * @param {React.ReactElement} props.children The child components.
+ * @param {Object}          props          The component props.
+ * @param {React.ReactNode} props.children The child components.
  *
- * @return {React.ReactElement} The child components if the post URL is valid and visible, otherwise null.
+ * @return {React.ReactNode} The child components if the post URL is valid and visible, otherwise null.
  */
 function PostURLCheck({
   children
