@@ -35297,7 +35297,7 @@ function useConvertClassicToBlockMenu(createNavigationMenu, {
       });
     } catch (err) {
       throw new Error((0,external_wp_i18n_namespaceObject.sprintf)(
-      // translators: %s: the name of a menu (e.g. Header navigation).
+      // translators: %s: The name of a menu (e.g. Header menu).
       (0,external_wp_i18n_namespaceObject.__)(`Unable to fetch classic menu "%s" from API.`), menuName), {
         cause: err
       });
@@ -35306,7 +35306,7 @@ function useConvertClassicToBlockMenu(createNavigationMenu, {
     // Handle offline response which resolves to `null`.
     if (classicMenuItems === null) {
       throw new Error((0,external_wp_i18n_namespaceObject.sprintf)(
-      // translators: %s: the name of a menu (e.g. Header navigation).
+      // translators: %s: The name of a menu (e.g. Header menu).
       (0,external_wp_i18n_namespaceObject.__)(`Unable to fetch classic menu "%s" from API.`), menuName));
     }
 
@@ -35333,7 +35333,7 @@ function useConvertClassicToBlockMenu(createNavigationMenu, {
       });
     } catch (err) {
       throw new Error((0,external_wp_i18n_namespaceObject.sprintf)(
-      // translators: %s: the name of a menu (e.g. Header navigation).
+      // translators: %s: The name of a menu (e.g. Header menu).
       (0,external_wp_i18n_namespaceObject.__)(`Unable to create Navigation Menu "%s".`), menuName), {
         cause: err
       });
@@ -35371,7 +35371,7 @@ function useConvertClassicToBlockMenu(createNavigationMenu, {
       // Rethrow error for debugging.
       if (throwOnError) {
         throw new Error((0,external_wp_i18n_namespaceObject.sprintf)(
-        // translators: %s: the name of a menu (e.g. Header navigation).
+        // translators: %s: The name of a menu (e.g. Header menu).
         (0,external_wp_i18n_namespaceObject.__)(`Unable to create Navigation Menu "%s".`), menuName), {
           cause: err
         });
@@ -35581,10 +35581,10 @@ function useGenerateDefaultNavigationTitle(clientId) {
     } = registry.resolveSelect(external_wp_coreData_namespaceObject.store);
     const [draftNavigationMenus, navigationMenus] = await Promise.all([getEntityRecords(...DRAFT_MENU_PARAMS), getEntityRecords(...PUBLISHED_MENU_PARAMS)]);
     const title = area ? (0,external_wp_i18n_namespaceObject.sprintf)(
-    // translators: %s: the name of a menu (e.g. Header navigation).
-    (0,external_wp_i18n_namespaceObject.__)('%s navigation'), area) :
-    // translators: 'navigation' as in website navigation.
-    (0,external_wp_i18n_namespaceObject.__)('Navigation');
+    // translators: %s: the name of a menu (e.g. Header menu).
+    (0,external_wp_i18n_namespaceObject.__)('%s menu'), area) :
+    // translators: 'menu' as in website navigation menu.
+    (0,external_wp_i18n_namespaceObject.__)('Menu');
 
     // Determine how many menus start with the automatic title.
     const matchingMenuTitleCount = [...draftNavigationMenus, ...navigationMenus].reduce((count, menu) => menu?.title?.raw?.startsWith(title) ? count + 1 : count, 0);
