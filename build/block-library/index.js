@@ -58798,6 +58798,9 @@ const SpacerEdit = ({
   const [temporaryWidth, setTemporaryWidth] = (0,external_wp_element_namespaceObject.useState)(null);
   const onResizeStart = () => toggleSelection(false);
   const onResizeStop = () => toggleSelection(true);
+  const {
+    __unstableMarkNextChangeAsNotPersistent
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const handleOnVerticalResizeStop = newHeight => {
     onResizeStop();
     if (isFlexLayout) {
@@ -58906,12 +58909,19 @@ const SpacerEdit = ({
     });
   };
   (0,external_wp_element_namespaceObject.useEffect)(() => {
+    // To avoid interfering with undo/redo operations any changes in this
+    // effect must not make history and should be preceded by
+    // `__unstableMarkNextChangeAsNotPersistent()`.
+    const setAttributesCovertly = nextAttributes => {
+      __unstableMarkNextChangeAsNotPersistent();
+      setAttributes(nextAttributes);
+    };
     if (isFlexLayout && selfStretch !== 'fill' && selfStretch !== 'fit' && flexSize === undefined) {
       if (inheritedOrientation === 'horizontal') {
         // If spacer is moving from a vertical container to a horizontal container,
         // it might not have width but have height instead.
         const newSize = (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(width, spacingSizes) || (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(height, spacingSizes) || '100px';
-        setAttributes({
+        setAttributesCovertly({
           width: '0px',
           style: {
             ...blockStyle,
@@ -58924,7 +58934,7 @@ const SpacerEdit = ({
         });
       } else {
         const newSize = (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(height, spacingSizes) || (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(width, spacingSizes) || '100px';
-        setAttributes({
+        setAttributesCovertly({
           height: '0px',
           style: {
             ...blockStyle,
@@ -58937,26 +58947,18 @@ const SpacerEdit = ({
         });
       }
     } else if (isFlexLayout && (selfStretch === 'fill' || selfStretch === 'fit')) {
-      if (inheritedOrientation === 'horizontal') {
-        setAttributes({
-          width: undefined
-        });
-      } else {
-        setAttributes({
-          height: undefined
-        });
-      }
+      setAttributesCovertly(inheritedOrientation === 'horizontal' ? {
+        width: undefined
+      } : {
+        height: undefined
+      });
     } else if (!isFlexLayout && (selfStretch || flexSize)) {
-      if (inheritedOrientation === 'horizontal') {
-        setAttributes({
+      setAttributesCovertly({
+        ...(inheritedOrientation === 'horizontal' ? {
           width: flexSize
-        });
-      } else {
-        setAttributes({
+        } : {
           height: flexSize
-        });
-      }
-      setAttributes({
+        }),
         style: {
           ...blockStyle,
           layout: {
@@ -58967,7 +58969,7 @@ const SpacerEdit = ({
         }
       });
     }
-  }, [blockStyle, flexSize, height, inheritedOrientation, isFlexLayout, layout, selfStretch, setAttributes, spacingSizes, width]);
+  }, [blockStyle, flexSize, height, inheritedOrientation, isFlexLayout, layout, selfStretch, setAttributes, spacingSizes, width, __unstableMarkNextChangeAsNotPersistent]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.View, {
       ...(0,external_wp_blockEditor_namespaceObject.useBlockProps)({
