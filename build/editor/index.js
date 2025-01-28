@@ -13764,11 +13764,9 @@ function BlockRemovalWarnings() {
 function StartPageOptions() {
   const {
     postId,
-    shouldEnable
+    enabled
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      isEditedPostDirty,
-      isEditedPostEmpty,
       getCurrentPostId,
       getCurrentPostType
     } = select(store_store);
@@ -13776,20 +13774,31 @@ function StartPageOptions() {
     const choosePatternModalEnabled = select(external_wp_preferences_namespaceObject.store).get('core', 'enableChoosePatternModal');
     return {
       postId: getCurrentPostId(),
-      shouldEnable: choosePatternModalEnabled && !preferencesModalActive && !isEditedPostDirty() && isEditedPostEmpty() && 'page' === getCurrentPostType()
+      enabled: choosePatternModalEnabled && !preferencesModalActive && 'page' === getCurrentPostType()
     };
   }, []);
+  const {
+    isEditedPostDirty,
+    isEditedPostEmpty
+  } = (0,external_wp_data_namespaceObject.useSelect)(store_store);
   const {
     setIsInserterOpened
   } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (shouldEnable) {
+    if (!enabled) {
+      return;
+    }
+    const isFreshPage = !isEditedPostDirty() && isEditedPostEmpty();
+    if (isFreshPage) {
       setIsInserterOpened({
         tab: 'patterns',
         category: 'core/starter-content'
       });
     }
-  }, [postId, shouldEnable, setIsInserterOpened]);
+
+    // Note: The `postId` ensures the effect re-runs when pages are switched without remounting the component.
+    // Examples: changing pages in the List View, creating a new page via Command Palette.
+  }, [postId, enabled, setIsInserterOpened, isEditedPostDirty, isEditedPostEmpty]);
   return null;
 }
 
