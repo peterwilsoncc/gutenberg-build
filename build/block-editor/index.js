@@ -30845,6 +30845,49 @@ const hasTypographySupport = blockName => {
   return TYPOGRAPHY_SUPPORT_KEYS.some(key => hasBlockSupport(blockName, key));
 };
 
+;// ./packages/block-editor/build-module/components/spacing-sizes-control/hooks/use-spacing-sizes.js
+/* wp:polyfill */
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const use_spacing_sizes_EMPTY_ARRAY = [];
+const compare = new Intl.Collator('und', {
+  numeric: true
+}).compare;
+function useSpacingSizes() {
+  const [customSpacingSizes, themeSpacingSizes, defaultSpacingSizes, defaultSpacingSizesEnabled] = use_settings_useSettings('spacing.spacingSizes.custom', 'spacing.spacingSizes.theme', 'spacing.spacingSizes.default', 'spacing.defaultSpacingSizes');
+  const customSizes = customSpacingSizes !== null && customSpacingSizes !== void 0 ? customSpacingSizes : use_spacing_sizes_EMPTY_ARRAY;
+  const themeSizes = themeSpacingSizes !== null && themeSpacingSizes !== void 0 ? themeSpacingSizes : use_spacing_sizes_EMPTY_ARRAY;
+  const defaultSizes = defaultSpacingSizes && defaultSpacingSizesEnabled !== false ? defaultSpacingSizes : use_spacing_sizes_EMPTY_ARRAY;
+  return (0,external_wp_element_namespaceObject.useMemo)(() => {
+    const sizes = [{
+      name: (0,external_wp_i18n_namespaceObject.__)('None'),
+      slug: '0',
+      size: 0
+    }, ...customSizes, ...themeSizes, ...defaultSizes];
+
+    // Using numeric slugs opts-in to sorting by slug.
+    if (sizes.every(({
+      slug
+    }) => /^[0-9]/.test(slug))) {
+      sizes.sort((a, b) => compare(a.slug, b.slug));
+    }
+    return sizes.length > RANGE_CONTROL_MAX_SIZE ? [{
+      name: (0,external_wp_i18n_namespaceObject.__)('Default'),
+      slug: 'default',
+      size: undefined
+    }, ...sizes] : sizes;
+  }, [customSizes, themeSizes, defaultSizes]);
+}
+
 ;// ./packages/icons/build-module/library/settings.js
 /**
  * WordPress dependencies
@@ -31375,49 +31418,6 @@ function linked_button_LinkedButton({
   });
 }
 
-;// ./packages/block-editor/build-module/components/spacing-sizes-control/hooks/use-spacing-sizes.js
-/* wp:polyfill */
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-const use_spacing_sizes_EMPTY_ARRAY = [];
-const compare = new Intl.Collator('und', {
-  numeric: true
-}).compare;
-function useSpacingSizes() {
-  const [customSpacingSizes, themeSpacingSizes, defaultSpacingSizes, defaultSpacingSizesEnabled] = use_settings_useSettings('spacing.spacingSizes.custom', 'spacing.spacingSizes.theme', 'spacing.spacingSizes.default', 'spacing.defaultSpacingSizes');
-  const customSizes = customSpacingSizes !== null && customSpacingSizes !== void 0 ? customSpacingSizes : use_spacing_sizes_EMPTY_ARRAY;
-  const themeSizes = themeSpacingSizes !== null && themeSpacingSizes !== void 0 ? themeSpacingSizes : use_spacing_sizes_EMPTY_ARRAY;
-  const defaultSizes = defaultSpacingSizes && defaultSpacingSizesEnabled !== false ? defaultSpacingSizes : use_spacing_sizes_EMPTY_ARRAY;
-  return (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const sizes = [{
-      name: (0,external_wp_i18n_namespaceObject.__)('None'),
-      slug: '0',
-      size: 0
-    }, ...customSizes, ...themeSizes, ...defaultSizes];
-
-    // Using numeric slugs opts-in to sorting by slug.
-    if (sizes.every(({
-      slug
-    }) => /^[0-9]/.test(slug))) {
-      sizes.sort((a, b) => compare(a.slug, b.slug));
-    }
-    return sizes.length > RANGE_CONTROL_MAX_SIZE ? [{
-      name: (0,external_wp_i18n_namespaceObject.__)('Default'),
-      slug: 'default',
-      size: undefined
-    }, ...sizes] : sizes;
-  }, [customSizes, themeSizes, defaultSizes]);
-}
-
 ;// ./packages/block-editor/build-module/components/spacing-sizes-control/index.js
 /**
  * WordPress dependencies
@@ -31435,6 +31435,50 @@ function useSpacingSizes() {
 
 
 
+
+/**
+ * A flexible control for managing spacing values in the block editor. Supports single, axial,
+ * and separated input controls for different spacing configurations with automatic view selection
+ * based on current values and available sides.
+ *
+ * @see https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/spacing-sizes-control/README.md
+ *
+ * @example
+ * ```jsx
+ * import { __experimentalSpacingSizesControl as SpacingSizesControl } from '@wordpress/block-editor';
+ * import { useState } from '@wordpress/element';
+ *
+ * function Example() {
+ *   const [ sides, setSides ] = useState( {
+ *     top: '0px',
+ *     right: '0px',
+ *     bottom: '0px',
+ *     left: '0px',
+ *   } );
+ *
+ *   return (
+ *     <SpacingSizesControl
+ *       values={ sides }
+ *       onChange={ setSides }
+ *       label="Sides"
+ *     />
+ *   );
+ * }
+ * ```
+ *
+ * @param {Object}   props                    Component props.
+ * @param {Object}   props.inputProps         Additional props for input controls.
+ * @param {string}   props.label              Label for the control.
+ * @param {number}   props.minimumCustomValue Minimum value for custom input.
+ * @param {Function} props.onChange           Called when spacing values change.
+ * @param {Function} props.onMouseOut         Called when mouse leaves the control.
+ * @param {Function} props.onMouseOver        Called when mouse enters the control.
+ * @param {boolean}  props.showSideInLabel    Show side in control label.
+ * @param {Array}    props.sides              Available sides for control.
+ * @param {boolean}  props.useSelect          Use select control for predefined values.
+ * @param {Object}   props.values             Current spacing values.
+ * @return {Element}                         Spacing sizes control component.
+ */
 
 function SpacingSizesControl({
   inputProps,
