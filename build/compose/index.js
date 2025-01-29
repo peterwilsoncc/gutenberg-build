@@ -3882,6 +3882,7 @@ function useFocusReturn(onFocusReturn) {
   }, [onFocusReturn]);
   return (0,external_wp_element_namespaceObject.useCallback)(node => {
     if (node) {
+      var _activeDocument$activ;
       // Set ref to be used when unmounting.
       ref.current = node;
 
@@ -3889,7 +3890,8 @@ function useFocusReturn(onFocusReturn) {
       if (focusedBeforeMount.current) {
         return;
       }
-      focusedBeforeMount.current = node.ownerDocument.activeElement;
+      const activeDocument = node.ownerDocument.activeElement instanceof window.HTMLIFrameElement ? node.ownerDocument.activeElement.contentDocument : node.ownerDocument;
+      focusedBeforeMount.current = (_activeDocument$activ = activeDocument?.activeElement) !== null && _activeDocument$activ !== void 0 ? _activeDocument$activ : null;
     } else if (focusedBeforeMount.current) {
       const isFocused = ref.current?.contains(ref.current?.ownerDocument.activeElement);
       if (ref.current?.isConnected && !isFocused) {
