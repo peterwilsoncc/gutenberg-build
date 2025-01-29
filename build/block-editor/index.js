@@ -32743,24 +32743,29 @@ function DimensionsPanel({
  */
 
 
+const scrollContainerCache = new WeakMap();
+
 /**
  * Allow scrolling "through" popovers over the canvas. This is only called for
  * as long as the pointer is over a popover. Do not use React events because it
  * will bubble through portals.
  *
- * @param {Object} scrollableRef
+ * @param {Object} contentRef
  */
-function usePopoverScroll(scrollableRef) {
+function usePopoverScroll(contentRef) {
   return (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
-    if (!scrollableRef) {
-      return;
-    }
     function onWheel(event) {
       const {
         deltaX,
         deltaY
       } = event;
-      scrollableRef.current.scrollBy(deltaX, deltaY);
+      const contentEl = contentRef.current;
+      let scrollContainer = scrollContainerCache.get(contentEl);
+      if (!scrollContainer) {
+        scrollContainer = (0,external_wp_dom_namespaceObject.getScrollContainer)(contentEl);
+        scrollContainerCache.set(contentEl, scrollContainer);
+      }
+      scrollContainer.scrollBy(deltaX, deltaY);
     }
     // Tell the browser that we do not call event.preventDefault
     // See https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
@@ -32771,7 +32776,7 @@ function usePopoverScroll(scrollableRef) {
     return () => {
       node.removeEventListener('wheel', onWheel, options);
     };
-  }, [scrollableRef]);
+  }, [contentRef]);
 }
 /* harmony default export */ const use_popover_scroll = (usePopoverScroll);
 
@@ -64890,7 +64895,7 @@ function BlockToolbarPopover({
     contentElement: __unstableContentRef?.current,
     clientId: clientIdToPositionOver
   });
-  return !isTyping && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_popover, {
+  return !isTyping && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrivateBlockPopover, {
     clientId: clientIdToPositionOver,
     bottomClientId: lastClientId,
     className: dist_clsx('block-editor-block-list__block-popover', {
@@ -64898,6 +64903,7 @@ function BlockToolbarPopover({
     }),
     resize: false,
     ...popoverProps,
+    __unstableContentRef: __unstableContentRef,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrivateBlockToolbar
     // If the toolbar is being shown because of being forced
     // it should focus the toolbar right after the mount.
