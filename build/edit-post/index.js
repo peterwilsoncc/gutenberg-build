@@ -3144,7 +3144,8 @@ function Layout({
     showMetaBoxes,
     hasHistory,
     isWelcomeGuideVisible,
-    templateId
+    templateId,
+    isDevicePreview
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _getPostType$viewable;
     const {
@@ -3159,6 +3160,11 @@ function Layout({
       getPostType
     } = select(external_wp_coreData_namespaceObject.store);
     const {
+      getDeviceType,
+      getEditorMode,
+      getRenderingMode
+    } = select(external_wp_editor_namespaceObject.store);
+    const {
       __unstableGetEditorMode
     } = unlock(select(external_wp_blockEditor_namespaceObject.store));
     const supportsTemplateMode = settings.supportsTemplateMode;
@@ -3169,15 +3175,16 @@ function Layout({
     });
     const isZoomOut = __unstableGetEditorMode() === 'zoom-out';
     return {
-      mode: select(external_wp_editor_namespaceObject.store).getEditorMode(),
+      mode: getEditorMode(),
       isFullscreenActive: select(store).isFeatureActive('fullscreenMode'),
       hasActiveMetaboxes: select(store).hasMetaBoxes(),
       hasBlockSelected: !!select(external_wp_blockEditor_namespaceObject.store).getBlockSelectionStart(),
       showIconLabels: get('core', 'showIconLabels'),
       isDistractionFree: get('core', 'distractionFree'),
-      showMetaBoxes: !DESIGN_POST_TYPES.includes(currentPostType) && !isZoomOut,
+      showMetaBoxes: !DESIGN_POST_TYPES.includes(currentPostType) && getRenderingMode() === 'post-only' && !isZoomOut,
       isWelcomeGuideVisible: isFeatureActive('welcomeGuide'),
-      templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate ? getEditedPostTemplateId() : null
+      templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate ? getEditedPostTemplateId() : null,
+      isDevicePreview: getDeviceType() !== 'Desktop'
     };
   }, [currentPostType, isEditingTemplate, settings.supportsTemplateMode]);
   useMetaBoxInitialization(hasActiveMetaboxes);
@@ -3282,7 +3289,7 @@ function Layout({
             location: "side"
           }),
           extraContent: !isDistractionFree && showMetaBoxes && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MetaBoxesMain, {
-            isLegacy: !shouldIframe
+            isLegacy: !shouldIframe || isDevicePreview
           }),
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.PostLockedModal, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditorInitialization, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FullscreenMode, {
             isActive: isFullscreenActive
