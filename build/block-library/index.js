@@ -38503,7 +38503,6 @@ function NavigationLinkEdit({
   const missingText = getMissingText(type);
   /* translators: Whether the navigation link is Invalid or a Draft. */
   const placeholderText = `(${isInvalid ? (0,external_wp_i18n_namespaceObject.__)('Invalid') : (0,external_wp_i18n_namespaceObject.__)('Draft')})`;
-  const tooltipText = isInvalid || isDraft ? (0,external_wp_i18n_namespaceObject.__)('This item has been deleted, or is a draft') : (0,external_wp_i18n_namespaceObject.__)('This item is missing a link');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
@@ -38535,11 +38534,8 @@ function NavigationLinkEdit({
         className: classes,
         children: [!url ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "wp-block-navigation-link__placeholder-text",
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
-            text: tooltipText,
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-              children: missingText
-            })
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+            children: missingText
           })
         }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
           children: [!isInvalid && !isDraft && !isLabelFieldFocused && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -38562,19 +38558,18 @@ function NavigationLinkEdit({
               children: description
             })]
           }), (isInvalid || isDraft || isLabelFieldFocused) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-            className: "wp-block-navigation-link__placeholder-text wp-block-navigation-link__label",
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
-              text: tooltipText,
-              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-                "aria-label": (0,external_wp_i18n_namespaceObject.__)('Navigation link text'),
-                children:
-                // Some attributes are stored in an escaped form. It's a legacy issue.
-                // Ideally they would be stored in a raw, unescaped form.
-                // Unescape is used here to "recover" the escaped characters
-                // so they display without encoding.
-                // See `updateAttributes` for more details.
-                `${(0,external_wp_htmlEntities_namespaceObject.decodeEntities)(label)} ${isInvalid || isDraft ? placeholderText : ''}`.trim()
-              })
+            className: dist_clsx('wp-block-navigation-link__placeholder-text', 'wp-block-navigation-link__label', {
+              'is-invalid': isInvalid,
+              'is-draft': isDraft
+            }),
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+              children:
+              // Some attributes are stored in an escaped form. It's a legacy issue.
+              // Ideally they would be stored in a raw, unescaped form.
+              // Unescape is used here to "recover" the escaped characters
+              // so they display without encoding.
+              // See `updateAttributes` for more details.
+              `${(0,external_wp_htmlEntities_namespaceObject.decodeEntities)(label)} ${isInvalid || isDraft ? placeholderText : ''}`.trim()
             })
           })]
         }), isLinkOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUI, {
