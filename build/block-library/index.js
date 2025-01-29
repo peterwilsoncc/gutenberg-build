@@ -16430,7 +16430,8 @@ function DetailsEdit({
     name,
     showContent,
     summary,
-    allowedBlocks
+    allowedBlocks,
+    placeholder
   } = attributes;
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
@@ -16492,7 +16493,7 @@ function DetailsEdit({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
           identifier: "summary",
           "aria-label": (0,external_wp_i18n_namespaceObject.__)('Write summary'),
-          placeholder: (0,external_wp_i18n_namespaceObject.__)('Write summary…'),
+          placeholder: placeholder || (0,external_wp_i18n_namespaceObject.__)('Write summary…'),
           allowedFormats: [],
           withoutInteractiveFormatting: true,
           value: summary,
@@ -16591,6 +16592,9 @@ const details_metadata = {
     },
     allowedBlocks: {
       type: "array"
+    },
+    placeholder: {
+      type: "string"
     }
   },
   supports: {
