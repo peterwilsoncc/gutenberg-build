@@ -1,5 +1,148 @@
 == Changelog ==
 
+= 20.2.0-rc.1 =
+
+
+## Changelog
+
+### Enhancements
+
+#### Block Library
+- Details block: Add name attribute for exclusive accordion. ([56971](https://github.com/WordPress/gutenberg/pull/56971))
+- Details block: Add placeholder attribute. ([68917](https://github.com/WordPress/gutenberg/pull/68917))
+- Home Link: Enable all non-interactive formats. ([68737](https://github.com/WordPress/gutenberg/pull/68737))
+- Latest Comments: Refactor settings panel to use ToolsPanel. ([67951](https://github.com/WordPress/gutenberg/pull/67951))
+- Latest Post Block: Refactor settings panel to use ToolsPanel. ([67956](https://github.com/WordPress/gutenberg/pull/67956))
+- Read More: Refactor settings panel to use ToolsPanel. ([67925](https://github.com/WordPress/gutenberg/pull/67925))
+- Search Block: Refactoring settings panel. ([67907](https://github.com/WordPress/gutenberg/pull/67907))
+- Search Results Title Block: Add dropdown menu props to Tools Panel component. ([68763](https://github.com/WordPress/gutenberg/pull/68763))
+- Spacer: Add dropdown menu props to Tools Panel component. ([68761](https://github.com/WordPress/gutenberg/pull/68761))
+- Term List Block: Refactor settings panel to use ToolsPanel. ([67955](https://github.com/WordPress/gutenberg/pull/67955))
+
+#### Design Tools
+- Position: Refactor "Position" controls panel to use `ToolsPanel` instead of `PanelBody`. ([67967](https://github.com/WordPress/gutenberg/pull/67967))
+- Post-content block header color support. ([67783](https://github.com/WordPress/gutenberg/pull/67783))
+
+#### Block Editor
+- Improve grid visualizer resize observation. ([68842](https://github.com/WordPress/gutenberg/pull/68842))
+
+#### Style Book
+- Navigation Submenu Block: Add example preview. ([68378](https://github.com/WordPress/gutenberg/pull/68378))
+
+
+### Bug Fixes
+
+- Fix: Invalid `_doing_it_wrong()` for `experimental-link-color`. ([68408](https://github.com/WordPress/gutenberg/pull/68408))
+
+#### Block Library
+- Archives Block: Fix reset button display state. ([68757](https://github.com/WordPress/gutenberg/pull/68757))
+- Fix: Add `rel="tag"` to individual anchor links in editor markup of the post terms block. ([68722](https://github.com/WordPress/gutenberg/pull/68722))
+- Fix: Linked featured image block cannot be selected correctly. ([68775](https://github.com/WordPress/gutenberg/pull/68775))
+- Page List Block: Fix empty settings panel. ([68756](https://github.com/WordPress/gutenberg/pull/68756))
+- Post Date Block: Fix reset button display state. ([68758](https://github.com/WordPress/gutenberg/pull/68758))
+- Query Page Numbers Block: Fix reset button display state. ([68759](https://github.com/WordPress/gutenberg/pull/68759))
+- Spacer block: Fix dimension control when no spacing presets are available. ([68818](https://github.com/WordPress/gutenberg/pull/68818))
+- Spacer: Fix flex layout unit reset. ([68815](https://github.com/WordPress/gutenberg/pull/68815))
+- `Spacer`: Fix changes being marked as persistent to `undo`. ([68869](https://github.com/WordPress/gutenberg/pull/68869))
+
+#### Patterns
+- Editor: Improve conditions for displaying new page assembler. ([68852](https://github.com/WordPress/gutenberg/pull/68852))
+
+#### Style Book
+- Disable the device preview button in the header. ([68841](https://github.com/WordPress/gutenberg/pull/68841))
+
+#### Block Editor
+- Fix block color contrast checker. ([68799](https://github.com/WordPress/gutenberg/pull/68799))
+
+#### DataViews
+- Fixed Incorrect Text Position issue in Dataviews. ([68767](https://github.com/WordPress/gutenberg/pull/68767))
+
+#### Block Transforms
+- Embed: Remove aspect ratio classes when transforming into Paragraph. ([68721](https://github.com/WordPress/gutenberg/pull/68721))
+
+#### Media
+- Upload Media: Fix package dependencies. ([68718](https://github.com/WordPress/gutenberg/pull/68718))
+
+
+### Accessibility
+
+#### Block Library
+- Navigation Link: Improve accessibility by removing non-interactive tooltips. ([68628](https://github.com/WordPress/gutenberg/pull/68628))
+- Use the term menu instead of navigation in nav elements labels. ([68683](https://github.com/WordPress/gutenberg/pull/68683))
+
+#### Post Editor
+- Update text description of the "Contain text cursor inside block" preference. ([68132](https://github.com/WordPress/gutenberg/pull/68132))
+
+
+### Performance
+
+#### Block Editor
+- Fix 'isBlockVisibleInTheInserter' selector helper performance. ([68898](https://github.com/WordPress/gutenberg/pull/68898))
+
+#### Block Library
+- Paragraph: Use CSS to hide placeholders in Zoom out mode. ([68690](https://github.com/WordPress/gutenberg/pull/68690))
+
+
+### Documentation
+
+- Block Editor: Add documentation for SpacingSizesControl component. ([68581](https://github.com/WordPress/gutenberg/pull/68581))
+- Changed Inline Documentation Order. ([68879](https://github.com/WordPress/gutenberg/pull/68879))
+- Docs: Update links to HTTPS. ([68888](https://github.com/WordPress/gutenberg/pull/68888))
+- Lint: Fix broken URL reference for `stylelint` user guide configuration. ([68706](https://github.com/WordPress/gutenberg/pull/68706))
+- Updated Typo in Constants.js. ([68765](https://github.com/WordPress/gutenberg/pull/68765))
+- Used https in main-dashboard-button.md file. ([68883](https://github.com/WordPress/gutenberg/pull/68883))
+- wp-env: Add phpMyAdmin and multisite support to the documentation. ([68125](https://github.com/WordPress/gutenberg/pull/68125))
+
+
+### Code Quality
+
+- Inline Commenting: Change the PHP compat directory. ([68846](https://github.com/WordPress/gutenberg/pull/68846))
+- Fix: Remove invalid param from wp_register_style() in gutenberg_enqueue_stored_styles(). ([68409](https://github.com/WordPress/gutenberg/pull/68409))
+- Fix: setcookie() $value must be string in Gutenberg_HTTP_Signaling_Server::Handle_read_pending_messages(). ([68411](https://github.com/WordPress/gutenberg/pull/68411))
+
+#### Block Library
+- Gallery: Remove unused inline menu styles. ([68776](https://github.com/WordPress/gutenberg/pull/68776))
+- Move HTML element help messages to the block library utils. ([68708](https://github.com/WordPress/gutenberg/pull/68708))
+- Navigation Submenu: Classname trailing spaces. ([68880](https://github.com/WordPress/gutenberg/pull/68880))
+- Unify block title with a strict title case. ([51912](https://github.com/WordPress/gutenberg/pull/51912))
+- Video: Fix react component warning error. ([68762](https://github.com/WordPress/gutenberg/pull/68762))
+
+#### Post Editor
+- Editor: Children prop to accept `ReactNode`. ([68839](https://github.com/WordPress/gutenberg/pull/68839))
+- Editor: Combine selectors in the 'Header' component. ([68697](https://github.com/WordPress/gutenberg/pull/68697))
+- Editor: Standardize reduced motion handling using media queries. ([68424](https://github.com/WordPress/gutenberg/pull/68424))
+
+#### Components
+- Box Control: Add Runtime Check & Conditional Types for `presets` and `presetKey` Props. ([68385](https://github.com/WordPress/gutenberg/pull/68385))
+- Remove unnecessary `Tooltip` component from linked `button`. ([68498](https://github.com/WordPress/gutenberg/pull/68498))
+
+#### Block Editor
+- Clean up unused utils of spacing size control. ([68794](https://github.com/WordPress/gutenberg/pull/68794))
+
+#### Template Editor
+- Editor: Update post-type support key for new default rendering mode. ([68745](https://github.com/WordPress/gutenberg/pull/68745))
+
+
+### Tools
+
+#### Build Tooling
+- Fix Duplicate Entries for 19.7.0 in changelog.txt. ([68836](https://github.com/WordPress/gutenberg/pull/68836))
+- Release Workflow: Install Subversion. ([68837](https://github.com/WordPress/gutenberg/pull/68837))
+
+#### Testing
+- E2E: Fix WP Editor Meta Boxes test. ([68872](https://github.com/WordPress/gutenberg/pull/68872))
+
+#### Env
+- Add WP_ENV_MULTISITE envoriment variable. ([68792](https://github.com/WordPress/gutenberg/pull/68792))
+
+
+## Contributors
+
+The following contributors merged PRs in this release:
+
+@afercia @benazeer-ben @fabiankaegy @himanshupathak95 @im3dabasia @Infinite-Null @justlevine @karthick-murugan @Mamaduka @Mayank-Tripathi32 @SainathPoojary @shail-mehta @shimotmk @Soean @spacedmonkey @stokesman @Sukhendu2002 @t-hamano @yogeshbhutkar
+
+
 = 20.1.0 =
 
 ## Changelog
