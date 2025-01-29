@@ -58591,30 +58591,31 @@ function DimensionInput({
       vh: 25
     }
   });
-  const handleOnChange = unprocessedValue => {
-    onChange(unprocessedValue.all);
-  };
 
   // Force the unit to update to `px` when the Spacer is being resized.
   const [parsedQuantity, parsedUnit] = (0,external_wp_components_namespaceObject.__experimentalParseQuantityAndUnitFromRawValue)(value);
   const computedValue = (0,external_wp_blockEditor_namespaceObject.isValueSpacingPreset)(value) ? value : [parsedQuantity, isResizing ? 'px' : parsedUnit].join('');
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [(!spacingSizes || spacingSizes?.length === 0) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: spacingSizes?.length < 2 ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalUnitControl, {
       id: inputId,
       isResetValueOnUnitChange: true,
       min: MIN_SPACER_SIZE,
-      onChange: handleOnChange,
+      onChange: onChange,
       value: computedValue,
       units: units,
       label: label,
       __next40pxDefaultSize: true
-    }), spacingSizes?.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.View, {
+    }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.View, {
       className: "tools-panel-item-spacing",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalSpacingSizesControl, {
         values: {
           all: computedValue
         },
-        onChange: handleOnChange,
+        onChange: ({
+          all
+        }) => {
+          onChange(all);
+        },
         label: label,
         sides: ['all'],
         units: units,
@@ -58622,7 +58623,7 @@ function DimensionInput({
         splitOnAxis: false,
         showSideInLabel: false
       })
-    })]
+    })
   });
 }
 function SpacerControls({
