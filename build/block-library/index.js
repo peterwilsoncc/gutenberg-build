@@ -6812,6 +6812,15 @@ const categories_metadata = {
         fontSize: true
       }
     },
+    color: {
+      gradients: true,
+      link: true,
+      __experimentalDefaultControls: {
+        background: true,
+        text: true,
+        link: true
+      }
+    },
     interactivity: {
       clientNavigation: true
     },
