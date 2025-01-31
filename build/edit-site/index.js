@@ -14232,7 +14232,6 @@ function SidebarNavigationScreen({
   isRoot,
   title,
   actions,
-  meta,
   content,
   footer,
   description,
@@ -14296,11 +14295,6 @@ function SidebarNavigationScreen({
           className: "edit-site-sidebar-navigation-screen__actions",
           children: actions
         })]
-      }), meta && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-          className: "edit-site-sidebar-navigation-screen__meta",
-          children: meta
-        })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
         className: "edit-site-sidebar-navigation-screen__content",
         children: [description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
