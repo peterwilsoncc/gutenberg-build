@@ -48638,6 +48638,7 @@ function ZoomOutSeparator({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -48777,13 +48778,13 @@ function Items({
     const {
       getSettings,
       getBlockOrder,
-      getSelectedBlockClientId,
       getSelectedBlockClientIds,
       __unstableGetVisibleBlocks,
       getTemplateLock,
       getBlockEditingMode,
       isSectionBlock,
-      isZoomOut: _isZoomOut
+      isZoomOut: _isZoomOut,
+      canInsertBlockType
     } = unlock(select(store));
     const _order = getBlockOrder(rootClientId);
     if (getSettings().isPreviewMode) {
@@ -48793,13 +48794,15 @@ function Items({
         visibleBlocks: block_list_EMPTY_SET
       };
     }
-    const selectedBlockClientId = getSelectedBlockClientId();
+    const selectedBlockClientIds = getSelectedBlockClientIds();
+    const selectedBlockClientId = selectedBlockClientIds[0];
+    const showRootAppender = !rootClientId && !selectedBlockClientId && (!_order.length || !canInsertBlockType((0,external_wp_blocks_namespaceObject.getDefaultBlockName)(), rootClientId));
     return {
       order: _order,
-      selectedBlocks: getSelectedBlockClientIds(),
+      selectedBlocks: selectedBlockClientIds,
       visibleBlocks: __unstableGetVisibleBlocks(),
       isZoomOut: _isZoomOut(),
-      shouldRenderAppender: !isSectionBlock(rootClientId) && getBlockEditingMode(rootClientId) !== 'disabled' && !getTemplateLock(rootClientId) && hasAppender && !_isZoomOut() && (hasCustomAppender || rootClientId === selectedBlockClientId || !rootClientId && !selectedBlockClientId && !_order.length)
+      shouldRenderAppender: !isSectionBlock(rootClientId) && getBlockEditingMode(rootClientId) !== 'disabled' && !getTemplateLock(rootClientId) && hasAppender && !_isZoomOut() && (hasCustomAppender || showRootAppender || rootClientId === selectedBlockClientId)
     };
   }, [rootClientId, hasAppender, hasCustomAppender]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(LayoutProvider, {
