@@ -27294,7 +27294,6 @@ function GlobalStylesUIWrapper() {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -27435,7 +27434,6 @@ function StyleBook({
   userConfig = {},
   path = ''
 }) {
-  const [resizeObserver, sizes] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
   const [textColor] = style_book_useGlobalStyle('color.text');
   const [backgroundColor] = style_book_useGlobalStyle('color.background');
   const colors = useMultiOriginPalettes();
@@ -27466,16 +27464,15 @@ function StyleBook({
     onClose: onClose,
     enableResizing: enableResizing,
     closeButtonLabel: showCloseButton ? (0,external_wp_i18n_namespaceObject.__)('Close') : null,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: dist_clsx('edit-site-style-book', {
-        'is-wide': sizes.width > 600,
         'is-button': !!onClick
       }),
       style: {
         color: textColor,
         background: backgroundColor
       },
-      children: [resizeObserver, showTabs ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(style_book_Tabs, {
+      children: showTabs ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(style_book_Tabs, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "edit-site-style-book__tablist-container",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(style_book_Tabs.TabList, {
@@ -27499,7 +27496,6 @@ function StyleBook({
               isSelected: isSelected,
               onSelect: onSelect,
               settings: settings,
-              sizes: sizes,
               title: tab.title,
               goTo: goTo
             })
@@ -27513,9 +27509,8 @@ function StyleBook({
         onClick: onClick,
         onSelect: onSelect,
         settings: settings,
-        sizes: sizes,
         goTo: goTo
-      })]
+      })
     })
   });
 }
@@ -27567,7 +27562,6 @@ const StyleBookPreview = ({
     // Now go to the selected block.
     onChangeSection(`/blocks/${encodeURIComponent(blockName)}`);
   };
-  const [resizeObserver, sizes] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
   const colors = useMultiOriginPalettes();
   const examples = getExamples(colors);
   const examplesForSinglePageUse = getExamplesForSinglePageUse(examples);
@@ -27612,9 +27606,9 @@ const StyleBookPreview = ({
     styles: !isObjectEmpty(globalStyles) && !isObjectEmpty(userConfig) ? globalStyles : siteEditorSettings.styles,
     isPreviewMode: true
   }), [globalStyles, siteEditorSettings, userConfig]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "edit-site-style-book",
-    children: [resizeObserver, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockEditorProvider, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockEditorProvider, {
       settings: settings,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GlobalStylesRenderer, {
         disableRootPadding: true
@@ -27622,11 +27616,10 @@ const StyleBookPreview = ({
         examples: displayedExamples,
         settings: settings,
         goTo: goTo,
-        sizes: sizes,
         isSelected: !isStatic ? isSelected : null,
         onSelect: !isStatic ? onSelect : null
       })]
-    })]
+    })
   });
 };
 const StyleBookBody = ({
@@ -27635,7 +27628,6 @@ const StyleBookBody = ({
   onClick,
   onSelect,
   settings,
-  sizes,
   title,
   goTo
 }) => {
@@ -27694,9 +27686,7 @@ const StyleBookBody = ({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("style", {
       children: [STYLE_BOOK_IFRAME_STYLES, !!onClick && 'body { cursor: pointer; } body * { pointer-events: none; }']
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Examples, {
-      className: dist_clsx('edit-site-style-book__examples', {
-        'is-wide': sizes.width > 600
-      }),
+      className: "edit-site-style-book__examples",
       filteredExamples: examples,
       label: title ? (0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: %s: Category of blocks, e.g. Text.
