@@ -34336,6 +34336,8 @@ const {
 const privateApis = {};
 lock(privateApis, {
   CreateTemplatePartModal: CreateTemplatePartModal,
+  patternTitleField: pattern_title,
+  templateTitleField: template_title,
   BackButton: back_button,
   EntitiesSavedStatesExtensible: EntitiesSavedStatesExtensible,
   Editor: editor,

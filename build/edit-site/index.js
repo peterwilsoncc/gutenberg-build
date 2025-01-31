@@ -41023,189 +41023,6 @@ function DataViews({
   });
 }
 
-;// ./packages/fields/build-module/actions/utils.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-function isTemplate(post) {
-  return post.type === 'wp_template';
-}
-function isTemplatePart(post) {
-  return post.type === 'wp_template_part';
-}
-function isTemplateOrTemplatePart(p) {
-  return p.type === 'wp_template' || p.type === 'wp_template_part';
-}
-function getItemTitle(item) {
-  if (typeof item.title === 'string') {
-    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title);
-  }
-  if (item.title && 'rendered' in item.title) {
-    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.rendered);
-  }
-  if (item.title && 'raw' in item.title) {
-    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.raw);
-  }
-  return '';
-}
-
-/**
- * Check if a template is removable.
- *
- * @param template The template entity to check.
- * @return Whether the template is removable.
- */
-function isTemplateRemovable(template) {
-  if (!template) {
-    return false;
-  }
-  // In patterns list page we map the templates parts to a different object
-  // than the one returned from the endpoint. This is why we need to check for
-  // two props whether is custom or has a theme file.
-  return [template.source, template.source].includes('custom') && !Boolean(template.type === 'wp_template' && template?.plugin) && !template.has_theme_file;
-}
-
-;// ./packages/icons/build-module/library/lock-small.js
-/**
- * WordPress dependencies
- */
-
-
-const lockSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M15 11h-.2V9c0-1.5-1.2-2.8-2.8-2.8S9.2 7.5 9.2 9v2H9c-.6 0-1 .4-1 1v4c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-4c0-.6-.4-1-1-1zm-1.8 0h-2.5V9c0-.7.6-1.2 1.2-1.2s1.2.6 1.2 1.2v2z"
-  })
-});
-/* harmony default export */ const lock_small = (lockSmall);
-
-;// ./packages/fields/build-module/fields/title/view.js
-/**
- * External dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-function BaseTitleView({
-  item,
-  className,
-  children
-}) {
-  const renderedTitle = getItemTitle(item);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-    className: dist_clsx('fields-field__title', className),
-    alignment: "center",
-    justify: "flex-start",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-      children: renderedTitle || (0,external_wp_i18n_namespaceObject.__)('(no title)')
-    }), children]
-  });
-}
-function TitleView({
-  item
-}) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BaseTitleView, {
-    item: item
-  });
-}
-
-;// ./packages/fields/build-module/lock-unlock.js
-/**
- * WordPress dependencies
- */
-
-const {
-  lock: build_module_lock_unlock_lock,
-  unlock: build_module_lock_unlock_unlock
-} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/fields');
-
-;// ./packages/fields/build-module/fields/pattern-title/view.js
-/**
- * WordPress dependencies
- */
-
-
-
-// @ts-ignore
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-const {
-  PATTERN_TYPES: view_PATTERN_TYPES
-} = build_module_lock_unlock_unlock(external_wp_patterns_namespaceObject.privateApis);
-function PatternTitleView({
-  item
-}) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BaseTitleView, {
-    item: item,
-    className: "fields-field__pattern-title",
-    children: item.type === view_PATTERN_TYPES.theme && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
-      placement: "top",
-      text: (0,external_wp_i18n_namespaceObject.__)('This pattern cannot be edited.'),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-        icon: lock_small,
-        size: 24
-      })
-    })
-  });
-}
-
-;// ./packages/fields/build-module/fields/pattern-title/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-const patternTitleField = {
-  type: 'text',
-  id: 'title',
-  label: (0,external_wp_i18n_namespaceObject.__)('Title'),
-  placeholder: (0,external_wp_i18n_namespaceObject.__)('No title'),
-  getValue: ({
-    item
-  }) => getItemTitle(item),
-  render: PatternTitleView,
-  enableHiding: false,
-  enableGlobalSearch: true
-};
-
-/**
- * Title for the pattern entity.
- */
-/* harmony default export */ const pattern_title = (patternTitleField);
-
 ;// ./packages/edit-site/build-module/components/page-patterns/use-pattern-settings.js
 /* wp:polyfill */
 /**
@@ -42061,7 +41878,6 @@ const templatePartAuthorField = {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -42078,7 +41894,8 @@ const {
   ExperimentalBlockEditorProvider: page_patterns_ExperimentalBlockEditorProvider
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const {
-  usePostActions
+  usePostActions,
+  patternTitleField
 } = unlock(external_wp_editor_namespaceObject.privateApis);
 const {
   useLocation: page_patterns_useLocation,
@@ -42153,7 +41970,7 @@ function DataviewsPatterns() {
     }));
   }, [records]);
   const fields = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const _fields = [previewField, pattern_title];
+    const _fields = [previewField, patternTitleField];
     if (postType === PATTERN_TYPES.user) {
       _fields.push(patternStatusField);
     } else if (postType === TEMPLATE_PART_POST_TYPE) {
@@ -42402,37 +42219,6 @@ function SidebarNavigationScreenTemplatesBrowse({
     content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsTemplatesSidebarContent, {})
   });
 }
-
-;// ./packages/fields/build-module/fields/template-title/index.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-const templateTitleField = {
-  type: 'text',
-  label: (0,external_wp_i18n_namespaceObject.__)('Template'),
-  placeholder: (0,external_wp_i18n_namespaceObject.__)('No title'),
-  id: 'title',
-  getValue: ({
-    item
-  }) => getItemTitle(item),
-  render: TitleView,
-  enableHiding: false,
-  enableGlobalSearch: true
-};
-
-/**
- * Title for the template entity.
- */
-/* harmony default export */ const template_title = (templateTitleField);
 
 ;// ./packages/icons/build-module/library/home.js
 /**
@@ -44388,7 +44174,6 @@ const authorField = {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -44401,7 +44186,8 @@ const authorField = {
 
 
 const {
-  usePostActions: page_templates_usePostActions
+  usePostActions: page_templates_usePostActions,
+  templateTitleField
 } = unlock(external_wp_editor_namespaceObject.privateApis);
 const {
   useHistory: page_templates_useHistory,
@@ -44518,7 +44304,7 @@ function PageTemplates() {
       label: author
     }));
   }, [records]);
-  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [fields_previewField, template_title, descriptionField, {
+  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [fields_previewField, templateTitleField, descriptionField, {
     ...authorField,
     elements: authors
   }], [authors]);
