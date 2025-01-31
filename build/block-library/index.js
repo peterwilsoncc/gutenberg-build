@@ -53650,6 +53650,20 @@ function RSSEdit({
     }),
     isActive: blockLayout === 'grid'
   }];
+
+  /*
+   * This function merges the existing attributes with additional style properties.
+   * The `border` and `spacing` properties are set to `undefined` to ensure that
+   * these styles are reset and not applied on the server side.
+   */
+  const serverSideAttributes = {
+    ...attributes,
+    style: {
+      ...attributes?.style,
+      border: undefined,
+      spacing: undefined
+    }
+  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
@@ -53713,7 +53727,7 @@ function RSSEdit({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Disabled, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)((external_wp_serverSideRender_default()), {
           block: "core/rss",
-          attributes: attributes
+          attributes: serverSideAttributes
         })
       })
     })]
@@ -53778,6 +53792,20 @@ const rss_metadata = {
     html: false,
     interactivity: {
       clientNavigation: true
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true
+    },
+    spacing: {
+      margin: true,
+      padding: true,
+      __experimentalDefaultControls: {
+        padding: false,
+        margin: false
+      }
     },
     color: {
       background: true,
