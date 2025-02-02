@@ -8297,7 +8297,7 @@ function ResizableFrame({
         });
       }
     },
-    whileHover: canvas === 'view' ? {
+    whileHover: canvas === 'view' && isBlockTheme ? {
       scale: 1.005,
       transition: {
         duration: disableMotion ? 0 : 0.5,
