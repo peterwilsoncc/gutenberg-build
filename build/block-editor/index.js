@@ -52938,16 +52938,12 @@ function InserterListbox({
  */
 
 
-
 function InserterNoResults() {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "block-editor-inserter__no-results",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-      className: "block-editor-inserter__no-results-icon",
-      icon: block_default
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
       children: (0,external_wp_i18n_namespaceObject.__)('No results found.')
-    })]
+    })
   });
 }
 /* harmony default export */ const no_results = (InserterNoResults);
