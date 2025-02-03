@@ -26511,6 +26511,21 @@ const shadow = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 });
 /* harmony default export */ const library_shadow = (shadow);
 
+;// ./packages/icons/build-module/library/reset.js
+/**
+ * WordPress dependencies
+ */
+
+
+const reset_reset = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M7 11.5h10V13H7z"
+  })
+});
+/* harmony default export */ const library_reset = (reset_reset);
+
 ;// ./packages/block-editor/build-module/components/global-styles/shadow-panel-components.js
 /* wp:polyfill */
 /**
@@ -26630,7 +26645,7 @@ function ShadowPopover({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
     popoverProps: popoverProps,
     className: "block-editor-global-styles__shadow-dropdown",
-    renderToggle: renderShadowToggle(),
+    renderToggle: renderShadowToggle(shadow, onShadowChange),
     renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalDropdownContentWrapper, {
       paddingSize: "medium",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ShadowPopoverContainer, {
@@ -26641,31 +26656,54 @@ function ShadowPopover({
     })
   });
 }
-function renderShadowToggle() {
+function renderShadowToggle(shadow, onShadowChange) {
   return ({
     onToggle,
     isOpen
   }) => {
+    const shadowButtonRef = (0,external_wp_element_namespaceObject.useRef)(undefined);
     const toggleProps = {
       onClick: onToggle,
       className: dist_clsx({
         'is-open': isOpen
       }),
-      'aria-expanded': isOpen
+      'aria-expanded': isOpen,
+      ref: shadowButtonRef
     };
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      __next40pxDefaultSize: true,
-      ...toggleProps,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        justify: "flex-start",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-          className: "block-editor-global-styles__toggle-icon",
-          icon: library_shadow,
-          size: 24
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-          children: (0,external_wp_i18n_namespaceObject.__)('Drop shadow')
-        })]
-      })
+    const removeButtonProps = {
+      onClick: () => {
+        if (isOpen) {
+          onToggle();
+        }
+        onShadowChange(undefined);
+        // Return focus to parent button.
+        shadowButtonRef.current?.focus();
+      },
+      className: dist_clsx('block-editor-global-styles__shadow-editor__remove-button', {
+        'is-open': isOpen
+      }),
+      label: (0,external_wp_i18n_namespaceObject.__)('Remove')
+    };
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
+        ...toggleProps,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+          justify: "flex-start",
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+            className: "block-editor-global-styles__toggle-icon",
+            icon: library_shadow,
+            size: 24
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+            children: (0,external_wp_i18n_namespaceObject.__)('Drop shadow')
+          })]
+        })
+      }), !!shadow && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
+        size: "small",
+        icon: library_reset,
+        ...removeButtonProps
+      })]
     });
   };
 }
@@ -27578,21 +27616,6 @@ function ColorGradientControl(props) {
   });
 }
 /* harmony default export */ const control = (ColorGradientControl);
-
-;// ./packages/icons/build-module/library/reset.js
-/**
- * WordPress dependencies
- */
-
-
-const reset_reset = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M7 11.5h10V13H7z"
-  })
-});
-/* harmony default export */ const library_reset = (reset_reset);
 
 ;// ./packages/block-editor/build-module/components/global-styles/color-panel.js
 /* wp:polyfill */
