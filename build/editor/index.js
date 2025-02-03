@@ -33578,23 +33578,27 @@ function Editor({
   const {
     post,
     template,
-    hasLoadedPost
+    hasLoadedPost,
+    error
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEntityRecord,
+      getResolutionError,
       hasFinishedResolution
     } = select(external_wp_coreData_namespaceObject.store);
+    const postArgs = ['postType', postType, postId];
     return {
-      post: getEntityRecord('postType', postType, postId),
+      post: getEntityRecord(...postArgs),
       template: templateId ? getEntityRecord('postType', TEMPLATE_POST_TYPE, templateId) : undefined,
-      hasLoadedPost: hasFinishedResolution('getEntityRecord', ['postType', postType, postId])
+      hasLoadedPost: hasFinishedResolution('getEntityRecord', postArgs),
+      error: getResolutionError('getEntityRecord', postArgs)?.message
     };
   }, [postType, postId, templateId]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [hasLoadedPost && !post && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
-      status: "warning",
+      status: !!error ? 'error' : 'warning',
       isDismissible: false,
-      children: (0,external_wp_i18n_namespaceObject.__)("You attempted to edit an item that doesn't exist. Perhaps it was deleted?")
+      children: !error ? (0,external_wp_i18n_namespaceObject.__)("You attempted to edit an item that doesn't exist. Perhaps it was deleted?") : error
     }), !!post && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ExperimentalEditorProvider, {
       post: post,
       __unstableTemplate: template,
