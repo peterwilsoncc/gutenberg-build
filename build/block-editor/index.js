@@ -25685,12 +25685,6 @@ function addSaveProps(extraProps, blockType, attributes) {
  */
 
 
-const ARIA_LABEL_SCHEMA = {
-  type: 'string',
-  source: 'attribute',
-  attribute: 'aria-label',
-  selector: '*'
-};
 
 /**
  * Filters registered block settings, extending attributes with ariaLabel using aria-label
@@ -25709,7 +25703,9 @@ function aria_label_addAttribute(settings) {
     // Gracefully handle if settings.attributes is undefined.
     settings.attributes = {
       ...settings.attributes,
-      ariaLabel: ARIA_LABEL_SCHEMA
+      ariaLabel: {
+        type: 'string'
+      }
     };
   }
   return settings;
