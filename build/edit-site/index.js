@@ -16559,7 +16559,10 @@ function BlockList({
   }, [filterValue, debouncedSpeak]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ref: blockTypesListRef,
-    className: "edit-site-block-types-item-list",
+    className: "edit-site-block-types-item-list"
+    // By default, BlockMenuItem has a role=listitem so this div must have a list role.
+    ,
+    role: "list",
     children: filteredBlockTypes.map(block => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockMenuItem, {
       block: block
     }, 'menu-itemblock-' + block.name))
