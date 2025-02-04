@@ -44283,7 +44283,6 @@ const postFeaturedImage = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
 /* harmony default export */ const post_featured_image = (postFeaturedImage);
 
 ;// ./packages/block-library/build-module/post-featured-image/dimension-controls.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -44291,15 +44290,6 @@ const postFeaturedImage = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
 
 
 
-
-/**
- * Internal dependencies
- */
-
-
-const {
-  ResolutionTool: dimension_controls_ResolutionTool
-} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const SCALE_OPTIONS = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
   children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
     value: "cover",
@@ -44313,7 +44303,6 @@ const SCALE_OPTIONS = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.j
   })]
 });
 const DEFAULT_SCALE = 'cover';
-const DEFAULT_SIZE = 'full';
 const scaleHelp = {
   cover: (0,external_wp_i18n_namespaceObject.__)('Image is scaled and cropped to fill the entire space without being distorted.'),
   contain: (0,external_wp_i18n_namespaceObject.__)('Image is scaled to fill the space without clipping nor distorting.'),
@@ -44325,28 +44314,14 @@ const DimensionControls = ({
     aspectRatio,
     width,
     height,
-    scale,
-    sizeSlug
+    scale
   },
-  setAttributes,
-  media
+  setAttributes
 }) => {
   const [availableUnits, defaultRatios, themeRatios, showDefaultRatios] = (0,external_wp_blockEditor_namespaceObject.useSettings)('spacing.units', 'dimensions.aspectRatios.default', 'dimensions.aspectRatios.theme', 'dimensions.defaultAspectRatios');
   const units = (0,external_wp_components_namespaceObject.__experimentalUseCustomUnits)({
     availableUnits: availableUnits || ['px', '%', 'vw', 'em', 'rem']
   });
-  const imageSizes = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).getSettings().imageSizes, []);
-  const imageSizeOptions = imageSizes.filter(({
-    slug
-  }) => {
-    return media?.media_details?.sizes?.[slug]?.source_url;
-  }).map(({
-    name,
-    slug
-  }) => ({
-    value: slug,
-    label: name
-  }));
   const onDimensionChange = (dimension, nextValue) => {
     const parsedValue = parseFloat(nextValue);
     /**
@@ -44467,18 +44442,6 @@ const DimensionControls = ({
         }),
         isBlock: true,
         children: SCALE_OPTIONS
-      })
-    }), !!imageSizeOptions.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dimension_controls_ResolutionTool, {
-      panelId: clientId,
-      value: sizeSlug,
-      defaultValue: DEFAULT_SIZE,
-      options: imageSizeOptions,
-      onChange: nextSizeSlug => setAttributes({
-        sizeSlug: nextSizeSlug
-      }),
-      isShownByDefault: false,
-      resetAllFilter: () => ({
-        sizeSlug: DEFAULT_SIZE
       })
     })]
   });
@@ -44629,6 +44592,7 @@ const overlay_Overlay = ({
 })])(overlay_Overlay));
 
 ;// ./packages/block-library/build-module/post-featured-image/edit.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -44655,9 +44619,45 @@ const overlay_Overlay = ({
 
 
 
+
 const post_featured_image_edit_ALLOWED_MEDIA_TYPES = ['image'];
-function getMediaSourceUrlBySizeSlug(media, slug) {
-  return media?.media_details?.sizes?.[slug]?.source_url || media?.source_url;
+const {
+  ResolutionTool: post_featured_image_edit_ResolutionTool
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
+const edit_DEFAULT_MEDIA_SIZE_SLUG = 'full';
+function FeaturedImageResolutionTool({
+  image,
+  value,
+  onChange
+}) {
+  const {
+    imageSizes
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getSettings
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    return {
+      imageSizes: getSettings().imageSizes
+    };
+  }, []);
+  if (!imageSizes?.length) {
+    return null;
+  }
+  const imageSizeOptions = imageSizes.filter(({
+    slug
+  }) => image?.media_details?.sizes?.[slug]?.source_url).map(({
+    name,
+    slug
+  }) => ({
+    value: slug,
+    label: name
+  }));
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_featured_image_edit_ResolutionTool, {
+    value: value,
+    defaultValue: edit_DEFAULT_MEDIA_SIZE_SLUG,
+    options: imageSizeOptions,
+    onChange: onChange
+  });
 }
 function PostFeaturedImageEdit({
   clientId,
@@ -44716,7 +44716,7 @@ function PostFeaturedImageEdit({
       postPermalink: getEditedEntityRecord('postType', postTypeSlug, postId)?.link
     };
   }, [featuredImage, postTypeSlug, postId]);
-  const mediaUrl = getMediaSourceUrlBySizeSlug(media, sizeSlug);
+  const mediaUrl = media?.media_details?.sizes?.[sizeSlug]?.source_url || media?.source_url;
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     style: {
       width,
@@ -44844,6 +44844,12 @@ function PostFeaturedImageEdit({
             onChange: newRel => setAttributes({
               rel: newRel
             })
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FeaturedImageResolutionTool, {
+          image: media,
+          value: sizeSlug,
+          onChange: nextSizeSlug => setAttributes({
+            sizeSlug: nextSizeSlug
           })
         })]
       })
