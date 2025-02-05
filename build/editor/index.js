@@ -20084,11 +20084,13 @@ function useAuthorsQuery(search) {
   const {
     authorId,
     authors,
-    postAuthor
+    postAuthor,
+    isLoading
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getUser,
-      getUsers
+      getUsers,
+      isResolving
     } = select(external_wp_coreData_namespaceObject.store);
     const {
       getEditedPostAttribute
@@ -20104,7 +20106,8 @@ function useAuthorsQuery(search) {
     return {
       authorId: _authorId,
       authors: getUsers(query),
-      postAuthor: getUser(_authorId, BASE_QUERY)
+      postAuthor: getUser(_authorId, BASE_QUERY),
+      isLoading: isResolving('getUsers', [query])
     };
   }, [search]);
   const authorOptions = (0,external_wp_element_namespaceObject.useMemo)(() => {
@@ -20136,7 +20139,8 @@ function useAuthorsQuery(search) {
   return {
     authorId,
     authorOptions,
-    postAuthor
+    postAuthor,
+    isLoading
   };
 }
 
@@ -20163,7 +20167,8 @@ function PostAuthorCombobox() {
   } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
   const {
     authorId,
-    authorOptions
+    authorOptions,
+    isLoading
   } = useAuthorsQuery(fieldValue);
 
   /**
@@ -20197,7 +20202,8 @@ function PostAuthorCombobox() {
     onFilterValueChange: (0,external_wp_compose_namespaceObject.debounce)(handleKeydown, 300),
     onChange: handleSelect,
     allowReset: false,
-    hideLabelFromVision: true
+    hideLabelFromVision: true,
+    isLoading: isLoading
   });
 }
 
