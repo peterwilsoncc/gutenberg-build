@@ -25685,6 +25685,12 @@ function addSaveProps(extraProps, blockType, attributes) {
  */
 
 
+const ARIA_LABEL_SCHEMA = {
+  type: 'string',
+  source: 'attribute',
+  attribute: 'aria-label',
+  selector: '*'
+};
 
 /**
  * Filters registered block settings, extending attributes with ariaLabel using aria-label
@@ -25703,9 +25709,7 @@ function aria_label_addAttribute(settings) {
     // Gracefully handle if settings.attributes is undefined.
     settings.attributes = {
       ...settings.attributes,
-      ariaLabel: {
-        type: 'string'
-      }
+      ariaLabel: ARIA_LABEL_SCHEMA
     };
   }
   return settings;
@@ -26507,21 +26511,6 @@ const shadow = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 });
 /* harmony default export */ const library_shadow = (shadow);
 
-;// ./packages/icons/build-module/library/reset.js
-/**
- * WordPress dependencies
- */
-
-
-const reset_reset = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M7 11.5h10V13H7z"
-  })
-});
-/* harmony default export */ const library_reset = (reset_reset);
-
 ;// ./packages/block-editor/build-module/components/global-styles/shadow-panel-components.js
 /* wp:polyfill */
 /**
@@ -26641,7 +26630,7 @@ function ShadowPopover({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
     popoverProps: popoverProps,
     className: "block-editor-global-styles__shadow-dropdown",
-    renderToggle: renderShadowToggle(shadow, onShadowChange),
+    renderToggle: renderShadowToggle(),
     renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalDropdownContentWrapper, {
       paddingSize: "medium",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ShadowPopoverContainer, {
@@ -26652,54 +26641,31 @@ function ShadowPopover({
     })
   });
 }
-function renderShadowToggle(shadow, onShadowChange) {
+function renderShadowToggle() {
   return ({
     onToggle,
     isOpen
   }) => {
-    const shadowButtonRef = (0,external_wp_element_namespaceObject.useRef)(undefined);
     const toggleProps = {
       onClick: onToggle,
       className: dist_clsx({
         'is-open': isOpen
       }),
-      'aria-expanded': isOpen,
-      ref: shadowButtonRef
+      'aria-expanded': isOpen
     };
-    const removeButtonProps = {
-      onClick: () => {
-        if (isOpen) {
-          onToggle();
-        }
-        onShadowChange(undefined);
-        // Return focus to parent button.
-        shadowButtonRef.current?.focus();
-      },
-      className: dist_clsx('block-editor-global-styles__shadow-editor__remove-button', {
-        'is-open': isOpen
-      }),
-      label: (0,external_wp_i18n_namespaceObject.__)('Remove')
-    };
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        __next40pxDefaultSize: true,
-        ...toggleProps,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-          justify: "flex-start",
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
-            className: "block-editor-global-styles__toggle-icon",
-            icon: library_shadow,
-            size: 24
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-            children: (0,external_wp_i18n_namespaceObject.__)('Drop shadow')
-          })]
-        })
-      }), !!shadow && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        __next40pxDefaultSize: true,
-        size: "small",
-        icon: library_reset,
-        ...removeButtonProps
-      })]
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
+      ...toggleProps,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        justify: "flex-start",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+          className: "block-editor-global-styles__toggle-icon",
+          icon: library_shadow,
+          size: 24
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+          children: (0,external_wp_i18n_namespaceObject.__)('Drop shadow')
+        })]
+      })
     });
   };
 }
@@ -27612,6 +27578,21 @@ function ColorGradientControl(props) {
   });
 }
 /* harmony default export */ const control = (ColorGradientControl);
+
+;// ./packages/icons/build-module/library/reset.js
+/**
+ * WordPress dependencies
+ */
+
+
+const reset_reset = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M7 11.5h10V13H7z"
+  })
+});
+/* harmony default export */ const library_reset = (reset_reset);
 
 ;// ./packages/block-editor/build-module/components/global-styles/color-panel.js
 /* wp:polyfill */
@@ -32762,29 +32743,24 @@ function DimensionsPanel({
  */
 
 
-const scrollContainerCache = new WeakMap();
-
 /**
  * Allow scrolling "through" popovers over the canvas. This is only called for
  * as long as the pointer is over a popover. Do not use React events because it
  * will bubble through portals.
  *
- * @param {Object} contentRef
+ * @param {Object} scrollableRef
  */
-function usePopoverScroll(contentRef) {
+function usePopoverScroll(scrollableRef) {
   return (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
+    if (!scrollableRef) {
+      return;
+    }
     function onWheel(event) {
       const {
         deltaX,
         deltaY
       } = event;
-      const contentEl = contentRef.current;
-      let scrollContainer = scrollContainerCache.get(contentEl);
-      if (!scrollContainer) {
-        scrollContainer = (0,external_wp_dom_namespaceObject.getScrollContainer)(contentEl);
-        scrollContainerCache.set(contentEl, scrollContainer);
-      }
-      scrollContainer.scrollBy(deltaX, deltaY);
+      scrollableRef.current.scrollBy(deltaX, deltaY);
     }
     // Tell the browser that we do not call event.preventDefault
     // See https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
@@ -32795,7 +32771,7 @@ function usePopoverScroll(contentRef) {
     return () => {
       node.removeEventListener('wheel', onWheel, options);
     };
-  }, [contentRef]);
+  }, [scrollableRef]);
 }
 /* harmony default export */ const use_popover_scroll = (usePopoverScroll);
 
@@ -48166,11 +48142,11 @@ const ForwardedInnerBlocks = (0,external_wp_element_namespaceObject.forwardRef)(
  * returns. Optionally, you can also pass any other props through this hook, and
  * they will be merged and returned.
  *
- * @see https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/inner-blocks/README.md
- *
  * @param {Object} props   Optional. Props to pass to the element. Must contain
  *                         the ref if one is defined.
  * @param {Object} options Optional. Inner blocks options.
+ *
+ * @see https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/inner-blocks/README.md
  */
 function useInnerBlocksProps(props = {}, options = {}) {
   const {
@@ -48657,7 +48633,6 @@ function ZoomOutSeparator({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -48797,13 +48772,13 @@ function Items({
     const {
       getSettings,
       getBlockOrder,
+      getSelectedBlockClientId,
       getSelectedBlockClientIds,
       __unstableGetVisibleBlocks,
       getTemplateLock,
       getBlockEditingMode,
       isSectionBlock,
-      isZoomOut: _isZoomOut,
-      canInsertBlockType
+      isZoomOut: _isZoomOut
     } = unlock(select(store));
     const _order = getBlockOrder(rootClientId);
     if (getSettings().isPreviewMode) {
@@ -48813,16 +48788,13 @@ function Items({
         visibleBlocks: block_list_EMPTY_SET
       };
     }
-    const selectedBlockClientIds = getSelectedBlockClientIds();
-    const selectedBlockClientId = selectedBlockClientIds[0];
-    const showRootAppender = !rootClientId && !selectedBlockClientId && (!_order.length || !canInsertBlockType((0,external_wp_blocks_namespaceObject.getDefaultBlockName)(), rootClientId));
-    const hasSelectedRoot = !!(rootClientId && selectedBlockClientId && rootClientId === selectedBlockClientId);
+    const selectedBlockClientId = getSelectedBlockClientId();
     return {
       order: _order,
-      selectedBlocks: selectedBlockClientIds,
+      selectedBlocks: getSelectedBlockClientIds(),
       visibleBlocks: __unstableGetVisibleBlocks(),
       isZoomOut: _isZoomOut(),
-      shouldRenderAppender: !isSectionBlock(rootClientId) && getBlockEditingMode(rootClientId) !== 'disabled' && !getTemplateLock(rootClientId) && hasAppender && !_isZoomOut() && (hasCustomAppender || hasSelectedRoot || showRootAppender)
+      shouldRenderAppender: !isSectionBlock(rootClientId) && getBlockEditingMode(rootClientId) !== 'disabled' && !getTemplateLock(rootClientId) && hasAppender && !_isZoomOut() && (hasCustomAppender || rootClientId === selectedBlockClientId || !rootClientId && !selectedBlockClientId && !_order.length)
     };
   }, [rootClientId, hasAppender, hasCustomAppender]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(LayoutProvider, {
@@ -52958,12 +52930,16 @@ function InserterListbox({
  */
 
 
+
 function InserterNoResults() {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "block-editor-inserter__no-results",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+      className: "block-editor-inserter__no-results-icon",
+      icon: block_default
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
       children: (0,external_wp_i18n_namespaceObject.__)('No results found.')
-    })
+    })]
   });
 }
 /* harmony default export */ const no_results = (InserterNoResults);
@@ -64914,7 +64890,7 @@ function BlockToolbarPopover({
     contentElement: __unstableContentRef?.current,
     clientId: clientIdToPositionOver
   });
-  return !isTyping && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrivateBlockPopover, {
+  return !isTyping && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_popover, {
     clientId: clientIdToPositionOver,
     bottomClientId: lastClientId,
     className: dist_clsx('block-editor-block-list__block-popover', {
@@ -64922,7 +64898,6 @@ function BlockToolbarPopover({
     }),
     resize: false,
     ...popoverProps,
-    __unstableContentRef: __unstableContentRef,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrivateBlockToolbar
     // If the toolbar is being shown because of being forced
     // it should focus the toolbar right after the mount.

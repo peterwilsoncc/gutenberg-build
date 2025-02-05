@@ -33578,27 +33578,23 @@ function Editor({
   const {
     post,
     template,
-    hasLoadedPost,
-    error
+    hasLoadedPost
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEntityRecord,
-      getResolutionError,
       hasFinishedResolution
     } = select(external_wp_coreData_namespaceObject.store);
-    const postArgs = ['postType', postType, postId];
     return {
-      post: getEntityRecord(...postArgs),
+      post: getEntityRecord('postType', postType, postId),
       template: templateId ? getEntityRecord('postType', TEMPLATE_POST_TYPE, templateId) : undefined,
-      hasLoadedPost: hasFinishedResolution('getEntityRecord', postArgs),
-      error: getResolutionError('getEntityRecord', postArgs)?.message
+      hasLoadedPost: hasFinishedResolution('getEntityRecord', ['postType', postType, postId])
     };
   }, [postType, postId, templateId]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [hasLoadedPost && !post && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
-      status: !!error ? 'error' : 'warning',
+      status: "warning",
       isDismissible: false,
-      children: !error ? (0,external_wp_i18n_namespaceObject.__)("You attempted to edit an item that doesn't exist. Perhaps it was deleted?") : error
+      children: (0,external_wp_i18n_namespaceObject.__)("You attempted to edit an item that doesn't exist. Perhaps it was deleted?")
     }), !!post && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ExperimentalEditorProvider, {
       post: post,
       __unstableTemplate: template,
@@ -34340,8 +34336,6 @@ const {
 const privateApis = {};
 lock(privateApis, {
   CreateTemplatePartModal: CreateTemplatePartModal,
-  patternTitleField: pattern_title,
-  templateTitleField: template_title,
   BackButton: back_button,
   EntitiesSavedStatesExtensible: EntitiesSavedStatesExtensible,
   Editor: editor,
