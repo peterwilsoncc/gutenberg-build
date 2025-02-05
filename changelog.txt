@@ -1,5 +1,14 @@
 == Changelog ==
 
+= 20.0.1 =
+
+## Changelog
+
+### Bug Fixes
+
+- iAPI Router: add missing changelog entry for [#68923](https://github.com/WordPress/gutenberg/pull/68945)
+
+
 = 20.0.0 =
 
 ## Changelog
