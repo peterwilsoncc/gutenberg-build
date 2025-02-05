@@ -18519,10 +18519,6 @@ function FontCard({
 
 
 
-
-const {
-  kebabCase: library_font_variant_kebabCase
-} = unlock(external_wp_components_namespaceObject.privateApis);
 function LibraryFontVariant({
   face,
   font
@@ -18540,7 +18536,7 @@ function LibraryFontVariant({
     toggleActivateFont(font);
   };
   const displayName = font.name + ' ' + getFontFaceVariantName(face);
-  const checkboxId = library_font_variant_kebabCase(`${font.slug}-${getFontFaceVariantName(face)}`);
+  const checkboxId = (0,external_wp_element_namespaceObject.useId)();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "font-library-modal__font-card",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
@@ -19065,16 +19061,13 @@ function GoogleFontsConfirmDialog() {
  */
 
 
+
 /**
  * Internal dependencies
  */
 
 
 
-
-const {
-  kebabCase: collection_font_variant_kebabCase
-} = unlock(external_wp_components_namespaceObject.privateApis);
 function CollectionFontVariant({
   face,
   font,
@@ -19089,7 +19082,7 @@ function CollectionFontVariant({
     handleToggleVariant(font);
   };
   const displayName = font.name + ' ' + getFontFaceVariantName(face);
-  const checkboxId = collection_font_variant_kebabCase(`${font.slug}-${getFontFaceVariantName(face)}`);
+  const checkboxId = (0,external_wp_element_namespaceObject.useId)();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "font-library-modal__font-card",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
