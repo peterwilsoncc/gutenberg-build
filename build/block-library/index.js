@@ -2055,6 +2055,15 @@ const metadata = {
         fontSize: true
       }
     },
+    color: {
+      gradients: true,
+      link: true,
+      __experimentalDefaultControls: {
+        background: true,
+        text: true,
+        link: true
+      }
+    },
     interactivity: {
       clientNavigation: true
     }
@@ -6810,6 +6819,15 @@ const categories_metadata = {
       __experimentalLetterSpacing: true,
       __experimentalDefaultControls: {
         fontSize: true
+      }
+    },
+    color: {
+      gradients: true,
+      link: true,
+      __experimentalDefaultControls: {
+        background: true,
+        text: true,
+        link: true
       }
     },
     interactivity: {
@@ -44265,7 +44283,6 @@ const postFeaturedImage = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
 /* harmony default export */ const post_featured_image = (postFeaturedImage);
 
 ;// ./packages/block-library/build-module/post-featured-image/dimension-controls.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -44273,15 +44290,6 @@ const postFeaturedImage = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
 
 
 
-
-/**
- * Internal dependencies
- */
-
-
-const {
-  ResolutionTool: dimension_controls_ResolutionTool
-} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const SCALE_OPTIONS = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
   children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
     value: "cover",
@@ -44295,7 +44303,6 @@ const SCALE_OPTIONS = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.j
   })]
 });
 const DEFAULT_SCALE = 'cover';
-const DEFAULT_SIZE = 'full';
 const scaleHelp = {
   cover: (0,external_wp_i18n_namespaceObject.__)('Image is scaled and cropped to fill the entire space without being distorted.'),
   contain: (0,external_wp_i18n_namespaceObject.__)('Image is scaled to fill the space without clipping nor distorting.'),
@@ -44307,28 +44314,14 @@ const DimensionControls = ({
     aspectRatio,
     width,
     height,
-    scale,
-    sizeSlug
+    scale
   },
-  setAttributes,
-  media
+  setAttributes
 }) => {
   const [availableUnits, defaultRatios, themeRatios, showDefaultRatios] = (0,external_wp_blockEditor_namespaceObject.useSettings)('spacing.units', 'dimensions.aspectRatios.default', 'dimensions.aspectRatios.theme', 'dimensions.defaultAspectRatios');
   const units = (0,external_wp_components_namespaceObject.__experimentalUseCustomUnits)({
     availableUnits: availableUnits || ['px', '%', 'vw', 'em', 'rem']
   });
-  const imageSizes = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).getSettings().imageSizes, []);
-  const imageSizeOptions = imageSizes.filter(({
-    slug
-  }) => {
-    return media?.media_details?.sizes?.[slug]?.source_url;
-  }).map(({
-    name,
-    slug
-  }) => ({
-    value: slug,
-    label: name
-  }));
   const onDimensionChange = (dimension, nextValue) => {
     const parsedValue = parseFloat(nextValue);
     /**
@@ -44449,18 +44442,6 @@ const DimensionControls = ({
         }),
         isBlock: true,
         children: SCALE_OPTIONS
-      })
-    }), !!imageSizeOptions.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dimension_controls_ResolutionTool, {
-      panelId: clientId,
-      value: sizeSlug,
-      defaultValue: DEFAULT_SIZE,
-      options: imageSizeOptions,
-      onChange: nextSizeSlug => setAttributes({
-        sizeSlug: nextSizeSlug
-      }),
-      isShownByDefault: false,
-      resetAllFilter: () => ({
-        sizeSlug: DEFAULT_SIZE
       })
     })]
   });
@@ -44611,6 +44592,7 @@ const overlay_Overlay = ({
 })])(overlay_Overlay));
 
 ;// ./packages/block-library/build-module/post-featured-image/edit.js
+/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -44637,9 +44619,45 @@ const overlay_Overlay = ({
 
 
 
+
 const post_featured_image_edit_ALLOWED_MEDIA_TYPES = ['image'];
-function getMediaSourceUrlBySizeSlug(media, slug) {
-  return media?.media_details?.sizes?.[slug]?.source_url || media?.source_url;
+const {
+  ResolutionTool: post_featured_image_edit_ResolutionTool
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
+const edit_DEFAULT_MEDIA_SIZE_SLUG = 'full';
+function FeaturedImageResolutionTool({
+  image,
+  value,
+  onChange
+}) {
+  const {
+    imageSizes
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getSettings
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    return {
+      imageSizes: getSettings().imageSizes
+    };
+  }, []);
+  if (!imageSizes?.length) {
+    return null;
+  }
+  const imageSizeOptions = imageSizes.filter(({
+    slug
+  }) => image?.media_details?.sizes?.[slug]?.source_url).map(({
+    name,
+    slug
+  }) => ({
+    value: slug,
+    label: name
+  }));
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_featured_image_edit_ResolutionTool, {
+    value: value,
+    defaultValue: edit_DEFAULT_MEDIA_SIZE_SLUG,
+    options: imageSizeOptions,
+    onChange: onChange
+  });
 }
 function PostFeaturedImageEdit({
   clientId,
@@ -44698,7 +44716,7 @@ function PostFeaturedImageEdit({
       postPermalink: getEditedEntityRecord('postType', postTypeSlug, postId)?.link
     };
   }, [featuredImage, postTypeSlug, postId]);
-  const mediaUrl = getMediaSourceUrlBySizeSlug(media, sizeSlug);
+  const mediaUrl = media?.media_details?.sizes?.[sizeSlug]?.source_url || media?.source_url;
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     style: {
       width,
@@ -44826,6 +44844,12 @@ function PostFeaturedImageEdit({
             onChange: newRel => setAttributes({
               rel: newRel
             })
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FeaturedImageResolutionTool, {
+          image: media,
+          value: sizeSlug,
+          onChange: nextSizeSlug => setAttributes({
+            sizeSlug: nextSizeSlug
           })
         })]
       })
@@ -53641,6 +53665,20 @@ function RSSEdit({
     }),
     isActive: blockLayout === 'grid'
   }];
+
+  /*
+   * This function merges the existing attributes with additional style properties.
+   * The `border` and `spacing` properties are set to `undefined` to ensure that
+   * these styles are reset and not applied on the server side.
+   */
+  const serverSideAttributes = {
+    ...attributes,
+    style: {
+      ...attributes?.style,
+      border: undefined,
+      spacing: undefined
+    }
+  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
@@ -53704,7 +53742,7 @@ function RSSEdit({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Disabled, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)((external_wp_serverSideRender_default()), {
           block: "core/rss",
-          attributes: attributes
+          attributes: serverSideAttributes
         })
       })
     })]
@@ -53769,6 +53807,20 @@ const rss_metadata = {
     html: false,
     interactivity: {
       clientNavigation: true
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true
+    },
+    spacing: {
+      margin: true,
+      padding: true,
+      __experimentalDefaultControls: {
+        padding: false,
+        margin: false
+      }
     },
     color: {
       background: true,
@@ -56600,6 +56652,22 @@ const DeviantArtIcon = () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceO
   })
 });
 
+;// ./packages/block-library/build-module/social-link/icons/discord.js
+/**
+ * WordPress dependencies
+ */
+
+
+const DiscordIcon = () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  version: "1.1",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M20.317 4.369A19.88 19.88 0 0 0 15.894 3a14.145 14.145 0 0 0-.719 1.518 19.205 19.205 0 0 0-5.351 0A14.183 14.183 0 0 0 9.104 3 19.896 19.896 0 0 0 4.682 4.369a18.921 18.921 0 0 0-3.012 12.52 19.929 19.929 0 0 0 6.081 3.097c.487-.65.922-1.339 1.3-2.061a12.445 12.445 0 0 1-1.958-.896c.165-.12.326-.246.483-.374a12.445 12.445 0 0 0 8.946 0c.157.128.318.253.483.374-.627.371-1.281.683-1.958.896.379.722.813 1.41 1.3 2.061a19.94 19.94 0 0 0 6.081-3.097 18.921 18.921 0 0 0-3.012-12.52ZM8.12 15.233c-1.202 0-2.184-1.09-2.184-2.431 0-1.34.97-2.431 2.184-2.431 1.213 0 2.202 1.09 2.184 2.431 0 1.341-.97 2.431-2.184 2.431Zm7.757 0c-1.202 0-2.184-1.09-2.184-2.431 0-1.34.97-2.431 2.184-2.431 1.213 0 2.202 1.09 2.184 2.431 0 1.341-.97 2.431-2.184 2.431Z"
+  })
+});
+
 ;// ./packages/block-library/build-module/social-link/icons/dribbble.js
 /**
  * WordPress dependencies
@@ -57278,6 +57346,13 @@ const social_link_variations_variations = [{
   },
   title: 'DeviantArt',
   icon: DeviantArtIcon
+}, {
+  name: 'discord',
+  attributes: {
+    service: 'discord'
+  },
+  title: 'Discord',
+  icon: DiscordIcon
 }, {
   name: 'dribbble',
   attributes: {
