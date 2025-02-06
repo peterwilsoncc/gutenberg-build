@@ -29987,7 +29987,6 @@ function PreviewDropdown({
 const square = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
-  fill: "none",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     fill: "none",
     d: "M5.75 12.75V18.25H11.25M12.75 5.75H18.25V11.25",
