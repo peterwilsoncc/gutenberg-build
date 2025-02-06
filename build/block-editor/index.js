@@ -55508,7 +55508,7 @@ function InserterSearchResults({
     selectBlockOnInsert
   });
   const [blockTypes, blockTypeCategories, blockTypeCollections, onSelectBlockType] = use_block_types_state(destinationRootClientId, onInsertBlocks, isQuick);
-  const [patterns,, onClickPattern] = use_patterns_state(onInsertBlocks, destinationRootClientId);
+  const [patterns,, onClickPattern] = use_patterns_state(onInsertBlocks, destinationRootClientId, undefined, isQuick);
   const filteredBlockPatterns = (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (maxBlockPatterns === 0) {
       return [];
@@ -56093,6 +56093,7 @@ function PublicInserterMenu(props, ref) {
 
 const SEARCH_THRESHOLD = 6;
 const SHOWN_BLOCK_TYPES = 6;
+const SHOWN_BLOCK_PATTERNS = 2;
 function QuickInserter({
   onSelect,
   rootClientId,
@@ -56166,7 +56167,7 @@ function QuickInserter({
         rootClientId: rootClientId,
         clientId: clientId,
         isAppender: isAppender,
-        maxBlockPatterns: 0,
+        maxBlockPatterns: !!filterValue ? SHOWN_BLOCK_PATTERNS : 0,
         maxBlockTypes: SHOWN_BLOCK_TYPES,
         isDraggable: false,
         selectBlockOnInsert: selectBlockOnInsert,
