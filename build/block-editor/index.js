@@ -26529,6 +26529,8 @@ function ShadowPopoverContainer({
           __next40pxDefaultSize: true,
           variant: "tertiary",
           onClick: () => onShadowChange(undefined),
+          disabled: !shadow,
+          accessibleWhenDisabled: true,
           children: (0,external_wp_i18n_namespaceObject.__)('Clear')
         })
       })]
