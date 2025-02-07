@@ -23745,11 +23745,11 @@ function FlatTermSelector({
     } = select(store_store);
     const {
       getEntityRecords,
-      getTaxonomy,
+      getEntityRecord,
       hasFinishedResolution
     } = select(external_wp_coreData_namespaceObject.store);
     const post = getCurrentPost();
-    const _taxonomy = getTaxonomy(slug);
+    const _taxonomy = getEntityRecord('root', 'taxonomy', slug);
     const _termIds = _taxonomy ? getEditedPostAttribute(_taxonomy.rest_base) : flat_term_selector_EMPTY_ARRAY;
     const query = {
       ...flat_term_selector_DEFAULT_QUERY,
@@ -23940,7 +23940,7 @@ const MaybeTagsPanel = () => {
     isPostTypeSupported
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const postType = select(store_store).getCurrentPostType();
-    const tagsTaxonomy = select(external_wp_coreData_namespaceObject.store).getTaxonomy('post_tag');
+    const tagsTaxonomy = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', 'taxonomy', 'post_tag');
     const _isPostTypeSupported = tagsTaxonomy?.types?.includes(postType);
     const areTagsFetched = tagsTaxonomy !== undefined;
     const tags = tagsTaxonomy && select(store_store).getEditedPostAttribute(tagsTaxonomy.rest_base);
@@ -24202,11 +24202,11 @@ function HierarchicalTermSelector({
       getEditedPostAttribute
     } = select(store_store);
     const {
-      getTaxonomy,
+      getEntityRecord,
       getEntityRecords,
       isResolving
     } = select(external_wp_coreData_namespaceObject.store);
-    const _taxonomy = getTaxonomy(slug);
+    const _taxonomy = getEntityRecord('root', 'taxonomy', slug);
     const post = getCurrentPost();
     return {
       hasCreateAction: _taxonomy ? (_post$_links = post._links?.['wp:action-create-' + _taxonomy.rest_base]) !== null && _post$_links !== void 0 ? _post$_links : false : false,
@@ -24454,10 +24454,9 @@ function MaybeCategoryPanel() {
     const postType = select(store_store).getCurrentPostType();
     const {
       canUser,
-      getEntityRecord,
-      getTaxonomy
+      getEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    const categoriesTaxonomy = getTaxonomy('category');
+    const categoriesTaxonomy = getEntityRecord('root', 'taxonomy', 'category');
     const defaultCategoryId = canUser('read', {
       kind: 'root',
       name: 'site'
@@ -26073,7 +26072,7 @@ function PostTaxonomies({
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return {
       postType: select(store_store).getCurrentPostType(),
-      taxonomies: select(external_wp_coreData_namespaceObject.store).getTaxonomies({
+      taxonomies: select(external_wp_coreData_namespaceObject.store).getEntityRecords('root', 'taxonomy', {
         per_page: -1
       })
     };
@@ -26133,7 +26132,7 @@ function PostTaxonomiesCheck({
 }) {
   const hasTaxonomies = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const postType = select(store_store).getCurrentPostType();
-    const taxonomies = select(external_wp_coreData_namespaceObject.store).getTaxonomies({
+    const taxonomies = select(external_wp_coreData_namespaceObject.store).getEntityRecords('root', 'taxonomy', {
       per_page: -1
     });
     return taxonomies?.some(taxonomy => taxonomy.types.includes(postType));
