@@ -8202,7 +8202,6 @@ const {
 } = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/block-editor');
 
 ;// ./packages/block-editor/build-module/store/reducer.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -10790,7 +10789,6 @@ function isPatternFiltered(pattern, sourceFilter, syncFilter) {
 }
 
 ;// ./packages/block-editor/build-module/utils/object.js
-/* wp:polyfill */
 /**
  * Immutably sets a value inside an object. Like `lodash#set`, but returning a
  * new object. Treats nullish initial values as empty objects. Clones any
@@ -10862,7 +10860,6 @@ function uniqByProperty(array, property) {
 }
 
 ;// ./packages/block-editor/build-module/store/get-block-settings.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -11003,7 +11000,6 @@ function getBlockSettings(state, clientId, ...paths) {
 }
 
 ;// ./packages/block-editor/build-module/store/private-selectors.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -11526,7 +11522,6 @@ function getInsertionPoint(state) {
 }
 
 ;// ./packages/block-editor/build-module/store/utils.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -11673,7 +11668,6 @@ function orderBy(items, field, order = 'asc') {
 }
 
 ;// ./packages/block-editor/build-module/store/selectors.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -14335,7 +14329,6 @@ function __unstableGetTemporarilyEditingFocusModeToRevert(state) {
 ;// external ["wp","a11y"]
 const external_wp_a11y_namespaceObject = window["wp"]["a11y"];
 ;// ./packages/block-editor/build-module/store/private-actions.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -14805,7 +14798,6 @@ function resetZoomLevel() {
 ;// external ["wp","notices"]
 const external_wp_notices_namespaceObject = window["wp"]["notices"];
 ;// ./packages/block-editor/build-module/utils/selection.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -14845,7 +14837,6 @@ function findRichTextAttributeKey(blockType) {
 }
 
 ;// ./packages/block-editor/build-module/store/actions.js
-/* wp:polyfill */
 /* eslint no-console: [ 'error', { allow: [ 'error', 'warn' ] } ] */
 /**
  * WordPress dependencies
@@ -17140,7 +17131,6 @@ function formatFontWeight(fontWeight) {
 }
 
 ;// ./packages/block-editor/build-module/utils/get-font-styles-and-weights.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -17302,7 +17292,6 @@ function getFontStylesAndWeights(fontFamilyFaces) {
 }
 
 ;// ./packages/block-editor/build-module/components/global-styles/typography-utils.js
-/* wp:polyfill */
 /**
  * The fluid utilities must match the backend equivalent.
  * See: gutenberg_get_typography_font_size_value() in lib/block-supports/typography.php
@@ -17534,7 +17523,6 @@ function findNearestStyleAndWeight(fontFamilyFaces, fontStyle, fontWeight) {
 }
 
 ;// ./packages/block-editor/build-module/components/global-styles/utils.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -18337,7 +18325,6 @@ function useGradientsPerOrigin(settings) {
 ;// ./node_modules/clsx/dist/clsx.mjs
 function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
 ;// ./packages/block-editor/build-module/hooks/utils.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -18838,7 +18825,6 @@ function useBlockControlsFill(group, shareWithChildBlocks) {
 }
 
 ;// ./packages/block-editor/build-module/components/block-controls/fill.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -19220,7 +19206,6 @@ const LAYOUT_DEFINITIONS = {
 };
 
 ;// ./packages/block-editor/build-module/layouts/utils.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -19439,7 +19424,6 @@ const sidesLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)
 /* harmony default export */ const sides_left = (sidesLeft);
 
 ;// ./packages/block-editor/build-module/components/spacing-sizes-control/utils.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -19805,7 +19789,6 @@ const justifySpaceBetweenVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_nam
 /* harmony default export */ const justify_space_between_vertical = (justifySpaceBetweenVertical);
 
 ;// ./packages/block-editor/build-module/components/block-vertical-alignment-control/ui.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -19898,7 +19881,6 @@ const BlockVerticalAlignmentToolbar = props => {
 
 
 ;// ./packages/block-editor/build-module/components/justify-content-control/ui.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -20002,7 +19984,6 @@ const JustifyToolbar = props => {
 
 
 ;// ./packages/block-editor/build-module/layouts/flex.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -20333,7 +20314,6 @@ function OrientationControl({
 }
 
 ;// ./packages/block-editor/build-module/layouts/flow.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -20494,7 +20474,6 @@ const stretchWide = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
 /* harmony default export */ const stretch_wide = (stretchWide);
 
 ;// ./packages/block-editor/build-module/layouts/constrained.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -21154,7 +21133,6 @@ function GridLayoutTypeControl({
 }
 
 ;// ./packages/block-editor/build-module/layouts/index.js
-/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -21240,7 +21218,6 @@ function LayoutStyle({
 }
 
 ;// ./packages/block-editor/build-module/components/block-alignment-control/use-available-alignments.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -21408,7 +21385,6 @@ const constants_BLOCK_ALIGNMENTS_CONTROLS = {
 const constants_DEFAULT_CONTROL = 'none';
 
 ;// ./packages/block-editor/build-module/components/block-alignment-control/ui.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -21604,7 +21580,6 @@ function useBlockEditingMode(mode) {
 }
 
 ;// ./packages/block-editor/build-module/hooks/align.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -21826,7 +21801,6 @@ const groups_groups = {
 /* harmony default export */ const inspector_controls_groups = (groups_groups);
 
 ;// ./packages/block-editor/build-module/components/inspector-controls/fill.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -21921,7 +21895,6 @@ function ToolsPanelInspectorControl({
 }
 
 ;// ./packages/block-editor/build-module/components/inspector-controls/block-support-tools-panel.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -22329,7 +22302,6 @@ function LinkSettingsDrawer({
 // EXTERNAL MODULE: external "React"
 var external_React_ = __webpack_require__(1609);
 ;// ./packages/block-editor/build-module/components/url-input/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -23148,7 +23120,6 @@ const DEFAULT_LINK_SETTINGS = [{
 }];
 
 ;// ./packages/block-editor/build-module/components/link-control/search-results.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -23298,7 +23269,6 @@ function hasPossibleTLD(url, maxLength = 6) {
 }
 
 ;// ./packages/block-editor/build-module/components/link-control/use-search-handler.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -23876,7 +23846,6 @@ function LinkPreview({
 }
 
 ;// ./packages/block-editor/build-module/components/link-control/settings.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -23994,7 +23963,6 @@ const makeCancelable = promise => {
 var fast_deep_equal = __webpack_require__(5215);
 var fast_deep_equal_default = /*#__PURE__*/__webpack_require__.n(fast_deep_equal);
 ;// ./packages/block-editor/build-module/components/link-control/use-internal-value.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -24045,7 +24013,6 @@ function useInternalValue(value) {
 }
 
 ;// ./packages/block-editor/build-module/components/link-control/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -24461,7 +24428,6 @@ const DeprecatedExperimentalLinkControl = props => {
 /* harmony default export */ const link_control = (LinkControl);
 
 ;// ./packages/block-editor/build-module/components/media-replace-flow/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -24687,7 +24653,6 @@ const MediaReplaceFlow = ({
 }), (0,external_wp_components_namespaceObject.withFilters)('editor.MediaReplaceFlow')])(MediaReplaceFlow));
 
 ;// ./packages/block-editor/build-module/components/background-image-control/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -25913,7 +25878,6 @@ var colord_r={grad:.9,turn:360,rad:360/(2*Math.PI)},t=function(r){return"string"
 var a11y_o=function(o){var t=o/255;return t<.04045?t/12.92:Math.pow((t+.055)/1.055,2.4)},a11y_t=function(t){return.2126*a11y_o(t.r)+.7152*a11y_o(t.g)+.0722*a11y_o(t.b)};/* harmony default export */ function a11y(o){o.prototype.luminance=function(){return o=a11y_t(this.rgba),void 0===(r=2)&&(r=0),void 0===n&&(n=Math.pow(10,r)),Math.round(n*o)/n+0;var o,r,n},o.prototype.contrast=function(r){void 0===r&&(r="#FFF");var n,a,i,e,v,u,d,c=r instanceof o?r:new o(r);return e=this.rgba,v=c.toRgb(),u=a11y_t(e),d=a11y_t(v),n=u>d?(u+.05)/(d+.05):(d+.05)/(u+.05),void 0===(a=2)&&(a=0),void 0===i&&(i=Math.pow(10,a)),Math.floor(i*n)/i+0},o.prototype.isReadable=function(o,t){return void 0===o&&(o="#FFF"),void 0===t&&(t={}),this.contrast(o)>=(e=void 0===(i=(r=t).size)?"normal":i,"AAA"===(a=void 0===(n=r.level)?"AA":n)&&"normal"===e?7:"AA"===a&&"large"===e?3:4.5);var r,n,a,i,e}}
 
 ;// ./packages/block-editor/build-module/components/colors/utils.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -26086,7 +26050,6 @@ function useMultipleOriginColorsAndGradients() {
 }
 
 ;// ./packages/block-editor/build-module/components/border-radius-control/utils.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -26251,7 +26214,6 @@ function AllInputControl({
 }
 
 ;// ./packages/block-editor/build-module/components/border-radius-control/input-controls.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -26366,7 +26328,6 @@ function LinkedButton({
 }
 
 ;// ./packages/block-editor/build-module/components/border-radius-control/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -26524,7 +26485,6 @@ const reset_reset = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
 /* harmony default export */ const library_reset = (reset_reset);
 
 ;// ./packages/block-editor/build-module/components/global-styles/shadow-panel-components.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -26730,7 +26690,6 @@ function useShadowPresets(settings) {
 }
 
 ;// ./packages/block-editor/build-module/components/global-styles/border-panel.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -26992,7 +26951,6 @@ function BorderPanel({
 }
 
 ;// ./packages/block-editor/build-module/hooks/border.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -27615,7 +27573,6 @@ function ColorGradientControl(props) {
 /* harmony default export */ const control = (ColorGradientControl);
 
 ;// ./packages/block-editor/build-module/components/global-styles/color-panel.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -28371,7 +28328,6 @@ function useBlockElement(clientId) {
 }
 
 ;// ./packages/block-editor/build-module/hooks/contrast-checker.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -28744,7 +28700,6 @@ function color_addTransforms(result, source, index, results) {
 (0,external_wp_hooks_namespaceObject.addFilter)('blocks.switchToBlockType.transformedBlock', 'core/color/addTransforms', color_addTransforms);
 
 ;// ./packages/block-editor/build-module/components/font-family/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -28826,7 +28781,6 @@ function FontFamilyControl({
 }
 
 ;// ./packages/block-editor/build-module/components/font-appearance-control/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -29267,7 +29221,6 @@ const alignJustify = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 /* harmony default export */ const align_justify = (alignJustify);
 
 ;// ./packages/block-editor/build-module/components/text-alignment-control/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -29387,7 +29340,6 @@ const formatCapitalize = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObjec
 /* harmony default export */ const format_capitalize = (formatCapitalize);
 
 ;// ./packages/block-editor/build-module/components/text-transform-control/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -29484,7 +29436,6 @@ const formatStrikethrough = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceOb
 /* harmony default export */ const format_strikethrough = (formatStrikethrough);
 
 ;// ./packages/block-editor/build-module/components/text-decoration-control/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -29577,7 +29528,6 @@ const textVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 /* harmony default export */ const text_vertical = (textVertical);
 
 ;// ./packages/block-editor/build-module/components/writing-mode-control/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -30493,7 +30443,6 @@ function font_size_addTransforms(result, source, index, results) {
 (0,external_wp_hooks_namespaceObject.addFilter)('blocks.switchToBlockType.transformedBlock', 'core/font-size/addTransforms', font_size_addTransforms);
 
 ;// ./packages/block-editor/build-module/components/alignment-control/ui.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -30590,7 +30539,6 @@ const AlignmentToolbar = props => {
 
 
 ;// ./packages/block-editor/build-module/hooks/text-align.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -30738,7 +30686,6 @@ function addAssignedTextAlign(props, blockType, attributes) {
 }
 
 ;// ./packages/block-editor/build-module/hooks/typography.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -30866,7 +30813,6 @@ const hasTypographySupport = blockName => {
 };
 
 ;// ./packages/block-editor/build-module/components/spacing-sizes-control/hooks/use-spacing-sizes.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -30926,7 +30872,6 @@ const settings_settings = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
 /* harmony default export */ const library_settings = (settings_settings);
 
 ;// ./packages/block-editor/build-module/components/spacing-sizes-control/input-controls/spacing-input-control.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -31258,7 +31203,6 @@ function SpacingInputControl({
 }
 
 ;// ./packages/block-editor/build-module/components/spacing-sizes-control/input-controls/axial.js
-/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -31322,7 +31266,6 @@ function AxialInputControls({
 }
 
 ;// ./packages/block-editor/build-module/components/spacing-sizes-control/input-controls/separated.js
-/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -31372,7 +31315,6 @@ function SeparatedInputControls({
 }
 
 ;// ./packages/block-editor/build-module/components/spacing-sizes-control/input-controls/single.js
-/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -32215,7 +32157,6 @@ function AspectRatioTool({
 }
 
 ;// ./packages/block-editor/build-module/components/global-styles/dimensions-panel.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -33443,7 +33384,6 @@ function useCustomSides() {
 }
 
 ;// ./packages/block-editor/build-module/hooks/style.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -33961,7 +33901,6 @@ function DuotoneControl({
 /* harmony default export */ const duotone_control = (DuotoneControl);
 
 ;// ./packages/block-editor/build-module/components/duotone/utils.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -34165,7 +34104,6 @@ function getBlockCSSSelector(blockType, target = 'root', options = {}) {
 }
 
 ;// ./packages/block-editor/build-module/components/global-styles/filters-panel.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -34358,7 +34296,6 @@ function FiltersPanel({
 }
 
 ;// ./packages/block-editor/build-module/hooks/duotone.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -34772,7 +34709,6 @@ function useBlockDisplayInformation(clientId) {
 }
 
 ;// ./packages/block-editor/build-module/hooks/position.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -35101,7 +35037,6 @@ function position_useBlockProps({
 }
 
 ;// ./packages/block-editor/build-module/components/global-styles/use-global-styles-output.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -36148,7 +36083,6 @@ function useGlobalStylesOutput(disableRootPadding = false) {
 }
 
 ;// ./packages/block-editor/build-module/hooks/block-style-variation.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -36467,7 +36401,6 @@ function block_style_variation_useBlockProps({
 });
 
 ;// ./packages/block-editor/build-module/hooks/layout.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -36863,7 +36796,6 @@ const withLayoutStyles = (0,external_wp_compose_namespaceObject.createHigherOrde
 (0,external_wp_hooks_namespaceObject.addFilter)('editor.BlockListBlock', 'core/editor/layout/with-layout-styles', withLayoutStyles);
 
 ;// ./packages/block-editor/build-module/components/grid/utils.js
-/* wp:polyfill */
 function range(start, length) {
   return Array.from({
     length
@@ -37287,7 +37219,6 @@ let OperationType = /*#__PURE__*/function (OperationType) {
 }({});
 
 ;// ./packages/upload-media/build-module/store/reducer.js
-/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -37425,7 +37356,6 @@ function reducer_reducer(state = DEFAULT_STATE, action = {
 /* harmony default export */ const store_reducer = (reducer_reducer);
 
 ;// ./packages/upload-media/build-module/store/selectors.js
-/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -37488,7 +37418,6 @@ function selectors_getSettings(state) {
 }
 
 ;// ./packages/upload-media/build-module/store/private-selectors.js
-/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -37689,7 +37618,6 @@ class UploadError extends Error {
 }
 
 ;// ./packages/upload-media/build-module/validate-mime-type.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -37732,7 +37660,6 @@ function validateMimeType(file, allowedTypes) {
 }
 
 ;// ./packages/upload-media/build-module/get-mime-types-array.js
-/* wp:polyfill */
 /**
  * Browsers may use unexpected mime types, and they differ from browser to browser.
  * This function computes a flexible array of mime types from the mime type structured provided by the server.
@@ -38573,7 +38500,6 @@ const with_registry_provider_withRegistryProvider = (0,external_wp_compose_names
 /* harmony default export */ const provider_with_registry_provider = (with_registry_provider_withRegistryProvider);
 
 ;// ./packages/block-editor/build-module/components/provider/use-block-sync.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -39164,7 +39090,6 @@ function BlockContextProvider({
 /* harmony default export */ const block_context = (block_context_Context);
 
 ;// ./packages/block-editor/build-module/utils/block-bindings.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -39419,7 +39344,6 @@ function useBlockBindingsUtils(clientId) {
 }
 
 ;// ./packages/block-editor/build-module/components/block-edit/edit.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -39651,7 +39575,6 @@ const moreVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 /* harmony default export */ const more_vertical = (moreVertical);
 
 ;// ./packages/block-editor/build-module/components/warning/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -39892,7 +39815,6 @@ function BlockView({
 }
 
 ;// ./packages/block-editor/build-module/components/block-compare/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -39964,7 +39886,6 @@ function BlockCompare({
 /* harmony default export */ const block_compare = (BlockCompare);
 
 ;// ./packages/block-editor/build-module/components/block-list/block-invalid-warning.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -44564,7 +44485,6 @@ function useMovingAnimation({
 /* harmony default export */ const use_moving_animation = (useMovingAnimation);
 
 ;// ./packages/block-editor/build-module/components/block-list/use-block-props/use-focus-first-element.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -45069,7 +44989,6 @@ function useScrollIntoView({
 }
 
 ;// ./packages/block-editor/build-module/components/use-flash-editable-blocks/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -45393,7 +45312,6 @@ function use_block_props_useBlockProps(props = {}, {
 use_block_props_useBlockProps.save = external_wp_blocks_namespaceObject.__unstableGetBlockProps;
 
 ;// ./packages/block-editor/build-module/components/block-list/block.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -46751,7 +46669,6 @@ function InsertionPoint(props) {
 }
 
 ;// ./packages/block-editor/build-module/components/block-list/use-in-between-inserter.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -47231,7 +47148,6 @@ function useInnerBlockTemplateSync(clientId, template, templateLock, templateIns
 }
 
 ;// ./packages/block-editor/build-module/components/inner-blocks/use-block-context.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -47268,7 +47184,6 @@ function useBlockContext(clientId) {
 }
 
 ;// ./packages/block-editor/build-module/components/use-on-block-drop/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -47527,7 +47442,6 @@ function useOnBlockDrop(targetRootClientId, targetBlockIndex, options = {}) {
 }
 
 ;// ./packages/block-editor/build-module/utils/math.js
-/* wp:polyfill */
 /**
  * A string representing the name of an edge.
  *
@@ -47634,7 +47548,6 @@ function isPointWithinTopAndBottomBoundariesOfRect(point, rect) {
 }
 
 ;// ./packages/block-editor/build-module/components/use-block-drop-zone/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -48645,7 +48558,6 @@ function ZoomOutSeparator({
 }
 
 ;// ./packages/block-editor/build-module/components/block-list/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -48947,7 +48859,6 @@ function useMultiSelection() {
 }
 
 ;// ./packages/block-editor/build-module/components/writing-flow/use-tab-nav.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -49152,7 +49063,6 @@ function useTabNav() {
 }
 
 ;// ./packages/block-editor/build-module/components/writing-flow/use-arrow-nav.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -49905,7 +49815,6 @@ function useClickSelection() {
 }
 
 ;// ./packages/block-editor/build-module/components/writing-flow/use-input.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -50231,7 +50140,6 @@ function shouldDismissPastedFiles(files, html /*, plainText */) {
 }
 
 ;// ./packages/block-editor/build-module/components/writing-flow/utils.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -50327,7 +50235,6 @@ function toPlainText(html) {
 }
 
 ;// ./packages/block-editor/build-module/components/writing-flow/use-clipboard-handler.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -50596,7 +50503,6 @@ function WritingFlow({
 /* harmony default export */ const writing_flow = ((0,external_wp_element_namespaceObject.forwardRef)(WritingFlow));
 
 ;// ./packages/block-editor/build-module/components/iframe/get-compatibility-styles.js
-/* wp:polyfill */
 let compatibilityStyles = null;
 
 /**
@@ -51818,7 +51724,6 @@ var postcss_prefix_selector_default = /*#__PURE__*/__webpack_require__.n(postcss
 var postcss_urlrebase = __webpack_require__(6020);
 var postcss_urlrebase_default = /*#__PURE__*/__webpack_require__.n(postcss_urlrebase);
 ;// ./packages/block-editor/build-module/utils/transform-styles/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -51992,7 +51897,6 @@ const transform_styles_transformStyles = (styles, wrapperSelector = '', transfor
 /* harmony default export */ const transform_styles = (transform_styles_transformStyles);
 
 ;// ./packages/block-editor/build-module/components/editor-styles/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -52782,7 +52686,6 @@ function InserterListboxRow(props, ref) {
 /* harmony default export */ const inserter_listbox_row = ((0,external_wp_element_namespaceObject.forwardRef)(InserterListboxRow));
 
 ;// ./packages/block-editor/build-module/components/block-types-list/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -52970,7 +52873,6 @@ function InserterNoResults() {
 /* harmony default export */ const no_results = (InserterNoResults);
 
 ;// ./packages/block-editor/build-module/components/inserter/block-types-tab.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -53150,7 +53052,6 @@ function BlockTypesTab({
 /* harmony default export */ const block_types_tab = ((0,external_wp_element_namespaceObject.forwardRef)(BlockTypesTab));
 
 ;// ./packages/block-editor/build-module/components/inserter/block-patterns-explorer/pattern-explorer-sidebar.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -53310,7 +53211,6 @@ function Pagination({
 }
 
 ;// ./packages/block-editor/build-module/components/block-patterns-list/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -53673,7 +53573,6 @@ function useInsertionPoint({
 /* harmony default export */ const use_insertion_point = (useInsertionPoint);
 
 ;// ./packages/block-editor/build-module/components/inserter/hooks/use-patterns-state.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -53849,7 +53748,6 @@ function replace(input, re, value) {
 }
 
 ;// ./packages/block-editor/build-module/components/inserter/search-items.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -54075,7 +53973,6 @@ function usePatternsPaging(currentCategoryPatterns, currentCategory, scrollConta
 }
 
 ;// ./packages/block-editor/build-module/components/inserter/block-patterns-explorer/pattern-list.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -54188,7 +54085,6 @@ function PatternList({
 /* harmony default export */ const pattern_list = (PatternList);
 
 ;// ./packages/block-editor/build-module/components/inserter/block-patterns-tab/use-pattern-categories.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -54293,7 +54189,6 @@ function PatternsExplorerModal({
 /* harmony default export */ const block_patterns_explorer = (PatternsExplorerModal);
 
 ;// ./packages/block-editor/build-module/components/inserter/mobile-tab-navigation.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -54494,7 +54389,6 @@ function PatternsFilter({
 }
 
 ;// ./packages/block-editor/build-module/components/inserter/block-patterns-tab/pattern-category-previews.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -54614,7 +54508,6 @@ function PatternCategoryPreviews({
 }
 
 ;// ./packages/block-editor/build-module/components/inserter/category-tabs/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -55092,7 +54985,6 @@ function MediaPreview({
 }
 
 ;// ./packages/block-editor/build-module/components/inserter/media-tab/media-list.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -55124,7 +55016,6 @@ function MediaList({
 /* harmony default export */ const media_list = (MediaList);
 
 ;// ./packages/block-editor/build-module/components/inserter/media-tab/hooks.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -55296,7 +55187,6 @@ function MediaCategoryPanel({
 }
 
 ;// ./packages/block-editor/build-module/components/inserter/media-tab/media-tab.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -55435,7 +55325,6 @@ const orderInserterBlockItems = (items, priority) => {
 };
 
 ;// ./packages/block-editor/build-module/components/inserter/search-results.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -55614,7 +55503,6 @@ const closeSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 /* harmony default export */ const close_small = (closeSmall);
 
 ;// ./packages/block-editor/build-module/components/tabbed-sidebar/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -56184,7 +56072,6 @@ function QuickInserter({
 }
 
 ;// ./packages/block-editor/build-module/components/inserter/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -56624,7 +56511,6 @@ const ButtonBlockerAppender = (0,external_wp_element_namespaceObject.forwardRef)
 /* harmony default export */ const button_block_appender = ((0,external_wp_element_namespaceObject.forwardRef)(button_block_appender_ButtonBlockAppender));
 
 ;// ./packages/block-editor/build-module/components/grid/grid-visualizer.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -57592,7 +57478,6 @@ function addMetaAttribute(blockTypeSettings) {
 (0,external_wp_hooks_namespaceObject.addFilter)('blocks.registerBlockType', 'core/metadata/addMetaAttribute', addMetaAttribute);
 
 ;// ./packages/block-editor/build-module/hooks/block-hooks.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -57779,7 +57664,6 @@ function BlockHooksControlPure({
 });
 
 ;// ./packages/block-editor/build-module/hooks/block-bindings.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -58096,7 +57980,6 @@ function addLabelCallback(settings) {
 (0,external_wp_hooks_namespaceObject.addFilter)('blocks.registerBlockType', 'core/metadata/addLabelCallback', addLabelCallback);
 
 ;// ./packages/block-editor/build-module/components/grid/use-grid-layout-sync.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -58675,7 +58558,6 @@ function useCachedTruthy(value) {
 }
 
 ;// ./packages/block-editor/build-module/hooks/index.js
-/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -58725,7 +58607,6 @@ createBlockSaveFilter([align, text_align, hooks_anchor, aria_label, custom_class
 
 
 ;// ./packages/block-editor/build-module/components/colors/with-colors.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -58960,7 +58841,6 @@ function font_size_picker_FontSizePicker(props) {
 /* harmony default export */ const font_size_picker = (font_size_picker_FontSizePicker);
 
 ;// ./packages/block-editor/build-module/components/font-sizes/with-font-sizes.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -59087,7 +58967,6 @@ const with_font_sizes_upperFirst = ([firstLetter, ...rest]) => firstLetter.toUpp
 
 
 ;// ./packages/block-editor/build-module/autocompleters/block.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -59218,7 +59097,6 @@ const post = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
 /* harmony default export */ const library_post = (post);
 
 ;// ./packages/block-editor/build-module/autocompleters/link.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -59281,7 +59159,6 @@ function createLinkCompleter() {
 /* harmony default export */ const autocompleters_link = (createLinkCompleter());
 
 ;// ./packages/block-editor/build-module/components/autocomplete/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -59584,7 +59461,6 @@ function BlockTitle({
 }
 
 ;// ./packages/block-editor/build-module/utils/get-editor-region.js
-/* wp:polyfill */
 /**
  * Gets the editor region for a given editor canvas element or
  * returns the passed element if no region is found
@@ -59614,7 +59490,6 @@ function getEditorRegion(editor) {
 }
 
 ;// ./packages/block-editor/build-module/components/block-breadcrumb/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -59900,7 +59775,6 @@ function useBlockToolbarPopoverProps({
 }
 
 ;// ./packages/block-editor/build-module/components/block-tools/use-selected-block-tool-props.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -61027,7 +60901,6 @@ function PreviewBlockPopover({
 }
 
 ;// ./packages/block-editor/build-module/components/block-switcher/block-variation-transformations.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -61123,7 +60996,6 @@ function BlockVariationTransformationItem({
 /* harmony default export */ const block_variation_transformations = (BlockVariationTransformations);
 
 ;// ./packages/block-editor/build-module/components/block-switcher/block-transformations-menu.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -61457,7 +61329,6 @@ function useStylesForBlocks({
 }
 
 ;// ./packages/block-editor/build-module/components/block-styles/menu-items.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -61533,7 +61404,6 @@ function BlockStylesMenu({
 }
 
 ;// ./packages/block-editor/build-module/components/block-switcher/utils.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -61597,7 +61467,6 @@ const getRetainedBlockAttributes = (name, attributes) => {
 };
 
 ;// ./packages/block-editor/build-module/components/block-switcher/use-transformed-patterns.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -61699,7 +61568,6 @@ const useTransformedPatterns = (patterns, selectedBlocks) => {
 /* harmony default export */ const use_transformed_patterns = (useTransformedPatterns);
 
 ;// ./packages/block-editor/build-module/components/block-switcher/pattern-transformations-menu.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -61808,7 +61676,6 @@ function pattern_transformations_menu_BlockPattern({
 /* harmony default export */ const pattern_transformations_menu = (PatternTransformationsMenu);
 
 ;// ./packages/block-editor/build-module/components/block-switcher/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -62083,7 +61950,6 @@ __unstableBlockToolbarLastItem.Slot = block_toolbar_last_item_Slot;
 /* harmony default export */ const block_toolbar_last_item = (__unstableBlockToolbarLastItem);
 
 ;// ./packages/block-editor/build-module/hooks/supports.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -62363,7 +62229,6 @@ const getLayoutSupport = nameOrType => getBlockSupport(nameOrType, LAYOUT_SUPPOR
 const supports_hasStyleSupport = nameOrType => supports_styleSupportKeys.some(key => (0,external_wp_blocks_namespaceObject.hasBlockSupport)(nameOrType, key));
 
 ;// ./packages/block-editor/build-module/components/use-paste-styles/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -62527,7 +62392,6 @@ function usePasteStyles() {
 }
 
 ;// ./packages/block-editor/build-module/components/block-actions/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -62914,7 +62778,6 @@ const lock_lock = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 /* harmony default export */ const library_lock = (lock_lock);
 
 ;// ./packages/block-editor/build-module/components/block-lock/modal.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -63276,7 +63139,6 @@ function isEmptyString(testString) {
 }
 
 ;// ./packages/block-editor/build-module/components/block-rename/modal.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -63575,7 +63437,6 @@ function BlockParentSelectorMenuItem({
 }
 
 ;// ./packages/block-editor/build-module/components/block-settings-menu/block-settings-dropdown.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -63998,7 +63859,6 @@ const grid_grid = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 /* harmony default export */ const library_grid = (grid_grid);
 
 ;// ./packages/block-editor/build-module/components/convert-to-group-buttons/toolbar.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -64153,7 +64013,6 @@ const __unstableBlockNameContext = (0,external_wp_element_namespaceObject.create
 /* harmony default export */ const block_name_context = (__unstableBlockNameContext);
 
 ;// ./packages/block-editor/build-module/components/navigable-toolbar/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -64408,7 +64267,6 @@ function useHasBlockToolbar() {
 }
 
 ;// ./packages/block-editor/build-module/components/block-toolbar/change-design.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -64619,7 +64477,6 @@ function SwitchSectionStyle({
 /* harmony default export */ const switch_section_style = (SwitchSectionStyle);
 
 ;// ./packages/block-editor/build-module/components/block-toolbar/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -65347,7 +65204,6 @@ const trash = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 /* harmony default export */ const library_trash = (trash);
 
 ;// ./packages/block-editor/build-module/components/use-block-commands/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -66225,7 +66081,6 @@ function useListViewImages({
 }
 
 ;// ./packages/block-editor/build-module/components/list-view/block-select-button.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -66447,7 +66302,6 @@ const ListViewBlockContents = (0,external_wp_element_namespaceObject.forwardRef)
 /* harmony default export */ const block_contents = (ListViewBlockContents);
 
 ;// ./packages/block-editor/build-module/components/list-view/utils.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -66622,7 +66476,6 @@ function getDragDisplacementValues({
 }
 
 ;// ./packages/block-editor/build-module/components/list-view/block.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -67152,7 +67005,6 @@ function ListViewBlock({
 /* harmony default export */ const list_view_block = ((0,external_wp_element_namespaceObject.memo)(ListViewBlock));
 
 ;// ./packages/block-editor/build-module/components/list-view/branch.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -67615,7 +67467,6 @@ function ListViewDropIndicatorPreview({
 }
 
 ;// ./packages/block-editor/build-module/components/list-view/use-block-selection.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -67736,7 +67587,6 @@ function useBlockSelection() {
 }
 
 ;// ./packages/block-editor/build-module/components/list-view/use-list-view-block-indexes.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -67832,7 +67682,6 @@ function useListViewCollapseItems({
 }
 
 ;// ./packages/block-editor/build-module/components/list-view/use-list-view-drop-zone.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -68322,7 +68171,6 @@ function useListViewExpandSelectedItem({
 }
 
 ;// ./packages/block-editor/build-module/components/list-view/use-clipboard-handler.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -68478,7 +68326,6 @@ function use_clipboard_handler_useClipboardHandler({
 }
 
 ;// ./packages/block-editor/build-module/components/list-view/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -68922,7 +68769,6 @@ function BlockStylesPreviewPanel({
 }
 
 ;// ./packages/block-editor/build-module/components/block-styles/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -69176,7 +69022,6 @@ function HeadingLevelIcon({
 }
 
 ;// ./packages/block-editor/build-module/components/block-heading-level-dropdown/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -69261,7 +69106,6 @@ const layout_layout = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.j
 /* harmony default export */ const library_layout = (layout_layout);
 
 ;// ./packages/block-editor/build-module/components/block-variation-picker/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -69415,7 +69259,6 @@ const SetupToolbar = ({
 /* harmony default export */ const setup_toolbar = (SetupToolbar);
 
 ;// ./packages/block-editor/build-module/components/block-pattern-setup/use-patterns-setup.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -69442,7 +69285,6 @@ function usePatternsSetup(clientId, blockName, filterPatternsFn) {
 /* harmony default export */ const use_patterns_setup = (usePatternsSetup);
 
 ;// ./packages/block-editor/build-module/components/block-pattern-setup/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -69616,7 +69458,6 @@ const BlockPatternSetup = ({
 /* harmony default export */ const block_pattern_setup = (BlockPatternSetup);
 
 ;// ./packages/block-editor/build-module/components/block-variation-transforms/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -69863,7 +69704,6 @@ function ColorPaletteControl({
 ;// external ["wp","date"]
 const external_wp_date_namespaceObject = window["wp"]["date"];
 ;// ./packages/block-editor/build-module/components/date-format-picker/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -69987,7 +69827,6 @@ function NonDefaultControls({
 }
 
 ;// ./packages/block-editor/build-module/components/colors-gradients/dropdown.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -70194,7 +70033,6 @@ function ColorGradientSettingsDropdown({
 }
 
 ;// ./packages/block-editor/build-module/components/colors-gradients/panel-color-gradient-settings.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -70562,7 +70400,6 @@ function ImageEditingProvider({
 }
 
 ;// ./packages/block-editor/build-module/components/image-editor/aspect-ratio-dropdown.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -72437,7 +72274,6 @@ URLPopover.LinkViewer = LinkViewer;
 /* harmony default export */ const url_popover = (URLPopover);
 
 ;// ./packages/block-editor/build-module/components/media-placeholder/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -72876,7 +72712,6 @@ function MediaPlaceholder({
 /* harmony default export */ const media_placeholder = ((0,external_wp_components_namespaceObject.withFilters)('editor.MediaPlaceholder')(MediaPlaceholder));
 
 ;// ./packages/block-editor/build-module/components/panel-color-settings/index.js
-/* wp:polyfill */
 /**
  * Internal dependencies
  */
@@ -72911,7 +72746,6 @@ const PanelColorSettings = ({
 /* harmony default export */ const panel_color_settings = (PanelColorSettings);
 
 ;// ./packages/block-editor/build-module/components/rich-text/format-toolbar/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -73068,7 +72902,6 @@ function useMarkPersistent({
 }
 
 ;// ./packages/block-editor/build-module/components/rich-text/use-format-types.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -73195,7 +73028,6 @@ function useFormatTypes({
 }
 
 ;// ./packages/block-editor/build-module/components/rich-text/event-listeners/before-input-rules.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -73305,7 +73137,6 @@ function preventEventDiscovery(value) {
 }
 
 ;// ./packages/block-editor/build-module/components/rich-text/event-listeners/input-rules.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -73619,7 +73450,6 @@ function createLinkInParagraph(url, onReplace) {
 }
 
 ;// ./packages/block-editor/build-module/components/rich-text/event-listeners/paste-handler.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -73914,7 +73744,6 @@ function createLinkInParagraph(url, onReplace) {
 });
 
 ;// ./packages/block-editor/build-module/components/rich-text/event-listeners/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -73954,7 +73783,6 @@ function useEventListeners(props) {
 }
 
 ;// ./packages/block-editor/build-module/components/rich-text/format-edit.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -74077,7 +73905,6 @@ function Content({
 }
 
 ;// ./packages/block-editor/build-module/components/rich-text/multiline.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -74238,7 +74065,6 @@ function withDeprecations(Component) {
 }
 
 ;// ./packages/block-editor/build-module/components/rich-text/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -74844,7 +74670,6 @@ function ResponsiveBlockControlLabel({
 }
 
 ;// ./packages/block-editor/build-module/components/responsive-block-control/index.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -75251,7 +75076,6 @@ const image_image = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
 /* harmony default export */ const library_image = (image_image);
 
 ;// ./packages/block-editor/build-module/components/url-popover/image-url-input-ui.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -75957,7 +75781,6 @@ const useIsListViewTabDisabled = blockName => {
 /* harmony default export */ const use_is_list_view_tab_disabled = (useIsListViewTabDisabled);
 
 ;// ./packages/block-editor/build-module/components/inspector-controls-tabs/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -76153,7 +75976,6 @@ function useBlockInspectorAnimationSettings(blockType) {
 }
 
 ;// ./packages/block-editor/build-module/components/block-quick-navigation/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -76233,7 +76055,6 @@ function BlockQuickNavigationItem({
 }
 
 ;// ./packages/block-editor/build-module/components/block-inspector/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -76930,7 +76751,6 @@ const DeprecatedExperimentalUseHasRecursion = (...args) => {
 };
 
 ;// ./packages/block-editor/build-module/components/inspector-popover-header/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -77483,7 +77303,6 @@ function memize(fn, options) {
 
 
 ;// ./packages/block-editor/build-module/components/global-styles/get-global-styles-changes.js
-/* wp:polyfill */
 /**
  * External dependencies
  */
@@ -77839,7 +77658,6 @@ function ResizableBoxPopover({
 }
 
 ;// ./packages/block-editor/build-module/components/block-manager/checklist.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -77873,7 +77691,6 @@ function BlockTypesChecklist({
 /* harmony default export */ const checklist = (BlockTypesChecklist);
 
 ;// ./packages/block-editor/build-module/components/block-manager/category.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -77946,7 +77763,6 @@ function BlockManagerCategory({
 /* harmony default export */ const block_manager_category = (BlockManagerCategory);
 
 ;// ./packages/block-editor/build-module/components/block-manager/index.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
@@ -78117,7 +77933,6 @@ function BlockRemovalWarningModal({
 }
 
 ;// ./packages/block-editor/build-module/components/dimensions-tool/scale-tool.js
-/* wp:polyfill */
 /**
  * WordPress dependencies
  */
