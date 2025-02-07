@@ -34118,6 +34118,7 @@ function getBlockCSSSelector(blockType, target = 'root', options = {}) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -34192,6 +34193,46 @@ const LabeledColorIndicator = ({
     children: label
   })]
 });
+const renderToggle = (duotone, resetDuotone) => ({
+  onToggle,
+  isOpen
+}) => {
+  const duotoneButtonRef = (0,external_wp_element_namespaceObject.useRef)(undefined);
+  const toggleProps = {
+    onClick: onToggle,
+    className: dist_clsx({
+      'is-open': isOpen
+    }),
+    'aria-expanded': isOpen,
+    ref: duotoneButtonRef
+  };
+  const removeButtonProps = {
+    onClick: () => {
+      if (isOpen) {
+        onToggle();
+      }
+      resetDuotone();
+      // Return focus to parent button.
+      duotoneButtonRef.current?.focus();
+    },
+    className: 'block-editor-panel-duotone-settings__reset',
+    label: (0,external_wp_i18n_namespaceObject.__)('Reset')
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
+      ...toggleProps,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LabeledColorIndicator, {
+        indicator: duotone,
+        label: (0,external_wp_i18n_namespaceObject.__)('Duotone')
+      })
+    }), duotone && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      size: "small",
+      icon: library_reset,
+      ...removeButtonProps
+    })]
+  });
+};
 function FiltersPanel({
   as: Wrapper = FiltersToolsPanel,
   value,
@@ -34250,30 +34291,7 @@ function FiltersPanel({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
         popoverProps: filters_panel_popoverProps,
         className: "block-editor-global-styles-filters-panel__dropdown",
-        renderToggle: ({
-          onToggle,
-          isOpen
-        }) => {
-          const toggleProps = {
-            onClick: onToggle,
-            className: dist_clsx({
-              'is-open': isOpen
-            }),
-            'aria-expanded': isOpen
-          };
-          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
-            isBordered: true,
-            isSeparated: true,
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItem, {
-              as: "button",
-              ...toggleProps,
-              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LabeledColorIndicator, {
-                indicator: duotone,
-                label: (0,external_wp_i18n_namespaceObject.__)('Duotone')
-              })
-            })
-          });
-        },
+        renderToggle: renderToggle(duotone, resetDuotone),
         renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalDropdownContentWrapper, {
           paddingSize: "small",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuGroup, {
@@ -69902,7 +69920,7 @@ const dropdown_LabeledColorIndicator = ({
 // Renders a color dropdown's toggle as an `Item` if it is within an `ItemGroup`
 // or as a `Button` if it isn't e.g. the controls are being rendered in
 // a `ToolsPanel`.
-const renderToggle = settings => ({
+const dropdown_renderToggle = settings => ({
   onToggle,
   isOpen
 }) => {
@@ -70018,7 +70036,7 @@ function ColorGradientSettingsDropdown({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
           popoverProps: popoverProps,
           className: "block-editor-tools-panel-color-gradient-settings__dropdown",
-          renderToggle: renderToggle(toggleSettings),
+          renderToggle: dropdown_renderToggle(toggleSettings),
           renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalDropdownContentWrapper, {
             paddingSize: "none",
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
