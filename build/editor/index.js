@@ -20258,12 +20258,11 @@ function PostAuthorCheck({
     hasAssignAuthorAction,
     hasAuthors
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _post$_links$wpActio;
     const post = select(store_store).getCurrentPost();
-    const authors = select(external_wp_coreData_namespaceObject.store).getUsers(AUTHORS_QUERY);
+    const canAssignAuthor = post?._links?.['wp:action-assign-author'] ? true : false;
     return {
-      hasAssignAuthorAction: (_post$_links$wpActio = post._links?.['wp:action-assign-author']) !== null && _post$_links$wpActio !== void 0 ? _post$_links$wpActio : false,
-      hasAuthors: authors?.length >= 1
+      hasAssignAuthorAction: canAssignAuthor,
+      hasAuthors: canAssignAuthor ? select(external_wp_coreData_namespaceObject.store).getUsers(AUTHORS_QUERY)?.length >= 1 : false
     };
   }, []);
   if (!hasAssignAuthorAction || !hasAuthors) {
