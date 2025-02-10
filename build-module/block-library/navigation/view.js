@@ -28,7 +28,7 @@ var x = (y) => {
 	var x = {}; __webpack_require__.d(x, y); return x
 } 
 var y = (x) => (() => (x))
-const interactivity_namespaceObject = x({ ["getContext"]: () => (__WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__.getContext), ["getElement"]: () => (__WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__.getElement), ["store"]: () => (__WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__.store), ["withSyncEvent"]: () => (__WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__.withSyncEvent) });
+const interactivity_namespaceObject = x({ ["getContext"]: () => (__WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__.getContext), ["getElement"]: () => (__WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__.getElement), ["store"]: () => (__WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__.store) });
 ;// ./packages/block-library/build-module/navigation/view.js
 /**
  * WordPress dependencies
@@ -124,7 +124,7 @@ const {
         actions.openMenu('click');
       }
     },
-    handleMenuKeydown: (0,interactivity_namespaceObject.withSyncEvent)(event => {
+    handleMenuKeydown(event) {
       const {
         type,
         firstFocusableElement,
@@ -132,8 +132,7 @@ const {
       } = (0,interactivity_namespaceObject.getContext)();
       if (state.menuOpenedBy.click) {
         // If Escape close the menu.
-        if (event.key === 'Escape') {
-          event.stopPropagation(); // Keeps ancestor menus open.
+        if (event?.key === 'Escape') {
           actions.closeMenu('click');
           actions.closeMenu('focus');
           return;
@@ -151,7 +150,7 @@ const {
           }
         }
       }
-    }),
+    },
     handleMenuFocusout(event) {
       const {
         modal,

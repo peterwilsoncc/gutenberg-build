@@ -1065,7 +1065,7 @@ const toggleFullscreenMode = () => ({
 }) => {
   const isFullscreen = registry.select(external_wp_preferences_namespaceObject.store).get('core/edit-post', 'fullscreenMode');
   registry.dispatch(external_wp_preferences_namespaceObject.store).toggle('core/edit-post', 'fullscreenMode');
-  registry.dispatch(external_wp_notices_namespaceObject.store).createInfoNotice(isFullscreen ? (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode deactivated.') : (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode activated.'), {
+  registry.dispatch(external_wp_notices_namespaceObject.store).createInfoNotice(isFullscreen ? (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode activated.') : (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode deactivated.'), {
     id: 'core/edit-post/toggle-fullscreen-mode/notice',
     type: 'snackbar',
     actions: [{
@@ -1946,7 +1946,7 @@ function ManagePatternsMenuItem() {
       post_type: 'wp_block'
     });
     const patternsUrl = (0,external_wp_url_namespaceObject.addQueryArgs)('site-editor.php', {
-      p: '/pattern'
+      path: '/patterns'
     });
 
     // The site editor and templates both check whether the user has
@@ -2559,7 +2559,6 @@ function usePaddingAppender(enabled) {
  * Internal dependencies
  */
 
-const isGutenbergPlugin =  true ? true : 0;
 function useShouldIframe() {
   return (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
@@ -2568,16 +2567,17 @@ function useShouldIframe() {
       getDeviceType
     } = select(external_wp_editor_namespaceObject.store);
     return (
-      // If the theme is block based and the Gutenberg plugin is active,
-      // we ALWAYS use the iframe for consistency across the post and site
-      // editor.
-      isGutenbergPlugin && getEditorSettings().__unstableIsBlockBasedTheme ||
-      // We also still want to iframe all the special
+      // If the theme is block based, we ALWAYS use the iframe for
+      // consistency across the post and site editor. The iframe was
+      // introduced long before the sited editor and block themes, so
+      // these themes are expecting it.
+      getEditorSettings().__unstableIsBlockBasedTheme ||
+      // For classic themes, we also still want to iframe all the special
       // editor features and modes such as device previews, zoom out, and
       // template/pattern editing.
       getDeviceType() !== 'Desktop' || ['wp_template', 'wp_block'].includes(getCurrentPostType()) || unlock(select(external_wp_blockEditor_namespaceObject.store)).isZoomOut() ||
-      // Finally, still iframe the editor if all blocks are v3 (which means
-      // they are marked as iframe-compatible).
+      // Finally, still iframe the editor for classic themes if all blocks
+      // are v3 (which means they are marked as iframe-compatible).
       select(external_wp_blocks_namespaceObject.store).getBlockTypes().every(type => type.apiVersion >= 3)
     );
   }, []);
@@ -3025,7 +3025,6 @@ function Layout({
   const {
     mode,
     isFullscreenActive,
-    hasResolvedMode,
     hasActiveMetaboxes,
     hasBlockSelected,
     showIconLabels,
@@ -3040,8 +3039,7 @@ function Layout({
       get
     } = select(external_wp_preferences_namespaceObject.store);
     const {
-      isFeatureActive,
-      hasMetaBoxes
+      isFeatureActive
     } = select(store);
     const {
       canUser,
@@ -3055,34 +3053,29 @@ function Layout({
       name: 'wp_template'
     });
     const {
-      getBlockSelectionStart,
       isZoomOut
     } = unlock(select(external_wp_blockEditor_namespaceObject.store));
     const {
       getEditorMode,
-      getRenderingMode,
-      getDefaultRenderingMode
-    } = unlock(select(external_wp_editor_namespaceObject.store));
+      getRenderingMode
+    } = select(external_wp_editor_namespaceObject.store);
     const isRenderingPostOnly = getRenderingMode() === 'post-only';
     const isNotDesignPostType = !DESIGN_POST_TYPES.includes(currentPostType);
     const isDirectlyEditingPattern = currentPostType === 'wp_block' && !onNavigateToPreviousEntityRecord;
-    const _templateId = getTemplateId(currentPostType, currentPostId);
-    const defaultMode = getDefaultRenderingMode(currentPostType);
     return {
       mode: getEditorMode(),
-      isFullscreenActive: isFeatureActive('fullscreenMode'),
-      hasActiveMetaboxes: hasMetaBoxes(),
-      hasResolvedMode: defaultMode === 'template-locked' ? !!_templateId : defaultMode !== undefined,
-      hasBlockSelected: !!getBlockSelectionStart(),
+      isFullscreenActive: select(store).isFeatureActive('fullscreenMode'),
+      hasActiveMetaboxes: select(store).hasMetaBoxes(),
+      hasBlockSelected: !!select(external_wp_blockEditor_namespaceObject.store).getBlockSelectionStart(),
       showIconLabels: get('core', 'showIconLabels'),
       isDistractionFree: get('core', 'distractionFree'),
       showMetaBoxes: isNotDesignPostType && !isZoomOut() || isDirectlyEditingPattern,
       isWelcomeGuideVisible: isFeatureActive('welcomeGuide'),
-      templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate ? _templateId : null,
+      templateId: supportsTemplateMode && isViewable && canViewTemplate && !isEditingTemplate ? getTemplateId(currentPostType, currentPostId) : null,
       enablePaddingAppender: !isZoomOut() && isRenderingPostOnly && isNotDesignPostType
     };
   }, [currentPostType, currentPostId, isEditingTemplate, settings.supportsTemplateMode, onNavigateToPreviousEntityRecord]);
-  useMetaBoxInitialization(hasActiveMetaboxes && hasResolvedMode);
+  useMetaBoxInitialization(hasActiveMetaboxes);
   const [paddingAppenderRef, paddingStyle] = usePaddingAppender(enablePaddingAppender);
 
   // Set the right context for the command palette

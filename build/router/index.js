@@ -1631,7 +1631,7 @@ function useHistory() {
     back: router_history.back
   }), [navigate]);
 }
-function useMatch(location, matcher, pathArg, matchResolverArgs) {
+function useMatch(location, matcher, pathArg) {
   const {
     query: rawQuery = {}
   } = location;
@@ -1657,8 +1657,7 @@ function useMatch(location, matcher, pathArg, matchResolverArgs) {
         if (typeof value === 'function') {
           return [key, value({
             query,
-            params: result.params,
-            ...matchResolverArgs
+            params: result.params
           })];
         }
         return [key, value];
@@ -1672,14 +1671,13 @@ function useMatch(location, matcher, pathArg, matchResolverArgs) {
       query,
       path: (0,external_wp_url_namespaceObject.addQueryArgs)(path, query)
     };
-  }, [matcher, rawQuery, pathArg, matchResolverArgs]);
+  }, [matcher, rawQuery, pathArg]);
 }
 function RouterProvider({
   routes,
   pathArg,
   beforeNavigate,
-  children,
-  matchResolverArgs
+  children
 }) {
   const location = (0,external_wp_element_namespaceObject.useSyncExternalStore)(router_history.listen, getLocationWithQuery, getLocationWithQuery);
   const matcher = (0,external_wp_element_namespaceObject.useMemo)(() => {
@@ -1694,7 +1692,7 @@ function RouterProvider({
     });
     return ret;
   }, [routes]);
-  const match = useMatch(location, matcher, pathArg, matchResolverArgs);
+  const match = useMatch(location, matcher, pathArg);
   const config = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     beforeNavigate,
     pathArg

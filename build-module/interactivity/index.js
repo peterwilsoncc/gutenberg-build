@@ -84,8 +84,7 @@ __webpack_require__.d(__webpack_exports__, {
   li: () => (/* reexport */ A),
   J0: () => (/* reexport */ h),
   FH: () => (/* reexport */ useWatch),
-  v4: () => (/* reexport */ withScope),
-  mh: () => (/* reexport */ withSyncEvent)
+  v4: () => (/* reexport */ withScope)
 });
 
 // EXTERNAL MODULE: ./node_modules/preact/dist/preact.module.js
@@ -326,9 +325,8 @@ function utils_useSignalEffect(callback) {
 function withScope(func) {
   const scope = getScope();
   const ns = getNamespace();
-  let wrapped;
   if (func?.constructor?.name === 'GeneratorFunction') {
-    wrapped = async (...args) => {
+    return async (...args) => {
       const gen = func(...args);
       let value;
       let it;
@@ -357,27 +355,17 @@ function withScope(func) {
       }
       return value;
     };
-  } else {
-    wrapped = (...args) => {
-      setNamespace(ns);
-      setScope(scope);
-      try {
-        return func(...args);
-      } finally {
-        resetNamespace();
-        resetScope();
-      }
-    };
   }
-
-  // If function was annotated via `withSyncEvent()`, maintain the annotation.
-  const syncAware = func;
-  if (syncAware.sync) {
-    const syncAwareWrapped = wrapped;
-    syncAwareWrapped.sync = true;
-    return syncAwareWrapped;
-  }
-  return wrapped;
+  return (...args) => {
+    setNamespace(ns);
+    setScope(scope);
+    try {
+      return func(...args);
+    } finally {
+      resetNamespace();
+      resetScope();
+    }
+  };
 }
 
 /**
@@ -537,18 +525,6 @@ const warn = message => {
  * @return Whether `candidate` is a plain object.
  */
 const isPlainObject = candidate => Boolean(candidate && typeof candidate === 'object' && candidate.constructor === Object);
-
-/**
- * Indicates that the passed `callback` requires synchronous access to the event object.
- *
- * @param callback The event callback.
- * @return Altered event callback.
- */
-function withSyncEvent(callback) {
-  const syncAware = callback;
-  syncAware.sync = true;
-  return syncAware;
-}
 
 ;// ./packages/interactivity/build-module/proxies/registry.js
 /**
@@ -1562,9 +1538,7 @@ const resolve = (path, namespace) => {
 // Generate the evaluate function.
 const getEvaluate = ({
   scope
-}) =>
-// TODO: When removing the temporarily remaining `value( ...args )` call below, remove the `...args` parameter too.
-(entry, ...args) => {
+}) => (entry, ...args) => {
   let {
     value: path,
     namespace
@@ -1576,27 +1550,7 @@ const getEvaluate = ({
   const hasNegationOperator = path[0] === '!' && !!(path = path.slice(1));
   setScope(scope);
   const value = resolve(path, namespace);
-  // Functions are returned without invoking them.
-  if (typeof value === 'function') {
-    // Except if they have a negation operator present, for backward compatibility.
-    // This pattern is strongly discouraged and deprecated, and it will be removed in a near future release.
-    // TODO: Remove this condition to effectively ignore negation operator when provided with a function.
-    if (hasNegationOperator) {
-      warn('Using a function with a negation operator is deprecated and will stop working in WordPress 6.9. Please use derived state instead.');
-      const functionResult = !value(...args);
-      resetScope();
-      return functionResult;
-    }
-    // Reset scope before return and wrap the function so it will still run within the correct scope.
-    resetScope();
-    return (...functionArgs) => {
-      setScope(scope);
-      const functionResult = value(...functionArgs);
-      resetScope();
-      return functionResult;
-    };
-  }
-  const result = value;
+  const result = typeof value === 'function' ? value(...args) : value;
   resetScope();
   return hasNegationOperator ? !result : result;
 };
@@ -1737,46 +1691,6 @@ function deepClone(source) {
   }
   return source;
 }
-
-/**
- * Wraps event object to warn about access of synchronous properties and methods.
- *
- * For all store actions attached to an event listener the event object is proxied via this function, unless the action
- * uses the `withSyncEvent()` utility to indicate that it requires synchronous access to the event object.
- *
- * At the moment, the proxied event only emits warnings when synchronous properties or methods are being accessed. In
- * the future this will be changed and result in an error. The current temporary behavior allows implementers to update
- * their relevant actions to use `withSyncEvent()`.
- *
- * For additional context, see https://github.com/WordPress/gutenberg/issues/64944.
- *
- * @param event Event object.
- * @return Proxied event object.
- */
-function wrapEventAsync(event) {
-  const handler = {
-    get(target, prop, receiver) {
-      const value = target[prop];
-      switch (prop) {
-        case 'currentTarget':
-          warn(`Accessing the synchronous event.${prop} property in a store action without wrapping it in withSyncEvent() is deprecated and will stop working in WordPress 6.9. Please wrap the store action in withSyncEvent().`);
-          break;
-        case 'preventDefault':
-        case 'stopImmediatePropagation':
-        case 'stopPropagation':
-          warn(`Using the synchronous event.${prop}() function in a store action without wrapping it in withSyncEvent() is deprecated and will stop working in WordPress 6.9. Please wrap the store action in withSyncEvent().`);
-          break;
-      }
-      if (value instanceof Function) {
-        return function (...args) {
-          return value.apply(this === receiver ? target : this, args);
-        };
-      }
-      return value;
-    }
-  };
-  return new Proxy(event, handler);
-}
 const newRule = /(?:([\u0080-\uFFFF\w-%@]+) *:? *([^{;]+?);|([^;}{]*?) *{)|(}\s*)/g;
 const ruleClean = /\/\*[^]*?\*\/|  +/g;
 const ruleNewline = /\n+/g;
@@ -1821,15 +1735,7 @@ const getGlobalEventDirective = type => {
     directives[`on-${type}`].filter(isNonDefaultDirectiveSuffix).forEach(entry => {
       const eventName = entry.suffix.split('--', 1)[0];
       useInit(() => {
-        const cb = event => {
-          const result = evaluate(entry);
-          if (typeof result === 'function') {
-            if (!result?.sync) {
-              event = wrapEventAsync(event);
-            }
-            result(event);
-          }
-        };
+        const cb = event => evaluate(entry, event);
         const globalVar = type === 'window' ? window : document;
         globalVar.addEventListener(eventName, cb);
         return () => globalVar.removeEventListener(eventName, cb);
@@ -1854,10 +1760,7 @@ const getGlobalAsyncEventDirective = type => {
       useInit(() => {
         const cb = async event => {
           await splitTask();
-          const result = evaluate(entry);
-          if (typeof result === 'function') {
-            result(event);
-          }
+          evaluate(entry, event);
         };
         const globalVar = type === 'window' ? window : document;
         globalVar.addEventListener(eventName, cb, {
@@ -1939,10 +1842,7 @@ const getGlobalAsyncEventDirective = type => {
         if (true) {
           if (false) {}
         }
-        let result = evaluate(entry);
-        if (typeof result === 'function') {
-          result = result();
-        }
+        const result = evaluate(entry);
         if (true) {
           if (false) {}
         }
@@ -1965,10 +1865,7 @@ const getGlobalAsyncEventDirective = type => {
         if (true) {
           if (false) {}
         }
-        let result = evaluate(entry);
-        if (typeof result === 'function') {
-          result = result();
-        }
+        const result = evaluate(entry);
         if (true) {
           if (false) {}
         }
@@ -2004,13 +1901,7 @@ const getGlobalAsyncEventDirective = type => {
           if (true) {
             if (false) {}
           }
-          const result = evaluate(entry);
-          if (typeof result === 'function') {
-            if (!result?.sync) {
-              event = wrapEventAsync(event);
-            }
-            result(event);
-          }
+          evaluate(entry, event);
           if (true) {
             if (false) {}
           }
@@ -2043,10 +1934,7 @@ const getGlobalAsyncEventDirective = type => {
         }
         entries.forEach(async entry => {
           await splitTask();
-          const result = evaluate(entry);
-          if (typeof result === 'function') {
-            result(event);
-          }
+          evaluate(entry, event);
         });
       };
     });
@@ -2072,10 +1960,7 @@ const getGlobalAsyncEventDirective = type => {
   }) => {
     classNames.filter(isNonDefaultDirectiveSuffix).forEach(entry => {
       const className = entry.suffix;
-      let result = evaluate(entry);
-      if (typeof result === 'function') {
-        result = result();
-      }
+      const result = evaluate(entry);
       const currentClass = element.props.class || '';
       const classFinder = new RegExp(`(^|\\s)${className}(\\s|$)`, 'g');
       if (!result) {
@@ -2108,10 +1993,7 @@ const getGlobalAsyncEventDirective = type => {
   }) => {
     style.filter(isNonDefaultDirectiveSuffix).forEach(entry => {
       const styleProp = entry.suffix;
-      let result = evaluate(entry);
-      if (typeof result === 'function') {
-        result = result();
-      }
+      const result = evaluate(entry);
       element.props.style = element.props.style || {};
       if (typeof element.props.style === 'string') {
         element.props.style = cssStringToObject(element.props.style);
@@ -2146,10 +2028,7 @@ const getGlobalAsyncEventDirective = type => {
   }) => {
     bind.filter(isNonDefaultDirectiveSuffix).forEach(entry => {
       const attribute = entry.suffix;
-      let result = evaluate(entry);
-      if (typeof result === 'function') {
-        result = result();
-      }
+      const result = evaluate(entry);
       element.props[attribute] = result;
 
       /*
@@ -2237,10 +2116,7 @@ const getGlobalAsyncEventDirective = type => {
       return;
     }
     try {
-      let result = evaluate(entry);
-      if (typeof result === 'function') {
-        result = result();
-      }
+      const result = evaluate(entry);
       element.props.children = typeof result === 'object' ? null : result.toString();
     } catch (e) {
       element.props.children = null;
@@ -2254,13 +2130,7 @@ const getGlobalAsyncEventDirective = type => {
     },
     evaluate
   }) => {
-    run.forEach(entry => {
-      let result = evaluate(entry);
-      if (typeof result === 'function') {
-        result = result();
-      }
-      return result;
-    });
+    run.forEach(entry => evaluate(entry));
   });
 
   // data-wp-each--[item]
@@ -2284,10 +2154,7 @@ const getGlobalAsyncEventDirective = type => {
     const {
       namespace
     } = entry;
-    let iterable = evaluate(entry);
-    if (typeof iterable === 'function') {
-      iterable = iterable();
-    }
+    const iterable = evaluate(entry);
     if (typeof iterable?.[Symbol.iterator] !== 'function') {
       return;
     }
@@ -2352,16 +2219,7 @@ const currentNamespace = () => {
 };
 const isObject = item => Boolean(item && typeof item === 'object' && item.constructor === Object);
 
-/**
- * This regex pattern must be kept in sync with the server-side implementation in
- * wp-includes/interactivity-api/class-wp-interactivity-api.php.
- *
- * The pattern validates directive attribute names to ensure consistency between
- * client and server processing. Invalid directive names (containing characters like
- * square brackets or colons) should be ignored by both client and server.
- *
- * @see https://github.com/WordPress/wordpress-develop/blob/trunk/src/wp-includes/interactivity-api/class-wp-interactivity-api.php
- */
+// Regular expression for directive parsing.
 const directiveParser = new RegExp(`^data-${directivePrefix}-` +
 // ${p} must be a prefix string, like 'wp'.
 // Match alphanumeric characters including hyphen-separated
@@ -2625,5 +2483,4 @@ var __webpack_exports__useRef = __webpack_exports__.li;
 var __webpack_exports__useState = __webpack_exports__.J0;
 var __webpack_exports__useWatch = __webpack_exports__.FH;
 var __webpack_exports__withScope = __webpack_exports__.v4;
-var __webpack_exports__withSyncEvent = __webpack_exports__.mh;
-export { __webpack_exports__getConfig as getConfig, __webpack_exports__getContext as getContext, __webpack_exports__getElement as getElement, __webpack_exports__getServerContext as getServerContext, __webpack_exports__getServerState as getServerState, __webpack_exports__privateApis as privateApis, __webpack_exports__splitTask as splitTask, __webpack_exports__store as store, __webpack_exports__useCallback as useCallback, __webpack_exports__useEffect as useEffect, __webpack_exports__useInit as useInit, __webpack_exports__useLayoutEffect as useLayoutEffect, __webpack_exports__useMemo as useMemo, __webpack_exports__useRef as useRef, __webpack_exports__useState as useState, __webpack_exports__useWatch as useWatch, __webpack_exports__withScope as withScope, __webpack_exports__withSyncEvent as withSyncEvent };
+export { __webpack_exports__getConfig as getConfig, __webpack_exports__getContext as getContext, __webpack_exports__getElement as getElement, __webpack_exports__getServerContext as getServerContext, __webpack_exports__getServerState as getServerState, __webpack_exports__privateApis as privateApis, __webpack_exports__splitTask as splitTask, __webpack_exports__store as store, __webpack_exports__useCallback as useCallback, __webpack_exports__useEffect as useEffect, __webpack_exports__useInit as useInit, __webpack_exports__useLayoutEffect as useLayoutEffect, __webpack_exports__useMemo as useMemo, __webpack_exports__useRef as useRef, __webpack_exports__useState as useState, __webpack_exports__useWatch as useWatch, __webpack_exports__withScope as withScope };

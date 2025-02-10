@@ -380,174 +380,7 @@ module.exports.strategies = {
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-var GradientParser = (GradientParser || {});
-
-GradientParser.stringify = (function() {
-
-  var visitor = {
-
-    'visit_linear-gradient': function(node) {
-      return visitor.visit_gradient(node);
-    },
-
-    'visit_repeating-linear-gradient': function(node) {
-      return visitor.visit_gradient(node);
-    },
-
-    'visit_radial-gradient': function(node) {
-      return visitor.visit_gradient(node);
-    },
-
-    'visit_repeating-radial-gradient': function(node) {
-      return visitor.visit_gradient(node);
-    },
-
-    'visit_gradient': function(node) {
-      var orientation = visitor.visit(node.orientation);
-      if (orientation) {
-        orientation += ', ';
-      }
-
-      return node.type + '(' + orientation + visitor.visit(node.colorStops) + ')';
-    },
-
-    'visit_shape': function(node) {
-      var result = node.value,
-          at = visitor.visit(node.at),
-          style = visitor.visit(node.style);
-
-      if (style) {
-        result += ' ' + style;
-      }
-
-      if (at) {
-        result += ' at ' + at;
-      }
-
-      return result;
-    },
-
-    'visit_default-radial': function(node) {
-      var result = '',
-          at = visitor.visit(node.at);
-
-      if (at) {
-        result += at;
-      }
-      return result;
-    },
-
-    'visit_extent-keyword': function(node) {
-      var result = node.value,
-          at = visitor.visit(node.at);
-
-      if (at) {
-        result += ' at ' + at;
-      }
-
-      return result;
-    },
-
-    'visit_position-keyword': function(node) {
-      return node.value;
-    },
-
-    'visit_position': function(node) {
-      return visitor.visit(node.value.x) + ' ' + visitor.visit(node.value.y);
-    },
-
-    'visit_%': function(node) {
-      return node.value + '%';
-    },
-
-    'visit_em': function(node) {
-      return node.value + 'em';
-    },
-
-    'visit_px': function(node) {
-      return node.value + 'px';
-    },
-
-    'visit_literal': function(node) {
-      return visitor.visit_color(node.value, node);
-    },
-
-    'visit_hex': function(node) {
-      return visitor.visit_color('#' + node.value, node);
-    },
-
-    'visit_rgb': function(node) {
-      return visitor.visit_color('rgb(' + node.value.join(', ') + ')', node);
-    },
-
-    'visit_rgba': function(node) {
-      return visitor.visit_color('rgba(' + node.value.join(', ') + ')', node);
-    },
-
-    'visit_color': function(resultColor, node) {
-      var result = resultColor,
-          length = visitor.visit(node.length);
-
-      if (length) {
-        result += ' ' + length;
-      }
-      return result;
-    },
-
-    'visit_angular': function(node) {
-      return node.value + 'deg';
-    },
-
-    'visit_directional': function(node) {
-      return 'to ' + node.value;
-    },
-
-    'visit_array': function(elements) {
-      var result = '',
-          size = elements.length;
-
-      elements.forEach(function(element, i) {
-        result += visitor.visit(element);
-        if (i < size - 1) {
-          result += ', ';
-        }
-      });
-
-      return result;
-    },
-
-    'visit': function(element) {
-      if (!element) {
-        return '';
-      }
-      var result = '';
-
-      if (element instanceof Array) {
-        return visitor.visit_array(element, result);
-      } else if (element.type) {
-        var nodeVisitor = visitor['visit_' + element.type];
-        if (nodeVisitor) {
-          return nodeVisitor(element);
-        } else {
-          throw Error('Missing visitor visit_' + element.type);
-        }
-      } else {
-        throw Error('Invalid node.');
-      }
-    }
-
-  };
-
-  return function(root) {
-    return visitor.visit(root);
-  };
-})();
-
-// Copyright (c) 2014 Rafael Caricio. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-var GradientParser = (GradientParser || {});
+var GradientParser = {};
 
 GradientParser.parse = (function() {
 
@@ -643,7 +476,7 @@ GradientParser.parse = (function() {
         error('Missing (');
       }
 
-      var result = callback(captures);
+      result = callback(captures);
 
       if (!scan(tokens.endCall)) {
         error('Missing )');
@@ -696,21 +529,12 @@ GradientParser.parse = (function() {
     if (radialType) {
       radialType.at = matchAtPosition();
     } else {
-      var extent = matchExtentKeyword();
-      if (extent) {
-        radialType = extent;
-        var positionAt = matchAtPosition();
-        if (positionAt) {
-          radialType.at = positionAt;
-        }
-      } else {
-        var defaultPosition = matchPositioning();
-        if (defaultPosition) {
-          radialType = {
-            type: 'default-radial',
-            at: defaultPosition
-          };
-        }
+      var defaultPosition = matchPositioning();
+      if (defaultPosition) {
+        radialType = {
+          type: 'default-radial',
+          at: defaultPosition
+        };
       }
     }
 
@@ -890,8 +714,7 @@ GradientParser.parse = (function() {
   };
 })();
 
-exports.parse = GradientParser.parse;
-exports.stringify = GradientParser.stringify;
+exports.parse = (GradientParser || {}).parse;
 
 
 /***/ }),
@@ -28917,7 +28740,7 @@ const dragStyles = ({
 
 const Input = /*#__PURE__*/emotion_styled_base_browser_esm("input",  true ? {
   target: "em5sgkm3"
-} : 0)("&&&{background-color:transparent;box-sizing:border-box;border:none;box-shadow:none!important;color:", COLORS.theme.foreground, ";display:block;font-family:inherit;margin:0;outline:none;width:100%;", dragStyles, " ", disabledStyles, " ", fontSizeStyles, " ", sizeStyles, " ", customPaddings, " &::-webkit-input-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}&::-moz-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}&:-ms-input-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}&[type='email'],&[type='url']{direction:ltr;}}" + ( true ? "" : 0));
+} : 0)("&&&{background-color:transparent;box-sizing:border-box;border:none;box-shadow:none!important;color:", COLORS.theme.foreground, ";display:block;font-family:inherit;margin:0;outline:none;width:100%;", dragStyles, " ", disabledStyles, " ", fontSizeStyles, " ", sizeStyles, " ", customPaddings, " &::-webkit-input-placeholder{line-height:normal;}&[type='email'],&[type='url']{direction:ltr;}}" + ( true ? "" : 0));
 const BaseLabel = /*#__PURE__*/emotion_styled_base_browser_esm(text_component,  true ? {
   target: "em5sgkm2"
 } : 0)("&&&{", baseLabelTypography, ";box-sizing:border-box;display:block;padding-top:0;padding-bottom:0;max-width:100%;z-index:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}" + ( true ? "" : 0));
@@ -32411,9 +32234,9 @@ function getPrecision(value) {
 /**
  * Clamps a value based on a min/max range.
  *
- * @param {number|string} value The value.
- * @param {number}        min   The minimum range.
- * @param {number}        max   The maximum range.
+ * @param {number} value The value.
+ * @param {number} min   The minimum range.
+ * @param {number} max   The maximum range.
  *
  * @return {number} The clamped value.
  */
@@ -32423,25 +32246,22 @@ function math_clamp(value, min, max) {
 }
 
 /**
- * Rounds a value to the nearest step offset by a minimum.
+ * Clamps a value based on a min/max range with rounding
  *
- * @param {number|string} value The value.
- * @param {number}        min   The minimum range.
- * @param {number}        step  The increment for the value.
+ * @param {number | string} value The value.
+ * @param {number}          min   The minimum range.
+ * @param {number}          max   The maximum range.
+ * @param {number}          step  A multiplier for the value.
  *
- * @return {number} The value as a valid step.
+ * @return {number} The rounded and clamped value.
  */
-function ensureValidStep(value, min, step) {
+function roundClamp(value = 0, min = Infinity, max = Infinity, step = 1) {
   const baseValue = getNumber(value);
   const stepValue = getNumber(step);
-  const precision = Math.max(getPrecision(step), getPrecision(min));
-  const realMin = Math.abs(min) === Infinity ? 0 : min;
-  // If the step is not a factor of the minimum then the step must be
-  // offset by the minimum.
-  const tare = realMin % stepValue ? realMin : 0;
-  const rounded = Math.round((baseValue - tare) / stepValue) * stepValue;
-  const fromMin = rounded + tare;
-  return precision ? getNumber(fromMin.toFixed(precision)) : fromMin;
+  const precision = getPrecision(step);
+  const rounded = Math.round(baseValue / stepValue) * stepValue;
+  const clampedValue = math_clamp(rounded, min, max);
+  return precision ? getNumber(clampedValue.toFixed(precision)) : clampedValue;
 }
 
 ;// ./packages/components/build-module/h-stack/utils.js
@@ -32745,14 +32565,12 @@ function UnforwardedNumberControl(props, forwardedRef) {
   const isStepAny = step === 'any';
   const baseStep = isStepAny ? 1 : ensureNumber(step);
   const baseSpin = ensureNumber(spinFactor) * baseStep;
+  const baseValue = roundClamp(0, min, max, baseStep);
   const constrainValue = (value, stepOverride) => {
-    // When step is not "any" the value must be a valid step.
-    if (!isStepAny) {
-      value = ensureValidStep(value, min, stepOverride !== null && stepOverride !== void 0 ? stepOverride : baseStep);
-    }
-    return `${math_clamp(value, min, max)}`;
+    // When step is "any" clamp the value, otherwise round and clamp it.
+    // Use '' + to convert to string for use in input value attribute.
+    return isStepAny ? '' + Math.min(max, Math.max(min, ensureNumber(value))) : '' + roundClamp(value, min, max, stepOverride !== null && stepOverride !== void 0 ? stepOverride : baseStep);
   };
-  const baseValue = constrainValue(0);
   const autoComplete = typeProp === 'number' ? 'off' : undefined;
   const classes = dist_clsx('components-number-control', className);
   const cx = useCx();
@@ -32859,8 +32677,8 @@ function UnforwardedNumberControl(props, forwardedRef) {
     hideHTMLArrows: spinControls !== 'native',
     isDragEnabled: isDragEnabled,
     label: label,
-    max: max === Infinity ? undefined : max,
-    min: min === -Infinity ? undefined : min,
+    max: max,
+    min: min,
     ref: mergedRef,
     required: required,
     step: step,
@@ -33123,7 +32941,7 @@ function UnforwardedAnglePickerControl(props, ref) {
  *     <AnglePickerControl
  *       value={ angle }
  *       onChange={ setAngle }
- *     />
+ *     </>
  *   );
  * }
  * ```
@@ -34402,13 +34220,6 @@ function overlayMiddlewares() {
 
 const SLOT_NAME = 'Popover';
 
-/**
- * Virtual padding to account for overflow boundaries.
- *
- * @type {number}
- */
-const OVERFLOW_PADDING = 8;
-
 // An SVG displaying a triangle facing down, filled with a solid
 // color and bordered in such a way to create an arrow-like effect.
 // Keeping the SVG's viewbox squared simplify the arrow positioning
@@ -34519,7 +34330,6 @@ const UnforwardedPopover = (props, forwardedRef) => {
   const hasArrow = !isExpanded && !noArrow;
   const normalizedPlacementFromProps = position ? positionToPlacement(position) : placementProp;
   const middleware = [...(placementProp === 'overlay' ? overlayMiddlewares() : []), offset(offsetProp), computedFlipProp && floating_ui_dom_flip(), computedResizeProp && floating_ui_dom_size({
-    padding: OVERFLOW_PADDING,
     apply(sizeProps) {
       var _refs$floating$curren;
       const {
@@ -34533,7 +34343,7 @@ const UnforwardedPopover = (props, forwardedRef) => {
 
       // Reduce the height of the popover to the available space.
       Object.assign(firstElementChild.style, {
-        maxHeight: `${Math.max(0, sizeProps.availableHeight)}px`,
+        maxHeight: `${sizeProps.availableHeight}px`,
         overflow: 'auto'
       });
     }
@@ -34707,18 +34517,6 @@ const UnforwardedPopover = (props, forwardedRef) => {
   });
 };
 
-// Export the PopoverSlot individually to allow typescript to pick the types up.
-const PopoverSlot = (0,external_wp_element_namespaceObject.forwardRef)(({
-  name = SLOT_NAME
-}, ref) => {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(slot_fill_Slot, {
-    bubblesVirtually: true,
-    name: name,
-    className: "popover-slot",
-    ref: ref
-  });
-});
-
 /**
  * `Popover` renders its content in a floating modal. If no explicit anchor is passed via props, it anchors to its parent element by default.
  *
@@ -34742,22 +34540,22 @@ const PopoverSlot = (0,external_wp_element_namespaceObject.forwardRef)(({
  * ```
  *
  */
-const popover_Popover = Object.assign(contextConnect(UnforwardedPopover, 'Popover'), {
-  /**
-   * Renders a slot that is used internally by Popover for rendering content.
-   */
-  Slot: Object.assign(PopoverSlot, {
-    displayName: 'Popover.Slot'
-  }),
-  /**
-   * Provides a context to manage popover slot names.
-   *
-   * This is marked as unstable and should not be used directly.
-   */
-  __unstableSlotNameProvider: Object.assign(slotNameContext.Provider, {
-    displayName: 'Popover.__unstableSlotNameProvider'
-  })
-});
+const popover_Popover = contextConnect(UnforwardedPopover, 'Popover');
+function PopoverSlot({
+  name = SLOT_NAME
+}, ref) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(slot_fill_Slot, {
+    bubblesVirtually: true,
+    name: name,
+    className: "popover-slot",
+    ref: ref
+  });
+}
+
+// @ts-expect-error For Legacy Reasons
+popover_Popover.Slot = (0,external_wp_element_namespaceObject.forwardRef)(PopoverSlot);
+// @ts-expect-error For Legacy Reasons
+popover_Popover.__unstableSlotNameProvider = slotNameContext.Provider;
 /* harmony default export */ const popover = (popover_Popover);
 
 ;// ./packages/components/build-module/autocomplete/autocompleter-ui.js
@@ -34920,31 +34718,6 @@ function useOnClickOutside(ref, handler) {
   }, [handler, ref]);
 }
 
-;// ./packages/components/build-module/utils/get-node-text.js
-const getNodeText = node => {
-  if (node === null) {
-    return '';
-  }
-  switch (typeof node) {
-    case 'string':
-    case 'number':
-      return node.toString();
-    case 'object':
-      {
-        if (node instanceof Array) {
-          return node.map(getNodeText).join('');
-        }
-        if ('props' in node) {
-          return getNodeText(node.props.children);
-        }
-        return '';
-      }
-    default:
-      return '';
-  }
-};
-/* harmony default export */ const get_node_text = (getNodeText);
-
 ;// ./packages/components/build-module/autocomplete/index.js
 /**
  * External dependencies
@@ -34967,7 +34740,33 @@ const getNodeText = node => {
 
 
 
-
+const getNodeText = node => {
+  if (node === null) {
+    return '';
+  }
+  switch (typeof node) {
+    case 'string':
+    case 'number':
+      return node.toString();
+      break;
+    case 'boolean':
+      return '';
+      break;
+    case 'object':
+      {
+        if (node instanceof Array) {
+          return node.map(getNodeText).join('');
+        }
+        if ('props' in node) {
+          return getNodeText(node.props.children);
+        }
+        break;
+      }
+    default:
+      return '';
+  }
+  return '';
+};
 const EMPTY_FILTERED_OPTIONS = [];
 
 // Used for generating the instance ID
@@ -35062,7 +34861,7 @@ function useAutocomplete({
           setSelectedIndex(newIndex);
           // See the related PR as to why this is necessary: https://github.com/WordPress/gutenberg/pull/54902.
           if ((0,external_wp_keycodes_namespaceObject.isAppleOS)()) {
-            (0,external_wp_a11y_namespaceObject.speak)(get_node_text(filteredOptions[newIndex].label), 'assertive');
+            (0,external_wp_a11y_namespaceObject.speak)(getNodeText(filteredOptions[newIndex].label), 'assertive');
           }
           break;
         }
@@ -35071,7 +34870,7 @@ function useAutocomplete({
           const newIndex = (selectedIndex + 1) % filteredOptions.length;
           setSelectedIndex(newIndex);
           if ((0,external_wp_keycodes_namespaceObject.isAppleOS)()) {
-            (0,external_wp_a11y_namespaceObject.speak)(get_node_text(filteredOptions[newIndex].label), 'assertive');
+            (0,external_wp_a11y_namespaceObject.speak)(getNodeText(filteredOptions[newIndex].label), 'assertive');
           }
           break;
         }
@@ -35206,12 +35005,11 @@ function useAutocomplete({
   const listBoxId = isExpanded ? `components-autocomplete-listbox-${instanceId}` : undefined;
   const activeId = isExpanded ? `components-autocomplete-item-${instanceId}-${selectedKey}` : null;
   const hasSelection = record.start !== undefined;
-  const showPopover = !!textContent && hasSelection && !!AutocompleterUI;
   return {
     listBoxId,
     activeId,
     onKeyDown: withIgnoreIMEEvents(handleKeyDown),
-    popover: showPopover && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AutocompleterUI, {
+    popover: hasSelection && AutocompleterUI && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AutocompleterUI, {
       className: className,
       filterValue: filterValue,
       instanceId: instanceId,
@@ -38307,18 +38105,17 @@ function UnforwardedRangeControl(props, forwardedRef) {
  * import { useState } from '@wordpress/element';
  *
  * const MyRangeControl = () => {
- *   const [ value, setValue ] = useState();
+ *   const [ isChecked, setChecked ] = useState( true );
  *   return (
  *     <RangeControl
  *       __nextHasNoMarginBottom
  *       __next40pxDefaultSize
  *       help="Please select how transparent you would like this."
- *       initialPosition={ 50 }
+ *       initialPosition={50}
  *       label="Opacity"
- *       max={ 100 }
- *       min={ 0 }
- *       value={ value }
- *       onChange={ setValue }
+ *       max={100}
+ *       min={0}
+ *       onChange={() => {}}
  *     />
  *   );
  * };
@@ -39386,7 +39183,6 @@ function ButtonsCircularOptionPicker(props) {
   }), [baseId]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ...additionalProps,
-    role: "group",
     id: baseId,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(CircularOptionPickerContext.Provider, {
       value: contextValue,
@@ -39436,34 +39232,7 @@ CircularOptionPicker.DropdownLinkAction = DropdownLinkAction;
 
 
 
-
 /* harmony default export */ const build_module_circular_option_picker = (circular_option_picker);
-
-;// ./packages/components/build-module/circular-option-picker/utils.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Computes the common props for the CircularOptionPicker.
- */
-function getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby) {
-  const metaProps = asButtons ? {
-    asButtons: true
-  } : {
-    asButtons: false,
-    loop
-  };
-  const labelProps = {
-    'aria-labelledby': ariaLabelledby,
-    'aria-label': ariaLabelledby ? undefined : ariaLabel || (0,external_wp_i18n_namespaceObject.__)('Custom color picker')
-  };
-  return {
-    metaProps,
-    labelProps
-  };
-}
 
 ;// ./packages/components/build-module/v-stack/hook.js
 /**
@@ -40001,7 +39770,7 @@ function UnforwardedColorPalette(props, forwardedRef) {
   const displayValue = value?.replace(/^var\((.+)\)$/, '$1');
   const customColorAccessibleLabel = !!displayValue ? (0,external_wp_i18n_namespaceObject.sprintf)(
   // translators: 1: The name of the color e.g: "vivid red". 2: The color's hex code e.g: "#f00".
-  (0,external_wp_i18n_namespaceObject.__)('Custom color picker. The currently selected color is called "%1$s" and has a value of "%2$s".'), buttonLabelName, displayValue) : (0,external_wp_i18n_namespaceObject.__)('Custom color picker');
+  (0,external_wp_i18n_namespaceObject.__)('Custom color picker. The currently selected color is called "%1$s" and has a value of "%2$s".'), buttonLabelName, displayValue) : (0,external_wp_i18n_namespaceObject.__)('Custom color picker.');
   const paletteCommonProps = {
     clearColor,
     onChange,
@@ -40013,10 +39782,33 @@ function UnforwardedColorPalette(props, forwardedRef) {
     disabled: !value,
     children: (0,external_wp_i18n_namespaceObject.__)('Clear')
   });
-  const {
-    metaProps,
-    labelProps
-  } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
+  let metaProps;
+  if (asButtons) {
+    metaProps = {
+      asButtons: true
+    };
+  } else {
+    const _metaProps = {
+      asButtons: false,
+      loop
+    };
+    if (ariaLabel) {
+      metaProps = {
+        ..._metaProps,
+        'aria-label': ariaLabel
+      };
+    } else if (ariaLabelledby) {
+      metaProps = {
+        ..._metaProps,
+        'aria-labelledby': ariaLabelledby
+      };
+    } else {
+      metaProps = {
+        ..._metaProps,
+        'aria-label': (0,external_wp_i18n_namespaceObject.__)('Custom color picker.')
+      };
+    }
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(v_stack_component, {
     spacing: 3,
     ref: forwardedRef,
@@ -40057,7 +39849,6 @@ function UnforwardedColorPalette(props, forwardedRef) {
       })
     }), (colors.length > 0 || actions) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_circular_option_picker, {
       ...metaProps,
-      ...labelProps,
       actions: actions,
       options: hasMultipleColorOrigins ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MultiplePalettes, {
         ...paletteCommonProps,
@@ -40152,7 +39943,6 @@ const UnitSelect = /*#__PURE__*/emotion_styled_base_browser_esm("select",  true 
 } : 0)("&&&{appearance:none;background:transparent;border-radius:", config_values.radiusXSmall, ";border:none;display:block;outline:none;margin:0;min-height:auto;font-family:inherit;", baseUnitLabelStyles, ";", unitSelectSizes, ";&:not( :disabled ){cursor:pointer;}}" + ( true ? "" : 0));
 
 ;// ./packages/components/build-module/border-control/styles.js
-function border_control_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
 /**
  * External dependencies
  */
@@ -40205,10 +39995,7 @@ const swatchGap = 12;
 const borderControlPopoverControls = /*#__PURE__*/emotion_react_browser_esm_css("width:", swatchSize * 6 + swatchGap * 5, "px;>div:first-of-type>", StyledLabel, "{margin-bottom:0;}&& ", StyledLabel, "+button:not( .has-text ){min-width:24px;padding:0;}" + ( true ? "" : 0),  true ? "" : 0);
 const borderControlPopoverContent = /*#__PURE__*/emotion_react_browser_esm_css( true ? "" : 0,  true ? "" : 0);
 const borderColorIndicator = /*#__PURE__*/emotion_react_browser_esm_css( true ? "" : 0,  true ? "" : 0);
-const resetButtonWrapper =  true ? {
-  name: "1ghe26v",
-  styles: "display:flex;justify-content:flex-end;margin-top:12px"
-} : 0;
+const resetButton = /*#__PURE__*/emotion_react_browser_esm_css("justify-content:center;width:100%;&&{border-top:", config_values.borderWidth, " solid ", COLORS.gray[400], ";border-top-left-radius:0;border-top-right-radius:0;}" + ( true ? "" : 0),  true ? "" : 0);
 const borderSlider = () => /*#__PURE__*/emotion_react_browser_esm_css("flex:1 1 60%;", rtl({
   marginRight: space(3)
 })(), ";" + ( true ? "" : 0),  true ? "" : 0);
@@ -40680,8 +40467,8 @@ function useBorderControlDropdown(props) {
   const popoverContentClassName = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return cx(borderControlPopoverContent);
   }, [cx]);
-  const resetButtonWrapperClassName = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return cx(resetButtonWrapper);
+  const resetButtonClassName = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return cx(resetButton);
   }, [cx]);
   return {
     ...otherProps,
@@ -40697,7 +40484,7 @@ function useBorderControlDropdown(props) {
     onReset,
     popoverContentClassName,
     popoverControlsClassName,
-    resetButtonWrapperClassName,
+    resetButtonClassName,
     size,
     __experimentalIsRenderedInSidebar
   };
@@ -40799,7 +40586,7 @@ const BorderControlDropdown = (props, forwardedRef) => {
     onStyleChange,
     popoverContentClassName,
     popoverControlsClassName,
-    resetButtonWrapperClassName,
+    resetButtonClassName,
     size,
     __unstablePopoverProps,
     ...otherProps
@@ -40810,7 +40597,7 @@ const BorderControlDropdown = (props, forwardedRef) => {
   } = border || {};
   const colorObject = getColorObject(color, colors);
   const toggleAriaLabel = getToggleAriaLabel(color, colorObject, style, enableStyle);
-  const enableResetButton = color || style && style !== 'none';
+  const showResetButton = color || style && style !== 'none';
   const dropdownPosition = __experimentalIsRenderedInSidebar ? 'bottom left' : undefined;
   const renderToggle = ({
     onToggle
@@ -40830,10 +40617,12 @@ const BorderControlDropdown = (props, forwardedRef) => {
       })
     })
   });
-  const renderContent = () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(dropdown_content_wrapper, {
+  const renderContent = ({
+    onClose
+  }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dropdown_content_wrapper, {
       paddingSize: "medium",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(v_stack_component, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(v_stack_component, {
         className: popoverControlsClassName,
         spacing: 6,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_palette, {
@@ -40850,20 +40639,20 @@ const BorderControlDropdown = (props, forwardedRef) => {
           value: style,
           onChange: onStyleChange
         })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: resetButtonWrapperClassName,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-          variant: "tertiary",
-          onClick: () => {
-            onReset();
-          },
-          disabled: !enableResetButton,
-          accessibleWhenDisabled: true,
-          __next40pxDefaultSize: true,
-          children: (0,external_wp_i18n_namespaceObject.__)('Reset')
-        })
-      })]
-    })
+      })
+    }), showResetButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dropdown_content_wrapper, {
+      paddingSize: "none",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+        className: resetButtonClassName,
+        variant: "tertiary",
+        onClick: () => {
+          onReset();
+          onClose();
+        },
+        __next40pxDefaultSize: true,
+        children: (0,external_wp_i18n_namespaceObject.__)('Reset')
+      })
+    })]
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dropdown, {
     renderToggle: renderToggle,
@@ -45839,13 +45628,35 @@ function Component(props) {
   }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SingleOrigin, {
     ...additionalProps
   });
-  const {
-    metaProps,
-    labelProps
-  } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
+  let metaProps;
+  if (asButtons) {
+    metaProps = {
+      asButtons: true
+    };
+  } else {
+    const _metaProps = {
+      asButtons: false,
+      loop
+    };
+    if (ariaLabel) {
+      metaProps = {
+        ..._metaProps,
+        'aria-label': ariaLabel
+      };
+    } else if (ariaLabelledby) {
+      metaProps = {
+        ..._metaProps,
+        'aria-labelledby': ariaLabelledby
+      };
+    } else {
+      metaProps = {
+        ..._metaProps,
+        'aria-label': (0,external_wp_i18n_namespaceObject.__)('Custom color picker.')
+      };
+    }
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_circular_option_picker, {
     ...metaProps,
-    ...labelProps,
     actions: actions,
     options: options
   });
@@ -49806,7 +49617,7 @@ const WithHintItemHint = /*#__PURE__*/emotion_styled_base_browser_esm("span",  t
 } : 0)("color:", COLORS.theme.gray[600], ";text-align:initial;line-height:", config_values.fontLineHeightBase, ";padding-inline-end:", space(1), ";margin-block:", space(1), ";" + ( true ? "" : 0));
 const SelectedItemCheck = /*#__PURE__*/emotion_styled_base_browser_esm(SelectItemCheck,  true ? {
   target: "e1p3eej70"
-} : 0)("display:flex;align-items:center;margin-inline-start:", space(2), ";fill:currentColor;align-self:start;margin-block-start:2px;font-size:0;", WithHintItemWrapper, "~&,&:not(:empty){font-size:24px;}" + ( true ? "" : 0));
+} : 0)("display:flex;align-items:center;margin-inline-start:", space(2), ";align-self:start;margin-block-start:2px;font-size:0;", WithHintItemWrapper, "~&,&:not(:empty){font-size:24px;}" + ( true ? "" : 0));
 
 ;// ./packages/components/build-module/custom-select-control-v2/custom-select.js
 /**
@@ -56603,15 +56414,37 @@ function DuotonePicker({
       }
     }, slug);
   });
-  const {
-    metaProps,
-    labelProps
-  } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
+  let metaProps;
+  if (asButtons) {
+    metaProps = {
+      asButtons: true
+    };
+  } else {
+    const _metaProps = {
+      asButtons: false,
+      loop
+    };
+    if (ariaLabel) {
+      metaProps = {
+        ..._metaProps,
+        'aria-label': ariaLabel
+      };
+    } else if (ariaLabelledby) {
+      metaProps = {
+        ..._metaProps,
+        'aria-labelledby': ariaLabelledby
+      };
+    } else {
+      metaProps = {
+        ..._metaProps,
+        'aria-label': (0,external_wp_i18n_namespaceObject.__)('Custom color picker.')
+      };
+    }
+  }
   const options = unsetable ? [unsetOption, ...duotoneOptions] : duotoneOptions;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_circular_option_picker, {
     ...otherProps,
     ...metaProps,
-    ...labelProps,
     options: options,
     actions: !!clearable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_circular_option_picker.ButtonAction, {
       onClick: () => onChange(undefined),
@@ -57362,6 +57195,45 @@ function FocusableIframe({
   });
 }
 
+;// ./packages/components/build-module/font-size-picker/utils.js
+/**
+ * Internal dependencies
+ */
+
+
+
+/**
+ * Some themes use css vars for their font sizes, so until we
+ * have the way of calculating them don't display them.
+ *
+ * @param value The value that is checked.
+ * @return Whether the value is a simple css value.
+ */
+function isSimpleCssValue(value) {
+  const sizeRegex = /^[\d\.]+(px|em|rem|vw|vh|%|svw|lvw|dvw|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax)?$/i;
+  return sizeRegex.test(String(value));
+}
+
+/**
+ * If all of the given font sizes have the same unit (e.g. 'px'), return that
+ * unit. Otherwise return null.
+ *
+ * @param fontSizes List of font sizes.
+ * @return The common unit, or null.
+ */
+function getCommonSizeUnit(fontSizes) {
+  const [firstFontSize, ...otherFontSizes] = fontSizes;
+  if (!firstFontSize) {
+    return null;
+  }
+  const [, firstUnit] = parseQuantityAndUnitFromRawValue(firstFontSize.size);
+  const areAllSizesSameUnit = otherFontSizes.every(fontSize => {
+    const [, unit] = parseQuantityAndUnitFromRawValue(fontSize.size);
+    return unit === firstUnit;
+  });
+  return areAllSizesSameUnit ? firstUnit : null;
+}
+
 ;// ./packages/components/build-module/font-size-picker/styles.js
 
 function font_size_picker_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
@@ -57376,38 +57248,25 @@ function font_size_picker_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You 
 
 
 
+
 const styles_Container = /*#__PURE__*/emotion_styled_base_browser_esm("fieldset",  true ? {
-  target: "e8tqeku3"
+  target: "e8tqeku4"
 } : 0)( true ? {
   name: "k2q51s",
   styles: "border:0;margin:0;padding:0;display:contents"
 } : 0);
 const styles_Header = /*#__PURE__*/emotion_styled_base_browser_esm(h_stack_component,  true ? {
-  target: "e8tqeku2"
+  target: "e8tqeku3"
 } : 0)("height:", space(4), ";" + ( true ? "" : 0));
 const HeaderToggle = /*#__PURE__*/emotion_styled_base_browser_esm(build_module_button,  true ? {
-  target: "e8tqeku1"
+  target: "e8tqeku2"
 } : 0)("margin-top:", space(-1), ";" + ( true ? "" : 0));
 const HeaderLabel = /*#__PURE__*/emotion_styled_base_browser_esm(base_control.VisualLabel,  true ? {
-  target: "e8tqeku0"
+  target: "e8tqeku1"
 } : 0)("display:flex;gap:", space(1), ";justify-content:flex-start;margin-bottom:0;" + ( true ? "" : 0));
-
-;// ./packages/components/build-module/font-size-picker/utils.js
-/**
- * Internal dependencies
- */
-
-/**
- * Some themes use css vars for their font sizes, so until we
- * have the way of calculating them don't display them.
- *
- * @param value The value that is checked.
- * @return Whether the value is a simple css value.
- */
-function isSimpleCssValue(value) {
-  const sizeRegex = /^[\d\.]+(px|em|rem|vw|vh|%|svw|lvw|dvw|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax)?$/i;
-  return sizeRegex.test(String(value));
-}
+const HeaderHint = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
+  target: "e8tqeku0"
+} : 0)("color:", COLORS.gray[700], ";" + ( true ? "" : 0));
 
 ;// ./packages/components/build-module/font-size-picker/font-size-picker-select.js
 /**
@@ -57421,10 +57280,15 @@ function isSimpleCssValue(value) {
 
 
 
+
 const DEFAULT_OPTION = {
   key: 'default',
   name: (0,external_wp_i18n_namespaceObject.__)('Default'),
   value: undefined
+};
+const CUSTOM_OPTION = {
+  key: 'custom',
+  name: (0,external_wp_i18n_namespaceObject.__)('Custom')
 };
 const FontSizePickerSelect = props => {
   var _options$find;
@@ -57432,12 +57296,20 @@ const FontSizePickerSelect = props => {
     __next40pxDefaultSize,
     fontSizes,
     value,
+    disableCustomFontSizes,
     size,
-    onChange
+    onChange,
+    onSelectCustom
   } = props;
+  const areAllSizesSameUnit = !!getCommonSizeUnit(fontSizes);
   const options = [DEFAULT_OPTION, ...fontSizes.map(fontSize => {
     let hint;
-    if (isSimpleCssValue(fontSize.size)) {
+    if (areAllSizesSameUnit) {
+      const [quantity] = parseQuantityAndUnitFromRawValue(fontSize.size);
+      if (quantity !== undefined) {
+        hint = String(quantity);
+      }
+    } else if (isSimpleCssValue(fontSize.size)) {
       hint = String(fontSize.size);
     }
     return {
@@ -57446,8 +57318,8 @@ const FontSizePickerSelect = props => {
       value: fontSize.size,
       hint
     };
-  })];
-  const selectedOption = (_options$find = options.find(option => option.value === value)) !== null && _options$find !== void 0 ? _options$find : DEFAULT_OPTION;
+  }), ...(disableCustomFontSizes ? [] : [CUSTOM_OPTION])];
+  const selectedOption = value ? (_options$find = options.find(option => option.value === value)) !== null && _options$find !== void 0 ? _options$find : CUSTOM_OPTION : DEFAULT_OPTION;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(custom_select_control, {
     __next40pxDefaultSize: __next40pxDefaultSize,
     __shouldNotWarnDeprecated36pxSize: true,
@@ -57463,7 +57335,11 @@ const FontSizePickerSelect = props => {
     onChange: ({
       selectedItem
     }) => {
-      onChange(selectedItem.value);
+      if (selectedItem === CUSTOM_OPTION) {
+        onSelectCustom();
+      } else {
+        onChange(selectedItem.value);
+      }
     },
     size: size
   });
@@ -57549,10 +57425,12 @@ const FontSizePickerToggleGroup = props => {
 
 
 
-
 /**
  * Internal dependencies
  */
+
+
+
 
 
 
@@ -57578,7 +57456,6 @@ const UnforwardedFontSizePicker = (props, ref) => {
     withSlider = false,
     withReset = true
   } = props;
-  const labelId = (0,external_wp_compose_namespaceObject.useInstanceId)(UnforwardedFontSizePicker, 'font-size-picker-label');
   const units = useCustomUnits({
     availableUnits: unitsProp
   });
@@ -57595,6 +57472,24 @@ const UnforwardedFontSizePicker = (props, ref) => {
   } else {
     currentPickerType = fontSizes.length > MAX_TOGGLE_GROUP_SIZES ? 'select' : 'togglegroup';
   }
+  const headerHint = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    switch (currentPickerType) {
+      case 'custom':
+        return (0,external_wp_i18n_namespaceObject.__)('Custom');
+      case 'togglegroup':
+        if (selectedFontSize) {
+          return selectedFontSize.name || T_SHIRT_NAMES[fontSizes.indexOf(selectedFontSize)];
+        }
+        break;
+      case 'select':
+        const commonUnit = getCommonSizeUnit(fontSizes);
+        if (commonUnit) {
+          return `(${commonUnit})`;
+        }
+        break;
+    }
+    return '';
+  }, [currentPickerType, selectedFontSize, fontSizes]);
   if (fontSizes.length === 0 && disableCustomFontSizes) {
     return null;
   }
@@ -57613,16 +57508,19 @@ const UnforwardedFontSizePicker = (props, ref) => {
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_Container, {
     ref: ref,
-    className: "components-font-size-picker"
-    // This Container component renders a fieldset element that needs to be labeled.
-    ,
-    "aria-labelledby": labelId,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {
+    className: "components-font-size-picker",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(visually_hidden_component, {
+      as: "legend",
+      children: (0,external_wp_i18n_namespaceObject.__)('Font size')
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_Header, {
         className: "components-font-size-picker__header",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HeaderLabel, {
-          id: labelId,
-          children: (0,external_wp_i18n_namespaceObject.__)('Font size')
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(HeaderLabel, {
+          "aria-label": `${(0,external_wp_i18n_namespaceObject.__)('Size')} ${headerHint || ''}`,
+          children: [(0,external_wp_i18n_namespaceObject.__)('Size'), headerHint && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HeaderHint, {
+            className: "components-font-size-picker__header__hint",
+            children: headerHint
+          })]
         }), !disableCustomFontSizes && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HeaderToggle, {
           label: currentPickerType === 'custom' ? (0,external_wp_i18n_namespaceObject.__)('Use size preset') : (0,external_wp_i18n_namespaceObject.__)('Set custom size'),
           icon: library_settings,
@@ -57665,7 +57563,7 @@ const UnforwardedFontSizePicker = (props, ref) => {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(unit_control, {
             __next40pxDefaultSize: __next40pxDefaultSize,
             __shouldNotWarnDeprecated36pxSize: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Font size'),
+            label: (0,external_wp_i18n_namespaceObject.__)('Custom'),
             labelPosition: "top",
             hideLabelFromVision: true,
             value: value,
@@ -57691,7 +57589,7 @@ const UnforwardedFontSizePicker = (props, ref) => {
               __next40pxDefaultSize: __next40pxDefaultSize,
               __shouldNotWarnDeprecated36pxSize: true,
               className: "components-font-size-picker__custom-input",
-              label: (0,external_wp_i18n_namespaceObject.__)('Font size'),
+              label: (0,external_wp_i18n_namespaceObject.__)('Custom Size'),
               hideLabelFromVision: true,
               value: valueQuantity,
               initialPosition: fallbackFontSize,
@@ -58660,8 +58558,6 @@ function Guide({
   className,
   contentLabel,
   finishButtonText = (0,external_wp_i18n_namespaceObject.__)('Finish'),
-  nextButtonText = (0,external_wp_i18n_namespaceObject.__)('Next'),
-  previousButtonText = (0,external_wp_i18n_namespaceObject.__)('Previous'),
   onFinish,
   pages = []
 }) {
@@ -58736,13 +58632,13 @@ function Guide({
           variant: "tertiary",
           onClick: goBack,
           __next40pxDefaultSize: true,
-          children: previousButtonText
+          children: (0,external_wp_i18n_namespaceObject.__)('Previous')
         }), canGoForward && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
           className: "components-guide__forward-button",
           variant: "primary",
           onClick: goForward,
           __next40pxDefaultSize: true,
-          children: nextButtonText
+          children: (0,external_wp_i18n_namespaceObject.__)('Next')
         }), !canGoForward && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
           className: "components-guide__finish-button",
           variant: "primary",
@@ -62985,21 +62881,6 @@ function isSingleCategorySelection(props) {
 function isMultipleCategorySelection(props) {
   return 'categorySuggestions' in props;
 }
-const defaultOrderByOptions = [{
-  label: (0,external_wp_i18n_namespaceObject.__)('Newest to oldest'),
-  value: 'date/desc'
-}, {
-  label: (0,external_wp_i18n_namespaceObject.__)('Oldest to newest'),
-  value: 'date/asc'
-}, {
-  /* translators: Label for ordering posts by title in ascending order. */
-  label: (0,external_wp_i18n_namespaceObject.__)('A → Z'),
-  value: 'title/asc'
-}, {
-  /* translators: Label for ordering posts by title in descending order. */
-  label: (0,external_wp_i18n_namespaceObject.__)('Z → A'),
-  value: 'title/desc'
-}];
 
 /**
  * Controls to query for posts.
@@ -63007,7 +62888,7 @@ const defaultOrderByOptions = [{
  * ```jsx
  * const MyQueryControls = () => (
  *   <QueryControls
- *     { ...{ maxItems, minItems, numberOfItems, order, orderBy, orderByOptions } }
+ *     { ...{ maxItems, minItems, numberOfItems, order, orderBy } }
  *     onOrderByChange={ ( newOrderBy ) => {
  *       updateQuery( { orderBy: newOrderBy } )
  *     }
@@ -63032,7 +62913,6 @@ function QueryControls({
   numberOfItems,
   order,
   orderBy,
-  orderByOptions = defaultOrderByOptions,
   maxItems = DEFAULT_MAX_ITEMS,
   minItems = DEFAULT_MIN_ITEMS,
   onAuthorChange,
@@ -63051,7 +62931,21 @@ function QueryControls({
       __next40pxDefaultSize: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Order by'),
       value: orderBy === undefined || order === undefined ? undefined : `${orderBy}/${order}`,
-      options: orderByOptions,
+      options: [{
+        label: (0,external_wp_i18n_namespaceObject.__)('Newest to oldest'),
+        value: 'date/desc'
+      }, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Oldest to newest'),
+        value: 'date/asc'
+      }, {
+        /* translators: Label for ordering posts by title in ascending order. */
+        label: (0,external_wp_i18n_namespaceObject.__)('A → Z'),
+        value: 'title/asc'
+      }, {
+        /* translators: Label for ordering posts by title in descending order. */
+        label: (0,external_wp_i18n_namespaceObject.__)('Z → A'),
+        value: 'title/desc'
+      }],
       onChange: value => {
         if (typeof value !== 'string') {
           return;
@@ -66179,7 +66073,7 @@ const inputStyleNeutral = /*#__PURE__*/emotion_react_browser_esm_css("box-shadow
 const inputStyleFocus = /*#__PURE__*/emotion_react_browser_esm_css("border-color:", COLORS.theme.accent, ";box-shadow:0 0 0 calc( ", config_values.borderWidthFocus, " - ", config_values.borderWidth, " ) ", COLORS.theme.accent, ";outline:2px solid transparent;" + ( true ? "" : 0),  true ? "" : 0);
 const StyledTextarea = /*#__PURE__*/emotion_styled_base_browser_esm("textarea",  true ? {
   target: "e1w5nnrk0"
-} : 0)("width:100%;display:block;font-family:", font('default.fontFamily'), ";line-height:20px;padding:9px 11px;", inputStyleNeutral, ";font-size:", font('mobileTextMinFontSize'), ";", breakpoint('small'), "{font-size:", font('default.fontSize'), ";}&:focus{", inputStyleFocus, ";}&::-webkit-input-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}&::-moz-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}&:-ms-input-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}.is-dark-theme &{&::-webkit-input-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}&::-moz-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}&:-ms-input-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}}" + ( true ? "" : 0));
+} : 0)("width:100%;display:block;font-family:", font('default.fontFamily'), ";line-height:20px;padding:9px 11px;", inputStyleNeutral, ";font-size:", font('mobileTextMinFontSize'), ";", breakpoint('small'), "{font-size:", font('default.fontSize'), ";}&:focus{", inputStyleFocus, ";}&::-webkit-input-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}&::-moz-placeholder{opacity:1;color:", COLORS.ui.darkGrayPlaceholder, ";}&:-ms-input-placeholder{color:", COLORS.ui.darkGrayPlaceholder, ";}.is-dark-theme &{&::-webkit-input-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}&::-moz-placeholder{opacity:1;color:", COLORS.ui.lightGrayPlaceholder, ";}&:-ms-input-placeholder{color:", COLORS.ui.lightGrayPlaceholder, ";}}" + ( true ? "" : 0));
 
 ;// ./packages/components/build-module/textarea-control/index.js
 /**
@@ -66534,7 +66428,7 @@ const ToolbarContext = (0,external_wp_element_namespaceObject.createContext)(und
  */
 
 
-function UnforwardedToolbarItem({
+function toolbar_item_ToolbarItem({
   children,
   as: Component,
   ...props
@@ -66572,8 +66466,7 @@ function UnforwardedToolbarItem({
     render: render
   });
 }
-const toolbar_item_ToolbarItem = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedToolbarItem);
-/* harmony default export */ const toolbar_item = (toolbar_item_ToolbarItem);
+/* harmony default export */ const toolbar_item = ((0,external_wp_element_namespaceObject.forwardRef)(toolbar_item_ToolbarItem));
 
 ;// ./packages/components/build-module/toolbar/toolbar-button/toolbar-button-container.js
 
@@ -67114,7 +67007,7 @@ const toolbar_Toolbar = (0,external_wp_element_namespaceObject.forwardRef)(Unfor
 
 
 
-function UnforwardedToolbarDropdownMenu(props, ref) {
+function ToolbarDropdownMenu(props, ref) {
   const accessibleToolbarState = (0,external_wp_element_namespaceObject.useContext)(toolbar_context);
   if (!accessibleToolbarState) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dropdown_menu, {
@@ -67137,8 +67030,7 @@ function UnforwardedToolbarDropdownMenu(props, ref) {
     })
   });
 }
-const ToolbarDropdownMenu = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedToolbarDropdownMenu);
-/* harmony default export */ const toolbar_dropdown_menu = (ToolbarDropdownMenu);
+/* harmony default export */ const toolbar_dropdown_menu = ((0,external_wp_element_namespaceObject.forwardRef)(ToolbarDropdownMenu));
 
 ;// ./packages/components/build-module/tools-panel/styles.js
 

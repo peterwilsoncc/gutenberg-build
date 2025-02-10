@@ -1078,7 +1078,6 @@ function getQueryArgs(url) {
 
 
 
-
 /**
  * Appends arguments as querystring to the provided URL. If the URL already
  * includes query arguments, the arguments are merged with (and take precedent
@@ -1100,8 +1099,7 @@ function addQueryArgs(url = '', args) {
   if (!args || !Object.keys(args).length) {
     return url;
   }
-  const fragment = getFragment(url) || '';
-  let baseUrl = url.replace(fragment, '');
+  let baseUrl = url;
 
   // Determine whether URL already had query arguments.
   const queryStringIndex = url.indexOf('?');
@@ -1112,7 +1110,7 @@ function addQueryArgs(url = '', args) {
     // Change working base URL to omit previous query arguments.
     baseUrl = baseUrl.substr(0, queryStringIndex);
   }
-  return baseUrl + '?' + buildQueryString(args) + fragment;
+  return baseUrl + '?' + buildQueryString(args);
 }
 
 ;// ./packages/url/build-module/get-query-arg.js
@@ -1190,18 +1188,15 @@ function hasQueryArg(url, arg) {
  * @return {string} Updated URL.
  */
 function removeQueryArgs(url, ...args) {
-  const fragment = url.replace(/^[^#]*/, '');
-  url = url.replace(/#.*/, '');
   const queryStringIndex = url.indexOf('?');
   if (queryStringIndex === -1) {
-    return url + fragment;
+    return url;
   }
   const query = getQueryArgs(url);
   const baseURL = url.substr(0, queryStringIndex);
   args.forEach(arg => delete query[arg]);
   const queryString = buildQueryString(query);
-  const updatedUrl = queryString ? baseURL + '?' + queryString : baseURL;
-  return updatedUrl + fragment;
+  return queryString ? baseURL + '?' + queryString : baseURL;
 }
 
 ;// ./packages/url/build-module/prepend-http.js

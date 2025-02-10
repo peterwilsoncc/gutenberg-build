@@ -1496,7 +1496,7 @@ const rootEntitiesConfig = [{
   baseURLParams: {
     // Please also change the preload path when changing this.
     // @see lib/compat/wordpress-6.8/preload.php
-    _fields: ['description', 'gmt_offset', 'home', 'name', 'site_icon', 'site_icon_url', 'site_logo', 'timezone_string', 'url', 'page_for_posts', 'page_on_front', 'show_on_front'].join(',')
+    _fields: ['description', 'gmt_offset', 'home', 'name', 'site_icon', 'site_icon_url', 'site_logo', 'timezone_string', 'default_template_part_areas', 'default_template_types', 'url'].join(',')
   },
   // The entity doesn't support selecting multiple records.
   // The property is maintained for backward compatibility.
@@ -1662,7 +1662,7 @@ const rootEntitiesConfig = [{
   },
   plural: 'globalStylesVariations',
   // Should be different from name.
-  getTitle: () => (0,external_wp_i18n_namespaceObject.__)('Custom Styles'),
+  getTitle: record => record?.title?.rendered || record?.title,
   getRevisionsUrl: (parentId, revisionId) => `/wp/v2/global-styles/${parentId}/revisions${revisionId ? '/' + revisionId : ''}`,
   supportsPagination: true
 }, {
@@ -3438,10 +3438,11 @@ const getRawEntityRecord = (0,external_wp_data_namespaceObject.createSelector)((
   const record = getEntityRecord(state, kind, name, key);
   return record && Object.keys(record).reduce((accumulator, _key) => {
     if (isRawAttribute(getEntityConfig(state, kind, name), _key)) {
+      var _record$_key$raw;
       // Because edits are the "raw" attribute values,
       // we return those from record selectors to make rendering,
       // comparisons, and joins with edits easier.
-      accumulator[_key] = record[_key]?.raw !== undefined ? record[_key]?.raw : record[_key];
+      accumulator[_key] = (_record$_key$raw = record[_key]?.raw) !== null && _record$_key$raw !== void 0 ? _record$_key$raw : record[_key];
     } else {
       accumulator[_key] = record[_key];
     }
@@ -4319,7 +4320,14 @@ function normalizePageId(value) {
   return value.toString();
 }
 const getHomePage = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(() => {
-  const siteData = select(STORE_NAME).getEntityRecord('root', '__unstableBase');
+  const canReadSiteData = select(STORE_NAME).canUser('read', {
+    kind: 'root',
+    name: 'site'
+  });
+  if (!canReadSiteData) {
+    return null;
+  }
+  const siteData = select(STORE_NAME).getEntityRecord('root', 'site');
   if (!siteData) {
     return null;
   }
@@ -4337,11 +4345,21 @@ const getHomePage = (0,external_wp_data_namespaceObject.createRegistrySelector)(
     postType: 'wp_template',
     postId: frontPageTemplateId
   };
-}, state => [getEntityRecord(state, 'root', '__unstableBase'), getDefaultTemplateId(state, {
+}, state => [canUser(state, 'read', {
+  kind: 'root',
+  name: 'site'
+}) && getEntityRecord(state, 'root', 'site'), getDefaultTemplateId(state, {
   slug: 'front-page'
 })]));
 const getPostsPageId = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
-  const siteData = select(STORE_NAME).getEntityRecord('root', '__unstableBase');
+  const canReadSiteData = select(STORE_NAME).canUser('read', {
+    kind: 'root',
+    name: 'site'
+  });
+  if (!canReadSiteData) {
+    return null;
+  }
+  const siteData = select(STORE_NAME).getEntityRecord('root', 'site');
   return siteData?.show_on_front === 'page' ? normalizePageId(siteData.page_for_posts) : null;
 });
 const getTemplateId = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (state, postType, postId) => {
