@@ -48983,6 +48983,9 @@ function useTabNav() {
       if (event.keyCode !== external_wp_keycodes_namespaceObject.TAB) {
         return;
       }
+      if (!hasMultiSelection() && !getSelectedBlockClientId()) {
+        return;
+      }
       const isShift = event.shiftKey;
       const direction = isShift ? 'findPrevious' : 'findNext';
       const nextTabbable = external_wp_dom_namespaceObject.focus.tabbable[direction](event.target);
