@@ -18168,13 +18168,15 @@ function parent_PageAttributesParent() {
     isHierarchical,
     parentPostId,
     parentPostTitle,
-    pageItems
+    pageItems,
+    isLoading
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _pType$hierarchical;
     const {
       getPostType,
       getEntityRecords,
-      getEntityRecord
+      getEntityRecord,
+      isResolving
     } = select(external_wp_coreData_namespaceObject.store);
     const {
       getCurrentPostId,
@@ -18203,7 +18205,8 @@ function parent_PageAttributesParent() {
       isHierarchical: postIsHierarchical,
       parentPostId: pageId,
       parentPostTitle: parentPost ? getTitle(parentPost) : '',
-      pageItems: postIsHierarchical ? getEntityRecords('postType', postTypeSlug, query) : null
+      pageItems: postIsHierarchical ? getEntityRecords('postType', postTypeSlug, query) : null,
+      isLoading: postIsHierarchical ? isResolving('getEntityRecords', ['postType', postTypeSlug, query]) : false
     };
   }, [fieldValue]);
   const parentOptions = (0,external_wp_element_namespaceObject.useMemo)(() => {
@@ -18277,7 +18280,8 @@ function parent_PageAttributesParent() {
     options: parentOptions,
     onFilterValueChange: (0,external_wp_compose_namespaceObject.debounce)(handleKeydown, 300),
     onChange: handleChange,
-    hideLabelFromVision: true
+    hideLabelFromVision: true,
+    isLoading: isLoading
   });
 }
 function PostParentToggle({
