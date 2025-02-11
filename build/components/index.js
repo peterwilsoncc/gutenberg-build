@@ -57286,20 +57286,14 @@ const DEFAULT_OPTION = {
   name: (0,external_wp_i18n_namespaceObject.__)('Default'),
   value: undefined
 };
-const CUSTOM_OPTION = {
-  key: 'custom',
-  name: (0,external_wp_i18n_namespaceObject.__)('Custom')
-};
 const FontSizePickerSelect = props => {
   var _options$find;
   const {
     __next40pxDefaultSize,
     fontSizes,
     value,
-    disableCustomFontSizes,
     size,
-    onChange,
-    onSelectCustom
+    onChange
   } = props;
   const areAllSizesSameUnit = !!getCommonSizeUnit(fontSizes);
   const options = [DEFAULT_OPTION, ...fontSizes.map(fontSize => {
@@ -57318,8 +57312,8 @@ const FontSizePickerSelect = props => {
       value: fontSize.size,
       hint
     };
-  }), ...(disableCustomFontSizes ? [] : [CUSTOM_OPTION])];
-  const selectedOption = value ? (_options$find = options.find(option => option.value === value)) !== null && _options$find !== void 0 ? _options$find : CUSTOM_OPTION : DEFAULT_OPTION;
+  })];
+  const selectedOption = (_options$find = options.find(option => option.value === value)) !== null && _options$find !== void 0 ? _options$find : DEFAULT_OPTION;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(custom_select_control, {
     __next40pxDefaultSize: __next40pxDefaultSize,
     __shouldNotWarnDeprecated36pxSize: true,
@@ -57335,11 +57329,7 @@ const FontSizePickerSelect = props => {
     onChange: ({
       selectedItem
     }) => {
-      if (selectedItem === CUSTOM_OPTION) {
-        onSelectCustom();
-      } else {
-        onChange(selectedItem.value);
-      }
+      onChange(selectedItem.value);
     },
     size: size
   });
