@@ -14783,7 +14783,9 @@ function MainSidebarNavigationContent({
     })]
   });
 }
-function SidebarNavigationScreenMain() {
+function SidebarNavigationScreenMain({
+  customDescription
+}) {
   const isBlockBasedTheme = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getCurrentTheme()?.is_block_theme, []);
   const {
     setEditorCanvasContainerView
@@ -14793,10 +14795,18 @@ function SidebarNavigationScreenMain() {
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     setEditorCanvasContainerView(undefined);
   }, [setEditorCanvasContainerView]);
+  let description;
+  if (customDescription) {
+    description = customDescription;
+  } else if (isBlockBasedTheme) {
+    description = (0,external_wp_i18n_namespaceObject.__)('Customize the appearance of your website using the block editor.');
+  } else {
+    description = (0,external_wp_i18n_namespaceObject.__)('Explore block styles and patterns to refine your site');
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreen, {
     isRoot: true,
     title: (0,external_wp_i18n_namespaceObject.__)('Design'),
-    description: isBlockBasedTheme ? (0,external_wp_i18n_namespaceObject.__)('Customize the appearance of your website using the block editor.') : (0,external_wp_i18n_namespaceObject.__)('Explore block styles and patterns to refine your site'),
+    description: description,
     content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MainSidebarNavigationContent, {
       isBlockBasedTheme: isBlockBasedTheme
     })
@@ -46268,6 +46278,32 @@ const stylebookRoute = {
   }
 };
 
+;// ./packages/edit-site/build-module/components/site-editor-routes/notfound.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const notFoundRoute = {
+  name: 'notfound',
+  path: '*',
+  areas: {
+    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenMain, {}),
+    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenMain, {
+      customDescription: (0,external_wp_i18n_namespaceObject.__)('404 (Not Found)')
+    }),
+    content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+      className: "edit-site-layout__area__404",
+      children: (0,external_wp_i18n_namespaceObject.__)('404 (Not Found)')
+    })
+  }
+};
+
 ;// ./packages/edit-site/build-module/components/site-editor-routes/index.js
 /**
  * WordPress dependencies
@@ -46292,7 +46328,8 @@ const stylebookRoute = {
 
 
 
-const site_editor_routes_routes = [pageItemRoute, pagesRoute, templateItemRoute, templatesRoute, templatePartItemRoute, patternItemRoute, patternsRoute, navigationItemRoute, navigationRoute, stylesRoute, homeRoute, stylebookRoute];
+
+const site_editor_routes_routes = [pageItemRoute, pagesRoute, templateItemRoute, templatesRoute, templatePartItemRoute, patternItemRoute, patternsRoute, navigationItemRoute, navigationRoute, stylesRoute, homeRoute, stylebookRoute, notFoundRoute];
 function useRegisterSiteEditorRoutes() {
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const {
