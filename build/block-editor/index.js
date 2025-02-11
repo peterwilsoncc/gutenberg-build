@@ -38818,7 +38818,7 @@ function KeyboardShortcutsRegister() {
       category: 'block',
       description: (0,external_wp_i18n_namespaceObject.__)('Remove the selected block(s).'),
       keyCombination: {
-        modifier: 'primaryShift',
+        modifier: 'shift',
         character: 'backspace'
       }
     });
@@ -73602,9 +73602,7 @@ function createLinkInParagraph(url, onReplace) {
   function onKeyDown(event) {
     const {
       keyCode,
-      shiftKey,
-      ctrlKey,
-      metaKey
+      shiftKey
     } = event;
     if (event.defaultPrevented) {
       return;
@@ -73628,8 +73626,8 @@ function createLinkInParagraph(url, onReplace) {
         return;
       }
 
-      // Exclude (command|ctrl)+shift+backspace as they are shortcuts for deleting blocks.
-      if (shiftKey && (ctrlKey || metaKey)) {
+      // Exclude shift+backspace as they are shortcuts for deleting blocks.
+      if (shiftKey) {
         return;
       }
       if (onMerge) {
