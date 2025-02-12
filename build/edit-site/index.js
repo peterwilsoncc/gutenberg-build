@@ -15062,7 +15062,9 @@ function WelcomeGuidePage() {
           children: heading
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
           className: "edit-site-welcome-guide__text",
-          children: (0,external_wp_i18n_namespaceObject.__)('It’s now possible to edit page content in the site editor. To customise other parts of the page like the header and footer switch to editing the template using the settings sidebar.')
+          children: (0,external_wp_i18n_namespaceObject.__)(
+          // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
+          'It’s now possible to edit page content in the site editor. To customise other parts of the page like the header and footer switch to editing the template using the settings sidebar.')
         })]
       })
     }]
@@ -43608,7 +43610,9 @@ function AddCustomGenericTemplateModalContent({
         onChange: setTitle,
         placeholder: defaultTitle,
         disabled: isBusy,
-        help: (0,external_wp_i18n_namespaceObject.__)('Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.')
+        help: (0,external_wp_i18n_namespaceObject.__)(
+        // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
+        'Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         className: "edit-site-custom-generic-template__modal-actions",
         justify: "right",

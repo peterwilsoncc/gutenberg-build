@@ -18533,7 +18533,9 @@ function CreateNewTemplateModal({
           onChange: setTitle,
           placeholder: DEFAULT_TITLE,
           disabled: isBusy,
-          help: (0,external_wp_i18n_namespaceObject.__)('Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.')
+          help: (0,external_wp_i18n_namespaceObject.__)(
+          // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
+          'Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
           justify: "right",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -33127,7 +33129,7 @@ const SidebarHeader = (_, ref) => {
     return {
       documentLabel:
       // translators: Default label for the Document sidebar tab, not selected.
-      getPostTypeLabel() || (0,external_wp_i18n_namespaceObject._x)('Document', 'noun, sidebar')
+      getPostTypeLabel() || (0,external_wp_i18n_namespaceObject._x)('Document', 'noun, panel')
     };
   }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Tabs.TabList, {
@@ -33405,7 +33407,7 @@ const SidebarContent = ({
     className: "editor-sidebar__panel",
     headerClassName: "editor-sidebar__panel-tabs",
     title: /* translators: button label text should, if possible, be under 16 characters. */
-    (0,external_wp_i18n_namespaceObject._x)('Settings', 'sidebar button label'),
+    (0,external_wp_i18n_namespaceObject._x)('Settings', 'panel button label'),
     toggleShortcut: keyboardShortcut,
     icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? drawer_left : drawer_right,
     isActiveByDefault: SIDEBAR_ACTIVE_BY_DEFAULT,
@@ -33743,7 +33745,7 @@ function PreferencesModalContents({
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreferenceToggleControl, {
           scope: "core",
           featureName: "showListViewByDefault",
-          help: (0,external_wp_i18n_namespaceObject.__)('Opens the List View sidebar by default.'),
+          help: (0,external_wp_i18n_namespaceObject.__)('Opens the List View panel by default.'),
           label: (0,external_wp_i18n_namespaceObject.__)('Always open List View')
         }), showBlockBreadcrumbsOption && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PreferenceToggleControl, {
           scope: "core",
