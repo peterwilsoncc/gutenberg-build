@@ -70510,7 +70510,7 @@ function AspectRatioDropdown({
         {
           slug: 'original',
           name: (0,external_wp_i18n_namespaceObject.__)('Original'),
-          aspect: defaultAspect
+          ratio: defaultAspect
         }, ...(showDefaultRatios ? defaultRatios.map(presetRatioAsNumber).filter(({
           ratio
         }) => ratio === 1) : [])]
