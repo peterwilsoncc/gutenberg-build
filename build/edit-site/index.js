@@ -7889,11 +7889,12 @@ function SidebarContent({
 
 
 
+
+
 const {
+  useLocation,
   useHistory
 } = unlock(external_wp_router_namespaceObject.privateApis);
-
-
 const SiteHub = (0,external_wp_element_namespaceObject.memo)((0,external_wp_element_namespaceObject.forwardRef)(({
   isTransparent
 }, ref) => {
@@ -7977,13 +7978,15 @@ const SiteHub = (0,external_wp_element_namespaceObject.memo)((0,external_wp_elem
 const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_wp_element_namespaceObject.forwardRef)(({
   isTransparent
 }, ref) => {
+  const {
+    path
+  } = useLocation();
   const history = useHistory();
   const {
     navigate
   } = (0,external_wp_element_namespaceObject.useContext)(SidebarNavigationContext);
   const {
     dashboardLink,
-    isBlockTheme,
     homeUrl,
     siteTitle
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -7991,13 +7994,11 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
       getSettings
     } = unlock(select(store));
     const {
-      getEntityRecord,
-      getCurrentTheme
+      getEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
     const _site = getEntityRecord('root', 'site');
     return {
       dashboardLink: getSettings().__experimentalDashboardLink,
-      isBlockTheme: getCurrentTheme()?.is_block_theme,
       homeUrl: getEntityRecord('root', '__unstableBase')?.home,
       siteTitle: !_site?.title && !!_site?.url ? (0,external_wp_url_namespaceObject.filterURLForDisplay)(_site?.url) : _site?.title
     };
@@ -8005,6 +8006,7 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
   const {
     open: openCommandCenter
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_commands_namespaceObject.store);
+  const isRoot = path === '/';
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "edit-site-site-hub",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -8022,7 +8024,7 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
             transform: 'scale(0.5)',
             borderRadius: 4
           },
-          ...(!isBlockTheme ? {
+          ...(isRoot ? {
             href: dashboardLink,
             label: (0,external_wp_i18n_namespaceObject.__)('Go to the Dashboard')
           } : {
@@ -8089,7 +8091,7 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
 
 
 const {
-  useLocation,
+  useLocation: resizable_frame_useLocation,
   useHistory: resizable_frame_useHistory
 } = unlock(external_wp_router_namespaceObject.privateApis);
 
@@ -8148,7 +8150,7 @@ function ResizableFrame({
   const {
     path,
     query
-  } = useLocation();
+  } = resizable_frame_useLocation();
   const {
     canvas = 'view'
   } = query;
