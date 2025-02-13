@@ -17207,7 +17207,8 @@ function EntityRecordItem({
         __nextHasNoMarginBottom: true,
         label: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(entityRecordTitle) || (0,external_wp_i18n_namespaceObject.__)('Untitled'),
         checked: checked,
-        onChange: onChange
+        onChange: onChange,
+        className: "entities-saved-states__change-control"
       })
     }), hasPostMetaChanges && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
       className: "entities-saved-states__changes",
@@ -17294,6 +17295,7 @@ function EntityTypeList({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
     title: entityLabel,
     initialOpen: true,
+    className: "entities-saved-states__panel-body",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EntityDescription, {
       record: firstRecord,
       count: count
@@ -17390,6 +17392,11 @@ const useIsDirty = () => {
 
 ;// ./packages/editor/build-module/components/entities-saved-states/index.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
 
@@ -17416,17 +17423,20 @@ function identity(values) {
  * @param {Object}   props              The component props.
  * @param {Function} props.close        The function to close the dialog.
  * @param {boolean}  props.renderDialog Whether to render the component with modal dialog behavior.
+ * @param {string}   props.variant      Changes the layout of the component. When an `inline` value is provided, the action buttons are rendered at the end of the component instead of at the start.
  *
  * @return {React.ReactNode} The rendered component.
  */
 function EntitiesSavedStates({
   close,
-  renderDialog
+  renderDialog,
+  variant
 }) {
   const isDirtyProps = useIsDirty();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EntitiesSavedStatesExtensible, {
     close: close,
     renderDialog: renderDialog,
+    variant: variant,
     ...isDirtyProps
   });
 }
@@ -17445,6 +17455,7 @@ function EntitiesSavedStates({
  * @param {boolean}  props.isDirty               Flag indicating if there are dirty entities.
  * @param {Function} props.setUnselectedEntities Function to set unselected entities.
  * @param {Array}    props.unselectedEntities    Array of unselected entities.
+ * @param {string}   props.variant               Changes the layout of the component. When an `inline` value is provided, the action buttons are rendered at the end of the component instead of at the start.
  *
  * @return {React.ReactNode} The rendered component.
  */
@@ -17458,7 +17469,8 @@ function EntitiesSavedStatesExtensible({
   dirtyEntityRecords,
   isDirty,
   setUnselectedEntities,
-  unselectedEntities
+  unselectedEntities,
+  variant = 'default'
 }) {
   const saveButtonRef = (0,external_wp_element_namespaceObject.useRef)();
   const {
@@ -17491,58 +17503,67 @@ function EntitiesSavedStatesExtensible({
   const [saveDialogRef, saveDialogProps] = (0,external_wp_compose_namespaceObject.__experimentalUseDialog)({
     onClose: () => dismissPanel()
   });
-  const dialogLabel = (0,external_wp_compose_namespaceObject.useInstanceId)(EntitiesSavedStatesExtensible, 'label');
-  const dialogDescription = (0,external_wp_compose_namespaceObject.useInstanceId)(EntitiesSavedStatesExtensible, 'description');
+  const dialogLabelId = (0,external_wp_compose_namespaceObject.useInstanceId)(EntitiesSavedStatesExtensible, 'entities-saved-states__panel-label');
+  const dialogDescriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(EntitiesSavedStatesExtensible, 'entities-saved-states__panel-description');
   const selectItemsToSaveDescription = !!dirtyEntityRecords.length ? (0,external_wp_i18n_namespaceObject.__)('Select the items you want to save.') : undefined;
+  const isInline = variant === 'inline';
+  const actionButtons = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+      isBlock: isInline ? false : true,
+      as: external_wp_components_namespaceObject.Button,
+      variant: isInline ? 'tertiary' : 'secondary',
+      size: isInline ? undefined : 'compact',
+      onClick: dismissPanel,
+      children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+      isBlock: isInline ? false : true,
+      as: external_wp_components_namespaceObject.Button,
+      ref: saveButtonRef,
+      variant: "primary",
+      size: isInline ? undefined : 'compact',
+      disabled: !saveEnabled,
+      accessibleWhenDisabled: true,
+      onClick: () => saveDirtyEntities({
+        onSave,
+        dirtyEntityRecords,
+        entitiesToSkip: unselectedEntities,
+        close
+      }),
+      className: "editor-entities-saved-states__save-button",
+      children: saveLabel
+    })]
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     ref: renderDialog ? saveDialogRef : undefined,
     ...(renderDialog && saveDialogProps),
-    className: "entities-saved-states__panel",
+    className: dist_clsx('entities-saved-states__panel', {
+      'is-inline': isInline
+    }),
     role: renderDialog ? 'dialog' : undefined,
-    "aria-labelledby": renderDialog ? dialogLabel : undefined,
-    "aria-describedby": renderDialog ? dialogDescription : undefined,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
+    "aria-labelledby": renderDialog ? dialogLabelId : undefined,
+    "aria-describedby": renderDialog ? dialogDescriptionId : undefined,
+    children: [!isInline && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Flex, {
       className: "entities-saved-states__panel-header",
       gap: 2,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-        isBlock: true,
-        as: external_wp_components_namespaceObject.Button,
-        variant: "secondary",
-        size: "compact",
-        onClick: dismissPanel,
-        children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-        isBlock: true,
-        as: external_wp_components_namespaceObject.Button,
-        ref: saveButtonRef,
-        variant: "primary",
-        size: "compact",
-        disabled: !saveEnabled,
-        accessibleWhenDisabled: true,
-        onClick: () => saveDirtyEntities({
-          onSave,
-          dirtyEntityRecords,
-          entitiesToSkip: unselectedEntities,
-          close
-        }),
-        className: "editor-entities-saved-states__save-button",
-        children: saveLabel
-      })]
+      children: actionButtons
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "entities-saved-states__text-prompt",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "entities-saved-states__text-prompt--header-wrapper",
-        id: renderDialog ? dialogLabel : undefined,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {
+          id: renderDialog ? dialogLabelId : undefined,
           className: "entities-saved-states__text-prompt--header",
           children: (0,external_wp_i18n_namespaceObject.__)('Are you ready to save?')
-        }), additionalPrompt]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-        id: renderDialog ? dialogDescription : undefined,
-        children: isDirty ? (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of site changes waiting to be saved. */
-        (0,external_wp_i18n_namespaceObject._n)('There is <strong>%d site change</strong> waiting to be saved.', 'There are <strong>%d site changes</strong> waiting to be saved.', dirtyEntityRecords.length), dirtyEntityRecords.length), {
-          strong: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {})
-        }) : selectItemsToSaveDescription
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+        id: renderDialog ? dialogDescriptionId : undefined,
+        children: [additionalPrompt, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+          className: "entities-saved-states__text-prompt--changes-count",
+          children: isDirty ? (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of site changes waiting to be saved. */
+          (0,external_wp_i18n_namespaceObject._n)('There is <strong>%d site change</strong> waiting to be saved.', 'There are <strong>%d site changes</strong> waiting to be saved.', dirtyEntityRecords.length), dirtyEntityRecords.length), {
+            strong: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {})
+          }) : selectItemsToSaveDescription
+        })]
       })]
     }), sortedPartitionedSavables.map(list => {
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EntityTypeList, {
@@ -17550,6 +17571,11 @@ function EntitiesSavedStatesExtensible({
         unselectedEntities: unselectedEntities,
         setUnselectedEntities: setUnselectedEntities
       }, list[0].name);
+    }), isInline && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Flex, {
+      direction: "row",
+      justify: "flex-end",
+      className: "entities-saved-states__panel-footer",
+      children: actionButtons
     })]
   });
 }

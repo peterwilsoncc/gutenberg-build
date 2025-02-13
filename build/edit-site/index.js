@@ -13173,7 +13173,8 @@ const {
 } = unlock(external_wp_router_namespaceObject.privateApis);
 const EntitiesSavedStatesForPreview = ({
   onClose,
-  renderDialog
+  renderDialog,
+  variant
 }) => {
   var _currentTheme$name$re, _previewingTheme$name;
   const isDirtyProps = (0,external_wp_editor_namespaceObject.useEntitiesSavedStatesIsDirty)();
@@ -13201,22 +13202,26 @@ const EntitiesSavedStatesForPreview = ({
     onSave,
     saveEnabled: true,
     saveLabel: activateSaveLabel,
-    renderDialog
+    renderDialog,
+    variant
   });
 };
 const _EntitiesSavedStates = ({
   onClose,
-  renderDialog
+  renderDialog,
+  variant
 }) => {
   if (isPreviewingTheme()) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EntitiesSavedStatesForPreview, {
       onClose: onClose,
-      renderDialog: renderDialog
+      renderDialog: renderDialog,
+      variant: variant
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EntitiesSavedStates, {
     close: onClose,
-    renderDialog: renderDialog
+    renderDialog: renderDialog,
+    variant: variant
   });
 };
 function SavePanel() {
@@ -13261,10 +13266,11 @@ function SavePanel() {
     return isSaveViewOpen ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
       className: "edit-site-save-panel__modal",
       onRequestClose: onClose,
-      __experimentalHideHeader: true,
-      contentLabel: (0,external_wp_i18n_namespaceObject.__)('Save site, content, and template changes'),
+      title: (0,external_wp_i18n_namespaceObject.__)('Review changes'),
+      size: "small",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(_EntitiesSavedStates, {
-        onClose: onClose
+        onClose: onClose,
+        variant: "inline"
       })
     }) : null;
   }
