@@ -30800,7 +30800,6 @@ const navigationRoute = {
 
 
 
-
 const {
   useLocation: navigation_item_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
@@ -30812,9 +30811,7 @@ function MobileNavigationItemView() {
     canvas = 'view'
   } = query;
   return canvas === 'edit' ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenNavigationMenu, {
-    backPath: {
-      postType: NAVIGATION_POST_TYPE
-    }
+    backPath: "/navigation"
   });
 }
 const navigationItemRoute = {
