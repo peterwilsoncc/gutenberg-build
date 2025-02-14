@@ -10834,6 +10834,7 @@ const noop = () => {};
  * @param {Function} $0.onError           Function called when an error happens.
  * @param {Function} $0.onFileChange      Function called each time a file or a temporary representation of the file is available.
  * @param {Function} $0.onSuccess         Function called after the final representation of the file is available.
+ * @param {boolean}  $0.multiple          Whether to allow multiple files to be uploaded.
  */
 function mediaUpload({
   additionalData = {},
@@ -10842,7 +10843,8 @@ function mediaUpload({
   maxUploadFileSize,
   onError = noop,
   onFileChange,
-  onSuccess
+  onSuccess,
+  multiple = true
 }) {
   const {
     getCurrentPost,
@@ -10897,7 +10899,8 @@ function mediaUpload({
       clearSaveLock();
       onError(message);
     },
-    wpAllowedMimeTypes
+    wpAllowedMimeTypes,
+    multiple
   });
 }
 
@@ -21176,7 +21179,8 @@ function PostFeaturedImage({
       onError(message) {
         noticeOperations.removeAllNotices();
         noticeOperations.createErrorNotice(message);
-      }
+      },
+      multiple: false
     });
   }
 
@@ -21332,7 +21336,8 @@ const applyWithDispatch = (0,external_wp_data_namespaceObject.withDispatch)((dis
         onError(message) {
           noticeOperations.removeAllNotices();
           noticeOperations.createErrorNotice(message);
-        }
+        },
+        multiple: false
       });
     },
     onRemoveImage() {

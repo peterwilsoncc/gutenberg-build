@@ -840,6 +840,7 @@ function validateFileSize(file, maxUploadFileSize) {
  * @param $0.onFileChange       Function called each time a file or a temporary representation of the file is available.
  * @param $0.wpAllowedMimeTypes List of allowed mime types and file extensions.
  * @param $0.signal             Abort signal.
+ * @param $0.multiple           Whether to allow multiple files to be uploaded.
  */
 function uploadMedia({
   wpAllowedMimeTypes,
@@ -849,8 +850,13 @@ function uploadMedia({
   maxUploadFileSize,
   onError,
   onFileChange,
-  signal
+  signal,
+  multiple = true
 }) {
+  if (!multiple && filesList.length > 1) {
+    onError?.(new Error((0,external_wp_i18n_namespaceObject.__)('Only one file can be used here.')));
+    return;
+  }
   const validFiles = [];
   const filesSet = [];
   const setAndUpdateFiles = (index, value) => {
