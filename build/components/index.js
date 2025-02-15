@@ -39943,6 +39943,7 @@ const UnitSelect = /*#__PURE__*/emotion_styled_base_browser_esm("select",  true 
 } : 0)("&&&{appearance:none;background:transparent;border-radius:", config_values.radiusXSmall, ";border:none;display:block;outline:none;margin:0;min-height:auto;font-family:inherit;", baseUnitLabelStyles, ";", unitSelectSizes, ";&:not( :disabled ){cursor:pointer;}}" + ( true ? "" : 0));
 
 ;// ./packages/components/build-module/border-control/styles.js
+function border_control_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
 /**
  * External dependencies
  */
@@ -39995,7 +39996,10 @@ const swatchGap = 12;
 const borderControlPopoverControls = /*#__PURE__*/emotion_react_browser_esm_css("width:", swatchSize * 6 + swatchGap * 5, "px;>div:first-of-type>", StyledLabel, "{margin-bottom:0;}&& ", StyledLabel, "+button:not( .has-text ){min-width:24px;padding:0;}" + ( true ? "" : 0),  true ? "" : 0);
 const borderControlPopoverContent = /*#__PURE__*/emotion_react_browser_esm_css( true ? "" : 0,  true ? "" : 0);
 const borderColorIndicator = /*#__PURE__*/emotion_react_browser_esm_css( true ? "" : 0,  true ? "" : 0);
-const resetButton = /*#__PURE__*/emotion_react_browser_esm_css("justify-content:center;width:100%;&&{border-top:", config_values.borderWidth, " solid ", COLORS.gray[400], ";border-top-left-radius:0;border-top-right-radius:0;}" + ( true ? "" : 0),  true ? "" : 0);
+const resetButtonWrapper =  true ? {
+  name: "1ghe26v",
+  styles: "display:flex;justify-content:flex-end;margin-top:12px"
+} : 0;
 const borderSlider = () => /*#__PURE__*/emotion_react_browser_esm_css("flex:1 1 60%;", rtl({
   marginRight: space(3)
 })(), ";" + ( true ? "" : 0),  true ? "" : 0);
@@ -40467,8 +40471,8 @@ function useBorderControlDropdown(props) {
   const popoverContentClassName = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return cx(borderControlPopoverContent);
   }, [cx]);
-  const resetButtonClassName = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return cx(resetButton);
+  const resetButtonWrapperClassName = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return cx(resetButtonWrapper);
   }, [cx]);
   return {
     ...otherProps,
@@ -40484,7 +40488,7 @@ function useBorderControlDropdown(props) {
     onReset,
     popoverContentClassName,
     popoverControlsClassName,
-    resetButtonClassName,
+    resetButtonWrapperClassName,
     size,
     __experimentalIsRenderedInSidebar
   };
@@ -40586,7 +40590,7 @@ const BorderControlDropdown = (props, forwardedRef) => {
     onStyleChange,
     popoverContentClassName,
     popoverControlsClassName,
-    resetButtonClassName,
+    resetButtonWrapperClassName,
     size,
     __unstablePopoverProps,
     ...otherProps
@@ -40597,7 +40601,7 @@ const BorderControlDropdown = (props, forwardedRef) => {
   } = border || {};
   const colorObject = getColorObject(color, colors);
   const toggleAriaLabel = getToggleAriaLabel(color, colorObject, style, enableStyle);
-  const showResetButton = color || style && style !== 'none';
+  const enableResetButton = color || style && style !== 'none';
   const dropdownPosition = __experimentalIsRenderedInSidebar ? 'bottom left' : undefined;
   const renderToggle = ({
     onToggle
@@ -40617,12 +40621,10 @@ const BorderControlDropdown = (props, forwardedRef) => {
       })
     })
   });
-  const renderContent = ({
-    onClose
-  }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dropdown_content_wrapper, {
+  const renderContent = () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(dropdown_content_wrapper, {
       paddingSize: "medium",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(v_stack_component, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(v_stack_component, {
         className: popoverControlsClassName,
         spacing: 6,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_palette, {
@@ -40639,20 +40641,20 @@ const BorderControlDropdown = (props, forwardedRef) => {
           value: style,
           onChange: onStyleChange
         })]
-      })
-    }), showResetButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dropdown_content_wrapper, {
-      paddingSize: "none",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-        className: resetButtonClassName,
-        variant: "tertiary",
-        onClick: () => {
-          onReset();
-          onClose();
-        },
-        __next40pxDefaultSize: true,
-        children: (0,external_wp_i18n_namespaceObject.__)('Reset')
-      })
-    })]
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        className: resetButtonWrapperClassName,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+          variant: "tertiary",
+          onClick: () => {
+            onReset();
+          },
+          disabled: !enableResetButton,
+          accessibleWhenDisabled: true,
+          __next40pxDefaultSize: true,
+          children: (0,external_wp_i18n_namespaceObject.__)('Reset')
+        })
+      })]
+    })
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dropdown, {
     renderToggle: renderToggle,
