@@ -18689,10 +18689,7 @@ function useCurrentTemplateSlug() {
 
 
 
-const POPOVER_PROPS = {
-  className: 'editor-post-template__dropdown',
-  placement: 'bottom-start'
-};
+
 function PostTemplateToggle({
   isOpen,
   onClick
@@ -18839,20 +18836,35 @@ function PostTemplateDropdownContent({
   });
 }
 function ClassicThemeControl() {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
-    popoverProps: POPOVER_PROPS,
-    focusOnMount: true,
-    renderToggle: ({
-      isOpen,
-      onToggle
-    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTemplateToggle, {
-      isOpen: isOpen,
-      onClick: onToggle
-    }),
-    renderContent: ({
-      onClose
-    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTemplateDropdownContent, {
-      onClose: onClose
+  const [popoverAnchor, setPopoverAnchor] = (0,external_wp_element_namespaceObject.useState)(null);
+  // Memoize popoverProps to avoid returning a new object every time.
+  const popoverProps = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    // Anchor the popover to the middle of the entire row so that it doesn't
+    // move around when the label changes.
+    anchor: popoverAnchor,
+    className: 'editor-post-template__dropdown',
+    placement: 'left-start',
+    offset: 36,
+    shift: true
+  }), [popoverAnchor]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_panel_row, {
+    label: (0,external_wp_i18n_namespaceObject.__)('Template'),
+    ref: setPopoverAnchor,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
+      popoverProps: popoverProps,
+      focusOnMount: true,
+      renderToggle: ({
+        isOpen,
+        onToggle
+      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTemplateToggle, {
+        isOpen: isOpen,
+        onClick: onToggle
+      }),
+      renderContent: ({
+        onClose
+      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostTemplateDropdownContent, {
+        onClose: onClose
+      })
     })
   });
 }
@@ -19839,6 +19851,12 @@ function CreateNewTemplate({
 
 
 
+
+/**
+ * Internal dependencies
+ */
+
+
 /**
  * Internal dependencies
  */
@@ -19848,10 +19866,6 @@ function CreateNewTemplate({
 
 
 
-const block_theme_POPOVER_PROPS = {
-  className: 'editor-post-template__dropdown',
-  placement: 'bottom-start'
-};
 function BlockThemeControl({
   id
 }) {
@@ -19890,6 +19904,17 @@ function BlockThemeControl({
     kind: 'postType',
     name: 'wp_template'
   }), []);
+  const [popoverAnchor, setPopoverAnchor] = (0,external_wp_element_namespaceObject.useState)(null);
+  // Memoize popoverProps to avoid returning a new object every time.
+  const popoverProps = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    // Anchor the popover to the middle of the entire row so that it doesn't
+    // move around when the label changes.
+    anchor: popoverAnchor,
+    className: 'editor-post-template__dropdown',
+    placement: 'left-start',
+    offset: 36,
+    shift: true
+  }), [popoverAnchor]);
   if (!hasResolved) {
     return null;
   }
@@ -19908,49 +19933,53 @@ function BlockThemeControl({
       });
     }
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
-    popoverProps: block_theme_POPOVER_PROPS,
-    focusOnMount: true,
-    toggleProps: {
-      size: 'compact',
-      variant: 'tertiary',
-      tooltipPosition: 'middle left'
-    },
-    label: (0,external_wp_i18n_namespaceObject.__)('Template options'),
-    text: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(template.title),
-    icon: null,
-    children: ({
-      onClose
-    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuGroup, {
-        children: [canCreateTemplate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-          onClick: () => {
-            onNavigateToEntityRecord({
-              postId: template.id,
-              postType: 'wp_template'
-            });
-            onClose();
-            mayShowTemplateEditNotice();
-          },
-          children: (0,external_wp_i18n_namespaceObject.__)('Edit template')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SwapTemplateButton, {
-          onClick: onClose
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResetDefaultTemplate, {
-          onClick: onClose
-        }), canCreateTemplate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CreateNewTemplate, {
-          onClick: onClose
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_panel_row, {
+    label: (0,external_wp_i18n_namespaceObject.__)('Template'),
+    ref: setPopoverAnchor,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
+      popoverProps: popoverProps,
+      focusOnMount: true,
+      toggleProps: {
+        size: 'compact',
+        variant: 'tertiary',
+        tooltipPosition: 'middle left'
+      },
+      label: (0,external_wp_i18n_namespaceObject.__)('Template options'),
+      text: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(template.title),
+      icon: null,
+      children: ({
+        onClose
+      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuGroup, {
+          children: [canCreateTemplate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+            onClick: () => {
+              onNavigateToEntityRecord({
+                postId: template.id,
+                postType: 'wp_template'
+              });
+              onClose();
+              mayShowTemplateEditNotice();
+            },
+            children: (0,external_wp_i18n_namespaceObject.__)('Edit template')
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SwapTemplateButton, {
+            onClick: onClose
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResetDefaultTemplate, {
+            onClick: onClose
+          }), canCreateTemplate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CreateNewTemplate, {
+            onClick: onClose
+          })]
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+            icon: !isTemplateHidden ? library_check : undefined,
+            isSelected: !isTemplateHidden,
+            role: "menuitemcheckbox",
+            onClick: () => {
+              setRenderingMode(isTemplateHidden ? 'template-locked' : 'post-only');
+            },
+            children: (0,external_wp_i18n_namespaceObject.__)('Show template')
+          })
         })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-          icon: !isTemplateHidden ? library_check : undefined,
-          isSelected: !isTemplateHidden,
-          role: "menuitemcheckbox",
-          onClick: () => {
-            setRenderingMode(isTemplateHidden ? 'template-locked' : 'post-only');
-          },
-          children: (0,external_wp_i18n_namespaceObject.__)('Show template')
-        })
-      })]
+      })
     })
   });
 }
@@ -19962,11 +19991,9 @@ function BlockThemeControl({
 
 
 
-
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -20020,17 +20047,11 @@ function PostTemplatePanel() {
     })) !== null && _select$canUser2 !== void 0 ? _select$canUser2 : false;
   }, []);
   if ((!isBlockTheme || !canViewTemplates) && isVisible) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_panel_row, {
-      label: (0,external_wp_i18n_namespaceObject.__)('Template'),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(classic_theme, {})
-    });
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(classic_theme, {});
   }
   if (isBlockTheme && !!templateId) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_panel_row, {
-      label: (0,external_wp_i18n_namespaceObject.__)('Template'),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockThemeControl, {
-        id: templateId
-      })
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockThemeControl, {
+      id: templateId
     });
   }
   return null;
