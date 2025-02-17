@@ -915,8 +915,8 @@ function uploadMedia({
       // Reset to empty on failure.
       setAndUpdateFiles(index, null);
       let message;
-      if (error instanceof Error) {
-        message = error.message;
+      if (typeof error === 'object' && error !== null && 'message' in error) {
+        message = typeof error.message === 'string' ? error.message : String(error.message);
       } else {
         message = (0,external_wp_i18n_namespaceObject.sprintf)(
         // translators: %s: file name
