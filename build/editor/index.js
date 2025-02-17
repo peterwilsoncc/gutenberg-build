@@ -17248,7 +17248,7 @@ function getEntityDescription(entity, count) {
     case 'site':
       return 1 === count ? (0,external_wp_i18n_namespaceObject.__)('This change will affect your whole site.') : (0,external_wp_i18n_namespaceObject.__)('These changes will affect your whole site.');
     case 'wp_template':
-      return (0,external_wp_i18n_namespaceObject.__)('This change will affect pages and posts that use this template.');
+      return (0,external_wp_i18n_namespaceObject.__)('This change will affect other parts of your site that use this template.');
     case 'page':
     case 'post':
       return (0,external_wp_i18n_namespaceObject.__)('The following has been modified.');
@@ -30774,7 +30774,7 @@ function EditTemplateBlocksNotification({
     },
     onCancel: () => setIsDialogOpen(false),
     size: "medium",
-    children: (0,external_wp_i18n_namespaceObject.__)('You’ve tried to select a block that is part of a template, which may be used on other posts and pages. Would you like to edit the template?')
+    children: (0,external_wp_i18n_namespaceObject.__)('You’ve tried to select a block that is part of a template that may be used elsewhere on your site. Would you like to edit the template?')
   });
 }
 
