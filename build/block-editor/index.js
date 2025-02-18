@@ -51144,10 +51144,17 @@ function Iframe({
     function preventFileDropDefault(event) {
       event.preventDefault();
     }
+    const {
+      ownerDocument
+    } = node;
+
+    // Ideally ALL classes that are added through get_body_class should
+    // be added in the editor too, which we'll somehow have to get from
+    // the server in the future (which will run the PHP filters).
+    setBodyClasses(Array.from(ownerDocument.body.classList).filter(name => name.startsWith('admin-color-') || name.startsWith('post-type-') || name === 'wp-embed-responsive'));
     function onLoad() {
       const {
-        contentDocument,
-        ownerDocument
+        contentDocument
       } = node;
       const {
         documentElement
@@ -51155,11 +51162,6 @@ function Iframe({
       iFrameDocument = contentDocument;
       documentElement.classList.add('block-editor-iframe__html');
       clearerRef(documentElement);
-
-      // Ideally ALL classes that are added through get_body_class should
-      // be added in the editor too, which we'll somehow have to get from
-      // the server in the future (which will run the PHP filters).
-      setBodyClasses(Array.from(ownerDocument.body.classList).filter(name => name.startsWith('admin-color-') || name.startsWith('post-type-') || name === 'wp-embed-responsive'));
       contentDocument.dir = ownerDocument.dir;
       for (const compatStyle of getCompatibilityStyles()) {
         if (contentDocument.getElementById(compatStyle.id)) {
