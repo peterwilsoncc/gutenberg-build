@@ -15711,7 +15711,9 @@ function CoverEdit({
               disableCustomColors: true,
               value: overlayColor.color,
               onChange: onSetOverlayColor,
-              clearable: false
+              clearable: false,
+              asButtons: true,
+              "aria-label": (0,external_wp_i18n_namespaceObject.__)('Overlay color')
             })
           })
         })]

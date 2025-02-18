@@ -39183,6 +39183,7 @@ function ButtonsCircularOptionPicker(props) {
   }), [baseId]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ...additionalProps,
+    role: "group",
     id: baseId,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(CircularOptionPickerContext.Provider, {
       value: contextValue,
@@ -39232,7 +39233,34 @@ CircularOptionPicker.DropdownLinkAction = DropdownLinkAction;
 
 
 
+
 /* harmony default export */ const build_module_circular_option_picker = (circular_option_picker);
+
+;// ./packages/components/build-module/circular-option-picker/utils.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Computes the common props for the CircularOptionPicker.
+ */
+function getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby) {
+  const metaProps = asButtons ? {
+    asButtons: true
+  } : {
+    asButtons: false,
+    loop
+  };
+  const labelProps = {
+    'aria-labelledby': ariaLabelledby,
+    'aria-label': ariaLabelledby ? undefined : ariaLabel || (0,external_wp_i18n_namespaceObject.__)('Custom color picker')
+  };
+  return {
+    metaProps,
+    labelProps
+  };
+}
 
 ;// ./packages/components/build-module/v-stack/hook.js
 /**
@@ -39770,7 +39798,7 @@ function UnforwardedColorPalette(props, forwardedRef) {
   const displayValue = value?.replace(/^var\((.+)\)$/, '$1');
   const customColorAccessibleLabel = !!displayValue ? (0,external_wp_i18n_namespaceObject.sprintf)(
   // translators: 1: The name of the color e.g: "vivid red". 2: The color's hex code e.g: "#f00".
-  (0,external_wp_i18n_namespaceObject.__)('Custom color picker. The currently selected color is called "%1$s" and has a value of "%2$s".'), buttonLabelName, displayValue) : (0,external_wp_i18n_namespaceObject.__)('Custom color picker.');
+  (0,external_wp_i18n_namespaceObject.__)('Custom color picker. The currently selected color is called "%1$s" and has a value of "%2$s".'), buttonLabelName, displayValue) : (0,external_wp_i18n_namespaceObject.__)('Custom color picker');
   const paletteCommonProps = {
     clearColor,
     onChange,
@@ -39782,33 +39810,10 @@ function UnforwardedColorPalette(props, forwardedRef) {
     disabled: !value,
     children: (0,external_wp_i18n_namespaceObject.__)('Clear')
   });
-  let metaProps;
-  if (asButtons) {
-    metaProps = {
-      asButtons: true
-    };
-  } else {
-    const _metaProps = {
-      asButtons: false,
-      loop
-    };
-    if (ariaLabel) {
-      metaProps = {
-        ..._metaProps,
-        'aria-label': ariaLabel
-      };
-    } else if (ariaLabelledby) {
-      metaProps = {
-        ..._metaProps,
-        'aria-labelledby': ariaLabelledby
-      };
-    } else {
-      metaProps = {
-        ..._metaProps,
-        'aria-label': (0,external_wp_i18n_namespaceObject.__)('Custom color picker.')
-      };
-    }
-  }
+  const {
+    metaProps,
+    labelProps
+  } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(v_stack_component, {
     spacing: 3,
     ref: forwardedRef,
@@ -39849,6 +39854,7 @@ function UnforwardedColorPalette(props, forwardedRef) {
       })
     }), (colors.length > 0 || actions) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_circular_option_picker, {
       ...metaProps,
+      ...labelProps,
       actions: actions,
       options: hasMultipleColorOrigins ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MultiplePalettes, {
         ...paletteCommonProps,
@@ -45630,35 +45636,13 @@ function Component(props) {
   }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SingleOrigin, {
     ...additionalProps
   });
-  let metaProps;
-  if (asButtons) {
-    metaProps = {
-      asButtons: true
-    };
-  } else {
-    const _metaProps = {
-      asButtons: false,
-      loop
-    };
-    if (ariaLabel) {
-      metaProps = {
-        ..._metaProps,
-        'aria-label': ariaLabel
-      };
-    } else if (ariaLabelledby) {
-      metaProps = {
-        ..._metaProps,
-        'aria-labelledby': ariaLabelledby
-      };
-    } else {
-      metaProps = {
-        ..._metaProps,
-        'aria-label': (0,external_wp_i18n_namespaceObject.__)('Custom color picker.')
-      };
-    }
-  }
+  const {
+    metaProps,
+    labelProps
+  } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_circular_option_picker, {
     ...metaProps,
+    ...labelProps,
     actions: actions,
     options: options
   });
@@ -56416,37 +56400,15 @@ function DuotonePicker({
       }
     }, slug);
   });
-  let metaProps;
-  if (asButtons) {
-    metaProps = {
-      asButtons: true
-    };
-  } else {
-    const _metaProps = {
-      asButtons: false,
-      loop
-    };
-    if (ariaLabel) {
-      metaProps = {
-        ..._metaProps,
-        'aria-label': ariaLabel
-      };
-    } else if (ariaLabelledby) {
-      metaProps = {
-        ..._metaProps,
-        'aria-labelledby': ariaLabelledby
-      };
-    } else {
-      metaProps = {
-        ..._metaProps,
-        'aria-label': (0,external_wp_i18n_namespaceObject.__)('Custom color picker.')
-      };
-    }
-  }
+  const {
+    metaProps,
+    labelProps
+  } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
   const options = unsetable ? [unsetOption, ...duotoneOptions] : duotoneOptions;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_circular_option_picker, {
     ...otherProps,
     ...metaProps,
+    ...labelProps,
     options: options,
     actions: !!clearable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_circular_option_picker.ButtonAction, {
       onClick: () => onChange(undefined),
