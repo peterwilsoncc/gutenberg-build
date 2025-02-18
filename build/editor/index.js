@@ -13732,49 +13732,173 @@ function BlockRemovalWarnings() {
 
 
 
+
+
+
+
+
 /**
  * Internal dependencies
  */
 
-function StartPageOptions() {
+
+function useStartPatterns() {
+  // A pattern is a start pattern if it includes 'core/post-content' in its blockTypes,
+  // and it has no postTypes declared and the current post type is page or if
+  // the current post type is part of the postTypes declared.
   const {
-    postId,
-    enabled
+    blockPatternsWithPostContentBlockType,
+    postType
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getCurrentPostId,
-      getCurrentPostType
+      getPatternsByBlockTypes,
+      getBlocksByName
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    const {
+      getCurrentPostType,
+      getRenderingMode
     } = select(store_store);
-    const preferencesModalActive = select(store).isModalActive('editor/preferences');
-    const choosePatternModalEnabled = select(external_wp_preferences_namespaceObject.store).get('core', 'enableChoosePatternModal');
+    const rootClientId = getRenderingMode() === 'post-only' ? '' : getBlocksByName('core/post-content')?.[0];
     return {
-      postId: getCurrentPostId(),
-      enabled: choosePatternModalEnabled && !preferencesModalActive && 'page' === getCurrentPostType()
+      blockPatternsWithPostContentBlockType: getPatternsByBlockTypes('core/post-content', rootClientId),
+      postType: getCurrentPostType()
     };
   }, []);
+  return (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (!blockPatternsWithPostContentBlockType?.length) {
+      return [];
+    }
+
+    /*
+     * Filter patterns without postTypes declared if the current postType is page
+     * or patterns that declare the current postType in its post type array.
+     */
+    return blockPatternsWithPostContentBlockType.filter(pattern => {
+      return postType === 'page' && !pattern.postTypes || Array.isArray(pattern.postTypes) && pattern.postTypes.includes(postType);
+    });
+  }, [postType, blockPatternsWithPostContentBlockType]);
+}
+function PatternSelection({
+  blockPatterns,
+  onChoosePattern
+}) {
+  const {
+    editEntityRecord
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
+  const {
+    postType,
+    postId
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getCurrentPostType,
+      getCurrentPostId
+    } = select(store_store);
+    return {
+      postType: getCurrentPostType(),
+      postId: getCurrentPostId()
+    };
+  }, []);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockPatternsList, {
+    blockPatterns: blockPatterns,
+    onClickPattern: (_pattern, blocks) => {
+      editEntityRecord('postType', postType, postId, {
+        blocks,
+        content: ({
+          blocks: blocksForSerialization = []
+        }) => (0,external_wp_blocks_namespaceObject.__unstableSerializeAndClean)(blocksForSerialization)
+      });
+      onChoosePattern();
+    }
+  });
+}
+function StartPageOptionsModal({
+  onClose
+}) {
+  const [showStartPatterns, setShowStartPatterns] = (0,external_wp_element_namespaceObject.useState)(true);
+  const {
+    set: setPreference
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_preferences_namespaceObject.store);
+  const startPatterns = useStartPatterns();
+  const hasStartPattern = startPatterns.length > 0;
+  if (!hasStartPattern) {
+    return null;
+  }
+  function handleClose() {
+    onClose();
+    setPreference('core', 'enableChoosePatternModal', showStartPatterns);
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Modal, {
+    className: "editor-start-page-options__modal",
+    title: (0,external_wp_i18n_namespaceObject.__)('Choose a pattern'),
+    isFullScreen: true,
+    onRequestClose: handleClose,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "editor-start-page-options__modal-content",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternSelection, {
+        blockPatterns: startPatterns,
+        onChoosePattern: handleClose
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Flex, {
+      className: "editor-start-page-options__modal__actions",
+      justify: "flex-end",
+      expanded: false,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          __nextHasNoMarginBottom: true,
+          checked: showStartPatterns,
+          label: (0,external_wp_i18n_namespaceObject.__)('Show starter patterns'),
+          help: (0,external_wp_i18n_namespaceObject.__)('Shows starter patterns when creating a new page.'),
+          onChange: newValue => {
+            setShowStartPatterns(newValue);
+          }
+        })
+      })
+    })]
+  });
+}
+function StartPageOptions() {
+  const [isOpen, setIsOpen] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
     isEditedPostDirty,
     isEditedPostEmpty
   } = (0,external_wp_data_namespaceObject.useSelect)(store_store);
   const {
-    setIsInserterOpened
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
+    isModalActive
+  } = (0,external_wp_data_namespaceObject.useSelect)(store);
+  const {
+    enabled,
+    postId
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getCurrentPostId,
+      getCurrentPostType
+    } = select(store_store);
+    const choosePatternModalEnabled = select(external_wp_preferences_namespaceObject.store).get('core', 'enableChoosePatternModal');
+    return {
+      postId: getCurrentPostId(),
+      enabled: choosePatternModalEnabled && 'page' === getCurrentPostType()
+    };
+  }, []);
+
+  // Note: The `postId` ensures the effect re-runs when pages are switched without remounting the component.
+  // Examples: changing pages in the List View, creating a new page via Command Palette.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!enabled) {
+    const isFreshPage = !isEditedPostDirty() && isEditedPostEmpty();
+    // Prevents immediately opening when features is enabled via preferences modal.
+    const isPreferencesModalActive = isModalActive('editor/preferences');
+    if (!enabled || !isFreshPage || isPreferencesModalActive) {
       return;
     }
-    const isFreshPage = !isEditedPostDirty() && isEditedPostEmpty();
-    if (isFreshPage) {
-      setIsInserterOpened({
-        tab: 'patterns',
-        category: 'core/starter-content'
-      });
-    }
 
-    // Note: The `postId` ensures the effect re-runs when pages are switched without remounting the component.
-    // Examples: changing pages in the List View, creating a new page via Command Palette.
-  }, [postId, enabled, setIsInserterOpened, isEditedPostDirty, isEditedPostEmpty]);
-  return null;
+    // Open the modal after the initial render for a new page.
+    setIsOpen(true);
+  }, [enabled, postId, isEditedPostDirty, isEditedPostEmpty, isModalActive]);
+  if (!isOpen) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StartPageOptionsModal, {
+    onClose: () => setIsOpen(false)
+  });
 }
 
 ;// external ["wp","keyboardShortcuts"]
@@ -14247,7 +14371,7 @@ function useFallbackTemplateContent(slug, isCustom = false) {
     return templateId ? getEntityRecord('postType', TEMPLATE_POST_TYPE, templateId)?.content?.raw : undefined;
   }, [slug, isCustom]);
 }
-function useStartPatterns(fallbackContent) {
+function start_template_options_useStartPatterns(fallbackContent) {
   const {
     slug,
     patterns
@@ -14301,13 +14425,13 @@ function useStartPatterns(fallbackContent) {
     })];
   }, [fallbackContent, slug, patterns]);
 }
-function PatternSelection({
+function start_template_options_PatternSelection({
   fallbackContent,
   onChoosePattern,
   postType
 }) {
   const [,, onChange] = (0,external_wp_coreData_namespaceObject.useEntityBlockEditor)('postType', postType);
-  const blockPatterns = useStartPatterns(fallbackContent);
+  const blockPatterns = start_template_options_useStartPatterns(fallbackContent);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockPatternsList, {
     blockPatterns: blockPatterns,
     onClickPattern: (pattern, blocks) => {
@@ -14337,7 +14461,7 @@ function StartModal({
     isFullScreen: true,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "editor-start-template-options__modal-content",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternSelection, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(start_template_options_PatternSelection, {
         fallbackContent: fallbackContent,
         slug: slug,
         isCustom: isCustom,
