@@ -24910,14 +24910,17 @@ function BackgroundImageControls({
 
   // Drag and drop callback, restricting image to one.
   const onFilesDrop = filesList => {
+    if (filesList?.length > 1) {
+      onUploadError((0,external_wp_i18n_namespaceObject.__)('Only one image can be used as a background image.'));
+      return;
+    }
     getSettings().mediaUpload({
       allowedTypes: [IMAGE_BACKGROUND_TYPE],
       filesList,
       onFileChange([image]) {
         onSelectMedia(image);
       },
-      onError: onUploadError,
-      multiple: false
+      onError: onUploadError
     });
   };
   const hasValue = hasBackgroundImageValue(style);
@@ -36628,7 +36631,7 @@ function LayoutPanelPure({
                 type: layoutType?.name === 'constrained' || hasContentSizeOrLegacySettings ? 'default' : 'constrained'
               }
             }),
-            help: layoutType?.name === 'constrained' || hasContentSizeOrLegacySettings ? (0,external_wp_i18n_namespaceObject.__)('Nested blocks use content width with options for full and wide widths.') : (0,external_wp_i18n_namespaceObject.__)('Nested blocks will fill the width of this container.')
+            help: layoutType?.name === 'constrained' || hasContentSizeOrLegacySettings ? (0,external_wp_i18n_namespaceObject.__)('Nested blocks use content width with options for full and wide widths.') : (0,external_wp_i18n_namespaceObject.__)('Nested blocks will fill the width of this container. Toggle to constrain.')
           })
         }), !inherit && allowSwitching && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LayoutTypeSwitcher, {
           type: blockLayoutType,
@@ -51144,17 +51147,10 @@ function Iframe({
     function preventFileDropDefault(event) {
       event.preventDefault();
     }
-    const {
-      ownerDocument
-    } = node;
-
-    // Ideally ALL classes that are added through get_body_class should
-    // be added in the editor too, which we'll somehow have to get from
-    // the server in the future (which will run the PHP filters).
-    setBodyClasses(Array.from(ownerDocument.body.classList).filter(name => name.startsWith('admin-color-') || name.startsWith('post-type-') || name === 'wp-embed-responsive'));
     function onLoad() {
       const {
-        contentDocument
+        contentDocument,
+        ownerDocument
       } = node;
       const {
         documentElement
@@ -51162,6 +51158,11 @@ function Iframe({
       iFrameDocument = contentDocument;
       documentElement.classList.add('block-editor-iframe__html');
       clearerRef(documentElement);
+
+      // Ideally ALL classes that are added through get_body_class should
+      // be added in the editor too, which we'll somehow have to get from
+      // the server in the future (which will run the PHP filters).
+      setBodyClasses(Array.from(ownerDocument.body.classList).filter(name => name.startsWith('admin-color-') || name.startsWith('post-type-') || name === 'wp-embed-responsive'));
       contentDocument.dir = ownerDocument.dir;
       for (const compatStyle of getCompatibilityStyles()) {
         if (contentDocument.getElementById(compatStyle.id)) {
@@ -54177,7 +54178,7 @@ function PatternsExplorer({
   rootClientId
 }) {
   const [searchValue, setSearchValue] = (0,external_wp_element_namespaceObject.useState)('');
-  const [selectedCategory, setSelectedCategory] = (0,external_wp_element_namespaceObject.useState)(initialCategory?.name);
+  const [selectedCategory, setSelectedCategory] = (0,external_wp_element_namespaceObject.useState)(initialCategory);
   const patternCategories = usePatternCategories(rootClientId);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "block-editor-block-patterns-explorer",
@@ -54300,7 +54301,7 @@ function MobileTabNavigation({
 
 const getShouldDisableSyncFilter = sourceFilter => sourceFilter !== 'all' && sourceFilter !== 'user';
 const getShouldHideSourcesFilter = category => {
-  return category.name === myPatternsCategory.name;
+  return category?.name === myPatternsCategory.name;
 };
 const PATTERN_SOURCE_MENU_OPTIONS = [{
   value: 'all',
@@ -54327,7 +54328,7 @@ function PatternsFilter({
   // we do this by deriving from props rather than calling setPatternSourceFilter otherwise
   // the user may be confused when switching to another category if the haven't explicitly set
   // this filter themselves.
-  const currentPatternSourceFilter = category.name === myPatternsCategory.name ? INSERTER_PATTERN_TYPES.user : patternSourceFilter;
+  const currentPatternSourceFilter = category?.name === myPatternsCategory.name ? INSERTER_PATTERN_TYPES.user : patternSourceFilter;
 
   // We need to disable the sync filter option if the source filter is not 'all' or 'user'
   // otherwise applying them will just result in no patterns being shown.
@@ -54445,13 +54446,13 @@ function PatternCategoryPreviews({
     if (isPatternFiltered(pattern, patternSourceFilter, patternSyncFilter)) {
       return false;
     }
-    if (category.name === allPatternsCategory.name) {
+    if (category.name === allPatternsCategory?.name) {
       return true;
     }
-    if (category.name === myPatternsCategory.name && pattern.type === INSERTER_PATTERN_TYPES.user) {
+    if (category.name === myPatternsCategory?.name && pattern.type === INSERTER_PATTERN_TYPES.user) {
       return true;
     }
-    if (category.name === starterPatternsCategory.name && pattern.blockTypes?.includes('core/post-content')) {
+    if (category.name === starterPatternsCategory?.name && pattern.blockTypes?.includes('core/post-content')) {
       return true;
     }
     if (category.name === 'uncategorized') {
@@ -54491,7 +54492,7 @@ function PatternCategoryPreviews({
             size: 13,
             level: 4,
             as: "div",
-            children: category.label
+            children: category?.label
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternsFilter, {
           patternSyncFilter: patternSyncFilter,
@@ -54584,7 +54585,7 @@ function CategoryTabs({
       className: "block-editor-inserter__category-tablist",
       children: categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(category_tabs_Tabs.Tab, {
         tabId: category.name,
-        "aria-current": category === selectedCategory ? 'true' : undefined,
+        "aria-current": category.name === selectedCategory?.name ? 'true' : undefined,
         children: category.label
       }, category.name))
     }), categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(category_tabs_Tabs.TabPanel, {
@@ -54672,7 +54673,7 @@ function BlockPatternsTab({
         }, category.name)
       })
     }), showPatternsExplorer && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_explorer, {
-      initialCategory: selectedCategory || categories[0],
+      initialCategory: selectedCategory?.name || categories[0]?.name,
       patternCategories: categories,
       onModalClose: () => setShowPatternsExplorer(false),
       rootClientId: rootClientId
@@ -55636,6 +55637,7 @@ function TabbedSidebar({
 
 
 
+
 /**
  * A hook used to set the editor mode to zoomed out mode, invoking the hook sets the mode.
  * Concepts:
@@ -55645,6 +55647,9 @@ function TabbedSidebar({
  * @param {boolean} enabled If we should enter into zoomOut mode or not
  */
 function useZoomOut(enabled = true) {
+  const {
+    postId
+  } = (0,external_wp_element_namespaceObject.useContext)(block_context);
   const {
     setZoomLevel,
     resetZoomLevel
@@ -55668,6 +55673,7 @@ function useZoomOut(enabled = true) {
   }, []);
   const controlZoomLevelRef = (0,external_wp_element_namespaceObject.useRef)(false);
   const isEnabledRef = (0,external_wp_element_namespaceObject.useRef)(enabled);
+  const postIdRef = (0,external_wp_element_namespaceObject.useRef)(postId);
 
   /**
    * This hook tracks if the zoom state was changed manually by the user via clicking
@@ -55684,6 +55690,11 @@ function useZoomOut(enabled = true) {
   }, [isZoomedOut]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     isEnabledRef.current = enabled;
+
+    // If the user created a new post/page, we should take control of the zoom level.
+    if (postIdRef.current !== postId) {
+      controlZoomLevelRef.current = true;
+    }
     if (enabled !== isZoomOut()) {
       controlZoomLevelRef.current = true;
       if (enabled) {
@@ -55698,7 +55709,7 @@ function useZoomOut(enabled = true) {
         resetZoomLevel();
       }
     };
-  }, [enabled, isZoomOut, resetZoomLevel, setZoomLevel]);
+  }, [enabled, isZoomOut, postId, resetZoomLevel, setZoomLevel]);
 }
 
 ;// ./packages/block-editor/build-module/components/inserter/menu.js
@@ -72493,8 +72504,7 @@ function MediaPlaceholder({
       allowedTypes,
       filesList: files,
       onFileChange: setMedia,
-      onError,
-      multiple
+      onError
     });
   };
   async function handleBlocksDrop(event) {
@@ -74942,7 +74952,7 @@ function ToolSelector(props, ref) {
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "block-editor-tool-selector__help",
-        children: (0,external_wp_i18n_namespaceObject.__)('Tools provide different sets of interactions for blocks. Choose between simplified content tools (Write) and advanced visual editing tools (Design).')
+        children: (0,external_wp_i18n_namespaceObject.__)('Tools provide different sets of interactions for blocks. Toggle between simplified content tools (Write) and advanced visual editing tools (Design).')
       })]
     })
   });

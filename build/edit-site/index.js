@@ -7889,12 +7889,11 @@ function SidebarContent({
 
 
 
-
-
 const {
-  useLocation,
   useHistory
 } = unlock(external_wp_router_namespaceObject.privateApis);
+
+
 const SiteHub = (0,external_wp_element_namespaceObject.memo)((0,external_wp_element_namespaceObject.forwardRef)(({
   isTransparent
 }, ref) => {
@@ -7978,15 +7977,13 @@ const SiteHub = (0,external_wp_element_namespaceObject.memo)((0,external_wp_elem
 const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_wp_element_namespaceObject.forwardRef)(({
   isTransparent
 }, ref) => {
-  const {
-    path
-  } = useLocation();
   const history = useHistory();
   const {
     navigate
   } = (0,external_wp_element_namespaceObject.useContext)(SidebarNavigationContext);
   const {
     dashboardLink,
+    isBlockTheme,
     homeUrl,
     siteTitle
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -7994,11 +7991,13 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
       getSettings
     } = unlock(select(store));
     const {
-      getEntityRecord
+      getEntityRecord,
+      getCurrentTheme
     } = select(external_wp_coreData_namespaceObject.store);
     const _site = getEntityRecord('root', 'site');
     return {
       dashboardLink: getSettings().__experimentalDashboardLink,
+      isBlockTheme: getCurrentTheme()?.is_block_theme,
       homeUrl: getEntityRecord('root', '__unstableBase')?.home,
       siteTitle: !_site?.title && !!_site?.url ? (0,external_wp_url_namespaceObject.filterURLForDisplay)(_site?.url) : _site?.title
     };
@@ -8006,7 +8005,6 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
   const {
     open: openCommandCenter
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_commands_namespaceObject.store);
-  const isRoot = path === '/';
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "edit-site-site-hub",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -8024,7 +8022,7 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
             transform: 'scale(0.5)',
             borderRadius: 4
           },
-          ...(isRoot ? {
+          ...(!isBlockTheme ? {
             href: dashboardLink,
             label: (0,external_wp_i18n_namespaceObject.__)('Go to the Dashboard')
           } : {
@@ -8091,7 +8089,7 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
 
 
 const {
-  useLocation: resizable_frame_useLocation,
+  useLocation,
   useHistory: resizable_frame_useHistory
 } = unlock(external_wp_router_namespaceObject.privateApis);
 
@@ -8150,7 +8148,7 @@ function ResizableFrame({
   const {
     path,
     query
-  } = resizable_frame_useLocation();
+  } = useLocation();
   const {
     canvas = 'view'
   } = query;
@@ -13175,8 +13173,7 @@ const {
 } = unlock(external_wp_router_namespaceObject.privateApis);
 const EntitiesSavedStatesForPreview = ({
   onClose,
-  renderDialog,
-  variant
+  renderDialog
 }) => {
   var _currentTheme$name$re, _previewingTheme$name;
   const isDirtyProps = (0,external_wp_editor_namespaceObject.useEntitiesSavedStatesIsDirty)();
@@ -13204,26 +13201,22 @@ const EntitiesSavedStatesForPreview = ({
     onSave,
     saveEnabled: true,
     saveLabel: activateSaveLabel,
-    renderDialog,
-    variant
+    renderDialog
   });
 };
 const _EntitiesSavedStates = ({
   onClose,
-  renderDialog,
-  variant
+  renderDialog
 }) => {
   if (isPreviewingTheme()) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EntitiesSavedStatesForPreview, {
       onClose: onClose,
-      renderDialog: renderDialog,
-      variant: variant
+      renderDialog: renderDialog
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EntitiesSavedStates, {
     close: onClose,
-    renderDialog: renderDialog,
-    variant: variant
+    renderDialog: renderDialog
   });
 };
 function SavePanel() {
@@ -13268,11 +13261,10 @@ function SavePanel() {
     return isSaveViewOpen ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
       className: "edit-site-save-panel__modal",
       onRequestClose: onClose,
-      title: (0,external_wp_i18n_namespaceObject.__)('Review changes'),
-      size: "small",
+      __experimentalHideHeader: true,
+      contentLabel: (0,external_wp_i18n_namespaceObject.__)('Save site, content, and template changes'),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(_EntitiesSavedStates, {
-        onClose: onClose,
-        variant: "inline"
+        onClose: onClose
       })
     }) : null;
   }
@@ -15070,9 +15062,7 @@ function WelcomeGuidePage() {
           children: heading
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
           className: "edit-site-welcome-guide__text",
-          children: (0,external_wp_i18n_namespaceObject.__)(
-          // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
-          'It’s now possible to edit page content in the site editor. To customise other parts of the page like the header and footer switch to editing the template using the settings sidebar.')
+          children: (0,external_wp_i18n_namespaceObject.__)('It’s now possible to edit page content in the site editor. To customise other parts of the page like the header and footer switch to editing the template using the settings sidebar.')
         })]
       })
     }]
@@ -30800,6 +30790,7 @@ const navigationRoute = {
 
 
 
+
 const {
   useLocation: navigation_item_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
@@ -30811,7 +30802,9 @@ function MobileNavigationItemView() {
     canvas = 'view'
   } = query;
   return canvas === 'edit' ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenNavigationMenu, {
-    backPath: "/navigation"
+    backPath: {
+      postType: NAVIGATION_POST_TYPE
+    }
   });
 }
 const navigationItemRoute = {
@@ -43615,9 +43608,7 @@ function AddCustomGenericTemplateModalContent({
         onChange: setTitle,
         placeholder: defaultTitle,
         disabled: isBusy,
-        help: (0,external_wp_i18n_namespaceObject.__)(
-        // eslint-disable-next-line no-restricted-syntax -- 'sidebar' is a common web design term for layouts
-        'Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.')
+        help: (0,external_wp_i18n_namespaceObject.__)('Describe the template, e.g. "Post with sidebar". A custom template can be manually applied to any post or page.')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         className: "edit-site-custom-generic-template__modal-actions",
         justify: "right",
