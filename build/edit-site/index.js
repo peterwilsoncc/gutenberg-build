@@ -41973,11 +41973,31 @@ function DataviewsPatterns() {
 
 ;// ./packages/edit-site/build-module/components/site-editor-routes/patterns.js
 /**
+ * WordPress dependencies
+ */
+
+
+/**
  * Internal dependencies
  */
 
 
 
+
+const {
+  useLocation: patterns_useLocation
+} = unlock(external_wp_router_namespaceObject.privateApis);
+function MobilePatternsView() {
+  const {
+    query = {}
+  } = patterns_useLocation();
+  const {
+    categoryId
+  } = query;
+  return !!categoryId ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsPatterns, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenPatterns, {
+    backPath: "/"
+  });
+}
 const patternsRoute = {
   name: 'patterns',
   path: '/pattern',
@@ -41986,7 +42006,7 @@ const patternsRoute = {
       backPath: "/"
     }),
     content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsPatterns, {}),
-    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsPatterns, {})
+    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MobilePatternsView, {})
   }
 };
 
