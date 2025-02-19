@@ -32677,8 +32677,8 @@ function UnforwardedNumberControl(props, forwardedRef) {
     hideHTMLArrows: spinControls !== 'native',
     isDragEnabled: isDragEnabled,
     label: label,
-    max: max,
-    min: min,
+    max: max === Infinity ? undefined : max,
+    min: min === -Infinity ? undefined : min,
     ref: mergedRef,
     required: required,
     step: step,
@@ -39183,6 +39183,7 @@ function ButtonsCircularOptionPicker(props) {
   }), [baseId]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ...additionalProps,
+    role: "group",
     id: baseId,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(CircularOptionPickerContext.Provider, {
       value: contextValue,
@@ -39232,7 +39233,34 @@ CircularOptionPicker.DropdownLinkAction = DropdownLinkAction;
 
 
 
+
 /* harmony default export */ const build_module_circular_option_picker = (circular_option_picker);
+
+;// ./packages/components/build-module/circular-option-picker/utils.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Computes the common props for the CircularOptionPicker.
+ */
+function getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby) {
+  const metaProps = asButtons ? {
+    asButtons: true
+  } : {
+    asButtons: false,
+    loop
+  };
+  const labelProps = {
+    'aria-labelledby': ariaLabelledby,
+    'aria-label': ariaLabelledby ? undefined : ariaLabel || (0,external_wp_i18n_namespaceObject.__)('Custom color picker')
+  };
+  return {
+    metaProps,
+    labelProps
+  };
+}
 
 ;// ./packages/components/build-module/v-stack/hook.js
 /**
@@ -39770,7 +39798,7 @@ function UnforwardedColorPalette(props, forwardedRef) {
   const displayValue = value?.replace(/^var\((.+)\)$/, '$1');
   const customColorAccessibleLabel = !!displayValue ? (0,external_wp_i18n_namespaceObject.sprintf)(
   // translators: 1: The name of the color e.g: "vivid red". 2: The color's hex code e.g: "#f00".
-  (0,external_wp_i18n_namespaceObject.__)('Custom color picker. The currently selected color is called "%1$s" and has a value of "%2$s".'), buttonLabelName, displayValue) : (0,external_wp_i18n_namespaceObject.__)('Custom color picker.');
+  (0,external_wp_i18n_namespaceObject.__)('Custom color picker. The currently selected color is called "%1$s" and has a value of "%2$s".'), buttonLabelName, displayValue) : (0,external_wp_i18n_namespaceObject.__)('Custom color picker');
   const paletteCommonProps = {
     clearColor,
     onChange,
@@ -39782,33 +39810,10 @@ function UnforwardedColorPalette(props, forwardedRef) {
     disabled: !value,
     children: (0,external_wp_i18n_namespaceObject.__)('Clear')
   });
-  let metaProps;
-  if (asButtons) {
-    metaProps = {
-      asButtons: true
-    };
-  } else {
-    const _metaProps = {
-      asButtons: false,
-      loop
-    };
-    if (ariaLabel) {
-      metaProps = {
-        ..._metaProps,
-        'aria-label': ariaLabel
-      };
-    } else if (ariaLabelledby) {
-      metaProps = {
-        ..._metaProps,
-        'aria-labelledby': ariaLabelledby
-      };
-    } else {
-      metaProps = {
-        ..._metaProps,
-        'aria-label': (0,external_wp_i18n_namespaceObject.__)('Custom color picker.')
-      };
-    }
-  }
+  const {
+    metaProps,
+    labelProps
+  } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(v_stack_component, {
     spacing: 3,
     ref: forwardedRef,
@@ -39849,6 +39854,7 @@ function UnforwardedColorPalette(props, forwardedRef) {
       })
     }), (colors.length > 0 || actions) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_circular_option_picker, {
       ...metaProps,
+      ...labelProps,
       actions: actions,
       options: hasMultipleColorOrigins ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MultiplePalettes, {
         ...paletteCommonProps,
@@ -39943,6 +39949,7 @@ const UnitSelect = /*#__PURE__*/emotion_styled_base_browser_esm("select",  true 
 } : 0)("&&&{appearance:none;background:transparent;border-radius:", config_values.radiusXSmall, ";border:none;display:block;outline:none;margin:0;min-height:auto;font-family:inherit;", baseUnitLabelStyles, ";", unitSelectSizes, ";&:not( :disabled ){cursor:pointer;}}" + ( true ? "" : 0));
 
 ;// ./packages/components/build-module/border-control/styles.js
+function border_control_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
 /**
  * External dependencies
  */
@@ -39995,7 +40002,10 @@ const swatchGap = 12;
 const borderControlPopoverControls = /*#__PURE__*/emotion_react_browser_esm_css("width:", swatchSize * 6 + swatchGap * 5, "px;>div:first-of-type>", StyledLabel, "{margin-bottom:0;}&& ", StyledLabel, "+button:not( .has-text ){min-width:24px;padding:0;}" + ( true ? "" : 0),  true ? "" : 0);
 const borderControlPopoverContent = /*#__PURE__*/emotion_react_browser_esm_css( true ? "" : 0,  true ? "" : 0);
 const borderColorIndicator = /*#__PURE__*/emotion_react_browser_esm_css( true ? "" : 0,  true ? "" : 0);
-const resetButton = /*#__PURE__*/emotion_react_browser_esm_css("justify-content:center;width:100%;&&{border-top:", config_values.borderWidth, " solid ", COLORS.gray[400], ";border-top-left-radius:0;border-top-right-radius:0;}" + ( true ? "" : 0),  true ? "" : 0);
+const resetButtonWrapper =  true ? {
+  name: "1ghe26v",
+  styles: "display:flex;justify-content:flex-end;margin-top:12px"
+} : 0;
 const borderSlider = () => /*#__PURE__*/emotion_react_browser_esm_css("flex:1 1 60%;", rtl({
   marginRight: space(3)
 })(), ";" + ( true ? "" : 0),  true ? "" : 0);
@@ -40467,8 +40477,8 @@ function useBorderControlDropdown(props) {
   const popoverContentClassName = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return cx(borderControlPopoverContent);
   }, [cx]);
-  const resetButtonClassName = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return cx(resetButton);
+  const resetButtonWrapperClassName = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return cx(resetButtonWrapper);
   }, [cx]);
   return {
     ...otherProps,
@@ -40484,7 +40494,7 @@ function useBorderControlDropdown(props) {
     onReset,
     popoverContentClassName,
     popoverControlsClassName,
-    resetButtonClassName,
+    resetButtonWrapperClassName,
     size,
     __experimentalIsRenderedInSidebar
   };
@@ -40586,7 +40596,7 @@ const BorderControlDropdown = (props, forwardedRef) => {
     onStyleChange,
     popoverContentClassName,
     popoverControlsClassName,
-    resetButtonClassName,
+    resetButtonWrapperClassName,
     size,
     __unstablePopoverProps,
     ...otherProps
@@ -40597,7 +40607,7 @@ const BorderControlDropdown = (props, forwardedRef) => {
   } = border || {};
   const colorObject = getColorObject(color, colors);
   const toggleAriaLabel = getToggleAriaLabel(color, colorObject, style, enableStyle);
-  const showResetButton = color || style && style !== 'none';
+  const enableResetButton = color || style && style !== 'none';
   const dropdownPosition = __experimentalIsRenderedInSidebar ? 'bottom left' : undefined;
   const renderToggle = ({
     onToggle
@@ -40617,12 +40627,10 @@ const BorderControlDropdown = (props, forwardedRef) => {
       })
     })
   });
-  const renderContent = ({
-    onClose
-  }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dropdown_content_wrapper, {
+  const renderContent = () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(dropdown_content_wrapper, {
       paddingSize: "medium",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(v_stack_component, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(v_stack_component, {
         className: popoverControlsClassName,
         spacing: 6,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_palette, {
@@ -40639,20 +40647,20 @@ const BorderControlDropdown = (props, forwardedRef) => {
           value: style,
           onChange: onStyleChange
         })]
-      })
-    }), showResetButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dropdown_content_wrapper, {
-      paddingSize: "none",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-        className: resetButtonClassName,
-        variant: "tertiary",
-        onClick: () => {
-          onReset();
-          onClose();
-        },
-        __next40pxDefaultSize: true,
-        children: (0,external_wp_i18n_namespaceObject.__)('Reset')
-      })
-    })]
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        className: resetButtonWrapperClassName,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+          variant: "tertiary",
+          onClick: () => {
+            onReset();
+          },
+          disabled: !enableResetButton,
+          accessibleWhenDisabled: true,
+          __next40pxDefaultSize: true,
+          children: (0,external_wp_i18n_namespaceObject.__)('Reset')
+        })
+      })]
+    })
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dropdown, {
     renderToggle: renderToggle,
@@ -45628,35 +45636,13 @@ function Component(props) {
   }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SingleOrigin, {
     ...additionalProps
   });
-  let metaProps;
-  if (asButtons) {
-    metaProps = {
-      asButtons: true
-    };
-  } else {
-    const _metaProps = {
-      asButtons: false,
-      loop
-    };
-    if (ariaLabel) {
-      metaProps = {
-        ..._metaProps,
-        'aria-label': ariaLabel
-      };
-    } else if (ariaLabelledby) {
-      metaProps = {
-        ..._metaProps,
-        'aria-labelledby': ariaLabelledby
-      };
-    } else {
-      metaProps = {
-        ..._metaProps,
-        'aria-label': (0,external_wp_i18n_namespaceObject.__)('Custom color picker.')
-      };
-    }
-  }
+  const {
+    metaProps,
+    labelProps
+  } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_circular_option_picker, {
     ...metaProps,
+    ...labelProps,
     actions: actions,
     options: options
   });
@@ -56414,37 +56400,15 @@ function DuotonePicker({
       }
     }, slug);
   });
-  let metaProps;
-  if (asButtons) {
-    metaProps = {
-      asButtons: true
-    };
-  } else {
-    const _metaProps = {
-      asButtons: false,
-      loop
-    };
-    if (ariaLabel) {
-      metaProps = {
-        ..._metaProps,
-        'aria-label': ariaLabel
-      };
-    } else if (ariaLabelledby) {
-      metaProps = {
-        ..._metaProps,
-        'aria-labelledby': ariaLabelledby
-      };
-    } else {
-      metaProps = {
-        ..._metaProps,
-        'aria-label': (0,external_wp_i18n_namespaceObject.__)('Custom color picker.')
-      };
-    }
-  }
+  const {
+    metaProps,
+    labelProps
+  } = getComputeCircularOptionPickerCommonProps(asButtons, loop, ariaLabel, ariaLabelledby);
   const options = unsetable ? [unsetOption, ...duotoneOptions] : duotoneOptions;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_circular_option_picker, {
     ...otherProps,
     ...metaProps,
+    ...labelProps,
     options: options,
     actions: !!clearable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_circular_option_picker.ButtonAction, {
       onClick: () => onChange(undefined),
