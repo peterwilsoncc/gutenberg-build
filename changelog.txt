@@ -1,5 +1,13 @@
 == Changelog ==
 
+= 20.0.2 =
+
+### Bug Fixes
+
+#### Block Editor
+- Fix 'isBlockVisibleInTheInserter' selector helper performance ([68898](https://github.com/WordPress/gutenberg/pull/68898))
+
+
 = 20.0.1 =
 
 ## Changelog
