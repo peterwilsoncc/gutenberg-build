@@ -3438,11 +3438,10 @@ const getRawEntityRecord = (0,external_wp_data_namespaceObject.createSelector)((
   const record = getEntityRecord(state, kind, name, key);
   return record && Object.keys(record).reduce((accumulator, _key) => {
     if (isRawAttribute(getEntityConfig(state, kind, name), _key)) {
-      var _record$_key$raw;
       // Because edits are the "raw" attribute values,
       // we return those from record selectors to make rendering,
       // comparisons, and joins with edits easier.
-      accumulator[_key] = (_record$_key$raw = record[_key]?.raw) !== null && _record$_key$raw !== void 0 ? _record$_key$raw : record[_key];
+      accumulator[_key] = record[_key]?.raw !== undefined ? record[_key]?.raw : record[_key];
     } else {
       accumulator[_key] = record[_key];
     }
