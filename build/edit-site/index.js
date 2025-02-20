@@ -14295,7 +14295,7 @@ function SidebarNavigationScreen({
         })]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
         className: "edit-site-sidebar-navigation-screen__content",
-        children: [description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+        children: [description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "edit-site-sidebar-navigation-screen__description",
           children: description
         }), content]
@@ -46318,17 +46318,25 @@ const stylebookRoute = {
  */
 
 
+
+function NotFoundError() {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
+    status: "error",
+    isDismissible: false,
+    children: (0,external_wp_i18n_namespaceObject.__)('The requested page could not be found. Please check the URL.')
+  });
+}
 const notFoundRoute = {
   name: 'notfound',
   path: '*',
   areas: {
     sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenMain, {}),
     mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenMain, {
-      customDescription: (0,external_wp_i18n_namespaceObject.__)('404 (Not Found)')
+      customDescription: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NotFoundError, {})
     }),
-    content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-      className: "edit-site-layout__area__404",
-      children: (0,external_wp_i18n_namespaceObject.__)('404 (Not Found)')
+    content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
+      padding: 2,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NotFoundError, {})
     })
   }
 };
