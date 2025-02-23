@@ -65034,7 +65034,11 @@ const VideoSettings = ({
     const toggleAttribute = attribute => {
       return newValue => {
         setAttributes({
-          [attribute]: newValue
+          [attribute]: newValue,
+          // Set muted when autoplay changes
+          ...(attribute === 'autoplay' && {
+            muted: newValue
+          })
         });
       };
     };
@@ -65058,7 +65062,8 @@ const VideoSettings = ({
       hasValue: () => !!autoplay,
       onDeselect: () => {
         setAttributes({
-          autoplay: false
+          autoplay: false,
+          muted: false
         });
       },
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
@@ -65096,7 +65101,9 @@ const VideoSettings = ({
         __nextHasNoMarginBottom: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Muted'),
         onChange: toggleFactory.muted,
-        checked: !!muted
+        checked: !!muted,
+        disabled: autoplay,
+        help: autoplay ? (0,external_wp_i18n_namespaceObject.__)('Muted because of Autoplay.') : null
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Playback controls'),
