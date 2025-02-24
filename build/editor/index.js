@@ -33776,6 +33776,7 @@ function EnablePublishSidebarOption(props) {
 const {
   BlockManager
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
+const block_visibility_EMPTY_ARRAY = [];
 function BlockVisibility() {
   const {
     showBlockTypes,
@@ -33790,7 +33791,7 @@ function BlockVisibility() {
     return {
       blockTypes: select(external_wp_blocks_namespaceObject.store).getBlockTypes(),
       allowedBlockTypes: select(store_store).getEditorSettings().allowedBlockTypes,
-      hiddenBlockTypes: (_select$get = select(external_wp_preferences_namespaceObject.store).get('core', 'hiddenBlockTypes')) !== null && _select$get !== void 0 ? _select$get : []
+      hiddenBlockTypes: (_select$get = select(external_wp_preferences_namespaceObject.store).get('core', 'hiddenBlockTypes')) !== null && _select$get !== void 0 ? _select$get : block_visibility_EMPTY_ARRAY
     };
   }, []);
   const allowedBlockTypes = (0,external_wp_element_namespaceObject.useMemo)(() => {
