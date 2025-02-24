@@ -19532,7 +19532,8 @@ const form_edit_Edit = ({
               method: 'post'
             });
           },
-          help: (0,external_wp_i18n_namespaceObject.__)('The email address where form submissions will be sent. Separate multiple email addresses with a comma.')
+          help: (0,external_wp_i18n_namespaceObject.__)('The email address where form submissions will be sent. Separate multiple email addresses with a comma.'),
+          type: "email"
         })]
       })
     }), submissionMethod !== 'email' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
@@ -19564,7 +19565,8 @@ const form_edit_Edit = ({
             action: newVal
           });
         },
-        help: (0,external_wp_i18n_namespaceObject.__)('The URL where the form should be submitted.')
+        help: (0,external_wp_i18n_namespaceObject.__)('The URL where the form should be submitted.'),
+        type: "url"
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
       ...innerBlocksProps,
@@ -38224,7 +38226,8 @@ function Controls({
             url: urlValue
           }, setAttributes, attributes);
         },
-        autoComplete: "off"
+        autoComplete: "off",
+        type: "url"
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       hasValue: () => !!description,
@@ -39383,7 +39386,8 @@ function NavigationSubmenuEdit({
               });
             },
             label: (0,external_wp_i18n_namespaceObject.__)('Link'),
-            autoComplete: "off"
+            autoComplete: "off",
+            type: "url"
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Description'),
