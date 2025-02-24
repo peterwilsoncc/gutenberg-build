@@ -1407,6 +1407,9 @@ function ColorPicker({
         [property]: color
       }));
     }
+    // Prevent the text and color picker from overlapping.
+    ,
+    __experimentalIsRenderedInSidebar: true
   });
 }
 function InlineColorUI({
