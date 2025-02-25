@@ -178,6 +178,7 @@ require __DIR__ . '/block-supports/duotone.php';
 require __DIR__ . '/block-supports/shadow.php';
 require __DIR__ . '/block-supports/background.php';
 require __DIR__ . '/block-supports/block-style-variations.php';
+require __DIR__ . '/block-supports/aria-label.php';
 
 // Data views.
 require_once __DIR__ . '/experimental/data-views.php';
