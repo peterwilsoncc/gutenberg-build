@@ -1065,7 +1065,7 @@ const toggleFullscreenMode = () => ({
 }) => {
   const isFullscreen = registry.select(external_wp_preferences_namespaceObject.store).get('core/edit-post', 'fullscreenMode');
   registry.dispatch(external_wp_preferences_namespaceObject.store).toggle('core/edit-post', 'fullscreenMode');
-  registry.dispatch(external_wp_notices_namespaceObject.store).createInfoNotice(isFullscreen ? (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode activated.') : (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode deactivated.'), {
+  registry.dispatch(external_wp_notices_namespaceObject.store).createInfoNotice(isFullscreen ? (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode deactivated.') : (0,external_wp_i18n_namespaceObject.__)('Fullscreen mode activated.'), {
     id: 'core/edit-post/toggle-fullscreen-mode/notice',
     type: 'snackbar',
     actions: [{
