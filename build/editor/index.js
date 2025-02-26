@@ -16806,16 +16806,11 @@ function EmptyOutlineIllustration() {
  * @return {Array} An array of heading blocks enhanced with the properties described above.
  */
 const computeOutlineHeadings = (blocks = []) => {
-  return blocks.flatMap((block = {}) => {
-    if (block.name === 'core/heading') {
-      return {
-        ...block,
-        level: block.attributes.level,
-        isEmpty: isEmptyHeading(block)
-      };
-    }
-    return computeOutlineHeadings(block.innerBlocks);
-  });
+  return blocks.filter(block => block.name === 'core/heading').map(block => ({
+    ...block,
+    level: block.attributes.level,
+    isEmpty: isEmptyHeading(block)
+  }));
 };
 const isEmptyHeading = heading => !heading.attributes.content || heading.attributes.content.trim().length === 0;
 
@@ -16836,14 +16831,10 @@ function DocumentOutline({
     selectBlock
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const {
-    blocks,
     title,
     isTitleSupported
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _postType$supports$ti;
-    const {
-      getBlocks
-    } = select(external_wp_blockEditor_namespaceObject.store);
     const {
       getEditedPostAttribute
     } = select(store_store);
@@ -16853,12 +16844,21 @@ function DocumentOutline({
     const postType = getPostType(getEditedPostAttribute('type'));
     return {
       title: getEditedPostAttribute('title'),
-      blocks: getBlocks(),
       isTitleSupported: (_postType$supports$ti = postType?.supports?.title) !== null && _postType$supports$ti !== void 0 ? _postType$supports$ti : false
     };
   });
+  const blocks = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getClientIdsWithDescendants,
+      getBlock
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    const clientIds = getClientIdsWithDescendants();
+    // Note: Don't modify data inside the `Array.map` callback,
+    // all compulations should happen in `computeOutlineHeadings`.
+    return clientIds.map(id => getBlock(id));
+  });
   const prevHeadingLevelRef = (0,external_wp_element_namespaceObject.useRef)(1);
-  const headings = computeOutlineHeadings(blocks);
+  const headings = (0,external_wp_element_namespaceObject.useMemo)(() => computeOutlineHeadings(blocks), [blocks]);
   if (headings.length < 1) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "editor-document-outline has-no-headings",
