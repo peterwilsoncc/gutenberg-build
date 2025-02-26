@@ -1872,6 +1872,7 @@ __webpack_require__.d(store_private_actions_namespaceObject, {
   revertTemplate: () => (private_actions_revertTemplate),
   saveDirtyEntities: () => (saveDirtyEntities),
   setCurrentTemplateId: () => (setCurrentTemplateId),
+  setDefaultRenderingMode: () => (setDefaultRenderingMode),
   setIsReady: () => (setIsReady),
   showBlockTypes: () => (showBlockTypes),
   unregisterEntityAction: () => (unregisterEntityAction),
@@ -1882,6 +1883,7 @@ __webpack_require__.d(store_private_actions_namespaceObject, {
 var store_private_selectors_namespaceObject = {};
 __webpack_require__.r(store_private_selectors_namespaceObject);
 __webpack_require__.d(store_private_selectors_namespaceObject, {
+  getDefaultRenderingMode: () => (getDefaultRenderingMode),
   getEntityActions: () => (private_selectors_getEntityActions),
   getEntityFields: () => (private_selectors_getEntityFields),
   getInserter: () => (getInserter),
@@ -14846,11 +14848,6 @@ const provider_noop = () => {};
 const NON_CONTEXTUAL_POST_TYPES = ['wp_block', 'wp_navigation', 'wp_template_part'];
 
 /**
- * These are rendering modes that the editor supports.
- */
-const RENDERING_MODES = ['post-only', 'template-locked'];
-
-/**
  * Depending on the post, template and template mode,
  * returns the appropriate blocks and change handlers for the block editor provider.
  *
@@ -14955,30 +14952,31 @@ const ExperimentalEditorProvider = with_registry_provider(({
       getEditorSettings,
       getEditorSelection,
       getRenderingMode,
-      __unstableIsEditorReady
-    } = select(store_store);
+      __unstableIsEditorReady,
+      getDefaultRenderingMode
+    } = unlock(select(store_store));
     const {
-      getEntitiesConfig,
-      getPostType,
-      hasFinishedResolution
+      getEntitiesConfig
     } = select(external_wp_coreData_namespaceObject.store);
-    const postTypeSupports = getPostType(post.type)?.supports;
-    const hasLoadedPostObject = hasFinishedResolution('getPostType', [post.type]);
-    const _defaultMode = Array.isArray(postTypeSupports?.editor) ? postTypeSupports.editor.find(features => 'default-mode' in features)?.['default-mode'] : undefined;
-    const hasDefaultMode = RENDERING_MODES.includes(_defaultMode);
-
-    // Wait for template resolution when rendering in a `template-locked` mode.
-    const hasResolvedMode = hasLoadedPostObject && _defaultMode === 'template-locked' ? hasTemplate : true;
+    const _defaultMode = getDefaultRenderingMode(post.type);
+    /**
+     * To avoid content "flash", wait until rendering mode has been resolved.
+     * This is important for the initial render of the editor.
+     *
+     * - Wait for template to be resolved if the default mode is 'template-locked'.
+     * - Wait for default mode to be resolved otherwise.
+     */
+    const hasResolvedMode = _defaultMode === 'template-locked' ? hasTemplate : _defaultMode !== undefined;
     return {
       editorSettings: getEditorSettings(),
       isReady: __unstableIsEditorReady() && hasResolvedMode,
       mode: getRenderingMode(),
-      defaultMode: hasDefaultMode ? _defaultMode : 'post-only',
+      defaultMode: _defaultMode,
       selection: getEditorSelection(),
       postTypeEntities: post.type === 'wp_template' ? getEntitiesConfig('postType') : null
     };
   }, [post.type, hasTemplate]);
-  const shouldRenderTemplate = !!template && mode !== 'post-only';
+  const shouldRenderTemplate = hasTemplate && mode !== 'post-only';
   const rootLevelPost = shouldRenderTemplate ? template : post;
   const defaultBlockContext = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const postContext = {};
@@ -15063,7 +15061,9 @@ const ExperimentalEditorProvider = with_registry_provider(({
 
   // Sets the right rendering mode when loading the editor.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    setRenderingMode(defaultMode);
+    if (defaultMode) {
+      setRenderingMode(defaultMode);
+    }
   }, [defaultMode, setRenderingMode]);
   useHideBlocksFromInserter(post.type, mode);
 
@@ -15676,6 +15676,31 @@ const removeTemplates = items => async ({
   }
 };
 
+/**
+ * Set the default rendering mode preference for the current post type.
+ *
+ * @param {string} mode The rendering mode to set as default.
+ */
+const setDefaultRenderingMode = mode => ({
+  select,
+  registry
+}) => {
+  var _registry$select$get$;
+  const postType = select.getCurrentPostType();
+  const theme = registry.select(external_wp_coreData_namespaceObject.store).getCurrentTheme()?.stylesheet;
+  const renderingModes = (_registry$select$get$ = registry.select(external_wp_preferences_namespaceObject.store).get('core', 'renderingModes')?.[theme]) !== null && _registry$select$get$ !== void 0 ? _registry$select$get$ : {};
+  if (renderingModes[postType] === mode) {
+    return;
+  }
+  const newModes = {
+    [theme]: {
+      ...renderingModes,
+      [postType]: mode
+    }
+  };
+  registry.dispatch(external_wp_preferences_namespaceObject.store).set('core', 'renderingModes', newModes);
+};
+
 // EXTERNAL MODULE: ./node_modules/fast-deep-equal/index.js
 var fast_deep_equal = __webpack_require__(5215);
 var fast_deep_equal_default = /*#__PURE__*/__webpack_require__.n(fast_deep_equal);
@@ -15741,6 +15766,7 @@ function isEntityReady(state, kind, name) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -15752,6 +15778,11 @@ const EMPTY_INSERTION_POINT = {
   insertionIndex: undefined,
   filterValue: undefined
 };
+
+/**
+ * These are rendering modes that the editor supports.
+ */
+const RENDERING_MODES = ['post-only', 'template-locked'];
 
 /**
  * Get the inserter.
@@ -15882,6 +15913,43 @@ const getPostBlocksByName = (0,external_wp_data_namespaceObject.createRegistrySe
     );
   }));
 }, () => [select(external_wp_blockEditor_namespaceObject.store).getBlocks()]));
+
+/**
+ * Returns the default rendering mode for a post type by user preference or post type configuration.
+ *
+ * @param {Object} state    Global application state.
+ * @param {string} postType The post type.
+ *
+ * @return {string} The default rendering mode. Returns `undefined` while resolving value.
+ */
+const getDefaultRenderingMode = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (state, postType) => {
+  const {
+    getPostType,
+    getCurrentTheme,
+    hasFinishedResolution
+  } = select(external_wp_coreData_namespaceObject.store);
+
+  // This needs to be called before `hasFinishedResolution`.
+  // eslint-disable-next-line @wordpress/no-unused-vars-before-return
+  const currentTheme = getCurrentTheme();
+  // eslint-disable-next-line @wordpress/no-unused-vars-before-return
+  const postTypeEntity = getPostType(postType);
+
+  // Wait for the post type and theme resolution.
+  if (!hasFinishedResolution('getPostType', [postType]) || !hasFinishedResolution('getCurrentTheme')) {
+    return undefined;
+  }
+  const theme = currentTheme?.stylesheet;
+  const defaultModePreference = select(external_wp_preferences_namespaceObject.store).get('core', 'renderingModes')?.[theme]?.[postType];
+  const postTypeDefaultMode = Array.isArray(postTypeEntity?.supports?.editor) ? postTypeEntity.supports.editor.find(features => 'default-mode' in features)?.['default-mode'] : undefined;
+  const defaultMode = defaultModePreference || postTypeDefaultMode;
+
+  // Fallback gracefully to 'post-only' when rendering mode is not supported.
+  if (!RENDERING_MODES.includes(defaultMode)) {
+    return 'post-only';
+  }
+  return defaultMode;
+});
 
 ;// ./packages/editor/build-module/store/index.js
 /**
@@ -20025,8 +20093,9 @@ function BlockThemeControl({
     createSuccessNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   const {
-    setRenderingMode
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
+    setRenderingMode,
+    setDefaultRenderingMode
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));
   const canCreateTemplate = (0,external_wp_data_namespaceObject.useSelect)(select => !!select(external_wp_coreData_namespaceObject.store).canUser('create', {
     kind: 'postType',
     name: 'wp_template'
@@ -20101,7 +20170,9 @@ function BlockThemeControl({
             isSelected: !isTemplateHidden,
             role: "menuitemcheckbox",
             onClick: () => {
-              setRenderingMode(isTemplateHidden ? 'template-locked' : 'post-only');
+              const newRenderingMode = isTemplateHidden ? 'template-locked' : 'post-only';
+              setRenderingMode(newRenderingMode);
+              setDefaultRenderingMode(newRenderingMode);
             },
             children: (0,external_wp_i18n_namespaceObject.__)('Show template')
           })
@@ -29983,8 +30054,9 @@ function PreviewDropdown({
   }, []);
   const {
     setDeviceType,
-    setRenderingMode
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
+    setRenderingMode,
+    setDefaultRenderingMode
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));
   const {
     resetZoomLevel
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store));
@@ -30069,7 +30141,9 @@ function PreviewDropdown({
           isSelected: !isTemplateHidden,
           role: "menuitemcheckbox",
           onClick: () => {
-            setRenderingMode(isTemplateHidden ? 'template-locked' : 'post-only');
+            const newRenderingMode = isTemplateHidden ? 'template-locked' : 'post-only';
+            setRenderingMode(newRenderingMode);
+            setDefaultRenderingMode(newRenderingMode);
           },
           children: (0,external_wp_i18n_namespaceObject.__)('Show template')
         })
