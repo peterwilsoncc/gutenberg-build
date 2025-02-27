@@ -54035,7 +54035,8 @@ function PatternList({
   searchValue,
   selectedCategory,
   patternCategories,
-  rootClientId
+  rootClientId,
+  onModalClose
 }) {
   const container = (0,external_wp_element_namespaceObject.useRef)();
   const debouncedSpeak = (0,external_wp_compose_namespaceObject.useDebounce)(external_wp_a11y_namespaceObject.speak, 500);
@@ -54095,7 +54096,10 @@ function PatternList({
       children: hasItems && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_list, {
           blockPatterns: pagingProps.categoryPatterns,
-          onClickPattern: onClickPattern,
+          onClickPattern: (pattern, blocks) => {
+            onClickPattern(pattern, blocks);
+            onModalClose();
+          },
           isDraggable: false
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Pagination, {
           ...pagingProps
@@ -54174,7 +54178,8 @@ function usePatternCategories(rootClientId, sourceFilter = 'all') {
 
 function PatternsExplorer({
   initialCategory,
-  rootClientId
+  rootClientId,
+  onModalClose
 }) {
   const [searchValue, setSearchValue] = (0,external_wp_element_namespaceObject.useState)('');
   const [selectedCategory, setSelectedCategory] = (0,external_wp_element_namespaceObject.useState)(initialCategory?.name);
@@ -54191,7 +54196,8 @@ function PatternsExplorer({
       searchValue: searchValue,
       selectedCategory: selectedCategory,
       patternCategories: patternCategories,
-      rootClientId: rootClientId
+      rootClientId: rootClientId,
+      onModalClose: onModalClose
     })]
   });
 }
@@ -54204,6 +54210,7 @@ function PatternsExplorerModal({
     onRequestClose: onModalClose,
     isFullScreen: true,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternsExplorer, {
+      onModalClose: onModalClose,
       ...restProps
     })
   });
