@@ -10034,6 +10034,7 @@ const commentStatusField = {
 
 
 
+const EMPTY_ARRAY = [];
 const TemplateEdit = ({
   data,
   field,
@@ -10046,14 +10047,14 @@ const TemplateEdit = ({
   const postId = typeof data.id === 'number' ? data.id : parseInt(data.id, 10);
   const slug = data.slug;
   const {
-    availableTemplates,
+    canSwitchTemplate,
     templates
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _select$getEntityReco;
     const allTemplates = (_select$getEntityReco = select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_template', {
       per_page: -1,
       post_type: postType
-    })) !== null && _select$getEntityReco !== void 0 ? _select$getEntityReco : [];
+    })) !== null && _select$getEntityReco !== void 0 ? _select$getEntityReco : EMPTY_ARRAY;
     const {
       getHomePage,
       getPostsPageId
@@ -10063,22 +10064,28 @@ const TemplateEdit = ({
     const allowSwitchingTemplate = !isPostsPage && !isFrontPage;
     return {
       templates: allTemplates,
-      availableTemplates: allowSwitchingTemplate ? allTemplates.filter(template => template.is_custom && template.slug !== data.template && !!template.content.raw // Skip empty templates.
-      ) : []
+      canSwitchTemplate: allowSwitchingTemplate
     };
-  }, [data.template, postId, postType]);
-  const templatesAsPatterns = (0,external_wp_element_namespaceObject.useMemo)(() => availableTemplates.map(template => ({
-    name: template.slug,
-    blocks: (0,external_wp_blocks_namespaceObject.parse)(template.content.raw),
-    title: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(template.title.rendered),
-    id: template.id
-  })), [availableTemplates]);
+  }, [postId, postType]);
+  const templatesAsPatterns = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (!canSwitchTemplate) {
+      return [];
+    }
+    return templates.filter(template => template.is_custom && template.slug !== data.template &&
+    // Skip empty templates.
+    !!template.content.raw).map(template => ({
+      name: template.slug,
+      blocks: (0,external_wp_blocks_namespaceObject.parse)(template.content.raw),
+      title: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(template.title.rendered),
+      id: template.id
+    }));
+  }, [canSwitchTemplate, data.template, templates]);
   const shownTemplates = (0,external_wp_compose_namespaceObject.useAsyncList)(templatesAsPatterns);
   const value = field.getValue({
     item: data
   });
+  const foundTemplate = templates.find(template => template.slug === value);
   const currentTemplate = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const foundTemplate = templates?.find(template => template.slug === value);
     if (foundTemplate) {
       return foundTemplate;
     }
@@ -10098,7 +10105,7 @@ const TemplateEdit = ({
       });
       return select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', 'wp_template', templateId);
     }
-  }, [postType, slug, templates, value]);
+  }, [foundTemplate, postType, slug]);
   const [showModal, setShowModal] = (0,external_wp_element_namespaceObject.useState)(false);
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: newValue
@@ -15739,14 +15746,14 @@ const verse = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
  * Internal dependencies
  */
 
-const EMPTY_ARRAY = [];
+const private_selectors_EMPTY_ARRAY = [];
 function getEntityActions(state, kind, name) {
   var _state$actions$kind$n;
-  return (_state$actions$kind$n = state.actions[kind]?.[name]) !== null && _state$actions$kind$n !== void 0 ? _state$actions$kind$n : EMPTY_ARRAY;
+  return (_state$actions$kind$n = state.actions[kind]?.[name]) !== null && _state$actions$kind$n !== void 0 ? _state$actions$kind$n : private_selectors_EMPTY_ARRAY;
 }
 function getEntityFields(state, kind, name) {
   var _state$fields$kind$na;
-  return (_state$fields$kind$na = state.fields[kind]?.[name]) !== null && _state$fields$kind$na !== void 0 ? _state$fields$kind$na : EMPTY_ARRAY;
+  return (_state$fields$kind$na = state.fields[kind]?.[name]) !== null && _state$fields$kind$na !== void 0 ? _state$fields$kind$na : private_selectors_EMPTY_ARRAY;
 }
 function isEntityReady(state, kind, name) {
   return state.isReady[kind]?.[name];
