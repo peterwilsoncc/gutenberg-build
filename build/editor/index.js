@@ -32291,9 +32291,14 @@ const {
   Menu,
   kebabCase
 } = unlock(external_wp_components_namespaceObject.privateApis);
-function useEditedEntityRecordsWithPermissions(postType, postIds) {
+function PostActions({
+  postType,
+  postId,
+  onActionPerformed
+}) {
+  const [activeModalAction, setActiveModalAction] = (0,external_wp_element_namespaceObject.useState)(null);
   const {
-    items,
+    item,
     permissions
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
@@ -32301,39 +32306,25 @@ function useEditedEntityRecordsWithPermissions(postType, postIds) {
       getEntityRecordPermissions
     } = unlock(select(external_wp_coreData_namespaceObject.store));
     return {
-      items: postIds.map(postId => getEditedEntityRecord('postType', postType, postId)),
-      permissions: postIds.map(postId => getEntityRecordPermissions('postType', postType, postId))
+      item: getEditedEntityRecord('postType', postType, postId),
+      permissions: getEntityRecordPermissions('postType', postType, postId)
     };
-  }, [postIds, postType]);
-  return (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return items.map((item, index) => ({
+  }, [postId, postType]);
+  const itemWithPermissions = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return {
       ...item,
-      permissions: permissions[index]
-    }));
-  }, [items, permissions]);
-}
-function PostActions({
-  postType,
-  postId,
-  onActionPerformed
-}) {
-  const [activeModalAction, setActiveModalAction] = (0,external_wp_element_namespaceObject.useState)(null);
-  const _postIds = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (Array.isArray(postId)) {
-      return postId;
-    }
-    return postId ? [postId] : [];
-  }, [postId]);
-  const itemsWithPermissions = useEditedEntityRecordsWithPermissions(postType, _postIds);
+      permissions
+    };
+  }, [item, permissions]);
   const allActions = usePostActions({
     postType,
     onActionPerformed
   });
   const actions = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return allActions.filter(action => {
-      return (!action.isEligible || itemsWithPermissions.some(itemWithPermissions => action.isEligible(itemWithPermissions))) && (itemsWithPermissions.length < 2 || action.supportsBulk);
+      return !action.isEligible || action.isEligible(itemWithPermissions);
     });
-  }, [allActions, itemsWithPermissions]);
+  }, [allActions, itemWithPermissions]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Menu, {
       placement: "bottom-end",
@@ -32349,13 +32340,13 @@ function PostActions({
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Popover, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsDropdownMenuGroup, {
           actions: actions,
-          items: itemsWithPermissions,
+          items: [itemWithPermissions],
           setActiveModalAction: setActiveModalAction
         })
       })]
     }), !!activeModalAction && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionModal, {
       action: activeModalAction,
-      items: itemsWithPermissions,
+      items: [itemWithPermissions],
       closeModal: () => setActiveModalAction(null)
     })]
   });
@@ -32527,9 +32518,9 @@ function PostCardPanel({
         }), pageTypeBadge && postIds.length === 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_card_panel_Badge, {
           children: pageTypeBadge
         })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostActions, {
+      }), postIds.length === 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostActions, {
         postType: postType,
-        postId: postId,
+        postId: postIds[0],
         onActionPerformed: onActionPerformed
       })]
     }), postIds.length > 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
