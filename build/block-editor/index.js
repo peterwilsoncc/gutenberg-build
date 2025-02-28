@@ -38802,6 +38802,33 @@ function KeyboardShortcutsRegister() {
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_keyboardShortcuts_namespaceObject.store);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     registerShortcut({
+      name: 'core/block-editor/copy',
+      category: 'block',
+      description: (0,external_wp_i18n_namespaceObject.__)('Copy the selected block(s).'),
+      keyCombination: {
+        modifier: 'primary',
+        character: 'c'
+      }
+    });
+    registerShortcut({
+      name: 'core/block-editor/cut',
+      category: 'block',
+      description: (0,external_wp_i18n_namespaceObject.__)('Cut the selected block(s).'),
+      keyCombination: {
+        modifier: 'primary',
+        character: 'x'
+      }
+    });
+    registerShortcut({
+      name: 'core/block-editor/paste',
+      category: 'block',
+      description: (0,external_wp_i18n_namespaceObject.__)('Paste the selected block(s).'),
+      keyCombination: {
+        modifier: 'primary',
+        character: 'v'
+      }
+    });
+    registerShortcut({
       name: 'core/block-editor/duplicate',
       category: 'block',
       description: (0,external_wp_i18n_namespaceObject.__)('Duplicate the selected block(s).'),
@@ -63468,7 +63495,6 @@ function BlockParentSelectorMenuItem({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -63491,17 +63517,30 @@ function CopyMenuItem({
   onCopy,
   label,
   shortcut,
-  eventType = 'copy'
+  eventType = 'copy',
+  __experimentalUpdateSelection: updateSelection = false
 }) {
   const {
     getBlocksByClientId
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
+  const {
+    removeBlocks
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const notifyCopy = useNotifyCopy();
   const ref = (0,external_wp_compose_namespaceObject.useCopyToClipboard)(() => (0,external_wp_blocks_namespaceObject.serialize)(getBlocksByClientId(clientIds)), () => {
-    if (onCopy && eventType === 'copy') {
-      onCopy();
+    switch (eventType) {
+      case 'copy':
+      case 'copyStyles':
+        onCopy();
+        notifyCopy(eventType, clientIds);
+        break;
+      case 'cut':
+        notifyCopy(eventType, clientIds);
+        removeBlocks(clientIds, updateSelection);
+        break;
+      default:
+        break;
     }
-    notifyCopy(eventType, clientIds);
   });
   const copyMenuItemLabel = label ? label : (0,external_wp_i18n_namespaceObject.__)('Copy');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
@@ -63564,6 +63603,8 @@ function BlockSettingsDropdown({
       getShortcutRepresentation
     } = select(external_wp_keyboardShortcuts_namespaceObject.store);
     return {
+      copy: getShortcutRepresentation('core/block-editor/copy'),
+      cut: getShortcutRepresentation('core/block-editor/cut'),
       duplicate: getShortcutRepresentation('core/block-editor/duplicate'),
       remove: getShortcutRepresentation('core/block-editor/remove'),
       insertAfter: getShortcutRepresentation('core/block-editor/insert-after'),
@@ -63664,7 +63705,13 @@ function BlockSettingsDropdown({
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyMenuItem, {
               clientIds: clientIds,
               onCopy: onCopy,
-              shortcut: external_wp_keycodes_namespaceObject.displayShortcut.primary('c')
+              shortcut: shortcuts.copy
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyMenuItem, {
+              clientIds: clientIds,
+              label: (0,external_wp_i18n_namespaceObject.__)('Cut'),
+              eventType: "cut",
+              shortcut: shortcuts.cut,
+              __experimentalUpdateSelection: !__experimentalSelectBlock
             }), canDuplicate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
               onClick: (0,external_wp_compose_namespaceObject.pipe)(onClose, onDuplicate, updateSelectionAfterDuplicate),
               shortcut: shortcuts.duplicate,
