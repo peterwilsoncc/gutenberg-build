@@ -24910,17 +24910,14 @@ function BackgroundImageControls({
 
   // Drag and drop callback, restricting image to one.
   const onFilesDrop = filesList => {
-    if (filesList?.length > 1) {
-      onUploadError((0,external_wp_i18n_namespaceObject.__)('Only one image can be used as a background image.'));
-      return;
-    }
     getSettings().mediaUpload({
       allowedTypes: [IMAGE_BACKGROUND_TYPE],
       filesList,
       onFileChange([image]) {
         onSelectMedia(image);
       },
-      onError: onUploadError
+      onError: onUploadError,
+      multiple: false
     });
   };
   const hasValue = hasBackgroundImageValue(style);
@@ -36631,7 +36628,7 @@ function LayoutPanelPure({
                 type: layoutType?.name === 'constrained' || hasContentSizeOrLegacySettings ? 'default' : 'constrained'
               }
             }),
-            help: layoutType?.name === 'constrained' || hasContentSizeOrLegacySettings ? (0,external_wp_i18n_namespaceObject.__)('Nested blocks use content width with options for full and wide widths.') : (0,external_wp_i18n_namespaceObject.__)('Nested blocks will fill the width of this container. Toggle to constrain.')
+            help: layoutType?.name === 'constrained' || hasContentSizeOrLegacySettings ? (0,external_wp_i18n_namespaceObject.__)('Nested blocks use content width with options for full and wide widths.') : (0,external_wp_i18n_namespaceObject.__)('Nested blocks will fill the width of this container.')
           })
         }), !inherit && allowSwitching && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LayoutTypeSwitcher, {
           type: blockLayoutType,
@@ -38805,6 +38802,33 @@ function KeyboardShortcutsRegister() {
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_keyboardShortcuts_namespaceObject.store);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     registerShortcut({
+      name: 'core/block-editor/copy',
+      category: 'block',
+      description: (0,external_wp_i18n_namespaceObject.__)('Copy the selected block(s).'),
+      keyCombination: {
+        modifier: 'primary',
+        character: 'c'
+      }
+    });
+    registerShortcut({
+      name: 'core/block-editor/cut',
+      category: 'block',
+      description: (0,external_wp_i18n_namespaceObject.__)('Cut the selected block(s).'),
+      keyCombination: {
+        modifier: 'primary',
+        character: 'x'
+      }
+    });
+    registerShortcut({
+      name: 'core/block-editor/paste',
+      category: 'block',
+      description: (0,external_wp_i18n_namespaceObject.__)('Paste the selected block(s).'),
+      keyCombination: {
+        modifier: 'primary',
+        character: 'v'
+      }
+    });
+    registerShortcut({
       name: 'core/block-editor/duplicate',
       category: 'block',
       description: (0,external_wp_i18n_namespaceObject.__)('Duplicate the selected block(s).'),
@@ -38818,7 +38842,7 @@ function KeyboardShortcutsRegister() {
       category: 'block',
       description: (0,external_wp_i18n_namespaceObject.__)('Remove the selected block(s).'),
       keyCombination: {
-        modifier: 'shift',
+        modifier: 'primaryShift',
         character: 'backspace'
       }
     });
@@ -48983,6 +49007,9 @@ function useTabNav() {
       if (event.keyCode !== external_wp_keycodes_namespaceObject.TAB) {
         return;
       }
+      if (!hasMultiSelection() && !getSelectedBlockClientId()) {
+        return;
+      }
       const isShift = event.shiftKey;
       const direction = isShift ? 'findPrevious' : 'findNext';
       const nextTabbable = external_wp_dom_namespaceObject.focus.tabbable[direction](event.target);
@@ -51144,10 +51171,17 @@ function Iframe({
     function preventFileDropDefault(event) {
       event.preventDefault();
     }
+    const {
+      ownerDocument
+    } = node;
+
+    // Ideally ALL classes that are added through get_body_class should
+    // be added in the editor too, which we'll somehow have to get from
+    // the server in the future (which will run the PHP filters).
+    setBodyClasses(Array.from(ownerDocument.body.classList).filter(name => name.startsWith('admin-color-') || name.startsWith('post-type-') || name === 'wp-embed-responsive'));
     function onLoad() {
       const {
-        contentDocument,
-        ownerDocument
+        contentDocument
       } = node;
       const {
         documentElement
@@ -51155,11 +51189,6 @@ function Iframe({
       iFrameDocument = contentDocument;
       documentElement.classList.add('block-editor-iframe__html');
       clearerRef(documentElement);
-
-      // Ideally ALL classes that are added through get_body_class should
-      // be added in the editor too, which we'll somehow have to get from
-      // the server in the future (which will run the PHP filters).
-      setBodyClasses(Array.from(ownerDocument.body.classList).filter(name => name.startsWith('admin-color-') || name.startsWith('post-type-') || name === 'wp-embed-responsive'));
       contentDocument.dir = ownerDocument.dir;
       for (const compatStyle of getCompatibilityStyles()) {
         if (contentDocument.getElementById(compatStyle.id)) {
@@ -54033,7 +54062,8 @@ function PatternList({
   searchValue,
   selectedCategory,
   patternCategories,
-  rootClientId
+  rootClientId,
+  onModalClose
 }) {
   const container = (0,external_wp_element_namespaceObject.useRef)();
   const debouncedSpeak = (0,external_wp_compose_namespaceObject.useDebounce)(external_wp_a11y_namespaceObject.speak, 500);
@@ -54093,7 +54123,10 @@ function PatternList({
       children: hasItems && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_list, {
           blockPatterns: pagingProps.categoryPatterns,
-          onClickPattern: onClickPattern,
+          onClickPattern: (pattern, blocks) => {
+            onClickPattern(pattern, blocks);
+            onModalClose();
+          },
           isDraggable: false
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Pagination, {
           ...pagingProps
@@ -54172,10 +54205,11 @@ function usePatternCategories(rootClientId, sourceFilter = 'all') {
 
 function PatternsExplorer({
   initialCategory,
-  rootClientId
+  rootClientId,
+  onModalClose
 }) {
   const [searchValue, setSearchValue] = (0,external_wp_element_namespaceObject.useState)('');
-  const [selectedCategory, setSelectedCategory] = (0,external_wp_element_namespaceObject.useState)(initialCategory);
+  const [selectedCategory, setSelectedCategory] = (0,external_wp_element_namespaceObject.useState)(initialCategory?.name);
   const patternCategories = usePatternCategories(rootClientId);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "block-editor-block-patterns-explorer",
@@ -54189,7 +54223,8 @@ function PatternsExplorer({
       searchValue: searchValue,
       selectedCategory: selectedCategory,
       patternCategories: patternCategories,
-      rootClientId: rootClientId
+      rootClientId: rootClientId,
+      onModalClose: onModalClose
     })]
   });
 }
@@ -54202,6 +54237,7 @@ function PatternsExplorerModal({
     onRequestClose: onModalClose,
     isFullScreen: true,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternsExplorer, {
+      onModalClose: onModalClose,
       ...restProps
     })
   });
@@ -54298,7 +54334,7 @@ function MobileTabNavigation({
 
 const getShouldDisableSyncFilter = sourceFilter => sourceFilter !== 'all' && sourceFilter !== 'user';
 const getShouldHideSourcesFilter = category => {
-  return category?.name === myPatternsCategory.name;
+  return category.name === myPatternsCategory.name;
 };
 const PATTERN_SOURCE_MENU_OPTIONS = [{
   value: 'all',
@@ -54325,7 +54361,7 @@ function PatternsFilter({
   // we do this by deriving from props rather than calling setPatternSourceFilter otherwise
   // the user may be confused when switching to another category if the haven't explicitly set
   // this filter themselves.
-  const currentPatternSourceFilter = category?.name === myPatternsCategory.name ? INSERTER_PATTERN_TYPES.user : patternSourceFilter;
+  const currentPatternSourceFilter = category.name === myPatternsCategory.name ? INSERTER_PATTERN_TYPES.user : patternSourceFilter;
 
   // We need to disable the sync filter option if the source filter is not 'all' or 'user'
   // otherwise applying them will just result in no patterns being shown.
@@ -54443,13 +54479,13 @@ function PatternCategoryPreviews({
     if (isPatternFiltered(pattern, patternSourceFilter, patternSyncFilter)) {
       return false;
     }
-    if (category.name === allPatternsCategory?.name) {
+    if (category.name === allPatternsCategory.name) {
       return true;
     }
-    if (category.name === myPatternsCategory?.name && pattern.type === INSERTER_PATTERN_TYPES.user) {
+    if (category.name === myPatternsCategory.name && pattern.type === INSERTER_PATTERN_TYPES.user) {
       return true;
     }
-    if (category.name === starterPatternsCategory?.name && pattern.blockTypes?.includes('core/post-content')) {
+    if (category.name === starterPatternsCategory.name && pattern.blockTypes?.includes('core/post-content')) {
       return true;
     }
     if (category.name === 'uncategorized') {
@@ -54489,7 +54525,7 @@ function PatternCategoryPreviews({
             size: 13,
             level: 4,
             as: "div",
-            children: category?.label
+            children: category.label
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternsFilter, {
           patternSyncFilter: patternSyncFilter,
@@ -54582,7 +54618,7 @@ function CategoryTabs({
       className: "block-editor-inserter__category-tablist",
       children: categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(category_tabs_Tabs.Tab, {
         tabId: category.name,
-        "aria-current": category.name === selectedCategory?.name ? 'true' : undefined,
+        "aria-current": category === selectedCategory ? 'true' : undefined,
         children: category.label
       }, category.name))
     }), categories.map(category => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(category_tabs_Tabs.TabPanel, {
@@ -54670,7 +54706,7 @@ function BlockPatternsTab({
         }, category.name)
       })
     }), showPatternsExplorer && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_patterns_explorer, {
-      initialCategory: selectedCategory?.name || categories[0]?.name,
+      initialCategory: selectedCategory || categories[0],
       patternCategories: categories,
       onModalClose: () => setShowPatternsExplorer(false),
       rootClientId: rootClientId
@@ -55634,7 +55670,6 @@ function TabbedSidebar({
 
 
 
-
 /**
  * A hook used to set the editor mode to zoomed out mode, invoking the hook sets the mode.
  * Concepts:
@@ -55644,9 +55679,6 @@ function TabbedSidebar({
  * @param {boolean} enabled If we should enter into zoomOut mode or not
  */
 function useZoomOut(enabled = true) {
-  const {
-    postId
-  } = (0,external_wp_element_namespaceObject.useContext)(block_context);
   const {
     setZoomLevel,
     resetZoomLevel
@@ -55670,7 +55702,6 @@ function useZoomOut(enabled = true) {
   }, []);
   const controlZoomLevelRef = (0,external_wp_element_namespaceObject.useRef)(false);
   const isEnabledRef = (0,external_wp_element_namespaceObject.useRef)(enabled);
-  const postIdRef = (0,external_wp_element_namespaceObject.useRef)(postId);
 
   /**
    * This hook tracks if the zoom state was changed manually by the user via clicking
@@ -55687,11 +55718,6 @@ function useZoomOut(enabled = true) {
   }, [isZoomedOut]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     isEnabledRef.current = enabled;
-
-    // If the user created a new post/page, we should take control of the zoom level.
-    if (postIdRef.current !== postId) {
-      controlZoomLevelRef.current = true;
-    }
     if (enabled !== isZoomOut()) {
       controlZoomLevelRef.current = true;
       if (enabled) {
@@ -55706,7 +55732,7 @@ function useZoomOut(enabled = true) {
         resetZoomLevel();
       }
     };
-  }, [enabled, isZoomOut, postId, resetZoomLevel, setZoomLevel]);
+  }, [enabled, isZoomOut, resetZoomLevel, setZoomLevel]);
 }
 
 ;// ./packages/block-editor/build-module/components/inserter/menu.js
@@ -63469,7 +63495,6 @@ function BlockParentSelectorMenuItem({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -63492,17 +63517,30 @@ function CopyMenuItem({
   onCopy,
   label,
   shortcut,
-  eventType = 'copy'
+  eventType = 'copy',
+  __experimentalUpdateSelection: updateSelection = false
 }) {
   const {
     getBlocksByClientId
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
+  const {
+    removeBlocks
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   const notifyCopy = useNotifyCopy();
   const ref = (0,external_wp_compose_namespaceObject.useCopyToClipboard)(() => (0,external_wp_blocks_namespaceObject.serialize)(getBlocksByClientId(clientIds)), () => {
-    if (onCopy && eventType === 'copy') {
-      onCopy();
+    switch (eventType) {
+      case 'copy':
+      case 'copyStyles':
+        onCopy();
+        notifyCopy(eventType, clientIds);
+        break;
+      case 'cut':
+        notifyCopy(eventType, clientIds);
+        removeBlocks(clientIds, updateSelection);
+        break;
+      default:
+        break;
     }
-    notifyCopy(eventType, clientIds);
   });
   const copyMenuItemLabel = label ? label : (0,external_wp_i18n_namespaceObject.__)('Copy');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
@@ -63565,6 +63603,8 @@ function BlockSettingsDropdown({
       getShortcutRepresentation
     } = select(external_wp_keyboardShortcuts_namespaceObject.store);
     return {
+      copy: getShortcutRepresentation('core/block-editor/copy'),
+      cut: getShortcutRepresentation('core/block-editor/cut'),
       duplicate: getShortcutRepresentation('core/block-editor/duplicate'),
       remove: getShortcutRepresentation('core/block-editor/remove'),
       insertAfter: getShortcutRepresentation('core/block-editor/insert-after'),
@@ -63665,7 +63705,13 @@ function BlockSettingsDropdown({
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyMenuItem, {
               clientIds: clientIds,
               onCopy: onCopy,
-              shortcut: external_wp_keycodes_namespaceObject.displayShortcut.primary('c')
+              shortcut: shortcuts.copy
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyMenuItem, {
+              clientIds: clientIds,
+              label: (0,external_wp_i18n_namespaceObject.__)('Cut'),
+              eventType: "cut",
+              shortcut: shortcuts.cut,
+              __experimentalUpdateSelection: !__experimentalSelectBlock
             }), canDuplicate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
               onClick: (0,external_wp_compose_namespaceObject.pipe)(onClose, onDuplicate, updateSelectionAfterDuplicate),
               shortcut: shortcuts.duplicate,
@@ -70507,7 +70553,7 @@ function AspectRatioDropdown({
         {
           slug: 'original',
           name: (0,external_wp_i18n_namespaceObject.__)('Original'),
-          aspect: defaultAspect
+          ratio: defaultAspect
         }, ...(showDefaultRatios ? defaultRatios.map(presetRatioAsNumber).filter(({
           ratio
         }) => ratio === 1) : [])]
@@ -72501,7 +72547,8 @@ function MediaPlaceholder({
       allowedTypes,
       filesList: files,
       onFileChange: setMedia,
-      onError
+      onError,
+      multiple
     });
   };
   async function handleBlocksDrop(event) {
@@ -73602,7 +73649,9 @@ function createLinkInParagraph(url, onReplace) {
   function onKeyDown(event) {
     const {
       keyCode,
-      shiftKey
+      shiftKey,
+      ctrlKey,
+      metaKey
     } = event;
     if (event.defaultPrevented) {
       return;
@@ -73626,8 +73675,8 @@ function createLinkInParagraph(url, onReplace) {
         return;
       }
 
-      // Exclude shift+backspace as they are shortcuts for deleting blocks.
-      if (shiftKey) {
+      // Exclude (command|ctrl)+shift+backspace as they are shortcuts for deleting blocks.
+      if (shiftKey && (ctrlKey || metaKey)) {
         return;
       }
       if (onMerge) {
@@ -74947,7 +74996,7 @@ function ToolSelector(props, ref) {
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "block-editor-tool-selector__help",
-        children: (0,external_wp_i18n_namespaceObject.__)('Tools provide different sets of interactions for blocks. Toggle between simplified content tools (Write) and advanced visual editing tools (Design).')
+        children: (0,external_wp_i18n_namespaceObject.__)('Tools provide different sets of interactions for blocks. Choose between simplified content tools (Write) and advanced visual editing tools (Design).')
       })]
     })
   });

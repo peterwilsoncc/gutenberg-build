@@ -15711,7 +15711,9 @@ function CoverEdit({
               disableCustomColors: true,
               value: overlayColor.color,
               onChange: onSetOverlayColor,
-              clearable: false
+              clearable: false,
+              asButtons: true,
+              "aria-label": (0,external_wp_i18n_namespaceObject.__)('Overlay color')
             })
           })
         })]
@@ -19530,7 +19532,8 @@ const form_edit_Edit = ({
               method: 'post'
             });
           },
-          help: (0,external_wp_i18n_namespaceObject.__)('The email address where form submissions will be sent. Separate multiple email addresses with a comma.')
+          help: (0,external_wp_i18n_namespaceObject.__)('The email address where form submissions will be sent. Separate multiple email addresses with a comma.'),
+          type: "email"
         })]
       })
     }), submissionMethod !== 'email' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
@@ -19562,7 +19565,8 @@ const form_edit_Edit = ({
             action: newVal
           });
         },
-        help: (0,external_wp_i18n_namespaceObject.__)('The URL where the form should be submitted.')
+        help: (0,external_wp_i18n_namespaceObject.__)('The URL where the form should be submitted.'),
+        type: "url"
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
       ...innerBlocksProps,
@@ -21775,6 +21779,7 @@ const LINK_DESTINATION_CUSTOM = 'custom';
 const constants_NEW_TAB_REL = ['noreferrer', 'noopener'];
 const constants_ALLOWED_MEDIA_TYPES = ['image'];
 const MEDIA_ID_NO_FEATURED_IMAGE_SET = 0;
+const SIZED_LAYOUTS = ['flex', 'grid'];
 
 ;// ./packages/block-library/build-module/gallery/utils.js
 /**
@@ -26746,11 +26751,26 @@ function image_Image({
     lightbox,
     metadata
   } = attributes;
-
-  // The only supported unit is px, so we can parseInt to strip the px here.
-  const numericWidth = width ? parseInt(width, 10) : undefined;
-  const numericHeight = height ? parseInt(height, 10) : undefined;
-  const imageRef = (0,external_wp_element_namespaceObject.useRef)();
+  const [imageElement, setImageElement] = (0,external_wp_element_namespaceObject.useState)();
+  const [resizeDelta, setResizeDelta] = (0,external_wp_element_namespaceObject.useState)(null);
+  const [pixelSize, setPixelSize] = (0,external_wp_element_namespaceObject.useState)({});
+  const [offsetTop, setOffsetTop] = (0,external_wp_element_namespaceObject.useState)(0);
+  const setResizeObserved = (0,external_wp_compose_namespaceObject.useResizeObserver)(([entry]) => {
+    if (!resizeDelta) {
+      const [box] = entry.borderBoxSize;
+      setPixelSize({
+        width: box.inlineSize,
+        height: box.blockSize
+      });
+    }
+    // This is usually 0 unless the image height is less than the line-height.
+    setOffsetTop(entry.target.offsetTop);
+  });
+  const effectResizeableBoxPlacement = (0,external_wp_element_namespaceObject.useCallback)(() => {
+    var _imageElement$offsetT;
+    setOffsetTop((_imageElement$offsetT = imageElement?.offsetTop) !== null && _imageElement$offsetT !== void 0 ? _imageElement$offsetT : 0);
+  }, [imageElement]);
+  const setRefs = (0,external_wp_compose_namespaceObject.useMergeRefs)([setImageElement, setResizeObserved]);
   const {
     allowResize = true
   } = context;
@@ -26828,7 +26848,7 @@ function image_Image({
     .catch(() => {});
   }, [id, url, isSingleSelected, externalBlob]);
 
-  // Get naturalWidth and naturalHeight from image ref, and fall back to loaded natural
+  // Get naturalWidth and naturalHeight from image, and fall back to loaded natural
   // width and height. This resolves an issue in Safari where the loaded natural
   // width and height is otherwise lost when switching between alignments.
   // See: https://github.com/WordPress/gutenberg/pull/37210.
@@ -26837,16 +26857,10 @@ function image_Image({
     naturalHeight
   } = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return {
-      naturalWidth: imageRef.current?.naturalWidth || loadedNaturalWidth || undefined,
-      naturalHeight: imageRef.current?.naturalHeight || loadedNaturalHeight || undefined
+      naturalWidth: imageElement?.naturalWidth || loadedNaturalWidth || undefined,
+      naturalHeight: imageElement?.naturalHeight || loadedNaturalHeight || undefined
     };
-  }, [loadedNaturalWidth, loadedNaturalHeight, imageRef.current?.complete]);
-  function onResizeStart() {
-    toggleSelection(false);
-  }
-  function onResizeStop() {
-    toggleSelection(true);
-  }
+  }, [loadedNaturalWidth, loadedNaturalHeight, imageElement?.complete]);
   function onImageError() {
     setHasImageErrored(true);
 
@@ -26980,7 +26994,21 @@ function image_Image({
   !!lightbox && lightbox?.enabled !== lightboxSetting?.enabled || lightboxSetting?.allowEditing;
   const lightboxChecked = !!lightbox?.enabled || !lightbox && !!lightboxSetting?.enabled;
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-  const dimensionsControl = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DimensionsTool, {
+  const dimensionsControl = isResizable && (SIZED_LAYOUTS.includes(parentLayoutType) ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DimensionsTool, {
+    value: {
+      aspectRatio
+    },
+    onChange: ({
+      aspectRatio: newAspectRatio
+    }) => {
+      setAttributes({
+        aspectRatio: newAspectRatio,
+        scale: 'cover'
+      });
+    },
+    defaultAspectRatio: "auto",
+    tools: ['aspectRatio']
+  }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DimensionsTool, {
     value: {
       width,
       height,
@@ -27011,22 +27039,7 @@ function image_Image({
     defaultAspectRatio: "auto",
     scaleOptions: scaleOptions,
     unitsOptions: dimensionsUnitsOptions
-  });
-  const aspectRatioControl = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DimensionsTool, {
-    value: {
-      aspectRatio
-    },
-    onChange: ({
-      aspectRatio: newAspectRatio
-    }) => {
-      setAttributes({
-        aspectRatio: newAspectRatio,
-        scale: 'cover'
-      });
-    },
-    defaultAspectRatio: "auto",
-    tools: ['aspectRatio']
-  });
+  }));
   const resetAll = () => {
     setAttributes({
       alt: undefined,
@@ -27042,7 +27055,7 @@ function image_Image({
       label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
       resetAll: resetAll,
       dropdownMenuProps: dropdownMenuProps,
-      children: isResizable && (parentLayoutType === 'grid' ? aspectRatioControl : dimensionsControl)
+      children: dimensionsControl
     })
   });
   const arePatternOverridesEnabled = metadata?.bindings?.__default?.source === 'core/pattern-overrides';
@@ -27194,7 +27207,7 @@ function image_Image({
             }),
             __nextHasNoMarginBottom: true
           })
-        }), isResizable && (parentLayoutType === 'grid' ? aspectRatioControl : dimensionsControl), !!imageSizeOptions.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(image_ResolutionTool, {
+        }), dimensionsControl, !!imageSizeOptions.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(image_ResolutionTool, {
           value: sizeSlug,
           onChange: updateImage,
           options: imageSizeOptions
@@ -27259,11 +27272,19 @@ function image_Image({
       alt: defaultedAlt,
       onError: onImageError,
       onLoad: onImageLoad,
-      ref: imageRef,
+      ref: setRefs,
       className: borderProps.className,
+      width: naturalWidth,
+      height: naturalHeight,
       style: {
-        width: width && height || aspectRatio ? '100%' : undefined,
-        height: width && height || aspectRatio ? '100%' : undefined,
+        aspectRatio,
+        ...(resizeDelta ? {
+          width: pixelSize.width + resizeDelta.width,
+          height: pixelSize.height + resizeDelta.height
+        } : {
+          width,
+          height
+        }),
         objectFit: scale,
         ...borderProps.style,
         ...shadowProps.style
@@ -27277,8 +27298,7 @@ function image_Image({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalImageEditor, {
         id: id,
         url: url,
-        width: numericWidth,
-        height: numericHeight,
+        ...pixelSize,
         naturalHeight: naturalHeight,
         naturalWidth: naturalWidth,
         onSaveImage: imageAttributes => setAttributes(imageAttributes),
@@ -27288,25 +27308,18 @@ function image_Image({
         borderProps: isRounded ? undefined : borderProps
       })
     });
-  } else if (!isResizable || parentLayoutType === 'grid') {
-    img = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      style: {
-        width,
-        height,
-        aspectRatio
-      },
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ImageWrapper, {
-        href: href,
-        children: img
-      })
-    });
   } else {
+    img = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ImageWrapper, {
+      href: href,
+      children: img
+    });
+  }
+  let resizableBox;
+  if (isResizable && isSingleSelected && !isEditingImage && !SIZED_LAYOUTS.includes(parentLayoutType)) {
     const numericRatio = aspectRatio && evalAspectRatio(aspectRatio);
-    const customRatio = numericWidth / numericHeight;
+    const customRatio = pixelSize.width / pixelSize.height;
     const naturalRatio = naturalWidth / naturalHeight;
     const ratio = numericRatio || customRatio || naturalRatio || 1;
-    const currentWidth = !numericWidth && numericHeight ? numericHeight * ratio : numericWidth;
-    const currentHeight = !numericHeight && numericWidth ? numericWidth / ratio : numericHeight;
     const minWidth = naturalWidth < naturalHeight ? constants_MIN_SIZE : constants_MIN_SIZE * ratio;
     const minHeight = naturalHeight < naturalWidth ? constants_MIN_SIZE : constants_MIN_SIZE / ratio;
 
@@ -27349,17 +27362,16 @@ function image_Image({
       }
     }
     /* eslint-enable no-lonely-if */
-    img = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ResizableBox, {
+    resizableBox = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ResizableBox, {
+      ref: effectResizeableBoxPlacement,
       style: {
-        display: 'block',
-        objectFit: scale,
-        aspectRatio: !width && !height && aspectRatio ? aspectRatio : undefined
+        position: 'absolute',
+        // To match the vertical-align: bottom of the img (from style.scss)
+        // syncs the top with the img. This matters when the img height is
+        // less than the line-height.
+        inset: `${offsetTop}px 0 0 0`
       },
-      size: {
-        width: currentWidth !== null && currentWidth !== void 0 ? currentWidth : 'auto',
-        height: currentHeight !== null && currentHeight !== void 0 ? currentHeight : 'auto'
-      },
-      showHandle: isSingleSelected,
+      size: pixelSize,
       minWidth: minWidth,
       maxWidth: maxResizeWidth,
       minHeight: minHeight,
@@ -27371,9 +27383,19 @@ function image_Image({
         bottom: true,
         left: showLeftHandle
       },
-      onResizeStart: onResizeStart,
-      onResizeStop: (event, direction, elt) => {
-        onResizeStop();
+      onResizeStart: () => {
+        toggleSelection(false);
+      },
+      onResize: (event, direction, elt, delta) => {
+        setResizeDelta(delta);
+      },
+      onResizeStop: (event, direction, elt, delta) => {
+        toggleSelection(true);
+        setResizeDelta(null);
+        setPixelSize(current => ({
+          width: current.width + delta.width,
+          height: current.height + delta.height
+        }));
 
         // Clear hardcoded width if the resized width is close to the max-content width.
         if (maxContentWidth &&
@@ -27397,11 +27419,7 @@ function image_Image({
           aspectRatio: ratio === naturalRatio ? undefined : String(ratio)
         });
       },
-      resizeRatio: align === 'center' ? 2 : 1,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ImageWrapper, {
-        href: href,
-        children: img
-      })
+      resizeRatio: align === 'center' ? 2 : 1
     });
   }
   if (!url && !temporaryURL) {
@@ -27428,7 +27446,7 @@ function image_Image({
     })
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [mediaReplaceFlow, controls, featuredImageControl, img, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Caption, {
+    children: [mediaReplaceFlow, controls, featuredImageControl, img, resizableBox, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Caption, {
       attributes: attributes,
       setAttributes: setAttributes,
       isSelected: isSingleSelected,
@@ -38222,7 +38240,8 @@ function Controls({
             url: urlValue
           }, setAttributes, attributes);
         },
-        autoComplete: "off"
+        autoComplete: "off",
+        type: "url"
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       hasValue: () => !!description,
@@ -39381,7 +39400,8 @@ function NavigationSubmenuEdit({
               });
             },
             label: (0,external_wp_i18n_namespaceObject.__)('Link'),
-            autoComplete: "off"
+            autoComplete: "off",
+            type: "url"
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Description'),
@@ -42841,10 +42861,17 @@ const post_comments_count_metadata = {
         fontSize: true
       }
     },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true
+    },
     interactivity: {
       clientNavigation: true
     }
-  }
+  },
+  style: "wp-block-post-comments-count"
 };
 
 const {
@@ -45201,7 +45228,7 @@ function PostNavigationLinkEdit({
         "aria-label": ariaLabel,
         placeholder: placeholder,
         value: label,
-        allowedFormats: ['core/bold', 'core/italic'],
+        withoutInteractiveFormatting: true,
         onChange: newLabel => setAttributes({
           label: newLabel
         })
@@ -55530,10 +55557,6 @@ function LogoEdit({
     setTemporaryURL();
   };
   const onFilesDrop = filesList => {
-    if (filesList?.length > 1) {
-      onUploadError((0,external_wp_i18n_namespaceObject.__)('Only one image can be used as a site logo.'));
-      return;
-    }
     getSettings().mediaUpload({
       allowedTypes: site_logo_edit_ALLOWED_MEDIA_TYPES,
       filesList,
@@ -55544,7 +55567,8 @@ function LogoEdit({
         }
         onInitialSelectLogo(image);
       },
-      onError: onUploadError
+      onError: onUploadError,
+      multiple: false
     });
   };
   const mediaReplaceFlowProps = {
@@ -58404,6 +58428,7 @@ const social_links_metadata = {
   supports: {
     align: ["left", "center", "right"],
     anchor: true,
+    html: false,
     __experimentalExposeControlsToChildren: true,
     layout: {
       allowSwitching: false,
@@ -58561,6 +58586,7 @@ const spacer_deprecated_deprecated = [{
 
 ;// ./packages/block-library/build-module/spacer/constants.js
 const MIN_SPACER_SIZE = 0;
+const DEFAULT_HEIGHT = '100px';
 
 ;// ./packages/block-library/build-module/spacer/controls.js
 /**
@@ -58654,7 +58680,7 @@ function SpacerControls({
       resetAll: () => {
         setAttributes({
           width: undefined,
-          height: '100px'
+          height: DEFAULT_HEIGHT
         });
       },
       dropdownMenuProps: dropdownMenuProps,
@@ -58676,9 +58702,9 @@ function SpacerControls({
       }), orientation !== 'horizontal' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         label: (0,external_wp_i18n_namespaceObject.__)('Height'),
         isShownByDefault: true,
-        hasValue: () => height !== '100px',
+        hasValue: () => height !== DEFAULT_HEIGHT,
         onDeselect: () => setAttributes({
-          height: '100px'
+          height: DEFAULT_HEIGHT
         }),
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DimensionInput, {
           label: (0,external_wp_i18n_namespaceObject.__)('Height'),
@@ -58855,9 +58881,9 @@ const SpacerEdit = ({
   };
   const getHeightForVerticalBlocks = () => {
     if (isFlexLayout) {
-      return undefined;
+      return DEFAULT_HEIGHT;
     }
-    return temporaryHeight || (0,external_wp_blockEditor_namespaceObject.getSpacingPresetCssVar)(height) || undefined;
+    return temporaryHeight || (0,external_wp_blockEditor_namespaceObject.getSpacingPresetCssVar)(height) || DEFAULT_HEIGHT;
   };
   const getWidthForHorizontalBlocks = () => {
     if (isFlexLayout) {
@@ -58934,7 +58960,7 @@ const SpacerEdit = ({
       if (inheritedOrientation === 'horizontal') {
         // If spacer is moving from a vertical container to a horizontal container,
         // it might not have width but have height instead.
-        const newSize = (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(width, spacingSizes) || (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(height, spacingSizes) || '100px';
+        const newSize = (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(width, spacingSizes) || (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(height, spacingSizes) || DEFAULT_HEIGHT;
         setAttributesCovertly({
           width: '0px',
           style: {
@@ -58947,7 +58973,7 @@ const SpacerEdit = ({
           }
         });
       } else {
-        const newSize = (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(height, spacingSizes) || (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(width, spacingSizes) || '100px';
+        const newSize = (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(height, spacingSizes) || (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(width, spacingSizes) || DEFAULT_HEIGHT;
         setAttributesCovertly({
           height: '0px',
           style: {
@@ -59031,6 +59057,11 @@ const spacer_transforms_transforms = {
  */
 
 
+/**
+ * Internal dependencies
+ */
+
+
 function spacer_save_save({
   attributes
 }) {
@@ -59049,7 +59080,7 @@ function spacer_save_save({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ...external_wp_blockEditor_namespaceObject.useBlockProps.save({
       style: {
-        height: (0,external_wp_blockEditor_namespaceObject.getSpacingPresetCssVar)(finalHeight),
+        height: (0,external_wp_blockEditor_namespaceObject.getSpacingPresetCssVar)(finalHeight) || DEFAULT_HEIGHT,
         width: (0,external_wp_blockEditor_namespaceObject.getSpacingPresetCssVar)(width)
       },
       'aria-hidden': true
@@ -65028,7 +65059,11 @@ const VideoSettings = ({
     const toggleAttribute = attribute => {
       return newValue => {
         setAttributes({
-          [attribute]: newValue
+          [attribute]: newValue,
+          // Set muted when autoplay changes
+          ...(attribute === 'autoplay' && {
+            muted: newValue
+          })
         });
       };
     };
@@ -65052,7 +65087,8 @@ const VideoSettings = ({
       hasValue: () => !!autoplay,
       onDeselect: () => {
         setAttributes({
-          autoplay: false
+          autoplay: false,
+          muted: false
         });
       },
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
@@ -65090,7 +65126,9 @@ const VideoSettings = ({
         __nextHasNoMarginBottom: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Muted'),
         onChange: toggleFactory.muted,
-        checked: !!muted
+        checked: !!muted,
+        disabled: autoplay,
+        help: autoplay ? (0,external_wp_i18n_namespaceObject.__)('Muted because of Autoplay.') : null
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Playback controls'),
