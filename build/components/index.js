@@ -57159,45 +57159,6 @@ function FocusableIframe({
   });
 }
 
-;// ./packages/components/build-module/font-size-picker/utils.js
-/**
- * Internal dependencies
- */
-
-
-
-/**
- * Some themes use css vars for their font sizes, so until we
- * have the way of calculating them don't display them.
- *
- * @param value The value that is checked.
- * @return Whether the value is a simple css value.
- */
-function isSimpleCssValue(value) {
-  const sizeRegex = /^[\d\.]+(px|em|rem|vw|vh|%|svw|lvw|dvw|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax)?$/i;
-  return sizeRegex.test(String(value));
-}
-
-/**
- * If all of the given font sizes have the same unit (e.g. 'px'), return that
- * unit. Otherwise return null.
- *
- * @param fontSizes List of font sizes.
- * @return The common unit, or null.
- */
-function getCommonSizeUnit(fontSizes) {
-  const [firstFontSize, ...otherFontSizes] = fontSizes;
-  if (!firstFontSize) {
-    return null;
-  }
-  const [, firstUnit] = parseQuantityAndUnitFromRawValue(firstFontSize.size);
-  const areAllSizesSameUnit = otherFontSizes.every(fontSize => {
-    const [, unit] = parseQuantityAndUnitFromRawValue(fontSize.size);
-    return unit === firstUnit;
-  });
-  return areAllSizesSameUnit ? firstUnit : null;
-}
-
 ;// ./packages/components/build-module/font-size-picker/styles.js
 
 function font_size_picker_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
@@ -57212,25 +57173,38 @@ function font_size_picker_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You 
 
 
 
-
 const styles_Container = /*#__PURE__*/emotion_styled_base_browser_esm("fieldset",  true ? {
-  target: "e8tqeku4"
+  target: "e8tqeku3"
 } : 0)( true ? {
   name: "k2q51s",
   styles: "border:0;margin:0;padding:0;display:contents"
 } : 0);
 const styles_Header = /*#__PURE__*/emotion_styled_base_browser_esm(h_stack_component,  true ? {
-  target: "e8tqeku3"
+  target: "e8tqeku2"
 } : 0)("height:", space(4), ";" + ( true ? "" : 0));
 const HeaderToggle = /*#__PURE__*/emotion_styled_base_browser_esm(build_module_button,  true ? {
-  target: "e8tqeku2"
+  target: "e8tqeku1"
 } : 0)("margin-top:", space(-1), ";" + ( true ? "" : 0));
 const HeaderLabel = /*#__PURE__*/emotion_styled_base_browser_esm(base_control.VisualLabel,  true ? {
-  target: "e8tqeku1"
-} : 0)("display:flex;gap:", space(1), ";justify-content:flex-start;margin-bottom:0;" + ( true ? "" : 0));
-const HeaderHint = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e8tqeku0"
-} : 0)("color:", COLORS.gray[700], ";" + ( true ? "" : 0));
+} : 0)("display:flex;gap:", space(1), ";justify-content:flex-start;margin-bottom:0;" + ( true ? "" : 0));
+
+;// ./packages/components/build-module/font-size-picker/utils.js
+/**
+ * Internal dependencies
+ */
+
+/**
+ * Some themes use css vars for their font sizes, so until we
+ * have the way of calculating them don't display them.
+ *
+ * @param value The value that is checked.
+ * @return Whether the value is a simple css value.
+ */
+function isSimpleCssValue(value) {
+  const sizeRegex = /^[\d\.]+(px|em|rem|vw|vh|%|svw|lvw|dvw|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax)?$/i;
+  return sizeRegex.test(String(value));
+}
 
 ;// ./packages/components/build-module/font-size-picker/font-size-picker-select.js
 /**
@@ -57241,7 +57215,6 @@ const HeaderHint = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? 
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -57259,15 +57232,9 @@ const FontSizePickerSelect = props => {
     size,
     onChange
   } = props;
-  const areAllSizesSameUnit = !!getCommonSizeUnit(fontSizes);
   const options = [DEFAULT_OPTION, ...fontSizes.map(fontSize => {
     let hint;
-    if (areAllSizesSameUnit) {
-      const [quantity] = parseQuantityAndUnitFromRawValue(fontSize.size);
-      if (quantity !== undefined) {
-        hint = String(quantity);
-      }
-    } else if (isSimpleCssValue(fontSize.size)) {
+    if (isSimpleCssValue(fontSize.size)) {
       hint = String(fontSize.size);
     }
     return {
@@ -57379,12 +57346,10 @@ const FontSizePickerToggleGroup = props => {
 
 
 
+
 /**
  * Internal dependencies
  */
-
-
-
 
 
 
@@ -57410,6 +57375,7 @@ const UnforwardedFontSizePicker = (props, ref) => {
     withSlider = false,
     withReset = true
   } = props;
+  const labelId = (0,external_wp_compose_namespaceObject.useInstanceId)(UnforwardedFontSizePicker, 'font-size-picker-label');
   const units = useCustomUnits({
     availableUnits: unitsProp
   });
@@ -57426,24 +57392,6 @@ const UnforwardedFontSizePicker = (props, ref) => {
   } else {
     currentPickerType = fontSizes.length > MAX_TOGGLE_GROUP_SIZES ? 'select' : 'togglegroup';
   }
-  const headerHint = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    switch (currentPickerType) {
-      case 'custom':
-        return (0,external_wp_i18n_namespaceObject.__)('Custom');
-      case 'togglegroup':
-        if (selectedFontSize) {
-          return selectedFontSize.name || T_SHIRT_NAMES[fontSizes.indexOf(selectedFontSize)];
-        }
-        break;
-      case 'select':
-        const commonUnit = getCommonSizeUnit(fontSizes);
-        if (commonUnit) {
-          return `(${commonUnit})`;
-        }
-        break;
-    }
-    return '';
-  }, [currentPickerType, selectedFontSize, fontSizes]);
   if (fontSizes.length === 0 && disableCustomFontSizes) {
     return null;
   }
@@ -57462,19 +57410,16 @@ const UnforwardedFontSizePicker = (props, ref) => {
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_Container, {
     ref: ref,
-    className: "components-font-size-picker",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(visually_hidden_component, {
-      as: "legend",
-      children: (0,external_wp_i18n_namespaceObject.__)('Font size')
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {
+    className: "components-font-size-picker"
+    // This Container component renders a fieldset element that needs to be labeled.
+    ,
+    "aria-labelledby": labelId,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(spacer_component, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(styles_Header, {
         className: "components-font-size-picker__header",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(HeaderLabel, {
-          "aria-label": `${(0,external_wp_i18n_namespaceObject.__)('Size')} ${headerHint || ''}`,
-          children: [(0,external_wp_i18n_namespaceObject.__)('Size'), headerHint && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HeaderHint, {
-            className: "components-font-size-picker__header__hint",
-            children: headerHint
-          })]
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HeaderLabel, {
+          id: labelId,
+          children: (0,external_wp_i18n_namespaceObject.__)('Font size')
         }), !disableCustomFontSizes && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HeaderToggle, {
           label: currentPickerType === 'custom' ? (0,external_wp_i18n_namespaceObject.__)('Use size preset') : (0,external_wp_i18n_namespaceObject.__)('Set custom size'),
           icon: library_settings,
@@ -57517,7 +57462,7 @@ const UnforwardedFontSizePicker = (props, ref) => {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(unit_control, {
             __next40pxDefaultSize: __next40pxDefaultSize,
             __shouldNotWarnDeprecated36pxSize: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Custom'),
+            label: (0,external_wp_i18n_namespaceObject.__)('Font size'),
             labelPosition: "top",
             hideLabelFromVision: true,
             value: value,
@@ -57543,7 +57488,7 @@ const UnforwardedFontSizePicker = (props, ref) => {
               __next40pxDefaultSize: __next40pxDefaultSize,
               __shouldNotWarnDeprecated36pxSize: true,
               className: "components-font-size-picker__custom-input",
-              label: (0,external_wp_i18n_namespaceObject.__)('Custom Size'),
+              label: (0,external_wp_i18n_namespaceObject.__)('Font size'),
               hideLabelFromVision: true,
               value: valueQuantity,
               initialPosition: fallbackFontSize,
