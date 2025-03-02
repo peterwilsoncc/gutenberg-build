@@ -58428,6 +58428,7 @@ const social_links_metadata = {
   supports: {
     align: ["left", "center", "right"],
     anchor: true,
+    html: false,
     __experimentalExposeControlsToChildren: true,
     layout: {
       allowSwitching: false,
@@ -58585,6 +58586,7 @@ const spacer_deprecated_deprecated = [{
 
 ;// ./packages/block-library/build-module/spacer/constants.js
 const MIN_SPACER_SIZE = 0;
+const DEFAULT_HEIGHT = '100px';
 
 ;// ./packages/block-library/build-module/spacer/controls.js
 /**
@@ -58678,7 +58680,7 @@ function SpacerControls({
       resetAll: () => {
         setAttributes({
           width: undefined,
-          height: '100px'
+          height: DEFAULT_HEIGHT
         });
       },
       dropdownMenuProps: dropdownMenuProps,
@@ -58700,9 +58702,9 @@ function SpacerControls({
       }), orientation !== 'horizontal' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         label: (0,external_wp_i18n_namespaceObject.__)('Height'),
         isShownByDefault: true,
-        hasValue: () => height !== '100px',
+        hasValue: () => height !== DEFAULT_HEIGHT,
         onDeselect: () => setAttributes({
-          height: '100px'
+          height: DEFAULT_HEIGHT
         }),
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DimensionInput, {
           label: (0,external_wp_i18n_namespaceObject.__)('Height'),
@@ -58879,9 +58881,9 @@ const SpacerEdit = ({
   };
   const getHeightForVerticalBlocks = () => {
     if (isFlexLayout) {
-      return undefined;
+      return DEFAULT_HEIGHT;
     }
-    return temporaryHeight || (0,external_wp_blockEditor_namespaceObject.getSpacingPresetCssVar)(height) || undefined;
+    return temporaryHeight || (0,external_wp_blockEditor_namespaceObject.getSpacingPresetCssVar)(height) || DEFAULT_HEIGHT;
   };
   const getWidthForHorizontalBlocks = () => {
     if (isFlexLayout) {
@@ -58958,7 +58960,7 @@ const SpacerEdit = ({
       if (inheritedOrientation === 'horizontal') {
         // If spacer is moving from a vertical container to a horizontal container,
         // it might not have width but have height instead.
-        const newSize = (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(width, spacingSizes) || (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(height, spacingSizes) || '100px';
+        const newSize = (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(width, spacingSizes) || (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(height, spacingSizes) || DEFAULT_HEIGHT;
         setAttributesCovertly({
           width: '0px',
           style: {
@@ -58971,7 +58973,7 @@ const SpacerEdit = ({
           }
         });
       } else {
-        const newSize = (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(height, spacingSizes) || (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(width, spacingSizes) || '100px';
+        const newSize = (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(height, spacingSizes) || (0,external_wp_blockEditor_namespaceObject.getCustomValueFromPreset)(width, spacingSizes) || DEFAULT_HEIGHT;
         setAttributesCovertly({
           height: '0px',
           style: {
@@ -59055,6 +59057,11 @@ const spacer_transforms_transforms = {
  */
 
 
+/**
+ * Internal dependencies
+ */
+
+
 function spacer_save_save({
   attributes
 }) {
@@ -59073,7 +59080,7 @@ function spacer_save_save({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ...external_wp_blockEditor_namespaceObject.useBlockProps.save({
       style: {
-        height: (0,external_wp_blockEditor_namespaceObject.getSpacingPresetCssVar)(finalHeight),
+        height: (0,external_wp_blockEditor_namespaceObject.getSpacingPresetCssVar)(finalHeight) || DEFAULT_HEIGHT,
         width: (0,external_wp_blockEditor_namespaceObject.getSpacingPresetCssVar)(width)
       },
       'aria-hidden': true
