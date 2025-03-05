@@ -7844,21 +7844,26 @@ function SidebarContentWrapper({
     children: children
   });
 }
-function SidebarContent({
-  routeKey,
-  shouldAnimate,
+function SidebarNavigationProvider({
   children
 }) {
   const [navState] = (0,external_wp_element_namespaceObject.useState)(createNavState);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationContext.Provider, {
     value: navState,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "edit-site-sidebar__content",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarContentWrapper, {
-        shouldAnimate: shouldAnimate,
-        children: children
-      }, routeKey)
-    })
+    children: children
+  });
+}
+function SidebarContent({
+  routeKey,
+  shouldAnimate,
+  children
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    className: "edit-site-sidebar__content",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarContentWrapper, {
+      shouldAnimate: shouldAnimate,
+      children: children
+    }, routeKey)
   });
 }
 
@@ -13426,26 +13431,34 @@ function Layout() {
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(site_hub, {
                 ref: toggleRef,
                 isTransparent: isResizableFrameOversized
-              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarContent, {
-                shouldAnimate: routeKey !== 'styles',
-                routeKey: routeKey,
-                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.ErrorBoundary, {
-                  children: areas.sidebar
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationProvider, {
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarContent, {
+                  shouldAnimate: routeKey !== 'styles',
+                  routeKey: routeKey,
+                  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.ErrorBoundary, {
+                    children: areas.sidebar
+                  })
                 })
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SaveHub, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SavePanel, {})]
             })
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EditorSnackbars, {}), isMobileViewport && areas.mobile && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.EditorSnackbars, {}), isMobileViewport && areas.mobile && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "edit-site-layout__mobile",
-          children: [canvas !== 'edit' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarContent, {
-            routeKey: routeKey,
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SiteHubMobile, {
-              ref: toggleRef,
-              isTransparent: isResizableFrameOversized
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationProvider, {
+            children: canvas !== 'edit' ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SiteHubMobile, {
+                ref: toggleRef,
+                isTransparent: isResizableFrameOversized
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarContent, {
+                routeKey: routeKey,
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.ErrorBoundary, {
+                  children: areas.mobile
+                })
+              })]
+            }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.ErrorBoundary, {
+              children: areas.mobile
             })
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_editor_namespaceObject.ErrorBoundary, {
-            children: areas.mobile
-          })]
+          })
         }), !isMobileViewport && areas.content && canvas !== 'edit' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "edit-site-layout__area",
           style: {
