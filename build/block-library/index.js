@@ -41987,7 +41987,7 @@ function PostAuthorEdit({
   };
   const showCombobox = authorOptions.length >= minimumUsersForCombobox;
   const showAuthorControl = !!postId && !isDescendentOfQueryLoop && authorOptions.length > 0;
-  if (!supportsAuthor) {
+  if (!supportsAuthor && postType !== undefined) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
       children: (0,external_wp_i18n_namespaceObject.sprintf)(
@@ -42342,9 +42342,9 @@ function PostAuthorNameEdit({
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
-      children: supportsAuthor ? displayAuthor : (0,external_wp_i18n_namespaceObject.sprintf)(
+      children: !supportsAuthor && postType !== undefined ? (0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: %s: Name of the post type e.g: "post".
-      (0,external_wp_i18n_namespaceObject.__)('This post type (%s) does not support the author.'), postType)
+      (0,external_wp_i18n_namespaceObject.__)('This post type (%s) does not support the author.'), postType) : displayAuthor
     })]
   });
 }
