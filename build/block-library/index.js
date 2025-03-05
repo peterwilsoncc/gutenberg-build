@@ -11054,6 +11054,12 @@ const useDefaultPageIndex = ({
         ...defaultPages,
         [key]: pages <= 1 ? 1 : pages // If there are 0 pages, it means that there are no comments, but there is no 0th page.
       });
+    }).catch(() => {
+      // There's no 0th page, but we can't know the number of pages, fallback to 1.
+      setDefaultPages({
+        ...defaultPages,
+        [key]: 1
+      });
     });
   }, [defaultPage, postId, perPage, setDefaultPages]);
 
