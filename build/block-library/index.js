@@ -47851,7 +47851,9 @@ const loop = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
 
 
 
+
 /** @typedef {import('@wordpress/blocks').WPBlockVariation} WPBlockVariation */
+/** @typedef {import('@wordpress/components/build-types/query-controls/types').OrderByOption} OrderByOption */
 
 /**
  * @typedef IHasNameAndId
@@ -48027,6 +48029,48 @@ function useIsPostTypeHierarchical(postType) {
     const type = select(external_wp_coreData_namespaceObject.store).getPostType(postType);
     return type?.viewable && type?.hierarchical;
   }, [postType]);
+}
+
+/**
+ * List of avaiable options to order by.
+ *
+ * @param {string} postType The post type to check.
+ * @return {OrderByOption[]} List of order options.
+ */
+function useOrderByOptions(postType) {
+  const supportsCustomOrder = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const type = select(external_wp_coreData_namespaceObject.store).getPostType(postType);
+    return !!type?.supports?.['page-attributes'];
+  }, [postType]);
+  return (0,external_wp_element_namespaceObject.useMemo)(() => {
+    const orderByOptions = [{
+      label: (0,external_wp_i18n_namespaceObject.__)('Newest to oldest'),
+      value: 'date/desc'
+    }, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Oldest to newest'),
+      value: 'date/asc'
+    }, {
+      /* translators: Label for ordering posts by title in ascending order. */
+      label: (0,external_wp_i18n_namespaceObject.__)('A → Z'),
+      value: 'title/asc'
+    }, {
+      /* translators: Label for ordering posts by title in descending order. */
+      label: (0,external_wp_i18n_namespaceObject.__)('Z → A'),
+      value: 'title/desc'
+    }];
+    if (supportsCustomOrder) {
+      orderByOptions.push({
+        /* translators: Label for ordering posts by ascending menu order. */
+        label: (0,external_wp_i18n_namespaceObject.__)('Ascending by order'),
+        value: 'menu_order/asc'
+      }, {
+        /* translators: Label for ordering posts by descending menu order. */
+        label: (0,external_wp_i18n_namespaceObject.__)('Descending by order'),
+        value: 'menu_order/desc'
+      });
+    }
+    return orderByOptions;
+  }, [supportsCustomOrder]);
 }
 
 /**
@@ -48322,7 +48366,7 @@ function EnhancedPaginationControl({
 
 
 
-const orderOptions = [{
+const defaultOrderByOptions = [{
   label: (0,external_wp_i18n_namespaceObject.__)('Newest to oldest'),
   value: 'date/desc'
 }, {
@@ -48340,6 +48384,7 @@ const orderOptions = [{
 function OrderControl({
   order,
   orderBy,
+  orderByOptions = defaultOrderByOptions,
   onChange
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
@@ -48347,7 +48392,7 @@ function OrderControl({
     __next40pxDefaultSize: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Order by'),
     value: `${orderBy}/${order}`,
-    options: orderOptions,
+    options: orderByOptions,
     onChange: value => {
       const [newOrderBy, newOrder] = value.split('/');
       onChange({
@@ -49098,6 +49143,7 @@ function QueryInspectorControls(props) {
     onChangeDebounced();
     return onChangeDebounced.cancel;
   }, [querySearch, onChangeDebounced]);
+  const orderByOptions = useOrderByOptions(postType);
   const showInheritControl = !isSingular && isControlAllowed(allowedControls, 'inherit');
   const showPostTypeControl = !inherit && isControlAllowed(allowedControls, 'postType');
   const postTypeControlLabel = (0,external_wp_i18n_namespaceObject.__)('Post type');
@@ -49229,6 +49275,7 @@ function QueryInspectorControls(props) {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(order_control, {
           order,
           orderBy,
+          orderByOptions,
           onChange: setQuery
         })
       }), showStickyControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
