@@ -28990,7 +28990,8 @@ function LatestPostsEdit({
       order,
       orderby: orderBy,
       per_page: postsToShow,
-      _embed: 'wp:featuredmedia'
+      _embed: 'wp:featuredmedia',
+      ignore_sticky: true
     }).filter(([, value]) => typeof value !== 'undefined'));
     return {
       defaultImageWidth: (_settings$imageDimens = settings.imageDimensions?.[featuredImageSizeSlug]?.width) !== null && _settings$imageDimens !== void 0 ? _settings$imageDimens : 0,
