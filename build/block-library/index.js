@@ -3422,6 +3422,7 @@ function AudioEdit({
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: classes
   });
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   if (!src && !temporaryURL) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
@@ -3452,42 +3453,74 @@ function AudioEdit({
         onReset: () => onSelectAudio(undefined)
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            autoplay: false,
+            loop: false,
+            preload: undefined
+          });
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Autoplay'),
-          onChange: toggleAttribute('autoplay'),
-          checked: autoplay,
-          help: getAutoplayHelp
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Loop'),
-          onChange: toggleAttribute('loop'),
-          checked: loop
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-          __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
-          label: (0,external_wp_i18n_namespaceObject._x)('Preload', 'noun; Audio block parameter'),
-          value: preload || ''
-          // `undefined` is required for the preload attribute to be unset.
-          ,
-          onChange: value => setAttributes({
-            preload: value || undefined
+          isShownByDefault: true,
+          hasValue: () => !!autoplay,
+          onDeselect: () => setAttributes({
+            autoplay: false
           }),
-          options: [{
-            value: '',
-            label: (0,external_wp_i18n_namespaceObject.__)('Browser default')
-          }, {
-            value: 'auto',
-            label: (0,external_wp_i18n_namespaceObject.__)('Auto')
-          }, {
-            value: 'metadata',
-            label: (0,external_wp_i18n_namespaceObject.__)('Metadata')
-          }, {
-            value: 'none',
-            label: (0,external_wp_i18n_namespaceObject._x)('None', 'Preload value')
-          }]
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Autoplay'),
+            onChange: toggleAttribute('autoplay'),
+            checked: !!autoplay,
+            help: getAutoplayHelp
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Loop'),
+          isShownByDefault: true,
+          hasValue: () => !!loop,
+          onDeselect: () => setAttributes({
+            loop: false
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Loop'),
+            onChange: toggleAttribute('loop'),
+            checked: !!loop
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Preload'),
+          isShownByDefault: true,
+          hasValue: () => !!preload,
+          onDeselect: () => setAttributes({
+            preload: undefined
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+            __next40pxDefaultSize: true,
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject._x)('Preload', 'noun; Audio block parameter'),
+            value: preload || ''
+            // `undefined` is required for the preload attribute to be unset.
+            ,
+            onChange: value => setAttributes({
+              preload: value || undefined
+            }),
+            options: [{
+              value: '',
+              label: (0,external_wp_i18n_namespaceObject.__)('Browser default')
+            }, {
+              value: 'auto',
+              label: (0,external_wp_i18n_namespaceObject.__)('Auto')
+            }, {
+              value: 'metadata',
+              label: (0,external_wp_i18n_namespaceObject.__)('Metadata')
+            }, {
+              value: 'none',
+              label: (0,external_wp_i18n_namespaceObject._x)('None', 'Preload value')
+            }]
+          })
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("figure", {
