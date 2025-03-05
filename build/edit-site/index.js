@@ -38074,7 +38074,7 @@ function ActionModal({
     __experimentalHideHeader: !!action.hideModalHeader,
     onRequestClose: closeModal,
     focusOnMount: "firstContentElement",
-    size: "medium",
+    size: action.modalSize || 'medium',
     overlayClassName: `dataviews-action-modal dataviews-action-modal__${dataviews_item_actions_kebabCase(action.id)}`,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(action.RenderModal, {
       items: items,

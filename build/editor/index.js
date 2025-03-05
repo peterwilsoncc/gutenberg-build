@@ -13404,7 +13404,7 @@ const getEditorCommandLoader = () => function useEditorCommandLoader() {
   });
   commands.push({
     name: 'core/open-settings-sidebar',
-    label: (0,external_wp_i18n_namespaceObject.__)('Show or hide the Settings panel.'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Show or hide the Settings panel'),
     icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? drawer_left : drawer_right,
     callback: ({
       close
