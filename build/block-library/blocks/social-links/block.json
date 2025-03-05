@@ -50,7 +50,6 @@
 	"supports": {
 		"align": [ "left", "center", "right" ],
 		"anchor": true,
-		"html": false,
 		"__experimentalExposeControlsToChildren": true,
 		"layout": {
 			"allowSwitching": false,
