@@ -22809,7 +22809,7 @@ const visibilityOptions = {
   },
   password: {
     label: (0,external_wp_i18n_namespaceObject.__)('Password protected'),
-    info: (0,external_wp_i18n_namespaceObject.__)('Only those with the password can view this post.')
+    info: (0,external_wp_i18n_namespaceObject.__)('Only visible to those who know the password.')
   }
 };
 
@@ -22886,9 +22886,9 @@ function PostVisibility({
     });
     setHasPassword(true);
   };
-  const updatePassword = event => {
+  const updatePassword = value => {
     editPost({
-      password: event.target.value
+      password: value
     });
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
@@ -22923,20 +22923,16 @@ function PostVisibility({
         info: visibilityOptions.password.info,
         checked: hasPassword,
         onChange: setPasswordProtected
-      }), hasPassword && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-        className: "editor-post-visibility__password",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
-          as: "label",
-          htmlFor: `editor-post-visibility__password-input-${instanceId}`,
-          children: (0,external_wp_i18n_namespaceObject.__)('Create password')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
-          className: "editor-post-visibility__password-input",
-          id: `editor-post-visibility__password-input-${instanceId}`,
-          type: "text",
-          onChange: updatePassword,
-          value: password,
-          placeholder: (0,external_wp_i18n_namespaceObject.__)('Use a secure password')
-        })]
+      }), hasPassword && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Password'),
+        onChange: updatePassword,
+        value: password,
+        placeholder: (0,external_wp_i18n_namespaceObject.__)('Use a secure password'),
+        type: "text",
+        id: `editor-post-visibility__password-input-${instanceId}`,
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        maxLength: 255
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalConfirmDialog, {
       isOpen: showPrivateConfirmDialog,
@@ -25651,7 +25647,7 @@ function PostSticky() {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
       className: "editor-post-sticky__checkbox-control",
       label: (0,external_wp_i18n_namespaceObject.__)('Sticky'),
-      help: (0,external_wp_i18n_namespaceObject.__)('Pin this post to the top of the blog'),
+      help: (0,external_wp_i18n_namespaceObject.__)('Pin this post to the top of the blog.'),
       checked: postSticky,
       onChange: () => editPost({
         sticky: !postSticky
@@ -25862,7 +25858,7 @@ function PostStatus() {
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
                 __nextHasNoMarginBottom: true,
                 label: (0,external_wp_i18n_namespaceObject.__)('Password protected'),
-                help: (0,external_wp_i18n_namespaceObject.__)('Only visible to those who know the password'),
+                help: (0,external_wp_i18n_namespaceObject.__)('Only visible to those who know the password.'),
                 checked: showPassword,
                 onChange: handleTogglePassword
               }), showPassword && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
