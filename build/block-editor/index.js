@@ -26620,7 +26620,7 @@ function renderShadowToggle(shadow, onShadowChange) {
     const shadowButtonRef = (0,external_wp_element_namespaceObject.useRef)(undefined);
     const toggleProps = {
       onClick: onToggle,
-      className: dist_clsx({
+      className: dist_clsx('block-editor-global-styles__shadow-dropdown-toggle', {
         'is-open': isOpen
       }),
       'aria-expanded': isOpen,
@@ -34197,7 +34197,7 @@ const renderToggle = (duotone, resetDuotone) => ({
   const duotoneButtonRef = (0,external_wp_element_namespaceObject.useRef)(undefined);
   const toggleProps = {
     onClick: onToggle,
-    className: dist_clsx({
+    className: dist_clsx('block-editor-global-styles-filters-panel__dropdown-toggle', {
       'is-open': isOpen
     }),
     'aria-expanded': isOpen,
