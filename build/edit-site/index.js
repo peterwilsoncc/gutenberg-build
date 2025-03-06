@@ -29993,37 +29993,35 @@ function ScreenNavigationMoreMenu(props) {
       popoverProps: POPOVER_PROPS,
       children: ({
         onClose
-      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuGroup, {
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-            onClick: () => {
-              openRenameModal();
-              // Close the dropdown after opening the modal.
-              onClose();
-            },
-            children: (0,external_wp_i18n_namespaceObject.__)('Rename')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-            onClick: () => {
-              history.navigate(`/wp_navigation/${menuId}?canvas=edit`);
-            },
-            children: (0,external_wp_i18n_namespaceObject.__)('Edit')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-            onClick: () => {
-              onDuplicate();
-              onClose();
-            },
-            children: (0,external_wp_i18n_namespaceObject.__)('Duplicate')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-            isDestructive: true,
-            onClick: () => {
-              openDeleteConfirmDialog();
+      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuGroup, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+          onClick: () => {
+            openRenameModal();
+            // Close the dropdown after opening the modal.
+            onClose();
+          },
+          children: (0,external_wp_i18n_namespaceObject.__)('Rename')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+          onClick: () => {
+            history.navigate(`/wp_navigation/${menuId}?canvas=edit`);
+          },
+          children: (0,external_wp_i18n_namespaceObject.__)('Edit')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+          onClick: () => {
+            onDuplicate();
+            onClose();
+          },
+          children: (0,external_wp_i18n_namespaceObject.__)('Duplicate')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+          isDestructive: true,
+          onClick: () => {
+            openDeleteConfirmDialog();
 
-              // Close the dropdown after opening the modal.
-              onClose();
-            },
-            children: (0,external_wp_i18n_namespaceObject.__)('Delete')
-          })]
-        })
+            // Close the dropdown after opening the modal.
+            onClose();
+          },
+          children: (0,external_wp_i18n_namespaceObject.__)('Delete')
+        })]
       })
     }), deleteConfirmDialogOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DeleteConfirmDialog, {
       onClose: closeModals,

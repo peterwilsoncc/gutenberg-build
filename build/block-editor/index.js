@@ -69595,14 +69595,11 @@ function VariationsDropdown({
     toggleProps: {
       iconPosition: 'right'
     },
-    children: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: `${className}__container`,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItemsChoice, {
-          choices: selectOptions,
-          value: selectedValue,
-          onSelect: onSelectVariation
-        })
+    children: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItemsChoice, {
+        choices: selectOptions,
+        value: selectedValue,
+        onSelect: onSelectVariation
       })
     })
   });
