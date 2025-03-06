@@ -24127,7 +24127,8 @@ const TagsPanel = () => {
 };
 const MaybeTagsPanel = () => {
   const {
-    hasTags,
+    postHasTags,
+    siteHasTags,
     isPostTypeSupported
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const postType = select(store_store).getCurrentPostType();
@@ -24135,13 +24136,22 @@ const MaybeTagsPanel = () => {
     const _isPostTypeSupported = tagsTaxonomy?.types?.includes(postType);
     const areTagsFetched = tagsTaxonomy !== undefined;
     const tags = tagsTaxonomy && select(store_store).getEditedPostAttribute(tagsTaxonomy.rest_base);
+    const siteTags = _isPostTypeSupported ? !!select(external_wp_coreData_namespaceObject.store).getEntityRecords('taxonomy', 'post_tag', {
+      per_page: 1
+    })?.length : false;
     return {
-      hasTags: !!tags?.length,
+      postHasTags: !!tags?.length,
+      siteHasTags: siteTags,
       isPostTypeSupported: areTagsFetched && _isPostTypeSupported
     };
   }, []);
-  const [hadTagsWhenOpeningThePanel] = (0,external_wp_element_namespaceObject.useState)(hasTags);
-  if (!isPostTypeSupported) {
+  const [hadTagsWhenOpeningThePanel] = (0,external_wp_element_namespaceObject.useState)(postHasTags);
+
+  /**
+   * We only want to show the tag panel if the post type supports
+   * tags and the site has tags.
+   */
+  if (!isPostTypeSupported || !siteHasTags) {
     return null;
   }
 
@@ -24149,9 +24159,9 @@ const MaybeTagsPanel = () => {
    * We only want to show the tag panel if the post didn't have
    * any tags when the user hit the Publish button.
    *
-   * We can't use the prop.hasTags because it'll change to true
+   * We can't use the prop.postHasTags because it'll change to true
    * if the user adds a new tag within the pre-publish panel.
-   * This would force a re-render and a new prop.hasTags check,
+   * This would force a re-render and a new prop.postHasTags check,
    * hiding this panel and keeping the user from adding
    * more than one tag.
    */
@@ -24641,7 +24651,10 @@ function HierarchicalTermSelector({
 
 
 function MaybeCategoryPanel() {
-  const hasNoCategory = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const {
+    hasNoCategory,
+    hasSiteCategories
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const postType = select(store_store).getCurrentPostType();
     const {
       canUser,
@@ -24655,11 +24668,19 @@ function MaybeCategoryPanel() {
     const defaultCategory = defaultCategoryId ? getEntityRecord('taxonomy', 'category', defaultCategoryId) : undefined;
     const postTypeSupportsCategories = categoriesTaxonomy && categoriesTaxonomy.types.some(type => type === postType);
     const categories = categoriesTaxonomy && select(store_store).getEditedPostAttribute(categoriesTaxonomy.rest_base);
+    const siteCategories = postTypeSupportsCategories ? !!select(external_wp_coreData_namespaceObject.store).getEntityRecords('taxonomy', 'category', {
+      exclude: [defaultCategoryId],
+      per_page: 1
+    })?.length : false;
 
     // This boolean should return true if everything is loaded
     // ( categoriesTaxonomy, defaultCategory )
     // and the post has not been assigned a category different than "uncategorized".
-    return !!categoriesTaxonomy && !!defaultCategory && postTypeSupportsCategories && (categories?.length === 0 || categories?.length === 1 && defaultCategory?.id === categories[0]);
+    const noCategory = !!categoriesTaxonomy && !!defaultCategory && postTypeSupportsCategories && (categories?.length === 0 || categories?.length === 1 && defaultCategory?.id === categories[0]);
+    return {
+      hasNoCategory: noCategory,
+      hasSiteCategories: siteCategories
+    };
   }, []);
   const [shouldShowPanel, setShouldShowPanel] = (0,external_wp_element_namespaceObject.useState)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -24669,7 +24690,12 @@ function MaybeCategoryPanel() {
       setShouldShowPanel(true);
     }
   }, [hasNoCategory]);
-  if (!shouldShowPanel) {
+
+  // We only want to show the category panel:
+  // if the post type supports categories,
+  // if the site has categories other than the default category,
+  // and if the post has no other categories than the default category.
+  if (!shouldShowPanel || !hasSiteCategories) {
     return null;
   }
   const panelBodyTitle = [(0,external_wp_i18n_namespaceObject.__)('Suggestion:'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
