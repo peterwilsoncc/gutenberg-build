@@ -1894,7 +1894,7 @@ function ArchivesEdit({
         resetAll: () => {
           setAttributes({
             displayAsDropdown: false,
-            showLabel: false,
+            showLabel: true,
             showPostCounts: false,
             type: 'monthly'
           });
@@ -1920,7 +1920,7 @@ function ArchivesEdit({
           isShownByDefault: true,
           hasValue: () => !showLabel,
           onDeselect: () => setAttributes({
-            showLabel: false
+            showLabel: true
           }),
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
             __nextHasNoMarginBottom: true,
