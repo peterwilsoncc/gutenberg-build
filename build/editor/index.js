@@ -32114,19 +32114,21 @@ function usePostActions({
     hasFrontPageTemplate
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getEntityRecords
+      getEntityRecords,
+      canUser
     } = select(external_wp_coreData_namespaceObject.store);
-    const templates = getEntityRecords('postType', 'wp_template', {
-      per_page: -1
+    const canUpdateSettings = canUser('update', {
+      kind: 'root',
+      name: 'site'
     });
+    const templates = 'page' === postType && canUpdateSettings ? getEntityRecords('postType', 'wp_template', {
+      per_page: -1
+    }) : [];
     return {
-      canManageOptions: select(external_wp_coreData_namespaceObject.store).canUser('update', {
-        kind: 'root',
-        name: 'site'
-      }),
+      canManageOptions: canUpdateSettings,
       hasFrontPageTemplate: !!templates?.find(template => template?.slug === 'front-page')
     };
-  });
+  }, [postType]);
   const setAsHomepageAction = useSetAsHomepageAction();
   const setAsPostsPageAction = useSetAsPostsPageAction();
   const shouldShowHomepageActions = canManageOptions && !hasFrontPageTemplate;
