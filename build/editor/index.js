@@ -22798,20 +22798,19 @@ const wordpress = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
  * WordPress dependencies
  */
 
-const visibilityOptions = {
-  public: {
-    label: (0,external_wp_i18n_namespaceObject.__)('Public'),
-    info: (0,external_wp_i18n_namespaceObject.__)('Visible to everyone.')
-  },
-  private: {
-    label: (0,external_wp_i18n_namespaceObject.__)('Private'),
-    info: (0,external_wp_i18n_namespaceObject.__)('Only visible to site admins and editors.')
-  },
-  password: {
-    label: (0,external_wp_i18n_namespaceObject.__)('Password protected'),
-    info: (0,external_wp_i18n_namespaceObject.__)('Only visible to those who know the password.')
-  }
-};
+const VISIBILITY_OPTIONS = [{
+  label: (0,external_wp_i18n_namespaceObject.__)('Public'),
+  value: 'public',
+  description: (0,external_wp_i18n_namespaceObject.__)('Visible to everyone.')
+}, {
+  label: (0,external_wp_i18n_namespaceObject.__)('Private'),
+  value: 'private',
+  description: (0,external_wp_i18n_namespaceObject.__)('Only visible to site admins and editors.')
+}, {
+  label: (0,external_wp_i18n_namespaceObject.__)('Password protected'),
+  value: 'password',
+  description: (0,external_wp_i18n_namespaceObject.__)('Only visible to those who know the password.')
+}];
 
 ;// ./packages/editor/build-module/components/post-visibility/index.js
 /**
@@ -22852,40 +22851,27 @@ function PostVisibility({
     password: select(store_store).getEditedPostAttribute('password')
   }));
   const {
-    editPost,
-    savePost
+    editPost
   } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
   const [hasPassword, setHasPassword] = (0,external_wp_element_namespaceObject.useState)(!!password);
-  const [showPrivateConfirmDialog, setShowPrivateConfirmDialog] = (0,external_wp_element_namespaceObject.useState)(false);
-  const setPublic = () => {
-    editPost({
-      status: visibility === 'private' ? 'draft' : status,
-      password: ''
-    });
-    setHasPassword(false);
-  };
-  const setPrivate = () => {
-    setShowPrivateConfirmDialog(true);
-  };
-  const confirmPrivate = () => {
-    editPost({
-      status: 'private',
-      password: ''
-    });
-    setHasPassword(false);
-    setShowPrivateConfirmDialog(false);
-    savePost();
-  };
-  const handleDialogCancel = () => {
-    setShowPrivateConfirmDialog(false);
-  };
-  const setPasswordProtected = () => {
-    editPost({
-      status: visibility === 'private' ? 'draft' : status,
-      password: password || ''
-    });
-    setHasPassword(true);
-  };
+  function updateVisibility(value) {
+    const nextValues = {
+      public: {
+        status: visibility === 'private' ? 'draft' : status,
+        password: ''
+      },
+      private: {
+        status: 'private',
+        password: ''
+      },
+      password: {
+        status: visibility === 'private' ? 'draft' : status,
+        password: password || ''
+      }
+    };
+    editPost(nextValues[value]);
+    setHasPassword(value === 'password');
+  }
   const updatePassword = value => {
     editPost({
       password: value
@@ -22897,32 +22883,14 @@ function PostVisibility({
       title: (0,external_wp_i18n_namespaceObject.__)('Visibility'),
       help: (0,external_wp_i18n_namespaceObject.__)('Control how this post is viewed.'),
       onClose: onClose
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
-      className: "editor-post-visibility__fieldset",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
-        as: "legend",
-        children: (0,external_wp_i18n_namespaceObject.__)('Visibility')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostVisibilityChoice, {
-        instanceId: instanceId,
-        value: "public",
-        label: visibilityOptions.public.label,
-        info: visibilityOptions.public.info,
-        checked: visibility === 'public' && !hasPassword,
-        onChange: setPublic
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostVisibilityChoice, {
-        instanceId: instanceId,
-        value: "private",
-        label: visibilityOptions.private.label,
-        info: visibilityOptions.private.info,
-        checked: visibility === 'private',
-        onChange: setPrivate
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostVisibilityChoice, {
-        instanceId: instanceId,
-        value: "password",
-        label: visibilityOptions.password.label,
-        info: visibilityOptions.password.info,
-        checked: hasPassword,
-        onChange: setPasswordProtected
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      spacing: 4,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Visibility'),
+        hideLabelFromVision: true,
+        options: VISIBILITY_OPTIONS,
+        selected: hasPassword ? 'password' : visibility,
+        onChange: updateVisibility
       }), hasPassword && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
         label: (0,external_wp_i18n_namespaceObject.__)('Password'),
         onChange: updatePassword,
@@ -22934,41 +22902,6 @@ function PostVisibility({
         __nextHasNoMarginBottom: true,
         maxLength: 255
       })]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalConfirmDialog, {
-      isOpen: showPrivateConfirmDialog,
-      onConfirm: confirmPrivate,
-      onCancel: handleDialogCancel,
-      confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Publish'),
-      size: "medium",
-      children: (0,external_wp_i18n_namespaceObject.__)('Would you like to privately publish this post now?')
-    })]
-  });
-}
-function PostVisibilityChoice({
-  instanceId,
-  value,
-  label,
-  info,
-  ...props
-}) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-    className: "editor-post-visibility__choice",
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
-      type: "radio",
-      name: `editor-post-visibility__setting-${instanceId}`,
-      value: value,
-      id: `editor-post-${value}-${instanceId}`,
-      "aria-describedby": `editor-post-${value}-${instanceId}-description`,
-      className: "editor-post-visibility__radio",
-      ...props
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("label", {
-      htmlFor: `editor-post-${value}-${instanceId}`,
-      className: "editor-post-visibility__label",
-      children: label
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-      id: `editor-post-${value}-${instanceId}-description`,
-      className: "editor-post-visibility__info",
-      children: info
     })]
   });
 }
@@ -23000,8 +22933,8 @@ function PostVisibilityLabel() {
  * @return {string} Post visibility label.
  */
 function usePostVisibilityLabel() {
-  const visibility = (0,external_wp_data_namespaceObject.useSelect)(select => select(store_store).getEditedPostVisibility());
-  return visibilityOptions[visibility]?.label;
+  const visibility = (0,external_wp_data_namespaceObject.useSelect)(select => select(store_store).getEditedPostVisibility(), []);
+  return VISIBILITY_OPTIONS.find(option => option.value === visibility)?.label;
 }
 
 ;// ./node_modules/date-fns/toDate.mjs
