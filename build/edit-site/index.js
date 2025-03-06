@@ -46391,6 +46391,7 @@ function useRegisterSiteEditorRoutes() {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -46412,8 +46413,17 @@ function AppLayout() {
 }
 function App() {
   useRegisterSiteEditorRoutes();
-  const routes = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    return unlock(select(store)).getRoutes();
+  const {
+    routes,
+    currentTheme,
+    editorSettings
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return {
+      routes: unlock(select(store)).getRoutes(),
+      currentTheme: select(external_wp_coreData_namespaceObject.store).getCurrentTheme(),
+      // This is a temp solution until the has_theme_json value is available for the current theme.
+      editorSettings: select(store).getSettings()
+    };
   }, []);
   const beforeNavigate = (0,external_wp_element_namespaceObject.useCallback)(({
     path,
@@ -46433,10 +46443,17 @@ function App() {
       }
     };
   }, []);
+  const matchResolverArgsValue = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    siteData: {
+      currentTheme,
+      editorSettings
+    }
+  }), [currentTheme, editorSettings]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RouterProvider, {
     routes: routes,
     pathArg: "p",
     beforeNavigate: beforeNavigate,
+    matchResolverArgs: matchResolverArgsValue,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AppLayout, {})
   });
 }
