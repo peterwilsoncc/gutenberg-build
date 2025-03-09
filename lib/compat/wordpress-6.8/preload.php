@@ -95,6 +95,20 @@ function gutenberg_block_editor_preload_paths_6_8( $paths, $context ) {
 		);
 	}
 
+	if ( 'core/edit-post' === $context->name ) {
+		$slug = 'page' === $context->post->post_type ? 'page' : 'single-' . $context->post->post_type;
+		if ( ! empty( $context->post->post_name ) ) {
+			$slug .= '-' . $context->post->post_name;
+		}
+
+		$paths[] = add_query_arg(
+			'slug',
+			// @see https://github.com/WordPress/gutenberg/blob/e093fefd041eb6cc4a4e7f67b92ab54fd75c8858/packages/core-data/src/private-selectors.ts#L244-L254
+			$slug,
+			'/wp/v2/templates/lookup'
+		);
+	}
+
 	return $paths;
 }
 add_filter( 'block_editor_rest_api_preload_paths', 'gutenberg_block_editor_preload_paths_6_8', 10, 2 );
