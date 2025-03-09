@@ -32713,7 +32713,7 @@ const scrollContainerCache = new WeakMap();
  * @param {Object} contentRef
  */
 function usePopoverScroll(contentRef) {
-  return (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
+  const effect = (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
     function onWheel(event) {
       const {
         deltaX,
@@ -32737,6 +32737,7 @@ function usePopoverScroll(contentRef) {
       node.removeEventListener('wheel', onWheel, options);
     };
   }, [contentRef]);
+  return contentRef ? effect : null;
 }
 /* harmony default export */ const use_popover_scroll = (usePopoverScroll);
 
