@@ -4071,9 +4071,9 @@ const getBlockListSettings = getBlockEditorSelector('getBlockListSettings');
 const __experimentalGetDefaultTemplateTypes = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
   external_wp_deprecated_default()("select('core/editor').__experimentalGetDefaultTemplateTypes", {
     since: '6.8',
-    alternative: "select('core/core-data').getEntityRecord( 'root', '__unstableBase' )?.default_template_types"
+    alternative: "select('core/core-data').getCurrentTheme()?.default_template_types"
   });
-  return select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_types;
+  return select(external_wp_coreData_namespaceObject.store).getCurrentTheme()?.default_template_types;
 });
 
 /**
@@ -4086,9 +4086,9 @@ const __experimentalGetDefaultTemplateTypes = (0,external_wp_data_namespaceObjec
 const __experimentalGetDefaultTemplatePartAreas = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(() => {
   external_wp_deprecated_default()("select('core/editor').__experimentalGetDefaultTemplatePartAreas", {
     since: '6.8',
-    alternative: "select('core/core-data').getEntityRecord( 'root', '__unstableBase' )?.default_template_part_areas"
+    alternative: "select('core/core-data').getCurrentTheme()?.default_template_part_areas"
   });
-  const areas = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || [];
+  const areas = select(external_wp_coreData_namespaceObject.store).getCurrentTheme()?.default_template_part_areas || [];
   return areas.map(item => {
     return {
       ...item,
@@ -4110,7 +4110,7 @@ const __experimentalGetDefaultTemplateType = (0,external_wp_data_namespaceObject
   external_wp_deprecated_default()("select('core/editor').__experimentalGetDefaultTemplateType", {
     since: '6.8'
   });
-  const templateTypes = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_types;
+  const templateTypes = select(external_wp_coreData_namespaceObject.store).getCurrentTheme()?.default_template_types;
   if (!templateTypes) {
     return selectors_EMPTY_OBJECT;
   }
@@ -4132,8 +4132,9 @@ const __experimentalGetTemplateInfo = (0,external_wp_data_namespaceObject.create
   if (!template) {
     return selectors_EMPTY_OBJECT;
   }
-  const templateTypes = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_types || [];
-  const templateAreas = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || [];
+  const currentTheme = select(external_wp_coreData_namespaceObject.store).getCurrentTheme();
+  const templateTypes = currentTheme?.default_template_types || [];
+  const templateAreas = currentTheme?.default_template_part_areas || [];
   return getTemplateInfo({
     template,
     templateAreas,
@@ -7407,7 +7408,7 @@ function CreateTemplatePartModalContents({
   const [area, setArea] = (0,external_wp_element_namespaceObject.useState)(defaultArea);
   const [isSubmitting, setIsSubmitting] = (0,external_wp_element_namespaceObject.useState)(false);
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(CreateTemplatePartModal);
-  const defaultTemplatePartAreas = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas, []);
+  const defaultTemplatePartAreas = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getCurrentTheme()?.default_template_part_areas, []);
   async function createTemplatePart() {
     if (!title || isSubmitting) {
       return;
@@ -15832,7 +15833,7 @@ const CARD_ICONS = {
 const getPostIcon = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (state, postType, options) => {
   {
     if (postType === 'wp_template_part' || postType === 'wp_template') {
-      const templateAreas = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || [];
+      const templateAreas = select(external_wp_coreData_namespaceObject.store).getCurrentTheme()?.default_template_part_areas || [];
       const areaData = templateAreas.find(item => options.area === item.area);
       if (areaData?.icon) {
         return getTemplatePartIcon(areaData.icon);
@@ -16524,7 +16525,7 @@ function DocumentBar(props) {
     onNavigateToPreviousEntityRecord,
     isTemplatePreview
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _select$getEntityReco;
+    var _getCurrentTheme;
     const {
       getCurrentPostType,
       getCurrentPostId,
@@ -16534,6 +16535,7 @@ function DocumentBar(props) {
     const {
       getEditedEntityRecord,
       getPostType,
+      getCurrentTheme,
       isResolving: isResolvingSelector
     } = select(external_wp_coreData_namespaceObject.store);
     const _postType = getCurrentPostType();
@@ -16541,7 +16543,7 @@ function DocumentBar(props) {
     const _document = getEditedEntityRecord('postType', _postType, _postId);
     const {
       default_template_types: templateTypes = []
-    } = (_select$getEntityReco = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')) !== null && _select$getEntityReco !== void 0 ? _select$getEntityReco : {};
+    } = (_getCurrentTheme = getCurrentTheme()) !== null && _getCurrentTheme !== void 0 ? _getCurrentTheme : {};
     const _templateInfo = getTemplateInfo({
       templateTypes,
       template: _document
@@ -17387,7 +17389,7 @@ function EntityRecordItem({
     entityRecordTitle,
     hasPostMetaChanges
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _select$getEntityReco;
+    var _select$getCurrentThe;
     if ('postType' !== kind || 'wp_template' !== name) {
       return {
         entityRecordTitle: title,
@@ -17397,7 +17399,7 @@ function EntityRecordItem({
     const template = select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord(kind, name, key);
     const {
       default_template_types: templateTypes = []
-    } = (_select$getEntityReco = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')) !== null && _select$getEntityReco !== void 0 ? _select$getEntityReco : {};
+    } = (_select$getCurrentThe = select(external_wp_coreData_namespaceObject.store).getCurrentTheme()) !== null && _select$getCurrentThe !== void 0 ? _select$getCurrentThe : {};
     return {
       entityRecordTitle: getTemplateInfo({
         template,
@@ -32418,7 +32420,7 @@ function PostCardPanel({
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEditedEntityRecord,
-      getEntityRecord,
+      getCurrentTheme,
       getPostType
     } = select(external_wp_coreData_namespaceObject.store);
     const {
@@ -32427,10 +32429,10 @@ function PostCardPanel({
     let _title = '';
     const _record = getEditedEntityRecord('postType', postType, postIds[0]);
     if (postIds.length === 1) {
-      var _getEntityRecord;
+      var _getCurrentTheme;
       const {
         default_template_types: templateTypes = []
-      } = (_getEntityRecord = getEntityRecord('root', '__unstableBase')) !== null && _getEntityRecord !== void 0 ? _getEntityRecord : {};
+      } = (_getCurrentTheme = getCurrentTheme()) !== null && _getCurrentTheme !== void 0 ? _getCurrentTheme : {};
       const _templateInfo = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE].includes(postType) ? getTemplateInfo({
         template: _record,
         templateTypes
