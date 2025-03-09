@@ -52098,9 +52098,9 @@ const query_total_metadata = {
     },
     color: {
       gradients: true,
-      text: true,
       __experimentalDefaultControls: {
-        background: true
+        background: true,
+        text: true
       }
     },
     typography: {
