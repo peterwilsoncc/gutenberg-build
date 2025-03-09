@@ -7993,25 +7993,56 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
   const {
     dashboardLink,
     homeUrl,
-    siteTitle
+    siteTitle,
+    isBlockTheme,
+    isClassicThemeWithStyleBookSupport
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getSettings
     } = unlock(select(store));
     const {
-      getEntityRecord
+      getEntityRecord,
+      getCurrentTheme
     } = select(external_wp_coreData_namespaceObject.store);
     const _site = getEntityRecord('root', 'site');
+    const currentTheme = getCurrentTheme();
+    const settings = getSettings();
+    const supportsEditorStyles = currentTheme.theme_supports['editor-styles'];
+    // This is a temp solution until the has_theme_json value is available for the current theme.
+    const hasThemeJson = settings.supportsLayout;
     return {
-      dashboardLink: getSettings().__experimentalDashboardLink,
+      dashboardLink: settings.__experimentalDashboardLink,
       homeUrl: getEntityRecord('root', '__unstableBase')?.home,
-      siteTitle: !_site?.title && !!_site?.url ? (0,external_wp_url_namespaceObject.filterURLForDisplay)(_site?.url) : _site?.title
+      siteTitle: !_site?.title && !!_site?.url ? (0,external_wp_url_namespaceObject.filterURLForDisplay)(_site?.url) : _site?.title,
+      isBlockTheme: currentTheme?.is_block_theme,
+      isClassicThemeWithStyleBookSupport: !currentTheme?.is_block_theme && (supportsEditorStyles || hasThemeJson)
     };
   }, []);
   const {
     open: openCommandCenter
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_commands_namespaceObject.store);
-  const isRoot = path === '/';
+  let backPath;
+
+  // If the current path is not the root page, find a page to back to.
+  if (path !== '/') {
+    if (isBlockTheme || isClassicThemeWithStyleBookSupport) {
+      // If the current theme is a block theme or a classic theme that supports StyleBook,
+      // back to the Design screen.
+      backPath = '/';
+    } else if (path !== '/pattern') {
+      // If the current theme is a classic theme that does not support StyleBook,
+      // back to the Patterns page.
+      backPath = '/pattern';
+    }
+  }
+  const backButtonProps = {
+    href: !!backPath ? undefined : dashboardLink,
+    label: !!backPath ? (0,external_wp_i18n_namespaceObject.__)('Go to Site Editor') : (0,external_wp_i18n_namespaceObject.__)('Go to the Dashboard'),
+    onClick: !!backPath ? () => {
+      history.navigate(backPath);
+      navigate('back');
+    } : undefined
+  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "edit-site-site-hub",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -8029,16 +8060,7 @@ const SiteHubMobile = (0,external_wp_element_namespaceObject.memo)((0,external_w
             transform: 'scale(0.5)',
             borderRadius: 4
           },
-          ...(isRoot ? {
-            href: dashboardLink,
-            label: (0,external_wp_i18n_namespaceObject.__)('Go to the Dashboard')
-          } : {
-            onClick: () => {
-              history.navigate('/');
-              navigate('back');
-            },
-            label: (0,external_wp_i18n_namespaceObject.__)('Go to Site Editor')
-          }),
+          ...backButtonProps,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(site_icon, {
             className: "edit-site-layout__view-mode-toggle-icon"
           })
@@ -14830,6 +14852,24 @@ function SidebarNavigationScreenMain({
     description: description,
     content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MainSidebarNavigationContent, {
       isBlockBasedTheme: isBlockBasedTheme
+    })
+  });
+}
+
+;// ./packages/edit-site/build-module/components/sidebar-navigation-screen-unsupported/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+function SidebarNavigationScreenUnsupported() {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
+    padding: 3,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
+      status: "warning",
+      isDismissible: false,
+      children: (0,external_wp_i18n_namespaceObject.__)('The theme you are currently using does not support this screen.')
     })
   });
 }
@@ -29769,6 +29809,21 @@ function EditSiteEditor({
   });
 }
 
+;// ./packages/edit-site/build-module/components/site-editor-routes/utils.js
+/**
+ * Check if the classic theme supports the stylebook.
+ *
+ * @param {Object} siteData - The site data provided by the site editor route area resolvers.
+ * @return {boolean} True if the stylebook is supported, false otherwise.
+ */
+function isClassicThemeWithStyleBookSupport(siteData) {
+  const isBlockTheme = siteData.currentTheme?.is_block_theme;
+  const supportsEditorStyles = siteData.currentTheme?.theme_supports['editor-styles'];
+  // This is a temp solution until the has_theme_json value is available for the current theme.
+  const hasThemeJson = siteData.editorSettings?.supportsLayout;
+  return !isBlockTheme && (supportsEditorStyles || hasThemeJson);
+}
+
 ;// ./packages/edit-site/build-module/components/site-editor-routes/home.js
 /**
  * Internal dependencies
@@ -29776,15 +29831,32 @@ function EditSiteEditor({
 
 
 
+
+
 const homeRoute = {
   name: 'home',
   path: '/',
   areas: {
-    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenMain, {}),
-    preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {
-      isHomeRoute: true
-    }),
-    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenMain, {})
+    sidebar({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme || isClassicThemeWithStyleBookSupport(siteData) ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenMain, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    },
+    preview({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme || isClassicThemeWithStyleBookSupport(siteData) ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {
+        isHomeRoute: true
+      }) : undefined;
+    },
+    mobile({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme || isClassicThemeWithStyleBookSupport(siteData) ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenMain, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    }
   }
 };
 
@@ -31529,6 +31601,7 @@ function SidebarNavigationScreenPatterns({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreen, {
     title: (0,external_wp_i18n_namespaceObject.__)('Patterns'),
     description: (0,external_wp_i18n_namespaceObject.__)('Manage what patterns are available when editing the site.'),
+    isRoot: !backPath,
     backPath: backPath,
     content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [isLoading && (0,external_wp_i18n_namespaceObject.__)('Loading items…'), !isLoading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -41979,40 +42052,39 @@ function DataviewsPatterns() {
 
 ;// ./packages/edit-site/build-module/components/site-editor-routes/patterns.js
 /**
- * WordPress dependencies
- */
-
-
-/**
  * Internal dependencies
  */
 
 
 
 
-const {
-  useLocation: patterns_useLocation
-} = unlock(external_wp_router_namespaceObject.privateApis);
-function MobilePatternsView() {
-  const {
-    query = {}
-  } = patterns_useLocation();
-  const {
-    categoryId
-  } = query;
-  return !!categoryId ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsPatterns, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenPatterns, {
-    backPath: "/"
-  });
-}
 const patternsRoute = {
   name: 'patterns',
   path: '/pattern',
   areas: {
-    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenPatterns, {
-      backPath: "/"
-    }),
+    sidebar({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      const backPath = isBlockTheme || isClassicThemeWithStyleBookSupport(siteData) ? '/' : undefined;
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenPatterns, {
+        backPath: backPath
+      });
+    },
     content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsPatterns, {}),
-    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MobilePatternsView, {})
+    mobile({
+      siteData,
+      query
+    }) {
+      const {
+        categoryId
+      } = query;
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      const backPath = isBlockTheme || isClassicThemeWithStyleBookSupport(siteData) ? '/' : undefined;
+      return !!categoryId ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsPatterns, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenPatterns, {
+        backPath: backPath
+      });
+    }
   }
 };
 
@@ -42023,13 +42095,20 @@ const patternsRoute = {
 
 
 
+
 const patternItemRoute = {
   name: 'pattern-item',
   path: '/wp_block/:postId',
   areas: {
-    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenPatterns, {
-      backPath: "/"
-    }),
+    sidebar({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      const backPath = isBlockTheme || isClassicThemeWithStyleBookSupport(siteData) ? '/' : undefined;
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenPatterns, {
+        backPath: backPath
+      });
+    },
     mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
     preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {})
   }
@@ -46295,21 +46374,35 @@ const pageItemRoute = {
 
 
 
+
+
 const stylebookRoute = {
   name: 'stylebook',
   path: '/stylebook',
   areas: {
-    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreen, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Styles'),
-      backPath: "/",
-      description: (0,external_wp_i18n_namespaceObject.__)(`Preview your website's visual identity: colors, typography, and blocks.`)
-    }),
-    preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleBookPreview, {
-      isStatic: true
-    }),
-    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleBookPreview, {
-      isStatic: true
-    })
+    sidebar({
+      siteData
+    }) {
+      return isClassicThemeWithStyleBookSupport(siteData) ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreen, {
+        title: (0,external_wp_i18n_namespaceObject.__)('Styles'),
+        backPath: "/",
+        description: (0,external_wp_i18n_namespaceObject.__)(`Preview your website's visual identity: colors, typography, and blocks.`)
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    },
+    preview({
+      siteData
+    }) {
+      return isClassicThemeWithStyleBookSupport(siteData) ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleBookPreview, {
+        isStatic: true
+      }) : undefined;
+    },
+    mobile({
+      siteData
+    }) {
+      return isClassicThemeWithStyleBookSupport(siteData) ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleBookPreview, {
+        isStatic: true
+      }) : undefined;
+    }
   }
 };
 
