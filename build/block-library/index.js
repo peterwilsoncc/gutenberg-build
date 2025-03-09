@@ -35493,22 +35493,23 @@ function useTemplatePartAreaLabel(clientId) {
     if (!parentTemplatePartClientIds?.length) {
       return;
     }
-    const defaultTemplatePartAreas = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || [];
-    const definedAreas = defaultTemplatePartAreas.map(item => ({
-      ...item,
-      icon: getTemplatePartIcon(item.icon)
-    }));
     const {
       getCurrentTheme,
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
+    const currentTheme = getCurrentTheme();
+    const defaultTemplatePartAreas = currentTheme?.default_template_part_areas || [];
+    const definedAreas = defaultTemplatePartAreas.map(item => ({
+      ...item,
+      icon: getTemplatePartIcon(item.icon)
+    }));
     for (const templatePartClientId of parentTemplatePartClientIds) {
       const templatePartBlock = getBlock(templatePartClientId);
 
       // The 'area' usually isn't stored on the block, but instead
       // on the entity.
       const {
-        theme = getCurrentTheme()?.stylesheet,
+        theme = currentTheme?.stylesheet,
         slug
       } = templatePartBlock.attributes;
       const templatePartEntityId = createTemplatePartId(theme, slug);
@@ -62945,7 +62946,7 @@ function useCreateTemplatePartFromBlocks(area, setAttributes) {
 function useTemplatePartArea(area) {
   return (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _selectedArea$area_ta;
-    const definedAreas = select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || [];
+    const definedAreas = select(external_wp_coreData_namespaceObject.store).getCurrentTheme()?.default_template_part_areas || [];
     const selectedArea = definedAreas.find(definedArea => definedArea.area === area);
     const defaultArea = definedAreas.find(definedArea => definedArea.area === 'uncategorized');
     return {
@@ -63448,7 +63449,7 @@ function TemplatePartAdvancedControls({
 }) {
   const [area, setArea] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', 'wp_template_part', 'area', templatePartId);
   const [title, setTitle] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', 'wp_template_part', 'title', templatePartId);
-  const defaultTemplatePartAreas = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.default_template_part_areas || [], []);
+  const defaultTemplatePartAreas = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getCurrentTheme()?.default_template_part_areas || [], []);
   const areaOptions = defaultTemplatePartAreas.map(({
     label,
     area: _area
