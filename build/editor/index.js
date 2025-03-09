@@ -16666,29 +16666,41 @@ const external_wp_richText_namespaceObject = window["wp"]["richText"];
 const TableOfContentsItem = ({
   children,
   isValid,
+  isDisabled,
   level,
   href,
   onSelect
-}) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
-  className: dist_clsx('document-outline__item', `is-${level.toLowerCase()}`, {
-    'is-invalid': !isValid
-  }),
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("a", {
-    href: href,
-    className: "document-outline__button",
-    onClick: onSelect,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-      className: "document-outline__emdash",
-      "aria-hidden": "true"
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {
-      className: "document-outline__level",
-      children: level
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-      className: "document-outline__item-content",
-      children: children
-    })]
-  })
-});
+}) => {
+  function handleClick(event) {
+    if (isDisabled) {
+      event.preventDefault();
+      return;
+    }
+    onSelect();
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
+    className: dist_clsx('document-outline__item', `is-${level.toLowerCase()}`, {
+      'is-invalid': !isValid,
+      'is-disabled': isDisabled
+    }),
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("a", {
+      href: href,
+      className: "document-outline__button",
+      "aria-disabled": isDisabled,
+      onClick: handleClick,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        className: "document-outline__emdash",
+        "aria-hidden": "true"
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {
+        className: "document-outline__level",
+        children: level
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        className: "document-outline__item-content",
+        children: children
+      })]
+    })
+  });
+};
 /* harmony default export */ const document_outline_item = (TableOfContentsItem);
 
 ;// ./packages/editor/build-module/components/document-outline/index.js
@@ -16866,6 +16878,23 @@ function DocumentOutline({
     // all compulations should happen in `computeOutlineHeadings`.
     return clientIds.map(id => getBlock(id));
   });
+  const contentBlocks = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    // When rendering in `post-only` mode all blocks are considered content blocks.
+    if (select(store_store).getRenderingMode() === 'post-only') {
+      return undefined;
+    }
+    const {
+      getBlocksByName,
+      getClientIdsOfDescendants
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    const [postContentClientId] = getBlocksByName('core/post-content');
+
+    // Do nothing if there's no post content block.
+    if (!postContentClientId) {
+      return undefined;
+    }
+    return getClientIdsOfDescendants(postContentClientId);
+  }, []);
   const prevHeadingLevelRef = (0,external_wp_element_namespaceObject.useRef)(1);
   const headings = (0,external_wp_element_namespaceObject.useMemo)(() => computeOutlineHeadings(blocks), [blocks]);
   if (headings.length < 1) {
@@ -16885,6 +16914,9 @@ function DocumentOutline({
     [heading.level]: (acc[heading.level] || 0) + 1
   }), {});
   const hasMultipleH1 = countByLevel[1] > 1;
+  function isContentBlock(clientId) {
+    return Array.isArray(contentBlocks) ? contentBlocks.includes(clientId) : true;
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "document-outline",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("ul", {
@@ -16904,7 +16936,7 @@ function DocumentOutline({
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(document_outline_item, {
           level: `H${item.level}`,
           isValid: isValid,
-          isDisabled: hasOutlineItemsDisabled,
+          isDisabled: hasOutlineItemsDisabled || !isContentBlock(item.clientId),
           href: `#block-${item.clientId}`,
           onSelect: () => {
             selectBlock(item.clientId);
