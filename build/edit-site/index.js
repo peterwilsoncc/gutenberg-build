@@ -29493,6 +29493,7 @@ function useSyncDeprecatedEntityIntoState({
 
 
 
+
 function SitePreview() {
   const siteUrl = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
@@ -29519,8 +29520,8 @@ function SitePreview() {
       document.getElementsByTagName('html')[0].setAttribute('style', 'margin-top: 0 !important;');
       document.getElementsByTagName('body')[0].classList.remove('admin-bar');
       // Make interactive elements unclickable.
-      const interactiveElements = document.querySelectorAll('a, button, input, details, audio');
-      interactiveElements.forEach(element => {
+      const focusableElements = external_wp_dom_namespaceObject.focus.focusable.find(document);
+      focusableElements.forEach(element => {
         element.style.pointerEvents = 'none';
         element.tabIndex = -1;
         element.setAttribute('aria-hidden', 'true');
