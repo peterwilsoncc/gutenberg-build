@@ -2505,15 +2505,20 @@ const avatar_metadata = {
     },
     color: {
       text: false,
-      background: false,
-      __experimentalDuotone: "img"
+      background: false
+    },
+    filter: {
+      duotone: true
     },
     interactivity: {
       clientNavigation: true
     }
   },
   selectors: {
-    border: ".wp-block-avatar img"
+    border: ".wp-block-avatar img",
+    filter: {
+      duotone: ".wp-block-avatar img"
+    }
   },
   editorStyle: "wp-block-avatar-editor",
   style: "wp-block-avatar"
@@ -16356,7 +16361,6 @@ const cover_metadata = {
       }
     },
     color: {
-      __experimentalDuotone: "> .wp-block-cover__image-background, > .wp-block-cover__video-background",
       heading: true,
       text: true,
       background: false,
@@ -16384,6 +16388,14 @@ const cover_metadata = {
     },
     interactivity: {
       clientNavigation: true
+    },
+    filter: {
+      duotone: true
+    }
+  },
+  selectors: {
+    filter: {
+      duotone: ".wp-block-cover > .wp-block-cover__image-background, .wp-block-cover > .wp-block-cover__video-background"
     }
   },
   editorStyle: "wp-block-cover-editor",
@@ -42180,7 +42192,6 @@ const post_author_metadata = {
     color: {
       gradients: true,
       link: true,
-      __experimentalDuotone: ".wp-block-post-author__avatar img",
       __experimentalDefaultControls: {
         background: true,
         text: true
@@ -42200,6 +42211,14 @@ const post_author_metadata = {
         width: true,
         style: true
       }
+    },
+    filter: {
+      duotone: true
+    }
+  },
+  selectors: {
+    filter: {
+      duotone: ".wp-block-post-author .wp-block-post-author__avatar img"
     }
   },
   editorStyle: "wp-block-post-author-editor",
@@ -55856,7 +55875,6 @@ const site_logo_metadata = {
     align: true,
     alignWide: false,
     color: {
-      __experimentalDuotone: "img, .components-placeholder__illustration, .components-placeholder::before",
       text: false,
       background: false
     },
@@ -55870,6 +55888,9 @@ const site_logo_metadata = {
     },
     interactivity: {
       clientNavigation: true
+    },
+    filter: {
+      duotone: true
     }
   },
   styles: [{
@@ -55880,6 +55901,11 @@ const site_logo_metadata = {
     name: "rounded",
     label: "Rounded"
   }],
+  selectors: {
+    filter: {
+      duotone: ".wp-block-site-logo img, .wp-block-site-logo .components-placeholder__illustration, .wp-block-site-logo .components-placeholder::before"
+    }
+  },
   editorStyle: "wp-block-site-logo-editor",
   style: "wp-block-site-logo"
 };
