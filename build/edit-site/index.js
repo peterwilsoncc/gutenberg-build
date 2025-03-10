@@ -30845,6 +30845,7 @@ const NavMenuItem = ({
 
 
 
+
 const {
   useLocation: navigation_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
@@ -30863,11 +30864,26 @@ const navigationRoute = {
   name: 'navigation',
   path: '/navigation',
   areas: {
-    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenNavigationMenus, {
-      backPath: "/"
-    }),
-    preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
-    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MobileNavigationView, {})
+    sidebar({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenNavigationMenus, {
+        backPath: "/"
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    },
+    preview({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : undefined;
+    },
+    mobile({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MobileNavigationView, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    }
   }
 };
 
@@ -30880,6 +30896,7 @@ const navigationRoute = {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -30902,11 +30919,26 @@ const navigationItemRoute = {
   name: 'navigation-item',
   path: '/wp_navigation/:postId',
   areas: {
-    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenNavigationMenu, {
-      backPath: "/navigation"
-    }),
-    preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
-    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MobileNavigationItemView, {})
+    sidebar({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenNavigationMenu, {
+        backPath: "/navigation"
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    },
+    preview({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    },
+    mobile({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MobileNavigationItemView, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    }
   }
 };
 
@@ -44372,21 +44404,42 @@ function PageTemplates() {
 
 
 
+
 const templatesRoute = {
   name: 'templates',
   path: '/template',
   areas: {
-    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenTemplatesBrowse, {
-      backPath: "/"
-    }),
-    content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageTemplates, {}),
-    preview({
-      query
+    sidebar({
+      siteData
     }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenTemplatesBrowse, {
+        backPath: "/"
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    },
+    content({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageTemplates, {}) : undefined;
+    },
+    preview({
+      query,
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      if (!isBlockTheme) {
+        return undefined;
+      }
       const isListView = query.layout === 'list';
       return isListView ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : undefined;
     },
-    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageTemplates, {})
+    mobile({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PageTemplates, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    }
   },
   widths: {
     content({
@@ -44405,15 +44458,31 @@ const templatesRoute = {
 
 
 
+
 const templateItemRoute = {
   name: 'template-item',
   path: '/wp_template/*postId',
   areas: {
-    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenTemplatesBrowse, {
-      backPath: "/"
-    }),
-    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
-    preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {})
+    sidebar({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenTemplatesBrowse, {
+        backPath: "/"
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    },
+    mobile({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    },
+    preview({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    }
   }
 };
 
@@ -46268,6 +46337,7 @@ function PostEdit({
 
 
 
+
 const {
   useLocation: pages_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
@@ -46286,23 +46356,43 @@ const pagesRoute = {
   name: 'pages',
   path: '/page',
   areas: {
-    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreen, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Pages'),
-      backPath: "/",
-      content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSidebarContent, {
-        postType: "page"
-      })
-    }),
-    content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
-      postType: "page"
-    }),
-    preview({
-      query
+    sidebar({
+      siteData
     }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreen, {
+        title: (0,external_wp_i18n_namespaceObject.__)('Pages'),
+        backPath: "/",
+        content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSidebarContent, {
+          postType: "page"
+        })
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    },
+    content({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostList, {
+        postType: "page"
+      }) : undefined;
+    },
+    preview({
+      query,
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      if (!isBlockTheme) {
+        return undefined;
+      }
       const isListView = (query.layout === 'list' || !query.layout) && query.isCustom !== 'true';
       return isListView ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : undefined;
     },
-    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MobilePagesView, {}),
+    mobile({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MobilePagesView, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    },
     edit({
       query
     }) {
@@ -46344,19 +46434,35 @@ const pagesRoute = {
 
 
 
+
 const pageItemRoute = {
   name: 'page-item',
   path: '/page/:postId',
   areas: {
-    sidebar: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreen, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Pages'),
-      backPath: "/",
-      content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSidebarContent, {
-        postType: "page"
-      })
-    }),
-    mobile: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}),
-    preview: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {})
+    sidebar({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreen, {
+        title: (0,external_wp_i18n_namespaceObject.__)('Pages'),
+        backPath: "/",
+        content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSidebarContent, {
+          postType: "page"
+        })
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    },
+    mobile({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    },
+    preview({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    }
   }
 };
 
