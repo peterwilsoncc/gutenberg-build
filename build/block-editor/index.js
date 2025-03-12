@@ -24631,7 +24631,8 @@ const MediaReplaceFlow = ({
             url
           }) => {
             onSelectURL(url);
-          }
+          },
+          searchInputPlaceholder: (0,external_wp_i18n_namespaceObject.__)('Paste or type URL')
         })]
       })]
     })
