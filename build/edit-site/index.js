@@ -25480,37 +25480,33 @@ function ShadowList({
     spacing: 2,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       justify: "space-between",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Flex, {
-        align: "center",
-        className: "edit-site-global-styles__shadows-panel__title",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(subtitle, {
-          level: 3,
-          children: label
-        })
-      }), canCreate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(subtitle, {
+        level: 3,
+        children: label
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.FlexItem, {
         className: "edit-site-global-styles__shadows-panel__options-container",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        children: [canCreate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           size: "small",
           icon: library_plus,
           label: (0,external_wp_i18n_namespaceObject.__)('Add shadow'),
           onClick: () => {
             handleAddShadow();
           }
-        })
-      }), !!shadows?.length && category === 'custom' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(shadows_panel_Menu, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_panel_Menu.TriggerButton, {
-          render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            size: "small",
-            icon: more_vertical,
-            label: (0,external_wp_i18n_namespaceObject.__)('Shadow options')
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_panel_Menu.Popover, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_panel_Menu.Item, {
-            onClick: onReset,
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_panel_Menu.ItemLabel, {
-              children: (0,external_wp_i18n_namespaceObject.__)('Remove all custom shadows')
+        }), !!shadows?.length && category === 'custom' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(shadows_panel_Menu, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_panel_Menu.TriggerButton, {
+            render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              size: "small",
+              icon: more_vertical,
+              label: (0,external_wp_i18n_namespaceObject.__)('Shadow options')
             })
-          })
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_panel_Menu.Popover, {
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_panel_Menu.Item, {
+              onClick: onReset,
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(shadows_panel_Menu.ItemLabel, {
+                children: (0,external_wp_i18n_namespaceObject.__)('Remove all custom shadows')
+              })
+            })
+          })]
         })]
       })]
     }), shadows.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
