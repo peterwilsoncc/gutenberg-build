@@ -14844,7 +14844,7 @@ function SidebarNavigationScreenMain({
   } else if (isBlockBasedTheme) {
     description = (0,external_wp_i18n_namespaceObject.__)('Customize the appearance of your website using the block editor.');
   } else {
-    description = (0,external_wp_i18n_namespaceObject.__)('Explore block styles and patterns to refine your site');
+    description = (0,external_wp_i18n_namespaceObject.__)('Explore block styles and patterns to refine your site.');
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreen, {
     isRoot: true,
