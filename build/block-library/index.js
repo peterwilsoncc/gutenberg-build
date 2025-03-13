@@ -5342,6 +5342,45 @@ function ButtonEdit(props) {
   const opensInNewTab = linkTarget === NEW_TAB_TARGET;
   const nofollow = !!rel?.includes(NOFOLLOW_REL);
   const isLinkTag = 'a' === TagName;
+  const {
+    createPageEntity,
+    userCanCreatePages,
+    lockUrlControls = false
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    if (!isSelected) {
+      return {};
+    }
+    const _settings = select(external_wp_blockEditor_namespaceObject.store).getSettings();
+    const blockBindingsSource = (0,external_wp_blocks_namespaceObject.getBlockBindingsSource)(metadata?.bindings?.url?.source);
+    return {
+      createPageEntity: _settings.__experimentalCreatePageEntity,
+      userCanCreatePages: _settings.__experimentalUserCanCreatePages,
+      lockUrlControls: !!metadata?.bindings?.url && !blockBindingsSource?.canUserEditValue?.({
+        select,
+        context,
+        args: metadata?.bindings?.url?.args
+      })
+    };
+  }, [context, isSelected, metadata?.bindings?.url]);
+  async function handleCreate(pageTitle) {
+    const page = await createPageEntity({
+      title: pageTitle,
+      status: 'draft'
+    });
+    return {
+      id: page.id,
+      type: page.type,
+      title: page.title.rendered,
+      url: page.link,
+      kind: 'post-type'
+    };
+  }
+  function createButtonText(searchTerm) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: search term. */
+    (0,external_wp_i18n_namespaceObject.__)('Create page: <mark>%s</mark>'), searchTerm), {
+      mark: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("mark", {})
+    });
+  }
   function startEditing(event) {
     event.preventDefault();
     setIsEditingURL(true);
@@ -5372,21 +5411,6 @@ function ButtonEdit(props) {
     clientId
   });
   const mergedRef = (0,external_wp_compose_namespaceObject.useMergeRefs)([useEnterRef, richTextRef]);
-  const {
-    lockUrlControls = false
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    if (!isSelected) {
-      return {};
-    }
-    const blockBindingsSource = (0,external_wp_blocks_namespaceObject.getBlockBindingsSource)(metadata?.bindings?.url?.source);
-    return {
-      lockUrlControls: !!metadata?.bindings?.url && !blockBindingsSource?.canUserEditValue?.({
-        select,
-        context,
-        args: metadata?.bindings?.url?.args
-      })
-    };
-  }, [context, isSelected, metadata?.bindings?.url]);
   const [fluidTypographySettings, layout] = (0,external_wp_blockEditor_namespaceObject.useSettings)('typography.fluid', 'layout');
   const typographyProps = (0,external_wp_blockEditor_namespaceObject.getTypographyClassesAndStyles)(attributes, {
     typography: {
@@ -5480,7 +5504,10 @@ function ButtonEdit(props) {
           richTextRef.current?.focus();
         },
         forceIsEditingLink: isEditingURL,
-        settings: LINK_SETTINGS
+        settings: LINK_SETTINGS,
+        createSuggestion: createPageEntity && handleCreate,
+        withCreateSuggestion: userCanCreatePages,
+        createSuggestionButtonText: createButtonText
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(WidthPanel, {
