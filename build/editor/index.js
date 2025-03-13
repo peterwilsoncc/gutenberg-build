@@ -19931,9 +19931,6 @@ function SwapTemplateButton({
   const {
     editEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  if (!availableTemplates?.length) {
-    return null;
-  }
   const onTemplateSelect = async template => {
     editEntityRecord('postType', postType, postId, {
       template: template.name
@@ -19945,6 +19942,8 @@ function SwapTemplateButton({
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+      disabled: !availableTemplates?.length,
+      accessibleWhenDisabled: true,
       onClick: () => setShowModal(true),
       children: (0,external_wp_i18n_namespaceObject.__)('Change template')
     }), showModal && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
