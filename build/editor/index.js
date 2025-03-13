@@ -18864,16 +18864,17 @@ function useAllowSwitchingTemplates() {
       kind: 'root',
       name: 'site'
     }) ? getEntityRecord('root', 'site') : undefined;
-    const templates = getEntityRecords('postType', 'wp_template', {
-      per_page: -1
-    });
     const isPostsPage = +postId === siteSettings?.page_for_posts;
+    const isFrontPage = postType === 'page' && +postId === siteSettings?.page_on_front;
     // If current page is set front page or posts page, we also need
     // to check if the current theme has a template for it. If not
-    const isFrontPage = postType === 'page' && +postId === siteSettings?.page_on_front && templates?.some(({
+    const templates = isFrontPage ? getEntityRecords('postType', 'wp_template', {
+      per_page: -1
+    }) : [];
+    const hasFrontPage = isFrontPage && !!templates?.some(({
       slug
     }) => slug === 'front-page');
-    return !isPostsPage && !isFrontPage;
+    return !isPostsPage && !hasFrontPage;
   }, [postId, postType]);
 }
 function useTemplates(postType) {
