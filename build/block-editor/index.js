@@ -60940,7 +60940,7 @@ function PreviewBlockPopover({
           className: "block-editor-block-switcher__preview-title",
           children: (0,external_wp_i18n_namespaceObject.__)('Preview')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_preview, {
-          viewportWidth: 500,
+          viewportWidth: 601,
           blocks: blocks
         })]
       })
