@@ -25832,6 +25832,10 @@ function PostStatus() {
           title: (0,external_wp_i18n_namespaceObject.__)('Status & visibility'),
           onClose: onClose
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
+          onSubmit: event => {
+            event.preventDefault();
+            onClose();
+          },
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
             spacing: 4,
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
