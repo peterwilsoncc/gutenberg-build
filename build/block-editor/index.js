@@ -59617,7 +59617,9 @@ function BlockBreadcrumb({
           getEditorRegion(blockEditor)?.focus();
         },
         children: rootLabel
-      }), !hasSelection && rootLabel, !!clientId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+      }), !hasSelection && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        children: rootLabel
+      }), !!clientId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
         icon: chevron_right_small,
         className: "block-editor-block-breadcrumb__separator"
       })]
