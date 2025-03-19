@@ -66331,7 +66331,7 @@ const ToolbarContext = (0,external_wp_element_namespaceObject.createContext)(und
  */
 
 
-function toolbar_item_ToolbarItem({
+function UnforwardedToolbarItem({
   children,
   as: Component,
   ...props
@@ -66369,7 +66369,8 @@ function toolbar_item_ToolbarItem({
     render: render
   });
 }
-/* harmony default export */ const toolbar_item = ((0,external_wp_element_namespaceObject.forwardRef)(toolbar_item_ToolbarItem));
+const toolbar_item_ToolbarItem = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedToolbarItem);
+/* harmony default export */ const toolbar_item = (toolbar_item_ToolbarItem);
 
 ;// ./packages/components/build-module/toolbar/toolbar-button/toolbar-button-container.js
 
@@ -66910,7 +66911,7 @@ const toolbar_Toolbar = (0,external_wp_element_namespaceObject.forwardRef)(Unfor
 
 
 
-function ToolbarDropdownMenu(props, ref) {
+function UnforwardedToolbarDropdownMenu(props, ref) {
   const accessibleToolbarState = (0,external_wp_element_namespaceObject.useContext)(toolbar_context);
   if (!accessibleToolbarState) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dropdown_menu, {
@@ -66933,7 +66934,8 @@ function ToolbarDropdownMenu(props, ref) {
     })
   });
 }
-/* harmony default export */ const toolbar_dropdown_menu = ((0,external_wp_element_namespaceObject.forwardRef)(ToolbarDropdownMenu));
+const ToolbarDropdownMenu = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedToolbarDropdownMenu);
+/* harmony default export */ const toolbar_dropdown_menu = (ToolbarDropdownMenu);
 
 ;// ./packages/components/build-module/tools-panel/styles.js
 
