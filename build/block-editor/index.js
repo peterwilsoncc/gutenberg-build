@@ -54082,6 +54082,9 @@ function PatternList({
       if (selectedCategory === myPatternsCategory.name && pattern.type === INSERTER_PATTERN_TYPES.user) {
         return true;
       }
+      if (selectedCategory === starterPatternsCategory.name && pattern.blockTypes?.includes('core/post-content')) {
+        return true;
+      }
       if (selectedCategory === 'uncategorized') {
         var _pattern$categories$s;
         const hasKnownCategory = (_pattern$categories$s = pattern.categories?.some(category => registeredPatternCategories.includes(category))) !== null && _pattern$categories$s !== void 0 ? _pattern$categories$s : false;
