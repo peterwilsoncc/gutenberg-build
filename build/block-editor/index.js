@@ -38849,6 +38849,15 @@ function KeyboardShortcutsRegister() {
       }
     });
     registerShortcut({
+      name: 'core/block-editor/paste-styles',
+      category: 'block',
+      description: (0,external_wp_i18n_namespaceObject.__)('Paste the copied style to the selected block(s).'),
+      keyCombination: {
+        modifier: 'primaryAlt',
+        character: 'v'
+      }
+    });
+    registerShortcut({
       name: 'core/block-editor/insert-before',
       category: 'block',
       description: (0,external_wp_i18n_namespaceObject.__)('Insert a new block before the selected block(s).'),
@@ -54083,6 +54092,9 @@ function PatternList({
       if (selectedCategory === myPatternsCategory.name && pattern.type === INSERTER_PATTERN_TYPES.user) {
         return true;
       }
+      if (selectedCategory === starterPatternsCategory.name && pattern.blockTypes?.includes('core/post-content')) {
+        return true;
+      }
       if (selectedCategory === 'uncategorized') {
         var _pattern$categories$s;
         const hasKnownCategory = (_pattern$categories$s = pattern.categories?.some(category => registeredPatternCategories.includes(category))) !== null && _pattern$categories$s !== void 0 ? _pattern$categories$s : false;
@@ -59617,7 +59629,9 @@ function BlockBreadcrumb({
           getEditorRegion(blockEditor)?.focus();
         },
         children: rootLabel
-      }), !hasSelection && rootLabel, !!clientId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+      }), !hasSelection && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        children: rootLabel
+      }), !!clientId && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
         icon: chevron_right_small,
         className: "block-editor-block-breadcrumb__separator"
       })]
@@ -60940,7 +60954,7 @@ function PreviewBlockPopover({
           className: "block-editor-block-switcher__preview-title",
           children: (0,external_wp_i18n_namespaceObject.__)('Preview')
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_preview, {
-          viewportWidth: 500,
+          viewportWidth: 601,
           blocks: blocks
         })]
       })
@@ -65056,6 +65070,7 @@ function useShowBlockTools() {
 
 
 
+
 function block_tools_selector(select) {
   const {
     getSelectedBlockClientId,
@@ -65110,6 +65125,7 @@ function BlockTools({
     showEmptyBlockSideInserter,
     showBlockToolbarPopover
   } = useShowBlockTools();
+  const pasteStyles = usePasteStyles();
   const {
     duplicateBlocks,
     removeBlocks,
@@ -65153,6 +65169,13 @@ function BlockTools({
       if (clientIds.length) {
         event.preventDefault();
         removeBlocks(clientIds);
+      }
+    } else if (isMatch('core/block-editor/paste-styles', event)) {
+      const clientIds = getSelectedBlockClientIds();
+      if (clientIds.length) {
+        event.preventDefault();
+        const blocks = getBlocksByClientId(clientIds);
+        pasteStyles(blocks);
       }
     } else if (isMatch('core/block-editor/insert-after', event)) {
       const clientIds = getSelectedBlockClientIds();
@@ -66579,6 +66602,7 @@ function getDragDisplacementValues({
 
 
 
+
 function ListViewBlock({
   block: {
     clientId
@@ -66637,6 +66661,7 @@ function ListViewBlock({
     getGroupingBlockName
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blocks_namespaceObject.store);
   const blockInformation = useBlockDisplayInformation(clientId);
+  const pasteStyles = usePasteStyles();
   const {
     block,
     blockName,
@@ -66738,6 +66763,13 @@ function ListViewBlock({
         blockToFocus = getBlockOrder()[0];
       }
       updateFocusAndSelection(blockToFocus, shouldUpdateSelection);
+    } else if (isMatch('core/block-editor/paste-styles', event)) {
+      event.preventDefault();
+      const {
+        blocksToUpdate
+      } = getBlocksToUpdate();
+      const blocks = getBlocksByClientId(blocksToUpdate);
+      pasteStyles(blocks);
     } else if (isMatch('core/block-editor/duplicate', event)) {
       event.preventDefault();
       const {
