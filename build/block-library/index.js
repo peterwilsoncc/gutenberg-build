@@ -26852,10 +26852,6 @@ function image_Image({
   const {
     allowResize = true
   } = context;
-  const {
-    getBlock,
-    getSettings
-  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
   const image = (0,external_wp_data_namespaceObject.useSelect)(select => id && isSingleSelected ? select(external_wp_coreData_namespaceObject.store).getMedia(id, {
     context: 'view'
   }) : null, [id, isSingleSelected]);
@@ -26867,7 +26863,8 @@ function image_Image({
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockRootClientId,
-      canInsertBlockType
+      canInsertBlockType,
+      getSettings
     } = select(external_wp_blockEditor_namespaceObject.store);
     const rootClientId = getBlockRootClientId(clientId);
     const settings = getSettings();
@@ -26879,6 +26876,10 @@ function image_Image({
     };
   }, [clientId]);
   const {
+    getBlock,
+    getSettings
+  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
+  const {
     replaceBlocks,
     toggleSelection
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
@@ -26886,6 +26887,9 @@ function image_Image({
     createErrorNotice,
     createSuccessNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
+  const {
+    editEntityRecord
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
   const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
   const isWideAligned = ['wide', 'full'].includes(align);
   const [{
@@ -26924,7 +26928,7 @@ function image_Image({
     .fetch(url.includes('?') ? url : url + '?').then(response => response.blob()).then(blob => setExternalBlob(blob))
     // Do nothing, cannot upload.
     .catch(() => {});
-  }, [id, url, isSingleSelected, externalBlob]);
+  }, [id, url, isSingleSelected, externalBlob, getSettings]);
 
   // Get naturalWidth and naturalHeight from image, and fall back to loaded natural
   // width and height. This resolves an issue in Safari where the loaded natural
@@ -27330,7 +27334,6 @@ function image_Image({
     queryId
   } = context;
   const isDescendentOfQueryLoop = Number.isFinite(queryId);
-  const [, setFeaturedImage] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', postType, 'featured_media', postId);
   let img = temporaryURL && hasImageErrored ?
   /*#__PURE__*/
   // Show a placeholder during upload when the blob URL can't be loaded. This can
@@ -27510,7 +27513,9 @@ function image_Image({
    * Set the post's featured image with the current image.
    */
   const setPostFeatureImage = () => {
-    setFeaturedImage(id);
+    editEntityRecord('postType', postType, postId, {
+      featured_media: id
+    });
     createSuccessNotice((0,external_wp_i18n_namespaceObject.__)('Post featured image updated.'), {
       type: 'snackbar'
     });
