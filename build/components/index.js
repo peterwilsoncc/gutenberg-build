@@ -35005,12 +35005,11 @@ function useAutocomplete({
   const listBoxId = isExpanded ? `components-autocomplete-listbox-${instanceId}` : undefined;
   const activeId = isExpanded ? `components-autocomplete-item-${instanceId}-${selectedKey}` : null;
   const hasSelection = record.start !== undefined;
-  const showPopover = !!textContent && hasSelection && !!AutocompleterUI;
   return {
     listBoxId,
     activeId,
     onKeyDown: withIgnoreIMEEvents(handleKeyDown),
-    popover: showPopover && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AutocompleterUI, {
+    popover: hasSelection && AutocompleterUI && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AutocompleterUI, {
       className: className,
       filterValue: filterValue,
       instanceId: instanceId,
@@ -38106,18 +38105,17 @@ function UnforwardedRangeControl(props, forwardedRef) {
  * import { useState } from '@wordpress/element';
  *
  * const MyRangeControl = () => {
- *   const [ value, setValue ] = useState();
+ *   const [ isChecked, setChecked ] = useState( true );
  *   return (
  *     <RangeControl
  *       __nextHasNoMarginBottom
  *       __next40pxDefaultSize
  *       help="Please select how transparent you would like this."
- *       initialPosition={ 50 }
+ *       initialPosition={50}
  *       label="Opacity"
- *       max={ 100 }
- *       min={ 0 }
- *       value={ value }
- *       onChange={ setValue }
+ *       max={100}
+ *       min={0}
+ *       onChange={() => {}}
  *     />
  *   );
  * };
@@ -49605,7 +49603,7 @@ const WithHintItemHint = /*#__PURE__*/emotion_styled_base_browser_esm("span",  t
 } : 0)("color:", COLORS.theme.gray[600], ";text-align:initial;line-height:", config_values.fontLineHeightBase, ";padding-inline-end:", space(1), ";margin-block:", space(1), ";" + ( true ? "" : 0));
 const SelectedItemCheck = /*#__PURE__*/emotion_styled_base_browser_esm(SelectItemCheck,  true ? {
   target: "e1p3eej70"
-} : 0)("display:flex;align-items:center;margin-inline-start:", space(2), ";fill:currentColor;align-self:start;margin-block-start:2px;font-size:0;", WithHintItemWrapper, "~&,&:not(:empty){font-size:24px;}" + ( true ? "" : 0));
+} : 0)("display:flex;align-items:center;margin-inline-start:", space(2), ";align-self:start;margin-block-start:2px;font-size:0;", WithHintItemWrapper, "~&,&:not(:empty){font-size:24px;}" + ( true ? "" : 0));
 
 ;// ./packages/components/build-module/custom-select-control-v2/custom-select.js
 /**
@@ -66331,7 +66329,7 @@ const ToolbarContext = (0,external_wp_element_namespaceObject.createContext)(und
  */
 
 
-function UnforwardedToolbarItem({
+function toolbar_item_ToolbarItem({
   children,
   as: Component,
   ...props
@@ -66369,8 +66367,7 @@ function UnforwardedToolbarItem({
     render: render
   });
 }
-const toolbar_item_ToolbarItem = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedToolbarItem);
-/* harmony default export */ const toolbar_item = (toolbar_item_ToolbarItem);
+/* harmony default export */ const toolbar_item = ((0,external_wp_element_namespaceObject.forwardRef)(toolbar_item_ToolbarItem));
 
 ;// ./packages/components/build-module/toolbar/toolbar-button/toolbar-button-container.js
 
@@ -66911,7 +66908,7 @@ const toolbar_Toolbar = (0,external_wp_element_namespaceObject.forwardRef)(Unfor
 
 
 
-function UnforwardedToolbarDropdownMenu(props, ref) {
+function ToolbarDropdownMenu(props, ref) {
   const accessibleToolbarState = (0,external_wp_element_namespaceObject.useContext)(toolbar_context);
   if (!accessibleToolbarState) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dropdown_menu, {
@@ -66934,8 +66931,7 @@ function UnforwardedToolbarDropdownMenu(props, ref) {
     })
   });
 }
-const ToolbarDropdownMenu = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedToolbarDropdownMenu);
-/* harmony default export */ const toolbar_dropdown_menu = (ToolbarDropdownMenu);
+/* harmony default export */ const toolbar_dropdown_menu = ((0,external_wp_element_namespaceObject.forwardRef)(ToolbarDropdownMenu));
 
 ;// ./packages/components/build-module/tools-panel/styles.js
 

@@ -1946,7 +1946,7 @@ function ManagePatternsMenuItem() {
       post_type: 'wp_block'
     });
     const patternsUrl = (0,external_wp_url_namespaceObject.addQueryArgs)('site-editor.php', {
-      p: '/pattern'
+      path: '/patterns'
     });
 
     // The site editor and templates both check whether the user has
