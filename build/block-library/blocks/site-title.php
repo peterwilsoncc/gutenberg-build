@@ -16,7 +16,7 @@
  */
 function gutenberg_render_block_core_site_title( $attributes ) {
 	$site_title = get_bloginfo( 'name' );
-	if ( ! $site_title ) {
+	if ( ! trim( $site_title ) ) {
 		return;
 	}
 

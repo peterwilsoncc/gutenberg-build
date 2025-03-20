@@ -56299,7 +56299,7 @@ function SiteTitleEdit({
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   function setTitle(newTitle) {
     editEntityRecord('root', 'site', undefined, {
-      title: newTitle
+      title: newTitle.trim()
     });
   }
   const TagName = level === 0 ? 'p' : `h${level}`;
