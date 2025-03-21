@@ -23476,17 +23476,16 @@ const LinkControlSearchInput = (0,external_wp_element_namespaceObject.forwardRef
       }, suggestion);
     }
   };
-  const inputLabel = placeholder !== null && placeholder !== void 0 ? placeholder : (0,external_wp_i18n_namespaceObject.__)('Search or type URL');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "block-editor-link-control__search-input-container",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(url_input, {
       disableSuggestions: currentLink?.url === value,
-      label: inputLabel,
+      label: (0,external_wp_i18n_namespaceObject.__)('Link'),
       hideLabelFromVision: hideLabelFromVision,
       className: className,
       value: value,
       onChange: onInputChange,
-      placeholder: inputLabel,
+      placeholder: placeholder !== null && placeholder !== void 0 ? placeholder : (0,external_wp_i18n_namespaceObject.__)('Search or type URL'),
       __experimentalRenderSuggestions: showSuggestions ? handleRenderSuggestions : null,
       __experimentalFetchLinkSuggestions: searchHandler,
       __experimentalHandleURLSuggestions: true,
