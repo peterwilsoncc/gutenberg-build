@@ -236,7 +236,7 @@ function InlineUI({
           type: image_name,
           attributes: {
             ...activeObjectAttributes,
-            style: width ? `width: ${editedWidth}px;` : '',
+            style: editedWidth ? `width: ${editedWidth}px;` : '',
             alt: editedAlt
           }
         };
