@@ -30032,11 +30032,9 @@ function PreviewDropdown({
     const {
       getDeviceType,
       getCurrentPostType,
-      getCurrentTemplateId
-    } = select(store_store);
-    const {
+      getCurrentTemplateId,
       getRenderingMode
-    } = unlock(select(store_store));
+    } = select(store_store);
     const {
       getEntityRecord,
       getPostType
