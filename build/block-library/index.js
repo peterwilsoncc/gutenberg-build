@@ -38219,7 +38219,7 @@ const useIsDraggingWithin = elementRef => {
   }, [elementRef]);
   return isDraggingWithin;
 };
-const useIsInvalidLink = (kind, type, id) => {
+const useIsInvalidLink = (kind, type, id, enabled) => {
   const isPostType = kind === 'post-type' || type === 'post' || type === 'page';
   const hasId = Number.isInteger(id);
   const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
@@ -38231,14 +38231,14 @@ const useIsInvalidLink = (kind, type, id) => {
     // Fetching the posts status is an "expensive" operation. Especially for sites with large navigations.
     // When the block is rendered in a template or other disabled contexts we can skip this check in order
     // to avoid all these additional requests that don't really add any value in that mode.
-    if (blockEditingMode === 'disabled') {
+    if (blockEditingMode === 'disabled' || !enabled) {
       return null;
     }
     const {
       getEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
     return getEntityRecord('postType', type, id)?.status;
-  }, [isPostType, blockEditingMode, type, id]);
+  }, [isPostType, blockEditingMode, enabled, type, id]);
 
   // Check Navigation Link validity if:
   // 1. Link is 'post-type'.
@@ -38417,7 +38417,6 @@ function NavigationLinkEdit({
     description,
     kind
   } = attributes;
-  const [isInvalid, isDraft] = useIsInvalidLink(kind, type, id);
   const {
     maxNestingLevel
   } = context;
@@ -38448,25 +38447,36 @@ function NavigationLinkEdit({
     isAtMaxNesting,
     isTopLevelLink,
     isParentOfSelectedBlock,
-    hasChildren
+    hasChildren,
+    validateLinkStatus
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockCount,
       getBlockName,
       getBlockRootClientId,
       hasSelectedInnerBlock,
-      getBlockParentsByBlockName
+      getBlockParentsByBlockName,
+      getSelectedBlockClientId
     } = select(external_wp_blockEditor_namespaceObject.store);
+    const rootClientId = getBlockRootClientId(clientId);
+    const isTopLevel = getBlockName(rootClientId) === 'core/navigation';
+    const selectedBlockClientId = getSelectedBlockClientId();
+    const rootNavigationClientId = isTopLevel ? rootClientId : getBlockParentsByBlockName(clientId, 'core/navigation')[0];
+
+    // Enable when the root Navigation block is selected or any of its inner blocks.
+    const enableLinkStatusValidation = selectedBlockClientId === rootNavigationClientId || hasSelectedInnerBlock(rootNavigationClientId, true);
     return {
       isAtMaxNesting: getBlockParentsByBlockName(clientId, NESTING_BLOCK_NAMES).length >= maxNestingLevel,
-      isTopLevelLink: getBlockName(getBlockRootClientId(clientId)) === 'core/navigation',
+      isTopLevelLink: isTopLevel,
       isParentOfSelectedBlock: hasSelectedInnerBlock(clientId, true),
-      hasChildren: !!getBlockCount(clientId)
+      hasChildren: !!getBlockCount(clientId),
+      validateLinkStatus: enableLinkStatusValidation
     };
   }, [clientId, maxNestingLevel]);
   const {
     getBlocks
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
+  const [isInvalid, isDraft] = useIsInvalidLink(kind, type, id, validateLinkStatus);
 
   /**
    * Transform to submenu block.
