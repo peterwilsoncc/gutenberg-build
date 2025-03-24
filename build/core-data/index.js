@@ -1662,7 +1662,7 @@ const rootEntitiesConfig = [{
   },
   plural: 'globalStylesVariations',
   // Should be different from name.
-  getTitle: record => record?.title?.rendered || record?.title,
+  getTitle: () => (0,external_wp_i18n_namespaceObject.__)('Custom Styles'),
   getRevisionsUrl: (parentId, revisionId) => `/wp/v2/global-styles/${parentId}/revisions${revisionId ? '/' + revisionId : ''}`,
   supportsPagination: true
 }, {
