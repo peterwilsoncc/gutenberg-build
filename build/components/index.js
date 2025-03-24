@@ -32941,7 +32941,7 @@ function UnforwardedAnglePickerControl(props, ref) {
  *     <AnglePickerControl
  *       value={ angle }
  *       onChange={ setAngle }
- *     </>
+ *     />
  *   );
  * }
  * ```
