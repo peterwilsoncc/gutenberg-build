@@ -32234,9 +32234,9 @@ function getPrecision(value) {
 /**
  * Clamps a value based on a min/max range.
  *
- * @param {number} value The value.
- * @param {number} min   The minimum range.
- * @param {number} max   The maximum range.
+ * @param {number|string} value The value.
+ * @param {number}        min   The minimum range.
+ * @param {number}        max   The maximum range.
  *
  * @return {number} The clamped value.
  */
@@ -32246,22 +32246,25 @@ function math_clamp(value, min, max) {
 }
 
 /**
- * Clamps a value based on a min/max range with rounding
+ * Rounds a value to the nearest step offset by a minimum.
  *
- * @param {number | string} value The value.
- * @param {number}          min   The minimum range.
- * @param {number}          max   The maximum range.
- * @param {number}          step  A multiplier for the value.
+ * @param {number|string} value The value.
+ * @param {number}        min   The minimum range.
+ * @param {number}        step  The increment for the value.
  *
- * @return {number} The rounded and clamped value.
+ * @return {number} The value as a valid step.
  */
-function roundClamp(value = 0, min = Infinity, max = Infinity, step = 1) {
+function ensureValidStep(value, min, step) {
   const baseValue = getNumber(value);
   const stepValue = getNumber(step);
-  const precision = getPrecision(step);
-  const rounded = Math.round(baseValue / stepValue) * stepValue;
-  const clampedValue = math_clamp(rounded, min, max);
-  return precision ? getNumber(clampedValue.toFixed(precision)) : clampedValue;
+  const precision = Math.max(getPrecision(step), getPrecision(min));
+  const realMin = Math.abs(min) === Infinity ? 0 : min;
+  // If the step is not a factor of the minimum then the step must be
+  // offset by the minimum.
+  const tare = realMin % stepValue ? realMin : 0;
+  const rounded = Math.round((baseValue - tare) / stepValue) * stepValue;
+  const fromMin = rounded + tare;
+  return precision ? getNumber(fromMin.toFixed(precision)) : fromMin;
 }
 
 ;// ./packages/components/build-module/h-stack/utils.js
@@ -32565,12 +32568,14 @@ function UnforwardedNumberControl(props, forwardedRef) {
   const isStepAny = step === 'any';
   const baseStep = isStepAny ? 1 : ensureNumber(step);
   const baseSpin = ensureNumber(spinFactor) * baseStep;
-  const baseValue = roundClamp(0, min, max, baseStep);
   const constrainValue = (value, stepOverride) => {
-    // When step is "any" clamp the value, otherwise round and clamp it.
-    // Use '' + to convert to string for use in input value attribute.
-    return isStepAny ? '' + Math.min(max, Math.max(min, ensureNumber(value))) : '' + roundClamp(value, min, max, stepOverride !== null && stepOverride !== void 0 ? stepOverride : baseStep);
+    // When step is not "any" the value must be a valid step.
+    if (!isStepAny) {
+      value = ensureValidStep(value, min, stepOverride !== null && stepOverride !== void 0 ? stepOverride : baseStep);
+    }
+    return `${math_clamp(value, min, max)}`;
   };
+  const baseValue = constrainValue(0);
   const autoComplete = typeProp === 'number' ? 'off' : undefined;
   const classes = dist_clsx('components-number-control', className);
   const cx = useCx();
