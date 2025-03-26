@@ -17487,7 +17487,10 @@ const EmbedEdit = props => {
       // When obtaining an incoming preview,
       // we set the attributes derived from the preview data.
       const mergedAttributes = getMergedAttributes();
-      setAttributes(mergedAttributes);
+      const hasChanges = Object.keys(mergedAttributes).some(key => mergedAttributes[key] !== attributes[key]);
+      if (hasChanges) {
+        setAttributes(mergedAttributes);
+      }
       if (onReplace) {
         const upgradedBlock = createUpgradedEmbedBlock(props, mergedAttributes);
         if (upgradedBlock) {
