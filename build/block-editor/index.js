@@ -26936,14 +26936,10 @@ function BorderPanel({
       children: [hasBorderControl ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
         as: "legend",
         children: (0,external_wp_i18n_namespaceObject.__)('Shadow')
-      }) : null, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
-        isBordered: true,
-        isSeparated: true,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ShadowPopover, {
-          shadow: shadow,
-          onShadowChange: setShadow,
-          settings: settings
-        })
+      }) : null, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ShadowPopover, {
+        shadow: shadow,
+        onShadowChange: setShadow,
+        settings: settings
       })]
     })]
   });
