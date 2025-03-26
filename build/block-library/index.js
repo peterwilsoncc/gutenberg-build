@@ -53728,7 +53728,9 @@ function RSSEdit({
     displayExcerpt,
     excerptLength,
     feedURL,
-    itemsToShow
+    itemsToShow,
+    openInNewTab,
+    rel
   } = attributes;
   function toggleAttribute(propName) {
     return () => {
@@ -53869,7 +53871,25 @@ function RSSEdit({
           min: 2,
           max: 6,
           required: true
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Open links in new tab'),
+          checked: openInNewTab,
+          onChange: value => setAttributes({
+            openInNewTab: value
+          })
         })]
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      group: "advanced",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Link rel'),
+        value: rel || '',
+        onChange: value => setAttributes({
+          rel: value
+        })
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
@@ -53934,6 +53954,13 @@ const rss_metadata = {
     excerptLength: {
       type: "number",
       "default": 55
+    },
+    openInNewTab: {
+      type: "boolean",
+      "default": false
+    },
+    rel: {
+      type: "string"
     }
   },
   supports: {
