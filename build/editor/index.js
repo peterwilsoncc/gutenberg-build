@@ -18788,6 +18788,7 @@ function CreateNewTemplateModal({
     onRequestClose: cancel,
     focusOnMount: "firstContentElement",
     size: "small",
+    overlayClassName: "editor-post-template__create-template-modal",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
       className: "editor-post-template__create-form",
       onSubmit: submit,
