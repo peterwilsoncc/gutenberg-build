@@ -36810,25 +36810,29 @@ function ColorTools({
         label: (0,external_wp_i18n_namespaceObject.__)('Text'),
         onColorChange: setTextColor,
         resetAllFilter: () => setTextColor(),
-        clearable: true
+        clearable: true,
+        enableAlpha: true
       }, {
         colorValue: backgroundColor.color,
         label: (0,external_wp_i18n_namespaceObject.__)('Background'),
         onColorChange: setBackgroundColor,
         resetAllFilter: () => setBackgroundColor(),
-        clearable: true
+        clearable: true,
+        enableAlpha: true
       }, {
         colorValue: overlayTextColor.color,
         label: (0,external_wp_i18n_namespaceObject.__)('Submenu & overlay text'),
         onColorChange: setOverlayTextColor,
         resetAllFilter: () => setOverlayTextColor(),
-        clearable: true
+        clearable: true,
+        enableAlpha: true
       }, {
         colorValue: overlayBackgroundColor.color,
         label: (0,external_wp_i18n_namespaceObject.__)('Submenu & overlay background'),
         onColorChange: setOverlayBackgroundColor,
         resetAllFilter: () => setOverlayBackgroundColor(),
-        clearable: true
+        clearable: true,
+        enableAlpha: true
       }],
       panelId: clientId,
       ...colorGradientSettings,
