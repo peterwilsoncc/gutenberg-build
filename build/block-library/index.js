@@ -45011,7 +45011,8 @@ function PostFeaturedImageEdit({
           label: label,
           showTooltip: true,
           tooltipPosition: "top center",
-          onClick: () => {
+          onClick: e => {
+            e.preventDefault();
             open();
           }
         });
