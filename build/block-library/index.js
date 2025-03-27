@@ -61730,7 +61730,8 @@ function getLatestHeadings(select, clientId) {
   const permalink = (_select$getPermalink = select('core/editor').getPermalink()) !== null && _select$getPermalink !== void 0 ? _select$getPermalink : null;
   const isPaginated = getBlocksByName('core/nextpage').length !== 0;
   const {
-    onlyIncludeCurrentPage
+    onlyIncludeCurrentPage,
+    maxLevel
   } = (_getBlockAttributes = getBlockAttributes(clientId)) !== null && _getBlockAttributes !== void 0 ? _getBlockAttributes : {};
 
   // Get post-content block client ID.
@@ -61792,6 +61793,11 @@ function getLatestHeadings(select, clientId) {
     else if (!onlyIncludeCurrentPage || headingPage === tocPage) {
       if (blockName === 'core/heading') {
         const headingAttributes = getBlockAttributes(blockClientId);
+
+        // Skip headings that are deeper than maxLevel
+        if (maxLevel && headingAttributes.level > maxLevel) {
+          continue;
+        }
         const canBeLinked = typeof headingPageLink === 'string' && typeof headingAttributes.anchor === 'string' && headingAttributes.anchor !== '';
         latestHeadings.push({
           // Convert line breaks to spaces, and get rid of HTML tags in the headings.
@@ -61868,10 +61874,11 @@ function useObserveHeadings(clientId) {
  *
  * @param {Object}                       props                                   The props.
  * @param {Object}                       props.attributes                        The block attributes.
- * @param {HeadingData[]}                props.attributes.headings               A list of data for each heading in the post.
+ * @param {HeadingData[]}                props.attributes.headings               The list of data for each heading in the post.
  * @param {boolean}                      props.attributes.onlyIncludeCurrentPage Whether to only include headings from the current page (if the post is paginated).
- * @param {string}                       props.clientId
- * @param {(attributes: Object) => void} props.setAttributes
+ * @param {number|undefined}             props.attributes.maxLevel               The maximum heading level to include, or null to include all levels.
+ * @param {string}                       props.clientId                          The client id.
+ * @param {(attributes: Object) => void} props.setAttributes                     The set attributes function.
  *
  * @return {Component} The component.
  */
@@ -61879,7 +61886,8 @@ function useObserveHeadings(clientId) {
 function TableOfContentsEdit({
   attributes: {
     headings = [],
-    onlyIncludeCurrentPage
+    onlyIncludeCurrentPage,
+    maxLevel
   },
   clientId,
   setAttributes
@@ -61926,15 +61934,16 @@ function TableOfContentsEdit({
     })
   });
   const inspectorControls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
       label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
       resetAll: () => {
         setAttributes({
-          onlyIncludeCurrentPage: false
+          onlyIncludeCurrentPage: false,
+          maxLevel: undefined
         });
       },
       dropdownMenuProps: dropdownMenuProps,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         hasValue: () => !!onlyIncludeCurrentPage,
         label: (0,external_wp_i18n_namespaceObject.__)('Only include current page'),
         onDeselect: () => setAttributes({
@@ -61950,7 +61959,46 @@ function TableOfContentsEdit({
           }),
           help: onlyIncludeCurrentPage ? (0,external_wp_i18n_namespaceObject.__)('Only including headings from the current page (if the post is paginated).') : (0,external_wp_i18n_namespaceObject.__)('Include headings from all pages (if the post is paginated).')
         })
-      })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => !!maxLevel,
+        label: (0,external_wp_i18n_namespaceObject.__)('Limit heading levels'),
+        onDeselect: () => setAttributes({
+          maxLevel: undefined
+        }),
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+          __nextHasNoMarginBottom: true,
+          __next40pxDefaultSize: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Include headings down to level'),
+          value: maxLevel || '',
+          options: [{
+            value: '',
+            label: (0,external_wp_i18n_namespaceObject.__)('All levels')
+          }, {
+            value: '1',
+            label: (0,external_wp_i18n_namespaceObject.__)('Heading 1')
+          }, {
+            value: '2',
+            label: (0,external_wp_i18n_namespaceObject.__)('Heading 2')
+          }, {
+            value: '3',
+            label: (0,external_wp_i18n_namespaceObject.__)('Heading 3')
+          }, {
+            value: '4',
+            label: (0,external_wp_i18n_namespaceObject.__)('Heading 4')
+          }, {
+            value: '5',
+            label: (0,external_wp_i18n_namespaceObject.__)('Heading 5')
+          }, {
+            value: '6',
+            label: (0,external_wp_i18n_namespaceObject.__)('Heading 6')
+          }],
+          onChange: value => setAttributes({
+            maxLevel: value ? parseInt(value) : undefined
+          }),
+          help: maxLevel ? (0,external_wp_i18n_namespaceObject.__)('Including all heading levels in the table of contents.') : (0,external_wp_i18n_namespaceObject.__)('Only include headings up to and including this level.')
+        })
+      })]
     })
   });
 
@@ -62047,6 +62095,9 @@ const table_of_contents_metadata = {
     onlyIncludeCurrentPage: {
       type: "boolean",
       "default": false
+    },
+    maxLevel: {
+      type: "number"
     }
   },
   supports: {
