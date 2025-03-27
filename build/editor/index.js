@@ -20040,9 +20040,7 @@ function ResetDefaultTemplate({
 
 
 
-function CreateNewTemplate({
-  onClick
-}) {
+function CreateNewTemplate() {
   const {
     canCreateTemplates
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -20072,7 +20070,6 @@ function CreateNewTemplate({
     }), isCreateModalOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CreateNewTemplateModal, {
       onClose: () => {
         setIsCreateModalOpen(false);
-        onClick();
       }
     })]
   });
@@ -20206,9 +20203,7 @@ function BlockThemeControl({
             onClick: onClose
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ResetDefaultTemplate, {
             onClick: onClose
-          }), canCreateTemplate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CreateNewTemplate, {
-            onClick: onClose
-          })]
+          }), canCreateTemplate && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CreateNewTemplate, {})]
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
             icon: !isTemplateHidden ? library_check : undefined,
