@@ -24751,16 +24751,17 @@ function InspectorImagePreviewItem({
   className,
   onToggleCallback = background_image_control_noop
 }) {
+  const {
+    isOpen,
+    ...restToggleProps
+  } = toggleProps;
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (typeof toggleProps?.isOpen !== 'undefined') {
-      onToggleCallback(toggleProps?.isOpen);
+    if (typeof isOpen !== 'undefined') {
+      onToggleCallback(isOpen);
     }
-  }, [toggleProps?.isOpen, onToggleCallback]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
-    as: as,
-    className: className,
-    ...toggleProps,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+  }, [isOpen, onToggleCallback]);
+  const renderPreviewContent = () => {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       justify: "flex-start",
       as: "span",
       className: "block-editor-global-styles-background-panel__inspector-preview-inner",
@@ -24788,8 +24789,15 @@ function InspectorImagePreviewItem({
           (0,external_wp_i18n_namespaceObject.__)('Background image: %s'), filename || label) : (0,external_wp_i18n_namespaceObject.__)('No background image selected')
         })]
       })]
-    })
-  });
+    });
+  };
+  return as === 'button' ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    __next40pxDefaultSize: true,
+    className: className,
+    ...restToggleProps,
+    "aria-expanded": isOpen,
+    children: renderPreviewContent()
+  }) : renderPreviewContent();
 }
 function BackgroundControlsPanel({
   label,
