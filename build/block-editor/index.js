@@ -54826,7 +54826,6 @@ function getBlockAndPreviewFromMedia(media, mediaType) {
 
 
 const ALLOWED_MEDIA_TYPES = ['image'];
-const MAXIMUM_TITLE_LENGTH = 25;
 const MEDIA_OPTIONS_POPOVER_PROPS = {
   position: 'bottom left',
   className: 'block-editor-inserter__media-list__item-preview-options__popover'
@@ -54994,11 +54993,6 @@ function MediaPreview({
     });
   }, [isInserting, getSettings, onClick, createSuccessNotice, updateBlockAttributes, createErrorNotice, getBlock]);
   const title = typeof media.title === 'string' ? media.title : media.title?.rendered || (0,external_wp_i18n_namespaceObject.__)('no title');
-  let truncatedTitle;
-  if (title.length > MAXIMUM_TITLE_LENGTH) {
-    const omission = '...';
-    truncatedTitle = title.slice(0, MAXIMUM_TITLE_LENGTH - omission.length) + omission;
-  }
   const onMouseEnter = (0,external_wp_element_namespaceObject.useCallback)(() => setIsHovered(true), []);
   const onMouseLeave = (0,external_wp_element_namespaceObject.useCallback)(() => setIsHovered(false), []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -55020,7 +55014,7 @@ function MediaPreview({
           onMouseEnter: onMouseEnter,
           onMouseLeave: onMouseLeave,
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
-            text: truncatedTitle || title,
+            text: title,
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Item, {
               render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
                 "aria-label": title,
