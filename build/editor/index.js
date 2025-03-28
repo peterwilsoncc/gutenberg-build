@@ -18707,9 +18707,13 @@ const addTemplate = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
 
 ;// ./packages/editor/build-module/components/post-template/create-new-template-modal.js
 /**
- * WordPress dependencies
+ * External dependencies
  */
 
+
+/**
+ * WordPress dependencies
+ */
 
 
 
@@ -18772,7 +18776,7 @@ function CreateNewTemplateModal({
       }
     })])]);
     const newTemplate = await createTemplate({
-      slug: (0,external_wp_url_namespaceObject.cleanForSlug)(title || DEFAULT_TITLE),
+      slug: paramCase(title || DEFAULT_TITLE) || 'wp-custom-template',
       content: newTemplateContent,
       title: title || DEFAULT_TITLE
     });
