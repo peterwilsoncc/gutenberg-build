@@ -45602,15 +45602,17 @@ const applyWithDispatch = (0,external_wp_data_namespaceObject.withDispatch)((dis
   // Do not add new properties here, use `useDispatch` instead to avoid
   // leaking new props to the public API (editor.BlockListBlock filter).
   return {
-    setAttributes(newAttributes) {
+    setAttributes(nextAttributes) {
       const {
         getMultiSelectedBlockClientIds
       } = registry.select(store);
       const multiSelectedBlockClientIds = getMultiSelectedBlockClientIds();
       const {
-        clientId
+        clientId,
+        attributes
       } = ownProps;
       const clientIds = multiSelectedBlockClientIds.length ? multiSelectedBlockClientIds : [clientId];
+      const newAttributes = typeof nextAttributes === 'function' ? nextAttributes(attributes) : nextAttributes;
       updateBlockAttributes(clientIds, newAttributes);
     },
     onInsertBlocks(blocks, index) {

@@ -49896,12 +49896,12 @@ function QueryContent({
   // Changes in query property (which is an object) need to be in the same callback,
   // because updates are batched after the render and changes in different query properties
   // would cause to override previous wanted changes.
-  const updateQuery = (0,external_wp_element_namespaceObject.useCallback)(newQuery => setAttributes({
+  const updateQuery = (0,external_wp_element_namespaceObject.useCallback)(newQuery => setAttributes(prevAttributes => ({
     query: {
-      ...query,
+      ...prevAttributes.query,
       ...newQuery
     }
-  }), [query, setAttributes]);
+  })), [setAttributes]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     const newQuery = {};
     // When we inherit from global query always need to set the `perPage`
