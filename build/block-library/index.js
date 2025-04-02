@@ -36140,7 +36140,6 @@ const external_wp_escapeHtml_namespaceObject = window["wp"]["escapeHtml"];
  * @property {number}               [id]            A post or term id.
  * @property {boolean}              [opensInNewTab] Sets link target to _blank when true.
  * @property {string}               [url]           Link href.
- * @property {string}               [title]         Link title attribute.
  */
 /**
  * Link Control onChange handler that updates block attributes when a setting is changed.
@@ -38295,7 +38294,6 @@ function Controls({
     label,
     url,
     description,
-    title,
     rel
   } = attributes;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
@@ -38358,26 +38356,6 @@ function Controls({
           });
         },
         help: (0,external_wp_i18n_namespaceObject.__)('The description will be displayed in the menu if the current theme supports it.')
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-      hasValue: () => !!title,
-      label: (0,external_wp_i18n_namespaceObject.__)('Title attribute'),
-      onDeselect: () => setAttributes({
-        title: ''
-      }),
-      isShownByDefault: true,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Title attribute'),
-        value: title || '',
-        onChange: titleValue => {
-          setAttributes({
-            title: titleValue
-          });
-        },
-        autoComplete: "off",
-        help: (0,external_wp_i18n_namespaceObject.__)('Additional information to help clarify the purpose of the link.')
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       hasValue: () => !!rel,
@@ -38929,14 +38907,12 @@ const navigation_link_transforms_transforms = {
       label,
       url,
       rel,
-      title,
       opensInNewTab
     }) => {
       return (0,external_wp_blocks_namespaceObject.createBlock)('core/buttons', {}, [(0,external_wp_blocks_namespaceObject.createBlock)('core/button', {
         text: label,
         url,
         rel,
-        title,
         linkTarget: opensInNewTab ? '_blank' : undefined
       })]);
     }
@@ -38988,9 +38964,6 @@ const navigation_link_metadata = {
       "default": false
     },
     url: {
-      type: "string"
-    },
-    title: {
       type: "string"
     },
     kind: {
@@ -39242,7 +39215,6 @@ const edit_useIsDraggingWithin = elementRef => {
  * @property {number}               [id]            A post or term id.
  * @property {boolean}              [opensInNewTab] Sets link target to _blank when true.
  * @property {string}               [url]           Link href.
- * @property {string}               [title]         Link title attribute.
  */
 
 function NavigationSubmenuEdit({
@@ -39258,8 +39230,7 @@ function NavigationSubmenuEdit({
     label,
     url,
     description,
-    rel,
-    title
+    rel
   } = attributes;
   const {
     showSubmenuIcon,
@@ -39467,7 +39438,6 @@ function NavigationSubmenuEdit({
             label: '',
             url: '',
             description: '',
-            title: '',
             rel: ''
           });
         },
@@ -39528,26 +39498,6 @@ function NavigationSubmenuEdit({
             },
             label: (0,external_wp_i18n_namespaceObject.__)('Description'),
             help: (0,external_wp_i18n_namespaceObject.__)('The description will be displayed in the menu if the current theme supports it.')
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Title attribute'),
-          isShownByDefault: true,
-          hasValue: () => !!title,
-          onDeselect: () => setAttributes({
-            title: ''
-          }),
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-            __nextHasNoMarginBottom: true,
-            __next40pxDefaultSize: true,
-            value: title || '',
-            onChange: titleValue => {
-              setAttributes({
-                title: titleValue
-              });
-            },
-            label: (0,external_wp_i18n_namespaceObject.__)('Title attribute'),
-            autoComplete: "off",
-            help: (0,external_wp_i18n_namespaceObject.__)('Additional information to help clarify the purpose of the link.')
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Rel attribute'),
@@ -39731,9 +39681,6 @@ const navigation_submenu_metadata = {
       "default": false
     },
     url: {
-      type: "string"
-    },
-    title: {
       type: "string"
     },
     kind: {
