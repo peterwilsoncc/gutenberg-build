@@ -61942,7 +61942,7 @@ function TableOfContentsEdit({
           onChange: value => setAttributes({
             maxLevel: value ? parseInt(value) : undefined
           }),
-          help: maxLevel ? (0,external_wp_i18n_namespaceObject.__)('Including all heading levels in the table of contents.') : (0,external_wp_i18n_namespaceObject.__)('Only include headings up to and including this level.')
+          help: !maxLevel ? (0,external_wp_i18n_namespaceObject.__)('Including all heading levels in the table of contents.') : (0,external_wp_i18n_namespaceObject.__)('Only include headings up to and including this level.')
         })
       })]
     })
