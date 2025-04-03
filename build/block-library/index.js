@@ -44884,7 +44884,7 @@ function PostFeaturedImageEdit({
               rel: newRel
             })
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FeaturedImageResolutionTool, {
+        }), !!media && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FeaturedImageResolutionTool, {
           image: media,
           value: sizeSlug,
           onChange: nextSizeSlug => setAttributes({
