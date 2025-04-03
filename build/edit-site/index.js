@@ -26999,7 +26999,8 @@ function getOverviewBlockExamples(colors) {
   const typographyBlockExamples = [];
   if ((0,external_wp_blocks_namespaceObject.getBlockType)('core/heading')) {
     const headingBlock = (0,external_wp_blocks_namespaceObject.createBlock)('core/heading', {
-      content: (0,external_wp_i18n_namespaceObject.__)(`AaBbCcDdEeFfGgHhiiJjKkLIMmNnOoPpQakRrssTtUuVVWwXxxYyZzOl23356789X{(…)},2!*&:/A@HELFO™`),
+      // translators: Typography example. Your local alphabet, numbers and some common special characters.
+      content: (0,external_wp_i18n_namespaceObject.__)(`AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789X{(…)},.-<>?!*&:/A@HELFO™©`),
       level: 1
     });
     typographyBlockExamples.push(headingBlock);
