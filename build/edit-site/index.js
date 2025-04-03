@@ -43726,7 +43726,7 @@ function AddCustomGenericTemplateModalContent({
     setIsBusy(true);
     try {
       await createTemplate({
-        slug: 'wp-custom-template-' + paramCase(title || defaultTitle),
+        slug: paramCase(title || defaultTitle) || 'wp-custom-template',
         title: title || defaultTitle
       }, false);
     } finally {

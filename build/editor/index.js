@@ -13752,6 +13752,7 @@ function BlockRemovalWarnings() {
  */
 
 
+
 function useStartPatterns() {
   // A pattern is a start pattern if it includes 'core/post-content' in its blockTypes,
   // and it has no postTypes declared and the current post type is page or if
@@ -13886,7 +13887,7 @@ function StartPageOptions() {
     const choosePatternModalEnabled = select(external_wp_preferences_namespaceObject.store).get('core', 'enableChoosePatternModal');
     return {
       postId: getCurrentPostId(),
-      enabled: choosePatternModalEnabled && 'page' === getCurrentPostType()
+      enabled: choosePatternModalEnabled && TEMPLATE_POST_TYPE !== getCurrentPostType()
     };
   }, []);
 
@@ -18707,9 +18708,13 @@ const addTemplate = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
 
 ;// ./packages/editor/build-module/components/post-template/create-new-template-modal.js
 /**
- * WordPress dependencies
+ * External dependencies
  */
 
+
+/**
+ * WordPress dependencies
+ */
 
 
 
@@ -18772,7 +18777,7 @@ function CreateNewTemplateModal({
       }
     })])]);
     const newTemplate = await createTemplate({
-      slug: (0,external_wp_url_namespaceObject.cleanForSlug)(title || DEFAULT_TITLE),
+      slug: paramCase(title || DEFAULT_TITLE) || 'wp-custom-template',
       content: newTemplateContent,
       title: title || DEFAULT_TITLE
     });

@@ -16570,16 +16570,12 @@ function DetailsEdit({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("details", {
       ...innerBlocksProps,
       open: isOpen,
+      onToggle: event => setIsOpen(event.target.open),
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("summary", {
-        onClick: event => {
-          event.preventDefault();
-          setIsOpen(!isOpen);
-        },
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
           identifier: "summary",
           "aria-label": (0,external_wp_i18n_namespaceObject.__)('Write summary'),
           placeholder: placeholder || (0,external_wp_i18n_namespaceObject.__)('Write summary…'),
-          allowedFormats: [],
           withoutInteractiveFormatting: true,
           value: summary,
           onChange: newSummary => setAttributes({
@@ -36144,7 +36140,6 @@ const external_wp_escapeHtml_namespaceObject = window["wp"]["escapeHtml"];
  * @property {number}               [id]            A post or term id.
  * @property {boolean}              [opensInNewTab] Sets link target to _blank when true.
  * @property {string}               [url]           Link href.
- * @property {string}               [title]         Link title attribute.
  */
 /**
  * Link Control onChange handler that updates block attributes when a setting is changed.
@@ -38299,7 +38294,6 @@ function Controls({
     label,
     url,
     description,
-    title,
     rel
   } = attributes;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
@@ -38362,26 +38356,6 @@ function Controls({
           });
         },
         help: (0,external_wp_i18n_namespaceObject.__)('The description will be displayed in the menu if the current theme supports it.')
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-      hasValue: () => !!title,
-      label: (0,external_wp_i18n_namespaceObject.__)('Title attribute'),
-      onDeselect: () => setAttributes({
-        title: ''
-      }),
-      isShownByDefault: true,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Title attribute'),
-        value: title || '',
-        onChange: titleValue => {
-          setAttributes({
-            title: titleValue
-          });
-        },
-        autoComplete: "off",
-        help: (0,external_wp_i18n_namespaceObject.__)('Additional information to help clarify the purpose of the link.')
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       hasValue: () => !!rel,
@@ -38933,14 +38907,12 @@ const navigation_link_transforms_transforms = {
       label,
       url,
       rel,
-      title,
       opensInNewTab
     }) => {
       return (0,external_wp_blocks_namespaceObject.createBlock)('core/buttons', {}, [(0,external_wp_blocks_namespaceObject.createBlock)('core/button', {
         text: label,
         url,
         rel,
-        title,
         linkTarget: opensInNewTab ? '_blank' : undefined
       })]);
     }
@@ -38992,9 +38964,6 @@ const navigation_link_metadata = {
       "default": false
     },
     url: {
-      type: "string"
-    },
-    title: {
       type: "string"
     },
     kind: {
@@ -39246,7 +39215,6 @@ const edit_useIsDraggingWithin = elementRef => {
  * @property {number}               [id]            A post or term id.
  * @property {boolean}              [opensInNewTab] Sets link target to _blank when true.
  * @property {string}               [url]           Link href.
- * @property {string}               [title]         Link title attribute.
  */
 
 function NavigationSubmenuEdit({
@@ -39262,8 +39230,7 @@ function NavigationSubmenuEdit({
     label,
     url,
     description,
-    rel,
-    title
+    rel
   } = attributes;
   const {
     showSubmenuIcon,
@@ -39471,7 +39438,6 @@ function NavigationSubmenuEdit({
             label: '',
             url: '',
             description: '',
-            title: '',
             rel: ''
           });
         },
@@ -39532,26 +39498,6 @@ function NavigationSubmenuEdit({
             },
             label: (0,external_wp_i18n_namespaceObject.__)('Description'),
             help: (0,external_wp_i18n_namespaceObject.__)('The description will be displayed in the menu if the current theme supports it.')
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Title attribute'),
-          isShownByDefault: true,
-          hasValue: () => !!title,
-          onDeselect: () => setAttributes({
-            title: ''
-          }),
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-            __nextHasNoMarginBottom: true,
-            __next40pxDefaultSize: true,
-            value: title || '',
-            onChange: titleValue => {
-              setAttributes({
-                title: titleValue
-              });
-            },
-            label: (0,external_wp_i18n_namespaceObject.__)('Title attribute'),
-            autoComplete: "off",
-            help: (0,external_wp_i18n_namespaceObject.__)('Additional information to help clarify the purpose of the link.')
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Rel attribute'),
@@ -39735,9 +39681,6 @@ const navigation_submenu_metadata = {
       "default": false
     },
     url: {
-      type: "string"
-    },
-    title: {
       type: "string"
     },
     kind: {
@@ -44941,7 +44884,7 @@ function PostFeaturedImageEdit({
               rel: newRel
             })
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FeaturedImageResolutionTool, {
+        }), !!media && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FeaturedImageResolutionTool, {
           image: media,
           value: sizeSlug,
           onChange: nextSizeSlug => setAttributes({
@@ -49900,12 +49843,12 @@ function QueryContent({
   // Changes in query property (which is an object) need to be in the same callback,
   // because updates are batched after the render and changes in different query properties
   // would cause to override previous wanted changes.
-  const updateQuery = (0,external_wp_element_namespaceObject.useCallback)(newQuery => setAttributes({
+  const updateQuery = (0,external_wp_element_namespaceObject.useCallback)(newQuery => setAttributes(prevAttributes => ({
     query: {
-      ...query,
+      ...prevAttributes.query,
       ...newQuery
     }
-  }), [query, setAttributes]);
+  })), [setAttributes]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     const newQuery = {};
     // When we inherit from global query always need to set the `perPage`
@@ -61830,9 +61773,12 @@ function observeCallback(select, dispatch, clientId) {
   }
   const headings = getLatestHeadings(select, clientId);
   if (!es6_default()(headings, attributes.headings)) {
-    __unstableMarkNextChangeAsNotPersistent();
-    updateBlockAttributes(clientId, {
-      headings
+    // Executing the update in a microtask ensures that the non-persistent marker doesn't affect an attribute triggering the change.
+    window.queueMicrotask(() => {
+      __unstableMarkNextChangeAsNotPersistent();
+      updateBlockAttributes(clientId, {
+        headings
+      });
     });
   }
 }
