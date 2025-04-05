@@ -58273,7 +58273,19 @@ function SocialLinksEdit(props) {
     showLabels,
     size
   } = attributes;
-  const hasSelectedChild = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).hasSelectedInnerBlock(clientId), [clientId]);
+  const {
+    hasSocialIcons,
+    hasSelectedChild
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockCount,
+      hasSelectedInnerBlock
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    return {
+      hasSocialIcons: getBlockCount(clientId) > 0,
+      hasSelectedChild: hasSelectedInnerBlock(clientId)
+    };
+  }, [clientId]);
   const hasAnySelected = isSelected || hasSelectedChild;
   const logosOnly = attributes.className?.includes('is-style-logos-only');
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
@@ -58299,19 +58311,6 @@ function SocialLinksEdit(props) {
       });
     }
   }, [logosOnly]);
-  const SocialPlaceholder = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("li", {
-    className: "wp-block-social-links__social-placeholder",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      className: "wp-block-social-links__social-placeholder-icons",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "wp-social-link wp-social-link-twitter"
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "wp-social-link wp-social-link-facebook"
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "wp-social-link wp-social-link-instagram"
-      })]
-    })
-  });
 
   // Fallback color values are used maintain selections in case switching
   // themes and named colors in palette do not match.
@@ -58324,11 +58323,10 @@ function SocialLinksEdit(props) {
     className
   });
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
-    placeholder: !isSelected && SocialPlaceholder,
     templateLock: false,
     orientation: (_attributes$layout$or = attributes.layout?.orientation) !== null && _attributes$layout$or !== void 0 ? _attributes$layout$or : 'horizontal',
     __experimentalAppenderTagName: 'li',
-    renderAppender: hasAnySelected && external_wp_blockEditor_namespaceObject.InnerBlocks.ButtonBlockAppender
+    renderAppender: !hasSocialIcons || hasAnySelected ? external_wp_blockEditor_namespaceObject.InnerBlocks.ButtonBlockAppender : undefined
   });
   const POPOVER_PROPS = {
     position: 'bottom right'
