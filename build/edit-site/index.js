@@ -38182,12 +38182,13 @@ function ActionModal({
   items,
   closeModal
 }) {
+  var _action$modalFocusOnM;
   const label = typeof action.label === 'string' ? action.label : action.label(items);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Modal, {
     title: action.modalHeader || label,
     __experimentalHideHeader: !!action.hideModalHeader,
     onRequestClose: closeModal,
-    focusOnMount: "firstContentElement",
+    focusOnMount: (_action$modalFocusOnM = action.modalFocusOnMount) !== null && _action$modalFocusOnM !== void 0 ? _action$modalFocusOnM : true,
     size: action.modalSize || 'medium',
     overlayClassName: `dataviews-action-modal dataviews-action-modal__${dataviews_item_actions_kebabCase(action.id)}`,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(action.RenderModal, {

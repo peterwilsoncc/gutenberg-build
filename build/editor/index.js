@@ -6641,6 +6641,7 @@ const duplicatePost = {
   }) {
     return status !== 'trash';
   },
+  modalFocusOnMount: 'firstContentElement',
   RenderModal: ({
     items,
     closeModal,
@@ -7539,6 +7540,7 @@ const duplicateTemplatePart = {
   label: (0,external_wp_i18n_namespaceObject._x)('Duplicate', 'action label'),
   isEligible: item => item.type === 'wp_template_part',
   modalHeader: (0,external_wp_i18n_namespaceObject._x)('Duplicate template part', 'action label'),
+  modalFocusOnMount: 'firstContentElement',
   RenderModal: ({
     items,
     closeModal
@@ -7613,6 +7615,7 @@ const duplicatePattern = {
   label: (0,external_wp_i18n_namespaceObject._x)('Duplicate', 'action label'),
   isEligible: item => item.type !== 'wp_template_part',
   modalHeader: (0,external_wp_i18n_namespaceObject._x)('Duplicate pattern', 'action label'),
+  modalFocusOnMount: 'firstContentElement',
   RenderModal: ({
     items,
     closeModal
@@ -7662,6 +7665,7 @@ const {
 const renamePost = {
   id: 'rename-post',
   label: (0,external_wp_i18n_namespaceObject.__)('Rename'),
+  modalFocusOnMount: 'firstContentElement',
   isEligible(post) {
     if (post.status === 'trash') {
       return false;
@@ -7912,6 +7916,7 @@ const reorderPage = {
   }) {
     return status !== 'trash';
   },
+  modalFocusOnMount: 'firstContentElement',
   RenderModal: ReorderModal
 };
 
@@ -8242,6 +8247,7 @@ const resetPostAction = {
   icon: library_backup,
   supportsBulk: true,
   hideModalHeader: true,
+  modalFocusOnMount: 'firstContentElement',
   RenderModal: ({
     items,
     closeModal,
@@ -8510,6 +8516,7 @@ const deletePostAction = {
   },
   supportsBulk: true,
   hideModalHeader: true,
+  modalFocusOnMount: 'firstContentElement',
   RenderModal: ({
     items,
     closeModal,
@@ -8626,6 +8633,7 @@ const trash_post_trashPost = {
   },
   supportsBulk: true,
   hideModalHeader: true,
+  modalFocusOnMount: 'firstContentElement',
   RenderModal: ({
     items,
     closeModal,
@@ -8772,6 +8780,7 @@ const permanentlyDeletePost = {
     return status === 'trash' && permissions?.delete;
   },
   hideModalHeader: true,
+  modalFocusOnMount: 'firstContentElement',
   RenderModal: ({
     items,
     closeModal,
@@ -31993,6 +32002,7 @@ const useSetAsHomepageAction = () => {
       }
       return true;
     },
+    modalFocusOnMount: 'firstContentElement',
     RenderModal: SetAsHomepageModal
   }), [pageForPosts, pageOnFront]);
 };
@@ -32140,6 +32150,7 @@ const useSetAsPostsPageAction = () => {
       }
       return true;
     },
+    modalFocusOnMount: 'firstContentElement',
     RenderModal: SetAsPostsPageModal
   }), [pageForPosts, pageOnFront]);
 };
