@@ -49160,12 +49160,10 @@ function QueryInspectorControls(props) {
   const {
     attributes,
     setQuery,
-    setDisplayLayout,
     isSingular
   } = props;
   const {
-    query,
-    displayLayout
+    query
   } = attributes;
   const {
     order,
@@ -49235,10 +49233,9 @@ function QueryInspectorControls(props) {
   const showPostTypeControl = !inherit && isControlAllowed(allowedControls, 'postType');
   const postTypeControlLabel = (0,external_wp_i18n_namespaceObject.__)('Post type');
   const postTypeControlHelp = (0,external_wp_i18n_namespaceObject.__)('Select the type of content to display: posts, pages, or custom post types.');
-  const showColumnsControl = false;
   const showOrderControl = !inherit && isControlAllowed(allowedControls, 'order');
   const showStickyControl = !inherit && showSticky && isControlAllowed(allowedControls, 'sticky');
-  const showSettingsPanel = showInheritControl || showPostTypeControl || showColumnsControl || showOrderControl || showStickyControl;
+  const showSettingsPanel = showInheritControl || showPostTypeControl || showOrderControl || showStickyControl;
   const showTaxControl = !!taxonomies?.length && isControlAllowed(allowedControls, 'taxQuery');
   const showAuthorControl = isControlAllowed(allowedControls, 'author');
   const showSearchControl = isControlAllowed(allowedControls, 'search');
@@ -49337,30 +49334,6 @@ function QueryInspectorControls(props) {
             value: option.value,
             label: option.label
           }, option.value))
-        })
-      }), showColumnsControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-        hasValue: () => displayLayout?.columns !== 2,
-        label: (0,external_wp_i18n_namespaceObject.__)('Columns'),
-        onDeselect: () => setDisplayLayout({
-          columns: 2
-        }),
-        isShownByDefault: true,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
-            __nextHasNoMarginBottom: true,
-            __next40pxDefaultSize: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Columns'),
-            value: displayLayout.columns,
-            onChange: value => setDisplayLayout({
-              columns: value
-            }),
-            min: 2,
-            max: Math.max(6, displayLayout.columns)
-          }), displayLayout.columns > 6 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
-            status: "warning",
-            isDismissible: false,
-            children: (0,external_wp_i18n_namespaceObject.__)('This column count exceeds the recommended amount and may cause visual breakage.')
-          })]
         })
       }), showOrderControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         hasValue: () => order !== 'desc' || orderBy !== 'date',
@@ -49810,7 +49783,6 @@ function QueryContent({
   const {
     queryId,
     query,
-    displayLayout,
     enhancedPagination,
     tagName: TagName = 'div',
     query: {
@@ -49894,12 +49866,6 @@ function QueryContent({
       });
     }
   }, [queryId, instanceId, __unstableMarkNextChangeAsNotPersistent, setAttributes]);
-  const updateDisplayLayout = newDisplayLayout => setAttributes({
-    displayLayout: {
-      ...displayLayout,
-      ...newDisplayLayout
-    }
-  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EnhancedPaginationModal, {
       attributes: attributes,
@@ -49910,7 +49876,6 @@ function QueryContent({
         name: name,
         attributes: attributes,
         setQuery: updateQuery,
-        setDisplayLayout: updateDisplayLayout,
         setAttributes: setAttributes,
         clientId: clientId,
         isSingular: isSingular
