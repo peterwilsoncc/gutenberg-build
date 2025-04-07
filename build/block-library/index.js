@@ -44791,6 +44791,17 @@ function PostFeaturedImageEdit({
     }
   };
 
+  // On reset image
+  const onResetImage = () => {
+    setAttributes({
+      isLink: false,
+      linkTarget: '_self',
+      rel: '',
+      sizeSlug: undefined
+    });
+    setFeaturedImage(0);
+  };
+
   // Reset temporary url when media is available.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (mediaUrl && temporaryURL) {
@@ -44823,7 +44834,7 @@ function PostFeaturedImageEdit({
         setAttributes: setAttributes,
         media: media
       })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+    }), (featuredImage || isDescendentOfQueryLoop || !postId) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
         label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
         resetAll: () => {
@@ -44954,8 +44965,7 @@ function PostFeaturedImageEdit({
           label: label,
           showTooltip: true,
           tooltipPosition: "top center",
-          onClick: e => {
-            e.preventDefault();
+          onClick: () => {
             open();
           }
         });
@@ -44991,7 +45001,7 @@ function PostFeaturedImageEdit({
         accept: "image/*",
         onSelect: onSelectImage,
         onError: onUploadError,
-        onReset: () => setFeaturedImage(0)
+        onReset: onResetImage
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("figure", {
       ...blockProps,
