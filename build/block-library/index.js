@@ -48630,7 +48630,7 @@ function ParentControl({
       searchResults: getEntityRecords(...selectorArgs),
       searchHasResolved: hasFinishedResolution('getEntityRecords', selectorArgs)
     };
-  }, [search, parents]);
+  }, [search, postType, parents]);
   const currentParents = (0,external_wp_data_namespaceObject.useSelect)(select => {
     if (!parents?.length) {
       return parent_control_EMPTY_ARRAY;
@@ -48643,7 +48643,7 @@ function ParentControl({
       include: parents,
       per_page: parents.length
     });
-  }, [parents]);
+  }, [parents, postType]);
   // Update the `value` state only after the selectors are resolved
   // to avoid emptying the input when we're changing parents.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -48831,7 +48831,7 @@ function TaxonomyItem({
       searchResults: getEntityRecords(...selectorArgs),
       searchHasResolved: hasFinishedResolution('getEntityRecords', selectorArgs)
     };
-  }, [search, termIds]);
+  }, [search, taxonomy.slug, termIds]);
   // `existingTerms` are the ones fetched from the API and their type is `{ id: number; name: string }`.
   // They are used to extract the terms' names to populate the `FormTokenField` properly
   // and to sanitize the provided `termIds`, by setting only the ones that exist.
@@ -48847,7 +48847,7 @@ function TaxonomyItem({
       include: termIds,
       per_page: termIds.length
     });
-  }, [termIds]);
+  }, [taxonomy.slug, termIds]);
   // Update the `value` state only after the selectors are resolved
   // to avoid emptying the input when we're changing terms.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -49217,17 +49217,13 @@ function QueryInspectorControls(props) {
     setQuery(updateQuery);
   };
   const [querySearch, setQuerySearch] = (0,external_wp_element_namespaceObject.useState)(query.search);
-  const onChangeDebounced = (0,external_wp_element_namespaceObject.useCallback)((0,external_wp_compose_namespaceObject.debounce)(() => {
-    if (query.search !== querySearch) {
+  const debouncedQuerySearch = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return (0,external_wp_compose_namespaceObject.debounce)(newQuerySearch => {
       setQuery({
-        search: querySearch
+        search: newQuerySearch
       });
-    }
-  }, 250), [querySearch, query.search]);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    onChangeDebounced();
-    return onChangeDebounced.cancel;
-  }, [querySearch, onChangeDebounced]);
+    }, 250);
+  }, [setQuery]);
   const orderByOptions = useOrderByOptions(postType);
   const showInheritControl = isControlAllowed(allowedControls, 'inherit');
   const showPostTypeControl = !inherit && isControlAllowed(allowedControls, 'postType');
@@ -49440,13 +49436,21 @@ function QueryInspectorControls(props) {
       }), showSearchControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         hasValue: () => !!querySearch,
         label: (0,external_wp_i18n_namespaceObject.__)('Keyword'),
-        onDeselect: () => setQuerySearch(''),
+        onDeselect: () => {
+          setQuery({
+            search: ''
+          });
+          setQuerySearch('');
+        },
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
           __nextHasNoMarginBottom: true,
           __next40pxDefaultSize: true,
           label: (0,external_wp_i18n_namespaceObject.__)('Keyword'),
           value: querySearch,
-          onChange: setQuerySearch
+          onChange: newQuerySearch => {
+            debouncedQuerySearch(newQuerySearch);
+            setQuerySearch(newQuerySearch);
+          }
         })
       }), showParentControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         hasValue: () => !!parents?.length,
