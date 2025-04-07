@@ -58273,7 +58273,6 @@ function SocialLinksEdit(props) {
   } = props;
   const {
     iconBackgroundColorValue,
-    customIconBackgroundColor,
     iconColorValue,
     openInNewTab,
     showLabels,
@@ -58298,25 +58297,26 @@ function SocialLinksEdit(props) {
 
   // Remove icon background color when logos only style is selected or
   // restore it when any other style is selected.
-  const backgroundBackupRef = (0,external_wp_element_namespaceObject.useRef)({});
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (logosOnly) {
-      backgroundBackupRef.current = {
-        iconBackgroundColor,
-        iconBackgroundColorValue,
-        customIconBackgroundColor
-      };
-      setAttributes({
-        iconBackgroundColor: undefined,
-        customIconBackgroundColor: undefined,
-        iconBackgroundColorValue: undefined
+      let restore;
+      setAttributes(prev => {
+        restore = {
+          iconBackgroundColor: prev.iconBackgroundColor,
+          iconBackgroundColorValue: prev.iconBackgroundColorValue,
+          customIconBackgroundColor: prev.customIconBackgroundColor
+        };
+        return {
+          iconBackgroundColor: undefined,
+          iconBackgroundColorValue: undefined,
+          customIconBackgroundColor: undefined
+        };
       });
-    } else {
-      setAttributes({
-        ...backgroundBackupRef.current
+      return () => setAttributes({
+        ...restore
       });
     }
-  }, [logosOnly]);
+  }, [logosOnly, setAttributes]);
 
   // Fallback color values are used maintain selections in case switching
   // themes and named colors in palette do not match.
