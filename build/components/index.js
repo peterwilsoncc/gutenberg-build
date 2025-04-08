@@ -34699,6 +34699,18 @@ const UnforwardedPopover = (props, forwardedRef) => {
   });
 };
 
+// Export the PopoverSlot individually to allow typescript to pick the types up.
+const PopoverSlot = (0,external_wp_element_namespaceObject.forwardRef)(({
+  name = SLOT_NAME
+}, ref) => {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(slot_fill_Slot, {
+    bubblesVirtually: true,
+    name: name,
+    className: "popover-slot",
+    ref: ref
+  });
+});
+
 /**
  * `Popover` renders its content in a floating modal. If no explicit anchor is passed via props, it anchors to its parent element by default.
  *
@@ -34722,22 +34734,22 @@ const UnforwardedPopover = (props, forwardedRef) => {
  * ```
  *
  */
-const popover_Popover = contextConnect(UnforwardedPopover, 'Popover');
-function PopoverSlot({
-  name = SLOT_NAME
-}, ref) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(slot_fill_Slot, {
-    bubblesVirtually: true,
-    name: name,
-    className: "popover-slot",
-    ref: ref
-  });
-}
-
-// @ts-expect-error For Legacy Reasons
-popover_Popover.Slot = (0,external_wp_element_namespaceObject.forwardRef)(PopoverSlot);
-// @ts-expect-error For Legacy Reasons
-popover_Popover.__unstableSlotNameProvider = slotNameContext.Provider;
+const popover_Popover = Object.assign(contextConnect(UnforwardedPopover, 'Popover'), {
+  /**
+   * Renders a slot that is used internally by Popover for rendering content.
+   */
+  Slot: Object.assign(PopoverSlot, {
+    displayName: 'Popover.Slot'
+  }),
+  /**
+   * Provides a context to manage popover slot names.
+   *
+   * This is marked as unstable and should not be used directly.
+   */
+  __unstableSlotNameProvider: Object.assign(slotNameContext.Provider, {
+    displayName: 'Popover.__unstableSlotNameProvider'
+  })
+});
 /* harmony default export */ const popover = (popover_Popover);
 
 ;// ./packages/components/build-module/autocomplete/autocompleter-ui.js
