@@ -30332,7 +30332,8 @@ function NavigationMenuContent({
       rootClientId: listViewRootClientId,
       onSelect: offCanvasOnselect,
       blockSettingsMenu: LeafMoreMenu,
-      showAppender: false
+      showAppender: false,
+      isExpanded: true
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "edit-site-sidebar-navigation-screen-navigation-menus__helper-block-editor",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockList, {})
