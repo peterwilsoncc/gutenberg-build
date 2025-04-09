@@ -42885,7 +42885,6 @@ function PostCommentsCountEdit({
 const post_comments_count_metadata = {
   $schema: "https://schemas.wp.org/trunk/block.json",
   apiVersion: 3,
-  __experimental: "fse",
   name: "core/post-comments-count",
   title: "Comments Count",
   category: "theme",
@@ -43221,7 +43220,6 @@ function PostCommentsLinkEdit({
 const post_comments_link_metadata = {
   $schema: "https://schemas.wp.org/trunk/block.json",
   apiVersion: 3,
-  __experimental: "fse",
   name: "core/post-comments-link",
   title: "Comments Link",
   category: "theme",
