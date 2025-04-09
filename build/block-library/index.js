@@ -16454,7 +16454,7 @@ const cover_settings = {
     innerBlocks: [{
       name: 'core/paragraph',
       attributes: {
-        content: (0,external_wp_i18n_namespaceObject.__)('<strong>Snow Patrol</strong>'),
+        content: `<strong>${(0,external_wp_i18n_namespaceObject.__)('Snow Patrol')}</strong>`,
         align: 'center'
       }
     }]
@@ -16738,7 +16738,7 @@ const details_settings = {
   icon: library_details,
   example: {
     attributes: {
-      summary: 'La Mancha',
+      summary: (0,external_wp_i18n_namespaceObject.__)('La Mancha'),
       showContent: true
     },
     innerBlocks: [{
@@ -53025,7 +53025,7 @@ const quote_settings = {
   icon: library_quote,
   example: {
     attributes: {
-      citation: 'Julio Cortázar'
+      citation: (0,external_wp_i18n_namespaceObject.__)('Julio Cortázar')
     },
     innerBlocks: [{
       name: 'core/paragraph',
@@ -61463,7 +61463,7 @@ const table_settings = {
           content: '5.2',
           tag: 'td'
         }, {
-          content: 'Jaco Pastorius',
+          content: (0,external_wp_i18n_namespaceObject.__)('Jaco Pastorius'),
           tag: 'td'
         }, {
           content: (0,external_wp_i18n_namespaceObject.__)('May 7, 2019'),
@@ -61474,7 +61474,7 @@ const table_settings = {
           content: '5.1',
           tag: 'td'
         }, {
-          content: 'Betty Carter',
+          content: (0,external_wp_i18n_namespaceObject.__)('Betty Carter'),
           tag: 'td'
         }, {
           content: (0,external_wp_i18n_namespaceObject.__)('February 21, 2019'),
@@ -61485,7 +61485,7 @@ const table_settings = {
           content: '5.0',
           tag: 'td'
         }, {
-          content: 'Bebo Valdés',
+          content: (0,external_wp_i18n_namespaceObject.__)('Bebo Valdés'),
           tag: 'td'
         }, {
           content: (0,external_wp_i18n_namespaceObject.__)('December 6, 2018'),
