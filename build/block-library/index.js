@@ -61137,12 +61137,12 @@ const tableContentPasteSchema = ({
       th: {
         allowEmpty: true,
         children: phrasingContentSchema,
-        attributes: ['scope', 'colspan', 'rowspan']
+        attributes: ['scope', 'colspan', 'rowspan', 'style']
       },
       td: {
         allowEmpty: true,
         children: phrasingContentSchema,
-        attributes: ['colspan', 'rowspan']
+        attributes: ['colspan', 'rowspan', 'style']
       }
     }
   }
@@ -61183,11 +61183,19 @@ const table_transforms_transforms = {
           const rowAttributes = Array.from(row.children).reduce((colAcc, col) => {
             const rowspan = normalizeRowColSpan(col.getAttribute('rowspan'));
             const colspan = normalizeRowColSpan(col.getAttribute('colspan'));
+            const {
+              textAlign
+            } = col.style || {};
+            let align;
+            if (textAlign === 'left' || textAlign === 'center' || textAlign === 'right') {
+              align = textAlign;
+            }
             colAcc.push({
               tag: col.nodeName.toLowerCase(),
               content: col.innerHTML,
               rowspan,
-              colspan
+              colspan,
+              align
             });
             return colAcc;
           }, []);
