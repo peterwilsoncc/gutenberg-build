@@ -28986,6 +28986,9 @@ function getFeaturedImageDetails(post, size) {
     alt: image?.alt_text
   };
 }
+function getCurrentAuthor(post) {
+  return post._embedded?.author?.[0];
+}
 function LatestPostsEdit({
   attributes,
   setAttributes
@@ -29034,7 +29037,7 @@ function LatestPostsEdit({
       order,
       orderby: orderBy,
       per_page: postsToShow,
-      _embed: 'wp:featuredmedia',
+      _embed: 'author,wp:featuredmedia',
       ignore_sticky: true
     }).filter(([, value]) => typeof value !== 'undefined'));
     return {
@@ -29357,7 +29360,7 @@ function LatestPostsEdit({
       children: displayPosts.map(post => {
         const titleTrimmed = post.title.rendered.trim();
         let excerpt = post.excerpt.rendered;
-        const currentAuthor = authorList?.find(author => author.id === post.author);
+        const currentAuthor = getCurrentAuthor(post);
         const excerptElement = document.createElement('div');
         excerptElement.innerHTML = excerpt;
         excerpt = excerptElement.textContent || excerptElement.innerText || '';
