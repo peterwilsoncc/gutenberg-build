@@ -28971,6 +28971,7 @@ const DEFAULT_EXCERPT_LENGTH = 55;
 
 const CATEGORIES_LIST_QUERY = {
   per_page: -1,
+  _fields: 'id,name',
   context: 'view'
 };
 const USERS_LIST_QUERY = {
