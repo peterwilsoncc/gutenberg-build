@@ -58652,6 +58652,8 @@ function Guide({
   className,
   contentLabel,
   finishButtonText = (0,external_wp_i18n_namespaceObject.__)('Finish'),
+  nextButtonText = (0,external_wp_i18n_namespaceObject.__)('Next'),
+  previousButtonText = (0,external_wp_i18n_namespaceObject.__)('Previous'),
   onFinish,
   pages = []
 }) {
@@ -58726,13 +58728,13 @@ function Guide({
           variant: "tertiary",
           onClick: goBack,
           __next40pxDefaultSize: true,
-          children: (0,external_wp_i18n_namespaceObject.__)('Previous')
+          children: previousButtonText
         }), canGoForward && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
           className: "components-guide__forward-button",
           variant: "primary",
           onClick: goForward,
           __next40pxDefaultSize: true,
-          children: (0,external_wp_i18n_namespaceObject.__)('Next')
+          children: nextButtonText
         }), !canGoForward && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
           className: "components-guide__finish-button",
           variant: "primary",
