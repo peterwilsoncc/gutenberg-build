@@ -64341,10 +64341,7 @@ function NavigableToolbar({
  * @return {boolean} Whether the block toolbar component will be rendered.
  */
 function useHasBlockToolbar() {
-  const {
-    isToolbarEnabled,
-    isBlockDisabled
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const enabled = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockEditingMode,
       getBlockName,
@@ -64356,15 +64353,9 @@ function useHasBlockToolbar() {
     // instead of getSelectedBlockClientIds
     const selectedBlockClientId = getBlockSelectionStart();
     const blockType = selectedBlockClientId && (0,external_wp_blocks_namespaceObject.getBlockType)(getBlockName(selectedBlockClientId));
-    return {
-      isToolbarEnabled: blockType && (0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockType, '__experimentalToolbar', true),
-      isBlockDisabled: getBlockEditingMode(selectedBlockClientId) === 'disabled'
-    };
+    return blockType && (0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockType, '__experimentalToolbar', true) && getBlockEditingMode(selectedBlockClientId) !== 'disabled';
   }, []);
-  if (!isToolbarEnabled || isBlockDisabled) {
-    return false;
-  }
-  return true;
+  return enabled;
 }
 
 ;// ./packages/block-editor/build-module/components/block-toolbar/change-design.js
