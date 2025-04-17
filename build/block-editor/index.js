@@ -15808,7 +15808,7 @@ const mergeBlocks = (firstBlockClientId, secondBlockClientId) => ({
   const clientIdB = secondBlockClientId;
   const blockA = select.getBlock(clientIdA);
   const blockAType = (0,external_wp_blocks_namespaceObject.getBlockType)(blockA.name);
-  if (!blockAType) {
+  if (!blockAType || select.getBlockEditingMode(clientIdA) === 'disabled' || select.getBlockEditingMode(clientIdB) === 'disabled') {
     return;
   }
   const blockB = select.getBlock(clientIdB);
