@@ -31925,6 +31925,7 @@ function FlexControls({
         });
       },
       value: flexSize,
+      min: 0,
       label: flexResetLabel,
       hideLabelFromVision: true
     })]
