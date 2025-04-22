@@ -29098,14 +29098,14 @@ function Controls({
       dropdownMenuProps: dropdownMenuProps,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         hasValue: () => !!displayPostContent,
-        label: (0,external_wp_i18n_namespaceObject.__)('Post content'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Display post content'),
         onDeselect: () => setAttributes({
           displayPostContent: false
         }),
         isShownByDefault: true,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
           __nextHasNoMarginBottom: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Post content'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Display post content'),
           checked: displayPostContent,
           onChange: value => setAttributes({
             displayPostContent: value
@@ -29113,13 +29113,13 @@ function Controls({
         })
       }), displayPostContent && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         hasValue: () => displayPostContentRadio !== 'excerpt',
-        label: (0,external_wp_i18n_namespaceObject.__)('Show'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Content length'),
         onDeselect: () => setAttributes({
           displayPostContentRadio: 'excerpt'
         }),
         isShownByDefault: true,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Show'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Content length'),
           selected: displayPostContentRadio,
           options: [{
             label: (0,external_wp_i18n_namespaceObject.__)('Excerpt'),
