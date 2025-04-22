@@ -15808,7 +15808,7 @@ const mergeBlocks = (firstBlockClientId, secondBlockClientId) => ({
   const clientIdB = secondBlockClientId;
   const blockA = select.getBlock(clientIdA);
   const blockAType = (0,external_wp_blocks_namespaceObject.getBlockType)(blockA.name);
-  if (!blockAType) {
+  if (!blockAType || select.getBlockEditingMode(clientIdA) === 'disabled' || select.getBlockEditingMode(clientIdB) === 'disabled') {
     return;
   }
   const blockB = select.getBlock(clientIdB);
@@ -30729,7 +30729,7 @@ function typography_styleToAttributes(style) {
   };
   const fontSizeValue = style?.typography?.fontSize;
   const fontFamilyValue = style?.typography?.fontFamily;
-  const fontSizeSlug = fontSizeValue?.startsWith('var:preset|font-size|') ? fontSizeValue.substring('var:preset|font-size|'.length) : undefined;
+  const fontSizeSlug = typeof fontSizeValue === 'string' && fontSizeValue?.startsWith('var:preset|font-size|') ? fontSizeValue.substring('var:preset|font-size|'.length) : undefined;
   const fontFamilySlug = fontFamilyValue?.startsWith('var:preset|font-family|') ? fontFamilyValue.substring('var:preset|font-family|'.length) : undefined;
   updatedStyle.typography = {
     ...omit(updatedStyle.typography, ['fontFamily']),
@@ -31925,6 +31925,7 @@ function FlexControls({
         });
       },
       value: flexSize,
+      min: 0,
       label: flexResetLabel,
       hideLabelFromVision: true
     })]
@@ -38856,8 +38857,8 @@ function KeyboardShortcutsRegister() {
       category: 'block',
       description: (0,external_wp_i18n_namespaceObject.__)('Remove the selected block(s).'),
       keyCombination: {
-        modifier: 'primaryShift',
-        character: 'backspace'
+        modifier: 'access',
+        character: 'z'
       }
     });
     registerShortcut({
@@ -63114,7 +63115,7 @@ function BlockModeToggle({
   const {
     blockType,
     mode,
-    isCodeEditingEnabled
+    enabled
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlock,
@@ -63125,13 +63126,13 @@ function BlockModeToggle({
     return {
       mode: getBlockMode(clientId),
       blockType: block ? (0,external_wp_blocks_namespaceObject.getBlockType)(block.name) : null,
-      isCodeEditingEnabled: getSettings().codeEditingEnabled
+      enabled: getSettings().codeEditingEnabled && !!block?.isValid
     };
   }, [clientId]);
   const {
     toggleBlockMode
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  if (!blockType || !(0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockType, 'html', true) || !isCodeEditingEnabled) {
+  if (!blockType || !(0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockType, 'html', true) || !enabled) {
     return null;
   }
   const label = mode === 'visual' ? (0,external_wp_i18n_namespaceObject.__)('Edit as HTML') : (0,external_wp_i18n_namespaceObject.__)('Edit visually');
@@ -64340,10 +64341,7 @@ function NavigableToolbar({
  * @return {boolean} Whether the block toolbar component will be rendered.
  */
 function useHasBlockToolbar() {
-  const {
-    isToolbarEnabled,
-    isBlockDisabled
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const enabled = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockEditingMode,
       getBlockName,
@@ -64355,15 +64353,9 @@ function useHasBlockToolbar() {
     // instead of getSelectedBlockClientIds
     const selectedBlockClientId = getBlockSelectionStart();
     const blockType = selectedBlockClientId && (0,external_wp_blocks_namespaceObject.getBlockType)(getBlockName(selectedBlockClientId));
-    return {
-      isToolbarEnabled: blockType && (0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockType, '__experimentalToolbar', true),
-      isBlockDisabled: getBlockEditingMode(selectedBlockClientId) === 'disabled'
-    };
+    return blockType && (0,external_wp_blocks_namespaceObject.hasBlockSupport)(blockType, '__experimentalToolbar', true) && getBlockEditingMode(selectedBlockClientId) !== 'disabled';
   }, []);
-  if (!isToolbarEnabled || isBlockDisabled) {
-    return false;
-  }
-  return true;
+  return enabled;
 }
 
 ;// ./packages/block-editor/build-module/components/block-toolbar/change-design.js
@@ -73698,10 +73690,7 @@ function createLinkInParagraph(url, onReplace) {
 /* harmony default export */ const event_listeners_delete = (props => element => {
   function onKeyDown(event) {
     const {
-      keyCode,
-      shiftKey,
-      ctrlKey,
-      metaKey
+      keyCode
     } = event;
     if (event.defaultPrevented) {
       return;
@@ -73722,11 +73711,6 @@ function createLinkInParagraph(url, onReplace) {
 
       // Only process delete if the key press occurs at an uncollapsed edge.
       if (!(0,external_wp_richText_namespaceObject.isCollapsed)(value) || hasActiveFormats || isReverse && start !== 0 || !isReverse && end !== text.length) {
-        return;
-      }
-
-      // Exclude (command|ctrl)+shift+backspace as they are shortcuts for deleting blocks.
-      if (shiftKey && (ctrlKey || metaKey)) {
         return;
       }
       if (onMerge) {

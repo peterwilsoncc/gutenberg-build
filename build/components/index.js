@@ -34402,6 +34402,13 @@ function overlayMiddlewares() {
 
 const SLOT_NAME = 'Popover';
 
+/**
+ * Virtual padding to account for overflow boundaries.
+ *
+ * @type {number}
+ */
+const OVERFLOW_PADDING = 8;
+
 // An SVG displaying a triangle facing down, filled with a solid
 // color and bordered in such a way to create an arrow-like effect.
 // Keeping the SVG's viewbox squared simplify the arrow positioning
@@ -34512,6 +34519,7 @@ const UnforwardedPopover = (props, forwardedRef) => {
   const hasArrow = !isExpanded && !noArrow;
   const normalizedPlacementFromProps = position ? positionToPlacement(position) : placementProp;
   const middleware = [...(placementProp === 'overlay' ? overlayMiddlewares() : []), offset(offsetProp), computedFlipProp && floating_ui_dom_flip(), computedResizeProp && floating_ui_dom_size({
+    padding: OVERFLOW_PADDING,
     apply(sizeProps) {
       var _refs$floating$curren;
       const {
@@ -34525,7 +34533,7 @@ const UnforwardedPopover = (props, forwardedRef) => {
 
       // Reduce the height of the popover to the available space.
       Object.assign(firstElementChild.style, {
-        maxHeight: `${sizeProps.availableHeight}px`,
+        maxHeight: `${Math.max(0, sizeProps.availableHeight)}px`,
         overflow: 'auto'
       });
     }
@@ -58652,6 +58660,8 @@ function Guide({
   className,
   contentLabel,
   finishButtonText = (0,external_wp_i18n_namespaceObject.__)('Finish'),
+  nextButtonText = (0,external_wp_i18n_namespaceObject.__)('Next'),
+  previousButtonText = (0,external_wp_i18n_namespaceObject.__)('Previous'),
   onFinish,
   pages = []
 }) {
@@ -58726,13 +58736,13 @@ function Guide({
           variant: "tertiary",
           onClick: goBack,
           __next40pxDefaultSize: true,
-          children: (0,external_wp_i18n_namespaceObject.__)('Previous')
+          children: previousButtonText
         }), canGoForward && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
           className: "components-guide__forward-button",
           variant: "primary",
           onClick: goForward,
           __next40pxDefaultSize: true,
-          children: (0,external_wp_i18n_namespaceObject.__)('Next')
+          children: nextButtonText
         }), !canGoForward && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
           className: "components-guide__finish-button",
           variant: "primary",
