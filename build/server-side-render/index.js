@@ -265,7 +265,12 @@ function DefaultLoadingResponsePlaceholder({
 }
 function ServerSideRender(props) {
   const {
+    attributes,
+    block,
     className,
+    httpMethod = 'GET',
+    urlQueryArgs,
+    skipBlockSupportAttributes = false,
     EmptyResponsePlaceholder = DefaultEmptyResponsePlaceholder,
     ErrorResponsePlaceholder = DefaultErrorResponsePlaceholder,
     LoadingResponsePlaceholder = DefaultLoadingResponsePlaceholder
@@ -276,20 +281,11 @@ function ServerSideRender(props) {
   const [response, setResponse] = (0,external_wp_element_namespaceObject.useState)(null);
   const prevProps = (0,external_wp_compose_namespaceObject.usePrevious)(props);
   const [isLoading, setIsLoading] = (0,external_wp_element_namespaceObject.useState)(false);
-  const latestPropsRef = (0,external_wp_element_namespaceObject.useRef)(props);
-  latestPropsRef.current = props;
-  const fetchData = (0,external_wp_element_namespaceObject.useCallback)(() => {
+  function fetchData() {
     var _sanitizedAttributes, _sanitizedAttributes2;
     if (!isMountedRef.current) {
       return;
     }
-    const {
-      attributes,
-      block,
-      skipBlockSupportAttributes = false,
-      httpMethod = 'GET',
-      urlQueryArgs
-    } = latestPropsRef.current;
     setIsLoading(true);
 
     // Schedule showing the Spinner after 1 second.
@@ -336,7 +332,7 @@ function ServerSideRender(props) {
       }
     });
     return fetchRequest;
-  }, []);
+  }
   const debouncedFetchData = (0,external_wp_compose_namespaceObject.useDebounce)(fetchData, 500);
 
   // When the component unmounts, set isMountedRef to false. This will

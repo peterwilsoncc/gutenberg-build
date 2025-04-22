@@ -780,7 +780,6 @@ function DynamicShortcut({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -843,17 +842,15 @@ function KeyboardShortcutHelpModal({
   const {
     registerShortcut
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_keyboardShortcuts_namespaceObject.store);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    registerShortcut({
-      name: 'core/customize-widgets/keyboard-shortcuts',
-      category: 'main',
-      description: (0,external_wp_i18n_namespaceObject.__)('Display these keyboard shortcuts.'),
-      keyCombination: {
-        modifier: 'access',
-        character: 'h'
-      }
-    });
-  }, [registerShortcut]);
+  registerShortcut({
+    name: 'core/customize-widgets/keyboard-shortcuts',
+    category: 'main',
+    description: (0,external_wp_i18n_namespaceObject.__)('Display these keyboard shortcuts.'),
+    keyCombination: {
+      modifier: 'access',
+      character: 'h'
+    }
+  });
   (0,external_wp_keyboardShortcuts_namespaceObject.useShortcut)('core/customize-widgets/keyboard-shortcuts', toggleModal);
   if (!isModalActive) {
     return null;

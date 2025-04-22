@@ -19917,75 +19917,6 @@ function PluginSidebarMoreMenuItem(props) {
   });
 }
 
-;// ./packages/editor/build-module/utils/search-templates.js
-/**
- * External dependencies
- */
-
-
-/**
- * Sanitizes the search input string.
- *
- * @param {string} input The search input to normalize.
- *
- * @return {string} The normalized search input.
- */
-function normalizeSearchInput(input = '') {
-  // Disregard diacritics.
-  input = remove_accents_default()(input);
-
-  // Trim & Lowercase.
-  input = input.trim().toLowerCase();
-  return input;
-}
-
-/**
- * Get the search rank for a given template and a specific search term.
- *
- * @param {Object} template    Template to rank
- * @param {string} searchValue Search term
- *
- * @return {number} A template search rank
- */
-function getTemplateSearchRank(template, searchValue) {
-  const normalizedSearchValue = normalizeSearchInput(searchValue);
-  const normalizedTitle = normalizeSearchInput(template.title);
-  let rank = 0;
-  if (normalizedSearchValue === normalizedTitle) {
-    rank += 30;
-  } else if (normalizedTitle.startsWith(normalizedSearchValue)) {
-    rank += 20;
-  } else {
-    const searchTerms = normalizedSearchValue.split(' ');
-    const hasMatchedTerms = searchTerms.every(searchTerm => normalizedTitle.includes(searchTerm));
-
-    // Prefer template with every search word in the title.
-    if (hasMatchedTerms) {
-      rank += 10;
-    }
-  }
-  return rank;
-}
-
-/**
- * Filters a template list given a search term.
- *
- * @param {Array}  templates   Item list
- * @param {string} searchValue Search input.
- *
- * @return {Array} Filtered template list.
- */
-function searchTemplates(templates = [], searchValue = '') {
-  if (!searchValue) {
-    return templates;
-  }
-  const rankedTemplates = templates.map(template => {
-    return [template, getTemplateSearchRank(template, searchValue)];
-  }).filter(([, rank]) => rank > 0);
-  rankedTemplates.sort(([, rank1], [, rank2]) => rank2 - rank1);
-  return rankedTemplates.map(([template]) => template);
-}
-
 ;// ./packages/editor/build-module/components/post-template/swap-template-button.js
 /**
  * WordPress dependencies
@@ -20002,7 +19933,6 @@ function searchTemplates(templates = [], searchValue = '') {
 /**
  * Internal dependencies
  */
-
 
 
 function SwapTemplateButton({
@@ -20051,7 +19981,6 @@ function TemplatesList({
   postType,
   onSelect
 }) {
-  const [searchValue, setSearchValue] = (0,external_wp_element_namespaceObject.useState)('');
   const availableTemplates = useAvailableTemplates(postType);
   const templatesAsPatterns = (0,external_wp_element_namespaceObject.useMemo)(() => availableTemplates.map(template => ({
     name: template.slug,
@@ -20059,22 +19988,10 @@ function TemplatesList({
     title: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(template.title.rendered),
     id: template.id
   })), [availableTemplates]);
-  const filteredBlockTemplates = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return searchTemplates(templatesAsPatterns, searchValue);
-  }, [templatesAsPatterns, searchValue]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SearchControl, {
-      __nextHasNoMarginBottom: true,
-      onChange: setSearchValue,
-      value: searchValue,
-      label: (0,external_wp_i18n_namespaceObject.__)('Search'),
-      placeholder: (0,external_wp_i18n_namespaceObject.__)('Search'),
-      className: "editor-post-template__swap-template-search"
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockPatternsList, {
-      label: (0,external_wp_i18n_namespaceObject.__)('Templates'),
-      blockPatterns: filteredBlockTemplates,
-      onClickPattern: onSelect
-    })]
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockPatternsList, {
+    label: (0,external_wp_i18n_namespaceObject.__)('Templates'),
+    blockPatterns: templatesAsPatterns,
+    onClickPattern: onSelect
   });
 }
 
@@ -20624,9 +20541,11 @@ function PostAuthor() {
  */
 
 
+
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -20644,15 +20563,17 @@ function PostAuthorCheck({
   children
 }) {
   const {
-    hasAssignAuthorAction
+    hasAssignAuthorAction,
+    hasAuthors
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const post = select(store_store).getCurrentPost();
     const canAssignAuthor = post?._links?.['wp:action-assign-author'] ? true : false;
     return {
-      hasAssignAuthorAction: canAssignAuthor
+      hasAssignAuthorAction: canAssignAuthor,
+      hasAuthors: canAssignAuthor ? select(external_wp_coreData_namespaceObject.store).getUsers(AUTHORS_QUERY)?.length >= 1 : false
     };
   }, []);
-  if (!hasAssignAuthorAction) {
+  if (!hasAssignAuthorAction || !hasAuthors) {
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_type_support_check, {
@@ -20671,12 +20592,9 @@ function PostAuthorCheck({
 
 
 
-
-
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -20688,12 +20606,7 @@ function PostAuthorToggle({
 }) {
   const {
     postAuthor
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const id = select(store_store).getEditedPostAttribute('author');
-    return {
-      postAuthor: select(external_wp_coreData_namespaceObject.store).getUser(id, BASE_QUERY)
-    };
-  }, []);
+  } = useAuthorsQuery();
   const authorName = (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(postAuthor?.name) || (0,external_wp_i18n_namespaceObject.__)('(No author)');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     size: "compact",
