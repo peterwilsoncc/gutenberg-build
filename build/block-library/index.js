@@ -6408,6 +6408,7 @@ const calendar_metadata = {
   },
   supports: {
     align: true,
+    html: false,
     color: {
       link: true,
       __experimentalSkipSerialization: ["text", "background"],
