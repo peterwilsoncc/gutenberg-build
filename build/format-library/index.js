@@ -236,7 +236,7 @@ function InlineUI({
           type: image_name,
           attributes: {
             ...activeObjectAttributes,
-            style: width ? `width: ${editedWidth}px;` : '',
+            style: editedWidth ? `width: ${editedWidth}px;` : '',
             alt: editedAlt
           }
         };
@@ -1406,7 +1406,8 @@ function ColorPicker({
       onChange(setColors(value, name, colors, {
         [property]: color
       }));
-    }
+    },
+    enableAlpha: true
     // Prevent the text and color picker from overlapping.
     ,
     __experimentalIsRenderedInSidebar: true

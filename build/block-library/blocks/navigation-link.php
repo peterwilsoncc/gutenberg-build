@@ -13,7 +13,7 @@
  *
  * @param  array $context     Navigation block context.
  * @param  array $attributes  Block attributes.
- * @param  bool  $is_sub_menu Whether the link is part of a sub-menu.
+ * @param  bool  $is_sub_menu Whether the link is part of a sub-menu. Default false.
  * @return array Colors CSS classes and inline styles.
  */
 function gutenberg_block_core_navigation_link_build_css_colors( $context, $attributes, $is_sub_menu = false ) {
@@ -213,7 +213,7 @@ function gutenberg_render_block_core_navigation_link( $attributes, $content, $bl
 	$kind        = empty( $attributes['kind'] ) ? 'post_type' : str_replace( '-', '_', $attributes['kind'] );
 	$is_active   = ! empty( $attributes['id'] ) && get_queried_object_id() === (int) $attributes['id'] && ! empty( get_queried_object()->$kind );
 
-	if ( is_post_type_archive() ) {
+	if ( is_post_type_archive() && ! empty( $attributes['url'] ) ) {
 		$queried_archive_link = get_post_type_archive_link( get_queried_object()->name );
 		if ( $attributes['url'] === $queried_archive_link ) {
 			$is_active = true;
@@ -247,10 +247,6 @@ function gutenberg_render_block_core_navigation_link( $attributes, $content, $bl
 		$html .= ' rel="' . esc_attr( $attributes['rel'] ) . '"';
 	} elseif ( isset( $attributes['nofollow'] ) && $attributes['nofollow'] ) {
 		$html .= ' rel="nofollow"';
-	}
-
-	if ( isset( $attributes['title'] ) ) {
-		$html .= ' title="' . esc_attr( $attributes['title'] ) . '"';
 	}
 
 	// End appending HTML attributes to anchor tag.

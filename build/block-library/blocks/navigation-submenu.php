@@ -86,7 +86,7 @@ function gutenberg_render_block_core_navigation_submenu( $attributes, $content, 
 	$kind        = empty( $attributes['kind'] ) ? 'post_type' : str_replace( '-', '_', $attributes['kind'] );
 	$is_active   = ! empty( $attributes['id'] ) && get_queried_object_id() === (int) $attributes['id'] && ! empty( get_queried_object()->$kind );
 
-	if ( is_post_type_archive() ) {
+	if ( is_post_type_archive() && ! empty( $attributes['url'] ) ) {
 		$queried_archive_link = get_post_type_archive_link( get_queried_object()->name );
 		if ( $attributes['url'] === $queried_archive_link ) {
 			$is_active = true;
@@ -167,10 +167,6 @@ function gutenberg_render_block_core_navigation_submenu( $attributes, $content, 
 			$html .= ' rel="' . esc_attr( $attributes['rel'] ) . '"';
 		} elseif ( isset( $attributes['nofollow'] ) && $attributes['nofollow'] ) {
 			$html .= ' rel="nofollow"';
-		}
-
-		if ( isset( $attributes['title'] ) ) {
-			$html .= ' title="' . esc_attr( $attributes['title'] ) . '"';
 		}
 
 		$html .= '>';
