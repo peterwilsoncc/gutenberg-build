@@ -80617,10 +80617,133 @@ function ResolutionTool({
   });
 }
 
+;// ./packages/block-editor/build-module/components/html-element-control/messages.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Messages providing helpful descriptions for HTML elements.
+ */
+const htmlElementMessages = {
+  article: (0,external_wp_i18n_namespaceObject.__)('The <article> element should represent a self-contained, syndicatable portion of the document.'),
+  aside: (0,external_wp_i18n_namespaceObject.__)("The <aside> element should represent a portion of a document whose content is only indirectly related to the document's main content."),
+  div: (0,external_wp_i18n_namespaceObject.__)('The <div> element should only be used if the block is a design element with no semantic meaning.'),
+  footer: (0,external_wp_i18n_namespaceObject.__)('The <footer> element should represent a footer for its nearest sectioning element (e.g.: <section>, <article>, <main> etc.).'),
+  header: (0,external_wp_i18n_namespaceObject.__)('The <header> element should represent introductory content, typically a group of introductory or navigational aids.'),
+  main: (0,external_wp_i18n_namespaceObject.__)('The <main> element should be used for the primary content of your document only.'),
+  nav: (0,external_wp_i18n_namespaceObject.__)('The <nav> element should be used to identify groups of links that are intended to be used for website or page content navigation.'),
+  section: (0,external_wp_i18n_namespaceObject.__)("The <section> element should represent a standalone portion of the document that can't be better represented by another element.")
+};
+
+;// ./packages/block-editor/build-module/components/html-element-control/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+/**
+ * Renders a SelectControl for choosing HTML elements with validation
+ * to prevent duplicate <main> elements.
+ *
+ * @param {Object}   props          Component props.
+ * @param {string}   props.tagName  The current HTML tag name.
+ * @param {Function} props.onChange Function to call when the tag is changed.
+ * @param {string}   props.clientId The client ID of the current block.
+ * @param {Array}    props.options  SelectControl options (optional).
+ *
+ * @return {Component} The HTML element select control with validation.
+ */
+
+function HTMLElementControl({
+  tagName,
+  onChange,
+  clientId,
+  options = [{
+    label: (0,external_wp_i18n_namespaceObject.__)('Default (<div>)'),
+    value: 'div'
+  }, {
+    label: '<header>',
+    value: 'header'
+  }, {
+    label: '<main>',
+    value: 'main'
+  }, {
+    label: '<section>',
+    value: 'section'
+  }, {
+    label: '<article>',
+    value: 'article'
+  }, {
+    label: '<aside>',
+    value: 'aside'
+  }, {
+    label: '<footer>',
+    value: 'footer'
+  }]
+}) {
+  const checkForMainTag = !!clientId && options.some(option => option.value === 'main');
+  const hasMainElementElsewhere = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    if (!checkForMainTag) {
+      return false;
+    }
+    const {
+      getClientIdsWithDescendants,
+      getBlockAttributes
+    } = select(store);
+    return getClientIdsWithDescendants().some(id => {
+      // Skip the current block.
+      if (id === clientId) {
+        return false;
+      }
+      return getBlockAttributes(id)?.tagName === 'main';
+    });
+  }, [clientId, checkForMainTag]);
+
+  // Create a modified options array that disables the main option if needed.
+  const modifiedOptions = options.map(option => {
+    if (option.value === 'main' && hasMainElementElsewhere && tagName !== 'main') {
+      return {
+        ...option,
+        disabled: true,
+        label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: HTML element name */
+        (0,external_wp_i18n_namespaceObject.__)('%s (Already in use)'), option.label)
+      };
+    }
+    return option;
+  });
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: 2,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+      __nextHasNoMarginBottom: true,
+      __next40pxDefaultSize: true,
+      label: (0,external_wp_i18n_namespaceObject.__)('HTML element'),
+      options: modifiedOptions,
+      value: tagName,
+      onChange: onChange,
+      help: htmlElementMessages[tagName]
+    }), tagName === 'main' && hasMainElementElsewhere && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
+      status: "warning",
+      isDismissible: false,
+      children: (0,external_wp_i18n_namespaceObject.__)('Multiple <main> elements detected. This is not valid HTML and may cause accessibility issues. Please change this HTML element.')
+    })]
+  });
+}
+
 ;// ./packages/block-editor/build-module/private-apis.js
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -80684,6 +80807,7 @@ lock(privateApis, {
   TextAlignmentControl: TextAlignmentControl,
   usesContextKey: usesContextKey,
   useFlashEditableBlocks: useFlashEditableBlocks,
+  HTMLElementControl: HTMLElementControl,
   useZoomOut: useZoomOut,
   globalStylesDataKey: globalStylesDataKey,
   globalStylesLinksDataKey: globalStylesLinksDataKey,

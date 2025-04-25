@@ -9249,27 +9249,10 @@ const v1 = {
 };
 /* harmony default export */ const comments_deprecated = ([v1]);
 
-;// ./packages/block-library/build-module/utils/messages.js
-/**
- * WordPress dependencies
- */
-
-const htmlElementMessages = {
-  article: (0,external_wp_i18n_namespaceObject.__)('The <article> element should represent a self-contained, syndicatable portion of the document.'),
-  aside: (0,external_wp_i18n_namespaceObject.__)("The <aside> element should represent a portion of a document whose content is only indirectly related to the document's main content."),
-  div: (0,external_wp_i18n_namespaceObject.__)('The <div> element should only be used if the block is a design element with no semantic meaning.'),
-  footer: (0,external_wp_i18n_namespaceObject.__)('The <footer> element should represent a footer for its nearest sectioning element (e.g.: <section>, <article>, <main> etc.).'),
-  header: (0,external_wp_i18n_namespaceObject.__)('The <header> element should represent introductory content, typically a group of introductory or navigational aids.'),
-  main: (0,external_wp_i18n_namespaceObject.__)('The <main> element should be used for the primary content of your document only.'),
-  nav: (0,external_wp_i18n_namespaceObject.__)('The <nav> element should be used to identify groups of links that are intended to be used for website or page content navigation.'),
-  section: (0,external_wp_i18n_namespaceObject.__)("The <section> element should represent a standalone portion of the document that can't be better represented by another element.")
-};
-
 ;// ./packages/block-library/build-module/comments/edit/comments-inspector-controls.js
 /**
  * WordPress dependencies
  */
-
 
 
 
@@ -9278,19 +9261,25 @@ const htmlElementMessages = {
  */
 
 
+const {
+  HTMLElementControl
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function CommentsInspectorControls({
   attributes: {
     tagName
   },
-  setAttributes
+  setAttributes,
+  clientId
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       group: "advanced",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('HTML element'),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HTMLElementControl, {
+        tagName: tagName,
+        onChange: value => setAttributes({
+          tagName: value
+        }),
+        clientId: clientId,
         options: [{
           label: (0,external_wp_i18n_namespaceObject.__)('Default (<div>)'),
           value: 'div'
@@ -9300,12 +9289,7 @@ function CommentsInspectorControls({
         }, {
           label: '<aside>',
           value: 'aside'
-        }],
-        value: tagName,
-        onChange: value => setAttributes({
-          tagName: value
-        }),
-        help: htmlElementMessages[tagName]
+        }]
       })
     })
   });
@@ -9650,7 +9634,8 @@ const TEMPLATE = [['core/comments-title'], ['core/comment-template', {}, [['core
 function CommentsEdit(props) {
   const {
     attributes,
-    setAttributes
+    setAttributes,
+    clientId
   } = props;
   const {
     tagName: TagName,
@@ -9668,7 +9653,8 @@ function CommentsEdit(props) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentsInspectorControls, {
       attributes: attributes,
-      setAttributes: setAttributes
+      setAttributes: setAttributes,
+      clientId: clientId
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
       ...innerBlocksProps
     })]
@@ -14201,10 +14187,10 @@ const DEFAULT_MEDIA_SIZE_SLUG = 'full';
 
 
 
-
 const {
   cleanEmptyObject: inspector_controls_cleanEmptyObject,
-  ResolutionTool
+  ResolutionTool,
+  HTMLElementControl: inspector_controls_HTMLElementControl
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function CoverHeightInput({
   onChange,
@@ -14505,10 +14491,12 @@ function CoverInspectorControls({
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       group: "advanced",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('HTML element'),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls_HTMLElementControl, {
+        tagName: tagName,
+        onChange: value => setAttributes({
+          tagName: value
+        }),
+        clientId: clientId,
         options: [{
           label: (0,external_wp_i18n_namespaceObject.__)('Default (<div>)'),
           value: 'div'
@@ -14530,12 +14518,7 @@ function CoverInspectorControls({
         }, {
           label: '<footer>',
           value: 'footer'
-        }],
-        value: tagName,
-        onChange: value => setAttributes({
-          tagName: value
-        }),
-        help: htmlElementMessages[tagName]
+        }]
       })
     })]
   });
@@ -23673,12 +23656,15 @@ function GroupPlaceHolder({
 
 
 
-
 /**
  * Internal dependencies
  */
 
 
+
+const {
+  HTMLElementControl: edit_HTMLElementControl
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
 /**
  * Render inspector controls for the Group block.
@@ -23686,20 +23672,21 @@ function GroupPlaceHolder({
  * @param {Object}   props                 Component props.
  * @param {string}   props.tagName         The HTML tag name.
  * @param {Function} props.onSelectTagName onChange function for the SelectControl.
+ * @param {string}   props.clientId        The client ID of the current block.
  *
  * @return {JSX.Element}                The control group.
  */
-
 function GroupEditControls({
   tagName,
-  onSelectTagName
+  onSelectTagName,
+  clientId
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
     group: "advanced",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('HTML element'),
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(edit_HTMLElementControl, {
+      tagName: tagName,
+      onChange: onSelectTagName,
+      clientId: clientId,
       options: [{
         label: (0,external_wp_i18n_namespaceObject.__)('Default (<div>)'),
         value: 'div'
@@ -23721,10 +23708,7 @@ function GroupEditControls({
       }, {
         label: '<footer>',
         value: 'footer'
-      }],
-      value: tagName,
-      onChange: onSelectTagName,
-      help: htmlElementMessages[tagName]
+      }]
     })
   });
 }
@@ -23806,7 +23790,8 @@ function GroupEdit({
       tagName: TagName,
       onSelectTagName: value => setAttributes({
         tagName: value
-      })
+      }),
+      clientId: clientId
     }), showPlaceholder && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.View, {
       children: [innerBlocksProps.children, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(placeholder, {
         name: name,
@@ -49805,7 +49790,6 @@ function QueryToolbar({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -49816,6 +49800,9 @@ function QueryToolbar({
 
 
 
+const {
+  HTMLElementControl: query_content_HTMLElementControl
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const DEFAULTS_POSTS_PER_PAGE = 3;
 const query_content_TEMPLATE = [['core/post-template']];
 function QueryContent({
@@ -49932,10 +49919,12 @@ function QueryContent({
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       group: "advanced",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('HTML element'),
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(query_content_HTMLElementControl, {
+        tagName: TagName,
+        onChange: value => setAttributes({
+          tagName: value
+        }),
+        clientId: clientId,
         options: [{
           label: (0,external_wp_i18n_namespaceObject.__)('Default (<div>)'),
           value: 'div'
@@ -49948,12 +49937,7 @@ function QueryContent({
         }, {
           label: '<aside>',
           value: 'aside'
-        }],
-        value: TagName,
-        onChange: value => setAttributes({
-          tagName: value
-        }),
-        help: htmlElementMessages[TagName]
+        }]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EnhancedPaginationControl, {
         enhancedPagination: enhancedPagination,
         setAttributes: setAttributes,
@@ -54808,9 +54792,13 @@ function useDeprecatedOpacity(opacity, currentColor, setAttributes) {
 
 
 
+const {
+  HTMLElementControl: separator_edit_HTMLElementControl
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function SeparatorEdit({
   attributes,
-  setAttributes
+  setAttributes,
+  clientId
 }) {
   const {
     backgroundColor,
@@ -54840,22 +54828,19 @@ function SeparatorEdit({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       group: "advanced",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('HTML element'),
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(separator_edit_HTMLElementControl, {
+        tagName: tagName,
+        onChange: value => setAttributes({
+          tagName: value
+        }),
+        clientId: clientId,
         options: [{
           label: (0,external_wp_i18n_namespaceObject.__)('Default (<hr>)'),
           value: 'hr'
         }, {
           label: '<div>',
           value: 'div'
-        }],
-        value: tagName,
-        onChange: value => setAttributes({
-          tagName: value
-        }),
-        help: htmlElementMessages[tagName]
+        }]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Wrapper, {
       ...(0,external_wp_blockEditor_namespaceObject.useBlockProps)({
@@ -63635,19 +63620,24 @@ function TemplatePartImportControls({
 
 
 
+
 /**
  * Internal dependencies
  */
 
 
 
+const {
+  HTMLElementControl: advanced_controls_HTMLElementControl
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function TemplatePartAdvancedControls({
   tagName,
   setAttributes,
   isEntityAvailable,
   templatePartId,
   defaultWrapper,
-  hasInnerBlocks
+  hasInnerBlocks,
+  clientId
 }) {
   const [area, setArea] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', 'wp_template_part', 'area', templatePartId);
   const [title, setTitle] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', 'wp_template_part', 'title', templatePartId);
@@ -63679,10 +63669,12 @@ function TemplatePartAdvancedControls({
         value: area,
         onChange: setArea
       })]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('HTML element'),
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(advanced_controls_HTMLElementControl, {
+      tagName: tagName || '',
+      onChange: value => setAttributes({
+        tagName: value
+      }),
+      clientId: clientId,
       options: [{
         label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: HTML tag based on area. */
         (0,external_wp_i18n_namespaceObject.__)('Default based on area (%s)'), `<${defaultWrapper}>`),
@@ -63708,12 +63700,7 @@ function TemplatePartAdvancedControls({
       }, {
         label: '<div>',
         value: 'div'
-      }],
-      value: tagName || '',
-      onChange: value => setAttributes({
-        tagName: value
-      }),
-      help: htmlElementMessages[tagName]
+      }]
     }), !hasInnerBlocks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplatePartImportControls, {
       area: area,
       setAttributes: setAttributes
@@ -64055,7 +64042,8 @@ function TemplatePartEdit({
           isEntityAvailable: isEntityAvailable,
           templatePartId: templatePartId,
           defaultWrapper: areaObject.tagName,
-          hasInnerBlocks: hasInnerBlocks
+          hasInnerBlocks: hasInnerBlocks,
+          clientId: clientId
         })
       }), isPlaceholder && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
         ...blockProps,
