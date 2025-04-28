@@ -277,7 +277,9 @@ function ServerSideRender(props) {
   const prevProps = (0,external_wp_compose_namespaceObject.usePrevious)(props);
   const [isLoading, setIsLoading] = (0,external_wp_element_namespaceObject.useState)(false);
   const latestPropsRef = (0,external_wp_element_namespaceObject.useRef)(props);
-  latestPropsRef.current = props;
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    latestPropsRef.current = props;
+  }, [props]);
   const fetchData = (0,external_wp_element_namespaceObject.useCallback)(() => {
     var _sanitizedAttributes, _sanitizedAttributes2;
     if (!isMountedRef.current) {
