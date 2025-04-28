@@ -38845,8 +38845,8 @@ function KeyboardShortcutsRegister() {
       category: 'block',
       description: (0,external_wp_i18n_namespaceObject.__)('Remove the selected block(s).'),
       keyCombination: {
-        modifier: 'primaryShift',
-        character: 'backspace'
+        modifier: 'access',
+        character: 'z'
       }
     });
     registerShortcut({
@@ -73664,10 +73664,7 @@ function createLinkInParagraph(url, onReplace) {
 /* harmony default export */ const event_listeners_delete = (props => element => {
   function onKeyDown(event) {
     const {
-      keyCode,
-      shiftKey,
-      ctrlKey,
-      metaKey
+      keyCode
     } = event;
     if (event.defaultPrevented) {
       return;
@@ -73688,11 +73685,6 @@ function createLinkInParagraph(url, onReplace) {
 
       // Only process delete if the key press occurs at an uncollapsed edge.
       if (!(0,external_wp_richText_namespaceObject.isCollapsed)(value) || hasActiveFormats || isReverse && start !== 0 || !isReverse && end !== text.length) {
-        return;
-      }
-
-      // Exclude (command|ctrl)+shift+backspace as they are shortcuts for deleting blocks.
-      if (shiftKey && (ctrlKey || metaKey)) {
         return;
       }
       if (onMerge) {
