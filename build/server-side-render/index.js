@@ -358,12 +358,12 @@ function ServerSideRender(props) {
   });
   const hasResponse = !!response;
   const hasEmptyResponse = response === '';
-  const hasError = response?.error;
+  const hasError = !!response?.error;
   if (isLoading) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LoadingResponsePlaceholder, {
       ...props,
       showLoader: showLoader,
-      children: hasResponse && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.RawHTML, {
+      children: hasResponse && !hasError && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.RawHTML, {
         className: className,
         children: response
       })
