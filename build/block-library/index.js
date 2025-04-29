@@ -27769,12 +27769,6 @@ function ImageEdit({
       additionalAttributes = {
         sizeSlug: newSize
       };
-    } else {
-      // Keep the same url when selecting the same file, so "Resolution"
-      // option is not changed.
-      additionalAttributes = {
-        url
-      };
     }
 
     // Check if default link setting should be used.
