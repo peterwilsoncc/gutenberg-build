@@ -80726,6 +80726,7 @@ function HTMLElementControl({
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 2,
+    className: "block-editor-html-element-control",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
       __nextHasNoMarginBottom: true,
       __next40pxDefaultSize: true,
@@ -80737,7 +80738,7 @@ function HTMLElementControl({
     }), tagName === 'main' && hasMainElementElsewhere && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
       status: "warning",
       isDismissible: false,
-      children: (0,external_wp_i18n_namespaceObject.__)('Multiple <main> elements detected. This is not valid HTML and may cause accessibility issues. Please change this HTML element.')
+      children: (0,external_wp_i18n_namespaceObject.__)('Multiple <main> elements detected. The duplicate may be in your content or template. This is not valid HTML and may cause accessibility issues. Please change this HTML element.')
     })]
   });
 }
