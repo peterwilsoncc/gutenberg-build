@@ -34414,7 +34414,7 @@ function DuotonePanelPure({
   if (blockEditingMode !== 'default') {
     return null;
   }
-  const duotonePresetOrColors = !Array.isArray(duotoneStyle) ? getColorsFromDuotonePreset(duotoneStyle, duotonePalette) : duotoneStyle;
+  const duotonePresetOrColors = duotoneStyle === 'unset' || Array.isArray(duotoneStyle) ? duotoneStyle : getColorsFromDuotonePreset(duotoneStyle, duotonePalette);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls, {
       group: "filter",
