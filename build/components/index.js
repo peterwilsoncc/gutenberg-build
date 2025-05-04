@@ -40574,15 +40574,16 @@ const useCustomUnits = ({
   defaultValues
 }) => {
   const customUnitsToReturn = filterUnitsWithSettings(availableUnits, units);
-  if (defaultValues) {
-    customUnitsToReturn.forEach((unit, i) => {
-      if (defaultValues[unit.value]) {
-        const [parsedDefaultValue] = parseQuantityAndUnitFromRawValue(defaultValues[unit.value]);
-        customUnitsToReturn[i].default = parsedDefaultValue;
-      }
-    });
+  if (!defaultValues) {
+    return customUnitsToReturn;
   }
-  return customUnitsToReturn;
+  return customUnitsToReturn.map(unit => {
+    const [defaultValue] = defaultValues[unit.value] ? parseQuantityAndUnitFromRawValue(defaultValues[unit.value]) : [];
+    return {
+      ...unit,
+      default: defaultValue
+    };
+  });
 };
 
 /**
