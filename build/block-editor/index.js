@@ -72421,7 +72421,8 @@ const InsertFromURLPopover = ({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
       __next40pxDefaultSize: true,
       label: (0,external_wp_i18n_namespaceObject.__)('URL'),
-      type: "url",
+      type: "text" // Use text instead of URL to allow relative paths (e.g., /image/image.jpg)
+      ,
       hideLabelFromVision: true,
       placeholder: (0,external_wp_i18n_namespaceObject.__)('Paste or type URL'),
       onChange: onChange,
