@@ -31789,7 +31789,6 @@ function EditorInterface({
 }) {
   const {
     mode,
-    isRichEditingEnabled,
     isInserterOpened,
     isListViewOpened,
     isDistractionFree,
@@ -31806,9 +31805,15 @@ function EditorInterface({
     } = select(store_store);
     const editorSettings = getEditorSettings();
     const postTypeLabel = getPostTypeLabel();
+    let _mode = select(store_store).getEditorMode();
+    if (!editorSettings.richEditingEnabled && _mode === 'visual') {
+      _mode = 'text';
+    }
+    if (!editorSettings.codeEditingEnabled && _mode === 'text') {
+      _mode = 'visual';
+    }
     return {
-      mode: select(store_store).getEditorMode(),
-      isRichEditingEnabled: editorSettings.richEditingEnabled,
+      mode: _mode,
       isInserterOpened: select(store_store).isInserterOpened(),
       isListViewOpened: select(store_store).isListViewOpened(),
       isDistractionFree: get('core', 'distractionFree'),
@@ -31856,14 +31861,14 @@ function EditorInterface({
     content: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [!isDistractionFree && !isPreviewMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(editor_notices, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(content_slot_fill.Slot, {
         children: ([editorCanvasView]) => editorCanvasView ? editorCanvasView : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: [!isPreviewMode && (mode === 'text' || !isRichEditingEnabled) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TextEditor
+          children: [!isPreviewMode && mode === 'text' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TextEditor
           // We should auto-focus the canvas (title) on load.
           // eslint-disable-next-line jsx-a11y/no-autofocus
           , {
             autoFocus: autoFocus
           }), !isPreviewMode && !isLargeViewport && mode === 'visual' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockToolbar, {
             hideDragHandle: true
-          }), (isPreviewMode || isRichEditingEnabled && mode === 'visual') && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(visual_editor, {
+          }), (isPreviewMode || mode === 'visual') && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(visual_editor, {
             styles: styles,
             contentRef: contentRef,
             disableIframe: disableIframe
@@ -31876,7 +31881,7 @@ function EditorInterface({
         })
       })]
     }),
-    footer: !isPreviewMode && !isDistractionFree && isLargeViewport && showBlockBreadcrumbs && isRichEditingEnabled && mode === 'visual' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockBreadcrumb, {
+    footer: !isPreviewMode && !isDistractionFree && isLargeViewport && showBlockBreadcrumbs && mode === 'visual' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockBreadcrumb, {
       rootLabelText: documentLabel
     }),
     actions: !isPreviewMode ? customSavePanel || /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SavePublishPanels, {
