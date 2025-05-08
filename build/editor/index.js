@@ -14702,6 +14702,7 @@ function ConvertToRegularBlocks({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -14719,13 +14720,15 @@ function ConvertToTemplatePart({
     createSuccessNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   const {
+    isBlockBasedTheme,
     canCreate
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return {
+      isBlockBasedTheme: select(external_wp_coreData_namespaceObject.store).getCurrentTheme()?.is_block_theme,
       canCreate: select(external_wp_blockEditor_namespaceObject.store).canInsertBlockType('core/template-part')
     };
   }, []);
-  if (!canCreate) {
+  if (!isBlockBasedTheme || !canCreate) {
     return null;
   }
   const onConvert = async templatePart => {
