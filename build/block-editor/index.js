@@ -72625,11 +72625,10 @@ function MediaPlaceholder({
         })).catch(() => resolve(block.attributes.url));
       });
     })).catch(err => onError(err));
-    if (multiple) {
-      onSelect(uploadedMediaList);
-    } else {
-      onSelect(uploadedMediaList[0]);
+    if (!uploadedMediaList?.length) {
+      return;
     }
+    onSelect(multiple ? uploadedMediaList : uploadedMediaList[0]);
   }
   const onUpload = event => {
     onFilesUpload(event.target.files);
