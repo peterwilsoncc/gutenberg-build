@@ -65009,6 +65009,7 @@ function SandBox({
  */
 
 
+
 const NOTICE_TIMEOUT = 10000;
 
 /**
@@ -65111,17 +65112,21 @@ function UnforwardedSnackbar({
       }), children, actions.map(({
         label,
         onClick,
-        url
-      }, index) => {
-        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
-          __next40pxDefaultSize: true,
-          href: url,
-          variant: "link",
-          onClick: event => onActionClick(event, onClick),
-          className: "components-snackbar__action",
-          children: label
-        }, index);
-      }), explicitDismiss && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        url,
+        openInNewTab = false
+      }, index) => url !== undefined && openInNewTab ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_link, {
+        href: url,
+        onClick: event => onActionClick(event, onClick),
+        className: "components-snackbar__action",
+        children: label
+      }, index) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+        __next40pxDefaultSize: true,
+        href: url,
+        variant: "link",
+        onClick: event => onActionClick(event, onClick),
+        className: "components-snackbar__action",
+        children: label
+      }, index)), explicitDismiss && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         role: "button",
         "aria-label": (0,external_wp_i18n_namespaceObject.__)('Dismiss this notice'),
         tabIndex: 0,

@@ -4270,7 +4270,8 @@ function getNotificationArgumentsForSaveSuccess(data) {
   if (shouldShowLink) {
     actions.push({
       label: isDraft ? (0,external_wp_i18n_namespaceObject.__)('View Preview') : postType.labels.view_item,
-      url: post.link
+      url: post.link,
+      openInNewTab: true
     });
   }
   return [noticeMessage, {
@@ -15518,7 +15519,8 @@ const saveDirtyEntities = ({
         id: saveNoticeId,
         actions: [{
           label: (0,external_wp_i18n_namespaceObject.__)('View site'),
-          url: homeUrl
+          url: homeUrl,
+          openInNewTab: true
         }]
       });
     }
