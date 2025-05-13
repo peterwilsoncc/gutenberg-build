@@ -34097,7 +34097,8 @@ const more_metadata = {
   attributes: {
     customText: {
       type: "string",
-      "default": ""
+      "default": "",
+      role: "content"
     },
     noTeaser: {
       type: "boolean",
