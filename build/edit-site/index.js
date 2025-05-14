@@ -14787,17 +14787,17 @@ function MainSidebarNavigationContent({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalItemGroup, {
     className: "edit-site-sidebar-navigation-screen-main",
     children: [isBlockBasedTheme && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItem, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItemGlobalStyles, {
+        to: "/styles",
+        uid: "global-styles-navigation-item",
+        icon: library_styles,
+        children: (0,external_wp_i18n_namespaceObject.__)('Styles')
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItem, {
         uid: "navigation-navigation-item",
         to: "/navigation",
         withChevron: true,
         icon: library_navigation,
         children: (0,external_wp_i18n_namespaceObject.__)('Navigation')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItemGlobalStyles, {
-        to: "/styles",
-        uid: "global-styles-navigation-item",
-        icon: library_styles,
-        children: (0,external_wp_i18n_namespaceObject.__)('Styles')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItem, {
         uid: "page-navigation-item",
         to: "/page",

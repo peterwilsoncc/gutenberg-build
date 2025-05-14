@@ -7655,7 +7655,8 @@ const code_metadata = {
       type: "rich-text",
       source: "rich-text",
       selector: "code",
-      __unstablePreserveWhiteSpace: true
+      __unstablePreserveWhiteSpace: true,
+      role: "content"
     }
   },
   supports: {
@@ -34097,7 +34098,8 @@ const more_metadata = {
   attributes: {
     customText: {
       type: "string",
-      "default": ""
+      "default": "",
+      role: "content"
     },
     noTeaser: {
       type: "boolean",
@@ -45689,13 +45691,15 @@ function PostTemplateEdit({
      * Handle cases where sticky is set to `exclude` or `only`.
      * Which works as a `post__in/post__not_in` query for sticky posts.
      */
-    if (sticky && sticky !== 'ignore') {
+    if (['exclude', 'only'].includes(sticky)) {
       query.sticky = sticky === 'only';
     }
-    if (sticky === 'ignore') {
+
+    // Empty string represents the default behavior of including sticky posts.
+    if (['', 'ignore'].includes(sticky)) {
       // Remove any leftover sticky query parameter.
       delete query.sticky;
-      query.ignore_sticky = true;
+      query.ignore_sticky = sticky === 'ignore';
     }
 
     // If `inherit` is truthy, adjust conditionally the query to create a better preview.
