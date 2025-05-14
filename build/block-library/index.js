@@ -7655,7 +7655,8 @@ const code_metadata = {
       type: "rich-text",
       source: "rich-text",
       selector: "code",
-      __unstablePreserveWhiteSpace: true
+      __unstablePreserveWhiteSpace: true,
+      role: "content"
     }
   },
   supports: {
