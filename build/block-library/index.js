@@ -60595,6 +60595,7 @@ function TableEdit({
   const [selectedCell, setSelectedCell] = (0,external_wp_element_namespaceObject.useState)();
   const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseColorProps)(attributes);
   const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseBorderProps)(attributes);
+  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
   const tableRef = (0,external_wp_element_namespaceObject.useRef)();
   const [hasTableCreated, setHasTableCreated] = (0,external_wp_element_namespaceObject.useState)(false);
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
@@ -60902,7 +60903,7 @@ function TableEdit({
     ...(0,external_wp_blockEditor_namespaceObject.useBlockProps)({
       ref: tableRef
     }),
-    children: [!isEmpty && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [!isEmpty && blockEditingMode === 'default' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
         group: "block",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.AlignmentControl, {
@@ -61027,7 +61028,7 @@ function TableEdit({
       isSelected: isSingleSelected,
       insertBlocksAfter: insertBlocksAfter,
       label: (0,external_wp_i18n_namespaceObject.__)('Table caption text'),
-      showToolbarButton: isSingleSelected
+      showToolbarButton: isSingleSelected && blockEditingMode === 'default'
     })]
   });
 }
@@ -61268,7 +61269,8 @@ const table_metadata = {
     caption: {
       type: "rich-text",
       source: "rich-text",
-      selector: "figcaption"
+      selector: "figcaption",
+      role: "content"
     },
     head: {
       type: "array",
@@ -61284,7 +61286,8 @@ const table_metadata = {
           query: {
             content: {
               type: "rich-text",
-              source: "rich-text"
+              source: "rich-text",
+              role: "content"
             },
             tag: {
               type: "string",
@@ -61329,7 +61332,8 @@ const table_metadata = {
           query: {
             content: {
               type: "rich-text",
-              source: "rich-text"
+              source: "rich-text",
+              role: "content"
             },
             tag: {
               type: "string",
@@ -61374,7 +61378,8 @@ const table_metadata = {
           query: {
             content: {
               type: "rich-text",
-              source: "rich-text"
+              source: "rich-text",
+              role: "content"
             },
             tag: {
               type: "string",
