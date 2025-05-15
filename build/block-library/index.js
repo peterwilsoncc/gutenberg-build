@@ -21838,6 +21838,7 @@ const constants_NEW_TAB_REL = ['noreferrer', 'noopener'];
 const constants_ALLOWED_MEDIA_TYPES = ['image'];
 const MEDIA_ID_NO_FEATURED_IMAGE_SET = 0;
 const SIZED_LAYOUTS = ['flex', 'grid'];
+const constants_DEFAULT_MEDIA_SIZE_SLUG = 'full';
 
 ;// ./packages/block-library/build-module/gallery/utils.js
 /**
@@ -26623,10 +26624,6 @@ const upload = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 
-/**
- * Module constants
- */
-
 
 
 
@@ -27273,6 +27270,7 @@ function image_Image({
           })
         }), dimensionsControl, !!imageSizeOptions.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(image_ResolutionTool, {
           value: sizeSlug,
+          defaultValue: constants_DEFAULT_MEDIA_SIZE_SLUG,
           onChange: updateImage,
           options: imageSizeOptions
         })]
@@ -27747,7 +27745,7 @@ function ImageEdit({
 
     // Try to use the previous selected image size if its available
     // otherwise try the default image size or fallback to "full"
-    let newSize = 'full';
+    let newSize = constants_DEFAULT_MEDIA_SIZE_SLUG;
     if (sizeSlug && hasSize(media, sizeSlug)) {
       newSize = sizeSlug;
     } else if (hasSize(media, imageDefaultSize)) {
@@ -31598,7 +31596,7 @@ const mediaAndText = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
  * WordPress dependencies
  */
 
-const constants_DEFAULT_MEDIA_SIZE_SLUG = 'full';
+const media_text_constants_DEFAULT_MEDIA_SIZE_SLUG = 'full';
 const WIDTH_CONSTRAINT_PERCENTAGE = 15;
 const media_text_constants_LINK_DESTINATION_MEDIA = 'media';
 const media_text_constants_LINK_DESTINATION_ATTACHMENT = 'attachment';
@@ -31890,7 +31888,7 @@ const media_text_deprecated_v7 = {
       linkTarget,
       rel
     } = attributes;
-    const mediaSizeSlug = attributes.mediaSizeSlug || constants_DEFAULT_MEDIA_SIZE_SLUG;
+    const mediaSizeSlug = attributes.mediaSizeSlug || media_text_constants_DEFAULT_MEDIA_SIZE_SLUG;
     const newRel = !rel ? undefined : rel;
     const imageClasses = dist_clsx({
       [`wp-image-${mediaId}`]: mediaId && mediaType === 'image',
@@ -31990,7 +31988,7 @@ const media_text_deprecated_v6 = {
       linkTarget,
       rel
     } = attributes;
-    const mediaSizeSlug = attributes.mediaSizeSlug || constants_DEFAULT_MEDIA_SIZE_SLUG;
+    const mediaSizeSlug = attributes.mediaSizeSlug || media_text_constants_DEFAULT_MEDIA_SIZE_SLUG;
     const newRel = !rel ? undefined : rel;
     const imageClasses = dist_clsx({
       [`wp-image-${mediaId}`]: mediaId && mediaType === 'image',
@@ -32107,7 +32105,7 @@ const media_text_deprecated_v5 = {
       linkTarget,
       rel
     } = attributes;
-    const mediaSizeSlug = attributes.mediaSizeSlug || constants_DEFAULT_MEDIA_SIZE_SLUG;
+    const mediaSizeSlug = attributes.mediaSizeSlug || media_text_constants_DEFAULT_MEDIA_SIZE_SLUG;
     const newRel = !rel ? undefined : rel;
     const imageClasses = dist_clsx({
       [`wp-image-${mediaId}`]: mediaId && mediaType === 'image',
@@ -32208,7 +32206,7 @@ const media_text_deprecated_v4 = {
       linkTarget,
       rel
     } = attributes;
-    const mediaSizeSlug = attributes.mediaSizeSlug || constants_DEFAULT_MEDIA_SIZE_SLUG;
+    const mediaSizeSlug = attributes.mediaSizeSlug || media_text_constants_DEFAULT_MEDIA_SIZE_SLUG;
     const newRel = !rel ? undefined : rel;
     const imageClasses = dist_clsx({
       [`wp-image-${mediaId}`]: mediaId && mediaType === 'image',
@@ -32940,7 +32938,7 @@ function MediaTextResolutionTool({
   }));
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(edit_ResolutionTool, {
     value: value,
-    defaultValue: constants_DEFAULT_MEDIA_SIZE_SLUG,
+    defaultValue: media_text_constants_DEFAULT_MEDIA_SIZE_SLUG,
     options: imageSizeOptions,
     onChange: onChange
   });
@@ -33294,7 +33292,7 @@ function media_text_save_save({
     linkTarget,
     rel
   } = attributes;
-  const mediaSizeSlug = attributes.mediaSizeSlug || constants_DEFAULT_MEDIA_SIZE_SLUG;
+  const mediaSizeSlug = attributes.mediaSizeSlug || media_text_constants_DEFAULT_MEDIA_SIZE_SLUG;
   const newRel = !rel ? undefined : rel;
   const imageClasses = dist_clsx({
     [`wp-image-${mediaId}`]: mediaId && mediaType === 'image',
