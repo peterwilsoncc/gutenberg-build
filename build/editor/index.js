@@ -28572,7 +28572,9 @@ function CommentForm({
       __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
       value: inputComment !== null && inputComment !== void 0 ? inputComment : '',
-      onChange: setInputComment
+      onChange: setInputComment,
+      label: (0,external_wp_i18n_namespaceObject.__)('Comment'),
+      hideLabelFromVision: true
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       alignment: "left",
       spacing: "3",
