@@ -19409,7 +19409,7 @@ function FontCollection({
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
             margin: 4
           }), !!selectedCollection?.font_families?.length && !fonts.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
-            children: (0,external_wp_i18n_namespaceObject.__)('No fonts found. Try with a different search term')
+            children: (0,external_wp_i18n_namespaceObject.__)('No fonts found. Try with a different search term.')
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
             className: "font-library-modal__fonts-grid__main",
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
