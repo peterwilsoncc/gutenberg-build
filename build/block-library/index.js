@@ -16643,7 +16643,8 @@ const details_metadata = {
     summary: {
       type: "rich-text",
       source: "rich-text",
-      selector: "summary"
+      selector: "summary",
+      role: "content"
     },
     name: {
       type: "string",
