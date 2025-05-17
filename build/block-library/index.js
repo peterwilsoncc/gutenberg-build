@@ -44011,6 +44011,8 @@ function PostExcerptEditor({
     queryId
   }
 }) {
+  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
+  const showControls = blockEditingMode === 'default';
   const isDescendentOfQueryLoop = Number.isFinite(queryId);
   const userCanEdit = useCanEditEntity('postType', postType, postId);
   const [rawExcerpt, setExcerpt, {
@@ -44143,7 +44145,7 @@ function PostExcerptEditor({
     children: !isTrimmed ? rawOrRenderedExcerpt || (0,external_wp_i18n_namespaceObject.__)('No excerpt found') : trimmedExcerpt + ELLIPSIS
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+    children: [showControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.AlignmentToolbar, {
         value: textAlign,
         onChange: newAlign => setAttributes({
@@ -44249,7 +44251,8 @@ const post_excerpt_metadata = {
       type: "string"
     },
     moreText: {
-      type: "string"
+      type: "string",
+      role: "content"
     },
     showMoreOnNewLine: {
       type: "boolean",
@@ -45202,6 +45205,8 @@ function PostNavigationLinkEdit({
   },
   setAttributes
 }) {
+  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
+  const showControls = blockEditingMode === 'default';
   const isNext = type === 'next';
   let placeholder = isNext ? (0,external_wp_i18n_namespaceObject.__)('Next') : (0,external_wp_i18n_namespaceObject.__)('Previous');
   const arrowMap = {
@@ -45302,7 +45307,7 @@ function PostNavigationLinkEdit({
         }),
         help: (0,external_wp_i18n_namespaceObject.__)('Only link to posts that have the same taxonomy terms as the current post. For example the same tags or categories.')
       })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+    }), showControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.AlignmentToolbar, {
         value: textAlign,
         onChange: nextAlign => {
@@ -45448,7 +45453,8 @@ const post_navigation_link_metadata = {
       "default": "next"
     },
     label: {
-      type: "string"
+      type: "string",
+      role: "content"
     },
     showTitle: {
       type: "boolean",
@@ -46003,6 +46009,8 @@ function PostTermsEdit({
     postId,
     postType
   } = context;
+  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
+  const showControls = blockEditingMode === 'default';
   const selectedTerm = (0,external_wp_data_namespaceObject.useSelect)(select => {
     if (!term) {
       return {};
@@ -46030,7 +46038,7 @@ function PostTermsEdit({
     })
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+    children: [showControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.AlignmentToolbar, {
         value: textAlign,
         onChange: nextAlign => {
@@ -46174,11 +46182,13 @@ const post_terms_metadata = {
     },
     prefix: {
       type: "string",
-      "default": ""
+      "default": "",
+      role: "content"
     },
     suffix: {
       type: "string",
-      "default": ""
+      "default": "",
+      role: "content"
     }
   },
   usesContext: ["postId", "postType"],
@@ -53572,7 +53582,8 @@ const read_more_metadata = {
   textdomain: "default",
   attributes: {
     content: {
-      type: "string"
+      type: "string",
+      role: "content"
     },
     linkTarget: {
       type: "string",
