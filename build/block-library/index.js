@@ -45344,21 +45344,6 @@ function PostNavigationLinkEdit({
   });
 }
 
-;// ./packages/icons/build-module/library/next.js
-/**
- * WordPress dependencies
- */
-
-
-const next = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M6.6 6L5.4 7l4.5 5-4.5 5 1.1 1 5.5-6-5.4-6zm6 0l-1.1 1 4.5 5-4.5 5 1.1 1 5.5-6-5.5-6z"
-  })
-});
-/* harmony default export */ const library_next = (next);
-
 ;// ./packages/icons/build-module/library/previous.js
 /**
  * WordPress dependencies
@@ -45374,6 +45359,21 @@ const previous = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(e
 });
 /* harmony default export */ const library_previous = (previous);
 
+;// ./packages/icons/build-module/library/next.js
+/**
+ * WordPress dependencies
+ */
+
+
+const next = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M6.6 6L5.4 7l4.5 5-4.5 5 1.1 1 5.5-6-5.4-6zm6 0l-1.1 1 4.5 5-4.5 5 1.1 1 5.5-6-5.5-6z"
+  })
+});
+/* harmony default export */ const library_next = (next);
+
 ;// ./packages/block-library/build-module/post-navigation-link/variations.js
 /**
  * WordPress dependencies
@@ -45381,6 +45381,21 @@ const previous = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(e
 
 
 const post_navigation_link_variations_variations = [{
+  name: 'post-previous',
+  title: (0,external_wp_i18n_namespaceObject.__)('Previous Post'),
+  description: (0,external_wp_i18n_namespaceObject.__)('Displays the post link that precedes the current post.'),
+  icon: library_previous,
+  attributes: {
+    type: 'previous'
+  },
+  scope: ['inserter', 'transform'],
+  example: {
+    attributes: {
+      label: (0,external_wp_i18n_namespaceObject.__)('Previous post'),
+      arrow: 'arrow'
+    }
+  }
+}, {
   isDefault: true,
   name: 'post-next',
   title: (0,external_wp_i18n_namespaceObject.__)('Next Post'),
@@ -45393,21 +45408,6 @@ const post_navigation_link_variations_variations = [{
   example: {
     attributes: {
       label: (0,external_wp_i18n_namespaceObject.__)('Next post'),
-      arrow: 'arrow'
-    }
-  }
-}, {
-  name: 'post-previous',
-  title: (0,external_wp_i18n_namespaceObject.__)('Previous Post'),
-  description: (0,external_wp_i18n_namespaceObject.__)('Displays the post link that precedes the current post.'),
-  icon: library_previous,
-  attributes: {
-    type: 'previous'
-  },
-  scope: ['inserter', 'transform'],
-  example: {
-    attributes: {
-      label: (0,external_wp_i18n_namespaceObject.__)('Previous post'),
       arrow: 'arrow'
     }
   }
