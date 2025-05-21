@@ -25311,6 +25311,7 @@ function PostPublishPanelPrepublish({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -25410,7 +25411,7 @@ function PostPublishPanelPostpublish({
     className: "post-publish-panel__postpublish",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
       className: "post-publish-panel__postpublish-header",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
         ref: postLinkRef,
         href: link,
         children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(post.title) || (0,external_wp_i18n_namespaceObject.__)('(no title)')
@@ -25440,11 +25441,18 @@ function PostPublishPanelPostpublish({
         })]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
         className: "post-publish-panel__postpublish-buttons",
-        children: [!isScheduled && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        children: [!isScheduled && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
           variant: "primary",
           href: link,
           __next40pxDefaultSize: true,
-          children: viewPostLabel
+          icon: library_external,
+          iconPosition: "right",
+          target: "_blank",
+          children: [viewPostLabel, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
+            as: "span",
+            children: /* translators: accessibility text */
+            (0,external_wp_i18n_namespaceObject.__)('(opens in a new tab)')
+          })]
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           variant: isScheduled ? 'primary' : 'secondary',
           __next40pxDefaultSize: true,
