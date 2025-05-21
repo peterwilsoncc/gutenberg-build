@@ -53899,7 +53899,8 @@ const rss_metadata = {
     },
     feedURL: {
       type: "string",
-      "default": ""
+      "default": "",
+      role: "content"
     },
     itemsToShow: {
       type: "number",
