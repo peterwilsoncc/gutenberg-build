@@ -46876,7 +46876,7 @@ function preformatted_save_save({
 const preformatted_transforms_transforms = {
   from: [{
     type: 'block',
-    blocks: ['core/code', 'core/paragraph'],
+    blocks: ['core/code', 'core/paragraph', 'core/verse'],
     transform: ({
       content,
       anchor
@@ -46903,6 +46903,10 @@ const preformatted_transforms_transforms = {
     type: 'block',
     blocks: ['core/code'],
     transform: attributes => (0,external_wp_blocks_namespaceObject.createBlock)('core/code', attributes)
+  }, {
+    type: 'block',
+    blocks: ['core/verse'],
+    transform: attributes => (0,external_wp_blocks_namespaceObject.createBlock)('core/verse', attributes)
   }]
 };
 /* harmony default export */ const preformatted_transforms = (preformatted_transforms_transforms);
