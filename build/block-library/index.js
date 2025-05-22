@@ -25359,7 +25359,8 @@ const html_metadata = {
   attributes: {
     content: {
       type: "string",
-      source: "raw"
+      source: "raw",
+      role: "content"
     }
   },
   supports: {
