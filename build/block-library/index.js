@@ -53996,121 +53996,6 @@ const search = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 });
 /* harmony default export */ const library_search = (search);
 
-;// ./packages/block-library/build-module/search/icons.js
-/**
- * WordPress dependencies
- */
-
-
-const buttonOnly = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Rect, {
-    x: "7",
-    y: "10",
-    width: "10",
-    height: "4",
-    rx: "1",
-    fill: "currentColor"
-  })
-});
-const buttonOutside = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Rect, {
-    x: "4.75",
-    y: "15.25",
-    width: "6.5",
-    height: "9.5",
-    transform: "rotate(-90 4.75 15.25)",
-    stroke: "currentColor",
-    strokeWidth: "1.5",
-    fill: "none"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Rect, {
-    x: "16",
-    y: "10",
-    width: "4",
-    height: "4",
-    rx: "1",
-    fill: "currentColor"
-  })]
-});
-const buttonInside = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Rect, {
-    x: "4.75",
-    y: "15.25",
-    width: "6.5",
-    height: "14.5",
-    transform: "rotate(-90 4.75 15.25)",
-    stroke: "currentColor",
-    strokeWidth: "1.5",
-    fill: "none"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Rect, {
-    x: "14",
-    y: "10",
-    width: "4",
-    height: "4",
-    rx: "1",
-    fill: "currentColor"
-  })]
-});
-const noButton = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Rect, {
-    x: "4.75",
-    y: "15.25",
-    width: "6.5",
-    height: "14.5",
-    transform: "rotate(-90 4.75 15.25)",
-    stroke: "currentColor",
-    fill: "none",
-    strokeWidth: "1.5"
-  })
-});
-const buttonWithIcon = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Rect, {
-    x: "4.75",
-    y: "7.75",
-    width: "14.5",
-    height: "8.5",
-    rx: "1.25",
-    stroke: "currentColor",
-    fill: "none",
-    strokeWidth: "1.5"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Rect, {
-    x: "8",
-    y: "11",
-    width: "8",
-    height: "2",
-    fill: "currentColor"
-  })]
-});
-const toggleLabel = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Rect, {
-    x: "4.75",
-    y: "17.25",
-    width: "5.5",
-    height: "14.5",
-    transform: "rotate(-90 4.75 17.25)",
-    stroke: "currentColor",
-    fill: "none",
-    strokeWidth: "1.5"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Rect, {
-    x: "4",
-    y: "7",
-    width: "10",
-    height: "2",
-    fill: "currentColor"
-  })]
-});
-
 ;// ./packages/block-library/build-module/search/utils.js
 /**
  * Constants
@@ -54151,7 +54036,6 @@ function utils_isPercentageUnit(unit) {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -54263,62 +54147,18 @@ function SearchEdit({
     return dist_clsx(className, isButtonPositionInside ? 'wp-block-search__button-inside' : undefined, isButtonPositionOutside ? 'wp-block-search__button-outside' : undefined, hasNoButton ? 'wp-block-search__no-button' : undefined, hasOnlyButton ? 'wp-block-search__button-only' : undefined, !buttonUseIcon && !hasNoButton ? 'wp-block-search__text-button' : undefined, buttonUseIcon && !hasNoButton ? 'wp-block-search__icon-button' : undefined, hasOnlyButton && isSearchFieldHidden ? 'wp-block-search__searchfield-hidden' : undefined);
   };
   const buttonPositionControls = [{
-    role: 'menuitemradio',
-    title: (0,external_wp_i18n_namespaceObject.__)('Button outside'),
-    isActive: buttonPosition === 'button-outside',
-    icon: buttonOutside,
-    onClick: () => {
-      setAttributes({
-        buttonPosition: 'button-outside',
-        isSearchFieldHidden: false
-      });
-    }
+    label: (0,external_wp_i18n_namespaceObject.__)('Button outside'),
+    value: 'button-outside'
   }, {
-    role: 'menuitemradio',
-    title: (0,external_wp_i18n_namespaceObject.__)('Button inside'),
-    isActive: buttonPosition === 'button-inside',
-    icon: buttonInside,
-    onClick: () => {
-      setAttributes({
-        buttonPosition: 'button-inside',
-        isSearchFieldHidden: false
-      });
-    }
+    label: (0,external_wp_i18n_namespaceObject.__)('Button inside'),
+    value: 'button-inside'
   }, {
-    role: 'menuitemradio',
-    title: (0,external_wp_i18n_namespaceObject.__)('No button'),
-    isActive: buttonPosition === 'no-button',
-    icon: noButton,
-    onClick: () => {
-      setAttributes({
-        buttonPosition: 'no-button',
-        isSearchFieldHidden: false
-      });
-    }
+    label: (0,external_wp_i18n_namespaceObject.__)('No button'),
+    value: 'no-button'
   }, {
-    role: 'menuitemradio',
-    title: (0,external_wp_i18n_namespaceObject.__)('Button only'),
-    isActive: buttonPosition === 'button-only',
-    icon: buttonOnly,
-    onClick: () => {
-      setAttributes({
-        buttonPosition: 'button-only',
-        isSearchFieldHidden: true
-      });
-    }
+    label: (0,external_wp_i18n_namespaceObject.__)('Button only'),
+    value: 'button-only'
   }];
-  const getButtonPositionIcon = () => {
-    switch (buttonPosition) {
-      case 'button-inside':
-        return buttonInside;
-      case 'button-outside':
-        return buttonOutside;
-      case 'no-button':
-        return noButton;
-      case 'button-only':
-        return buttonOnly;
-    }
-  };
   const getResizableSides = () => {
     if (hasOnlyButton) {
       return {};
@@ -54399,44 +54239,79 @@ function SearchEdit({
     });
   };
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-  const controls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-          title: (0,external_wp_i18n_namespaceObject.__)('Show search label'),
-          icon: toggleLabel,
-          onClick: () => {
-            setAttributes({
-              showLabel: !showLabel
-            });
-          },
-          className: showLabel ? 'is-pressed' : undefined
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarDropdownMenu, {
-          icon: getButtonPositionIcon(),
-          label: (0,external_wp_i18n_namespaceObject.__)('Change button position'),
-          controls: buttonPositionControls
-        }), !hasNoButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-          title: (0,external_wp_i18n_namespaceObject.__)('Use button with icon'),
-          icon: buttonWithIcon,
-          onClick: () => {
-            setAttributes({
-              buttonUseIcon: !buttonUseIcon
-            });
-          },
-          className: buttonUseIcon ? 'is-pressed' : undefined
-        })]
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+  const controls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
         label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
         resetAll: () => {
           setAttributes({
             width: undefined,
-            widthUnit: undefined
+            widthUnit: undefined,
+            showLabel: true,
+            buttonUseIcon: false,
+            buttonPosition: 'button-outside',
+            isSearchFieldHidden: false
           });
         },
         dropdownMenuProps: dropdownMenuProps,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !showLabel,
+          label: (0,external_wp_i18n_namespaceObject.__)('Show label'),
+          onDeselect: () => {
+            setAttributes({
+              showLabel: true
+            });
+          },
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            checked: showLabel,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show label'),
+            onChange: value => setAttributes({
+              showLabel: value
+            })
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => buttonPosition !== 'button-outside',
+          label: (0,external_wp_i18n_namespaceObject.__)('Button position'),
+          onDeselect: () => {
+            setAttributes({
+              buttonPosition: 'button-outside',
+              isSearchFieldHidden: false
+            });
+          },
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+            value: buttonPosition,
+            __next40pxDefaultSize: true,
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Button position'),
+            onChange: value => {
+              setAttributes({
+                buttonPosition: value,
+                isSearchFieldHidden: value === 'button-only'
+              });
+            },
+            options: buttonPositionControls
+          })
+        }), buttonPosition !== 'no-button' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !!buttonUseIcon,
+          label: (0,external_wp_i18n_namespaceObject.__)('Use button with icon'),
+          onDeselect: () => {
+            setAttributes({
+              buttonUseIcon: false
+            });
+          },
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            checked: buttonUseIcon,
+            label: (0,external_wp_i18n_namespaceObject.__)('Use button with icon'),
+            onChange: value => setAttributes({
+              buttonUseIcon: value
+            })
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           hasValue: () => !!width,
           label: (0,external_wp_i18n_namespaceObject.__)('Width'),
           onDeselect: () => {
@@ -54492,9 +54367,9 @@ function SearchEdit({
               })
             })]
           })
-        })
+        })]
       })
-    })]
+    })
   });
   const padBorderRadius = radius => radius ? `calc(${radius} + ${DEFAULT_INNER_PADDING})` : undefined;
   const getWrapperStyles = () => {
