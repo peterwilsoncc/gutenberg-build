@@ -58148,21 +58148,6 @@ const social_links_deprecated_deprecated = [
 }];
 /* harmony default export */ const social_links_deprecated = (social_links_deprecated_deprecated);
 
-;// ./packages/icons/build-module/library/check.js
-/**
- * WordPress dependencies
- */
-
-
-const check = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M16.7 7.1l-6.3 8.5-3.3-2.5-.9 1.2 4.5 3.4L17.9 8z"
-  })
-});
-/* harmony default export */ const library_check = (check);
-
 ;// ./packages/block-library/build-module/social-links/edit.js
 /**
  * External dependencies
@@ -58178,23 +58163,22 @@ const check = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 
 
 
-
 /**
  * Internal dependencies
  */
 
 
 const sizeOptions = [{
-  name: (0,external_wp_i18n_namespaceObject.__)('Small'),
+  label: (0,external_wp_i18n_namespaceObject.__)('Small'),
   value: 'has-small-icon-size'
 }, {
-  name: (0,external_wp_i18n_namespaceObject.__)('Normal'),
+  label: (0,external_wp_i18n_namespaceObject.__)('Normal'),
   value: 'has-normal-icon-size'
 }, {
-  name: (0,external_wp_i18n_namespaceObject.__)('Large'),
+  label: (0,external_wp_i18n_namespaceObject.__)('Large'),
   value: 'has-large-icon-size'
 }, {
-  name: (0,external_wp_i18n_namespaceObject.__)('Huge'),
+  label: (0,external_wp_i18n_namespaceObject.__)('Huge'),
   value: 'has-huge-icon-size'
 }];
 function SocialLinksEdit(props) {
@@ -58272,9 +58256,6 @@ function SocialLinksEdit(props) {
     __experimentalAppenderTagName: 'li',
     renderAppender: !hasSocialIcons || hasAnySelected ? external_wp_blockEditor_namespaceObject.InnerBlocks.ButtonBlockAppender : undefined
   });
-  const POPOVER_PROPS = {
-    position: 'bottom right'
-  };
   const colorSettings = [{
     // Use custom attribute as fallback to prevent loss of named color selection when
     // switching themes to a new theme that does not have a matching named color.
@@ -58315,56 +58296,35 @@ function SocialLinksEdit(props) {
   }
   const colorGradientSettings = (0,external_wp_blockEditor_namespaceObject.__experimentalUseMultipleOriginColorsAndGradients)();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-      group: "other",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarDropdownMenu, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Size'),
-        text: (0,external_wp_i18n_namespaceObject.__)('Size'),
-        icon: null,
-        popoverProps: POPOVER_PROPS,
-        children: ({
-          onClose
-        }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
-          children: sizeOptions.map(entry => {
-            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-              icon: (size === entry.value || !size && entry.value === 'has-normal-icon-size') && library_check,
-              isSelected: size === entry.value,
-              onClick: () => {
-                setAttributes({
-                  size: entry.value
-                });
-              },
-              onClose: onClose,
-              role: "menuitemradio",
-              children: entry.name
-            }, entry.value);
-          })
-        })
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
         label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
         resetAll: () => {
           setAttributes({
             openInNewTab: false,
-            showLabels: false
+            showLabels: false,
+            size: 'has-normal-icon-size'
           });
         },
         dropdownMenuProps: dropdownMenuProps,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           isShownByDefault: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Open links in new tab'),
-          hasValue: () => !!openInNewTab,
+          hasValue: () => !!size && size !== 'has-normal-icon-size',
+          label: (0,external_wp_i18n_namespaceObject.__)('Icon size'),
           onDeselect: () => setAttributes({
-            openInNewTab: false
+            size: 'has-normal-icon-size'
           }),
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+            __next40pxDefaultSize: true,
             __nextHasNoMarginBottom: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Open links in new tab'),
-            checked: openInNewTab,
-            onChange: () => setAttributes({
-              openInNewTab: !openInNewTab
-            })
+            label: (0,external_wp_i18n_namespaceObject.__)('Icon Size'),
+            onChange: newSize => {
+              setAttributes({
+                size: newSize
+              });
+            },
+            value: size !== null && size !== void 0 ? size : 'has-normal-icon-size',
+            options: sizeOptions
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           isShownByDefault: true,
@@ -58379,6 +58339,21 @@ function SocialLinksEdit(props) {
             checked: showLabels,
             onChange: () => setAttributes({
               showLabels: !showLabels
+            })
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          isShownByDefault: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Open links in new tab'),
+          hasValue: () => !!openInNewTab,
+          onDeselect: () => setAttributes({
+            openInNewTab: false
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Open links in new tab'),
+            checked: openInNewTab,
+            onChange: () => setAttributes({
+              openInNewTab: !openInNewTab
             })
           })
         })]
