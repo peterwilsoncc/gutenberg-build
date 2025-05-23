@@ -18705,6 +18705,7 @@ const file_deprecated_deprecated = [deprecated_v3, file_deprecated_v2, file_depr
  */
 
 
+
 function FileBlockInspector({
   hrefs,
   openInNewWindow,
@@ -18722,6 +18723,7 @@ function FileBlockInspector({
     textLinkHref,
     attachmentPage
   } = hrefs;
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   let linkDestinationOptions = [{
     value: href,
     label: (0,external_wp_i18n_namespaceObject.__)('URL')
@@ -18737,42 +18739,83 @@ function FileBlockInspector({
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: [href.endsWith('.pdf') && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('PDF settings'),
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+      children: [href.endsWith('.pdf') && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('PDF settings'),
+        resetAll: () => {
+          changeDisplayPreview(true);
+          changePreviewHeight(600);
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Show inline embed'),
-          help: displayPreview ? (0,external_wp_i18n_namespaceObject.__)("Note: Most phone and tablet browsers won't display embedded PDFs.") : null,
-          checked: !!displayPreview,
-          onChange: changeDisplayPreview
-        }), displayPreview && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
-          __nextHasNoMarginBottom: true,
-          __next40pxDefaultSize: true,
+          isShownByDefault: true,
+          hasValue: () => !displayPreview,
+          onDeselect: () => changeDisplayPreview(true),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show inline embed'),
+            help: displayPreview ? (0,external_wp_i18n_namespaceObject.__)("Note: Most phone and tablet browsers won't display embedded PDFs.") : null,
+            checked: !!displayPreview,
+            onChange: changeDisplayPreview
+          })
+        }), displayPreview && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Height in pixels'),
-          min: MIN_PREVIEW_HEIGHT,
-          max: Math.max(MAX_PREVIEW_HEIGHT, previewHeight),
-          value: previewHeight,
-          onChange: changePreviewHeight
+          isShownByDefault: true,
+          hasValue: () => previewHeight !== 600,
+          onDeselect: () => changePreviewHeight(600),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+            __nextHasNoMarginBottom: true,
+            __next40pxDefaultSize: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Height in pixels'),
+            min: MIN_PREVIEW_HEIGHT,
+            max: Math.max(MAX_PREVIEW_HEIGHT, previewHeight),
+            value: previewHeight,
+            onChange: changePreviewHeight
+          })
         })]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-          __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          changeLinkDestinationOption(href);
+          changeOpenInNewWindow(false);
+          changeShowDownloadButton(true);
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Link to'),
-          value: textLinkHref,
-          options: linkDestinationOptions,
-          onChange: changeLinkDestinationOption
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+          isShownByDefault: true,
+          hasValue: () => textLinkHref !== href,
+          onDeselect: () => changeLinkDestinationOption(href),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+            __next40pxDefaultSize: true,
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Link to'),
+            value: textLinkHref,
+            options: linkDestinationOptions,
+            onChange: changeLinkDestinationOption
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
-          checked: openInNewWindow,
-          onChange: changeOpenInNewWindow
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+          isShownByDefault: true,
+          hasValue: () => !!openInNewWindow,
+          onDeselect: () => changeOpenInNewWindow(false),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
+            checked: openInNewWindow,
+            onChange: changeOpenInNewWindow
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Show download button'),
-          checked: showDownloadButton,
-          onChange: changeShowDownloadButton
+          isShownByDefault: true,
+          hasValue: () => !showDownloadButton,
+          onDeselect: () => changeShowDownloadButton(true),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show download button'),
+            checked: showDownloadButton,
+            onChange: changeShowDownloadButton
+          })
         })]
       })]
     })
