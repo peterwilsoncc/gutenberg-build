@@ -55101,7 +55101,8 @@ const shortcode_metadata = {
   attributes: {
     text: {
       type: "string",
-      source: "raw"
+      source: "raw",
+      role: "content"
     }
   },
   supports: {
