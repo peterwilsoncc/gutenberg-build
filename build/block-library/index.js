@@ -5420,6 +5420,8 @@ function ButtonEdit(props) {
       wideSize: layout?.wideSize
     }
   });
+  const hasNonContentControls = blockEditingMode === 'default';
+  const hasBlockControls = hasNonContentControls || isLinkTag && !lockUrlControls;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
@@ -5454,9 +5456,9 @@ function ButtonEdit(props) {
         onMerge: mergeBlocks,
         identifier: "text"
       })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
+    }), hasBlockControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
       group: "block",
-      children: [blockEditingMode === 'default' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.AlignmentControl, {
+      children: [hasNonContentControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.AlignmentControl, {
         value: textAlign,
         onChange: nextAlign => {
           setAttributes({
