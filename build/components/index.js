@@ -47086,7 +47086,6 @@ function SuggestionsList({
   const listRef = (0,external_wp_compose_namespaceObject.useRefEffect)(listNode => {
     // only have to worry about scrolling selected suggestion into view
     // when already expanded.
-    let rafId;
     if (selectedIndex > -1 && scrollIntoView && listNode.children[selectedIndex]) {
       listNode.children[selectedIndex].scrollIntoView({
         behavior: 'instant',
@@ -47094,11 +47093,6 @@ function SuggestionsList({
         inline: 'nearest'
       });
     }
-    return () => {
-      if (rafId !== undefined) {
-        cancelAnimationFrame(rafId);
-      }
-    };
   }, [selectedIndex, scrollIntoView]);
   const handleHover = suggestion => {
     return () => {
