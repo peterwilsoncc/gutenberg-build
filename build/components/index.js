@@ -33159,7 +33159,7 @@ const external_wp_keycodes_namespaceObject = window["wp"]["keycodes"];
  */
 const ALL_UNICODE_DASH_CHARACTERS = new RegExp(/[\u007e\u00ad\u2053\u207b\u208b\u2212\p{Pd}]/gu);
 const normalizeTextString = value => {
-  return remove_accents_default()(value).toLocaleLowerCase().replace(ALL_UNICODE_DASH_CHARACTERS, '-');
+  return remove_accents_default()(value).normalize('NFKC').toLocaleLowerCase().replace(ALL_UNICODE_DASH_CHARACTERS, '-');
 };
 
 /**
@@ -47110,7 +47110,7 @@ function SuggestionsList({
       return null;
     }
     const transformedSuggestion = displayTransform(suggestion);
-    const indexOfMatch = transformedSuggestion.toLocaleLowerCase().indexOf(matchText);
+    const indexOfMatch = transformedSuggestion.normalize('NFKC').toLocaleLowerCase().indexOf(matchText);
     return {
       suggestionBeforeMatch: transformedSuggestion.substring(0, indexOfMatch),
       suggestionMatch: transformedSuggestion.substring(indexOfMatch, indexOfMatch + matchText.length),
@@ -58381,7 +58381,7 @@ function FormTokenField(props) {
     } else {
       match = match.toLocaleLowerCase();
       _suggestions.forEach(suggestion => {
-        const index = suggestion.toLocaleLowerCase().indexOf(match);
+        const index = suggestion.normalize('NFKC').toLocaleLowerCase().indexOf(match);
         if (normalizedValue.indexOf(suggestion) === -1) {
           if (index === 0) {
             startsWithMatch.push(suggestion);
