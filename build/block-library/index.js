@@ -5465,19 +5465,13 @@ function ButtonEdit(props) {
             textAlign: nextAlign
           });
         }
-      }), !isURLSet && isLinkTag && !lockUrlControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+      }), isLinkTag && !lockUrlControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
         name: "link",
-        icon: library_link,
-        title: (0,external_wp_i18n_namespaceObject.__)('Link'),
-        shortcut: external_wp_keycodes_namespaceObject.displayShortcut.primary('k'),
-        onClick: startEditing
-      }), isURLSet && isLinkTag && !lockUrlControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-        name: "link",
-        icon: link_off,
-        title: (0,external_wp_i18n_namespaceObject.__)('Unlink'),
-        shortcut: external_wp_keycodes_namespaceObject.displayShortcut.primaryShift('k'),
-        onClick: unlink,
-        isActive: true
+        icon: !isURLSet ? library_link : link_off,
+        title: !isURLSet ? (0,external_wp_i18n_namespaceObject.__)('Link') : (0,external_wp_i18n_namespaceObject.__)('Unlink'),
+        shortcut: !isURLSet ? external_wp_keycodes_namespaceObject.displayShortcut.primary('k') : external_wp_keycodes_namespaceObject.displayShortcut.primaryShift('k'),
+        onClick: !isURLSet ? startEditing : unlink,
+        isActive: isURLSet
       })]
     }), isLinkTag && isSelected && (isEditingURL || isURLSet) && !lockUrlControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Popover, {
       placement: "bottom",
