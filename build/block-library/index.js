@@ -30232,66 +30232,145 @@ var external_wp_deprecated_default = /*#__PURE__*/__webpack_require__.n(external
 
 
 
+
+/**
+ * Internal dependencies
+ */
+
+
+const LIST_STYLE_OPTIONS = [{
+  label: (0,external_wp_i18n_namespaceObject.__)('Numbers'),
+  value: 'decimal'
+}, {
+  label: (0,external_wp_i18n_namespaceObject.__)('Uppercase letters'),
+  value: 'upper-alpha'
+}, {
+  label: (0,external_wp_i18n_namespaceObject.__)('Lowercase letters'),
+  value: 'lower-alpha'
+}, {
+  label: (0,external_wp_i18n_namespaceObject.__)('Uppercase Roman numerals'),
+  value: 'upper-roman'
+}, {
+  label: (0,external_wp_i18n_namespaceObject.__)('Lowercase Roman numerals'),
+  value: 'lower-roman'
+}];
 const OrderedListSettings = ({
   setAttributes,
   reversed,
   start,
   type
-}) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-    title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-      __next40pxDefaultSize: true,
-      __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('List style'),
-      options: [{
-        label: (0,external_wp_i18n_namespaceObject.__)('Numbers'),
-        value: 'decimal'
-      }, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Uppercase letters'),
-        value: 'upper-alpha'
-      }, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Lowercase letters'),
-        value: 'lower-alpha'
-      }, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Uppercase Roman numerals'),
-        value: 'upper-roman'
-      }, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Lowercase Roman numerals'),
-        value: 'lower-roman'
-      }],
-      value: type,
-      onChange: newValue => setAttributes({
-        type: newValue
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-      __next40pxDefaultSize: true,
-      __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Start value'),
-      type: "number",
-      onChange: value => {
-        const int = parseInt(value, 10);
+}) => {
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+    children: external_wp_element_namespaceObject.Platform.isNative ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
+      title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('List style'),
+        options: LIST_STYLE_OPTIONS,
+        value: type,
+        onChange: newValue => setAttributes({
+          type: newValue
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Start value'),
+        type: "number",
+        onChange: value => {
+          const int = parseInt(value, 10);
+          setAttributes({
+            // It should be possible to unset the value,
+            // e.g. with an empty string.
+            start: isNaN(int) ? undefined : int
+          });
+        },
+        value: Number.isInteger(start) ? start.toString(10) : '',
+        step: "1"
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Reverse order'),
+        checked: reversed || false,
+        onChange: value => {
+          setAttributes({
+            // Unset the attribute if not reversed.
+            reversed: value || undefined
+          });
+        }
+      })]
+    }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+      resetAll: () => {
         setAttributes({
-          // It should be possible to unset the value,
-          // e.g. with an empty string.
-          start: isNaN(int) ? undefined : int
+          type: undefined,
+          start: undefined,
+          reversed: undefined
         });
       },
-      value: Number.isInteger(start) ? start.toString(10) : '',
-      step: "1"
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-      __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Reverse order'),
-      checked: reversed || false,
-      onChange: value => {
-        setAttributes({
-          // Unset the attribute if not reversed.
-          reversed: value || undefined
-        });
-      }
-    })]
-  })
-});
+      dropdownMenuProps: dropdownMenuProps,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        label: (0,external_wp_i18n_namespaceObject.__)('List style'),
+        isShownByDefault: true,
+        hasValue: () => !!type,
+        onDeselect: () => setAttributes({
+          type: undefined
+        }),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+          __next40pxDefaultSize: true,
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('List style'),
+          options: LIST_STYLE_OPTIONS,
+          value: type || 'decimal',
+          onChange: newValue => setAttributes({
+            type: newValue
+          })
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Start value'),
+        isShownByDefault: true,
+        hasValue: () => !!start,
+        onDeselect: () => setAttributes({
+          start: undefined
+        }),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+          __next40pxDefaultSize: true,
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Start value'),
+          type: "number",
+          onChange: value => {
+            const int = parseInt(value, 10);
+            setAttributes({
+              // It should be possible to unset the value,
+              // e.g. with an empty string.
+              start: isNaN(int) ? undefined : int
+            });
+          },
+          value: Number.isInteger(start) ? start.toString(10) : '',
+          step: "1"
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Reverse order'),
+        isShownByDefault: true,
+        hasValue: () => !!reversed,
+        onDeselect: () => setAttributes({
+          reversed: undefined
+        }),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Reverse order'),
+          checked: reversed || false,
+          onChange: value => {
+            setAttributes({
+              // Unset the attribute if not reversed.
+              reversed: value || undefined
+            });
+          }
+        })
+      })]
+    })
+  });
+};
 /* harmony default export */ const ordered_list_settings = (OrderedListSettings);
 
 ;// ./packages/block-library/build-module/list/tag-name.js
