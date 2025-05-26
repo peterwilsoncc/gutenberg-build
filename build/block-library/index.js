@@ -53748,6 +53748,11 @@ const rss = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(extern
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 const DEFAULT_MIN_ITEMS = 1;
 const DEFAULT_MAX_ITEMS = 20;
 function RSSEdit({
@@ -53767,6 +53772,7 @@ function RSSEdit({
     openInNewTab,
     rel
   } = attributes;
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   function toggleAttribute(propName) {
     return () => {
       const value = attributes[propName];
@@ -53856,62 +53862,130 @@ function RSSEdit({
         controls: toolbarControls
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
-          __nextHasNoMarginBottom: true,
-          __next40pxDefaultSize: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            itemsToShow: 5,
+            displayAuthor: false,
+            displayDate: false,
+            displayExcerpt: false,
+            excerptLength: 55,
+            columns: 2,
+            openInNewTab: false
+          });
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Number of items'),
-          value: itemsToShow,
-          onChange: value => setAttributes({
-            itemsToShow: value
+          hasValue: () => itemsToShow !== 5,
+          onDeselect: () => setAttributes({
+            itemsToShow: 5
           }),
-          min: DEFAULT_MIN_ITEMS,
-          max: DEFAULT_MAX_ITEMS,
-          required: true
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+            __nextHasNoMarginBottom: true,
+            __next40pxDefaultSize: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Number of items'),
+            value: itemsToShow,
+            onChange: value => setAttributes({
+              itemsToShow: value
+            }),
+            min: DEFAULT_MIN_ITEMS,
+            max: DEFAULT_MAX_ITEMS,
+            required: true
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Display author'),
-          checked: displayAuthor,
-          onChange: toggleAttribute('displayAuthor')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+          hasValue: () => !!displayAuthor,
+          onDeselect: () => setAttributes({
+            displayAuthor: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Display author'),
+            checked: displayAuthor,
+            onChange: toggleAttribute('displayAuthor')
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Display date'),
-          checked: displayDate,
-          onChange: toggleAttribute('displayDate')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+          hasValue: () => !!displayDate,
+          onDeselect: () => setAttributes({
+            displayDate: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Display date'),
+            checked: displayDate,
+            onChange: toggleAttribute('displayDate')
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Display excerpt'),
-          checked: displayExcerpt,
-          onChange: toggleAttribute('displayExcerpt')
-        }), displayExcerpt && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
-          __nextHasNoMarginBottom: true,
-          __next40pxDefaultSize: true,
+          hasValue: () => !!displayExcerpt,
+          onDeselect: () => setAttributes({
+            displayExcerpt: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Display excerpt'),
+            checked: displayExcerpt,
+            onChange: toggleAttribute('displayExcerpt')
+          })
+        }), displayExcerpt && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Max number of words in excerpt'),
-          value: excerptLength,
-          onChange: value => setAttributes({
-            excerptLength: value
+          hasValue: () => excerptLength !== 55,
+          onDeselect: () => setAttributes({
+            excerptLength: 55
           }),
-          min: 10,
-          max: 100,
-          required: true
-        }), blockLayout === 'grid' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
-          __nextHasNoMarginBottom: true,
-          __next40pxDefaultSize: true,
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+            __nextHasNoMarginBottom: true,
+            __next40pxDefaultSize: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Max number of words in excerpt'),
+            value: excerptLength,
+            onChange: value => setAttributes({
+              excerptLength: value
+            }),
+            min: 10,
+            max: 100,
+            required: true
+          })
+        }), blockLayout === 'grid' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Columns'),
-          value: columns,
-          onChange: value => setAttributes({
-            columns: value
+          hasValue: () => columns !== 2,
+          onDeselect: () => setAttributes({
+            columns: 2
           }),
-          min: 2,
-          max: 6,
-          required: true
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+            __nextHasNoMarginBottom: true,
+            __next40pxDefaultSize: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Columns'),
+            value: columns,
+            onChange: value => setAttributes({
+              columns: value
+            }),
+            min: 2,
+            max: 6,
+            required: true
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Open links in new tab'),
-          checked: openInNewTab,
-          onChange: value => setAttributes({
-            openInNewTab: value
+          hasValue: () => !!openInNewTab,
+          onDeselect: () => setAttributes({
+            openInNewTab: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Open links in new tab'),
+            checked: openInNewTab,
+            onChange: value => setAttributes({
+              openInNewTab: value
+            })
           })
         })]
       })
