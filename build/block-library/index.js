@@ -48621,11 +48621,8 @@ function EnhancedPaginationControl({
   const {
     hasUnsupportedBlocks
   } = useUnsupportedBlocks(clientId);
-  const fullPageClientSideNavigation = window.__experimentalFullPageClientSideNavigation;
   let help = (0,external_wp_i18n_namespaceObject.__)('Reload the full page—instead of just the posts list—when visitors navigate between pages.');
-  if (fullPageClientSideNavigation) {
-    help = (0,external_wp_i18n_namespaceObject.__)('Experimental full-page client-side navigation setting enabled.');
-  } else if (hasUnsupportedBlocks) {
+  if (hasUnsupportedBlocks) {
     help = (0,external_wp_i18n_namespaceObject.__)('Enhancement disabled because there are non-compatible blocks inside the Query block.');
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
@@ -48633,8 +48630,8 @@ function EnhancedPaginationControl({
       __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Reload full page'),
       help: help,
-      checked: !enhancedPagination && !fullPageClientSideNavigation,
-      disabled: hasUnsupportedBlocks || fullPageClientSideNavigation,
+      checked: !enhancedPagination,
+      disabled: hasUnsupportedBlocks,
       onChange: value => {
         setAttributes({
           enhancedPagination: !value
@@ -49704,7 +49701,7 @@ function EnhancedPaginationModal({
     hasUnsupportedBlocks
   } = useUnsupportedBlocks(clientId);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (enhancedPagination && hasUnsupportedBlocks && !window.__experimentalFullPageClientSideNavigation) {
+    if (enhancedPagination && hasUnsupportedBlocks) {
       setAttributes({
         enhancedPagination: false
       });
