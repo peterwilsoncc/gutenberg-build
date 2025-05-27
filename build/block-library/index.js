@@ -16812,6 +16812,11 @@ const pencil = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 function getResponsiveHelp(checked) {
   return checked ? (0,external_wp_i18n_namespaceObject.__)('This embed will preserve its aspect ratio when the browser is resized.') : (0,external_wp_i18n_namespaceObject.__)('This embed may not preserve its aspect ratio when the browser is resized.');
 }
@@ -16822,30 +16827,44 @@ const EmbedControls = ({
   allowResponsive,
   toggleResponsive,
   switchBackToURLInput
-}) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
-      children: showEditButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-        className: "components-toolbar__control",
-        label: (0,external_wp_i18n_namespaceObject.__)('Edit URL'),
-        icon: library_edit,
-        onClick: switchBackToURLInput
+}) => {
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+        children: showEditButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+          className: "components-toolbar__control",
+          label: (0,external_wp_i18n_namespaceObject.__)('Edit URL'),
+          icon: library_edit,
+          onClick: switchBackToURLInput
+        })
       })
-    })
-  }), themeSupportsResponsive && blockSupportsResponsive && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Media settings'),
-      className: "blocks-responsive",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-        __nextHasNoMarginBottom: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Resize for smaller devices'),
-        checked: allowResponsive,
-        help: getResponsiveHelp,
-        onChange: toggleResponsive
+    }), themeSupportsResponsive && blockSupportsResponsive && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Media settings'),
+        resetAll: () => {
+          toggleResponsive(true);
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Media settings'),
+          isShownByDefault: true,
+          hasValue: () => !allowResponsive,
+          onDeselect: () => {
+            toggleResponsive(!allowResponsive);
+          },
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Resize for smaller devices'),
+            checked: allowResponsive,
+            help: getResponsiveHelp,
+            onChange: toggleResponsive
+          })
+        })
       })
-    })
-  })]
-});
+    })]
+  });
+};
 /* harmony default export */ const embed_controls = (EmbedControls);
 
 ;// ./packages/block-library/build-module/embed/icons.js
@@ -17435,20 +17454,18 @@ const EmbedEdit = props => {
    * @return {Object} Merged attributes.
    */
   const getMergedAttributes = () => getMergedAttributesWithPreview(attributes, preview, title, responsive);
-  const toggleResponsive = () => {
+  function toggleResponsive(newAllowResponsive) {
     const {
-      allowResponsive,
       className
     } = attributes;
     const {
       html
     } = preview;
-    const newAllowResponsive = !allowResponsive;
     setAttributes({
       allowResponsive: newAllowResponsive,
       className: getClassNames(html, className, responsive && newAllowResponsive)
     });
-  };
+  }
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (preview?.html || !cannotEmbed || !hasResolved) {
       return;
