@@ -47105,7 +47105,7 @@ function SuggestionsList({
     };
   };
   const computeSuggestionMatch = suggestion => {
-    const matchText = displayTransform(match).toLocaleLowerCase();
+    const matchText = displayTransform(match).normalize('NFKC').toLocaleLowerCase();
     if (matchText.length === 0) {
       return null;
     }
@@ -58380,7 +58380,7 @@ function FormTokenField(props) {
     if (match.length === 0) {
       _suggestions = _suggestions.filter(suggestion => !normalizedValue.includes(suggestion));
     } else {
-      match = match.toLocaleLowerCase();
+      match = match.normalize('NFKC').toLocaleLowerCase();
       _suggestions.forEach(suggestion => {
         const index = suggestion.normalize('NFKC').toLocaleLowerCase().indexOf(match);
         if (normalizedValue.indexOf(suggestion) === -1) {
