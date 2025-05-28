@@ -46694,6 +46694,11 @@ const post_time_to_read_init = () => initBlock({
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 function PostTitleEdit({
   attributes: {
     level,
@@ -46742,6 +46747,7 @@ function PostTitleEdit({
     })
   });
   const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   let titleElement = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
     ...blockProps,
     children: (0,external_wp_i18n_namespaceObject.__)('Title')
@@ -46808,30 +46814,62 @@ function PostTitleEdit({
           }
         })]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-          title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-            __nextHasNoMarginBottom: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+          resetAll: () => {
+            setAttributes({
+              rel: '',
+              linkTarget: '_self',
+              isLink: false
+            });
+          },
+          dropdownMenuProps: dropdownMenuProps,
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
             label: (0,external_wp_i18n_namespaceObject.__)('Make title a link'),
-            onChange: () => setAttributes({
-              isLink: !isLink
+            isShownByDefault: true,
+            hasValue: () => isLink,
+            onDeselect: () => setAttributes({
+              isLink: false
             }),
-            checked: isLink
-          }), isLink && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
               __nextHasNoMarginBottom: true,
-              label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
-              onChange: value => setAttributes({
-                linkTarget: value ? '_blank' : '_self'
+              label: (0,external_wp_i18n_namespaceObject.__)('Make title a link'),
+              onChange: () => setAttributes({
+                isLink: !isLink
               }),
-              checked: linkTarget === '_blank'
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-              __next40pxDefaultSize: true,
-              __nextHasNoMarginBottom: true,
+              checked: isLink
+            })
+          }), isLink && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+              label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
+              isShownByDefault: true,
+              hasValue: () => linkTarget === '_blank',
+              onDeselect: () => setAttributes({
+                linkTarget: '_self'
+              }),
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+                __nextHasNoMarginBottom: true,
+                label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
+                onChange: value => setAttributes({
+                  linkTarget: value ? '_blank' : '_self'
+                }),
+                checked: linkTarget === '_blank'
+              })
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
               label: (0,external_wp_i18n_namespaceObject.__)('Link rel'),
-              value: rel,
-              onChange: newRel => setAttributes({
-                rel: newRel
+              isShownByDefault: true,
+              hasValue: () => !!rel,
+              onDeselect: () => setAttributes({
+                rel: ''
+              }),
+              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+                __next40pxDefaultSize: true,
+                __nextHasNoMarginBottom: true,
+                label: (0,external_wp_i18n_namespaceObject.__)('Link rel'),
+                value: rel,
+                onChange: newRel => setAttributes({
+                  rel: newRel
+                })
               })
             })]
           })]
