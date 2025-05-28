@@ -72131,9 +72131,7 @@ function ImageSizeControl({
     } = getScaledWidthAndHeight(scale, imageWidth, imageHeight);
     return currentWidth === scaledWidth && currentHeight === scaledHeight;
   });
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-    className: "block-editor-image-size-control",
-    spacing: "4",
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [imageSizeOptions && imageSizeOptions.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
       __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Resolution'),
@@ -72142,17 +72140,20 @@ function ImageSizeControl({
       onChange: onChangeImage,
       help: imageSizeHelp,
       size: "__unstable-large"
-    }), isResizable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    }), isResizable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      className: "block-editor-image-size-control",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         align: "baseline",
-        spacing: "4",
+        spacing: "3",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+          className: "block-editor-image-size-control__width",
           label: (0,external_wp_i18n_namespaceObject.__)('Width'),
           value: currentWidth,
           min: 1,
           onChange: value => updateDimension('width', value),
           size: "__unstable-large"
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+          className: "block-editor-image-size-control__height",
           label: (0,external_wp_i18n_namespaceObject.__)('Height'),
           value: currentHeight,
           min: 1,
