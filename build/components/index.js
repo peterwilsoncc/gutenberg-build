@@ -72356,7 +72356,8 @@ lock(privateApis, {
   Theme: theme,
   Menu: menu_Menu,
   kebabCase: kebabCase,
-  Badge: badge
+  Badge: badge,
+  normalizeTextString: normalizeTextString
 });
 
 ;// ./packages/components/build-module/index.js
