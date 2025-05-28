@@ -65516,6 +65516,14 @@ const VideoSettings = ({
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
+const {
+  Badge
+} = unlock(external_wp_components_namespaceObject.privateApis);
 const ALLOWED_TYPES = ['text/vtt'];
 const DEFAULT_KIND = 'subtitles';
 const KIND_OPTIONS = [{
@@ -65543,13 +65551,18 @@ function TrackList({
       className: "block-library-video-tracks-editor__track-list-track",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         children: track.label
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        __next40pxDefaultSize: true,
-        variant: "tertiary",
-        onClick: () => onEditPress(index),
-        "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Label of the video text track e.g: "French subtitles". */
-        (0,external_wp_i18n_namespaceObject._x)('Edit %s', 'text tracks'), track.label),
-        children: (0,external_wp_i18n_namespaceObject.__)('Edit')
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        justify: "flex-end",
+        children: [track.default && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Badge, {
+          children: (0,external_wp_i18n_namespaceObject.__)('Default')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
+          variant: "tertiary",
+          onClick: () => onEditPress(index),
+          "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Label of the video text track e.g: "French subtitles". */
+          (0,external_wp_i18n_namespaceObject._x)('Edit %s', 'text tracks'), track.label),
+          children: (0,external_wp_i18n_namespaceObject.__)('Edit')
+        })]
       })]
     }, index);
   });
@@ -65563,13 +65576,15 @@ function SingleTrackEditor({
   track,
   onChange,
   onClose,
-  onRemove
+  onRemove,
+  allowSettingDefault
 }) {
   const {
     src = '',
     label = '',
     srcLang = '',
-    kind = DEFAULT_KIND
+    kind = DEFAULT_KIND,
+    default: isDefaultTrack = false
   } = track;
   const fileName = src.startsWith('blob:') ? '' : (0,external_wp_url_namespaceObject.getFilename)(src) || '';
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
@@ -65607,7 +65622,7 @@ function SingleTrackEditor({
         help: (0,external_wp_i18n_namespaceObject.__)('Language tag (en, fr, etc.)')
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-      spacing: "8",
+      spacing: "4",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
@@ -65619,6 +65634,18 @@ function SingleTrackEditor({
           onChange({
             ...track,
             kind: newKind
+          });
+        }
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Set as default track'),
+        checked: isDefaultTrack,
+        disabled: !allowSettingDefault,
+        onChange: defaultTrack => {
+          onChange({
+            ...track,
+            default: defaultTrack
           });
         }
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -65716,7 +65743,8 @@ function TracksEditor({
           onRemove: () => {
             onChange(tracks.filter((_track, index) => index !== trackBeingEdited));
             setTrackBeingEdited(null);
-          }
+          },
+          allowSettingDefault: !tracks.some(track => track.default) || tracks[trackBeingEdited].default
         });
       }
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
