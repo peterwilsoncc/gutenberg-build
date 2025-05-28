@@ -29247,102 +29247,174 @@ function Controls({
           })
         })
       })]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Featured image'),
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-        __nextHasNoMarginBottom: true,
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Featured image'),
+      resetAll: () => setAttributes({
+        displayFeaturedImage: false,
+        featuredImageAlign: undefined,
+        featuredImageSizeSlug: 'thumbnail',
+        featuredImageSizeWidth: null,
+        featuredImageSizeHeight: null,
+        addLinkToFeaturedImage: false
+      }),
+      dropdownMenuProps: dropdownMenuProps,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => !!displayFeaturedImage,
         label: (0,external_wp_i18n_namespaceObject.__)('Display featured image'),
-        checked: displayFeaturedImage,
-        onChange: value => setAttributes({
-          displayFeaturedImage: value
+        onDeselect: () => setAttributes({
+          displayFeaturedImage: false
+        }),
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Display featured image'),
+          checked: displayFeaturedImage,
+          onChange: value => setAttributes({
+            displayFeaturedImage: value
+          })
         })
       }), displayFeaturedImage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalImageSizeControl, {
-          onChange: value => {
-            const newAttrs = {};
-            if (value.hasOwnProperty('width')) {
-              newAttrs.featuredImageSizeWidth = value.width;
-            }
-            if (value.hasOwnProperty('height')) {
-              newAttrs.featuredImageSizeHeight = value.height;
-            }
-            setAttributes(newAttrs);
-          },
-          slug: featuredImageSizeSlug,
-          width: featuredImageSizeWidth,
-          height: featuredImageSizeHeight,
-          imageWidth: defaultImageWidth,
-          imageHeight: defaultImageHeight,
-          imageSizeOptions: imageSizeOptions,
-          imageSizeHelp: (0,external_wp_i18n_namespaceObject.__)('Select the size of the source image.'),
-          onChangeImage: value => setAttributes({
-            featuredImageSizeSlug: value,
-            featuredImageSizeWidth: undefined,
-            featuredImageSizeHeight: undefined
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
-          className: "editor-latest-posts-image-alignment-control",
-          __nextHasNoMarginBottom: true,
-          __next40pxDefaultSize: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Image alignment'),
-          value: featuredImageAlign || 'none',
-          onChange: value => setAttributes({
-            featuredImageAlign: value !== 'none' ? value : undefined
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => featuredImageSizeSlug !== 'thumbnail' || featuredImageSizeWidth !== null || featuredImageSizeHeight !== null,
+          label: (0,external_wp_i18n_namespaceObject.__)('Image size'),
+          onDeselect: () => setAttributes({
+            featuredImageSizeSlug: 'thumbnail',
+            featuredImageSizeWidth: null,
+            featuredImageSizeHeight: null
           }),
-          children: imageAlignmentOptions.map(({
-            value,
-            icon,
-            label
-          }) => {
-            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOptionIcon, {
-              value: value,
-              icon: icon,
-              label: label
-            }, value);
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalImageSizeControl, {
+            onChange: value => {
+              const newAttrs = {};
+              if (value.hasOwnProperty('width')) {
+                newAttrs.featuredImageSizeWidth = value.width;
+              }
+              if (value.hasOwnProperty('height')) {
+                newAttrs.featuredImageSizeHeight = value.height;
+              }
+              setAttributes(newAttrs);
+            },
+            slug: featuredImageSizeSlug,
+            width: featuredImageSizeWidth,
+            height: featuredImageSizeHeight,
+            imageWidth: defaultImageWidth,
+            imageHeight: defaultImageHeight,
+            imageSizeOptions: imageSizeOptions,
+            imageSizeHelp: (0,external_wp_i18n_namespaceObject.__)('Select the size of the source image.'),
+            onChangeImage: value => setAttributes({
+              featuredImageSizeSlug: value,
+              featuredImageSizeWidth: undefined,
+              featuredImageSizeHeight: undefined
+            })
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !!featuredImageAlign,
+          label: (0,external_wp_i18n_namespaceObject.__)('Image alignment'),
+          onDeselect: () => setAttributes({
+            featuredImageAlign: undefined
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+            className: "editor-latest-posts-image-alignment-control",
+            __nextHasNoMarginBottom: true,
+            __next40pxDefaultSize: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Image alignment'),
+            value: featuredImageAlign || 'none',
+            onChange: value => setAttributes({
+              featuredImageAlign: value !== 'none' ? value : undefined
+            }),
+            children: imageAlignmentOptions.map(({
+              value,
+              icon,
+              label
+            }) => {
+              return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOptionIcon, {
+                value: value,
+                icon: icon,
+                label: label
+              }, value);
+            })
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !!addLinkToFeaturedImage,
           label: (0,external_wp_i18n_namespaceObject.__)('Add link to featured image'),
-          checked: addLinkToFeaturedImage,
-          onChange: value => setAttributes({
-            addLinkToFeaturedImage: value
+          onDeselect: () => setAttributes({
+            addLinkToFeaturedImage: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Add link to featured image'),
+            checked: addLinkToFeaturedImage,
+            onChange: value => setAttributes({
+              addLinkToFeaturedImage: value
+            })
           })
         })]
       })]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Sorting and filtering'),
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.QueryControls, {
-        order,
-        orderBy,
-        numberOfItems: postsToShow,
-        onOrderChange: value => setAttributes({
-          order: value
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Sorting and filtering'),
+      resetAll: () => setAttributes({
+        order: 'desc',
+        orderBy: 'date',
+        postsToShow: 5,
+        categories: undefined,
+        selectedAuthor: undefined,
+        columns: 3
+      }),
+      dropdownMenuProps: dropdownMenuProps,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => order !== 'desc' || orderBy !== 'date' || postsToShow !== 5 || categories?.length > 0 || !!selectedAuthor,
+        label: (0,external_wp_i18n_namespaceObject.__)('Sort and filter'),
+        onDeselect: () => setAttributes({
+          order: 'desc',
+          orderBy: 'date',
+          postsToShow: 5,
+          categories: undefined,
+          selectedAuthor: undefined
         }),
-        onOrderByChange: value => setAttributes({
-          orderBy: value
-        }),
-        onNumberOfItemsChange: value => setAttributes({
-          postsToShow: value
-        }),
-        categorySuggestions: categorySuggestions,
-        onCategoryChange: selectCategories,
-        selectedCategories: categories,
-        onAuthorChange: value => setAttributes({
-          selectedAuthor: '' !== value ? Number(value) : undefined
-        }),
-        authorList: authorList !== null && authorList !== void 0 ? authorList : [],
-        selectedAuthorId: selectedAuthor
-      }), postLayout === 'grid' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.QueryControls, {
+          order,
+          orderBy,
+          numberOfItems: postsToShow,
+          onOrderChange: value => setAttributes({
+            order: value
+          }),
+          onOrderByChange: value => setAttributes({
+            orderBy: value
+          }),
+          onNumberOfItemsChange: value => setAttributes({
+            postsToShow: value
+          }),
+          categorySuggestions: categorySuggestions,
+          onCategoryChange: selectCategories,
+          selectedCategories: categories,
+          onAuthorChange: value => setAttributes({
+            selectedAuthor: '' !== value ? Number(value) : undefined
+          }),
+          authorList: authorList !== null && authorList !== void 0 ? authorList : [],
+          selectedAuthorId: selectedAuthor
+        })
+      }), postLayout === 'grid' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => columns !== 3,
         label: (0,external_wp_i18n_namespaceObject.__)('Columns'),
-        value: columns,
-        onChange: value => setAttributes({
-          columns: value
+        onDeselect: () => setAttributes({
+          columns: 3
         }),
-        min: 2,
-        max: !postCount ? MAX_POSTS_COLUMNS : Math.min(MAX_POSTS_COLUMNS, postCount),
-        required: true
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+          __nextHasNoMarginBottom: true,
+          __next40pxDefaultSize: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Columns'),
+          value: columns,
+          onChange: value => setAttributes({
+            columns: value
+          }),
+          min: 2,
+          max: !postCount ? MAX_POSTS_COLUMNS : Math.min(MAX_POSTS_COLUMNS, postCount),
+          required: true
+        })
       })]
     })]
   });
