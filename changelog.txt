@@ -1,6 +1,6 @@
 == Changelog ==
 
-= 20.9.0-rc.1 =
+= 20.9.0 =
 
 
 ## Changelog
@@ -121,6 +121,8 @@ The following PRs were merged by first-time contributors:
 The following contributors merged PRs in this release:
 
 @carolinan @himanshupathak95 @igorradovanov @im3dabasia @Infinite-Null @jasalt @karthikeya-io @Mamaduka @Mayank-Tripathi32 @peterwilsoncc @SainathPoojary @shimotmk @SirLouen @StevenDufresne @Sukhendu2002 @t-hamano @unscripted @yogeshbhutkar
+
+
 
 
 = 20.8.0 =
