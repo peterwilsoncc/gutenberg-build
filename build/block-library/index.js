@@ -36424,6 +36424,7 @@ const external_wp_escapeHtml_namespaceObject = window["wp"]["escapeHtml"];
  * @property {number}               [id]            A post or term id.
  * @property {boolean}              [opensInNewTab] Sets link target to _blank when true.
  * @property {string}               [url]           Link href.
+ * @property {string}               [title]         Link title attribute.
  */
 /**
  * Link Control onChange handler that updates block attributes when a setting is changed.
@@ -39191,12 +39192,14 @@ const navigation_link_transforms_transforms = {
       label,
       url,
       rel,
+      title,
       opensInNewTab
     }) => {
       return (0,external_wp_blocks_namespaceObject.createBlock)('core/buttons', {}, [(0,external_wp_blocks_namespaceObject.createBlock)('core/button', {
         text: label,
         url,
         rel,
+        title,
         linkTarget: opensInNewTab ? '_blank' : undefined
       })]);
     }
@@ -39248,6 +39251,9 @@ const navigation_link_metadata = {
       "default": false
     },
     url: {
+      type: "string"
+    },
+    title: {
       type: "string"
     },
     kind: {
@@ -39965,6 +39971,9 @@ const navigation_submenu_metadata = {
       "default": false
     },
     url: {
+      type: "string"
+    },
+    title: {
       type: "string"
     },
     kind: {
