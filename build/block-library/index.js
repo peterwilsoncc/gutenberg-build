@@ -65743,7 +65743,7 @@ function TrackList({
           children: (0,external_wp_i18n_namespaceObject.__)('Edit')
         })]
       })]
-    }, index);
+    }, track.src);
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
     label: (0,external_wp_i18n_namespaceObject.__)('Text tracks'),
