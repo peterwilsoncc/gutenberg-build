@@ -80672,7 +80672,7 @@ const htmlElementMessages = {
  * @param {Object}   props          Component props.
  * @param {string}   props.tagName  The current HTML tag name.
  * @param {Function} props.onChange Function to call when the tag is changed.
- * @param {string}   props.clientId The client ID of the current block.
+ * @param {string}   props.clientId Optional. The client ID of the block. Used to check for existing <main> elements.
  * @param {Array}    props.options  SelectControl options (optional).
  *
  * @return {Component} The HTML element select control with validation.

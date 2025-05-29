@@ -5521,7 +5521,6 @@ function ButtonEdit(props) {
         onChange: value => setAttributes({
           tagName: value
         }),
-        clientId: clientId,
         options: [{
           label: (0,external_wp_i18n_namespaceObject.__)('Default (<a>)'),
           value: 'a'
@@ -9278,8 +9277,7 @@ function CommentsInspectorControls({
   attributes: {
     tagName
   },
-  setAttributes,
-  clientId
+  setAttributes
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
@@ -9289,7 +9287,6 @@ function CommentsInspectorControls({
         onChange: value => setAttributes({
           tagName: value
         }),
-        clientId: clientId,
         options: [{
           label: (0,external_wp_i18n_namespaceObject.__)('Default (<div>)'),
           value: 'div'
@@ -55058,8 +55055,7 @@ const {
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function SeparatorEdit({
   attributes,
-  setAttributes,
-  clientId
+  setAttributes
 }) {
   const {
     backgroundColor,
@@ -55094,7 +55090,6 @@ function SeparatorEdit({
         onChange: value => setAttributes({
           tagName: value
         }),
-        clientId: clientId,
         options: [{
           label: (0,external_wp_i18n_namespaceObject.__)('Default (<hr>)'),
           value: 'hr'
