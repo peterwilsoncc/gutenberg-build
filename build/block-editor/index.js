@@ -80639,8 +80639,10 @@ function ResolutionTool({
  * Messages providing helpful descriptions for HTML elements.
  */
 const htmlElementMessages = {
+  a: (0,external_wp_i18n_namespaceObject.__)('The <a> element should be used for links that navigate to a different page or to a different section within the same page.'),
   article: (0,external_wp_i18n_namespaceObject.__)('The <article> element should represent a self-contained, syndicatable portion of the document.'),
   aside: (0,external_wp_i18n_namespaceObject.__)("The <aside> element should represent a portion of a document whose content is only indirectly related to the document's main content."),
+  button: (0,external_wp_i18n_namespaceObject.__)('The <button> element should be used for interactive controls that perform an action on the current page, such as opening a modal or toggling content visibility.'),
   div: (0,external_wp_i18n_namespaceObject.__)('The <div> element should only be used if the block is a design element with no semantic meaning.'),
   footer: (0,external_wp_i18n_namespaceObject.__)('The <footer> element should represent a footer for its nearest sectioning element (e.g.: <section>, <article>, <main> etc.).'),
   header: (0,external_wp_i18n_namespaceObject.__)('The <header> element should represent introductory content, typically a group of introductory or navigational aids.'),

@@ -5186,6 +5186,7 @@ const linkOff = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
 
 
 
+
 /**
  * WordPress dependencies
  */
@@ -5199,6 +5200,9 @@ const linkOff = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
 
 
 
+const {
+  HTMLElementControl
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const LINK_SETTINGS = [...external_wp_blockEditor_namespaceObject.LinkControl.DEFAULT_LINK_SETTINGS, {
   id: 'nofollow',
   title: (0,external_wp_i18n_namespaceObject.__)('Mark as nofollow')
@@ -5510,9 +5514,22 @@ function ButtonEdit(props) {
         selectedWidth: width,
         setAttributes: setAttributes
       })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       group: "advanced",
-      children: isLinkTag && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HTMLElementControl, {
+        tagName: tagName,
+        onChange: value => setAttributes({
+          tagName: value
+        }),
+        clientId: clientId,
+        options: [{
+          label: (0,external_wp_i18n_namespaceObject.__)('Default (<a>)'),
+          value: 'a'
+        }, {
+          label: '<button>',
+          value: 'button'
+        }]
+      }), isLinkTag && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Link rel'),
@@ -5520,7 +5537,7 @@ function ButtonEdit(props) {
         onChange: newRel => setAttributes({
           rel: newRel
         })
-      })
+      })]
     })]
   });
 }
@@ -9255,7 +9272,7 @@ const v1 = {
 
 
 const {
-  HTMLElementControl
+  HTMLElementControl: comments_inspector_controls_HTMLElementControl
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function CommentsInspectorControls({
   attributes: {
@@ -9267,7 +9284,7 @@ function CommentsInspectorControls({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       group: "advanced",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HTMLElementControl, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comments_inspector_controls_HTMLElementControl, {
         tagName: tagName,
         onChange: value => setAttributes({
           tagName: value
