@@ -11732,6 +11732,7 @@ function CommentsPaginationArrowControls({
  */
 
 
+
 const comments_pagination_edit_TEMPLATE = [['core/comments-pagination-previous'], ['core/comments-pagination-numbers'], ['core/comments-pagination-next']];
 function QueryPaginationEdit({
   attributes: {
@@ -11755,6 +11756,7 @@ function QueryPaginationEdit({
     });
   }, []);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
     template: comments_pagination_edit_TEMPLATE
   });
@@ -11780,15 +11782,27 @@ function QueryPaginationEdit({
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [hasNextPreviousBlocks && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentsPaginationArrowControls, {
-          value: paginationArrow,
-          onChange: value => {
-            setAttributes({
-              paginationArrow: value
-            });
-          }
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        dropdownMenuProps: dropdownMenuProps,
+        resetAll: () => setAttributes({
+          paginationArrow: 'none'
+        }),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Arrow'),
+          hasValue: () => paginationArrow !== 'none',
+          onDeselect: () => setAttributes({
+            paginationArrow: 'none'
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentsPaginationArrowControls, {
+            value: paginationArrow,
+            onChange: value => {
+              setAttributes({
+                paginationArrow: value
+              });
+            }
+          })
         })
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
