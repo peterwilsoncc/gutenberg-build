@@ -57732,6 +57732,11 @@ const YouTubeIcon = () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
 
 ;// ./packages/block-library/build-module/social-link/variations.js
 /**
+ * WordPress dependencies
+ */
+
+
+/**
  * Internal dependencies
  */
 
@@ -57741,175 +57746,175 @@ const social_link_variations_variations = [{
   attributes: {
     service: 'wordpress'
   },
-  title: 'WordPress',
+  title: (0,external_wp_i18n_namespaceObject.__)('WordPress'),
   icon: WordPressIcon
 }, {
   name: 'fivehundredpx',
   attributes: {
     service: 'fivehundredpx'
   },
-  title: '500px',
+  title: (0,external_wp_i18n_namespaceObject.__)('500px'),
   icon: FivehundredpxIcon
 }, {
   name: 'amazon',
   attributes: {
     service: 'amazon'
   },
-  title: 'Amazon',
+  title: (0,external_wp_i18n_namespaceObject.__)('Amazon'),
   icon: AmazonIcon
 }, {
   name: 'bandcamp',
   attributes: {
     service: 'bandcamp'
   },
-  title: 'Bandcamp',
+  title: (0,external_wp_i18n_namespaceObject.__)('Bandcamp'),
   icon: BandcampIcon
 }, {
   name: 'behance',
   attributes: {
     service: 'behance'
   },
-  title: 'Behance',
+  title: (0,external_wp_i18n_namespaceObject.__)('Behance'),
   icon: BehanceIcon
 }, {
   name: 'bluesky',
   attributes: {
     service: 'bluesky'
   },
-  title: 'Bluesky',
+  title: (0,external_wp_i18n_namespaceObject.__)('Bluesky'),
   icon: BlueskyIcon
 }, {
   name: 'chain',
   attributes: {
     service: 'chain'
   },
-  title: 'Link',
+  title: (0,external_wp_i18n_namespaceObject.__)('Link'),
   icon: ChainIcon
 }, {
   name: 'codepen',
   attributes: {
     service: 'codepen'
   },
-  title: 'CodePen',
+  title: (0,external_wp_i18n_namespaceObject.__)('CodePen'),
   icon: CodepenIcon
 }, {
   name: 'deviantart',
   attributes: {
     service: 'deviantart'
   },
-  title: 'DeviantArt',
+  title: (0,external_wp_i18n_namespaceObject.__)('DeviantArt'),
   icon: DeviantArtIcon
 }, {
   name: 'discord',
   attributes: {
     service: 'discord'
   },
-  title: 'Discord',
+  title: (0,external_wp_i18n_namespaceObject.__)('Discord'),
   icon: DiscordIcon
 }, {
   name: 'dribbble',
   attributes: {
     service: 'dribbble'
   },
-  title: 'Dribbble',
+  title: (0,external_wp_i18n_namespaceObject.__)('Dribbble'),
   icon: DribbbleIcon
 }, {
   name: 'dropbox',
   attributes: {
     service: 'dropbox'
   },
-  title: 'Dropbox',
+  title: (0,external_wp_i18n_namespaceObject.__)('Dropbox'),
   icon: DropboxIcon
 }, {
   name: 'etsy',
   attributes: {
     service: 'etsy'
   },
-  title: 'Etsy',
+  title: (0,external_wp_i18n_namespaceObject.__)('Etsy'),
   icon: EtsyIcon
 }, {
   name: 'facebook',
   attributes: {
     service: 'facebook'
   },
-  title: 'Facebook',
+  title: (0,external_wp_i18n_namespaceObject.__)('Facebook'),
   icon: FacebookIcon
 }, {
   name: 'feed',
   attributes: {
     service: 'feed'
   },
-  title: 'RSS Feed',
+  title: (0,external_wp_i18n_namespaceObject.__)('RSS Feed'),
   icon: FeedIcon
 }, {
   name: 'flickr',
   attributes: {
     service: 'flickr'
   },
-  title: 'Flickr',
+  title: (0,external_wp_i18n_namespaceObject.__)('Flickr'),
   icon: FlickrIcon
 }, {
   name: 'foursquare',
   attributes: {
     service: 'foursquare'
   },
-  title: 'Foursquare',
+  title: (0,external_wp_i18n_namespaceObject.__)('Foursquare'),
   icon: FoursquareIcon
 }, {
   name: 'goodreads',
   attributes: {
     service: 'goodreads'
   },
-  title: 'Goodreads',
+  title: (0,external_wp_i18n_namespaceObject.__)('Goodreads'),
   icon: GoodreadsIcon
 }, {
   name: 'google',
   attributes: {
     service: 'google'
   },
-  title: 'Google',
+  title: (0,external_wp_i18n_namespaceObject.__)('Google'),
   icon: GoogleIcon
 }, {
   name: 'github',
   attributes: {
     service: 'github'
   },
-  title: 'GitHub',
+  title: (0,external_wp_i18n_namespaceObject.__)('GitHub'),
   icon: GitHubIcon
 }, {
   name: 'gravatar',
   attributes: {
     service: 'gravatar'
   },
-  title: 'Gravatar',
+  title: (0,external_wp_i18n_namespaceObject.__)('Gravatar'),
   icon: GravatarIcon
 }, {
   name: 'instagram',
   attributes: {
     service: 'instagram'
   },
-  title: 'Instagram',
+  title: (0,external_wp_i18n_namespaceObject.__)('Instagram'),
   icon: InstagramIcon
 }, {
   name: 'lastfm',
   attributes: {
     service: 'lastfm'
   },
-  title: 'Last.fm',
+  title: (0,external_wp_i18n_namespaceObject.__)('Last.fm'),
   icon: LastfmIcon
 }, {
   name: 'linkedin',
   attributes: {
     service: 'linkedin'
   },
-  title: 'LinkedIn',
+  title: (0,external_wp_i18n_namespaceObject.__)('LinkedIn'),
   icon: LinkedInIcon
 }, {
   name: 'mail',
   attributes: {
     service: 'mail'
   },
-  title: 'Mail',
+  title: (0,external_wp_i18n_namespaceObject.__)('Mail'),
   keywords: ['email', 'e-mail'],
   icon: MailIcon
 }, {
@@ -57917,140 +57922,140 @@ const social_link_variations_variations = [{
   attributes: {
     service: 'mastodon'
   },
-  title: 'Mastodon',
+  title: (0,external_wp_i18n_namespaceObject.__)('Mastodon'),
   icon: MastodonIcon
 }, {
   name: 'meetup',
   attributes: {
     service: 'meetup'
   },
-  title: 'Meetup',
+  title: (0,external_wp_i18n_namespaceObject.__)('Meetup'),
   icon: MeetupIcon
 }, {
   name: 'medium',
   attributes: {
     service: 'medium'
   },
-  title: 'Medium',
+  title: (0,external_wp_i18n_namespaceObject.__)('Medium'),
   icon: MediumIcon
 }, {
   name: 'patreon',
   attributes: {
     service: 'patreon'
   },
-  title: 'Patreon',
+  title: (0,external_wp_i18n_namespaceObject.__)('Patreon'),
   icon: PatreonIcon
 }, {
   name: 'pinterest',
   attributes: {
     service: 'pinterest'
   },
-  title: 'Pinterest',
+  title: (0,external_wp_i18n_namespaceObject.__)('Pinterest'),
   icon: PinterestIcon
 }, {
   name: 'pocket',
   attributes: {
     service: 'pocket'
   },
-  title: 'Pocket',
+  title: (0,external_wp_i18n_namespaceObject.__)('Pocket'),
   icon: PocketIcon
 }, {
   name: 'reddit',
   attributes: {
     service: 'reddit'
   },
-  title: 'Reddit',
+  title: (0,external_wp_i18n_namespaceObject.__)('Reddit'),
   icon: RedditIcon
 }, {
   name: 'skype',
   attributes: {
     service: 'skype'
   },
-  title: 'Skype',
+  title: (0,external_wp_i18n_namespaceObject.__)('Skype'),
   icon: SkypeIcon
 }, {
   name: 'snapchat',
   attributes: {
     service: 'snapchat'
   },
-  title: 'Snapchat',
+  title: (0,external_wp_i18n_namespaceObject.__)('Snapchat'),
   icon: SnapchatIcon
 }, {
   name: 'soundcloud',
   attributes: {
     service: 'soundcloud'
   },
-  title: 'SoundCloud',
+  title: (0,external_wp_i18n_namespaceObject.__)('SoundCloud'),
   icon: SoundCloudIcon
 }, {
   name: 'spotify',
   attributes: {
     service: 'spotify'
   },
-  title: 'Spotify',
+  title: (0,external_wp_i18n_namespaceObject.__)('Spotify'),
   icon: SpotifyIcon
 }, {
   name: 'telegram',
   attributes: {
     service: 'telegram'
   },
-  title: 'Telegram',
+  title: (0,external_wp_i18n_namespaceObject.__)('Telegram'),
   icon: TelegramIcon
 }, {
   name: 'threads',
   attributes: {
     service: 'threads'
   },
-  title: 'Threads',
+  title: (0,external_wp_i18n_namespaceObject.__)('Threads'),
   icon: ThreadsIcon
 }, {
   name: 'tiktok',
   attributes: {
     service: 'tiktok'
   },
-  title: 'TikTok',
+  title: (0,external_wp_i18n_namespaceObject.__)('TikTok'),
   icon: TiktokIcon
 }, {
   name: 'tumblr',
   attributes: {
     service: 'tumblr'
   },
-  title: 'Tumblr',
+  title: (0,external_wp_i18n_namespaceObject.__)('Tumblr'),
   icon: TumblrIcon
 }, {
   name: 'twitch',
   attributes: {
     service: 'twitch'
   },
-  title: 'Twitch',
+  title: (0,external_wp_i18n_namespaceObject.__)('Twitch'),
   icon: TwitchIcon
 }, {
   name: 'twitter',
   attributes: {
     service: 'twitter'
   },
-  title: 'Twitter',
+  title: (0,external_wp_i18n_namespaceObject.__)('Twitter'),
   icon: TwitterIcon
 }, {
   name: 'vimeo',
   attributes: {
     service: 'vimeo'
   },
-  title: 'Vimeo',
+  title: (0,external_wp_i18n_namespaceObject.__)('Vimeo'),
   icon: VimeoIcon
 }, {
   name: 'vk',
   attributes: {
     service: 'vk'
   },
-  title: 'VK',
+  title: (0,external_wp_i18n_namespaceObject.__)('VK'),
   icon: VkIcon
 }, {
   name: 'whatsapp',
   attributes: {
     service: 'whatsapp'
   },
-  title: 'WhatsApp',
+  title: (0,external_wp_i18n_namespaceObject.__)('WhatsApp'),
   icon: WhatsAppIcon
 }, {
   name: 'x',
@@ -58058,21 +58063,21 @@ const social_link_variations_variations = [{
     service: 'x'
   },
   keywords: ['twitter'],
-  title: 'X',
+  title: (0,external_wp_i18n_namespaceObject.__)('X'),
   icon: XIcon
 }, {
   name: 'yelp',
   attributes: {
     service: 'yelp'
   },
-  title: 'Yelp',
+  title: (0,external_wp_i18n_namespaceObject.__)('Yelp'),
   icon: YelpIcon
 }, {
   name: 'youtube',
   attributes: {
     service: 'youtube'
   },
-  title: 'YouTube',
+  title: (0,external_wp_i18n_namespaceObject.__)('YouTube'),
   icon: YouTubeIcon
 }];
 
