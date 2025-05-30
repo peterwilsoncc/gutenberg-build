@@ -19649,6 +19649,7 @@ const formSubmissionNotificationError = ['core/form-submission-notification', {
  */
 
 
+
 const form_edit_TEMPLATE = [formSubmissionNotificationSuccess, formSubmissionNotificationError, ['core/form-input', {
   type: 'text',
   label: (0,external_wp_i18n_namespaceObject.__)('Name'),
@@ -19667,6 +19668,15 @@ const form_edit_Edit = ({
   setAttributes,
   clientId
 }) => {
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  const resetAllSettings = () => {
+    setAttributes({
+      submissionMethod: 'email',
+      email: undefined,
+      action: undefined,
+      method: 'post'
+    });
+  };
   const {
     action,
     method,
@@ -19691,46 +19701,66 @@ const form_edit_Edit = ({
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-          __nextHasNoMarginBottom: true,
-          __next40pxDefaultSize: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        dropdownMenuProps: dropdownMenuProps,
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: resetAllSettings,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => submissionMethod !== 'email',
           label: (0,external_wp_i18n_namespaceObject.__)('Submissions method'),
-          options: [
-          // TODO: Allow plugins to add their own submission methods.
-          {
-            label: (0,external_wp_i18n_namespaceObject.__)('Send email'),
-            value: 'email'
-          }, {
-            label: (0,external_wp_i18n_namespaceObject.__)('- Custom -'),
-            value: 'custom'
-          }],
-          value: submissionMethod,
-          onChange: value => setAttributes({
-            submissionMethod: value
+          onDeselect: () => setAttributes({
+            submissionMethod: 'email'
           }),
-          help: submissionMethod === 'custom' ? (0,external_wp_i18n_namespaceObject.__)('Select the method to use for form submissions. Additional options for the "custom" mode can be found in the "Advanced" section.') : (0,external_wp_i18n_namespaceObject.__)('Select the method to use for form submissions.')
-        }), submissionMethod === 'email' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-          __nextHasNoMarginBottom: true,
-          __next40pxDefaultSize: true,
-          autoComplete: "off",
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+            __nextHasNoMarginBottom: true,
+            __next40pxDefaultSize: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Submissions method'),
+            options: [
+            // TODO: Allow plugins to add their own submission methods.
+            {
+              label: (0,external_wp_i18n_namespaceObject.__)('Send email'),
+              value: 'email'
+            }, {
+              label: (0,external_wp_i18n_namespaceObject.__)('- Custom -'),
+              value: 'custom'
+            }],
+            value: submissionMethod,
+            onChange: value => setAttributes({
+              submissionMethod: value
+            }),
+            help: submissionMethod === 'custom' ? (0,external_wp_i18n_namespaceObject.__)('Select the method to use for form submissions. Additional options for the "custom" mode can be found in the "Advanced" section.') : (0,external_wp_i18n_namespaceObject.__)('Select the method to use for form submissions.')
+          })
+        }), submissionMethod === 'email' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !!email,
           label: (0,external_wp_i18n_namespaceObject.__)('Email for form submissions'),
-          value: email,
-          required: true,
-          onChange: value => {
-            setAttributes({
-              email: value
-            });
-            setAttributes({
-              action: `mailto:${value}`
-            });
-            setAttributes({
-              method: 'post'
-            });
-          },
-          help: (0,external_wp_i18n_namespaceObject.__)('The email address where form submissions will be sent. Separate multiple email addresses with a comma.'),
-          type: "email"
+          onDeselect: () => setAttributes({
+            email: undefined,
+            action: undefined,
+            method: 'post'
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+            __nextHasNoMarginBottom: true,
+            __next40pxDefaultSize: true,
+            autoComplete: "off",
+            label: (0,external_wp_i18n_namespaceObject.__)('Email for form submissions'),
+            value: email || '',
+            required: true,
+            onChange: value => {
+              setAttributes({
+                email: value
+              });
+              setAttributes({
+                action: `mailto:${value}`
+              });
+              setAttributes({
+                method: 'post'
+              });
+            },
+            help: (0,external_wp_i18n_namespaceObject.__)('The email address where form submissions will be sent. Separate multiple email addresses with a comma.'),
+            type: "email"
+          })
         })]
       })
     }), submissionMethod !== 'email' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
