@@ -20023,6 +20023,10 @@ const verticalAlignmentMap = {
   stretch: 'stretch',
   'space-between': 'space-between'
 };
+const defaultAlignments = {
+  horizontal: 'center',
+  vertical: 'top'
+};
 const flexWrapOptions = ['wrap', 'nowrap'];
 /* harmony default export */ const flex = ({
   name: 'flex',
@@ -20147,7 +20151,7 @@ function FlexLayoutVerticalAlignmentControl({
   const {
     orientation = 'horizontal'
   } = layout;
-  const defaultVerticalAlignment = orientation === 'horizontal' ? verticalAlignmentMap.center : verticalAlignmentMap.top;
+  const defaultVerticalAlignment = orientation === 'horizontal' ? defaultAlignments.horizontal : defaultAlignments.vertical;
   const {
     verticalAlignment = defaultVerticalAlignment
   } = layout;
