@@ -12225,6 +12225,11 @@ const title = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 function comments_title_edit_Edit({
   attributes: {
     textAlign,
@@ -12259,6 +12264,7 @@ function comments_title_edit_Edit({
     } = select(external_wp_blockEditor_namespaceObject.store);
     return getSettings().__experimentalDiscussionSettings;
   });
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (isSiteEditor) {
       // Match the number of comments that will be shown in the comment-template/edit.js placeholder
@@ -12302,21 +12308,44 @@ function comments_title_edit_Edit({
     })]
   });
   const inspectorControls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-        __nextHasNoMarginBottom: true,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+      resetAll: () => {
+        setAttributes({
+          showPostTitle: true,
+          showCommentsCount: true
+        });
+      },
+      dropdownMenuProps: dropdownMenuProps,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         label: (0,external_wp_i18n_namespaceObject.__)('Show post title'),
-        checked: showPostTitle,
-        onChange: value => setAttributes({
-          showPostTitle: value
+        isShownByDefault: true,
+        hasValue: () => !showPostTitle,
+        onDeselect: () => setAttributes({
+          showPostTitle: true
+        }),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Show post title'),
+          checked: showPostTitle,
+          onChange: value => setAttributes({
+            showPostTitle: value
+          })
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-        __nextHasNoMarginBottom: true,
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         label: (0,external_wp_i18n_namespaceObject.__)('Show comments count'),
-        checked: showCommentsCount,
-        onChange: value => setAttributes({
-          showCommentsCount: value
+        isShownByDefault: true,
+        hasValue: () => !showCommentsCount,
+        onDeselect: () => setAttributes({
+          showCommentsCount: true
+        }),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Show comments count'),
+          checked: showCommentsCount,
+          onChange: value => setAttributes({
+            showCommentsCount: value
+          })
         })
       })]
     })
