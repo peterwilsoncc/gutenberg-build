@@ -20343,6 +20343,11 @@ const form_input_deprecated_deprecated = [form_input_deprecated_v2, form_input_d
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 function InputFieldBlock({
   attributes,
   setAttributes,
@@ -20358,6 +20363,7 @@ function InputFieldBlock({
     value
   } = attributes;
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const ref = (0,external_wp_element_namespaceObject.useRef)();
   const TagName = type === 'textarea' ? 'textarea' : 'input';
   const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseBorderProps)(attributes);
@@ -20370,26 +20376,49 @@ function InputFieldBlock({
   const isCheckboxOrRadio = type === 'checkbox' || type === 'radio';
   const controls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: ['hidden' !== type && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: ['checkbox' !== type && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-          __nextHasNoMarginBottom: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            inlineLabel: false,
+            required: false
+          });
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: ['checkbox' !== type && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Inline label'),
-          checked: inlineLabel,
-          onChange: newVal => {
-            setAttributes({
-              inlineLabel: newVal
-            });
-          }
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-          __nextHasNoMarginBottom: true,
+          hasValue: () => !!inlineLabel,
+          onDeselect: () => setAttributes({
+            inlineLabel: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Inline label'),
+            checked: inlineLabel,
+            onChange: newVal => {
+              setAttributes({
+                inlineLabel: newVal
+              });
+            }
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Required'),
-          checked: required,
-          onChange: newVal => {
-            setAttributes({
-              required: newVal
-            });
-          }
+          hasValue: () => !!required,
+          onDeselect: () => setAttributes({
+            required: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Required'),
+            checked: required,
+            onChange: newVal => {
+              setAttributes({
+                required: newVal
+              });
+            }
+          })
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
