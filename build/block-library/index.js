@@ -10739,6 +10739,11 @@ const commentEditLink = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 function comment_edit_link_edit_Edit({
   attributes: {
     linkTarget,
@@ -10751,6 +10756,7 @@ function comment_edit_link_edit_Edit({
       [`has-text-align-${textAlign}`]: textAlign
     })
   });
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const blockControls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
     group: "block",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.AlignmentControl, {
@@ -10761,15 +10767,29 @@ function comment_edit_link_edit_Edit({
     })
   });
   const inspectorControls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-        __nextHasNoMarginBottom: true,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+      resetAll: () => {
+        setAttributes({
+          linkTarget: '_self'
+        });
+      },
+      dropdownMenuProps: dropdownMenuProps,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
         label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
-        onChange: value => setAttributes({
-          linkTarget: value ? '_blank' : '_self'
+        isShownByDefault: true,
+        hasValue: () => linkTarget === '_blank',
+        onDeselect: () => setAttributes({
+          linkTarget: '_self'
         }),
-        checked: linkTarget === '_blank'
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
+          onChange: value => setAttributes({
+            linkTarget: value ? '_blank' : '_self'
+          }),
+          checked: linkTarget === '_blank'
+        })
       })
     })
   });
