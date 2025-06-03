@@ -35556,37 +35556,53 @@ function OverlayMenuPreview({
   icon
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-      __nextHasNoMarginBottom: true,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Show icon button'),
-      help: (0,external_wp_i18n_namespaceObject.__)('Configure the visual appearance of the button that toggles the overlay menu.'),
-      onChange: value => setAttributes({
-        hasIcon: value
+      isShownByDefault: true,
+      hasValue: () => !hasIcon,
+      onDeselect: () => setAttributes({
+        hasIcon: true
       }),
-      checked: hasIcon
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
-      __next40pxDefaultSize: true,
-      __nextHasNoMarginBottom: true,
-      className: "wp-block-navigation__overlay-menu-icon-toggle-group",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Show icon button'),
+        help: (0,external_wp_i18n_namespaceObject.__)('Configure the visual appearance of the button that toggles the overlay menu.'),
+        onChange: value => setAttributes({
+          hasIcon: value
+        }),
+        checked: hasIcon
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Icon'),
-      value: icon,
-      onChange: value => setAttributes({
-        icon: value
+      isShownByDefault: true,
+      hasValue: () => icon !== 'handle',
+      onDeselect: () => setAttributes({
+        icon: 'handle'
       }),
-      isBlock: true,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-        value: "handle",
-        "aria-label": (0,external_wp_i18n_namespaceObject.__)('handle'),
-        label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OverlayMenuIcon, {
-          icon: "handle"
-        })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-        value: "menu",
-        "aria-label": (0,external_wp_i18n_namespaceObject.__)('menu'),
-        label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OverlayMenuIcon, {
-          icon: "menu"
-        })
-      })]
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        className: "wp-block-navigation__overlay-menu-icon-toggle-group",
+        label: (0,external_wp_i18n_namespaceObject.__)('Icon'),
+        value: icon,
+        onChange: value => setAttributes({
+          icon: value
+        }),
+        isBlock: true,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+          value: "handle",
+          "aria-label": (0,external_wp_i18n_namespaceObject.__)('handle'),
+          label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OverlayMenuIcon, {
+            icon: "handle"
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+          value: "menu",
+          "aria-label": (0,external_wp_i18n_namespaceObject.__)('menu'),
+          label: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OverlayMenuIcon, {
+            icon: "menu"
+          })
+        })]
+      })
     })]
   });
 }
@@ -37204,6 +37220,7 @@ function AccessibleMenuDescription({
 
 
 
+
 function ColorTools({
   textColor,
   setTextColor,
@@ -37540,10 +37557,21 @@ function Navigation({
     isFirstRender.current = false;
   }, [submenuAccessibilityNotice]);
   const overlayMenuPreviewId = (0,external_wp_compose_namespaceObject.useInstanceId)(OverlayMenuPreview, `overlay-menu-preview`);
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const stylingInspectorControls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: hasSubmenuIndicatorSetting && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Display'),
+      children: hasSubmenuIndicatorSetting && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Display'),
+        resetAll: () => {
+          setAttributes({
+            showSubmenuIcon: true,
+            openSubmenusOnClick: false,
+            overlayMenu: 'mobile',
+            hasIcon: true,
+            icon: 'handle'
+          });
+        },
+        dropdownMenuProps: dropdownMenuProps,
         children: [isResponsive && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
             __next40pxDefaultSize: true,
@@ -37567,68 +37595,98 @@ function Navigation({
                 children: (0,external_wp_i18n_namespaceObject.__)('Close')
               })]
             })]
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          }), overlayMenuPreview && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
             id: overlayMenuPreviewId,
-            children: overlayMenuPreview && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OverlayMenuPreview, {
+            spacing: 4,
+            style: {
+              gridColumn: 'span 2'
+            },
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OverlayMenuPreview, {
               setAttributes: setAttributes,
               hasIcon: hasIcon,
               icon: icon,
               hidden: !overlayMenuPreview
             })
           })]
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
-          __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => overlayMenu !== 'mobile',
           label: (0,external_wp_i18n_namespaceObject.__)('Overlay Menu'),
-          "aria-label": (0,external_wp_i18n_namespaceObject.__)('Configure overlay menu'),
-          value: overlayMenu,
-          help: (0,external_wp_i18n_namespaceObject.__)('Collapses the navigation options in a menu icon opening an overlay.'),
-          onChange: value => setAttributes({
-            overlayMenu: value
+          onDeselect: () => setAttributes({
+            overlayMenu: 'mobile'
           }),
-          isBlock: true,
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-            value: "never",
-            label: (0,external_wp_i18n_namespaceObject.__)('Off')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-            value: "mobile",
-            label: (0,external_wp_i18n_namespaceObject.__)('Mobile')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-            value: "always",
-            label: (0,external_wp_i18n_namespaceObject.__)('Always')
-          })]
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+            __next40pxDefaultSize: true,
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Overlay Menu'),
+            "aria-label": (0,external_wp_i18n_namespaceObject.__)('Configure overlay menu'),
+            value: overlayMenu,
+            help: (0,external_wp_i18n_namespaceObject.__)('Collapses the navigation options in a menu icon opening an overlay.'),
+            onChange: value => setAttributes({
+              overlayMenu: value
+            }),
+            isBlock: true,
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+              value: "never",
+              label: (0,external_wp_i18n_namespaceObject.__)('Off')
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+              value: "mobile",
+              label: (0,external_wp_i18n_namespaceObject.__)('Mobile')
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+              value: "always",
+              label: (0,external_wp_i18n_namespaceObject.__)('Always')
+            })]
+          })
         }), hasSubmenus && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h3", {
+            className: "wp-block-navigation__submenu-header",
             children: (0,external_wp_i18n_namespaceObject.__)('Submenus')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-            __nextHasNoMarginBottom: true,
-            checked: openSubmenusOnClick,
-            onChange: value => {
-              setAttributes({
-                openSubmenusOnClick: value,
-                ...(value && {
-                  showSubmenuIcon: true
-                }) // Make sure arrows are shown when we toggle this on.
-              });
-            },
-            label: (0,external_wp_i18n_namespaceObject.__)('Open on click')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-            __nextHasNoMarginBottom: true,
-            checked: showSubmenuIcon,
-            onChange: value => {
-              setAttributes({
-                showSubmenuIcon: value
-              });
-            },
-            disabled: attributes.openSubmenusOnClick,
-            label: (0,external_wp_i18n_namespaceObject.__)('Show arrow')
-          }), submenuAccessibilityNotice && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
-              spokenMessage: null,
-              status: "warning",
-              isDismissible: false,
-              children: submenuAccessibilityNotice
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+            hasValue: () => openSubmenusOnClick,
+            label: (0,external_wp_i18n_namespaceObject.__)('Open on click'),
+            onDeselect: () => setAttributes({
+              openSubmenusOnClick: false,
+              showSubmenuIcon: true
+            }),
+            isShownByDefault: true,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+              __nextHasNoMarginBottom: true,
+              checked: openSubmenusOnClick,
+              onChange: value => {
+                setAttributes({
+                  openSubmenusOnClick: value,
+                  ...(value && {
+                    showSubmenuIcon: true
+                  }) // Make sure arrows are shown when we toggle this on.
+                });
+              },
+              label: (0,external_wp_i18n_namespaceObject.__)('Open on click')
             })
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+            hasValue: () => !showSubmenuIcon,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show arrow'),
+            onDeselect: () => setAttributes({
+              showSubmenuIcon: true
+            }),
+            isDisabled: attributes.openSubmenusOnClick,
+            isShownByDefault: true,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+              __nextHasNoMarginBottom: true,
+              checked: showSubmenuIcon,
+              onChange: value => {
+                setAttributes({
+                  showSubmenuIcon: value
+                });
+              },
+              disabled: attributes.openSubmenusOnClick,
+              label: (0,external_wp_i18n_namespaceObject.__)('Show arrow')
+            })
+          }), submenuAccessibilityNotice && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
+            spokenMessage: null,
+            status: "warning",
+            isDismissible: false,
+            className: "wp-block-navigation__submenu-accessibility-notice",
+            children: submenuAccessibilityNotice
           })]
         })]
       })
