@@ -43384,6 +43384,26 @@ function PostCommentsCountEdit({
   });
 }
 
+;// ./packages/block-library/build-module/post-comments-count/transforms.js
+/**
+ * WordPress dependencies
+ */
+
+const post_comments_count_transforms_transforms = {
+  to: [{
+    type: 'block',
+    blocks: ['core/post-comments-link'],
+    transform: ({
+      textAlign
+    }) => {
+      return (0,external_wp_blocks_namespaceObject.createBlock)('core/post-comments-link', {
+        textAlign
+      });
+    }
+  }]
+};
+/* harmony default export */ const post_comments_count_transforms = (post_comments_count_transforms_transforms);
+
 ;// ./packages/block-library/build-module/post-comments-count/index.js
 /**
  * WordPress dependencies
@@ -43447,13 +43467,15 @@ const post_comments_count_metadata = {
   style: "wp-block-post-comments-count"
 };
 
+
 const {
   name: post_comments_count_name
 } = post_comments_count_metadata;
 
 const post_comments_count_settings = {
   icon: post_comments_count,
-  edit: PostCommentsCountEdit
+  edit: PostCommentsCountEdit,
+  transforms: post_comments_count_transforms
 };
 const post_comments_count_init = () => initBlock({
   name: post_comments_count_name,
@@ -43719,6 +43741,26 @@ function PostCommentsLinkEdit({
 }
 /* harmony default export */ const post_comments_link_edit = (PostCommentsLinkEdit);
 
+;// ./packages/block-library/build-module/post-comments-link/transforms.js
+/**
+ * WordPress dependencies
+ */
+
+const post_comments_link_transforms_transforms = {
+  to: [{
+    type: 'block',
+    blocks: ['core/post-comments-count'],
+    transform: ({
+      textAlign
+    }) => {
+      return (0,external_wp_blocks_namespaceObject.createBlock)('core/post-comments-count', {
+        textAlign
+      });
+    }
+  }]
+};
+/* harmony default export */ const post_comments_link_transforms = (post_comments_link_transforms_transforms);
+
 ;// ./packages/block-library/build-module/post-comments-link/index.js
 /**
  * WordPress dependencies
@@ -43789,13 +43831,15 @@ const post_comments_link_metadata = {
   style: "wp-block-post-comments-link"
 };
 
+
 const {
   name: post_comments_link_name
 } = post_comments_link_metadata;
 
 const post_comments_link_settings = {
   edit: post_comments_link_edit,
-  icon: post_comments_count
+  icon: post_comments_count,
+  transforms: post_comments_link_transforms
 };
 const post_comments_link_init = () => initBlock({
   name: post_comments_link_name,
