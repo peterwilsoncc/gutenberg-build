@@ -332,11 +332,15 @@ function withScope(func) {
       const gen = func(...args);
       let value;
       let it;
+      let error;
       while (true) {
         setNamespace(ns);
         setScope(scope);
         try {
-          it = gen.next(value);
+          it = error ? gen.throw(error) : gen.next(value);
+          error = undefined;
+        } catch (e) {
+          throw e;
         } finally {
           resetScope();
           resetNamespace();
@@ -344,15 +348,14 @@ function withScope(func) {
         try {
           value = await it.value;
         } catch (e) {
-          setNamespace(ns);
-          setScope(scope);
-          gen.throw(e);
-        } finally {
-          resetScope();
-          resetNamespace();
+          error = e;
         }
         if (it.done) {
-          break;
+          if (error) {
+            throw error;
+          } else {
+            break;
+          }
         }
       }
       return value;
