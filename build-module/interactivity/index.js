@@ -2391,6 +2391,8 @@ const hydratedIslands = new WeakSet();
  * @return The resulting vDOM tree.
  */
 function toVdom(root) {
+  const nodesToRemove = new Set();
+  const nodesToReplace = new Set();
   const treeWalker = document.createTreeWalker(root, 205 // TEXT + CDATA_SECTION + COMMENT + PROCESSING_INSTRUCTION + ELEMENT
   );
   function walk(node) {
@@ -2400,22 +2402,19 @@ function toVdom(root) {
 
     // TEXT_NODE (3)
     if (nodeType === 3) {
-      return [node.data];
+      return node.data;
     }
 
     // CDATA_SECTION_NODE (4)
     if (nodeType === 4) {
-      var _nodeValue;
-      const next = treeWalker.nextSibling();
-      node.replaceWith(new window.Text((_nodeValue = node.nodeValue) !== null && _nodeValue !== void 0 ? _nodeValue : ''));
-      return [node.nodeValue, next];
+      nodesToReplace.add(node);
+      return node.nodeValue;
     }
 
     // COMMENT_NODE (8) || PROCESSING_INSTRUCTION_NODE (7)
     if (nodeType === 8 || nodeType === 7) {
-      const next = treeWalker.nextSibling();
-      node.remove();
-      return [null, next];
+      nodesToRemove.add(node);
+      return null;
     }
     const elementNode = node;
     const {
@@ -2493,11 +2492,11 @@ function toVdom(root) {
       let child = treeWalker.firstChild();
       if (child) {
         while (child) {
-          const [vnode, nextChild] = walk(child);
+          const vnode = walk(child);
           if (vnode) {
             children.push(vnode);
           }
-          child = nextChild || treeWalker.nextSibling();
+          child = treeWalker.nextSibling();
         }
         treeWalker.parentNode();
       }
@@ -2507,9 +2506,15 @@ function toVdom(root) {
     if (island) {
       namespaces.pop();
     }
-    return [(0,preact_module.h)(localName, props, children)];
+    return (0,preact_module.h)(localName, props, children);
   }
-  return walk(treeWalker.currentNode);
+  const vdom = walk(treeWalker.currentNode);
+  nodesToRemove.forEach(node => node.remove());
+  nodesToReplace.forEach(node => {
+    var _nodeValue;
+    return node.replaceWith(new window.Text((_nodeValue = node.nodeValue) !== null && _nodeValue !== void 0 ? _nodeValue : ''));
+  });
+  return vdom;
 }
 
 ;// ./packages/interactivity/build-module/init.js
