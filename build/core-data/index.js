@@ -4320,6 +4320,7 @@ function normalizePageId(value) {
 }
 const getHomePage = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(() => {
   const siteData = select(STORE_NAME).getEntityRecord('root', '__unstableBase');
+  // Still resolving getEntityRecord.
   if (!siteData) {
     return null;
   }
@@ -4333,6 +4334,10 @@ const getHomePage = (0,external_wp_data_namespaceObject.createRegistrySelector)(
   const frontPageTemplateId = select(STORE_NAME).getDefaultTemplateId({
     slug: 'front-page'
   });
+  // Still resolving getDefaultTemplateId.
+  if (!frontPageTemplateId) {
+    return null;
+  }
   return {
     postType: 'wp_template',
     postId: frontPageTemplateId
