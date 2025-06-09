@@ -42435,6 +42435,11 @@ const postAuthor = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 const minimumUsersForCombobox = 25;
 const edit_AUTHORS_QUERY = {
   who: 'authors',
@@ -42451,6 +42456,7 @@ function PostAuthorEdit({
   setAttributes
 }) {
   const isDescendentOfQueryLoop = Number.isFinite(queryId);
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const {
     authorId,
     authorDetails,
@@ -42481,7 +42487,8 @@ function PostAuthorEdit({
     showBio,
     byline,
     isLink,
-    linkTarget
+    linkTarget,
+    avatarSize
   } = attributes;
   const avatarSizes = [];
   const authorName = authorDetails?.name || (0,external_wp_i18n_namespaceObject.__)('Post Author');
@@ -42524,12 +42531,22 @@ function PostAuthorEdit({
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-          spacing: 4,
-          className: "wp-block-post-author__inspector-settings",
-          children: [showAuthorControl && (showCombobox && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ComboboxControl, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            avatarSize: 48,
+            showAvatar: true,
+            isLink: false,
+            linkTarget: '_self'
+          });
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: [showAuthorControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          style: {
+            gridColumn: '1 / -1'
+          },
+          children: showCombobox && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ComboboxControl, {
             __next40pxDefaultSize: true,
             __nextHasNoMarginBottom: true,
             label: (0,external_wp_i18n_namespaceObject.__)('Author'),
@@ -42544,47 +42561,87 @@ function PostAuthorEdit({
             value: authorId,
             options: authorOptions,
             onChange: handleSelect
-          })), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Show avatar'),
+          isShownByDefault: true,
+          hasValue: () => !showAvatar,
+          onDeselect: () => setAttributes({
+            showAvatar: true
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
             __nextHasNoMarginBottom: true,
             label: (0,external_wp_i18n_namespaceObject.__)('Show avatar'),
             checked: showAvatar,
             onChange: () => setAttributes({
               showAvatar: !showAvatar
             })
-          }), showAvatar && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+          })
+        }), showAvatar && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Avatar size'),
+          isShownByDefault: true,
+          hasValue: () => avatarSize !== 48,
+          onDeselect: () => setAttributes({
+            avatarSize: 48
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
             __next40pxDefaultSize: true,
             __nextHasNoMarginBottom: true,
             label: (0,external_wp_i18n_namespaceObject.__)('Avatar size'),
-            value: attributes.avatarSize,
+            value: avatarSize,
             options: avatarSizes,
             onChange: size => {
               setAttributes({
                 avatarSize: Number(size)
               });
             }
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Show bio'),
+          isShownByDefault: true,
+          hasValue: () => !!showBio,
+          onDeselect: () => setAttributes({
+            showBio: undefined
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
             __nextHasNoMarginBottom: true,
             label: (0,external_wp_i18n_namespaceObject.__)('Show bio'),
-            checked: showBio,
+            checked: !!showBio,
             onChange: () => setAttributes({
               showBio: !showBio
             })
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Link author name to author page'),
+          isShownByDefault: true,
+          hasValue: () => !!isLink,
+          onDeselect: () => setAttributes({
+            isLink: false
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
             __nextHasNoMarginBottom: true,
             label: (0,external_wp_i18n_namespaceObject.__)('Link author name to author page'),
             checked: isLink,
             onChange: () => setAttributes({
               isLink: !isLink
             })
-          }), isLink && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          })
+        }), isLink && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Link target'),
+          isShownByDefault: true,
+          hasValue: () => linkTarget !== '_self',
+          onDeselect: () => setAttributes({
+            linkTarget: '_self'
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
             __nextHasNoMarginBottom: true,
             label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
             onChange: value => setAttributes({
               linkTarget: value ? '_blank' : '_self'
             }),
             checked: linkTarget === '_blank'
-          })]
-        })
+          })
+        })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       group: "block",
@@ -42601,8 +42658,8 @@ function PostAuthorEdit({
       children: [showAvatar && authorDetails?.avatar_urls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "wp-block-post-author__avatar",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
-          width: attributes.avatarSize,
-          src: authorDetails.avatar_urls[attributes.avatarSize],
+          width: avatarSize,
+          src: authorDetails.avatar_urls[avatarSize],
           alt: authorDetails.name
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
