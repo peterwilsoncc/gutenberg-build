@@ -58598,7 +58598,7 @@ const SocialLinkEdit = ({
       group: "other",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
         popoverProps: {
-          position: 'bottom right'
+          placement: 'bottom-start'
         },
         renderToggle: ({
           isOpen,
