@@ -39697,7 +39697,7 @@ function Warning({
             icon: more_vertical,
             label: (0,external_wp_i18n_namespaceObject.__)('More options'),
             popoverProps: {
-              position: 'bottom left',
+              placement: 'bottom-end',
               className: 'block-editor-warning__dropdown'
             },
             noIcons: true,

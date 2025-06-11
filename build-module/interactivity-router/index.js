@@ -83,6 +83,8 @@ const {
   populateServerData,
   batch
 } = (0,interactivity_namespaceObject.privateApis)('I acknowledge that using private APIs means my theme or plugin will inevitably break in the next version of WordPress.');
+const regionAttr = `data-${directivePrefix}-router-region`;
+const interactiveAttr = `data-${directivePrefix}-interactive`;
 // Check if the navigation mode is full page or region based. The only supported
 // mode for now is 'regionBased'.
 const navigationMode = 'regionBased';
@@ -125,9 +127,8 @@ const regionsToVdom = async (dom, {
     body: undefined
   };
   if (navigationMode === 'regionBased') {
-    const attrName = `data-${directivePrefix}-router-region`;
-    dom.querySelectorAll(`[${attrName}]`).forEach(region => {
-      const id = region.getAttribute(attrName);
+    dom.querySelectorAll(`[${interactiveAttr}][${regionAttr}]:not([${interactiveAttr}] [${interactiveAttr}])`).forEach(region => {
+      const id = region.getAttribute(regionAttr);
       regions[id] = vdom?.has(region) ? vdom.get(region) : toVdom(region);
     });
   }
@@ -143,11 +144,10 @@ const regionsToVdom = async (dom, {
 // Render all interactive regions contained in the given page.
 const renderRegions = async page => {
   if (navigationMode === 'regionBased') {
-    const attrName = `data-${directivePrefix}-router-region`;
     batch(() => {
       populateServerData(page.initialData);
-      document.querySelectorAll(`[${attrName}]`).forEach(region => {
-        const id = region.getAttribute(attrName);
+      document.querySelectorAll(`[${interactiveAttr}][${regionAttr}]:not([${interactiveAttr}] [${interactiveAttr}])`).forEach(region => {
+        const id = region.getAttribute(regionAttr);
         const fragment = getRegionRootFragment(region);
         render(page.regions[id], fragment);
       });
