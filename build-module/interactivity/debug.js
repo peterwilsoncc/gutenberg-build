@@ -290,15 +290,11 @@ function withScope(func) {
       const gen = func(...args);
       let value;
       let it;
-      let error;
       while (true) {
         setNamespace(ns);
         setScope(scope);
         try {
-          it = error ? gen.throw(error) : gen.next(value);
-          error = undefined;
-        } catch (e) {
-          throw e;
+          it = gen.next(value);
         } finally {
           resetScope();
           resetNamespace();
@@ -306,14 +302,15 @@ function withScope(func) {
         try {
           value = await it.value;
         } catch (e) {
-          error = e;
+          setNamespace(ns);
+          setScope(scope);
+          gen.throw(e);
+        } finally {
+          resetScope();
+          resetNamespace();
         }
         if (it.done) {
-          if (error) {
-            throw error;
-          } else {
-            break;
-          }
+          break;
         }
       }
       return value;
@@ -2349,8 +2346,6 @@ const hydratedIslands = new WeakSet();
  * @return The resulting vDOM tree.
  */
 function toVdom(root) {
-  const nodesToRemove = new Set();
-  const nodesToReplace = new Set();
   const treeWalker = document.createTreeWalker(root, 205 // TEXT + CDATA_SECTION + COMMENT + PROCESSING_INSTRUCTION + ELEMENT
   );
   function walk(node) {
@@ -2360,19 +2355,22 @@ function toVdom(root) {
 
     // TEXT_NODE (3)
     if (nodeType === 3) {
-      return node.data;
+      return [node.data];
     }
 
     // CDATA_SECTION_NODE (4)
     if (nodeType === 4) {
-      nodesToReplace.add(node);
-      return node.nodeValue;
+      var _nodeValue;
+      const next = treeWalker.nextSibling();
+      node.replaceWith(new window.Text((_nodeValue = node.nodeValue) !== null && _nodeValue !== void 0 ? _nodeValue : ''));
+      return [node.nodeValue, next];
     }
 
     // COMMENT_NODE (8) || PROCESSING_INSTRUCTION_NODE (7)
     if (nodeType === 8 || nodeType === 7) {
-      nodesToRemove.add(node);
-      return null;
+      const next = treeWalker.nextSibling();
+      node.remove();
+      return [null, next];
     }
     const elementNode = node;
     const {
@@ -2450,11 +2448,11 @@ function toVdom(root) {
       let child = treeWalker.firstChild();
       if (child) {
         while (child) {
-          const vnode = walk(child);
+          const [vnode, nextChild] = walk(child);
           if (vnode) {
             children.push(vnode);
           }
-          child = treeWalker.nextSibling();
+          child = nextChild || treeWalker.nextSibling();
         }
         treeWalker.parentNode();
       }
@@ -2464,15 +2462,9 @@ function toVdom(root) {
     if (island) {
       namespaces.pop();
     }
-    return (0,preact_module.h)(localName, props, children);
+    return [(0,preact_module.h)(localName, props, children)];
   }
-  const vdom = walk(treeWalker.currentNode);
-  nodesToRemove.forEach(node => node.remove());
-  nodesToReplace.forEach(node => {
-    var _nodeValue;
-    return node.replaceWith(new window.Text((_nodeValue = node.nodeValue) !== null && _nodeValue !== void 0 ? _nodeValue : ''));
-  });
-  return vdom;
+  return walk(treeWalker.currentNode);
 }
 
 ;// ./packages/interactivity/build-module/init.js
