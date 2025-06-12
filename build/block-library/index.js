@@ -58895,6 +58895,9 @@ const social_links_deprecated_deprecated = [
 
 
 const sizeOptions = [{
+  label: (0,external_wp_i18n_namespaceObject.__)('Default'),
+  value: ''
+}, {
   label: (0,external_wp_i18n_namespaceObject.__)('Small'),
   value: 'has-small-icon-size'
 }, {
@@ -59029,16 +59032,16 @@ function SocialLinksEdit(props) {
           setAttributes({
             openInNewTab: false,
             showLabels: false,
-            size: 'has-normal-icon-size'
+            size: undefined
           });
         },
         dropdownMenuProps: dropdownMenuProps,
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           isShownByDefault: true,
-          hasValue: () => !!size && size !== 'has-normal-icon-size',
+          hasValue: () => !!size,
           label: (0,external_wp_i18n_namespaceObject.__)('Icon size'),
           onDeselect: () => setAttributes({
-            size: 'has-normal-icon-size'
+            size: undefined
           }),
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
             __next40pxDefaultSize: true,
@@ -59046,10 +59049,10 @@ function SocialLinksEdit(props) {
             label: (0,external_wp_i18n_namespaceObject.__)('Icon Size'),
             onChange: newSize => {
               setAttributes({
-                size: newSize
+                size: newSize === '' ? undefined : newSize
               });
             },
-            value: size !== null && size !== void 0 ? size : 'has-normal-icon-size',
+            value: size !== null && size !== void 0 ? size : '',
             options: sizeOptions
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
