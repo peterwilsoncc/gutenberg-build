@@ -2267,49 +2267,94 @@ function UserControl({
 
 
 
+
 const AvatarInspectorControls = ({
   setAttributes,
   avatar,
   attributes,
   selectUser
-}) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-    title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
-      __nextHasNoMarginBottom: true,
-      __next40pxDefaultSize: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Image size'),
-      onChange: newSize => setAttributes({
-        size: newSize
-      }),
-      min: avatar.minSize,
-      max: avatar.maxSize,
-      initialPosition: attributes?.size,
-      value: attributes?.size
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-      __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Link to user profile'),
-      onChange: () => setAttributes({
-        isLink: !attributes.isLink
-      }),
-      checked: attributes.isLink
-    }), attributes.isLink && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-      __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
-      onChange: value => setAttributes({
-        linkTarget: value ? '_blank' : '_self'
-      }),
-      checked: attributes.linkTarget === '_blank'
-    }), selectUser && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(user_control, {
-      value: attributes?.userId,
-      onChange: value => {
+}) => {
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+      resetAll: () => {
         setAttributes({
-          userId: value
+          size: 96,
+          isLink: false,
+          linkTarget: '_self',
+          userId: undefined
         });
-      }
-    })]
-  })
-});
+      },
+      dropdownMenuProps: dropdownMenuProps,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Image size'),
+        isShownByDefault: true,
+        hasValue: () => attributes?.size !== 96,
+        onDeselect: () => setAttributes({
+          size: 96
+        }),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+          __nextHasNoMarginBottom: true,
+          __next40pxDefaultSize: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Image size'),
+          onChange: newSize => setAttributes({
+            size: newSize
+          }),
+          min: avatar.minSize,
+          max: avatar.maxSize,
+          initialPosition: attributes?.size,
+          value: attributes?.size
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Link to user profile'),
+        isShownByDefault: true,
+        hasValue: () => attributes?.isLink,
+        onDeselect: () => setAttributes({
+          isLink: false
+        }),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Link to user profile'),
+          onChange: () => setAttributes({
+            isLink: !attributes.isLink
+          }),
+          checked: attributes.isLink
+        })
+      }), attributes.isLink && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
+        isShownByDefault: true,
+        hasValue: () => attributes?.linkTarget !== '_self',
+        onDeselect: () => setAttributes({
+          linkTarget: '_self'
+        }),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
+          onChange: value => setAttributes({
+            linkTarget: value ? '_blank' : '_self'
+          }),
+          checked: attributes.linkTarget === '_blank'
+        })
+      }), selectUser && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        label: (0,external_wp_i18n_namespaceObject.__)('User'),
+        isShownByDefault: true,
+        hasValue: () => !!attributes?.userId,
+        onDeselect: () => setAttributes({
+          userId: undefined
+        }),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(user_control, {
+          value: attributes?.userId,
+          onChange: value => {
+            setAttributes({
+              userId: value
+            });
+          }
+        })
+      })]
+    })
+  });
+};
 const ResizableAvatar = ({
   setAttributes,
   attributes,
