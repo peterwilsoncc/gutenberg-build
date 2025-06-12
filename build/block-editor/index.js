@@ -54862,7 +54862,7 @@ function getBlockAndPreviewFromMedia(media, mediaType) {
 
 const ALLOWED_MEDIA_TYPES = ['image'];
 const MEDIA_OPTIONS_POPOVER_PROPS = {
-  position: 'bottom left',
+  placement: 'bottom-end',
   className: 'block-editor-inserter__media-list__item-preview-options__popover'
 };
 function MediaPreviewOptions({
