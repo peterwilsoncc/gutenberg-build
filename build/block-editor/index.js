@@ -75104,70 +75104,60 @@ const arrowLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
  */
 
 
-class URLInputButton extends external_wp_element_namespaceObject.Component {
-  constructor() {
-    super(...arguments);
-    this.toggle = this.toggle.bind(this);
-    this.submitLink = this.submitLink.bind(this);
-    this.state = {
-      expanded: false
-    };
-  }
-  toggle() {
-    this.setState({
-      expanded: !this.state.expanded
-    });
-  }
-  submitLink(event) {
+/**
+ * A button that toggles a URL input field for inserting or editing links.
+ *
+ * @param {Object}   props          Component properties.
+ * @param {string}   props.url      The current URL value.
+ * @param {Function} props.onChange Callback function to handle URL changes.
+ * @return {JSX.Element} The URL input button component.
+ */
+
+function URLInputButton({
+  url,
+  onChange
+}) {
+  const [expanded, toggleExpanded] = (0,external_wp_element_namespaceObject.useReducer)(isExpanded => !isExpanded, false);
+  const submitLink = event => {
     event.preventDefault();
-    this.toggle();
-  }
-  render() {
-    const {
-      url,
-      onChange
-    } = this.props;
-    const {
-      expanded
-    } = this.state;
-    const buttonLabel = url ? (0,external_wp_i18n_namespaceObject.__)('Edit link') : (0,external_wp_i18n_namespaceObject.__)('Insert link');
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-      className: "block-editor-url-input__button",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        size: "compact",
-        icon: library_link,
-        label: buttonLabel,
-        onClick: this.toggle,
-        className: "components-toolbar__control",
-        isPressed: !!url
-      }), expanded && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
-        className: "block-editor-url-input__button-modal",
-        onSubmit: this.submitLink,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-          className: "block-editor-url-input__button-modal-line",
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-            __next40pxDefaultSize: true,
-            className: "block-editor-url-input__back",
-            icon: arrow_left,
-            label: (0,external_wp_i18n_namespaceObject.__)('Close'),
-            onClick: this.toggle
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(url_input, {
-            value: url || '',
-            onChange: onChange,
-            suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlSuffixWrapper, {
-              variant: "control",
-              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-                size: "small",
-                icon: keyboard_return,
-                label: (0,external_wp_i18n_namespaceObject.__)('Submit'),
-                type: "submit"
-              })
+    toggleExpanded();
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    className: "block-editor-url-input__button",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      size: "compact",
+      icon: library_link,
+      label: url ? (0,external_wp_i18n_namespaceObject.__)('Edit link') : (0,external_wp_i18n_namespaceObject.__)('Insert link'),
+      onClick: toggleExpanded,
+      className: "components-toolbar__control",
+      isPressed: !!url
+    }), expanded && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
+      className: "block-editor-url-input__button-modal",
+      onSubmit: submitLink,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+        className: "block-editor-url-input__button-modal-line",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
+          className: "block-editor-url-input__back",
+          icon: arrow_left,
+          label: (0,external_wp_i18n_namespaceObject.__)('Close'),
+          onClick: toggleExpanded
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(url_input, {
+          value: url || '',
+          onChange: onChange,
+          suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlSuffixWrapper, {
+            variant: "control",
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              size: "small",
+              icon: keyboard_return,
+              label: (0,external_wp_i18n_namespaceObject.__)('Submit'),
+              type: "submit"
             })
-          })]
-        })
-      })]
-    });
-  }
+          })
+        })]
+      })
+    })]
+  });
 }
 
 /**
