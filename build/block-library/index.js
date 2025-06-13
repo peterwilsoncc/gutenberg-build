@@ -19915,7 +19915,6 @@ const form_edit_Edit = ({
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
       ...innerBlocksProps,
-      className: "wp-block-form",
       encType: submissionMethod === 'email' ? 'text/plain' : null
     })]
   });
