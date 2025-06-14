@@ -45824,6 +45824,11 @@ const post_featured_image_init = () => initBlock({
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 function PostNavigationLinkEdit({
   context: {
     postType
@@ -45886,46 +45891,80 @@ function PostNavigationLinkEdit({
     });
     return [selectOption, ...taxonomyOptions];
   };
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            showTitle: false,
+            linkLabel: false,
+            arrow: 'none'
+          });
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Display the title as a link'),
-          help: (0,external_wp_i18n_namespaceObject.__)('If you have entered a custom label, it will be prepended before the title.'),
-          checked: !!showTitle,
-          onChange: () => setAttributes({
-            showTitle: !showTitle
+          isShownByDefault: true,
+          hasValue: () => showTitle,
+          onDeselect: () => setAttributes({
+            showTitle: false
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Display the title as a link'),
+            help: (0,external_wp_i18n_namespaceObject.__)('If you have entered a custom label, it will be prepended before the title.'),
+            checked: !!showTitle,
+            onChange: () => setAttributes({
+              showTitle: !showTitle
+            })
           })
-        }), showTitle && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          __nextHasNoMarginBottom: true,
+        }), showTitle && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Include the label as part of the link'),
-          checked: !!linkLabel,
-          onChange: () => setAttributes({
-            linkLabel: !linkLabel
+          isShownByDefault: true,
+          hasValue: () => !!linkLabel,
+          onDeselect: () => setAttributes({
+            linkLabel: false
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Include the label as part of the link'),
+            checked: !!linkLabel,
+            onChange: () => setAttributes({
+              linkLabel: !linkLabel
+            })
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
-          __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Arrow'),
-          value: arrow,
-          onChange: value => {
-            setAttributes({
-              arrow: value
-            });
-          },
-          help: (0,external_wp_i18n_namespaceObject.__)('A decorative arrow for the next and previous link.'),
-          isBlock: true,
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-            value: "none",
-            label: (0,external_wp_i18n_namespaceObject._x)('None', 'Arrow option for Next/Previous link')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-            value: "arrow",
-            label: (0,external_wp_i18n_namespaceObject._x)('Arrow', 'Arrow option for Next/Previous link')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-            value: "chevron",
-            label: (0,external_wp_i18n_namespaceObject._x)('Chevron', 'Arrow option for Next/Previous link')
-          })]
+          isShownByDefault: true,
+          hasValue: () => arrow !== 'none',
+          onDeselect: () => setAttributes({
+            arrow: 'none'
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+            __next40pxDefaultSize: true,
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Arrow'),
+            value: arrow,
+            onChange: value => {
+              setAttributes({
+                arrow: value
+              });
+            },
+            help: (0,external_wp_i18n_namespaceObject.__)('A decorative arrow for the next and previous link.'),
+            isBlock: true,
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+              value: "none",
+              label: (0,external_wp_i18n_namespaceObject._x)('None', 'Arrow option for Next/Previous link')
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+              value: "arrow",
+              label: (0,external_wp_i18n_namespaceObject._x)('Arrow', 'Arrow option for Next/Previous link')
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+              value: "chevron",
+              label: (0,external_wp_i18n_namespaceObject._x)('Chevron', 'Arrow option for Next/Previous link')
+            })]
+          })
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
