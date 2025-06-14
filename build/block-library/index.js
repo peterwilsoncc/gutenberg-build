@@ -20091,8 +20091,7 @@ const form_metadata = {
       __experimentalDefaultControls: {
         fontSize: true
       }
-    },
-    __experimentalSelector: "form"
+    }
   }
 };
 
