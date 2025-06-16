@@ -46164,7 +46164,7 @@ function DataFormLayout({
   }
   const normalizedFormFields = (0,external_wp_element_namespaceObject.useMemo)(() => normalizeFormFields(form), [form]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
-    spacing: 2,
+    spacing: 4,
     children: normalizedFormFields.map(formField => {
       const FieldLayout = getFormFieldLayout(formField.layout)?.component;
       if (!FieldLayout) {
