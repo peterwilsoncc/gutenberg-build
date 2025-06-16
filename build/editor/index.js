@@ -24265,15 +24265,24 @@ function FlatTermSelector({
 
 
 const TagsPanel = () => {
+  var _tagLabels$add_new_it, _tagLabels$name;
+  const tagLabels = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const taxonomy = select(external_wp_coreData_namespaceObject.store).getTaxonomy('post_tag');
+    return taxonomy?.labels;
+  }, []);
+  const addNewItem = (_tagLabels$add_new_it = tagLabels?.add_new_item) !== null && _tagLabels$add_new_it !== void 0 ? _tagLabels$add_new_it : (0,external_wp_i18n_namespaceObject.__)('Add tag');
+  const tagLabel = (_tagLabels$name = tagLabels?.name) !== null && _tagLabels$name !== void 0 ? _tagLabels$name : (0,external_wp_i18n_namespaceObject.__)('Tags');
   const panelBodyTitle = [(0,external_wp_i18n_namespaceObject.__)('Suggestion:'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
     className: "editor-post-publish-panel__link",
-    children: (0,external_wp_i18n_namespaceObject.__)('Add tags')
+    children: addNewItem
   }, "label")];
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
     initialOpen: false,
     title: panelBodyTitle,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-      children: (0,external_wp_i18n_namespaceObject.__)('Tags help users and search engines navigate your site and find your content. Add a few keywords to describe your post.')
+      children: (0,external_wp_i18n_namespaceObject.sprintf)(
+      // translators: %s is the taxonomy name (e.g., "Tags").
+      (0,external_wp_i18n_namespaceObject.__)('%s help users and search engines navigate your site and find your content. Add a few keywords to describe your post.'), tagLabel)
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(flat_term_selector, {
       slug: "post_tag",
       __nextHasNoMarginBottom: true
