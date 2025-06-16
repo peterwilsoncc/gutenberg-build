@@ -57772,6 +57772,10 @@ function FormFileUpload({
     ...props,
     children: children
   });
+
+  // iOS browsers may not reliably handle 'audio/*' in the accept attribute.
+  // Adding explicit audio MIME types improves compatibility across all devices.
+  const compatAccept = accept?.includes('audio/*') ? `${accept}, audio/mp3, audio/x-m4a, audio/x-m4b, audio/x-m4p, audio/x-wav, audio/webm` : accept;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "components-form-file-upload",
     children: [ui, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
@@ -57781,7 +57785,7 @@ function FormFileUpload({
       style: {
         display: 'none'
       },
-      accept: accept,
+      accept: compatAccept,
       onChange: onChange,
       onClick: onClick,
       "data-testid": "form-file-upload-input"
