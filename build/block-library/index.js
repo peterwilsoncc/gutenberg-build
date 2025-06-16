@@ -20108,7 +20108,8 @@ const {
 const form_settings = {
   edit: form_edit,
   save: form_save_save,
-  variations: form_variations
+  variations: form_variations,
+  example: {}
 };
 const form_init = () => {
   // Prevent adding forms inside forms.
@@ -20821,7 +20822,8 @@ const form_input_settings = {
   deprecated: form_input_deprecated,
   edit: form_input_edit,
   save: form_input_save_save,
-  variations: form_input_variations
+  variations: form_input_variations,
+  example: {}
 };
 const form_input_init = () => initBlock({
   name: form_input_name,
@@ -20897,7 +20899,8 @@ const {
 
 const form_submit_button_settings = {
   edit: form_submit_button_edit,
-  save: form_submit_button_save_save
+  save: form_submit_button_save_save,
+  example: {}
 };
 const form_submit_button_init = () => initBlock({
   name: form_submit_button_name,
@@ -21093,7 +21096,8 @@ const form_submission_notification_settings = {
   icon: library_group,
   edit: form_submission_notification_edit,
   save: form_submission_notification_save_save,
-  variations: form_submission_notification_variations
+  variations: form_submission_notification_variations,
+  example: {}
 };
 const form_submission_notification_init = () => initBlock({
   name: form_submission_notification_name,
