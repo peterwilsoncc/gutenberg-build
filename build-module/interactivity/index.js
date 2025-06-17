@@ -463,16 +463,17 @@ function useCallback(callback, inputs) {
 }
 
 /**
- * Pass a factory function and an array of inputs. `useMemo` will only recompute
- * the memoized value when one of the inputs has changed.
+ * Returns the memoized output of the passed factory function, allowing access
+ * to the current element's scope.
  *
  * This hook is equivalent to Preact's `useMemo` and makes the element's scope
  * available so functions like `getElement()` and `getContext()` can be used
- * inside the passed factory function.
+ * inside the passed factory function. Note that `useMemo` will only recompute
+ * the memoized value when one of the inputs has changed.
  *
  * @param factory Factory function that returns that value for memoization.
- * @param inputs  If present, the factory will only be run to recompute if
- *                the values in the list change (using `===`).
+ * @param inputs  If present, the factory will only be run to recompute if the
+ *                values in the list change (using `===`).
  *
  * @return The memoized value.
  */
@@ -745,7 +746,7 @@ class PropSignal {
   }
 
   /**
-   *  Update the internal signals for the value and the getter of the
+   *  Updates the internal signals for the value and the getter of the
    *  corresponding prop.
    *
    * @param param0
@@ -1080,7 +1081,7 @@ const deepMergeRecursive = (target, source, override = true) => {
 };
 
 /**
- * Recursively update prop values inside the passed `target` and nested plain
+ * Recursively updates prop values inside the passed `target` and nested plain
  * objects, using the values present in `source`. References to plain objects
  * are kept, only updating props containing primitives or arrays. Arrays are
  * replaced instead of merged or concatenated.
@@ -1207,7 +1208,7 @@ const contextHandlers = {
 };
 
 /**
- * Wrap a context object with a proxy to reproduce the context stack. The proxy
+ * Wraps a context object with a proxy to reproduce the context stack. The proxy
  * uses the passed `inherited` context as a fallback to look up for properties
  * that don't exist in the given context. Also, updated properties are modified
  * where they are defined, or added to the main context when they don't exist.
@@ -1256,7 +1257,7 @@ const storeConfigs = new Map();
 const serverStates = new Map();
 
 /**
- * Get the defined config for the store with the passed namespace.
+ * Gets the defined config for the store with the passed namespace.
  *
  * @param namespace Store's namespace from which to retrieve the config.
  * @return Defined config for the given namespace.
@@ -1264,7 +1265,7 @@ const serverStates = new Map();
 const getConfig = namespace => storeConfigs.get(namespace || getNamespace()) || {};
 
 /**
- * Get the part of the state defined and updated from the server.
+ * Gets the part of the state defined and updated from the server.
  *
  * The object returned is read-only, and includes the state defined in PHP with
  * `wp_interactivity_state()`. When using `actions.navigate()`, this object is
@@ -1462,7 +1463,7 @@ const directiveCallbacks = {};
 const directivePriorities = {};
 
 /**
- * Register a new directive type in the Interactivity API runtime.
+ * Registers a new directive type in the Interactivity API runtime.
  *
  * @example
  * ```js
@@ -1726,7 +1727,7 @@ preact_module/* options */.fF.vnode = vnode => {
 
 
 /**
- * Recursively clone the passed object.
+ * Recursively clones the passed object.
  *
  * @param source Source object.
  * @return Cloned object.
@@ -1786,7 +1787,7 @@ const ruleNewline = /\n+/g;
 const empty = ' ';
 
 /**
- * Convert a css style string into a object.
+ * Converts a css style string into a object.
  *
  * Made by Cristian Bote (@cristianbote) for Goober.
  * https://unpkg.com/browse/goober@2.1.13/src/core/astish.js

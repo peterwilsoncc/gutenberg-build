@@ -69,7 +69,7 @@ var y = (x) => (() => (x))
 const interactivity_namespaceObject = x({ ["getConfig"]: () => (__WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__.getConfig), ["privateApis"]: () => (__WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__.privateApis), ["store"]: () => (__WEBPACK_EXTERNAL_MODULE__wordpress_interactivity_8e89b257__.store) });
 ;// ./packages/interactivity-router/build-module/assets/scs.js
 /**
- * Calculate the Shortest Common Supersequence (SCS) of two sequences.
+ * Calculates the Shortest Common Supersequence (SCS) of two sequences.
  *
  * A supersequence is a sequence that contains both input sequences as subsequences.
  * The shortest common supersequence is the shortest possible such sequence.
@@ -130,7 +130,7 @@ function shortestCommonSupersequence(X, Y, isEqual = (a, b) => a === b) {
  */
 
 /**
- * Compare the passed style or link elements to check if they can be
+ * Compares the passed style or link elements to check if they can be
  * considered equal.
  *
  * @param a `<style>` or `<link>` element.
@@ -140,7 +140,7 @@ function shortestCommonSupersequence(X, Y, isEqual = (a, b) => a === b) {
 const areNodesEqual = (a, b) => a.isEqualNode(b);
 
 /**
- * Normalized the passed style or link element, reverting the changes
+ * Normalizes the passed style or link element, reverting the changes
  * made by {@link prepareStylePromise|`prepareStylePromise`} to the
  * `data-original-media` and `media`.
  *
@@ -172,12 +172,12 @@ const normalizeMedia = element => {
 };
 
 /**
- * Add the minimun style elements from Y around those in X using a
+ * Adds the minimum style elements from Y around those in X using a
  * shortest common supersequence algorithm, returning a list of
  * promises for all the elements in Y.
  *
- * If X is empty, it appends all the elements in Y to the passed
- * parent element or to `document.head` instead.
+ * If X is empty, it appends all elements in Y to the passed parent
+ * element or to `document.head` instead.
  *
  * The returned promises resolve once the corresponding style element
  * is loaded and ready. Those elements that are also in X return a
@@ -249,7 +249,7 @@ function updateStylesWithSCS(X, Y, parent = window.document.head) {
 const stylePromiseCache = new WeakMap();
 
 /**
- * Prepare and return the corresponding `Promise` for the passed style
+ * Prepares and returns the corresponding `Promise` for the passed style
  * element.
  *
  * It returns the cached promise if it exists. Otherwise, constructs
@@ -308,7 +308,7 @@ const prepareStylePromise = element => {
 const styleSheetCache = new Map();
 
 /**
- * Prepare all style elements contained in the passed document.
+ * Prepares all style elements contained in the passed document.
  *
  * This function calls {@link updateStylesWithSCS|`updateStylesWithSCS`}
  * to insert only the minimum amount of style elements into the DOM, so
@@ -336,13 +336,13 @@ const preloadStyles = (doc, url) => {
 };
 
 /**
- * Traverse all style elements in the DOM, enabling only those included
+ * Traverses all style elements in the DOM, enabling only those included
  * in the passed list and disabling the others.
  *
  * If the style element has the `data-original-media` attribute, the
  * original `media` value is restored.
  *
- * @param styles List of style elements to apply
+ * @param styles List of style elements to apply.
  */
 const applyStyles = styles => {
   window.document.querySelectorAll('style,link[rel=stylesheet]').forEach(el => {
@@ -551,7 +551,7 @@ const baseUrl = document.baseURI;
 const pageBaseUrl = baseUrl;
 
 /**
- * Extend the internal dynamic import map with the passed one.
+ * Extends the internal dynamic import map with the passed one.
  *
  * @param importMapIn         Import map.
  * @param importMapIn.imports Imports declaration.
@@ -562,7 +562,7 @@ function resolver_addImportMap(importMapIn) {
 }
 
 /**
- * Resolve the URL of the passed module ID against the current internal
+ * Resolves the URL of the passed module ID against the current internal
  * dynamic import map.
  *
  * @param id        Module ID.
@@ -839,7 +839,7 @@ function getOrCreateLoad(url, fetchOpts, parent) {
 const dynamicImport = u => import(/* webpackIgnore: true */u);
 
 /**
- * Resolve the passed module URL and fetch the corresponding module
+ * Resolves the passed module URL and fetches the corresponding module
  * and their dependencies, returning a `ModuleLoad` object once all
  * of them have been fetched.
  *
@@ -859,7 +859,7 @@ async function preloadModule(url, fetchOpts) {
 }
 
 /**
- * Import the module represented by the passed `ModuleLoad` instance.
+ * Imports the module represented by the passed `ModuleLoad` instance.
  *
  * @param load The `ModuleLoad` instance representing the module.
  * @return A promise with the imported module.
@@ -874,7 +874,7 @@ async function importPreloadedModule(load) {
 }
 
 /**
- * Import the module represented by the passed module URL.
+ * Imports the module represented by the passed module URL.
  *
  * The module URL and all its dependencies are resolved using the
  * current status of the internal dynamic import map.
@@ -922,7 +922,7 @@ async function importShim(id) {
 }
 
 /**
- * Import the module with the passed ID.
+ * Imports the module with the passed ID.
  *
  * The module is resolved against the internal dynamic import map,
  * extended with the passed import map.
@@ -937,7 +937,7 @@ async function importWithMap(id, importMapIn) {
 }
 
 /**
- * Preload the module with the passed ID along with its dependencies.
+ * Preloads the module with the passed ID along with its dependencies.
  *
  * The module is resolved against the internal dynamic import map,
  * extended with the passed import map.
@@ -985,7 +985,7 @@ const initialImportMap = initialImportMapElement ? JSON.parse(initialImportMapEl
 const resolvedScriptModules = new Set();
 
 /**
- * Mark the specified module as natively resolved.
+ * Marks the specified module as natively resolved.
  * @param url Script module URL.
  */
 const markScriptModuleAsResolved = url => {
@@ -993,7 +993,7 @@ const markScriptModuleAsResolved = url => {
 };
 
 /**
- * Resolve and fetch modules present in the passed document, using the
+ * Resolves and fetches modules present in the passed document, using the
  * document's import map to resolve them.
  *
  * @param doc Document containing the modules to preload.
@@ -1021,7 +1021,7 @@ const preloadScriptModules = doc => {
 };
 
 /**
- * Import modules respresented by the passed `ScriptModuleLoad` instances.
+ * Imports modules respresented by the passed `ScriptModuleLoad` instances.
  *
  * @param modules Array of `MoudleLoad` instances.
  * @return Promise that resolves once all modules are imported.
@@ -1156,7 +1156,7 @@ const renderPage = page => {
 };
 
 /**
- * Load the given page forcing a full page reload.
+ * Loads the given page forcing a full page reload.
  *
  * The function returns a promise that won't resolve, useful to prevent any
  * potential feedback indicating that the navigation has finished while the new
@@ -1185,8 +1185,6 @@ window.addEventListener('popstate', async () => {
 });
 
 // Initialize the router and cache the initial page using the initial vDOM.
-// Once this code is tested and more mature, the head should be updated for
-// region based navigation as well.
 window.document.querySelectorAll('script[type=module][src]').forEach(({
   src
 }) => markScriptModuleAsResolved(src));
@@ -1342,7 +1340,7 @@ const {
  * Announces a message to screen readers.
  *
  * This is a wrapper around the `@wordpress/a11y` package's `speak` function. It handles importing
- * the package on demand and should be used instead of calling `ally.speak` direacly.
+ * the package on demand and should be used instead of calling `a11y.speak` directly.
  *
  * @param messageKey The message to be announced by assistive technologies.
  */
