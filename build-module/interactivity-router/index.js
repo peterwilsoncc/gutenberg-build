@@ -1064,6 +1064,30 @@ const getPagePath = url => {
 };
 
 /**
+ * Parses the given region's directive.
+ *
+ * @param region Region element.
+ * @return Data contained in the region directive value.
+ */
+const parseRegionAttribute = region => {
+  const value = region.getAttribute(regionAttr);
+  try {
+    const {
+      id,
+      attachTo
+    } = JSON.parse(value);
+    return {
+      id,
+      attachTo
+    };
+  } catch (e) {
+    return {
+      id: value
+    };
+  }
+};
+
+/**
  * Fetches and prepares a page from a given URL.
  *
  * @param url          The URL of the page to fetch.
@@ -1115,9 +1139,16 @@ const preparePage = async (url, dom, {
   vdom
 } = {}) => {
   const regions = {};
+  const regionsToAttach = {};
   dom.querySelectorAll(regionsSelector).forEach(region => {
-    const id = region.getAttribute(regionAttr);
+    const {
+      id,
+      attachTo
+    } = parseRegionAttribute(region);
     regions[id] = vdom?.has(region) ? vdom.get(region) : toVdom(region);
+    if (attachTo) {
+      regionsToAttach[id] = attachTo;
+    }
   });
   const title = dom.querySelector('title')?.innerText;
   const initialData = parseServerData(dom);
@@ -1126,6 +1157,7 @@ const preparePage = async (url, dom, {
   const [styles, scriptModules] = await Promise.all([Promise.all(preloadStyles(dom, url)), Promise.all(preloadScriptModules(dom))]);
   return {
     regions,
+    regionsToAttach,
     styles,
     scriptModules,
     title,
@@ -1142,13 +1174,42 @@ const preparePage = async (url, dom, {
  */
 const renderPage = page => {
   applyStyles(page.styles);
+
+  // Clone regionsToAttach.
+  const regionsToAttach = {
+    ...page.regionsToAttach
+  };
   batch(() => {
     populateServerData(page.initialData);
     document.querySelectorAll(regionsSelector).forEach(region => {
-      const id = region.getAttribute(regionAttr);
+      const {
+        id
+      } = parseRegionAttribute(region);
       const fragment = getRegionRootFragment(region);
       render(page.regions[id], fragment);
+      // If this is an attached region, remove it from the list.
+      delete regionsToAttach[id];
     });
+
+    // Render unattached regions.
+    for (const id in regionsToAttach) {
+      const parent = document.querySelector(regionsToAttach[id]);
+
+      // Get the type from the vnode. If wrapped with Directives, get the
+      // original type from `props.type`.
+      const {
+        props,
+        type
+      } = page.regions[id];
+      const elementType = typeof type === 'function' ? props.type : type;
+
+      // Create an element with the obtained type where the region will be
+      // rendered. The type should match the one of the root vnode.
+      const region = document.createElement(elementType);
+      parent.appendChild(region);
+      const fragment = getRegionRootFragment(region);
+      render(page.regions[id], fragment);
+    }
   });
   if (page.title) {
     document.title = page.title;
