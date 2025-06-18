@@ -10856,6 +10856,7 @@ function v4(options, buf, offset) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -10886,6 +10887,9 @@ function mediaUpload({
   onSuccess,
   multiple = true
 }) {
+  const {
+    receiveEntityRecords
+  } = (0,external_wp_data_namespaceObject.dispatch)(external_wp_coreData_namespaceObject.store);
   const {
     getCurrentPost,
     getEditorSettings
@@ -10926,6 +10930,15 @@ function mediaUpload({
         clearSaveLock();
       }
       onFileChange?.(file);
+
+      // Files are initially received by `onFileChange` as a blob.
+      // After that the function is called a second time with the file as an entity.
+      // For core-data, we only care about receiving/invalidating entities.
+      const entityFiles = file.filter(_file => _file?.id);
+      if (entityFiles?.length) {
+        const invalidateCache = true;
+        receiveEntityRecords('root', 'media', entityFiles, undefined, invalidateCache);
+      }
     },
     onSuccess,
     additionalData: {
@@ -16206,7 +16219,27 @@ function setDefaultCompleters(completers = []) {
  */
 
 
-(0,external_wp_hooks_namespaceObject.addFilter)('editor.MediaUpload', 'core/editor/components/media-upload', () => external_wp_mediaUtils_namespaceObject.MediaUpload);
+
+
+
+function MediaUploadWithCacheInvalidation(props) {
+  const {
+    invalidateResolutionForStoreSelector
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
+  const {
+    onClose: originalOnClose,
+    ...rest
+  } = props;
+  const onClose = (...onCloseArgs) => {
+    invalidateResolutionForStoreSelector('getMediaItems');
+    originalOnClose?.(...onCloseArgs);
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_mediaUtils_namespaceObject.MediaUpload, {
+    onClose: onClose,
+    ...rest
+  });
+}
+(0,external_wp_hooks_namespaceObject.addFilter)('editor.MediaUpload', 'core/editor/components/media-upload', () => MediaUploadWithCacheInvalidation);
 
 ;// ./packages/editor/build-module/hooks/pattern-overrides.js
 /**
