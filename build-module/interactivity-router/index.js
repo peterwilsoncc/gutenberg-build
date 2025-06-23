@@ -569,7 +569,7 @@ function resolver_addImportMap(importMapIn) {
  * @param parentUrl Parent URL, in case the module ID is relative.
  * @return Resolved module URL.
  */
-function resolver_resolve(id, parentUrl) {
+function resolve(id, parentUrl) {
   const urlResolved = resolveIfNotPlainOrUrl(id, parentUrl);
   return resolveImportMap(importMap, urlResolved || id, parentUrl) || id;
 }
@@ -659,10 +659,34 @@ async function fetchModule(url, fetchOpts, parent) {
  */
 
 
-const loader_initPromise = init;
-const skip = id => Object.keys(JSON.parse(document.querySelector('script#wp-importmap[type=importmap]').text).imports).includes(id);
+const initPromise = init;
+
+/**
+ * Script element containing the initial page's import map.
+ */
+const initialImportMapElement = window.document.querySelector('script#wp-importmap[type=importmap]');
+
+/**
+ * Data from the initial page's import map.
+ *
+ * Pages containing any of the imports present on the original page
+ * in their import maps should ignore them, as those imports would
+ * be handled natively.
+ */
+const initialImportMap = initialImportMapElement ? JSON.parse(initialImportMapElement.text) : {
+  imports: {},
+  scopes: {}
+};
+const skip = id => Object.keys(initialImportMap.imports).includes(id);
 const fetchCache = {};
 const registry = {};
+
+// Init registry with importamp content.
+Object.keys(initialImportMap.imports).forEach(id => {
+  registry[id] = {
+    blobUrl: id
+  };
+});
 async function loadAll(load, seen) {
   if (load.blobUrl || seen[load.url]) {
     return;
@@ -745,8 +769,8 @@ function resolveDeps(load, seen) {
       }
       // dynamic import
       else {
-        pushStringTo(statementStart + 6);
-        resolvedSource += `Shim(`;
+        pushStringTo(statementStart);
+        resolvedSource += `wpInteractivityRouterImport(`;
         dynamicImportEndStack.push(statementEnd - 1);
         lastIndex = start;
       }
@@ -818,7 +842,7 @@ function getOrCreateLoad(url, fetchOpts, parent) {
       if (d !== -1 || !n) {
         return undefined;
       }
-      const responseUrl = resolver_resolve(n, load.responseUrl || load.url);
+      const responseUrl = resolve(n, load.responseUrl || load.url);
       if (skip && skip(responseUrl)) {
         return {
           blobUrl: responseUrl
@@ -848,7 +872,7 @@ const dynamicImport = u => import(/* webpackIgnore: true */u);
  * @return A promise with a `ModuleLoad` instance.
  */
 async function preloadModule(url, fetchOpts) {
-  await loader_initPromise;
+  await initPromise;
   const load = getOrCreateLoad(url, fetchOpts, null);
   const seen = {};
   await loadAll(load, seen);
@@ -883,7 +907,7 @@ async function importPreloadedModule(load) {
  * @param fetchOpts Fetch options.
  * @return A promise with the imported module.
  */
-async function loader_topLevelLoad(url, fetchOpts) {
+async function topLevelLoad(url, fetchOpts) {
   const load = await preloadModule(url, fetchOpts);
   return importPreloadedModule(load);
 }
@@ -914,6 +938,12 @@ async function loader_topLevelLoad(url, fetchOpts) {
 // and `preloadWithMap`.
 const dynamic_importmap_baseUrl = document.baseURI;
 const dynamic_importmap_pageBaseUrl = dynamic_importmap_baseUrl;
+Object.defineProperty(self, 'wpInteractivityRouterImport', {
+  value: importShim,
+  writable: false,
+  enumerable: false,
+  configurable: false
+});
 async function importShim(id) {
   await initPromise;
   return topLevelLoad(resolve(id, dynamic_importmap_pageBaseUrl), {
@@ -948,8 +978,8 @@ async function importWithMap(id, importMapIn) {
  */
 async function preloadWithMap(id, importMapIn) {
   resolver_addImportMap(importMapIn);
-  await loader_initPromise;
-  return preloadModule(resolver_resolve(id, dynamic_importmap_pageBaseUrl), {
+  await initPromise;
+  return preloadModule(resolve(id, dynamic_importmap_pageBaseUrl), {
     credentials: 'same-origin'
   });
 }
@@ -960,23 +990,6 @@ async function preloadWithMap(id, importMapIn) {
  * Internal dependencies
  */
 
-
-/**
- * Script element containing the initial page's import map.
- */
-const initialImportMapElement = window.document.querySelector('script#wp-importmap[type=importmap]');
-
-/**
- * Data from the initial page's import map.
- *
- * Pages containing any of the imports present on the original page
- * in their import maps should ignore them, as those imports would
- * be handled natively.
- */
-const initialImportMap = initialImportMapElement ? JSON.parse(initialImportMapElement.text) : {
-  imports: {},
-  scopes: {}
-};
 
 /**
  * IDs of modules that should be resolved by the browser rather than
