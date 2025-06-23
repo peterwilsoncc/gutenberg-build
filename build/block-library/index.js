@@ -57361,6 +57361,307 @@ const keyboardReturn = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.
 });
 /* harmony default export */ const keyboard_return = (keyboardReturn);
 
+;// ./packages/block-library/build-module/social-link/icons/chain.js
+/**
+ * WordPress dependencies
+ */
+
+
+const ChainIcon = () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  width: "24",
+  height: "24",
+  viewBox: "0 0 24 24",
+  version: "1.1",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M15.6 7.2H14v1.5h1.6c2 0 3.7 1.7 3.7 3.7s-1.7 3.7-3.7 3.7H14v1.5h1.6c2.8 0 5.2-2.3 5.2-5.2 0-2.9-2.3-5.2-5.2-5.2zM4.7 12.4c0-2 1.7-3.7 3.7-3.7H10V7.2H8.4c-2.9 0-5.2 2.3-5.2 5.2 0 2.9 2.3 5.2 5.2 5.2H10v-1.5H8.4c-2 0-3.7-1.7-3.7-3.7zm4.6.9h5.3v-1.5H9.3v1.5z"
+  })
+});
+
+;// ./packages/block-library/build-module/social-link/social-list.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Retrieves the social service's icon component and label.
+ *
+ * @param {Object} variation The object of the social service variation.
+ * @return {Object} An object containing the Icon component for social service and label.
+ */
+function getSocialService(variation) {
+  var _variation$icon, _variation$title;
+  if (!variation?.name) {
+    return {
+      icon: ChainIcon,
+      label: (0,external_wp_i18n_namespaceObject.__)('Social Icon')
+    };
+  }
+  return {
+    icon: (_variation$icon = variation?.icon) !== null && _variation$icon !== void 0 ? _variation$icon : ChainIcon,
+    label: (_variation$title = variation?.title) !== null && _variation$title !== void 0 ? _variation$title : (0,external_wp_i18n_namespaceObject.__)('Social Icon')
+  };
+}
+
+;// ./packages/block-library/build-module/social-link/edit.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const SocialLinkURLPopover = ({
+  url,
+  setAttributes,
+  setPopover,
+  popoverAnchor,
+  clientId
+}) => {
+  const {
+    removeBlock
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.URLPopover, {
+    anchor: popoverAnchor,
+    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Edit social link'),
+    onClose: () => {
+      setPopover(false);
+      popoverAnchor?.focus();
+    },
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
+      className: "block-editor-url-popover__link-editor",
+      onSubmit: event => {
+        event.preventDefault();
+        setPopover(false);
+        popoverAnchor?.focus();
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        className: "block-editor-url-input",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.URLInput, {
+          value: url,
+          onChange: nextURL => setAttributes({
+            url: nextURL
+          }),
+          placeholder: (0,external_wp_i18n_namespaceObject.__)('Enter social link'),
+          label: (0,external_wp_i18n_namespaceObject.__)('Enter social link'),
+          hideLabelFromVision: true,
+          disableSuggestions: true,
+          onKeyDown: event => {
+            if (!!url || event.defaultPrevented || ![external_wp_keycodes_namespaceObject.BACKSPACE, external_wp_keycodes_namespaceObject.DELETE].includes(event.keyCode)) {
+              return;
+            }
+            removeBlock(clientId);
+          },
+          suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlSuffixWrapper, {
+            variant: "control",
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              icon: keyboard_return,
+              label: (0,external_wp_i18n_namespaceObject.__)('Apply'),
+              type: "submit",
+              size: "small"
+            })
+          })
+        })
+      })
+    })
+  });
+};
+const SocialLinkEdit = ({
+  attributes,
+  context,
+  isSelected,
+  setAttributes,
+  clientId,
+  name
+}) => {
+  const {
+    url,
+    service,
+    label = '',
+    rel
+  } = attributes;
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  const {
+    showLabels,
+    iconColor,
+    iconColorValue,
+    iconBackgroundColor,
+    iconBackgroundColorValue
+  } = context;
+  const [showURLPopover, setPopover] = (0,external_wp_element_namespaceObject.useState)(false);
+  const wrapperClasses = dist_clsx('wp-social-link',
+  // Manually adding this class for backwards compatibility of CSS when moving the
+  // blockProps from the li to the button: https://github.com/WordPress/gutenberg/pull/64883
+  'wp-block-social-link', 'wp-social-link-' + service, {
+    'wp-social-link__is-incomplete': !url,
+    [`has-${iconColor}-color`]: iconColor,
+    [`has-${iconBackgroundColor}-background-color`]: iconBackgroundColor
+  });
+
+  // Use internal state instead of a ref to make sure that the component
+  // re-renders when the popover's anchor updates.
+  const [popoverAnchor, setPopoverAnchor] = (0,external_wp_element_namespaceObject.useState)(null);
+  const isContentOnlyMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)() === 'contentOnly';
+  const {
+    activeVariation
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getActiveBlockVariation
+    } = select(external_wp_blocks_namespaceObject.store);
+    return {
+      activeVariation: getActiveBlockVariation(name, attributes)
+    };
+  }, [name, attributes]);
+  const {
+    icon,
+    label: socialLinkName
+  } = getSocialService(activeVariation);
+  // The initial label (ie. the link text) is an empty string.
+  // We want to prevent empty links so that the link text always fallbacks to
+  // the social name, even when users enter and save an empty string or only
+  // spaces. The PHP render callback fallbacks to the social name as well.
+  const socialLinkText = label.trim() === '' ? socialLinkName : label;
+  const ref = (0,external_wp_element_namespaceObject.useRef)();
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
+    className: 'wp-block-social-link-anchor',
+    ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([setPopoverAnchor, ref]),
+    onClick: () => setPopover(true),
+    onKeyDown: event => {
+      if (event.keyCode === external_wp_keycodes_namespaceObject.ENTER) {
+        event.preventDefault();
+        setPopover(true);
+      }
+    }
+  });
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [isContentOnlyMode && showLabels &&
+    /*#__PURE__*/
+    // Add an extra control to modify the label attribute when content only mode is active.
+    // With content only mode active, the inspector is hidden, so users need another way
+    // to edit this attribute.
+    (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      group: "other",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
+        popoverProps: {
+          placement: 'bottom-start'
+        },
+        renderToggle: ({
+          isOpen,
+          onToggle
+        }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+          onClick: onToggle,
+          "aria-haspopup": "true",
+          "aria-expanded": isOpen,
+          children: (0,external_wp_i18n_namespaceObject.__)('Text')
+        }),
+        renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+          __next40pxDefaultSize: true,
+          __nextHasNoMarginBottom: true,
+          className: "wp-block-social-link__toolbar_content_text",
+          label: (0,external_wp_i18n_namespaceObject.__)('Text'),
+          help: (0,external_wp_i18n_namespaceObject.__)('Provide a text label or use the default.'),
+          value: label,
+          onChange: value => setAttributes({
+            label: value
+          }),
+          placeholder: socialLinkName
+        })
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            label: undefined
+          });
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          isShownByDefault: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Text'),
+          hasValue: () => !!label,
+          onDeselect: () => {
+            setAttributes({
+              label: undefined
+            });
+          },
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+            __next40pxDefaultSize: true,
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Text'),
+            help: (0,external_wp_i18n_namespaceObject.__)('The text is visible when enabled from the parent Social Icons block.'),
+            value: label,
+            onChange: value => setAttributes({
+              label: value
+            }),
+            placeholder: socialLinkName
+          })
+        })
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      group: "advanced",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Link rel'),
+        value: rel || '',
+        onChange: value => setAttributes({
+          rel: value
+        })
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
+      role: "presentation",
+      className: wrapperClasses,
+      style: {
+        color: iconColorValue,
+        backgroundColor: iconBackgroundColorValue
+      },
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
+        "aria-haspopup": "dialog",
+        ...blockProps,
+        role: "button",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+          icon: icon
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          className: dist_clsx('wp-block-social-link-label', {
+            'screen-reader-text': !showLabels
+          }),
+          children: socialLinkText
+        })]
+      }), isSelected && showURLPopover && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SocialLinkURLPopover, {
+        url: url,
+        setAttributes: setAttributes,
+        setPopover: setPopover,
+        popoverAnchor: popoverAnchor,
+        clientId: clientId
+      })]
+    })]
+  });
+};
+/* harmony default export */ const social_link_edit = (SocialLinkEdit);
+
 ;// ./packages/block-library/build-module/social-link/icons/wordpress.js
 /**
  * WordPress dependencies
@@ -57456,22 +57757,6 @@ const BlueskyIcon = () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObje
   version: "1.1",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M6.3,4.2c2.3,1.7,4.8,5.3,5.7,7.2.9-1.9,3.4-5.4,5.7-7.2,1.7-1.3,4.3-2.2,4.3.9s-.4,5.2-.6,5.9c-.7,2.6-3.3,3.2-5.6,2.8,4,.7,5.1,3,2.9,5.3-5,5.2-6.7-2.8-6.7-2.8,0,0-1.7,8-6.7,2.8-2.2-2.3-1.2-4.6,2.9-5.3-2.3.4-4.9-.3-5.6-2.8-.2-.7-.6-5.3-.6-5.9,0-3.1,2.7-2.1,4.3-.9h0Z"
-  })
-});
-
-;// ./packages/block-library/build-module/social-link/icons/chain.js
-/**
- * WordPress dependencies
- */
-
-
-const ChainIcon = () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  width: "24",
-  height: "24",
-  viewBox: "0 0 24 24",
-  version: "1.1",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M15.6 7.2H14v1.5h1.6c2 0 3.7 1.7 3.7 3.7s-1.7 3.7-3.7 3.7H14v1.5h1.6c2.8 0 5.2-2.3 5.2-5.2 0-2.9-2.3-5.2-5.2-5.2zM4.7 12.4c0-2 1.7-3.7 3.7-3.7H10V7.2H8.4c-2.9 0-5.2 2.3-5.2 5.2 0 2.9 2.3 5.2 5.2 5.2H10v-1.5H8.4c-2 0-3.7-1.7-3.7-3.7zm4.6.9h5.3v-1.5H9.3v1.5z"
   })
 });
 
@@ -58494,280 +58779,6 @@ social_link_variations_variations.forEach(variation => {
   variation.isActive = (blockAttributes, variationAttributes) => blockAttributes.service === variationAttributes.service;
 });
 /* harmony default export */ const social_link_variations = (social_link_variations_variations);
-
-;// ./packages/block-library/build-module/social-link/social-list.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-/**
- * Retrieves the social service's icon component.
- *
- * @param {string} name key for a social service (lowercase slug)
- *
- * @return {Component} Icon component for social service.
- */
-const getIconBySite = name => {
-  const variation = social_link_variations.find(v => v.name === name);
-  return variation ? variation.icon : ChainIcon;
-};
-
-/**
- * Retrieves the display name for the social service.
- *
- * @param {string} name key for a social service (lowercase slug)
- *
- * @return {string} Display name for social service
- */
-const getNameBySite = name => {
-  const variation = social_link_variations.find(v => v.name === name);
-  return variation ? variation.title : (0,external_wp_i18n_namespaceObject.__)('Social Icon');
-};
-
-;// ./packages/block-library/build-module/social-link/edit.js
-/**
- * External dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-const SocialLinkURLPopover = ({
-  url,
-  setAttributes,
-  setPopover,
-  popoverAnchor,
-  clientId
-}) => {
-  const {
-    removeBlock
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.URLPopover, {
-    anchor: popoverAnchor,
-    "aria-label": (0,external_wp_i18n_namespaceObject.__)('Edit social link'),
-    onClose: () => {
-      setPopover(false);
-      popoverAnchor?.focus();
-    },
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
-      className: "block-editor-url-popover__link-editor",
-      onSubmit: event => {
-        event.preventDefault();
-        setPopover(false);
-        popoverAnchor?.focus();
-      },
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "block-editor-url-input",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.URLInput, {
-          value: url,
-          onChange: nextURL => setAttributes({
-            url: nextURL
-          }),
-          placeholder: (0,external_wp_i18n_namespaceObject.__)('Enter social link'),
-          label: (0,external_wp_i18n_namespaceObject.__)('Enter social link'),
-          hideLabelFromVision: true,
-          disableSuggestions: true,
-          onKeyDown: event => {
-            if (!!url || event.defaultPrevented || ![external_wp_keycodes_namespaceObject.BACKSPACE, external_wp_keycodes_namespaceObject.DELETE].includes(event.keyCode)) {
-              return;
-            }
-            removeBlock(clientId);
-          },
-          suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlSuffixWrapper, {
-            variant: "control",
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-              icon: keyboard_return,
-              label: (0,external_wp_i18n_namespaceObject.__)('Apply'),
-              type: "submit",
-              size: "small"
-            })
-          })
-        })
-      })
-    })
-  });
-};
-const SocialLinkEdit = ({
-  attributes,
-  context,
-  isSelected,
-  setAttributes,
-  clientId
-}) => {
-  const {
-    url,
-    service,
-    label = '',
-    rel
-  } = attributes;
-  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-  const {
-    showLabels,
-    iconColor,
-    iconColorValue,
-    iconBackgroundColor,
-    iconBackgroundColorValue
-  } = context;
-  const [showURLPopover, setPopover] = (0,external_wp_element_namespaceObject.useState)(false);
-  const wrapperClasses = dist_clsx('wp-social-link',
-  // Manually adding this class for backwards compatibility of CSS when moving the
-  // blockProps from the li to the button: https://github.com/WordPress/gutenberg/pull/64883
-  'wp-block-social-link', 'wp-social-link-' + service, {
-    'wp-social-link__is-incomplete': !url,
-    [`has-${iconColor}-color`]: iconColor,
-    [`has-${iconBackgroundColor}-background-color`]: iconBackgroundColor
-  });
-
-  // Use internal state instead of a ref to make sure that the component
-  // re-renders when the popover's anchor updates.
-  const [popoverAnchor, setPopoverAnchor] = (0,external_wp_element_namespaceObject.useState)(null);
-  const isContentOnlyMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)() === 'contentOnly';
-  const IconComponent = getIconBySite(service);
-  const socialLinkName = getNameBySite(service);
-  // The initial label (ie. the link text) is an empty string.
-  // We want to prevent empty links so that the link text always fallbacks to
-  // the social name, even when users enter and save an empty string or only
-  // spaces. The PHP render callback fallbacks to the social name as well.
-  const socialLinkText = label.trim() === '' ? socialLinkName : label;
-  const ref = (0,external_wp_element_namespaceObject.useRef)();
-  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
-    className: 'wp-block-social-link-anchor',
-    ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([setPopoverAnchor, ref]),
-    onClick: () => setPopover(true),
-    onKeyDown: event => {
-      if (event.keyCode === external_wp_keycodes_namespaceObject.ENTER) {
-        event.preventDefault();
-        setPopover(true);
-      }
-    }
-  });
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [isContentOnlyMode && showLabels &&
-    /*#__PURE__*/
-    // Add an extra control to modify the label attribute when content only mode is active.
-    // With content only mode active, the inspector is hidden, so users need another way
-    // to edit this attribute.
-    (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-      group: "other",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
-        popoverProps: {
-          placement: 'bottom-start'
-        },
-        renderToggle: ({
-          isOpen,
-          onToggle
-        }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-          onClick: onToggle,
-          "aria-haspopup": "true",
-          "aria-expanded": isOpen,
-          children: (0,external_wp_i18n_namespaceObject.__)('Text')
-        }),
-        renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-          __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
-          className: "wp-block-social-link__toolbar_content_text",
-          label: (0,external_wp_i18n_namespaceObject.__)('Text'),
-          help: (0,external_wp_i18n_namespaceObject.__)('Provide a text label or use the default.'),
-          value: label,
-          onChange: value => setAttributes({
-            label: value
-          }),
-          placeholder: socialLinkName
-        })
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        resetAll: () => {
-          setAttributes({
-            label: undefined
-          });
-        },
-        dropdownMenuProps: dropdownMenuProps,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          isShownByDefault: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Text'),
-          hasValue: () => !!label,
-          onDeselect: () => {
-            setAttributes({
-              label: undefined
-            });
-          },
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-            __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Text'),
-            help: (0,external_wp_i18n_namespaceObject.__)('The text is visible when enabled from the parent Social Icons block.'),
-            value: label,
-            onChange: value => setAttributes({
-              label: value
-            }),
-            placeholder: socialLinkName
-          })
-        })
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      group: "advanced",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-        __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Link rel'),
-        value: rel || '',
-        onChange: value => setAttributes({
-          rel: value
-        })
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
-      role: "presentation",
-      className: wrapperClasses,
-      style: {
-        color: iconColorValue,
-        backgroundColor: iconBackgroundColorValue
-      },
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
-        "aria-haspopup": "dialog",
-        ...blockProps,
-        role: "button",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(IconComponent, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          className: dist_clsx('wp-block-social-link-label', {
-            'screen-reader-text': !showLabels
-          }),
-          children: socialLinkText
-        })]
-      }), isSelected && showURLPopover && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SocialLinkURLPopover, {
-        url: url,
-        setAttributes: setAttributes,
-        setPopover: setPopover,
-        popoverAnchor: popoverAnchor,
-        clientId: clientId
-      })]
-    })]
-  });
-};
-/* harmony default export */ const social_link_edit = (SocialLinkEdit);
 
 ;// ./packages/block-library/build-module/social-link/index.js
 /**
