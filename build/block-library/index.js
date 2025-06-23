@@ -27419,6 +27419,7 @@ function image_Image({
       aspectRatio: undefined,
       lightbox: undefined
     });
+    updateImage(constants_DEFAULT_MEDIA_SIZE_SLUG);
   };
   const sizeControls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
