@@ -2198,6 +2198,8 @@ function useUserAvatar({
   };
 }
 
+;// external ["wp","htmlEntities"]
+const external_wp_htmlEntities_namespaceObject = window["wp"]["htmlEntities"];
 ;// ./packages/block-library/build-module/avatar/user-control.js
 /**
  * WordPress dependencies
@@ -2208,9 +2210,11 @@ function useUserAvatar({
 
 
 
+
+
 const AUTHORS_QUERY = {
   who: 'authors',
-  per_page: -1,
+  per_page: 100,
   _fields: 'id,name',
   context: 'view'
 };
@@ -2218,22 +2222,35 @@ function UserControl({
   value,
   onChange
 }) {
-  const [filteredAuthorsList, setFilteredAuthorsList] = (0,external_wp_element_namespaceObject.useState)();
-  const authorsList = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const [filterValue, setFilterValue] = (0,external_wp_element_namespaceObject.useState)('');
+  const {
+    authors,
+    isLoading
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getUsers
+      getUsers,
+      isResolving
     } = select(external_wp_coreData_namespaceObject.store);
-    return getUsers(AUTHORS_QUERY);
-  }, []);
-  if (!authorsList) {
-    return null;
-  }
-  const options = authorsList.map(author => {
-    return {
-      label: author.name,
-      value: author.id
+    const query = {
+      ...AUTHORS_QUERY
     };
-  });
+    if (filterValue) {
+      query.search = filterValue;
+      query.search_columns = ['name'];
+    }
+    return {
+      authors: getUsers(query),
+      isLoading: isResolving('getUsers', [query])
+    };
+  }, [filterValue]);
+  const options = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return (authors !== null && authors !== void 0 ? authors : []).map(author => {
+      return {
+        value: author.id,
+        label: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(author.name)
+      };
+    });
+  }, [authors]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ComboboxControl, {
     __next40pxDefaultSize: true,
     __nextHasNoMarginBottom: true,
@@ -2241,11 +2258,11 @@ function UserControl({
     help: (0,external_wp_i18n_namespaceObject.__)('Select the avatar user to display, if it is blank it will use the post/page author.'),
     value: value,
     onChange: onChange,
-    options: filteredAuthorsList || options,
-    onFilterValueChange: inputValue => setFilteredAuthorsList(options.filter(option => option.label.toLowerCase().startsWith(inputValue.toLowerCase())))
+    options: options,
+    onFilterValueChange: (0,external_wp_compose_namespaceObject.debounce)(setFilterValue, 300),
+    isLoading: isLoading
   });
 }
-/* harmony default export */ const user_control = (UserControl);
 
 ;// ./packages/block-library/build-module/avatar/edit.js
 /**
@@ -2343,7 +2360,7 @@ const AvatarInspectorControls = ({
         onDeselect: () => setAttributes({
           userId: undefined
         }),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(user_control, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(UserControl, {
           value: attributes?.userId,
           onChange: value => {
             setAttributes({
@@ -6528,8 +6545,6 @@ const category = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(e
 });
 /* harmony default export */ const library_category = (category);
 
-;// external ["wp","htmlEntities"]
-const external_wp_htmlEntities_namespaceObject = window["wp"]["htmlEntities"];
 ;// ./packages/icons/build-module/library/pin.js
 /**
  * WordPress dependencies
