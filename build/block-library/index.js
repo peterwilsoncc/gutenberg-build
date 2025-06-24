@@ -66145,6 +66145,7 @@ const VideoSettings = ({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -66321,11 +66322,32 @@ function TracksEditor({
   tracks = [],
   onChange
 }) {
+  const {
+    createNotice
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   const mediaUpload = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return select(external_wp_blockEditor_namespaceObject.store).getSettings().mediaUpload;
   }, []);
   const [trackBeingEdited, setTrackBeingEdited] = (0,external_wp_element_namespaceObject.useState)(null);
   const dropdownPopoverRef = (0,external_wp_element_namespaceObject.useRef)();
+  const handleTrackSelect = ({
+    title,
+    url
+  }) => {
+    if (tracks.some(track => track.src === url)) {
+      createNotice('error', (0,external_wp_i18n_namespaceObject.__)('This track already exists.'), {
+        isDismissible: true,
+        type: 'snackbar'
+      });
+      return;
+    }
+    const trackIndex = tracks.length;
+    onChange([...tracks, {
+      label: title || '',
+      src: url
+    }]);
+    setTrackBeingEdited(trackIndex);
+  };
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     dropdownPopoverRef.current?.focus();
   }, [trackBeingEdited]);
@@ -66394,15 +66416,7 @@ function TracksEditor({
             className: "block-library-video-tracks-editor__add-tracks-container",
             label: (0,external_wp_i18n_namespaceObject.__)('Add tracks'),
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUpload, {
-              onSelect: ({
-                url
-              }) => {
-                const trackIndex = tracks.length;
-                onChange([...tracks, {
-                  src: url
-                }]);
-                setTrackBeingEdited(trackIndex);
-              },
+              onSelect: handleTrackSelect,
               allowedTypes: ALLOWED_TYPES,
               render: ({
                 open
