@@ -38711,6 +38711,7 @@ const navigation_init = () => initBlock({
 
 
 
+
 const navigation_link_edit_DEFAULT_BLOCK = {
   name: 'core/navigation-link'
 };
@@ -38838,8 +38839,18 @@ function edit_Controls({
     description,
     rel
   } = attributes;
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
     label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+    resetAll: () => {
+      setAttributes({
+        label: '',
+        url: '',
+        description: '',
+        rel: ''
+      });
+    },
+    dropdownMenuProps: dropdownMenuProps,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       hasValue: () => !!label,
       label: (0,external_wp_i18n_namespaceObject.__)('Text'),
