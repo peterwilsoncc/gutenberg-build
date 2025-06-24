@@ -20576,22 +20576,13 @@ function PostAuthorCombobox() {
       author: postAuthorId
     });
   };
-
-  /**
-   * Handle user input.
-   *
-   * @param {string} inputValue The current value of the input field.
-   */
-  const handleKeydown = inputValue => {
-    setFieldValue(inputValue);
-  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ComboboxControl, {
     __nextHasNoMarginBottom: true,
     __next40pxDefaultSize: true,
     label: (0,external_wp_i18n_namespaceObject.__)('Author'),
     options: authorOptions,
     value: authorId,
-    onFilterValueChange: (0,external_wp_compose_namespaceObject.debounce)(handleKeydown, 300),
+    onFilterValueChange: (0,external_wp_compose_namespaceObject.debounce)(setFieldValue, 300),
     onChange: handleSelect,
     allowReset: false,
     hideLabelFromVision: true,
