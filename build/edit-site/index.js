@@ -27327,6 +27327,7 @@ function GlobalStylesUIWrapper() {
 
 
 
+
 const {
   ExperimentalBlockEditorProvider,
   useGlobalStyle: style_book_useGlobalStyle,
@@ -27442,6 +27443,31 @@ function getExamplesForSinglePageUse(examples) {
   });
   examplesForSinglePageUse.push(...otherExamples);
   return examplesForSinglePageUse;
+}
+
+/**
+ * Applies a block variation to each example by updating its attributes.
+ *
+ * @param {Array}  examples  Array of examples
+ * @param {string} variation Block variation name.
+ * @return {Array} Updated examples with variation applied.
+ */
+function applyBlockVariationsToExamples(examples, variation) {
+  if (!variation) {
+    return examples;
+  }
+  return examples.map(example => ({
+    ...example,
+    variation,
+    blocks: {
+      ...example.blocks,
+      attributes: {
+        ...example.blocks.attributes,
+        style: undefined,
+        className: getVariationClassName(variation)
+      }
+    }
+  }));
 }
 function StyleBook({
   enableResizing = true,
@@ -27567,7 +27593,7 @@ const StyleBookPreview = ({
     // '/blocks/core%2Fbuttons'.
     return section === `/blocks/${encodeURIComponent(blockName)}` || section.startsWith(`/blocks/${encodeURIComponent(blockName)}/`);
   };
-  const onSelect = blockName => {
+  const onSelect = (blockName, isBlockVariation = false) => {
     if (STYLE_BOOK_COLOR_GROUPS.find(group => group.slug === blockName)) {
       // Go to color palettes Global Styles.
       onChangeSection('/colors/palette');
@@ -27578,6 +27604,9 @@ const StyleBookPreview = ({
       onChangeSection('/typography');
       return;
     }
+    if (isBlockVariation) {
+      return;
+    }
 
     // Now go to the selected block.
     onChangeSection(`/blocks/${encodeURIComponent(blockName)}`);
@@ -27586,13 +27615,19 @@ const StyleBookPreview = ({
   const examples = getExamples(colors);
   const examplesForSinglePageUse = getExamplesForSinglePageUse(examples);
   let previewCategory = null;
+  let blockVariation = null;
   if (section.includes('/colors')) {
     previewCategory = 'colors';
   } else if (section.includes('/typography')) {
     previewCategory = 'text';
   } else if (section.includes('/blocks')) {
     previewCategory = 'blocks';
-    const blockName = decodeURIComponent(section).split('/blocks/')[1];
+    let blockName = decodeURIComponent(section).split('/blocks/')[1];
+
+    // The blockName can contain variations, if so, extract the variation.
+    if (blockName?.includes('/variations')) {
+      [blockName, blockVariation] = blockName.split('/variations/');
+    }
     if (blockName && examples.find(example => example.name === blockName)) {
       previewCategory = blockName;
     }
@@ -27600,16 +27635,29 @@ const StyleBookPreview = ({
     previewCategory = 'overview';
   }
   const categoryDefinition = STYLE_BOOK_PREVIEW_CATEGORIES.find(category => category.slug === previewCategory);
-
-  // If there's no category definition there may be a single block.
-  const filteredExamples = categoryDefinition ? getExamplesByCategory(categoryDefinition, examples) : {
-    examples: [examples.find(example => example.name === previewCategory)]
-  };
-
-  // If there's no preview category, show all examples.
-  const displayedExamples = previewCategory ? filteredExamples : {
-    examples: examplesForSinglePageUse
-  };
+  const filteredExamples = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    // If there's no category definition there may be a single block.
+    if (!categoryDefinition) {
+      return {
+        examples: [examples.find(example => example.name === previewCategory)]
+      };
+    }
+    return getExamplesByCategory(categoryDefinition, examples);
+  }, [categoryDefinition, examples, previewCategory]);
+  const displayedExamples = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    // If there's no preview category, show all examples.
+    if (!previewCategory) {
+      return {
+        examples: examplesForSinglePageUse
+      };
+    }
+    if (blockVariation) {
+      return {
+        examples: applyBlockVariationsToExamples(filteredExamples.examples, blockVariation)
+      };
+    }
+    return filteredExamples;
+  }, [previewCategory, examplesForSinglePageUse, blockVariation, filteredExamples]);
   const {
     base: baseConfig
   } = (0,external_wp_element_namespaceObject.useContext)(style_book_GlobalStylesContext);
@@ -27734,7 +27782,7 @@ const Examples = (0,external_wp_element_namespaceObject.memo)(({
       content: example.content,
       blocks: example.blocks,
       isSelected: isSelected?.(example.name),
-      onClick: !!onSelect ? () => onSelect(example.name) : null
+      onClick: !!onSelect ? () => onSelect(example.name, !!example.variation) : null
     }, example.name)), !!filteredExamples?.subcategories?.length && filteredExamples.subcategories.map(subcategory => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite.Group, {
       className: "edit-site-style-book__subcategory",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.GroupLabel, {
