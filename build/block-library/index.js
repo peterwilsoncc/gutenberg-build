@@ -45562,7 +45562,8 @@ function PostFeaturedImageEdit({
           setAttributes({
             isLink: false,
             linkTarget: '_self',
-            rel: ''
+            rel: '',
+            sizeSlug: edit_DEFAULT_MEDIA_SIZE_SLUG
           });
         },
         dropdownMenuProps: dropdownMenuProps,
