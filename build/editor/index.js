@@ -32345,29 +32345,46 @@ function usePostActions({
       defaultActions: getEntityActions('postType', postType)
     };
   }, [postType]);
-  const {
-    canManageOptions,
-    hasFrontPageTemplate
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const shouldShowHomepageActions = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    if (postType !== 'page') {
+      return false;
+    }
     const {
-      getEntityRecords,
+      getDefaultTemplateId,
+      getEntityRecord,
       canUser
     } = select(external_wp_coreData_namespaceObject.store);
     const canUpdateSettings = canUser('update', {
       kind: 'root',
       name: 'site'
     });
-    const templates = 'page' === postType && canUpdateSettings ? getEntityRecords('postType', 'wp_template', {
-      per_page: -1
-    }) : [];
-    return {
-      canManageOptions: canUpdateSettings,
-      hasFrontPageTemplate: !!templates?.find(template => template?.slug === 'front-page')
-    };
+    if (!canUpdateSettings) {
+      return false;
+    }
+
+    // Note that resolved template for `front-page` is not necessarily a
+    // `front-page` template.
+    const frontPageTemplateId = getDefaultTemplateId({
+      slug: 'front-page'
+    });
+    if (!frontPageTemplateId) {
+      return true;
+    }
+
+    // This won't trigger a second network request, getDefaultTemplateId
+    // will have received the whole template from the REST API.
+    const frontPageTemplate = getEntityRecord('postType', 'wp_template', frontPageTemplateId);
+    if (!frontPageTemplate) {
+      return true;
+    }
+
+    // When there is a front page template, the front page cannot be
+    // changed. See
+    // https://developer.wordpress.org/themes/basics/template-hierarchy/
+    return frontPageTemplate.slug !== 'front-page';
   }, [postType]);
   const setAsHomepageAction = useSetAsHomepageAction();
   const setAsPostsPageAction = useSetAsPostsPageAction();
-  const shouldShowHomepageActions = canManageOptions && !hasFrontPageTemplate;
   const {
     registerPostTypeSchema
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));
