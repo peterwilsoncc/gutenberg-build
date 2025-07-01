@@ -60,7 +60,7 @@ document.addEventListener('click', async event => {
     } = await Promise.resolve(/* import() */).then(__webpack_require__.bind(__webpack_require__, 438));
     actions.navigate(ref.href);
   }
-}, true);
+});
 // Prefetch on hover.
 document.addEventListener('mouseenter', async event => {
   if (event.target?.nodeName === 'A') {
