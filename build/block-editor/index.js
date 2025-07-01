@@ -24755,7 +24755,6 @@ function InspectorImagePreviewItem({
   toggleProps = {},
   filename,
   label,
-  className,
   onToggleCallback = background_image_control_noop
 }) {
   const {
@@ -24800,9 +24799,7 @@ function InspectorImagePreviewItem({
   };
   return as === 'button' ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     __next40pxDefaultSize: true,
-    className: className,
     ...restToggleProps,
-    "aria-expanded": isOpen,
     children: renderPreviewContent()
   }) : renderPreviewContent();
 }
@@ -24970,7 +24967,6 @@ function BackgroundImageControls({
         })
       },
       name: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorImagePreviewItem, {
-        className: "block-editor-global-styles-background-panel__image-preview",
         imgUrl: url,
         filename: title,
         label: imgLabel
