@@ -239,22 +239,16 @@ function DefaultErrorResponsePlaceholder({
   });
 }
 function DefaultLoadingResponsePlaceholder({
-  children,
-  isLoading
+  children
 }) {
   const [showLoader, setShowLoader] = (0,external_wp_element_namespaceObject.useState)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (!isLoading) {
-      setShowLoader(false);
-      return;
-    }
-
     // Schedule showing the Spinner after 1 second.
     const timeout = setTimeout(() => {
       setShowLoader(true);
     }, 1000);
     return () => clearTimeout(timeout);
-  }, [isLoading]);
+  }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     style: {
       position: 'relative'
@@ -368,7 +362,6 @@ function ServerSideRender(props) {
   if (isLoading) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LoadingResponsePlaceholder, {
       ...props,
-      isLoading: isLoading,
       children: hasResponse && !hasError && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.RawHTML, {
         className: className,
         children: response
