@@ -38852,7 +38852,8 @@ function edit_Controls({
     label,
     url,
     description,
-    rel
+    rel,
+    opensInNewTab
   } = attributes;
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
@@ -38906,6 +38907,21 @@ function edit_Controls({
         },
         autoComplete: "off",
         type: "url"
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      hasValue: () => !!opensInNewTab,
+      label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
+      onDeselect: () => setAttributes({
+        opensInNewTab: false
+      }),
+      isShownByDefault: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
+        checked: opensInNewTab,
+        onChange: value => setAttributes({
+          opensInNewTab: value
+        })
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       hasValue: () => !!description,
@@ -42499,16 +42515,81 @@ const postAuthor = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 
 
 
+
+
+
 /**
  * Internal dependencies
  */
 
 
-const minimumUsersForCombobox = 25;
 const edit_AUTHORS_QUERY = {
   who: 'authors',
-  per_page: 100
+  per_page: 100,
+  _fields: 'id,name',
+  context: 'view'
 };
+function AuthorCombobox({
+  value,
+  onChange
+}) {
+  const [filterValue, setFilterValue] = (0,external_wp_element_namespaceObject.useState)('');
+  const {
+    authors,
+    isLoading
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getUsers,
+      isResolving
+    } = select(external_wp_coreData_namespaceObject.store);
+    const query = {
+      ...edit_AUTHORS_QUERY
+    };
+    if (filterValue) {
+      query.search = filterValue;
+      query.search_columns = ['name'];
+    }
+    return {
+      authors: getUsers(query),
+      isLoading: isResolving('getUsers', [query])
+    };
+  }, [filterValue]);
+  const authorOptions = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    const fetchedAuthors = (authors !== null && authors !== void 0 ? authors : []).map(author => {
+      return {
+        value: author.id,
+        label: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(author.name)
+      };
+    });
+
+    // Ensure the current author is included in the list.
+    const foundAuthor = fetchedAuthors.findIndex(fetchedAuthor => value?.id === fetchedAuthor.value);
+    let currentAuthor = [];
+    if (foundAuthor < 0 && value) {
+      currentAuthor = [{
+        value: value.id,
+        label: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(value.name)
+      }];
+    } else if (foundAuthor < 0 && !value) {
+      currentAuthor = [{
+        value: 0,
+        label: (0,external_wp_i18n_namespaceObject.__)('(No author)')
+      }];
+    }
+    return [...currentAuthor, ...fetchedAuthors];
+  }, [authors, value]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ComboboxControl, {
+    __next40pxDefaultSize: true,
+    __nextHasNoMarginBottom: true,
+    label: (0,external_wp_i18n_namespaceObject.__)('Author'),
+    options: authorOptions,
+    value: value?.id,
+    onFilterValueChange: (0,external_wp_compose_namespaceObject.debounce)(setFilterValue, 300),
+    onChange: onChange,
+    allowReset: false,
+    isLoading: isLoading
+  });
+}
 function PostAuthorEdit({
   isSelected,
   context: {
@@ -42522,24 +42603,24 @@ function PostAuthorEdit({
   const isDescendentOfQueryLoop = Number.isFinite(queryId);
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const {
-    authorId,
     authorDetails,
-    authors,
+    canAssignAuthor,
     supportsAuthor
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _getPostType$supports;
     const {
       getEditedEntityRecord,
       getUser,
-      getUsers,
       getPostType
     } = select(external_wp_coreData_namespaceObject.store);
-    const _authorId = getEditedEntityRecord('postType', postType, postId)?.author;
+    const currentPost = getEditedEntityRecord('postType', postType, postId);
+    const authorId = currentPost?.author;
     return {
-      authorId: _authorId,
-      authorDetails: _authorId ? getUser(_authorId) : null,
-      authors: getUsers(edit_AUTHORS_QUERY),
-      supportsAuthor: (_getPostType$supports = getPostType(postType)?.supports?.author) !== null && _getPostType$supports !== void 0 ? _getPostType$supports : false
+      authorDetails: authorId ? getUser(authorId, {
+        context: 'view'
+      }) : null,
+      supportsAuthor: (_getPostType$supports = getPostType(postType)?.supports?.author) !== null && _getPostType$supports !== void 0 ? _getPostType$supports : false,
+      canAssignAuthor: currentPost?._links?.['wp:action-assign-author'] ? true : false
     };
   }, [postType, postId]);
   const {
@@ -42569,22 +42650,12 @@ function PostAuthorEdit({
       [`has-text-align-${textAlign}`]: textAlign
     })
   });
-  const authorOptions = authors?.length ? authors.map(({
-    id,
-    name
-  }) => {
-    return {
-      value: id,
-      label: name
-    };
-  }) : [];
   const handleSelect = nextAuthorId => {
     editEntityRecord('postType', postType, postId, {
       author: nextAuthorId
     });
   };
-  const showCombobox = authorOptions.length >= minimumUsersForCombobox;
-  const showAuthorControl = !!postId && !isDescendentOfQueryLoop && authorOptions.length > 0;
+  const showAuthorControl = !!postId && !isDescendentOfQueryLoop && canAssignAuthor;
   if (!supportsAuthor && postType !== undefined) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
@@ -42610,20 +42681,8 @@ function PostAuthorEdit({
           style: {
             gridColumn: '1 / -1'
           },
-          children: showCombobox && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ComboboxControl, {
-            __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Author'),
-            options: authorOptions,
-            value: authorId,
-            onChange: handleSelect,
-            allowReset: false
-          }) || /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-            __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Author'),
-            value: authorId,
-            options: authorOptions,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AuthorCombobox, {
+            value: authorDetails,
             onChange: handleSelect
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
@@ -45519,7 +45578,8 @@ function PostFeaturedImageEdit({
           setAttributes({
             isLink: false,
             linkTarget: '_self',
-            rel: ''
+            rel: '',
+            sizeSlug: edit_DEFAULT_MEDIA_SIZE_SLUG
           });
         },
         dropdownMenuProps: dropdownMenuProps,
@@ -55971,7 +56031,7 @@ const siteLogo = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(e
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M12 3c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9zm0 1.5c4.1 0 7.5 3.4 7.5 7.5v.1c-1.4-.8-3.3-1.7-3.4-1.8-.2-.1-.5-.1-.8.1l-2.9 2.1L9 11.3c-.2-.1-.4 0-.6.1l-3.7 2.2c-.1-.5-.2-1-.2-1.5 0-4.2 3.4-7.6 7.5-7.6zm0 15c-3.1 0-5.7-1.9-6.9-4.5l3.7-2.2 3.5 1.2c.2.1.5 0 .7-.1l2.9-2.1c.8.4 2.5 1.2 3.5 1.9-.9 3.3-3.9 5.8-7.4 5.8z"
+    d: "M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8Zm0 1.5c3.4 0 6.2 2.7 6.5 6l-1.2-.6-.8-.4c-.1 0-.2 0-.3-.1H16c-.1-.2-.4-.2-.7 0l-2.9 2.1L9 11.3h-.7L5.5 13v-1.1c0-3.6 2.9-6.5 6.5-6.5Zm0 13c-2.7 0-5-1.7-6-4l2.8-1.7 3.5 1.2h.4s.2 0 .4-.2l2.9-2.1.4.2c.6.3 1.4.7 2.1 1.1-.5 3.1-3.2 5.4-6.4 5.4Z"
   })
 });
 /* harmony default export */ const site_logo = (siteLogo);
