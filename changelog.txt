@@ -1,15 +1,8 @@
 == Changelog ==
 
-= 21.1.0-rc.1 =
-
+= 21.1.0 =
 
 ## Changelog
-
-### Features
-
-#### Interactivity API
-- iAPI Router: Add support for new router regions with `attachTo`. ([70421](https://github.com/WordPress/gutenberg/pull/70421))
-
 
 ### Enhancements
 
@@ -25,6 +18,7 @@
 - [ Experimental Form ]: Add example block previews. ([70436](https://github.com/WordPress/gutenberg/pull/70436))
 
 #### Interactivity API
+- iAPI Router: Add support for new router regions with `attachTo`. ([70421](https://github.com/WordPress/gutenberg/pull/70421))
 - iAPI Router: Support new styles and script modules on client-side navigation. ([70353](https://github.com/WordPress/gutenberg/pull/70353))
 - iAPI: Export `NavigateOptions` and `PrefetchOptions` types. ([70315](https://github.com/WordPress/gutenberg/pull/70315))
 - iAPI: Introduce `AsyncAction` and `TypeYield` type helpers. ([70422](https://github.com/WordPress/gutenberg/pull/70422))
@@ -159,6 +153,8 @@ The following PRs were merged by first-time contributors:
 The following contributors merged PRs in this release:
 
 @alejandrogonzalvo @BugReportOnWeb @DAreRodz @dd32 @ellatrix @himanshupathak95 @iamsandeepdahiya @im3dabasia @Infinite-Null @jsnajdr @karthikeya-io @kushagra-goyal-14 @Maikuolan @Mamaduka @Mayank-Tripathi32 @NidhiDhandhukiya74 @peterwilsoncc @ramonjd @Rishit30G @SainathPoojary @SantosGuillamot @shimotmk @shrivastavanolo @t-hamano @talldan @USERSATOSHI @vk17-starlord @Vrishabhsk @westonruter @yashjawale @yogeshbhutkar
+
+
 
 
 = 21.0.0 =
