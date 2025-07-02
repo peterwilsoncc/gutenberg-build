@@ -62950,6 +62950,7 @@ function BlockLockModal({
     (0,external_wp_i18n_namespaceObject.__)('Lock %s'), blockInformation.title),
     overlayClassName: "block-editor-block-lock-modal",
     onRequestClose: onClose,
+    size: "small",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("form", {
       onSubmit: event => {
         event.preventDefault();
