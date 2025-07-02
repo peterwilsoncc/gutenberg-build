@@ -33294,7 +33294,7 @@ function getDefaultUseItems(autocompleter) {
   };
 }
 
-;// ./packages/components/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.esm.js
+;// ./node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
 
 
 
@@ -33307,7 +33307,7 @@ function getDefaultUseItems(autocompleter) {
  * This wraps the core `arrow` middleware to allow React refs as the element.
  * @see https://floating-ui.com/docs/arrow
  */
-const floating_ui_react_dom_esm_arrow = options => {
+const floating_ui_react_dom_arrow = options => {
   function isRef(value) {
     return {}.hasOwnProperty.call(value, 'current');
   }
@@ -33327,7 +33327,8 @@ const floating_ui_react_dom_esm_arrow = options => {
           }).fn(state);
         }
         return {};
-      } else if (element) {
+      }
+      if (element) {
         return floating_ui_dom_arrow({
           element,
           padding
@@ -33352,11 +33353,13 @@ function deepEqual(a, b) {
   if (typeof a === 'function' && a.toString() === b.toString()) {
     return true;
   }
-  let length, i, keys;
-  if (a && b && typeof a == 'object') {
+  let length;
+  let i;
+  let keys;
+  if (a && b && typeof a === 'object') {
     if (Array.isArray(a)) {
       length = a.length;
-      if (length != b.length) return false;
+      if (length !== b.length) return false;
       for (i = length; i-- !== 0;) {
         if (!deepEqual(a[i], b[i])) {
           return false;
@@ -33385,6 +33388,8 @@ function deepEqual(a, b) {
     }
     return true;
   }
+
+  // biome-ignore lint/suspicious/noSelfCompare: in source
   return a !== a && b !== b;
 }
 
@@ -33396,7 +33401,7 @@ function getDPR(element) {
   return win.devicePixelRatio || 1;
 }
 
-function floating_ui_react_dom_esm_roundByDPR(element, value) {
+function floating_ui_react_dom_roundByDPR(element, value) {
   const dpr = getDPR(element);
   return Math.round(value * dpr) / dpr;
 }
@@ -33411,7 +33416,7 @@ function useLatestRef(value) {
 
 /**
  * Provides data to position a floating element.
- * @see https://floating-ui.com/docs/react
+ * @see https://floating-ui.com/docs/useFloating
  */
 function useFloating(options) {
   if (options === void 0) {
@@ -33445,22 +33450,23 @@ function useFloating(options) {
   const [_reference, _setReference] = external_React_.useState(null);
   const [_floating, _setFloating] = external_React_.useState(null);
   const setReference = external_React_.useCallback(node => {
-    if (node != referenceRef.current) {
+    if (node !== referenceRef.current) {
       referenceRef.current = node;
       _setReference(node);
     }
-  }, [_setReference]);
+  }, []);
   const setFloating = external_React_.useCallback(node => {
     if (node !== floatingRef.current) {
       floatingRef.current = node;
       _setFloating(node);
     }
-  }, [_setFloating]);
+  }, []);
   const referenceEl = externalReference || _reference;
   const floatingEl = externalFloating || _floating;
   const referenceRef = external_React_.useRef(null);
   const floatingRef = external_React_.useRef(null);
   const dataRef = external_React_.useRef(data);
+  const hasWhileElementsMounted = whileElementsMounted != null;
   const whileElementsMountedRef = useLatestRef(whileElementsMounted);
   const platformRef = useLatestRef(platform);
   const update = external_React_.useCallback(() => {
@@ -33504,17 +33510,18 @@ function useFloating(options) {
       isMountedRef.current = false;
     };
   }, []);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `hasWhileElementsMounted` is intentionally included.
   index(() => {
     if (referenceEl) referenceRef.current = referenceEl;
     if (floatingEl) floatingRef.current = floatingEl;
     if (referenceEl && floatingEl) {
       if (whileElementsMountedRef.current) {
         return whileElementsMountedRef.current(referenceEl, floatingEl, update);
-      } else {
-        update();
       }
+      update();
     }
-  }, [referenceEl, floatingEl, update, whileElementsMountedRef]);
+  }, [referenceEl, floatingEl, update, whileElementsMountedRef, hasWhileElementsMounted]);
   const refs = external_React_.useMemo(() => ({
     reference: referenceRef,
     floating: floatingRef,
@@ -33534,8 +33541,8 @@ function useFloating(options) {
     if (!elements.floating) {
       return initialStyles;
     }
-    const x = floating_ui_react_dom_esm_roundByDPR(elements.floating, data.x);
-    const y = floating_ui_react_dom_esm_roundByDPR(elements.floating, data.y);
+    const x = floating_ui_react_dom_roundByDPR(elements.floating, data.x);
+    const y = floating_ui_react_dom_roundByDPR(elements.floating, data.y);
     if (transform) {
       return {
         ...initialStyles,
@@ -34542,7 +34549,7 @@ const UnforwardedPopover = (props, forwardedRef) => {
     crossAxis: true,
     limiter: floating_ui_dom_limitShift(),
     padding: 1 // Necessary to avoid flickering at the edge of the viewport.
-  }), floating_ui_react_dom_esm_arrow({
+  }), floating_ui_react_dom_arrow({
     element: arrowRef
   })];
   const slotName = (0,external_wp_element_namespaceObject.useContext)(slotNameContext) || __unstableSlotName;
