@@ -5525,8 +5525,8 @@ const viewPostRevisions = {
   label(items) {
     var _items$0$_links$versi;
     const revisionsCount = (_items$0$_links$versi = items[0]._links?.['version-history']?.[0]?.count) !== null && _items$0$_links$versi !== void 0 ? _items$0$_links$versi : 0;
-    return (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: number of revisions. */
-    (0,external_wp_i18n_namespaceObject.__)('View revisions (%s)'), revisionsCount);
+    return (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of revisions. */
+    (0,external_wp_i18n_namespaceObject.__)('View revisions (%d)'), revisionsCount);
   },
   isEligible(post) {
     var _post$_links$predeces, _post$_links$version;
@@ -7163,7 +7163,7 @@ function PanelDropdown({
       "aria-expanded": isOpen,
       "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: %s: Field name.
-      (0,external_wp_i18n_namespaceObject._x)('Edit %s', 'field'), fieldLabel),
+      (0,external_wp_i18n_namespaceObject._x)('Edit %s', 'field'), fieldLabel || ''),
       onClick: onToggle,
       disabled: fieldDefinition.readOnly === true,
       accessibleWhenDisabled: true,
@@ -9197,8 +9197,8 @@ const resetPostAction = {
           });
           await saveEditedEntityRecord('postType', template.type, template.id);
         }
-        createSuccessNotice(items.length > 1 ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The number of items. */
-        (0,external_wp_i18n_namespaceObject.__)('%s items reset.'), items.length) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The template/part's name. */
+        createSuccessNotice(items.length > 1 ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: The number of items. */
+        (0,external_wp_i18n_namespaceObject.__)('%d items reset.'), items.length) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The template/part's name. */
         (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), getItemTitle(items[0])), {
           type: 'snackbar',
           id: 'revert-template-action'
@@ -9609,8 +9609,8 @@ const trash_post_trashPost = {
                 successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The item's title. */
                 (0,external_wp_i18n_namespaceObject.__)('"%s" moved to the trash.'), getItemTitle(items[0]));
               } else {
-                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The number of items. */
-                (0,external_wp_i18n_namespaceObject._n)('%s item moved to the trash.', '%s items moved to the trash.', items.length), items.length);
+                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: The number of items. */
+                (0,external_wp_i18n_namespaceObject._n)('%d item moved to the trash.', '%d items moved to the trash.', items.length), items.length);
               }
               createSuccessNotice(successMessage, {
                 type: 'snackbar',

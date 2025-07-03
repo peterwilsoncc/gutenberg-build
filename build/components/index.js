@@ -42897,14 +42897,14 @@ function BoxInputControl({
     value: 0,
     label: '',
     tooltip: (0,external_wp_i18n_namespaceObject.__)('None')
-  }].concat(presets.map((preset, index) => {
+  }, ...presets.map((preset, index) => {
     var _preset$name;
     return {
       value: index + 1,
       label: '',
       tooltip: (_preset$name = preset.name) !== null && _preset$name !== void 0 ? _preset$name : preset.slug
     };
-  })) : [];
+  })] : [];
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(InputWrapper, {
     expanded: true,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FlexedBoxControlIcon, {
@@ -44962,7 +44962,7 @@ function ControlPointButton({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
       "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: 1: gradient position e.g: 70. 2: gradient color code e.g: rgb(52,121,151).
-      (0,external_wp_i18n_namespaceObject.__)('Gradient control point at position %1$s%% with color code %2$s.'), position, color),
+      (0,external_wp_i18n_namespaceObject.__)('Gradient control point at position %1$d%% with color code %2$s.'), position, color),
       "aria-describedby": descriptionId,
       "aria-haspopup": "true",
       "aria-expanded": isOpen,
@@ -46602,8 +46602,8 @@ function getNameAndSlugForPosition(elements, slugPrefix) {
     return previousValue;
   }, 1);
   return {
-    name: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: is an id for a custom color */
-    (0,external_wp_i18n_namespaceObject.__)('Color %s'), position),
+    name: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: is an id for a custom color */
+    (0,external_wp_i18n_namespaceObject.__)('Color %d'), position),
     slug: `${slugPrefix}color-${position}`
   };
 }
@@ -46684,7 +46684,7 @@ function palette_edit_Option({
         },
         "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(
         // translators: %s is a color or gradient name, e.g. "Red".
-        (0,external_wp_i18n_namespaceObject.__)('Edit: %s'), element.name.trim().length ? element.name : value),
+        (0,external_wp_i18n_namespaceObject.__)('Edit: %s'), element.name.trim().length ? element.name : value || ''),
         style: {
           padding: 0
         },
@@ -46710,7 +46710,7 @@ function palette_edit_Option({
           icon: line_solid,
           label: (0,external_wp_i18n_namespaceObject.sprintf)(
           // translators: %s is a color or gradient name, e.g. "Red".
-          (0,external_wp_i18n_namespaceObject.__)('Remove color: %s'), element.name.trim().length ? element.name : value),
+          (0,external_wp_i18n_namespaceObject.__)('Remove color: %s'), element.name.trim().length ? element.name : value || ''),
           onClick: onRemove
         })
       })]
@@ -49840,9 +49840,9 @@ function defaultRenderSelectedValue(value) {
     return (0,external_wp_i18n_namespaceObject.__)('Select an item');
   }
   if (Array.isArray(value)) {
-    return value.length === 1 ? value[0] :
-    // translators: %s: number of items selected (it will always be 2 or more items)
-    (0,external_wp_i18n_namespaceObject.sprintf)((0,external_wp_i18n_namespaceObject.__)('%s items selected'), value.length);
+    return value.length === 1 ? value[0] : (0,external_wp_i18n_namespaceObject.sprintf)(
+    // translators: %d: number of items selected (it will always be 2 or more items)
+    (0,external_wp_i18n_namespaceObject._n)('%d item selected', '%d items selected', value.length), value.length);
   }
   return value;
 }
@@ -57932,7 +57932,7 @@ function Token({
   });
   const transformedValue = displayTransform(value);
   const termPositionAndCount = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: term name, 2: term position in a set of terms, 3: total term set count. */
-  (0,external_wp_i18n_namespaceObject.__)('%1$s (%2$s of %3$s)'), transformedValue, termPosition, termsCount);
+  (0,external_wp_i18n_namespaceObject.__)('%1$s (%2$d of %3$d)'), transformedValue, termPosition, termsCount);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
     className: tokenClasses,
     onMouseEnter: onMouseEnter,
@@ -60307,7 +60307,7 @@ function MenuTitleSearch({
   };
   const inputId = `components-navigation__menu-title-search-${menu}`;
   const placeholder = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: placeholder for menu search box. %s: menu title */
-  (0,external_wp_i18n_namespaceObject.__)('Search %s'), title?.toLowerCase()).trim();
+  (0,external_wp_i18n_namespaceObject.__)('Search %s'), title?.toLowerCase() || '').trim();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MenuTitleSearchControlWrapper, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(search_control, {
       __nextHasNoMarginBottom: true,

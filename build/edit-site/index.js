@@ -42138,8 +42138,8 @@ function DataViewsPagination() {
       value: page.toString(),
       label: page.toString(),
       'aria-label': currentPage === page ? (0,external_wp_i18n_namespaceObject.sprintf)(
-      // translators: Current page number in total number of pages
-      (0,external_wp_i18n_namespaceObject.__)('Page %1$s of %2$s'), currentPage, totalPages) : page.toString()
+      // translators: 1: current page number. 2: total number of pages.
+      (0,external_wp_i18n_namespaceObject.__)('Page %1$d of %2$d'), currentPage, totalPages) : page.toString()
     };
   });
   return !!totalItems && totalPages !== 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -42154,7 +42154,7 @@ function DataViewsPagination() {
       className: "dataviews-pagination__page-select",
       children: (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: 1: Current page number, 2: Total number of pages.
-      (0,external_wp_i18n_namespaceObject._x)('<div>Page</div>%1$s<div>of %2$s</div>', 'paging'), '<CurrentPage />', totalPages), {
+      (0,external_wp_i18n_namespaceObject._x)('<div>Page</div>%1$s<div>of %2$d</div>', 'paging'), '<CurrentPage />', totalPages), {
         div: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           "aria-hidden": true
         }),
@@ -48043,7 +48043,7 @@ function PanelDropdown({
       "aria-expanded": isOpen,
       "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: %s: Field name.
-      (0,external_wp_i18n_namespaceObject._x)('Edit %s', 'field'), fieldLabel),
+      (0,external_wp_i18n_namespaceObject._x)('Edit %s', 'field'), fieldLabel || ''),
       onClick: onToggle,
       disabled: fieldDefinition.readOnly === true,
       accessibleWhenDisabled: true,
