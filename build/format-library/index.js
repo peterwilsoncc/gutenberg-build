@@ -190,6 +190,21 @@ const external_wp_element_namespaceObject = window["wp"]["element"];
 const ALLOWED_MEDIA_TYPES = ['image'];
 const image_name = 'core/image';
 const image_title = (0,external_wp_i18n_namespaceObject.__)('Inline image');
+
+/**
+ * Extracts the image ID from the className attribute.
+ *
+ * @param {Object} activeObjectAttributes The attributes of the active object.
+ * @return {number|undefined} The extracted image ID or undefined if not found.
+ */
+function getCurrentImageId(activeObjectAttributes) {
+  var _activeObjectAttribut;
+  if (!activeObjectAttributes?.className) {
+    return undefined;
+  }
+  const [, id] = (_activeObjectAttribut = activeObjectAttributes.className.match(/wp-image-(\d+)/)) !== null && _activeObjectAttribut !== void 0 ? _activeObjectAttribut : [];
+  return id ? parseInt(id, 10) : undefined;
+}
 const image_image = {
   name: image_name,
   title: image_title,
@@ -297,6 +312,7 @@ function Edit({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.MediaUploadCheck, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUpload, {
       allowedTypes: ALLOWED_MEDIA_TYPES,
+      value: getCurrentImageId(activeObjectAttributes),
       onSelect: ({
         id,
         url,
@@ -324,7 +340,7 @@ function Edit({
             d: "M4 18.5h16V17H4v1.5zM16 13v1.5h4V13h-4zM5.1 15h7.8c.6 0 1.1-.5 1.1-1.1V6.1c0-.6-.5-1.1-1.1-1.1H5.1C4.5 5 4 5.5 4 6.1v7.8c0 .6.5 1.1 1.1 1.1zm.4-8.5h7V10l-1-1c-.3-.3-.8-.3-1 0l-1.6 1.5-1.2-.7c-.3-.2-.6-.2-.9 0l-1.3 1V6.5zm0 6.1l1.8-1.3 1.3.8c.3.2.7.2.9-.1l1.5-1.4 1.5 1.4v1.5h-7v-.9z"
           })
         }),
-        title: image_title,
+        title: isObjectActive ? (0,external_wp_i18n_namespaceObject.__)('Replace image') : image_title,
         onClick: open,
         isActive: isObjectActive
       })
