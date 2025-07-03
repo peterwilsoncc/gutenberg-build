@@ -5348,7 +5348,7 @@ function WidthPanel({
         children: [25, 50, 75, 100].map(widthValue => {
           return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
             value: widthValue,
-            label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: Percentage value. */
+            label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: Percentage value. */
             (0,external_wp_i18n_namespaceObject.__)('%d%%'), widthValue)
           }, widthValue);
         })
@@ -9438,7 +9438,7 @@ const CommentsForm = ({
       });
     } else if (!postTypeSupportsComments) {
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.Warning, {
-        children: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Post type (i.e. "post", "page") */
+        children: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Post type (i.e. "post", "page") */
         (0,external_wp_i18n_namespaceObject.__)('Post Comments Form block: Comments are not enabled for this post type (%s).'), postType)
       });
     } else if ('open' !== defaultCommentStatus) {
@@ -16956,7 +16956,7 @@ const details_settings = {
       return customName || summary;
     }
     if (context === 'accessibility') {
-      return !hasSummary ? (0,external_wp_i18n_namespaceObject.__)('Details. Empty.') : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: accessibility text; summary title. */
+      return !hasSummary ? (0,external_wp_i18n_namespaceObject.__)('Details. Empty.') : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: accessibility text; summary title. */
       (0,external_wp_i18n_namespaceObject.__)('Details. %s'), summary);
     }
   },
@@ -55311,7 +55311,7 @@ function SearchEdit({
               children: PERCENTAGE_WIDTHS.map(widthValue => {
                 return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
                   value: widthValue,
-                  label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: Percentage value. */
+                  label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: Percentage value. */
                   (0,external_wp_i18n_namespaceObject.__)('%d%%'), widthValue)
                 }, widthValue);
               })

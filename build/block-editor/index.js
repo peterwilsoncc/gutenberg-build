@@ -50087,11 +50087,11 @@ function useNotifyCopy() {
       const title = getBlockType(getBlockName(clientId))?.title;
       if (eventType === 'copy') {
         notice = (0,external_wp_i18n_namespaceObject.sprintf)(
-        // Translators: Name of the block being copied, e.g. "Paragraph".
+        // Translators: %s: Name of the block being copied, e.g. "Paragraph".
         (0,external_wp_i18n_namespaceObject.__)('Copied "%s" to clipboard.'), title);
       } else {
         notice = (0,external_wp_i18n_namespaceObject.sprintf)(
-        // Translators: Name of the block being cut, e.g. "Paragraph".
+        // Translators: %s: Name of the block being cut, e.g. "Paragraph".
         (0,external_wp_i18n_namespaceObject.__)('Moved "%s" to clipboard.'), title);
       }
     } else if (eventType === 'copy') {
@@ -62466,13 +62466,13 @@ function usePasteStyles() {
     if (targetBlocks.length === 1) {
       const title = (0,external_wp_blocks_namespaceObject.getBlockType)(targetBlocks[0].name)?.title;
       createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
-      // Translators: Name of the block being pasted, e.g. "Paragraph".
+      // Translators: %s: Name of the block being pasted, e.g. "Paragraph".
       (0,external_wp_i18n_namespaceObject.__)('Pasted styles to %s.'), title), {
         type: 'snackbar'
       });
     } else {
       createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
-      // Translators: The number of the blocks.
+      // Translators: %d: The number of the blocks.
       (0,external_wp_i18n_namespaceObject.__)('Pasted styles to %d blocks.'), targetBlocks.length), {
         type: 'snackbar'
       });
@@ -72171,7 +72171,7 @@ function ImageSizeControl({
         children: IMAGE_SIZE_PRESETS.map(scale => {
           return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
             value: scale,
-            label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: Percentage value. */
+            label: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: Percentage value. */
             (0,external_wp_i18n_namespaceObject.__)('%d%%'), scale)
           }, scale);
         })

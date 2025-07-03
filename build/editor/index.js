@@ -8991,13 +8991,13 @@ const restorePost = {
     }) => status === 'fulfilled')) {
       let successMessage;
       if (posts.length === 1) {
-        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The number of posts. */
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: The number of posts. */
         (0,external_wp_i18n_namespaceObject.__)('"%s" has been restored.'), getItemTitle(posts[0]));
       } else if (posts[0].type === 'page') {
-        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The number of posts. */
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: The number of posts. */
         (0,external_wp_i18n_namespaceObject.__)('%d pages have been restored.'), posts.length);
       } else {
-        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The number of posts. */
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: The number of posts. */
         (0,external_wp_i18n_namespaceObject.__)('%d posts have been restored.'), posts.length);
       }
       createSuccessNotice(successMessage, {
@@ -9198,7 +9198,7 @@ const resetPostAction = {
           await saveEditedEntityRecord('postType', template.type, template.id);
         }
         createSuccessNotice(items.length > 1 ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: The number of items. */
-        (0,external_wp_i18n_namespaceObject.__)('%d items reset.'), items.length) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The template/part's name. */
+        (0,external_wp_i18n_namespaceObject.__)('%d items reset.'), items.length) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: The template/part's name. */
         (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), getItemTitle(items[0])), {
           type: 'snackbar',
           id: 'revert-template-action'
@@ -9477,7 +9477,7 @@ const deletePostAction = {
               success: {
                 messages: {
                   getMessage: item => {
-                    return isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The template/part's name. */
+                    return isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: The template/part's name. */
                     (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(getItemTitle(item))) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: The template/part's name. */
                     (0,external_wp_i18n_namespaceObject._x)('"%s" deleted.', 'template part'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(getItemTitle(item)));
                   },
@@ -9606,7 +9606,7 @@ const trash_post_trashPost = {
             }) => status === 'fulfilled')) {
               let successMessage;
               if (promiseResult.length === 1) {
-                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The item's title. */
+                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: The item's title. */
                 (0,external_wp_i18n_namespaceObject.__)('"%s" moved to the trash.'), getItemTitle(items[0]));
               } else {
                 successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: The number of items. */
@@ -9755,7 +9755,7 @@ const permanentlyDeletePost = {
             }) => status === 'fulfilled')) {
               let successMessage;
               if (promiseResult.length === 1) {
-                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The posts's title. */
+                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: The posts's title. */
                 (0,external_wp_i18n_namespaceObject.__)('"%s" permanently deleted.'), getItemTitle(items[0]));
               } else {
                 successMessage = (0,external_wp_i18n_namespaceObject.__)('The items were permanently deleted.');
@@ -11555,7 +11555,7 @@ const getOpenverseCaption = item => {
   let _caption;
   if (_creator) {
     _caption = title ? (0,external_wp_i18n_namespaceObject.sprintf)(
-    // translators: %1s: Title of a media work from Openverse; %2s: Name of the work's creator; %3s: Work's licence e.g: "CC0 1.0".
+    // translators: %1s: Title of a media work from Openverse; %2$s: Name of the work's creator; %3s: Work's licence e.g: "CC0 1.0".
     (0,external_wp_i18n_namespaceObject._x)('"%1$s" by %2$s/ %3$s', 'caption'), getExternalLink(foreignLandingUrl, (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title)), creatorUrl ? getExternalLink(creatorUrl, _creator) : _creator, licenseUrl ? getExternalLink(`${licenseUrl}?ref=openverse`, fullLicense) : fullLicense) : (0,external_wp_i18n_namespaceObject.sprintf)(
     // translators: %1s: Link attributes for a given Openverse media work; %2s: Name of the work's creator; %3s: Works's licence e.g: "CC0 1.0".
     (0,external_wp_i18n_namespaceObject._x)('<a %1$s>Work</a> by %2$s/ %3$s', 'caption'), getExternalLinkAttributes(foreignLandingUrl), creatorUrl ? getExternalLink(creatorUrl, _creator) : _creator, licenseUrl ? getExternalLink(`${licenseUrl}?ref=openverse`, fullLicense) : fullLicense);
@@ -16599,7 +16599,7 @@ const removeTemplates = items => async ({
       } else if (typeof items[0].title?.raw === 'string') {
         title = items[0].title?.raw;
       }
-      successMessage = isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The template/part's name. */
+      successMessage = isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: The template/part's name. */
       (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title)) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: The template/part's name. */
       (0,external_wp_i18n_namespaceObject._x)('"%s" deleted.', 'template part'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title));
     } else {
@@ -25345,7 +25345,7 @@ function PostFormatPanel() {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostFormatSuggestion, {
         onUpdatePostFormat: onUpdatePostFormat,
         suggestedPostFormat: suggestion.id,
-        suggestionText: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: post format */
+        suggestionText: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %1s: post format */
         (0,external_wp_i18n_namespaceObject.__)('Apply the "%1$s" format.'), suggestion.caption)
       })
     })]
@@ -29696,7 +29696,7 @@ function Thread({
       children: [!isFocused && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
         className: "editor-collab-sidebar-panel__show-more-reply",
         children: (0,external_wp_i18n_namespaceObject.sprintf)(
-        // translators: 1: number of replies.
+        // translators: %s: number of replies.
         (0,external_wp_i18n_namespaceObject._x)('%s more replies..', 'Show replies button'), thread?.reply?.length)
       }), isFocused && thread.reply.map(reply => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
         className: "editor-collab-sidebar-panel__child-thread",

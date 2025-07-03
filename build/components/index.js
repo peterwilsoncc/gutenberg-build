@@ -54813,7 +54813,7 @@ function getDayLabel(date, isSelected, numEvents) {
     (0,external_wp_i18n_namespaceObject._n)('%1$s. Selected. There is %2$d event', '%1$s. Selected. There are %2$d events', numEvents), localizedDate, numEvents);
   } else if (isSelected) {
     return (0,external_wp_i18n_namespaceObject.sprintf)(
-    // translators: %s: The calendar date.
+    // translators: 1: The calendar date.
     (0,external_wp_i18n_namespaceObject.__)('%1$s. Selected'), localizedDate);
   } else if (numEvents > 0) {
     return (0,external_wp_i18n_namespaceObject.sprintf)(

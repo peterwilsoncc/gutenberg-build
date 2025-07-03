@@ -39325,27 +39325,27 @@ const FilterText = ({
     })
   };
   if (filterInView?.operator === constants_OPERATOR_IS_ANY) {
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 3: Filter value. e.g.: "Author is any: Admin, Editor". */
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Author is any: Admin, Editor". */
     (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is any: </Name><Value>%2$s</Value>'), filter.name, activeElements.map(element => element.label).join(', ')), filterTextWrappers);
   }
   if (filterInView?.operator === constants_OPERATOR_IS_NONE) {
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 3: Filter value. e.g.: "Author is none: Admin, Editor". */
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Author is none: Admin, Editor". */
     (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is none: </Name><Value>%2$s</Value>'), filter.name, activeElements.map(element => element.label).join(', ')), filterTextWrappers);
   }
   if (filterInView?.operator === OPERATOR_IS_ALL) {
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 3: Filter value. e.g.: "Author is all: Admin, Editor". */
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Author is all: Admin, Editor". */
     (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is all: </Name><Value>%2$s</Value>'), filter.name, activeElements.map(element => element.label).join(', ')), filterTextWrappers);
   }
   if (filterInView?.operator === OPERATOR_IS_NOT_ALL) {
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 3: Filter value. e.g.: "Author is not all: Admin, Editor". */
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Author is not all: Admin, Editor". */
     (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is not all: </Name><Value>%2$s</Value>'), filter.name, activeElements.map(element => element.label).join(', ')), filterTextWrappers);
   }
   if (filterInView?.operator === constants_OPERATOR_IS) {
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 3: Filter value. e.g.: "Author is: Admin". */
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Author is: Admin". */
     (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is: </Name><Value>%2$s</Value>'), filter.name, activeElements[0].label), filterTextWrappers);
   }
   if (filterInView?.operator === constants_OPERATOR_IS_NOT) {
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 3: Filter value. e.g.: "Author is not: Admin". */
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Author is not: Admin". */
     (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is not: </Name><Value>%2$s</Value>'), filter.name, activeElements[0].label), filterTextWrappers);
   }
   if (filterInView?.operator === OPERATOR_LESS_THAN) {
@@ -44809,7 +44809,7 @@ const useTaxonomiesMenuItems = onClickMenuItem => {
     let menuItemTitle = labels.template_name || labels.singular_name;
     if (_needsUniqueIdentifier) {
       menuItemTitle = labels.template_name ? (0,external_wp_i18n_namespaceObject.sprintf)(
-      // translators: 1: Name of the template e.g: "Products by Category". 2s: Slug of the taxonomy e.g: "product_cat".
+      // translators: 1: Name of the template e.g: "Products by Category". 2: Slug of the taxonomy e.g: "product_cat".
       (0,external_wp_i18n_namespaceObject._x)('%1$s (%2$s)', 'taxonomy template menu label'), labels.template_name, slug) : (0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: 1: Name of the taxonomy e.g: "Category". 2: Slug of the taxonomy e.g: "product_cat".
       (0,external_wp_i18n_namespaceObject._x)('%1$s (%2$s)', 'taxonomy menu label'), labels.singular_name, slug);
