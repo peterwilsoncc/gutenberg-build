@@ -1533,7 +1533,7 @@ __webpack_require__.d(__webpack_exports__, {
   PostLastRevision: () => (/* reexport */ post_last_revision),
   PostLastRevisionCheck: () => (/* reexport */ post_last_revision_check),
   PostLastRevisionPanel: () => (/* reexport */ post_last_revision_panel),
-  PostLockedModal: () => (/* reexport */ PostLockedModal),
+  PostLockedModal: () => (/* reexport */ post_locked_modal),
   PostPendingStatus: () => (/* reexport */ post_pending_status),
   PostPendingStatusCheck: () => (/* reexport */ post_pending_status_check),
   PostPingbacks: () => (/* reexport */ post_pingbacks),
@@ -23091,13 +23091,6 @@ function PostLastRevisionPanel() {
  */
 
 
-/**
- * A modal component that is displayed when a post is locked for editing by another user.
- * The modal provides information about the lock status and options to take over or exit the editor.
- *
- * @return {React.ReactNode} The rendered PostLockedModal component.
- */
-
 function PostLockedModal() {
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(PostLockedModal);
   const hookName = 'core/editor/post-locked-modal-' + instanceId;
@@ -23296,6 +23289,14 @@ function PostLockedModal() {
     })
   });
 }
+
+/**
+ * A modal component that is displayed when a post is locked for editing by another user.
+ * The modal provides information about the lock status and options to take over or exit the editor.
+ *
+ * @return {React.ReactNode} The rendered PostLockedModal component.
+ */
+/* harmony default export */ const post_locked_modal = ( true ? (0,external_wp_components_namespaceObject.withFilters)('editor.PostLockedModal')(PostLockedModal) : 0);
 
 ;// ./packages/editor/build-module/components/post-pending-status/check.js
 /**
