@@ -846,14 +846,14 @@ const I18N_HOOK_REGEXP = /^i18n\.(n?gettext|has_translation)(_|$)/;
  * Retrieve the domain to use when calling domain-specific filters.
  */
 /**
- * @typedef {<T extends string>(text: T, domain?: string) => import('./types').TranslatableText< T >} __
+ * @typedef {<Text extends string>(text: Text, domain?: string) => import('./types').TranslatableText< Text >} __
  *
  * Retrieve the translation of text.
  *
  * @see https://developer.wordpress.org/reference/functions/__/
  */
 /**
- * @typedef {<T extends string>(text: T, context: string, domain?: string) => import('./types').TranslatableText< T >} _x
+ * @typedef {<Text extends string>(text: Text, context: string, domain?: string) => import('./types').TranslatableText< Text >} _x
  *
  * Retrieve translated string with gettext context.
  *
@@ -1245,12 +1245,12 @@ const subscribe = i18n.subscribe.bind(i18n);
  *
  * @see https://developer.wordpress.org/reference/functions/__/
  *
- * @template {string} T
+ * @template {string} Text
  *
- * @param {T}      text     Text to translate.
+ * @param {Text}   text     Text to translate.
  * @param {string} [domain] Domain to retrieve the translated text.
  *
- * @return {import('./types').TranslatableText<T>} Translated text.
+ * @return {import('./types').TranslatableText< Text >} Translated text.
  */
 const __ = i18n.__.bind(i18n);
 
@@ -1259,13 +1259,13 @@ const __ = i18n.__.bind(i18n);
  *
  * @see https://developer.wordpress.org/reference/functions/_x/
  *
- * @template {string} T
+ * @template {string} Text
  *
- * @param {T}      text     Text to translate.
+ * @param {Text}   text     Text to translate.
  * @param {string} context  Context information for the translators.
  * @param {string} [domain] Domain to retrieve the translated text.
  *
- * @return {import('./types').TranslatableText<T>} Translated context string without pipe.
+ * @return {import('./types').TranslatableText< Text >} Translated context string without pipe.
  */
 const _x = i18n._x.bind(i18n);
 
@@ -1275,15 +1275,16 @@ const _x = i18n._x.bind(i18n);
  *
  * @see https://developer.wordpress.org/reference/functions/_n/
  *
- * @template {string} T
+ * @template {string} Single
+ * @template {string} Plural
  *
- * @param {T}      single   The text to be used if the number is singular.
- * @param {string} plural   The text to be used if the number is plural.
+ * @param {Single} single   The text to be used if the number is singular.
+ * @param {Plural} plural   The text to be used if the number is plural.
  * @param {number} number   The number to compare against to use either the
  *                          singular or plural form.
  * @param {string} [domain] Domain to retrieve the translated text.
  *
- * @return {import('./types').TranslatableText<T>} The translated singular or plural form.
+ * @return {import('./types').TranslatableText< Single | Plural >} The translated singular or plural form.
  */
 const _n = i18n._n.bind(i18n);
 
@@ -1293,16 +1294,17 @@ const _n = i18n._n.bind(i18n);
  *
  * @see https://developer.wordpress.org/reference/functions/_nx/
  *
- * @template {string} T
+ * @template {string} Single
+ * @template {string} Plural
  *
- * @param {T}      single   The text to be used if the number is singular.
- * @param {string} plural   The text to be used if the number is plural.
+ * @param {Single} single   The text to be used if the number is singular.
+ * @param {Plural} plural   The text to be used if the number is plural.
  * @param {number} number   The number to compare against to use either the
  *                          singular or plural form.
  * @param {string} context  Context information for the translators.
  * @param {string} [domain] Domain to retrieve the translated text.
  *
- * @return {import('./types').TranslatableText<T>} The translated singular or plural form.
+ * @return {import('./types').TranslatableText< Single | Plural >} The translated singular or plural form.
  */
 const _nx = i18n._nx.bind(i18n);
 
