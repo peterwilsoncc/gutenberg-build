@@ -58193,6 +58193,9 @@ function FormTokenField(props) {
       case 'Escape':
         preventDefault = handleEscapeKey(event);
         break;
+      case 'Tab':
+        preventDefault = handleTabKey(event);
+        break;
       default:
         break;
     }
@@ -58283,14 +58286,21 @@ function FormTokenField(props) {
     setSelectedSuggestionScroll(true);
     return true; // PreventDefault.
   }
-  function handleEscapeKey(event) {
+  function collapseSuggestionsList(event) {
     if (event.target instanceof HTMLInputElement) {
       setIncompleteTokenValue(event.target.value);
       setIsExpanded(false);
       setSelectedSuggestionIndex(-1);
       setSelectedSuggestionScroll(false);
     }
+  }
+  function handleEscapeKey(event) {
+    collapseSuggestionsList(event);
     return true; // PreventDefault.
+  }
+  function handleTabKey(event) {
+    collapseSuggestionsList(event);
+    return false; // Do not prevent the default behavior.
   }
   function handleCommaKey() {
     if (inputHasValidValue()) {
