@@ -14515,9 +14515,9 @@ function CoverInspectorControls({
             hasParallax: false,
             focalPoint: undefined,
             isRepeated: false,
-            alt: '',
-            sizeSlug: undefined
+            alt: ''
           });
+          updateImage(DEFAULT_MEDIA_SIZE_SLUG);
         },
         dropdownMenuProps: dropdownMenuProps,
         children: [isImageBackground && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
