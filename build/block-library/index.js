@@ -16421,17 +16421,23 @@ const details = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(e
 
 
 
+
 /**
  * Internal dependencies
  */
 
 
+
+const {
+  withIgnoreIMEEvents
+} = unlock(external_wp_components_namespaceObject.privateApis);
 const details_edit_TEMPLATE = [['core/paragraph', {
   placeholder: (0,external_wp_i18n_namespaceObject.__)('Type / to add a hidden block')
 }]];
 function DetailsEdit({
   attributes,
-  setAttributes
+  setAttributes,
+  clientId
 }) {
   const {
     name,
@@ -16448,6 +16454,22 @@ function DetailsEdit({
   });
   const [isOpen, setIsOpen] = (0,external_wp_element_namespaceObject.useState)(showContent);
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+
+  // Check if the inner blocks are selected.
+  const hasSelectedInnerBlock = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).hasSelectedInnerBlock(clientId, true), [clientId]);
+  const handleSummaryKeyDown = event => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      setIsOpen(prevIsOpen => !prevIsOpen);
+      event.preventDefault();
+    }
+  };
+
+  // Prevent spacebar from toggling <details> while typing.
+  const handleSummaryKeyUp = event => {
+    if (event.key === ' ') {
+      event.preventDefault();
+    }
+  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
@@ -16491,12 +16513,14 @@ function DetailsEdit({
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("details", {
       ...innerBlocksProps,
-      open: isOpen,
+      open: isOpen || hasSelectedInnerBlock,
       onToggle: event => setIsOpen(event.target.open),
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("summary", {
+        onKeyDown: withIgnoreIMEEvents(handleSummaryKeyDown),
+        onKeyUp: handleSummaryKeyUp,
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
           identifier: "summary",
-          "aria-label": (0,external_wp_i18n_namespaceObject.__)('Write summary'),
+          "aria-label": (0,external_wp_i18n_namespaceObject.__)('Write summary. Press Enter to expand or collapse the details.'),
           placeholder: placeholder || (0,external_wp_i18n_namespaceObject.__)('Write summary…'),
           withoutInteractiveFormatting: true,
           value: summary,
