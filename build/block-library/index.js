@@ -17944,16 +17944,6 @@ const embed_variations_variations = [{
     responsive: true
   }
 }, {
-  name: 'screencast',
-  title: getTitle('Screencast'),
-  icon: embedVideoIcon,
-  description: (0,external_wp_i18n_namespaceObject.__)('Embed Screencast content.'),
-  patterns: [/^https?:\/\/(www\.)?screencast\.com\/.+/i],
-  attributes: {
-    providerNameSlug: 'screencast',
-    responsive: true
-  }
-}, {
   name: 'scribd',
   title: getTitle('Scribd'),
   icon: embedContentIcon,
