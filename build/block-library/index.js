@@ -49166,7 +49166,7 @@ function QueryInspectorControls(props) {
     return onChangeDebounced.cancel;
   }, [querySearch, onChangeDebounced]);
   const orderByOptions = useOrderByOptions(postType);
-  const showInheritControl = !isSingular && isControlAllowed(allowedControls, 'inherit');
+  const showInheritControl = isControlAllowed(allowedControls, 'inherit');
   const showPostTypeControl = !inherit && isControlAllowed(allowedControls, 'postType');
   const postTypeControlLabel = (0,external_wp_i18n_namespaceObject.__)('Post type');
   const postTypeControlHelp = (0,external_wp_i18n_namespaceObject.__)('Select the type of content to display: posts, pages, or custom post types.');
@@ -49196,6 +49196,10 @@ function QueryInspectorControls(props) {
   const showOffSetControl = isControlAllowed(allowedControls, 'offset');
   const showPagesControl = isControlAllowed(allowedControls, 'pages');
   const showDisplayPanel = showPostCountControl || showOffSetControl || showPagesControl;
+
+  // The block cannot inherit a default WordPress query in singular content (e.g., post, page, 404, blank).
+  // Warn users but still permit this type of query for exceptional cases in Classic and Hybrid themes.
+  const hasInheritanceWarning = isSingular && inherit;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [showSettingsPanel && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
       label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
@@ -49216,24 +49220,31 @@ function QueryInspectorControls(props) {
           inherit: true
         }),
         isShownByDefault: true,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
-          __next40pxDefaultSize: true,
-          __nextHasNoMarginBottom: true,
-          label: (0,external_wp_i18n_namespaceObject.__)('Query type'),
-          isBlock: true,
-          onChange: value => {
-            setQuery({
-              inherit: value === 'default'
-            });
-          },
-          help: inherit ? (0,external_wp_i18n_namespaceObject.__)('Display a list of posts or custom post types based on the current template.') : (0,external_wp_i18n_namespaceObject.__)('Display a list of posts or custom post types based on specific criteria.'),
-          value: !!inherit ? 'default' : 'custom',
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-            value: "default",
-            label: (0,external_wp_i18n_namespaceObject.__)('Default')
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-            value: "custom",
-            label: (0,external_wp_i18n_namespaceObject.__)('Custom')
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+          spacing: 4,
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+            __next40pxDefaultSize: true,
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Query type'),
+            isBlock: true,
+            onChange: value => {
+              setQuery({
+                inherit: value === 'default'
+              });
+            },
+            help: inherit ? (0,external_wp_i18n_namespaceObject.__)('Display a list of posts or custom post types based on the current template.') : (0,external_wp_i18n_namespaceObject.__)('Display a list of posts or custom post types based on specific criteria.'),
+            value: !!inherit ? 'default' : 'custom',
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+              value: "default",
+              label: (0,external_wp_i18n_namespaceObject.__)('Default')
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+              value: "custom",
+              label: (0,external_wp_i18n_namespaceObject.__)('Custom')
+            })]
+          }), hasInheritanceWarning && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
+            status: "warning",
+            isDismissible: false,
+            children: (0,external_wp_i18n_namespaceObject.__)('Cannot inherit the current template query when placed inside the singular content (e.g., post, page, 404, blank).')
           })]
         })
       }), showPostTypeControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
@@ -49803,16 +49814,11 @@ function QueryContent({
     } else if (!query.perPage && postsPerPage) {
       newQuery.perPage = postsPerPage;
     }
-    // We need to reset the `inherit` value if in a singular template, as queries
-    // are not inherited when in singular content (e.g. post, page, 404, blank).
-    if (isSingular && query.inherit) {
-      newQuery.inherit = false;
-    }
     if (!!Object.keys(newQuery).length) {
       __unstableMarkNextChangeAsNotPersistent();
       updateQuery(newQuery);
     }
-  }, [query.perPage, query.inherit, postsPerPage, inherit, isSingular, __unstableMarkNextChangeAsNotPersistent, updateQuery]);
+  }, [query.perPage, inherit, postsPerPage, __unstableMarkNextChangeAsNotPersistent, updateQuery]);
   // We need this for multi-query block pagination.
   // Query parameters for each block are scoped to their ID.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
