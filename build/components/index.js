@@ -9101,7 +9101,7 @@ const flip = function (options) {
           if (!ignoreCrossAxisOverflow ||
           // We leave the current main axis only if every placement on that axis
           // overflows the main axis.
-          overflowsData.every(d => floating_ui_utils_getSideAxis(d.placement) === initialSideAxis ? d.overflows[0] > 0 : true)) {
+          overflowsData.every(d => d.overflows[0] > 0 && floating_ui_utils_getSideAxis(d.placement) === initialSideAxis)) {
             // Try next placement and re-run the lifecycle.
             return {
               data: {
@@ -9982,9 +9982,14 @@ function getWindowScrollBarX(element, rect) {
   return rect.left + leftScroll;
 }
 
-function getHTMLOffset(documentElement, scroll) {
+function getHTMLOffset(documentElement, scroll, ignoreScrollbarX) {
+  if (ignoreScrollbarX === void 0) {
+    ignoreScrollbarX = false;
+  }
   const htmlRect = documentElement.getBoundingClientRect();
-  const x = htmlRect.left + scroll.scrollLeft - getWindowScrollBarX(documentElement, htmlRect);
+  const x = htmlRect.left + scroll.scrollLeft - (ignoreScrollbarX ? 0 :
+  // RTL <body> scrollbar.
+  getWindowScrollBarX(documentElement, htmlRect));
   const y = htmlRect.top + scroll.scrollTop;
   return {
     x,
@@ -10023,7 +10028,7 @@ function convertOffsetParentRelativeRectToViewportRelativeRect(_ref) {
       offsets.y = offsetRect.y + offsetParent.clientTop;
     }
   }
-  const htmlOffset = documentElement && !isOffsetParentAnElement && !isFixed ? getHTMLOffset(documentElement, scroll) : createCoords(0);
+  const htmlOffset = documentElement && !isOffsetParentAnElement && !isFixed ? getHTMLOffset(documentElement, scroll, true) : createCoords(0);
   return {
     width: rect.width * scale.x,
     height: rect.height * scale.y,
@@ -10057,10 +10062,6 @@ function getDocumentRect(element) {
   };
 }
 
-// Safety check: ensure the scrollbar space is reasonable in case this
-// calculation is affected by unusual styles.
-// Most scrollbars leave 15-18px of space.
-const SCROLLBAR_MAX = 25;
 function getViewportRect(element, strategy) {
   const win = floating_ui_utils_dom_getWindow(element);
   const html = getDocumentElement(element);
@@ -10077,24 +10078,6 @@ function getViewportRect(element, strategy) {
       x = visualViewport.offsetLeft;
       y = visualViewport.offsetTop;
     }
-  }
-  const windowScrollbarX = getWindowScrollBarX(html);
-  // <html> `overflow: hidden` + `scrollbar-gutter: stable` reduces the
-  // visual width of the <html> but this is not considered in the size
-  // of `html.clientWidth`.
-  if (windowScrollbarX <= 0) {
-    const doc = html.ownerDocument;
-    const body = doc.body;
-    const bodyStyles = getComputedStyle(body);
-    const bodyMarginInline = doc.compatMode === 'CSS1Compat' ? parseFloat(bodyStyles.marginLeft) + parseFloat(bodyStyles.marginRight) || 0 : 0;
-    const clippingStableScrollbarWidth = Math.abs(html.clientWidth - body.clientWidth - bodyMarginInline);
-    if (clippingStableScrollbarWidth <= SCROLLBAR_MAX) {
-      width -= clippingStableScrollbarWidth;
-    }
-  } else if (windowScrollbarX <= SCROLLBAR_MAX) {
-    // If the <body> scrollbar is on the left, the width needs to be extended
-    // by the scrollbar amount so there isn't extra space on the right.
-    width += windowScrollbarX;
   }
   return {
     width,
@@ -33143,7 +33126,7 @@ function getDefaultUseItems(autocompleter) {
   };
 }
 
-;// ./packages/components/node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.esm.js
+;// ./node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.mjs
 
 
 
@@ -33156,7 +33139,7 @@ function getDefaultUseItems(autocompleter) {
  * This wraps the core `arrow` middleware to allow React refs as the element.
  * @see https://floating-ui.com/docs/arrow
  */
-const floating_ui_react_dom_esm_arrow = options => {
+const floating_ui_react_dom_arrow = options => {
   function isRef(value) {
     return {}.hasOwnProperty.call(value, 'current');
   }
@@ -33176,7 +33159,8 @@ const floating_ui_react_dom_esm_arrow = options => {
           }).fn(state);
         }
         return {};
-      } else if (element) {
+      }
+      if (element) {
         return floating_ui_dom_arrow({
           element,
           padding
@@ -33201,11 +33185,13 @@ function deepEqual(a, b) {
   if (typeof a === 'function' && a.toString() === b.toString()) {
     return true;
   }
-  let length, i, keys;
-  if (a && b && typeof a == 'object') {
+  let length;
+  let i;
+  let keys;
+  if (a && b && typeof a === 'object') {
     if (Array.isArray(a)) {
       length = a.length;
-      if (length != b.length) return false;
+      if (length !== b.length) return false;
       for (i = length; i-- !== 0;) {
         if (!deepEqual(a[i], b[i])) {
           return false;
@@ -33234,6 +33220,8 @@ function deepEqual(a, b) {
     }
     return true;
   }
+
+  // biome-ignore lint/suspicious/noSelfCompare: in source
   return a !== a && b !== b;
 }
 
@@ -33245,7 +33233,7 @@ function getDPR(element) {
   return win.devicePixelRatio || 1;
 }
 
-function floating_ui_react_dom_esm_roundByDPR(element, value) {
+function floating_ui_react_dom_roundByDPR(element, value) {
   const dpr = getDPR(element);
   return Math.round(value * dpr) / dpr;
 }
@@ -33260,7 +33248,7 @@ function useLatestRef(value) {
 
 /**
  * Provides data to position a floating element.
- * @see https://floating-ui.com/docs/react
+ * @see https://floating-ui.com/docs/useFloating
  */
 function useFloating(options) {
   if (options === void 0) {
@@ -33294,22 +33282,23 @@ function useFloating(options) {
   const [_reference, _setReference] = external_React_.useState(null);
   const [_floating, _setFloating] = external_React_.useState(null);
   const setReference = external_React_.useCallback(node => {
-    if (node != referenceRef.current) {
+    if (node !== referenceRef.current) {
       referenceRef.current = node;
       _setReference(node);
     }
-  }, [_setReference]);
+  }, []);
   const setFloating = external_React_.useCallback(node => {
     if (node !== floatingRef.current) {
       floatingRef.current = node;
       _setFloating(node);
     }
-  }, [_setFloating]);
+  }, []);
   const referenceEl = externalReference || _reference;
   const floatingEl = externalFloating || _floating;
   const referenceRef = external_React_.useRef(null);
   const floatingRef = external_React_.useRef(null);
   const dataRef = external_React_.useRef(data);
+  const hasWhileElementsMounted = whileElementsMounted != null;
   const whileElementsMountedRef = useLatestRef(whileElementsMounted);
   const platformRef = useLatestRef(platform);
   const update = external_React_.useCallback(() => {
@@ -33353,17 +33342,18 @@ function useFloating(options) {
       isMountedRef.current = false;
     };
   }, []);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `hasWhileElementsMounted` is intentionally included.
   index(() => {
     if (referenceEl) referenceRef.current = referenceEl;
     if (floatingEl) floatingRef.current = floatingEl;
     if (referenceEl && floatingEl) {
       if (whileElementsMountedRef.current) {
         return whileElementsMountedRef.current(referenceEl, floatingEl, update);
-      } else {
-        update();
       }
+      update();
     }
-  }, [referenceEl, floatingEl, update, whileElementsMountedRef]);
+  }, [referenceEl, floatingEl, update, whileElementsMountedRef, hasWhileElementsMounted]);
   const refs = external_React_.useMemo(() => ({
     reference: referenceRef,
     floating: floatingRef,
@@ -33383,8 +33373,8 @@ function useFloating(options) {
     if (!elements.floating) {
       return initialStyles;
     }
-    const x = floating_ui_react_dom_esm_roundByDPR(elements.floating, data.x);
-    const y = floating_ui_react_dom_esm_roundByDPR(elements.floating, data.y);
+    const x = floating_ui_react_dom_roundByDPR(elements.floating, data.x);
+    const y = floating_ui_react_dom_roundByDPR(elements.floating, data.y);
     if (transform) {
       return {
         ...initialStyles,
@@ -34383,7 +34373,7 @@ const UnforwardedPopover = (props, forwardedRef) => {
     crossAxis: true,
     limiter: floating_ui_dom_limitShift(),
     padding: 1 // Necessary to avoid flickering at the edge of the viewport.
-  }), floating_ui_react_dom_esm_arrow({
+  }), floating_ui_react_dom_arrow({
     element: arrowRef
   })];
   const slotName = (0,external_wp_element_namespaceObject.useContext)(slotNameContext) || __unstableSlotName;
