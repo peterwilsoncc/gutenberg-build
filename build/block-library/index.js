@@ -38072,6 +38072,7 @@ const navigation_init = () => initBlock({
 const navigation_link_edit_DEFAULT_BLOCK = {
   name: 'core/navigation-link'
 };
+const NESTING_BLOCK_NAMES = ['core/navigation-link', 'core/navigation-submenu'];
 
 /**
  * A React hook to determine if it's dragging within the target element.
@@ -38359,7 +38360,7 @@ function NavigationLinkEdit({
       getBlockParentsByBlockName
     } = select(external_wp_blockEditor_namespaceObject.store);
     return {
-      isAtMaxNesting: getBlockParentsByBlockName(clientId, ['core/navigation-link', 'core/navigation-submenu']).length >= maxNestingLevel,
+      isAtMaxNesting: getBlockParentsByBlockName(clientId, NESTING_BLOCK_NAMES).length >= maxNestingLevel,
       isTopLevelLink: getBlockName(getBlockRootClientId(clientId)) === 'core/navigation',
       isParentOfSelectedBlock: hasSelectedInnerBlock(clientId, true),
       hasChildren: !!getBlockCount(clientId)
