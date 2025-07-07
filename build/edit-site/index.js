@@ -42505,8 +42505,10 @@ const PAGE_SIZE_VALUES = [10, 20, 50, 100];
 function ItemsPerPageControl() {
   const {
     view,
+    perPageSizes,
     onChangeView
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
+  const pageSizeValues = perPageSizes !== null && perPageSizes !== void 0 ? perPageSizes : PAGE_SIZE_VALUES;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
     __nextHasNoMarginBottom: true,
     __next40pxDefaultSize: true,
@@ -42522,7 +42524,7 @@ function ItemsPerPageControl() {
         page: 1
       });
     },
-    children: PAGE_SIZE_VALUES.map(value => {
+    children: pageSizeValues.map(value => {
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
         value: value,
         label: value.toString()
@@ -43025,7 +43027,8 @@ function DataViews({
   renderItemLink,
   isItemClickable = defaultIsItemClickable,
   header,
-  children
+  children,
+  perPageSizes
 }) {
   const containerRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const [containerWidth, setContainerWidth] = (0,external_wp_element_namespaceObject.useState)(0);
@@ -43076,7 +43079,8 @@ function DataViews({
       defaultLayouts,
       filters,
       isShowingFilter,
-      setIsShowingFilter
+      setIsShowingFilter,
+      perPageSizes
     },
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "dataviews-wrapper",
