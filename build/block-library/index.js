@@ -31163,7 +31163,6 @@ const list_metadata = {
       source: "html",
       selector: "ol,ul",
       multiline: "li",
-      __unstableMultilineWrapperTags: ["ol", "ul"],
       "default": "",
       role: "content"
     },
