@@ -56544,6 +56544,7 @@ function LogoEdit({
     getSettings
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
   const [temporaryURL, setTemporaryURL] = (0,external_wp_element_namespaceObject.useState)();
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const {
     editEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
@@ -56689,17 +56690,27 @@ function LogoEdit({
     className: classes
   });
   const mediaInspectorPanel = (canUserEdit || logoUrl) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Media'),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Media'),
+      dropdownMenuProps: dropdownMenuProps,
+      children: !canUserEdit ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "block-library-site-logo__inspector-media-replace-container",
-        children: !canUserEdit ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorLogoPreview, {
+        style: {
+          gridColumn: '1 / -1'
+        },
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorLogoPreview, {
           media: mediaItemData,
           itemGroupProps: {
             isBordered: true,
             className: 'block-library-site-logo__inspector-readonly-logo-preview'
           }
-        }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+        })
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        hasValue: () => !!logoUrl,
+        label: (0,external_wp_i18n_namespaceObject.__)('Logo'),
+        isShownByDefault: true,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+          className: "block-library-site-logo__inspector-media-replace-container",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SiteLogoReplaceFlow, {
             ...mediaReplaceFlowProps,
             name: !!logoUrl ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorLogoPreview, {
