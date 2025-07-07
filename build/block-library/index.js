@@ -38123,15 +38123,23 @@ const useIsDraggingWithin = elementRef => {
 const useIsInvalidLink = (kind, type, id) => {
   const isPostType = kind === 'post-type' || type === 'post' || type === 'page';
   const hasId = Number.isInteger(id);
+  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
   const postStatus = (0,external_wp_data_namespaceObject.useSelect)(select => {
     if (!isPostType) {
+      return null;
+    }
+
+    // Fetching the posts status is an "expensive" operation. Especially for sites with large navigations.
+    // When the block is rendered in a template or other disabled contexts we can skip this check in order
+    // to avoid all these additional requests that don't really add any value in that mode.
+    if (blockEditingMode === 'disabled') {
       return null;
     }
     const {
       getEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
     return getEntityRecord('postType', type, id)?.status;
-  }, [isPostType, type, id]);
+  }, [isPostType, blockEditingMode, type, id]);
 
   // Check Navigation Link validity if:
   // 1. Link is 'post-type'.
