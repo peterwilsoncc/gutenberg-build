@@ -1,5 +1,25 @@
 == Changelog ==
 
+= 21.1.1 =
+
+
+## Changelog
+
+### Bug Fixes
+
+#### Media
+- Media library modal: Fix plugin incompatibilities with MediaUpload filter. ([70648](https://github.com/WordPress/gutenberg/pull/70648))
+
+
+
+
+## Contributors
+
+The following contributors merged PRs in this release:
+
+@talldan
+
+
 = 21.1.0 =
 
 ## Changelog
