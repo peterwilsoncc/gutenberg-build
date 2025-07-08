@@ -1,6 +1,86 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 7734:
+/***/ ((module) => {
+
+"use strict";
+
+
+// do not edit .js files directly - edit src/index.jst
+
+
+  var envHasBigInt64Array = typeof BigInt64Array !== 'undefined';
+
+
+module.exports = function equal(a, b) {
+  if (a === b) return true;
+
+  if (a && b && typeof a == 'object' && typeof b == 'object') {
+    if (a.constructor !== b.constructor) return false;
+
+    var length, i, keys;
+    if (Array.isArray(a)) {
+      length = a.length;
+      if (length != b.length) return false;
+      for (i = length; i-- !== 0;)
+        if (!equal(a[i], b[i])) return false;
+      return true;
+    }
+
+
+    if ((a instanceof Map) && (b instanceof Map)) {
+      if (a.size !== b.size) return false;
+      for (i of a.entries())
+        if (!b.has(i[0])) return false;
+      for (i of a.entries())
+        if (!equal(i[1], b.get(i[0]))) return false;
+      return true;
+    }
+
+    if ((a instanceof Set) && (b instanceof Set)) {
+      if (a.size !== b.size) return false;
+      for (i of a.entries())
+        if (!b.has(i[0])) return false;
+      return true;
+    }
+
+    if (ArrayBuffer.isView(a) && ArrayBuffer.isView(b)) {
+      length = a.length;
+      if (length != b.length) return false;
+      for (i = length; i-- !== 0;)
+        if (a[i] !== b[i]) return false;
+      return true;
+    }
+
+
+    if (a.constructor === RegExp) return a.source === b.source && a.flags === b.flags;
+    if (a.valueOf !== Object.prototype.valueOf) return a.valueOf() === b.valueOf();
+    if (a.toString !== Object.prototype.toString) return a.toString() === b.toString();
+
+    keys = Object.keys(a);
+    length = keys.length;
+    if (length !== Object.keys(b).length) return false;
+
+    for (i = length; i-- !== 0;)
+      if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false;
+
+    for (i = length; i-- !== 0;) {
+      var key = keys[i];
+
+      if (!equal(a[key], b[key])) return false;
+    }
+
+    return true;
+  }
+
+  // true if both NaN, false otherwise
+  return a!==a && b!==b;
+};
+
+
+/***/ }),
+
 /***/ 9681:
 /***/ ((module) => {
 
@@ -13572,7 +13652,7 @@ const help = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M12 4.75a7.25 7.25 0 100 14.5 7.25 7.25 0 000-14.5zM3.25 12a8.75 8.75 0 1117.5 0 8.75 8.75 0 01-17.5 0zM12 8.75a1.5 1.5 0 01.167 2.99c-.465.052-.917.44-.917 1.01V14h1.5v-.845A3 3 0 109 10.25h1.5a1.5 1.5 0 011.5-1.5zM11.25 15v1.5h1.5V15h-1.5z"
+    d: "M12 4a8 8 0 1 1 .001 16.001A8 8 0 0 1 12 4Zm0 1.5a6.5 6.5 0 1 0-.001 13.001A6.5 6.5 0 0 0 12 5.5Zm.75 11h-1.5V15h1.5v1.5Zm-.445-9.234a3 3 0 0 1 .445 5.89V14h-1.5v-1.25c0-.57.452-.958.917-1.01A1.5 1.5 0 0 0 12 8.75a1.5 1.5 0 0 0-1.5 1.5H9a3 3 0 0 1 3.305-2.984Z"
   })
 });
 /* harmony default export */ const library_help = (help);
@@ -15568,7 +15648,7 @@ const typography = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M6.9 7L3 17.8h1.7l1-2.8h4.1l1 2.8h1.7L8.6 7H6.9zm-.7 6.6l1.5-4.3 1.5 4.3h-3zM21.6 17c-.1.1-.2.2-.3.2-.1.1-.2.1-.4.1s-.3-.1-.4-.2c-.1-.1-.1-.3-.1-.6V12c0-.5 0-1-.1-1.4-.1-.4-.3-.7-.5-1-.2-.2-.5-.4-.9-.5-.4 0-.8-.1-1.3-.1s-1 .1-1.4.2c-.4.1-.7.3-1 .4-.2.2-.4.3-.6.5-.1.2-.2.4-.2.7 0 .3.1.5.2.8.2.2.4.3.8.3.3 0 .6-.1.8-.3.2-.2.3-.4.3-.7 0-.3-.1-.5-.2-.7-.2-.2-.4-.3-.6-.4.2-.2.4-.3.7-.4.3-.1.6-.1.8-.1.3 0 .6 0 .8.1.2.1.4.3.5.5.1.2.2.5.2.9v1.1c0 .3-.1.5-.3.6-.2.2-.5.3-.9.4-.3.1-.7.3-1.1.4-.4.1-.8.3-1.1.5-.3.2-.6.4-.8.7-.2.3-.3.7-.3 1.2 0 .6.2 1.1.5 1.4.3.4.9.5 1.6.5.5 0 1-.1 1.4-.3.4-.2.8-.6 1.1-1.1 0 .4.1.7.3 1 .2.3.6.4 1.2.4.4 0 .7-.1.9-.2.2-.1.5-.3.7-.4h-.3zm-3-.9c-.2.4-.5.7-.8.8-.3.2-.6.2-.8.2-.4 0-.6-.1-.9-.3-.2-.2-.3-.6-.3-1.1 0-.5.1-.9.3-1.2s.5-.5.8-.7c.3-.2.7-.3 1-.5.3-.1.6-.3.7-.6v3.4z"
+    d: "m8.6 7 3.9 10.8h-1.7l-1-2.8H5.7l-1 2.8H3L6.9 7h1.7Zm-2.4 6.6h3L7.7 9.3l-1.5 4.3ZM17.691 8.879c.473 0 .88.055 1.221.165.352.1.643.264.875.495.274.253.456.572.544.957.088.374.132.83.132 1.37v4.554c0 .274.033.472.099.593.077.11.198.166.363.166.11 0 .215-.028.313-.083.11-.055.237-.137.38-.247l.165.28a3.304 3.304 0 0 1-.71.446c-.23.11-.527.165-.89.165-.352 0-.639-.055-.858-.165-.22-.11-.386-.27-.495-.479-.1-.209-.149-.468-.149-.775-.286.462-.627.814-1.023 1.056-.396.242-.858.363-1.386.363-.462 0-.858-.088-1.188-.264a1.752 1.752 0 0 1-.742-.726 2.201 2.201 0 0 1-.248-1.056c0-.484.11-.875.33-1.172.22-.308.5-.556.841-.742.352-.187.721-.341 1.106-.462.396-.132.765-.253 1.106-.363.351-.121.637-.259.857-.413.232-.154.347-.357.347-.61V10.81c0-.396-.066-.71-.198-.941a1.05 1.05 0 0 0-.511-.511 1.763 1.763 0 0 0-.76-.149c-.253 0-.522.039-.808.116a1.165 1.165 0 0 0-.677.412 1.1 1.1 0 0 1 .595.396c.165.187.247.424.247.71 0 .307-.104.55-.313.726-.198.176-.451.263-.76.263-.34 0-.594-.104-.758-.313a1.231 1.231 0 0 1-.248-.759c0-.297.072-.539.214-.726.154-.187.352-.363.595-.528.264-.176.6-.324 1.006-.445.418-.121.88-.182 1.386-.182Zm.99 3.729a1.57 1.57 0 0 1-.528.462c-.231.121-.479.248-.742.38a5.377 5.377 0 0 0-.76.462c-.23.165-.423.38-.577.643-.154.264-.231.6-.231 1.007 0 .429.11.77.33 1.023.22.242.517.363.891.363.308 0 .594-.088.858-.264.275-.176.528-.44.759-.792v-3.284Z"
   })
 });
 /* harmony default export */ const library_typography = (typography);
@@ -27327,6 +27407,7 @@ function GlobalStylesUIWrapper() {
 
 
 
+
 const {
   ExperimentalBlockEditorProvider,
   useGlobalStyle: style_book_useGlobalStyle,
@@ -27442,6 +27523,31 @@ function getExamplesForSinglePageUse(examples) {
   });
   examplesForSinglePageUse.push(...otherExamples);
   return examplesForSinglePageUse;
+}
+
+/**
+ * Applies a block variation to each example by updating its attributes.
+ *
+ * @param {Array}  examples  Array of examples
+ * @param {string} variation Block variation name.
+ * @return {Array} Updated examples with variation applied.
+ */
+function applyBlockVariationsToExamples(examples, variation) {
+  if (!variation) {
+    return examples;
+  }
+  return examples.map(example => ({
+    ...example,
+    variation,
+    blocks: {
+      ...example.blocks,
+      attributes: {
+        ...example.blocks.attributes,
+        style: undefined,
+        className: getVariationClassName(variation)
+      }
+    }
+  }));
 }
 function StyleBook({
   enableResizing = true,
@@ -27567,7 +27673,7 @@ const StyleBookPreview = ({
     // '/blocks/core%2Fbuttons'.
     return section === `/blocks/${encodeURIComponent(blockName)}` || section.startsWith(`/blocks/${encodeURIComponent(blockName)}/`);
   };
-  const onSelect = blockName => {
+  const onSelect = (blockName, isBlockVariation = false) => {
     if (STYLE_BOOK_COLOR_GROUPS.find(group => group.slug === blockName)) {
       // Go to color palettes Global Styles.
       onChangeSection('/colors/palette');
@@ -27578,6 +27684,9 @@ const StyleBookPreview = ({
       onChangeSection('/typography');
       return;
     }
+    if (isBlockVariation) {
+      return;
+    }
 
     // Now go to the selected block.
     onChangeSection(`/blocks/${encodeURIComponent(blockName)}`);
@@ -27586,13 +27695,19 @@ const StyleBookPreview = ({
   const examples = getExamples(colors);
   const examplesForSinglePageUse = getExamplesForSinglePageUse(examples);
   let previewCategory = null;
+  let blockVariation = null;
   if (section.includes('/colors')) {
     previewCategory = 'colors';
   } else if (section.includes('/typography')) {
     previewCategory = 'text';
   } else if (section.includes('/blocks')) {
     previewCategory = 'blocks';
-    const blockName = decodeURIComponent(section).split('/blocks/')[1];
+    let blockName = decodeURIComponent(section).split('/blocks/')[1];
+
+    // The blockName can contain variations, if so, extract the variation.
+    if (blockName?.includes('/variations')) {
+      [blockName, blockVariation] = blockName.split('/variations/');
+    }
     if (blockName && examples.find(example => example.name === blockName)) {
       previewCategory = blockName;
     }
@@ -27600,16 +27715,29 @@ const StyleBookPreview = ({
     previewCategory = 'overview';
   }
   const categoryDefinition = STYLE_BOOK_PREVIEW_CATEGORIES.find(category => category.slug === previewCategory);
-
-  // If there's no category definition there may be a single block.
-  const filteredExamples = categoryDefinition ? getExamplesByCategory(categoryDefinition, examples) : {
-    examples: [examples.find(example => example.name === previewCategory)]
-  };
-
-  // If there's no preview category, show all examples.
-  const displayedExamples = previewCategory ? filteredExamples : {
-    examples: examplesForSinglePageUse
-  };
+  const filteredExamples = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    // If there's no category definition there may be a single block.
+    if (!categoryDefinition) {
+      return {
+        examples: [examples.find(example => example.name === previewCategory)]
+      };
+    }
+    return getExamplesByCategory(categoryDefinition, examples);
+  }, [categoryDefinition, examples, previewCategory]);
+  const displayedExamples = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    // If there's no preview category, show all examples.
+    if (!previewCategory) {
+      return {
+        examples: examplesForSinglePageUse
+      };
+    }
+    if (blockVariation) {
+      return {
+        examples: applyBlockVariationsToExamples(filteredExamples.examples, blockVariation)
+      };
+    }
+    return filteredExamples;
+  }, [previewCategory, examplesForSinglePageUse, blockVariation, filteredExamples]);
   const {
     base: baseConfig
   } = (0,external_wp_element_namespaceObject.useContext)(style_book_GlobalStylesContext);
@@ -27734,7 +27862,7 @@ const Examples = (0,external_wp_element_namespaceObject.memo)(({
       content: example.content,
       blocks: example.blocks,
       isSelected: isSelected?.(example.name),
-      onClick: !!onSelect ? () => onSelect(example.name) : null
+      onClick: !!onSelect ? () => onSelect(example.name, !!example.variation) : null
     }, example.name)), !!filteredExamples?.subcategories?.length && filteredExamples.subcategories.map(subcategory => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite.Group, {
       className: "edit-site-style-book__subcategory",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.GroupLabel, {
@@ -31654,6 +31782,660 @@ function SidebarNavigationScreenPatterns({
 // EXTERNAL MODULE: ./node_modules/remove-accents/index.js
 var remove_accents = __webpack_require__(9681);
 var remove_accents_default = /*#__PURE__*/__webpack_require__.n(remove_accents);
+;// ./packages/dataviews/node_modules/date-fns/constants.js
+/**
+ * @module constants
+ * @summary Useful constants
+ * @description
+ * Collection of useful date constants.
+ *
+ * The constants could be imported from `date-fns/constants`:
+ *
+ * ```ts
+ * import { maxTime, minTime } from "./constants/date-fns/constants";
+ *
+ * function isAllowedTime(time) {
+ *   return time <= maxTime && time >= minTime;
+ * }
+ * ```
+ */
+
+/**
+ * @constant
+ * @name daysInWeek
+ * @summary Days in 1 week.
+ */
+const daysInWeek = 7;
+
+/**
+ * @constant
+ * @name daysInYear
+ * @summary Days in 1 year.
+ *
+ * @description
+ * How many days in a year.
+ *
+ * One years equals 365.2425 days according to the formula:
+ *
+ * > Leap year occurs every 4 years, except for years that are divisible by 100 and not divisible by 400.
+ * > 1 mean year = (365+1/4-1/100+1/400) days = 365.2425 days
+ */
+const daysInYear = 365.2425;
+
+/**
+ * @constant
+ * @name maxTime
+ * @summary Maximum allowed time.
+ *
+ * @example
+ * import { maxTime } from "./constants/date-fns/constants";
+ *
+ * const isValid = 8640000000000001 <= maxTime;
+ * //=> false
+ *
+ * new Date(8640000000000001);
+ * //=> Invalid Date
+ */
+const maxTime = Math.pow(10, 8) * 24 * 60 * 60 * 1000;
+
+/**
+ * @constant
+ * @name minTime
+ * @summary Minimum allowed time.
+ *
+ * @example
+ * import { minTime } from "./constants/date-fns/constants";
+ *
+ * const isValid = -8640000000000001 >= minTime;
+ * //=> false
+ *
+ * new Date(-8640000000000001)
+ * //=> Invalid Date
+ */
+const minTime = -maxTime;
+
+/**
+ * @constant
+ * @name millisecondsInWeek
+ * @summary Milliseconds in 1 week.
+ */
+const millisecondsInWeek = 604800000;
+
+/**
+ * @constant
+ * @name millisecondsInDay
+ * @summary Milliseconds in 1 day.
+ */
+const millisecondsInDay = 86400000;
+
+/**
+ * @constant
+ * @name millisecondsInMinute
+ * @summary Milliseconds in 1 minute
+ */
+const millisecondsInMinute = 60000;
+
+/**
+ * @constant
+ * @name millisecondsInHour
+ * @summary Milliseconds in 1 hour
+ */
+const millisecondsInHour = 3600000;
+
+/**
+ * @constant
+ * @name millisecondsInSecond
+ * @summary Milliseconds in 1 second
+ */
+const millisecondsInSecond = 1000;
+
+/**
+ * @constant
+ * @name minutesInYear
+ * @summary Minutes in 1 year.
+ */
+const minutesInYear = 525600;
+
+/**
+ * @constant
+ * @name minutesInMonth
+ * @summary Minutes in 1 month.
+ */
+const minutesInMonth = 43200;
+
+/**
+ * @constant
+ * @name minutesInDay
+ * @summary Minutes in 1 day.
+ */
+const minutesInDay = 1440;
+
+/**
+ * @constant
+ * @name minutesInHour
+ * @summary Minutes in 1 hour.
+ */
+const minutesInHour = 60;
+
+/**
+ * @constant
+ * @name monthsInQuarter
+ * @summary Months in 1 quarter.
+ */
+const monthsInQuarter = 3;
+
+/**
+ * @constant
+ * @name monthsInYear
+ * @summary Months in 1 year.
+ */
+const monthsInYear = 12;
+
+/**
+ * @constant
+ * @name quartersInYear
+ * @summary Quarters in 1 year
+ */
+const quartersInYear = 4;
+
+/**
+ * @constant
+ * @name secondsInHour
+ * @summary Seconds in 1 hour.
+ */
+const secondsInHour = 3600;
+
+/**
+ * @constant
+ * @name secondsInMinute
+ * @summary Seconds in 1 minute.
+ */
+const secondsInMinute = 60;
+
+/**
+ * @constant
+ * @name secondsInDay
+ * @summary Seconds in 1 day.
+ */
+const secondsInDay = secondsInHour * 24;
+
+/**
+ * @constant
+ * @name secondsInWeek
+ * @summary Seconds in 1 week.
+ */
+const secondsInWeek = secondsInDay * 7;
+
+/**
+ * @constant
+ * @name secondsInYear
+ * @summary Seconds in 1 year.
+ */
+const secondsInYear = secondsInDay * daysInYear;
+
+/**
+ * @constant
+ * @name secondsInMonth
+ * @summary Seconds in 1 month
+ */
+const secondsInMonth = secondsInYear / 12;
+
+/**
+ * @constant
+ * @name secondsInQuarter
+ * @summary Seconds in 1 quarter.
+ */
+const secondsInQuarter = secondsInMonth * 3;
+
+/**
+ * @constant
+ * @name constructFromSymbol
+ * @summary Symbol enabling Date extensions to inherit properties from the reference date.
+ *
+ * The symbol is used to enable the `constructFrom` function to construct a date
+ * using a reference date and a value. It allows to transfer extra properties
+ * from the reference date to the new date. It's useful for extensions like
+ * [`TZDate`](https://github.com/date-fns/tz) that accept a time zone as
+ * a constructor argument.
+ */
+const constructFromSymbol = Symbol.for("constructDateFrom");
+
+;// ./packages/dataviews/node_modules/date-fns/constructFrom.js
+
+
+/**
+ * @name constructFrom
+ * @category Generic Helpers
+ * @summary Constructs a date using the reference date and the value
+ *
+ * @description
+ * The function constructs a new date using the constructor from the reference
+ * date and the given value. It helps to build generic functions that accept
+ * date extensions.
+ *
+ * It defaults to `Date` if the passed reference date is a number or a string.
+ *
+ * Starting from v3.7.0, it allows to construct a date using `[Symbol.for("constructDateFrom")]`
+ * enabling to transfer extra properties from the reference date to the new date.
+ * It's useful for extensions like [`TZDate`](https://github.com/date-fns/tz)
+ * that accept a time zone as a constructor argument.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The reference date to take constructor from
+ * @param value - The value to create the date
+ *
+ * @returns Date initialized using the given date and value
+ *
+ * @example
+ * import { constructFrom } from "./constructFrom/date-fns";
+ *
+ * // A function that clones a date preserving the original type
+ * function cloneDate<DateType extends Date>(date: DateType): DateType {
+ *   return constructFrom(
+ *     date, // Use constructor from the given date
+ *     date.getTime() // Use the date value to create a new date
+ *   );
+ * }
+ */
+function constructFrom(date, value) {
+  if (typeof date === "function") return date(value);
+
+  if (date && typeof date === "object" && constructFromSymbol in date)
+    return date[constructFromSymbol](value);
+
+  if (date instanceof Date) return new date.constructor(value);
+
+  return new Date(value);
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_constructFrom = ((/* unused pure expression or super */ null && (constructFrom)));
+
+;// ./packages/dataviews/node_modules/date-fns/toDate.js
+
+
+/**
+ * @name toDate
+ * @category Common Helpers
+ * @summary Convert the given argument to an instance of Date.
+ *
+ * @description
+ * Convert the given argument to an instance of Date.
+ *
+ * If the argument is an instance of Date, the function returns its clone.
+ *
+ * If the argument is a number, it is treated as a timestamp.
+ *
+ * If the argument is none of the above, the function returns Invalid Date.
+ *
+ * Starting from v3.7.0, it clones a date using `[Symbol.for("constructDateFrom")]`
+ * enabling to transfer extra properties from the reference date to the new date.
+ * It's useful for extensions like [`TZDate`](https://github.com/date-fns/tz)
+ * that accept a time zone as a constructor argument.
+ *
+ * **Note**: *all* Date arguments passed to any *date-fns* function is processed by `toDate`.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param argument - The value to convert
+ *
+ * @returns The parsed date in the local time zone
+ *
+ * @example
+ * // Clone the date:
+ * const result = toDate(new Date(2014, 1, 11, 11, 30, 30))
+ * //=> Tue Feb 11 2014 11:30:30
+ *
+ * @example
+ * // Convert the timestamp to date:
+ * const result = toDate(1392098430000)
+ * //=> Tue Feb 11 2014 11:30:30
+ */
+function toDate(argument, context) {
+  // [TODO] Get rid of `toDate` or `constructFrom`?
+  return constructFrom(context || argument, argument);
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_toDate = ((/* unused pure expression or super */ null && (toDate)));
+
+;// ./packages/dataviews/node_modules/date-fns/addDays.js
+
+
+
+/**
+ * The {@link addDays} function options.
+ */
+
+/**
+ * @name addDays
+ * @category Day Helpers
+ * @summary Add the specified number of days to the given date.
+ *
+ * @description
+ * Add the specified number of days to the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of days to be added.
+ * @param options - An object with options
+ *
+ * @returns The new date with the days added
+ *
+ * @example
+ * // Add 10 days to 1 September 2014:
+ * const result = addDays(new Date(2014, 8, 1), 10)
+ * //=> Thu Sep 11 2014 00:00:00
+ */
+function addDays(date, amount, options) {
+  const _date = toDate(date, options?.in);
+  if (isNaN(amount)) return constructFrom(options?.in || date, NaN);
+
+  // If 0 days, no-op to avoid changing times in the hour before end of DST
+  if (!amount) return _date;
+
+  _date.setDate(_date.getDate() + amount);
+  return _date;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_addDays = ((/* unused pure expression or super */ null && (addDays)));
+
+;// ./packages/dataviews/node_modules/date-fns/subDays.js
+
+
+/**
+ * The {@link subDays} function options.
+ */
+
+/**
+ * @name subDays
+ * @category Day Helpers
+ * @summary Subtract the specified number of days from the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of days to be subtracted.
+ * @param options - An object with options
+ *
+ * @returns The new date with the days subtracted
+ *
+ * @example
+ * // Subtract 10 days from 1 September 2014:
+ * const result = subDays(new Date(2014, 8, 1), 10)
+ * //=> Fri Aug 22 2014 00:00:00
+ */
+function subDays(date, amount, options) {
+  return addDays(date, -amount, options);
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_subDays = ((/* unused pure expression or super */ null && (subDays)));
+
+;// ./packages/dataviews/node_modules/date-fns/addWeeks.js
+
+
+/**
+ * The {@link addWeeks} function options.
+ */
+
+/**
+ * @name addWeeks
+ * @category Week Helpers
+ * @summary Add the specified number of weeks to the given date.
+ *
+ * @description
+ * Add the specified number of weeks to the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of weeks to be added.
+ * @param options - An object with options
+ *
+ * @returns The new date with the weeks added
+ *
+ * @example
+ * // Add 4 weeks to 1 September 2014:
+ * const result = addWeeks(new Date(2014, 8, 1), 4)
+ * //=> Mon Sep 29 2014 00:00:00
+ */
+function addWeeks(date, amount, options) {
+  return addDays(date, amount * 7, options);
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_addWeeks = ((/* unused pure expression or super */ null && (addWeeks)));
+
+;// ./packages/dataviews/node_modules/date-fns/subWeeks.js
+
+
+/**
+ * The {@link subWeeks} function options.
+ */
+
+/**
+ * @name subWeeks
+ * @category Week Helpers
+ * @summary Subtract the specified number of weeks from the given date.
+ *
+ * @description
+ * Subtract the specified number of weeks from the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of weeks to be subtracted.
+ * @param options - An object with options
+ *
+ * @returns The new date with the weeks subtracted
+ *
+ * @example
+ * // Subtract 4 weeks from 1 September 2014:
+ * const result = subWeeks(new Date(2014, 8, 1), 4)
+ * //=> Mon Aug 04 2014 00:00:00
+ */
+function subWeeks(date, amount, options) {
+  return addWeeks(date, -amount, options);
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_subWeeks = ((/* unused pure expression or super */ null && (subWeeks)));
+
+;// ./packages/dataviews/node_modules/date-fns/addMonths.js
+
+
+
+/**
+ * The {@link addMonths} function options.
+ */
+
+/**
+ * @name addMonths
+ * @category Month Helpers
+ * @summary Add the specified number of months to the given date.
+ *
+ * @description
+ * Add the specified number of months to the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of months to be added.
+ * @param options - The options object
+ *
+ * @returns The new date with the months added
+ *
+ * @example
+ * // Add 5 months to 1 September 2014:
+ * const result = addMonths(new Date(2014, 8, 1), 5)
+ * //=> Sun Feb 01 2015 00:00:00
+ *
+ * // Add one month to 30 January 2023:
+ * const result = addMonths(new Date(2023, 0, 30), 1)
+ * //=> Tue Feb 28 2023 00:00:00
+ */
+function addMonths(date, amount, options) {
+  const _date = toDate(date, options?.in);
+  if (isNaN(amount)) return constructFrom(options?.in || date, NaN);
+  if (!amount) {
+    // If 0 months, no-op to avoid changing times in the hour before end of DST
+    return _date;
+  }
+  const dayOfMonth = _date.getDate();
+
+  // The JS Date object supports date math by accepting out-of-bounds values for
+  // month, day, etc. For example, new Date(2020, 0, 0) returns 31 Dec 2019 and
+  // new Date(2020, 13, 1) returns 1 Feb 2021.  This is *almost* the behavior we
+  // want except that dates will wrap around the end of a month, meaning that
+  // new Date(2020, 13, 31) will return 3 Mar 2021 not 28 Feb 2021 as desired. So
+  // we'll default to the end of the desired month by adding 1 to the desired
+  // month and using a date of 0 to back up one day to the end of the desired
+  // month.
+  const endOfDesiredMonth = constructFrom(options?.in || date, _date.getTime());
+  endOfDesiredMonth.setMonth(_date.getMonth() + amount + 1, 0);
+  const daysInMonth = endOfDesiredMonth.getDate();
+  if (dayOfMonth >= daysInMonth) {
+    // If we're already at the end of the month, then this is the correct date
+    // and we're done.
+    return endOfDesiredMonth;
+  } else {
+    // Otherwise, we now know that setting the original day-of-month value won't
+    // cause an overflow, so set the desired day-of-month. Note that we can't
+    // just set the date of `endOfDesiredMonth` because that object may have had
+    // its time changed in the unusual case where where a DST transition was on
+    // the last day of the month and its local time was in the hour skipped or
+    // repeated next to a DST transition.  So we use `date` instead which is
+    // guaranteed to still have the original time.
+    _date.setFullYear(
+      endOfDesiredMonth.getFullYear(),
+      endOfDesiredMonth.getMonth(),
+      dayOfMonth,
+    );
+    return _date;
+  }
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_addMonths = ((/* unused pure expression or super */ null && (addMonths)));
+
+;// ./packages/dataviews/node_modules/date-fns/subMonths.js
+
+
+/**
+ * The subMonths function options.
+ */
+
+/**
+ * @name subMonths
+ * @category Month Helpers
+ * @summary Subtract the specified number of months from the given date.
+ *
+ * @description
+ * Subtract the specified number of months from the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of months to be subtracted.
+ * @param options - An object with options
+ *
+ * @returns The new date with the months subtracted
+ *
+ * @example
+ * // Subtract 5 months from 1 February 2015:
+ * const result = subMonths(new Date(2015, 1, 1), 5)
+ * //=> Mon Sep 01 2014 00:00:00
+ */
+function subMonths(date, amount, options) {
+  return addMonths(date, -amount, options);
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_subMonths = ((/* unused pure expression or super */ null && (subMonths)));
+
+;// ./packages/dataviews/node_modules/date-fns/addYears.js
+
+
+/**
+ * The {@link addYears} function options.
+ */
+
+/**
+ * @name addYears
+ * @category Year Helpers
+ * @summary Add the specified number of years to the given date.
+ *
+ * @description
+ * Add the specified number of years to the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of years to be added.
+ * @param options - The options
+ *
+ * @returns The new date with the years added
+ *
+ * @example
+ * // Add 5 years to 1 September 2014:
+ * const result = addYears(new Date(2014, 8, 1), 5)
+ * //=> Sun Sep 01 2019 00:00:00
+ */
+function addYears(date, amount, options) {
+  return addMonths(date, amount * 12, options);
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_addYears = ((/* unused pure expression or super */ null && (addYears)));
+
+;// ./packages/dataviews/node_modules/date-fns/subYears.js
+
+
+/**
+ * The {@link subYears} function options.
+ */
+
+/**
+ * @name subYears
+ * @category Year Helpers
+ * @summary Subtract the specified number of years from the given date.
+ *
+ * @description
+ * Subtract the specified number of years from the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of years to be subtracted.
+ * @param options - An object with options
+ *
+ * @returns The new date with the years subtracted
+ *
+ * @example
+ * // Subtract 5 years from 1 September 2014:
+ * const result = subYears(new Date(2014, 8, 1), 5)
+ * //=> Tue Sep 01 2009 00:00:00
+ */
+function subYears(date, amount, options) {
+  return addYears(date, -amount, options);
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_subYears = ((/* unused pure expression or super */ null && (subYears)));
+
 ;// ./packages/icons/build-module/library/arrow-up.js
 /**
  * WordPress dependencies
@@ -31702,7 +32484,24 @@ const constants_OPERATOR_IS_ANY = 'isAny';
 const constants_OPERATOR_IS_NONE = 'isNone';
 const OPERATOR_IS_ALL = 'isAll';
 const OPERATOR_IS_NOT_ALL = 'isNotAll';
-const ALL_OPERATORS = [constants_OPERATOR_IS, constants_OPERATOR_IS_NOT, constants_OPERATOR_IS_ANY, constants_OPERATOR_IS_NONE, OPERATOR_IS_ALL, OPERATOR_IS_NOT_ALL];
+const OPERATOR_LESS_THAN = 'lessThan';
+const OPERATOR_GREATER_THAN = 'greaterThan';
+const OPERATOR_LESS_THAN_OR_EQUAL = 'lessThanOrEqual';
+const OPERATOR_GREATER_THAN_OR_EQUAL = 'greaterThanOrEqual';
+const OPERATOR_BEFORE = 'before';
+const OPERATOR_AFTER = 'after';
+const OPERATOR_BEFORE_INC = 'beforeInc';
+const OPERATOR_AFTER_INC = 'afterInc';
+const OPERATOR_CONTAINS = 'contains';
+const OPERATOR_NOT_CONTAINS = 'notContains';
+const OPERATOR_STARTS_WITH = 'startsWith';
+const OPERATOR_BETWEEN = 'between';
+const OPERATOR_ON = 'on';
+const OPERATOR_NOT_ON = 'notOn';
+const OPERATOR_IN_THE_PAST = 'inThePast';
+const OPERATOR_OVER = 'over';
+const ALL_OPERATORS = [constants_OPERATOR_IS, constants_OPERATOR_IS_NOT, constants_OPERATOR_IS_ANY, constants_OPERATOR_IS_NONE, OPERATOR_IS_ALL, OPERATOR_IS_NOT_ALL, OPERATOR_LESS_THAN, OPERATOR_GREATER_THAN, OPERATOR_LESS_THAN_OR_EQUAL, OPERATOR_GREATER_THAN_OR_EQUAL, OPERATOR_BEFORE, OPERATOR_AFTER, OPERATOR_BEFORE_INC, OPERATOR_AFTER_INC, OPERATOR_CONTAINS, OPERATOR_NOT_CONTAINS, OPERATOR_STARTS_WITH, OPERATOR_BETWEEN, OPERATOR_ON, OPERATOR_NOT_ON, OPERATOR_IN_THE_PAST, OPERATOR_OVER];
+const SINGLE_SELECTION_OPERATORS = [constants_OPERATOR_IS, constants_OPERATOR_IS_NOT, OPERATOR_LESS_THAN, OPERATOR_GREATER_THAN, OPERATOR_LESS_THAN_OR_EQUAL, OPERATOR_GREATER_THAN_OR_EQUAL, OPERATOR_BEFORE, OPERATOR_AFTER, OPERATOR_BEFORE_INC, OPERATOR_AFTER_INC, OPERATOR_CONTAINS, OPERATOR_NOT_CONTAINS, OPERATOR_STARTS_WITH, OPERATOR_ON, OPERATOR_NOT_ON];
 const OPERATORS = {
   [constants_OPERATOR_IS]: {
     key: 'is-filter',
@@ -31727,6 +32526,70 @@ const OPERATORS = {
   [OPERATOR_IS_NOT_ALL]: {
     key: 'is-not-all-filter',
     label: (0,external_wp_i18n_namespaceObject.__)('Is not all')
+  },
+  [OPERATOR_LESS_THAN]: {
+    key: 'less-than-filter',
+    label: (0,external_wp_i18n_namespaceObject.__)('Less than')
+  },
+  [OPERATOR_GREATER_THAN]: {
+    key: 'greater-than-filter',
+    label: (0,external_wp_i18n_namespaceObject.__)('Greater than')
+  },
+  [OPERATOR_LESS_THAN_OR_EQUAL]: {
+    key: 'less-than-or-equal-filter',
+    label: (0,external_wp_i18n_namespaceObject.__)('Less than or equal')
+  },
+  [OPERATOR_GREATER_THAN_OR_EQUAL]: {
+    key: 'greater-than-or-equal-filter',
+    label: (0,external_wp_i18n_namespaceObject.__)('Greater than or equal')
+  },
+  [OPERATOR_BEFORE]: {
+    key: 'before-filter',
+    label: (0,external_wp_i18n_namespaceObject.__)('Before')
+  },
+  [OPERATOR_AFTER]: {
+    key: 'after-filter',
+    label: (0,external_wp_i18n_namespaceObject.__)('After')
+  },
+  [OPERATOR_BEFORE_INC]: {
+    key: 'before-inc-filter',
+    label: (0,external_wp_i18n_namespaceObject.__)('Before (inc)')
+  },
+  [OPERATOR_AFTER_INC]: {
+    key: 'after-inc-filter',
+    label: (0,external_wp_i18n_namespaceObject.__)('After (inc)')
+  },
+  [OPERATOR_CONTAINS]: {
+    key: 'contains-filter',
+    label: (0,external_wp_i18n_namespaceObject.__)('Contains')
+  },
+  [OPERATOR_NOT_CONTAINS]: {
+    key: 'not-contains-filter',
+    label: (0,external_wp_i18n_namespaceObject.__)("Doesn't contain")
+  },
+  [OPERATOR_STARTS_WITH]: {
+    key: 'starts-with-filter',
+    label: (0,external_wp_i18n_namespaceObject.__)('Starts with')
+  },
+  [OPERATOR_BETWEEN]: {
+    key: 'between-filter',
+    label: (0,external_wp_i18n_namespaceObject.__)('Between (inc)')
+  },
+  [OPERATOR_ON]: {
+    key: 'on-filter',
+    label: (0,external_wp_i18n_namespaceObject.__)('On')
+  },
+  [OPERATOR_NOT_ON]: {
+    key: 'not-on-filter',
+    label: (0,external_wp_i18n_namespaceObject.__)('Not on')
+  },
+  [OPERATOR_IN_THE_PAST]: {
+    key: 'in-the-past-filter',
+    label: (0,external_wp_i18n_namespaceObject.__)('In the past')
+  },
+  [OPERATOR_OVER]: {
+    key: 'over-filter',
+    label: (0,external_wp_i18n_namespaceObject.__)('Over')
   }
 };
 const SORTING_DIRECTIONS = ['asc', 'desc'];
@@ -31752,15 +32615,89 @@ const constants_LAYOUT_TABLE = 'table';
 const constants_LAYOUT_GRID = 'grid';
 const constants_LAYOUT_LIST = 'list';
 
+;// ./packages/dataviews/build-module/utils.js
+/**
+ * Internal dependencies
+ */
+
+function renderFromElements({
+  item,
+  field
+}) {
+  const value = field.getValue({
+    item
+  });
+  return field?.elements?.find(element => element.value === value)?.label || field.getValue({
+    item
+  });
+}
+
+;// ./packages/dataviews/build-module/field-types/email.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function sort(valueA, valueB, direction) {
+  return direction === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+}
+function isValid(value, context) {
+  // TODO: this implicitly means the value is required.
+  if (value === '') {
+    return false;
+  }
+  if (!(0,external_wp_url_namespaceObject.isEmail)(value)) {
+    return false;
+  }
+  if (context?.elements) {
+    const validValues = context?.elements?.map(f => f.value);
+    if (!validValues.includes(value)) {
+      return false;
+    }
+  }
+  return true;
+}
+/* harmony default export */ const email = ({
+  sort,
+  isValid,
+  Edit: 'email',
+  render: ({
+    item,
+    field
+  }) => {
+    return field.elements ? renderFromElements({
+      item,
+      field
+    }) : field.getValue({
+      item
+    });
+  },
+  enableSorting: true,
+  filterBy: {
+    defaultOperators: [constants_OPERATOR_IS_ANY, constants_OPERATOR_IS_NONE],
+    validOperators: [constants_OPERATOR_IS, constants_OPERATOR_IS_NOT, OPERATOR_CONTAINS, OPERATOR_NOT_CONTAINS, OPERATOR_STARTS_WITH,
+    // Multiple selection
+    constants_OPERATOR_IS_ANY, constants_OPERATOR_IS_NONE, OPERATOR_IS_ALL, OPERATOR_IS_NOT_ALL]
+  }
+});
+
 ;// ./packages/dataviews/build-module/field-types/integer.js
 /**
  * Internal dependencies
  */
 
-function sort(a, b, direction) {
+
+
+function integer_sort(a, b, direction) {
   return direction === 'asc' ? a - b : b - a;
 }
-function isValid(value, context) {
+function integer_isValid(value, context) {
   // TODO: this implicitly means the value is required.
   if (value === '') {
     return false;
@@ -31777,15 +32714,37 @@ function isValid(value, context) {
   return true;
 }
 /* harmony default export */ const integer = ({
-  sort,
-  isValid,
-  Edit: 'integer'
+  sort: integer_sort,
+  isValid: integer_isValid,
+  Edit: 'integer',
+  render: ({
+    item,
+    field
+  }) => {
+    return field.elements ? renderFromElements({
+      item,
+      field
+    }) : field.getValue({
+      item
+    });
+  },
+  enableSorting: true,
+  filterBy: {
+    defaultOperators: [constants_OPERATOR_IS, constants_OPERATOR_IS_NOT, OPERATOR_LESS_THAN, OPERATOR_GREATER_THAN, OPERATOR_LESS_THAN_OR_EQUAL, OPERATOR_GREATER_THAN_OR_EQUAL, OPERATOR_BETWEEN],
+    validOperators: [
+    // Single-selection
+    constants_OPERATOR_IS, constants_OPERATOR_IS_NOT, OPERATOR_LESS_THAN, OPERATOR_GREATER_THAN, OPERATOR_LESS_THAN_OR_EQUAL, OPERATOR_GREATER_THAN_OR_EQUAL, OPERATOR_BETWEEN,
+    // Multiple-selection
+    constants_OPERATOR_IS_ANY, constants_OPERATOR_IS_NONE, OPERATOR_IS_ALL, OPERATOR_IS_NOT_ALL]
+  }
 });
 
 ;// ./packages/dataviews/build-module/field-types/text.js
 /**
  * Internal dependencies
  */
+
+
 
 function text_sort(valueA, valueB, direction) {
   return direction === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
@@ -31802,13 +32761,35 @@ function text_isValid(value, context) {
 /* harmony default export */ const field_types_text = ({
   sort: text_sort,
   isValid: text_isValid,
-  Edit: 'text'
+  Edit: 'text',
+  render: ({
+    item,
+    field
+  }) => {
+    return field.elements ? renderFromElements({
+      item,
+      field
+    }) : field.getValue({
+      item
+    });
+  },
+  enableSorting: true,
+  filterBy: {
+    defaultOperators: [constants_OPERATOR_IS_ANY, constants_OPERATOR_IS_NONE],
+    validOperators: [
+    // Single selection
+    constants_OPERATOR_IS, constants_OPERATOR_IS_NOT, OPERATOR_CONTAINS, OPERATOR_NOT_CONTAINS, OPERATOR_STARTS_WITH,
+    // Multiple selection
+    constants_OPERATOR_IS_ANY, constants_OPERATOR_IS_NONE, OPERATOR_IS_ALL, OPERATOR_IS_NOT_ALL]
+  }
 });
 
 ;// ./packages/dataviews/build-module/field-types/datetime.js
 /**
  * Internal dependencies
  */
+
+
 
 function datetime_sort(a, b, direction) {
   const timeA = new Date(a).getTime();
@@ -31827,13 +32808,185 @@ function datetime_isValid(value, context) {
 /* harmony default export */ const datetime = ({
   sort: datetime_sort,
   isValid: datetime_isValid,
-  Edit: 'datetime'
+  Edit: 'datetime',
+  render: ({
+    item,
+    field
+  }) => {
+    return field.elements ? renderFromElements({
+      item,
+      field
+    }) : field.getValue({
+      item
+    });
+  },
+  enableSorting: true,
+  filterBy: {
+    defaultOperators: [OPERATOR_ON, OPERATOR_NOT_ON, OPERATOR_BEFORE, OPERATOR_AFTER, OPERATOR_BEFORE_INC, OPERATOR_AFTER_INC, OPERATOR_IN_THE_PAST, OPERATOR_OVER],
+    validOperators: [OPERATOR_ON, OPERATOR_NOT_ON, OPERATOR_BEFORE, OPERATOR_AFTER, OPERATOR_BEFORE_INC, OPERATOR_AFTER_INC, OPERATOR_IN_THE_PAST, OPERATOR_OVER]
+  }
 });
+
+;// ./packages/dataviews/build-module/field-types/boolean.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function boolean_sort(a, b, direction) {
+  const boolA = Boolean(a);
+  const boolB = Boolean(b);
+  if (boolA === boolB) {
+    return 0;
+  }
+
+  // In ascending order, false comes before true
+  if (direction === 'asc') {
+    return boolA ? 1 : -1;
+  }
+
+  // In descending order, true comes before false
+  return boolA ? -1 : 1;
+}
+function boolean_isValid(value) {
+  if (![true, false, undefined].includes(value)) {
+    return false;
+  }
+  return true;
+}
+/* harmony default export */ const field_types_boolean = ({
+  sort: boolean_sort,
+  isValid: boolean_isValid,
+  Edit: 'boolean',
+  render: ({
+    item,
+    field
+  }) => {
+    if (field.elements) {
+      return renderFromElements({
+        item,
+        field
+      });
+    }
+    if (field.getValue({
+      item
+    }) === true) {
+      return (0,external_wp_i18n_namespaceObject.__)('True');
+    }
+    if (field.getValue({
+      item
+    }) === false) {
+      return (0,external_wp_i18n_namespaceObject.__)('False');
+    }
+    return null;
+  },
+  enableSorting: true,
+  filterBy: {
+    defaultOperators: [constants_OPERATOR_IS, constants_OPERATOR_IS_NOT],
+    validOperators: [constants_OPERATOR_IS, constants_OPERATOR_IS_NOT]
+  }
+});
+
+;// ./packages/dataviews/build-module/field-types/media.js
+/**
+ * Internal dependencies
+ */
+
+function media_sort() {
+  return 0;
+}
+function media_isValid(value, context) {
+  if (context?.elements) {
+    const validValues = context?.elements.map(f => f.value);
+    if (!validValues.includes(value)) {
+      return false;
+    }
+  }
+  return true;
+}
+/* harmony default export */ const media = ({
+  sort: media_sort,
+  isValid: media_isValid,
+  Edit: null,
+  render: () => null,
+  enableSorting: false,
+  filterBy: false
+});
+
+;// ./packages/dataviews/build-module/field-types/array.js
+/**
+ * Internal dependencies
+ */
+
+
+
+// Sort arrays by length, then alphabetically by joined string
+function array_sort(valueA, valueB, direction) {
+  const arrA = Array.isArray(valueA) ? valueA : [];
+  const arrB = Array.isArray(valueB) ? valueB : [];
+  if (arrA.length !== arrB.length) {
+    return direction === 'asc' ? arrA.length - arrB.length : arrB.length - arrA.length;
+  }
+  const joinedA = arrA.join(',');
+  const joinedB = arrB.join(',');
+  return direction === 'asc' ? joinedA.localeCompare(joinedB) : joinedB.localeCompare(joinedA);
+}
+function array_isValid(value, context) {
+  if (!Array.isArray(value)) {
+    return false;
+  }
+
+  // Only allow strings for now. Can be extended to other types in the future.
+  if (!value.every(v => typeof v === 'string')) {
+    return false;
+  }
+  if (context?.elements) {
+    const validValues = context.elements.map(f => f.value);
+    if (!value.every(v => validValues.includes(v))) {
+      return false;
+    }
+  }
+  return true;
+}
+function render({
+  item,
+  field
+}) {
+  const value = field.getValue({
+    item
+  }) || [];
+  return value.join(', ');
+}
+const arrayFieldType = {
+  sort: array_sort,
+  isValid: array_isValid,
+  Edit: null,
+  // Not implemented yet
+  render,
+  enableSorting: true,
+  filterBy: {
+    defaultOperators: [constants_OPERATOR_IS_ANY, constants_OPERATOR_IS_NONE],
+    validOperators: [constants_OPERATOR_IS_ANY, constants_OPERATOR_IS_NONE, OPERATOR_IS_ALL, OPERATOR_IS_NOT_ALL]
+  }
+};
+/* harmony default export */ const array = (arrayFieldType);
 
 ;// ./packages/dataviews/build-module/field-types/index.js
 /**
  * Internal dependencies
  */
+
+
+
+
+
+
 
 
 
@@ -31846,6 +32999,9 @@ function datetime_isValid(value, context) {
  * @return A field type definition.
  */
 function getFieldTypeDefinition(type) {
+  if ('email' === type) {
+    return email;
+  }
   if ('integer' === type) {
     return integer;
   }
@@ -31855,6 +33011,18 @@ function getFieldTypeDefinition(type) {
   if ('datetime' === type) {
     return datetime;
   }
+  if ('boolean' === type) {
+    return field_types_boolean;
+  }
+  if ('media' === type) {
+    return media;
+  }
+  if ('array' === type) {
+    return array;
+  }
+
+  // This is a fallback for fields that don't provide a type.
+  // It can be removed when the field.type is mandatory.
   return {
     sort: (a, b, direction) => {
       if (typeof a === 'number' && typeof b === 'number') {
@@ -31871,8 +33039,62 @@ function getFieldTypeDefinition(type) {
       }
       return true;
     },
-    Edit: () => null
+    Edit: null,
+    render: ({
+      item,
+      field
+    }) => {
+      return field.elements ? renderFromElements({
+        item,
+        field
+      }) : field.getValue({
+        item
+      });
+    },
+    enableSorting: true,
+    filterBy: {
+      defaultOperators: [constants_OPERATOR_IS, constants_OPERATOR_IS_NOT],
+      validOperators: ALL_OPERATORS
+    }
   };
+}
+
+;// ./packages/dataviews/build-module/dataform-controls/checkbox.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+function Checkbox({
+  field,
+  onChange,
+  data,
+  hideLabelFromVision
+}) {
+  const {
+    id,
+    getValue,
+    label,
+    description
+  } = field;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+    __nextHasNoMarginBottom: true,
+    hidden: hideLabelFromVision,
+    label: label,
+    help: description,
+    checked: getValue({
+      item: data
+    }),
+    onChange: () => onChange({
+      [id]: !getValue({
+        item: data
+      })
+    })
+  });
 }
 
 ;// ./packages/dataviews/build-module/dataform-controls/datetime.js
@@ -31882,15 +33104,100 @@ function getFieldTypeDefinition(type) {
 
 
 
+
 /**
  * Internal dependencies
  */
 
+
+
+const TIME_UNITS_OPTIONS = {
+  [OPERATOR_IN_THE_PAST]: [{
+    value: 'days',
+    label: (0,external_wp_i18n_namespaceObject.__)('Days')
+  }, {
+    value: 'weeks',
+    label: (0,external_wp_i18n_namespaceObject.__)('Weeks')
+  }, {
+    value: 'months',
+    label: (0,external_wp_i18n_namespaceObject.__)('Months')
+  }, {
+    value: 'years',
+    label: (0,external_wp_i18n_namespaceObject.__)('Years')
+  }],
+  [OPERATOR_OVER]: [{
+    value: 'days',
+    label: (0,external_wp_i18n_namespaceObject.__)('Days ago')
+  }, {
+    value: 'weeks',
+    label: (0,external_wp_i18n_namespaceObject.__)('Weeks ago')
+  }, {
+    value: 'months',
+    label: (0,external_wp_i18n_namespaceObject.__)('Months ago')
+  }, {
+    value: 'years',
+    label: (0,external_wp_i18n_namespaceObject.__)('Years ago')
+  }]
+};
+function RelativeDateControls({
+  id,
+  value,
+  onChange,
+  label,
+  hideLabelFromVision,
+  options
+}) {
+  const {
+    value: relValue = '',
+    unit = options[0].value
+  } = value;
+  const onChangeValue = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: {
+      value: Number(newValue),
+      unit
+    }
+  }), [id, onChange, unit]);
+  const onChangeUnit = (0,external_wp_element_namespaceObject.useCallback)(newUnit => onChange({
+    [id]: {
+      value: relValue,
+      unit: newUnit
+    }
+  }), [id, onChange, relValue]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
+    id: id,
+    __nextHasNoMarginBottom: true,
+    className: "dataviews-controls__datetime",
+    label: label,
+    hideLabelFromVision: hideLabelFromVision,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+      spacing: 2.5,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+        __next40pxDefaultSize: true,
+        className: "dataviews-controls__datetime-number",
+        spinControls: "none",
+        min: 1,
+        step: 1,
+        value: relValue,
+        onChange: onChangeValue
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+        className: "dataviews-controls__datetime-unit",
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Unit'),
+        value: unit,
+        options: options,
+        onChange: onChangeUnit,
+        hideLabelFromVision: true
+      })]
+    })
+  });
+}
 function DateTime({
   data,
   field,
   onChange,
-  hideLabelFromVision
+  hideLabelFromVision,
+  operator
 }) {
   const {
     id,
@@ -31902,6 +33209,16 @@ function DateTime({
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: newValue
   }), [id, onChange]);
+  if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RelativeDateControls, {
+      id: id,
+      value: value && typeof value === 'object' ? value : {},
+      onChange: onChange,
+      label: label,
+      hideLabelFromVision: hideLabelFromVision,
+      options: TIME_UNITS_OPTIONS[operator]
+    });
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
     className: "dataviews-controls__datetime",
     children: [!hideLabelFromVision && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
@@ -31911,14 +33228,14 @@ function DateTime({
       as: "legend",
       children: label
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TimePicker, {
-      currentTime: value,
+      currentTime: typeof value === 'string' ? value : undefined,
       onChange: onChangeControl,
       hideLabelFromVision: true
     })]
   });
 }
 
-;// ./packages/dataviews/build-module/dataform-controls/integer.js
+;// ./packages/dataviews/build-module/dataform-controls/email.js
 /**
  * WordPress dependencies
  */
@@ -31929,11 +33246,93 @@ function DateTime({
  * Internal dependencies
  */
 
-function Integer({
+function Email({
   data,
   field,
   onChange,
   hideLabelFromVision
+}) {
+  const {
+    id,
+    label,
+    placeholder,
+    description
+  } = field;
+  const value = field.getValue({
+    item: data
+  });
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: newValue
+  }), [id, onChange]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+    type: "email",
+    label: label,
+    placeholder: placeholder,
+    value: value !== null && value !== void 0 ? value : '',
+    help: description,
+    onChange: onChangeControl,
+    __next40pxDefaultSize: true,
+    __nextHasNoMarginBottom: true,
+    hideLabelFromVision: hideLabelFromVision
+  });
+}
+
+;// ./packages/dataviews/build-module/dataform-controls/integer.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+function BetweenControls({
+  id,
+  value,
+  onChange,
+  hideLabelFromVision
+}) {
+  const [min = '', max = ''] = Array.isArray(value) ? value : [];
+  const onChangeMin = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: [Number(newValue), max]
+  }), [id, onChange, max]);
+  const onChangeMax = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: [min, Number(newValue)]
+  }), [id, onChange, min]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
+    __nextHasNoMarginBottom: true,
+    help: (0,external_wp_i18n_namespaceObject.__)('The max. value must be greater than the min. value.'),
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
+      direction: "row",
+      gap: 4,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Min.'),
+        value: min,
+        max: max ? Number(max) - 1 : undefined,
+        onChange: onChangeMin,
+        __next40pxDefaultSize: true,
+        hideLabelFromVision: hideLabelFromVision
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Max.'),
+        value: max,
+        min: min ? Number(min) + 1 : undefined,
+        onChange: onChangeMax,
+        __next40pxDefaultSize: true,
+        hideLabelFromVision: hideLabelFromVision
+      })]
+    })
+  });
+}
+function Integer({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision,
+  operator
 }) {
   var _field$getValue;
   const {
@@ -31947,6 +33346,14 @@ function Integer({
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: Number(newValue)
   }), [id, onChange]);
+  if (operator === OPERATOR_BETWEEN) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BetweenControls, {
+      id: id,
+      value: value,
+      onChange: onChange,
+      hideLabelFromVision: hideLabelFromVision
+    });
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
     label: label,
     help: description,
@@ -32040,6 +33447,7 @@ function Select({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
     label: label,
     value: value,
+    help: field.description,
     options: elements,
     onChange: onChangeControl,
     __next40pxDefaultSize: true,
@@ -32068,7 +33476,8 @@ function Text({
   const {
     id,
     label,
-    placeholder
+    placeholder,
+    description
   } = field;
   const value = field.getValue({
     item: data
@@ -32080,10 +33489,93 @@ function Text({
     label: label,
     placeholder: placeholder,
     value: value !== null && value !== void 0 ? value : '',
+    help: description,
     onChange: onChangeControl,
     __next40pxDefaultSize: true,
     __nextHasNoMarginBottom: true,
     hideLabelFromVision: hideLabelFromVision
+  });
+}
+
+;// ./packages/dataviews/build-module/dataform-controls/toggle-group.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+function ToggleGroup({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  const {
+    id
+  } = field;
+  const value = field.getValue({
+    item: data
+  });
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: newValue
+  }), [id, onChange]);
+  if (field.elements) {
+    const selectedOption = field.elements.find(el => el.value === value);
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+      __next40pxDefaultSize: true,
+      __nextHasNoMarginBottom: true,
+      isBlock: true,
+      label: field.label,
+      help: selectedOption?.description || field.description,
+      onChange: onChangeControl,
+      value: value,
+      hideLabelFromVision: hideLabelFromVision,
+      children: field.elements.map(el => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+        label: el.label,
+        value: el.value
+      }, el.value))
+    });
+  }
+  return null;
+}
+
+;// ./packages/dataviews/build-module/dataform-controls/boolean.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+function boolean_Boolean({
+  field,
+  onChange,
+  data,
+  hideLabelFromVision
+}) {
+  const {
+    id,
+    getValue,
+    label
+  } = field;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+    hidden: hideLabelFromVision,
+    __nextHasNoMarginBottom: true,
+    label: label,
+    checked: getValue({
+      item: data
+    }),
+    onChange: () => onChange({
+      [id]: !getValue({
+        item: data
+      })
+    })
   });
 }
 
@@ -32101,12 +33593,20 @@ function Text({
 
 
 
+
+
+
+
 const FORM_CONTROLS = {
+  boolean: boolean_Boolean,
+  checkbox: Checkbox,
   datetime: DateTime,
+  email: Email,
   integer: Integer,
   radio: Radio,
   select: Select,
-  text: Text
+  text: Text,
+  toggleGroup: ToggleGroup
 };
 function getControl(field, fieldTypeDefinition) {
   if (typeof field.Edit === 'function') {
@@ -32132,8 +33632,13 @@ function getControlByType(type) {
 
 ;// ./packages/dataviews/build-module/normalize-fields.js
 /**
+ * External dependencies
+ */
+
+/**
  * Internal dependencies
  */
+
 
 
 const getValueFromId = id => ({
@@ -32150,6 +33655,61 @@ const getValueFromId = id => ({
   }
   return value;
 };
+function getFilterBy(field, fieldTypeDefinition) {
+  if (field.filterBy === false) {
+    return false;
+  }
+  if (typeof field.filterBy === 'object') {
+    let operators = field.filterBy.operators;
+
+    // Assign default values if no operator was provided.
+    if (!operators || !Array.isArray(operators)) {
+      operators = !!fieldTypeDefinition.filterBy ? fieldTypeDefinition.filterBy.defaultOperators : [];
+    }
+
+    // Make sure only valid operators are included.
+    let validOperators = ALL_OPERATORS;
+    if (typeof fieldTypeDefinition.filterBy === 'object') {
+      validOperators = fieldTypeDefinition.filterBy.validOperators;
+    }
+    operators = operators.filter(operator => validOperators.includes(operator));
+
+    // The `between` operator is not supported when elements are provided.
+    if (field.elements && operators.includes(OPERATOR_BETWEEN)) {
+      operators = operators.filter(operator => operator !== OPERATOR_BETWEEN);
+    }
+
+    // Do not allow mixing single & multiselection operators.
+    // Remove multiselection operators if any of the single selection ones is present.
+    const hasSingleSelectionOperator = operators.some(operator => SINGLE_SELECTION_OPERATORS.includes(operator));
+    if (hasSingleSelectionOperator) {
+      operators = operators.filter(operator =>
+      // The 'Between' operator is unique as it can be combined with single selection operators.
+      [...SINGLE_SELECTION_OPERATORS, OPERATOR_BETWEEN].includes(operator));
+    }
+
+    // If no operators are left at this point,
+    // the filters should be disabled.
+    if (operators.length === 0) {
+      return false;
+    }
+    return {
+      isPrimary: !!field.filterBy.isPrimary,
+      operators
+    };
+  }
+  if (fieldTypeDefinition.filterBy === false) {
+    return false;
+  }
+  let defaultOperators = fieldTypeDefinition.filterBy.defaultOperators;
+  // The `between` operator is not supported when elements are provided.
+  if (field.elements && defaultOperators.includes(OPERATOR_BETWEEN)) {
+    defaultOperators = defaultOperators.filter(operator => operator !== OPERATOR_BETWEEN);
+  }
+  return {
+    operators: defaultOperators
+  };
+}
 
 /**
  * Apply default values and normalize the fields config.
@@ -32159,7 +33719,7 @@ const getValueFromId = id => ({
  */
 function normalizeFields(fields) {
   return fields.map(field => {
-    var _field$sort, _field$isValid, _field$enableHiding, _field$enableSorting;
+    var _field$sort, _field$isValid, _field$render, _field$enableHiding, _ref, _field$enableSorting, _ref2, _field$readOnly;
     const fieldTypeDefinition = getFieldTypeDefinition(field.type);
     const getValue = field.getValue || getValueFromId(field.id);
     const sort = (_field$sort = field.sort) !== null && _field$sort !== void 0 ? _field$sort : function sort(a, b, direction) {
@@ -32175,17 +33735,16 @@ function normalizeFields(fields) {
       }), context);
     };
     const Edit = getControl(field, fieldTypeDefinition);
-    const renderFromElements = ({
-      item
-    }) => {
-      const value = getValue({
-        item
-      });
-      return field?.elements?.find(element => element.value === value)?.label || getValue({
-        item
+    const render = (_field$render = field.render) !== null && _field$render !== void 0 ? _field$render : function render({
+      item,
+      field: renderedField
+    }) {
+      return fieldTypeDefinition.render({
+        item,
+        field: renderedField
       });
     };
-    const render = field.render || (field.elements ? renderFromElements : getValue);
+    const filterBy = getFilterBy(field, fieldTypeDefinition);
     return {
       ...field,
       label: field.label || field.id,
@@ -32196,7 +33755,9 @@ function normalizeFields(fields) {
       isValid,
       Edit,
       enableHiding: (_field$enableHiding = field.enableHiding) !== null && _field$enableHiding !== void 0 ? _field$enableHiding : true,
-      enableSorting: (_field$enableSorting = field.enableSorting) !== null && _field$enableSorting !== void 0 ? _field$enableSorting : true
+      enableSorting: (_ref = (_field$enableSorting = field.enableSorting) !== null && _field$enableSorting !== void 0 ? _field$enableSorting : fieldTypeDefinition.enableSorting) !== null && _ref !== void 0 ? _ref : true,
+      filterBy,
+      readOnly: (_ref2 = (_field$readOnly = field.readOnly) !== null && _field$readOnly !== void 0 ? _field$readOnly : fieldTypeDefinition.readOnly) !== null && _ref2 !== void 0 ? _ref2 : false
     };
   });
 }
@@ -32204,6 +33765,12 @@ function normalizeFields(fields) {
 ;// ./packages/dataviews/build-module/filter-and-sort-data-view.js
 /**
  * External dependencies
+ */
+
+
+
+/**
+ * WordPress dependencies
  */
 
 
@@ -32216,6 +33783,28 @@ function normalizeSearchInput(input = '') {
   return remove_accents_default()(input.trim().toLowerCase());
 }
 const filter_and_sort_data_view_EMPTY_ARRAY = [];
+
+/**
+ * Calculates a date offset from now.
+ *
+ * @param value Number of units to offset.
+ * @param unit  Unit of time to offset.
+ * @return      Date offset from now.
+ */
+function getRelativeDate(value, unit) {
+  switch (unit) {
+    case 'days':
+      return subDays(new Date(), value);
+    case 'weeks':
+      return subWeeks(new Date(), value);
+    case 'months':
+      return subMonths(new Date(), value);
+    case 'years':
+      return subYears(new Date(), value);
+    default:
+      return new Date();
+  }
+}
 
 /**
  * Applies the filtering, sorting and pagination to the raw data based on the view configuration.
@@ -32297,13 +33886,136 @@ function filterSortAndPaginate(data, view, fields) {
           filteredData = filteredData.filter(item => {
             return filter.value === field.getValue({
               item
-            });
+            }) || filter.value === undefined;
           });
         } else if (filter.operator === constants_OPERATOR_IS_NOT) {
           filteredData = filteredData.filter(item => {
             return filter.value !== field.getValue({
               item
             });
+          });
+        } else if (filter.operator === OPERATOR_ON && filter.value !== undefined) {
+          const filterDate = (0,external_wp_date_namespaceObject.getDate)(filter.value);
+          filteredData = filteredData.filter(item => {
+            const fieldDate = (0,external_wp_date_namespaceObject.getDate)(field.getValue({
+              item
+            }));
+            return filterDate.getTime() === fieldDate.getTime();
+          });
+        } else if (filter.operator === OPERATOR_NOT_ON && filter.value !== undefined) {
+          const filterDate = (0,external_wp_date_namespaceObject.getDate)(filter.value);
+          filteredData = filteredData.filter(item => {
+            const fieldDate = (0,external_wp_date_namespaceObject.getDate)(field.getValue({
+              item
+            }));
+            return filterDate.getTime() !== fieldDate.getTime();
+          });
+        } else if (filter.operator === OPERATOR_LESS_THAN && filter.value !== undefined) {
+          filteredData = filteredData.filter(item => {
+            const fieldValue = field.getValue({
+              item
+            });
+            return fieldValue < filter.value;
+          });
+        } else if (filter.operator === OPERATOR_GREATER_THAN && filter.value !== undefined) {
+          filteredData = filteredData.filter(item => {
+            const fieldValue = field.getValue({
+              item
+            });
+            return fieldValue > filter.value;
+          });
+        } else if (filter.operator === OPERATOR_LESS_THAN_OR_EQUAL && filter.value !== undefined) {
+          filteredData = filteredData.filter(item => {
+            const fieldValue = field.getValue({
+              item
+            });
+            return fieldValue <= filter.value;
+          });
+        } else if (filter.operator === OPERATOR_GREATER_THAN_OR_EQUAL && filter.value !== undefined) {
+          filteredData = filteredData.filter(item => {
+            const fieldValue = field.getValue({
+              item
+            });
+            return fieldValue >= filter.value;
+          });
+        } else if (filter.operator === OPERATOR_CONTAINS && filter?.value !== undefined) {
+          filteredData = filteredData.filter(item => {
+            const fieldValue = field.getValue({
+              item
+            });
+            return typeof fieldValue === 'string' && filter.value && fieldValue.toLowerCase().includes(String(filter.value).toLowerCase());
+          });
+        } else if (filter.operator === OPERATOR_NOT_CONTAINS && filter?.value !== undefined) {
+          filteredData = filteredData.filter(item => {
+            const fieldValue = field.getValue({
+              item
+            });
+            return typeof fieldValue === 'string' && filter.value && !fieldValue.toLowerCase().includes(String(filter.value).toLowerCase());
+          });
+        } else if (filter.operator === OPERATOR_STARTS_WITH && filter?.value !== undefined) {
+          filteredData = filteredData.filter(item => {
+            const fieldValue = field.getValue({
+              item
+            });
+            return typeof fieldValue === 'string' && filter.value && fieldValue.toLowerCase().startsWith(String(filter.value).toLowerCase());
+          });
+        } else if (filter.operator === OPERATOR_BEFORE && filter.value !== undefined) {
+          const filterValue = (0,external_wp_date_namespaceObject.getDate)(filter.value);
+          filteredData = filteredData.filter(item => {
+            const fieldValue = (0,external_wp_date_namespaceObject.getDate)(field.getValue({
+              item
+            }));
+            return fieldValue < filterValue;
+          });
+        } else if (filter.operator === OPERATOR_AFTER && filter.value !== undefined) {
+          const filterValue = (0,external_wp_date_namespaceObject.getDate)(filter.value);
+          filteredData = filteredData.filter(item => {
+            const fieldValue = (0,external_wp_date_namespaceObject.getDate)(field.getValue({
+              item
+            }));
+            return fieldValue > filterValue;
+          });
+        } else if (filter.operator === OPERATOR_BEFORE_INC && filter.value !== undefined) {
+          const filterValue = (0,external_wp_date_namespaceObject.getDate)(filter.value);
+          filteredData = filteredData.filter(item => {
+            const fieldValue = (0,external_wp_date_namespaceObject.getDate)(field.getValue({
+              item
+            }));
+            return fieldValue <= filterValue;
+          });
+        } else if (filter.operator === OPERATOR_AFTER_INC && filter.value !== undefined) {
+          const filterValue = (0,external_wp_date_namespaceObject.getDate)(filter.value);
+          filteredData = filteredData.filter(item => {
+            const fieldValue = (0,external_wp_date_namespaceObject.getDate)(field.getValue({
+              item
+            }));
+            return fieldValue >= filterValue;
+          });
+        } else if (filter.operator === OPERATOR_BETWEEN && Array.isArray(filter.value) && filter.value.length === 2 && filter.value[0] !== undefined && filter.value[1] !== undefined) {
+          filteredData = filteredData.filter(item => {
+            const fieldValue = field.getValue({
+              item
+            });
+            if (typeof fieldValue === 'number' || fieldValue instanceof Date || typeof fieldValue === 'string') {
+              return fieldValue >= filter.value[0] && fieldValue <= filter.value[1];
+            }
+            return false;
+          });
+        } else if (filter.operator === OPERATOR_IN_THE_PAST && filter.value?.value !== undefined && filter.value?.unit !== undefined) {
+          const targetDate = getRelativeDate(filter.value.value, filter.value.unit);
+          filteredData = filteredData.filter(item => {
+            const fieldValue = (0,external_wp_date_namespaceObject.getDate)(field.getValue({
+              item
+            }));
+            return fieldValue >= targetDate && fieldValue <= new Date();
+          });
+        } else if (filter.operator === OPERATOR_OVER && filter.value?.value !== undefined && filter.value?.unit !== undefined) {
+          const targetDate = getRelativeDate(filter.value.value, filter.value.unit);
+          filteredData = filteredData.filter(item => {
+            const fieldValue = (0,external_wp_date_namespaceObject.getDate)(field.getValue({
+              item
+            }));
+            return fieldValue < targetDate;
           });
         }
       }
@@ -32344,6 +34056,10 @@ function filterSortAndPaginate(data, view, fields) {
 
 ;// ./packages/dataviews/build-module/components/dataviews-context/index.js
 /**
+ * External dependencies
+ */
+
+/**
  * WordPress dependencies
  */
 
@@ -32370,7 +34086,17 @@ const DataViewsContext = (0,external_wp_element_namespaceObject.createContext)({
   openedFilter: null,
   getItemId: item => item.id,
   isItemClickable: () => true,
-  containerWidth: 0
+  renderItemLink: undefined,
+  containerWidth: 0,
+  containerRef: (0,external_wp_element_namespaceObject.createRef)(),
+  defaultLayouts: {
+    list: {},
+    grid: {},
+    table: {}
+  },
+  filters: [],
+  isShowingFilter: false,
+  setIsShowingFilter: () => {}
 });
 /* harmony default export */ const dataviews_context = (DataViewsContext);
 
@@ -37242,11 +38968,31 @@ var ComboboxItemValue = forwardRef2(function ComboboxItemValue2(props) {
 });
 
 
+;// ./packages/dataviews/build-module/components/dataviews-filters/utils.js
+/**
+ * Internal dependencies
+ */
+
+const utils_EMPTY_ARRAY = [];
+const getCurrentValue = (filterDefinition, currentFilter) => {
+  if (filterDefinition.singleSelection) {
+    return currentFilter?.value;
+  }
+  if (Array.isArray(currentFilter?.value)) {
+    return currentFilter.value;
+  }
+  if (!Array.isArray(currentFilter?.value) && !!currentFilter?.value) {
+    return [currentFilter.value];
+  }
+  return utils_EMPTY_ARRAY;
+};
+
 ;// ./packages/dataviews/build-module/components/dataviews-filters/search-widget.js
 /**
  * External dependencies
  */
 // eslint-disable-next-line no-restricted-imports
+
 
 
 
@@ -37259,36 +39005,14 @@ var ComboboxItemValue = forwardRef2(function ComboboxItemValue2(props) {
 
 
 
-
 /**
  * Internal dependencies
  */
 
-const radioCheck = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Circle, {
-    cx: 12,
-    cy: 12,
-    r: 3
-  })
-});
+
 function search_widget_normalizeSearchInput(input = '') {
   return remove_accents_default()(input.trim().toLowerCase());
 }
-const search_widget_EMPTY_ARRAY = [];
-const getCurrentValue = (filterDefinition, currentFilter) => {
-  if (filterDefinition.singleSelection) {
-    return currentFilter?.value;
-  }
-  if (Array.isArray(currentFilter?.value)) {
-    return currentFilter.value;
-  }
-  if (!Array.isArray(currentFilter?.value) && !!currentFilter?.value) {
-    return [currentFilter.value];
-  }
-  return search_widget_EMPTY_ARRAY;
-};
 const getNewValue = (filterDefinition, currentFilter, value) => {
   if (filterDefinition.singleSelection) {
     return value;
@@ -37301,6 +39025,27 @@ const getNewValue = (filterDefinition, currentFilter, value) => {
 function generateFilterElementCompositeItemId(prefix, filterElementValue) {
   return `${prefix}-${filterElementValue}`;
 }
+const MultiSelectionOption = ({
+  selected
+}) => {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+    className: dist_clsx('dataviews-filters__search-widget-listitem-multi-selection', {
+      'is-selected': selected
+    }),
+    children: selected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+      icon: library_check
+    })
+  });
+};
+const SingleSelectionOption = ({
+  selected
+}) => {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+    className: dist_clsx('dataviews-filters__search-widget-listitem-single-selection', {
+      'is-selected': selected
+    })
+  });
+};
 function ListBox({
   view,
   filter,
@@ -37365,13 +39110,10 @@ function ListBox({
           });
         }
       }),
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
-        className: "dataviews-filters__search-widget-listitem-check",
-        children: [filter.singleSelection && currentValue === element.value && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-          icon: radioCheck
-        }), !filter.singleSelection && currentValue.includes(element.value) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-          icon: library_check
-        })]
+      children: [filter.singleSelection && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SingleSelectionOption, {
+        selected: currentValue === element.value
+      }), !filter.singleSelection && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MultiSelectionOption, {
+        selected: currentValue.includes(element.value)
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         children: element.label
       })]
@@ -37444,13 +39186,10 @@ function search_widget_ComboboxList({
           hideOnClick: false,
           setValueOnClick: false,
           focusOnHover: true,
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
-            className: "dataviews-filters__search-widget-listitem-check",
-            children: [filter.singleSelection && currentValue === element.value && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-              icon: radioCheck
-            }), !filter.singleSelection && currentValue.includes(element.value) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-              icon: library_check
-            })]
+          children: [filter.singleSelection && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SingleSelectionOption, {
+            selected: currentValue === element.value
+          }), !filter.singleSelection && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MultiSelectionOption, {
+            selected: currentValue.includes(element.value)
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ComboboxItemValue, {
               className: "dataviews-filters__search-widget-filter-combobox-item-value",
@@ -37474,7 +39213,80 @@ function SearchWidget(props) {
   });
 }
 
-;// ./packages/dataviews/build-module/components/dataviews-filters/filter-summary.js
+// EXTERNAL MODULE: ./node_modules/fast-deep-equal/es6/index.js
+var es6 = __webpack_require__(7734);
+var es6_default = /*#__PURE__*/__webpack_require__.n(es6);
+;// ./packages/dataviews/build-module/components/dataviews-filters/input-widget.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function InputWidget({
+  filter,
+  view,
+  onChangeView,
+  fields
+}) {
+  const currentFilter = view.filters?.find(f => f.field === filter.field);
+  const field = fields.find(f => f.id === filter.field);
+  const currentValue = getCurrentValue(filter, currentFilter);
+  const data = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    var _view$filters;
+    return ((_view$filters = view.filters) !== null && _view$filters !== void 0 ? _view$filters : []).reduce((acc, f) => {
+      acc[f.field] = f.value;
+      return acc;
+    }, {});
+  }, [view.filters]);
+  const handleChange = (0,external_wp_compose_namespaceObject.useEvent)(updatedData => {
+    var _view$filters2;
+    if (!field || !currentFilter) {
+      return;
+    }
+    const nextValue = updatedData[field.id];
+    if (es6_default()(nextValue, currentValue)) {
+      return;
+    }
+    onChangeView({
+      ...view,
+      filters: ((_view$filters2 = view.filters) !== null && _view$filters2 !== void 0 ? _view$filters2 : []).map(_filter => _filter.field === filter.field ? {
+        ..._filter,
+        operator: currentFilter.operator || filter.operators[0],
+        value: nextValue
+      } : _filter)
+    });
+  });
+  if (!field || !field.Edit || !currentFilter) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Flex, {
+    className: "dataviews-filters__user-input-widget",
+    gap: 2.5,
+    direction: "column",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.Edit, {
+      hideLabelFromVision: true,
+      data: data,
+      field: field,
+      operator: currentFilter.operator,
+      onChange: handleChange
+    })
+  });
+}
+
+;// ./packages/dataviews/build-module/components/dataviews-filters/filter.js
 /**
  * External dependencies
  */
@@ -37495,6 +39307,7 @@ const SPACE = ' ';
 
 
 
+
 const FilterText = ({
   activeElements,
   filterInView,
@@ -37512,28 +39325,95 @@ const FilterText = ({
     })
   };
   if (filterInView?.operator === constants_OPERATOR_IS_ANY) {
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 3: Filter value. e.g.: "Author is any: Admin, Editor". */
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Author is any: Admin, Editor". */
     (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is any: </Name><Value>%2$s</Value>'), filter.name, activeElements.map(element => element.label).join(', ')), filterTextWrappers);
   }
   if (filterInView?.operator === constants_OPERATOR_IS_NONE) {
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 3: Filter value. e.g.: "Author is none: Admin, Editor". */
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Author is none: Admin, Editor". */
     (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is none: </Name><Value>%2$s</Value>'), filter.name, activeElements.map(element => element.label).join(', ')), filterTextWrappers);
   }
   if (filterInView?.operator === OPERATOR_IS_ALL) {
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 3: Filter value. e.g.: "Author is all: Admin, Editor". */
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Author is all: Admin, Editor". */
     (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is all: </Name><Value>%2$s</Value>'), filter.name, activeElements.map(element => element.label).join(', ')), filterTextWrappers);
   }
   if (filterInView?.operator === OPERATOR_IS_NOT_ALL) {
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 3: Filter value. e.g.: "Author is not all: Admin, Editor". */
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Author is not all: Admin, Editor". */
     (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is not all: </Name><Value>%2$s</Value>'), filter.name, activeElements.map(element => element.label).join(', ')), filterTextWrappers);
   }
   if (filterInView?.operator === constants_OPERATOR_IS) {
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 3: Filter value. e.g.: "Author is: Admin". */
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Author is: Admin". */
     (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is: </Name><Value>%2$s</Value>'), filter.name, activeElements[0].label), filterTextWrappers);
   }
   if (filterInView?.operator === constants_OPERATOR_IS_NOT) {
-    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 3: Filter value. e.g.: "Author is not: Admin". */
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Author is not: Admin". */
     (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is not: </Name><Value>%2$s</Value>'), filter.name, activeElements[0].label), filterTextWrappers);
+  }
+  if (filterInView?.operator === OPERATOR_LESS_THAN) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Price is less than: 10". */
+    (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is less than: </Name><Value>%2$s</Value>'), filter.name, activeElements[0].label), filterTextWrappers);
+  }
+  if (filterInView?.operator === OPERATOR_GREATER_THAN) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Price is greater than: 10". */
+    (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is greater than: </Name><Value>%2$s</Value>'), filter.name, activeElements[0].label), filterTextWrappers);
+  }
+  if (filterInView?.operator === OPERATOR_LESS_THAN_OR_EQUAL) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Price is less than or equal to: 10". */
+    (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is less than or equal to: </Name><Value>%2$s</Value>'), filter.name, activeElements[0].label), filterTextWrappers);
+  }
+  if (filterInView?.operator === OPERATOR_GREATER_THAN_OR_EQUAL) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Price is greater than or equal to: 10". */
+    (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is greater than or equal to: </Name><Value>%2$s</Value>'), filter.name, activeElements[0].label), filterTextWrappers);
+  }
+  if (filterInView?.operator === OPERATOR_CONTAINS) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Title contains: Mars". */
+    (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s contains: </Name><Value>%2$s</Value>'), filter.name, activeElements[0].label), filterTextWrappers);
+  }
+  if (filterInView?.operator === OPERATOR_NOT_CONTAINS) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Description doesn't contain: photo". */
+    (0,external_wp_i18n_namespaceObject.__)("<Name>%1$s doesn't contain: </Name><Value>%2$s</Value>"), filter.name, activeElements[0].label), filterTextWrappers);
+  }
+  if (filterInView?.operator === OPERATOR_STARTS_WITH) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Title starts with: Mar". */
+    (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s starts with: </Name><Value>%2$s</Value>'), filter.name, activeElements[0].label), filterTextWrappers);
+  }
+  if (filterInView?.operator === OPERATOR_BEFORE) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Date is before: 2024-01-01". */
+    (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is before: </Name><Value>%2$s</Value>'), filter.name, activeElements[0].label), filterTextWrappers);
+  }
+  if (filterInView?.operator === OPERATOR_AFTER) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Date is after: 2024-01-01". */
+    (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is after: </Name><Value>%2$s</Value>'), filter.name, activeElements[0].label), filterTextWrappers);
+  }
+  if (filterInView?.operator === OPERATOR_BEFORE_INC) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Date is on or before: 2024-01-01". */
+    (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is on or before: </Name><Value>%2$s</Value>'), filter.name, activeElements[0].label), filterTextWrappers);
+  }
+  if (filterInView?.operator === OPERATOR_AFTER_INC) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Date is on or after: 2024-01-01". */
+    (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is on or after: </Name><Value>%2$s</Value>'), filter.name, activeElements[0].label), filterTextWrappers);
+  }
+  if (filterInView?.operator === OPERATOR_BETWEEN) {
+    const {
+      label
+    } = activeElements[0];
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Min value. 3: Max value. e.g.: "Item count between (inc): 10-180". */
+    (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s between (inc): </Name><Value>%2$s-%3$s</Value>'), filter.name, label[0], label[1]), filterTextWrappers);
+  }
+  if (filterInView?.operator === OPERATOR_ON) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Date is: 2024-01-01". */
+    (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is: </Name><Value>%2$s</Value>'), filter.name, activeElements[0].label), filterTextWrappers);
+  }
+  if (filterInView?.operator === OPERATOR_NOT_ON) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Date is not: 2024-01-01". */
+    (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is not: </Name><Value>%2$s</Value>'), filter.name, activeElements[0].label), filterTextWrappers);
+  }
+  if (filterInView?.operator === OPERATOR_IN_THE_PAST) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Date is in the past: 1 days". */
+    (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is in the past: </Name><Value>%2$s</Value>'), filter.name, `${activeElements[0].value.value} ${activeElements[0].value.unit}`), filterTextWrappers);
+  }
+  if (filterInView?.operator === OPERATOR_OVER) {
+    return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name. 2: Filter value. e.g.: "Date is over: 1 days ago". */
+    (0,external_wp_i18n_namespaceObject.__)('<Name>%1$s is over: </Name><Value>%2$s</Value> ago'), filter.name, `${activeElements[0].value.value} ${activeElements[0].value.unit}`), filterTextWrappers);
   }
   return (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: 1: Filter name e.g.: "Unknown status for Author". */
   (0,external_wp_i18n_namespaceObject.__)('Unknown status for %1$s'), filter.name);
@@ -37557,16 +39437,22 @@ function OperatorSelector({
       className: "dataviews-filters__summary-operators-filter-name",
       children: filter.name
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+      className: "dataviews-filters__summary-operators-filter-select",
       label: (0,external_wp_i18n_namespaceObject.__)('Conditions'),
       value: value,
       options: operatorOptions,
       onChange: newValue => {
         var _view$filters, _view$filters2;
         const operator = newValue;
+        const currentOperator = currentFilter?.operator;
         const newFilters = currentFilter ? [...((_view$filters = view.filters) !== null && _view$filters !== void 0 ? _view$filters : []).map(_filter => {
           if (_filter.field === filter.field) {
+            // Reset the value only when switching between operators that have different value types.
+            const OPERATORS_SHOULD_RESET_VALUE = [OPERATOR_BETWEEN, OPERATOR_IN_THE_PAST, OPERATOR_OVER];
+            const shouldResetValue = currentOperator && (OPERATORS_SHOULD_RESET_VALUE.includes(currentOperator) || OPERATORS_SHOULD_RESET_VALUE.includes(operator));
             return {
               ..._filter,
+              value: shouldResetValue ? undefined : _filter.value,
               operator
             };
           }
@@ -37583,14 +39469,16 @@ function OperatorSelector({
         });
       },
       size: "small",
+      variant: "minimal",
       __nextHasNoMarginBottom: true,
       hideLabelFromVision: true
     })]
   });
 }
-function FilterSummary({
+function Filter({
   addFilterRef,
   openedFilter,
+  fields,
   ...commonProps
 }) {
   const toggleRef = (0,external_wp_element_namespaceObject.useRef)(null);
@@ -37600,12 +39488,20 @@ function FilterSummary({
     onChangeView
   } = commonProps;
   const filterInView = view.filters?.find(f => f.field === filter.field);
-  const activeElements = filter.elements.filter(element => {
-    if (filter.singleSelection) {
-      return element.value === filterInView?.value;
-    }
-    return filterInView?.value?.includes(element.value);
-  });
+  let activeElements = [];
+  if (filter.elements.length > 0) {
+    activeElements = filter.elements.filter(element => {
+      if (filter.singleSelection) {
+        return element.value === filterInView?.value;
+      }
+      return filterInView?.value?.includes(element.value);
+    });
+  } else if (filterInView?.value !== undefined) {
+    activeElements = [{
+      value: filterInView.value,
+      label: filterInView.value
+    }];
+  }
   const isPrimary = filter.isPrimary;
   const hasValues = filterInView?.value !== undefined;
   const canResetOrRemove = !isPrimary || hasValues;
@@ -37685,8 +39581,15 @@ function FilterSummary({
         justify: "flex-start",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(OperatorSelector, {
           ...commonProps
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SearchWidget, {
-          ...commonProps
+        }), commonProps.filter.elements.length > 0 ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SearchWidget, {
+          ...commonProps,
+          filter: {
+            ...commonProps.filter,
+            elements: commonProps.filter.elements
+          }
+        }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InputWidget, {
+          ...commonProps,
+          fields: fields
         })]
       });
     }
@@ -37825,30 +39728,6 @@ function ResetFilter({
   });
 }
 
-;// ./packages/dataviews/build-module/utils.js
-/**
- * Internal dependencies
- */
-
-function sanitizeOperators(field) {
-  let operators = field.filterBy?.operators;
-
-  // Assign default values.
-  if (!operators || !Array.isArray(operators)) {
-    operators = [constants_OPERATOR_IS_ANY, constants_OPERATOR_IS_NONE];
-  }
-
-  // Make sure only valid operators are used.
-  operators = operators.filter(operator => ALL_OPERATORS.includes(operator));
-
-  // Do not allow mixing single & multiselection operators.
-  // Remove multiselection operators if any of the single selection ones is present.
-  if (operators.includes(constants_OPERATOR_IS) || operators.includes(constants_OPERATOR_IS_NOT)) {
-    operators = operators.filter(operator => [constants_OPERATOR_IS, constants_OPERATOR_IS_NOT].includes(operator));
-  }
-  return operators;
-}
-
 ;// ./packages/dataviews/build-module/components/dataviews-filters/index.js
 /**
  * WordPress dependencies
@@ -37867,24 +39746,21 @@ function sanitizeOperators(field) {
 
 
 
-
 function useFilters(fields, view) {
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
     const filters = [];
     fields.forEach(field => {
-      if (!field.elements?.length) {
+      var _field$elements;
+      if (field.filterBy === false || !field.elements?.length && !field.Edit) {
         return;
       }
-      const operators = sanitizeOperators(field);
-      if (operators.length === 0) {
-        return;
-      }
+      const operators = field.filterBy.operators;
       const isPrimary = !!field.filterBy?.isPrimary;
       filters.push({
         field: field.id,
         name: field.label,
-        elements: field.elements,
-        singleSelection: operators.some(op => [constants_OPERATOR_IS, constants_OPERATOR_IS_NOT].includes(op)),
+        elements: (_field$elements = field.elements) !== null && _field$elements !== void 0 ? _field$elements : [],
+        singleSelection: operators.some(op => SINGLE_SELECTION_OPERATORS.includes(op)),
         operators,
         isVisible: isPrimary || !!view.filters?.some(f => f.field === field.id && ALL_OPERATORS.includes(f.operator)),
         isPrimary
@@ -37904,14 +39780,15 @@ function useFilters(fields, view) {
     return filters;
   }, [fields, view]);
 }
-function FiltersToggle({
-  filters,
-  view,
-  onChangeView,
-  setOpenedFilter,
-  isShowingFilter,
-  setIsShowingFilter
-}) {
+function FiltersToggle() {
+  const {
+    filters,
+    view,
+    onChangeView,
+    setOpenedFilter,
+    isShowingFilter,
+    setIsShowingFilter
+  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const buttonRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const onChangeViewWithFilterVisibility = (0,external_wp_element_namespaceObject.useCallback)(_view => {
     onChangeView(_view);
@@ -37978,7 +39855,9 @@ function FilterVisibilityToggle({
     })]
   });
 }
-function Filters() {
+function Filters({
+  className
+}) {
   const {
     fields,
     view,
@@ -38000,9 +39879,10 @@ function Filters() {
     return null;
   }
   const filterComponents = [...visibleFilters.map(filter => {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FilterSummary, {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Filter, {
       filter: filter,
       view: view,
+      fields: fields,
       onChangeView: onChangeView,
       addFilterRef: addFilterRef,
       openedFilter: openedFilter
@@ -38018,8 +39898,8 @@ function Filters() {
     style: {
       width: 'fit-content'
     },
-    className: "dataviews-filters__container",
     wrap: true,
+    className: className,
     children: filterComponents
   });
 }
@@ -38264,7 +40144,7 @@ function ItemActions({
     justify: "flex-end",
     className: "dataviews-item-actions",
     style: {
-      flexShrink: '0',
+      flexShrink: 0,
       width: 'auto'
     },
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrimaryActions, {
@@ -38637,7 +40517,6 @@ const unseen = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 
-
 const {
   Menu: column_header_menu_Menu
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
@@ -38673,12 +40552,15 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
   isHidable = field.enableHiding !== false;
   isSortable = field.enableSorting !== false;
   const header = field.header;
-  operators = sanitizeOperators(field);
-  // Filter can be added:
-  // 1. If the field is not already part of a view's filters.
-  // 2. If the field meets the type and operator requirements.
-  // 3. If it's not primary. If it is, it should be already visible.
-  canAddFilter = !view.filters?.some(_filter => fieldId === _filter.field) && !!field.elements?.length && !!operators.length && !field.filterBy?.isPrimary;
+  operators = !!field.filterBy && field.filterBy?.operators || [];
+
+  // Filter can be added if:
+  //
+  // 1. The field is not already part of a view's filters.
+  // 2. The field has elements or Edit property.
+  // 3. The field does not opt-out of filtering.
+  // 4. The filter is not primary (if it is, it is already visible).
+  canAddFilter = !view.filters?.some(_filter => fieldId === _filter.field) && !!(field.elements?.length || field.Edit) && field.filterBy !== false && !field.filterBy?.isPrimary;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(column_header_menu_Menu, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(column_header_menu_Menu.TriggerButton, {
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -38801,7 +40683,12 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
 const ColumnHeaderMenu = _HeaderMenu;
 /* harmony default export */ const column_header_menu = (ColumnHeaderMenu);
 
-;// ./packages/dataviews/build-module/dataviews-layouts/utils/get-clickable-item-props.js
+;// ./packages/dataviews/build-module/dataviews-layouts/utils/item-click-wrapper.js
+
+/**
+ * External dependencies
+ */
+
 function getClickableItemProps({
   item,
   isItemClickable,
@@ -38831,8 +40718,48 @@ function getClickableItemProps({
     }
   };
 }
+function ItemClickWrapper({
+  item,
+  isItemClickable,
+  onClickItem,
+  renderItemLink,
+  className,
+  children,
+  ...extraProps
+}) {
+  if (!isItemClickable(item)) {
+    return children;
+  }
+
+  // If we have a renderItemLink, use it
+  if (renderItemLink) {
+    return renderItemLink({
+      item,
+      className: `${className} ${className}--clickable`,
+      ...extraProps,
+      children
+    });
+  }
+
+  // Otherwise use the classic click handler approach
+  const clickProps = getClickableItemProps({
+    item,
+    isItemClickable,
+    onClickItem,
+    className
+  });
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    ...clickProps,
+    ...extraProps,
+    children: children
+  });
+}
 
 ;// ./packages/dataviews/build-module/dataviews-layouts/table/column-primary.js
+/**
+ * External dependencies
+ */
+
 /**
  * WordPress dependencies
  */
@@ -38851,45 +40778,105 @@ function ColumnPrimary({
   mediaField,
   descriptionField,
   onClickItem,
+  renderItemLink,
   isItemClickable
 }) {
-  const clickableProps = getClickableItemProps({
-    item,
-    isItemClickable,
-    onClickItem,
-    className: 'dataviews-view-table__cell-content-wrapper dataviews-title-field'
-  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
     spacing: 3,
     justify: "flex-start",
     children: [mediaField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "dataviews-view-table__cell-content-wrapper dataviews-column-primary__media",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(mediaField.render, {
-        item: item
+        item: item,
+        field: mediaField
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       spacing: 0,
-      children: [titleField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-        ...clickableProps,
+      children: [titleField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ItemClickWrapper, {
+        item: item,
+        isItemClickable: isItemClickable,
+        onClickItem: onClickItem,
+        renderItemLink: renderItemLink,
+        className: "dataviews-view-table__cell-content-wrapper dataviews-title-field",
         children: [level !== undefined && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
           className: "dataviews-view-table__level",
           children: ['—'.repeat(level), "\xA0"]
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(titleField.render, {
-          item: item
+          item: item,
+          field: titleField
         })]
       }), descriptionField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(descriptionField.render, {
-        item: item
+        item: item,
+        field: descriptionField
       })]
     })]
   });
 }
 /* harmony default export */ const column_primary = (ColumnPrimary);
 
-;// ./packages/dataviews/build-module/dataviews-layouts/table/index.js
+;// ./packages/dataviews/build-module/dataviews-layouts/table/use-is-horizontal-scroll-end.js
 /**
  * External dependencies
  */
 
+/**
+ * WordPress dependencies
+ */
+
+
+
+const isScrolledToEnd = element => {
+  if ((0,external_wp_i18n_namespaceObject.isRTL)()) {
+    const scrollLeft = Math.abs(element.scrollLeft);
+    return scrollLeft <= 1;
+  }
+  return element.scrollLeft + element.clientWidth >= element.scrollWidth - 1;
+};
+
+/**
+ * A hook to check if a given scroll container has reached the horizontal scroll end.
+ *
+ * The current way receives "refs" as arguments, but it lacks a mechanism to detect when a ref has changed.
+ * As a result, when the "ref" is updated and attached to a new div, the computation should trigger again.
+ * However, this isn't possible in the current setup because the hook is unaware that the ref has changed.
+ *
+ * See https://github.com/Automattic/wp-calypso/pull/103005#discussion_r2077567912.
+ *
+ * @param {Object}                                  params                    The parameters for the hook.
+ * @param {MutableRefObject<HTMLDivElement | null>} params.scrollContainerRef The ref to the scroll container element.
+ * @param {boolean}                                 [params.enabled=false]    Whether the hook is enabled.
+ * @return {boolean} - Returns true if the scroll container is scrolled to the end or false otherwise.
+ */
+function useIsHorizontalScrollEnd({
+  scrollContainerRef,
+  enabled = false
+}) {
+  const [isHorizontalScrollEnd, setIsHorizontalScrollEnd] = (0,external_wp_element_namespaceObject.useState)(false);
+  const handleIsHorizontalScrollEnd = (0,external_wp_compose_namespaceObject.useDebounce)((0,external_wp_element_namespaceObject.useCallback)(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      setIsHorizontalScrollEnd(isScrolledToEnd(scrollContainer));
+    }
+  }, [scrollContainerRef, setIsHorizontalScrollEnd]), 200);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (typeof window === 'undefined' || !enabled || !scrollContainerRef.current) {
+      return () => {};
+    }
+    handleIsHorizontalScrollEnd();
+    scrollContainerRef.current.addEventListener('scroll', handleIsHorizontalScrollEnd);
+    window.addEventListener('resize', handleIsHorizontalScrollEnd);
+    return () => {
+      scrollContainerRef.current?.removeEventListener('scroll', handleIsHorizontalScrollEnd);
+      window.removeEventListener('resize', handleIsHorizontalScrollEnd);
+    };
+  }, [scrollContainerRef, enabled]);
+  return isHorizontalScrollEnd;
+}
+
+;// ./packages/dataviews/build-module/dataviews-layouts/table/index.js
+/**
+ * External dependencies
+ */
 
 /**
  * WordPress dependencies
@@ -38908,19 +40895,27 @@ function ColumnPrimary({
 
 
 
+
+
 function TableColumnField({
   item,
   fields,
-  column
+  column,
+  align
 }) {
   const field = fields.find(f => f.id === column);
   if (!field) {
     return null;
   }
+  const className = dist_clsx('dataviews-view-table__cell-content-wrapper', {
+    'dataviews-view-table__cell-align-end': align === 'end',
+    'dataviews-view-table__cell-align-center': align === 'center'
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    className: "dataviews-view-table__cell-content-wrapper",
+    className: className,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.render, {
-      item
+      item: item,
+      field: field
     })
   });
 }
@@ -38939,7 +40934,9 @@ function TableRow({
   getItemId,
   isItemClickable,
   onClickItem,
-  onChangeSelection
+  renderItemLink,
+  onChangeSelection,
+  isActionsColumnSticky
 }) {
   var _view$fields;
   const hasPossibleBulkAction = useHasAPossibleBulkAction(actions, item);
@@ -39003,7 +41000,8 @@ function TableRow({
         mediaField: showMedia ? mediaField : undefined,
         descriptionField: showDescription ? descriptionField : undefined,
         isItemClickable: isItemClickable,
-        onClickItem: onClickItem
+        onClickItem: onClickItem,
+        renderItemLink: renderItemLink
       })
     }), columns.map(column => {
       var _view$layout$styles$c;
@@ -39011,7 +41009,8 @@ function TableRow({
       const {
         width,
         maxWidth,
-        minWidth
+        minWidth,
+        align
       } = (_view$layout$styles$c = view.layout?.styles?.[column]) !== null && _view$layout$styles$c !== void 0 ? _view$layout$styles$c : {};
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("td", {
         style: {
@@ -39022,7 +41021,8 @@ function TableRow({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TableColumnField, {
           fields: fields,
           item: item,
-          column: column
+          column: column,
+          align: align
         })
       }, column);
     }), !!actions?.length &&
@@ -39034,7 +41034,10 @@ function TableRow({
     // intercepting click events from ItemActions.
     /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */
     (0,external_ReactJSXRuntime_namespaceObject.jsx)("td", {
-      className: "dataviews-view-table__actions-column",
+      className: dist_clsx('dataviews-view-table__actions-column', {
+        'dataviews-view-table__actions-column--sticky': true,
+        'dataviews-view-table__actions-column--stuck': isActionsColumnSticky
+      }),
       onClick: e => e.stopPropagation(),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemActions, {
         item: item,
@@ -39057,9 +41060,14 @@ function ViewTable({
   setOpenedFilter,
   onClickItem,
   isItemClickable,
-  view
+  renderItemLink,
+  view,
+  className
 }) {
   var _view$fields2;
+  const {
+    containerRef
+  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const headerMenuRefs = (0,external_wp_element_namespaceObject.useRef)(new Map());
   const headerMenuToFocusRef = (0,external_wp_element_namespaceObject.useRef)();
   const [nextHeaderMenuToFocus, setNextHeaderMenuToFocus] = (0,external_wp_element_namespaceObject.useState)();
@@ -39071,6 +41079,10 @@ function ViewTable({
     }
   });
   const tableNoticeId = (0,external_wp_element_namespaceObject.useId)();
+  const isHorizontalScrollEnd = useIsHorizontalScrollEnd({
+    scrollContainerRef: containerRef,
+    enabled: !!actions?.length
+  });
   if (nextHeaderMenuToFocus) {
     // If we need to force focus, we short-circuit rendering here
     // to prevent any additional work while we handle that.
@@ -39108,7 +41120,7 @@ function ViewTable({
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("table", {
-      className: dist_clsx('dataviews-view-table', {
+      className: dist_clsx('dataviews-view-table', className, {
         [`has-${view.layout?.density}-density`]: view.layout?.density && ['compact', 'comfortable'].includes(view.layout.density)
       }),
       "aria-busy": isLoading,
@@ -39144,13 +41156,15 @@ function ViewTable({
             const {
               width,
               maxWidth,
-              minWidth
+              minWidth,
+              align
             } = (_view$layout$styles$c2 = view.layout?.styles?.[column]) !== null && _view$layout$styles$c2 !== void 0 ? _view$layout$styles$c2 : {};
             return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("th", {
               style: {
                 width,
                 maxWidth,
-                minWidth
+                minWidth,
+                textAlign: align
               },
               "aria-sort": view.sort?.direction && view.sort?.field === column ? sortValues[view.sort.direction] : undefined,
               scope: "col",
@@ -39165,7 +41179,10 @@ function ViewTable({
               })
             }, column);
           }), !!actions?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("th", {
-            className: "dataviews-view-table__actions-column",
+            className: dist_clsx('dataviews-view-table__actions-column', {
+              'dataviews-view-table__actions-column--sticky': true,
+              'dataviews-view-table__actions-column--stuck': !isHorizontalScrollEnd
+            }),
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
               className: "dataviews-view-table-header",
               children: (0,external_wp_i18n_namespaceObject.__)('Actions')
@@ -39188,7 +41205,9 @@ function ViewTable({
           getItemId: getItemId,
           onChangeSelection: onChangeSelection,
           onClickItem: onClickItem,
-          isItemClickable: isItemClickable
+          renderItemLink: renderItemLink,
+          isItemClickable: isItemClickable,
+          isActionsColumnSticky: !isHorizontalScrollEnd
         }, getItemId(item)))
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -39329,7 +41348,6 @@ function PreviewSizePicker() {
  * External dependencies
  */
 
-
 /**
  * WordPress dependencies
  */
@@ -39356,6 +41374,7 @@ function GridItem({
   onChangeSelection,
   onClickItem,
   isItemClickable,
+  renderItemLink,
   getItemId,
   item,
   actions,
@@ -39376,23 +41395,13 @@ function GridItem({
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(GridItem);
   const isSelected = selection.includes(id);
   const renderedMediaField = mediaField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(mediaField.render, {
-    item: item
+    item: item,
+    field: mediaField
   }) : null;
   const renderedTitleField = showTitle && titleField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(titleField.render, {
-    item: item
+    item: item,
+    field: titleField
   }) : null;
-  const clickableMediaItemProps = getClickableItemProps({
-    item,
-    isItemClickable,
-    onClickItem,
-    className: 'dataviews-view-grid__media'
-  });
-  const clickableTitleItemProps = getClickableItemProps({
-    item,
-    isItemClickable,
-    onClickItem,
-    className: 'dataviews-view-grid__title-field dataviews-title-field'
-  });
   let mediaA11yProps;
   let titleA11yProps;
   if (isItemClickable(item) && onClickItem) {
@@ -39424,8 +41433,12 @@ function GridItem({
         onChangeSelection(selection.includes(id) ? selection.filter(itemId => id !== itemId) : [...selection, id]);
       }
     },
-    children: [showMedia && renderedMediaField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      ...clickableMediaItemProps,
+    children: [showMedia && renderedMediaField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemClickWrapper, {
+      item: item,
+      isItemClickable: isItemClickable,
+      onClickItem: onClickItem,
+      renderItemLink: renderItemLink,
+      className: "dataviews-view-grid__media",
       ...mediaA11yProps,
       children: renderedMediaField
     }), hasBulkActions && showMedia && renderedMediaField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSelectionCheckbox, {
@@ -39438,8 +41451,12 @@ function GridItem({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       justify: "space-between",
       className: "dataviews-view-grid__title-actions",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        ...clickableTitleItemProps,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemClickWrapper, {
+        item: item,
+        isItemClickable: isItemClickable,
+        onClickItem: onClickItem,
+        renderItemLink: renderItemLink,
+        className: "dataviews-view-grid__title-field dataviews-title-field",
         ...titleA11yProps,
         children: renderedTitleField
       }), !!actions?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemActions, {
@@ -39450,7 +41467,8 @@ function GridItem({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       spacing: 1,
       children: [showDescription && descriptionField?.render && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(descriptionField.render, {
-        item: item
+        item: item,
+        field: descriptionField
       }), !!badgeFields?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
         className: "dataviews-view-grid__badge-fields",
         spacing: 2,
@@ -39461,7 +41479,8 @@ function GridItem({
           return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Badge, {
             className: "dataviews-view-grid__field-value",
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.render, {
-              item: item
+              item: item,
+              field: field
             })
           }, field.id);
         })
@@ -39488,7 +41507,8 @@ function GridItem({
                   maxHeight: 'none'
                 },
                 children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.render, {
-                  item: item
+                  item: item,
+                  field: field
                 })
               })]
             })
@@ -39507,8 +41527,10 @@ function ViewGrid({
   onChangeSelection,
   onClickItem,
   isItemClickable,
+  renderItemLink,
   selection,
-  view
+  view,
+  className
 }) {
   var _view$fields;
   const titleField = fields.find(field => field.id === view?.titleField);
@@ -39544,7 +41566,7 @@ function ViewGrid({
       gap: 8,
       columns: 2,
       alignment: "top",
-      className: "dataviews-view-grid",
+      className: dist_clsx('dataviews-view-grid', className),
       style: gridStyle,
       "aria-busy": isLoading,
       children: data.map(item => {
@@ -39554,6 +41576,7 @@ function ViewGrid({
           onChangeSelection: onChangeSelection,
           onClickItem: onClickItem,
           isItemClickable: isItemClickable,
+          renderItemLink: renderItemLink,
           getItemId: getItemId,
           item: item,
           actions: actions,
@@ -39576,6 +41599,7 @@ function ViewGrid({
     })]
   });
 }
+/* harmony default export */ const grid = (ViewGrid);
 
 ;// ./packages/dataviews/build-module/dataviews-layouts/list/index.js
 /**
@@ -39715,11 +41739,13 @@ function ListItem({
   const renderedMediaField = showMedia && mediaField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "dataviews-view-list__media-wrapper",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(mediaField.render, {
-      item: item
+      item: item,
+      field: mediaField
     })
   }) : null;
   const renderedTitleField = showTitle && titleField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(titleField.render, {
-    item: item
+    item: item,
+    field: titleField
   }) : null;
   const usedActions = eligibleActions?.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
     spacing: 3,
@@ -39799,7 +41825,8 @@ function ListItem({
           }), showDescription && descriptionField?.render && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
             className: "dataviews-view-list__field",
             children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(descriptionField.render, {
-              item: item
+              item: item,
+              field: descriptionField
             })
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
             className: "dataviews-view-list__fields",
@@ -39813,7 +41840,8 @@ function ListItem({
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
                 className: "dataviews-view-list__field-value",
                 children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(field.render, {
-                  item: item
+                  item: item,
+                  field: field
                 })
               })]
             }, field.id))
@@ -39836,7 +41864,8 @@ function ViewList(props) {
     isLoading,
     onChangeSelection,
     selection,
-    view
+    view,
+    className
   } = props;
   const baseId = (0,external_wp_compose_namespaceObject.useInstanceId)(ViewList, 'view-list');
   const selectedItem = data?.findLast(item => selection.includes(getItemId(item)));
@@ -39918,7 +41947,7 @@ function ViewList(props) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
     id: baseId,
     render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {}),
-    className: "dataviews-view-list",
+    className: dist_clsx('dataviews-view-list', className),
     role: "grid",
     activeId: activeCompositeId,
     setActiveId: setActiveCompositeId,
@@ -40010,7 +42039,7 @@ const VIEW_LAYOUTS = [{
 }, {
   type: constants_LAYOUT_GRID,
   label: (0,external_wp_i18n_namespaceObject.__)('Grid'),
-  component: ViewGrid,
+  component: grid,
   icon: library_category,
   viewConfigOptions: PreviewSizePicker
 }, {
@@ -40036,7 +42065,9 @@ const VIEW_LAYOUTS = [{
 
 
 
-function DataViewsLayout() {
+function DataViewsLayout({
+  className
+}) {
   const {
     actions = [],
     data,
@@ -40050,10 +42081,12 @@ function DataViewsLayout() {
     onChangeSelection,
     setOpenedFilter,
     onClickItem,
-    isItemClickable
+    isItemClickable,
+    renderItemLink
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const ViewComponent = VIEW_LAYOUTS.find(v => v.type === view.type)?.component;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewComponent, {
+    className: className,
     actions: actions,
     data: data,
     fields: fields,
@@ -40065,6 +42098,7 @@ function DataViewsLayout() {
     selection: selection,
     setOpenedFilter: setOpenedFilter,
     onClickItem: onClickItem,
+    renderItemLink: renderItemLink,
     isItemClickable: isItemClickable,
     view: view
   });
@@ -40104,8 +42138,8 @@ function DataViewsPagination() {
       value: page.toString(),
       label: page.toString(),
       'aria-label': currentPage === page ? (0,external_wp_i18n_namespaceObject.sprintf)(
-      // translators: Current page number in total number of pages
-      (0,external_wp_i18n_namespaceObject.__)('Page %1$s of %2$s'), currentPage, totalPages) : page.toString()
+      // translators: 1: current page number. 2: total number of pages.
+      (0,external_wp_i18n_namespaceObject.__)('Page %1$d of %2$d'), currentPage, totalPages) : page.toString()
     };
   });
   return !!totalItems && totalPages !== 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -40120,7 +42154,7 @@ function DataViewsPagination() {
       className: "dataviews-pagination__page-select",
       children: (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: 1: Current page number, 2: Total number of pages.
-      (0,external_wp_i18n_namespaceObject._x)('<div>Page</div>%1$s<div>of %2$s</div>', 'paging'), '<CurrentPage />', totalPages), {
+      (0,external_wp_i18n_namespaceObject._x)('<div>Page</div>%1$s<div>of %2$d</div>', 'paging'), '<CurrentPage />', totalPages), {
         div: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           "aria-hidden": true
         }),
@@ -40331,16 +42365,11 @@ const DATAVIEWS_CONFIG_POPOVER_PROPS = {
   placement: 'bottom-end',
   offset: 9
 };
-function ViewTypeMenu({
-  defaultLayouts = {
-    list: {},
-    grid: {},
-    table: {}
-  }
-}) {
+function ViewTypeMenu() {
   const {
     view,
-    onChangeView
+    onChangeView,
+    defaultLayouts
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const availableLayouts = Object.keys(defaultLayouts);
   if (availableLayouts.length <= 1) {
@@ -40476,8 +42505,10 @@ const PAGE_SIZE_VALUES = [10, 20, 50, 100];
 function ItemsPerPageControl() {
   const {
     view,
+    perPageSizes,
     onChangeView
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
+  const pageSizeValues = perPageSizes !== null && perPageSizes !== void 0 ? perPageSizes : PAGE_SIZE_VALUES;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
     __nextHasNoMarginBottom: true,
     __next40pxDefaultSize: true,
@@ -40493,7 +42524,7 @@ function ItemsPerPageControl() {
         page: 1
       });
     },
-    children: PAGE_SIZE_VALUES.map(value => {
+    children: pageSizeValues.map(value => {
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
         value: value,
         label: value.toString()
@@ -40907,17 +42938,9 @@ function DataviewsViewConfigDropdown() {
     })
   });
 }
-function _DataViewsViewConfig({
-  defaultLayouts = {
-    list: {},
-    grid: {},
-    table: {}
-  }
-}) {
+function _DataViewsViewConfig() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewTypeMenu, {
-      defaultLayouts: defaultLayouts
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsViewConfigDropdown, {})]
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewTypeMenu, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataviewsViewConfigDropdown, {})]
   });
 }
 const DataViewsViewConfig = (0,external_wp_element_namespaceObject.memo)(_DataViewsViewConfig);
@@ -40946,9 +42969,45 @@ const DataViewsViewConfig = (0,external_wp_element_namespaceObject.memo)(_DataVi
 
 
 
+
+
 const defaultGetItemId = item => item.id;
 const defaultIsItemClickable = () => true;
 const dataviews_EMPTY_ARRAY = [];
+function DefaultUI({
+  header,
+  search = true,
+  searchLabel = undefined
+}) {
+  const {
+    isShowingFilter
+  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+      alignment: "top",
+      justify: "space-between",
+      className: "dataviews__view-actions",
+      spacing: 1,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        justify: "start",
+        expanded: false,
+        className: "dataviews__search",
+        children: [search && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_search, {
+          label: searchLabel
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FiltersToggle, {})]
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        spacing: 1,
+        expanded: false,
+        style: {
+          flexShrink: 0
+        },
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config, {}), header]
+      })]
+    }), isShowingFilter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_filters, {
+      className: "dataviews-filters__container"
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsLayout, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsFooter, {})]
+  });
+}
 function DataViews({
   view,
   onChangeView,
@@ -40965,11 +43024,15 @@ function DataViews({
   selection: selectionProperty,
   onChangeSelection,
   onClickItem,
+  renderItemLink,
   isItemClickable = defaultIsItemClickable,
-  header
+  header,
+  children,
+  perPageSizes
 }) {
+  const containerRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const [containerWidth, setContainerWidth] = (0,external_wp_element_namespaceObject.useState)(0);
-  const containerRef = (0,external_wp_compose_namespaceObject.useResizeObserver)(resizeObserverEntries => {
+  const resizeObserverRef = (0,external_wp_compose_namespaceObject.useResizeObserver)(resizeObserverEntries => {
     setContainerWidth(resizeObserverEntries[0].borderBoxSize[0].inlineSize);
   }, {
     box: 'border-box'
@@ -41010,44 +43073,38 @@ function DataViews({
       getItemLevel,
       isItemClickable,
       onClickItem,
-      containerWidth
+      renderItemLink,
+      containerWidth,
+      containerRef,
+      defaultLayouts,
+      filters,
+      isShowingFilter,
+      setIsShowingFilter,
+      perPageSizes
     },
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "dataviews-wrapper",
-      ref: containerRef,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-        alignment: "top",
-        justify: "space-between",
-        className: "dataviews__view-actions",
-        spacing: 1,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-          justify: "start",
-          expanded: false,
-          className: "dataviews__search",
-          children: [search && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_search, {
-            label: searchLabel
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FiltersToggle, {
-            filters: filters,
-            view: view,
-            onChangeView: onChangeView,
-            setOpenedFilter: setOpenedFilter,
-            setIsShowingFilter: setIsShowingFilter,
-            isShowingFilter: isShowingFilter
-          })]
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-          spacing: 1,
-          expanded: false,
-          style: {
-            flexShrink: 0
-          },
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config, {
-            defaultLayouts: defaultLayouts
-          }), header]
-        })]
-      }), isShowingFilter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_filters, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsLayout, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsFooter, {})]
+      ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([containerRef, resizeObserverRef]),
+      children: children !== null && children !== void 0 ? children : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DefaultUI, {
+        header: header,
+        search: search,
+        searchLabel: searchLabel
+      })
     })
   });
 }
+
+// Populate the DataViews sub components
+const DataViewsSubComponents = DataViews;
+DataViewsSubComponents.BulkActionToolbar = BulkActionsFooter;
+DataViewsSubComponents.Filters = dataviews_filters;
+DataViewsSubComponents.FiltersToggle = FiltersToggle;
+DataViewsSubComponents.Layout = DataViewsLayout;
+DataViewsSubComponents.LayoutSwitcher = ViewTypeMenu;
+DataViewsSubComponents.Pagination = DataViewsPagination;
+DataViewsSubComponents.Search = dataviews_search;
+DataViewsSubComponents.ViewConfig = DataviewsViewConfigDropdown;
+/* harmony default export */ const dataviews = (DataViewsSubComponents);
 
 ;// ./packages/edit-site/build-module/components/page-patterns/use-pattern-settings.js
 /**
@@ -41638,7 +43695,7 @@ const globe = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M12 3.3c-4.8 0-8.8 3.9-8.8 8.8 0 4.8 3.9 8.8 8.8 8.8 4.8 0 8.8-3.9 8.8-8.8s-4-8.8-8.8-8.8zm6.5 5.5h-2.6C15.4 7.3 14.8 6 14 5c2 .6 3.6 2 4.5 3.8zm.7 3.2c0 .6-.1 1.2-.2 1.8h-2.9c.1-.6.1-1.2.1-1.8s-.1-1.2-.1-1.8H19c.2.6.2 1.2.2 1.8zM12 18.7c-1-.7-1.8-1.9-2.3-3.5h4.6c-.5 1.6-1.3 2.9-2.3 3.5zm-2.6-4.9c-.1-.6-.1-1.1-.1-1.8 0-.6.1-1.2.1-1.8h5.2c.1.6.1 1.1.1 1.8s-.1 1.2-.1 1.8H9.4zM4.8 12c0-.6.1-1.2.2-1.8h2.9c-.1.6-.1 1.2-.1 1.8 0 .6.1 1.2.1 1.8H5c-.2-.6-.2-1.2-.2-1.8zM12 5.3c1 .7 1.8 1.9 2.3 3.5H9.7c.5-1.6 1.3-2.9 2.3-3.5zM10 5c-.8 1-1.4 2.3-1.8 3.8H5.5C6.4 7 8 5.6 10 5zM5.5 15.3h2.6c.4 1.5 1 2.8 1.8 3.7-1.8-.6-3.5-2-4.4-3.7zM14 19c.8-1 1.4-2.2 1.8-3.7h2.6C17.6 17 16 18.4 14 19z"
+    d: "M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8Zm6.5 8c0 .6 0 1.2-.2 1.8h-2.7c0-.6.2-1.1.2-1.8s0-1.2-.2-1.8h2.7c.2.6.2 1.1.2 1.8Zm-.9-3.2h-2.4c-.3-.9-.7-1.8-1.1-2.4-.1-.2-.2-.4-.3-.5 1.6.5 3 1.6 3.8 3ZM12.8 17c-.3.5-.6 1-.8 1.3-.2-.3-.5-.8-.8-1.3-.3-.5-.6-1.1-.8-1.7h3.3c-.2.6-.5 1.2-.8 1.7Zm-2.9-3.2c-.1-.6-.2-1.1-.2-1.8s0-1.2.2-1.8H14c.1.6.2 1.1.2 1.8s0 1.2-.2 1.8H9.9ZM11.2 7c.3-.5.6-1 .8-1.3.2.3.5.8.8 1.3.3.5.6 1.1.8 1.7h-3.3c.2-.6.5-1.2.8-1.7Zm-1-1.2c-.1.2-.2.3-.3.5-.4.7-.8 1.5-1.1 2.4H6.4c.8-1.4 2.2-2.5 3.8-3Zm-1.8 8H5.7c-.2-.6-.2-1.1-.2-1.8s0-1.2.2-1.8h2.7c0 .6-.2 1.1-.2 1.8s0 1.2.2 1.8Zm-2 1.4h2.4c.3.9.7 1.8 1.1 2.4.1.2.2.4.3.5-1.6-.5-3-1.6-3.8-3Zm7.4 3c.1-.2.2-.3.3-.5.4-.7.8-1.5 1.1-2.4h2.4c-.8 1.4-2.2 2.5-3.8 3Z"
   })
 });
 /* harmony default export */ const library_globe = (globe);
@@ -42059,7 +44116,7 @@ function DataviewsPatterns() {
         type: postType,
         titleId: `${id}-title`,
         descriptionId: `${id}-description`
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViews, {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews, {
         paginationInfo: paginationInfo,
         fields: fields,
         actions: actions,
@@ -42411,7 +44468,7 @@ const tag = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(extern
  */
 
 
-const media = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+const media_media = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
@@ -42422,7 +44479,7 @@ const media = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ext
     d: "m5 3c-1.10457 0-2 .89543-2 2v14c0 1.1046.89543 2 2 2h14c1.1046 0 2-.8954 2-2v-14c0-1.10457-.8954-2-2-2zm14 1.5h-14c-.27614 0-.5.22386-.5.5v10.7072l3.62953-2.6465c.25108-.1831.58905-.1924.84981-.0234l2.92666 1.8969 3.5712-3.4719c.2911-.2831.7545-.2831 1.0456 0l2.9772 2.8945v-9.3568c0-.27614-.2239-.5-.5-.5zm-14.5 14.5v-1.4364l4.09643-2.987 2.99567 1.9417c.2936.1903.6798.1523.9307-.0917l3.4772-3.3806 3.4772 3.3806.0228-.0234v2.5968c0 .2761-.2239.5-.5.5h-14c-.27614 0-.5-.2239-.5-.5z"
   })]
 });
-/* harmony default export */ const library_media = (media);
+/* harmony default export */ const library_media = (media_media);
 
 ;// ./packages/icons/build-module/library/post.js
 /**
@@ -42509,7 +44566,14 @@ const usePublicPostTypes = () => {
     return postTypes?.filter(({
       viewable,
       slug
-    }) => viewable && !excludedPostTypes.includes(slug));
+    }) => viewable && !excludedPostTypes.includes(slug)).sort((a, b) => {
+      // Sort post types alphabetically by name,
+      // but exclude the built-in 'post' type from sorting.
+      if (a.slug === 'post' || b.slug === 'post') {
+        return 0;
+      }
+      return a.name.localeCompare(b.name);
+    });
   }, [postTypes]);
 };
 const usePublicTaxonomies = () => {
@@ -42756,7 +44820,7 @@ const useTaxonomiesMenuItems = onClickMenuItem => {
     let menuItemTitle = labels.template_name || labels.singular_name;
     if (_needsUniqueIdentifier) {
       menuItemTitle = labels.template_name ? (0,external_wp_i18n_namespaceObject.sprintf)(
-      // translators: 1: Name of the template e.g: "Products by Category". 2s: Slug of the taxonomy e.g: "product_cat".
+      // translators: 1: Name of the template e.g: "Products by Category". 2: Slug of the taxonomy e.g: "product_cat".
       (0,external_wp_i18n_namespaceObject._x)('%1$s (%2$s)', 'taxonomy template menu label'), labels.template_name, slug) : (0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: 1: Name of the taxonomy e.g: "Category". 2: Slug of the taxonomy e.g: "product_cat".
       (0,external_wp_i18n_namespaceObject._x)('%1$s (%2$s)', 'taxonomy menu label'), labels.singular_name, slug);
@@ -44432,7 +46496,7 @@ function PageTemplates() {
     className: "edit-site-page-templates",
     title: (0,external_wp_i18n_namespaceObject.__)('Templates'),
     actions: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_new_template, {}),
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViews, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews, {
       paginationInfo: paginationInfo,
       fields: fields,
       actions: actions,
@@ -45694,7 +47758,7 @@ function PostList({
         onClose: closeModal
       })]
     }),
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViews, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews, {
       paginationInfo: paginationInfo,
       fields: fields,
       actions: actions,
@@ -45764,6 +47828,11 @@ function isCombinedField(field) {
 }
 
 ;// ./packages/dataviews/build-module/dataforms-layouts/regular/index.js
+/**
+ * External dependencies
+ */
+
+
 /**
  * WordPress dependencies
  */
@@ -45836,18 +47905,21 @@ function FormRegularField({
   }
   const labelPosition = (_field$labelPosition = field.labelPosition) !== null && _field$labelPosition !== void 0 ? _field$labelPosition : 'top';
   const fieldDefinition = fields.find(fieldDef => fieldDef.id === field.id);
-  if (!fieldDefinition) {
+  if (!fieldDefinition || !fieldDefinition.Edit) {
     return null;
   }
   if (labelPosition === 'side') {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       className: "dataforms-layouts-regular__field",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "dataforms-layouts-regular__field-label",
+        className: dist_clsx('dataforms-layouts-regular__field-label', `dataforms-layouts-regular__field-label--label-position-${labelPosition}`),
         children: fieldDefinition.label
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "dataforms-layouts-regular__field-control",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fieldDefinition.Edit, {
+        children: fieldDefinition.readOnly === true ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fieldDefinition.render, {
+          item: data,
+          field: fieldDefinition
+        }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fieldDefinition.Edit, {
           data: data,
           field: fieldDefinition,
           onChange: onChange,
@@ -45858,7 +47930,18 @@ function FormRegularField({
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "dataforms-layouts-regular__field",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fieldDefinition.Edit, {
+    children: fieldDefinition.readOnly === true ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: [!hideLabelFromVision && labelPosition !== 'none' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        className: "dataforms-layouts-regular__field-label",
+        children: fieldDefinition.label
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        className: "dataforms-layouts-regular__field-control",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fieldDefinition.render, {
+          item: data,
+          field: fieldDefinition
+        })
+      })]
+    }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fieldDefinition.Edit, {
       data: data,
       field: fieldDefinition,
       onChange: onChange,
@@ -45868,6 +47951,11 @@ function FormRegularField({
 }
 
 ;// ./packages/dataviews/build-module/dataforms-layouts/panel/index.js
+/**
+ * External dependencies
+ */
+
+
 /**
  * WordPress dependencies
  */
@@ -45966,10 +48054,13 @@ function PanelDropdown({
       "aria-expanded": isOpen,
       "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: %s: Field name.
-      (0,external_wp_i18n_namespaceObject._x)('Edit %s', 'field'), fieldLabel),
+      (0,external_wp_i18n_namespaceObject._x)('Edit %s', 'field'), fieldLabel || ''),
       onClick: onToggle,
+      disabled: fieldDefinition.readOnly === true,
+      accessibleWhenDisabled: true,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fieldDefinition.render, {
-        item: data
+        item: data,
+        field: fieldDefinition
       })
     }),
     renderContent: ({
@@ -46013,7 +48104,6 @@ function FormPanelField({
     }
     return fieldDef.id === field.id;
   });
-  const labelPosition = (_field$labelPosition = field.labelPosition) !== null && _field$labelPosition !== void 0 ? _field$labelPosition : 'side';
 
   // Use internal state instead of a ref to make sure that the component
   // re-renders when the popover's anchor updates.
@@ -46021,13 +48111,15 @@ function FormPanelField({
   if (!fieldDefinition) {
     return null;
   }
+  const labelPosition = (_field$labelPosition = field.labelPosition) !== null && _field$labelPosition !== void 0 ? _field$labelPosition : 'side';
+  const labelClassName = dist_clsx('dataforms-layouts-panel__field-label', `dataforms-layouts-panel__field-label--label-position-${labelPosition}`);
   const fieldLabel = isCombinedField(field) ? field.label : fieldDefinition?.label;
   if (labelPosition === 'top') {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       className: "dataforms-layouts-panel__field",
       spacing: 0,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "dataforms-layouts-panel__field-label",
+        className: labelClassName,
         style: {
           paddingBottom: 0
         },
@@ -46064,7 +48156,7 @@ function FormPanelField({
     ref: setPopoverAnchor,
     className: "dataforms-layouts-panel__field",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "dataforms-layouts-panel__field-label",
+      className: labelClassName,
       children: fieldLabel
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "dataforms-layouts-panel__field-control",
@@ -46159,7 +48251,7 @@ function DataFormLayout({
   }
   const normalizedFormFields = (0,external_wp_element_namespaceObject.useMemo)(() => normalizeFormFields(form), [form]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
-    spacing: 4,
+    spacing: form?.type === 'panel' ? 2 : 4,
     children: normalizedFormFields.map(formField => {
       const FieldLayout = getFormFieldLayout(formField.layout)?.component;
       if (!FieldLayout) {

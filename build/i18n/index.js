@@ -1,271 +1,9 @@
 /******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
-
-/***/ 2058:
-/***/ ((module, exports, __webpack_require__) => {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;/* global window, exports, define */
-
-!function() {
-    'use strict'
-
-    var re = {
-        not_string: /[^s]/,
-        not_bool: /[^t]/,
-        not_type: /[^T]/,
-        not_primitive: /[^v]/,
-        number: /[diefg]/,
-        numeric_arg: /[bcdiefguxX]/,
-        json: /[j]/,
-        not_json: /[^j]/,
-        text: /^[^\x25]+/,
-        modulo: /^\x25{2}/,
-        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
-        key: /^([a-z_][a-z_\d]*)/i,
-        key_access: /^\.([a-z_][a-z_\d]*)/i,
-        index_access: /^\[(\d+)\]/,
-        sign: /^[\+\-]/
-    }
-
-    function sprintf(key) {
-        // `arguments` is not an array, but should be fine for this call
-        return sprintf_format(sprintf_parse(key), arguments)
-    }
-
-    function vsprintf(fmt, argv) {
-        return sprintf.apply(null, [fmt].concat(argv || []))
-    }
-
-    function sprintf_format(parse_tree, argv) {
-        var cursor = 1, tree_length = parse_tree.length, arg, output = '', i, k, match, pad, pad_character, pad_length, is_positive, sign
-        for (i = 0; i < tree_length; i++) {
-            if (typeof parse_tree[i] === 'string') {
-                output += parse_tree[i]
-            }
-            else if (Array.isArray(parse_tree[i])) {
-                match = parse_tree[i] // convenience purposes only
-                if (match[2]) { // keyword argument
-                    arg = argv[cursor]
-                    for (k = 0; k < match[2].length; k++) {
-                        if (!arg.hasOwnProperty(match[2][k])) {
-                            throw new Error(sprintf('[sprintf] property "%s" does not exist', match[2][k]))
-                        }
-                        arg = arg[match[2][k]]
-                    }
-                }
-                else if (match[1]) { // positional argument (explicit)
-                    arg = argv[match[1]]
-                }
-                else { // positional argument (implicit)
-                    arg = argv[cursor++]
-                }
-
-                if (re.not_type.test(match[8]) && re.not_primitive.test(match[8]) && arg instanceof Function) {
-                    arg = arg()
-                }
-
-                if (re.numeric_arg.test(match[8]) && (typeof arg !== 'number' && isNaN(arg))) {
-                    throw new TypeError(sprintf('[sprintf] expecting number but found %T', arg))
-                }
-
-                if (re.number.test(match[8])) {
-                    is_positive = arg >= 0
-                }
-
-                switch (match[8]) {
-                    case 'b':
-                        arg = parseInt(arg, 10).toString(2)
-                        break
-                    case 'c':
-                        arg = String.fromCharCode(parseInt(arg, 10))
-                        break
-                    case 'd':
-                    case 'i':
-                        arg = parseInt(arg, 10)
-                        break
-                    case 'j':
-                        arg = JSON.stringify(arg, null, match[6] ? parseInt(match[6]) : 0)
-                        break
-                    case 'e':
-                        arg = match[7] ? parseFloat(arg).toExponential(match[7]) : parseFloat(arg).toExponential()
-                        break
-                    case 'f':
-                        arg = match[7] ? parseFloat(arg).toFixed(match[7]) : parseFloat(arg)
-                        break
-                    case 'g':
-                        arg = match[7] ? String(Number(arg.toPrecision(match[7]))) : parseFloat(arg)
-                        break
-                    case 'o':
-                        arg = (parseInt(arg, 10) >>> 0).toString(8)
-                        break
-                    case 's':
-                        arg = String(arg)
-                        arg = (match[7] ? arg.substring(0, match[7]) : arg)
-                        break
-                    case 't':
-                        arg = String(!!arg)
-                        arg = (match[7] ? arg.substring(0, match[7]) : arg)
-                        break
-                    case 'T':
-                        arg = Object.prototype.toString.call(arg).slice(8, -1).toLowerCase()
-                        arg = (match[7] ? arg.substring(0, match[7]) : arg)
-                        break
-                    case 'u':
-                        arg = parseInt(arg, 10) >>> 0
-                        break
-                    case 'v':
-                        arg = arg.valueOf()
-                        arg = (match[7] ? arg.substring(0, match[7]) : arg)
-                        break
-                    case 'x':
-                        arg = (parseInt(arg, 10) >>> 0).toString(16)
-                        break
-                    case 'X':
-                        arg = (parseInt(arg, 10) >>> 0).toString(16).toUpperCase()
-                        break
-                }
-                if (re.json.test(match[8])) {
-                    output += arg
-                }
-                else {
-                    if (re.number.test(match[8]) && (!is_positive || match[3])) {
-                        sign = is_positive ? '+' : '-'
-                        arg = arg.toString().replace(re.sign, '')
-                    }
-                    else {
-                        sign = ''
-                    }
-                    pad_character = match[4] ? match[4] === '0' ? '0' : match[4].charAt(1) : ' '
-                    pad_length = match[6] - (sign + arg).length
-                    pad = match[6] ? (pad_length > 0 ? pad_character.repeat(pad_length) : '') : ''
-                    output += match[5] ? sign + arg + pad : (pad_character === '0' ? sign + pad + arg : pad + sign + arg)
-                }
-            }
-        }
-        return output
-    }
-
-    var sprintf_cache = Object.create(null)
-
-    function sprintf_parse(fmt) {
-        if (sprintf_cache[fmt]) {
-            return sprintf_cache[fmt]
-        }
-
-        var _fmt = fmt, match, parse_tree = [], arg_names = 0
-        while (_fmt) {
-            if ((match = re.text.exec(_fmt)) !== null) {
-                parse_tree.push(match[0])
-            }
-            else if ((match = re.modulo.exec(_fmt)) !== null) {
-                parse_tree.push('%')
-            }
-            else if ((match = re.placeholder.exec(_fmt)) !== null) {
-                if (match[2]) {
-                    arg_names |= 1
-                    var field_list = [], replacement_field = match[2], field_match = []
-                    if ((field_match = re.key.exec(replacement_field)) !== null) {
-                        field_list.push(field_match[1])
-                        while ((replacement_field = replacement_field.substring(field_match[0].length)) !== '') {
-                            if ((field_match = re.key_access.exec(replacement_field)) !== null) {
-                                field_list.push(field_match[1])
-                            }
-                            else if ((field_match = re.index_access.exec(replacement_field)) !== null) {
-                                field_list.push(field_match[1])
-                            }
-                            else {
-                                throw new SyntaxError('[sprintf] failed to parse named argument key')
-                            }
-                        }
-                    }
-                    else {
-                        throw new SyntaxError('[sprintf] failed to parse named argument key')
-                    }
-                    match[2] = field_list
-                }
-                else {
-                    arg_names |= 2
-                }
-                if (arg_names === 3) {
-                    throw new Error('[sprintf] mixing positional and named placeholders is not (yet) supported')
-                }
-                parse_tree.push(match)
-            }
-            else {
-                throw new SyntaxError('[sprintf] unexpected placeholder')
-            }
-            _fmt = _fmt.substring(match[0].length)
-        }
-        return sprintf_cache[fmt] = parse_tree
-    }
-
-    /**
-     * export to either browser or node.js
-     */
-    /* eslint-disable quote-props */
-    if (true) {
-        exports.sprintf = sprintf
-        exports.vsprintf = vsprintf
-    }
-    if (typeof window !== 'undefined') {
-        window['sprintf'] = sprintf
-        window['vsprintf'] = vsprintf
-
-        if (true) {
-            !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {
-                return {
-                    'sprintf': sprintf,
-                    'vsprintf': vsprintf
-                }
-            }).call(exports, __webpack_require__, exports, module),
-		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))
-        }
-    }
-    /* eslint-enable quote-props */
-}()
-
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
+/******/ 	"use strict";
+/******/ 	// The require scope
+/******/ 	var __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -296,9 +34,6 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/* global window, exports, define */
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
-(() => {
-"use strict";
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
@@ -319,211 +54,219 @@ __webpack_require__.d(__webpack_exports__, {
   subscribe: () => (/* reexport */ subscribe)
 });
 
-;// ./node_modules/memize/dist/index.js
+;// ./node_modules/@tannin/sprintf/src/index.js
 /**
- * Memize options object.
+ * Regular expression matching format placeholder syntax.
  *
- * @typedef MemizeOptions
+ * The pattern for matching named arguments is a naive and incomplete matcher
+ * against valid JavaScript identifier names.
  *
- * @property {number} [maxSize] Maximum size of the cache.
+ * via Mathias Bynens:
+ *
+ * >An identifier must start with $, _, or any character in the Unicode
+ * >categories “Uppercase letter (Lu)”, “Lowercase letter (Ll)”, “Titlecase
+ * >letter (Lt)”, “Modifier letter (Lm)”, “Other letter (Lo)”, or “Letter
+ * >number (Nl)”.
+ * >
+ * >The rest of the string can contain the same characters, plus any U+200C zero
+ * >width non-joiner characters, U+200D zero width joiner characters, and
+ * >characters in the Unicode categories “Non-spacing mark (Mn)”, “Spacing
+ * >combining mark (Mc)”, “Decimal digit number (Nd)”, or “Connector
+ * >punctuation (Pc)”.
+ *
+ * If browser support is constrained to those supporting ES2015, this could be
+ * made more accurate using the `u` flag:
+ *
+ * ```
+ * /^[$_\p{L}\p{Nl}][$_\p{L}\p{Nl}\u200C\u200D\p{Mn}\p{Mc}\p{Nd}\p{Pc}]*$/u;
+ * ```
+ *
+ * @see http://www.pixelbeat.org/programming/gcc/format_specs.html
+ * @see https://mathiasbynens.be/notes/javascript-identifiers#valid-identifier-names
+ *
+ * @type {RegExp}
+ */
+var PATTERN =
+	/%(((\d+)\$)|(\(([$_a-zA-Z][$_a-zA-Z0-9]*)\)))?[ +0#-]*\d*(\.(\d+|\*))?(ll|[lhqL])?([cduxXefgsp%])/g;
+//               ▲         ▲                    ▲       ▲  ▲            ▲           ▲ type
+//               │         │                    │       │  │            └ Length (unsupported)
+//               │         │                    │       │  └ Precision / max width
+//               │         │                    │       └ Min width (unsupported)
+//               │         │                    └ Flags (unsupported)
+//               └ Index   └ Name (for named arguments)
+/**
+ * Given a format string, returns string with arguments interpolatation.
+ * Arguments can either be provided directly via function arguments spread, or
+ * with an array as the second argument.
+ *
+ * @see https://en.wikipedia.org/wiki/Printf_format_string
+ *
+ * @example
+ *
+ * ```js
+ * import sprintf from '@tannin/sprintf';
+ *
+ * sprintf( 'Hello %s!', 'world' );
+ * // ⇒ 'Hello world!'
+ * ```
+ * @template {string} T
+ * @overload
+ * @param {T} string - string printf format string
+ * @param {...import('../types').SprintfArgs<T>} args - arguments to interpolate
+ *
+ * @return {string} Formatted string.
  */
 
 /**
- * Internal cache entry.
+ * Given a format string, returns string with arguments interpolatation.
+ * Arguments can either be provided directly via function arguments spread, or
+ * with an array as the second argument.
  *
- * @typedef MemizeCacheNode
+ * @see https://en.wikipedia.org/wiki/Printf_format_string
  *
- * @property {?MemizeCacheNode|undefined} [prev] Previous node.
- * @property {?MemizeCacheNode|undefined} [next] Next node.
- * @property {Array<*>}                   args   Function arguments for cache
- *                                               entry.
- * @property {*}                          val    Function result.
+ * @example
+ *
+ * ```js
+ * import sprintf from '@tannin/sprintf';
+ *
+ * sprintf( 'Hello %s!', 'world' );
+ * // ⇒ 'Hello world!'
+ * ```
+ * @template {string} T
+ * @overload
+ * @param {T} string - string printf format string
+ * @param {import('../types').SprintfArgs<T>} args - arguments to interpolate
+ *
+ * @return {string} Formatted string.
  */
 
 /**
- * Properties of the enhanced function for controlling cache.
+ * Given a format string, returns string with arguments interpolatation.
+ * Arguments can either be provided directly via function arguments spread, or
+ * with an array as the second argument.
  *
- * @typedef MemizeMemoizedFunction
+ * @see https://en.wikipedia.org/wiki/Printf_format_string
  *
- * @property {()=>void} clear Clear the cache.
+ * @example
+ *
+ * ```js
+ * import sprintf from '@tannin/sprintf';
+ *
+ * sprintf( 'Hello %s!', 'world' );
+ * // ⇒ 'Hello world!'
+ * ```
+ * @template {string} T
+ * @param {T} string - string printf format string
+ * @param {...import('../types').SprintfArgs<T>} args - arguments to interpolate
+ *
+ * @return {string} Formatted string.
  */
-
-/**
- * Accepts a function to be memoized, and returns a new memoized function, with
- * optional options.
- *
- * @template {(...args: any[]) => any} F
- *
- * @param {F}             fn        Function to memoize.
- * @param {MemizeOptions} [options] Options object.
- *
- * @return {((...args: Parameters<F>) => ReturnType<F>) & MemizeMemoizedFunction} Memoized function.
- */
-function memize(fn, options) {
-	var size = 0;
-
-	/** @type {?MemizeCacheNode|undefined} */
-	var head;
-
-	/** @type {?MemizeCacheNode|undefined} */
-	var tail;
-
-	options = options || {};
-
-	function memoized(/* ...args */) {
-		var node = head,
-			len = arguments.length,
-			args,
-			i;
-
-		searchCache: while (node) {
-			// Perform a shallow equality test to confirm that whether the node
-			// under test is a candidate for the arguments passed. Two arrays
-			// are shallowly equal if their length matches and each entry is
-			// strictly equal between the two sets. Avoid abstracting to a
-			// function which could incur an arguments leaking deoptimization.
-
-			// Check whether node arguments match arguments length
-			if (node.args.length !== arguments.length) {
-				node = node.next;
-				continue;
-			}
-
-			// Check whether node arguments match arguments values
-			for (i = 0; i < len; i++) {
-				if (node.args[i] !== arguments[i]) {
-					node = node.next;
-					continue searchCache;
-				}
-			}
-
-			// At this point we can assume we've found a match
-
-			// Surface matched node to head if not already
-			if (node !== head) {
-				// As tail, shift to previous. Must only shift if not also
-				// head, since if both head and tail, there is no previous.
-				if (node === tail) {
-					tail = node.prev;
-				}
-
-				// Adjust siblings to point to each other. If node was tail,
-				// this also handles new tail's empty `next` assignment.
-				/** @type {MemizeCacheNode} */ (node.prev).next = node.next;
-				if (node.next) {
-					node.next.prev = node.prev;
-				}
-
-				node.next = head;
-				node.prev = null;
-				/** @type {MemizeCacheNode} */ (head).prev = node;
-				head = node;
-			}
-
-			// Return immediately
-			return node.val;
-		}
-
-		// No cached value found. Continue to insertion phase:
-
-		// Create a copy of arguments (avoid leaking deoptimization)
-		args = new Array(len);
-		for (i = 0; i < len; i++) {
-			args[i] = arguments[i];
-		}
-
-		node = {
-			args: args,
-
-			// Generate the result from original function
-			val: fn.apply(null, args),
-		};
-
-		// Don't need to check whether node is already head, since it would
-		// have been returned above already if it was
-
-		// Shift existing head down list
-		if (head) {
-			head.prev = node;
-			node.next = head;
-		} else {
-			// If no head, follows that there's no tail (at initial or reset)
-			tail = node;
-		}
-
-		// Trim tail if we're reached max size and are pending cache insertion
-		if (size === /** @type {MemizeOptions} */ (options).maxSize) {
-			tail = /** @type {MemizeCacheNode} */ (tail).prev;
-			/** @type {MemizeCacheNode} */ (tail).next = null;
-		} else {
-			size++;
-		}
-
-		head = node;
-
-		return node.val;
+function sprintf(string, ...args) {
+	var i = 0;
+	if (Array.isArray(args[0])) {
+		args = /** @type {import('../types').SprintfArgs<T>[]} */ (
+			/** @type {unknown} */ args[0]
+		);
 	}
 
-	memoized.clear = function () {
-		head = null;
-		tail = null;
-		size = 0;
-	};
+	return string.replace(PATTERN, function () {
+		var index,
+			// name needs to be documented as `string | undefined` else value will have tpye unknown.
+			/**
+			 * Name of the argument to substitute, if any.
+			 *
+			 * @type {string | undefined}
+			 */
+			name,
+			precision,
+			type,
+			value;
 
-	// Ignore reason: There's not a clear solution to create an intersection of
-	// the function with additional properties, where the goal is to retain the
-	// function signature of the incoming argument and add control properties
-	// on the return value.
+		index = arguments[3];
+		name = arguments[5];
+		precision = arguments[7];
+		type = arguments[9];
 
-	// @ts-ignore
-	return memoized;
+		// There's no placeholder substitution in the explicit "%", meaning it
+		// is not necessary to increment argument index.
+		if (type === '%') {
+			return '%';
+		}
+
+		// Asterisk precision determined by peeking / shifting next argument.
+		if (precision === '*') {
+			precision = args[i];
+			i++;
+		}
+
+		if (name === undefined) {
+			// If not a positional argument, use counter value.
+			if (index === undefined) {
+				index = i + 1;
+			}
+
+			i++;
+
+			// Positional argument.
+			value = args[index - 1];
+		} else if (
+			args[0] &&
+			typeof args[0] === 'object' &&
+			args[0].hasOwnProperty(name)
+		) {
+			// If it's a named argument, use name.
+			value = args[0][name];
+		}
+
+		// Parse as type.
+		if (type === 'f') {
+			value = parseFloat(value) || 0;
+		} else if (type === 'd') {
+			value = parseInt(value) || 0;
+		}
+
+		// Apply precision.
+		if (precision !== undefined) {
+			if (type === 'f') {
+				value = value.toFixed(precision);
+			} else if (type === 's') {
+				value = value.substr(0, precision);
+			}
+		}
+
+		// To avoid "undefined" concatenation, return empty string if no
+		// placeholder substitution can be performed.
+		return value !== undefined && value !== null ? value : '';
+	});
 }
 
-
-
-// EXTERNAL MODULE: ./node_modules/sprintf-js/src/sprintf.js
-var sprintf = __webpack_require__(2058);
-var sprintf_default = /*#__PURE__*/__webpack_require__.n(sprintf);
 ;// ./packages/i18n/build-module/sprintf.js
 /**
  * External dependencies
  */
 
 
-
 /**
- * Log to console, once per message; or more precisely, per referentially equal
- * argument set. Because Jed throws errors, we log these to the console instead
- * to avoid crashing the application.
- *
- * @param {...*} args Arguments to pass to `console.error`
+ * Internal dependencies
  */
-const logErrorOnce = memize(console.error); // eslint-disable-line no-console
 
 /**
- * Returns a formatted string. If an error occurs in applying the format, the
- * original format string is returned.
+ * Returns a formatted string.
  *
- * @param {string} format The format of the string to generate.
- * @param {...*}   args   Arguments to apply to the format.
+ * @template {string} T
+ * @param {T | TranslatableText<T>}  format The format of the string to generate.
+ * @param {DistributeSprintfArgs<T>} args   Arguments to apply to the format.
  *
- * @see https://www.npmjs.com/package/sprintf-js
+ * @see https://www.npmjs.com/package/@tannin/sprintf
  *
  * @return {string} The formatted string.
  */
 function sprintf_sprintf(format, ...args) {
-  try {
-    return sprintf_default().sprintf(format, ...args);
-  } catch (error) {
-    if (error instanceof Error) {
-      logErrorOnce('sprintf error: \n\n' + error.toString());
-    }
-    return format;
-  }
+  return sprintf(format, ...args);
 }
 
 ;// ./node_modules/@tannin/postfix/index.js
-var PRECEDENCE, OPENERS, TERMINATORS, PATTERN;
+var PRECEDENCE, OPENERS, TERMINATORS, postfix_PATTERN;
 
 /**
  * Operator precedence mapping.
@@ -574,7 +317,7 @@ TERMINATORS = {
  *
  * @type {RegExp}
  */
-PATTERN = /<=|>=|==|!=|&&|\|\||\?:|\(|!|\*|\/|%|\+|-|<|>|\?|\)|:/;
+postfix_PATTERN = /<=|>=|==|!=|&&|\|\||\?:|\(|!|\*|\/|%|\+|-|<|>|\?|\)|:/;
 
 /**
  * Given a C expression, returns the equivalent postfix (Reverse Polish)
@@ -600,7 +343,7 @@ function postfix( expression ) {
 		stack = [],
 		match, operator, term, element;
 
-	while ( ( match = expression.match( PATTERN ) ) ) {
+	while ( ( match = expression.match( postfix_PATTERN ) ) ) {
 		operator = match[ 0 ];
 
 		// Term is the string preceding the operator match. It may contain
@@ -1103,21 +846,21 @@ const I18N_HOOK_REGEXP = /^i18n\.(n?gettext|has_translation)(_|$)/;
  * Retrieve the domain to use when calling domain-specific filters.
  */
 /**
- * @typedef {(text: string, domain?: string) => string} __
+ * @typedef {<Text extends string>(text: Text, domain?: string) => import('./types').TranslatableText< Text >} __
  *
  * Retrieve the translation of text.
  *
  * @see https://developer.wordpress.org/reference/functions/__/
  */
 /**
- * @typedef {(text: string, context: string, domain?: string) => string} _x
+ * @typedef {<Text extends string>(text: Text, context: string, domain?: string) => import('./types').TranslatableText< Text >} _x
  *
  * Retrieve translated string with gettext context.
  *
  * @see https://developer.wordpress.org/reference/functions/_x/
  */
 /**
- * @typedef {(single: string, plural: string, number: number, domain?: string) => string} _n
+ * @typedef {<Single extends string, Plural extends string>(single: Single, plural: Plural, number: number, domain?: string) => import('./types').TranslatableText< Single | Plural >} _n
  *
  * Translates and retrieves the singular or plural form based on the supplied
  * number.
@@ -1125,7 +868,7 @@ const I18N_HOOK_REGEXP = /^i18n\.(n?gettext|has_translation)(_|$)/;
  * @see https://developer.wordpress.org/reference/functions/_n/
  */
 /**
- * @typedef {(single: string, plural: string, number: number, context: string, domain?: string) => string} _nx
+ * @typedef {<Single extends string, Plural extends string>(single: Single, plural: Plural, number: number, context: string, domain?: string) => import('./types').TranslatableText< Single | Plural >} _nx
  *
  * Translates and retrieves the singular or plural form based on the supplied
  * number, with gettext context.
@@ -1294,7 +1037,7 @@ const createI18n = (initialData, initialDomain, hooks) => {
   const __ = (text, domain) => {
     let translation = dcnpgettext(domain, undefined, text);
     if (!hooks) {
-      return translation;
+      return /** @type {import('./types').TranslatableText<typeof text>} */translation;
     }
 
     /**
@@ -1306,14 +1049,14 @@ const createI18n = (initialData, initialDomain, hooks) => {
      */
     translation = /** @type {string} */
     /** @type {*} */hooks.applyFilters('i18n.gettext', translation, text, domain);
-    return /** @type {string} */ /** @type {*} */hooks.applyFilters('i18n.gettext_' + getFilterDomain(domain), translation, text, domain);
+    return /** @type {import('./types').TranslatableText<typeof text>} */ /** @type {*} */hooks.applyFilters('i18n.gettext_' + getFilterDomain(domain), translation, text, domain);
   };
 
   /** @type {_x} */
   const _x = (text, context, domain) => {
     let translation = dcnpgettext(domain, context, text);
     if (!hooks) {
-      return translation;
+      return /** @type {import('./types').TranslatableText<typeof text>} */translation;
     }
 
     /**
@@ -1326,14 +1069,14 @@ const createI18n = (initialData, initialDomain, hooks) => {
      */
     translation = /** @type {string} */
     /** @type {*} */hooks.applyFilters('i18n.gettext_with_context', translation, text, context, domain);
-    return /** @type {string} */ /** @type {*} */hooks.applyFilters('i18n.gettext_with_context_' + getFilterDomain(domain), translation, text, context, domain);
+    return /** @type {import('./types').TranslatableText<typeof text>} */ /** @type {*} */hooks.applyFilters('i18n.gettext_with_context_' + getFilterDomain(domain), translation, text, context, domain);
   };
 
   /** @type {_n} */
   const _n = (single, plural, number, domain) => {
     let translation = dcnpgettext(domain, undefined, single, plural, number);
     if (!hooks) {
-      return translation;
+      return /** @type {import('./types').TranslatableText<typeof single | typeof plural>} */translation;
     }
 
     /**
@@ -1347,14 +1090,14 @@ const createI18n = (initialData, initialDomain, hooks) => {
      */
     translation = /** @type {string} */
     /** @type {*} */hooks.applyFilters('i18n.ngettext', translation, single, plural, number, domain);
-    return /** @type {string} */ /** @type {*} */hooks.applyFilters('i18n.ngettext_' + getFilterDomain(domain), translation, single, plural, number, domain);
+    return /** @type {import('./types').TranslatableText<typeof single | typeof plural>} */ /** @type {*} */hooks.applyFilters('i18n.ngettext_' + getFilterDomain(domain), translation, single, plural, number, domain);
   };
 
   /** @type {_nx} */
   const _nx = (single, plural, number, context, domain) => {
     let translation = dcnpgettext(domain, context, single, plural, number);
     if (!hooks) {
-      return translation;
+      return /** @type {import('./types').TranslatableText<typeof single | typeof plural>} */translation;
     }
 
     /**
@@ -1369,7 +1112,7 @@ const createI18n = (initialData, initialDomain, hooks) => {
      */
     translation = /** @type {string} */
     /** @type {*} */hooks.applyFilters('i18n.ngettext_with_context', translation, single, plural, number, context, domain);
-    return /** @type {string} */ /** @type {*} */hooks.applyFilters('i18n.ngettext_with_context_' + getFilterDomain(domain), translation, single, plural, number, context, domain);
+    return /** @type {import('./types').TranslatableText<typeof single | typeof plural>} */ /** @type {*} */hooks.applyFilters('i18n.ngettext_with_context_' + getFilterDomain(domain), translation, single, plural, number, context, domain);
   };
 
   /** @type {IsRtl} */
@@ -1502,10 +1245,12 @@ const subscribe = i18n.subscribe.bind(i18n);
  *
  * @see https://developer.wordpress.org/reference/functions/__/
  *
- * @param {string} text     Text to translate.
+ * @template {string} Text
+ *
+ * @param {Text}   text     Text to translate.
  * @param {string} [domain] Domain to retrieve the translated text.
  *
- * @return {string} Translated text.
+ * @return {import('./types').TranslatableText< Text >} Translated text.
  */
 const __ = i18n.__.bind(i18n);
 
@@ -1514,11 +1259,13 @@ const __ = i18n.__.bind(i18n);
  *
  * @see https://developer.wordpress.org/reference/functions/_x/
  *
- * @param {string} text     Text to translate.
+ * @template {string} Text
+ *
+ * @param {Text}   text     Text to translate.
  * @param {string} context  Context information for the translators.
  * @param {string} [domain] Domain to retrieve the translated text.
  *
- * @return {string} Translated context string without pipe.
+ * @return {import('./types').TranslatableText< Text >} Translated context string without pipe.
  */
 const _x = i18n._x.bind(i18n);
 
@@ -1528,13 +1275,16 @@ const _x = i18n._x.bind(i18n);
  *
  * @see https://developer.wordpress.org/reference/functions/_n/
  *
- * @param {string} single   The text to be used if the number is singular.
- * @param {string} plural   The text to be used if the number is plural.
+ * @template {string} Single
+ * @template {string} Plural
+ *
+ * @param {Single} single   The text to be used if the number is singular.
+ * @param {Plural} plural   The text to be used if the number is plural.
  * @param {number} number   The number to compare against to use either the
  *                          singular or plural form.
  * @param {string} [domain] Domain to retrieve the translated text.
  *
- * @return {string} The translated singular or plural form.
+ * @return {import('./types').TranslatableText< Single | Plural >} The translated singular or plural form.
  */
 const _n = i18n._n.bind(i18n);
 
@@ -1544,14 +1294,17 @@ const _n = i18n._n.bind(i18n);
  *
  * @see https://developer.wordpress.org/reference/functions/_nx/
  *
- * @param {string} single   The text to be used if the number is singular.
- * @param {string} plural   The text to be used if the number is plural.
+ * @template {string} Single
+ * @template {string} Plural
+ *
+ * @param {Single} single   The text to be used if the number is singular.
+ * @param {Plural} plural   The text to be used if the number is plural.
  * @param {number} number   The number to compare against to use either the
  *                          singular or plural form.
  * @param {string} context  Context information for the translators.
  * @param {string} [domain] Domain to retrieve the translated text.
  *
- * @return {string} The translated singular or plural form.
+ * @return {import('./types').TranslatableText< Single | Plural >} The translated singular or plural form.
  */
 const _nx = i18n._nx.bind(i18n);
 
@@ -1581,8 +1334,6 @@ const hasTranslation = i18n.hasTranslation.bind(i18n);
 
 
 
-
-})();
 
 (window.wp = window.wp || {}).i18n = __webpack_exports__;
 /******/ })()
