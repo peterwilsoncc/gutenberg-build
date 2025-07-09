@@ -1533,7 +1533,7 @@ __webpack_require__.d(__webpack_exports__, {
   PostLastRevision: () => (/* reexport */ post_last_revision),
   PostLastRevisionCheck: () => (/* reexport */ post_last_revision_check),
   PostLastRevisionPanel: () => (/* reexport */ post_last_revision_panel),
-  PostLockedModal: () => (/* reexport */ post_locked_modal),
+  PostLockedModal: () => (/* reexport */ PostLockedModal),
   PostPendingStatus: () => (/* reexport */ post_pending_status),
   PostPendingStatusCheck: () => (/* reexport */ post_pending_status_check),
   PostPingbacks: () => (/* reexport */ post_pingbacks),
@@ -3546,26 +3546,6 @@ function isPostSavingLocked(state) {
  *
  * @param {Object} state Global application state.
  *
- * @example
- * ```jsx
- * import { __ } from '@wordpress/i18n';
- * import { store as editorStore } from '@wordpress/editor';
- * import { useSelect } from '@wordpress/data';
- *
- * const ExampleComponent = () => {
- * 	const isAutoSavingLocked = useSelect(
- * 		( select ) => select( editorStore ).isPostAutosavingLocked(),
- * 		[]
- * 	);
- *
- * 	return isAutoSavingLocked ? (
- * 		<p>{ __( 'Post auto saving is locked' ) }</p>
- * 	) : (
- * 		<p>{ __( 'Post auto saving is not locked' ) }</p>
- * 	);
- * };
- * ```
- *
  * @return {boolean} Is locked.
  */
 function isPostAutosavingLocked(state) {
@@ -5545,8 +5525,8 @@ const viewPostRevisions = {
   label(items) {
     var _items$0$_links$versi;
     const revisionsCount = (_items$0$_links$versi = items[0]._links?.['version-history']?.[0]?.count) !== null && _items$0$_links$versi !== void 0 ? _items$0$_links$versi : 0;
-    return (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: number of revisions. */
-    (0,external_wp_i18n_namespaceObject.__)('View revisions (%d)'), revisionsCount);
+    return (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: number of revisions. */
+    (0,external_wp_i18n_namespaceObject.__)('View revisions (%s)'), revisionsCount);
   },
   isEligible(post) {
     var _post$_links$predeces, _post$_links$version;
@@ -5602,268 +5582,15 @@ function DataFormProvider({
 }
 /* harmony default export */ const dataform_context = (DataFormContext);
 
-;// ./packages/dataviews/build-module/utils.js
-/**
- * Internal dependencies
- */
-
-function renderFromElements({
-  item,
-  field
-}) {
-  const value = field.getValue({
-    item
-  });
-  return field?.elements?.find(element => element.value === value)?.label || field.getValue({
-    item
-  });
-}
-
-;// ./packages/icons/build-module/library/arrow-up.js
-/**
- * WordPress dependencies
- */
-
-
-const arrowUp = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M12 3.9 6.5 9.5l1 1 3.8-3.7V20h1.5V6.8l3.7 3.7 1-1z"
-  })
-});
-/* harmony default export */ const arrow_up = (arrowUp);
-
-;// ./packages/icons/build-module/library/arrow-down.js
-/**
- * WordPress dependencies
- */
-
-
-const arrowDown = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "m16.5 13.5-3.7 3.7V4h-1.5v13.2l-3.8-3.7-1 1 5.5 5.6 5.5-5.6z"
-  })
-});
-/* harmony default export */ const arrow_down = (arrowDown);
-
-;// ./packages/dataviews/build-module/constants.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-// Filter operators.
-const OPERATOR_IS = 'is';
-const OPERATOR_IS_NOT = 'isNot';
-const OPERATOR_IS_ANY = 'isAny';
-const OPERATOR_IS_NONE = 'isNone';
-const OPERATOR_IS_ALL = 'isAll';
-const OPERATOR_IS_NOT_ALL = 'isNotAll';
-const OPERATOR_LESS_THAN = 'lessThan';
-const OPERATOR_GREATER_THAN = 'greaterThan';
-const OPERATOR_LESS_THAN_OR_EQUAL = 'lessThanOrEqual';
-const OPERATOR_GREATER_THAN_OR_EQUAL = 'greaterThanOrEqual';
-const OPERATOR_BEFORE = 'before';
-const OPERATOR_AFTER = 'after';
-const OPERATOR_BEFORE_INC = 'beforeInc';
-const OPERATOR_AFTER_INC = 'afterInc';
-const OPERATOR_CONTAINS = 'contains';
-const OPERATOR_NOT_CONTAINS = 'notContains';
-const OPERATOR_STARTS_WITH = 'startsWith';
-const OPERATOR_BETWEEN = 'between';
-const OPERATOR_ON = 'on';
-const OPERATOR_NOT_ON = 'notOn';
-const OPERATOR_IN_THE_PAST = 'inThePast';
-const OPERATOR_OVER = 'over';
-const ALL_OPERATORS = [OPERATOR_IS, OPERATOR_IS_NOT, OPERATOR_IS_ANY, OPERATOR_IS_NONE, OPERATOR_IS_ALL, OPERATOR_IS_NOT_ALL, OPERATOR_LESS_THAN, OPERATOR_GREATER_THAN, OPERATOR_LESS_THAN_OR_EQUAL, OPERATOR_GREATER_THAN_OR_EQUAL, OPERATOR_BEFORE, OPERATOR_AFTER, OPERATOR_BEFORE_INC, OPERATOR_AFTER_INC, OPERATOR_CONTAINS, OPERATOR_NOT_CONTAINS, OPERATOR_STARTS_WITH, OPERATOR_BETWEEN, OPERATOR_ON, OPERATOR_NOT_ON, OPERATOR_IN_THE_PAST, OPERATOR_OVER];
-const SINGLE_SELECTION_OPERATORS = [OPERATOR_IS, OPERATOR_IS_NOT, OPERATOR_LESS_THAN, OPERATOR_GREATER_THAN, OPERATOR_LESS_THAN_OR_EQUAL, OPERATOR_GREATER_THAN_OR_EQUAL, OPERATOR_BEFORE, OPERATOR_AFTER, OPERATOR_BEFORE_INC, OPERATOR_AFTER_INC, OPERATOR_CONTAINS, OPERATOR_NOT_CONTAINS, OPERATOR_STARTS_WITH, OPERATOR_ON, OPERATOR_NOT_ON];
-const OPERATORS = {
-  [OPERATOR_IS]: {
-    key: 'is-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Is')
-  },
-  [OPERATOR_IS_NOT]: {
-    key: 'is-not-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Is not')
-  },
-  [OPERATOR_IS_ANY]: {
-    key: 'is-any-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Is any')
-  },
-  [OPERATOR_IS_NONE]: {
-    key: 'is-none-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Is none')
-  },
-  [OPERATOR_IS_ALL]: {
-    key: 'is-all-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Is all')
-  },
-  [OPERATOR_IS_NOT_ALL]: {
-    key: 'is-not-all-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Is not all')
-  },
-  [OPERATOR_LESS_THAN]: {
-    key: 'less-than-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Less than')
-  },
-  [OPERATOR_GREATER_THAN]: {
-    key: 'greater-than-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Greater than')
-  },
-  [OPERATOR_LESS_THAN_OR_EQUAL]: {
-    key: 'less-than-or-equal-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Less than or equal')
-  },
-  [OPERATOR_GREATER_THAN_OR_EQUAL]: {
-    key: 'greater-than-or-equal-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Greater than or equal')
-  },
-  [OPERATOR_BEFORE]: {
-    key: 'before-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Before')
-  },
-  [OPERATOR_AFTER]: {
-    key: 'after-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('After')
-  },
-  [OPERATOR_BEFORE_INC]: {
-    key: 'before-inc-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Before (inc)')
-  },
-  [OPERATOR_AFTER_INC]: {
-    key: 'after-inc-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('After (inc)')
-  },
-  [OPERATOR_CONTAINS]: {
-    key: 'contains-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Contains')
-  },
-  [OPERATOR_NOT_CONTAINS]: {
-    key: 'not-contains-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)("Doesn't contain")
-  },
-  [OPERATOR_STARTS_WITH]: {
-    key: 'starts-with-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Starts with')
-  },
-  [OPERATOR_BETWEEN]: {
-    key: 'between-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Between (inc)')
-  },
-  [OPERATOR_ON]: {
-    key: 'on-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('On')
-  },
-  [OPERATOR_NOT_ON]: {
-    key: 'not-on-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Not on')
-  },
-  [OPERATOR_IN_THE_PAST]: {
-    key: 'in-the-past-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('In the past')
-  },
-  [OPERATOR_OVER]: {
-    key: 'over-filter',
-    label: (0,external_wp_i18n_namespaceObject.__)('Over')
-  }
-};
-const SORTING_DIRECTIONS = (/* unused pure expression or super */ null && (['asc', 'desc']));
-const sortArrows = {
-  asc: '↑',
-  desc: '↓'
-};
-const sortValues = {
-  asc: 'ascending',
-  desc: 'descending'
-};
-const sortLabels = {
-  asc: (0,external_wp_i18n_namespaceObject.__)('Sort ascending'),
-  desc: (0,external_wp_i18n_namespaceObject.__)('Sort descending')
-};
-const sortIcons = {
-  asc: arrow_up,
-  desc: arrow_down
-};
-
-// View layouts.
-const LAYOUT_TABLE = 'table';
-const LAYOUT_GRID = 'grid';
-const LAYOUT_LIST = 'list';
-
-;// ./packages/dataviews/build-module/field-types/email.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-function sort(valueA, valueB, direction) {
-  return direction === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
-}
-function isValid(value, context) {
-  // TODO: this implicitly means the value is required.
-  if (value === '') {
-    return false;
-  }
-  if (!(0,external_wp_url_namespaceObject.isEmail)(value)) {
-    return false;
-  }
-  if (context?.elements) {
-    const validValues = context?.elements?.map(f => f.value);
-    if (!validValues.includes(value)) {
-      return false;
-    }
-  }
-  return true;
-}
-/* harmony default export */ const email = ({
-  sort,
-  isValid,
-  Edit: 'email',
-  render: ({
-    item,
-    field
-  }) => {
-    return field.elements ? renderFromElements({
-      item,
-      field
-    }) : field.getValue({
-      item
-    });
-  },
-  enableSorting: true,
-  filterBy: {
-    defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
-    validOperators: [OPERATOR_IS, OPERATOR_IS_NOT, OPERATOR_CONTAINS, OPERATOR_NOT_CONTAINS, OPERATOR_STARTS_WITH,
-    // Multiple selection
-    OPERATOR_IS_ANY, OPERATOR_IS_NONE, OPERATOR_IS_ALL, OPERATOR_IS_NOT_ALL]
-  }
-});
-
 ;// ./packages/dataviews/build-module/field-types/integer.js
 /**
  * Internal dependencies
  */
 
-
-
-function integer_sort(a, b, direction) {
+function sort(a, b, direction) {
   return direction === 'asc' ? a - b : b - a;
 }
-function integer_isValid(value, context) {
+function isValid(value, context) {
   // TODO: this implicitly means the value is required.
   if (value === '') {
     return false;
@@ -5880,37 +5607,15 @@ function integer_isValid(value, context) {
   return true;
 }
 /* harmony default export */ const integer = ({
-  sort: integer_sort,
-  isValid: integer_isValid,
-  Edit: 'integer',
-  render: ({
-    item,
-    field
-  }) => {
-    return field.elements ? renderFromElements({
-      item,
-      field
-    }) : field.getValue({
-      item
-    });
-  },
-  enableSorting: true,
-  filterBy: {
-    defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT, OPERATOR_LESS_THAN, OPERATOR_GREATER_THAN, OPERATOR_LESS_THAN_OR_EQUAL, OPERATOR_GREATER_THAN_OR_EQUAL, OPERATOR_BETWEEN],
-    validOperators: [
-    // Single-selection
-    OPERATOR_IS, OPERATOR_IS_NOT, OPERATOR_LESS_THAN, OPERATOR_GREATER_THAN, OPERATOR_LESS_THAN_OR_EQUAL, OPERATOR_GREATER_THAN_OR_EQUAL, OPERATOR_BETWEEN,
-    // Multiple-selection
-    OPERATOR_IS_ANY, OPERATOR_IS_NONE, OPERATOR_IS_ALL, OPERATOR_IS_NOT_ALL]
-  }
+  sort,
+  isValid,
+  Edit: 'integer'
 });
 
 ;// ./packages/dataviews/build-module/field-types/text.js
 /**
  * Internal dependencies
  */
-
-
 
 function text_sort(valueA, valueB, direction) {
   return direction === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
@@ -5927,35 +5632,13 @@ function text_isValid(value, context) {
 /* harmony default export */ const field_types_text = ({
   sort: text_sort,
   isValid: text_isValid,
-  Edit: 'text',
-  render: ({
-    item,
-    field
-  }) => {
-    return field.elements ? renderFromElements({
-      item,
-      field
-    }) : field.getValue({
-      item
-    });
-  },
-  enableSorting: true,
-  filterBy: {
-    defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
-    validOperators: [
-    // Single selection
-    OPERATOR_IS, OPERATOR_IS_NOT, OPERATOR_CONTAINS, OPERATOR_NOT_CONTAINS, OPERATOR_STARTS_WITH,
-    // Multiple selection
-    OPERATOR_IS_ANY, OPERATOR_IS_NONE, OPERATOR_IS_ALL, OPERATOR_IS_NOT_ALL]
-  }
+  Edit: 'text'
 });
 
 ;// ./packages/dataviews/build-module/field-types/datetime.js
 /**
  * Internal dependencies
  */
-
-
 
 function datetime_sort(a, b, direction) {
   const timeA = new Date(a).getTime();
@@ -5974,185 +5657,13 @@ function datetime_isValid(value, context) {
 /* harmony default export */ const datetime = ({
   sort: datetime_sort,
   isValid: datetime_isValid,
-  Edit: 'datetime',
-  render: ({
-    item,
-    field
-  }) => {
-    return field.elements ? renderFromElements({
-      item,
-      field
-    }) : field.getValue({
-      item
-    });
-  },
-  enableSorting: true,
-  filterBy: {
-    defaultOperators: [OPERATOR_ON, OPERATOR_NOT_ON, OPERATOR_BEFORE, OPERATOR_AFTER, OPERATOR_BEFORE_INC, OPERATOR_AFTER_INC, OPERATOR_IN_THE_PAST, OPERATOR_OVER],
-    validOperators: [OPERATOR_ON, OPERATOR_NOT_ON, OPERATOR_BEFORE, OPERATOR_AFTER, OPERATOR_BEFORE_INC, OPERATOR_AFTER_INC, OPERATOR_IN_THE_PAST, OPERATOR_OVER]
-  }
+  Edit: 'datetime'
 });
-
-;// ./packages/dataviews/build-module/field-types/boolean.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-function boolean_sort(a, b, direction) {
-  const boolA = Boolean(a);
-  const boolB = Boolean(b);
-  if (boolA === boolB) {
-    return 0;
-  }
-
-  // In ascending order, false comes before true
-  if (direction === 'asc') {
-    return boolA ? 1 : -1;
-  }
-
-  // In descending order, true comes before false
-  return boolA ? -1 : 1;
-}
-function boolean_isValid(value) {
-  if (![true, false, undefined].includes(value)) {
-    return false;
-  }
-  return true;
-}
-/* harmony default export */ const field_types_boolean = ({
-  sort: boolean_sort,
-  isValid: boolean_isValid,
-  Edit: 'boolean',
-  render: ({
-    item,
-    field
-  }) => {
-    if (field.elements) {
-      return renderFromElements({
-        item,
-        field
-      });
-    }
-    if (field.getValue({
-      item
-    }) === true) {
-      return (0,external_wp_i18n_namespaceObject.__)('True');
-    }
-    if (field.getValue({
-      item
-    }) === false) {
-      return (0,external_wp_i18n_namespaceObject.__)('False');
-    }
-    return null;
-  },
-  enableSorting: true,
-  filterBy: {
-    defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
-    validOperators: [OPERATOR_IS, OPERATOR_IS_NOT]
-  }
-});
-
-;// ./packages/dataviews/build-module/field-types/media.js
-/**
- * Internal dependencies
- */
-
-function media_sort() {
-  return 0;
-}
-function media_isValid(value, context) {
-  if (context?.elements) {
-    const validValues = context?.elements.map(f => f.value);
-    if (!validValues.includes(value)) {
-      return false;
-    }
-  }
-  return true;
-}
-/* harmony default export */ const media = ({
-  sort: media_sort,
-  isValid: media_isValid,
-  Edit: null,
-  render: () => null,
-  enableSorting: false,
-  filterBy: false
-});
-
-;// ./packages/dataviews/build-module/field-types/array.js
-/**
- * Internal dependencies
- */
-
-
-
-// Sort arrays by length, then alphabetically by joined string
-function array_sort(valueA, valueB, direction) {
-  const arrA = Array.isArray(valueA) ? valueA : [];
-  const arrB = Array.isArray(valueB) ? valueB : [];
-  if (arrA.length !== arrB.length) {
-    return direction === 'asc' ? arrA.length - arrB.length : arrB.length - arrA.length;
-  }
-  const joinedA = arrA.join(',');
-  const joinedB = arrB.join(',');
-  return direction === 'asc' ? joinedA.localeCompare(joinedB) : joinedB.localeCompare(joinedA);
-}
-function array_isValid(value, context) {
-  if (!Array.isArray(value)) {
-    return false;
-  }
-
-  // Only allow strings for now. Can be extended to other types in the future.
-  if (!value.every(v => typeof v === 'string')) {
-    return false;
-  }
-  if (context?.elements) {
-    const validValues = context.elements.map(f => f.value);
-    if (!value.every(v => validValues.includes(v))) {
-      return false;
-    }
-  }
-  return true;
-}
-function render({
-  item,
-  field
-}) {
-  const value = field.getValue({
-    item
-  }) || [];
-  return value.join(', ');
-}
-const arrayFieldType = {
-  sort: array_sort,
-  isValid: array_isValid,
-  Edit: null,
-  // Not implemented yet
-  render,
-  enableSorting: true,
-  filterBy: {
-    defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
-    validOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE, OPERATOR_IS_ALL, OPERATOR_IS_NOT_ALL]
-  }
-};
-/* harmony default export */ const array = (arrayFieldType);
 
 ;// ./packages/dataviews/build-module/field-types/index.js
 /**
  * Internal dependencies
  */
-
-
-
-
-
-
 
 
 
@@ -6165,9 +5676,6 @@ const arrayFieldType = {
  * @return A field type definition.
  */
 function getFieldTypeDefinition(type) {
-  if ('email' === type) {
-    return email;
-  }
   if ('integer' === type) {
     return integer;
   }
@@ -6177,18 +5685,6 @@ function getFieldTypeDefinition(type) {
   if ('datetime' === type) {
     return datetime;
   }
-  if ('boolean' === type) {
-    return field_types_boolean;
-  }
-  if ('media' === type) {
-    return media;
-  }
-  if ('array' === type) {
-    return array;
-  }
-
-  // This is a fallback for fields that don't provide a type.
-  // It can be removed when the field.type is mandatory.
   return {
     sort: (a, b, direction) => {
       if (typeof a === 'number' && typeof b === 'number') {
@@ -6205,66 +5701,12 @@ function getFieldTypeDefinition(type) {
       }
       return true;
     },
-    Edit: null,
-    render: ({
-      item,
-      field
-    }) => {
-      return field.elements ? renderFromElements({
-        item,
-        field
-      }) : field.getValue({
-        item
-      });
-    },
-    enableSorting: true,
-    filterBy: {
-      defaultOperators: [OPERATOR_IS, OPERATOR_IS_NOT],
-      validOperators: ALL_OPERATORS
-    }
+    Edit: () => null
   };
 }
 
 ;// external ["wp","components"]
 const external_wp_components_namespaceObject = window["wp"]["components"];
-;// ./packages/dataviews/build-module/dataform-controls/checkbox.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-function Checkbox({
-  field,
-  onChange,
-  data,
-  hideLabelFromVision
-}) {
-  const {
-    id,
-    getValue,
-    label,
-    description
-  } = field;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-    __nextHasNoMarginBottom: true,
-    hidden: hideLabelFromVision,
-    label: label,
-    help: description,
-    checked: getValue({
-      item: data
-    }),
-    onChange: () => onChange({
-      [id]: !getValue({
-        item: data
-      })
-    })
-  });
-}
-
 ;// ./packages/dataviews/build-module/dataform-controls/datetime.js
 /**
  * WordPress dependencies
@@ -6272,100 +5714,15 @@ function Checkbox({
 
 
 
-
 /**
  * Internal dependencies
  */
 
-
-
-const TIME_UNITS_OPTIONS = {
-  [OPERATOR_IN_THE_PAST]: [{
-    value: 'days',
-    label: (0,external_wp_i18n_namespaceObject.__)('Days')
-  }, {
-    value: 'weeks',
-    label: (0,external_wp_i18n_namespaceObject.__)('Weeks')
-  }, {
-    value: 'months',
-    label: (0,external_wp_i18n_namespaceObject.__)('Months')
-  }, {
-    value: 'years',
-    label: (0,external_wp_i18n_namespaceObject.__)('Years')
-  }],
-  [OPERATOR_OVER]: [{
-    value: 'days',
-    label: (0,external_wp_i18n_namespaceObject.__)('Days ago')
-  }, {
-    value: 'weeks',
-    label: (0,external_wp_i18n_namespaceObject.__)('Weeks ago')
-  }, {
-    value: 'months',
-    label: (0,external_wp_i18n_namespaceObject.__)('Months ago')
-  }, {
-    value: 'years',
-    label: (0,external_wp_i18n_namespaceObject.__)('Years ago')
-  }]
-};
-function RelativeDateControls({
-  id,
-  value,
-  onChange,
-  label,
-  hideLabelFromVision,
-  options
-}) {
-  const {
-    value: relValue = '',
-    unit = options[0].value
-  } = value;
-  const onChangeValue = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: {
-      value: Number(newValue),
-      unit
-    }
-  }), [id, onChange, unit]);
-  const onChangeUnit = (0,external_wp_element_namespaceObject.useCallback)(newUnit => onChange({
-    [id]: {
-      value: relValue,
-      unit: newUnit
-    }
-  }), [id, onChange, relValue]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
-    id: id,
-    __nextHasNoMarginBottom: true,
-    className: "dataviews-controls__datetime",
-    label: label,
-    hideLabelFromVision: hideLabelFromVision,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-      spacing: 2.5,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
-        __next40pxDefaultSize: true,
-        className: "dataviews-controls__datetime-number",
-        spinControls: "none",
-        min: 1,
-        step: 1,
-        value: relValue,
-        onChange: onChangeValue
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-        className: "dataviews-controls__datetime-unit",
-        __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Unit'),
-        value: unit,
-        options: options,
-        onChange: onChangeUnit,
-        hideLabelFromVision: true
-      })]
-    })
-  });
-}
 function DateTime({
   data,
   field,
   onChange,
-  hideLabelFromVision,
-  operator
+  hideLabelFromVision
 }) {
   const {
     id,
@@ -6377,16 +5734,6 @@ function DateTime({
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: newValue
   }), [id, onChange]);
-  if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RelativeDateControls, {
-      id: id,
-      value: value && typeof value === 'object' ? value : {},
-      onChange: onChange,
-      label: label,
-      hideLabelFromVision: hideLabelFromVision,
-      options: TIME_UNITS_OPTIONS[operator]
-    });
-  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
     className: "dataviews-controls__datetime",
     children: [!hideLabelFromVision && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
@@ -6396,52 +5743,10 @@ function DateTime({
       as: "legend",
       children: label
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TimePicker, {
-      currentTime: typeof value === 'string' ? value : undefined,
+      currentTime: value,
       onChange: onChangeControl,
       hideLabelFromVision: true
     })]
-  });
-}
-
-;// ./packages/dataviews/build-module/dataform-controls/email.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-function Email({
-  data,
-  field,
-  onChange,
-  hideLabelFromVision
-}) {
-  const {
-    id,
-    label,
-    placeholder,
-    description
-  } = field;
-  const value = field.getValue({
-    item: data
-  });
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: newValue
-  }), [id, onChange]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-    type: "email",
-    label: label,
-    placeholder: placeholder,
-    value: value !== null && value !== void 0 ? value : '',
-    help: description,
-    onChange: onChangeControl,
-    __next40pxDefaultSize: true,
-    __nextHasNoMarginBottom: true,
-    hideLabelFromVision: hideLabelFromVision
   });
 }
 
@@ -6452,55 +5757,15 @@ function Email({
 
 
 
-
 /**
  * Internal dependencies
  */
 
-
-function BetweenControls({
-  id,
-  value,
-  onChange,
-  hideLabelFromVision
-}) {
-  const [min = '', max = ''] = Array.isArray(value) ? value : [];
-  const onChangeMin = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: [Number(newValue), max]
-  }), [id, onChange, max]);
-  const onChangeMax = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: [min, Number(newValue)]
-  }), [id, onChange, min]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
-    __nextHasNoMarginBottom: true,
-    help: (0,external_wp_i18n_namespaceObject.__)('The max. value must be greater than the min. value.'),
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
-      direction: "row",
-      gap: 4,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Min.'),
-        value: min,
-        max: max ? Number(max) - 1 : undefined,
-        onChange: onChangeMin,
-        __next40pxDefaultSize: true,
-        hideLabelFromVision: hideLabelFromVision
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Max.'),
-        value: max,
-        min: min ? Number(min) + 1 : undefined,
-        onChange: onChangeMax,
-        __next40pxDefaultSize: true,
-        hideLabelFromVision: hideLabelFromVision
-      })]
-    })
-  });
-}
 function Integer({
   data,
   field,
   onChange,
-  hideLabelFromVision,
-  operator
+  hideLabelFromVision
 }) {
   var _field$getValue;
   const {
@@ -6514,14 +5779,6 @@ function Integer({
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: Number(newValue)
   }), [id, onChange]);
-  if (operator === OPERATOR_BETWEEN) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BetweenControls, {
-      id: id,
-      value: value,
-      onChange: onChange,
-      hideLabelFromVision: hideLabelFromVision
-    });
-  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
     label: label,
     help: description,
@@ -6615,7 +5872,6 @@ function Select({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
     label: label,
     value: value,
-    help: field.description,
     options: elements,
     onChange: onChangeControl,
     __next40pxDefaultSize: true,
@@ -6644,8 +5900,7 @@ function Text({
   const {
     id,
     label,
-    placeholder,
-    description
+    placeholder
   } = field;
   const value = field.getValue({
     item: data
@@ -6657,93 +5912,10 @@ function Text({
     label: label,
     placeholder: placeholder,
     value: value !== null && value !== void 0 ? value : '',
-    help: description,
     onChange: onChangeControl,
     __next40pxDefaultSize: true,
     __nextHasNoMarginBottom: true,
     hideLabelFromVision: hideLabelFromVision
-  });
-}
-
-;// ./packages/dataviews/build-module/dataform-controls/toggle-group.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-function ToggleGroup({
-  data,
-  field,
-  onChange,
-  hideLabelFromVision
-}) {
-  const {
-    id
-  } = field;
-  const value = field.getValue({
-    item: data
-  });
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: newValue
-  }), [id, onChange]);
-  if (field.elements) {
-    const selectedOption = field.elements.find(el => el.value === value);
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
-      __next40pxDefaultSize: true,
-      __nextHasNoMarginBottom: true,
-      isBlock: true,
-      label: field.label,
-      help: selectedOption?.description || field.description,
-      onChange: onChangeControl,
-      value: value,
-      hideLabelFromVision: hideLabelFromVision,
-      children: field.elements.map(el => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-        label: el.label,
-        value: el.value
-      }, el.value))
-    });
-  }
-  return null;
-}
-
-;// ./packages/dataviews/build-module/dataform-controls/boolean.js
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-function boolean_Boolean({
-  field,
-  onChange,
-  data,
-  hideLabelFromVision
-}) {
-  const {
-    id,
-    getValue,
-    label
-  } = field;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-    hidden: hideLabelFromVision,
-    __nextHasNoMarginBottom: true,
-    label: label,
-    checked: getValue({
-      item: data
-    }),
-    onChange: () => onChange({
-      [id]: !getValue({
-        item: data
-      })
-    })
   });
 }
 
@@ -6761,20 +5933,12 @@ function boolean_Boolean({
 
 
 
-
-
-
-
 const FORM_CONTROLS = {
-  boolean: boolean_Boolean,
-  checkbox: Checkbox,
   datetime: DateTime,
-  email: Email,
   integer: Integer,
   radio: Radio,
   select: Select,
-  text: Text,
-  toggleGroup: ToggleGroup
+  text: Text
 };
 function getControl(field, fieldTypeDefinition) {
   if (typeof field.Edit === 'function') {
@@ -6800,13 +5964,8 @@ function getControlByType(type) {
 
 ;// ./packages/dataviews/build-module/normalize-fields.js
 /**
- * External dependencies
- */
-
-/**
  * Internal dependencies
  */
-
 
 
 const getValueFromId = id => ({
@@ -6823,61 +5982,6 @@ const getValueFromId = id => ({
   }
   return value;
 };
-function getFilterBy(field, fieldTypeDefinition) {
-  if (field.filterBy === false) {
-    return false;
-  }
-  if (typeof field.filterBy === 'object') {
-    let operators = field.filterBy.operators;
-
-    // Assign default values if no operator was provided.
-    if (!operators || !Array.isArray(operators)) {
-      operators = !!fieldTypeDefinition.filterBy ? fieldTypeDefinition.filterBy.defaultOperators : [];
-    }
-
-    // Make sure only valid operators are included.
-    let validOperators = ALL_OPERATORS;
-    if (typeof fieldTypeDefinition.filterBy === 'object') {
-      validOperators = fieldTypeDefinition.filterBy.validOperators;
-    }
-    operators = operators.filter(operator => validOperators.includes(operator));
-
-    // The `between` operator is not supported when elements are provided.
-    if (field.elements && operators.includes(OPERATOR_BETWEEN)) {
-      operators = operators.filter(operator => operator !== OPERATOR_BETWEEN);
-    }
-
-    // Do not allow mixing single & multiselection operators.
-    // Remove multiselection operators if any of the single selection ones is present.
-    const hasSingleSelectionOperator = operators.some(operator => SINGLE_SELECTION_OPERATORS.includes(operator));
-    if (hasSingleSelectionOperator) {
-      operators = operators.filter(operator =>
-      // The 'Between' operator is unique as it can be combined with single selection operators.
-      [...SINGLE_SELECTION_OPERATORS, OPERATOR_BETWEEN].includes(operator));
-    }
-
-    // If no operators are left at this point,
-    // the filters should be disabled.
-    if (operators.length === 0) {
-      return false;
-    }
-    return {
-      isPrimary: !!field.filterBy.isPrimary,
-      operators
-    };
-  }
-  if (fieldTypeDefinition.filterBy === false) {
-    return false;
-  }
-  let defaultOperators = fieldTypeDefinition.filterBy.defaultOperators;
-  // The `between` operator is not supported when elements are provided.
-  if (field.elements && defaultOperators.includes(OPERATOR_BETWEEN)) {
-    defaultOperators = defaultOperators.filter(operator => operator !== OPERATOR_BETWEEN);
-  }
-  return {
-    operators: defaultOperators
-  };
-}
 
 /**
  * Apply default values and normalize the fields config.
@@ -6887,7 +5991,7 @@ function getFilterBy(field, fieldTypeDefinition) {
  */
 function normalizeFields(fields) {
   return fields.map(field => {
-    var _field$sort, _field$isValid, _field$render, _field$enableHiding, _ref, _field$enableSorting, _ref2, _field$readOnly;
+    var _field$sort, _field$isValid, _field$enableHiding, _field$enableSorting;
     const fieldTypeDefinition = getFieldTypeDefinition(field.type);
     const getValue = field.getValue || getValueFromId(field.id);
     const sort = (_field$sort = field.sort) !== null && _field$sort !== void 0 ? _field$sort : function sort(a, b, direction) {
@@ -6903,16 +6007,17 @@ function normalizeFields(fields) {
       }), context);
     };
     const Edit = getControl(field, fieldTypeDefinition);
-    const render = (_field$render = field.render) !== null && _field$render !== void 0 ? _field$render : function render({
-      item,
-      field: renderedField
-    }) {
-      return fieldTypeDefinition.render({
-        item,
-        field: renderedField
+    const renderFromElements = ({
+      item
+    }) => {
+      const value = getValue({
+        item
+      });
+      return field?.elements?.find(element => element.value === value)?.label || getValue({
+        item
       });
     };
-    const filterBy = getFilterBy(field, fieldTypeDefinition);
+    const render = field.render || (field.elements ? renderFromElements : getValue);
     return {
       ...field,
       label: field.label || field.id,
@@ -6923,15 +6028,11 @@ function normalizeFields(fields) {
       isValid,
       Edit,
       enableHiding: (_field$enableHiding = field.enableHiding) !== null && _field$enableHiding !== void 0 ? _field$enableHiding : true,
-      enableSorting: (_ref = (_field$enableSorting = field.enableSorting) !== null && _field$enableSorting !== void 0 ? _field$enableSorting : fieldTypeDefinition.enableSorting) !== null && _ref !== void 0 ? _ref : true,
-      filterBy,
-      readOnly: (_ref2 = (_field$readOnly = field.readOnly) !== null && _field$readOnly !== void 0 ? _field$readOnly : fieldTypeDefinition.readOnly) !== null && _ref2 !== void 0 ? _ref2 : false
+      enableSorting: (_field$enableSorting = field.enableSorting) !== null && _field$enableSorting !== void 0 ? _field$enableSorting : true
     };
   });
 }
 
-;// ./node_modules/clsx/dist/clsx.mjs
-function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
 ;// ./packages/dataviews/build-module/dataforms-layouts/is-combined-field.js
 /**
  * Internal dependencies
@@ -6942,11 +6043,6 @@ function isCombinedField(field) {
 }
 
 ;// ./packages/dataviews/build-module/dataforms-layouts/regular/index.js
-/**
- * External dependencies
- */
-
-
 /**
  * WordPress dependencies
  */
@@ -7019,21 +6115,18 @@ function FormRegularField({
   }
   const labelPosition = (_field$labelPosition = field.labelPosition) !== null && _field$labelPosition !== void 0 ? _field$labelPosition : 'top';
   const fieldDefinition = fields.find(fieldDef => fieldDef.id === field.id);
-  if (!fieldDefinition || !fieldDefinition.Edit) {
+  if (!fieldDefinition) {
     return null;
   }
   if (labelPosition === 'side') {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       className: "dataforms-layouts-regular__field",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: dist_clsx('dataforms-layouts-regular__field-label', `dataforms-layouts-regular__field-label--label-position-${labelPosition}`),
+        className: "dataforms-layouts-regular__field-label",
         children: fieldDefinition.label
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "dataforms-layouts-regular__field-control",
-        children: fieldDefinition.readOnly === true ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fieldDefinition.render, {
-          item: data,
-          field: fieldDefinition
-        }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fieldDefinition.Edit, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fieldDefinition.Edit, {
           data: data,
           field: fieldDefinition,
           onChange: onChange,
@@ -7044,18 +6137,7 @@ function FormRegularField({
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "dataforms-layouts-regular__field",
-    children: fieldDefinition.readOnly === true ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [!hideLabelFromVision && labelPosition !== 'none' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "dataforms-layouts-regular__field-label",
-        children: fieldDefinition.label
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: "dataforms-layouts-regular__field-control",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fieldDefinition.render, {
-          item: data,
-          field: fieldDefinition
-        })
-      })]
-    }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fieldDefinition.Edit, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fieldDefinition.Edit, {
       data: data,
       field: fieldDefinition,
       onChange: onChange,
@@ -7080,11 +6162,6 @@ const closeSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 /* harmony default export */ const close_small = (closeSmall);
 
 ;// ./packages/dataviews/build-module/dataforms-layouts/panel/index.js
-/**
- * External dependencies
- */
-
-
 /**
  * WordPress dependencies
  */
@@ -7183,13 +6260,10 @@ function PanelDropdown({
       "aria-expanded": isOpen,
       "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: %s: Field name.
-      (0,external_wp_i18n_namespaceObject._x)('Edit %s', 'field'), fieldLabel || ''),
+      (0,external_wp_i18n_namespaceObject._x)('Edit %s', 'field'), fieldLabel),
       onClick: onToggle,
-      disabled: fieldDefinition.readOnly === true,
-      accessibleWhenDisabled: true,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fieldDefinition.render, {
-        item: data,
-        field: fieldDefinition
+        item: data
       })
     }),
     renderContent: ({
@@ -7233,6 +6307,7 @@ function FormPanelField({
     }
     return fieldDef.id === field.id;
   });
+  const labelPosition = (_field$labelPosition = field.labelPosition) !== null && _field$labelPosition !== void 0 ? _field$labelPosition : 'side';
 
   // Use internal state instead of a ref to make sure that the component
   // re-renders when the popover's anchor updates.
@@ -7240,15 +6315,13 @@ function FormPanelField({
   if (!fieldDefinition) {
     return null;
   }
-  const labelPosition = (_field$labelPosition = field.labelPosition) !== null && _field$labelPosition !== void 0 ? _field$labelPosition : 'side';
-  const labelClassName = dist_clsx('dataforms-layouts-panel__field-label', `dataforms-layouts-panel__field-label--label-position-${labelPosition}`);
   const fieldLabel = isCombinedField(field) ? field.label : fieldDefinition?.label;
   if (labelPosition === 'top') {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       className: "dataforms-layouts-panel__field",
       spacing: 0,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-        className: labelClassName,
+        className: "dataforms-layouts-panel__field-label",
         style: {
           paddingBottom: 0
         },
@@ -7285,7 +6358,7 @@ function FormPanelField({
     ref: setPopoverAnchor,
     className: "dataforms-layouts-panel__field",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: labelClassName,
+      className: "dataforms-layouts-panel__field-label",
       children: fieldLabel
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "dataforms-layouts-panel__field-control",
@@ -7380,7 +6453,7 @@ function DataFormLayout({
   }
   const normalizedFormFields = (0,external_wp_element_namespaceObject.useMemo)(() => normalizeFormFields(form), [form]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
-    spacing: form?.type === 'panel' ? 2 : 4,
+    spacing: 4,
     children: normalizedFormFields.map(formField => {
       const FieldLayout = getFormFieldLayout(formField.layout)?.component;
       if (!FieldLayout) {
@@ -7484,6 +6557,8 @@ function isTemplateRemovable(template) {
   return [template.source, template.source].includes('custom') && !Boolean(template.type === 'wp_template' && template?.plugin) && !template.has_theme_file;
 }
 
+;// ./node_modules/clsx/dist/clsx.mjs
+function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
 ;// ./packages/fields/build-module/fields/title/view.js
 /**
  * External dependencies
@@ -7547,8 +6622,7 @@ const titleField = {
   }) => getItemTitle(item),
   render: TitleView,
   enableHiding: false,
-  enableGlobalSearch: true,
-  filterBy: false
+  enableGlobalSearch: true
 };
 
 /**
@@ -8748,8 +7822,7 @@ const orderField = {
   id: 'menu_order',
   type: 'integer',
   label: (0,external_wp_i18n_namespaceObject.__)('Order'),
-  description: (0,external_wp_i18n_namespaceObject.__)('Determines the order of pages.'),
-  filterBy: false
+  description: (0,external_wp_i18n_namespaceObject.__)('Determines the order of pages.')
 };
 
 /**
@@ -9011,13 +8084,13 @@ const restorePost = {
     }) => status === 'fulfilled')) {
       let successMessage;
       if (posts.length === 1) {
-        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: The number of posts. */
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The number of posts. */
         (0,external_wp_i18n_namespaceObject.__)('"%s" has been restored.'), getItemTitle(posts[0]));
       } else if (posts[0].type === 'page') {
-        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: The number of posts. */
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The number of posts. */
         (0,external_wp_i18n_namespaceObject.__)('%d pages have been restored.'), posts.length);
       } else {
-        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: The number of posts. */
+        successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The number of posts. */
         (0,external_wp_i18n_namespaceObject.__)('%d posts have been restored.'), posts.length);
       }
       createSuccessNotice(successMessage, {
@@ -9217,8 +8290,8 @@ const resetPostAction = {
           });
           await saveEditedEntityRecord('postType', template.type, template.id);
         }
-        createSuccessNotice(items.length > 1 ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: The number of items. */
-        (0,external_wp_i18n_namespaceObject.__)('%d items reset.'), items.length) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: The template/part's name. */
+        createSuccessNotice(items.length > 1 ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The number of items. */
+        (0,external_wp_i18n_namespaceObject.__)('%s items reset.'), items.length) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The template/part's name. */
         (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), getItemTitle(items[0])), {
           type: 'snackbar',
           id: 'revert-template-action'
@@ -9497,7 +8570,7 @@ const deletePostAction = {
               success: {
                 messages: {
                   getMessage: item => {
-                    return isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: The template/part's name. */
+                    return isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The template/part's name. */
                     (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(getItemTitle(item))) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: The template/part's name. */
                     (0,external_wp_i18n_namespaceObject._x)('"%s" deleted.', 'template part'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(getItemTitle(item)));
                   },
@@ -9626,11 +8699,11 @@ const trash_post_trashPost = {
             }) => status === 'fulfilled')) {
               let successMessage;
               if (promiseResult.length === 1) {
-                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: The item's title. */
+                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The item's title. */
                 (0,external_wp_i18n_namespaceObject.__)('"%s" moved to the trash.'), getItemTitle(items[0]));
               } else {
-                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %d: The number of items. */
-                (0,external_wp_i18n_namespaceObject._n)('%d item moved to the trash.', '%d items moved to the trash.', items.length), items.length);
+                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The number of items. */
+                (0,external_wp_i18n_namespaceObject._n)('%s item moved to the trash.', '%s items moved to the trash.', items.length), items.length);
               }
               createSuccessNotice(successMessage, {
                 type: 'snackbar',
@@ -9775,7 +8848,7 @@ const permanentlyDeletePost = {
             }) => status === 'fulfilled')) {
               let successMessage;
               if (promiseResult.length === 1) {
-                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: The posts's title. */
+                successMessage = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The posts's title. */
                 (0,external_wp_i18n_namespaceObject.__)('"%s" permanently deleted.'), getItemTitle(items[0]));
               } else {
                 successMessage = (0,external_wp_i18n_namespaceObject.__)('The items were permanently deleted.');
@@ -10016,8 +9089,7 @@ const featuredImageField = {
   label: (0,external_wp_i18n_namespaceObject.__)('Featured Image'),
   Edit: FeaturedImageEdit,
   render: FeaturedImageView,
-  enableSorting: false,
-  filterBy: false
+  enableSorting: false
 };
 
 /**
@@ -10129,9 +9201,6 @@ const authorField = {
     const nameA = a._embedded?.author?.[0]?.name || '';
     const nameB = b._embedded?.author?.[0]?.name || '';
     return direction === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
-  },
-  filterBy: {
-    operators: ['isAny', 'isNone']
   }
 };
 
@@ -10314,7 +9383,7 @@ function StatusView({
 
 
 
-const status_OPERATOR_IS_ANY = 'isAny';
+const OPERATOR_IS_ANY = 'isAny';
 const statusField = {
   label: (0,external_wp_i18n_namespaceObject.__)('Status'),
   id: 'status',
@@ -10324,7 +9393,7 @@ const statusField = {
   Edit: 'radio',
   enableSorting: false,
   filterBy: {
-    operators: [status_OPERATOR_IS_ANY]
+    operators: [OPERATOR_IS_ANY]
   }
 };
 
@@ -10412,8 +9481,7 @@ const dateField = {
   id: 'date',
   type: 'datetime',
   label: (0,external_wp_i18n_namespaceObject.__)('Date'),
-  render: date_view,
-  filterBy: false
+  render: date_view
 };
 
 /**
@@ -10623,8 +9691,7 @@ const slugField = {
   type: 'text',
   label: (0,external_wp_i18n_namespaceObject.__)('Slug'),
   Edit: slug_edit,
-  render: slug_view,
-  filterBy: false
+  render: slug_view
 };
 
 /**
@@ -10933,8 +10000,7 @@ const parentField = {
   label: (0,external_wp_i18n_namespaceObject.__)('Parent'),
   Edit: ParentEdit,
   render: ParentView,
-  enableSorting: true,
-  filterBy: false
+  enableSorting: true
 };
 
 /**
@@ -10959,7 +10025,9 @@ const commentStatusField = {
   type: 'text',
   Edit: 'radio',
   enableSorting: false,
-  filterBy: false,
+  filterBy: {
+    operators: []
+  },
   elements: [{
     value: 'open',
     label: (0,external_wp_i18n_namespaceObject.__)('Open'),
@@ -11143,8 +10211,7 @@ const templateField = {
   type: 'text',
   label: (0,external_wp_i18n_namespaceObject.__)('Template'),
   Edit: TemplateEdit,
-  enableSorting: false,
-  filterBy: false
+  enableSorting: false
 };
 
 /**
@@ -11227,8 +10294,7 @@ const passwordField = {
   Edit: edit,
   enableSorting: false,
   enableHiding: false,
-  isVisible: item => item.status !== 'private',
-  filterBy: false
+  isVisible: item => item.status !== 'private'
 };
 
 /**
@@ -11303,8 +10369,7 @@ const pageTitleField = {
   }) => getItemTitle(item),
   render: PageTitleView,
   enableHiding: false,
-  enableGlobalSearch: true,
-  filterBy: false
+  enableGlobalSearch: true
 };
 
 /**
@@ -11335,8 +10400,7 @@ const templateTitleField = {
   }) => getItemTitle(item),
   render: TitleView,
   enableHiding: false,
-  enableGlobalSearch: true,
-  filterBy: false
+  enableGlobalSearch: true
 };
 
 /**
@@ -11453,8 +10517,7 @@ const patternTitleField = {
   }) => getItemTitle(item),
   render: PatternTitleView,
   enableHiding: false,
-  enableGlobalSearch: true,
-  filterBy: false
+  enableGlobalSearch: true
 };
 
 /**
@@ -11575,7 +10638,7 @@ const getOpenverseCaption = item => {
   let _caption;
   if (_creator) {
     _caption = title ? (0,external_wp_i18n_namespaceObject.sprintf)(
-    // translators: %1s: Title of a media work from Openverse; %2$s: Name of the work's creator; %3s: Work's licence e.g: "CC0 1.0".
+    // translators: %1s: Title of a media work from Openverse; %2s: Name of the work's creator; %3s: Work's licence e.g: "CC0 1.0".
     (0,external_wp_i18n_namespaceObject._x)('"%1$s" by %2$s/ %3$s', 'caption'), getExternalLink(foreignLandingUrl, (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title)), creatorUrl ? getExternalLink(creatorUrl, _creator) : _creator, licenseUrl ? getExternalLink(`${licenseUrl}?ref=openverse`, fullLicense) : fullLicense) : (0,external_wp_i18n_namespaceObject.sprintf)(
     // translators: %1s: Link attributes for a given Openverse media work; %2s: Name of the work's creator; %3s: Works's licence e.g: "CC0 1.0".
     (0,external_wp_i18n_namespaceObject._x)('<a %1$s>Work</a> by %2$s/ %3$s', 'caption'), getExternalLinkAttributes(foreignLandingUrl), creatorUrl ? getExternalLink(creatorUrl, _creator) : _creator, licenseUrl ? getExternalLink(`${licenseUrl}?ref=openverse`, fullLicense) : fullLicense);
@@ -16619,7 +15682,7 @@ const removeTemplates = items => async ({
       } else if (typeof items[0].title?.raw === 'string') {
         title = items[0].title?.raw;
       }
-      successMessage = isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: The template/part's name. */
+      successMessage = isResetting ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: The template/part's name. */
       (0,external_wp_i18n_namespaceObject.__)('"%s" reset.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title)) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: The template/part's name. */
       (0,external_wp_i18n_namespaceObject._x)('"%s" deleted.', 'template part'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(title));
     } else {
@@ -17156,27 +16219,7 @@ function setDefaultCompleters(completers = []) {
  */
 
 
-
-
-
-function MediaUploadWithCacheInvalidation(props) {
-  const {
-    invalidateResolutionForStoreSelector
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  const {
-    onClose: originalOnClose,
-    ...rest
-  } = props;
-  const onClose = (...onCloseArgs) => {
-    invalidateResolutionForStoreSelector('getMediaItems');
-    originalOnClose?.(...onCloseArgs);
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_mediaUtils_namespaceObject.MediaUpload, {
-    onClose: onClose,
-    ...rest
-  });
-}
-(0,external_wp_hooks_namespaceObject.addFilter)('editor.MediaUpload', 'core/editor/components/media-upload', () => MediaUploadWithCacheInvalidation);
+(0,external_wp_hooks_namespaceObject.addFilter)('editor.MediaUpload', 'core/editor/components/media-upload', () => external_wp_mediaUtils_namespaceObject.MediaUpload);
 
 ;// ./packages/editor/build-module/hooks/pattern-overrides.js
 /**
@@ -23111,6 +22154,13 @@ function PostLastRevisionPanel() {
  */
 
 
+/**
+ * A modal component that is displayed when a post is locked for editing by another user.
+ * The modal provides information about the lock status and options to take over or exit the editor.
+ *
+ * @return {React.ReactNode} The rendered PostLockedModal component.
+ */
+
 function PostLockedModal() {
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(PostLockedModal);
   const hookName = 'core/editor/post-locked-modal-' + instanceId;
@@ -23309,14 +22359,6 @@ function PostLockedModal() {
     })
   });
 }
-
-/**
- * A modal component that is displayed when a post is locked for editing by another user.
- * The modal provides information about the lock status and options to take over or exit the editor.
- *
- * @return {React.ReactNode} The rendered PostLockedModal component.
- */
-/* harmony default export */ const post_locked_modal = ( true ? (0,external_wp_components_namespaceObject.withFilters)('editor.PostLockedModal')(PostLockedModal) : 0);
 
 ;// ./packages/editor/build-module/components/post-pending-status/check.js
 /**
@@ -25365,7 +24407,7 @@ function PostFormatPanel() {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostFormatSuggestion, {
         onUpdatePostFormat: onUpdatePostFormat,
         suggestedPostFormat: suggestion.id,
-        suggestionText: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %1s: post format */
+        suggestionText: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: post format */
         (0,external_wp_i18n_namespaceObject.__)('Apply the "%1$s" format.'), suggestion.caption)
       })
     })]
@@ -29716,7 +28758,7 @@ function Thread({
       children: [!isFocused && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
         className: "editor-collab-sidebar-panel__show-more-reply",
         children: (0,external_wp_i18n_namespaceObject.sprintf)(
-        // translators: %s: number of replies.
+        // translators: 1: number of replies.
         (0,external_wp_i18n_namespaceObject._x)('%s more replies..', 'Show replies button'), thread?.reply?.length)
       }), isFocused && thread.reply.map(reply => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
         className: "editor-collab-sidebar-panel__child-thread",
@@ -33283,46 +32325,29 @@ function usePostActions({
       defaultActions: getEntityActions('postType', postType)
     };
   }, [postType]);
-  const shouldShowHomepageActions = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    if (postType !== 'page') {
-      return false;
-    }
+  const {
+    canManageOptions,
+    hasFrontPageTemplate
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getDefaultTemplateId,
-      getEntityRecord,
+      getEntityRecords,
       canUser
     } = select(external_wp_coreData_namespaceObject.store);
     const canUpdateSettings = canUser('update', {
       kind: 'root',
       name: 'site'
     });
-    if (!canUpdateSettings) {
-      return false;
-    }
-
-    // Note that resolved template for `front-page` is not necessarily a
-    // `front-page` template.
-    const frontPageTemplateId = getDefaultTemplateId({
-      slug: 'front-page'
-    });
-    if (!frontPageTemplateId) {
-      return true;
-    }
-
-    // This won't trigger a second network request, getDefaultTemplateId
-    // will have received the whole template from the REST API.
-    const frontPageTemplate = getEntityRecord('postType', 'wp_template', frontPageTemplateId);
-    if (!frontPageTemplate) {
-      return true;
-    }
-
-    // When there is a front page template, the front page cannot be
-    // changed. See
-    // https://developer.wordpress.org/themes/basics/template-hierarchy/
-    return frontPageTemplate.slug !== 'front-page';
+    const templates = 'page' === postType && canUpdateSettings ? getEntityRecords('postType', 'wp_template', {
+      per_page: -1
+    }) : [];
+    return {
+      canManageOptions: canUpdateSettings,
+      hasFrontPageTemplate: !!templates?.find(template => template?.slug === 'front-page')
+    };
   }, [postType]);
   const setAsHomepageAction = useSetAsHomepageAction();
   const setAsPostsPageAction = useSetAsPostsPageAction();
+  const shouldShowHomepageActions = canManageOptions && !hasFrontPageTemplate;
   const {
     registerPostTypeSchema
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store_store));

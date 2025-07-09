@@ -142,7 +142,7 @@ var __webpack_exports__ = {};
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
-  "default": () => (/* binding */ ExportedServerSideRender)
+  "default": () => (/* binding */ build_module)
 });
 
 ;// external ["wp","element"]
@@ -239,16 +239,22 @@ function DefaultErrorResponsePlaceholder({
   });
 }
 function DefaultLoadingResponsePlaceholder({
-  children
+  children,
+  isLoading
 }) {
   const [showLoader, setShowLoader] = (0,external_wp_element_namespaceObject.useState)(false);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (!isLoading) {
+      setShowLoader(false);
+      return;
+    }
+
     // Schedule showing the Spinner after 1 second.
     const timeout = setTimeout(() => {
       setShowLoader(true);
     }, 1000);
     return () => clearTimeout(timeout);
-  }, []);
+  }, [isLoading]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     style: {
       position: 'relative'
@@ -362,6 +368,7 @@ function ServerSideRender(props) {
   if (isLoading) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LoadingResponsePlaceholder, {
       ...props,
+      isLoading: isLoading,
       children: hasResponse && !hasError && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.RawHTML, {
         className: className,
         children: response
@@ -402,22 +409,29 @@ function ServerSideRender(props) {
  */
 
 const build_module_EMPTY_OBJECT = {};
-function ExportedServerSideRender({
-  urlQueryArgs = build_module_EMPTY_OBJECT,
-  ...props
-}) {
-  const currentPostId = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    // FIXME: @wordpress/server-side-render should not depend on @wordpress/editor.
-    // It is used by blocks that can be loaded into a *non-post* block editor.
-    // eslint-disable-next-line @wordpress/data-no-store-string-literals
-    const postId = select('core/editor')?.getCurrentPostId();
-
+const ExportedServerSideRender = (0,external_wp_data_namespaceObject.withSelect)(select => {
+  // FIXME: @wordpress/server-side-render should not depend on @wordpress/editor.
+  // It is used by blocks that can be loaded into a *non-post* block editor.
+  // eslint-disable-next-line @wordpress/data-no-store-string-literals
+  const coreEditorSelect = select('core/editor');
+  if (coreEditorSelect) {
+    const currentPostId = coreEditorSelect.getCurrentPostId();
     // For templates and template parts we use a custom ID format.
     // Since they aren't real posts, we don't want to use their ID
     // for server-side rendering. Since they use a string based ID,
     // we can assume real post IDs are numbers.
-    return postId && typeof postId === 'number' ? postId : null;
-  }, []);
+    if (currentPostId && typeof currentPostId === 'number') {
+      return {
+        currentPostId
+      };
+    }
+  }
+  return build_module_EMPTY_OBJECT;
+})(({
+  urlQueryArgs = build_module_EMPTY_OBJECT,
+  currentPostId,
+  ...props
+}) => {
   const newUrlQueryArgs = (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (!currentPostId) {
       return urlQueryArgs;
@@ -431,7 +445,8 @@ function ExportedServerSideRender({
     urlQueryArgs: newUrlQueryArgs,
     ...props
   });
-}
+});
+/* harmony default export */ const build_module = (ExportedServerSideRender);
 
 (window.wp = window.wp || {}).serverSideRender = __webpack_exports__["default"];
 /******/ })()
