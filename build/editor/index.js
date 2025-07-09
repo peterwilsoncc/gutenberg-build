@@ -16219,27 +16219,7 @@ function setDefaultCompleters(completers = []) {
  */
 
 
-
-
-
-function MediaUploadWithCacheInvalidation(props) {
-  const {
-    invalidateResolutionForStoreSelector
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  const {
-    onClose: originalOnClose,
-    ...rest
-  } = props;
-  const onClose = (...onCloseArgs) => {
-    invalidateResolutionForStoreSelector('getMediaItems');
-    originalOnClose?.(...onCloseArgs);
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_mediaUtils_namespaceObject.MediaUpload, {
-    onClose: onClose,
-    ...rest
-  });
-}
-(0,external_wp_hooks_namespaceObject.addFilter)('editor.MediaUpload', 'core/editor/components/media-upload', () => MediaUploadWithCacheInvalidation);
+(0,external_wp_hooks_namespaceObject.addFilter)('editor.MediaUpload', 'core/editor/components/media-upload', () => external_wp_mediaUtils_namespaceObject.MediaUpload);
 
 ;// ./packages/editor/build-module/hooks/pattern-overrides.js
 /**
