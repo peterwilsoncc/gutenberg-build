@@ -16627,6 +16627,13 @@ const cover_settings = {
       }
     }]
   },
+  __experimentalImage(attributes, {
+    context
+  }) {
+    if (attributes.backgroundType === 'image' && context === 'list-view' && attributes?.url) {
+      return attributes?.url;
+    }
+  },
   transforms: cover_transforms,
   save: cover_save_save,
   edit: cover_edit,
@@ -34304,6 +34311,13 @@ const media_text_settings = {
         content: (0,external_wp_i18n_namespaceObject.__)('— Kobayashi Issa (一茶)')
       }
     }]
+  },
+  __experimentalImage(attributes, {
+    context
+  }) {
+    if (attributes.mediaType === 'image' && context === 'list-view' && attributes?.mediaUrl) {
+      return attributes?.mediaUrl;
+    }
   },
   transforms: media_text_transforms,
   edit: media_text_edit,

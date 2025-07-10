@@ -66119,6 +66119,7 @@ function ListViewExpander({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -66187,6 +66188,16 @@ function useListViewImages({
     };
   }, [clientId]);
   const images = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    const blockImageURL = (0,external_wp_blocks_namespaceObject.__experimentalGetBlockImage)(block.name, block.attributes, 'list-view');
+    if (blockImageURL) {
+      return [{
+        url: blockImageURL,
+        alt: block.attributes?.alt || block.attributes?.mediaAlt || '',
+        clientId: block.clientId
+      }];
+    }
+
+    // Fallback to custom logic for core/image or core/gallery.
     return getImagesFromBlock(block, isExpanded);
   }, [block, isExpanded]);
   return images;
