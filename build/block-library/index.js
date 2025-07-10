@@ -66532,6 +66532,20 @@ function TracksEditor({
     }]);
     setTrackBeingEdited(trackIndex);
   };
+  function uploadFiles(event) {
+    const files = event.target.files;
+    mediaUpload({
+      allowedTypes: ALLOWED_TYPES,
+      filesList: files,
+      onFileChange: ([track]) => {
+        // Wait until the track has been uploaded.
+        if (!track?.id) {
+          return;
+        }
+        handleTrackSelect(track);
+      }
+    });
+  }
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     dropdownPopoverRef.current?.focus();
   }, [trackBeingEdited]);
@@ -66596,57 +66610,34 @@ function TracksEditor({
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TrackList, {
             tracks: tracks,
             onEditPress: setTrackBeingEdited
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.MenuGroup, {
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
             className: "block-library-video-tracks-editor__add-tracks-container",
             label: (0,external_wp_i18n_namespaceObject.__)('Add tracks'),
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUpload, {
-              onSelect: handleTrackSelect,
-              allowedTypes: ALLOWED_TYPES,
-              render: ({
-                open
-              }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-                icon: library_media,
-                onClick: open,
-                children: (0,external_wp_i18n_namespaceObject.__)('Open Media Library')
-              })
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUploadCheck, {
-              children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FormFileUpload, {
-                onChange: event => {
-                  const files = event.target.files;
-                  const trackIndex = tracks.length;
-                  mediaUpload({
-                    allowedTypes: ALLOWED_TYPES,
-                    filesList: files,
-                    onFileChange: ([{
-                      url
-                    }]) => {
-                      const newTracks = [...tracks];
-                      if (!newTracks[trackIndex]) {
-                        newTracks[trackIndex] = {};
-                      }
-                      newTracks[trackIndex] = {
-                        ...tracks[trackIndex],
-                        src: url
-                      };
-                      onChange(newTracks);
-                      setTrackBeingEdited(trackIndex);
-                    }
-                  });
-                },
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.MediaUploadCheck, {
+              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUpload, {
+                onSelect: handleTrackSelect,
+                allowedTypes: ALLOWED_TYPES,
+                render: ({
+                  open
+                }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+                  icon: library_media,
+                  onClick: open,
+                  children: (0,external_wp_i18n_namespaceObject.__)('Open Media Library')
+                })
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FormFileUpload, {
+                onChange: uploadFiles,
                 accept: ".vtt,text/vtt",
                 render: ({
                   openFileDialog
                 }) => {
                   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
                     icon: library_upload,
-                    onClick: () => {
-                      openFileDialog();
-                    },
+                    onClick: openFileDialog,
                     children: (0,external_wp_i18n_namespaceObject._x)('Upload', 'verb')
                   });
                 }
-              })
-            })]
+              })]
+            })
           })]
         })]
       });
