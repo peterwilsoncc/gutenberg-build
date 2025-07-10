@@ -66353,6 +66353,13 @@ const KIND_OPTIONS = [{
   label: (0,external_wp_i18n_namespaceObject.__)('Metadata'),
   value: 'metadata'
 }];
+const DEFAULT_TRACK = {
+  src: '',
+  label: '',
+  srcLang: 'en',
+  kind: DEFAULT_KIND,
+  default: false
+};
 function TrackList({
   tracks,
   onEditPress
@@ -66390,13 +66397,17 @@ function SingleTrackEditor({
   onRemove,
   allowSettingDefault
 }) {
+  const [trackState, setTrackState] = (0,external_wp_element_namespaceObject.useState)({
+    ...DEFAULT_TRACK,
+    ...track
+  });
   const {
-    src = '',
-    label = '',
-    srcLang = '',
-    kind = DEFAULT_KIND,
-    default: isDefaultTrack = false
-  } = track;
+    src,
+    label,
+    srcLang,
+    kind,
+    default: isDefaultTrack
+  } = trackState;
   const fileName = src.startsWith('blob:') ? '' : (0,external_wp_url_namespaceObject.getFilename)(src) || '';
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     className: "block-library-video-tracks-editor__single-track-editor",
@@ -66414,20 +66425,20 @@ function SingleTrackEditor({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
-        onChange: newLabel => onChange({
-          ...track,
+        onChange: newLabel => setTrackState(prevTrackState => ({
+          ...prevTrackState,
           label: newLabel
-        }),
+        })),
         label: (0,external_wp_i18n_namespaceObject.__)('Label'),
         value: label,
         help: (0,external_wp_i18n_namespaceObject.__)('Title of track')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
-        onChange: newSrcLang => onChange({
-          ...track,
+        onChange: newSrcLang => setTrackState(prevTrackState => ({
+          ...prevTrackState,
           srcLang: newSrcLang
-        }),
+        })),
         label: (0,external_wp_i18n_namespaceObject.__)('Source language'),
         value: srcLang,
         help: (0,external_wp_i18n_namespaceObject.__)('Language tag (en, fr, etc.)')
@@ -66441,24 +66452,20 @@ function SingleTrackEditor({
         options: KIND_OPTIONS,
         value: kind,
         label: (0,external_wp_i18n_namespaceObject.__)('Kind'),
-        onChange: newKind => {
-          onChange({
-            ...track,
-            kind: newKind
-          });
-        }
+        onChange: newKind => setTrackState(prevTrackState => ({
+          ...prevTrackState,
+          kind: newKind
+        }))
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
         label: (0,external_wp_i18n_namespaceObject.__)('Set as default track'),
         checked: isDefaultTrack,
         disabled: !allowSettingDefault,
-        onChange: defaultTrack => {
-          onChange({
-            ...track,
-            default: defaultTrack
-          });
-        }
+        onChange: defaultTrack => setTrackState(prevTrackState => ({
+          ...prevTrackState,
+          default: defaultTrack
+        }))
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         className: "block-library-video-tracks-editor__single-track-editor-buttons-container",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -66471,26 +66478,7 @@ function SingleTrackEditor({
           __next40pxDefaultSize: true,
           variant: "primary",
           onClick: () => {
-            const changes = {};
-            let hasChanges = false;
-            if (label === '') {
-              changes.label = (0,external_wp_i18n_namespaceObject.__)('English');
-              hasChanges = true;
-            }
-            if (srcLang === '') {
-              changes.srcLang = 'en';
-              hasChanges = true;
-            }
-            if (track.kind === undefined) {
-              changes.kind = DEFAULT_KIND;
-              hasChanges = true;
-            }
-            if (hasChanges) {
-              onChange({
-                ...track,
-                ...changes
-              });
-            }
+            onChange(trackState);
             onClose();
           },
           children: (0,external_wp_i18n_namespaceObject.__)('Apply')
@@ -66524,6 +66512,7 @@ function TracksEditor({
     }
     const trackIndex = tracks.length;
     onChange([...tracks, {
+      ...DEFAULT_TRACK,
       label: title || '',
       src: url
     }]);
