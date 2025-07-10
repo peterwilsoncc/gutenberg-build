@@ -37437,10 +37437,10 @@ function UnforwardedSelectControl(props, ref) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control, {
     help: help,
     id: id,
+    className: classes,
     __nextHasNoMarginBottom: __nextHasNoMarginBottom,
     __associatedWPComponentName: "SelectControl",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledInputBase, {
-      className: classes,
       disabled: disabled,
       hideLabelFromVision: hideLabelFromVision,
       id: id,
