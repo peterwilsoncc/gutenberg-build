@@ -33646,9 +33646,9 @@ function MediaTextEdit({
         imageFill: false,
         mediaAlt: '',
         focalPoint: undefined,
-        mediaWidth: 50,
-        mediaSizeSlug: undefined
+        mediaWidth: 50
       });
+      updateImage(media_text_constants_DEFAULT_MEDIA_SIZE_SLUG);
     },
     dropdownMenuProps: dropdownMenuProps,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
