@@ -55634,11 +55634,9 @@ function useDeprecatedOpacity(opacity, currentColor, setAttributes) {
 
 
 
-
 /**
  * Internal dependencies
  */
-
 
 
 const HtmlElementControl = ({
@@ -55676,7 +55674,6 @@ function SeparatorEdit({
   const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseColorProps)(attributes);
   const currentColor = colorProps?.style?.backgroundColor;
   const hasCustomColor = !!style?.color?.background;
-  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   useDeprecatedOpacity(opacity, currentColor, setAttributes);
 
   // The dots styles uses text for the dots, to change those dots color is
@@ -55695,32 +55692,10 @@ function SeparatorEdit({
   const Wrapper = tagName === 'hr' ? external_wp_components_namespaceObject.HorizontalRule : tagName;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: external_wp_element_namespaceObject.Platform.isNative ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HtmlElementControl, {
-          tagName: tagName,
-          setAttributes: setAttributes
-        })
-      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        resetAll: () => {
-          setAttributes({
-            tagName: 'hr'
-          });
-        },
-        dropdownMenuProps: dropdownMenuProps,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          hasValue: () => tagName !== 'hr',
-          label: (0,external_wp_i18n_namespaceObject.__)('HTML element'),
-          onDeselect: () => setAttributes({
-            tagName: 'hr'
-          }),
-          isShownByDefault: true,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HtmlElementControl, {
-            tagName: tagName,
-            setAttributes: setAttributes
-          })
-        })
+      group: "advanced",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(HtmlElementControl, {
+        tagName: tagName,
+        setAttributes: setAttributes
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Wrapper, {
       ...(0,external_wp_blockEditor_namespaceObject.useBlockProps)({
