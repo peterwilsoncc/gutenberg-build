@@ -39917,7 +39917,8 @@ function NavigationSubmenuEdit({
     label,
     url,
     description,
-    rel
+    rel,
+    opensInNewTab
   } = attributes;
   const {
     showSubmenuIcon,
@@ -40125,7 +40126,8 @@ function NavigationSubmenuEdit({
             label: '',
             url: '',
             description: '',
-            rel: ''
+            rel: '',
+            opensInNewTab: false
           });
         },
         dropdownMenuProps: dropdownMenuProps,
@@ -40167,6 +40169,21 @@ function NavigationSubmenuEdit({
             label: (0,external_wp_i18n_namespaceObject.__)('Link'),
             autoComplete: "off",
             type: "url"
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          hasValue: () => !!opensInNewTab,
+          label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
+          onDeselect: () => setAttributes({
+            opensInNewTab: false
+          }),
+          isShownByDefault: true,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
+            checked: opensInNewTab,
+            onChange: value => setAttributes({
+              opensInNewTab: value
+            })
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Description'),
