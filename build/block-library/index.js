@@ -38947,7 +38947,8 @@ function edit_Controls({
         label: '',
         url: '',
         description: '',
-        rel: ''
+        rel: '',
+        opensInNewTab: false
       });
     },
     dropdownMenuProps: dropdownMenuProps,
