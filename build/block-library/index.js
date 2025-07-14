@@ -65912,9 +65912,13 @@ function Tracks({
   tracks = []
 }) {
   return tracks.map(track => {
+    const {
+      id,
+      ...trackAttrs
+    } = track;
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("track", {
-      ...track
-    }, track.src);
+      ...trackAttrs
+    }, id !== null && id !== void 0 ? id : trackAttrs.src);
   });
 }
 
@@ -66332,7 +66336,6 @@ const VideoSettings = ({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -66371,6 +66374,7 @@ function TrackList({
   onEditPress
 }) {
   const content = tracks.map((track, index) => {
+    var _track$id;
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       className: "block-library-video-tracks-editor__track-list-track",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
@@ -66388,7 +66392,7 @@ function TrackList({
           children: (0,external_wp_i18n_namespaceObject.__)('Edit')
         })]
       })]
-    }, track.src);
+    }, (_track$id = track.id) !== null && _track$id !== void 0 ? _track$id : track.src);
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
     label: (0,external_wp_i18n_namespaceObject.__)('Text tracks'),
@@ -66497,44 +66501,50 @@ function TracksEditor({
   tracks = [],
   onChange
 }) {
-  const {
-    createNotice
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   const mediaUpload = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return select(external_wp_blockEditor_namespaceObject.store).getSettings().mediaUpload;
   }, []);
   const [trackBeingEdited, setTrackBeingEdited] = (0,external_wp_element_namespaceObject.useState)(null);
   const dropdownPopoverRef = (0,external_wp_element_namespaceObject.useRef)();
-  const handleTrackSelect = ({
-    title,
-    url
-  }) => {
-    if (tracks.some(track => track.src === url)) {
-      createNotice('error', (0,external_wp_i18n_namespaceObject.__)('This track already exists.'), {
-        isDismissible: true,
-        type: 'snackbar'
-      });
+  const handleTrackSelect = (selectedTracks = [], appendTracks = false) => {
+    const existingTracksMap = new Map(tracks.map(track => [track.id, track]));
+    const tracksToAdd = selectedTracks.map(({
+      id,
+      title,
+      url
+    }) => {
+      // Reuse existing tracks to preserve user-configured metadata.
+      if (existingTracksMap.has(id)) {
+        return existingTracksMap.get(id);
+      }
+      return {
+        ...DEFAULT_TRACK,
+        id,
+        label: title || '',
+        src: url
+      };
+    });
+    if (tracksToAdd.length === 0) {
       return;
     }
-    const trackIndex = tracks.length;
-    onChange([...tracks, {
-      ...DEFAULT_TRACK,
-      label: title || '',
-      src: url
-    }]);
-    setTrackBeingEdited(trackIndex);
+    onChange([...(appendTracks ? tracks : []), ...tracksToAdd]);
   };
   function uploadFiles(event) {
     const files = event.target.files;
     mediaUpload({
       allowedTypes: ALLOWED_TYPES,
       filesList: files,
-      onFileChange: ([track]) => {
-        // Wait until the track has been uploaded.
-        if (!track?.id) {
+      onFileChange: selectedTracks => {
+        if (!Array.isArray(selectedTracks)) {
           return;
         }
-        handleTrackSelect(track);
+
+        // Wait until the track has been uploaded.
+        const uploadedTracks = selectedTracks.filter(track => !!track?.id);
+        if (!uploadedTracks.length) {
+          return;
+        }
+        handleTrackSelect(uploadedTracks, true);
       }
     });
   }
@@ -66609,6 +66619,10 @@ function TracksEditor({
               children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUpload, {
                 onSelect: handleTrackSelect,
                 allowedTypes: ALLOWED_TYPES,
+                value: tracks.map(({
+                  id
+                }) => id),
+                multiple: true,
                 render: ({
                   open
                 }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
@@ -66619,6 +66633,7 @@ function TracksEditor({
               }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FormFileUpload, {
                 onChange: uploadFiles,
                 accept: ".vtt,text/vtt",
+                multiple: true,
                 render: ({
                   openFileDialog
                 }) => {
