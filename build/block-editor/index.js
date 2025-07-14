@@ -66121,7 +66121,6 @@ function ListViewExpander({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -66129,40 +66128,73 @@ function ListViewExpander({
 
 // Maximum number of images to display in a list view row.
 const MAX_IMAGES = 3;
-function getImage(block) {
-  if (block.name !== 'core/image') {
-    return;
-  }
-  if (block.attributes?.url) {
-    return {
-      url: block.attributes.url,
-      alt: block.attributes.alt,
-      clientId: block.clientId
-    };
-  }
-}
-function getImagesFromGallery(block) {
-  if (block.name !== 'core/gallery' || !block.innerBlocks) {
-    return [];
-  }
-  const images = [];
-  for (const innerBlock of block.innerBlocks) {
-    const img = getImage(innerBlock);
-    if (img) {
-      images.push(img);
+const IMAGE_GETTERS = {
+  'core/image': ({
+    clientId,
+    attributes
+  }) => {
+    if (attributes.url) {
+      return {
+        url: attributes.url,
+        alt: attributes.alt || '',
+        clientId
+      };
     }
-    if (images.length >= MAX_IMAGES) {
+  },
+  'core/cover': ({
+    clientId,
+    attributes
+  }) => {
+    if (attributes.backgroundType === 'image' && attributes.url) {
+      return {
+        url: attributes.url,
+        alt: attributes.alt || '',
+        clientId
+      };
+    }
+  },
+  'core/media-text': ({
+    clientId,
+    attributes
+  }) => {
+    if (attributes.mediaType === 'image' && attributes.mediaUrl) {
+      return {
+        url: attributes.mediaUrl,
+        alt: attributes.mediaAlt || '',
+        clientId
+      };
+    }
+  },
+  'core/gallery': ({
+    innerBlocks
+  }) => {
+    const images = [];
+    const getValues = !!innerBlocks?.length ? IMAGE_GETTERS[innerBlocks[0].name] : undefined;
+    if (!getValues) {
       return images;
     }
+    for (const innerBlock of innerBlocks) {
+      const img = getValues(innerBlock);
+      if (img) {
+        images.push(img);
+      }
+      if (images.length >= MAX_IMAGES) {
+        return images;
+      }
+    }
+    return images;
   }
-  return images;
-}
+};
 function getImagesFromBlock(block, isExpanded) {
-  const img = getImage(block);
-  if (img) {
-    return [img];
+  const getImages = IMAGE_GETTERS[block.name];
+  const images = !!getImages ? getImages(block) : undefined;
+  if (!images) {
+    return [];
   }
-  return isExpanded ? [] : getImagesFromGallery(block);
+  if (!Array.isArray(images)) {
+    return [images];
+  }
+  return isExpanded ? [] : images;
 }
 
 /**
@@ -66184,22 +66216,11 @@ function useListViewImages({
   const {
     block
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const _block = select(store).getBlock(clientId);
     return {
-      block: _block
+      block: select(store).getBlock(clientId)
     };
   }, [clientId]);
   const images = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const blockImageURL = (0,external_wp_blocks_namespaceObject.__experimentalGetBlockImage)(block.name, block.attributes, 'list-view');
-    if (blockImageURL) {
-      return [{
-        url: blockImageURL,
-        alt: block.attributes?.alt || block.attributes?.mediaAlt || '',
-        clientId: block.clientId
-      }];
-    }
-
-    // Fallback to custom logic for core/image or core/gallery.
     return getImagesFromBlock(block, isExpanded);
   }, [block, isExpanded]);
   return images;
