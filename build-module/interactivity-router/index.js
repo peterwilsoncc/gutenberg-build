@@ -348,10 +348,13 @@ const applyStyles = styles => {
   window.document.querySelectorAll('style,link[rel=stylesheet]').forEach(el => {
     if (el.sheet) {
       if (styles.includes(el)) {
-        const {
-          originalMedia = 'all'
-        } = el.dataset;
-        el.sheet.media.mediaText = originalMedia;
+        // Only update mediaText when necessary.
+        if (el.sheet.media.mediaText === 'preload') {
+          const {
+            originalMedia = 'all'
+          } = el.dataset;
+          el.sheet.media.mediaText = originalMedia;
+        }
         el.sheet.disabled = false;
       } else {
         el.sheet.disabled = true;
