@@ -31963,7 +31963,7 @@ function GridControls({
     rowSpan
   } = childLayout;
   const {
-    columnCount = 3,
+    columnCount,
     rowCount
   } = parentLayout !== null && parentLayout !== void 0 ? parentLayout : {};
   const rootClientId = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getBlockRootClientId(panelId));
@@ -31971,7 +31971,7 @@ function GridControls({
     moveBlocksToPosition,
     __unstableMarkNextChangeAsNotPersistent
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(rootClientId, columnCount);
+  const getNumberOfBlocksBeforeCell = useGetNumberOfBlocksBeforeCell(rootClientId, columnCount || 3);
   const hasStartValue = () => !!columnStart || !!rowStart;
   const hasSpanValue = () => !!columnSpan || !!rowSpan;
   const resetGridStarts = () => {
@@ -31986,48 +31986,67 @@ function GridControls({
       rowSpan: undefined
     });
   };
+
+  // Calculate max column span based on current position and grid width
+  const maxColumnSpan = columnCount ? columnCount - (columnStart !== null && columnStart !== void 0 ? columnStart : 1) + 1 : undefined;
+
+  // Calculate max row span based on current position and grid height
+  const maxRowSpan = window.__experimentalEnableGridInteractivity && rowCount ? rowCount - (rowStart !== null && rowStart !== void 0 ? rowStart : 1) + 1 : undefined;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
       as: external_wp_components_namespaceObject.__experimentalToolsPanelItem,
       hasValue: hasSpanValue,
       label: (0,external_wp_i18n_namespaceObject.__)('Grid span'),
       onDeselect: resetGridSpans,
       isShownByDefault: isShownByDefault,
       panelId: panelId,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
-        size: "__unstable-large",
-        label: (0,external_wp_i18n_namespaceObject.__)('Column span'),
-        type: "number",
-        onChange: value => {
-          // Don't allow unsetting.
-          const newColumnSpan = value === '' ? 1 : parseInt(value, 10);
-          onChange({
-            columnStart,
-            rowStart,
-            rowSpan,
-            columnSpan: newColumnSpan
-          });
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+        style: {
+          width: '50%'
         },
-        value: columnSpan !== null && columnSpan !== void 0 ? columnSpan : 1,
-        min: 1
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
-        size: "__unstable-large",
-        label: (0,external_wp_i18n_namespaceObject.__)('Row span'),
-        type: "number",
-        onChange: value => {
-          // Don't allow unsetting.
-          const newRowSpan = value === '' ? 1 : parseInt(value, 10);
-          onChange({
-            columnStart,
-            rowStart,
-            columnSpan,
-            rowSpan: newRowSpan
-          });
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
+          size: "__unstable-large",
+          label: (0,external_wp_i18n_namespaceObject.__)('Column span'),
+          type: "number",
+          onChange: value => {
+            // Don't allow unsetting.
+            const newColumnSpan = value === '' ? 1 : parseInt(value, 10);
+            const constrainedValue = maxColumnSpan ? Math.min(newColumnSpan, maxColumnSpan) : newColumnSpan;
+            onChange({
+              columnStart,
+              rowStart,
+              rowSpan,
+              columnSpan: constrainedValue
+            });
+          },
+          value: columnSpan !== null && columnSpan !== void 0 ? columnSpan : 1,
+          min: 1,
+          max: maxColumnSpan
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+        style: {
+          width: '50%'
         },
-        value: rowSpan !== null && rowSpan !== void 0 ? rowSpan : 1,
-        min: 1
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
+          size: "__unstable-large",
+          label: (0,external_wp_i18n_namespaceObject.__)('Row span'),
+          type: "number",
+          onChange: value => {
+            const newRowSpan = value === '' ? 1 : parseInt(value, 10);
+            const constrainedValue = maxRowSpan ? Math.min(newRowSpan, maxRowSpan) : newRowSpan;
+            onChange({
+              columnStart,
+              rowStart,
+              columnSpan,
+              rowSpan: constrainedValue
+            });
+          },
+          value: rowSpan !== null && rowSpan !== void 0 ? rowSpan : 1,
+          min: 1,
+          max: maxRowSpan
+        })
       })]
-    }), window.__experimentalEnableGridInteractivity && columnCount &&
+    }), window.__experimentalEnableGridInteractivity &&
     /*#__PURE__*/
     // Use Flex with an explicit width on the FlexItem instead of HStack to
     // work around an issue in webkit where inputs with a max attribute are
