@@ -44160,12 +44160,17 @@ const postContent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
  */
 
 
+
+const {
+  HTMLElementControl: post_content_edit_HTMLElementControl
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function ReadOnlyContent({
   parentLayout,
   layoutClassNames,
   userCanEdit,
   postType,
-  postId
+  postId,
+  tagName: TagName = 'div'
 }) {
   const [,, content] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', postType, 'content', postId);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
@@ -44192,12 +44197,12 @@ function ReadOnlyContent({
       ...blockPreviewProps
     });
   }
-  return content?.protected ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+  return content?.protected ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
     ...blockProps,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.Warning, {
       children: (0,external_wp_i18n_namespaceObject.__)('This content is password protected.')
     })
-  }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+  }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
     ...blockProps,
     dangerouslySetInnerHTML: {
       __html: content?.rendered
@@ -44205,7 +44210,8 @@ function ReadOnlyContent({
   });
 }
 function EditableContent({
-  context = {}
+  context = {},
+  tagName: TagName = 'div'
 }) {
   const {
     postType,
@@ -44227,7 +44233,7 @@ function EditableContent({
     onChange,
     template: !hasInnerBlocks ? initialInnerBlocks : undefined
   });
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
     ...props
   });
 }
@@ -44238,7 +44244,8 @@ function Content(props) {
       postType,
       postId
     } = {},
-    layoutClassNames
+    layoutClassNames,
+    tagName
   } = props;
   const userCanEdit = useCanEditEntity('postType', postType, postId);
   if (userCanEdit === undefined) {
@@ -44253,7 +44260,8 @@ function Content(props) {
     layoutClassNames: layoutClassNames,
     userCanEdit: userCanEdit,
     postType: postType,
-    postId: postId
+    postId: postId,
+    tagName: tagName
   });
 }
 function edit_Placeholder({
@@ -44282,8 +44290,51 @@ function RecursionError() {
     })
   });
 }
+
+/**
+ * Render inspector controls for the PostContent block.
+ *
+ * @param {Object}   props                 Component props.
+ * @param {string}   props.tagName         The HTML tag name.
+ * @param {Function} props.onSelectTagName onChange function for the SelectControl.
+ * @param {string}   props.clientId        The client ID of the current block.
+ *
+ * @return {JSX.Element}                The control group.
+ */
+function PostContentEditControls({
+  tagName,
+  onSelectTagName,
+  clientId
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+    group: "advanced",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_content_edit_HTMLElementControl, {
+      tagName: tagName,
+      onChange: onSelectTagName,
+      clientId: clientId,
+      options: [{
+        label: (0,external_wp_i18n_namespaceObject.__)('Default (<div>)'),
+        value: 'div'
+      }, {
+        label: '<main>',
+        value: 'main'
+      }, {
+        label: '<section>',
+        value: 'section'
+      }, {
+        label: '<article>',
+        value: 'article'
+      }]
+    })
+  });
+}
 function PostContentEdit({
   context,
+  attributes: {
+    tagName = 'div'
+  },
+  setAttributes,
+  clientId,
   __unstableLayoutClassNames: layoutClassNames,
   __unstableParentLayout: parentLayout
 }) {
@@ -44295,15 +44346,26 @@ function PostContentEdit({
   if (contextPostId && contextPostType && hasAlreadyRendered) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RecursionError, {});
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RecursionProvider, {
-    uniqueId: contextPostId,
-    children: contextPostId && contextPostType ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Content, {
-      context: context,
-      parentLayout: parentLayout,
-      layoutClassNames: layoutClassNames
-    }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(edit_Placeholder, {
-      layoutClassNames: layoutClassNames
-    })
+  const handleSelectTagName = value => {
+    setAttributes({
+      tagName: value
+    });
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostContentEditControls, {
+      tagName: tagName,
+      onSelectTagName: handleSelectTagName,
+      clientId: clientId
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RecursionProvider, {
+      uniqueId: contextPostId,
+      children: contextPostId && contextPostType ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Content, {
+        context: context,
+        parentLayout: parentLayout,
+        layoutClassNames: layoutClassNames
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(edit_Placeholder, {
+        layoutClassNames: layoutClassNames
+      })
+    })]
   });
 }
 
@@ -44326,6 +44388,12 @@ const post_content_metadata = {
   description: "Displays the contents of a post or page.",
   textdomain: "default",
   usesContext: ["postId", "postType", "queryId"],
+  attributes: {
+    tagName: {
+      type: "string",
+      "default": "div"
+    }
+  },
   example: {
     viewportWidth: 350
   },
