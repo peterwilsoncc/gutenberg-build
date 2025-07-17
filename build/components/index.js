@@ -32131,6 +32131,8 @@ function Icon({
     return (0,external_wp_element_namespaceObject.cloneElement)(icon, {
       // @ts-ignore Just forwarding the size prop along
       size,
+      width: size,
+      height: size,
       ...additionalProps
     });
   }
