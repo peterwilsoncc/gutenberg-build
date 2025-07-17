@@ -35994,15 +35994,19 @@ function useControlledValue({
   const initialValue = hasValue ? valueProp : defaultValue;
   const [state, setState] = (0,external_wp_element_namespaceObject.useState)(initialValue);
   const value = hasValue ? valueProp : state;
+  const uncontrolledSetValue = (0,external_wp_element_namespaceObject.useCallback)((nextValue, ...args) => {
+    setState(nextValue);
+    onChange?.(nextValue, ...args);
+  }, [onChange]);
   let setValue;
   if (hasValue && typeof onChange === 'function') {
+    // Controlled mode.
     setValue = onChange;
   } else if (!hasValue && typeof onChange === 'function') {
-    setValue = nextValue => {
-      onChange(nextValue);
-      setState(nextValue);
-    };
+    // Uncontrolled mode, plus forwarding to the onChange prop.
+    setValue = uncontrolledSetValue;
   } else {
+    // Uncontrolled mode, only update internal state.
     setValue = setState;
   }
   return [value, setValue];
@@ -80765,58 +80769,6 @@ function clampNumberOfMonths(numberOfMonths) {
   return Math.min(3, Math.max(1, numberOfMonths));
 }
 
-;// ./packages/components/build-module/calendar/utils/use-controlled-value.js
-/**
- * WordPress dependencies
- */
-
-/**
- * Handles controlled and uncontrolled state for the selected calendar value.
- * It is assumed that the `value` prop is controlled when it's not undefined:
- * - initial date selected, uncontrolled: use a non-undefined`defaultValue`
- * - initial date selected, controlled: use a non-undefined `value`
- * - no date selected, controlled: set `value` to `null`
- *
- * The `onChange` prop will return `undefined` when no date is selected,
- * regardless of controlled / uncontrolled. It is expected that the consumer
- * of the component will handle setting the value to `null` to indicate no date
- * selected in controlled mode.
- *
- * @param props              - The props object.
- * @param props.defaultValue - The default value.
- * @param props.onChange     - The onChange callback.
- * @param props.value        - The value.
- *
- * @return The value and the setValue function.
- */
-function use_controlled_value_useControlledValue({
-  defaultValue,
-  onChange,
-  value: valueProp
-}) {
-  var _ref;
-  const hasValue = typeof valueProp !== 'undefined';
-  const initialValue = hasValue ? valueProp : defaultValue;
-  const [state, setState] = (0,external_wp_element_namespaceObject.useState)(initialValue);
-  const value = (_ref = hasValue ? valueProp : state) !== null && _ref !== void 0 ? _ref : undefined;
-  let setValue;
-  const uncontrolledSetValue = (0,external_wp_element_namespaceObject.useCallback)((nextValue, ...args) => {
-    setState(nextValue);
-    onChange?.(nextValue, ...args);
-  }, [setState, onChange]);
-  if (hasValue && typeof onChange === 'function') {
-    // Controlled mode.
-    setValue = onChange;
-  } else if (!hasValue && typeof onChange === 'function') {
-    // Uncontrolled mode, plus forwarding to the onChange prop.
-    setValue = uncontrolledSetValue;
-  } else {
-    // Uncontrolled mode, only update internal state.
-    setValue = setState;
-  }
-  return [value, setValue];
-}
-
 ;// ./packages/components/build-module/calendar/utils/use-localization-props.js
 /**
  * WordPress dependencies
@@ -80979,6 +80931,10 @@ const useLocalizationProps = ({
 
 
 /**
+ * WordPress dependencies
+ */
+
+/**
  * Internal dependencies
  */
 
@@ -81008,10 +80964,14 @@ const DateCalendar = ({
     timeZone,
     mode: 'single'
   });
-  const [selected, setSelected] = use_controlled_value_useControlledValue({
+  const onChange = (0,external_wp_element_namespaceObject.useCallback)((selected, triggerDate, modifiers, e) => {
+    // Convert internal `null` to `undefined` for the public event handler.
+    onSelect?.(selected !== null && selected !== void 0 ? selected : undefined, triggerDate, modifiers, e);
+  }, [onSelect]);
+  const [selected, setSelected] = useControlledValue({
     defaultValue: defaultSelected,
     value: selectedProp,
-    onChange: onSelect
+    onChange
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DayPicker, {
     ...COMMON_PROPS,
@@ -81019,7 +80979,7 @@ const DateCalendar = ({
     ...props,
     mode: "single",
     numberOfMonths: clampNumberOfMonths(numberOfMonths),
-    selected: selected,
+    selected: selected !== null && selected !== void 0 ? selected : undefined,
     onSelect: setSelected
   });
 };
@@ -81140,10 +81100,14 @@ const DateRangeCalendar = ({
     timeZone,
     mode: 'range'
   });
-  const [selected, setSelected] = use_controlled_value_useControlledValue({
+  const onChange = (0,external_wp_element_namespaceObject.useCallback)((selected, triggerDate, modifiers, e) => {
+    // Convert internal `null` to `undefined` for the public event handler.
+    onSelect?.(selected !== null && selected !== void 0 ? selected : undefined, triggerDate, modifiers, e);
+  }, [onSelect]);
+  const [selected, setSelected] = useControlledValue({
     defaultValue: defaultSelected,
     value: selectedProp,
-    onChange: onSelect
+    onChange
   });
   const [hoveredDate, setHoveredDate] = (0,external_wp_element_namespaceObject.useState)(undefined);
 
@@ -81173,7 +81137,7 @@ const DateRangeCalendar = ({
     excludeDisabled: excludeDisabled,
     min: min,
     max: max,
-    selected: selected,
+    selected: selected !== null && selected !== void 0 ? selected : undefined,
     onSelect: setSelected,
     onDayMouseEnter: date => setHoveredDate(date),
     onDayMouseLeave: () => setHoveredDate(undefined),
