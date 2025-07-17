@@ -66722,6 +66722,7 @@ function ListViewBlock({
     insertBeforeBlock,
     setOpenedBlockSettingsMenu
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
+  const debouncedToggleBlockHighlight = (0,external_wp_compose_namespaceObject.useDebounce)(toggleBlockHighlight, 50);
   const {
     canInsertBlockType,
     getSelectedBlockClientIds,
@@ -66944,12 +66945,12 @@ function ListViewBlock({
   }
   const onMouseEnter = (0,external_wp_element_namespaceObject.useCallback)(() => {
     setIsHovered(true);
-    toggleBlockHighlight(clientId, true);
-  }, [clientId, setIsHovered, toggleBlockHighlight]);
+    debouncedToggleBlockHighlight(clientId, true);
+  }, [clientId, setIsHovered, debouncedToggleBlockHighlight]);
   const onMouseLeave = (0,external_wp_element_namespaceObject.useCallback)(() => {
     setIsHovered(false);
-    toggleBlockHighlight(clientId, false);
-  }, [clientId, setIsHovered, toggleBlockHighlight]);
+    debouncedToggleBlockHighlight(clientId, false);
+  }, [clientId, setIsHovered, debouncedToggleBlockHighlight]);
   const selectEditorBlock = (0,external_wp_element_namespaceObject.useCallback)(event => {
     selectBlock(event, clientId);
     event.preventDefault();
