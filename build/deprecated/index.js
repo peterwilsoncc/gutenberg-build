@@ -55,7 +55,7 @@ const logged = Object.create(null);
  * import deprecated from '@wordpress/deprecated';
  *
  * deprecated( 'Eating meat', {
- * 	since: '2019.01.01'
+ * 	since: '2019.01.01',
  * 	version: '2020.01.01',
  * 	alternative: 'vegetables',
  * 	plugin: 'the earth',
