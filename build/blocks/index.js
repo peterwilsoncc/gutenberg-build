@@ -7737,13 +7737,18 @@ const ICON_COLORS = ['#191e23', '#f8f9f9'];
  * Determines whether the block's attributes are equal to the default attributes
  * which means the block is unmodified.
  *
- * @param {WPBlock} block Block Object
+ * @param {WPBlock} block Block Object.
+ * @param {?string} role  Optional role to filter attributes for modification check.
  *
  * @return {boolean} Whether the block is an unmodified block.
  */
-function isUnmodifiedBlock(block) {
+function isUnmodifiedBlock(block, role) {
   var _getBlockType$attribu;
-  return Object.entries((_getBlockType$attribu = getBlockType(block.name)?.attributes) !== null && _getBlockType$attribu !== void 0 ? _getBlockType$attribu : {}).every(([key, definition]) => {
+  const blockAttributes = (_getBlockType$attribu = getBlockType(block.name)?.attributes) !== null && _getBlockType$attribu !== void 0 ? _getBlockType$attribu : {};
+
+  // Filter attributes by role if a role is provided.
+  const attributesToCheck = role ? Object.entries(blockAttributes).filter(([, definition]) => definition.role === role || definition.__experimentalRole === role) : Object.entries(blockAttributes);
+  return attributesToCheck.every(([key, definition]) => {
     const value = block.attributes[key];
 
     // Every attribute that has a default must match the default.
@@ -7768,11 +7773,12 @@ function isUnmodifiedBlock(block) {
  * to the default attributes which means the block is unmodified.
  *
  * @param {WPBlock} block Block Object
+ * @param {?string} role  Optional role to filter attributes for modification check.
  *
  * @return {boolean} Whether the block is an unmodified default block.
  */
-function isUnmodifiedDefaultBlock(block) {
-  return block.name === getDefaultBlockName() && isUnmodifiedBlock(block);
+function isUnmodifiedDefaultBlock(block, role) {
+  return block.name === getDefaultBlockName() && isUnmodifiedBlock(block, role);
 }
 
 /**
