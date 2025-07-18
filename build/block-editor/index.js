@@ -10030,22 +10030,6 @@ function lastFocus(state = false, action) {
 }
 
 /**
- * Reducer setting currently hovered block.
- *
- * @param {boolean} state  Current state.
- * @param {Object}  action Dispatched action.
- *
- * @return {boolean} Updated state.
- */
-function hoveredBlockClientId(state = false, action) {
-  switch (action.type) {
-    case 'HOVER_BLOCK':
-      return action.clientId;
-  }
-  return state;
-}
-
-/**
  * Reducer setting zoom out state.
  *
  * @param {boolean} state  Current state.
@@ -10111,7 +10095,6 @@ const combinedReducers = (0,external_wp_data_namespaceObject.combineReducers)({
   blockRemovalRules,
   openedBlockSettingsMenu,
   registeredInserterMediaCategories,
-  hoveredBlockClientId,
   zoomLevel
 });
 
@@ -14080,11 +14063,14 @@ function isBlockVisible(state, clientId) {
 /**
  * Returns the currently hovered block.
  *
- * @param {Object} state Global application state.
- * @return {Object} Client Id of the hovered block.
+ * @deprecated
  */
-function getHoveredBlockClientId(state) {
-  return state.hoveredBlockClientId;
+function getHoveredBlockClientId() {
+  external_wp_deprecated_default()("wp.data.select( 'core/block-editor' ).getHoveredBlockClientId", {
+    since: '6.9',
+    version: '7.1'
+  });
+  return undefined;
 }
 
 /**
@@ -15025,14 +15011,15 @@ function selectBlock(clientId, initialPosition = 0) {
  * Returns an action object used in signalling that the block with the
  * specified client ID has been hovered.
  *
- * @param {string} clientId Block client ID.
- *
- * @return {Object} Action object.
+ * @deprecated
  */
-function hoverBlock(clientId) {
+function hoverBlock() {
+  external_wp_deprecated_default()('wp.data.dispatch( "core/block-editor" ).hoverBlock', {
+    since: '6.9',
+    version: '7.1'
+  });
   return {
-    type: 'HOVER_BLOCK',
-    clientId
+    type: 'DO_NOTHING'
   };
 }
 
@@ -44671,36 +44658,19 @@ function useFocusFirstElement({
  * WordPress dependencies
  */
 
-
-
-/**
- * Internal dependencies
- */
-
+function listener(event) {
+  if (event.defaultPrevented) {
+    return;
+  }
+  event.preventDefault();
+  event.currentTarget.classList.toggle('is-hovered', event.type === 'mouseover');
+}
 
 /*
  * Adds `is-hovered` class when the block is hovered and in navigation or
  * outline mode.
  */
-function useIsHovered({
-  clientId
-}) {
-  const {
-    hoverBlock
-  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  function listener(event) {
-    if (event.defaultPrevented) {
-      return;
-    }
-    const action = event.type === 'mouseover' ? 'add' : 'remove';
-    event.preventDefault();
-    event.currentTarget.classList[action]('is-hovered');
-    if (action === 'add') {
-      hoverBlock(clientId);
-    } else {
-      hoverBlock(null);
-    }
-  }
+function useIsHovered() {
   return (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
     node.addEventListener('mouseout', listener);
     node.addEventListener('mouseover', listener);
@@ -44710,7 +44680,6 @@ function useIsHovered({
 
       // Remove class in case it lingers.
       node.classList.remove('is-hovered');
-      hoverBlock(null);
     };
   }, []);
 }
@@ -45341,9 +45310,7 @@ function use_block_props_useBlockProps(props = {}, {
   }), useBlockRefProvider(clientId), useFocusHandler(clientId), useEventHandlers({
     clientId,
     isSelected
-  }), useIsHovered({
-    clientId
-  }), useIntersectionObserver(), use_moving_animation({
+  }), useIsHovered(), useIntersectionObserver(), use_moving_animation({
     triggerAnimationOnChange: index,
     clientId
   }), (0,external_wp_compose_namespaceObject.useDisabled)({
