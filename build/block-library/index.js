@@ -15806,7 +15806,7 @@ function CoverEdit({
   }] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
   const resizableBoxDimensions = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return {
-      height: minHeightUnit === 'px' ? minHeight : 'auto',
+      height: minHeightUnit === 'px' && minHeight ? minHeight : 'auto',
       width: 'auto'
     };
   }, [minHeight, minHeightUnit]);
