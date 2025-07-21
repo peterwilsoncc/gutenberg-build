@@ -36823,6 +36823,7 @@ const shouldSeverEntityLink = (originalUrl, newUrl) => {
  */
 
 const updateAttributes = (updatedValue = {}, setAttributes, blockAttributes = {}) => {
+  var _newUrl$replace;
   const {
     label: originalLabel = '',
     kind: originalKind = '',
@@ -36833,7 +36834,7 @@ const updateAttributes = (updatedValue = {}, setAttributes, blockAttributes = {}
     // the title of any provided Post.
     label: newLabelFromLabel = '',
     // alternative to title
-    url: newUrl = '',
+    url: newUrl,
     opensInNewTab,
     id: newID,
     kind: newKind = originalKind,
@@ -36843,7 +36844,7 @@ const updateAttributes = (updatedValue = {}, setAttributes, blockAttributes = {}
   // Use title if provided, otherwise fall back to label
   const finalNewLabel = newLabel || newLabelFromLabel;
   const newLabelWithoutHttp = finalNewLabel.replace(/http(s?):\/\//gi, '');
-  const newUrlWithoutHttp = newUrl.replace(/http(s?):\/\//gi, '');
+  const newUrlWithoutHttp = (_newUrl$replace = newUrl?.replace(/http(s?):\/\//gi, '')) !== null && _newUrl$replace !== void 0 ? _newUrl$replace : '';
   const useNewLabel = finalNewLabel && finalNewLabel !== originalLabel &&
   // LinkControl without the title field relies
   // on the check below. Specifically, it assumes that
@@ -36871,9 +36872,9 @@ const updateAttributes = (updatedValue = {}, setAttributes, blockAttributes = {}
   const kind = isCustomLink ? 'custom' : newKind;
   const attributes = {
     // Passed `url` may already be encoded. To prevent double encoding, decodeURI is executed to revert to the original string.
-    ...(newUrl && {
-      url: encodeURI((0,external_wp_url_namespaceObject.safeDecodeURI)(newUrl))
-    }),
+    ...(newUrl !== undefined ? {
+      url: newUrl ? encodeURI((0,external_wp_url_namespaceObject.safeDecodeURI)(newUrl)) : newUrl
+    } : {}),
     ...(label && {
       label
     }),
@@ -39027,7 +39028,7 @@ function getMissingText(type) {
 function edit_Controls({
   attributes,
   setAttributes,
-  setIsLabelFieldFocused
+  setIsEditingControl
 }) {
   const {
     label,
@@ -39036,6 +39037,7 @@ function edit_Controls({
     rel,
     opensInNewTab
   } = attributes;
+  const lastURLRef = (0,external_wp_element_namespaceObject.useRef)(url);
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
     label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
@@ -39067,8 +39069,8 @@ function edit_Controls({
           });
         },
         autoComplete: "off",
-        onFocus: () => setIsLabelFieldFocused(true),
-        onBlur: () => setIsLabelFieldFocused(false)
+        onFocus: () => setIsEditingControl(true),
+        onBlur: () => setIsEditingControl(false)
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       hasValue: () => !!url,
@@ -39083,12 +39085,26 @@ function edit_Controls({
         label: (0,external_wp_i18n_namespaceObject.__)('Link'),
         value: url ? (0,external_wp_url_namespaceObject.safeDecodeURI)(url) : '',
         onChange: urlValue => {
-          updateAttributes({
-            url: urlValue
-          }, setAttributes, attributes);
+          setAttributes({
+            url: encodeURI((0,external_wp_url_namespaceObject.safeDecodeURI)(urlValue))
+          });
         },
         autoComplete: "off",
-        type: "url"
+        type: "url",
+        onFocus: () => {
+          lastURLRef.current = url;
+          setIsEditingControl(true);
+        },
+        onBlur: () => {
+          // Defer the updateAttributes call to ensure entity connection isn't severed by accident.
+          updateAttributes({
+            url: !url ? lastURLRef.current : url
+          }, setAttributes, {
+            ...attributes,
+            url: lastURLRef.current
+          });
+          setIsEditingControl(false);
+        }
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       hasValue: () => !!opensInNewTab,
@@ -39187,9 +39203,10 @@ function NavigationLinkEdit({
   const linkUIref = (0,external_wp_element_namespaceObject.useRef)();
   const prevUrl = (0,external_wp_compose_namespaceObject.usePrevious)(url);
 
-  // Change the label using inspector causes rich text to change focus on firefox.
-  // This is a workaround to keep the focus on the label field when label filed is focused we don't render the rich text.
-  const [isLabelFieldFocused, setIsLabelFieldFocused] = (0,external_wp_element_namespaceObject.useState)(false);
+  // Change the `label` and `url` using inspector causes RichText to change focus.
+  // This is a workaround to keep the focus on the field when it's focused we don't render the RichText.
+  // See: https://github.com/WordPress/gutenberg/pull/61374.
+  const [isEditingControl, setIsEditingControl] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
     isAtMaxNesting,
     isTopLevelLink,
@@ -39375,19 +39392,19 @@ function NavigationLinkEdit({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(edit_Controls, {
         attributes: attributes,
         setAttributes: setAttributes,
-        setIsLabelFieldFocused: setIsLabelFieldFocused
+        setIsEditingControl: setIsEditingControl
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       ...blockProps,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("a", {
         className: classes,
-        children: [!url ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        children: [!url && !isEditingControl ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "wp-block-navigation-link__placeholder-text",
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
             children: missingText
           })
         }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-          children: [!isInvalid && !isDraft && !isLabelFieldFocused && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+          children: [!isInvalid && !isDraft && !isEditingControl && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
               ref: ref,
               identifier: "label",
@@ -39406,7 +39423,7 @@ function NavigationLinkEdit({
               className: "wp-block-navigation-item__description",
               children: description
             })]
-          }), (isInvalid || isDraft || isLabelFieldFocused) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          }), (isInvalid || isDraft || isEditingControl) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
             className: dist_clsx('wp-block-navigation-link__placeholder-text', 'wp-block-navigation-link__label', {
               'is-invalid': isInvalid,
               'is-draft': isDraft
