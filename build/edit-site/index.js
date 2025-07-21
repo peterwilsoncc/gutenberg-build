@@ -34079,13 +34079,15 @@ function filterSortAndPaginate(data, view, fields) {
   }
 
   // Handle sorting.
-  if (view.sort || view.groupByField) {
+  const sortByField = view.sort?.field ? _fields.find(field => {
+    return field.id === view.sort?.field;
+  }) : null;
+  const groupByField = view.groupByField ? _fields.find(field => {
+    return field.id === view.groupByField;
+  }) : null;
+  if (sortByField || groupByField) {
     filteredData.sort((a, b) => {
-      // Sort by the group by field.
-      const groupByField = _fields.find(field => {
-        return field.id === view.groupByField;
-      });
-      if (view.groupByField && groupByField) {
+      if (groupByField) {
         const groupCompare = groupByField.sort(a, b, 'asc');
 
         // If items are in different groups, return the group comparison result.
@@ -34094,12 +34096,7 @@ function filterSortAndPaginate(data, view, fields) {
           return groupCompare;
         }
       }
-
-      // Sort by the sort field.
-      const sortByField = _fields.find(field => {
-        return field.id === view?.sort?.field;
-      });
-      if (view.sort && sortByField) {
+      if (sortByField) {
         var _view$sort$direction;
         return sortByField.sort(a, b, (_view$sort$direction = view.sort?.direction) !== null && _view$sort$direction !== void 0 ? _view$sort$direction : 'desc');
       }
