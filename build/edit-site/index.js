@@ -32827,6 +32827,58 @@ function datetime_isValid(value, context) {
   }
 });
 
+;// ./packages/dataviews/build-module/field-types/date.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const getFormattedDate = dateToDisplay => (0,external_wp_date_namespaceObject.dateI18n)((0,external_wp_date_namespaceObject.getSettings)().formats.date, (0,external_wp_date_namespaceObject.getDate)(dateToDisplay));
+function date_sort(a, b, direction) {
+  const timeA = new Date(a).getTime();
+  const timeB = new Date(b).getTime();
+  return direction === 'asc' ? timeA - timeB : timeB - timeA;
+}
+function date_isValid(value, context) {
+  if (context?.elements) {
+    const validValues = context?.elements.map(f => f.value);
+    if (!validValues.includes(value)) {
+      return false;
+    }
+  }
+  return true;
+}
+/* harmony default export */ const date = ({
+  sort: date_sort,
+  isValid: date_isValid,
+  Edit: null,
+  render: ({
+    item,
+    field
+  }) => {
+    if (field.elements) {
+      return renderFromElements({
+        item,
+        field
+      });
+    }
+    const value = field.getValue({
+      item
+    });
+    if (!value) {
+      return '';
+    }
+    return getFormattedDate(value);
+  },
+  enableSorting: true,
+  filterBy: false
+});
+
 ;// ./packages/dataviews/build-module/field-types/boolean.js
 /**
  * WordPress dependencies
@@ -32992,6 +33044,7 @@ const arrayFieldType = {
 
 
 
+
 /**
  *
  * @param {FieldType} type The field type definition to get.
@@ -33010,6 +33063,9 @@ function getFieldTypeDefinition(type) {
   }
   if ('datetime' === type) {
     return datetime;
+  }
+  if ('date' === type) {
+    return date;
   }
   if ('boolean' === type) {
     return field_types_boolean;

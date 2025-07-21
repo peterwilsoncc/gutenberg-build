@@ -5993,6 +5993,58 @@ function datetime_isValid(value, context) {
   }
 });
 
+;// ./packages/dataviews/build-module/field-types/date.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const getFormattedDate = dateToDisplay => (0,external_wp_date_namespaceObject.dateI18n)((0,external_wp_date_namespaceObject.getSettings)().formats.date, (0,external_wp_date_namespaceObject.getDate)(dateToDisplay));
+function date_sort(a, b, direction) {
+  const timeA = new Date(a).getTime();
+  const timeB = new Date(b).getTime();
+  return direction === 'asc' ? timeA - timeB : timeB - timeA;
+}
+function date_isValid(value, context) {
+  if (context?.elements) {
+    const validValues = context?.elements.map(f => f.value);
+    if (!validValues.includes(value)) {
+      return false;
+    }
+  }
+  return true;
+}
+/* harmony default export */ const date = ({
+  sort: date_sort,
+  isValid: date_isValid,
+  Edit: null,
+  render: ({
+    item,
+    field
+  }) => {
+    if (field.elements) {
+      return renderFromElements({
+        item,
+        field
+      });
+    }
+    const value = field.getValue({
+      item
+    });
+    if (!value) {
+      return '';
+    }
+    return getFormattedDate(value);
+  },
+  enableSorting: true,
+  filterBy: false
+});
+
 ;// ./packages/dataviews/build-module/field-types/boolean.js
 /**
  * WordPress dependencies
@@ -6158,6 +6210,7 @@ const arrayFieldType = {
 
 
 
+
 /**
  *
  * @param {FieldType} type The field type definition to get.
@@ -6176,6 +6229,9 @@ function getFieldTypeDefinition(type) {
   }
   if ('datetime' === type) {
     return datetime;
+  }
+  if ('date' === type) {
+    return date;
   }
   if ('boolean' === type) {
     return field_types_boolean;
@@ -10345,7 +10401,7 @@ const statusField = {
  * Internal dependencies
  */
 
-const getFormattedDate = dateToDisplay => (0,external_wp_date_namespaceObject.dateI18n)((0,external_wp_date_namespaceObject.getSettings)().formats.datetimeAbbreviated, (0,external_wp_date_namespaceObject.getDate)(dateToDisplay));
+const date_view_getFormattedDate = dateToDisplay => (0,external_wp_date_namespaceObject.dateI18n)((0,external_wp_date_namespaceObject.getSettings)().formats.datetimeAbbreviated, (0,external_wp_date_namespaceObject.getDate)(dateToDisplay));
 const DateView = ({
   item
 }) => {
@@ -10354,7 +10410,7 @@ const DateView = ({
   if (isDraftOrPrivate) {
     var _item$date;
     return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: page creation or modification date. */
-    (0,external_wp_i18n_namespaceObject.__)('<span>Modified: <time>%s</time></span>'), getFormattedDate((_item$date = item.date) !== null && _item$date !== void 0 ? _item$date : null)), {
+    (0,external_wp_i18n_namespaceObject.__)('<span>Modified: <time>%s</time></span>'), date_view_getFormattedDate((_item$date = item.date) !== null && _item$date !== void 0 ? _item$date : null)), {
       span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {}),
       time: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {})
     });
@@ -10363,7 +10419,7 @@ const DateView = ({
   if (isScheduled) {
     var _item$date2;
     return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: page creation date */
-    (0,external_wp_i18n_namespaceObject.__)('<span>Scheduled: <time>%s</time></span>'), getFormattedDate((_item$date2 = item.date) !== null && _item$date2 !== void 0 ? _item$date2 : null)), {
+    (0,external_wp_i18n_namespaceObject.__)('<span>Scheduled: <time>%s</time></span>'), date_view_getFormattedDate((_item$date2 = item.date) !== null && _item$date2 !== void 0 ? _item$date2 : null)), {
       span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {}),
       time: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {})
     });
@@ -10372,7 +10428,7 @@ const DateView = ({
   if (isPublished) {
     var _item$date3;
     return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: page creation time */
-    (0,external_wp_i18n_namespaceObject.__)('<span>Published: <time>%s</time></span>'), getFormattedDate((_item$date3 = item.date) !== null && _item$date3 !== void 0 ? _item$date3 : null)), {
+    (0,external_wp_i18n_namespaceObject.__)('<span>Published: <time>%s</time></span>'), date_view_getFormattedDate((_item$date3 = item.date) !== null && _item$date3 !== void 0 ? _item$date3 : null)), {
       span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {}),
       time: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {})
     });
@@ -10383,7 +10439,7 @@ const DateView = ({
   const isPending = item.status === 'pending';
   if (isPending) {
     return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: page creation or modification date. */
-    (0,external_wp_i18n_namespaceObject.__)('<span>Modified: <time>%s</time></span>'), getFormattedDate(dateToDisplay !== null && dateToDisplay !== void 0 ? dateToDisplay : null)), {
+    (0,external_wp_i18n_namespaceObject.__)('<span>Modified: <time>%s</time></span>'), date_view_getFormattedDate(dateToDisplay !== null && dateToDisplay !== void 0 ? dateToDisplay : null)), {
       span: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {}),
       time: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {})
     });
@@ -10391,7 +10447,7 @@ const DateView = ({
 
   // Unknow status.
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {
-    children: getFormattedDate((_item$date5 = item.date) !== null && _item$date5 !== void 0 ? _item$date5 : null)
+    children: date_view_getFormattedDate((_item$date5 = item.date) !== null && _item$date5 !== void 0 ? _item$date5 : null)
   });
 };
 /* harmony default export */ const date_view = (DateView);
@@ -10419,7 +10475,7 @@ const dateField = {
 /**
  * Date field for BasePost.
  */
-/* harmony default export */ const date = (dateField);
+/* harmony default export */ const fields_date = (dateField);
 
 ;// ./packages/icons/build-module/library/copy-small.js
 /**
@@ -16311,7 +16367,7 @@ const registerPostTypeSchema = postType => async ({
   const actions = [postTypeConfig.viewable ? view_post : undefined, !!postTypeConfig.supports?.revisions ? view_post_revisions : undefined,
   // @ts-ignore
    true ? !['wp_template', 'wp_block', 'wp_template_part'].includes(postTypeConfig.slug) && canCreate && duplicate_post : 0, postTypeConfig.slug === 'wp_template_part' && canCreate && currentTheme?.is_block_theme ? duplicate_template_part : undefined, canCreate && postTypeConfig.slug === 'wp_block' ? duplicate_pattern : undefined, postTypeConfig.supports?.title ? rename_post : undefined, postTypeConfig.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, restore_post, reset_post, delete_post, trash_post, permanently_delete_post].filter(Boolean);
-  const fields = [postTypeConfig.supports?.thumbnail && currentTheme?.theme_supports?.['post-thumbnails'] && featured_image, postTypeConfig.supports?.author && author, fields_status, date, slug, postTypeConfig.supports?.['page-attributes'] && fields_parent, postTypeConfig.supports?.comments && comment_status, fields_template, fields_password, postTypeConfig.supports?.editor && postTypeConfig.viewable && content_preview].filter(Boolean);
+  const fields = [postTypeConfig.supports?.thumbnail && currentTheme?.theme_supports?.['post-thumbnails'] && featured_image, postTypeConfig.supports?.author && author, fields_status, fields_date, slug, postTypeConfig.supports?.['page-attributes'] && fields_parent, postTypeConfig.supports?.comments && comment_status, fields_template, fields_password, postTypeConfig.supports?.editor && postTypeConfig.viewable && content_preview].filter(Boolean);
   if (postTypeConfig.supports?.title) {
     let _titleField;
     if (postType === 'page') {
