@@ -34079,17 +34079,32 @@ function filterSortAndPaginate(data, view, fields) {
   }
 
   // Handle sorting.
-  if (view.sort) {
-    const fieldId = view.sort.field;
-    const fieldToSort = _fields.find(field => {
-      return field.id === fieldId;
-    });
-    if (fieldToSort) {
-      filteredData.sort((a, b) => {
-        var _view$sort$direction;
-        return fieldToSort.sort(a, b, (_view$sort$direction = view.sort?.direction) !== null && _view$sort$direction !== void 0 ? _view$sort$direction : 'desc');
+  if (view.sort || view.groupByField) {
+    filteredData.sort((a, b) => {
+      // Sort by the group by field.
+      const groupByField = _fields.find(field => {
+        return field.id === view.groupByField;
       });
-    }
+      if (view.groupByField && groupByField) {
+        const groupCompare = groupByField.sort(a, b, 'asc');
+
+        // If items are in different groups, return the group comparison result.
+        // Otherwise, fall back to sorting by the sort field.
+        if (groupCompare !== 0) {
+          return groupCompare;
+        }
+      }
+
+      // Sort by the sort field.
+      const sortByField = _fields.find(field => {
+        return field.id === view?.sort?.field;
+      });
+      if (view.sort && sortByField) {
+        var _view$sort$direction;
+        return sortByField.sort(a, b, (_view$sort$direction = view.sort?.direction) !== null && _view$sort$direction !== void 0 ? _view$sort$direction : 'desc');
+      }
+      return 0;
+    });
   }
 
   // Handle pagination.
@@ -41617,8 +41632,62 @@ function ViewGrid({
   const gridStyle = usedPreviewSize ? {
     gridTemplateColumns: `repeat(${usedPreviewSize}, minmax(0, 1fr))`
   } : {};
+  const groupField = view.groupByField ? fields.find(f => f.id === view.groupByField) : null;
+
+  // Group data by groupByField if specified
+  const dataByGroup = groupField ? data.reduce((groups, item) => {
+    const groupName = groupField.getValue({
+      item
+    });
+    if (!groups.has(groupName)) {
+      groups.set(groupName, []);
+    }
+    groups.get(groupName)?.push(item);
+    return groups;
+  }, new Map()) : null;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [hasData && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalGrid, {
+    children: [
+    // Render multiple groups.
+    hasData && groupField && dataByGroup && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+      spacing: 4,
+      children: Array.from(dataByGroup.entries()).map(([groupName, groupItems]) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        spacing: 2,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h3", {
+          className: "dataviews-view-grid__group-header",
+          children: (0,external_wp_i18n_namespaceObject.sprintf)(
+          // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
+          (0,external_wp_i18n_namespaceObject.__)('%1$s: %2$s'), groupField.label, groupName)
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalGrid, {
+          gap: 8,
+          columns: 2,
+          alignment: "top",
+          className: dist_clsx('dataviews-view-grid', className),
+          style: gridStyle,
+          "aria-busy": isLoading,
+          children: groupItems.map(item => {
+            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItem, {
+              view: view,
+              selection: selection,
+              onChangeSelection: onChangeSelection,
+              onClickItem: onClickItem,
+              isItemClickable: isItemClickable,
+              renderItemLink: renderItemLink,
+              getItemId: getItemId,
+              item: item,
+              actions: actions,
+              mediaField: mediaField,
+              titleField: titleField,
+              descriptionField: descriptionField,
+              regularFields: regularFields,
+              badgeFields: badgeFields,
+              hasBulkActions: hasBulkActions
+            }, getItemId(item));
+          })
+        })]
+      }, groupName))
+    }),
+    // Render a single grid with all data.
+    hasData && !dataByGroup && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalGrid, {
       gap: 8,
       columns: 2,
       alignment: "top",
@@ -41644,7 +41713,9 @@ function ViewGrid({
           hasBulkActions: hasBulkActions
         }, getItemId(item));
       })
-    }), !hasData && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    }),
+    // Render empty state.
+    !hasData && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: dist_clsx({
         'dataviews-loading': isLoading,
         'dataviews-no-results': !isLoading
