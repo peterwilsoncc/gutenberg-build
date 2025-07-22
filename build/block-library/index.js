@@ -66260,14 +66260,14 @@ const video_deprecated_deprecated = [video_deprecated_v1];
 
 
 
+
+const VIDEO_POSTER_ALLOWED_MEDIA_TYPES = ['image'];
 function PosterImage({
   poster,
-  setAttributes,
-  instanceId
+  setAttributes
 }) {
-  const posterImageButton = (0,external_wp_element_namespaceObject.useRef)();
-  const VIDEO_POSTER_ALLOWED_MEDIA_TYPES = ['image'];
-  const videoPosterDescription = `video-block__poster-image-description-${instanceId}`;
+  const posterButtonRef = (0,external_wp_element_namespaceObject.useRef)();
+  const descriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(PosterImage, 'video-block__poster-image-description');
   function onSelectPoster(image) {
     setAttributes({
       poster: image.url
@@ -66279,23 +66279,23 @@ function PosterImage({
     });
 
     // Move focus back to the Media Upload button.
-    posterImageButton.current.focus();
+    posterButtonRef.current.focus();
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-    label: (0,external_wp_i18n_namespaceObject.__)('Poster image'),
-    isShownByDefault: true,
-    hasValue: () => !!poster,
-    onDeselect: () => {
-      setAttributes({
-        poster: ''
-      });
-    },
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUploadCheck, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-        className: "editor-video-poster-control",
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
-          children: (0,external_wp_i18n_namespaceObject.__)('Poster image')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUpload, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUploadCheck, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      label: (0,external_wp_i18n_namespaceObject.__)('Poster image'),
+      isShownByDefault: true,
+      hasValue: () => !!poster,
+      onDeselect: () => {
+        setAttributes({
+          poster: undefined
+        });
+      },
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
+        children: (0,external_wp_i18n_namespaceObject.__)('Poster image')
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+        justify: "flex-start",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUpload, {
           title: (0,external_wp_i18n_namespaceObject.__)('Select poster image'),
           onSelect: onSelectPoster,
           allowedTypes: VIDEO_POSTER_ALLOWED_MEDIA_TYPES,
@@ -66305,12 +66305,12 @@ function PosterImage({
             __next40pxDefaultSize: true,
             variant: "primary",
             onClick: open,
-            ref: posterImageButton,
-            "aria-describedby": videoPosterDescription,
+            ref: posterButtonRef,
+            "aria-describedby": descriptionId,
             children: !poster ? (0,external_wp_i18n_namespaceObject.__)('Select') : (0,external_wp_i18n_namespaceObject.__)('Replace')
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-          id: videoPosterDescription,
+          id: descriptionId,
           hidden: true,
           children: poster ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: poster image URL. */
           (0,external_wp_i18n_namespaceObject.__)('The current poster image url is %s'), poster) : (0,external_wp_i18n_namespaceObject.__)('There is no poster image currently selected')
@@ -66320,7 +66320,7 @@ function PosterImage({
           variant: "tertiary",
           children: (0,external_wp_i18n_namespaceObject.__)('Remove')
         })]
-      })
+      })]
     })
   });
 }
@@ -66839,7 +66839,6 @@ function TracksEditor({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -66860,7 +66859,6 @@ function VideoEdit({
   insertBlocksAfter,
   onReplace
 }) {
-  const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(VideoEdit);
   const videoPlayer = (0,external_wp_element_namespaceObject.useRef)();
   const {
     id,
@@ -67013,7 +67011,7 @@ function VideoEdit({
             muted: false,
             playsInline: false,
             preload: 'metadata',
-            poster: ''
+            poster: undefined
           });
         },
         dropdownMenuProps: dropdownMenuProps,
@@ -67022,8 +67020,7 @@ function VideoEdit({
           attributes: attributes
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(poster_image, {
           poster: poster,
-          setAttributes: setAttributes,
-          instanceId: instanceId
+          setAttributes: setAttributes
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("figure", {
