@@ -33885,11 +33885,13 @@ function filterSortAndPaginate(data, view, fields) {
   if (view.search) {
     const normalizedSearch = normalizeSearchInput(view.search);
     filteredData = filteredData.filter(item => {
-      return _fields.filter(field => field.enableGlobalSearch).map(field => {
-        return normalizeSearchInput(field.getValue({
+      return _fields.filter(field => field.enableGlobalSearch).some(field => {
+        const fieldValue = field.getValue({
           item
-        }));
-      }).some(field => field.includes(normalizedSearch));
+        });
+        const values = Array.isArray(fieldValue) ? fieldValue : [fieldValue];
+        return values.some(value => normalizeSearchInput(String(value)).includes(normalizedSearch));
+      });
     });
   }
   if (view.filters && view.filters?.length > 0) {
