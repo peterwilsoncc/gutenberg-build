@@ -14735,7 +14735,8 @@ function CoverBlockControls({
   onSelectMedia,
   currentSettings,
   toggleUseFeaturedImage,
-  onClearMedia
+  onClearMedia,
+  blockEditingMode
 }) {
   const {
     contentPosition,
@@ -14751,6 +14752,7 @@ function CoverBlockControls({
   const [prevMinHeightValue, setPrevMinHeightValue] = (0,external_wp_element_namespaceObject.useState)(minHeight);
   const [prevMinHeightUnit, setPrevMinHeightUnit] = (0,external_wp_element_namespaceObject.useState)(minHeightUnit);
   const isMinFullHeight = minHeightUnit === 'vh' && minHeight === 100 && !attributes?.style?.dimensions?.aspectRatio;
+  const isContentOnlyMode = blockEditingMode === 'contentOnly';
   const toggleMinFullHeight = () => {
     if (isMinFullHeight) {
       // If there aren't previous values, take the default ones.
@@ -14784,7 +14786,7 @@ function CoverBlockControls({
     });
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
+    children: [!isContentOnlyMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
       group: "block",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalBlockAlignmentMatrixControl, {
         label: (0,external_wp_i18n_namespaceObject.__)('Change content position'),
@@ -15888,7 +15890,8 @@ function CoverEdit({
     onSelectMedia: onSelectMedia,
     currentSettings: currentSettings,
     toggleUseFeaturedImage: toggleUseFeaturedImage,
-    onClearMedia: onClearMedia
+    onClearMedia: onClearMedia,
+    blockEditingMode: blockEditingMode
   });
   const inspectorControls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CoverInspectorControls, {
     attributes: attributes,
