@@ -1847,7 +1847,8 @@ async function loadTaxonomyEntities() {
         context: 'edit'
       },
       name,
-      label: taxonomy.name
+      label: taxonomy.name,
+      getTitle: record => record?.name
     };
   });
 }
