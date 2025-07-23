@@ -15845,7 +15845,11 @@ const mergeBlocks = (firstBlockClientId, secondBlockClientId) => ({
     return;
   }
   if (!blockAType.merge) {
-    dispatch.selectBlock(blockA.clientId);
+    if ((0,external_wp_blocks_namespaceObject.isUnmodifiedBlock)(blockB, 'content')) {
+      dispatch.removeBlock(clientIdB, select.isBlockSelected(clientIdB));
+    } else {
+      dispatch.selectBlock(blockA.clientId);
+    }
     return;
   }
   const blockBType = (0,external_wp_blocks_namespaceObject.getBlockType)(blockB.name);
