@@ -11272,6 +11272,8 @@ function PasswordEdit({
  * WordPress dependencies
  */
 
+
+
 /**
  * Internal dependencies
  */
@@ -11280,6 +11282,7 @@ function PasswordEdit({
 const passwordField = {
   id: 'password',
   type: 'text',
+  label: (0,external_wp_i18n_namespaceObject.__)('Password'),
   Edit: edit,
   enableSorting: false,
   enableHiding: false,
