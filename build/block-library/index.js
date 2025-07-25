@@ -6577,6 +6577,8 @@ const pin = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(extern
 
 
 
+
+
 /**
  * Internal dependencies
  */
@@ -6594,7 +6596,8 @@ function CategoriesEdit({
     taxonomy: taxonomySlug
   },
   setAttributes,
-  className
+  className,
+  clientId
 }) {
   const selectId = (0,external_wp_compose_namespaceObject.useInstanceId)(CategoriesEdit, 'blocks-category-select');
   const {
@@ -6616,6 +6619,16 @@ function CategoriesEdit({
     records: categories,
     isResolving
   } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('taxonomy', taxonomySlug, query);
+  const {
+    createWarningNotice
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
+  const showRedirectionPreventedNotice = event => {
+    event.preventDefault();
+    createWarningNotice((0,external_wp_i18n_namespaceObject.__)('Links are disabled in the editor.'), {
+      id: `block-library/core/categories/redirection-prevented/${clientId}`,
+      type: 'snackbar'
+    });
+  };
   const getCategoriesList = parentId => {
     if (!categories?.length) {
       return [];
@@ -6648,8 +6661,7 @@ function CategoriesEdit({
       className: `cat-item cat-item-${id}`,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
         href: link,
-        target: "_blank",
-        rel: "noreferrer noopener",
+        onClick: showRedirectionPreventedNotice,
         children: renderCategoryName(name)
       }), showPostCounts && ` (${count})`, isHierarchicalTaxonomy && showHierarchy && !!childCategories.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ul", {
         className: "children",
@@ -29998,14 +30010,12 @@ function LatestPostsEdit({
             className: imageClasses,
             children: addLinkToFeaturedImage ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
               href: post.link,
-              rel: "noreferrer noopener",
               onClick: showRedirectionPreventedNotice,
               children: featuredImage
             }) : featuredImage
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
             className: "wp-block-latest-posts__post-title",
             href: post.link,
-            rel: "noreferrer noopener",
             dangerouslySetInnerHTML: !!titleTrimmed ? {
               __html: titleTrimmed
             } : undefined,
