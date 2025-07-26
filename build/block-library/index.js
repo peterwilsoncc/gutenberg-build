@@ -19213,6 +19213,7 @@ const createActiveXObject = type => {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -19310,7 +19311,7 @@ function FileEdit({
       setTemporaryURL(newMedia.url);
       return;
     }
-    const isPdf = newMedia.url.endsWith('.pdf');
+    const isPdf = (0,external_wp_url_namespaceObject.getFilename)(newMedia.url).toLowerCase().endsWith('.pdf');
     const pdfAttributes = {
       displayPreview: isPdf ? (_attributes$displayPr = attributes.displayPreview) !== null && _attributes$displayPr !== void 0 ? _attributes$displayPr : true : undefined,
       previewHeight: isPdf ? (_attributes$previewHe = attributes.previewHeight) !== null && _attributes$previewHe !== void 0 ? _attributes$previewHe : 600 : undefined
