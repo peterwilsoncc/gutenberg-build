@@ -66984,6 +66984,8 @@ function VideoEdit({
       videoPlayer.current.load();
     }
   }, [poster]);
+
+  // TODO: Whether the video was obtained from the media library or was provided by URL, obtain the `videoWidth` and `videoHeight` of the video once its metadata has loaded and persist in the block attributes.
   function onSelectVideo(media) {
     if (!media || !media.url) {
       // In this case there was an error
