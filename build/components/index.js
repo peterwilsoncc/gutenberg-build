@@ -46767,7 +46767,7 @@ function palette_edit_Option({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(IndicatorStyled, {
           colorValue: value
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(flex_item_component, {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(flex_block_component, {
         children: !canOnlyChangeValues ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NameInput, {
           label: isGradient ? (0,external_wp_i18n_namespaceObject.__)('Gradient name') : (0,external_wp_i18n_namespaceObject.__)('Color name'),
           value: element.name,
