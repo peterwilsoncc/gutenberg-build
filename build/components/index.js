@@ -37803,10 +37803,10 @@ var range_control_styles_ref2 =  true ? {
   name: "1lr98c4",
   styles: "bottom:-80%"
 } : 0;
-const tooltipPosition = ({
-  position
+const tooltipPlacement = ({
+  placement
 }) => {
-  const isBottom = position === 'bottom';
+  const isBottom = placement === 'bottom';
   if (isBottom) {
     return range_control_styles_ref2;
   }
@@ -37814,7 +37814,7 @@ const tooltipPosition = ({
 };
 const range_control_styles_Tooltip = /*#__PURE__*/emotion_styled_base_browser_esm("span",  true ? {
   target: "e1epgpqk2"
-} : 0)("background:rgba( 0, 0, 0, 0.8 );border-radius:", config_values.radiusSmall, ";color:white;font-size:12px;min-width:32px;padding:4px 8px;pointer-events:none;position:absolute;text-align:center;user-select:none;line-height:1.4;", tooltipShow, ";", tooltipPosition, ";", rtl({
+} : 0)("background:rgba( 0, 0, 0, 0.8 );border-radius:", config_values.radiusSmall, ";color:white;font-size:12px;min-width:32px;padding:4px 8px;pointer-events:none;position:absolute;text-align:center;user-select:none;line-height:1.4;", tooltipShow, ";", tooltipPlacement, ";", rtl({
   transform: 'translateX(-50%)'
 }, {
   transform: 'translateX(50%)'
@@ -38026,7 +38026,7 @@ function SimpleTooltip(props) {
   const {
     className,
     inputRef,
-    tooltipPosition,
+    tooltipPlacement,
     show = false,
     style = {},
     value = 0,
@@ -38034,9 +38034,9 @@ function SimpleTooltip(props) {
     zIndex = 100,
     ...restProps
   } = props;
-  const position = useTooltipPosition({
+  const placement = useTooltipPlacement({
     inputRef,
-    tooltipPosition
+    tooltipPlacement
   });
   const classes = dist_clsx('components-simple-tooltip', className);
   const styles = {
@@ -38047,33 +38047,33 @@ function SimpleTooltip(props) {
     ...restProps,
     "aria-hidden": "false",
     className: classes,
-    position: position,
+    placement: placement,
     show: show,
     role: "tooltip",
     style: styles,
     children: renderTooltipContent(value)
   });
 }
-function useTooltipPosition({
+function useTooltipPlacement({
   inputRef,
-  tooltipPosition
+  tooltipPlacement
 }) {
-  const [position, setPosition] = (0,external_wp_element_namespaceObject.useState)();
-  const setTooltipPosition = (0,external_wp_element_namespaceObject.useCallback)(() => {
+  const [placement, setPlacement] = (0,external_wp_element_namespaceObject.useState)();
+  const setTooltipPlacement = (0,external_wp_element_namespaceObject.useCallback)(() => {
     if (inputRef && inputRef.current) {
-      setPosition(tooltipPosition);
+      setPlacement(tooltipPlacement);
     }
-  }, [tooltipPosition, inputRef]);
+  }, [tooltipPlacement, inputRef]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    setTooltipPosition();
-  }, [setTooltipPosition]);
+    setTooltipPlacement();
+  }, [setTooltipPlacement]);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
-    window.addEventListener('resize', setTooltipPosition);
+    window.addEventListener('resize', setTooltipPlacement);
     return () => {
-      window.removeEventListener('resize', setTooltipPosition);
+      window.removeEventListener('resize', setTooltipPlacement);
     };
   });
-  return position;
+  return placement;
 }
 
 ;// ./packages/components/build-module/range-control/index.js
@@ -38331,7 +38331,7 @@ function UnforwardedRangeControl(props, forwardedRef) {
         }), enableTooltip && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SimpleTooltip, {
           className: "components-range-control__tooltip",
           inputRef: inputRef,
-          tooltipPosition: "bottom",
+          tooltipPlacement: "bottom",
           renderTooltipContent: renderTooltipContent,
           show: isCurrentlyFocused || showTooltip,
           style: offsetStyle,
