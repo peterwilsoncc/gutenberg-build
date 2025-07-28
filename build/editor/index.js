@@ -12237,7 +12237,8 @@ const {
   globalStylesLinksDataKey,
   selectBlockPatternsKey,
   reusableBlocksSelectKey,
-  sectionRootClientIdKey
+  sectionRootClientIdKey,
+  mediaEditKey
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
 /**
@@ -12347,6 +12348,9 @@ function useBlockEditorSettings(settings, postType, postId, renderingMode) {
     setIsInserterOpened
   } = (0,external_wp_data_namespaceObject.useDispatch)(store_store);
   const {
+    editMediaEntity
+  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store));
+  const {
     saveEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
 
@@ -12390,6 +12394,7 @@ function useBlockEditorSettings(settings, postType, postId, renderingMode) {
       hasFixedToolbar,
       isDistractionFree,
       keepCaretInsideBlock,
+      [mediaEditKey]: hasUploadPermissions ? editMediaEntity : undefined,
       mediaUpload: hasUploadPermissions ? mediaUpload : undefined,
       mediaSideload: hasUploadPermissions ? media_sideload : undefined,
       __experimentalBlockPatterns: blockPatterns,
@@ -12428,7 +12433,7 @@ function useBlockEditorSettings(settings, postType, postId, renderingMode) {
       editorTool: renderingMode === 'post-only' && postType !== 'wp_template' ? 'edit' : undefined
     };
     return blockEditorSettings;
-  }, [allowedBlockTypes, allowRightClickOverrides, focusMode, forceDisableFocusMode, hasFixedToolbar, isDistractionFree, keepCaretInsideBlock, settings, hasUploadPermissions, userPatternCategories, blockPatterns, blockPatternCategories, canUseUnfilteredHTML, undo, createPageEntity, userCanCreatePages, pageOnFront, pageForPosts, postType, setIsInserterOpened, sectionRootClientId, globalStylesData, globalStylesLinksData, renderingMode]);
+  }, [allowedBlockTypes, allowRightClickOverrides, focusMode, forceDisableFocusMode, hasFixedToolbar, isDistractionFree, keepCaretInsideBlock, settings, hasUploadPermissions, userPatternCategories, blockPatterns, blockPatternCategories, canUseUnfilteredHTML, undo, createPageEntity, userCanCreatePages, pageOnFront, pageForPosts, postType, setIsInserterOpened, sectionRootClientId, globalStylesData, globalStylesLinksData, renderingMode, editMediaEntity]);
 }
 /* harmony default export */ const use_block_editor_settings = (useBlockEditorSettings);
 

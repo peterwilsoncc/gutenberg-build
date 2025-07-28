@@ -8188,6 +8188,7 @@ const globalStylesLinksDataKey = Symbol('globalStylesLinks');
 const selectBlockPatternsKey = Symbol('selectBlockPatternsKey');
 const reusableBlocksSelectKey = Symbol('reusableBlocksSelect');
 const sectionRootClientIdKey = Symbol('sectionRootClientIdKey');
+const mediaEditKey = Symbol('mediaEditKey');
 
 ;// external ["wp","privateApis"]
 const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
@@ -70299,12 +70300,15 @@ const constants_POPOVER_PROPS = {
 /**
  * WordPress dependencies
  */
-// Disable Reason: Needs to be refactored.
-// eslint-disable-next-line no-restricted-imports
 
 
 
 
+
+
+/**
+ * Internal dependencies
+ */
 
 
 const messages = {
@@ -70325,11 +70329,19 @@ function useSaveImage({
     createSuccessNotice
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   const [isInProgress, setIsInProgress] = (0,external_wp_element_namespaceObject.useState)(false);
+  const {
+    editMediaEntity
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const settings = select(store).getSettings();
+    return {
+      editMediaEntity: settings[mediaEditKey]
+    };
+  }, []);
   const cancel = (0,external_wp_element_namespaceObject.useCallback)(() => {
     setIsInProgress(false);
     onFinishEditing();
   }, [onFinishEditing]);
-  const apply = (0,external_wp_element_namespaceObject.useCallback)(() => {
+  const apply = (0,external_wp_element_namespaceObject.useCallback)(async () => {
     setIsInProgress(true);
     const modifiers = [];
     if (rotation > 0) {
@@ -70361,41 +70373,42 @@ function useSaveImage({
       return;
     }
     const modifierType = modifiers.length === 1 ? modifiers[0].type : 'cropAndRotate';
-    external_wp_apiFetch_default()({
-      path: `/wp/v2/media/${id}/edit`,
-      method: 'POST',
-      data: {
+    try {
+      const savedImage = await editMediaEntity(id, {
         src: url,
         modifiers
+      }, {
+        throwOnError: true
+      });
+      if (savedImage) {
+        onSaveImage({
+          id: savedImage.id,
+          url: savedImage.source_url
+        });
+        createSuccessNotice(messages[modifierType], {
+          type: 'snackbar',
+          actions: [{
+            label: (0,external_wp_i18n_namespaceObject.__)('Undo'),
+            onClick: () => {
+              onSaveImage({
+                id,
+                url
+              });
+            }
+          }]
+        });
       }
-    }).then(response => {
-      onSaveImage({
-        id: response.id,
-        url: response.source_url
-      });
-      createSuccessNotice(messages[modifierType], {
-        type: 'snackbar',
-        actions: [{
-          label: (0,external_wp_i18n_namespaceObject.__)('Undo'),
-          onClick: () => {
-            onSaveImage({
-              id,
-              url
-            });
-          }
-        }]
-      });
-    }).catch(error => {
+    } catch (error) {
       createErrorNotice((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Error message. */
       (0,external_wp_i18n_namespaceObject.__)('Could not edit image. %s'), (0,external_wp_dom_namespaceObject.__unstableStripHTML)(error.message)), {
         id: 'image-editing-error',
         type: 'snackbar'
       });
-    }).finally(() => {
+    } finally {
       setIsInProgress(false);
       onFinishEditing();
-    });
-  }, [crop, rotation, id, url, onSaveImage, createErrorNotice, createSuccessNotice, onFinishEditing]);
+    }
+  }, [crop, rotation, id, url, onSaveImage, createErrorNotice, createSuccessNotice, onFinishEditing, editMediaEntity]);
   return (0,external_wp_element_namespaceObject.useMemo)(() => ({
     isInProgress,
     apply,
@@ -80857,7 +80870,8 @@ lock(privateApis, {
   setBackgroundStyleDefaults: setBackgroundStyleDefaults,
   sectionRootClientIdKey: sectionRootClientIdKey,
   CommentIconSlotFill: block_comment_icon_slot,
-  CommentIconToolbarSlotFill: block_comment_icon_toolbar_slot
+  CommentIconToolbarSlotFill: block_comment_icon_toolbar_slot,
+  mediaEditKey: mediaEditKey
 });
 
 ;// ./packages/block-editor/build-module/index.js
