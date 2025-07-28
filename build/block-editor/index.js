@@ -51206,6 +51206,17 @@ function Iframe({
     function preventFileDropDefault(event) {
       event.preventDefault();
     }
+    // Prevent clicks on link fragments from navigating away. Note that links
+    // inside `contenteditable` are already disabled by the browser, so
+    // this is for links in blocks outside of `contenteditable`.
+    function interceptLinkClicks(event) {
+      if (event.target.tagName === 'A' && event.target.getAttribute('href')?.startsWith('#')) {
+        event.preventDefault();
+        // Manually handle link fragment navigation within the iframe to prevent page reloads.
+        // This ensures smooth scrolling to anchor links (e.g., footnotes) despite the iframe's different base URL.
+        iFrameDocument.defaultView.location.hash = event.target.getAttribute('href').slice(1);
+      }
+    }
     const {
       ownerDocument
     } = node;
@@ -51237,21 +51248,7 @@ function Iframe({
       }
       iFrameDocument.addEventListener('dragover', preventFileDropDefault, false);
       iFrameDocument.addEventListener('drop', preventFileDropDefault, false);
-      // Prevent clicks on links from navigating away. Note that links
-      // inside `contenteditable` are already disabled by the browser, so
-      // this is for links in blocks outside of `contenteditable`.
-      iFrameDocument.addEventListener('click', event => {
-        if (event.target.tagName === 'A') {
-          event.preventDefault();
-
-          // Appending a hash to the current URL will not reload the
-          // page. This is useful for e.g. footnotes.
-          const href = event.target.getAttribute('href');
-          if (href?.startsWith('#')) {
-            iFrameDocument.defaultView.location.hash = href.slice(1);
-          }
-        }
-      });
+      iFrameDocument.addEventListener('click', interceptLinkClicks);
     }
     node.addEventListener('load', onLoad);
     return () => {
@@ -51259,6 +51256,7 @@ function Iframe({
       node.removeEventListener('load', onLoad);
       iFrameDocument?.removeEventListener('dragover', preventFileDropDefault);
       iFrameDocument?.removeEventListener('drop', preventFileDropDefault);
+      iFrameDocument?.removeEventListener('click', interceptLinkClicks);
     };
   }, []);
   const {
