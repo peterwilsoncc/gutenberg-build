@@ -66277,6 +66277,11 @@ const StyledTextarea = /*#__PURE__*/emotion_styled_base_browser_esm("textarea", 
 
 ;// ./packages/components/build-module/textarea-control/index.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
 
@@ -66303,6 +66308,7 @@ function UnforwardedTextareaControl(props, ref) {
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(TextareaControl);
   const id = `inspector-textarea-control-${instanceId}`;
   const onChangeValue = event => onChange(event.target.value);
+  const classes = dist_clsx('components-textarea-control', className);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(base_control, {
     __nextHasNoMarginBottom: __nextHasNoMarginBottom,
     __associatedWPComponentName: "TextareaControl",
@@ -66310,7 +66316,7 @@ function UnforwardedTextareaControl(props, ref) {
     hideLabelFromVision: hideLabelFromVision,
     id: id,
     help: help,
-    className: className,
+    className: classes,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyledTextarea, {
       className: "components-textarea-control__input",
       id: id,
