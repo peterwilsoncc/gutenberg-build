@@ -44729,22 +44729,22 @@ const post_content_init = () => initBlock({
 
 function PostDateEdit({
   attributes: {
+    datetime,
     textAlign,
     format,
     isLink,
-    displayType
+    metadata
   },
   context: {
-    postId,
     postType: postTypeSlug,
     queryId
   },
   setAttributes
 }) {
+  const displayType = metadata?.bindings?.datetime?.source === 'core/post-data' && metadata?.bindings?.datetime?.args?.key;
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: dist_clsx({
-      [`has-text-align-${textAlign}`]: textAlign,
-      [`wp-block-post-date__modified-date`]: displayType === 'modified'
+      [`has-text-align-${textAlign}`]: textAlign
     })
   });
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
@@ -44756,19 +44756,32 @@ function PostDateEdit({
   const popoverProps = (0,external_wp_element_namespaceObject.useMemo)(() => ({
     anchor: popoverAnchor
   }), [popoverAnchor]);
+  const {
+    __unstableMarkNextChangeAsNotPersistent
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+
+  // We need to set the datetime to a default value upon first loading
+  // to discern the block from its legacy version (which would default
+  // to the containing post's publish date).
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (datetime === undefined) {
+      __unstableMarkNextChangeAsNotPersistent();
+      setAttributes({
+        datetime: new Date()
+      });
+    }
+  }, [datetime]);
   const isDescendentOfQueryLoop = Number.isFinite(queryId);
   const dateSettings = (0,external_wp_date_namespaceObject.getSettings)();
   const [siteFormat = dateSettings.formats.date] = (0,external_wp_coreData_namespaceObject.useEntityProp)('root', 'site', 'date_format');
   const [siteTimeFormat = dateSettings.formats.time] = (0,external_wp_coreData_namespaceObject.useEntityProp)('root', 'site', 'time_format');
-  const [date, setDate] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', postTypeSlug, displayType, postId);
   const postType = (0,external_wp_data_namespaceObject.useSelect)(select => postTypeSlug ? select(external_wp_coreData_namespaceObject.store).getPostType(postTypeSlug) : null, [postTypeSlug]);
-  const dateLabel = displayType === 'date' ? (0,external_wp_i18n_namespaceObject.__)('Post Date') : (0,external_wp_i18n_namespaceObject.__)('Post Modified Date');
-  let postDate = date ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {
-    dateTime: (0,external_wp_date_namespaceObject.dateI18n)('c', date),
+  let postDate = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {
+    dateTime: (0,external_wp_date_namespaceObject.dateI18n)('c', datetime),
     ref: setPopoverAnchor,
-    children: format === 'human-diff' ? (0,external_wp_date_namespaceObject.humanTimeDiff)(date) : (0,external_wp_date_namespaceObject.dateI18n)(format || siteFormat, date)
-  }) : dateLabel;
-  if (isLink && date) {
+    children: format === 'human-diff' ? (0,external_wp_date_namespaceObject.humanTimeDiff)(datetime) : (0,external_wp_date_namespaceObject.dateI18n)(format || siteFormat, datetime)
+  });
+  if (isLink && datetime) {
     postDate = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
       href: "#post-date-pseudo-link",
       onClick: event => event.preventDefault(),
@@ -44785,14 +44798,17 @@ function PostDateEdit({
             textAlign: nextAlign
           });
         }
-      }), date && displayType === 'date' && !isDescendentOfQueryLoop && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+      }), displayType !== 'modified' && !isDescendentOfQueryLoop && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
           popoverProps: popoverProps,
           renderContent: ({
             onClose
           }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalPublishDateTimePicker, {
-            currentDate: date,
-            onChange: setDate,
+            title: displayType === 'date' ? (0,external_wp_i18n_namespaceObject.__)('Publish Date') : (0,external_wp_i18n_namespaceObject.__)('Date'),
+            currentDate: datetime,
+            onChange: newDatetime => setAttributes({
+              datetime: newDatetime
+            }),
             is12Hour: is12HourFormat(siteTimeFormat),
             onClose: onClose,
             dateOrder: /* translators: Order of day, month, and year. Available formats are 'dmy', 'mdy', and 'ymd'. */
@@ -44823,9 +44839,9 @@ function PostDateEdit({
         label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
         resetAll: () => {
           setAttributes({
+            datetime: undefined,
             format: undefined,
-            isLink: false,
-            displayType: 'date'
+            isLink: false
           });
         },
         dropdownMenuProps: dropdownMenuProps,
@@ -44862,22 +44878,6 @@ function PostDateEdit({
             }),
             checked: isLink
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          hasValue: () => displayType !== 'date',
-          label: (0,external_wp_i18n_namespaceObject.__)('Display last modified date'),
-          onDeselect: () => setAttributes({
-            displayType: 'date'
-          }),
-          isShownByDefault: true,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-            __nextHasNoMarginBottom: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Display last modified date'),
-            onChange: value => setAttributes({
-              displayType: value ? 'modified' : 'date'
-            }),
-            checked: displayType === 'modified',
-            help: (0,external_wp_i18n_namespaceObject.__)('Only shows if the post has been modified')
-          })
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -44897,9 +44897,112 @@ function is12HourFormat(format) {
 
 ;// ./packages/block-library/build-module/post-date/deprecated.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * Internal dependencies
  */
 
+const post_date_deprecated_v2 = {
+  attributes: {
+    textAlign: {
+      type: 'string'
+    },
+    format: {
+      type: 'string'
+    },
+    isLink: {
+      type: 'boolean',
+      default: false,
+      role: 'content'
+    },
+    displayType: {
+      type: 'string',
+      default: 'date'
+    }
+  },
+  supports: {
+    html: false,
+    color: {
+      gradients: true,
+      link: true,
+      __experimentalDefaultControls: {
+        background: true,
+        text: true,
+        link: true
+      }
+    },
+    spacing: {
+      margin: true,
+      padding: true
+    },
+    typography: {
+      fontSize: true,
+      lineHeight: true,
+      __experimentalFontFamily: true,
+      __experimentalFontWeight: true,
+      __experimentalFontStyle: true,
+      __experimentalTextTransform: true,
+      __experimentalTextDecoration: true,
+      __experimentalLetterSpacing: true,
+      __experimentalDefaultControls: {
+        fontSize: true
+      }
+    },
+    interactivity: {
+      clientNavigation: true
+    },
+    __experimentalBorder: {
+      radius: true,
+      color: true,
+      width: true,
+      style: true,
+      __experimentalDefaultControls: {
+        radius: true,
+        color: true,
+        width: true,
+        style: true
+      }
+    }
+  },
+  save() {
+    return null;
+  },
+  migrate({
+    className,
+    displayType,
+    metadata,
+    ...otherAttributes
+  }) {
+    if (displayType === 'date' || displayType === 'modified') {
+      if (displayType === 'modified') {
+        className = dist_clsx(className, 'wp-block-post-date__modified-date');
+      }
+      return {
+        ...otherAttributes,
+        className,
+        metadata: {
+          ...metadata,
+          bindings: {
+            datetime: {
+              source: 'core/post-data',
+              args: {
+                key: displayType
+              }
+            }
+          }
+        }
+      };
+    }
+  },
+  isEligible(attributes) {
+    // If there's neither an explicit `datetime` attribute nor a block binding for that attribute,
+    // then we're dealing with an old version of the block.
+    return !attributes.datetime && !attributes?.metadata?.bindings?.datetime;
+  }
+};
 const post_date_deprecated_v1 = {
   attributes: {
     textAlign: {
@@ -44948,7 +45051,7 @@ const post_date_deprecated_v1 = {
  *
  * See block-deprecation.md
  */
-/* harmony default export */ const post_date_deprecated = ([post_date_deprecated_v1]);
+/* harmony default export */ const post_date_deprecated = ([post_date_deprecated_v2, post_date_deprecated_v1]);
 
 ;// ./packages/block-library/build-module/post-date/variations.js
 /**
@@ -44957,14 +45060,43 @@ const post_date_deprecated_v1 = {
 
 
 const post_date_variations_variations = [{
+  name: 'post-date',
+  title: (0,external_wp_i18n_namespaceObject.__)('Post Date'),
+  description: (0,external_wp_i18n_namespaceObject.__)("Display a post's publish date."),
+  attributes: {
+    metadata: {
+      bindings: {
+        datetime: {
+          source: 'core/post-data',
+          args: {
+            key: 'date'
+          }
+        }
+      }
+    }
+  },
+  scope: ['block', 'inserter', 'transform'],
+  isActive: blockAttributes => blockAttributes?.metadata?.bindings?.datetime?.source === 'core/post-data' && blockAttributes?.metadata?.bindings?.datetime?.args?.key === 'date',
+  icon: post_date
+}, {
   name: 'post-date-modified',
   title: (0,external_wp_i18n_namespaceObject.__)('Modified Date'),
   description: (0,external_wp_i18n_namespaceObject.__)("Display a post's last updated date."),
   attributes: {
-    displayType: 'modified'
+    metadata: {
+      bindings: {
+        datetime: {
+          source: 'core/post-data',
+          args: {
+            key: 'modified'
+          }
+        }
+      }
+    },
+    className: 'wp-block-post-date__modified-date'
   },
-  scope: ['block', 'inserter'],
-  isActive: blockAttributes => blockAttributes.displayType === 'modified',
+  scope: ['block', 'inserter', 'transform'],
+  isActive: blockAttributes => blockAttributes?.metadata?.bindings?.datetime?.source === 'core/post-data' && blockAttributes?.metadata?.bindings?.datetime?.args?.key === 'modified',
   icon: post_date
 }];
 /* harmony default export */ const post_date_variations = (post_date_variations_variations);
@@ -44988,6 +45120,10 @@ const post_date_metadata = {
   description: "Display the publish date for an entry such as a post or page.",
   textdomain: "default",
   attributes: {
+    datetime: {
+      type: "string",
+      role: "content"
+    },
     textAlign: {
       type: "string"
     },
@@ -44998,10 +45134,6 @@ const post_date_metadata = {
       type: "boolean",
       "default": false,
       role: "content"
-    },
-    displayType: {
-      type: "string",
-      "default": "date"
     }
   },
   usesContext: ["postId", "postType", "queryId"],

@@ -39196,7 +39196,8 @@ const BLOCK_BINDINGS_ALLOWED_BLOCKS = {
   'core/paragraph': ['content'],
   'core/heading': ['content'],
   'core/image': ['id', 'url', 'title', 'alt'],
-  'core/button': ['url', 'text', 'linkTarget', 'rel']
+  'core/button': ['url', 'text', 'linkTarget', 'rel'],
+  'core/post-date': ['datetime']
 };
 
 /**
@@ -76946,6 +76947,7 @@ function PublishDateTimePicker({
   showPopoverHeaderActions,
   isCompact,
   currentDate,
+  title,
   ...additionalProps
 }, ref) {
   const datePickerProps = {
@@ -76960,7 +76962,7 @@ function PublishDateTimePicker({
     ref: ref,
     className: "block-editor-publish-date-time-picker",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorPopoverHeader, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Publish'),
+      title: title || (0,external_wp_i18n_namespaceObject.__)('Publish'),
       actions: showPopoverHeaderActions ? [{
         label: (0,external_wp_i18n_namespaceObject.__)('Now'),
         onClick: () => onChange?.(null)
