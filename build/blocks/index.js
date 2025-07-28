@@ -7747,7 +7747,15 @@ function isUnmodifiedBlock(block, role) {
   const blockAttributes = (_getBlockType$attribu = getBlockType(block.name)?.attributes) !== null && _getBlockType$attribu !== void 0 ? _getBlockType$attribu : {};
 
   // Filter attributes by role if a role is provided.
-  const attributesToCheck = role ? Object.entries(blockAttributes).filter(([, definition]) => definition.role === role || definition.__experimentalRole === role) : Object.entries(blockAttributes);
+  const attributesToCheck = role ? Object.entries(blockAttributes).filter(([key, definition]) => {
+    // A special case for the metadata attribute.
+    // It can include block bindings that serve as a source of content,
+    // without directly modifying content attributes.
+    if (role === 'content' && key === 'metadata') {
+      return true;
+    }
+    return definition.role === role || definition.__experimentalRole === role;
+  }) : Object.entries(blockAttributes);
   return attributesToCheck.every(([key, definition]) => {
     const value = block.attributes[key];
 
