@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 21.3.0-rc.2 =
+
+- Block Editor: Fix link interception in the iframed editor. (https://github.com/WordPress/gutenberg/pull/70931)
+
+
 = 21.3.0-rc.1 =
 
 ## Changelog
