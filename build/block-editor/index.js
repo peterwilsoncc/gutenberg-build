@@ -70341,7 +70341,7 @@ function useSaveImage({
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const settings = select(store).getSettings();
     return {
-      editMediaEntity: settings[mediaEditKey]
+      editMediaEntity: settings?.[mediaEditKey]
     };
   }, []);
   const cancel = (0,external_wp_element_namespaceObject.useCallback)(() => {
@@ -70349,6 +70349,14 @@ function useSaveImage({
     onFinishEditing();
   }, [onFinishEditing]);
   const apply = (0,external_wp_element_namespaceObject.useCallback)(async () => {
+    if (!editMediaEntity) {
+      onFinishEditing();
+      createErrorNotice((0,external_wp_i18n_namespaceObject.__)('Sorry, you are not allowed to edit images on this site.'), {
+        id: 'image-editing-error',
+        type: 'snackbar'
+      });
+      return;
+    }
     setIsInProgress(true);
     const modifiers = [];
     if (rotation > 0) {
