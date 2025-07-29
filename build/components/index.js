@@ -81152,10 +81152,284 @@ const DateRangeCalendar = ({
   });
 };
 
+;// ./packages/components/build-module/validated-form-controls/control-with-error.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * External dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function appendRequiredIndicator(label, required, markWhenOptional) {
+  if (required && !markWhenOptional) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: [label, " ", `(${(0,external_wp_i18n_namespaceObject.__)('Required')})`]
+    });
+  }
+  if (!required && markWhenOptional) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: [label, " ", `(${(0,external_wp_i18n_namespaceObject.__)('Optional')})`]
+    });
+  }
+  return label;
+}
+
+/**
+ * HTML elements that support the Constraint Validation API.
+ *
+ * Here, we exclude HTMLButtonElement because although it does technically support the API,
+ * normal buttons are actually exempted from any validation.
+ * @see https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement/willValidate
+ */
+
+function UnforwardedControlWithError({
+  required,
+  markWhenOptional,
+  customValidator,
+  getValidityTarget,
+  children
+}, forwardedRef) {
+  const [errorMessage, setErrorMessage] = (0,external_wp_element_namespaceObject.useState)();
+  const [isTouched, setIsTouched] = (0,external_wp_element_namespaceObject.useState)(false);
+
+  // Ensure that error messages are visible after user attemps to submit a form
+  // with multiple invalid fields.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    const validityTarget = getValidityTarget();
+    const showValidationMessage = () => setErrorMessage(validityTarget?.validationMessage);
+    validityTarget?.addEventListener('invalid', showValidationMessage);
+    return () => {
+      validityTarget?.removeEventListener('invalid', showValidationMessage);
+    };
+  });
+  const validate = () => {
+    const message = customValidator?.();
+    const validityTarget = getValidityTarget();
+    validityTarget?.setCustomValidity(message !== null && message !== void 0 ? message : '');
+    setErrorMessage(validityTarget?.validationMessage);
+  };
+  const onBlur = event => {
+    // Only consider "blurred from the component" if focus has fully left the wrapping div.
+    // This prevents unnecessary blurs from components with multiple focusable elements.
+    if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget)) {
+      setIsTouched(true);
+      const validityTarget = getValidityTarget();
+
+      // Prevents a double flash of the native error tooltip when the control is already showing one.
+      if (!validityTarget?.validity.valid) {
+        if (!errorMessage) {
+          setErrorMessage(validityTarget?.validationMessage);
+        }
+        return;
+      }
+      validate();
+    }
+  };
+  const onChange = (...args) => {
+    children.props.onChange?.(...args);
+
+    // Only validate incrementally if the field has blurred at least once,
+    // or currently has an error message.
+    if (isTouched || errorMessage) {
+      validate();
+    }
+  };
+  const onKeyDown = event => {
+    // Ensures that custom validators are triggered when the user submits by pressing Enter,
+    // without ever blurring the control.
+    if (event.key === 'Enter') {
+      validate();
+    }
+  };
+  return (
+    /*#__PURE__*/
+    // Disable reason: Just listening to a bubbled event, not for interaction.
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    (0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      className: "components-validated-control",
+      ref: forwardedRef,
+      onBlur: onBlur,
+      onKeyDown: withIgnoreIMEEvents(onKeyDown),
+      children: [(0,external_wp_element_namespaceObject.cloneElement)(children, {
+        label: appendRequiredIndicator(children.props.label, required, markWhenOptional),
+        onChange,
+        required
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        "aria-live": "polite",
+        children: errorMessage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("p", {
+          className: "components-validated-control__error",
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+            className: "components-validated-control__error-icon",
+            icon: library_error,
+            size: 16,
+            fill: "currentColor"
+          }), errorMessage]
+        })
+      })]
+    })
+  );
+}
+const ControlWithError = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedControlWithError);
+
+;// ./packages/components/build-module/validated-form-controls/components/number-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const UnforwardedValidatedNumberControl = ({
+  required,
+  customValidator,
+  onChange,
+  markWhenOptional,
+  ...restProps
+}, forwardedRef) => {
+  const validityTargetRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const mergedRefs = (0,external_wp_compose_namespaceObject.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const valueRef = (0,external_wp_element_namespaceObject.useRef)(restProps.value);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ControlWithError, {
+    required: required,
+    markWhenOptional: markWhenOptional,
+    customValidator: () => {
+      return customValidator?.(valueRef.current);
+    },
+    getValidityTarget: () => validityTargetRef.current,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(number_control, {
+      __next40pxDefaultSize: true,
+      ref: mergedRefs
+      // TODO: Upstream limitation - When form is submitted when value is undefined, it will
+      // automatically set a clamped value (as defined by `min` attribute, so 0 by default).
+      ,
+      onChange: (value, ...args) => {
+        valueRef.current = value;
+        onChange?.(value, ...args);
+      },
+      ...restProps
+    })
+  });
+};
+const ValidatedNumberControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedValidatedNumberControl);
+
+;// ./packages/components/build-module/validated-form-controls/components/text-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const UnforwardedValidatedTextControl = ({
+  required,
+  customValidator,
+  onChange,
+  markWhenOptional,
+  ...restProps
+}, forwardedRef) => {
+  const validityTargetRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const mergedRefs = (0,external_wp_compose_namespaceObject.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const valueRef = (0,external_wp_element_namespaceObject.useRef)(restProps.value);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ControlWithError, {
+    required: required,
+    markWhenOptional: markWhenOptional,
+    customValidator: () => {
+      return customValidator?.(valueRef.current);
+    },
+    getValidityTarget: () => validityTargetRef.current,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(text_control, {
+      __next40pxDefaultSize: true,
+      __nextHasNoMarginBottom: true,
+      ref: mergedRefs,
+      onChange: value => {
+        valueRef.current = value;
+        onChange?.(value);
+      },
+      ...restProps
+    })
+  });
+};
+const ValidatedTextControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedValidatedTextControl);
+
+;// ./packages/components/build-module/validated-form-controls/components/toggle-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+// TODO: Should we customize the default `missingValue` message? It says to "check this box".
+
+const UnforwardedValidatedToggleControl = ({
+  required,
+  customValidator,
+  onChange,
+  markWhenOptional,
+  ...restProps
+}, forwardedRef) => {
+  const validityTargetRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const mergedRefs = (0,external_wp_compose_namespaceObject.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const valueRef = (0,external_wp_element_namespaceObject.useRef)(restProps.checked);
+
+  // TODO: Upstream limitation - The `required` attribute is not passed down to the input,
+  // so we need to set it manually.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (validityTargetRef.current) {
+      validityTargetRef.current.required = required !== null && required !== void 0 ? required : false;
+    }
+  }, [required]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ControlWithError, {
+    required: required,
+    markWhenOptional: markWhenOptional,
+    customValidator: () => {
+      return customValidator?.(valueRef.current);
+    },
+    getValidityTarget: () => validityTargetRef.current,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(toggle_control, {
+      __nextHasNoMarginBottom: true,
+      ref: mergedRefs,
+      onChange: value => {
+        valueRef.current = value;
+        onChange?.(value);
+      },
+      ...restProps
+    })
+  });
+};
+const ValidatedToggleControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedValidatedToggleControl);
+
 ;// ./packages/components/build-module/private-apis.js
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -81179,7 +81453,10 @@ lock(privateApis, {
   normalizeTextString: normalizeTextString,
   DateCalendar: DateCalendar,
   DateRangeCalendar: DateRangeCalendar,
-  TZDate: date_TZDate
+  TZDate: date_TZDate,
+  ValidatedNumberControl: ValidatedNumberControl,
+  ValidatedTextControl: ValidatedTextControl,
+  ValidatedToggleControl: ValidatedToggleControl
 });
 
 ;// ./packages/components/build-module/index.js

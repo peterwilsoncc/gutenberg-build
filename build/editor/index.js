@@ -5815,25 +5815,29 @@ const LAYOUT_LIST = 'list';
 function sort(valueA, valueB, direction) {
   return direction === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
 }
-function isValid(value, context) {
-  // TODO: this implicitly means the value is required.
-  if (value === '') {
-    return false;
-  }
-  if (!(0,external_wp_url_namespaceObject.isEmail)(value)) {
-    return false;
-  }
-  if (context?.elements) {
-    const validValues = context?.elements?.map(f => f.value);
-    if (!validValues.includes(value)) {
-      return false;
-    }
-  }
-  return true;
-}
+
+// Email validation regex based on HTML5 spec
+// https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address
+const emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 /* harmony default export */ const email = ({
   sort,
-  isValid,
+  isValid: {
+    custom: (item, field) => {
+      const value = field.getValue({
+        item
+      });
+      if (![undefined, '', null].includes(value) && !emailRegex.test(value)) {
+        return (0,external_wp_i18n_namespaceObject.__)('Value must be a valid email address.');
+      }
+      if (field.elements) {
+        const validValues = field.elements.map(f => f.value);
+        if (!validValues.includes(value)) {
+          return (0,external_wp_i18n_namespaceObject.__)('Value must be one of the elements.');
+        }
+      }
+      return null;
+    }
+  },
   Edit: 'email',
   render: ({
     item,
@@ -5857,6 +5861,11 @@ function isValid(value, context) {
 
 ;// ./packages/dataviews/build-module/field-types/integer.js
 /**
+ * WordPress dependencies
+ */
+
+
+/**
  * Internal dependencies
  */
 
@@ -5865,25 +5874,25 @@ function isValid(value, context) {
 function integer_sort(a, b, direction) {
   return direction === 'asc' ? a - b : b - a;
 }
-function integer_isValid(value, context) {
-  // TODO: this implicitly means the value is required.
-  if (value === '') {
-    return false;
-  }
-  if (!Number.isInteger(Number(value))) {
-    return false;
-  }
-  if (context?.elements) {
-    const validValues = context?.elements.map(f => f.value);
-    if (!validValues.includes(Number(value))) {
-      return false;
-    }
-  }
-  return true;
-}
 /* harmony default export */ const integer = ({
   sort: integer_sort,
-  isValid: integer_isValid,
+  isValid: {
+    custom: (item, field) => {
+      const value = field.getValue({
+        item
+      });
+      if (![undefined, '', null].includes(value) && !Number.isInteger(value)) {
+        return (0,external_wp_i18n_namespaceObject.__)('Value must be an integer.');
+      }
+      if (field?.elements) {
+        const validValues = field.elements.map(f => f.value);
+        if (!validValues.includes(Number(value))) {
+          return (0,external_wp_i18n_namespaceObject.__)('Value must be one of the elements.');
+        }
+      }
+      return null;
+    }
+  },
   Edit: 'integer',
   render: ({
     item,
@@ -5909,6 +5918,11 @@ function integer_isValid(value, context) {
 
 ;// ./packages/dataviews/build-module/field-types/text.js
 /**
+ * WordPress dependencies
+ */
+
+
+/**
  * Internal dependencies
  */
 
@@ -5917,18 +5931,22 @@ function integer_isValid(value, context) {
 function text_sort(valueA, valueB, direction) {
   return direction === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
 }
-function text_isValid(value, context) {
-  if (context?.elements) {
-    const validValues = context?.elements?.map(f => f.value);
-    if (!validValues.includes(value)) {
-      return false;
-    }
-  }
-  return true;
-}
 /* harmony default export */ const field_types_text = ({
   sort: text_sort,
-  isValid: text_isValid,
+  isValid: {
+    custom: (item, field) => {
+      const value = field.getValue({
+        item
+      });
+      if (field?.elements) {
+        const validValues = field.elements.map(f => f.value);
+        if (!validValues.includes(value)) {
+          return (0,external_wp_i18n_namespaceObject.__)('Value must be one of the elements.');
+        }
+      }
+      return null;
+    }
+  },
   Edit: 'text',
   render: ({
     item,
@@ -5954,6 +5972,11 @@ function text_isValid(value, context) {
 
 ;// ./packages/dataviews/build-module/field-types/datetime.js
 /**
+ * WordPress dependencies
+ */
+
+
+/**
  * Internal dependencies
  */
 
@@ -5964,18 +5987,22 @@ function datetime_sort(a, b, direction) {
   const timeB = new Date(b).getTime();
   return direction === 'asc' ? timeA - timeB : timeB - timeA;
 }
-function datetime_isValid(value, context) {
-  if (context?.elements) {
-    const validValues = context?.elements.map(f => f.value);
-    if (!validValues.includes(value)) {
-      return false;
-    }
-  }
-  return true;
-}
 /* harmony default export */ const datetime = ({
   sort: datetime_sort,
-  isValid: datetime_isValid,
+  isValid: {
+    custom: (item, field) => {
+      const value = field.getValue({
+        item
+      });
+      if (field?.elements) {
+        const validValues = field.elements.map(f => f.value);
+        if (!validValues.includes(value)) {
+          return (0,external_wp_i18n_namespaceObject.__)('Value must be one of the elements.');
+        }
+      }
+      return null;
+    }
+  },
   Edit: 'datetime',
   render: ({
     item,
@@ -6001,6 +6028,7 @@ function datetime_isValid(value, context) {
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -6012,18 +6040,22 @@ function date_sort(a, b, direction) {
   const timeB = new Date(b).getTime();
   return direction === 'asc' ? timeA - timeB : timeB - timeA;
 }
-function date_isValid(value, context) {
-  if (context?.elements) {
-    const validValues = context?.elements.map(f => f.value);
-    if (!validValues.includes(value)) {
-      return false;
-    }
-  }
-  return true;
-}
 /* harmony default export */ const date = ({
   sort: date_sort,
-  isValid: date_isValid,
+  isValid: {
+    custom: (item, field) => {
+      const value = field.getValue({
+        item
+      });
+      if (field?.elements) {
+        const validValues = field.elements.map(f => f.value);
+        if (!validValues.includes(value)) {
+          return (0,external_wp_i18n_namespaceObject.__)('Value must be one of the elements.');
+        }
+      }
+      return null;
+    }
+  },
   Edit: null,
   render: ({
     item,
@@ -6074,15 +6106,19 @@ function boolean_sort(a, b, direction) {
   // In descending order, true comes before false
   return boolA ? -1 : 1;
 }
-function boolean_isValid(value) {
-  if (![true, false, undefined].includes(value)) {
-    return false;
-  }
-  return true;
-}
 /* harmony default export */ const field_types_boolean = ({
   sort: boolean_sort,
-  isValid: boolean_isValid,
+  isValid: {
+    custom: (item, field) => {
+      const value = field.getValue({
+        item
+      });
+      if (![undefined, '', null].includes(value) && ![true, false].includes(value)) {
+        return (0,external_wp_i18n_namespaceObject.__)('Value must be true, false, or undefined');
+      }
+      return null;
+    }
+  },
   Edit: 'boolean',
   render: ({
     item,
@@ -6115,24 +6151,33 @@ function boolean_isValid(value) {
 
 ;// ./packages/dataviews/build-module/field-types/media.js
 /**
+ * WordPress dependencies
+ */
+
+
+/**
  * Internal dependencies
  */
 
 function media_sort() {
   return 0;
 }
-function media_isValid(value, context) {
-  if (context?.elements) {
-    const validValues = context?.elements.map(f => f.value);
-    if (!validValues.includes(value)) {
-      return false;
-    }
-  }
-  return true;
-}
 /* harmony default export */ const media = ({
   sort: media_sort,
-  isValid: media_isValid,
+  isValid: {
+    custom: (item, field) => {
+      const value = field.getValue({
+        item
+      });
+      if (field?.elements) {
+        const validValues = field.elements.map(f => f.value);
+        if (!validValues.includes(value)) {
+          return (0,external_wp_i18n_namespaceObject.__)('Value must be one of the elements.');
+        }
+      }
+      return null;
+    }
+  },
   Edit: null,
   render: () => null,
   enableSorting: false,
@@ -6140,6 +6185,11 @@ function media_isValid(value, context) {
 });
 
 ;// ./packages/dataviews/build-module/field-types/array.js
+/**
+ * WordPress dependencies
+ */
+
+
 /**
  * Internal dependencies
  */
@@ -6157,23 +6207,6 @@ function array_sort(valueA, valueB, direction) {
   const joinedB = arrB.join(',');
   return direction === 'asc' ? joinedA.localeCompare(joinedB) : joinedB.localeCompare(joinedA);
 }
-function array_isValid(value, context) {
-  if (!Array.isArray(value)) {
-    return false;
-  }
-
-  // Only allow strings for now. Can be extended to other types in the future.
-  if (!value.every(v => typeof v === 'string')) {
-    return false;
-  }
-  if (context?.elements) {
-    const validValues = context.elements.map(f => f.value);
-    if (!value.every(v => validValues.includes(v))) {
-      return false;
-    }
-  }
-  return true;
-}
 function render({
   item,
   field
@@ -6185,7 +6218,28 @@ function render({
 }
 const arrayFieldType = {
   sort: array_sort,
-  isValid: array_isValid,
+  isValid: {
+    custom: (item, field) => {
+      const value = field.getValue({
+        item
+      });
+      if (![undefined, '', null].includes(value) && !Array.isArray(value)) {
+        return (0,external_wp_i18n_namespaceObject.__)('Value must be an array.');
+      }
+
+      // Only allow strings for now. Can be extended to other types in the future.
+      if (!value.every(v => typeof v === 'string')) {
+        return (0,external_wp_i18n_namespaceObject.__)('Every value must be a string.');
+      }
+      if (field?.elements) {
+        const validValues = field.elements.map(f => f.value);
+        if (!value.every(v => validValues.includes(v))) {
+          return (0,external_wp_i18n_namespaceObject.__)('Value must be one of the elements.');
+        }
+      }
+      return null;
+    }
+  },
   Edit: null,
   // Not implemented yet
   render,
@@ -6198,6 +6252,11 @@ const arrayFieldType = {
 /* harmony default export */ const array = (arrayFieldType);
 
 ;// ./packages/dataviews/build-module/field-types/index.js
+/**
+ * WordPress dependencies
+ */
+
+
 /**
  * Internal dependencies
  */
@@ -6254,14 +6313,19 @@ function getFieldTypeDefinition(type) {
       }
       return direction === 'asc' ? a.localeCompare(b) : b.localeCompare(a);
     },
-    isValid: (value, context) => {
-      if (context?.elements) {
-        const validValues = context?.elements?.map(f => f.value);
-        if (!validValues.includes(value)) {
-          return false;
+    isValid: {
+      custom: (item, field) => {
+        if (field?.elements) {
+          const value = field.getValue({
+            item
+          });
+          const validValues = field?.elements?.map(f => f.value);
+          if (!validValues.includes(value)) {
+            return (0,external_wp_i18n_namespaceObject.__)('Value must be one of the elements.');
+          }
         }
+        return null;
       }
-      return true;
     },
     Edit: null,
     render: ({
@@ -6461,6 +6525,16 @@ function DateTime({
   });
 }
 
+;// ./packages/dataviews/build-module/lock-unlock.js
+/**
+ * WordPress dependencies
+ */
+
+const {
+  lock: lock_unlock_lock,
+  unlock: lock_unlock_unlock
+} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/dataviews');
+
 ;// ./packages/dataviews/build-module/dataform-controls/email.js
 /**
  * WordPress dependencies
@@ -6472,6 +6546,11 @@ function DateTime({
  * Internal dependencies
  */
 
+
+
+const {
+  ValidatedTextControl
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function Email({
   data,
   field,
@@ -6490,7 +6569,17 @@ function Email({
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: newValue
   }), [id, onChange]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedTextControl, {
+    required: !!field.isValid?.required,
+    customValidator: newValue => {
+      if (field.isValid?.custom) {
+        return field.isValid.custom({
+          ...data,
+          [id]: newValue
+        }, field);
+      }
+      return null;
+    },
     type: "email",
     label: label,
     placeholder: placeholder,
@@ -6516,6 +6605,10 @@ function Email({
  */
 
 
+
+const {
+  ValidatedNumberControl
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function BetweenControls({
   id,
   value,
@@ -6569,12 +6662,14 @@ function Integer({
   const value = (_field$getValue = field.getValue({
     item: data
   })) !== null && _field$getValue !== void 0 ? _field$getValue : '';
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    // Do not convert an empty string or undefined to a number,
-    // otherwise there's a mismatch between the UI control (empty)
-    // and the data relied by onChange (0).
-    [id]: ['', undefined].includes(newValue) ? undefined : Number(newValue)
-  }), [id, onChange]);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    onChange({
+      // Do not convert an empty string or undefined to a number,
+      // otherwise there's a mismatch between the UI control (empty)
+      // and the data relied by onChange (0).
+      [id]: ['', undefined].includes(newValue) ? undefined : Number(newValue)
+    });
+  }, [id, onChange]);
   if (operator === OPERATOR_BETWEEN) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BetweenControls, {
       id: id,
@@ -6583,7 +6678,17 @@ function Integer({
       hideLabelFromVision: hideLabelFromVision
     });
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedNumberControl, {
+    required: !!field.isValid?.required,
+    customValidator: newValue => {
+      if (field.isValid?.custom) {
+        return field.isValid.custom({
+          ...data,
+          [id]: [undefined, '', null].includes(newValue) ? undefined : Number(newValue)
+        }, field);
+      }
+      return null;
+    },
     label: label,
     help: description,
     value: value,
@@ -6696,6 +6801,11 @@ function Select({
  * Internal dependencies
  */
 
+
+
+const {
+  ValidatedTextControl: text_ValidatedTextControl
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function Text({
   data,
   field,
@@ -6714,7 +6824,17 @@ function Text({
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: newValue
   }), [id, onChange]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(text_ValidatedTextControl, {
+    required: !!field.isValid?.required,
+    customValidator: newValue => {
+      if (field.isValid?.custom) {
+        return field.isValid.custom({
+          ...data,
+          [id]: newValue
+        }, field);
+      }
+      return null;
+    },
     label: label,
     placeholder: placeholder,
     value: value !== null && value !== void 0 ? value : '',
@@ -6782,6 +6902,11 @@ function ToggleGroup({
  * Internal dependencies
  */
 
+
+
+const {
+  ValidatedToggleControl
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function boolean_Boolean({
   field,
   onChange,
@@ -6793,7 +6918,17 @@ function boolean_Boolean({
     getValue,
     label
   } = field;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedToggleControl, {
+    required: !!field.isValid.required,
+    customValidator: newValue => {
+      if (field.isValid?.custom) {
+        return field.isValid.custom({
+          ...data,
+          [id]: newValue
+        }, field);
+      }
+      return null;
+    },
     hidden: hideLabelFromVision,
     __nextHasNoMarginBottom: true,
     label: label,
@@ -6948,7 +7083,7 @@ function getFilterBy(field, fieldTypeDefinition) {
  */
 function normalizeFields(fields) {
   return fields.map(field => {
-    var _field$sort, _field$isValid, _field$render, _field$enableHiding, _ref, _field$enableSorting, _ref2, _field$readOnly;
+    var _field$sort, _field$render, _field$enableHiding, _ref, _field$enableSorting, _ref2, _field$readOnly;
     const fieldTypeDefinition = getFieldTypeDefinition(field.type);
     const getValue = field.getValue || getValueFromId(field.id);
     const sort = (_field$sort = field.sort) !== null && _field$sort !== void 0 ? _field$sort : function sort(a, b, direction) {
@@ -6958,10 +7093,9 @@ function normalizeFields(fields) {
         item: b
       }), direction);
     };
-    const isValid = (_field$isValid = field.isValid) !== null && _field$isValid !== void 0 ? _field$isValid : function isValid(item, context) {
-      return fieldTypeDefinition.isValid(getValue({
-        item
-      }), context);
+    const isValid = {
+      ...fieldTypeDefinition.isValid,
+      ...field.isValid
     };
     const Edit = getControl(field, fieldTypeDefinition);
     const render = (_field$render = field.render) !== null && _field$render !== void 0 ? _field$render : function render({
@@ -8597,8 +8731,8 @@ const external_wp_patterns_namespaceObject = window["wp"]["patterns"];
  */
 
 const {
-  lock: lock_unlock_lock,
-  unlock: lock_unlock_unlock
+  lock: build_module_lock_unlock_lock,
+  unlock: build_module_lock_unlock_unlock
 } = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/fields');
 
 ;// ./packages/fields/build-module/actions/duplicate-pattern.js
@@ -8617,7 +8751,7 @@ const {
 const {
   CreatePatternModalContents,
   useDuplicatePatternProps
-} = lock_unlock_unlock(external_wp_patterns_namespaceObject.privateApis);
+} = build_module_lock_unlock_unlock(external_wp_patterns_namespaceObject.privateApis);
 const duplicatePattern = {
   id: 'duplicate-pattern',
   label: (0,external_wp_i18n_namespaceObject._x)('Duplicate', 'action label'),
@@ -8669,7 +8803,7 @@ const duplicatePattern = {
 // Patterns.
 const {
   PATTERN_TYPES
-} = lock_unlock_unlock(external_wp_patterns_namespaceObject.privateApis);
+} = build_module_lock_unlock_unlock(external_wp_patterns_namespaceObject.privateApis);
 const renamePost = {
   id: 'rename-post',
   label: (0,external_wp_i18n_namespaceObject.__)('Rename'),
@@ -8787,10 +8921,23 @@ function isItemValid(item, fields, form) {
   const _fields = normalizeFields(fields.filter(({
     id
   }) => !!form.fields?.includes(id)));
+  const isEmptyNullOrUndefined = value => [undefined, '', null].includes(value);
   return _fields.every(field => {
-    return field.isValid(item, {
-      elements: field.elements
+    const value = field.getValue({
+      item
     });
+    if (field.isValid.required) {
+      if (field.type === 'text' && isEmptyNullOrUndefined(value) || field.type === 'email' && isEmptyNullOrUndefined(value) || field.type === 'integer' && isEmptyNullOrUndefined(value) || field.type === undefined && isEmptyNullOrUndefined(value)) {
+        return false;
+      }
+      if (field.type === 'boolean' && value !== true) {
+        return false;
+      }
+    }
+    if (typeof field.isValid.custom === 'function' && field.isValid.custom(item, field) !== null) {
+      return false;
+    }
+    return true;
   });
 }
 
@@ -8810,7 +8957,10 @@ const orderField = {
   type: 'integer',
   label: (0,external_wp_i18n_namespaceObject.__)('Order'),
   description: (0,external_wp_i18n_namespaceObject.__)('Determines the order of pages.'),
-  filterBy: false
+  filterBy: false,
+  isValid: {
+    required: true
+  }
 };
 
 /**
@@ -9506,7 +9656,7 @@ const editPostWithNotices = async (postsWithUpdates, notice, callbacks) => {
 
 const {
   PATTERN_TYPES: delete_post_PATTERN_TYPES
-} = lock_unlock_unlock(external_wp_patterns_namespaceObject.privateApis);
+} = build_module_lock_unlock_unlock(external_wp_patterns_namespaceObject.privateApis);
 
 // This action is used for templates, patterns and template parts.
 // Every other post type uses the similar `trashPostAction` which
@@ -11082,7 +11232,7 @@ const TemplateEdit = ({
     const {
       getHomePage,
       getPostsPageId
-    } = lock_unlock_unlock(select(external_wp_coreData_namespaceObject.store));
+    } = build_module_lock_unlock_unlock(select(external_wp_coreData_namespaceObject.store));
     const isPostsPage = getPostsPageId() === +postId;
     const isFrontPage = postType === 'page' && getHomePage()?.postId === +postId;
     const allowSwitchingTemplate = !isPostsPage && !isFrontPage;
@@ -11318,7 +11468,7 @@ const passwordField = {
 
 const {
   Badge
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+} = build_module_lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function PageTitleView({
   item
 }) {
@@ -11474,7 +11624,7 @@ const lockSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 
 const {
   PATTERN_TYPES: view_PATTERN_TYPES
-} = lock_unlock_unlock(external_wp_patterns_namespaceObject.privateApis);
+} = build_module_lock_unlock_unlock(external_wp_patterns_namespaceObject.privateApis);
 function PatternTitleView({
   item
 }) {
