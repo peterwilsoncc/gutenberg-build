@@ -42428,10 +42428,10 @@ function DropCapControl({
       label: (0,external_wp_i18n_namespaceObject.__)('Drop cap'),
       isShownByDefault: isDropCapControlEnabledByDefault,
       onDeselect: () => setAttributes({
-        dropCap: undefined
+        dropCap: false
       }),
       resetAllFilter: () => ({
-        dropCap: undefined
+        dropCap: false
       }),
       panelId: clientId,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
