@@ -33398,7 +33398,10 @@ function Integer({
     item: data
   })) !== null && _field$getValue !== void 0 ? _field$getValue : '';
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: Number(newValue)
+    // Do not convert an empty string or undefined to a number,
+    // otherwise there's a mismatch between the UI control (empty)
+    // and the data relied by onChange (0).
+    [id]: ['', undefined].includes(newValue) ? undefined : Number(newValue)
   }), [id, onChange]);
   if (operator === OPERATOR_BETWEEN) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BetweenControls, {
@@ -39333,7 +39336,13 @@ function InputWidget({
       filters: ((_view$filters2 = view.filters) !== null && _view$filters2 !== void 0 ? _view$filters2 : []).map(_filter => _filter.field === filter.field ? {
         ..._filter,
         operator: currentFilter.operator || filter.operators[0],
-        value: nextValue
+        // Consider empty strings as undefined:
+        //
+        // - undefined as value means the filter is unset: the filter widget displays no value and the search returns all records
+        // - empty string as value means "search empty string": returns only the records that have an empty string as value
+        //
+        // In practice, this means the filter will not be able to find an empty string as the value.
+        value: nextValue === '' ? undefined : nextValue
       } : _filter)
     });
   });
