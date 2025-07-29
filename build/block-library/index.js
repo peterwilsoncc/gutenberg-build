@@ -59037,175 +59037,175 @@ const social_link_variations_variations = [{
   attributes: {
     service: 'wordpress'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('WordPress'),
+  title: (0,external_wp_i18n_namespaceObject._x)('WordPress', 'social link block variation name'),
   icon: WordPressIcon
 }, {
   name: 'fivehundredpx',
   attributes: {
     service: 'fivehundredpx'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('500px'),
+  title: (0,external_wp_i18n_namespaceObject._x)('500px', 'social link block variation name'),
   icon: FivehundredpxIcon
 }, {
   name: 'amazon',
   attributes: {
     service: 'amazon'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Amazon'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Amazon', 'social link block variation name'),
   icon: AmazonIcon
 }, {
   name: 'bandcamp',
   attributes: {
     service: 'bandcamp'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Bandcamp'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Bandcamp', 'social link block variation name'),
   icon: BandcampIcon
 }, {
   name: 'behance',
   attributes: {
     service: 'behance'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Behance'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Behance', 'social link block variation name'),
   icon: BehanceIcon
 }, {
   name: 'bluesky',
   attributes: {
     service: 'bluesky'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Bluesky'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Bluesky', 'social link block variation name'),
   icon: BlueskyIcon
 }, {
   name: 'chain',
   attributes: {
     service: 'chain'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Link'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Link', 'social link block variation name'),
   icon: ChainIcon
 }, {
   name: 'codepen',
   attributes: {
     service: 'codepen'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('CodePen'),
+  title: (0,external_wp_i18n_namespaceObject._x)('CodePen', 'social link block variation name'),
   icon: CodepenIcon
 }, {
   name: 'deviantart',
   attributes: {
     service: 'deviantart'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('DeviantArt'),
+  title: (0,external_wp_i18n_namespaceObject._x)('DeviantArt', 'social link block variation name'),
   icon: DeviantArtIcon
 }, {
   name: 'discord',
   attributes: {
     service: 'discord'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Discord'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Discord', 'social link block variation name'),
   icon: DiscordIcon
 }, {
   name: 'dribbble',
   attributes: {
     service: 'dribbble'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Dribbble'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Dribbble', 'social link block variation name'),
   icon: DribbbleIcon
 }, {
   name: 'dropbox',
   attributes: {
     service: 'dropbox'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Dropbox'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Dropbox', 'social link block variation name'),
   icon: DropboxIcon
 }, {
   name: 'etsy',
   attributes: {
     service: 'etsy'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Etsy'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Etsy', 'social link block variation name'),
   icon: EtsyIcon
 }, {
   name: 'facebook',
   attributes: {
     service: 'facebook'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Facebook'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Facebook', 'social link block variation name'),
   icon: FacebookIcon
 }, {
   name: 'feed',
   attributes: {
     service: 'feed'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('RSS Feed'),
+  title: (0,external_wp_i18n_namespaceObject._x)('RSS Feed', 'social link block variation name'),
   icon: FeedIcon
 }, {
   name: 'flickr',
   attributes: {
     service: 'flickr'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Flickr'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Flickr', 'social link block variation name'),
   icon: FlickrIcon
 }, {
   name: 'foursquare',
   attributes: {
     service: 'foursquare'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Foursquare'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Foursquare', 'social link block variation name'),
   icon: FoursquareIcon
 }, {
   name: 'goodreads',
   attributes: {
     service: 'goodreads'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Goodreads'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Goodreads', 'social link block variation name'),
   icon: GoodreadsIcon
 }, {
   name: 'google',
   attributes: {
     service: 'google'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Google'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Google', 'social link block variation name'),
   icon: GoogleIcon
 }, {
   name: 'github',
   attributes: {
     service: 'github'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('GitHub'),
+  title: (0,external_wp_i18n_namespaceObject._x)('GitHub', 'social link block variation name'),
   icon: GitHubIcon
 }, {
   name: 'gravatar',
   attributes: {
     service: 'gravatar'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Gravatar'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Gravatar', 'social link block variation name'),
   icon: GravatarIcon
 }, {
   name: 'instagram',
   attributes: {
     service: 'instagram'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Instagram'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Instagram', 'social link block variation name'),
   icon: InstagramIcon
 }, {
   name: 'lastfm',
   attributes: {
     service: 'lastfm'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Last.fm'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Last.fm', 'social link block variation name'),
   icon: LastfmIcon
 }, {
   name: 'linkedin',
   attributes: {
     service: 'linkedin'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('LinkedIn'),
+  title: (0,external_wp_i18n_namespaceObject._x)('LinkedIn', 'social link block variation name'),
   icon: LinkedInIcon
 }, {
   name: 'mail',
   attributes: {
     service: 'mail'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Mail'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Mail', 'social link block variation name'),
   keywords: ['email', 'e-mail'],
   icon: MailIcon
 }, {
@@ -59213,56 +59213,56 @@ const social_link_variations_variations = [{
   attributes: {
     service: 'mastodon'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Mastodon'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Mastodon', 'social link block variation name'),
   icon: MastodonIcon
 }, {
   name: 'meetup',
   attributes: {
     service: 'meetup'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Meetup'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Meetup', 'social link block variation name'),
   icon: MeetupIcon
 }, {
   name: 'medium',
   attributes: {
     service: 'medium'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Medium'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Medium', 'social link block variation name'),
   icon: MediumIcon
 }, {
   name: 'patreon',
   attributes: {
     service: 'patreon'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Patreon'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Patreon', 'social link block variation name'),
   icon: PatreonIcon
 }, {
   name: 'pinterest',
   attributes: {
     service: 'pinterest'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Pinterest'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Pinterest', 'social link block variation name'),
   icon: PinterestIcon
 }, {
   name: 'pocket',
   attributes: {
     service: 'pocket'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Pocket'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Pocket', 'social link block variation name'),
   icon: PocketIcon
 }, {
   name: 'reddit',
   attributes: {
     service: 'reddit'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Reddit'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Reddit', 'social link block variation name'),
   icon: RedditIcon
 }, {
   name: 'skype',
   attributes: {
     service: 'skype'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Skype'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Skype', 'social link block variation name'),
   icon: SkypeIcon,
   // Deprecated: Skype service is no longer available.
   scope: []
@@ -59271,84 +59271,84 @@ const social_link_variations_variations = [{
   attributes: {
     service: 'snapchat'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Snapchat'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Snapchat', 'social link block variation name'),
   icon: SnapchatIcon
 }, {
   name: 'soundcloud',
   attributes: {
     service: 'soundcloud'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('SoundCloud'),
+  title: (0,external_wp_i18n_namespaceObject._x)('SoundCloud', 'social link block variation name'),
   icon: SoundCloudIcon
 }, {
   name: 'spotify',
   attributes: {
     service: 'spotify'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Spotify'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Spotify', 'social link block variation name'),
   icon: SpotifyIcon
 }, {
   name: 'telegram',
   attributes: {
     service: 'telegram'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Telegram'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Telegram', 'social link block variation name'),
   icon: TelegramIcon
 }, {
   name: 'threads',
   attributes: {
     service: 'threads'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Threads'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Threads', 'social link block variation name'),
   icon: ThreadsIcon
 }, {
   name: 'tiktok',
   attributes: {
     service: 'tiktok'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('TikTok'),
+  title: (0,external_wp_i18n_namespaceObject._x)('TikTok', 'social link block variation name'),
   icon: TiktokIcon
 }, {
   name: 'tumblr',
   attributes: {
     service: 'tumblr'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Tumblr'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Tumblr', 'social link block variation name'),
   icon: TumblrIcon
 }, {
   name: 'twitch',
   attributes: {
     service: 'twitch'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Twitch'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Twitch', 'social link block variation name'),
   icon: TwitchIcon
 }, {
   name: 'twitter',
   attributes: {
     service: 'twitter'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Twitter'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Twitter', 'social link block variation name'),
   icon: TwitterIcon
 }, {
   name: 'vimeo',
   attributes: {
     service: 'vimeo'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Vimeo'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Vimeo', 'social link block variation name'),
   icon: VimeoIcon
 }, {
   name: 'vk',
   attributes: {
     service: 'vk'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('VK'),
+  title: (0,external_wp_i18n_namespaceObject._x)('VK', 'social link block variation name'),
   icon: VkIcon
 }, {
   name: 'whatsapp',
   attributes: {
     service: 'whatsapp'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('WhatsApp'),
+  title: (0,external_wp_i18n_namespaceObject._x)('WhatsApp', 'social link block variation name'),
   icon: WhatsAppIcon
 }, {
   name: 'x',
@@ -59356,21 +59356,21 @@ const social_link_variations_variations = [{
     service: 'x'
   },
   keywords: ['twitter'],
-  title: (0,external_wp_i18n_namespaceObject.__)('X'),
+  title: (0,external_wp_i18n_namespaceObject._x)('X', 'social link block variation name'),
   icon: XIcon
 }, {
   name: 'yelp',
   attributes: {
     service: 'yelp'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('Yelp'),
+  title: (0,external_wp_i18n_namespaceObject._x)('Yelp', 'social link block variation name'),
   icon: YelpIcon
 }, {
   name: 'youtube',
   attributes: {
     service: 'youtube'
   },
-  title: (0,external_wp_i18n_namespaceObject.__)('YouTube'),
+  title: (0,external_wp_i18n_namespaceObject._x)('YouTube', 'social link block variation name'),
   icon: YouTubeIcon
 }];
 
