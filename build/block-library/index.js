@@ -59263,7 +59263,9 @@ const social_link_variations_variations = [{
     service: 'skype'
   },
   title: (0,external_wp_i18n_namespaceObject.__)('Skype'),
-  icon: SkypeIcon
+  icon: SkypeIcon,
+  // Deprecated: Skype service is no longer available.
+  scope: []
 }, {
   name: 'snapchat',
   attributes: {
