@@ -40953,6 +40953,7 @@ function useIsHorizontalScrollEnd({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -41039,12 +41040,18 @@ function TableRow({
     onTouchStart: () => {
       isTouchDeviceRef.current = true;
     },
-    onClick: () => {
+    onClick: event => {
       if (!hasPossibleBulkAction) {
         return;
       }
       if (!isTouchDeviceRef.current && document.getSelection()?.type !== 'Range') {
-        onChangeSelection(selection.includes(id) ? selection.filter(itemId => id !== itemId) : [id]);
+        if ((0,external_wp_keycodes_namespaceObject.isAppleOS)() ? event.metaKey : event.ctrlKey) {
+          // Handle non-consecutive selection.
+          onChangeSelection(selection.includes(id) ? selection.filter(itemId => id !== itemId) : [...selection, id]);
+        } else {
+          // Handle single selection
+          onChangeSelection(selection.includes(id) ? selection.filter(itemId => id !== itemId) : [id]);
+        }
       }
     },
     children: [hasBulkActions && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("td", {
@@ -41423,6 +41430,7 @@ function PreviewSizePicker() {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -41492,7 +41500,7 @@ function GridItem({
       'is-selected': hasBulkAction && isSelected
     }),
     onClickCapture: event => {
-      if (event.ctrlKey || event.metaKey) {
+      if ((0,external_wp_keycodes_namespaceObject.isAppleOS)() ? event.metaKey : event.ctrlKey) {
         event.stopPropagation();
         event.preventDefault();
         if (!hasBulkAction) {
