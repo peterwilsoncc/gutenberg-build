@@ -93,6 +93,7 @@ function removeBlockSupportAttributes(attributes) {
     border,
     color,
     elements,
+    shadow,
     spacing,
     typography,
     ...restStyles
