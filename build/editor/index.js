@@ -39485,6 +39485,7 @@ const CONTENT = 'content';
  */
 
 
+
 /**
  * Gets a list of post data fields with their values and labels
  * to be consumed in the needed callbacks.
@@ -39520,12 +39521,12 @@ function getPostDataFields(select, context) {
     entityDataValues = getEditedEntityRecord('postType', context?.postType, context?.postId);
     dataFields = {
       date: {
-        label: 'Post Date',
+        label: (0,external_wp_i18n_namespaceObject.__)('Post Date'),
         value: entityDataValues?.date,
         type: 'string'
       },
       modified: {
-        label: 'Post Modified Date',
+        label: (0,external_wp_i18n_namespaceObject.__)('Post Modified Date'),
         value: entityDataValues?.modified,
         type: 'string'
       }
