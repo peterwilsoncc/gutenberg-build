@@ -67146,7 +67146,8 @@ function ListViewBlock({
           className: 'block-editor-list-view-block__menu',
           tabIndex,
           onClick: clearSettingsAnchorRect,
-          onFocus
+          onFocus,
+          size: 'small'
         },
         disableOpenOnArrowDown: true,
         expand: expand,
