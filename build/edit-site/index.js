@@ -37562,6 +37562,7 @@ const DataViewsContext = (0,external_wp_element_namespaceObject.createContext)({
   renderItemLink: undefined,
   containerWidth: 0,
   containerRef: (0,external_wp_element_namespaceObject.createRef)(),
+  resizeObserverRef: () => {},
   defaultLayouts: {
     list: {},
     grid: {},
@@ -44257,7 +44258,10 @@ function ColumnPrimary({
       className: "dataviews-view-table__cell-content-wrapper dataviews-column-primary__media",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(mediaField.render, {
         item: item,
-        field: mediaField
+        field: mediaField,
+        config: {
+          sizes: '32px'
+        }
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       spacing: 0,
@@ -44700,125 +44704,6 @@ function ViewTable({
 }
 /* harmony default export */ const table = (ViewTable);
 
-;// ./packages/dataviews/build-module/dataviews-layouts/grid/preview-size-picker.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-const viewportBreaks = {
-  xhuge: {
-    min: 3,
-    max: 6,
-    default: 5
-  },
-  huge: {
-    min: 2,
-    max: 4,
-    default: 4
-  },
-  xlarge: {
-    min: 2,
-    max: 3,
-    default: 3
-  },
-  large: {
-    min: 1,
-    max: 2,
-    default: 2
-  },
-  mobile: {
-    min: 1,
-    max: 2,
-    default: 2
-  }
-};
-
-/**
- * Breakpoints were adjusted from media queries breakpoints to account for
- * the sidebar width. This was done to match the existing styles we had.
- */
-const BREAKPOINTS = {
-  xhuge: 1520,
-  huge: 1140,
-  xlarge: 780,
-  large: 480,
-  mobile: 0
-};
-function useViewPortBreakpoint() {
-  const containerWidth = (0,external_wp_element_namespaceObject.useContext)(dataviews_context).containerWidth;
-  for (const [key, value] of Object.entries(BREAKPOINTS)) {
-    if (containerWidth >= value) {
-      return key;
-    }
-  }
-  return 'mobile';
-}
-function useUpdatedPreviewSizeOnViewportChange() {
-  const view = (0,external_wp_element_namespaceObject.useContext)(dataviews_context).view;
-  const viewport = useViewPortBreakpoint();
-  return (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const previewSize = view.layout?.previewSize;
-    let newPreviewSize;
-    if (!previewSize) {
-      return;
-    }
-    const breakValues = viewportBreaks[viewport];
-    if (previewSize < breakValues.min) {
-      newPreviewSize = breakValues.min;
-    }
-    if (previewSize > breakValues.max) {
-      newPreviewSize = breakValues.max;
-    }
-    return newPreviewSize;
-  }, [viewport, view]);
-}
-function PreviewSizePicker() {
-  const viewport = useViewPortBreakpoint();
-  const context = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
-  const view = context.view;
-  const breakValues = viewportBreaks[viewport];
-  const previewSizeToUse = view.layout?.previewSize || breakValues.default;
-  const marks = (0,external_wp_element_namespaceObject.useMemo)(() => Array.from({
-    length: breakValues.max - breakValues.min + 1
-  }, (_, i) => {
-    return {
-      value: breakValues.min + i
-    };
-  }), [breakValues]);
-  if (viewport === 'mobile') {
-    return null;
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
-    __nextHasNoMarginBottom: true,
-    __next40pxDefaultSize: true,
-    showTooltip: false,
-    label: (0,external_wp_i18n_namespaceObject.__)('Preview size'),
-    value: breakValues.max + breakValues.min - previewSizeToUse,
-    marks: marks,
-    min: breakValues.min,
-    max: breakValues.max,
-    withInputField: false,
-    onChange: (value = 0) => {
-      context.onChangeView({
-        ...view,
-        layout: {
-          ...view.layout,
-          previewSize: breakValues.max + breakValues.min - value
-        }
-      });
-    },
-    step: 1
-  });
-}
-
 ;// ./packages/dataviews/build-module/dataviews-layouts/grid/index.js
 /**
  * External dependencies
@@ -44827,6 +44712,7 @@ function PreviewSizePicker() {
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -44860,7 +44746,8 @@ function GridItem({
   descriptionField,
   regularFields,
   badgeFields,
-  hasBulkActions
+  hasBulkActions,
+  config
 }) {
   const {
     showTitle = true,
@@ -44873,7 +44760,8 @@ function GridItem({
   const isSelected = selection.includes(id);
   const renderedMediaField = mediaField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(mediaField.render, {
     item: item,
-    field: mediaField
+    field: mediaField,
+    config: config
   }) : null;
   const renderedTitleField = showTitle && titleField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(titleField.render, {
     item: item,
@@ -45010,6 +44898,9 @@ function ViewGrid({
   className
 }) {
   var _view$fields;
+  const {
+    resizeObserverRef
+  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const titleField = fields.find(field => field.id === view?.titleField);
   const mediaField = fields.find(field => field.id === view?.mediaField);
   const descriptionField = fields.find(field => field.id === view?.descriptionField);
@@ -45032,12 +44923,15 @@ function ViewGrid({
     badgeFields: []
   });
   const hasData = !!data?.length;
-  const updatedPreviewSize = useUpdatedPreviewSizeOnViewportChange();
   const hasBulkActions = useSomeItemHasAPossibleBulkAction(actions, data);
-  const usedPreviewSize = updatedPreviewSize || view.layout?.previewSize;
-  const gridStyle = usedPreviewSize ? {
-    gridTemplateColumns: `repeat(${usedPreviewSize}, minmax(0, 1fr))`
-  } : {};
+  const usedPreviewSize = view.layout?.previewSize;
+  /*
+   * This is the maximum width that an image can achieve in the grid. The reasoning is:
+   * The biggest min image width available is 430px (see /dataviews-layouts/grid/preview-size-picker.tsx).
+   * Because the grid is responsive, once there is room for another column, the images shrink to accommodate it.
+   * So each image will never grow past 2*430px plus a little more to account for the gaps.
+   */
+  const size = '900px';
   const groupField = view.groupByField ? fields.find(f => f.id === view.groupByField) : null;
 
   // Group data by groupByField if specified
@@ -45063,13 +44957,13 @@ function ViewGrid({
           children: (0,external_wp_i18n_namespaceObject.sprintf)(
           // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
           (0,external_wp_i18n_namespaceObject.__)('%1$s: %2$s'), groupField.label, groupName)
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalGrid, {
-          gap: 8,
-          columns: 2,
-          alignment: "top",
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: dist_clsx('dataviews-view-grid', className),
-          style: gridStyle,
+          style: {
+            gridTemplateColumns: usedPreviewSize && `repeat(auto-fill, minmax(${usedPreviewSize}px, 1fr))`
+          },
           "aria-busy": isLoading,
+          ref: resizeObserverRef,
           children: groupItems.map(item => {
             return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItem, {
               view: view,
@@ -45086,20 +44980,23 @@ function ViewGrid({
               descriptionField: descriptionField,
               regularFields: regularFields,
               badgeFields: badgeFields,
-              hasBulkActions: hasBulkActions
+              hasBulkActions: hasBulkActions,
+              config: {
+                sizes: size
+              }
             }, getItemId(item));
           })
         })]
       }, groupName))
     }),
     // Render a single grid with all data.
-    hasData && !dataByGroup && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalGrid, {
-      gap: 8,
-      columns: 2,
-      alignment: "top",
+    hasData && !dataByGroup && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: dist_clsx('dataviews-view-grid', className),
-      style: gridStyle,
+      style: {
+        gridTemplateColumns: usedPreviewSize && `repeat(auto-fill, minmax(${usedPreviewSize}px, 1fr))`
+      },
       "aria-busy": isLoading,
+      ref: resizeObserverRef,
       children: data.map(item => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItem, {
           view: view,
@@ -45116,7 +45013,10 @@ function ViewGrid({
           descriptionField: descriptionField,
           regularFields: regularFields,
           badgeFields: badgeFields,
-          hasBulkActions: hasBulkActions
+          hasBulkActions: hasBulkActions,
+          config: {
+            sizes: size
+          }
         }, getItemId(item));
       })
     }),
@@ -45273,7 +45173,10 @@ function ListItem({
     className: "dataviews-view-list__media-wrapper",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(mediaField.render, {
       item: item,
-      field: mediaField
+      field: mediaField,
+      config: {
+        sizes: '52px'
+      }
     })
   }) : null;
   const renderedTitleField = showTitle && titleField?.render ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(titleField.render, {
@@ -45500,6 +45403,80 @@ function ViewList(props) {
         onDropdownTriggerKeyDown: onDropdownTriggerKeyDown
       }, id);
     })
+  });
+}
+
+;// ./packages/dataviews/build-module/dataviews-layouts/grid/preview-size-picker.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const imageSizes = [{
+  value: 230,
+  breakpoint: 1
+}, {
+  value: 290,
+  breakpoint: 1112 // at minimum image width, 4 images display at this container size
+}, {
+  value: 350,
+  breakpoint: 1636 // at minimum image width, 6 images display at this container size
+}, {
+  value: 430,
+  breakpoint: 588 // at minimum image width, 2 images display at this container size
+}];
+function PreviewSizePicker() {
+  const context = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
+  const view = context.view;
+  if (context.containerWidth < 588) {
+    return null;
+  }
+  const breakValues = imageSizes.filter(size => {
+    return context.containerWidth >= size.breakpoint;
+  });
+
+  // If the container has resized and the set preview size is no longer available,
+  // we reset it to the next smallest size.
+  const previewSizeToUse = view.layout?.previewSize ? breakValues.map((size, index) => ({
+    ...size,
+    index
+  })).filter(size => {
+    var _view$layout$previewS;
+    return size.value <= ((_view$layout$previewS = view.layout?.previewSize) !== null && _view$layout$previewS !== void 0 ? _view$layout$previewS : 0);
+  } // We know the view.layout?.previewSize exists at this point but the linter doesn't seem to.
+  ).sort((a, b) => b.value - a.value)[0].index : 0;
+  const marks = breakValues.map((size, index) => {
+    return {
+      value: index
+    };
+  });
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RangeControl, {
+    __nextHasNoMarginBottom: true,
+    __next40pxDefaultSize: true,
+    showTooltip: false,
+    label: (0,external_wp_i18n_namespaceObject.__)('Preview size'),
+    value: previewSizeToUse,
+    min: 0,
+    max: breakValues.length - 1,
+    withInputField: false,
+    onChange: (value = 0) => {
+      context.onChangeView({
+        ...view,
+        layout: {
+          ...view.layout,
+          previewSize: breakValues[value].value
+        }
+      });
+    },
+    step: 1,
+    marks: marks
   });
 }
 
@@ -46609,6 +46586,7 @@ function DataViews({
       renderItemLink,
       containerWidth,
       containerRef,
+      resizeObserverRef,
       defaultLayouts,
       filters,
       isShowingFilter,
@@ -46617,7 +46595,7 @@ function DataViews({
     },
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "dataviews-wrapper",
-      ref: (0,external_wp_compose_namespaceObject.useMergeRefs)([containerRef, resizeObserverRef]),
+      ref: containerRef,
       children: children !== null && children !== void 0 ? children : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DefaultUI, {
         header: header,
         search: search,

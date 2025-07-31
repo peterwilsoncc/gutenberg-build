@@ -14036,7 +14036,8 @@ const FeaturedImageEdit = ({
  */
 
 const FeaturedImageView = ({
-  item
+  item,
+  config
 }) => {
   const mediaId = item.featured_media;
   const media = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -14050,7 +14051,9 @@ const FeaturedImageView = ({
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
       className: "fields-controls__featured-image-image",
       src: url,
-      alt: ""
+      alt: "",
+      srcSet: media?.media_details?.sizes ? Object.values(media.media_details.sizes).map(size => `${size.source_url} ${size.width}w`).join(', ') : undefined,
+      sizes: config?.sizes || '100vw'
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
