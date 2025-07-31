@@ -37664,8 +37664,8 @@ function PostCardPanel({
   let title = (0,external_wp_i18n_namespaceObject.__)('No title');
   if (labels?.name && postIds.length > 1) {
     title = (0,external_wp_i18n_namespaceObject.sprintf)(
-    // translators: %i number of selected items %s: Name of the plural post type e.g: "Posts".
-    (0,external_wp_i18n_namespaceObject.__)('%i %s'), postId.length, labels?.name);
+    // translators: %1$d number of selected items %2$s: Name of the plural post type e.g: "Posts".
+    (0,external_wp_i18n_namespaceObject.__)('%1$d %2$s'), postIds.length, labels?.name);
   } else if (postTitle) {
     title = (0,external_wp_dom_namespaceObject.__unstableStripHTML)(postTitle);
   }
