@@ -10616,7 +10616,11 @@ function Select({
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: newValue
   }), [id, onChange]);
-  const elements = [
+  const fieldElements = (_field$elements = field?.elements) !== null && _field$elements !== void 0 ? _field$elements : [];
+  const hasEmptyValue = fieldElements.some(({
+    value: elementValue
+  }) => elementValue === '');
+  const elements = hasEmptyValue ? fieldElements : [
   /*
    * Value can be undefined when:
    *
@@ -10627,7 +10631,7 @@ function Select({
   {
     label: (0,external_wp_i18n_namespaceObject.__)('Select item'),
     value: ''
-  }, ...((_field$elements = field?.elements) !== null && _field$elements !== void 0 ? _field$elements : [])];
+  }, ...fieldElements];
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
     label: label,
     value: value,
