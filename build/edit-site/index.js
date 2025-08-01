@@ -44280,6 +44280,8 @@ function ColumnPrimary({
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       spacing: 0,
+      alignment: "flex-start",
+      className: "dataviews-view-table__primary-column-content",
       children: [titleField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(ItemClickWrapper, {
         item: item,
         isItemClickable: isItemClickable,
@@ -49804,10 +49806,7 @@ const descriptionField = {
   render: ({
     item
   }) => {
-    return item.description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-      className: "page-templates-description",
-      children: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.description)
-    });
+    return item.description && (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.description);
   },
   enableSorting: false,
   enableGlobalSearch: true
@@ -49890,14 +49889,7 @@ const {
 const page_templates_EMPTY_ARRAY = [];
 const page_templates_defaultLayouts = {
   [LAYOUT_TABLE]: {
-    showMedia: false,
-    layout: {
-      styles: {
-        author: {
-          width: '1%'
-        }
-      }
-    }
+    showMedia: false
   },
   [LAYOUT_GRID]: {
     showMedia: true
