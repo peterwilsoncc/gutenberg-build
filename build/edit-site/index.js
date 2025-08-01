@@ -37574,7 +37574,8 @@ const DataViewsContext = (0,external_wp_element_namespaceObject.createContext)({
   },
   filters: [],
   isShowingFilter: false,
-  setIsShowingFilter: () => {}
+  setIsShowingFilter: () => {},
+  perPageSizes: []
 });
 /* harmony default export */ const dataviews_context = (DataViewsContext);
 
@@ -46015,14 +46016,15 @@ function SortDirectionControl() {
     })
   });
 }
-const PAGE_SIZE_VALUES = [10, 20, 50, 100];
 function ItemsPerPageControl() {
   const {
     view,
     perPageSizes,
     onChangeView
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
-  const pageSizeValues = perPageSizes !== null && perPageSizes !== void 0 ? perPageSizes : PAGE_SIZE_VALUES;
+  if (perPageSizes.length < 2 || perPageSizes.length > 6) {
+    return null;
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
     __nextHasNoMarginBottom: true,
     __next40pxDefaultSize: true,
@@ -46038,7 +46040,7 @@ function ItemsPerPageControl() {
         page: 1
       });
     },
-    children: pageSizeValues.map(value => {
+    children: perPageSizes.map(value => {
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
         value: value,
         label: value.toString()
@@ -46542,7 +46544,7 @@ function DataViews({
   isItemClickable = defaultIsItemClickable,
   header,
   children,
-  perPageSizes
+  perPageSizes = [10, 20, 50, 100]
 }) {
   const containerRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const [containerWidth, setContainerWidth] = (0,external_wp_element_namespaceObject.useState)(0);
