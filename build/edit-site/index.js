@@ -44246,6 +44246,7 @@ function ItemClickWrapper({
 
 
 
+
 function ColumnPrimary({
   item,
   level,
@@ -44259,8 +44260,17 @@ function ColumnPrimary({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
     spacing: 3,
     justify: "flex-start",
-    children: [mediaField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    children: [mediaField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemClickWrapper, {
+      item: item,
+      isItemClickable: isItemClickable,
+      onClickItem: onClickItem,
+      renderItemLink: renderItemLink,
       className: "dataviews-view-table__cell-content-wrapper dataviews-column-primary__media",
+      "aria-label": titleField ? (0,external_wp_i18n_namespaceObject.sprintf)(
+      // translators: %s is the item title.
+      (0,external_wp_i18n_namespaceObject.__)('Click item: %s'), titleField.getValue?.({
+        item
+      })) : undefined,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(mediaField.render, {
         item: item,
         field: mediaField,
