@@ -44286,7 +44286,7 @@ function ColumnPrimary({
         onClickItem: onClickItem,
         renderItemLink: renderItemLink,
         className: "dataviews-view-table__cell-content-wrapper dataviews-title-field",
-        children: [level !== undefined && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
+        children: [level !== undefined && level > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
           className: "dataviews-view-table__level",
           children: ['—'.repeat(level), "\xA0"]
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(titleField.render, {
