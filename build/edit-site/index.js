@@ -36852,11 +36852,13 @@ function Select({
   var _field$getValue, _field$elements;
   const {
     id,
-    label
+    label,
+    type
   } = field;
+  const isMultiple = type === 'array';
   const value = (_field$getValue = field.getValue({
     item: data
-  })) !== null && _field$getValue !== void 0 ? _field$getValue : '';
+  })) !== null && _field$getValue !== void 0 ? _field$getValue : isMultiple ? [] : '';
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: newValue
   }), [id, onChange]);
@@ -36864,7 +36866,7 @@ function Select({
   const hasEmptyValue = fieldElements.some(({
     value: elementValue
   }) => elementValue === '');
-  const elements = hasEmptyValue ? fieldElements : [
+  const elements = hasEmptyValue || isMultiple ? fieldElements : [
   /*
    * Value can be undefined when:
    *
@@ -36884,7 +36886,8 @@ function Select({
     onChange: onChangeControl,
     __next40pxDefaultSize: true,
     __nextHasNoMarginBottom: true,
-    hideLabelFromVision: hideLabelFromVision
+    hideLabelFromVision: hideLabelFromVision,
+    multiple: isMultiple
   });
 }
 
