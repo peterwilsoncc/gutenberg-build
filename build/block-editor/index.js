@@ -75247,6 +75247,7 @@ const image_image = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -75346,7 +75347,7 @@ const ImageURLInputUI = ({
         // This check will ensure our link destination is correct.
         const selectedDestination = getLinkDestinations().find(destination => destination.url === urlInput)?.linkDestination || LINK_DESTINATION_CUSTOM;
         onChangeUrl({
-          href: urlInput,
+          href: (0,external_wp_url_namespaceObject.prependHTTP)(urlInput),
           linkDestination: selectedDestination,
           lightbox: {
             enabled: false
