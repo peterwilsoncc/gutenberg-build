@@ -44559,7 +44559,8 @@ function ViewTable({
   isItemClickable,
   renderItemLink,
   view,
-  className
+  className,
+  empty
 }) {
   var _view$fields2;
   const {
@@ -44714,7 +44715,7 @@ function ViewTable({
       }),
       id: tableNoticeId,
       children: !hasData && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-        children: isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : (0,external_wp_i18n_namespaceObject.__)('No results')
+        children: isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : empty
       })
     })]
   });
@@ -44912,7 +44913,8 @@ function ViewGrid({
   renderItemLink,
   selection,
   view,
-  className
+  className,
+  empty
 }) {
   var _view$fields;
   const {
@@ -45044,7 +45046,7 @@ function ViewGrid({
         'dataviews-no-results': !isLoading
       }),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-        children: isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : (0,external_wp_i18n_namespaceObject.__)('No results')
+        children: isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : empty
       })
     })]
   });
@@ -45318,7 +45320,8 @@ function ViewList(props) {
     onChangeSelection,
     selection,
     view,
-    className
+    className,
+    empty
   } = props;
   const baseId = (0,external_wp_compose_namespaceObject.useInstanceId)(ViewList, 'view-list');
   const selectedItem = data?.findLast(item => selection.includes(getItemId(item)));
@@ -45393,7 +45396,7 @@ function ViewList(props) {
         'dataviews-no-results': !hasData && !isLoading
       }),
       children: !hasData && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-        children: isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : (0,external_wp_i18n_namespaceObject.__)('No results')
+        children: isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : empty
       })
     });
   }
@@ -45586,6 +45589,7 @@ const VIEW_LAYOUTS = [{
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -45609,7 +45613,8 @@ function DataViewsLayout({
     setOpenedFilter,
     onClickItem,
     isItemClickable,
-    renderItemLink
+    renderItemLink,
+    empty = (0,external_wp_i18n_namespaceObject.__)('No results')
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const ViewComponent = VIEW_LAYOUTS.find(v => v.type === view.type)?.component;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewComponent, {
@@ -45627,7 +45632,8 @@ function DataViewsLayout({
     onClickItem: onClickItem,
     renderItemLink: renderItemLink,
     isItemClickable: isItemClickable,
-    view: view
+    view: view,
+    empty: empty
   });
 }
 
@@ -46556,7 +46562,8 @@ function DataViews({
   isItemClickable = defaultIsItemClickable,
   header,
   children,
-  perPageSizes = [10, 20, 50, 100]
+  perPageSizes = [10, 20, 50, 100],
+  empty
 }) {
   const containerRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const [containerWidth, setContainerWidth] = (0,external_wp_element_namespaceObject.useState)(0);
@@ -46609,7 +46616,8 @@ function DataViews({
       filters,
       isShowingFilter,
       setIsShowingFilter,
-      perPageSizes
+      perPageSizes,
+      empty
     },
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "dataviews-wrapper",
