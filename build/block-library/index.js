@@ -14382,13 +14382,53 @@ const DEFAULT_MEDIA_SIZE_SLUG = 'full';
 
 
 
+
+
+
 const POSTER_IMAGE_ALLOWED_MEDIA_TYPES = ['image'];
 function PosterImage({
   poster,
   onChange
 }) {
   const posterButtonRef = (0,external_wp_element_namespaceObject.useRef)();
+  const [isLoading, setIsLoading] = (0,external_wp_element_namespaceObject.useState)(false);
   const descriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(PosterImage, 'block-library-poster-image-description');
+  const {
+    getSettings
+  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
+  const {
+    createErrorNotice
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
+  const onDropFiles = filesList => {
+    getSettings().mediaUpload({
+      allowedTypes: POSTER_IMAGE_ALLOWED_MEDIA_TYPES,
+      filesList,
+      onFileChange: ([image]) => {
+        if ((0,external_wp_blob_namespaceObject.isBlobURL)(image?.url)) {
+          setIsLoading(true);
+          return;
+        }
+        if (image) {
+          onChange(image);
+        }
+        setIsLoading(false);
+      },
+      onError: message => {
+        createErrorNotice(message, {
+          id: 'poster-image-upload-notice',
+          type: 'snackbar'
+        });
+        setIsLoading(false);
+      },
+      multiple: false
+    });
+  };
+  const getPosterButtonContent = () => {
+    if (!poster && isLoading) {
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {});
+    }
+    return !poster ? (0,external_wp_i18n_namespaceObject.__)('Set poster image') : (0,external_wp_i18n_namespaceObject.__)('Replace');
+  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.MediaUploadCheck, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Poster image'),
@@ -14405,17 +14445,19 @@ function PosterImage({
           open
         }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
           className: "block-library-poster-image__container",
-          children: [poster && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          children: [poster && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Button, {
             __next40pxDefaultSize: true,
             onClick: open,
             "aria-haspopup": "dialog",
-            "aria-label": !poster ? null : (0,external_wp_i18n_namespaceObject.__)('Edit or replace the poster image.'),
-            className: poster ? 'block-library-poster-image__preview' : 'block-library-poster-image__toggle',
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+            "aria-label": (0,external_wp_i18n_namespaceObject.__)('Edit or replace the poster image.'),
+            className: "block-library-poster-image__preview",
+            disabled: isLoading,
+            accessibleWhenDisabled: true,
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
               src: poster,
               alt: (0,external_wp_i18n_namespaceObject.__)('Poster image preview'),
               className: "block-library-poster-image__preview-image"
-            })
+            }), isLoading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})]
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
             className: dist_clsx('block-library-poster-image__actions', {
               'block-library-poster-image__actions-select': !poster
@@ -14428,7 +14470,9 @@ function PosterImage({
               "aria-describedby": descriptionId,
               "aria-haspopup": "dialog",
               variant: !poster ? 'secondary' : undefined,
-              children: !poster ? (0,external_wp_i18n_namespaceObject.__)('Set poster image') : (0,external_wp_i18n_namespaceObject.__)('Replace')
+              disabled: isLoading,
+              accessibleWhenDisabled: true,
+              children: getPosterButtonContent()
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
               id: descriptionId,
               hidden: true,
@@ -14443,8 +14487,12 @@ function PosterImage({
                 posterButtonRef.current.focus();
               },
               className: "block-library-poster-image__action",
+              disabled: isLoading,
+              accessibleWhenDisabled: true,
               children: (0,external_wp_i18n_namespaceObject.__)('Remove')
             })]
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropZone, {
+            onFilesDrop: onDropFiles
           })]
         })
       })]
