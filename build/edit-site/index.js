@@ -51164,7 +51164,9 @@ function PostList({
     }) => field);
     return _fields.map(field => ({
       ...field,
-      elements: activeViewFilters.includes(field.id) ? [] : field.elements
+      ...(activeViewFilters.includes(field.id) ? {
+        filterBy: false
+      } : {})
     }));
   }, [_fields, defaultViews, activeView]);
   const queryArgs = (0,external_wp_element_namespaceObject.useMemo)(() => {
