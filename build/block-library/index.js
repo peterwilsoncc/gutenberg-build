@@ -43995,6 +43995,9 @@ const post_comments_count_metadata = {
     }
   },
   usesContext: ["postId"],
+  example: {
+    viewportWidth: 350
+  },
   supports: {
     html: false,
     color: {
@@ -44351,6 +44354,9 @@ const post_comments_link_metadata = {
     textAlign: {
       type: "string"
     }
+  },
+  example: {
+    viewportWidth: 350
   },
   supports: {
     html: false,
