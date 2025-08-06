@@ -34695,25 +34695,6 @@ function MoreEdit({
   insertBlocksAfter,
   setAttributes
 }) {
-  const onChangeInput = event => {
-    setAttributes({
-      customText: event.target.value
-    });
-  };
-  const onKeyDown = ({
-    keyCode
-  }) => {
-    if (keyCode === external_wp_keycodes_namespaceObject.ENTER) {
-      insertBlocksAfter([(0,external_wp_blocks_namespaceObject.createBlock)((0,external_wp_blocks_namespaceObject.getDefaultBlockName)())]);
-    }
-  };
-  const getHideExcerptHelp = checked => checked ? (0,external_wp_i18n_namespaceObject.__)('The excerpt is hidden.') : (0,external_wp_i18n_namespaceObject.__)('The excerpt is visible.');
-  const toggleHideExcerpt = () => setAttributes({
-    noTeaser: !noTeaser
-  });
-  const style = {
-    width: `${(customText ? customText : DEFAULT_TEXT).length + 1.2}em`
-  };
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
@@ -34736,21 +34717,26 @@ function MoreEdit({
             __nextHasNoMarginBottom: true,
             label: (0,external_wp_i18n_namespaceObject.__)('Hide the excerpt on the full content page'),
             checked: !!noTeaser,
-            onChange: toggleHideExcerpt,
-            help: getHideExcerptHelp
+            onChange: () => setAttributes({
+              noTeaser: !noTeaser
+            }),
+            help: checked => checked ? (0,external_wp_i18n_namespaceObject.__)('The excerpt is hidden.') : (0,external_wp_i18n_namespaceObject.__)('The excerpt is visible.')
           })
         })
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...(0,external_wp_blockEditor_namespaceObject.useBlockProps)(),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
-        "aria-label": (0,external_wp_i18n_namespaceObject.__)('“Read more” link text'),
-        type: "text",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.PlainText, {
+        __experimentalVersion: 2,
+        tagName: "span",
+        "aria-label": (0,external_wp_i18n_namespaceObject.__)('"Read more" text'),
         value: customText,
         placeholder: DEFAULT_TEXT,
-        onChange: onChangeInput,
-        onKeyDown: onKeyDown,
-        style: style
+        onChange: value => setAttributes({
+          customText: value
+        }),
+        disableLineBreaks: true,
+        __unstableOnSplitAtEnd: () => insertBlocksAfter((0,external_wp_blocks_namespaceObject.createBlock)((0,external_wp_blocks_namespaceObject.getDefaultBlockName)()))
       })
     })]
   });
