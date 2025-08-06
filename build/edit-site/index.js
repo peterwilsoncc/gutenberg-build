@@ -42991,8 +42991,9 @@ function Filter({
     }];
   }
   const isPrimary = filter.isPrimary;
-  const hasValues = filterInView?.value !== undefined;
-  const canResetOrRemove = !isPrimary || hasValues;
+  const isLocked = filterInView?.isLocked;
+  const hasValues = !isLocked && filterInView?.value !== undefined;
+  const canResetOrRemove = !isLocked && (!isPrimary || hasValues);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
     defaultOpen: openedFilter === filter.field,
     contentClassName: "dataviews-filters__summary-popover",
@@ -43015,17 +43016,23 @@ function Filter({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: dist_clsx('dataviews-filters__summary-chip', {
             'has-reset': canResetOrRemove,
-            'has-values': hasValues
+            'has-values': hasValues,
+            'is-not-clickable': isLocked
           }),
           role: "button",
-          tabIndex: 0,
-          onClick: onToggle,
+          tabIndex: isLocked ? -1 : 0,
+          onClick: () => {
+            if (!isLocked) {
+              onToggle();
+            }
+          },
           onKeyDown: event => {
-            if ([ENTER, SPACE].includes(event.key)) {
+            if (!isLocked && [ENTER, SPACE].includes(event.key)) {
               onToggle();
               event.preventDefault();
             }
           },
+          "aria-disabled": isLocked,
           "aria-pressed": isOpen,
           "aria-expanded": isOpen,
           ref: toggleRef,
@@ -43187,7 +43194,7 @@ function ResetFilter({
   onChangeView
 }) {
   const isPrimary = field => filters.some(_filter => _filter.field === field && _filter.isPrimary);
-  const isDisabled = !view.search && !view.filters?.some(_filter => _filter.value !== undefined || !isPrimary(_filter.field));
+  const isDisabled = !view.search && !view.filters?.some(_filter => !_filter.isLocked && (_filter.value !== undefined || !isPrimary(_filter.field)));
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
     disabled: isDisabled,
     accessibleWhenDisabled: true,
@@ -43199,7 +43206,7 @@ function ResetFilter({
         ...view,
         page: 1,
         search: '',
-        filters: []
+        filters: view.filters?.filter(f => !!f.isLocked) || []
       });
     },
     children: (0,external_wp_i18n_namespaceObject.__)('Reset')
@@ -43228,25 +43235,36 @@ function useFilters(fields, view) {
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
     const filters = [];
     fields.forEach(field => {
-      var _field$elements;
+      var _view$filters$some, _field$elements;
       if (field.filterBy === false || !field.elements?.length && !field.Edit) {
         return;
       }
       const operators = field.filterBy.operators;
       const isPrimary = !!field.filterBy?.isPrimary;
+      const isLocked = (_view$filters$some = view.filters?.some(f => f.field === field.id && !!f.isLocked)) !== null && _view$filters$some !== void 0 ? _view$filters$some : false;
       filters.push({
         field: field.id,
         name: field.label,
         elements: (_field$elements = field.elements) !== null && _field$elements !== void 0 ? _field$elements : [],
         singleSelection: operators.some(op => SINGLE_SELECTION_OPERATORS.includes(op)),
         operators,
-        isVisible: isPrimary || !!view.filters?.some(f => f.field === field.id && ALL_OPERATORS.includes(f.operator)),
-        isPrimary
+        isVisible: isLocked || isPrimary || !!view.filters?.some(f => f.field === field.id && ALL_OPERATORS.includes(f.operator)),
+        isPrimary,
+        isLocked
       });
     });
-    // Sort filters by primary property. We need the primary filters to be first.
-    // Then we sort by name.
+
+    // Sort filters by:
+    // - locked filters go first
+    // - primary filters go next
+    // - then, sort by name
     filters.sort((a, b) => {
+      if (a.isLocked && !b.isLocked) {
+        return -1;
+      }
+      if (!a.isLocked && b.isLocked) {
+        return 1;
+      }
       if (a.isPrimary && !b.isPrimary) {
         return -1;
       }
@@ -46637,7 +46655,13 @@ function DataViews({
     return selection.filter(id => data.some(item => getItemId(item) === id));
   }, [selection, data, getItemId]);
   const filters = useFilters(_fields, view);
-  const [isShowingFilter, setIsShowingFilter] = (0,external_wp_element_namespaceObject.useState)(() => (filters || []).some(filter => filter.isPrimary));
+  const hasPrimaryOrLockedFilters = (0,external_wp_element_namespaceObject.useMemo)(() => (filters || []).some(filter => filter.isPrimary || filter.isLocked), [filters]);
+  const [isShowingFilter, setIsShowingFilter] = (0,external_wp_element_namespaceObject.useState)(hasPrimaryOrLockedFilters);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (hasPrimaryOrLockedFilters && !isShowingFilter) {
+      setIsShowingFilter(true);
+    }
+  }, [hasPrimaryOrLockedFilters, isShowingFilter]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_context.Provider, {
     value: {
       view,
@@ -50355,52 +50379,67 @@ function useDefaultViews({
       title: (0,external_wp_i18n_namespaceObject.__)('Published'),
       slug: 'published',
       icon: library_published,
-      view: DEFAULT_POST_BASE,
-      filters: [{
-        field: 'status',
-        operator: OPERATOR_IS_ANY,
-        value: 'publish'
-      }]
+      view: {
+        ...DEFAULT_POST_BASE,
+        filters: [{
+          field: 'status',
+          operator: OPERATOR_IS_ANY,
+          value: 'publish',
+          isLocked: true
+        }]
+      }
     }, {
       title: (0,external_wp_i18n_namespaceObject.__)('Scheduled'),
       slug: 'future',
       icon: library_scheduled,
-      view: DEFAULT_POST_BASE,
-      filters: [{
-        field: 'status',
-        operator: OPERATOR_IS_ANY,
-        value: 'future'
-      }]
+      view: {
+        ...DEFAULT_POST_BASE,
+        filters: [{
+          field: 'status',
+          operator: OPERATOR_IS_ANY,
+          value: 'future',
+          isLocked: true
+        }]
+      }
     }, {
       title: (0,external_wp_i18n_namespaceObject.__)('Drafts'),
       slug: 'drafts',
       icon: library_drafts,
-      view: DEFAULT_POST_BASE,
-      filters: [{
-        field: 'status',
-        operator: OPERATOR_IS_ANY,
-        value: 'draft'
-      }]
+      view: {
+        ...DEFAULT_POST_BASE,
+        filters: [{
+          field: 'status',
+          operator: OPERATOR_IS_ANY,
+          value: 'draft',
+          isLocked: true
+        }]
+      }
     }, {
       title: (0,external_wp_i18n_namespaceObject.__)('Pending'),
       slug: 'pending',
       icon: library_pending,
-      view: DEFAULT_POST_BASE,
-      filters: [{
-        field: 'status',
-        operator: OPERATOR_IS_ANY,
-        value: 'pending'
-      }]
+      view: {
+        ...DEFAULT_POST_BASE,
+        filters: [{
+          field: 'status',
+          operator: OPERATOR_IS_ANY,
+          value: 'pending',
+          isLocked: true
+        }]
+      }
     }, {
       title: (0,external_wp_i18n_namespaceObject.__)('Private'),
       slug: 'private',
       icon: not_allowed,
-      view: DEFAULT_POST_BASE,
-      filters: [{
-        field: 'status',
-        operator: OPERATOR_IS_ANY,
-        value: 'private'
-      }]
+      view: {
+        ...DEFAULT_POST_BASE,
+        filters: [{
+          field: 'status',
+          operator: OPERATOR_IS_ANY,
+          value: 'private',
+          isLocked: true
+        }]
+      }
     }, {
       title: (0,external_wp_i18n_namespaceObject.__)('Trash'),
       slug: 'trash',
@@ -50408,13 +50447,14 @@ function useDefaultViews({
       view: {
         ...DEFAULT_POST_BASE,
         type: LAYOUT_TABLE,
-        layout: default_views_defaultLayouts[LAYOUT_TABLE].layout
-      },
-      filters: [{
-        field: 'status',
-        operator: OPERATOR_IS_ANY,
-        value: 'trash'
-      }]
+        layout: default_views_defaultLayouts[LAYOUT_TABLE].layout,
+        filters: [{
+          field: 'status',
+          operator: OPERATOR_IS_ANY,
+          value: 'trash',
+          isLocked: true
+        }]
+      }
     }];
   }, [labels]);
 }
@@ -51188,46 +51228,15 @@ function PostList({
       }));
     }
   }, [location.path, location.query.isCustom, history]);
-  const getActiveViewFilters = (views, match) => {
-    var _found$filters;
-    const found = views.find(({
-      slug
-    }) => slug === match);
-    return (_found$filters = found?.filters) !== null && _found$filters !== void 0 ? _found$filters : [];
-  };
   const {
     isLoading: isLoadingFields,
-    fields: _fields
+    fields: fields
   } = usePostFields({
     postType
   });
-  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const activeViewFilters = getActiveViewFilters(defaultViews, activeView).map(({
-      field
-    }) => field);
-    return _fields.map(field => ({
-      ...field,
-      ...(activeViewFilters.includes(field.id) ? {
-        filterBy: false
-      } : {})
-    }));
-  }, [_fields, defaultViews, activeView]);
   const queryArgs = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const filters = {};
     view.filters?.forEach(filter => {
-      if (filter.field === 'status' && filter.operator === OPERATOR_IS_ANY) {
-        filters.status = filter.value;
-      }
-      if (filter.field === 'author' && filter.operator === OPERATOR_IS_ANY) {
-        filters.author = filter.value;
-      } else if (filter.field === 'author' && filter.operator === OPERATOR_IS_NONE) {
-        filters.author_exclude = filter.value;
-      }
-    });
-
-    // The bundled views want data filtered without displaying the filter.
-    const activeViewFilters = getActiveViewFilters(defaultViews, activeView);
-    activeViewFilters.forEach(filter => {
       if (filter.field === 'status' && filter.operator === OPERATOR_IS_ANY) {
         filters.status = filter.value;
       }
