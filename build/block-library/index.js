@@ -31907,6 +31907,7 @@ function useMerge(clientId, onMerge) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -31935,12 +31936,14 @@ function edit_IndentUI({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_outdent_rtl : format_outdent,
       title: (0,external_wp_i18n_namespaceObject.__)('Outdent'),
+      shortcut: external_wp_keycodes_namespaceObject.displayShortcut.shift('Tab'),
       description: (0,external_wp_i18n_namespaceObject.__)('Outdent list item'),
       disabled: !canOutdent,
       onClick: () => outdentListItem()
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_indent_rtl : format_indent,
       title: (0,external_wp_i18n_namespaceObject.__)('Indent'),
+      shortcut: "Tab",
       description: (0,external_wp_i18n_namespaceObject.__)('Indent list item'),
       disabled: !canIndent,
       onClick: () => indentListItem()
