@@ -44602,6 +44602,21 @@ function ViewTable({
   const titleField = fields.find(field => field.id === view.titleField);
   const mediaField = fields.find(field => field.id === view.mediaField);
   const descriptionField = fields.find(field => field.id === view.descriptionField);
+
+  // Get group field if groupByField is specified
+  const groupField = view.groupByField ? fields.find(f => f.id === view.groupByField) : null;
+
+  // Group data by groupByField if specified
+  const dataByGroup = groupField ? data.reduce((groups, item) => {
+    const groupName = groupField.getValue({
+      item
+    });
+    if (!groups.has(groupName)) {
+      groups.set(groupName, []);
+    }
+    groups.get(groupName)?.push(item);
+    return groups;
+  }, new Map()) : null;
   const {
     showTitle = true,
     showMedia = true,
@@ -44690,7 +44705,36 @@ function ViewTable({
             })
           })]
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("tbody", {
+      }), hasData && groupField && dataByGroup ? Array.from(dataByGroup.entries()).map(([groupName, groupItems]) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("tbody", {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("tr", {
+          className: "dataviews-view-table__group-header-row",
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("td", {
+            colSpan: columns.length + (hasPrimaryColumn ? 1 : 0) + (hasBulkActions ? 1 : 0) + (actions?.length ? 1 : 0),
+            className: "dataviews-view-table__group-header-cell",
+            children: (0,external_wp_i18n_namespaceObject.sprintf)(
+            // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
+            (0,external_wp_i18n_namespaceObject.__)('%1$s: %2$s'), groupField.label, groupName)
+          })
+        }), groupItems.map((item, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TableRow, {
+          item: item,
+          level: view.showLevels && typeof getItemLevel === 'function' ? getItemLevel(item) : undefined,
+          hasBulkActions: hasBulkActions,
+          actions: actions,
+          fields: fields,
+          id: getItemId(item) || index.toString(),
+          view: view,
+          titleField: titleField,
+          mediaField: mediaField,
+          descriptionField: descriptionField,
+          selection: selection,
+          getItemId: getItemId,
+          onChangeSelection: onChangeSelection,
+          onClickItem: onClickItem,
+          renderItemLink: renderItemLink,
+          isItemClickable: isItemClickable,
+          isActionsColumnSticky: !isHorizontalScrollEnd
+        }, getItemId(item)))]
+      }, `group-${groupName}`)) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("tbody", {
         children: hasData && data.map((item, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TableRow, {
           item: item,
           level: view.showLevels && typeof getItemLevel === 'function' ? getItemLevel(item) : undefined,
