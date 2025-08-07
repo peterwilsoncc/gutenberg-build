@@ -1687,7 +1687,7 @@ function getNormalStylePropertyName(property) {
  * @return {*} Normalized property value.
  */
 function getNormalStylePropertyValue(property, value) {
-  if (typeof value === 'number' && 0 !== value && !CSS_PROPERTIES_SUPPORTS_UNITLESS.has(property)) {
+  if (typeof value === 'number' && 0 !== value && !hasPrefix(property, ['--']) && !CSS_PROPERTIES_SUPPORTS_UNITLESS.has(property)) {
     return value + 'px';
   }
   return value;
