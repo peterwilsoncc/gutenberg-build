@@ -33525,7 +33525,8 @@ function MediaContainer(props, ref) {
         onSelectMedia: onSelectMedia,
         mediaUrl: useFeaturedImage && featuredImageURL ? featuredImageURL : mediaUrl,
         mediaId: mediaId,
-        toggleUseFeaturedImage: toggleUseFeaturedImage
+        toggleUseFeaturedImage: toggleUseFeaturedImage,
+        useFeaturedImage: useFeaturedImage
       }), (mediaTypeRenderers[mediaType] || media_container_noop)(), isTemporaryMedia && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}), !useFeaturedImage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PlaceholderContainer, {
         ...props
       }), !featuredImageURL && useFeaturedImage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Placeholder, {
@@ -34151,7 +34152,8 @@ const media_text_transforms_transforms = {
       overlayColor,
       style,
       textColor,
-      url
+      url,
+      useFeaturedImage
     }, innerBlocks) => {
       let additionalAttributes = {};
       if (customGradient) {
@@ -34191,6 +34193,7 @@ const media_text_transforms_transforms = {
         mediaType: backgroundType,
         mediaUrl: url,
         textColor,
+        useFeaturedImage,
         ...additionalAttributes
       }, innerBlocks);
     }
@@ -34251,7 +34254,8 @@ const media_text_transforms_transforms = {
       mediaType,
       mediaUrl,
       style,
-      textColor
+      textColor,
+      useFeaturedImage
     }, innerBlocks) => {
       const additionalAttributes = {};
 
@@ -34276,13 +34280,14 @@ const media_text_transforms_transforms = {
         alt: mediaAlt,
         anchor,
         backgroundType: mediaType,
-        dimRatio: !!mediaUrl ? 50 : 100,
+        dimRatio: !!mediaUrl || useFeaturedImage ? 50 : 100,
         focalPoint,
         gradient,
         id: mediaId,
         overlayColor: backgroundColor,
         textColor,
         url: mediaUrl,
+        useFeaturedImage,
         ...additionalAttributes
       };
       return (0,external_wp_blocks_namespaceObject.createBlock)('core/cover', coverAttributes, innerBlocks);
