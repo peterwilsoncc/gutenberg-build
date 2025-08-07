@@ -1695,6 +1695,17 @@ const rootEntitiesConfig = [{
   plural: 'statuses',
   key: 'slug'
 }];
+const deprecatedEntities = {
+  root: {
+    media: {
+      since: '6.9',
+      alternative: {
+        kind: 'postType',
+        name: 'attachment'
+      }
+    }
+  }
+};
 const additionalEntityConfigLoaders = [{
   kind: 'postType',
   loadEntities: loadPostTypeEntities
@@ -3165,6 +3176,62 @@ function getUserPermissionCacheKey(action, resource, id) {
   return key;
 }
 
+;// ./packages/core-data/build-module/utils/log-entity-deprecation.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+let loggedAlready = false;
+
+/**
+ * Logs a deprecation warning for an entity, if it's deprecated.
+ *
+ * @param kind                            The kind of the entity.
+ * @param name                            The name of the entity.
+ * @param functionName                    The name of the function that was called with a deprecated entity.
+ * @param options                         The options for the deprecation warning.
+ * @param options.alternativeFunctionName The name of the alternative function that should be used instead.
+ * @param options.isShorthandSelector     Whether the function is a shorthand selector.
+ */
+function logEntityDeprecation(kind, name, functionName, {
+  alternativeFunctionName,
+  isShorthandSelector = false
+} = {}) {
+  const deprecation = deprecatedEntities[kind]?.[name];
+  if (!deprecation) {
+    return;
+  }
+  if (!loggedAlready) {
+    const {
+      alternative
+    } = deprecation;
+    const message = isShorthandSelector ? `'${functionName}'` : `The '${kind}', '${name}' entity (used via '${functionName}')`;
+    let alternativeMessage = `the '${alternative.kind}', '${alternative.name}' entity`;
+    if (alternativeFunctionName) {
+      alternativeMessage += ` via the '${alternativeFunctionName}' function`;
+    }
+    external_wp_deprecated_default()(message, {
+      ...deprecation,
+      alternative: alternativeMessage
+    });
+  }
+
+  // Only log an entity deprecation once per call stack,
+  // else there's spurious logging when selections or actions call through to other selectors or actions.
+  // Note: this won't prevent the deprecation warning being logged if a selector or action makes an async call
+  // to another selector or action, but this is probably the best we can do.
+  loggedAlready = true;
+  // At the end of the call stack, reset the flag.
+  setTimeout(() => {
+    loggedAlready = false;
+  }, 0);
+}
+
 ;// ./packages/core-data/build-module/selectors.js
 /**
  * WordPress dependencies
@@ -3176,6 +3243,7 @@ function getUserPermissionCacheKey(action, resource, id) {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -3316,6 +3384,7 @@ function getEntity(state, kind, name) {
  * @return Entity config
  */
 function getEntityConfig(state, kind, name) {
+  logEntityDeprecation(kind, name, 'getEntityConfig');
   return state.entities.config?.find(config => config.kind === kind && config.name === name);
 }
 
@@ -3360,6 +3429,7 @@ function getEntityConfig(state, kind, name) {
  */
 const getEntityRecord = (0,external_wp_data_namespaceObject.createSelector)((state, kind, name, key, query) => {
   var _query$context;
+  logEntityDeprecation(kind, name, 'getEntityRecord');
   const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
   if (!queriedState) {
     return undefined;
@@ -3435,6 +3505,7 @@ function __experimentalGetEntityRecordNoResolver(state, kind, name, key) {
  * @return Object with the entity's raw attributes.
  */
 const getRawEntityRecord = (0,external_wp_data_namespaceObject.createSelector)((state, kind, name, key) => {
+  logEntityDeprecation(kind, name, 'getRawEntityRecord');
   const record = getEntityRecord(state, kind, name, key);
   return record && Object.keys(record).reduce((accumulator, _key) => {
     if (isRawAttribute(getEntityConfig(state, kind, name), _key)) {
@@ -3465,6 +3536,7 @@ const getRawEntityRecord = (0,external_wp_data_namespaceObject.createSelector)((
  * @return  Whether entity records have been received.
  */
 function hasEntityRecords(state, kind, name, query) {
+  logEntityDeprecation(kind, name, 'hasEntityRecords');
   return Array.isArray(getEntityRecords(state, kind, name, query));
 }
 
@@ -3489,6 +3561,8 @@ function hasEntityRecords(state, kind, name, query) {
  * @return Records.
  */
 const getEntityRecords = (state, kind, name, query) => {
+  logEntityDeprecation(kind, name, 'getEntityRecords');
+
   // Queried data state is prepopulated for all known entities. If this is not
   // assigned for the given parameters, then it is known to not exist.
   const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
@@ -3510,6 +3584,8 @@ const getEntityRecords = (state, kind, name, query) => {
  * @return number | null.
  */
 const getEntityRecordsTotalItems = (state, kind, name, query) => {
+  logEntityDeprecation(kind, name, 'getEntityRecordsTotalItems');
+
   // Queried data state is prepopulated for all known entities. If this is not
   // assigned for the given parameters, then it is known to not exist.
   const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
@@ -3531,6 +3607,8 @@ const getEntityRecordsTotalItems = (state, kind, name, query) => {
  * @return number | null.
  */
 const getEntityRecordsTotalPages = (state, kind, name, query) => {
+  logEntityDeprecation(kind, name, 'getEntityRecordsTotalPages');
+
   // Queried data state is prepopulated for all known entities. If this is not
   // assigned for the given parameters, then it is known to not exist.
   const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
@@ -3637,6 +3715,7 @@ const __experimentalGetEntitiesBeingSaved = (0,external_wp_data_namespaceObject.
  * @return The entity record's edits.
  */
 function getEntityRecordEdits(state, kind, name, recordId) {
+  logEntityDeprecation(kind, name, 'getEntityRecordEdits');
   return state.entities.records?.[kind]?.[name]?.edits?.[recordId];
 }
 
@@ -3655,6 +3734,7 @@ function getEntityRecordEdits(state, kind, name, recordId) {
  * @return The entity record's non transient edits.
  */
 const getEntityRecordNonTransientEdits = (0,external_wp_data_namespaceObject.createSelector)((state, kind, name, recordId) => {
+  logEntityDeprecation(kind, name, 'getEntityRecordNonTransientEdits');
   const {
     transientEdits
   } = getEntityConfig(state, kind, name) || {};
@@ -3682,6 +3762,7 @@ const getEntityRecordNonTransientEdits = (0,external_wp_data_namespaceObject.cre
  * @return Whether the entity record has edits or not.
  */
 function hasEditsForEntityRecord(state, kind, name, recordId) {
+  logEntityDeprecation(kind, name, 'hasEditsForEntityRecord');
   return isSavingEntityRecord(state, kind, name, recordId) || Object.keys(getEntityRecordNonTransientEdits(state, kind, name, recordId)).length > 0;
 }
 
@@ -3696,6 +3777,7 @@ function hasEditsForEntityRecord(state, kind, name, recordId) {
  * @return The entity record, merged with its edits.
  */
 const getEditedEntityRecord = (0,external_wp_data_namespaceObject.createSelector)((state, kind, name, recordId) => {
+  logEntityDeprecation(kind, name, 'getEditedEntityRecord');
   const raw = getRawEntityRecord(state, kind, name, recordId);
   const edited = getEntityRecordEdits(state, kind, name, recordId);
   // Never return a non-falsy empty object. Unfortunately we can't return
@@ -3727,6 +3809,7 @@ const getEditedEntityRecord = (0,external_wp_data_namespaceObject.createSelector
  */
 function isAutosavingEntityRecord(state, kind, name, recordId) {
   var _state$entities$recor;
+  logEntityDeprecation(kind, name, 'isAutosavingEntityRecord');
   const {
     pending,
     isAutosave
@@ -3746,6 +3829,7 @@ function isAutosavingEntityRecord(state, kind, name, recordId) {
  */
 function isSavingEntityRecord(state, kind, name, recordId) {
   var _state$entities$recor2;
+  logEntityDeprecation(kind, name, 'isSavingEntityRecord');
   return (_state$entities$recor2 = state.entities.records?.[kind]?.[name]?.saving?.[recordId]?.pending) !== null && _state$entities$recor2 !== void 0 ? _state$entities$recor2 : false;
 }
 
@@ -3761,6 +3845,7 @@ function isSavingEntityRecord(state, kind, name, recordId) {
  */
 function isDeletingEntityRecord(state, kind, name, recordId) {
   var _state$entities$recor3;
+  logEntityDeprecation(kind, name, 'isDeletingEntityRecord');
   return (_state$entities$recor3 = state.entities.records?.[kind]?.[name]?.deleting?.[recordId]?.pending) !== null && _state$entities$recor3 !== void 0 ? _state$entities$recor3 : false;
 }
 
@@ -3775,6 +3860,7 @@ function isDeletingEntityRecord(state, kind, name, recordId) {
  * @return The entity record's save error.
  */
 function getLastEntitySaveError(state, kind, name, recordId) {
+  logEntityDeprecation(kind, name, 'getLastEntitySaveError');
   return state.entities.records?.[kind]?.[name]?.saving?.[recordId]?.error;
 }
 
@@ -3789,6 +3875,7 @@ function getLastEntitySaveError(state, kind, name, recordId) {
  * @return The entity record's save error.
  */
 function getLastEntityDeleteError(state, kind, name, recordId) {
+  logEntityDeprecation(kind, name, 'getLastEntityDeleteError');
   return state.entities.records?.[kind]?.[name]?.deleting?.[recordId]?.error;
 }
 
@@ -3935,7 +4022,7 @@ function isPreviewEmbedFallback(state, url) {
  *
  * @param state    Data state.
  * @param action   Action to check. One of: 'create', 'read', 'update', 'delete'.
- * @param resource Entity resource to check. Accepts entity object `{ kind: 'root', name: 'media', id: 1 }`
+ * @param resource Entity resource to check. Accepts entity object `{ kind: 'postType', name: 'attachment', id: 1 }`
  *                 or REST base as a string - `media`.
  * @param id       Optional ID of the rest resource to check.
  *
@@ -3946,6 +4033,9 @@ function canUser(state, action, resource, id) {
   const isEntity = typeof resource === 'object';
   if (isEntity && (!resource.kind || !resource.name)) {
     return false;
+  }
+  if (isEntity) {
+    logEntityDeprecation(resource.kind, resource.name, 'canUser');
   }
   const key = getUserPermissionCacheKey(action, resource, id);
   return state.userPermissions[key];
@@ -4157,6 +4247,7 @@ function getDefaultTemplateId(state, query) {
  * @return Record.
  */
 const getRevisions = (state, kind, name, recordKey, query) => {
+  logEntityDeprecation(kind, name, 'getRevisions');
   const queriedStateRevisions = state.entities.records?.[kind]?.[name]?.revisions?.[recordKey];
   if (!queriedStateRevisions) {
     return null;
@@ -4179,6 +4270,7 @@ const getRevisions = (state, kind, name, recordKey, query) => {
  */
 const getRevision = (0,external_wp_data_namespaceObject.createSelector)((state, kind, name, recordKey, revisionKey, query) => {
   var _query$context5;
+  logEntityDeprecation(kind, name, 'getRevision');
   const queriedState = state.entities.records?.[kind]?.[name]?.revisions?.[recordKey];
   if (!queriedState) {
     return undefined;
@@ -4237,6 +4329,7 @@ const {
 
 
 
+
 /**
  * Returns the previous edit from the current undo offset
  * for the entity records edits history, if any.
@@ -4292,6 +4385,7 @@ const getEntityRecordsPermissions = (0,external_wp_data_namespaceObject.createRe
  * @return The entity record permissions.
  */
 function getEntityRecordPermissions(state, kind, name, id) {
+  logEntityDeprecation(kind, name, 'getEntityRecordPermissions');
   return getEntityRecordsPermissions(state, kind, name, id)[0];
 }
 
@@ -21619,6 +21713,7 @@ function getSyncProvider() {
 
 
 
+
 /**
  * Returns an action object used in signalling that authors have been received.
  * Ignored from documentation as it's internal to the data store.
@@ -21859,6 +21954,7 @@ const deleteEntityRecord = (kind, name, recordId, query, {
   dispatch,
   resolveSelect
 }) => {
+  logEntityDeprecation(kind, name, 'deleteEntityRecord');
   const configs = await resolveSelect.getEntitiesConfig(kind);
   const entityConfig = configs.find(config => config.kind === kind && config.name === name);
   let error;
@@ -21924,6 +22020,7 @@ const editEntityRecord = (kind, name, recordId, edits, options = {}) => ({
   select,
   dispatch
 }) => {
+  logEntityDeprecation(kind, name, 'editEntityRecord');
   const entityConfig = select.getEntityConfig(kind, name);
   if (!entityConfig) {
     throw new Error(`The entity being edited (${kind}, ${name}) does not have a loaded config.`);
@@ -22049,6 +22146,7 @@ const saveEntityRecord = (kind, name, record, {
   resolveSelect,
   dispatch
 }) => {
+  logEntityDeprecation(kind, name, 'saveEntityRecord');
   const configs = await resolveSelect.getEntitiesConfig(kind);
   const entityConfig = configs.find(config => config.kind === kind && config.name === name);
   if (!entityConfig) {
@@ -22248,6 +22346,7 @@ const saveEditedEntityRecord = (kind, name, recordId, options) => async ({
   dispatch,
   resolveSelect
 }) => {
+  logEntityDeprecation(kind, name, 'saveEditedEntityRecord');
   if (!select.hasEditsForEntityRecord(kind, name, recordId)) {
     return;
   }
@@ -22279,6 +22378,7 @@ const __experimentalSaveSpecifiedEntityEdits = (kind, name, recordId, itemsToSav
   dispatch,
   resolveSelect
 }) => {
+  logEntityDeprecation(kind, name, '__experimentalSaveSpecifiedEntityEdits');
   if (!select.hasEditsForEntityRecord(kind, name, recordId)) {
     return;
   }
@@ -22425,6 +22525,7 @@ const receiveRevisions = (kind, name, recordKey, records, query, invalidateCache
   dispatch,
   resolveSelect
 }) => {
+  logEntityDeprecation(kind, name, 'receiveRevisions');
   const configs = await resolveSelect.getEntitiesConfig(kind);
   const entityConfig = configs.find(config => config.kind === kind && config.name === name);
   const key = entityConfig && entityConfig?.revisionKey ? entityConfig.revisionKey : DEFAULT_ENTITY_KEY;
@@ -22502,8 +22603,8 @@ const editMediaEntity = (recordId, edits = {}, {
   if (!recordId) {
     return;
   }
-  const kind = 'root';
-  const name = 'media';
+  const kind = 'postType';
+  const name = 'attachment';
   const configs = await resolveSelect.getEntitiesConfig(kind);
   const entityConfig = configs.find(config => config.kind === kind && config.name === name);
   if (!entityConfig) {
@@ -23242,7 +23343,7 @@ const resolvers_getEmbedPreview = url => async ({
  *
  * @param {string}        requestedAction Action to check. One of: 'create', 'read', 'update',
  *                                        'delete'.
- * @param {string|Object} resource        Entity resource to check. Accepts entity object `{ kind: 'root', name: 'media', id: 1 }`
+ * @param {string|Object} resource        Entity resource to check. Accepts entity object `{ kind: 'postType', name: 'attachment', id: 1 }`
  *                                        or REST base as a string - `media`.
  * @param {?string}       id              ID of the rest resource to check.
  */
@@ -24666,7 +24767,7 @@ const external_wp_warning_namespaceObject = window["wp"]["warning"];
  *
  * @since 6.1.0 Introduced in WordPress core.
  *
- * @param    resource Entity resource to check. Accepts entity object `{ kind: 'root', name: 'media', id: 1 }`
+ * @param    resource Entity resource to check. Accepts entity object `{ kind: 'postType', name: 'attachment', id: 1 }`
  *                    or REST base as a string - `media`.
  * @param    id       Optional ID of the resource to check, e.g. 10. Note: This argument is discouraged
  *                    when using an entity object as a resource to check permissions and will be ignored.
@@ -25241,6 +25342,7 @@ lock(privateApis, {
 
 
 
+
 // The entity selectors/resolvers and actions are shortcuts to their generic equivalents
 // (getEntityRecord, getEntityRecords, updateEntityRecord, updateEntityRecords)
 // Instead of getEntityRecord, the consumer could use more user-friendly named selector: getPostType, getTaxonomy...
@@ -25252,9 +25354,23 @@ const entitySelectors = build_module_entitiesConfig.reduce((result, entity) => {
     name,
     plural
   } = entity;
-  result[getMethodName(kind, name)] = (state, key, query) => getEntityRecord(state, kind, name, key, query);
+  const getEntityRecordMethodName = getMethodName(kind, name);
+  result[getEntityRecordMethodName] = (state, key, query) => {
+    logEntityDeprecation(kind, name, getEntityRecordMethodName, {
+      isShorthandSelector: true,
+      alternativeFunctionName: 'getEntityRecord'
+    });
+    return getEntityRecord(state, kind, name, key, query);
+  };
   if (plural) {
-    result[getMethodName(kind, plural, 'get')] = (state, query) => getEntityRecords(state, kind, name, query);
+    const getEntityRecordsMethodName = getMethodName(kind, plural, 'get');
+    result[getEntityRecordsMethodName] = (state, query) => {
+      logEntityDeprecation(kind, name, getEntityRecordsMethodName, {
+        isShorthandSelector: true,
+        alternativeFunctionName: 'getEntityRecords'
+      });
+      return getEntityRecords(state, kind, name, query);
+    };
   }
   return result;
 }, {});
@@ -25264,11 +25380,24 @@ const entityResolvers = build_module_entitiesConfig.reduce((result, entity) => {
     name,
     plural
   } = entity;
-  result[getMethodName(kind, name)] = (key, query) => resolvers_getEntityRecord(kind, name, key, query);
+  const getEntityRecordMethodName = getMethodName(kind, name);
+  result[getEntityRecordMethodName] = (key, query) => {
+    logEntityDeprecation(kind, name, getEntityRecordMethodName, {
+      isShorthandSelector: true,
+      alternativeFunctionName: 'getEntityRecord'
+    });
+    return resolvers_getEntityRecord(kind, name, key, query);
+  };
   if (plural) {
-    const pluralMethodName = getMethodName(kind, plural, 'get');
-    result[pluralMethodName] = (...args) => resolvers_getEntityRecords(kind, name, ...args);
-    result[pluralMethodName].shouldInvalidate = action => resolvers_getEntityRecords.shouldInvalidate(action, kind, name);
+    const getEntityRecordsMethodName = getMethodName(kind, plural, 'get');
+    result[getEntityRecordsMethodName] = (...args) => {
+      logEntityDeprecation(kind, plural, getEntityRecordsMethodName, {
+        isShorthandSelector: true,
+        alternativeFunctionName: 'getEntityRecords'
+      });
+      return resolvers_getEntityRecords(kind, name, ...args);
+    };
+    result[getEntityRecordsMethodName].shouldInvalidate = action => resolvers_getEntityRecords.shouldInvalidate(action, kind, name);
   }
   return result;
 }, {});
@@ -25277,8 +25406,22 @@ const entityActions = build_module_entitiesConfig.reduce((result, entity) => {
     kind,
     name
   } = entity;
-  result[getMethodName(kind, name, 'save')] = (record, options) => saveEntityRecord(kind, name, record, options);
-  result[getMethodName(kind, name, 'delete')] = (key, query, options) => deleteEntityRecord(kind, name, key, query, options);
+  const saveEntityRecordMethodName = getMethodName(kind, name, 'save');
+  result[saveEntityRecordMethodName] = (record, options) => {
+    logEntityDeprecation(kind, name, saveEntityRecordMethodName, {
+      isShorthandSelector: true,
+      alternativeFunctionName: 'saveEntityRecord'
+    });
+    return saveEntityRecord(kind, name, record, options);
+  };
+  const deleteEntityRecordMethodName = getMethodName(kind, name, 'delete');
+  result[deleteEntityRecordMethodName] = (key, query, options) => {
+    logEntityDeprecation(kind, name, deleteEntityRecordMethodName, {
+      isShorthandSelector: true,
+      alternativeFunctionName: 'deleteEntityRecord'
+    });
+    return deleteEntityRecord(kind, name, key, query, options);
+  };
   return result;
 }, {});
 const storeConfig = () => ({

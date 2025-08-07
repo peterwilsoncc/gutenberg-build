@@ -2906,10 +2906,14 @@ const getNestedEditedPostProperty = (0,external_wp_data_namespaceObject.createSe
  * 	const getFeaturedMediaUrl = useSelect( ( select ) => {
  * 		const getFeaturedMediaId =
  * 			select( 'core/editor' ).getEditedPostAttribute( 'featured_media' );
- * 		const getMedia = select( 'core' ).getMedia( getFeaturedMediaId );
+ * 		const media = select( 'core' ).getEntityRecord(
+ * 			'postType',
+ * 			'attachment',
+ * 			getFeaturedMediaId
+ * 		);
  *
  * 		return (
- * 			getMedia?.media_details?.sizes?.large?.source_url || getMedia?.source_url || ''
+ * 			media?.media_details?.sizes?.large?.source_url || media?.source_url || ''
  * 		);
  * }, [] );
  *```
@@ -4528,21 +4532,6 @@ function setEditedPost(postType, postId) {
  * ```js
  * // Update the post title
  * wp.data.dispatch( 'core/editor' ).editPost( { title: `${ newTitle }` } );
- * ```
- *
- * @example
- *```js
- * 	// Get specific media size based on the featured media ID
- * 	// Note: change sizes?.large for any registered size
- * 	const getFeaturedMediaUrl = useSelect( ( select ) => {
- * 		const getFeaturedMediaId =
- * 			select( 'core/editor' ).getEditedPostAttribute( 'featured_media' );
- * 		const getMedia = select( 'core' ).getMedia( getFeaturedMediaId );
- *
- * 		return (
- * 			getMedia?.media_details?.sizes?.large?.source_url || getMedia?.source_url || ''
- * 		);
- * }, [] );
  * ```
  *
  * @return {Object} Action object
@@ -13958,7 +13947,7 @@ const FeaturedImageEdit = ({
     const {
       getEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    return getEntityRecord('root', 'media', value);
+    return getEntityRecord('postType', 'attachment', value);
   }, [value]);
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: newValue
@@ -14051,7 +14040,7 @@ const FeaturedImageView = ({
     const {
       getEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
-    return mediaId ? getEntityRecord('root', 'media', mediaId) : null;
+    return mediaId ? getEntityRecord('postType', 'attachment', mediaId) : null;
   }, [mediaId]);
   const url = media?.source_url;
   if (url) {
@@ -15661,7 +15650,7 @@ const getOpenverseCaption = item => {
   return _caption.replace(/\s{2}/g, ' ');
 };
 const coreMediaFetch = async (query = {}) => {
-  const mediaItems = await (0,external_wp_data_namespaceObject.resolveSelect)(external_wp_coreData_namespaceObject.store).getMediaItems({
+  const mediaItems = await (0,external_wp_data_namespaceObject.resolveSelect)(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'attachment', {
     ...query,
     orderBy: !!query?.search ? 'relevance' : 'date'
   });
@@ -15946,7 +15935,7 @@ function mediaUpload({
       const entityFiles = file.filter(_file => _file?.id);
       if (entityFiles?.length) {
         const invalidateCache = true;
-        receiveEntityRecords('root', 'media', entityFiles, undefined, invalidateCache);
+        receiveEntityRecords('postType', 'attachment', entityFiles, undefined, invalidateCache);
       }
     },
     onSuccess,
@@ -16324,8 +16313,8 @@ function useBlockEditorSettings(settings, postType, postId, renderingMode) {
       isDistractionFree: get('core', 'distractionFree'),
       keepCaretInsideBlock: get('core', 'keepCaretInsideBlock'),
       hasUploadPermissions: (_canUser = canUser('create', {
-        kind: 'root',
-        name: 'media'
+        kind: 'postType',
+        name: 'attachment'
       })) !== null && _canUser !== void 0 ? _canUser : true,
       userCanCreatePages: canUser('create', {
         kind: 'postType',
@@ -26688,7 +26677,7 @@ function PostFeaturedImage({
 }
 const applyWithSelect = (0,external_wp_data_namespaceObject.withSelect)(select => {
   const {
-    getMedia,
+    getEntityRecord,
     getPostType,
     hasFinishedResolution
   } = select(external_wp_coreData_namespaceObject.store);
@@ -26698,13 +26687,13 @@ const applyWithSelect = (0,external_wp_data_namespaceObject.withSelect)(select =
   } = select(store_store);
   const featuredImageId = getEditedPostAttribute('featured_media');
   return {
-    media: featuredImageId ? getMedia(featuredImageId, {
+    media: featuredImageId ? getEntityRecord('postType', 'attachment', featuredImageId, {
       context: 'view'
     }) : null,
     currentPostId: getCurrentPostId(),
     postType: getPostType(getEditedPostAttribute('type')),
     featuredImageId,
-    isRequestingFeaturedImageMedia: !!featuredImageId && !hasFinishedResolution('getMedia', [featuredImageId, {
+    isRequestingFeaturedImageMedia: !!featuredImageId && !hasFinishedResolution('getEntityRecord', ['postType', 'attachment', featuredImageId, {
       context: 'view'
     }])
   };

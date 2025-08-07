@@ -3217,8 +3217,8 @@ function WidgetAreasBlockEditorProvider({
     }) ? getEntityRecord('root', 'site') : undefined;
     return {
       hasUploadPermissions: (_canUser = canUser('create', {
-        kind: 'root',
-        name: 'media'
+        kind: 'postType',
+        name: 'attachment'
       })) !== null && _canUser !== void 0 ? _canUser : true,
       reusableBlocks: ALLOW_REUSABLE_BLOCKS ? getEntityRecords('postType', 'wp_block') : EMPTY_ARRAY,
       isFixedToolbarActive: !!select(external_wp_preferences_namespaceObject.store).get('core/edit-widgets', 'fixedToolbar'),

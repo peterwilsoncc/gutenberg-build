@@ -7424,7 +7424,7 @@ const __experimentalGetPreviewDeviceType = (0,external_wp_data_namespaceObject.c
 const getCanUserCreateMedia = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => () => {
   external_wp_deprecated_default()(`wp.data.select( 'core/edit-site' ).getCanUserCreateMedia()`, {
     since: '6.7',
-    alternative: `wp.data.select( 'core' ).canUser( 'create', { kind: 'root', type: 'media' } )`
+    alternative: `wp.data.select( 'core' ).canUser( 'create', { kind: 'postType', type: 'attachment' } )`
   });
   return select(external_wp_coreData_namespaceObject.store).canUser('create', 'media');
 });
@@ -27653,8 +27653,8 @@ const StyleBookPreview = ({
 }) => {
   const siteEditorSettings = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getSettings(), []);
   const canUserUploadMedia = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).canUser('create', {
-    kind: 'root',
-    name: 'media'
+    kind: 'postType',
+    name: 'attachment'
   }), []);
 
   // Update block editor settings because useMultipleOriginColorsAndGradients fetch colours from there.
@@ -47335,7 +47335,6 @@ function useAddedBy(postType, postId) {
   return (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getEntityRecord,
-      getMedia,
       getUser,
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
@@ -47367,7 +47366,7 @@ function useAddedBy(postType, postId) {
           return {
             type: originalSource,
             icon: library_globe,
-            imageUrl: siteData?.site_logo ? getMedia(siteData.site_logo)?.source_url : undefined,
+            imageUrl: siteData?.site_logo ? getEntityRecord('postType', 'attachment', siteData.site_logo)?.source_url : undefined,
             text: authorText,
             isCustomized: false
           };

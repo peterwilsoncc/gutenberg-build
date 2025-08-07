@@ -14611,7 +14611,7 @@ function CoverInspectorControls({
     getSettings
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
   const imageSizes = getSettings()?.imageSizes;
-  const image = (0,external_wp_data_namespaceObject.useSelect)(select => id && isImageBackground ? select(external_wp_coreData_namespaceObject.store).getMedia(id, {
+  const image = (0,external_wp_data_namespaceObject.useSelect)(select => id && isImageBackground ? select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', 'attachment', id, {
     context: 'view'
   }) : null, [id, isImageBackground]);
   const currentBackgroundImage = useFeaturedImage ? featuredImage : image;
@@ -15814,7 +15814,7 @@ function CoverEdit({
     media
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return {
-      media: featuredImage && useFeaturedImage ? select(external_wp_coreData_namespaceObject.store).getMedia(featuredImage, {
+      media: featuredImage && useFeaturedImage ? select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', 'attachment', featuredImage, {
         context: 'view'
       }) : undefined
     };
@@ -19331,7 +19331,7 @@ function FileEdit({
   const {
     media
   } = (0,external_wp_data_namespaceObject.useSelect)(select => ({
-    media: id === undefined ? undefined : select(external_wp_coreData_namespaceObject.store).getMedia(id)
+    media: id === undefined ? undefined : select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', 'attachment', id)
   }), [id]);
   const {
     createErrorNotice
@@ -19719,9 +19719,9 @@ const file_transforms_transforms = {
         return false;
       }
       const {
-        getMedia
+        getEntityRecord
       } = (0,external_wp_data_namespaceObject.select)(external_wp_coreData_namespaceObject.store);
-      const media = getMedia(id);
+      const media = getEntityRecord('postType', 'attachment', id);
       return !!media && media.mime_type.includes('audio');
     },
     transform: attributes => {
@@ -19742,9 +19742,9 @@ const file_transforms_transforms = {
         return false;
       }
       const {
-        getMedia
+        getEntityRecord
       } = (0,external_wp_data_namespaceObject.select)(external_wp_coreData_namespaceObject.store);
-      const media = getMedia(id);
+      const media = getEntityRecord('postType', 'attachment', id);
       return !!media && media.mime_type.includes('video');
     },
     transform: attributes => {
@@ -19765,9 +19765,9 @@ const file_transforms_transforms = {
         return false;
       }
       const {
-        getMedia
+        getEntityRecord
       } = (0,external_wp_data_namespaceObject.select)(external_wp_coreData_namespaceObject.store);
-      const media = getMedia(id);
+      const media = getEntityRecord('postType', 'attachment', id);
       return !!media && media.mime_type.includes('image');
     },
     transform: attributes => {
@@ -22679,16 +22679,16 @@ const EMPTY_IMAGE_MEDIA = [];
  */
 function useGetMedia(innerBlockImages) {
   return (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _select$getMediaItems;
+    var _select$getEntityReco;
     const imageIds = innerBlockImages.map(imageBlock => imageBlock.attributes.id).filter(id => id !== undefined);
     if (imageIds.length === 0) {
       return EMPTY_IMAGE_MEDIA;
     }
-    return (_select$getMediaItems = select(external_wp_coreData_namespaceObject.store).getMediaItems({
+    return (_select$getEntityReco = select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'attachment', {
       include: imageIds.join(','),
       per_page: -1,
       orderby: 'include'
-    })) !== null && _select$getMediaItems !== void 0 ? _select$getMediaItems : EMPTY_IMAGE_MEDIA;
+    })) !== null && _select$getEntityReco !== void 0 ? _select$getEntityReco : EMPTY_IMAGE_MEDIA;
   }, [innerBlockImages]);
 }
 
@@ -27409,7 +27409,7 @@ function image_Image({
   const {
     allowResize = true
   } = context;
-  const image = (0,external_wp_data_namespaceObject.useSelect)(select => id && isSingleSelected ? select(external_wp_coreData_namespaceObject.store).getMedia(id, {
+  const image = (0,external_wp_data_namespaceObject.useSelect)(select => id && isSingleSelected ? select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', 'attachment', id, {
     context: 'view'
   }) : null, [id, isSingleSelected]);
   const {
@@ -33713,7 +33713,7 @@ function MediaTextEdit({
     featuredImageMedia
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return {
-      featuredImageMedia: featuredImage && useFeaturedImage ? select(external_wp_coreData_namespaceObject.store).getMedia(featuredImage, {
+      featuredImageMedia: featuredImage && useFeaturedImage ? select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', 'attachment', featuredImage, {
         context: 'view'
       }) : undefined
     };
@@ -33722,7 +33722,7 @@ function MediaTextEdit({
     image
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return {
-      image: mediaId && isSelected ? select(external_wp_coreData_namespaceObject.store).getMedia(mediaId, {
+      image: mediaId && isSelected ? select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', 'attachment', mediaId, {
         context: 'view'
       }) : null
     };
@@ -46062,12 +46062,12 @@ function PostFeaturedImageEdit({
     postPermalink
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getMedia,
+      getEntityRecord,
       getPostType,
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
     return {
-      media: featuredImage && getMedia(featuredImage, {
+      media: featuredImage && getEntityRecord('postType', 'attachment', featuredImage, {
         context: 'view'
       }),
       postType: postTypeSlug && getPostType(postTypeSlug),
@@ -56997,10 +56997,10 @@ function LogoEdit({
     const siteData = getEntityRecord('root', '__unstableBase');
     const _siteLogoId = _canUserEdit ? siteSettings?.site_logo : siteData?.site_logo;
     const _siteIconId = siteSettings?.site_icon;
-    const mediaItem = _siteLogoId && select(external_wp_coreData_namespaceObject.store).getMedia(_siteLogoId, {
+    const mediaItem = _siteLogoId && select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', 'attachment', _siteLogoId, {
       context: 'view'
     });
-    const _isRequestingMediaItem = !!_siteLogoId && !select(external_wp_coreData_namespaceObject.store).hasFinishedResolution('getMedia', [_siteLogoId, {
+    const _isRequestingMediaItem = !!_siteLogoId && !select(external_wp_coreData_namespaceObject.store).hasFinishedResolution('getEntityRecord', ['postType', 'attachment', _siteLogoId, {
       context: 'view'
     }]);
     return {
