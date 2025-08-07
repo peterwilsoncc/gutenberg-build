@@ -147,7 +147,7 @@ const getAddNewPageCommand = () => function useAddNewPageCommand() {
     const addNewPage = isSiteEditor && isBlockBasedTheme ? createPageEntity : () => document.location.href = 'post-new.php?post_type=page';
     return [{
       name: 'core/add-new-page',
-      label: (0,external_wp_i18n_namespaceObject.__)('Add new page'),
+      label: (0,external_wp_i18n_namespaceObject.__)('Add Page'),
       icon: library_plus,
       callback: addNewPage
     }];
@@ -160,7 +160,7 @@ const getAddNewPageCommand = () => function useAddNewPageCommand() {
 function useAdminNavigationCommands() {
   (0,external_wp_commands_namespaceObject.useCommand)({
     name: 'core/add-new-post',
-    label: (0,external_wp_i18n_namespaceObject.__)('Add new post'),
+    label: (0,external_wp_i18n_namespaceObject.__)('Add Post'),
     icon: library_plus,
     callback: () => {
       document.location.assign('post-new.php');
