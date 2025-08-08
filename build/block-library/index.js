@@ -57683,13 +57683,17 @@ function SiteTitleEdit({
   } = attributes;
   const {
     canUserEdit,
-    title
+    title,
+    isNavigationMode
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       canUser,
       getEntityRecord,
       getEditedEntityRecord
     } = select(external_wp_coreData_namespaceObject.store);
+    const {
+      isNavigationMode: _isNavigationMode
+    } = select(external_wp_blockEditor_namespaceObject.store);
     const canEdit = canUser('update', {
       kind: 'root',
       name: 'site'
@@ -57698,13 +57702,15 @@ function SiteTitleEdit({
     const readOnlySettings = getEntityRecord('root', '__unstableBase');
     return {
       canUserEdit: canEdit,
-      title: canEdit ? settings?.title : readOnlySettings?.name
+      title: canEdit ? settings?.title : readOnlySettings?.name,
+      isNavigationMode: _isNavigationMode()
     };
   }, []);
   const {
     editEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
   function setTitle(newTitle) {
     editEntityRecord('root', 'site', undefined, {
       title: newTitle.trim()
@@ -57741,7 +57747,7 @@ function SiteTitleEdit({
     })
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
+    children: [!isNavigationMode && blockEditingMode === 'default' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
       group: "block",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
         value: level,
