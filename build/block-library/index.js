@@ -56658,6 +56658,12 @@ const SiteLogo = ({
     toggleSelection
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+
+  // Check if we're in contentOnly mode
+  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
+  const isNavigationMode = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).isNavigationMode(), []);
+  const isContentOnlyMode = blockEditingMode === 'contentOnly';
+  const isContentOnlyWriteMode = isNavigationMode && isContentOnlyMode;
   const {
     imageEditing,
     maxWidth,
@@ -56782,46 +56788,55 @@ const SiteLogo = ({
   /* eslint-enable no-lonely-if */
 
   const canEditImage = logoId && naturalWidth && naturalHeight && imageEditing;
-  const imgEdit = canEditImage && isEditingImage ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalImageEditor, {
-    id: logoId,
-    url: logoUrl,
-    width: currentWidth,
-    height: currentHeight,
-    naturalHeight: naturalHeight,
-    naturalWidth: naturalWidth,
-    onSaveImage: imageAttributes => {
-      setLogo(imageAttributes.id);
-    },
-    onFinishEditing: () => {
-      setIsEditingImage(false);
-    }
-  }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ResizableBox, {
-    size: {
+
+  // Hide crop and dimensions editing in write mode
+  const shouldShowCropAndDimensions = !isContentOnlyWriteMode;
+  let imgEdit;
+  if (canEditImage && isEditingImage) {
+    imgEdit = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__experimentalImageEditor, {
+      id: logoId,
+      url: logoUrl,
       width: currentWidth,
-      height: currentHeight
-    },
-    showHandle: isSelected,
-    minWidth: minWidth,
-    maxWidth: maxWidthBuffer,
-    minHeight: minHeight,
-    maxHeight: maxWidthBuffer / ratio,
-    lockAspectRatio: true,
-    enable: {
-      top: false,
-      right: showRightHandle,
-      bottom: true,
-      left: showLeftHandle
-    },
-    onResizeStart: onResizeStart,
-    onResizeStop: (event, direction, elt, delta) => {
-      onResizeStop();
-      setAttributes({
-        width: parseInt(currentWidth + delta.width, 10),
-        height: parseInt(currentHeight + delta.height, 10)
-      });
-    },
-    children: imgWrapper
-  });
+      height: currentHeight,
+      naturalHeight: naturalHeight,
+      naturalWidth: naturalWidth,
+      onSaveImage: imageAttributes => {
+        setLogo(imageAttributes.id);
+      },
+      onFinishEditing: () => {
+        setIsEditingImage(false);
+      }
+    });
+  } else {
+    // Always render ResizableBox but disable resize functionality in contentOnly mode
+    imgEdit = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ResizableBox, {
+      size: {
+        width: currentWidth,
+        height: currentHeight
+      },
+      showHandle: isSelected && shouldShowCropAndDimensions,
+      minWidth: minWidth,
+      maxWidth: maxWidthBuffer,
+      minHeight: minHeight,
+      maxHeight: maxWidthBuffer / ratio,
+      lockAspectRatio: true,
+      enable: {
+        top: false,
+        right: showRightHandle,
+        bottom: true,
+        left: showLeftHandle
+      },
+      onResizeStart: onResizeStart,
+      onResizeStop: (event, direction, elt, delta) => {
+        onResizeStop();
+        setAttributes({
+          width: parseInt(currentWidth + delta.width, 10),
+          height: parseInt(currentHeight + delta.height, 10)
+        });
+      },
+      children: imgWrapper
+    });
+  }
 
   // Support the previous location for the Site Icon settings. To be removed
   // when the required WP core version for Gutenberg is >= 6.5.0.
@@ -56916,9 +56931,9 @@ const SiteLogo = ({
           })
         })]
       })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+    }), canEditImage && !isEditingImage && shouldShowCropAndDimensions && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       group: "block",
-      children: canEditImage && !isEditingImage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
         onClick: () => setIsEditingImage(true),
         icon: library_crop,
         label: (0,external_wp_i18n_namespaceObject.__)('Crop')
