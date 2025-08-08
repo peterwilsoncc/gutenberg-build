@@ -63612,6 +63612,7 @@ function BlockSettingsDropdown({
     selectedBlockClientIds,
     openedBlockSettingsMenu,
     isContentOnly,
+    isNavigationMode,
     isZoomOut
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
@@ -63622,6 +63623,7 @@ function BlockSettingsDropdown({
       getBlockAttributes,
       getOpenedBlockSettingsMenu,
       getBlockEditingMode,
+      isNavigationMode: _isNavigationMode,
       isZoomOut: _isZoomOut
     } = unlock(select(store));
     const {
@@ -63636,6 +63638,7 @@ function BlockSettingsDropdown({
       selectedBlockClientIds: getSelectedBlockClientIds(),
       openedBlockSettingsMenu: getOpenedBlockSettingsMenu(),
       isContentOnly: getBlockEditingMode(firstBlockClientId) === 'contentOnly',
+      isNavigationMode: _isNavigationMode(),
       isZoomOut: _isZoomOut()
     };
   }, [firstBlockClientId]);
@@ -63660,6 +63663,7 @@ function BlockSettingsDropdown({
     };
   }, []);
   const hasSelectedBlocks = selectedBlockClientIds.length > 0;
+  const isContentOnlyWriteMode = isNavigationMode && isContentOnly;
   async function updateSelectionAfterDuplicate(clientIdsPromise) {
     if (!__experimentalSelectBlock) {
       return;
@@ -63750,11 +63754,11 @@ function BlockSettingsDropdown({
               parentBlockType: parentBlockType
             }), count === 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_html_convert_button, {
               clientId: firstBlockClientId
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyMenuItem, {
+            }), !isContentOnlyWriteMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyMenuItem, {
               clientIds: clientIds,
               onCopy: onCopy,
               shortcut: shortcuts.copy
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyMenuItem, {
+            }), !isContentOnlyWriteMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CopyMenuItem, {
               clientIds: clientIds,
               label: (0,external_wp_i18n_namespaceObject.__)('Cut'),
               eventType: "cut",
