@@ -27,6 +27,18 @@ const formatBold = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 });
 /* harmony default export */ const format_bold = (formatBold);
 
+;// external ["wp","privateApis"]
+const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
+;// ./packages/format-library/build-module/lock-unlock.js
+/**
+ * WordPress dependencies
+ */
+
+const {
+  lock,
+  unlock
+} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/format-library');
+
 ;// ./packages/format-library/build-module/bold/index.js
 /**
  * WordPress dependencies
@@ -36,6 +48,14 @@ const formatBold = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
+const {
+  essentialFormatKey
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const bold_name = 'core/bold';
 const title = (0,external_wp_i18n_namespaceObject.__)('Bold');
 const bold = {
@@ -43,6 +63,7 @@ const bold = {
   title,
   tagName: 'strong',
   className: null,
+  [essentialFormatKey]: true,
   edit({
     isActive,
     value,
@@ -377,6 +398,14 @@ const formatItalic = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
+const {
+  essentialFormatKey: italic_essentialFormatKey
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const italic_name = 'core/italic';
 const italic_title = (0,external_wp_i18n_namespaceObject.__)('Italic');
 const italic = {
@@ -384,6 +413,7 @@ const italic = {
   title: italic_title,
   tagName: 'em',
   className: null,
+  [italic_essentialFormatKey]: true,
   edit({
     isActive,
     value,
@@ -917,6 +947,10 @@ function getRichTextValueFromSelection(value, isActive) {
 
 
 
+
+const {
+  essentialFormatKey: link_essentialFormatKey
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 const link_name = 'core/link';
 const link_title = (0,external_wp_i18n_namespaceObject.__)('Link');
 function link_Edit({
@@ -1093,6 +1127,7 @@ const build_module_link_link = {
     target: 'target',
     rel: 'rel'
   },
+  [link_essentialFormatKey]: true,
   __unstablePasteRule(value, {
     html,
     plainText
@@ -1286,18 +1321,6 @@ const color = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
   })
 });
 /* harmony default export */ const library_color = (color);
-
-;// external ["wp","privateApis"]
-const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
-;// ./packages/format-library/build-module/lock-unlock.js
-/**
- * WordPress dependencies
- */
-
-const {
-  lock,
-  unlock
-} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/format-library');
 
 ;// ./packages/format-library/build-module/text-color/inline.js
 /**

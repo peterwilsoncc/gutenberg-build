@@ -8189,6 +8189,7 @@ const selectBlockPatternsKey = Symbol('selectBlockPatternsKey');
 const reusableBlocksSelectKey = Symbol('reusableBlocksSelect');
 const sectionRootClientIdKey = Symbol('sectionRootClientIdKey');
 const mediaEditKey = Symbol('mediaEditKey');
+const essentialFormatKey = Symbol('essentialFormat');
 
 ;// external ["wp","privateApis"]
 const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
@@ -73086,6 +73087,11 @@ function useMarkPersistent({
 
 
 
+
+/**
+ * Internal dependencies
+ */
+
 function formatTypesSelector(select) {
   return select(external_wp_richText_namespaceObject.store).getFormatTypes();
 }
@@ -73118,26 +73124,32 @@ function getPrefixedSelectKeys(selected, prefix) {
  * This hook provides RichText with the `formatTypes` and its derived props from
  * experimental format type settings.
  *
- * @param {Object}  $0                              Options
- * @param {string}  $0.clientId                     Block client ID.
- * @param {string}  $0.identifier                   Block attribute.
- * @param {boolean} $0.withoutInteractiveFormatting Whether to clean the interactive formatting or not.
- * @param {Array}   $0.allowedFormats               Allowed formats
+ * @param {Object}  options                                Options
+ * @param {string}  options.clientId                       Block client ID.
+ * @param {string}  options.identifier                     Block attribute.
+ * @param {Array}   options.allowedFormats                 Allowed formats
+ * @param {boolean} options.withoutInteractiveFormatting   Whether to clean the interactive formatting or not.
+ * @param {boolean} options.disableNoneEssentialFormatting Whether to disable none-essential formatting or not.
  */
 function useFormatTypes({
   clientId,
   identifier,
+  allowedFormats,
   withoutInteractiveFormatting,
-  allowedFormats
+  disableNoneEssentialFormatting = false
 }) {
   const allFormatTypes = (0,external_wp_data_namespaceObject.useSelect)(formatTypesSelector, []);
   const formatTypes = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return allFormatTypes.filter(({
       name,
       interactive,
-      tagName
+      tagName,
+      [essentialFormatKey]: isEssential
     }) => {
       if (allowedFormats && !allowedFormats.includes(name)) {
+        return false;
+      }
+      if (disableNoneEssentialFormatting && !isEssential) {
         return false;
       }
       if (withoutInteractiveFormatting && (interactive || interactiveContentTags.has(tagName))) {
@@ -73145,7 +73157,7 @@ function useFormatTypes({
       }
       return true;
     });
-  }, [allFormatTypes, allowedFormats, withoutInteractiveFormatting]);
+  }, [allFormatTypes, allowedFormats, disableNoneEssentialFormatting, withoutInteractiveFormatting]);
   const keyedSelected = (0,external_wp_data_namespaceObject.useSelect)(select => formatTypes.reduce((accumulator, type) => {
     if (!type.__experimentalGetPropsForEditableTreePreparation) {
       return accumulator;
@@ -74362,7 +74374,9 @@ function RichTextWrapper({
     }
     const {
       getSelectionStart,
-      getSelectionEnd
+      getSelectionEnd,
+      getBlockEditingMode,
+      isNavigationMode
     } = select(store);
     const selectionStart = getSelectionStart();
     const selectionEnd = getSelectionEnd();
@@ -74375,13 +74389,15 @@ function RichTextWrapper({
     return {
       selectionStart: isSelected ? selectionStart.offset : undefined,
       selectionEnd: isSelected ? selectionEnd.offset : undefined,
-      isSelected
+      isSelected,
+      isContentOnlyWriteMode: isNavigationMode() && getBlockEditingMode(clientId) === 'contentOnly'
     };
   };
   const {
     selectionStart,
     selectionEnd,
-    isSelected
+    isSelected,
+    isContentOnlyWriteMode
   } = (0,external_wp_data_namespaceObject.useSelect)(selector, [clientId, identifier, instanceId, originalIsSelected, isBlockSelected]);
   const {
     disableBoundBlock,
@@ -74488,8 +74504,9 @@ function RichTextWrapper({
   } = useFormatTypes({
     clientId,
     identifier,
+    allowedFormats: adjustedAllowedFormats,
     withoutInteractiveFormatting,
-    allowedFormats: adjustedAllowedFormats
+    disableNoneEssentialFormatting: isContentOnlyWriteMode
   });
   function addEditorOnlyFormats(value) {
     return valueHandlers.reduce((accumulator, fn) => fn(accumulator, value.text), value.formats);
@@ -80893,7 +80910,8 @@ lock(privateApis, {
   sectionRootClientIdKey: sectionRootClientIdKey,
   CommentIconSlotFill: block_comment_icon_slot,
   CommentIconToolbarSlotFill: block_comment_icon_toolbar_slot,
-  mediaEditKey: mediaEditKey
+  mediaEditKey: mediaEditKey,
+  essentialFormatKey: essentialFormatKey
 });
 
 ;// ./packages/block-editor/build-module/index.js
