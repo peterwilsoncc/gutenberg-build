@@ -34456,7 +34456,7 @@ function DuotonePanelPure({
             }
           };
           setAttributes({
-            style: newStyle
+            style: utils_cleanEmptyObject(newStyle)
           });
         },
         settings: settings
@@ -34480,7 +34480,7 @@ function DuotonePanelPure({
             }
           };
           setAttributes({
-            style: newStyle
+            style: utils_cleanEmptyObject(newStyle)
           });
         },
         settings: settings
