@@ -44057,6 +44057,9 @@ const _HeaderMenu = (0,external_wp_element_namespaceObject.forwardRef)(function 
   // 3. The field does not opt-out of filtering.
   // 4. The filter is not primary (if it is, it is already visible).
   canAddFilter = !view.filters?.some(_filter => fieldId === _filter.field) && !!(field.elements?.length || field.Edit) && field.filterBy !== false && !field.filterBy?.isPrimary;
+  if (!isSortable && !canMove && !isHidable && !canAddFilter) {
+    return header;
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(column_header_menu_Menu, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(column_header_menu_Menu.TriggerButton, {
       render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -44685,7 +44688,7 @@ function ViewTable({
               canMove: false
             })
           }), columns.map((column, index) => {
-            var _view$layout$styles$c2;
+            var _view$layout$styles$c2, _view$layout$enableMo;
             // Explicit picks the supported styles.
             const {
               width,
@@ -44709,7 +44712,8 @@ function ViewTable({
                 fields: fields,
                 onChangeView: onChangeView,
                 onHide: onHide,
-                setOpenedFilter: setOpenedFilter
+                setOpenedFilter: setOpenedFilter,
+                canMove: (_view$layout$enableMo = view.layout?.enableMoving) !== null && _view$layout$enableMo !== void 0 ? _view$layout$enableMo : true
               })
             }, column);
           }), !!actions?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("th", {
