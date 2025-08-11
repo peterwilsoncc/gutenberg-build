@@ -16614,7 +16614,8 @@ const cover_metadata = {
   textdomain: "default",
   attributes: {
     url: {
-      type: "string"
+      type: "string",
+      role: "content"
     },
     useFeaturedImage: {
       type: "boolean",
