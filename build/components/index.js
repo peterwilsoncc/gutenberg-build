@@ -54505,6 +54505,7 @@ const useLilius = ({
 
 ;// ./packages/components/build-module/date-time/date/styles.js
 
+function date_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
 /**
  * External dependencies
  */
@@ -54518,28 +54519,36 @@ const useLilius = ({
 
 
 const styles_Wrapper = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
-  target: "e105ri6r5"
+  target: "e105ri6r7"
 } : 0)(boxSizingReset, ";" + ( true ? "" : 0));
 const Navigator = /*#__PURE__*/emotion_styled_base_browser_esm(h_stack_component,  true ? {
+  target: "e105ri6r6"
+} : 0)("column-gap:", space(2), ";display:grid;grid-template-columns:0.5fr repeat( 5, 1fr ) 0.5fr;justify-items:center;margin-bottom:", space(4), ";" + ( true ? "" : 0));
+const ViewPreviousMonthButton = /*#__PURE__*/emotion_styled_base_browser_esm(build_module_button,  true ? {
+  target: "e105ri6r5"
+} : 0)( true ? {
+  name: "sarfoe",
+  styles: "grid-column:1/2"
+} : 0);
+const ViewNextMonthButton = /*#__PURE__*/emotion_styled_base_browser_esm(build_module_button,  true ? {
   target: "e105ri6r4"
-} : 0)("margin-bottom:", space(4), ";" + ( true ? "" : 0));
+} : 0)( true ? {
+  name: "1v98r3z",
+  styles: "grid-column:7/8"
+} : 0);
 const NavigatorHeading = /*#__PURE__*/emotion_styled_base_browser_esm(heading_component,  true ? {
   target: "e105ri6r3"
-} : 0)("font-size:", config_values.fontSize, ";font-weight:", config_values.fontWeight, ";strong{font-weight:", config_values.fontWeightHeading, ";}" + ( true ? "" : 0));
+} : 0)("font-size:", config_values.fontSize, ";font-weight:", config_values.fontWeight, ";grid-column:2/7;strong{font-weight:", config_values.fontWeightHeading, ";}" + ( true ? "" : 0));
 const Calendar = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "e105ri6r2"
 } : 0)("column-gap:", space(2), ";display:grid;grid-template-columns:0.5fr repeat( 5, 1fr ) 0.5fr;justify-items:center;row-gap:", space(2), ";" + ( true ? "" : 0));
 const DayOfWeek = /*#__PURE__*/emotion_styled_base_browser_esm("div",  true ? {
   target: "e105ri6r1"
-} : 0)("color:", COLORS.theme.gray[700], ";font-size:", config_values.fontSize, ";line-height:", config_values.fontLineHeightBase, ";&:nth-of-type( 1 ){justify-self:start;}&:nth-of-type( 7 ){justify-self:end;}" + ( true ? "" : 0));
+} : 0)("color:", COLORS.theme.gray[700], ";font-size:", config_values.fontSize, ";line-height:", config_values.fontLineHeightBase, ";" + ( true ? "" : 0));
 const DayButton = /*#__PURE__*/emotion_styled_base_browser_esm(build_module_button,  true ? {
   shouldForwardProp: prop => !['column', 'isSelected', 'isToday', 'hasEvents'].includes(prop),
   target: "e105ri6r0"
-} : 0)("grid-column:", props => props.column, ";position:relative;justify-content:center;", props => props.column === 1 && `
-		justify-self: start;
-		`, " ", props => props.column === 7 && `
-		justify-self: end;
-		`, " ", props => props.disabled && `
+} : 0)("grid-column:", props => props.column, ";position:relative;justify-content:center;", props => props.disabled && `
 		pointer-events: none;
 		`, " &&&{border-radius:", config_values.radiusRound, ";height:", space(7), ";width:", space(7), ";", props => props.isSelected && `
 				background: ${COLORS.theme.accent};
@@ -54680,7 +54689,6 @@ const TIMEZONELESS_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
 
 
-
 /**
  * DatePicker is a React component that renders a calendar for date selection.
  *
@@ -54746,7 +54754,7 @@ function DatePicker({
     role: "application",
     "aria-label": (0,external_wp_i18n_namespaceObject.__)('Calendar'),
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Navigator, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewPreviousMonthButton, {
         icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? arrow_right : arrow_left,
         variant: "tertiary",
         "aria-label": (0,external_wp_i18n_namespaceObject.__)('View previous month'),
@@ -54761,7 +54769,7 @@ function DatePicker({
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("strong", {
           children: (0,external_wp_date_namespaceObject.dateI18n)('F', viewing, -viewing.getTimezoneOffset())
         }), ' ', (0,external_wp_date_namespaceObject.dateI18n)('Y', viewing, -viewing.getTimezoneOffset())]
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_button, {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewNextMonthButton, {
         icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? arrow_left : arrow_right,
         variant: "tertiary",
         "aria-label": (0,external_wp_i18n_namespaceObject.__)('View next month'),
