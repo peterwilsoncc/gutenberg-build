@@ -21655,7 +21655,7 @@ function DocumentBar(props) {
         } : undefined,
         children: (0,external_wp_i18n_namespaceObject.__)('Back')
       })
-    }), !isTemplate && isTemplatePreview && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
+    }), !isTemplate && isTemplatePreview && !hasBackButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockIcon, {
       icon: library_layout,
       className: "editor-document-bar__icon-layout"
     }), isNotFound ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
