@@ -6233,8 +6233,8 @@ const arrayFieldType = {
       return null;
     }
   },
-  Edit: null,
-  // Not implemented yet
+  Edit: 'array',
+  // Use array control
   render,
   enableSorting: true,
   filterBy: {
@@ -10789,6 +10789,70 @@ function boolean_Boolean({
   });
 }
 
+;// ./packages/dataviews/build-module/dataform-controls/array.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+function ArrayControl({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  var _elements$map;
+  const {
+    id,
+    label,
+    placeholder,
+    elements
+  } = field;
+  const value = field.getValue({
+    item: data
+  });
+  const findElementByValue = (0,external_wp_element_namespaceObject.useCallback)(suggestionValue => {
+    return elements?.find(suggestion => suggestion.value === suggestionValue);
+  }, [elements]);
+  const findElementByLabel = (0,external_wp_element_namespaceObject.useCallback)(suggestionLabel => {
+    return elements?.find(suggestion => suggestion.label === suggestionLabel);
+  }, [elements]);
+
+  // Ensure value is an array
+  const arrayValue = (0,external_wp_element_namespaceObject.useMemo)(() => Array.isArray(value) ? value.map(token => {
+    const tokenLabel = findElementByValue(token)?.label;
+    return tokenLabel || token;
+  }) : [], [value, findElementByValue]);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(tokens => {
+    // Convert TokenItem objects to strings
+    const stringTokens = tokens.map(token => {
+      if (typeof token !== 'string') {
+        return token.value;
+      }
+      const tokenByLabel = findElementByLabel(token);
+      return tokenByLabel?.value || token;
+    });
+    onChange({
+      [id]: stringTokens
+    });
+  }, [id, onChange, findElementByLabel]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FormTokenField, {
+    label: hideLabelFromVision ? undefined : label,
+    value: arrayValue,
+    onChange: onChangeControl,
+    placeholder: placeholder,
+    suggestions: (_elements$map = elements?.map(suggestion => suggestion.label)) !== null && _elements$map !== void 0 ? _elements$map : [],
+    __experimentalExpandOnFocus: elements && elements.length > 0,
+    __next40pxDefaultSize: true,
+    __nextHasNoMarginBottom: true
+  });
+}
+
 ;// ./packages/dataviews/build-module/dataform-controls/index.js
 /**
  * External dependencies
@@ -10808,7 +10872,9 @@ function boolean_Boolean({
 
 
 
+
 const FORM_CONTROLS = {
+  array: ArrayControl,
   boolean: boolean_Boolean,
   checkbox: Checkbox,
   datetime: DateTime,
@@ -10827,7 +10893,7 @@ function getControl(field, fieldTypeDefinition) {
   if (typeof field.Edit === 'string') {
     return getControlByType(field.Edit);
   }
-  if (field.elements) {
+  if (field.elements && field.type !== 'array') {
     return getControlByType('select');
   }
   if (typeof fieldTypeDefinition.Edit === 'string') {
