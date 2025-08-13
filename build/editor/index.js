@@ -21373,10 +21373,86 @@ function ControlsWithStoreSubscription(props) {
 }
 (0,external_wp_hooks_namespaceObject.addFilter)('editor.BlockEdit', 'core/editor/with-pattern-override-controls', withPatternOverrideControls);
 
+;// ./packages/editor/build-module/hooks/navigation-link-view-button.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+
+// Target blocks that should have the View button.
+
+const SUPPORTED_BLOCKS = ['core/navigation-link', 'core/navigation-submenu'];
+
+/**
+ * Component that renders the View button for navigation blocks.
+ *
+ * @param {Object} props            Component props.
+ * @param {Object} props.attributes Block attributes.
+ * @return {JSX.Element|null} The View button component or null if not applicable.
+ */
+function NavigationViewButton({
+  attributes
+}) {
+  const {
+    kind,
+    id,
+    type
+  } = attributes;
+  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
+  const onNavigateToEntityRecord = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_blockEditor_namespaceObject.store).getSettings().onNavigateToEntityRecord, []);
+  const onViewPage = (0,external_wp_element_namespaceObject.useCallback)(() => {
+    if (kind === 'post-type' && type === 'page' && id && onNavigateToEntityRecord) {
+      onNavigateToEntityRecord({
+        postId: id,
+        postType: type
+      });
+    }
+  }, [kind, id, type, onNavigateToEntityRecord]);
+
+  // Only show for page-type links, when navigation is available, and when in contentOnly mode.
+  if (kind !== 'post-type' || type !== 'page' || !id || !onNavigateToEntityRecord || blockEditingMode !== 'contentOnly') {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.__unstableBlockToolbarLastItem, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+        name: "view",
+        title: (0,external_wp_i18n_namespaceObject.__)('View'),
+        onClick: onViewPage,
+        children: (0,external_wp_i18n_namespaceObject.__)('View')
+      })
+    })
+  });
+}
+
+/**
+ * Higher-order component that adds the View button to navigation blocks.
+ */
+const withNavigationViewButton = (0,external_wp_compose_namespaceObject.createHigherOrderComponent)(BlockEdit => props => {
+  const isSupportedBlock = SUPPORTED_BLOCKS.includes(props.name);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockEdit, {
+      ...props
+    }, "edit"), props.isSelected && isSupportedBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationViewButton, {
+      ...props
+    })]
+  });
+}, 'withNavigationViewButton');
+
+// Register the filter.
+(0,external_wp_hooks_namespaceObject.addFilter)('editor.BlockEdit', 'core/editor/with-navigation-view-button', withNavigationViewButton);
+
 ;// ./packages/editor/build-module/hooks/index.js
 /**
  * Internal dependencies
  */
+
 
 
 
