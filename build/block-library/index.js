@@ -54107,6 +54107,43 @@ function useArchiveLabel() {
   }, [authorSlug, isAuthor, taxonomy, term]);
 }
 
+;// ./packages/block-library/build-module/query-title/use-post-type-label.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Hook to fetch the singular label for the current post type.
+ *
+ * @param {string} contextPostType Context provided post type.
+ */
+function usePostTypeLabel(contextPostType) {
+  const currentPostType = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    // Access core/editor by string to avoid @wordpress/editor dependency.
+    // eslint-disable-next-line @wordpress/data-no-store-string-literals
+    const {
+      getCurrentPostType
+    } = select('core/editor');
+    return getCurrentPostType();
+  }, []);
+
+  // Fetch the post type label from the core data store
+  return (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getPostType
+    } = select(external_wp_coreData_namespaceObject.store);
+    const postTypeSlug = contextPostType || currentPostType;
+    const postType = getPostType(postTypeSlug);
+
+    // Return the singular name of the post type
+    return {
+      postTypeLabel: postType ? postType.labels.singular_name : ''
+    };
+  }, [contextPostType, currentPostType]);
+}
+
 ;// ./packages/block-library/build-module/query-title/edit.js
 /**
  * External dependencies
@@ -54126,7 +54163,8 @@ function useArchiveLabel() {
 
 
 
-const SUPPORTED_TYPES = ['archive', 'search'];
+
+const SUPPORTED_TYPES = ['archive', 'search', 'post-type'];
 function QueryTitleEdit({
   attributes: {
     type,
@@ -54136,12 +54174,18 @@ function QueryTitleEdit({
     showPrefix,
     showSearchTerm
   },
-  setAttributes
+  setAttributes,
+  context: {
+    query
+  }
 }) {
   const {
     archiveTypeLabel,
     archiveNameLabel
   } = useArchiveLabel();
+  const {
+    postTypeLabel
+  } = usePostTypeLabel(query?.postType);
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const TagName = `h${level}`;
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
@@ -54241,6 +54285,49 @@ function QueryTitleEdit({
       })]
     });
   }
+  if (type === 'post-type') {
+    let title;
+    if (postTypeLabel) {
+      if (showPrefix) {
+        title = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: Singular post type name of the queried object */
+        (0,external_wp_i18n_namespaceObject.__)('Post Type: "%s"'), postTypeLabel);
+      } else {
+        title = postTypeLabel;
+      }
+    } else {
+      title = showPrefix ? (0,external_wp_i18n_namespaceObject.__)('Post Type: Name') : (0,external_wp_i18n_namespaceObject.__)('Name');
+    }
+    titleElement = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+          resetAll: () => setAttributes({
+            showPrefix: true
+          }),
+          dropdownMenuProps: dropdownMenuProps,
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+            hasValue: () => !showPrefix,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show post type label'),
+            onDeselect: () => setAttributes({
+              showPrefix: true
+            }),
+            isShownByDefault: true,
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+              __nextHasNoMarginBottom: true,
+              label: (0,external_wp_i18n_namespaceObject.__)('Show post type label'),
+              onChange: () => setAttributes({
+                showPrefix: !showPrefix
+              }),
+              checked: showPrefix
+            })
+          })
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
+        ...blockProps,
+        children: title
+      })]
+    });
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
       group: "block",
@@ -54286,6 +54373,16 @@ const query_title_variations_variations = [{
   icon: library_title,
   attributes: {
     type: 'search'
+  },
+  scope: ['inserter']
+}, {
+  isDefault: false,
+  name: 'post-type-label',
+  title: (0,external_wp_i18n_namespaceObject.__)('Post Type Label'),
+  description: (0,external_wp_i18n_namespaceObject.__)('Display the post type label based on the queried object.'),
+  icon: library_title,
+  attributes: {
+    type: 'post-type'
   },
   scope: ['inserter']
 }];
@@ -54403,6 +54500,7 @@ const query_title_metadata = {
       type: "search"
     }
   },
+  usesContext: ["query"],
   supports: {
     align: ["wide", "full"],
     html: false,
