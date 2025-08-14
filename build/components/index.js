@@ -468,6 +468,10 @@ GradientParser.stringify = (function() {
       return node.value + 'px';
     },
 
+    'visit_calc': function(node) {
+      return 'calc(' + node.value + ')';
+    },
+
     'visit_literal': function(node) {
       return visitor.visit_color(node.value, node);
     },
@@ -482,6 +486,18 @@ GradientParser.stringify = (function() {
 
     'visit_rgba': function(node) {
       return visitor.visit_color('rgba(' + node.value.join(', ') + ')', node);
+    },
+
+    'visit_hsl': function(node) {
+      return visitor.visit_color('hsl(' + node.value[0] + ', ' + node.value[1] + '%, ' + node.value[2] + '%)', node);
+    },
+
+    'visit_hsla': function(node) {
+      return visitor.visit_color('hsla(' + node.value[0] + ', ' + node.value[1] + '%, ' + node.value[2] + '%, ' + node.value[3] + ')', node);
+    },
+
+    'visit_var': function(node) {
+      return visitor.visit_color('var(' + node.value + ')', node);
     },
 
     'visit_color': function(resultColor, node) {
@@ -516,6 +532,13 @@ GradientParser.stringify = (function() {
       return result;
     },
 
+    'visit_object': function(obj) {
+      if (obj.width && obj.height) {
+        return visitor.visit(obj.width) + ' ' + visitor.visit(obj.height);
+      }
+      return '';
+    },
+
     'visit': function(element) {
       if (!element) {
         return '';
@@ -523,7 +546,9 @@ GradientParser.stringify = (function() {
       var result = '';
 
       if (element instanceof Array) {
-        return visitor.visit_array(element, result);
+        return visitor.visit_array(element);
+      } else if (typeof element === 'object' && !element.type) {
+        return visitor.visit_object(element);
       } else if (element.type) {
         var nodeVisitor = visitor['visit_' + element.type];
         if (nodeVisitor) {
@@ -556,13 +581,14 @@ GradientParser.parse = (function() {
     repeatingLinearGradient: /^(\-(webkit|o|ms|moz)\-)?(repeating\-linear\-gradient)/i,
     radialGradient: /^(\-(webkit|o|ms|moz)\-)?(radial\-gradient)/i,
     repeatingRadialGradient: /^(\-(webkit|o|ms|moz)\-)?(repeating\-radial\-gradient)/i,
-    sideOrCorner: /^to (left (top|bottom)|right (top|bottom)|left|right|top|bottom)/i,
+    sideOrCorner: /^to (left (top|bottom)|right (top|bottom)|top (left|right)|bottom (left|right)|left|right|top|bottom)/i,
     extentKeywords: /^(closest\-side|closest\-corner|farthest\-side|farthest\-corner|contain|cover)/,
     positionKeywords: /^(left|center|right|top|bottom)/i,
     pixelValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))px/,
     percentageValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))\%/,
     emValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))em/,
     angleValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))deg/,
+    radianValue: /^(-?(([0-9]*\.[0-9]+)|([0-9]+\.?)))rad/,
     startCall: /^\(/,
     endCall: /^\)/,
     comma: /^,/,
@@ -570,7 +596,12 @@ GradientParser.parse = (function() {
     literalColor: /^([a-zA-Z]+)/,
     rgbColor: /^rgb/i,
     rgbaColor: /^rgba/i,
-    number: /^(([0-9]*\.[0-9]+)|([0-9]+\.?))/
+    varColor: /^var/i,
+    calcValue: /^calc/i,
+    variableName: /^(--[a-zA-Z0-9-,\s\#]+)/,
+    number: /^(([0-9]*\.[0-9]+)|([0-9]+\.?))/,
+    hslColor: /^hsl/i,
+    hslaColor: /^hsla/i,
   };
 
   var input = '';
@@ -654,8 +685,24 @@ GradientParser.parse = (function() {
   }
 
   function matchLinearOrientation() {
-    return matchSideOrCorner() ||
-      matchAngle();
+    // Check for standard CSS3 "to" direction
+    var sideOrCorner = matchSideOrCorner();
+    if (sideOrCorner) {
+      return sideOrCorner;
+    }
+    
+    // Check for legacy single keyword direction (e.g., "right", "top")
+    var legacyDirection = match('position-keyword', tokens.positionKeywords, 1);
+    if (legacyDirection) {
+      // For legacy syntax, we convert to the directional type
+      return {
+        type: 'directional',
+        value: legacyDirection.value
+      };
+    }
+    
+    // If neither, check for angle
+    return matchAngle();
   }
 
   function matchSideOrCorner() {
@@ -663,7 +710,8 @@ GradientParser.parse = (function() {
   }
 
   function matchAngle() {
-    return match('angular', tokens.angleValue, 1);
+    return match('angular', tokens.angleValue, 1) ||
+      match('angular', tokens.radianValue, 1);
   }
 
   function matchListRadialOrientations() {
@@ -704,12 +752,21 @@ GradientParser.parse = (function() {
           radialType.at = positionAt;
         }
       } else {
-        var defaultPosition = matchPositioning();
-        if (defaultPosition) {
+        // Check for "at" position first, which is a common browser output format
+        var atPosition = matchAtPosition();
+        if (atPosition) {
           radialType = {
             type: 'default-radial',
-            at: defaultPosition
+            at: atPosition
           };
+        } else {
+          var defaultPosition = matchPositioning();
+          if (defaultPosition) {
+            radialType = {
+              type: 'default-radial',
+              at: defaultPosition
+            };
+          }
         }
       }
     }
@@ -731,7 +788,7 @@ GradientParser.parse = (function() {
     var ellipse = match('shape', /^(ellipse)/i, 0);
 
     if (ellipse) {
-      ellipse.style =  matchDistance() || matchExtentKeyword();
+      ellipse.style = matchPositioning() || matchDistance() || matchExtentKeyword();
     }
 
     return ellipse;
@@ -803,8 +860,11 @@ GradientParser.parse = (function() {
 
   function matchColor() {
     return matchHexColor() ||
+      matchHSLAColor() ||
+      matchHSLColor() ||
       matchRGBAColor() ||
       matchRGBColor() ||
+      matchVarColor() ||
       matchLiteralColor();
   }
 
@@ -834,6 +894,70 @@ GradientParser.parse = (function() {
     });
   }
 
+  function matchVarColor() {
+    return matchCall(tokens.varColor, function () {
+      return {
+        type: 'var',
+        value: matchVariableName()
+      };
+    });
+  }
+
+  function matchHSLColor() {
+    return matchCall(tokens.hslColor, function() {
+      // Check for percentage before trying to parse the hue
+      var lookahead = scan(tokens.percentageValue);
+      if (lookahead) {
+        error('HSL hue value must be a number in degrees (0-360) or normalized (-360 to 360), not a percentage');
+      }
+      
+      var hue = matchNumber();
+      scan(tokens.comma);
+      var captures = scan(tokens.percentageValue);
+      var sat = captures ? captures[1] : null;
+      scan(tokens.comma);
+      captures = scan(tokens.percentageValue);
+      var light = captures ? captures[1] : null;
+      if (!sat || !light) {
+        error('Expected percentage value for saturation and lightness in HSL');
+      }
+      return {
+        type: 'hsl',
+        value: [hue, sat, light]
+      };
+    });
+  }
+
+  function matchHSLAColor() {
+    return matchCall(tokens.hslaColor, function() {
+      var hue = matchNumber();
+      scan(tokens.comma);
+      var captures = scan(tokens.percentageValue);
+      var sat = captures ? captures[1] : null;
+      scan(tokens.comma);
+      captures = scan(tokens.percentageValue);
+      var light = captures ? captures[1] : null;
+      scan(tokens.comma);
+      var alpha = matchNumber();
+      if (!sat || !light) {
+        error('Expected percentage value for saturation and lightness in HSLA');
+      }
+      return {
+        type: 'hsla',
+        value: [hue, sat, light, alpha]
+      };
+    });
+  }
+
+  function matchPercentage() {
+    var captures = scan(tokens.percentageValue);
+    return captures ? captures[1] : null;
+  }
+
+  function matchVariableName() {
+    return scan(tokens.variableName)[1];
+  }
+
   function matchNumber() {
     return scan(tokens.number)[1];
   }
@@ -841,11 +965,46 @@ GradientParser.parse = (function() {
   function matchDistance() {
     return match('%', tokens.percentageValue, 1) ||
       matchPositionKeyword() ||
+      matchCalc() ||
       matchLength();
   }
 
   function matchPositionKeyword() {
     return match('position-keyword', tokens.positionKeywords, 1);
+  }
+
+  function matchCalc() {
+    return matchCall(tokens.calcValue, function() {
+      var openParenCount = 1; // Start with the opening parenthesis from calc(
+      var i = 0;
+      
+      // Parse through the content looking for balanced parentheses
+      while (openParenCount > 0 && i < input.length) {
+        var char = input.charAt(i);
+        if (char === '(') {
+          openParenCount++;
+        } else if (char === ')') {
+          openParenCount--;
+        }
+        i++;
+      }
+      
+      // If we exited because we ran out of input but still have open parentheses, error
+      if (openParenCount > 0) {
+        error('Missing closing parenthesis in calc() expression');
+      }
+      
+      // Get the content inside the calc() without the last closing paren
+      var calcContent = input.substring(0, i - 1);
+      
+      // Consume the calc expression content
+      consume(i - 1); // -1 because we don't want to consume the closing parenthesis
+      
+      return {
+        type: 'calc',
+        value: calcContent
+      };
+    });
   }
 
   function matchLength() {
@@ -885,7 +1044,11 @@ GradientParser.parse = (function() {
   }
 
   return function(code) {
-    input = code.toString();
+    input = code.toString().trim();
+    // Remove trailing semicolon if present
+    if (input.endsWith(';')) {
+      input = input.slice(0, -1);
+    }
     return getAST();
   };
 })();
@@ -45478,6 +45641,17 @@ function serializeGradientColor({
   if (type === 'hex') {
     return `#${value}`;
   }
+  if (type === 'var') {
+    return `var(${value})`;
+  }
+  if (type === 'hsl') {
+    const [hue, saturation, lightness] = value;
+    return `hsl(${hue},${saturation}%,${lightness}%)`;
+  }
+  if (type === 'hsla') {
+    const [hue, saturation, lightness, alpha] = value;
+    return `hsla(${hue},${saturation}%,${lightness}%,${alpha})`;
+  }
   return `${type}(${value.join(',')})`;
 }
 function serializeGradientPosition(position) {
@@ -45488,6 +45662,9 @@ function serializeGradientPosition(position) {
     value,
     type
   } = position;
+  if (type === 'calc') {
+    return `calc(${value})`;
+  }
   return `${value}${type}`;
 }
 function serializeGradientColorStop({
@@ -45612,9 +45789,21 @@ function getStopCssColor(colorStop) {
       return `#${colorStop.value}`;
     case 'literal':
       return colorStop.value;
+    case 'var':
+      return `${colorStop.type}(${colorStop.value})`;
     case 'rgb':
     case 'rgba':
       return `${colorStop.type}(${colorStop.value.join(',')})`;
+    case 'hsl':
+      {
+        const [hue, saturation, lightness] = colorStop.value;
+        return `hsl(${hue},${saturation}%,${lightness}%)`;
+      }
+    case 'hsla':
+      {
+        const [hue, saturation, lightness, alpha] = colorStop.value;
+        return `hsla(${hue},${saturation}%,${lightness}%,${alpha})`;
+      }
     default:
       // Should be unreachable if passing an AST from gradient-parser.
       // See https://github.com/rafaelcaricio/gradient-parser#ast.
