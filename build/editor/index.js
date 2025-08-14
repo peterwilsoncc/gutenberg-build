@@ -11048,6 +11048,73 @@ function isCombinedField(field) {
   return field.children !== undefined;
 }
 
+;// ./packages/dataviews/build-module/normalize-form-fields.js
+/**
+ * Internal dependencies
+ */
+
+const DEFAULT_LAYOUT = {
+  type: 'regular',
+  labelPosition: 'top'
+};
+
+/**
+ * Normalizes a layout configuration based on its type.
+ *
+ * @param layout The layout object to normalize.
+ * @return The normalized layout object.
+ */
+function normalizeLayout(layout) {
+  let normalizedLayout = DEFAULT_LAYOUT;
+  if (layout?.type === 'regular') {
+    var _layout$labelPosition;
+    normalizedLayout = {
+      type: 'regular',
+      labelPosition: (_layout$labelPosition = layout?.labelPosition) !== null && _layout$labelPosition !== void 0 ? _layout$labelPosition : 'top'
+    };
+  } else if (layout?.type === 'panel') {
+    var _layout$labelPosition2;
+    normalizedLayout = {
+      type: 'panel',
+      labelPosition: (_layout$labelPosition2 = layout?.labelPosition) !== null && _layout$labelPosition2 !== void 0 ? _layout$labelPosition2 : 'side'
+    };
+  } else if (layout?.type === 'card') {
+    if (layout.withHeader === false) {
+      // Don't let isOpened be false if withHeader is false.
+      // Otherwise, the card will not be visible.
+      normalizedLayout = {
+        type: 'card',
+        withHeader: false,
+        isOpened: true
+      };
+    } else {
+      normalizedLayout = {
+        type: 'card',
+        withHeader: true,
+        isOpened: typeof layout.isOpened === 'boolean' ? layout.isOpened : true
+      };
+    }
+  }
+  return normalizedLayout;
+}
+function normalizeFormFields(form) {
+  var _form$fields;
+  const formLayout = normalizeLayout(form?.layout);
+  return ((_form$fields = form.fields) !== null && _form$fields !== void 0 ? _form$fields : []).map(field => {
+    if (typeof field === 'string') {
+      return {
+        id: field,
+        layout: formLayout
+      };
+    }
+    const fieldLayout = field.layout ? normalizeLayout(field.layout) : formLayout;
+    return {
+      ...field,
+      layout: fieldLayout
+    };
+  });
+}
+
 ;// ./packages/dataviews/build-module/dataforms-layouts/regular/index.js
 /**
  * External dependencies
@@ -11063,6 +11130,7 @@ function isCombinedField(field) {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -11090,29 +11158,13 @@ function FormRegularField({
   onChange,
   hideLabelFromVision
 }) {
-  var _field$labelPosition;
   const {
     fields
   } = (0,external_wp_element_namespaceObject.useContext)(dataform_context);
-  const form = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (isCombinedField(field)) {
-      return {
-        fields: field.children.map(child => {
-          if (typeof child === 'string') {
-            return {
-              id: child
-            };
-          }
-          return child;
-        }),
-        type: 'regular'
-      };
-    }
-    return {
-      type: 'regular',
-      fields: []
-    };
-  }, [field]);
+  const form = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    layout: DEFAULT_LAYOUT,
+    fields: isCombinedField(field) ? field.children : []
+  }), [field]);
   if (isCombinedField(field)) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [!hideLabelFromVision && field.label && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Header, {
@@ -11124,7 +11176,11 @@ function FormRegularField({
       })]
     });
   }
-  const labelPosition = (_field$labelPosition = field.labelPosition) !== null && _field$labelPosition !== void 0 ? _field$labelPosition : 'top';
+  const layout = normalizeLayout({
+    ...field.layout,
+    type: 'regular'
+  });
+  const labelPosition = layout.labelPosition;
   const fieldDefinition = fields.find(fieldDef => fieldDef.id === field.id);
   if (!fieldDefinition || !fieldDefinition.Edit) {
     return null;
@@ -11208,6 +11264,7 @@ const closeSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 
 
 
+
 function DropdownHeader({
   title,
   onClose
@@ -11239,28 +11296,14 @@ function PanelDropdown({
   field
 }) {
   const fieldLabel = isCombinedField(field) ? field.label : fieldDefinition?.label;
-  const form = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (isCombinedField(field)) {
-      return {
-        type: 'regular',
-        fields: field.children.map(child => {
-          if (typeof child === 'string') {
-            return {
-              id: child
-            };
-          }
-          return child;
-        })
-      };
-    }
+  const form = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    layout: DEFAULT_LAYOUT,
+    fields: isCombinedField(field) ? field.children :
     // If not explicit children return the field id itself.
-    return {
-      type: 'regular',
-      fields: [{
-        id: field.id
-      }]
-    };
-  }, [field]);
+    [{
+      id: field.id
+    }]
+  }), [field]);
 
   // Memoize popoverProps to avoid returning a new object every time.
   const popoverProps = (0,external_wp_element_namespaceObject.useMemo)(() => ({
@@ -11327,18 +11370,20 @@ function FormPanelField({
   field,
   onChange
 }) {
-  var _field$labelPosition;
   const {
     fields
   } = (0,external_wp_element_namespaceObject.useContext)(dataform_context);
-  const fieldDefinition = fields.find(fieldDef => {
-    // Default to the first child if it is a combined field.
+  const fieldDefinition = fields.find(_field => {
+    // Default to the first simple child if it is a combined field.
     if (isCombinedField(field)) {
-      const children = field.children.filter(child => typeof child === 'string' || !isCombinedField(child));
-      const firstChildFieldId = typeof children[0] === 'string' ? children[0] : children[0].id;
-      return fieldDef.id === firstChildFieldId;
+      const simpleChildren = field.children.filter(child => typeof child === 'string' || !isCombinedField(child));
+      if (simpleChildren.length === 0) {
+        return false;
+      }
+      const firstChildFieldId = typeof simpleChildren[0] === 'string' ? simpleChildren[0] : simpleChildren[0].id;
+      return _field.id === firstChildFieldId;
     }
-    return fieldDef.id === field.id;
+    return _field.id === field.id;
   });
 
   // Use internal state instead of a ref to make sure that the component
@@ -11347,7 +11392,11 @@ function FormPanelField({
   if (!fieldDefinition) {
     return null;
   }
-  const labelPosition = (_field$labelPosition = field.labelPosition) !== null && _field$labelPosition !== void 0 ? _field$labelPosition : 'side';
+  const layout = normalizeLayout({
+    ...field.layout,
+    type: 'panel'
+  });
+  const labelPosition = layout.labelPosition;
   const labelClassName = dist_clsx('dataforms-layouts-panel__field-label', `dataforms-layouts-panel__field-label--label-position-${labelPosition}`);
   const fieldLabel = isCombinedField(field) ? field.label : fieldDefinition?.label;
   if (labelPosition === 'top') {
@@ -11408,10 +11457,170 @@ function FormPanelField({
   });
 }
 
+;// ./packages/icons/build-module/library/chevron-up.js
+/**
+ * WordPress dependencies
+ */
+
+
+const chevronUp = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z"
+  })
+});
+/* harmony default export */ const chevron_up = (chevronUp);
+
+;// ./packages/icons/build-module/library/chevron-down.js
+/**
+ * WordPress dependencies
+ */
+
+
+const chevronDown = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M17.5 11.6L12 16l-5.5-4.4.9-1.2L12 14l4.5-3.6 1 1.2z"
+  })
+});
+/* harmony default export */ const chevron_down = (chevronDown);
+
+;// ./packages/dataviews/build-module/dataforms-layouts/card/index.js
+/**
+ * External dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+function useCollapsibleCard(initialIsOpen = true) {
+  const [isOpen, setIsOpen] = (0,external_wp_element_namespaceObject.useState)(initialIsOpen);
+  const toggle = (0,external_wp_element_namespaceObject.useCallback)(() => {
+    setIsOpen(prev => !prev);
+  }, []);
+  const CollapsibleCardHeader = (0,external_wp_element_namespaceObject.useCallback)(({
+    children,
+    ...props
+  }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.CardHeader, {
+    ...props,
+    onClick: toggle,
+    style: {
+      cursor: 'pointer',
+      ...props.style
+    },
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      style: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      },
+      children: children
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
+      variant: "tertiary",
+      icon: isOpen ? chevron_up : chevron_down,
+      "aria-expanded": isOpen,
+      "aria-label": isOpen ? 'Collapse' : 'Expand'
+    })]
+  }), [toggle, isOpen]);
+  return {
+    isOpen,
+    CollapsibleCardHeader
+  };
+}
+function FormCardField({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  const {
+    fields
+  } = (0,external_wp_element_namespaceObject.useContext)(dataform_context);
+  const layout = normalizeLayout({
+    ...field.layout,
+    type: 'card'
+  });
+  const form = (0,external_wp_element_namespaceObject.useMemo)(() => ({
+    layout: DEFAULT_LAYOUT,
+    fields: isCombinedField(field) ? field.children : []
+  }), [field]);
+  const {
+    isOpen,
+    CollapsibleCardHeader
+  } = useCollapsibleCard(layout.isOpened);
+  if (isCombinedField(field)) {
+    const withHeader = !!field.label && layout.withHeader;
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Card, {
+      className: "dataforms-layouts-card__field",
+      children: [withHeader && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollapsibleCardHeader, {
+        className: "dataforms-layouts-card__field-label",
+        children: field.label
+      }), (isOpen || !withHeader) &&
+      /*#__PURE__*/
+      // If it doesn't have a header, keep it open.
+      // Otherwise, the card will not be visible.
+      (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CardBody, {
+        className: "dataforms-layouts-card__field-control",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataFormLayout, {
+          data: data,
+          form: form,
+          onChange: onChange
+        })
+      })]
+    });
+  }
+  const fieldDefinition = fields.find(fieldDef => fieldDef.id === field.id);
+  if (!fieldDefinition || !fieldDefinition.Edit) {
+    return null;
+  }
+  const RegularLayout = getFormFieldLayout('regular')?.component;
+  if (!RegularLayout) {
+    return null;
+  }
+  const withHeader = !!fieldDefinition.label && layout.withHeader;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Card, {
+    className: "dataforms-layouts-card__field",
+    children: [withHeader && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollapsibleCardHeader, {
+      className: "dataforms-layouts-card__field-label",
+      children: fieldDefinition.label
+    }), (isOpen || !withHeader) &&
+    /*#__PURE__*/
+    // If it doesn't have a header, keep it open.
+    // Otherwise, the card will not be visible.
+    (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CardBody, {
+      className: "dataforms-layouts-card__field-control",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RegularLayout, {
+        data: data,
+        field: field,
+        onChange: onChange,
+        hideLabelFromVision: hideLabelFromVision || withHeader
+      })
+    })]
+  });
+}
+
 ;// ./packages/dataviews/build-module/dataforms-layouts/index.js
 /**
  * Internal dependencies
  */
+
 
 
 const FORM_FIELD_LAYOUTS = [{
@@ -11420,40 +11629,12 @@ const FORM_FIELD_LAYOUTS = [{
 }, {
   type: 'panel',
   component: FormPanelField
+}, {
+  type: 'card',
+  component: FormCardField
 }];
 function getFormFieldLayout(type) {
   return FORM_FIELD_LAYOUTS.find(layout => layout.type === type);
-}
-
-;// ./packages/dataviews/build-module/normalize-form-fields.js
-/**
- * Internal dependencies
- */
-
-function normalizeFormFields(form) {
-  var _form$type, _form$labelPosition, _form$fields;
-  let layout = 'regular';
-  if (['regular', 'panel'].includes((_form$type = form.type) !== null && _form$type !== void 0 ? _form$type : '')) {
-    layout = form.type;
-  }
-  const labelPosition = (_form$labelPosition = form.labelPosition) !== null && _form$labelPosition !== void 0 ? _form$labelPosition : layout === 'regular' ? 'top' : 'side';
-  return ((_form$fields = form.fields) !== null && _form$fields !== void 0 ? _form$fields : []).map(field => {
-    var _field$layout, _field$labelPosition;
-    if (typeof field === 'string') {
-      return {
-        id: field,
-        layout,
-        labelPosition
-      };
-    }
-    const fieldLayout = (_field$layout = field.layout) !== null && _field$layout !== void 0 ? _field$layout : layout;
-    const fieldLabelPosition = (_field$labelPosition = field.labelPosition) !== null && _field$labelPosition !== void 0 ? _field$labelPosition : fieldLayout === 'regular' ? 'top' : 'side';
-    return {
-      ...field,
-      layout: fieldLayout,
-      labelPosition: fieldLabelPosition
-    };
-  });
 }
 
 ;// ./packages/dataviews/build-module/dataforms-layouts/data-form-layout.js
@@ -11487,9 +11668,9 @@ function DataFormLayout({
   }
   const normalizedFormFields = (0,external_wp_element_namespaceObject.useMemo)(() => normalizeFormFields(form), [form]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
-    spacing: form?.type === 'panel' ? 2 : 4,
+    spacing: form.layout?.type === 'panel' ? 2 : 4,
     children: normalizedFormFields.map(formField => {
-      const FieldLayout = getFormFieldLayout(formField.layout)?.component;
+      const FieldLayout = getFormFieldLayout(formField.layout.type)?.component;
       if (!FieldLayout) {
         return null;
       }
