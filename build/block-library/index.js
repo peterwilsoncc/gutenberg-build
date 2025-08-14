@@ -674,14 +674,54 @@ __webpack_require__.d(__webpack_exports__, {
   registerCoreBlocks: () => (/* binding */ registerCoreBlocks)
 });
 
+// NAMESPACE OBJECT: ./packages/block-library/build-module/accordions/index.js
+var accordions_namespaceObject = {};
+__webpack_require__.r(accordions_namespaceObject);
+__webpack_require__.d(accordions_namespaceObject, {
+  init: () => (init),
+  metadata: () => (metadata),
+  name: () => (accordions_name),
+  settings: () => (settings)
+});
+
+// NAMESPACE OBJECT: ./packages/block-library/build-module/accordion-item/index.js
+var build_module_accordion_item_namespaceObject = {};
+__webpack_require__.r(build_module_accordion_item_namespaceObject);
+__webpack_require__.d(build_module_accordion_item_namespaceObject, {
+  init: () => (accordion_item_init),
+  metadata: () => (accordion_item_metadata),
+  name: () => (accordion_item_name),
+  settings: () => (accordion_item_settings)
+});
+
+// NAMESPACE OBJECT: ./packages/block-library/build-module/accordion-header/index.js
+var build_module_accordion_header_namespaceObject = {};
+__webpack_require__.r(build_module_accordion_header_namespaceObject);
+__webpack_require__.d(build_module_accordion_header_namespaceObject, {
+  init: () => (accordion_header_init),
+  metadata: () => (accordion_header_metadata),
+  name: () => (accordion_header_name),
+  settings: () => (accordion_header_settings)
+});
+
+// NAMESPACE OBJECT: ./packages/block-library/build-module/accordion-panel/index.js
+var build_module_accordion_panel_namespaceObject = {};
+__webpack_require__.r(build_module_accordion_panel_namespaceObject);
+__webpack_require__.d(build_module_accordion_panel_namespaceObject, {
+  init: () => (accordion_panel_init),
+  metadata: () => (accordion_panel_metadata),
+  name: () => (accordion_panel_name),
+  settings: () => (accordion_panel_settings)
+});
+
 // NAMESPACE OBJECT: ./packages/block-library/build-module/archives/index.js
 var archives_namespaceObject = {};
 __webpack_require__.r(archives_namespaceObject);
 __webpack_require__.d(archives_namespaceObject, {
-  init: () => (init),
-  metadata: () => (metadata),
+  init: () => (archives_init),
+  metadata: () => (archives_metadata),
   name: () => (archives_name),
-  settings: () => (settings)
+  settings: () => (archives_settings)
 });
 
 // NAMESPACE OBJECT: ./packages/block-library/build-module/avatar/index.js
@@ -1700,22 +1740,150 @@ const external_wp_blocks_namespaceObject = window["wp"]["blocks"];
 const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
 ;// external "ReactJSXRuntime"
 const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
-;// ./packages/icons/build-module/library/archive.js
+;// ./packages/icons/build-module/library/accordion.js
 /**
  * WordPress dependencies
  */
 
 
-const archive = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
+const accordion = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+  viewBox: "0 0 24 24",
+  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     fillRule: "evenodd",
     clipRule: "evenodd",
-    d: "M11.934 7.406a1 1 0 0 0 .914.594H19a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5h5.764a.5.5 0 0 1 .447.276l.723 1.63Zm1.064-1.216a.5.5 0 0 0 .462.31H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.764a2 2 0 0 1 1.789 1.106l.445 1.084ZM8.5 10.5h7V12h-7v-1.5Zm7 3.5h-7v1.5h7V14Z"
-  })
+    d: "M19.5 9.25L9.5 9.25L9.5 7.75L19.5 7.75L19.5 9.25Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M4.5 6L8.5 8.5L4.5 11L4.5 6Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M19.5 16.25L9.5 16.25L9.5 14.75L19.5 14.75L19.5 16.25Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M4.5 13L8.5 15.5L4.5 18L4.5 13Z",
+    fill: "currentColor"
+  })]
 });
-/* harmony default export */ const library_archive = (archive);
+/* harmony default export */ const library_accordion = (accordion);
+
+;// external ["wp","blockEditor"]
+const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
+;// external ["wp","i18n"]
+const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
+;// external ["wp","components"]
+const external_wp_components_namespaceObject = window["wp"]["components"];
+;// ./packages/block-library/build-module/accordions/edit.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+const ACCORDION_BLOCK_NAME = 'core/accordion-item';
+const ACCORDION_BLOCK = {
+  name: ACCORDION_BLOCK_NAME
+};
+function Edit({
+  attributes: {
+    autoclose,
+    iconPosition,
+    showIcon
+  },
+  setAttributes
+}) {
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+  const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
+    template: [[ACCORDION_BLOCK_NAME], [ACCORDION_BLOCK_NAME]],
+    defaultBlock: ACCORDION_BLOCK,
+    directInsert: true,
+    templateInsertUpdatesSelection: true
+  });
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
+        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        initialOpen: true,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          isBlock: true,
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Auto-close'),
+          onChange: value => {
+            setAttributes({
+              autoclose: value
+            });
+          },
+          checked: autoclose,
+          help: (0,external_wp_i18n_namespaceObject.__)('Automatically close accordions when a new one is opened.')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          isBlock: true,
+          __nextHasNoMarginBottom: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Show icon'),
+          onChange: value => {
+            setAttributes({
+              showIcon: value
+            });
+          },
+          checked: showIcon,
+          help: (0,external_wp_i18n_namespaceObject.__)('Display a plus icon next to the accordion header.')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+          __nextHasNoMarginBottom: true,
+          __next40pxDefaultSize: true,
+          isBlock: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Icon Position'),
+          value: iconPosition,
+          onChange: value => {
+            setAttributes({
+              iconPosition: value
+            });
+          },
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+            label: "Left",
+            value: "left"
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+            label: "Right",
+            value: "right"
+          })]
+        })]
+      })
+    }, "setting"), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      ...innerBlocksProps
+    })]
+  });
+}
+
+;// ./node_modules/clsx/dist/clsx.mjs
+function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
+;// ./packages/block-library/build-module/accordions/save.js
+/**
+ * External dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+
+function save({
+  attributes
+}) {
+  const {
+    iconPosition
+  } = attributes;
+  const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
+  const className = dist_clsx({
+    'icon-position-left': iconPosition === 'left'
+  }, blockProps.className);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    ...external_wp_blockEditor_namespaceObject.useInnerBlocksProps.save({
+      ...blockProps,
+      className
+    })
+  });
+}
 
 ;// ./packages/block-library/build-module/utils/init-block.js
 /**
@@ -1746,19 +1914,897 @@ function initBlock(block) {
   }, settings);
 }
 
-;// external ["wp","components"]
-const external_wp_components_namespaceObject = window["wp"]["components"];
-;// external ["wp","i18n"]
-const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
-;// external ["wp","blockEditor"]
-const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
-;// external ["wp","serverSideRender"]
-const external_wp_serverSideRender_namespaceObject = window["wp"]["serverSideRender"];
-var external_wp_serverSideRender_default = /*#__PURE__*/__webpack_require__.n(external_wp_serverSideRender_namespaceObject);
+;// ./packages/block-library/build-module/accordions/index.js
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+const metadata = {
+  $schema: "https://schemas.wp.org/trunk/block.json",
+  apiVersion: 3,
+  name: "core/accordions",
+  title: "Accordions",
+  category: "design",
+  description: "A group of Accordion headers and associated expandable content.",
+  example: {},
+  __experimental: true,
+  supports: {
+    html: false,
+    align: ["wide", "full"],
+    background: {
+      backgroundImage: true,
+      backgroundSize: true,
+      __experimentalDefaultControls: {
+        backgroundImage: true
+      }
+    },
+    color: {
+      background: true,
+      gradient: true
+    },
+    __experimentalBorder: {
+      color: true,
+      radius: true,
+      style: true,
+      width: true,
+      __experimentalDefaultControls: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      }
+    },
+    spacing: {
+      padding: true,
+      margin: ["top", "bottom"],
+      blockGap: true
+    },
+    shadow: true,
+    layout: true,
+    interactivity: true
+  },
+  attributes: {
+    iconPosition: {
+      type: "string",
+      "default": "right"
+    },
+    showIcon: {
+      type: "boolean",
+      "default": true
+    },
+    autoclose: {
+      type: "boolean",
+      "default": false
+    },
+    allowedBlocks: {
+      type: "array"
+    }
+  },
+  providesContext: {
+    "core/accordion-icon-position": "iconPosition",
+    "core/accordion-show-icon": "showIcon"
+  },
+  allowedBlocks: ["core/accordion-item"],
+  textdomain: "default",
+  style: "wp-block-accordions"
+};
+
+const {
+  name: accordions_name
+} = metadata;
+
+const settings = {
+  icon: library_accordion,
+  example: {},
+  edit: Edit,
+  save: save
+};
+const init = () => initBlock({
+  name: accordions_name,
+  metadata,
+  settings
+});
+
+;// ./packages/icons/build-module/library/accordion-item.js
+/**
+ * WordPress dependencies
+ */
+
+
+const accordionItem = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M19.5 9.5L9.5 9.5L9.5 8L19.5 8L19.5 9.5Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M19.5 13L9.5 13L9.5 11.5L19.5 11.5L19.5 13Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M19.5 16.3999L9.5 16.3999L9.5 14.8999L19.5 14.8999L19.5 16.3999Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M4.5 6.25L8.5 8.75L4.5 11.25L4.5 6.25Z",
+    fill: "currentColor"
+  })]
+});
+/* harmony default export */ const accordion_item = (accordionItem);
+
 ;// external ["wp","data"]
 const external_wp_data_namespaceObject = window["wp"]["data"];
 ;// external ["wp","element"]
 const external_wp_element_namespaceObject = window["wp"]["element"];
+;// ./packages/block-library/build-module/accordion-item/edit.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * External dependencies
+ */
+
+
+function edit_Edit({
+  attributes: {
+    openByDefault
+  },
+  clientId,
+  setAttributes
+}) {
+  const {
+    isSelected,
+    getBlockOrder
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      isBlockSelected,
+      hasSelectedInnerBlock,
+      getBlockOrder: getBlockOrderSelector
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    return {
+      isSelected: isBlockSelected(clientId) || hasSelectedInnerBlock(clientId, true),
+      getBlockOrder: getBlockOrderSelector
+    };
+  }, [clientId]);
+  const contentBlockClientId = getBlockOrder(clientId)[1];
+  const {
+    updateBlockAttributes,
+    __unstableMarkNextChangeAsNotPersistent
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (contentBlockClientId) {
+      __unstableMarkNextChangeAsNotPersistent();
+      updateBlockAttributes(contentBlockClientId, {
+        isSelected
+      });
+    }
+  }, [isSelected, contentBlockClientId, __unstableMarkNextChangeAsNotPersistent, updateBlockAttributes]);
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+  const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)({
+    ...blockProps,
+    className: dist_clsx(blockProps.className, {
+      'is-open': openByDefault || isSelected
+    })
+  }, {
+    template: [['core/accordion-header', {}], ['core/accordion-panel', {
+      openByDefault
+    }]],
+    templateLock: 'all',
+    directInsert: true,
+    templateInsertUpdatesSelection: true
+  });
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
+        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Open by default'),
+          __nextHasNoMarginBottom: true,
+          onChange: value => {
+            setAttributes({
+              openByDefault: value
+            });
+            if (contentBlockClientId) {
+              updateBlockAttributes(contentBlockClientId, {
+                openByDefault: value
+              });
+            }
+          },
+          checked: openByDefault,
+          help: (0,external_wp_i18n_namespaceObject.__)('Accordion content will be displayed by default.')
+        })
+      })
+    }, "setting"), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      ...innerBlocksProps
+    })]
+  });
+}
+
+;// ./packages/block-library/build-module/accordion-item/save.js
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * External dependencies
+ */
+
+
+function save_save({
+  attributes
+}) {
+  const {
+    openByDefault
+  } = attributes;
+  const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
+  const className = dist_clsx({
+    'is-open': openByDefault
+  }, blockProps.className);
+  const innerBlocksProps = external_wp_blockEditor_namespaceObject.useInnerBlocksProps.save({
+    ...blockProps,
+    className
+  });
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    ...innerBlocksProps
+  });
+}
+
+;// ./packages/block-library/build-module/accordion-item/index.js
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+const accordion_item_metadata = {
+  $schema: "https://schemas.wp.org/trunk/block.json",
+  apiVersion: 3,
+  name: "core/accordion-item",
+  version: "0.1.0",
+  title: "Accordion",
+  category: "design",
+  description: "A single accordion that displays a header and expandable content.",
+  example: {},
+  __experimental: true,
+  parent: ["core/accordions"],
+  allowedBlocks: ["core/accordion-header", "core/accordion-panel"],
+  supports: {
+    align: ["wide", "full"],
+    color: {
+      background: true,
+      gradient: true
+    },
+    interactivity: true,
+    spacing: {
+      margin: ["top", "bottom"],
+      blockGap: true
+    },
+    __experimentalBorder: {
+      color: true,
+      radius: true,
+      style: true,
+      width: true,
+      __experimentalDefaultControls: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      }
+    },
+    shadow: true
+  },
+  attributes: {
+    openByDefault: {
+      type: "boolean",
+      "default": false
+    }
+  },
+  textdomain: "default"
+};
+
+const {
+  name: accordion_item_name
+} = accordion_item_metadata;
+
+const accordion_item_settings = {
+  icon: accordion_item,
+  example: {},
+  edit: edit_Edit,
+  save: save_save
+};
+const accordion_item_init = () => initBlock({
+  name: accordion_item_name,
+  metadata: accordion_item_metadata,
+  settings: accordion_item_settings
+});
+
+;// ./packages/icons/build-module/library/accordion-header.js
+/**
+ * WordPress dependencies
+ */
+
+
+const accordionHeader = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M19.5 12.75L9.5 12.75L9.5 11.25L19.5 11.25L19.5 12.75Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M4.5 9.5L8.5 12L4.5 14.5L4.5 9.5Z",
+    fill: "currentColor"
+  })]
+});
+/* harmony default export */ const accordion_header = (accordionHeader);
+
+;// ./packages/block-library/build-module/accordion-item/icons.js
+/**
+ * WordPress dependencies
+ */
+
+const plus = ({
+  width,
+  height
+}) => {
+  return (0,external_wp_element_namespaceObject.createElement)('span', {
+    style: {
+      display: 'inline-block',
+      width: width || 24,
+      height: height || 24,
+      lineHeight: `${height || 24}px`,
+      textAlign: 'center',
+      fontSize: `${(height || 24) * 0.6}px`,
+      fontWeight: 'bold',
+      color: 'currentColor'
+    }
+  }, '+');
+};
+
+;// ./packages/block-library/build-module/accordion-header/edit.js
+/**
+ * External dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const ICONS = {
+  plus: plus
+};
+function accordion_header_edit_Edit({
+  attributes,
+  setAttributes,
+  context
+}) {
+  const {
+    level,
+    title,
+    textAlign,
+    levelOptions
+  } = attributes;
+  const {
+    'core/accordion-icon-position': iconPosition,
+    'core/accordion-show-icon': showIcon
+  } = context;
+  const TagName = 'h' + level;
+
+  // Set icon attributes.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (iconPosition !== undefined && showIcon !== undefined) {
+      setAttributes({
+        iconPosition,
+        showIcon
+      });
+    }
+  }, [iconPosition, showIcon, setAttributes]);
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+  const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseBorderProps)(attributes);
+  const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseColorProps)(attributes);
+  const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
+  const shadowProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetShadowClassesAndStyles)(attributes);
+  const Icon = ICONS.plus;
+  const shouldShowIcon = showIcon && Icon;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
+          value: level,
+          options: levelOptions,
+          onChange: newLevel => setAttributes({
+            level: newLevel
+          })
+        })
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
+      ...blockProps,
+      className: dist_clsx(blockProps.className, colorProps.className, borderProps.className, 'accordion-item__heading', {
+        [`has-custom-font-size`]: blockProps.style.fontSize,
+        [`icon-position-left`]: iconPosition === 'left',
+        [`has-text-align-${textAlign}`]: textAlign
+      }),
+      style: {
+        ...borderProps.style,
+        ...colorProps.style,
+        ...shadowProps.style
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
+        className: dist_clsx('accordion-item__toggle'),
+        style: {
+          ...spacingProps.style
+        },
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
+          allowedFormats: ['core/bold', 'core/italic', 'core/image', 'core/strikethrough'],
+          disableLineBreaks: true,
+          tagName: "span",
+          value: title,
+          onChange: newTitle => setAttributes({
+            title: newTitle
+          }),
+          placeholder: (0,external_wp_i18n_namespaceObject.__)('Accordion title')
+        }), shouldShowIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          className: dist_clsx(`accordion-item__toggle-icon`, {
+            'has-icon-plus': true
+          }),
+          style: {
+            // TO-DO: make this configurable
+            width: `1.2em`,
+            height: `1.2em`
+          },
+          children: Icon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Icon, {
+            width: "1.2em",
+            height: "1.2em"
+          })
+        })]
+      })
+    })]
+  });
+}
+
+;// ./packages/block-library/build-module/accordion-header/save.js
+/**
+ * External dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+const save_ICONS = {
+  plus: plus
+};
+function accordion_header_save_save({
+  attributes
+}) {
+  const {
+    level,
+    title,
+    iconPosition,
+    textAlign,
+    showIcon
+  } = attributes;
+  const TagName = 'h' + level;
+  const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
+  const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetBorderClassesAndStyles)(attributes);
+  const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetColorClassesAndStyles)(attributes);
+  const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
+  const shadowProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetShadowClassesAndStyles)(attributes);
+  const Icon = save_ICONS.plus;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
+    ...blockProps,
+    className: dist_clsx(blockProps.className, colorProps.className, borderProps.className, 'accordion-item__heading', {
+      [`has-custom-font-size`]: blockProps?.style?.fontSize,
+      [`icon-position-left`]: iconPosition === 'left',
+      [`has-text-align-${textAlign}`]: textAlign
+    }),
+    style: {
+      ...borderProps.style,
+      ...colorProps.style,
+      ...shadowProps.style
+    },
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
+      className: dist_clsx('accordion-item__toggle'),
+      style: {
+        ...spacingProps.style
+      },
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText.Content, {
+        tagName: "span",
+        value: title
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        className: dist_clsx(`accordion-item__toggle-icon`, {
+          'has-icon-plus': showIcon
+        }),
+        style: {
+          // TO-DO: make this configurable
+          width: `1.2em`,
+          height: `1.2em`
+        },
+        children: showIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Icon, {
+          width: "1.2em",
+          height: "1.2em"
+        })
+      })]
+    })
+  });
+}
+
+;// ./packages/block-library/build-module/accordion-header/index.js
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+const accordion_header_metadata = {
+  $schema: "https://schemas.wp.org/trunk/block.json",
+  apiVersion: 3,
+  name: "core/accordion-header",
+  version: "0.1.0",
+  title: "Accordion Header",
+  category: "design",
+  description: "Accordion header.",
+  example: {},
+  __experimental: true,
+  parent: ["core/accordion-item"],
+  usesContext: ["core/accordion-icon-position", "core/accordion-show-icon"],
+  supports: {
+    anchor: true,
+    color: {
+      background: true,
+      gradient: true
+    },
+    align: false,
+    border: true,
+    interactivity: true,
+    spacing: {
+      padding: true,
+      margin: ["top", "bottom"],
+      __experimentalDefaultControls: {
+        padding: true,
+        margin: true
+      }
+    },
+    __experimentalBorder: {
+      color: true,
+      radius: true,
+      style: true,
+      width: true,
+      __experimentalDefaultControls: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      }
+    },
+    typography: {
+      textAlign: true,
+      fontSize: true,
+      __experimentalFontFamily: true,
+      __experimentalFontWeight: true,
+      __experimentalFontStyle: true,
+      __experimentalTextTransform: true,
+      __experimentalTextDecoration: true,
+      __experimentalLetterSpacing: true,
+      __experimentalDefaultControls: {
+        fontSize: true,
+        fontFamily: true
+      }
+    },
+    shadow: true
+  },
+  attributes: {
+    openByDefault: {
+      type: "boolean",
+      "default": false
+    },
+    title: {
+      type: "rich-text",
+      source: "rich-text",
+      selector: "span"
+    },
+    level: {
+      type: "number",
+      "default": 3
+    },
+    levelOptions: {
+      type: "array"
+    },
+    textAlignment: {
+      type: "string",
+      "default": "left"
+    },
+    iconPosition: {
+      type: "string",
+      "enum": ["left", "right"],
+      "default": "right"
+    },
+    showIcon: {
+      type: "boolean",
+      "default": true
+    }
+  },
+  textdomain: "default"
+};
+
+const {
+  name: accordion_header_name
+} = accordion_header_metadata;
+
+const accordion_header_settings = {
+  icon: accordion_header,
+  example: {},
+  edit: accordion_header_edit_Edit,
+  save: accordion_header_save_save
+};
+const accordion_header_init = () => initBlock({
+  name: accordion_header_name,
+  metadata: accordion_header_metadata,
+  settings: accordion_header_settings
+});
+
+;// ./packages/icons/build-module/library/accordion-panel.js
+/**
+ * WordPress dependencies
+ */
+
+
+const accordionPanel = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M8.10417 6.00024H6.5C5.39543 6.00024 4.5 6.89567 4.5 8.00024V10.3336H6V8.00024C6 7.7241 6.22386 7.50024 6.5 7.50024H8.10417V6.00024ZM4.5 13.6669V16.0002C4.5 17.1048 5.39543 18.0002 6.5 18.0002H8.10417V16.5002H6.5C6.22386 16.5002 6 16.2764 6 16.0002V13.6669H4.5ZM10.3958 6.00024V7.50024H13.6042V6.00024H10.3958ZM15.8958 6.00024V7.50024H17.5C17.7761 7.50024 18 7.7241 18 8.00024V10.3336H19.5V8.00024C19.5 6.89567 18.6046 6.00024 17.5 6.00024H15.8958ZM19.5 13.6669H18V16.0002C18 16.2764 17.7761 16.5002 17.5 16.5002H15.8958V18.0002H17.5C18.6046 18.0002 19.5 17.1048 19.5 16.0002V13.6669ZM13.6042 18.0002V16.5002H10.3958V18.0002H13.6042Z",
+    fill: "currentColor"
+  })
+});
+/* harmony default export */ const accordion_panel = (accordionPanel);
+
+;// ./packages/block-library/build-module/accordion-panel/edit.js
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * External dependencies
+ */
+
+
+function accordion_panel_edit_Edit({
+  attributes
+}) {
+  const {
+    allowedBlocks,
+    templateLock,
+    openByDefault,
+    isSelected
+  } = attributes;
+  const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseBorderProps)(attributes);
+  const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseColorProps)(attributes);
+  const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
+  const shadowProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetShadowClassesAndStyles)(attributes);
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+  const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)({
+    className: 'accordion-content__wrapper',
+    style: {
+      ...spacingProps.style
+    }
+  }, {
+    allowedBlocks,
+    template: [['core/paragraph', {}]],
+    templateLock
+  });
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    ...blockProps,
+    className: dist_clsx(blockProps.className, colorProps.className, borderProps.className, {
+      [`has-custom-font-size`]: blockProps?.style?.fontSize
+    }),
+    style: {
+      ...borderProps.style,
+      ...colorProps.style,
+      ...shadowProps.style
+    },
+    "aria-hidden": !isSelected && !openByDefault,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      ...innerBlocksProps
+    })
+  });
+}
+
+;// ./packages/block-library/build-module/accordion-panel/save.js
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * External dependencies
+ */
+
+
+function accordion_panel_save_save({
+  attributes
+}) {
+  const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
+  const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetBorderClassesAndStyles)(attributes);
+  const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetColorClassesAndStyles)(attributes);
+  const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
+  const shadowProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetShadowClassesAndStyles)(attributes);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    ...blockProps,
+    className: dist_clsx(blockProps.className, colorProps.className, borderProps.className, {
+      [`has-custom-font-size`]: blockProps?.style?.fontSize
+    }),
+    style: {
+      ...borderProps.style,
+      ...colorProps.style,
+      ...shadowProps.style
+    },
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "accordion-content__wrapper",
+      style: {
+        ...spacingProps.style
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InnerBlocks.Content, {})
+    })
+  });
+}
+
+;// ./packages/block-library/build-module/accordion-panel/index.js
+/**
+ * WordPress dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+const accordion_panel_metadata = {
+  $schema: "https://schemas.wp.org/trunk/block.json",
+  apiVersion: 3,
+  name: "core/accordion-panel",
+  version: "0.1.0",
+  title: "Accordion Panel",
+  category: "design",
+  description: "Accordion Panel",
+  example: {},
+  __experimental: true,
+  parent: ["core/accordion-item"],
+  supports: {
+    color: {
+      background: true,
+      gradient: true
+    },
+    border: true,
+    interactivity: true,
+    spacing: {
+      padding: true,
+      margin: ["top", "bottom"],
+      blockGap: true,
+      __experimentalDefaultControls: {
+        padding: true,
+        blockGap: true
+      }
+    },
+    __experimentalBorder: {
+      color: true,
+      radius: true,
+      style: true,
+      width: true,
+      __experimentalDefaultControls: {
+        color: true,
+        radius: true,
+        style: true,
+        width: true
+      }
+    },
+    typography: {
+      fontSize: true,
+      lineHeight: true,
+      __experimentalFontFamily: true,
+      __experimentalFontWeight: true,
+      __experimentalFontStyle: true,
+      __experimentalTextTransform: true,
+      __experimentalTextDecoration: true,
+      __experimentalLetterSpacing: true,
+      __experimentalDefaultControls: {
+        fontSize: true
+      }
+    },
+    shadow: true
+  },
+  attributes: {
+    allowedBlocks: {
+      type: "array"
+    },
+    templateLock: {
+      type: ["string", "boolean"],
+      "enum": ["all", "insert", "contentOnly", false],
+      "default": false
+    },
+    openByDefault: {
+      type: "boolean",
+      "default": false
+    },
+    isSelected: {
+      type: "boolean",
+      "default": false
+    }
+  },
+  textdomain: "default"
+};
+
+const {
+  name: accordion_panel_name
+} = accordion_panel_metadata;
+
+const accordion_panel_settings = {
+  icon: accordion_panel,
+  example: {},
+  edit: accordion_panel_edit_Edit,
+  save: accordion_panel_save_save
+};
+const accordion_panel_init = () => initBlock({
+  name: accordion_panel_name,
+  metadata: accordion_panel_metadata,
+  settings: accordion_panel_settings
+});
+
+;// ./packages/icons/build-module/library/archive.js
+/**
+ * WordPress dependencies
+ */
+
+
+const archive = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M11.934 7.406a1 1 0 0 0 .914.594H19a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H5a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5h5.764a.5.5 0 0 1 .447.276l.723 1.63Zm1.064-1.216a.5.5 0 0 0 .462.31H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.764a2 2 0 0 1 1.789 1.106l.445 1.084ZM8.5 10.5h7V12h-7v-1.5Zm7 3.5h-7v1.5h7V14Z"
+  })
+});
+/* harmony default export */ const library_archive = (archive);
+
+;// external ["wp","serverSideRender"]
+const external_wp_serverSideRender_namespaceObject = window["wp"]["serverSideRender"];
+var external_wp_serverSideRender_default = /*#__PURE__*/__webpack_require__.n(external_wp_serverSideRender_namespaceObject);
 ;// external ["wp","blob"]
 const external_wp_blob_namespaceObject = window["wp"]["blob"];
 ;// external ["wp","coreData"]
@@ -1999,7 +3045,7 @@ function ArchivesEdit({
  * Internal dependencies
  */
 
-const metadata = {
+const archives_metadata = {
   $schema: "https://schemas.wp.org/trunk/block.json",
   apiVersion: 3,
   name: "core/archives",
@@ -2073,17 +3119,17 @@ const metadata = {
 
 const {
   name: archives_name
-} = metadata;
+} = archives_metadata;
 
-const settings = {
+const archives_settings = {
   icon: library_archive,
   example: {},
   edit: ArchivesEdit
 };
-const init = () => initBlock({
+const archives_init = () => initBlock({
   name: archives_name,
-  metadata,
-  settings
+  metadata: archives_metadata,
+  settings: archives_settings
 });
 
 ;// ./packages/icons/build-module/library/comment-author-avatar.js
@@ -2103,8 +3149,6 @@ const commentAuthorAvatar = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceOb
 });
 /* harmony default export */ const comment_author_avatar = (commentAuthorAvatar);
 
-;// ./node_modules/clsx/dist/clsx.mjs
-function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
 ;// external ["wp","url"]
 const external_wp_url_namespaceObject = window["wp"]["url"];
 ;// ./packages/block-library/build-module/avatar/hooks.js
@@ -2495,7 +3539,7 @@ const UserEdit = ({
     })]
   });
 };
-function Edit(props) {
+function avatar_edit_Edit(props) {
   // Don't show the Comment Edit controls if we have a comment ID set, or if we're in the Site Editor (where it is `null`).
   if (props?.context?.commentId || props?.context?.commentId === null) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentEdit, {
@@ -2592,7 +3636,7 @@ const {
 
 const avatar_settings = {
   icon: comment_author_avatar,
-  edit: Edit,
+  edit: avatar_edit_Edit,
   example: {}
 };
 const avatar_init = () => initBlock({
@@ -3617,7 +4661,7 @@ function AudioEdit({
  */
 
 
-function save({
+function audio_save_save({
   attributes
 }) {
   const {
@@ -3816,7 +4860,7 @@ const audio_settings = {
   transforms: audio_transforms,
   deprecated: deprecated,
   edit: edit,
-  save: save
+  save: audio_save_save
 };
 const audio_init = () => initBlock({
   name: audio_name,
@@ -5615,7 +6659,7 @@ function ButtonEdit(props) {
  */
 
 
-function save_save({
+function button_save_save({
   attributes,
   className
 }) {
@@ -5854,7 +6898,7 @@ const button_settings = {
     }
   },
   edit: button_edit,
-  save: save_save,
+  save: button_save_save,
   deprecated: button_deprecated,
   merge: (a, {
     text = ''
@@ -9872,7 +10916,7 @@ const comments_init = () => initBlock({
 
 
 
-function edit_Edit({
+function comment_author_avatar_edit_Edit({
   attributes,
   context: {
     commentId
@@ -10021,7 +11065,7 @@ const {
 
 const comment_author_avatar_settings = {
   icon: comment_author_avatar,
-  edit: edit_Edit
+  edit: comment_author_avatar_edit_Edit
 };
 const comment_author_avatar_init = () => initBlock({
   name: comment_author_avatar_name,
@@ -37119,14 +38163,14 @@ const chevronLeftSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObjec
  */
 
 
-const plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+const plus_plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z"
   })
 });
-/* harmony default export */ const library_plus = (plus);
+/* harmony default export */ const library_plus = (plus_plus);
 
 ;// ./packages/block-library/build-module/navigation-link/link-ui.js
 /**
@@ -68265,6 +69309,10 @@ lock(privateApis, {
 
 
 
+
+
+
+
 /**
  * Function to get all the block-library blocks in an array
  */
@@ -68277,6 +69325,12 @@ const getAllBlocks = () => {
   archives_namespaceObject, build_module_audio_namespaceObject, build_module_button_namespaceObject, build_module_buttons_namespaceObject, build_module_calendar_namespaceObject, categories_namespaceObject, build_module_code_namespaceObject, build_module_column_namespaceObject, build_module_columns_namespaceObject, build_module_comment_author_avatar_namespaceObject, build_module_cover_namespaceObject, build_module_details_namespaceObject, embed_namespaceObject, build_module_file_namespaceObject, build_module_group_namespaceObject, build_module_html_namespaceObject, latest_comments_namespaceObject, latest_posts_namespaceObject, media_text_namespaceObject, missing_namespaceObject, build_module_more_namespaceObject, nextpage_namespaceObject, page_list_namespaceObject, page_list_item_namespaceObject, pattern_namespaceObject, build_module_preformatted_namespaceObject, build_module_pullquote_namespaceObject, block_namespaceObject, build_module_rss_namespaceObject, build_module_search_namespaceObject, build_module_separator_namespaceObject, build_module_shortcode_namespaceObject, social_link_namespaceObject, social_links_namespaceObject, spacer_namespaceObject, build_module_table_namespaceObject, tag_cloud_namespaceObject, text_columns_namespaceObject, build_module_verse_namespaceObject, build_module_video_namespaceObject, footnotes_namespaceObject,
   // theme blocks
   build_module_navigation_namespaceObject, navigation_link_namespaceObject, navigation_submenu_namespaceObject, build_module_site_logo_namespaceObject, site_title_namespaceObject, site_tagline_namespaceObject, query_namespaceObject, template_part_namespaceObject, avatar_namespaceObject, post_title_namespaceObject, build_module_post_excerpt_namespaceObject, build_module_post_featured_image_namespaceObject, build_module_post_content_namespaceObject, build_module_post_author_namespaceObject, post_author_name_namespaceObject, post_comment_namespaceObject, build_module_post_comments_count_namespaceObject, post_comments_link_namespaceObject, build_module_post_date_namespaceObject, build_module_post_terms_namespaceObject, post_navigation_link_namespaceObject, post_template_namespaceObject, post_time_to_read_namespaceObject, build_module_query_pagination_namespaceObject, build_module_query_pagination_next_namespaceObject, build_module_query_pagination_numbers_namespaceObject, build_module_query_pagination_previous_namespaceObject, query_no_results_namespaceObject, query_total_namespaceObject, read_more_namespaceObject, comments_namespaceObject, build_module_comment_author_name_namespaceObject, build_module_comment_content_namespaceObject, comment_date_namespaceObject, build_module_comment_edit_link_namespaceObject, build_module_comment_reply_link_namespaceObject, comment_template_namespaceObject, comments_title_namespaceObject, comments_pagination_namespaceObject, comments_pagination_next_namespaceObject, comments_pagination_numbers_namespaceObject, comments_pagination_previous_namespaceObject, build_module_post_comments_form_namespaceObject, build_module_table_of_contents_namespaceObject, home_link_namespaceObject, loginout_namespaceObject, build_module_term_description_namespaceObject, query_title_namespaceObject, post_author_biography_namespaceObject];
+  if (window?.__experimentalEnableBlockExperiments) {
+    blocks.push(accordions_namespaceObject);
+    blocks.push(build_module_accordion_item_namespaceObject);
+    blocks.push(build_module_accordion_header_namespaceObject);
+    blocks.push(build_module_accordion_panel_namespaceObject);
+  }
   if (window?.__experimentalEnableFormBlocks) {
     blocks.push(build_module_form_namespaceObject);
     blocks.push(form_input_namespaceObject);
