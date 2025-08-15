@@ -37644,7 +37644,8 @@ const DataViewsContext = (0,external_wp_element_namespaceObject.createContext)({
   filters: [],
   isShowingFilter: false,
   setIsShowingFilter: () => {},
-  perPageSizes: []
+  perPageSizes: [],
+  hasInfiniteScrollHandler: false
 });
 /* harmony default export */ const dataviews_context = (DataViewsContext);
 
@@ -44517,16 +44518,21 @@ function TableRow({
   onClickItem,
   renderItemLink,
   onChangeSelection,
-  isActionsColumnSticky
+  isActionsColumnSticky,
+  posinset
 }) {
   var _view$fields;
+  const {
+    paginationInfo
+  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const hasPossibleBulkAction = useHasAPossibleBulkAction(actions, item);
   const isSelected = hasPossibleBulkAction && selection.includes(id);
   const [isHovered, setIsHovered] = (0,external_wp_element_namespaceObject.useState)(false);
   const {
     showTitle = true,
     showMedia = true,
-    showDescription = true
+    showDescription = true,
+    infiniteScrollEnabled
   } = view;
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -44552,6 +44558,9 @@ function TableRow({
     onTouchStart: () => {
       isTouchDeviceRef.current = true;
     },
+    "aria-setsize": infiniteScrollEnabled ? paginationInfo.totalItems : undefined,
+    "aria-posinset": posinset,
+    role: infiniteScrollEnabled ? 'article' : undefined,
     onClick: event => {
       if (!hasPossibleBulkAction) {
         return;
@@ -44721,6 +44730,7 @@ function ViewTable({
       headerMenuRefs.current.delete(column);
     }
   };
+  const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("table", {
       className: dist_clsx('dataviews-view-table', className, {
@@ -44728,6 +44738,7 @@ function ViewTable({
       }),
       "aria-busy": isLoading,
       "aria-describedby": tableNoticeId,
+      role: isInfiniteScroll ? 'feed' : undefined,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("thead", {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("tr", {
           className: "dataviews-view-table__row",
@@ -44840,18 +44851,22 @@ function ViewTable({
           onClickItem: onClickItem,
           renderItemLink: renderItemLink,
           isItemClickable: isItemClickable,
-          isActionsColumnSticky: !isHorizontalScrollEnd
+          isActionsColumnSticky: !isHorizontalScrollEnd,
+          posinset: isInfiniteScroll ? index + 1 : undefined
         }, getItemId(item)))
       })]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: dist_clsx({
         'dataviews-loading': isLoading,
         'dataviews-no-results': !hasData && !isLoading
       }),
       id: tableNoticeId,
-      children: !hasData && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+      children: [!hasData && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
         children: isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : empty
-      })
+      }), hasData && isLoading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+        className: "dataviews-loading-more",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
+      })]
     })]
   });
 }
@@ -44900,12 +44915,14 @@ function GridItem({
   regularFields,
   badgeFields,
   hasBulkActions,
-  config
+  config,
+  posinset
 }) {
   const {
     showTitle = true,
     showMedia = true,
-    showDescription = true
+    showDescription = true,
+    infiniteScrollEnabled
   } = view;
   const hasBulkAction = useHasAPossibleBulkAction(actions, item);
   const id = getItemId(item);
@@ -44936,6 +44953,9 @@ function GridItem({
       };
     }
   }
+  const {
+    paginationInfo
+  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 0,
     className: dist_clsx('dataviews-view-grid__card', {
@@ -44951,6 +44971,9 @@ function GridItem({
         onChangeSelection(selection.includes(id) ? selection.filter(itemId => id !== itemId) : [...selection, id]);
       }
     },
+    role: infiniteScrollEnabled ? 'article' : undefined,
+    "aria-setsize": infiniteScrollEnabled ? paginationInfo.totalItems : undefined,
+    "aria-posinset": posinset,
     children: [showMedia && renderedMediaField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemClickWrapper, {
       item: item,
       isItemClickable: isItemClickable,
@@ -45102,6 +45125,7 @@ function ViewGrid({
     groups.get(groupName)?.push(item);
     return groups;
   }, new Map()) : null;
+  const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [
     // Render multiple groups.
@@ -45154,7 +45178,8 @@ function ViewGrid({
       },
       "aria-busy": isLoading,
       ref: resizeObserverRef,
-      children: data.map(item => {
+      role: isInfiniteScroll ? 'feed' : undefined,
+      children: data.map((item, index) => {
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(GridItem, {
           view: view,
           selection: selection,
@@ -45173,7 +45198,8 @@ function ViewGrid({
           hasBulkActions: hasBulkActions,
           config: {
             sizes: size
-          }
+          },
+          posinset: isInfiniteScroll ? index + 1 : undefined
         }, getItemId(item));
       })
     }),
@@ -45186,6 +45212,9 @@ function ViewGrid({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
         children: isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : empty
       })
+    }), hasData && isLoading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+      className: "dataviews-loading-more",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
     })]
   });
 }
@@ -45210,6 +45239,7 @@ function ViewGrid({
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -45284,12 +45314,14 @@ function ListItem({
   descriptionField,
   onSelect,
   otherFields,
-  onDropdownTriggerKeyDown
+  onDropdownTriggerKeyDown,
+  posinset
 }) {
   const {
     showTitle = true,
     showMedia = true,
-    showDescription = true
+    showDescription = true,
+    infiniteScrollEnabled
   } = view;
   const itemRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const labelId = `${idPrefix}-label`;
@@ -45303,6 +45335,9 @@ function ListItem({
     const isHover = type === 'mouseenter';
     setIsHovered(isHover);
   };
+  const {
+    paginationInfo
+  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (isSelected) {
       itemRef.current?.scrollIntoView({
@@ -45380,8 +45415,14 @@ function ListItem({
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite.Row, {
     ref: itemRef,
-    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {}),
-    role: "row",
+    render:
+    /*#__PURE__*/
+    /* aria-posinset breaks Composite.Row if passed to it directly. */
+    (0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      "aria-posinset": posinset,
+      "aria-setsize": infiniteScrollEnabled ? paginationInfo.totalItems : undefined
+    }),
+    role: infiniteScrollEnabled ? 'article' : 'row',
     className: dist_clsx({
       'is-selected': isSelected,
       'is-hovered': isHovered
@@ -45538,29 +45579,35 @@ function ViewList(props) {
       })
     });
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
-    id: baseId,
-    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {}),
-    className: dist_clsx('dataviews-view-list', className),
-    role: "grid",
-    activeId: activeCompositeId,
-    setActiveId: setActiveCompositeId,
-    children: data.map(item => {
-      const id = generateCompositeItemIdPrefix(item);
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ListItem, {
-        view: view,
-        idPrefix: id,
-        actions: actions,
-        item: item,
-        isSelected: item === selectedItem,
-        onSelect: onSelect,
-        mediaField: mediaField,
-        titleField: titleField,
-        descriptionField: descriptionField,
-        otherFields: otherFields,
-        onDropdownTriggerKeyDown: onDropdownTriggerKeyDown
-      }, id);
-    })
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
+      id: baseId,
+      render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {}),
+      className: dist_clsx('dataviews-view-list', className),
+      role: view.infiniteScrollEnabled ? 'feed' : 'grid',
+      activeId: activeCompositeId,
+      setActiveId: setActiveCompositeId,
+      children: data.map((item, index) => {
+        const id = generateCompositeItemIdPrefix(item);
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ListItem, {
+          view: view,
+          idPrefix: id,
+          actions: actions,
+          item: item,
+          isSelected: item === selectedItem,
+          onSelect: onSelect,
+          mediaField: mediaField,
+          titleField: titleField,
+          descriptionField: descriptionField,
+          otherFields: otherFields,
+          onDropdownTriggerKeyDown: onDropdownTriggerKeyDown,
+          posinset: view.infiniteScrollEnabled ? index + 1 : undefined
+        }, id);
+      })
+    }), hasData && isLoading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+      className: "dataviews-loading-more",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
+    })]
   });
 }
 
@@ -45799,7 +45846,7 @@ function DataViewsPagination() {
       totalPages
     }
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
-  if (!totalItems || !totalPages) {
+  if (!totalItems || !totalPages || view.infiniteScrollEnabled) {
     return null;
   }
   const currentPage = (_view$page = view.page) !== null && _view$page !== void 0 ? _view$page : 1;
@@ -46003,6 +46050,46 @@ const cog = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(extern
 
 ;// external ["wp","warning"]
 const external_wp_warning_namespaceObject = window["wp"]["warning"];
+;// ./packages/dataviews/build-module/components/dataviews-view-config/infinite-scroll-toggle.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+function InfiniteScrollToggle() {
+  var _view$infiniteScrollE;
+  const context = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
+  const {
+    view,
+    onChangeView
+  } = context;
+  const infiniteScrollEnabled = (_view$infiniteScrollE = view.infiniteScrollEnabled) !== null && _view$infiniteScrollE !== void 0 ? _view$infiniteScrollE : false;
+
+  // Only render the toggle if an infinite scroll handler is available
+  if (!context.hasInfiniteScrollHandler) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+    __nextHasNoMarginBottom: true,
+    label: (0,external_wp_i18n_namespaceObject.__)('Enable infinite scroll'),
+    help: (0,external_wp_i18n_namespaceObject.__)('Automatically load more content as you scroll, instead of showing pagination links.'),
+    checked: infiniteScrollEnabled,
+    onChange: newValue => {
+      onChangeView({
+        ...view,
+        infiniteScrollEnabled: newValue
+      });
+    }
+  });
+}
+
 ;// ./packages/dataviews/build-module/components/dataviews-view-config/index.js
 /**
  * External dependencies
@@ -46023,6 +46110,7 @@ const external_wp_warning_namespaceObject = window["wp"]["warning"];
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -46076,7 +46164,6 @@ function ViewTypeMenu() {
                 if ('layout' in viewWithoutLayout) {
                   delete viewWithoutLayout.layout;
                 }
-                // @ts-expect-error
                 return onChangeView({
                   ...viewWithoutLayout,
                   type: e.target.value,
@@ -46178,7 +46265,10 @@ function ItemsPerPageControl() {
     perPageSizes,
     onChangeView
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
-  if (perPageSizes.length < 2 || perPageSizes.length > 6) {
+  const {
+    infiniteScrollEnabled
+  } = view;
+  if (perPageSizes.length < 2 || perPageSizes.length > 6 || infiniteScrollEnabled) {
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
@@ -46601,7 +46691,7 @@ function DataviewsViewConfigDropdown() {
             expanded: true,
             className: "is-divided-in-two",
             children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SortFieldControl, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SortDirectionControl, {})]
-          }), !!activeLayout?.viewConfigOptions && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(activeLayout.viewConfigOptions, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemsPerPageControl, {})]
+          }), !!activeLayout?.viewConfigOptions && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(activeLayout.viewConfigOptions, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InfiniteScrollToggle, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemsPerPageControl, {})]
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SettingsSection, {
           title: (0,external_wp_i18n_namespaceObject.__)('Properties'),
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldControl, {})
@@ -46703,6 +46793,9 @@ function DataViews({
   perPageSizes = [10, 20, 50, 100],
   empty
 }) {
+  const {
+    infiniteScrollHandler
+  } = paginationInfo;
   const containerRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const [containerWidth, setContainerWidth] = (0,external_wp_element_namespaceObject.useState)(0);
   const resizeObserverRef = (0,external_wp_compose_namespaceObject.useResizeObserver)(resizeObserverEntries => {
@@ -46735,6 +46828,31 @@ function DataViews({
       setIsShowingFilter(true);
     }
   }, [hasPrimaryOrLockedFilters, isShowingFilter]);
+
+  // Attach scroll event listener for infinite scroll
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (!view.infiniteScrollEnabled || !containerRef.current) {
+      return;
+    }
+    const handleScroll = (0,external_wp_compose_namespaceObject.throttle)(event => {
+      const target = event.target;
+      const scrollTop = target.scrollTop;
+      const scrollHeight = target.scrollHeight;
+      const clientHeight = target.clientHeight;
+
+      // Check if user has scrolled near the bottom
+      if (scrollTop + clientHeight >= scrollHeight - 100) {
+        infiniteScrollHandler?.();
+      }
+    }, 100); // Throttle to 100ms
+
+    const container = containerRef.current;
+    container.addEventListener('scroll', handleScroll);
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+      handleScroll.cancel(); // Cancel any pending throttled calls
+    };
+  }, [infiniteScrollHandler, view.infiniteScrollEnabled]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_context.Provider, {
     value: {
       view,
@@ -46761,7 +46879,8 @@ function DataViews({
       isShowingFilter,
       setIsShowingFilter,
       perPageSizes,
-      empty
+      empty,
+      hasInfiniteScrollHandler: !!infiniteScrollHandler
     },
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "dataviews-wrapper",
