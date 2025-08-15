@@ -45644,7 +45644,7 @@ const imageSizes = [{
   breakpoint: 588 // at minimum image width, 2 images display at this container size
 }];
 function PreviewSizePicker() {
-  var _view$layout$previewS;
+  var _view$layout$previewS, _breakValues$map$filt;
   const context = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const view = context.view;
   const breakValues = imageSizes.filter(size => {
@@ -45652,11 +45652,11 @@ function PreviewSizePicker() {
   });
   const layoutPreviewSize = (_view$layout$previewS = view.layout?.previewSize) !== null && _view$layout$previewS !== void 0 ? _view$layout$previewS : 230; // Default to the third smallest size if no preview size is set.
   // If the container has resized and the set preview size is no longer available,
-  // we reset it to the next smallest size.
-  const previewSizeToUse = breakValues.map((size, index) => ({
+  // we reset it to the next smallest size, or the smallest available size.
+  const previewSizeToUse = (_breakValues$map$filt = breakValues.map((size, index) => ({
     ...size,
     index
-  })).filter(size => size.value <= layoutPreviewSize).sort((a, b) => b.value - a.value)[0].index;
+  })).filter(size => size.value <= layoutPreviewSize).sort((a, b) => b.value - a.value)[0]?.index) !== null && _breakValues$map$filt !== void 0 ? _breakValues$map$filt : 0;
   const marks = breakValues.map((size, index) => {
     return {
       value: index
