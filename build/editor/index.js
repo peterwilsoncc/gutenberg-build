@@ -12689,6 +12689,7 @@ function CreateTemplatePartModalContents({
         onChange: setTitle,
         required: true
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
+        className: "fields-create-template-part-modal__area-fieldset",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
           as: "legend",
           children: (0,external_wp_i18n_namespaceObject.__)('Area')
