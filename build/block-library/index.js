@@ -1775,12 +1775,124 @@ const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
 const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
 ;// external ["wp","components"]
 const external_wp_components_namespaceObject = window["wp"]["components"];
+;// external ["wp","data"]
+const external_wp_data_namespaceObject = window["wp"]["data"];
+;// external ["wp","element"]
+const external_wp_element_namespaceObject = window["wp"]["element"];
+;// external ["wp","blob"]
+const external_wp_blob_namespaceObject = window["wp"]["blob"];
+;// external ["wp","coreData"]
+const external_wp_coreData_namespaceObject = window["wp"]["coreData"];
+;// external ["wp","compose"]
+const external_wp_compose_namespaceObject = window["wp"]["compose"];
+;// ./packages/block-library/build-module/utils/hooks.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+/**
+ * Returns whether the current user can edit the given entity.
+ *
+ * @param {string} kind     Entity kind.
+ * @param {string} name     Entity name.
+ * @param {string} recordId Record's id.
+ */
+function useCanEditEntity(kind, name, recordId) {
+  return (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).canUser('update', {
+    kind,
+    name,
+    id: recordId
+  }), [kind, name, recordId]);
+}
+
+/**
+ * Handles uploading a media file from a blob URL on mount.
+ *
+ * @param {Object}   args              Upload media arguments.
+ * @param {string}   args.url          Blob URL.
+ * @param {?Array}   args.allowedTypes Array of allowed media types.
+ * @param {Function} args.onChange     Function called when the media is uploaded.
+ * @param {Function} args.onError      Function called when an error happens.
+ */
+function useUploadMediaFromBlobURL(args = {}) {
+  const latestArgsRef = (0,external_wp_element_namespaceObject.useRef)(args);
+  const hasUploadStartedRef = (0,external_wp_element_namespaceObject.useRef)(false);
+  const {
+    getSettings
+  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
+  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
+    latestArgsRef.current = args;
+  });
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    // Uploading is a special effect that can't be canceled via the cleanup method.
+    // The extra check avoids duplicate uploads in development mode (React.StrictMode).
+    if (hasUploadStartedRef.current) {
+      return;
+    }
+    if (!latestArgsRef.current.url || !(0,external_wp_blob_namespaceObject.isBlobURL)(latestArgsRef.current.url)) {
+      return;
+    }
+    const file = (0,external_wp_blob_namespaceObject.getBlobByURL)(latestArgsRef.current.url);
+    if (!file) {
+      return;
+    }
+    const {
+      url,
+      allowedTypes,
+      onChange,
+      onError
+    } = latestArgsRef.current;
+    const {
+      mediaUpload
+    } = getSettings();
+    hasUploadStartedRef.current = true;
+    mediaUpload({
+      filesList: [file],
+      allowedTypes,
+      onFileChange: ([media]) => {
+        if ((0,external_wp_blob_namespaceObject.isBlobURL)(media?.url)) {
+          return;
+        }
+        (0,external_wp_blob_namespaceObject.revokeBlobURL)(url);
+        onChange(media);
+        hasUploadStartedRef.current = false;
+      },
+      onError: message => {
+        (0,external_wp_blob_namespaceObject.revokeBlobURL)(url);
+        onError(message);
+        hasUploadStartedRef.current = false;
+      }
+    });
+  }, [getSettings]);
+}
+function useToolsPanelDropdownMenuProps() {
+  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
+  return !isMobile ? {
+    popoverProps: {
+      placement: 'left-start',
+      // For non-mobile, inner sidebar width (248px) - button width (24px) - border (1px) + padding (16px) + spacing (20px)
+      offset: 259
+    }
+  } : {};
+}
+
 ;// ./packages/block-library/build-module/accordions/edit.js
 /**
  * WordPress dependencies
  */
 
 
+
+
+/**
+ * Internal dependencies
+ */
 
 
 const ACCORDION_BLOCK_NAME = 'core/accordion-item';
@@ -1796,6 +1908,7 @@ function Edit({
   setAttributes
 }) {
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
     template: [[ACCORDION_BLOCK_NAME], [ACCORDION_BLOCK_NAME]],
     defaultBlock: ACCORDION_BLOCK,
@@ -1804,49 +1917,80 @@ function Edit({
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        initialOpen: true,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          isBlock: true,
-          __nextHasNoMarginBottom: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            autoclose: false,
+            showIcon: true,
+            iconPosition: 'right'
+          });
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Auto-close'),
-          onChange: value => {
-            setAttributes({
-              autoclose: value
-            });
-          },
-          checked: autoclose,
-          help: (0,external_wp_i18n_namespaceObject.__)('Automatically close accordions when a new one is opened.')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-          isBlock: true,
-          __nextHasNoMarginBottom: true,
+          isShownByDefault: true,
+          hasValue: () => !!autoclose,
+          onDeselect: () => setAttributes({
+            autoclose: false
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            isBlock: true,
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Auto-close'),
+            onChange: value => {
+              setAttributes({
+                autoclose: value
+              });
+            },
+            checked: autoclose,
+            help: (0,external_wp_i18n_namespaceObject.__)('Automatically close accordions when a new one is opened.')
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Show icon'),
-          onChange: value => {
-            setAttributes({
-              showIcon: value
-            });
-          },
-          checked: showIcon,
-          help: (0,external_wp_i18n_namespaceObject.__)('Display a plus icon next to the accordion header.')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
-          __nextHasNoMarginBottom: true,
-          __next40pxDefaultSize: true,
-          isBlock: true,
+          isShownByDefault: true,
+          hasValue: () => !showIcon,
+          onDeselect: () => setAttributes({
+            showIcon: true
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            isBlock: true,
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show icon'),
+            onChange: value => {
+              setAttributes({
+                showIcon: value
+              });
+            },
+            checked: showIcon,
+            help: (0,external_wp_i18n_namespaceObject.__)('Display a plus icon next to the accordion header.')
+          })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Icon Position'),
-          value: iconPosition,
-          onChange: value => {
-            setAttributes({
-              iconPosition: value
-            });
-          },
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-            label: "Left",
-            value: "left"
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
-            label: "Right",
-            value: "right"
-          })]
+          isShownByDefault: true,
+          hasValue: () => iconPosition !== 'right',
+          onDeselect: () => setAttributes({
+            iconPosition: 'right'
+          }),
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+            __nextHasNoMarginBottom: true,
+            __next40pxDefaultSize: true,
+            isBlock: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Icon Position'),
+            value: iconPosition,
+            onChange: value => {
+              setAttributes({
+                iconPosition: value
+              });
+            },
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+              label: (0,external_wp_i18n_namespaceObject.__)('Left'),
+              value: "left"
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControlOption, {
+              label: (0,external_wp_i18n_namespaceObject.__)('Right'),
+              value: "right"
+            })]
+          })
         })]
       })
     }, "setting"), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -2041,10 +2185,6 @@ const accordionItem = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.j
 });
 /* harmony default export */ const accordion_item = (accordionItem);
 
-;// external ["wp","data"]
-const external_wp_data_namespaceObject = window["wp"]["data"];
-;// external ["wp","element"]
-const external_wp_element_namespaceObject = window["wp"]["element"];
 ;// ./packages/block-library/build-module/accordion-item/edit.js
 /**
  * WordPress dependencies
@@ -2059,6 +2199,11 @@ const external_wp_element_namespaceObject = window["wp"]["element"];
  */
 
 
+/**
+ * Internal dependencies
+ */
+
+
 function edit_Edit({
   attributes: {
     openByDefault
@@ -2066,6 +2211,7 @@ function edit_Edit({
   clientId,
   setAttributes
 }) {
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const {
     isSelected,
     getBlockOrder
@@ -2109,23 +2255,49 @@ function edit_Edit({
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
-        title: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            openByDefault: false
+          });
+          if (contentBlockClientId) {
+            updateBlockAttributes(contentBlockClientId, {
+              openByDefault: false
+            });
+          }
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Open by default'),
-          __nextHasNoMarginBottom: true,
-          onChange: value => {
+          isShownByDefault: true,
+          hasValue: () => !!openByDefault,
+          onDeselect: () => {
             setAttributes({
-              openByDefault: value
+              openByDefault: false
             });
             if (contentBlockClientId) {
               updateBlockAttributes(contentBlockClientId, {
-                openByDefault: value
+                openByDefault: false
               });
             }
           },
-          checked: openByDefault,
-          help: (0,external_wp_i18n_namespaceObject.__)('Accordion content will be displayed by default.')
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            label: (0,external_wp_i18n_namespaceObject.__)('Open by default'),
+            __nextHasNoMarginBottom: true,
+            onChange: value => {
+              setAttributes({
+                openByDefault: value
+              });
+              if (contentBlockClientId) {
+                updateBlockAttributes(contentBlockClientId, {
+                  openByDefault: value
+                });
+              }
+            },
+            checked: openByDefault,
+            help: (0,external_wp_i18n_namespaceObject.__)('Accordion content will be displayed by default.')
+          })
         })
       })
     }, "setting"), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
@@ -2805,109 +2977,6 @@ const archive = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
 ;// external ["wp","serverSideRender"]
 const external_wp_serverSideRender_namespaceObject = window["wp"]["serverSideRender"];
 var external_wp_serverSideRender_default = /*#__PURE__*/__webpack_require__.n(external_wp_serverSideRender_namespaceObject);
-;// external ["wp","blob"]
-const external_wp_blob_namespaceObject = window["wp"]["blob"];
-;// external ["wp","coreData"]
-const external_wp_coreData_namespaceObject = window["wp"]["coreData"];
-;// external ["wp","compose"]
-const external_wp_compose_namespaceObject = window["wp"]["compose"];
-;// ./packages/block-library/build-module/utils/hooks.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-
-/**
- * Returns whether the current user can edit the given entity.
- *
- * @param {string} kind     Entity kind.
- * @param {string} name     Entity name.
- * @param {string} recordId Record's id.
- */
-function useCanEditEntity(kind, name, recordId) {
-  return (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).canUser('update', {
-    kind,
-    name,
-    id: recordId
-  }), [kind, name, recordId]);
-}
-
-/**
- * Handles uploading a media file from a blob URL on mount.
- *
- * @param {Object}   args              Upload media arguments.
- * @param {string}   args.url          Blob URL.
- * @param {?Array}   args.allowedTypes Array of allowed media types.
- * @param {Function} args.onChange     Function called when the media is uploaded.
- * @param {Function} args.onError      Function called when an error happens.
- */
-function useUploadMediaFromBlobURL(args = {}) {
-  const latestArgsRef = (0,external_wp_element_namespaceObject.useRef)(args);
-  const hasUploadStartedRef = (0,external_wp_element_namespaceObject.useRef)(false);
-  const {
-    getSettings
-  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
-  (0,external_wp_element_namespaceObject.useLayoutEffect)(() => {
-    latestArgsRef.current = args;
-  });
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    // Uploading is a special effect that can't be canceled via the cleanup method.
-    // The extra check avoids duplicate uploads in development mode (React.StrictMode).
-    if (hasUploadStartedRef.current) {
-      return;
-    }
-    if (!latestArgsRef.current.url || !(0,external_wp_blob_namespaceObject.isBlobURL)(latestArgsRef.current.url)) {
-      return;
-    }
-    const file = (0,external_wp_blob_namespaceObject.getBlobByURL)(latestArgsRef.current.url);
-    if (!file) {
-      return;
-    }
-    const {
-      url,
-      allowedTypes,
-      onChange,
-      onError
-    } = latestArgsRef.current;
-    const {
-      mediaUpload
-    } = getSettings();
-    hasUploadStartedRef.current = true;
-    mediaUpload({
-      filesList: [file],
-      allowedTypes,
-      onFileChange: ([media]) => {
-        if ((0,external_wp_blob_namespaceObject.isBlobURL)(media?.url)) {
-          return;
-        }
-        (0,external_wp_blob_namespaceObject.revokeBlobURL)(url);
-        onChange(media);
-        hasUploadStartedRef.current = false;
-      },
-      onError: message => {
-        (0,external_wp_blob_namespaceObject.revokeBlobURL)(url);
-        onError(message);
-        hasUploadStartedRef.current = false;
-      }
-    });
-  }, [getSettings]);
-}
-function useToolsPanelDropdownMenuProps() {
-  const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
-  return !isMobile ? {
-    popoverProps: {
-      placement: 'left-start',
-      // For non-mobile, inner sidebar width (248px) - button width (24px) - border (1px) + padding (16px) + spacing (20px)
-      offset: 259
-    }
-  } : {};
-}
-
 ;// ./packages/block-library/build-module/archives/edit.js
 /**
  * WordPress dependencies
