@@ -685,9 +685,9 @@ __webpack_require__.d(accordions_namespaceObject, {
 });
 
 // NAMESPACE OBJECT: ./packages/block-library/build-module/accordion-item/index.js
-var build_module_accordion_item_namespaceObject = {};
-__webpack_require__.r(build_module_accordion_item_namespaceObject);
-__webpack_require__.d(build_module_accordion_item_namespaceObject, {
+var accordion_item_namespaceObject = {};
+__webpack_require__.r(accordion_item_namespaceObject);
+__webpack_require__.d(accordion_item_namespaceObject, {
   init: () => (accordion_item_init),
   metadata: () => (accordion_item_metadata),
   name: () => (accordion_item_name),
@@ -695,9 +695,9 @@ __webpack_require__.d(build_module_accordion_item_namespaceObject, {
 });
 
 // NAMESPACE OBJECT: ./packages/block-library/build-module/accordion-header/index.js
-var build_module_accordion_header_namespaceObject = {};
-__webpack_require__.r(build_module_accordion_header_namespaceObject);
-__webpack_require__.d(build_module_accordion_header_namespaceObject, {
+var accordion_header_namespaceObject = {};
+__webpack_require__.r(accordion_header_namespaceObject);
+__webpack_require__.d(accordion_header_namespaceObject, {
   init: () => (accordion_header_init),
   metadata: () => (accordion_header_metadata),
   name: () => (accordion_header_name),
@@ -705,9 +705,9 @@ __webpack_require__.d(build_module_accordion_header_namespaceObject, {
 });
 
 // NAMESPACE OBJECT: ./packages/block-library/build-module/accordion-panel/index.js
-var build_module_accordion_panel_namespaceObject = {};
-__webpack_require__.r(build_module_accordion_panel_namespaceObject);
-__webpack_require__.d(build_module_accordion_panel_namespaceObject, {
+var accordion_panel_namespaceObject = {};
+__webpack_require__.r(accordion_panel_namespaceObject);
+__webpack_require__.d(accordion_panel_namespaceObject, {
   init: () => (accordion_panel_init),
   metadata: () => (accordion_panel_metadata),
   name: () => (accordion_panel_name),
@@ -1736,39 +1736,6 @@ __webpack_require__.d(footnotes_namespaceObject, {
 
 ;// external ["wp","blocks"]
 const external_wp_blocks_namespaceObject = window["wp"]["blocks"];
-;// external ["wp","primitives"]
-const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
-;// external "ReactJSXRuntime"
-const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
-;// ./packages/icons/build-module/library/accordion.js
-/**
- * WordPress dependencies
- */
-
-
-const accordion = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M19.5 9.25L9.5 9.25L9.5 7.75L19.5 7.75L19.5 9.25Z",
-    fill: "currentColor"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4.5 6L8.5 8.5L4.5 11L4.5 6Z",
-    fill: "currentColor"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M19.5 16.25L9.5 16.25L9.5 14.75L19.5 14.75L19.5 16.25Z",
-    fill: "currentColor"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4.5 13L8.5 15.5L4.5 18L4.5 13Z",
-    fill: "currentColor"
-  })]
-});
-/* harmony default export */ const library_accordion = (accordion);
-
 ;// external ["wp","blockEditor"]
 const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
 ;// external ["wp","i18n"]
@@ -1882,6 +1849,8 @@ function useToolsPanelDropdownMenuProps() {
   } : {};
 }
 
+;// external "ReactJSXRuntime"
+const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
 ;// ./packages/block-library/build-module/accordions/edit.js
 /**
  * WordPress dependencies
@@ -2058,11 +2027,37 @@ function initBlock(block) {
   }, settings);
 }
 
-;// ./packages/block-library/build-module/accordions/index.js
+;// external ["wp","primitives"]
+const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
+;// ./packages/block-library/build-module/accordions/icon.js
 /**
  * WordPress dependencies
  */
 
+
+/* harmony default export */ const icon = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M19.5 9.25L9.5 9.25L9.5 7.75L19.5 7.75L19.5 9.25Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M4.5 6L8.5 8.5L4.5 11L4.5 6Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M19.5 16.25L9.5 16.25L9.5 14.75L19.5 14.75L19.5 16.25Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M4.5 13L8.5 15.5L4.5 18L4.5 13Z",
+    fill: "currentColor"
+  })]
+}));
+
+;// ./packages/block-library/build-module/accordions/index.js
 /**
  * Internal dependencies
  */
@@ -2138,12 +2133,13 @@ const metadata = {
   style: "wp-block-accordions"
 };
 
+
 const {
   name: accordions_name
 } = metadata;
 
 const settings = {
-  icon: library_accordion,
+  icon: icon,
   example: {},
   edit: Edit,
   save: save
@@ -2153,37 +2149,6 @@ const init = () => initBlock({
   metadata,
   settings
 });
-
-;// ./packages/icons/build-module/library/accordion-item.js
-/**
- * WordPress dependencies
- */
-
-
-const accordionItem = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M19.5 9.5L9.5 9.5L9.5 8L19.5 8L19.5 9.5Z",
-    fill: "currentColor"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M19.5 13L9.5 13L9.5 11.5L19.5 11.5L19.5 13Z",
-    fill: "currentColor"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M19.5 16.3999L9.5 16.3999L9.5 14.8999L19.5 14.8999L19.5 16.3999Z",
-    fill: "currentColor"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4.5 6.25L8.5 8.75L4.5 11.25L4.5 6.25Z",
-    fill: "currentColor"
-  })]
-});
-/* harmony default export */ const accordion_item = (accordionItem);
 
 ;// ./packages/block-library/build-module/accordion-item/edit.js
 /**
@@ -2335,11 +2300,37 @@ function save_save({
   });
 }
 
-;// ./packages/block-library/build-module/accordion-item/index.js
+;// ./packages/block-library/build-module/accordion-item/icon.js
 /**
  * WordPress dependencies
  */
 
+
+/* harmony default export */ const accordion_item_icon = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M19.5 9.5L9.5 9.5L9.5 8L19.5 8L19.5 9.5Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M19.5 13L9.5 13L9.5 11.5L19.5 11.5L19.5 13Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M19.5 16.3999L9.5 16.3999L9.5 14.8999L19.5 14.8999L19.5 16.3999Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M4.5 6.25L8.5 8.75L4.5 11.25L4.5 6.25Z",
+    fill: "currentColor"
+  })]
+}));
+
+;// ./packages/block-library/build-module/accordion-item/index.js
 /**
  * Internal dependencies
  */
@@ -2391,12 +2382,13 @@ const accordion_item_metadata = {
   textdomain: "default"
 };
 
+
 const {
   name: accordion_item_name
 } = accordion_item_metadata;
 
 const accordion_item_settings = {
-  icon: accordion_item,
+  icon: accordion_item_icon,
   example: {},
   edit: edit_Edit,
   save: save_save
@@ -2406,27 +2398,6 @@ const accordion_item_init = () => initBlock({
   metadata: accordion_item_metadata,
   settings: accordion_item_settings
 });
-
-;// ./packages/icons/build-module/library/accordion-header.js
-/**
- * WordPress dependencies
- */
-
-
-const accordionHeader = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M19.5 12.75L9.5 12.75L9.5 11.25L19.5 11.25L19.5 12.75Z",
-    fill: "currentColor"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4.5 9.5L8.5 12L4.5 14.5L4.5 9.5Z",
-    fill: "currentColor"
-  })]
-});
-/* harmony default export */ const accordion_header = (accordionHeader);
 
 ;// ./packages/block-library/build-module/accordion-item/icons.js
 /**
@@ -2632,11 +2603,27 @@ function accordion_header_save_save({
   });
 }
 
-;// ./packages/block-library/build-module/accordion-header/index.js
+;// ./packages/block-library/build-module/accordion-header/icon.js
 /**
  * WordPress dependencies
  */
 
+
+/* harmony default export */ const accordion_header_icon = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M19.5 12.75L9.5 12.75L9.5 11.25L19.5 11.25L19.5 12.75Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M4.5 9.5L8.5 12L4.5 14.5L4.5 9.5Z",
+    fill: "currentColor"
+  })]
+}));
+
+;// ./packages/block-library/build-module/accordion-header/index.js
 /**
  * Internal dependencies
  */
@@ -2733,12 +2720,13 @@ const accordion_header_metadata = {
   textdomain: "default"
 };
 
+
 const {
   name: accordion_header_name
 } = accordion_header_metadata;
 
 const accordion_header_settings = {
-  icon: accordion_header,
+  icon: accordion_header_icon,
   example: {},
   edit: accordion_header_edit_Edit,
   save: accordion_header_save_save
@@ -2748,24 +2736,6 @@ const accordion_header_init = () => initBlock({
   metadata: accordion_header_metadata,
   settings: accordion_header_settings
 });
-
-;// ./packages/icons/build-module/library/accordion-panel.js
-/**
- * WordPress dependencies
- */
-
-
-const accordionPanel = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M8.10417 6.00024H6.5C5.39543 6.00024 4.5 6.89567 4.5 8.00024V10.3336H6V8.00024C6 7.7241 6.22386 7.50024 6.5 7.50024H8.10417V6.00024ZM4.5 13.6669V16.0002C4.5 17.1048 5.39543 18.0002 6.5 18.0002H8.10417V16.5002H6.5C6.22386 16.5002 6 16.2764 6 16.0002V13.6669H4.5ZM10.3958 6.00024V7.50024H13.6042V6.00024H10.3958ZM15.8958 6.00024V7.50024H17.5C17.7761 7.50024 18 7.7241 18 8.00024V10.3336H19.5V8.00024C19.5 6.89567 18.6046 6.00024 17.5 6.00024H15.8958ZM19.5 13.6669H18V16.0002C18 16.2764 17.7761 16.5002 17.5 16.5002H15.8958V18.0002H17.5C18.6046 18.0002 19.5 17.1048 19.5 16.0002V13.6669ZM13.6042 18.0002V16.5002H10.3958V18.0002H13.6042Z",
-    fill: "currentColor"
-  })
-});
-/* harmony default export */ const accordion_panel = (accordionPanel);
 
 ;// ./packages/block-library/build-module/accordion-panel/edit.js
 /**
@@ -2856,11 +2826,24 @@ function accordion_panel_save_save({
   });
 }
 
-;// ./packages/block-library/build-module/accordion-panel/index.js
+;// ./packages/block-library/build-module/accordion-panel/icon.js
 /**
  * WordPress dependencies
  */
 
+
+/* harmony default export */ const accordion_panel_icon = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M8.10417 6.00024H6.5C5.39543 6.00024 4.5 6.89567 4.5 8.00024V10.3336H6V8.00024C6 7.7241 6.22386 7.50024 6.5 7.50024H8.10417V6.00024ZM4.5 13.6669V16.0002C4.5 17.1048 5.39543 18.0002 6.5 18.0002H8.10417V16.5002H6.5C6.22386 16.5002 6 16.2764 6 16.0002V13.6669H4.5ZM10.3958 6.00024V7.50024H13.6042V6.00024H10.3958ZM15.8958 6.00024V7.50024H17.5C17.7761 7.50024 18 7.7241 18 8.00024V10.3336H19.5V8.00024C19.5 6.89567 18.6046 6.00024 17.5 6.00024H15.8958ZM19.5 13.6669H18V16.0002C18 16.2764 17.7761 16.5002 17.5 16.5002H15.8958V18.0002H17.5C18.6046 18.0002 19.5 17.1048 19.5 16.0002V13.6669ZM13.6042 18.0002V16.5002H10.3958V18.0002H13.6042Z",
+    fill: "currentColor"
+  })
+}));
+
+;// ./packages/block-library/build-module/accordion-panel/index.js
 /**
  * Internal dependencies
  */
@@ -2941,12 +2924,13 @@ const accordion_panel_metadata = {
   textdomain: "default"
 };
 
+
 const {
   name: accordion_panel_name
 } = accordion_panel_metadata;
 
 const accordion_panel_settings = {
-  icon: accordion_panel,
+  icon: accordion_panel_icon,
   example: {},
   edit: accordion_panel_edit_Edit,
   save: accordion_panel_save_save
@@ -48817,7 +48801,7 @@ function PostTimeToReadEdit({
  */
 
 
-/* harmony default export */ const icon = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
+/* harmony default export */ const post_time_to_read_icon = (/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   width: "24",
   height: "24",
@@ -48895,7 +48879,7 @@ const {
 } = post_time_to_read_metadata;
 
 const post_time_to_read_settings = {
-  icon: icon,
+  icon: post_time_to_read_icon,
   edit: post_time_to_read_edit,
   example: {}
 };
@@ -69494,9 +69478,9 @@ const getAllBlocks = () => {
   build_module_navigation_namespaceObject, navigation_link_namespaceObject, navigation_submenu_namespaceObject, build_module_site_logo_namespaceObject, site_title_namespaceObject, site_tagline_namespaceObject, query_namespaceObject, template_part_namespaceObject, avatar_namespaceObject, post_title_namespaceObject, build_module_post_excerpt_namespaceObject, build_module_post_featured_image_namespaceObject, build_module_post_content_namespaceObject, build_module_post_author_namespaceObject, post_author_name_namespaceObject, post_comment_namespaceObject, build_module_post_comments_count_namespaceObject, post_comments_link_namespaceObject, build_module_post_date_namespaceObject, build_module_post_terms_namespaceObject, post_navigation_link_namespaceObject, post_template_namespaceObject, post_time_to_read_namespaceObject, build_module_query_pagination_namespaceObject, build_module_query_pagination_next_namespaceObject, build_module_query_pagination_numbers_namespaceObject, build_module_query_pagination_previous_namespaceObject, query_no_results_namespaceObject, query_total_namespaceObject, read_more_namespaceObject, comments_namespaceObject, build_module_comment_author_name_namespaceObject, build_module_comment_content_namespaceObject, comment_date_namespaceObject, build_module_comment_edit_link_namespaceObject, build_module_comment_reply_link_namespaceObject, comment_template_namespaceObject, comments_title_namespaceObject, comments_pagination_namespaceObject, comments_pagination_next_namespaceObject, comments_pagination_numbers_namespaceObject, comments_pagination_previous_namespaceObject, build_module_post_comments_form_namespaceObject, build_module_table_of_contents_namespaceObject, home_link_namespaceObject, loginout_namespaceObject, build_module_term_description_namespaceObject, query_title_namespaceObject, post_author_biography_namespaceObject];
   if (window?.__experimentalEnableBlockExperiments) {
     blocks.push(accordions_namespaceObject);
-    blocks.push(build_module_accordion_item_namespaceObject);
-    blocks.push(build_module_accordion_header_namespaceObject);
-    blocks.push(build_module_accordion_panel_namespaceObject);
+    blocks.push(accordion_item_namespaceObject);
+    blocks.push(accordion_header_namespaceObject);
+    blocks.push(accordion_panel_namespaceObject);
   }
   if (window?.__experimentalEnableFormBlocks) {
     blocks.push(build_module_form_namespaceObject);
