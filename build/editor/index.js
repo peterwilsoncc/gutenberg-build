@@ -10405,20 +10405,27 @@ function Email({
   const value = field.getValue({
     item: data
   });
+  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: newValue
   }), [id, onChange]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedTextControl, {
     required: !!field.isValid?.required,
-    customValidator: newValue => {
-      if (field.isValid?.custom) {
-        return field.isValid.custom({
-          ...data,
-          [id]: newValue
-        }, field);
+    onValidate: newValue => {
+      const message = field.isValid?.custom?.({
+        ...data,
+        [id]: newValue
+      }, field);
+      if (message) {
+        setCustomValidity({
+          type: 'invalid',
+          message
+        });
+        return;
       }
-      return null;
+      setCustomValidity(undefined);
     },
+    customValidity: customValidity,
     type: "email",
     label: label,
     placeholder: placeholder,
@@ -10501,6 +10508,7 @@ function Integer({
   const value = (_field$getValue = field.getValue({
     item: data
   })) !== null && _field$getValue !== void 0 ? _field$getValue : '';
+  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
     onChange({
       // Do not convert an empty string or undefined to a number,
@@ -10519,15 +10527,21 @@ function Integer({
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedNumberControl, {
     required: !!field.isValid?.required,
-    customValidator: newValue => {
-      if (field.isValid?.custom) {
-        return field.isValid.custom({
-          ...data,
-          [id]: [undefined, '', null].includes(newValue) ? undefined : Number(newValue)
-        }, field);
+    onValidate: newValue => {
+      const message = field.isValid?.custom?.({
+        ...data,
+        [id]: [undefined, '', null].includes(newValue) ? undefined : Number(newValue)
+      }, field);
+      if (message) {
+        setCustomValidity({
+          type: 'invalid',
+          message
+        });
+        return;
       }
-      return null;
+      setCustomValidity(undefined);
     },
+    customValidity: customValidity,
     label: label,
     help: description,
     value: value,
@@ -10667,20 +10681,27 @@ function Text({
   const value = field.getValue({
     item: data
   });
+  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
     [id]: newValue
   }), [id, onChange]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(text_ValidatedTextControl, {
     required: !!field.isValid?.required,
-    customValidator: newValue => {
-      if (field.isValid?.custom) {
-        return field.isValid.custom({
-          ...data,
-          [id]: newValue
-        }, field);
+    onValidate: newValue => {
+      const message = field.isValid?.custom?.({
+        ...data,
+        [id]: newValue
+      }, field);
+      if (message) {
+        setCustomValidity({
+          type: 'invalid',
+          message
+        });
+        return;
       }
-      return null;
+      setCustomValidity(undefined);
     },
+    customValidity: customValidity,
     label: label,
     placeholder: placeholder,
     value: value !== null && value !== void 0 ? value : '',
@@ -10744,6 +10765,7 @@ function ToggleGroup({
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -10764,17 +10786,24 @@ function boolean_Boolean({
     getValue,
     label
   } = field;
+  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedToggleControl, {
     required: !!field.isValid.required,
-    customValidator: newValue => {
-      if (field.isValid?.custom) {
-        return field.isValid.custom({
-          ...data,
-          [id]: newValue
-        }, field);
+    onValidate: newValue => {
+      const message = field.isValid?.custom?.({
+        ...data,
+        [id]: newValue
+      }, field);
+      if (message) {
+        setCustomValidity({
+          type: 'invalid',
+          message
+        });
+        return;
       }
-      return null;
+      setCustomValidity(undefined);
     },
+    customValidity: customValidity,
     hidden: hideLabelFromVision,
     __nextHasNoMarginBottom: true,
     label: label,
