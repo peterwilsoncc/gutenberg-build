@@ -59312,6 +59312,7 @@ function UnforwardedMenuItem(props, ref) {
     role: role,
     icon: iconPosition === 'left' ? icon : undefined,
     className: className,
+    accessibleWhenDisabled: true,
     ...buttonProps,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
       className: "components-menu-item__item",
