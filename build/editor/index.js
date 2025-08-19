@@ -34248,7 +34248,7 @@ function Thread({
         className: "editor-collab-sidebar-panel__show-more-reply",
         children: (0,external_wp_i18n_namespaceObject.sprintf)(
         // translators: %s: number of replies.
-        (0,external_wp_i18n_namespaceObject._x)('%s more replies..', 'Show replies button'), thread?.reply?.length)
+        (0,external_wp_i18n_namespaceObject._x)('%s more replies', 'Show replies button'), thread?.reply?.length)
       }), isFocused && thread.reply.map(reply => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
         className: "editor-collab-sidebar-panel__child-thread",
         id: reply.id,
