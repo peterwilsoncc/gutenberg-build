@@ -39,9 +39,14 @@ __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
+  initializeCommandPalette: () => (/* binding */ initializeCommandPalette),
   privateApis: () => (/* reexport */ privateApis)
 });
 
+;// external ["wp","element"]
+const external_wp_element_namespaceObject = window["wp"]["element"];
+;// external ["wp","router"]
+const external_wp_router_namespaceObject = window["wp"]["router"];
 ;// external ["wp","commands"]
 const external_wp_commands_namespaceObject = window["wp"]["commands"];
 ;// external ["wp","i18n"]
@@ -71,12 +76,8 @@ const external_wp_url_namespaceObject = window["wp"]["url"];
 const external_wp_coreData_namespaceObject = window["wp"]["coreData"];
 ;// external ["wp","data"]
 const external_wp_data_namespaceObject = window["wp"]["data"];
-;// external ["wp","element"]
-const external_wp_element_namespaceObject = window["wp"]["element"];
 ;// external ["wp","notices"]
 const external_wp_notices_namespaceObject = window["wp"]["notices"];
-;// external ["wp","router"]
-const external_wp_router_namespaceObject = window["wp"]["router"];
 ;// external ["wp","privateApis"]
 const external_wp_privateApis_namespaceObject = window["wp"]["privateApis"];
 ;// ./packages/core-commands/build-module/lock-unlock.js
@@ -681,7 +682,46 @@ lock(privateApis, {
 });
 
 ;// ./packages/core-commands/build-module/index.js
+/**
+ * WordPress dependencies
+ */
 
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+const {
+  RouterProvider
+} = unlock(external_wp_router_namespaceObject.privateApis);
+
+// Register core commands and render the Command Palette.
+function CommandPalette() {
+  useAdminNavigationCommands();
+  useSiteEditorNavigationCommands();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RouterProvider, {
+    pathArg: "p",
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_commands_namespaceObject.CommandMenu, {})
+  });
+}
+
+/**
+ * Initializes the Command Palette.
+ */
+function initializeCommandPalette() {
+  if (false) {}
+  const root = document.createElement('div');
+  document.body.appendChild(root);
+  (0,external_wp_element_namespaceObject.createRoot)(root).render(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.StrictMode, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommandPalette, {})
+  }));
+}
 
 (window.wp = window.wp || {}).coreCommands = __webpack_exports__;
 /******/ })()
