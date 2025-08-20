@@ -43724,15 +43724,6 @@ function ItemActions({
       registry: registry
     });
   }
-
-  // If all actions are primary, there is no need to render the dropdown.
-  if (primaryActions.length === eligibleActions.length) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PrimaryActions, {
-      item: item,
-      actions: primaryActions,
-      registry: registry
-    });
-  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
     spacing: 1,
     justify: "flex-end",
@@ -43745,7 +43736,7 @@ function ItemActions({
       item: item,
       actions: primaryActions,
       registry: registry
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CompactItemActions, {
+    }), primaryActions.length < eligibleActions.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CompactItemActions, {
       item: item,
       actions: eligibleActions,
       registry: registry
