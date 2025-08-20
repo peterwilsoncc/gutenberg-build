@@ -45369,7 +45369,12 @@ function PostCommentsLinkEdit({
   }, [postId]);
   const post = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', postType, postId), [postType, postId]);
   if (!post) {
-    return null;
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      ...blockProps,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.Warning, {
+        children: (0,external_wp_i18n_namespaceObject.__)('Post Comments Link block: post not found.')
+      })
+    });
   }
   const {
     link
