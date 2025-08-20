@@ -67826,9 +67826,11 @@ const VideoSettings = ({
       return newValue => {
         setAttributes({
           [attribute]: newValue,
-          // Set muted when autoplay changes
+          // Set muted and playsInLine when autoplay changes
+          // playsInline is set to true when autoplay is true to support iOS devices
           ...(attribute === 'autoplay' && {
-            muted: newValue
+            muted: newValue,
+            playsInline: newValue
           })
         });
       };
@@ -67926,7 +67928,8 @@ const VideoSettings = ({
         label: (0,external_wp_i18n_namespaceObject.__)('Play inline'),
         onChange: toggleFactory.playsInline,
         checked: !!playsInline,
-        help: (0,external_wp_i18n_namespaceObject.__)('When enabled, videos will play directly within the webpage on mobile browsers, instead of opening in a fullscreen player.')
+        disabled: autoplay,
+        help: autoplay ? (0,external_wp_i18n_namespaceObject.__)('Play inline enabled because of Autoplay.') : (0,external_wp_i18n_namespaceObject.__)('When enabled, videos will play directly within the webpage on mobile browsers, instead of opening in a fullscreen player.')
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
       label: (0,external_wp_i18n_namespaceObject.__)('Preload'),
