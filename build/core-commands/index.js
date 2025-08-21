@@ -158,6 +158,42 @@ const getAddNewPageCommand = () => function useAddNewPageCommand() {
     commands
   };
 };
+const getAdminBasicNavigationCommands = () => function useAdminBasicNavigationCommands() {
+  const {
+    isBlockBasedTheme,
+    canCreateTemplate
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return {
+      isBlockBasedTheme: select(external_wp_coreData_namespaceObject.store).getCurrentTheme()?.is_block_theme,
+      canCreateTemplate: select(external_wp_coreData_namespaceObject.store).canUser('create', {
+        kind: 'postType',
+        name: 'wp_template'
+      })
+    };
+  }, []);
+  const commands = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (canCreateTemplate && isBlockBasedTheme) {
+      const isSiteEditor = (0,external_wp_url_namespaceObject.getPath)(window.location.href)?.includes('site-editor.php');
+      if (!isSiteEditor) {
+        return [{
+          name: 'core/go-to-site-editor',
+          label: (0,external_wp_i18n_namespaceObject.__)('Open Site Editor'),
+          callback: ({
+            close
+          }) => {
+            close();
+            document.location = 'site-editor.php';
+          }
+        }];
+      }
+    }
+    return [];
+  }, [canCreateTemplate, isBlockBasedTheme]);
+  return {
+    commands,
+    isLoading: false
+  };
+};
 function useAdminNavigationCommands() {
   (0,external_wp_commands_namespaceObject.useCommand)({
     name: 'core/add-new-post',
@@ -170,6 +206,10 @@ function useAdminNavigationCommands() {
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/add-new-page',
     hook: getAddNewPageCommand()
+  });
+  (0,external_wp_commands_namespaceObject.useCommandLoader)({
+    name: 'core/admin-navigation',
+    hook: getAdminBasicNavigationCommands()
   });
 }
 
