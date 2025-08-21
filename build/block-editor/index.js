@@ -8982,7 +8982,7 @@ withBlockReset, withPersistentBlockChange, withIgnoredBlockChange, withResetCont
           const newState = new Map(state);
           for (const clientId of action.clientIds) {
             var _action$attributes;
-            const updatedAttributeEntries = Object.entries(action.uniqueByBlock ? action.attributes[clientId] : (_action$attributes = action.attributes) !== null && _action$attributes !== void 0 ? _action$attributes : {});
+            const updatedAttributeEntries = Object.entries(!!action.options?.uniqueByBlock ? action.attributes[clientId] : (_action$attributes = action.attributes) !== null && _action$attributes !== void 0 ? _action$attributes : {});
             if (updatedAttributeEntries.length === 0) {
               continue;
             }
@@ -9815,7 +9815,7 @@ function lastBlockAttributesChange(state = null, action) {
     case 'UPDATE_BLOCK_ATTRIBUTES':
       return action.clientIds.reduce((accumulator, id) => ({
         ...accumulator,
-        [id]: action.uniqueByBlock ? action.attributes[id] : action.attributes
+        [id]: !!action.options?.uniqueByBlock ? action.attributes[id] : action.attributes
       }), {});
   }
   return state;
@@ -14956,18 +14956,25 @@ function receiveBlocks(blocks) {
 /**
  * Action that updates attributes of multiple blocks with the specified client IDs.
  *
- * @param {string|string[]} clientIds     Block client IDs.
- * @param {Object}          attributes    Block attributes to be merged. Should be keyed by clientIds if
- *                                        uniqueByBlock is true.
- * @param {boolean}         uniqueByBlock true if each block in clientIds array has a unique set of attributes
+ * @param {string|string[]} clientIds                     Block client IDs.
+ * @param {Object}          attributes                    Block attributes to be merged. Should be keyed by clientIds if `options.uniqueByBlock` is true.
+ * @param {Object}          options                       Updating options.
+ * @param {boolean}         [options.uniqueByBlock=false] Whether each block in clientIds array has a unique set of attributes.
  * @return {Object} Action object.
  */
-function updateBlockAttributes(clientIds, attributes, uniqueByBlock = false) {
+function updateBlockAttributes(clientIds, attributes, options = {
+  uniqueByBlock: false
+}) {
+  if (typeof options === 'boolean') {
+    options = {
+      uniqueByBlock: options
+    };
+  }
   return {
     type: 'UPDATE_BLOCK_ATTRIBUTES',
     clientIds: actions_castArray(clientIds),
     attributes,
-    uniqueByBlock
+    options
   };
 }
 

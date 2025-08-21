@@ -24088,7 +24088,9 @@ function GalleryEdit(props) {
       }) => id === block.attributes.id) : null;
       changedAttributes[block.clientId] = utils_getHrefAndDestination(image, value, false, block.attributes, lightboxSetting);
     });
-    updateBlockAttributes(blocks, changedAttributes, true);
+    updateBlockAttributes(blocks, changedAttributes, {
+      uniqueByBlock: true
+    });
     const linkToText = [...linkOptions].find(linkType => linkType.value === value);
     createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: image size settings */
     (0,external_wp_i18n_namespaceObject.__)('All gallery image links updated to: %s'), linkToText.noticeText), {
@@ -24122,7 +24124,9 @@ function GalleryEdit(props) {
       blocks.push(block.clientId);
       changedAttributes[block.clientId] = getUpdatedLinkTargetSettings(newLinkTarget, block.attributes);
     });
-    updateBlockAttributes(blocks, changedAttributes, true);
+    updateBlockAttributes(blocks, changedAttributes, {
+      uniqueByBlock: true
+    });
     const noticeText = openInNewTab ? (0,external_wp_i18n_namespaceObject.__)('All gallery images updated to open in new tab') : (0,external_wp_i18n_namespaceObject.__)('All gallery images updated to not open in new tab');
     createSuccessNotice(noticeText, {
       id: 'gallery-attributes-openInNewTab',
@@ -24143,7 +24147,9 @@ function GalleryEdit(props) {
       }) => id === block.attributes.id) : null;
       changedAttributes[block.clientId] = getImageSizeAttributes(image, newSizeSlug);
     });
-    updateBlockAttributes(blocks, changedAttributes, true);
+    updateBlockAttributes(blocks, changedAttributes, {
+      uniqueByBlock: true
+    });
     const imageSize = imageSizeOptions.find(size => size.value === newSizeSlug);
     createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: image size settings */
     (0,external_wp_i18n_namespaceObject.__)('All gallery image sizes updated to: %s'), (_imageSize$label = imageSize?.label) !== null && _imageSize$label !== void 0 ? _imageSize$label : newSizeSlug), {
