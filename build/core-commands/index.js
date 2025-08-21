@@ -150,7 +150,8 @@ const getAddNewPageCommand = () => function useAddNewPageCommand() {
       name: 'core/add-new-page',
       label: (0,external_wp_i18n_namespaceObject.__)('Add Page'),
       icon: library_plus,
-      callback: addNewPage
+      callback: addNewPage,
+      keywords: [(0,external_wp_i18n_namespaceObject.__)('page'), (0,external_wp_i18n_namespaceObject.__)('new'), (0,external_wp_i18n_namespaceObject.__)('add'), (0,external_wp_i18n_namespaceObject.__)('create')]
     }];
   }, [createPageEntity, isSiteEditor, isBlockBasedTheme]);
   return {
@@ -201,7 +202,8 @@ function useAdminNavigationCommands() {
     icon: library_plus,
     callback: () => {
       document.location.assign('post-new.php');
-    }
+    },
+    keywords: [(0,external_wp_i18n_namespaceObject.__)('post'), (0,external_wp_i18n_namespaceObject.__)('new'), (0,external_wp_i18n_namespaceObject.__)('add'), (0,external_wp_i18n_namespaceObject.__)('create')]
   });
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/add-new-page',
