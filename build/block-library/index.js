@@ -29407,7 +29407,6 @@ function ImageEdit({
 }) {
   const {
     url = '',
-    alt,
     caption,
     id,
     width,
@@ -29430,10 +29429,6 @@ function ImageEdit({
     width: placeholderWidth
   }] = (0,external_wp_compose_namespaceObject.useResizeObserver)();
   const isSmallContainer = placeholderWidth && placeholderWidth < 160;
-  const altRef = (0,external_wp_element_namespaceObject.useRef)();
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    altRef.current = alt;
-  }, [alt]);
   const captionRef = (0,external_wp_element_namespaceObject.useRef)();
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     captionRef.current = caption;
