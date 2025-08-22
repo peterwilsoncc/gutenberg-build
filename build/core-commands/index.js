@@ -757,7 +757,6 @@ function CommandPalette() {
  * Initializes the Command Palette.
  */
 function initializeCommandPalette() {
-  if (false) {}
   const root = document.createElement('div');
   document.body.appendChild(root);
   (0,external_wp_element_namespaceObject.createRoot)(root).render(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.StrictMode, {
