@@ -21220,7 +21220,6 @@ function form_save_save({
   } = attributes;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
     ...blockProps,
-    className: "wp-block-form",
     encType: submissionMethod === 'email' ? 'text/plain' : null,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InnerBlocks.Content, {})
   });
@@ -21313,6 +21312,97 @@ const form_variations_variations = [{
 }];
 /* harmony default export */ const form_variations = (form_variations_variations);
 
+;// ./packages/block-library/build-module/form/deprecated.js
+/**
+ * WordPress dependencies
+ */
+
+
+const form_deprecated_v1 = {
+  // The block supports here are deliberately empty despite this
+  // deprecated version of the block having adopted block supports.
+  // The attributes added by these supports have been manually
+  // added to this deprecated version's attributes definition so
+  // that the data isn't lost on migration. All this is so that the
+  // automatic application of block support classes doesn't occur
+  // as this version of the block had a bug that overrode those
+  // classes. If those block support classes are applied during the
+  // deprecation process, this deprecation doesn't match and won't
+  // run.
+  // @see https://github.com/WordPress/gutenberg/pull/55755
+  supports: {},
+  attributes: {
+    submissionMethod: {
+      type: 'string',
+      default: 'email'
+    },
+    method: {
+      type: 'string',
+      default: 'post'
+    },
+    action: {
+      type: 'string'
+    },
+    email: {
+      type: 'string'
+    },
+    // The following attributes have been added to match the block
+    // supports at the time of the deprecation. See above for details.
+    anchor: {
+      type: 'string',
+      source: 'attribute',
+      attribute: 'id',
+      selector: '*'
+    },
+    backgroundColor: {
+      type: 'string'
+    },
+    textColor: {
+      type: 'string'
+    },
+    gradient: {
+      type: 'string'
+    },
+    style: {
+      type: 'object'
+    },
+    fontFamily: {
+      type: 'string'
+    },
+    fontSize: {
+      type: 'string'
+    }
+  },
+  save({
+    attributes
+  }) {
+    const {
+      submissionMethod
+    } = attributes;
+    const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetColorClassesAndStyles)(attributes);
+    const typographyProps = (0,external_wp_blockEditor_namespaceObject.getTypographyClassesAndStyles)(attributes);
+    const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
+    const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save({
+      // In this deprecated version, the block support is deliberately empty.
+      // As a result, the useBlockProps.save() does not output style or id attributes,
+      // so we apply them explicitly here.
+      style: {
+        ...colorProps.style,
+        ...typographyProps.style,
+        ...spacingProps.style
+      },
+      id: attributes.anchor
+    });
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
+      ...blockProps,
+      className: "wp-block-form",
+      encType: submissionMethod === 'email' ? 'text/plain' : null,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InnerBlocks.Content, {})
+    });
+  }
+};
+/* harmony default export */ const form_deprecated = ([form_deprecated_v1]);
+
 ;// ./packages/block-library/build-module/form/index.js
 /**
  * Internal dependencies
@@ -21349,7 +21439,6 @@ const form_metadata = {
   },
   supports: {
     anchor: true,
-    className: false,
     color: {
       gradients: true,
       link: true,
@@ -21381,6 +21470,7 @@ const form_metadata = {
 
 
 
+
 /**
  * WordPress dependencies
  */
@@ -21392,6 +21482,7 @@ const {
 const form_settings = {
   edit: form_edit,
   save: form_save_save,
+  deprecated: form_deprecated,
   variations: form_variations,
   example: {}
 };
