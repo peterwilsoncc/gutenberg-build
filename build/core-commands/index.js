@@ -70,6 +70,21 @@ const plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exter
 });
 /* harmony default export */ const library_plus = (plus);
 
+;// ./packages/icons/build-module/library/dashboard.js
+/**
+ * WordPress dependencies
+ */
+
+
+const dashboard = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M12 5a8 8 0 0 1 3.842.984L14.726 7.1a6.502 6.502 0 0 0-7.323 1.303 6.5 6.5 0 0 0 0 9.194l-1.06 1.06A8 8 0 0 1 12 5Zm7.021 4.168a8 8 0 0 1-1.364 9.49l-1.06-1.061a6.5 6.5 0 0 0 1.307-7.312l1.117-1.117ZM17.47 6.47a.75.75 0 1 1 1.06 1.06l-5.083 5.082a1.5 1.5 0 1 1-1.06-1.06L17.47 6.47Z"
+  })
+});
+/* harmony default export */ const library_dashboard = (dashboard);
+
 ;// external ["wp","url"]
 const external_wp_url_namespaceObject = window["wp"]["url"];
 ;// external ["wp","coreData"]
@@ -195,6 +210,27 @@ const getAdminBasicNavigationCommands = () => function useAdminBasicNavigationCo
     isLoading: false
   };
 };
+const getDashboardCommand = () => function useDashboardCommand() {
+  const currentPath = (0,external_wp_url_namespaceObject.getPath)(window.location.href);
+  const isEditorScreen = currentPath?.includes('site-editor.php') || currentPath?.includes('post.php') || currentPath?.includes('post-new.php') || currentPath?.includes('widgets.php') || currentPath?.includes('customize.php');
+  const commands = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (isEditorScreen) {
+      return [{
+        name: 'core/dashboard',
+        label: (0,external_wp_i18n_namespaceObject.__)('Dashboard'),
+        icon: library_dashboard,
+        callback: () => {
+          document.location.assign('index.php');
+        }
+      }];
+    }
+    return [];
+  }, [isEditorScreen]);
+  return {
+    isLoading: false,
+    commands
+  };
+};
 function useAdminNavigationCommands() {
   (0,external_wp_commands_namespaceObject.useCommand)({
     name: 'core/add-new-post',
@@ -204,6 +240,10 @@ function useAdminNavigationCommands() {
       document.location.assign('post-new.php');
     },
     keywords: [(0,external_wp_i18n_namespaceObject.__)('post'), (0,external_wp_i18n_namespaceObject.__)('new'), (0,external_wp_i18n_namespaceObject.__)('add'), (0,external_wp_i18n_namespaceObject.__)('create')]
+  });
+  (0,external_wp_commands_namespaceObject.useCommandLoader)({
+    name: 'core/dashboard',
+    hook: getDashboardCommand()
   });
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/add-new-page',
