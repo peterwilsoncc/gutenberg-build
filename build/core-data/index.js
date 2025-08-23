@@ -649,6 +649,8 @@ __webpack_require__.d(resolvers_namespaceObject, {
   getEntitiesConfig: () => (resolvers_getEntitiesConfig),
   getEntityRecord: () => (resolvers_getEntityRecord),
   getEntityRecords: () => (resolvers_getEntityRecords),
+  getEntityRecordsTotalItems: () => (resolvers_getEntityRecordsTotalItems),
+  getEntityRecordsTotalPages: () => (resolvers_getEntityRecordsTotalPages),
   getNavigationFallbackId: () => (resolvers_getNavigationFallbackId),
   getRawEntityRecord: () => (resolvers_getRawEntityRecord),
   getRegisteredPostMeta: () => (resolvers_getRegisteredPostMeta),
@@ -23315,6 +23317,16 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
 resolvers_getEntityRecords.shouldInvalidate = (action, kind, name) => {
   return (action.type === 'RECEIVE_ITEMS' || action.type === 'REMOVE_ITEMS') && action.invalidateCache && kind === action.kind && name === action.name;
 };
+
+/**
+ * Requests the total number of entity records.
+ */
+const resolvers_getEntityRecordsTotalItems = forward_resolver('getEntityRecords');
+
+/**
+ * Requests the number of available pages for the given query.
+ */
+const resolvers_getEntityRecordsTotalPages = forward_resolver('getEntityRecords');
 
 /**
  * Requests the current theme.
