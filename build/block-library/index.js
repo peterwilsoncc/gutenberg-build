@@ -65933,6 +65933,7 @@ function TitleModal({
 
 
 
+
 function TemplatePartPlaceholder({
   area,
   clientId,
@@ -65965,7 +65966,7 @@ function TemplatePartPlaceholder({
   const areaObject = useTemplatePartArea(area);
   const createFromBlocks = useCreateTemplatePartFromBlocks(area, setAttributes);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Placeholder, {
-    icon: areaObject.icon,
+    icon: getTemplatePartIcon(areaObject.icon),
     label: areaObject.label,
     instructions: isBlockBasedTheme ? (0,external_wp_i18n_namespaceObject.sprintf)(
     // Translators: %s as template part area title ("Header", "Footer", etc.).
