@@ -2358,28 +2358,6 @@ const queries = (state = {}, action) => {
 /** @typedef {import('./types').AnyFunction} AnyFunction */
 
 /**
- * Reducer managing terms state. Keyed by taxonomy slug, the value is either
- * undefined (if no request has been made for given taxonomy), null (if a
- * request is in-flight for given taxonomy), or the array of terms for the
- * taxonomy.
- *
- * @param {Object} state  Current state.
- * @param {Object} action Dispatched action.
- *
- * @return {Object} Updated state.
- */
-function terms(state = {}, action) {
-  switch (action.type) {
-    case 'RECEIVE_TERMS':
-      return {
-        ...state,
-        [action.taxonomy]: action.terms
-      };
-  }
-  return state;
-}
-
-/**
  * Reducer managing authors state. Keyed by id.
  *
  * @param {Object} state  Current state.
@@ -2423,22 +2401,6 @@ function currentUser(state = {}, action) {
   switch (action.type) {
     case 'RECEIVE_CURRENT_USER':
       return action.currentUser;
-  }
-  return state;
-}
-
-/**
- * Reducer managing taxonomies.
- *
- * @param {Object} state  Current state.
- * @param {Object} action Dispatched action.
- *
- * @return {Object} Updated state.
- */
-function taxonomies(state = [], action) {
-  switch (action.type) {
-    case 'RECEIVE_TAXONOMIES':
-      return action.taxonomies;
   }
   return state;
 }
@@ -2931,7 +2893,6 @@ function registeredPostMeta(state = {}, action) {
   return state;
 }
 /* harmony default export */ const build_module_reducer = ((0,external_wp_data_namespaceObject.combineReducers)({
-  terms,
   users,
   currentTheme,
   currentGlobalStylesId,
@@ -2939,7 +2900,6 @@ function registeredPostMeta(state = {}, action) {
   themeGlobalStyleVariations,
   themeBaseGlobalStyles,
   themeGlobalStyleRevisions,
-  taxonomies,
   entities,
   editsReference,
   undoManager,
