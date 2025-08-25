@@ -28952,7 +28952,7 @@ function image_Image({
     };
   }, [arePatternOverridesEnabled, context, isSingleSelected, metadata?.bindings]);
   const showUrlInput = isSingleSelected && !isEditingImage && !lockHrefControls && !lockUrlControls;
-  const showCoverControls = isSingleSelected && canInsertCover;
+  const showCoverControls = isSingleSelected && canInsertCover && !isContentOnlyMode;
   const showBlockControls = showUrlInput || allowCrop || showCoverControls;
   const mediaReplaceFlow = isSingleSelected && !isEditingImage && !lockUrlControls &&
   /*#__PURE__*/
