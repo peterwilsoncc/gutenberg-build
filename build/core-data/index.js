@@ -1614,7 +1614,8 @@ const rootEntitiesConfig = [{
   baseURLParams: {
     context: 'edit'
   },
-  plural: 'users'
+  plural: 'users',
+  supportsPagination: true
 }, {
   name: 'comment',
   kind: 'root',
@@ -1623,7 +1624,8 @@ const rootEntitiesConfig = [{
     context: 'edit'
   },
   plural: 'comments',
-  label: (0,external_wp_i18n_namespaceObject.__)('Comment')
+  label: (0,external_wp_i18n_namespaceObject.__)('Comment'),
+  supportsPagination: true
 }, {
   name: 'menu',
   kind: 'root',
@@ -1632,7 +1634,8 @@ const rootEntitiesConfig = [{
     context: 'edit'
   },
   plural: 'menus',
-  label: (0,external_wp_i18n_namespaceObject.__)('Menu')
+  label: (0,external_wp_i18n_namespaceObject.__)('Menu'),
+  supportsPagination: true
 }, {
   name: 'menuItem',
   kind: 'root',
@@ -1642,7 +1645,8 @@ const rootEntitiesConfig = [{
   },
   plural: 'menuItems',
   label: (0,external_wp_i18n_namespaceObject.__)('Menu Item'),
-  rawAttributes: ['title']
+  rawAttributes: ['title'],
+  supportsPagination: true
 }, {
   name: 'menuLocation',
   kind: 'root',
@@ -1860,7 +1864,8 @@ async function loadTaxonomyEntities() {
       },
       name,
       label: taxonomy.name,
-      getTitle: record => record?.name
+      getTitle: record => record?.name,
+      supportsPagination: true
     };
   });
 }
