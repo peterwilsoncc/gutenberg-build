@@ -38824,7 +38824,7 @@ function injectThemeAttributeInBlockTemplateContent(block, currentThemeStyleshee
  * Filter all patterns and return only the ones that are compatible with the current template.
  *
  * @param {Array}  patterns An array of patterns.
- * @param {Object} template The current template.
+ * @param {Object} template The current template. Required values are `area`, `name`, and `slug`.
  * @return {Array} Array of patterns that are compatible with the current template.
  */
 function filterPatterns(patterns, template) {
@@ -38851,7 +38851,11 @@ function preparePatterns(patterns, currentThemeStylesheet) {
     }).map(block => injectThemeAttributeInBlockTemplateContent(block, currentThemeStylesheet))
   }));
 }
-function useAvailablePatterns(template) {
+function useAvailablePatterns({
+  area,
+  name,
+  slug
+}) {
   const {
     blockPatterns,
     restBlockPatterns,
@@ -38870,9 +38874,13 @@ function useAvailablePatterns(template) {
   }, []);
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
     const mergedPatterns = [...(blockPatterns || []), ...(restBlockPatterns || [])];
-    const filteredPatterns = filterPatterns(mergedPatterns, template);
+    const filteredPatterns = filterPatterns(mergedPatterns, {
+      area,
+      name,
+      slug
+    });
     return preparePatterns(filteredPatterns, currentThemeStylesheet);
-  }, [blockPatterns, restBlockPatterns, template, currentThemeStylesheet]);
+  }, [area, name, slug, blockPatterns, restBlockPatterns, currentThemeStylesheet]);
 }
 
 ;// ./packages/editor/build-module/components/post-transform-panel/index.js
@@ -38909,7 +38917,9 @@ function post_transform_panel_TemplatesList({
 }
 function PostTransform() {
   const {
-    record,
+    area,
+    name,
+    slug,
     postType,
     postId
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -38922,16 +38932,23 @@ function PostTransform() {
     } = select(external_wp_coreData_namespaceObject.store);
     const type = getCurrentPostType();
     const id = getCurrentPostId();
+    const record = getEditedEntityRecord('postType', type, id);
     return {
+      area: record?.area,
+      name: record?.name,
+      slug: record?.slug,
       postType: type,
-      postId: id,
-      record: getEditedEntityRecord('postType', type, id)
+      postId: id
     };
   }, []);
   const {
     editEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  const availablePatterns = useAvailablePatterns(record);
+  const availablePatterns = useAvailablePatterns({
+    area,
+    name,
+    slug
+  });
   const onTemplateSelect = async selectedTemplate => {
     await editEntityRecord('postType', postType, postId, {
       blocks: selectedTemplate.blocks,
@@ -38943,7 +38960,7 @@ function PostTransform() {
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
     title: (0,external_wp_i18n_namespaceObject.__)('Design'),
-    initialOpen: record.type === TEMPLATE_PART_POST_TYPE,
+    initialOpen: postType === TEMPLATE_PART_POST_TYPE,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_transform_panel_TemplatesList, {
       availableTemplates: availablePatterns,
       onSelect: onTemplateSelect
