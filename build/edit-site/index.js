@@ -46756,8 +46756,7 @@ function DefaultUI({
   searchLabel = undefined
 }) {
   const {
-    isShowingFilter,
-    config
+    isShowingFilter
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -46772,13 +46771,13 @@ function DefaultUI({
         children: [search && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_search, {
           label: searchLabel
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FiltersToggle, {})]
-      }), (config || header) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         spacing: 1,
         expanded: false,
         style: {
           flexShrink: 0
         },
-        children: ["config && ", /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config, {}), header]
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config, {}), header]
       })]
     }), isShowingFilter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_filters, {
       className: "dataviews-filters__container"
@@ -46921,6 +46920,7 @@ DataViewsSubComponents.LayoutSwitcher = ViewTypeMenu;
 DataViewsSubComponents.Pagination = DataViewsPagination;
 DataViewsSubComponents.Search = dataviews_search;
 DataViewsSubComponents.ViewConfig = DataviewsViewConfigDropdown;
+DataViewsSubComponents.Footer = DataViewsFooter;
 /* harmony default export */ const dataviews = (DataViewsSubComponents);
 
 ;// ./packages/edit-site/build-module/components/page-patterns/use-pattern-settings.js
