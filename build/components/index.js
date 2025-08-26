@@ -81394,9 +81394,6 @@ function ValidityIndicator({
  */
 
 
-/**
- * External dependencies
- */
 
 
 /**
@@ -81439,6 +81436,7 @@ function UnforwardedControlWithError({
   const [errorMessage, setErrorMessage] = (0,external_wp_element_namespaceObject.useState)();
   const [statusMessage, setStatusMessage] = (0,external_wp_element_namespaceObject.useState)();
   const [isTouched, setIsTouched] = (0,external_wp_element_namespaceObject.useState)(false);
+  const previousCustomValidityType = (0,external_wp_compose_namespaceObject.usePrevious)(customValidity?.type);
 
   // Ensure that error messages are visible after user attemps to submit a form
   // with multiple invalid fields.
@@ -81466,6 +81464,8 @@ function UnforwardedControlWithError({
         {
           // Wait before showing a validating state.
           const timer = setTimeout(() => {
+            validityTarget?.setCustomValidity('');
+            setErrorMessage(undefined);
             setStatusMessage({
               type: 'validating',
               message: customValidity.message
@@ -81475,13 +81475,18 @@ function UnforwardedControlWithError({
         }
       case 'valid':
         {
+          // Ensures that we wait for any async responses before showing
+          // a synchronously valid state.
+          if (previousCustomValidityType === 'valid') {
+            break;
+          }
           validityTarget?.setCustomValidity('');
           setErrorMessage(validityTarget?.validationMessage);
           setStatusMessage({
             type: 'valid',
             message: customValidity.message
           });
-          return;
+          break;
         }
       case 'invalid':
         {
@@ -81489,24 +81494,19 @@ function UnforwardedControlWithError({
           validityTarget?.setCustomValidity((_customValidity$messa = customValidity.message) !== null && _customValidity$messa !== void 0 ? _customValidity$messa : '');
           setErrorMessage(validityTarget?.validationMessage);
           setStatusMessage(undefined);
-          return undefined;
+          break;
         }
     }
-  }, [isTouched, customValidity?.type, customValidity?.message, getValidityTarget]);
+  }, [isTouched, customValidity?.type, customValidity?.message, getValidityTarget, previousCustomValidityType]);
   const onBlur = event => {
+    if (isTouched) {
+      return;
+    }
+
     // Only consider "blurred from the component" if focus has fully left the wrapping div.
     // This prevents unnecessary blurs from components with multiple focusable elements.
     if (!event.relatedTarget || !event.currentTarget.contains(event.relatedTarget)) {
       setIsTouched(true);
-      const validityTarget = getValidityTarget();
-
-      // Prevents a double flash of the native error tooltip when the control is already showing one.
-      if (!validityTarget?.validity.valid) {
-        if (!errorMessage) {
-          setErrorMessage(validityTarget?.validationMessage);
-        }
-        return;
-      }
       onValidate?.();
     }
   };
