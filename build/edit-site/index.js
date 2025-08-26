@@ -52349,44 +52349,6 @@ function DataFormLayout({
   });
 }
 
-;// ./packages/dataviews/build-module/validation.js
-/**
- * Internal dependencies
- */
-
-/**
- * Whether or not the given item's value is valid according to the fields and form config.
- *
- * @param item   The item to validate.
- * @param fields Fields config.
- * @param form   Form config.
- *
- * @return A boolean indicating if the item is valid (true) or not (false).
- */
-function isItemValid(item, fields, form) {
-  const _fields = normalizeFields(fields.filter(({
-    id
-  }) => !!form.fields?.includes(id)));
-  const isEmptyNullOrUndefined = value => [undefined, '', null].includes(value);
-  return _fields.every(field => {
-    const value = field.getValue({
-      item
-    });
-    if (field.isValid.required) {
-      if (field.type === 'text' && isEmptyNullOrUndefined(value) || field.type === 'email' && isEmptyNullOrUndefined(value) || field.type === 'integer' && isEmptyNullOrUndefined(value) || field.type === undefined && isEmptyNullOrUndefined(value)) {
-        return false;
-      }
-      if (field.type === 'boolean' && value !== true) {
-        return false;
-      }
-    }
-    if (typeof field.isValid.custom === 'function' && field.isValid.custom(item, field) !== null) {
-      return false;
-    }
-    return true;
-  });
-}
-
 ;// ./packages/dataviews/build-module/components/dataform/index.js
 /**
  * WordPress dependencies
@@ -52401,7 +52363,6 @@ function isItemValid(item, fields, form) {
 
 
 
-
 function DataForm({
   data,
   form,
@@ -52409,18 +52370,6 @@ function DataForm({
   onChange
 }) {
   const normalizedFields = (0,external_wp_element_namespaceObject.useMemo)(() => normalizeFields(fields), [fields]);
-  const onChangeWithValidation = updatedData => {
-    if (!onChange) {
-      return;
-    }
-    const isValid = isItemValid({
-      ...data,
-      ...updatedData
-    }, fields, form);
-    onChange(updatedData, {
-      isValid
-    });
-  };
   if (!form.fields) {
     return null;
   }
@@ -52429,7 +52378,7 @@ function DataForm({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataFormLayout, {
       data: data,
       form: form,
-      onChange: onChangeWithValidation
+      onChange: onChange
     })
   });
 }

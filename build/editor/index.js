@@ -11851,44 +11851,6 @@ function DataFormLayout({
   });
 }
 
-;// ./packages/dataviews/build-module/validation.js
-/**
- * Internal dependencies
- */
-
-/**
- * Whether or not the given item's value is valid according to the fields and form config.
- *
- * @param item   The item to validate.
- * @param fields Fields config.
- * @param form   Form config.
- *
- * @return A boolean indicating if the item is valid (true) or not (false).
- */
-function isItemValid(item, fields, form) {
-  const _fields = normalizeFields(fields.filter(({
-    id
-  }) => !!form.fields?.includes(id)));
-  const isEmptyNullOrUndefined = value => [undefined, '', null].includes(value);
-  return _fields.every(field => {
-    const value = field.getValue({
-      item
-    });
-    if (field.isValid.required) {
-      if (field.type === 'text' && isEmptyNullOrUndefined(value) || field.type === 'email' && isEmptyNullOrUndefined(value) || field.type === 'integer' && isEmptyNullOrUndefined(value) || field.type === undefined && isEmptyNullOrUndefined(value)) {
-        return false;
-      }
-      if (field.type === 'boolean' && value !== true) {
-        return false;
-      }
-    }
-    if (typeof field.isValid.custom === 'function' && field.isValid.custom(item, field) !== null) {
-      return false;
-    }
-    return true;
-  });
-}
-
 ;// ./packages/dataviews/build-module/components/dataform/index.js
 /**
  * WordPress dependencies
@@ -11903,7 +11865,6 @@ function isItemValid(item, fields, form) {
 
 
 
-
 function DataForm({
   data,
   form,
@@ -11911,18 +11872,6 @@ function DataForm({
   onChange
 }) {
   const normalizedFields = (0,external_wp_element_namespaceObject.useMemo)(() => normalizeFields(fields), [fields]);
-  const onChangeWithValidation = updatedData => {
-    if (!onChange) {
-      return;
-    }
-    const isValid = isItemValid({
-      ...data,
-      ...updatedData
-    }, fields, form);
-    onChange(updatedData, {
-      isValid
-    });
-  };
   if (!form.fields) {
     return null;
   }
@@ -11931,7 +11880,7 @@ function DataForm({
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataFormLayout, {
       data: data,
       form: form,
-      onChange: onChangeWithValidation
+      onChange: onChange
     })
   });
 }
@@ -13209,6 +13158,44 @@ const renamePost = {
  */
 /* harmony default export */ const rename_post = (renamePost);
 
+;// ./packages/dataviews/build-module/validation.js
+/**
+ * Internal dependencies
+ */
+
+/**
+ * Whether or not the given item's value is valid according to the fields and form config.
+ *
+ * @param item   The item to validate.
+ * @param fields Fields config.
+ * @param form   Form config.
+ *
+ * @return A boolean indicating if the item is valid (true) or not (false).
+ */
+function isItemValid(item, fields, form) {
+  const _fields = normalizeFields(fields.filter(({
+    id
+  }) => !!form.fields?.includes(id)));
+  const isEmptyNullOrUndefined = value => [undefined, '', null].includes(value);
+  return _fields.every(field => {
+    const value = field.getValue({
+      item
+    });
+    if (field.isValid.required) {
+      if (field.type === 'text' && isEmptyNullOrUndefined(value) || field.type === 'email' && isEmptyNullOrUndefined(value) || field.type === 'integer' && isEmptyNullOrUndefined(value) || field.type === undefined && isEmptyNullOrUndefined(value)) {
+        return false;
+      }
+      if (field.type === 'boolean' && value !== true) {
+        return false;
+      }
+    }
+    if (typeof field.isValid.custom === 'function' && field.isValid.custom(item, field) !== null) {
+      return false;
+    }
+    return true;
+  });
+}
+
 ;// ./packages/fields/build-module/fields/order/index.js
 /**
  * WordPress dependencies
@@ -13264,7 +13251,6 @@ function ReorderModal({
   onActionPerformed
 }) {
   const [item, setItem] = (0,external_wp_element_namespaceObject.useState)(items[0]);
-  const [isItemValid, setIsValid] = (0,external_wp_element_namespaceObject.useState)(true);
   const orderInput = item.menu_order;
   const {
     editEntityRecord,
@@ -13276,7 +13262,7 @@ function ReorderModal({
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_notices_namespaceObject.store);
   async function onOrder(event) {
     event.preventDefault();
-    if (!isItemValid) {
+    if (!isItemValid(item, reorder_page_fields, formOrderAction)) {
       return;
     }
     try {
@@ -13300,6 +13286,7 @@ function ReorderModal({
       });
     }
   }
+  const isSaveDisabled = !isItemValid(item, reorder_page_fields, formOrderAction);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
     onSubmit: onOrder,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
@@ -13310,15 +13297,10 @@ function ReorderModal({
         data: item,
         fields: reorder_page_fields,
         form: formOrderAction,
-        onChange: (changes, {
-          isValid
-        }) => {
-          setItem({
-            ...item,
-            ...changes
-          });
-          setIsValid(isValid);
-        }
+        onChange: changes => setItem({
+          ...item,
+          ...changes
+        })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         justify: "right",
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
@@ -13333,7 +13315,7 @@ function ReorderModal({
           variant: "primary",
           type: "submit",
           accessibleWhenDisabled: true,
-          disabled: !isItemValid,
+          disabled: isSaveDisabled,
           children: (0,external_wp_i18n_namespaceObject.__)('Save')
         })]
       })]
