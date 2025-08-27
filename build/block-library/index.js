@@ -4506,6 +4506,8 @@ function AudioEdit({
     src
   } = attributes;
   const [temporaryURL, setTemporaryURL] = (0,external_wp_element_namespaceObject.useState)(attributes.blob);
+  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
+  const hasNonContentControls = blockEditingMode === 'default';
   useUploadMediaFromBlobURL({
     url: temporaryURL,
     allowedTypes: ALLOWED_MEDIA_TYPES,
@@ -4701,7 +4703,7 @@ function AudioEdit({
         isSelected: isSingleSelected,
         insertBlocksAfter: insertBlocksAfter,
         label: (0,external_wp_i18n_namespaceObject.__)('Audio caption text'),
-        showToolbarButton: isSingleSelected
+        showToolbarButton: isSingleSelected && hasNonContentControls
       })]
     })]
   });
@@ -68423,6 +68425,8 @@ function VideoEdit({
   } = attributes;
   const [temporaryURL, setTemporaryURL] = (0,external_wp_element_namespaceObject.useState)(attributes.blob);
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
+  const hasNonContentControls = blockEditingMode === 'default';
   useUploadMediaFromBlobURL({
     url: temporaryURL,
     allowedTypes: video_edit_ALLOWED_MEDIA_TYPES,
@@ -68600,7 +68604,7 @@ function VideoEdit({
         isSelected: isSingleSelected,
         insertBlocksAfter: insertBlocksAfter,
         label: (0,external_wp_i18n_namespaceObject.__)('Video caption text'),
-        showToolbarButton: isSingleSelected
+        showToolbarButton: isSingleSelected && hasNonContentControls
       })]
     })]
   });
