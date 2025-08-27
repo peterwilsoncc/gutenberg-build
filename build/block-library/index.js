@@ -52335,12 +52335,14 @@ function PatternSelection({
 
 function QueryToolbar({
   clientId,
-  attributes
+  attributes,
+  hasInnerBlocks
 }) {
   const hasPatterns = useBlockPatterns(clientId, attributes).length;
   if (!hasPatterns) {
     return null;
   }
+  const buttonLabel = hasInnerBlocks ? (0,external_wp_i18n_namespaceObject.__)('Change design') : (0,external_wp_i18n_namespaceObject.__)('Choose pattern');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
     className: "wp-block-template-part__block-control-group",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalDropdownContentWrapper, {
@@ -52355,7 +52357,7 @@ function QueryToolbar({
           "aria-haspopup": "true",
           "aria-expanded": isOpen,
           onClick: onToggle,
-          children: (0,external_wp_i18n_namespaceObject.__)('Change design')
+          children: buttonLabel
         }),
         renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PatternSelection, {
           clientId: clientId,
@@ -52488,7 +52490,13 @@ function QueryContent({
     }
   }, [queryId, instanceId, __unstableMarkNextChangeAsNotPersistent, setAttributes]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EnhancedPaginationModal, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QueryToolbar, {
+        clientId: clientId,
+        attributes: attributes,
+        hasInnerBlocks: true
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EnhancedPaginationModal, {
       attributes: attributes,
       setAttributes: setAttributes,
       clientId: clientId
@@ -52500,11 +52508,6 @@ function QueryContent({
         setAttributes: setAttributes,
         clientId: clientId,
         isSingular: isSingular
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QueryToolbar, {
-        attributes: attributes,
-        clientId: clientId
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       group: "advanced",
@@ -52549,9 +52552,11 @@ function QueryContent({
 
 
 
+
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -52562,7 +52567,14 @@ function QueryPlaceholder({
   openPatternSelectionModal
 }) {
   const [isStartingBlank, setIsStartingBlank] = (0,external_wp_element_namespaceObject.useState)(false);
-  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+  const [containerWidth, setContainerWidth] = (0,external_wp_element_namespaceObject.useState)(0);
+
+  // Use ResizeObserver to monitor container width.
+  const resizeObserverRef = (0,external_wp_compose_namespaceObject.useResizeObserver)(([entry]) => {
+    setContainerWidth(entry.contentRect.width);
+  });
+  const SMALL_CONTAINER_BREAKPOINT = 160;
+  const isSmallContainer = containerWidth > 0 && containerWidth < SMALL_CONTAINER_BREAKPOINT;
   const {
     blockType,
     activeBlockVariation
@@ -52579,6 +52591,9 @@ function QueryPlaceholder({
   const hasPatterns = !!useBlockPatterns(clientId, attributes).length;
   const icon = activeBlockVariation?.icon?.src || activeBlockVariation?.icon || blockType?.icon?.src;
   const label = activeBlockVariation?.title || blockType?.title;
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
+    ref: resizeObserverRef
+  });
   if (isStartingBlank) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QueryVariationPicker, {
       clientId: clientId,
@@ -52587,18 +52602,26 @@ function QueryPlaceholder({
       label: label
     });
   }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     ...blockProps,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Placeholder, {
-      icon: icon,
-      label: label,
-      instructions: (0,external_wp_i18n_namespaceObject.__)('Choose a pattern for the query loop or start blank.'),
-      children: [!!hasPatterns && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QueryToolbar, {
+        clientId: clientId,
+        attributes: attributes,
+        hasInnerBlocks: false
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Placeholder, {
+      className: "block-editor-media-placeholder",
+      icon: !isSmallContainer && icon,
+      label: !isSmallContainer && label,
+      instructions: !isSmallContainer && (0,external_wp_i18n_namespaceObject.__)('Choose a pattern for the query loop or start blank.'),
+      withIllustration: isSmallContainer,
+      children: [!!hasPatterns && !isSmallContainer && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         __next40pxDefaultSize: true,
         variant: "primary",
         onClick: openPatternSelectionModal,
         children: (0,external_wp_i18n_namespaceObject.__)('Choose')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      }), !isSmallContainer && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         __next40pxDefaultSize: true,
         variant: "secondary",
         onClick: () => {
@@ -52606,7 +52629,7 @@ function QueryPlaceholder({
         },
         children: (0,external_wp_i18n_namespaceObject.__)('Start blank')
       })]
-    })
+    })]
   });
 }
 function QueryVariationPicker({
