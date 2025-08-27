@@ -26535,8 +26535,6 @@ function SidebarNavigationScreenGlobalStylesContent() {
 
 
 
-
-
 /**
  * Internal dependencies
  */
@@ -26554,13 +26552,7 @@ function ScreenStyleVariations() {
   const isPreviewMode = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return select(external_wp_blockEditor_namespaceObject.store).getSettings().isPreviewMode;
   }, []);
-  const {
-    setDeviceType
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_editor_namespaceObject.store);
   useZoomOut(!isPreviewMode);
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    setDeviceType('desktop');
-  }, [setDeviceType]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header, {
       title: (0,external_wp_i18n_namespaceObject.__)('Browse styles'),
