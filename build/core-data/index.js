@@ -23202,17 +23202,19 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
         });
         const pageRecords = Object.values(await response.json());
         totalPages = parseInt(response.headers.get('X-WP-TotalPages'));
+        if (!meta) {
+          meta = {
+            totalItems: parseInt(response.headers.get('X-WP-Total')),
+            totalPages: 1
+          };
+        }
         records.push(...pageRecords);
         registry.batch(() => {
-          dispatch.receiveEntityRecords(kind, name, records, query);
+          dispatch.receiveEntityRecords(kind, name, records, query, false, undefined, meta);
           dispatch.finishResolutions('getEntityRecord', getResolutionsArgs(pageRecords));
         });
         page++;
       } while (page <= totalPages);
-      meta = {
-        totalItems: records.length,
-        totalPages: 1
-      };
     } else {
       records = Object.values(await external_wp_apiFetch_default()({
         path
