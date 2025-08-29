@@ -53302,6 +53302,7 @@ const useBlockTypesState = (rootClientId, onInsert, isQuick) => {
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -53309,13 +53310,21 @@ const useBlockTypesState = (rootClientId, onInsert, isQuick) => {
 
 
 
+function InserterListBoxWrapper({
+  key,
+  children
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.Fragment, {
+    children: children
+  }, key);
+}
 function InserterListbox({
   children
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
     focusShift: true,
     focusWrap: "horizontal",
-    render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {}),
+    render: InserterListBoxWrapper,
     children: children
   });
 }
