@@ -24869,7 +24869,8 @@ const gallery_metadata = {
     caption: {
       type: "rich-text",
       source: "rich-text",
-      selector: ".blocks-gallery-caption"
+      selector: ".blocks-gallery-caption",
+      role: "content"
     },
     imageCrop: {
       type: "boolean",

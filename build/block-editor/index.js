@@ -7555,6 +7555,7 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   hasAllowedPatterns: () => (hasAllowedPatterns),
   isBlockInterfaceHidden: () => (private_selectors_isBlockInterfaceHidden),
   isBlockSubtreeDisabled: () => (isBlockSubtreeDisabled),
+  isContainerInsertableToInWriteMode: () => (isContainerInsertableToInWriteMode),
   isDragging: () => (private_selectors_isDragging),
   isSectionBlock: () => (isSectionBlock),
   isZoomOut: () => (isZoomOut)
@@ -10990,6 +10991,7 @@ function getBlockSettings(state, clientId, ...paths) {
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -10999,6 +11001,9 @@ function getBlockSettings(state, clientId, ...paths) {
 
 
 
+const {
+  isContentBlock: private_selectors_isContentBlock
+} = unlock(external_wp_blocks_namespaceObject.privateApis);
 
 
 /**
@@ -11040,6 +11045,26 @@ const isBlockSubtreeDisabled = (state, clientId) => {
   };
   return getBlockOrder(state, clientId).every(isChildSubtreeDisabled);
 };
+
+/**
+ * Determines if a container (clientId) allows insertion of blocks, considering contentOnly mode restrictions.
+ *
+ * @param {Object} state        Editor state.
+ * @param {string} blockName    The block name to insert.
+ * @param {string} rootClientId The client ID of the root container block.
+ * @return {boolean} Whether the container allows insertion.
+ */
+function isContainerInsertableToInWriteMode(state, blockName, rootClientId) {
+  const isBlockContentBlock = private_selectors_isContentBlock(blockName);
+  const rootBlockName = getBlockName(state, rootClientId);
+  const isContainerContentBlock = private_selectors_isContentBlock(rootBlockName);
+  const isRootBlockMain = getSectionRootClientId(state) === rootClientId;
+
+  // In write mode, containers shouldn't be inserted into unless:
+  // 1. they are a section root;
+  // 2. they are a content block and the block to be inserted is also content.
+  return isRootBlockMain || isContainerContentBlock && isBlockContentBlock;
+}
 function getEnabledClientIdsTreeUnmemoized(state, rootClientId) {
   const blockOrder = getBlockOrder(state, rootClientId);
   const result = [];
@@ -11673,6 +11698,9 @@ function orderBy(items, field, order = 'asc') {
 
 
 
+const {
+  isContentBlock: selectors_isContentBlock
+} = unlock(external_wp_blocks_namespaceObject.privateApis);
 
 /**
  * A block selection object.
@@ -13114,11 +13142,15 @@ const canInsertBlockTypeUnmemoized = (state, blockName, rootClientId = null) => 
   if (isLocked) {
     return false;
   }
-  const _isSectionBlock = !!isSectionBlock(state, rootClientId);
-  if (_isSectionBlock) {
+  const isContentRoleBlock = selectors_isContentBlock(blockName);
+  const isParentSectionBlock = !!isSectionBlock(state, rootClientId);
+  // It shouldn't be possible to insert inside a section block unless in
+  // some cases when the block is a content block.
+  if (isParentSectionBlock && !isContentRoleBlock) {
     return false;
   }
-  if (getBlockEditingMode(state, rootClientId !== null && rootClientId !== void 0 ? rootClientId : '') === 'disabled') {
+  const blockEditingMode = getBlockEditingMode(state, rootClientId !== null && rootClientId !== void 0 ? rootClientId : '');
+  if (blockEditingMode === 'disabled') {
     return false;
   }
   const parentBlockListSettings = getBlockListSettings(state, rootClientId);
@@ -13126,6 +13158,11 @@ const canInsertBlockTypeUnmemoized = (state, blockName, rootClientId = null) => 
   // The parent block doesn't have settings indicating it doesn't support
   // inner blocks, return false.
   if (rootClientId && parentBlockListSettings === undefined) {
+    return false;
+  }
+
+  // In write mode, check if this container allows insertion.
+  if (blockEditingMode === 'contentOnly' && isNavigationMode(state) && !isContainerInsertableToInWriteMode(state, blockName, rootClientId)) {
     return false;
   }
   const parentName = getBlockName(state, rootClientId);
@@ -13224,10 +13261,17 @@ function canRemoveBlock(state, clientId) {
     return false;
   }
   const isBlockWithinSection = !!getParentSectionBlock(state, clientId);
-  if (isBlockWithinSection) {
+  const isContentRoleBlock = selectors_isContentBlock(getBlockName(state, clientId));
+  if (isBlockWithinSection && !isContentRoleBlock) {
     return false;
   }
-  return getBlockEditingMode(state, rootClientId) !== 'disabled';
+  const blockEditingMode = getBlockEditingMode(state, rootClientId);
+
+  // Check if the parent container allows insertion/removal in write mode
+  if (blockEditingMode === 'contentOnly' && isNavigationMode(state) && !isContainerInsertableToInWriteMode(state, getBlockName(state, rootClientId), rootClientId)) {
+    return false;
+  }
+  return blockEditingMode !== 'disabled';
 }
 
 /**
@@ -62896,7 +62940,9 @@ function BlockActions({
     const directInsertBlock = rootClientId ? getDirectInsertBlock(rootClientId) : null;
     return {
       canRemove: canRemoveBlocks(clientIds),
-      canInsertBlock: canInsertDefaultBlock || !!directInsertBlock,
+      canInsertBlock: blocks.every(block => {
+        return (canInsertDefaultBlock || !!directInsertBlock) && canInsertBlockType(block.name, rootClientId);
+      }),
       canCopyStyles: blocks.every(block => {
         return !!block && ((0,external_wp_blocks_namespaceObject.hasBlockSupport)(block.name, 'color') || (0,external_wp_blocks_namespaceObject.hasBlockSupport)(block.name, 'typography'));
       }),
