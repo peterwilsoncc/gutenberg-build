@@ -2806,6 +2806,9 @@ function MetaBoxesMain({
   // aria-valuenow attribute on the separator.
   const effectSizeConstraints = (0,external_wp_compose_namespaceObject.useRefEffect)(node => {
     const container = node.closest('.interface-interface-skeleton__content');
+    if (!container) {
+      return;
+    }
     const noticeLists = container.querySelectorAll(':scope > .components-notice-list');
     const resizeHandle = container.querySelector('.edit-post-meta-boxes-main__presenter');
     const deriveConstraints = () => {
