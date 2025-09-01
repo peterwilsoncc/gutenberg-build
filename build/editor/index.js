@@ -35748,6 +35748,7 @@ function PreviewDropdown({
             const newRenderingMode = isTemplateHidden ? 'template-locked' : 'post-only';
             setRenderingMode(newRenderingMode);
             setDefaultRenderingMode(newRenderingMode);
+            resetZoomLevel();
           },
           children: (0,external_wp_i18n_namespaceObject.__)('Show template')
         })
