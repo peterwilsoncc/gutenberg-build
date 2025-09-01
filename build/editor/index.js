@@ -21999,7 +21999,7 @@ function usePageTypeBadge(postId) {
 
 /** @typedef {import("@wordpress/components").IconType} IconType */
 
-const MotionButton = (0,external_wp_components_namespaceObject.__unstableMotion)(external_wp_components_namespaceObject.Button);
+const MotionButton = external_wp_components_namespaceObject.__unstableMotion.create(external_wp_components_namespaceObject.Button);
 
 /**
  * This component renders a navigation bar at the top of the editor. It displays the title of the current document,
