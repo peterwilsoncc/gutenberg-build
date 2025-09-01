@@ -6,7 +6,6 @@
 	"title": "Accordion Content",
 	"category": "design",
 	"description": "Displays a section of content in an accordion, including a header and expandable content.",
-	"example": {},
 	"__experimental": true,
 	"parent": [ "core/accordion" ],
 	"allowedBlocks": [ "core/accordion-header", "core/accordion-panel" ],

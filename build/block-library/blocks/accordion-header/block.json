@@ -6,7 +6,6 @@
 	"title": "Accordion Header",
 	"category": "design",
 	"description": "Displays an accordion header.",
-	"example": {},
 	"__experimental": true,
 	"parent": [ "core/accordion-content" ],
 	"usesContext": [

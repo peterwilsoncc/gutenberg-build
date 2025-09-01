@@ -2361,7 +2361,6 @@ const accordion_content_metadata = {
   title: "Accordion Content",
   category: "design",
   description: "Displays a section of content in an accordion, including a header and expandable content.",
-  example: {},
   __experimental: true,
   parent: ["core/accordion"],
   allowedBlocks: ["core/accordion-header", "core/accordion-panel"],
@@ -2406,7 +2405,6 @@ const {
 
 const accordion_content_settings = {
   icon: accordion_content_icon,
-  example: {},
   edit: edit_Edit,
   save: save_save
 };
@@ -2654,7 +2652,6 @@ const accordion_header_metadata = {
   title: "Accordion Header",
   category: "design",
   description: "Displays an accordion header.",
-  example: {},
   __experimental: true,
   parent: ["core/accordion-content"],
   usesContext: ["core/accordion-icon-position", "core/accordion-show-icon"],
@@ -2744,7 +2741,6 @@ const {
 
 const accordion_header_settings = {
   icon: accordion_header_icon,
-  example: {},
   edit: accordion_header_edit_Edit,
   save: accordion_header_save_save
 };
@@ -2874,7 +2870,6 @@ const accordion_panel_metadata = {
   title: "Accordion Panel",
   category: "design",
   description: "Displays an accordion panel.",
-  example: {},
   __experimental: true,
   parent: ["core/accordion-content"],
   supports: {
@@ -2948,7 +2943,6 @@ const {
 
 const accordion_panel_settings = {
   icon: accordion_panel_icon,
-  example: {},
   edit: accordion_panel_edit_Edit,
   save: accordion_panel_save_save
 };
