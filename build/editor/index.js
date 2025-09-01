@@ -4348,14 +4348,25 @@ function getNotificationArgumentsForSaveFail(data) {
   }
   const publishStatus = ['publish', 'private', 'future'];
   const isPublished = publishStatus.indexOf(post.status) !== -1;
-  // If the post was being published, we show the corresponding publish error message
-  // Unless we publish an "updating failed" message.
+  if (error.code === 'offline_error') {
+    const messages = {
+      publish: (0,external_wp_i18n_namespaceObject.__)('Publishing failed because you were offline.'),
+      private: (0,external_wp_i18n_namespaceObject.__)('Publishing failed because you were offline.'),
+      future: (0,external_wp_i18n_namespaceObject.__)('Scheduling failed because you were offline.'),
+      default: (0,external_wp_i18n_namespaceObject.__)('Updating failed because you were offline.')
+    };
+    const noticeMessage = !isPublished && edits.status in messages ? messages[edits.status] : messages.default;
+    return [noticeMessage, {
+      id: 'editor-save'
+    }];
+  }
   const messages = {
     publish: (0,external_wp_i18n_namespaceObject.__)('Publishing failed.'),
     private: (0,external_wp_i18n_namespaceObject.__)('Publishing failed.'),
-    future: (0,external_wp_i18n_namespaceObject.__)('Scheduling failed.')
+    future: (0,external_wp_i18n_namespaceObject.__)('Scheduling failed.'),
+    default: (0,external_wp_i18n_namespaceObject.__)('Updating failed.')
   };
-  let noticeMessage = !isPublished && publishStatus.indexOf(edits.status) !== -1 ? messages[edits.status] : (0,external_wp_i18n_namespaceObject.__)('Updating failed.');
+  let noticeMessage = !isPublished && edits.status in messages ? messages[edits.status] : messages.default;
 
   // Check if message string contains HTML. Notice text is currently only
   // supported as plaintext, and stripping the tags may muddle the meaning.
