@@ -52227,13 +52227,16 @@ function FormCardField({
       /*#__PURE__*/
       // If it doesn't have a header, keep it open.
       // Otherwise, the card will not be visible.
-      (0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CardBody, {
+      (0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.CardBody, {
         className: "dataforms-layouts-card__field-control",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataFormLayout, {
+        children: [field.description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          className: "dataforms-layouts-card__field-description",
+          children: field.description
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataFormLayout, {
           data: data,
           form: form,
           onChange: onChange
-        })
+        })]
       })]
     });
   }
