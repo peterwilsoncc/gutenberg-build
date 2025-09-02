@@ -2136,9 +2136,6 @@ const metadata = {
     autoclose: {
       type: "boolean",
       "default": false
-    },
-    allowedBlocks: {
-      type: "array"
     }
   },
   providesContext: {
@@ -2357,7 +2354,6 @@ const accordion_content_metadata = {
   $schema: "https://schemas.wp.org/trunk/block.json",
   apiVersion: 3,
   name: "core/accordion-content",
-  version: "0.1.0",
   title: "Accordion Content",
   category: "design",
   description: "Displays a section of content in an accordion, including a header and expandable content.",
@@ -2365,7 +2361,6 @@ const accordion_content_metadata = {
   parent: ["core/accordion"],
   allowedBlocks: ["core/accordion-header", "core/accordion-panel"],
   supports: {
-    align: ["wide", "full"],
     color: {
       background: true,
       gradient: true
@@ -2648,7 +2643,6 @@ const accordion_header_metadata = {
   $schema: "https://schemas.wp.org/trunk/block.json",
   apiVersion: 3,
   name: "core/accordion-header",
-  version: "0.1.0",
   title: "Accordion Header",
   category: "design",
   description: "Displays an accordion header.",
@@ -2662,7 +2656,6 @@ const accordion_header_metadata = {
       gradient: true
     },
     align: false,
-    border: true,
     interactivity: true,
     spacing: {
       padding: true,
@@ -2866,7 +2859,6 @@ const accordion_panel_metadata = {
   $schema: "https://schemas.wp.org/trunk/block.json",
   apiVersion: 3,
   name: "core/accordion-panel",
-  version: "0.1.0",
   title: "Accordion Panel",
   category: "design",
   description: "Displays an accordion panel.",
@@ -2877,7 +2869,6 @@ const accordion_panel_metadata = {
       background: true,
       gradient: true
     },
-    border: true,
     interactivity: true,
     spacing: {
       padding: true,
