@@ -127,6 +127,10 @@ const {
   useHistory
 } = unlock(external_wp_router_namespaceObject.privateApis);
 const getAddNewPageCommand = () => function useAddNewPageCommand() {
+  const canCreatePage = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).canUser('create', {
+    kind: 'postType',
+    name: 'page'
+  }), []);
   const isSiteEditor = (0,external_wp_url_namespaceObject.getPath)(window.location.href)?.includes('site-editor.php');
   const history = useHistory();
   const isBlockBasedTheme = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -160,6 +164,9 @@ const getAddNewPageCommand = () => function useAddNewPageCommand() {
     }
   }, [createErrorNotice, history, saveEntityRecord]);
   const commands = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (!canCreatePage) {
+      return [];
+    }
     const addNewPage = isSiteEditor && isBlockBasedTheme ? createPageEntity : () => document.location.href = 'post-new.php?post_type=page';
     return [{
       name: 'core/add-new-page',
@@ -168,7 +175,7 @@ const getAddNewPageCommand = () => function useAddNewPageCommand() {
       callback: addNewPage,
       keywords: [(0,external_wp_i18n_namespaceObject.__)('page'), (0,external_wp_i18n_namespaceObject.__)('new'), (0,external_wp_i18n_namespaceObject.__)('add'), (0,external_wp_i18n_namespaceObject.__)('create')]
     }];
-  }, [createPageEntity, isSiteEditor, isBlockBasedTheme]);
+  }, [createPageEntity, isSiteEditor, isBlockBasedTheme, canCreatePage]);
   return {
     isLoading: false,
     commands
@@ -231,15 +238,34 @@ const getDashboardCommand = () => function useDashboardCommand() {
     commands
   };
 };
+const getAddNewPostCommand = () => function useAddNewPostCommand() {
+  const canCreatePost = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).canUser('create', {
+    kind: 'postType',
+    name: 'post'
+  }), []);
+  const commands = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (!canCreatePost) {
+      return [];
+    }
+    return [{
+      name: 'core/add-new-post',
+      label: (0,external_wp_i18n_namespaceObject.__)('Add Post'),
+      icon: library_plus,
+      callback: () => {
+        document.location.assign('post-new.php');
+      },
+      keywords: [(0,external_wp_i18n_namespaceObject.__)('post'), (0,external_wp_i18n_namespaceObject.__)('new'), (0,external_wp_i18n_namespaceObject.__)('add'), (0,external_wp_i18n_namespaceObject.__)('create')]
+    }];
+  }, [canCreatePost]);
+  return {
+    isLoading: false,
+    commands
+  };
+};
 function useAdminNavigationCommands() {
-  (0,external_wp_commands_namespaceObject.useCommand)({
+  (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/add-new-post',
-    label: (0,external_wp_i18n_namespaceObject.__)('Add Post'),
-    icon: library_plus,
-    callback: () => {
-      document.location.assign('post-new.php');
-    },
-    keywords: [(0,external_wp_i18n_namespaceObject.__)('post'), (0,external_wp_i18n_namespaceObject.__)('new'), (0,external_wp_i18n_namespaceObject.__)('add'), (0,external_wp_i18n_namespaceObject.__)('create')]
+    hook: getAddNewPostCommand()
   });
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/dashboard',
@@ -612,13 +638,18 @@ const getSiteEditorBasicNavigationCommands = () => function useSiteEditorBasicNa
   const isSiteEditor = (0,external_wp_url_namespaceObject.getPath)(window.location.href)?.includes('site-editor.php');
   const {
     isBlockBasedTheme,
-    canCreateTemplate
+    canCreateTemplate,
+    canCreatePatterns
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return {
       isBlockBasedTheme: select(external_wp_coreData_namespaceObject.store).getCurrentTheme()?.is_block_theme,
       canCreateTemplate: select(external_wp_coreData_namespaceObject.store).canUser('create', {
         kind: 'postType',
         name: 'wp_template'
+      }),
+      canCreatePatterns: select(external_wp_coreData_namespaceObject.store).canUser('create', {
+        kind: 'postType',
+        name: 'wp_block'
       })
     };
   }, []);
@@ -694,30 +725,32 @@ const getSiteEditorBasicNavigationCommands = () => function useSiteEditorBasicNa
         }
       });
     }
-    result.push({
-      name: 'core/edit-site/open-patterns',
-      label: (0,external_wp_i18n_namespaceObject.__)('Patterns'),
-      icon: library_symbol,
-      callback: ({
-        close
-      }) => {
-        if (canCreateTemplate) {
-          if (isSiteEditor) {
-            history.navigate('/pattern');
+    if (canCreatePatterns) {
+      result.push({
+        name: 'core/edit-site/open-patterns',
+        label: (0,external_wp_i18n_namespaceObject.__)('Patterns'),
+        icon: library_symbol,
+        callback: ({
+          close
+        }) => {
+          if (canCreateTemplate) {
+            if (isSiteEditor) {
+              history.navigate('/pattern');
+            } else {
+              document.location = (0,external_wp_url_namespaceObject.addQueryArgs)('site-editor.php', {
+                p: '/pattern'
+              });
+            }
+            close();
           } else {
-            document.location = (0,external_wp_url_namespaceObject.addQueryArgs)('site-editor.php', {
-              p: '/pattern'
-            });
+            // If a user cannot access the site editor
+            document.location.href = 'edit.php?post_type=wp_block';
           }
-          close();
-        } else {
-          // If a user cannot access the site editor
-          document.location.href = 'edit.php?post_type=wp_block';
         }
-      }
-    });
+      });
+    }
     return result;
-  }, [history, isSiteEditor, canCreateTemplate, isBlockBasedTheme]);
+  }, [history, isSiteEditor, canCreateTemplate, canCreatePatterns, isBlockBasedTheme]);
   return {
     commands,
     isLoading: false
