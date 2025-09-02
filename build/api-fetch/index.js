@@ -421,42 +421,22 @@ const userLocaleMiddleware = (options, next) => {
 
 
 /**
- * Parses the apiFetch response.
- *
- * @param response
- * @param shouldParseResponse
- *
- * @return Parsed response.
- */
-const response_parseResponse = (response, shouldParseResponse = true) => {
-  if (shouldParseResponse) {
-    if (response.status === 204) {
-      return null;
-    }
-    return response.json ? response.json() : Promise.reject(response);
-  }
-  return response;
-};
-
-/**
  * Calls the `json` function on the Response, throwing an error if the response
  * doesn't have a json function or if parsing the json itself fails.
  *
  * @param response
  * @return Parsed response.
  */
-const parseJsonAndNormalizeError = response => {
-  const invalidJsonError = {
-    code: 'invalid_json',
-    message: (0,external_wp_i18n_namespaceObject.__)('The response is not a valid JSON response.')
-  };
-  if (!response || !response.json) {
-    throw invalidJsonError;
+async function parseJsonAndNormalizeError(response) {
+  try {
+    return await response.json();
+  } catch {
+    throw {
+      code: 'invalid_json',
+      message: (0,external_wp_i18n_namespaceObject.__)('The response is not a valid JSON response.')
+    };
   }
-  return response.json().catch(() => {
-    throw invalidJsonError;
-  });
-};
+}
 
 /**
  * Parses the apiFetch response properly and normalize response errors.
@@ -466,28 +446,30 @@ const parseJsonAndNormalizeError = response => {
  *
  * @return Parsed response.
  */
-const parseResponseAndNormalizeError = (response, shouldParseResponse = true) => {
-  return Promise.resolve(response_parseResponse(response, shouldParseResponse)).catch(res => parseAndThrowError(res, shouldParseResponse));
-};
+async function parseResponseAndNormalizeError(response, shouldParseResponse = true) {
+  if (!shouldParseResponse) {
+    return response;
+  }
+  if (response.status === 204) {
+    return null;
+  }
+  return await parseJsonAndNormalizeError(response);
+}
 
 /**
  * Parses a response, throwing an error if parsing the response fails.
  *
  * @param response
  * @param shouldParseResponse
- * @return Parsed response.
+ * @return Never returns, always throws.
  */
-function parseAndThrowError(response, shouldParseResponse = true) {
+async function parseAndThrowError(response, shouldParseResponse = true) {
   if (!shouldParseResponse) {
     throw response;
   }
-  return parseJsonAndNormalizeError(response).then(error => {
-    const unknownError = {
-      code: 'unknown_error',
-      message: (0,external_wp_i18n_namespaceObject.__)('An unknown error occurred.')
-    };
-    throw error || unknownError;
-  });
+
+  // Parse the response JSON and throw it as an error.
+  throw await parseJsonAndNormalizeError(response);
 }
 
 ;// ./packages/api-fetch/build-module/middlewares/media-upload.js
@@ -551,7 +533,7 @@ const mediaUploadMiddleware = (options, next) => {
     parse: false
   }).catch(response => {
     // `response` could actually be an error thrown by `defaultFetchHandler`.
-    if (!response.headers) {
+    if (!(response instanceof globalThis.Response)) {
       return Promise.reject(response);
     }
     const attachmentId = response.headers.get('x-wp-upload-attachment-id');
@@ -663,20 +645,6 @@ const middlewares = [user_locale, namespace_endpoint, http_v1, fetch_all_middlew
 function registerMiddleware(middleware) {
   middlewares.unshift(middleware);
 }
-
-/**
- * Checks the status of a response, throwing the Response as an error if
- * it is outside the 200 range.
- *
- * @param response
- * @return The response if the status is in the 200 range.
- */
-const checkStatus = response => {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  }
-  throw response;
-};
 const defaultFetchHandler = nextOptions => {
   const {
     url,
@@ -701,7 +669,7 @@ const defaultFetchHandler = nextOptions => {
     body = JSON.stringify(data);
     headers['Content-Type'] = 'application/json';
   }
-  const responsePromise = window.fetch(
+  const responsePromise = globalThis.fetch(
   // Fall back to explicitly passing `window.location` which is the behavior if `undefined` is passed.
   url || path || window.location.href, {
     ...DEFAULT_OPTIONS,
@@ -709,7 +677,14 @@ const defaultFetchHandler = nextOptions => {
     body,
     headers
   });
-  return responsePromise.then(value => Promise.resolve(value).then(checkStatus).catch(response => parseAndThrowError(response, parse)).then(response => parseResponseAndNormalizeError(response, parse)), err => {
+  return responsePromise.then(response => {
+    // If the response is not 2xx, still parse the response body as JSON
+    // but throw the JSON as error.
+    if (!response.ok) {
+      return parseAndThrowError(response, parse);
+    }
+    return parseResponseAndNormalizeError(response, parse);
+  }, err => {
     // Re-throw AbortError for the users to handle it themselves.
     if (err && err.name === 'AbortError') {
       throw err;
@@ -717,7 +692,7 @@ const defaultFetchHandler = nextOptions => {
 
     // If the browser reports being offline, we'll just assume that
     // this is why the request failed.
-    if (!window.navigator.onLine) {
+    if (!globalThis.navigator.onLine) {
       throw {
         code: 'offline_error',
         message: (0,external_wp_i18n_namespaceObject.__)('Unable to connect. Please check your Internet connection.')
@@ -763,7 +738,14 @@ const apiFetch = options => {
     }
 
     // If the nonce is invalid, refresh it and try again.
-    return window.fetch(apiFetch.nonceEndpoint).then(checkStatus).then(data => data.text()).then(text => {
+    return globalThis.fetch(apiFetch.nonceEndpoint).then(response => {
+      // If the nonce refresh fails, it means we failed to recover from the original
+      // `rest_cookie_invalid_nonce` error and that it's time to finally re-throw it.
+      if (!response.ok) {
+        return Promise.reject(error);
+      }
+      return response.text();
+    }).then(text => {
       apiFetch.nonceMiddleware.nonce = text;
       return apiFetch(options);
     });
