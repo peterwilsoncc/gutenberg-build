@@ -38573,7 +38573,6 @@ function UnforwardedLinkUI(props, ref) {
   const dialogTitleId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkUI, `link-ui-link-control__title`);
   const dialogDescriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkUI, `link-ui-link-control__description`);
   const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
-  const isDefaultBlockEditingMode = blockEditingMode === 'default';
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Popover, {
     ref: ref,
     placement: "bottom",
@@ -38604,7 +38603,7 @@ function UnforwardedLinkUI(props, ref) {
         onChange: props.onChange,
         onRemove: props.onRemove,
         onCancel: props.onCancel,
-        renderControlBottom: () => !link?.url?.length && isDefaultBlockEditingMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUITools, {
+        renderControlBottom: () => !link?.url?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUITools, {
           focusAddBlockButton: focusAddBlockButton,
           focusAddPageButton: focusAddPageButton,
           setAddingBlock: () => {
@@ -38615,7 +38614,8 @@ function UnforwardedLinkUI(props, ref) {
             setAddingPage(true);
             setFocusAddPageButton(false);
           },
-          canCreatePage: permissions.canCreate
+          canCreatePage: permissions.canCreate,
+          blockEditingMode: blockEditingMode
         })
       })]
     }), addingBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUIBlockInserter, {
@@ -38644,7 +38644,8 @@ const LinkUITools = ({
   setAddingPage,
   focusAddBlockButton,
   focusAddPageButton,
-  canCreatePage
+  canCreatePage,
+  blockEditingMode
 }) => {
   const blockInserterAriaRole = 'listbox';
   const addBlockButtonRef = (0,external_wp_element_namespaceObject.useRef)();
@@ -38676,7 +38677,7 @@ const LinkUITools = ({
       },
       "aria-haspopup": blockInserterAriaRole,
       children: (0,external_wp_i18n_namespaceObject.__)('Create page')
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    }), blockEditingMode === 'default' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       __next40pxDefaultSize: true,
       ref: addBlockButtonRef,
       icon: library_plus,
