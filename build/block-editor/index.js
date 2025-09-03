@@ -46681,8 +46681,6 @@ function BlockListAppender({
 
 
 const inbetween_MAX_POPOVER_RECOMPUTE_COUNTER = Number.MAX_SAFE_INTEGER;
-const InsertionPointOpenRef = (0,external_wp_element_namespaceObject.createContext)();
-InsertionPointOpenRef.displayName = 'InsertionPointOpenRefContext';
 function BlockPopoverInbetween({
   previousClientId,
   nextClientId,
@@ -46946,8 +46944,8 @@ function BlockDropZonePopover({
 
 
 
-const insertion_point_InsertionPointOpenRef = (0,external_wp_element_namespaceObject.createContext)();
-insertion_point_InsertionPointOpenRef.displayName = 'InsertionPointOpenRefContext';
+const InsertionPointOpenRef = (0,external_wp_element_namespaceObject.createContext)();
+InsertionPointOpenRef.displayName = 'InsertionPointOpenRefContext';
 function InbetweenInsertionPointPopover({
   __unstablePopoverSlot,
   __unstableContentRef,
@@ -46958,7 +46956,7 @@ function InbetweenInsertionPointPopover({
     selectBlock,
     hideInsertionPoint
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
-  const openRef = (0,external_wp_element_namespaceObject.useContext)(insertion_point_InsertionPointOpenRef);
+  const openRef = (0,external_wp_element_namespaceObject.useContext)(InsertionPointOpenRef);
   const ref = (0,external_wp_element_namespaceObject.useRef)();
   const {
     orientation,
@@ -47177,7 +47175,7 @@ function InsertionPoint(props) {
 
 
 function useInBetweenInserter() {
-  const openRef = (0,external_wp_element_namespaceObject.useContext)(insertion_point_InsertionPointOpenRef);
+  const openRef = (0,external_wp_element_namespaceObject.useContext)(InsertionPointOpenRef);
   const isInBetweenInserterDisabled = (0,external_wp_data_namespaceObject.useSelect)(select => select(store).getSettings().isDistractionFree || unlock(select(store)).isZoomOut(), []);
   const {
     getBlockListSettings,
@@ -65702,7 +65700,7 @@ function BlockTools({
     (0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...props,
       onKeyDown: onKeyDown,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(insertion_point_InsertionPointOpenRef.Provider, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(InsertionPointOpenRef.Provider, {
         value: (0,external_wp_element_namespaceObject.useRef)(false),
         children: [!isTyping && !isZoomOutMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InsertionPoint, {
           __unstableContentRef: __unstableContentRef
