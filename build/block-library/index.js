@@ -38671,7 +38671,7 @@ const LinkUITools = ({
         setAddingPage(true);
       },
       "aria-haspopup": blockInserterAriaRole,
-      children: (0,external_wp_i18n_namespaceObject.__)('Add page')
+      children: (0,external_wp_i18n_namespaceObject.__)('Create page')
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       __next40pxDefaultSize: true,
       ref: addBlockButtonRef,
