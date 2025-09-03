@@ -56920,9 +56920,7 @@ class Inserter extends external_wp_element_namespaceObject.Component {
       }
       insertBlock(blockToInsert, getInsertionIndex(), rootClientId, selectBlockOnInsert);
       if (onSelectOrClose) {
-        onSelectOrClose({
-          clientId: blockToInsert?.clientId
-        });
+        onSelectOrClose(blockToInsert);
       }
       const message = (0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: %s: the name of the block that has been added
@@ -66344,12 +66342,22 @@ const Appender = (0,external_wp_element_namespaceObject.forwardRef)(({
     setInsertedBlock
   } = useListViewContext();
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(Appender);
-  const hideInserter = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const {
+    directInsert,
+    hideInserter
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
+      getBlockListSettings,
       getTemplateLock,
       isZoomOut
     } = unlock(select(store));
-    return !!getTemplateLock(clientId) || isZoomOut();
+    const settings = getBlockListSettings(clientId);
+    const directInsertValue = settings?.directInsert || false;
+    const hideInserterValue = !!getTemplateLock(clientId) || isZoomOut();
+    return {
+      directInsert: directInsertValue,
+      hideInserter: hideInserterValue
+    };
   }, [clientId]);
   const blockTitle = useBlockDisplayTitle({
     clientId,
@@ -66381,7 +66389,7 @@ const Appender = (0,external_wp_element_namespaceObject.forwardRef)(({
       position: "bottom right",
       isAppender: true,
       selectBlockOnInsert: false,
-      shouldDirectInsert: false,
+      shouldDirectInsert: directInsert,
       __experimentalIsQuick: true,
       ...props,
       toggleProps: {

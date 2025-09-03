@@ -38007,7 +38007,6 @@ function LeafMoreMenu(props) {
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddSubmenuItem, {
           block: block,
           onClose: onClose,
-          expanded: true,
           expandedState: props.expandedState,
           expand: props.expand,
           setInsertedBlock: props.setInsertedBlock
@@ -38485,7 +38484,8 @@ function getSuggestionsQuery(type, kind) {
 }
 function LinkUIBlockInserter({
   clientId,
-  onBack
+  onBack,
+  onBlockInsert
 }) {
   const {
     rootBlockClientId
@@ -38531,7 +38531,8 @@ function LinkUIBlockInserter({
       clientId: clientId,
       isAppender: false,
       prioritizePatterns: false,
-      selectBlockOnInsert: true,
+      selectBlockOnInsert: !onBlockInsert,
+      onSelect: onBlockInsert ? onBlockInsert : undefined,
       hasSearch: false
     })]
   });
@@ -38621,7 +38622,8 @@ function UnforwardedLinkUI(props, ref) {
         setAddingBlock(false);
         setFocusAddBlockButton(true);
         setFocusAddPageButton(false);
-      }
+      },
+      onBlockInsert: props?.onBlockInsert
     }), addingPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUIPageCreator, {
       postType: postType,
       onBack: () => {
@@ -38718,7 +38720,8 @@ function AdditionalBlockContent({
   setInsertedBlock
 }) {
   const {
-    updateBlockAttributes
+    updateBlockAttributes,
+    removeBlock
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const supportsLinkControls = BLOCKS_WITH_LINK_UI_SUPPORT?.includes(insertedBlock?.name);
   const blockWasJustInserted = insertedBlock?.clientId === block.clientId;
@@ -38726,23 +38729,57 @@ function AdditionalBlockContent({
   if (!showLinkControls) {
     return null;
   }
+
+  /**
+   * Cleanup function for auto-inserted Navigation Link blocks.
+   *
+   * Removes the block if it has no URL and clears the inserted block state.
+   * This ensures consistent cleanup behavior across different contexts.
+   */
+  const cleanupInsertedBlock = () => {
+    // Prevent automatic block selection when removing blocks in list view context
+    // This avoids focus stealing that would close the list view and switch to canvas
+    const shouldAutoSelectBlock = false;
+
+    // Follows the exact same pattern as Navigation Link block's onClose handler
+    // If there is no URL then remove the auto-inserted block to avoid empty blocks
+    if (!insertedBlock?.attributes?.url && insertedBlock?.clientId) {
+      // Remove the block entirely to avoid poor UX
+      // This matches the Navigation Link block's behavior
+      removeBlock(insertedBlock.clientId, shouldAutoSelectBlock);
+    }
+    setInsertedBlock(null);
+  };
   const setInsertedBlockAttributes = _insertedBlockClientId => _updatedAttributes => {
     if (!_insertedBlockClientId) {
       return;
     }
     updateBlockAttributes(_insertedBlockClientId, _updatedAttributes);
   };
+
+  // Wrapper function to clean up original block when a new block is selected
+  const handleSetInsertedBlock = newBlock => {
+    // Prevent automatic block selection when removing blocks in list view context
+    // This avoids focus stealing that would close the list view and switch to canvas
+    const shouldAutoSelectBlock = false;
+
+    // If we have an existing inserted block and a new block is being set,
+    // remove the original block to avoid duplicates
+    if (insertedBlock?.clientId && newBlock) {
+      removeBlock(insertedBlock.clientId, shouldAutoSelectBlock);
+    }
+    setInsertedBlock(newBlock);
+  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUI, {
     clientId: insertedBlock?.clientId,
     link: insertedBlock?.attributes,
+    onBlockInsert: handleSetInsertedBlock,
     onClose: () => {
-      setInsertedBlock(null);
+      // Use cleanup function
+      cleanupInsertedBlock();
     },
     onChange: updatedValue => {
       updateAttributes(updatedValue, setInsertedBlockAttributes(insertedBlock?.clientId), insertedBlock?.attributes);
-      setInsertedBlock(null);
-    },
-    onCancel: () => {
       setInsertedBlock(null);
     }
   });
