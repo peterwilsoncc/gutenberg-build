@@ -38412,6 +38412,10 @@ function UnforwardedLinkUI(props, ref) {
     kind: 'postType',
     name: postType
   });
+
+  // Check if we're in contentOnly mode
+  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
+  const isDefaultBlockEditingMode = blockEditingMode === 'default';
   async function handleCreate(pageTitle) {
     const page = await saveEntityRecord('postType', postType, {
       title: pageTitle,
@@ -38489,7 +38493,7 @@ function UnforwardedLinkUI(props, ref) {
         onChange: props.onChange,
         onRemove: props.onRemove,
         onCancel: props.onCancel,
-        renderControlBottom: () => !link?.url?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUITools, {
+        renderControlBottom: () => !link?.url?.length && isDefaultBlockEditingMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUITools, {
           focusAddBlockButton: focusAddBlockButton,
           setAddingBlock: () => {
             setAddingBlock(true);
