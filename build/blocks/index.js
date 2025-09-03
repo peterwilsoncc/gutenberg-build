@@ -6787,7 +6787,8 @@ const __EXPERIMENTAL_ELEMENTS = {
   h6: 'h6',
   button: '.wp-element-button, .wp-block-button__link',
   caption: '.wp-element-caption, .wp-block-audio figcaption, .wp-block-embed figcaption, .wp-block-gallery figcaption, .wp-block-image figcaption, .wp-block-table figcaption, .wp-block-video figcaption',
-  cite: 'cite'
+  cite: 'cite',
+  select: 'select'
 };
 
 // These paths may have three origins, custom, theme, and default,
