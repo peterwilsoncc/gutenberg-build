@@ -1477,10 +1477,12 @@ function RawHTML({
 
 /** @typedef {import('react').ReactElement} ReactElement */
 
+const Context = (0,external_React_namespaceObject.createContext)(undefined);
+Context.displayName = 'ElementContext';
 const {
   Provider,
   Consumer
-} = (0,external_React_namespaceObject.createContext)(undefined);
+} = Context;
 const ForwardRef = (0,external_React_namespaceObject.forwardRef)(() => {
   return null;
 });

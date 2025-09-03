@@ -5122,6 +5122,7 @@ var ITI7HKP4_Composite = forwardRef2(function Composite2(props) {
  */
 
 const CompositeContext = (0,external_wp_element_namespaceObject.createContext)({});
+CompositeContext.displayName = 'CompositeContext';
 const context_useCompositeContext = () => (0,external_wp_element_namespaceObject.useContext)(CompositeContext);
 
 ;// ./node_modules/@ariakit/react-core/esm/__chunks/7HVFURXT.js
@@ -12057,6 +12058,7 @@ const computePopoverPosition = c => c === null || Number.isNaN(c) ? undefined : 
 const TooltipInternalContext = (0,external_wp_element_namespaceObject.createContext)({
   isNestedInTooltip: false
 });
+TooltipInternalContext.displayName = 'TooltipInternalContext';
 
 /**
  * Time over anchor to wait before showing tooltip
@@ -12250,6 +12252,7 @@ function use_update_effect_useUpdateEffect(effect, deps) {
 
 
 const ComponentsContext = (0,external_wp_element_namespaceObject.createContext)(/** @type {Record<string, any>} */{});
+ComponentsContext.displayName = 'ComponentsContext';
 const useComponentsContext = () => (0,external_wp_element_namespaceObject.useContext)(ComponentsContext);
 
 /**
@@ -34530,6 +34533,7 @@ const initialContextValue = {
   isDefault: true
 };
 const SlotFillContext = (0,external_wp_element_namespaceObject.createContext)(initialContextValue);
+SlotFillContext.displayName = 'SlotFillContext';
 /* harmony default export */ const slot_fill_context = (SlotFillContext);
 
 ;// ./packages/components/build-module/slot-fill/bubbles-virtually/use-slot.js
@@ -34572,6 +34576,7 @@ const initialValue = {
   updateFill: () => {}
 };
 const context_SlotFillContext = (0,external_wp_element_namespaceObject.createContext)(initialValue);
+context_SlotFillContext.displayName = 'SlotFillContext';
 /* harmony default export */ const context = (context_SlotFillContext);
 
 ;// ./packages/components/build-module/slot-fill/fill.js
@@ -35278,6 +35283,7 @@ const ArrowTriangle = () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceOb
   })]
 });
 const slotNameContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
+slotNameContext.displayName = '__unstableSlotNameContext';
 const fallbackContainerClassname = 'components-popover__fallback-container';
 const getPopoverFallbackContainer = () => {
   let container = document.body.querySelector('.' + fallbackContainerClassname);
@@ -36603,6 +36609,7 @@ var RadioGroup = forwardRef2(function RadioGroup2(props) {
  */
 
 const ToggleGroupControlContext = (0,external_wp_element_namespaceObject.createContext)({});
+ToggleGroupControlContext.displayName = 'ToggleGroupControlContext';
 const useToggleGroupControlContext = () => (0,external_wp_element_namespaceObject.useContext)(ToggleGroupControlContext);
 /* harmony default export */ const toggle_group_control_context = (ToggleGroupControlContext);
 
@@ -39956,6 +39963,7 @@ const LegacyAdapter = props => {
  */
 
 const CircularOptionPickerContext = (0,external_wp_element_namespaceObject.createContext)({});
+CircularOptionPickerContext.displayName = 'CircularOptionPickerContext';
 
 ;// ./packages/components/build-module/circular-option-picker/circular-option-picker-option.js
 /**
@@ -45414,6 +45422,7 @@ const itemSizes = {
 const ItemGroupContext = (0,external_wp_element_namespaceObject.createContext)({
   size: 'medium'
 });
+ItemGroupContext.displayName = 'ItemGroupContext';
 const useItemGroupContext = () => (0,external_wp_element_namespaceObject.useContext)(ItemGroupContext);
 
 ;// ./packages/components/build-module/item-group/item/hook.js
@@ -48818,6 +48827,7 @@ function useModalExitAnimation() {
 // Used to track and dismiss the prior modal when another opens unless nested.
 
 const ModalContext = (0,external_wp_element_namespaceObject.createContext)(new Set());
+ModalContext.displayName = 'ModalContext';
 
 // Used to track body class names applied while modals are open.
 const bodyOpenClasses = new Map();
@@ -50708,6 +50718,7 @@ const SelectedItemCheck = /*#__PURE__*/emotion_styled_base_browser_esm(SelectIte
 
 
 const CustomSelectContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
+CustomSelectContext.displayName = 'CustomSelectContext';
 function defaultRenderSelectedValue(value) {
   const isValueEmpty = Array.isArray(value) ? value.length === 0 : value === undefined || value === null;
   if (isValueEmpty) {
@@ -56632,6 +56643,7 @@ const disabled_styles_disabledStyles =  true ? {
 
 
 const Context = (0,external_wp_element_namespaceObject.createContext)(false);
+Context.displayName = 'DisabledContext';
 const {
   Consumer,
   Provider: disabled_Provider
@@ -60164,6 +60176,7 @@ const NavigationContext = (0,external_wp_element_namespaceObject.createContext)(
     isMenuEmpty: defaultIsEmpty
   }
 });
+NavigationContext.displayName = 'NavigationContext';
 const useNavigationContext = () => (0,external_wp_element_namespaceObject.useContext)(NavigationContext);
 
 ;// ./packages/components/build-module/navigation/styles/navigation-styles.js
@@ -60597,6 +60610,7 @@ const NavigationBackButton = (0,external_wp_element_namespaceObject.forwardRef)(
 const NavigationGroupContext = (0,external_wp_element_namespaceObject.createContext)({
   group: undefined
 });
+NavigationGroupContext.displayName = 'NavigationGroupContext';
 const useNavigationGroupContext = () => (0,external_wp_element_namespaceObject.useContext)(NavigationGroupContext);
 
 ;// ./packages/components/build-module/navigation/group/index.js
@@ -60702,6 +60716,7 @@ const NavigationMenuContext = (0,external_wp_element_namespaceObject.createConte
   menu: undefined,
   search: ''
 });
+NavigationMenuContext.displayName = 'NavigationMenuContext';
 const useNavigationMenuContext = () => (0,external_wp_element_namespaceObject.useContext)(NavigationMenuContext);
 
 ;// ./packages/components/build-module/navigation/utils.js
@@ -61902,6 +61917,7 @@ const context_initialContextValue = {
   params: {}
 };
 const NavigatorContext = (0,external_wp_element_namespaceObject.createContext)(context_initialContextValue);
+NavigatorContext.displayName = 'NavigatorContext';
 
 ;// ./packages/components/build-module/navigator/styles.js
 function navigator_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
@@ -64016,6 +64032,7 @@ const RadioGroupContext = (0,external_wp_element_namespaceObject.createContext)(
   store: undefined,
   disabled: undefined
 });
+RadioGroupContext.displayName = 'RadioGroupContext';
 
 ;// ./packages/components/build-module/radio-group/radio.js
 /**
@@ -67423,6 +67440,7 @@ var ToolbarItem = memo2(
  */
 
 const ToolbarContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
+ToolbarContext.displayName = 'ToolbarContext';
 /* harmony default export */ const toolbar_context = (ToolbarContext);
 
 ;// ./packages/components/build-module/toolbar/toolbar-item/index.js
@@ -68135,6 +68153,7 @@ const ToolsPanelContext = (0,external_wp_element_namespaceObject.createContext)(
   deregisterResetAllFilter: tools_panel_context_noop,
   areAllOptionalControlsHidden: true
 });
+ToolsPanelContext.displayName = 'ToolsPanelContext';
 const useToolsPanelContext = () => (0,external_wp_element_namespaceObject.useContext)(ToolsPanelContext);
 
 ;// ./packages/components/build-module/tools-panel/tools-panel-header/hook.js
@@ -68987,6 +69006,7 @@ const component_ToolsPanelItem = contextConnect(UnconnectedToolsPanelItem, 'Tool
  */
 
 const RovingTabIndexContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
+RovingTabIndexContext.displayName = 'RovingTabIndexContext';
 const useRovingTabIndexContext = () => (0,external_wp_element_namespaceObject.useContext)(RovingTabIndexContext);
 const RovingTabIndexProvider = RovingTabIndexContext.Provider;
 
@@ -70384,6 +70404,7 @@ function useMenuStore(props = {}) {
  */
 
 const context_Context = (0,external_wp_element_namespaceObject.createContext)(undefined);
+context_Context.displayName = 'MenuContext';
 
 ;// ./node_modules/@ariakit/react-core/esm/__chunks/MVIULMNR.js
 "use client";
@@ -72627,6 +72648,7 @@ function Theme({
  */
 
 const TabsContext = (0,external_wp_element_namespaceObject.createContext)(undefined);
+TabsContext.displayName = 'TabsContext';
 const useTabsContext = () => (0,external_wp_element_namespaceObject.useContext)(TabsContext);
 
 ;// ./packages/components/build-module/tabs/styles.js

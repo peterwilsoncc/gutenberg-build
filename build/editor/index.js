@@ -5591,6 +5591,7 @@ const viewPostRevisions = {
 const DataFormContext = (0,external_wp_element_namespaceObject.createContext)({
   fields: []
 });
+DataFormContext.displayName = 'DataFormContext';
 function DataFormProvider({
   fields,
   children

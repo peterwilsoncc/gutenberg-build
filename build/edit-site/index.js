@@ -7858,6 +7858,8 @@ const external_wp_dom_namespaceObject = window["wp"]["dom"];
 
 
 const SidebarNavigationContext = (0,external_wp_element_namespaceObject.createContext)(() => {});
+SidebarNavigationContext.displayName = 'SidebarNavigationContext';
+
 // Focus a sidebar element after a navigation. The element to focus is either
 // specified by `focusSelector` (when navigating back) or it is the first
 // tabbable element (usually the "Back" button).
@@ -18095,6 +18097,7 @@ const {
 
 
 const FontLibraryContext = (0,external_wp_element_namespaceObject.createContext)({});
+FontLibraryContext.displayName = 'FontLibraryContext';
 function FontLibraryProvider({
   children
 }) {
@@ -37662,6 +37665,7 @@ const DataViewsContext = (0,external_wp_element_namespaceObject.createContext)({
     perPageSizes: []
   }
 });
+DataViewsContext.displayName = 'DataViewsContext';
 /* harmony default export */ const dataviews_context = (DataViewsContext);
 
 ;// ./packages/icons/build-module/library/funnel.js
@@ -51598,6 +51602,7 @@ function PostList({
 const DataFormContext = (0,external_wp_element_namespaceObject.createContext)({
   fields: []
 });
+DataFormContext.displayName = 'DataFormContext';
 function DataFormProvider({
   fields,
   children

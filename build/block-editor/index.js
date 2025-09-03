@@ -7884,6 +7884,7 @@ const DEFAULT_BLOCK_EDIT_CONTEXT = {
   isSelected: false
 };
 const Context = (0,external_wp_element_namespaceObject.createContext)(DEFAULT_BLOCK_EDIT_CONTEXT);
+Context.displayName = 'BlockEditContext';
 const {
   Provider
 } = Context;
@@ -18068,6 +18069,7 @@ const DEFAULT_GLOBAL_STYLES_CONTEXT = {
   setUserConfig: () => {}
 };
 const GlobalStylesContext = (0,external_wp_element_namespaceObject.createContext)(DEFAULT_GLOBAL_STYLES_CONTEXT);
+GlobalStylesContext.displayName = 'GlobalStylesContext';
 
 ;// ./packages/block-editor/build-module/components/global-styles/hooks.js
 /**
@@ -21228,6 +21230,7 @@ const defaultLayout = {
   type: 'default'
 };
 const Layout = (0,external_wp_element_namespaceObject.createContext)(defaultLayout);
+Layout.displayName = 'BlockLayoutContext';
 
 /**
  * Allows to define the layout.
@@ -28678,6 +28681,7 @@ function ContrastChecker({
 const BlockRefs = (0,external_wp_element_namespaceObject.createContext)({
   refsMap: (0,external_wp_compose_namespaceObject.observableMap)()
 });
+BlockRefs.displayName = 'BlockRefsContext';
 function BlockRefsProvider({
   children
 }) {
@@ -39566,6 +39570,7 @@ const BlockEditorProvider = props => {
 /** @type {import('react').Context<Record<string,*>>} */
 
 const block_context_Context = (0,external_wp_element_namespaceObject.createContext)({});
+block_context_Context.displayName = 'BlockContext';
 
 /**
  * Component which merges passed value with current consumed block context.
@@ -40187,6 +40192,7 @@ function MultipleUsageWarning({
  */
 
 const PrivateBlockContext = (0,external_wp_element_namespaceObject.createContext)({});
+PrivateBlockContext.displayName = 'PrivateBlockContext';
 
 ;// ./packages/block-editor/build-module/components/block-edit/index.js
 /**
@@ -46676,6 +46682,7 @@ function BlockListAppender({
 
 const inbetween_MAX_POPOVER_RECOMPUTE_COUNTER = Number.MAX_SAFE_INTEGER;
 const InsertionPointOpenRef = (0,external_wp_element_namespaceObject.createContext)();
+InsertionPointOpenRef.displayName = 'InsertionPointOpenRefContext';
 function BlockPopoverInbetween({
   previousClientId,
   nextClientId,
@@ -46940,6 +46947,7 @@ function BlockDropZonePopover({
 
 
 const insertion_point_InsertionPointOpenRef = (0,external_wp_element_namespaceObject.createContext)();
+insertion_point_InsertionPointOpenRef.displayName = 'InsertionPointOpenRefContext';
 function InbetweenInsertionPointPopover({
   __unstablePopoverSlot,
   __unstableContentRef,
@@ -49077,6 +49085,7 @@ function ZoomOutSeparator({
 
 
 const IntersectionObserver = (0,external_wp_element_namespaceObject.createContext)();
+IntersectionObserver.displayName = 'IntersectionObserverContext';
 const pendingBlockVisibilityUpdatesPerRegistry = new WeakMap();
 function Root({
   className,
@@ -64554,6 +64563,7 @@ function BlockEditVisuallyButton({
  */
 
 const __unstableBlockNameContext = (0,external_wp_element_namespaceObject.createContext)('');
+__unstableBlockNameContext.displayName = '__unstableBlockNameContext';
 /* harmony default export */ const block_name_context = (__unstableBlockNameContext);
 
 ;// ./packages/block-editor/build-module/components/navigable-toolbar/index.js
@@ -66267,6 +66277,7 @@ const listView = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(e
  */
 
 const ListViewContext = (0,external_wp_element_namespaceObject.createContext)({});
+ListViewContext.displayName = 'ListViewContext';
 const useListViewContext = () => (0,external_wp_element_namespaceObject.useContext)(ListViewContext);
 
 ;// ./packages/block-editor/build-module/components/list-view/aria-referenced-text.js
@@ -70976,6 +70987,7 @@ function useTransformImage({
 
 
 const ImageEditingContext = (0,external_wp_element_namespaceObject.createContext)({});
+ImageEditingContext.displayName = 'ImageEditingContext';
 const useImageEditingContext = () => (0,external_wp_element_namespaceObject.useContext)(ImageEditingContext);
 function ImageEditingProvider({
   id,
@@ -74715,7 +74727,9 @@ function withDeprecations(Component) {
 
 
 const keyboardShortcutContext = (0,external_wp_element_namespaceObject.createContext)();
+keyboardShortcutContext.displayName = 'keyboardShortcutContext';
 const inputEventContext = (0,external_wp_element_namespaceObject.createContext)();
+inputEventContext.displayName = 'inputEventContext';
 const instanceIdKey = Symbol('instanceId');
 
 /**
@@ -77272,6 +77286,7 @@ const TypewriterOrIEBypass = isIE ? props => props.children : Typewriter;
 
 
 const RenderedRefsContext = (0,external_wp_element_namespaceObject.createContext)({});
+RenderedRefsContext.displayName = 'RenderedRefsContext';
 
 /**
  * Immutably adds an unique identifier to a set scoped for a given block type.

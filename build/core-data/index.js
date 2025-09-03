@@ -24090,6 +24090,7 @@ const external_wp_element_namespaceObject = window["wp"]["element"];
  */
 
 const EntityContext = (0,external_wp_element_namespaceObject.createContext)({});
+EntityContext.displayName = 'EntityContext';
 
 ;// external "ReactJSXRuntime"
 const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
