@@ -2748,10 +2748,6 @@ const accordion_header_init = () => initBlock({
  * WordPress dependencies
  */
 
-/**
- * External dependencies
- */
-
 
 function accordion_panel_edit_Edit({
   attributes
@@ -2762,35 +2758,16 @@ function accordion_panel_edit_Edit({
     openByDefault,
     isSelected
   } = attributes;
-  const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseBorderProps)(attributes);
-  const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseColorProps)(attributes);
-  const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
-  const shadowProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetShadowClassesAndStyles)(attributes);
-  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
-  const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)({
-    className: 'accordion-content__wrapper',
-    style: {
-      ...spacingProps.style
-    }
-  }, {
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
+    'aria-hidden': !isSelected && !openByDefault
+  });
+  const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
     allowedBlocks,
     template: [['core/paragraph', {}]],
     templateLock
   });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    ...blockProps,
-    className: dist_clsx(blockProps.className, colorProps.className, borderProps.className, {
-      [`has-custom-font-size`]: blockProps?.style?.fontSize
-    }),
-    style: {
-      ...borderProps.style,
-      ...colorProps.style,
-      ...shadowProps.style
-    },
-    "aria-hidden": !isSelected && !openByDefault,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      ...innerBlocksProps
-    })
+    ...innerBlocksProps
   });
 }
 
@@ -2799,36 +2776,12 @@ function accordion_panel_edit_Edit({
  * WordPress dependencies
  */
 
-/**
- * External dependencies
- */
 
-
-function accordion_panel_save_save({
-  attributes
-}) {
+function accordion_panel_save_save() {
   const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
-  const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetBorderClassesAndStyles)(attributes);
-  const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetColorClassesAndStyles)(attributes);
-  const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
-  const shadowProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetShadowClassesAndStyles)(attributes);
+  const innerBlocksProps = external_wp_blockEditor_namespaceObject.useInnerBlocksProps.save(blockProps);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    ...blockProps,
-    className: dist_clsx(blockProps.className, colorProps.className, borderProps.className, {
-      [`has-custom-font-size`]: blockProps?.style?.fontSize
-    }),
-    style: {
-      ...borderProps.style,
-      ...colorProps.style,
-      ...shadowProps.style
-    },
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-      className: "accordion-content__wrapper",
-      style: {
-        ...spacingProps.style
-      },
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InnerBlocks.Content, {})
-    })
+    ...innerBlocksProps
   });
 }
 
