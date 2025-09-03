@@ -36078,7 +36078,11 @@ const close_close = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
 
 ;// ./packages/block-library/build-module/navigation/constants.js
 const constants_DEFAULT_BLOCK = {
-  name: 'core/navigation-link'
+  name: 'core/navigation-link',
+  attributes: {
+    kind: 'post-type',
+    type: 'page'
+  }
 };
 const PRIORITIZED_INSERTER_BLOCKS = ['core/navigation-link/page', 'core/navigation-link'];
 
@@ -38263,6 +38267,144 @@ const plus_plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 });
 /* harmony default export */ const library_plus = (plus_plus);
 
+;// ./packages/block-library/build-module/navigation-link/page-creator.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+
+
+/**
+ * Component for creating new pages within the Navigation Link UI.
+ *
+ * @param {Object}   props                Component props.
+ * @param {string}   props.postType       The post type to create.
+ * @param {Function} props.onBack         Callback when user wants to go back.
+ * @param {Function} props.onPageCreated  Callback when page is successfully created.
+ * @param {string}   [props.initialTitle] Initial title to pre-fill the form.
+ */
+
+function LinkUIPageCreator({
+  postType,
+  onBack,
+  onPageCreated,
+  initialTitle = ''
+}) {
+  const [title, setTitle] = (0,external_wp_element_namespaceObject.useState)(initialTitle);
+  const [shouldPublish, setShouldPublish] = (0,external_wp_element_namespaceObject.useState)(false);
+
+  // Focus the first element when the component mounts
+  const focusOnMountRef = (0,external_wp_compose_namespaceObject.useFocusOnMount)('firstElement');
+
+  // Check if the title is valid for submission
+  const isTitleValid = title.trim().length > 0;
+
+  // Get the last created entity record (without ID) to track creation state
+  const {
+    lastError,
+    isSaving
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => ({
+    lastError: select(external_wp_coreData_namespaceObject.store).getLastEntitySaveError('postType', postType),
+    isSaving: select(external_wp_coreData_namespaceObject.store).isSavingEntityRecord('postType', postType)
+  }), [postType]);
+  const {
+    saveEntityRecord
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
+  async function createPage(event) {
+    event.preventDefault();
+    if (isSaving || !isTitleValid) {
+      return;
+    }
+    try {
+      const savedRecord = await saveEntityRecord('postType', postType, {
+        title,
+        status: shouldPublish ? 'publish' : 'draft'
+      }, {
+        throwOnError: true
+      });
+      if (savedRecord) {
+        // Create the page link object from the saved record
+        const pageLink = {
+          id: savedRecord.id,
+          type: postType,
+          title: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(savedRecord.title.rendered),
+          url: savedRecord.link,
+          kind: 'post-type'
+        };
+        onPageCreated(pageLink);
+      }
+    } catch (error) {
+      // Error handling is done via the data store selectors
+    }
+  }
+  const isSubmitDisabled = isSaving || !isTitleValid;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    className: "link-ui-page-creator",
+    ref: focusOnMountRef,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      className: "link-ui-page-creator__back",
+      icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right_small : chevron_left_small,
+      onClick: e => {
+        e.preventDefault();
+        onBack();
+      },
+      size: "small",
+      children: (0,external_wp_i18n_namespaceObject.__)('Back')
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+      className: "link-ui-page-creator__inner",
+      spacing: 4,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
+        onSubmit: createPage,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+          spacing: 4,
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+            __next40pxDefaultSize: true,
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Title'),
+            onChange: setTitle,
+            placeholder: (0,external_wp_i18n_namespaceObject.__)('No title'),
+            value: title
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Publish immediately'),
+            help: (0,external_wp_i18n_namespaceObject.__)('If unchecked, the page will be created as a draft.'),
+            checked: shouldPublish,
+            onChange: setShouldPublish
+          }), lastError && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
+            status: "error",
+            isDismissible: false,
+            children: lastError.message
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+            spacing: 2,
+            justify: "flex-end",
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              __next40pxDefaultSize: true,
+              variant: "tertiary",
+              onClick: onBack,
+              disabled: isSaving,
+              accessibleWhenDisabled: true,
+              children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+              __next40pxDefaultSize: true,
+              variant: "primary",
+              type: "submit",
+              isBusy: isSaving,
+              "aria-disabled": isSubmitDisabled,
+              children: (0,external_wp_i18n_namespaceObject.__)('Create page')
+            })]
+          })]
+        })
+      })
+    })]
+  });
+}
+
 ;// ./packages/block-library/build-module/navigation-link/link-ui.js
 /**
  * WordPress dependencies
@@ -38277,10 +38419,10 @@ const plus_plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 
 
 
-
 /**
  * Internal dependencies
  */
+
 
 
 const {
@@ -38404,41 +38546,13 @@ function UnforwardedLinkUI(props, ref) {
   } = props.link;
   const postType = type || 'page';
   const [addingBlock, setAddingBlock] = (0,external_wp_element_namespaceObject.useState)(false);
+  const [addingPage, setAddingPage] = (0,external_wp_element_namespaceObject.useState)(false);
   const [focusAddBlockButton, setFocusAddBlockButton] = (0,external_wp_element_namespaceObject.useState)(false);
-  const {
-    saveEntityRecord
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
+  const [focusAddPageButton, setFocusAddPageButton] = (0,external_wp_element_namespaceObject.useState)(false);
   const permissions = (0,external_wp_coreData_namespaceObject.useResourcePermissions)({
     kind: 'postType',
     name: postType
   });
-
-  // Check if we're in contentOnly mode
-  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
-  const isDefaultBlockEditingMode = blockEditingMode === 'default';
-  async function handleCreate(pageTitle) {
-    const page = await saveEntityRecord('postType', postType, {
-      title: pageTitle,
-      status: 'draft'
-    });
-    return {
-      id: page.id,
-      type: postType,
-      // Make `title` property consistent with that in `fetchLinkSuggestions` where the `rendered` title (containing HTML entities)
-      // is also being decoded. By being consistent in both locations we avoid having to branch in the rendering output code.
-      // Ideally in the future we will update both APIs to utilise the "raw" form of the title which is better suited to edit contexts.
-      // e.g.
-      // - title.raw = "Yes & No"
-      // - title.rendered = "Yes &#038; No"
-      // - decodeEntities( title.rendered ) = "Yes & No"
-      // See:
-      // - https://github.com/WordPress/gutenberg/pull/41063
-      // - https://github.com/WordPress/gutenberg/blob/a1e1fdc0e6278457e9f4fc0b31ac6d2095f5450b/packages/core-data/src/fetch/__experimental-fetch-link-suggestions.js#L212-L218
-      title: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(page.title.rendered),
-      url: page.link,
-      kind: 'post-type'
-    };
-  }
 
   // Memoize link value to avoid overriding the LinkControl's internal state.
   // This is a temporary fix. See https://github.com/WordPress/gutenberg/issues/50976#issuecomment-1568226407.
@@ -38447,15 +38561,23 @@ function UnforwardedLinkUI(props, ref) {
     opensInNewTab,
     title: label && (0,external_wp_dom_namespaceObject.__unstableStripHTML)(label)
   }), [label, opensInNewTab, url]);
+  const handlePageCreated = pageLink => {
+    // Set the new page as the current link
+    props.onChange(pageLink);
+    // Return to main Link UI
+    setAddingPage(false);
+  };
   const dialogTitleId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkUI, `link-ui-link-control__title`);
   const dialogDescriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkUI, `link-ui-link-control__description`);
+  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
+  const isDefaultBlockEditingMode = blockEditingMode === 'default';
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Popover, {
     ref: ref,
     placement: "bottom",
     onClose: props.onClose,
     anchor: props.anchor,
     shift: true,
-    children: [!addingBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    children: [!addingBlock && !addingPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       role: "dialog",
       "aria-labelledby": dialogTitleId,
       "aria-describedby": dialogDescriptionId,
@@ -38472,21 +38594,7 @@ function UnforwardedLinkUI(props, ref) {
         hasRichPreviews: true,
         value: link,
         showInitialSuggestions: true,
-        withCreateSuggestion: permissions.canCreate,
-        createSuggestion: handleCreate,
-        createSuggestionButtonText: searchTerm => {
-          let format;
-          if (type === 'post') {
-            /* translators: %s: search term. */
-            format = (0,external_wp_i18n_namespaceObject.__)('Create draft post: <mark>%s</mark>');
-          } else {
-            /* translators: %s: search term. */
-            format = (0,external_wp_i18n_namespaceObject.__)('Create draft page: <mark>%s</mark>');
-          }
-          return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(format, searchTerm), {
-            mark: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("mark", {})
-          });
-        },
+        withCreateSuggestion: false,
         noDirectEntry: !!type,
         noURLSuggestion: !!type,
         suggestionsQuery: getSuggestionsQuery(type, kind),
@@ -38495,10 +38603,16 @@ function UnforwardedLinkUI(props, ref) {
         onCancel: props.onCancel,
         renderControlBottom: () => !link?.url?.length && isDefaultBlockEditingMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUITools, {
           focusAddBlockButton: focusAddBlockButton,
+          focusAddPageButton: focusAddPageButton,
           setAddingBlock: () => {
             setAddingBlock(true);
             setFocusAddBlockButton(false);
-          }
+          },
+          setAddingPage: () => {
+            setAddingPage(true);
+            setFocusAddPageButton(false);
+          },
+          canCreatePage: permissions.canCreate
         })
       })]
     }), addingBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUIBlockInserter, {
@@ -38506,17 +38620,31 @@ function UnforwardedLinkUI(props, ref) {
       onBack: () => {
         setAddingBlock(false);
         setFocusAddBlockButton(true);
+        setFocusAddPageButton(false);
       }
+    }), addingPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUIPageCreator, {
+      postType: postType,
+      onBack: () => {
+        setAddingPage(false);
+        setFocusAddPageButton(true);
+        setFocusAddBlockButton(false);
+      },
+      onPageCreated: handlePageCreated,
+      initialTitle: link?.url || ''
     })]
   });
 }
 const LinkUI = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedLinkUI);
 const LinkUITools = ({
   setAddingBlock,
-  focusAddBlockButton
+  setAddingPage,
+  focusAddBlockButton,
+  focusAddPageButton,
+  canCreatePage
 }) => {
   const blockInserterAriaRole = 'listbox';
   const addBlockButtonRef = (0,external_wp_element_namespaceObject.useRef)();
+  const addPageButtonRef = (0,external_wp_element_namespaceObject.useRef)();
 
   // Focus the add block button when the popover is opened.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -38524,9 +38652,27 @@ const LinkUITools = ({
       addBlockButtonRef.current?.focus();
     }
   }, [focusAddBlockButton]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+
+  // Focus the add page button when the popover is opened.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (focusAddPageButton) {
+      addPageButtonRef.current?.focus();
+    }
+  }, [focusAddPageButton]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: 0,
     className: "link-ui-tools",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    children: [canCreatePage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      __next40pxDefaultSize: true,
+      ref: addPageButtonRef,
+      icon: library_plus,
+      onClick: e => {
+        e.preventDefault();
+        setAddingPage(true);
+      },
+      "aria-haspopup": blockInserterAriaRole,
+      children: (0,external_wp_i18n_namespaceObject.__)('Add page')
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       __next40pxDefaultSize: true,
       ref: addBlockButtonRef,
       icon: library_plus,
@@ -38536,7 +38682,7 @@ const LinkUITools = ({
       },
       "aria-haspopup": blockInserterAriaRole,
       children: (0,external_wp_i18n_namespaceObject.__)('Add block')
-    })
+    })]
   });
 };
 /* harmony default export */ const link_ui = ((/* unused pure expression or super */ null && (LinkUITools)));
