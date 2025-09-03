@@ -12009,7 +12009,7 @@ const titleField = {
     item
   }) => getItemTitle(item),
   render: TitleView,
-  enableHiding: false,
+  enableHiding: true,
   enableGlobalSearch: true,
   filterBy: false
 };

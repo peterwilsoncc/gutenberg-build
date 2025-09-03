@@ -44943,6 +44943,7 @@ function GridItem({
     item: item,
     field: titleField
   }) : null;
+  const shouldRenderMedia = showMedia && renderedMediaField;
   let mediaA11yProps;
   let titleA11yProps;
   if (isItemClickable(item) && onClickItem) {
@@ -44980,7 +44981,7 @@ function GridItem({
     role: infiniteScrollEnabled ? 'article' : undefined,
     "aria-setsize": infiniteScrollEnabled ? paginationInfo.totalItems : undefined,
     "aria-posinset": posinset,
-    children: [showMedia && renderedMediaField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemClickWrapper, {
+    children: [shouldRenderMedia && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemClickWrapper, {
       item: item,
       isItemClickable: isItemClickable,
       onClickItem: onClickItem,
@@ -44988,14 +44989,21 @@ function GridItem({
       className: "dataviews-view-grid__media",
       ...mediaA11yProps,
       children: renderedMediaField
-    }), hasBulkActions && showMedia && renderedMediaField && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSelectionCheckbox, {
+    }), hasBulkActions && shouldRenderMedia && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsSelectionCheckbox, {
       item: item,
       selection: selection,
       onChangeSelection: onChangeSelection,
       getItemId: getItemId,
       titleField: titleField,
       disabled: !hasBulkAction
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+    }), !showTitle && shouldRenderMedia && !!actions?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "dataviews-view-grid__media-actions",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemActions, {
+        item: item,
+        actions: actions,
+        isCompact: true
+      })
+    }), showTitle && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       justify: "space-between",
       className: "dataviews-view-grid__title-actions",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ItemClickWrapper, {
