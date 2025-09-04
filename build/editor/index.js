@@ -5801,6 +5801,9 @@ const LAYOUT_TABLE = 'table';
 const LAYOUT_GRID = 'grid';
 const LAYOUT_LIST = 'list';
 
+// Picker view layouts.
+const LAYOUT_PICKER_GRID = 'pickerGrid';
+
 ;// ./packages/dataviews/build-module/field-types/email.js
 /**
  * WordPress dependencies
