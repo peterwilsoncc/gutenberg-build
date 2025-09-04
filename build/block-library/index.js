@@ -2184,12 +2184,13 @@ const init = () => initBlock({
 
 
 function edit_Edit({
-  attributes: {
-    openByDefault
-  },
+  attributes,
   clientId,
   setAttributes
 }) {
+  const {
+    openByDefault
+  } = attributes;
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const {
     isSelected,
@@ -2218,13 +2219,12 @@ function edit_Edit({
       });
     }
   }, [isSelected, contentBlockClientId, __unstableMarkNextChangeAsNotPersistent, updateBlockAttributes]);
-  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
-  const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)({
-    ...blockProps,
-    className: dist_clsx(blockProps.className, {
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
+    className: dist_clsx({
       'is-open': openByDefault || isSelected
     })
-  }, {
+  });
+  const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
     template: [['core/accordion-header', {}], ['core/accordion-panel', {
       openByDefault
     }]],
@@ -2382,7 +2382,8 @@ const accordion_content_metadata = {
         width: true
       }
     },
-    shadow: true
+    shadow: true,
+    layout: true
   },
   attributes: {
     openByDefault: {
@@ -2857,7 +2858,8 @@ const accordion_panel_metadata = {
         fontSize: true
       }
     },
-    shadow: true
+    shadow: true,
+    layout: true
   },
   attributes: {
     allowedBlocks: {
