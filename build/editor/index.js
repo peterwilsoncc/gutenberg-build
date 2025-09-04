@@ -6259,6 +6259,58 @@ const arrayFieldType = {
 };
 /* harmony default export */ const array = (arrayFieldType);
 
+;// ./packages/dataviews/build-module/field-types/telephone.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function telephone_sort(valueA, valueB, direction) {
+  return direction === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+}
+/* harmony default export */ const telephone = ({
+  sort: telephone_sort,
+  isValid: {
+    custom: (item, field) => {
+      const value = field.getValue({
+        item
+      });
+      if (field?.elements) {
+        const validValues = field.elements.map(f => f.value);
+        if (!validValues.includes(value)) {
+          return (0,external_wp_i18n_namespaceObject.__)('Value must be one of the elements.');
+        }
+      }
+      return null;
+    }
+  },
+  Edit: 'telephone',
+  render: ({
+    item,
+    field
+  }) => {
+    return field.elements ? renderFromElements({
+      item,
+      field
+    }) : field.getValue({
+      item
+    });
+  },
+  enableSorting: true,
+  filterBy: {
+    defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
+    validOperators: [OPERATOR_IS, OPERATOR_IS_NOT, OPERATOR_CONTAINS, OPERATOR_NOT_CONTAINS, OPERATOR_STARTS_WITH,
+    // Multiple selection
+    OPERATOR_IS_ANY, OPERATOR_IS_NONE, OPERATOR_IS_ALL, OPERATOR_IS_NOT_ALL]
+  }
+});
+
 ;// ./packages/dataviews/build-module/field-types/index.js
 /**
  * WordPress dependencies
@@ -6268,6 +6320,7 @@ const arrayFieldType = {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -6310,6 +6363,9 @@ function getFieldTypeDefinition(type) {
   }
   if ('array' === type) {
     return array;
+  }
+  if ('telephone' === type) {
+    return telephone;
   }
 
   // This is a fallback for fields that don't provide a type.
@@ -10389,7 +10445,7 @@ function DateControl({
   });
 }
 
-;// ./packages/dataviews/build-module/dataform-controls/email.js
+;// ./packages/dataviews/build-module/dataform-controls/utils/validated-text.js
 /**
  * WordPress dependencies
  */
@@ -10405,11 +10461,12 @@ function DateControl({
 const {
   ValidatedTextControl
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
-function Email({
+function ValidatedText({
   data,
   field,
   onChange,
-  hideLabelFromVision
+  hideLabelFromVision,
+  type
 }) {
   const {
     id,
@@ -10441,15 +10498,57 @@ function Email({
       setCustomValidity(undefined);
     },
     customValidity: customValidity,
-    type: "email",
     label: label,
     placeholder: placeholder,
     value: value !== null && value !== void 0 ? value : '',
     help: description,
     onChange: onChangeControl,
-    __next40pxDefaultSize: true,
-    __nextHasNoMarginBottom: true,
-    hideLabelFromVision: hideLabelFromVision
+    hideLabelFromVision: hideLabelFromVision,
+    type: type
+  });
+}
+
+;// ./packages/dataviews/build-module/dataform-controls/email.js
+/**
+ * Internal dependencies
+ */
+
+
+
+function Email({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedText, {
+    data,
+    field,
+    onChange,
+    hideLabelFromVision,
+    type: 'email'
+  });
+}
+
+;// ./packages/dataviews/build-module/dataform-controls/telephone.js
+/**
+ * Internal dependencies
+ */
+
+
+
+function Telephone({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedText, {
+    data,
+    field,
+    onChange,
+    hideLabelFromVision,
+    type: 'tel'
   });
 }
 
@@ -10667,64 +10766,22 @@ function Select({
 
 ;// ./packages/dataviews/build-module/dataform-controls/text.js
 /**
- * WordPress dependencies
- */
-
-
-
-/**
  * Internal dependencies
  */
 
 
 
-const {
-  ValidatedTextControl: text_ValidatedTextControl
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function Text({
   data,
   field,
   onChange,
   hideLabelFromVision
 }) {
-  const {
-    id,
-    label,
-    placeholder,
-    description
-  } = field;
-  const value = field.getValue({
-    item: data
-  });
-  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: newValue
-  }), [id, onChange]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(text_ValidatedTextControl, {
-    required: !!field.isValid?.required,
-    onValidate: newValue => {
-      const message = field.isValid?.custom?.({
-        ...data,
-        [id]: newValue
-      }, field);
-      if (message) {
-        setCustomValidity({
-          type: 'invalid',
-          message
-        });
-        return;
-      }
-      setCustomValidity(undefined);
-    },
-    customValidity: customValidity,
-    label: label,
-    placeholder: placeholder,
-    value: value !== null && value !== void 0 ? value : '',
-    help: description,
-    onChange: onChangeControl,
-    __next40pxDefaultSize: true,
-    __nextHasNoMarginBottom: true,
-    hideLabelFromVision: hideLabelFromVision
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedText, {
+    data,
+    field,
+    onChange,
+    hideLabelFromVision
   });
 }
 
@@ -10917,6 +10974,7 @@ function ArrayControl({
 
 
 
+
 const FORM_CONTROLS = {
   array: ArrayControl,
   boolean: boolean_Boolean,
@@ -10924,6 +10982,7 @@ const FORM_CONTROLS = {
   datetime: DateTime,
   date: DateControl,
   email: Email,
+  telephone: Telephone,
   integer: Integer,
   radio: Radio,
   select: Select,
