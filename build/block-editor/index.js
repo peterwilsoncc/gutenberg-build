@@ -33162,7 +33162,8 @@ function usePopoverScroll(contentRef) {
     function onWheel(event) {
       const {
         deltaX,
-        deltaY
+        deltaY,
+        target
       } = event;
       const contentEl = contentRef.current;
       let scrollContainer = scrollContainerCache.get(contentEl);
@@ -33170,7 +33171,15 @@ function usePopoverScroll(contentRef) {
         scrollContainer = (0,external_wp_dom_namespaceObject.getScrollContainer)(contentEl);
         scrollContainerCache.set(contentEl, scrollContainer);
       }
-      scrollContainer.scrollBy(deltaX, deltaY);
+      // Finds a scrollable ancestor of the event’s target. It's not cached because the
+      // it may not remain scrollable due to popover position changes. The cache is also
+      // less likely to be utilized because the target may be different every event.
+      const eventScrollContainer = (0,external_wp_dom_namespaceObject.getScrollContainer)(target);
+      // Scrolls “through” the popover only if another contained scrollable area isn’t
+      // in front of it. This is to avoid scrolling both containers simultaneously.
+      if (!node.contains(eventScrollContainer)) {
+        scrollContainer.scrollBy(deltaX, deltaY);
+      }
     }
     // Tell the browser that we do not call event.preventDefault
     // See https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
