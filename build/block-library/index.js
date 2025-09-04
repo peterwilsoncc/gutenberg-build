@@ -36033,6 +36033,23 @@ const navigation = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 
 ;// external ["wp","a11y"]
 const external_wp_a11y_namespaceObject = window["wp"]["a11y"];
+;// ./packages/icons/build-module/library/page.js
+/**
+ * WordPress dependencies
+ */
+
+
+const page = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M15.5 7.5h-7V9h7V7.5Zm-7 3.5h7v1.5h-7V11Zm7 3.5h-7V16h7v-1.5Z"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M17 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM7 5.5h10a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5Z"
+  })]
+});
+/* harmony default export */ const library_page = (page);
+
 ;// ./packages/icons/build-module/icon/index.js
 /**
  * WordPress dependencies
@@ -38927,6 +38944,7 @@ function AccessibleMenuDescription({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -38953,6 +38971,49 @@ function AccessibleMenuDescription({
 
 
 
+
+/**
+ * Component that renders the Add page button for the Navigation block.
+ *
+ * @param {Object} props          Component props.
+ * @param {string} props.clientId Block client ID.
+ * @return {JSX.Element|null} The Add page button component or null if not applicable.
+ */
+
+function NavigationAddPageButton({
+  clientId
+}) {
+  const {
+    insertBlock
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  const {
+    getBlockCount
+  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
+  const onAddPage = (0,external_wp_element_namespaceObject.useCallback)(() => {
+    // Get the current number of blocks to insert at the end
+    const blockCount = getBlockCount(clientId);
+
+    // Create a new navigation link block (default block)
+    const newBlock = (0,external_wp_blocks_namespaceObject.createBlock)(constants_DEFAULT_BLOCK.name, {
+      kind: constants_DEFAULT_BLOCK.attributes.kind,
+      type: constants_DEFAULT_BLOCK.attributes.type
+    });
+
+    // Insert the block at the end of the navigation
+    insertBlock(newBlock, blockCount, clientId);
+  }, [clientId, insertBlock, getBlockCount]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+        name: "add-page",
+        icon: library_page,
+        title: (0,external_wp_i18n_namespaceObject.__)('Add page'),
+        onClick: onAddPage,
+        children: (0,external_wp_i18n_namespaceObject.__)('Add page')
+      })
+    })
+  });
+}
 function ColorTools({
   textColor,
   setTextColor,
@@ -39554,7 +39615,9 @@ function Navigation({
         onSelectNavigationMenu: onSelectNavigationMenu,
         isLoading: isLoading,
         blockEditingMode: blockEditingMode
-      }), blockEditingMode === 'default' && stylingInspectorControls, blockEditingMode === 'default' && isEntityAvailable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      }), blockEditingMode === 'default' && stylingInspectorControls, blockEditingMode === 'contentOnly' && isEntityAvailable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationAddPageButton, {
+        clientId: clientId
+      }), blockEditingMode === 'default' && isEntityAvailable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
         group: "advanced",
         children: [hasResolvedCanUserUpdateNavigationMenu && canUserUpdateNavigationMenu && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationMenuNameControl, {}), hasResolvedCanUserDeleteNavigationMenu && canUserDeleteNavigationMenu && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationMenuDeleteControl, {
           onDelete: () => {
@@ -40991,23 +41054,6 @@ function NavigationLinkEdit({
 function navigation_link_save_save() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InnerBlocks.Content, {});
 }
-
-;// ./packages/icons/build-module/library/page.js
-/**
- * WordPress dependencies
- */
-
-
-const page = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M15.5 7.5h-7V9h7V7.5Zm-7 3.5h7v1.5h-7V11Zm7 3.5h-7V16h7v-1.5Z"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M17 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM7 5.5h10a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5Z"
-  })]
-});
-/* harmony default export */ const library_page = (page);
 
 ;// ./packages/icons/build-module/library/tag.js
 /**
