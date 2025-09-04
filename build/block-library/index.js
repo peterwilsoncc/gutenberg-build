@@ -57080,7 +57080,11 @@ function SearchEdit({
     const textFieldClasses = dist_clsx('wp-block-search__input', isButtonPositionInside ? undefined : borderProps.className, typographyProps.className);
     const textFieldStyles = {
       ...(isButtonPositionInside ? {
-        borderRadius
+        borderRadius: borderProps.style?.borderRadius,
+        borderTopLeftRadius: borderProps.style?.borderTopLeftRadius,
+        borderTopRightRadius: borderProps.style?.borderTopRightRadius,
+        borderBottomLeftRadius: borderProps.style?.borderBottomLeftRadius,
+        borderBottomRightRadius: borderProps.style?.borderBottomRightRadius
       } : borderProps.style),
       ...typographyProps.style,
       textDecoration: undefined
@@ -57109,7 +57113,11 @@ function SearchEdit({
       ...colorProps.style,
       ...typographyProps.style,
       ...(isButtonPositionInside ? {
-        borderRadius
+        borderRadius: borderProps.style?.borderRadius,
+        borderTopLeftRadius: borderProps.style?.borderTopLeftRadius,
+        borderTopRightRadius: borderProps.style?.borderTopRightRadius,
+        borderBottomLeftRadius: borderProps.style?.borderBottomLeftRadius,
+        borderBottomRightRadius: borderProps.style?.borderBottomRightRadius
       } : borderProps.style)
     };
     const handleButtonClick = () => {
@@ -57278,7 +57286,8 @@ function SearchEdit({
       })
     })
   });
-  const padBorderRadius = radius => radius ? `calc(${radius} + ${DEFAULT_INNER_PADDING})` : undefined;
+  const isNonZeroBorderRadius = radius => radius !== undefined && parseInt(radius, 10) !== 0;
+  const padBorderRadius = radius => isNonZeroBorderRadius(radius) ? `calc(${radius} + ${DEFAULT_INNER_PADDING})` : undefined;
   const getWrapperStyles = () => {
     const styles = isButtonPositionInside ? borderProps.style : {
       borderRadius: borderProps.style?.borderRadius,
@@ -57287,8 +57296,7 @@ function SearchEdit({
       borderBottomLeftRadius: borderProps.style?.borderBottomLeftRadius,
       borderBottomRightRadius: borderProps.style?.borderBottomRightRadius
     };
-    const isNonZeroBorderRadius = borderRadius !== undefined && parseInt(borderRadius, 10) !== 0;
-    if (isButtonPositionInside && isNonZeroBorderRadius) {
+    if (isButtonPositionInside) {
       // We have button inside wrapper and a border radius value to apply.
       // Add default padding so we don't get "fat" corners.
       //
@@ -57298,17 +57306,17 @@ function SearchEdit({
       if (typeof borderRadius === 'object') {
         // Individual corner border radii present.
         const {
-          topLeft,
-          topRight,
-          bottomLeft,
-          bottomRight
-        } = borderRadius;
+          borderTopLeftRadius,
+          borderTopRightRadius,
+          borderBottomLeftRadius,
+          borderBottomRightRadius
+        } = borderProps.style;
         return {
           ...styles,
-          borderTopLeftRadius: padBorderRadius(topLeft),
-          borderTopRightRadius: padBorderRadius(topRight),
-          borderBottomLeftRadius: padBorderRadius(bottomLeft),
-          borderBottomRightRadius: padBorderRadius(bottomRight)
+          borderTopLeftRadius: padBorderRadius(borderTopLeftRadius),
+          borderTopRightRadius: padBorderRadius(borderTopRightRadius),
+          borderBottomLeftRadius: padBorderRadius(borderBottomLeftRadius),
+          borderBottomRightRadius: padBorderRadius(borderBottomRightRadius)
         };
       }
 
