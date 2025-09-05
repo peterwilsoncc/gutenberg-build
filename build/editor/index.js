@@ -6311,6 +6311,58 @@ function telephone_sort(valueA, valueB, direction) {
   }
 });
 
+;// ./packages/dataviews/build-module/field-types/url.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function url_sort(valueA, valueB, direction) {
+  return direction === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+}
+/* harmony default export */ const url = ({
+  sort: url_sort,
+  isValid: {
+    custom: (item, field) => {
+      const value = field.getValue({
+        item
+      });
+      if (field?.elements) {
+        const validValues = field.elements.map(f => f.value);
+        if (!validValues.includes(value)) {
+          return (0,external_wp_i18n_namespaceObject.__)('Value must be one of the elements.');
+        }
+      }
+      return null;
+    }
+  },
+  Edit: 'url',
+  render: ({
+    item,
+    field
+  }) => {
+    return field.elements ? renderFromElements({
+      item,
+      field
+    }) : field.getValue({
+      item
+    });
+  },
+  enableSorting: true,
+  filterBy: {
+    defaultOperators: [OPERATOR_IS_ANY, OPERATOR_IS_NONE],
+    validOperators: [OPERATOR_IS, OPERATOR_IS_NOT, OPERATOR_CONTAINS, OPERATOR_NOT_CONTAINS, OPERATOR_STARTS_WITH,
+    // Multiple selection
+    OPERATOR_IS_ANY, OPERATOR_IS_NONE, OPERATOR_IS_ALL, OPERATOR_IS_NOT_ALL]
+  }
+});
+
 ;// ./packages/dataviews/build-module/field-types/index.js
 /**
  * WordPress dependencies
@@ -6320,6 +6372,7 @@ function telephone_sort(valueA, valueB, direction) {
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -6366,6 +6419,9 @@ function getFieldTypeDefinition(type) {
   }
   if ('telephone' === type) {
     return telephone;
+  }
+  if ('url' === type) {
+    return url;
   }
 
   // This is a fallback for fields that don't provide a type.
@@ -10552,6 +10608,28 @@ function Telephone({
   });
 }
 
+;// ./packages/dataviews/build-module/dataform-controls/url.js
+/**
+ * Internal dependencies
+ */
+
+
+
+function Url({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedText, {
+    data,
+    field,
+    onChange,
+    hideLabelFromVision,
+    type: 'url'
+  });
+}
+
 ;// ./packages/dataviews/build-module/dataform-controls/integer.js
 /**
  * WordPress dependencies
@@ -10975,6 +11053,7 @@ function ArrayControl({
 
 
 
+
 const FORM_CONTROLS = {
   array: ArrayControl,
   boolean: boolean_Boolean,
@@ -10983,6 +11062,7 @@ const FORM_CONTROLS = {
   date: DateControl,
   email: Email,
   telephone: Telephone,
+  url: Url,
   integer: Integer,
   radio: Radio,
   select: Select,
@@ -13259,7 +13339,7 @@ function isItemValid(item, fields, form) {
       item
     });
     if (field.isValid.required) {
-      if (field.type === 'text' && isEmptyNullOrUndefined(value) || field.type === 'email' && isEmptyNullOrUndefined(value) || field.type === 'integer' && isEmptyNullOrUndefined(value) || field.type === undefined && isEmptyNullOrUndefined(value)) {
+      if (field.type === 'text' && isEmptyNullOrUndefined(value) || field.type === 'email' && isEmptyNullOrUndefined(value) || field.type === 'url' && isEmptyNullOrUndefined(value) || field.type === 'telephone' && isEmptyNullOrUndefined(value) || field.type === 'integer' && isEmptyNullOrUndefined(value) || field.type === undefined && isEmptyNullOrUndefined(value)) {
         return false;
       }
       if (field.type === 'boolean' && value !== true) {
