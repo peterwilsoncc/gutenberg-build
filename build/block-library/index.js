@@ -38240,6 +38240,21 @@ const updateAttributes = (updatedValue = {}, setAttributes, blockAttributes = {}
   setAttributes(attributes);
 };
 
+;// ./packages/icons/build-module/library/plus.js
+/**
+ * WordPress dependencies
+ */
+
+
+const plus_plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z"
+  })
+});
+/* harmony default export */ const library_plus = (plus_plus);
+
 ;// ./packages/icons/build-module/library/chevron-right-small.js
 /**
  * WordPress dependencies
@@ -38270,20 +38285,81 @@ const chevronLeftSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObjec
 });
 /* harmony default export */ const chevron_left_small = (chevronLeftSmall);
 
-;// ./packages/icons/build-module/library/plus.js
+;// ./packages/block-library/build-module/navigation-link/dialog-wrapper.js
 /**
  * WordPress dependencies
  */
 
 
-const plus_plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z"
-  })
-});
-/* harmony default export */ const library_plus = (plus_plus);
+
+
+
+/**
+ * Shared BackButton component for consistent navigation across LinkUI sub-components.
+ *
+ * @param {Object}   props           Component props.
+ * @param {string}   props.className CSS class name for the button.
+ * @param {Function} props.onBack    Callback when user wants to go back.
+ */
+
+function BackButton({
+  className,
+  onBack
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    className: className,
+    icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right_small : chevron_left_small,
+    onClick: e => {
+      e.preventDefault();
+      onBack();
+    },
+    size: "small",
+    children: (0,external_wp_i18n_namespaceObject.__)('Back')
+  });
+}
+
+/**
+ * Shared DialogWrapper component for consistent dialog structure across LinkUI sub-components.
+ *
+ * @param {Object}   props             Component props.
+ * @param {string}   props.className   CSS class name for the dialog container.
+ * @param {string}   props.title       Dialog title for accessibility.
+ * @param {string}   props.description Dialog description for accessibility.
+ * @param {Function} props.onBack      Callback when user wants to go back.
+ * @param {Object}   props.children    Child components to render inside the dialog.
+ */
+function DialogWrapper({
+  className,
+  title,
+  description,
+  onBack,
+  children
+}) {
+  const dialogTitleId = (0,external_wp_compose_namespaceObject.useInstanceId)(DialogWrapper, 'link-ui-dialog-title');
+  const dialogDescriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(DialogWrapper, 'link-ui-dialog-description');
+  const focusOnMountRef = (0,external_wp_compose_namespaceObject.useFocusOnMount)('firstElement');
+  const backButtonClassName = `${className}__back`;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    className: className,
+    role: "dialog",
+    "aria-labelledby": dialogTitleId,
+    "aria-describedby": dialogDescriptionId,
+    ref: focusOnMountRef,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.VisuallyHidden, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
+        id: dialogTitleId,
+        children: title
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+        id: dialogDescriptionId,
+        children: description
+      })]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackButton, {
+      className: backButtonClassName,
+      onBack: onBack
+    }), children]
+  });
+}
+/* harmony default export */ const dialog_wrapper = (DialogWrapper);
 
 ;// ./packages/block-library/build-module/navigation-link/page-creator.js
 /**
@@ -38296,6 +38372,9 @@ const plus_plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 
 
 
+/**
+ * Internal dependencies
+ */
 
 
 /**
@@ -38316,9 +38395,6 @@ function LinkUIPageCreator({
 }) {
   const [title, setTitle] = (0,external_wp_element_namespaceObject.useState)(initialTitle);
   const [shouldPublish, setShouldPublish] = (0,external_wp_element_namespaceObject.useState)(false);
-
-  // Focus the first element when the component mounts
-  const focusOnMountRef = (0,external_wp_compose_namespaceObject.useFocusOnMount)('firstElement');
 
   // Check if the title is valid for submission
   const isTitleValid = title.trim().length > 0;
@@ -38362,19 +38438,12 @@ function LinkUIPageCreator({
     }
   }
   const isSubmitDisabled = isSaving || !isTitleValid;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dialog_wrapper, {
     className: "link-ui-page-creator",
-    ref: focusOnMountRef,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      className: "link-ui-page-creator__back",
-      icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right_small : chevron_left_small,
-      onClick: e => {
-        e.preventDefault();
-        onBack();
-      },
-      size: "small",
-      children: (0,external_wp_i18n_namespaceObject.__)('Back')
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+    title: (0,external_wp_i18n_namespaceObject.__)('Create page'),
+    description: (0,external_wp_i18n_namespaceObject.__)('Create a new page to add to your Navigation.'),
+    onBack: onBack,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
       className: "link-ui-page-creator__inner",
       spacing: 4,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
@@ -38419,20 +38488,14 @@ function LinkUIPageCreator({
           })]
         })
       })
-    })]
+    })
   });
 }
 
-;// ./packages/block-library/build-module/navigation-link/link-ui.js
+;// ./packages/block-library/build-module/navigation-link/block-inserter.js
 /**
  * WordPress dependencies
  */
-
-
-
-
-
-
 
 
 
@@ -38448,6 +38511,69 @@ const {
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
 /**
+ * Component for inserting blocks within the Navigation Link UI.
+ *
+ * @param {Object}   props               Component props.
+ * @param {string}   props.clientId      Client ID of the navigation link block.
+ * @param {Function} props.onBack        Callback when user wants to go back.
+ * @param {Function} props.onBlockInsert Callback when a block is inserted.
+ */
+function LinkUIBlockInserter({
+  clientId,
+  onBack,
+  onBlockInsert
+}) {
+  const {
+    rootBlockClientId
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockRootClientId
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    return {
+      rootBlockClientId: getBlockRootClientId(clientId)
+    };
+  }, [clientId]);
+  if (!clientId) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dialog_wrapper, {
+    className: "link-ui-block-inserter",
+    title: (0,external_wp_i18n_namespaceObject.__)('Add block'),
+    description: (0,external_wp_i18n_namespaceObject.__)('Choose a block to add to your Navigation.'),
+    onBack: onBack,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QuickInserter, {
+      rootClientId: rootBlockClientId,
+      clientId: clientId,
+      isAppender: false,
+      prioritizePatterns: false,
+      selectBlockOnInsert: !onBlockInsert,
+      onSelect: onBlockInsert ? onBlockInsert : undefined,
+      hasSearch: false
+    })
+  });
+}
+/* harmony default export */ const block_inserter = (LinkUIBlockInserter);
+
+;// ./packages/block-library/build-module/navigation-link/link-ui.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+/**
  * Given the Link block's type attribute, return the query params to give to
  * /wp/v2/search.
  *
@@ -38455,6 +38581,7 @@ const {
  * @param {string} kind Link block's entity of kind (post-type|taxonomy)
  * @return {{ type?: string, subtype?: string }} Search query params.
  */
+
 function getSuggestionsQuery(type, kind) {
   switch (type) {
     case 'post':
@@ -38501,61 +38628,6 @@ function getSuggestionsQuery(type, kind) {
       };
   }
 }
-function LinkUIBlockInserter({
-  clientId,
-  onBack,
-  onBlockInsert
-}) {
-  const {
-    rootBlockClientId
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getBlockRootClientId
-    } = select(external_wp_blockEditor_namespaceObject.store);
-    return {
-      rootBlockClientId: getBlockRootClientId(clientId)
-    };
-  }, [clientId]);
-  const focusOnMountRef = (0,external_wp_compose_namespaceObject.useFocusOnMount)('firstElement');
-  const dialogTitleId = (0,external_wp_compose_namespaceObject.useInstanceId)(external_wp_blockEditor_namespaceObject.LinkControl, `link-ui-block-inserter__title`);
-  const dialogDescriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(external_wp_blockEditor_namespaceObject.LinkControl, `link-ui-block-inserter__description`);
-  if (!clientId) {
-    return null;
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-    className: "link-ui-block-inserter",
-    role: "dialog",
-    "aria-labelledby": dialogTitleId,
-    "aria-describedby": dialogDescriptionId,
-    ref: focusOnMountRef,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.VisuallyHidden, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
-        id: dialogTitleId,
-        children: (0,external_wp_i18n_namespaceObject.__)('Add block')
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-        id: dialogDescriptionId,
-        children: (0,external_wp_i18n_namespaceObject.__)('Choose a block to add to your Navigation.')
-      })]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      className: "link-ui-block-inserter__back",
-      icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right_small : chevron_left_small,
-      onClick: e => {
-        e.preventDefault();
-        onBack();
-      },
-      size: "small",
-      children: (0,external_wp_i18n_namespaceObject.__)('Back')
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QuickInserter, {
-      rootClientId: rootBlockClientId,
-      clientId: clientId,
-      isAppender: false,
-      prioritizePatterns: false,
-      selectBlockOnInsert: !onBlockInsert,
-      onSelect: onBlockInsert ? onBlockInsert : undefined,
-      hasSearch: false
-    })]
-  });
-}
 function UnforwardedLinkUI(props, ref) {
   const {
     label,
@@ -38569,7 +38641,9 @@ function UnforwardedLinkUI(props, ref) {
   const [addingPage, setAddingPage] = (0,external_wp_element_namespaceObject.useState)(false);
   const [focusAddBlockButton, setFocusAddBlockButton] = (0,external_wp_element_namespaceObject.useState)(false);
   const [focusAddPageButton, setFocusAddPageButton] = (0,external_wp_element_namespaceObject.useState)(false);
-  const permissions = (0,external_wp_coreData_namespaceObject.useResourcePermissions)({
+  const {
+    canCreate: canCreatePage
+  } = (0,external_wp_coreData_namespaceObject.useResourcePermissions)({
     kind: 'postType',
     name: postType
   });
@@ -38587,8 +38661,8 @@ function UnforwardedLinkUI(props, ref) {
     // Return to main Link UI
     setAddingPage(false);
   };
-  const dialogTitleId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkUI, `link-ui-link-control__title`);
-  const dialogDescriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkUI, `link-ui-link-control__description`);
+  const dialogTitleId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkUI, 'link-ui-link-control__title');
+  const dialogDescriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkUI, 'link-ui-link-control__description');
   const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Popover, {
     ref: ref,
@@ -38631,11 +38705,11 @@ function UnforwardedLinkUI(props, ref) {
             setAddingPage(true);
             setFocusAddPageButton(false);
           },
-          canCreatePage: permissions.canCreate,
-          blockEditingMode: blockEditingMode
+          blockEditingMode: blockEditingMode,
+          canCreatePage: canCreatePage
         })
       })]
-    }), addingBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUIBlockInserter, {
+    }), addingBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_inserter, {
       clientId: props.clientId,
       onBack: () => {
         setAddingBlock(false);
