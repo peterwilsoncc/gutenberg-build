@@ -6127,7 +6127,7 @@ function boolean_sort(a, b, direction) {
       return null;
     }
   },
-  Edit: 'boolean',
+  Edit: 'checkbox',
   render: ({
     item,
     field
@@ -6469,16 +6469,32 @@ function getFieldTypeDefinition(type) {
 
 ;// external ["wp","components"]
 const external_wp_components_namespaceObject = window["wp"]["components"];
+;// ./packages/dataviews/build-module/lock-unlock.js
+/**
+ * WordPress dependencies
+ */
+
+const {
+  lock: lock_unlock_lock,
+  unlock: lock_unlock_unlock
+} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/dataviews');
+
 ;// ./packages/dataviews/build-module/dataform-controls/checkbox.js
 /**
  * WordPress dependencies
  */
 
 
+
 /**
  * Internal dependencies
  */
 
+
+
+const {
+  ValidatedCheckboxControl
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function Checkbox({
   field,
   onChange,
@@ -6491,8 +6507,24 @@ function Checkbox({
     label,
     description
   } = field;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-    __nextHasNoMarginBottom: true,
+  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedCheckboxControl, {
+    required: !!field.isValid?.required,
+    onValidate: newValue => {
+      const message = field.isValid?.custom?.({
+        ...data,
+        [id]: newValue
+      }, field);
+      if (message) {
+        setCustomValidity({
+          type: 'invalid',
+          message
+        });
+        return;
+      }
+      setCustomValidity(undefined);
+    },
+    customValidity: customValidity,
     hidden: hideLabelFromVision,
     label: label,
     help: description,
@@ -10114,16 +10146,6 @@ function cleanEscapedString(input) {
 // Fallback for modularized imports:
 /* harmony default export */ const date_fns_format = ((/* unused pure expression or super */ null && (format)));
 
-;// ./packages/dataviews/build-module/lock-unlock.js
-/**
- * WordPress dependencies
- */
-
-const {
-  lock: lock_unlock_lock,
-  unlock: lock_unlock_unlock
-} = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/dataviews');
-
 ;// ./packages/dataviews/build-module/dataform-controls/date.js
 /**
  * WordPress dependencies
@@ -10863,6 +10885,67 @@ function Text({
   });
 }
 
+;// ./packages/dataviews/build-module/dataform-controls/toggle.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const {
+  ValidatedToggleControl
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+function Toggle({
+  field,
+  onChange,
+  data,
+  hideLabelFromVision
+}) {
+  const {
+    id,
+    getValue,
+    label,
+    description
+  } = field;
+  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedToggleControl, {
+    required: !!field.isValid.required,
+    onValidate: newValue => {
+      const message = field.isValid?.custom?.({
+        ...data,
+        [id]: newValue
+      }, field);
+      if (message) {
+        setCustomValidity({
+          type: 'invalid',
+          message
+        });
+        return;
+      }
+      setCustomValidity(undefined);
+    },
+    customValidity: customValidity,
+    hidden: hideLabelFromVision,
+    __nextHasNoMarginBottom: true,
+    label: label,
+    help: description,
+    checked: getValue({
+      item: data
+    }),
+    onChange: () => onChange({
+      [id]: !getValue({
+        item: data
+      })
+    })
+  });
+}
+
 ;// ./packages/dataviews/build-module/dataform-controls/toggle-group.js
 /**
  * WordPress dependencies
@@ -10907,65 +10990,6 @@ function ToggleGroup({
     });
   }
   return null;
-}
-
-;// ./packages/dataviews/build-module/dataform-controls/boolean.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-const {
-  ValidatedToggleControl
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
-function boolean_Boolean({
-  field,
-  onChange,
-  data,
-  hideLabelFromVision
-}) {
-  const {
-    id,
-    getValue,
-    label
-  } = field;
-  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedToggleControl, {
-    required: !!field.isValid.required,
-    onValidate: newValue => {
-      const message = field.isValid?.custom?.({
-        ...data,
-        [id]: newValue
-      }, field);
-      if (message) {
-        setCustomValidity({
-          type: 'invalid',
-          message
-        });
-        return;
-      }
-      setCustomValidity(undefined);
-    },
-    customValidity: customValidity,
-    hidden: hideLabelFromVision,
-    __nextHasNoMarginBottom: true,
-    label: label,
-    checked: getValue({
-      item: data
-    }),
-    onChange: () => onChange({
-      [id]: !getValue({
-        item: data
-      })
-    })
-  });
 }
 
 ;// ./packages/dataviews/build-module/dataform-controls/array.js
@@ -11056,7 +11080,6 @@ function ArrayControl({
 
 const FORM_CONTROLS = {
   array: ArrayControl,
-  boolean: boolean_Boolean,
   checkbox: Checkbox,
   datetime: DateTime,
   date: DateControl,
@@ -11067,6 +11090,7 @@ const FORM_CONTROLS = {
   radio: Radio,
   select: Select,
   text: Text,
+  toggle: Toggle,
   toggleGroup: ToggleGroup
 };
 function getControl(field, fieldTypeDefinition) {

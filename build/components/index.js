@@ -82185,6 +82185,53 @@ function UnforwardedControlWithError({
 }
 const ControlWithError = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedControlWithError);
 
+;// ./packages/components/build-module/validated-form-controls/components/checkbox-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const UnforwardedValidatedCheckboxControl = ({
+  required,
+  onValidate,
+  customValidity,
+  onChange,
+  markWhenOptional,
+  ...restProps
+}, forwardedRef) => {
+  const validityTargetRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const mergedRefs = (0,external_wp_compose_namespaceObject.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const valueRef = (0,external_wp_element_namespaceObject.useRef)(restProps.checked);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ControlWithError, {
+    required: required,
+    markWhenOptional: markWhenOptional,
+    ref: mergedRefs,
+    onValidate: () => {
+      return onValidate?.(valueRef.current);
+    },
+    customValidity: customValidity,
+    getValidityTarget: () => validityTargetRef.current?.querySelector('input[type="checkbox"]'),
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(checkbox_control, {
+      __nextHasNoMarginBottom: true,
+      onChange: value => {
+        valueRef.current = value;
+        onChange?.(value);
+      }
+      // TODO: Upstream limitation - CheckboxControl doesn't support uncontrolled mode, visually.
+      ,
+      ...restProps
+    })
+  });
+};
+const ValidatedCheckboxControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedValidatedCheckboxControl);
+
 ;// ./packages/components/build-module/validated-form-controls/components/number-control.js
 /**
  * WordPress dependencies
@@ -82363,6 +82410,7 @@ lock(privateApis, {
   DateCalendar: DateCalendar,
   DateRangeCalendar: DateRangeCalendar,
   TZDate: date_TZDate,
+  ValidatedCheckboxControl: ValidatedCheckboxControl,
   ValidatedNumberControl: ValidatedNumberControl,
   ValidatedTextControl: ValidatedTextControl,
   ValidatedToggleControl: ValidatedToggleControl
