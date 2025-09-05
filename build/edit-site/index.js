@@ -52349,6 +52349,12 @@ function normalizeLayout(layout) {
         isOpened: typeof layout.isOpened === 'boolean' ? layout.isOpened : true
       };
     }
+  } else if (layout?.type === 'row') {
+    var _layout$alignment;
+    normalizedLayout = {
+      type: 'row',
+      alignment: (_layout$alignment = layout?.alignment) !== null && _layout$alignment !== void 0 ? _layout$alignment : 'center'
+    };
   }
   return normalizedLayout;
 }
@@ -52830,10 +52836,6 @@ function FormPanelField({
 
 ;// ./packages/dataviews/build-module/dataforms-layouts/card/index.js
 /**
- * External dependencies
- */
-
-/**
  * WordPress dependencies
  */
 
@@ -52960,10 +52962,125 @@ function FormCardField({
   });
 }
 
-;// ./packages/dataviews/build-module/dataforms-layouts/index.js
+;// ./packages/dataviews/build-module/dataforms-layouts/row/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
 /**
  * Internal dependencies
  */
+
+
+
+
+
+
+
+function row_Header({
+  title
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+    className: "dataforms-layouts-row__header",
+    spacing: 4,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+      alignment: "center",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHeading, {
+        level: 2,
+        size: 13,
+        children: title
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {})]
+    })
+  });
+}
+const EMPTY_WRAPPER = ({
+  children
+}) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+  children: children
+});
+function FormRowField({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  const {
+    fields
+  } = (0,external_wp_element_namespaceObject.useContext)(dataform_context);
+  const layout = normalizeLayout({
+    ...field.layout,
+    type: 'row'
+  });
+  if (isCombinedField(field)) {
+    const form = {
+      fields: field.children.map(child => {
+        if (typeof child === 'string') {
+          return {
+            id: child
+          };
+        }
+        return child;
+      })
+    };
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      className: "dataforms-layouts-row__field",
+      children: [!hideLabelFromVision && field.label && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(row_Header, {
+        title: field.label
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
+        alignment: layout.alignment,
+        spacing: 4,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataFormLayout, {
+          data: data,
+          form: form,
+          onChange: onChange,
+          as: EMPTY_WRAPPER,
+          children: (FieldLayout, nestedField) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+            className: "dataforms-layouts-row__field-control",
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldLayout, {
+              data: data,
+              field: nestedField,
+              onChange: onChange,
+              hideLabelFromVision: hideLabelFromVision
+            })
+          }, nestedField.id)
+        })
+      })]
+    });
+  }
+  const fieldDefinition = fields.find(f => f.id === field.id);
+  if (!fieldDefinition || !fieldDefinition.Edit) {
+    return null;
+  }
+  const RegularLayout = getFormFieldLayout('regular')?.component;
+  if (!RegularLayout) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "dataforms-layouts-row__field-control",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RegularLayout, {
+        data: data,
+        field: fieldDefinition,
+        onChange: onChange
+      })
+    })
+  });
+}
+
+;// ./packages/dataviews/build-module/dataforms-layouts/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
 
 
 
@@ -52972,10 +53089,33 @@ const FORM_FIELD_LAYOUTS = [{
   component: FormRegularField
 }, {
   type: 'panel',
-  component: FormPanelField
+  component: FormPanelField,
+  wrapper: ({
+    children
+  }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: 2,
+    children: children
+  })
 }, {
   type: 'card',
   component: FormCardField
+}, {
+  type: 'row',
+  component: FormRowField,
+  wrapper: ({
+    children,
+    layout
+  }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+    spacing: 4,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "dataforms-layouts-row__field",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
+        spacing: 4,
+        alignment: layout.alignment,
+        children: children
+      })
+    })
+  })
 }];
 function getFormFieldLayout(type) {
   return FORM_FIELD_LAYOUTS.find(layout => layout.type === type);
@@ -52997,12 +53137,20 @@ function getFormFieldLayout(type) {
 
 
 
+const DEFAULT_WRAPPER = ({
+  children
+}) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+  spacing: 4,
+  children: children
+});
 function DataFormLayout({
   data,
   form,
   onChange,
-  children
+  children,
+  as
 }) {
+  var _ref;
   const {
     fields: fieldDefinitions
   } = (0,external_wp_element_namespaceObject.useContext)(dataform_context);
@@ -53011,8 +53159,10 @@ function DataFormLayout({
     return fieldDefinitions.find(fieldDefinition => fieldDefinition.id === fieldId);
   }
   const normalizedFormFields = (0,external_wp_element_namespaceObject.useMemo)(() => normalizeFormFields(form), [form]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
-    spacing: form.layout?.type === 'panel' ? 2 : 4,
+  const normalizedFormLayout = normalizeLayout(form.layout);
+  const Wrapper = (_ref = as !== null && as !== void 0 ? as : getFormFieldLayout(normalizedFormLayout.type)?.wrapper) !== null && _ref !== void 0 ? _ref : DEFAULT_WRAPPER;
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Wrapper, {
+    layout: normalizedFormLayout,
     children: normalizedFormFields.map(formField => {
       const FieldLayout = getFormFieldLayout(formField.layout.type)?.component;
       if (!FieldLayout) {
