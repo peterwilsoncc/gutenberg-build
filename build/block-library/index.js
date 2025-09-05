@@ -38641,9 +38641,7 @@ function UnforwardedLinkUI(props, ref) {
   const [addingPage, setAddingPage] = (0,external_wp_element_namespaceObject.useState)(false);
   const [focusAddBlockButton, setFocusAddBlockButton] = (0,external_wp_element_namespaceObject.useState)(false);
   const [focusAddPageButton, setFocusAddPageButton] = (0,external_wp_element_namespaceObject.useState)(false);
-  const {
-    canCreate: canCreatePage
-  } = (0,external_wp_coreData_namespaceObject.useResourcePermissions)({
+  const permissions = (0,external_wp_coreData_namespaceObject.useResourcePermissions)({
     kind: 'postType',
     name: postType
   });
@@ -38694,20 +38692,26 @@ function UnforwardedLinkUI(props, ref) {
         onChange: props.onChange,
         onRemove: props.onRemove,
         onCancel: props.onCancel,
-        renderControlBottom: () => !link?.url?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUITools, {
-          focusAddBlockButton: focusAddBlockButton,
-          focusAddPageButton: focusAddPageButton,
-          setAddingBlock: () => {
-            setAddingBlock(true);
-            setFocusAddBlockButton(false);
-          },
-          setAddingPage: () => {
-            setAddingPage(true);
-            setFocusAddPageButton(false);
-          },
-          blockEditingMode: blockEditingMode,
-          canCreatePage: canCreatePage
-        })
+        renderControlBottom: () => {
+          // Don't show the tools when there is submitted link (preview state).
+          if (link?.url?.length) {
+            return null;
+          }
+          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUITools, {
+            focusAddBlockButton: focusAddBlockButton,
+            focusAddPageButton: focusAddPageButton,
+            setAddingBlock: () => {
+              setAddingBlock(true);
+              setFocusAddBlockButton(false);
+            },
+            setAddingPage: () => {
+              setAddingPage(true);
+              setFocusAddPageButton(false);
+            },
+            canAddPage: permissions?.canCreate && type === 'page',
+            canAddBlock: blockEditingMode === 'default'
+          });
+        }
       })]
     }), addingBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_inserter, {
       clientId: props.clientId,
@@ -38735,8 +38739,8 @@ const LinkUITools = ({
   setAddingPage,
   focusAddBlockButton,
   focusAddPageButton,
-  canCreatePage,
-  blockEditingMode
+  canAddPage,
+  canAddBlock
 }) => {
   const blockInserterAriaRole = 'listbox';
   const addBlockButtonRef = (0,external_wp_element_namespaceObject.useRef)();
@@ -38755,10 +38759,15 @@ const LinkUITools = ({
       addPageButtonRef.current?.focus();
     }
   }, [focusAddPageButton]);
+
+  // Don't render anything if neither button should be shown
+  if (!canAddPage && !canAddBlock) {
+    return null;
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: 0,
     className: "link-ui-tools",
-    children: [canCreatePage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    children: [canAddPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       __next40pxDefaultSize: true,
       ref: addPageButtonRef,
       icon: library_plus,
@@ -38768,7 +38777,7 @@ const LinkUITools = ({
       },
       "aria-haspopup": blockInserterAriaRole,
       children: (0,external_wp_i18n_namespaceObject.__)('Create page')
-    }), blockEditingMode === 'default' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    }), canAddBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       __next40pxDefaultSize: true,
       ref: addBlockButtonRef,
       icon: library_plus,
