@@ -54059,7 +54059,7 @@ function useInsertionPoint({
       setLastFocus(null);
     }
     const selectedBlock = getSelectedBlock();
-    if (!isAppender && selectedBlock && (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(selectedBlock)) {
+    if (!isAppender && selectedBlock && (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(selectedBlock, 'content')) {
       replaceBlocks(selectedBlock.clientId, blocks, null, shouldFocusBlock || shouldForceFocusBlock ? 0 : null, meta);
     } else {
       insertBlocks(blocks, isAppender || _rootClientId === undefined ? destinationIndex : getIndex({
@@ -65495,7 +65495,7 @@ function useShowBlockTools() {
     const block = getBlock(clientId);
     const editorMode = __unstableGetEditorMode();
     const hasSelectedBlock = !!clientId && !!block;
-    const isEmptyDefaultBlock = hasSelectedBlock && (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(block) && getBlockMode(clientId) !== 'html';
+    const isEmptyDefaultBlock = hasSelectedBlock && (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(block, 'content') && getBlockMode(clientId) !== 'html';
     const _showEmptyBlockSideInserter = clientId && !isTyping() &&
     // Hide the block inserter on the navigation mode.
     // See https://github.com/WordPress/gutenberg/pull/66636#discussion_r1824728483.
