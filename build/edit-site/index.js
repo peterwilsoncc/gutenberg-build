@@ -16354,7 +16354,6 @@ const PreviewStyles = ({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -16363,12 +16362,7 @@ const PreviewStyles = ({
 
 
 
-
-const {
-  useGlobalStyle: screen_root_useGlobalStyle
-} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function ScreenRoot() {
-  const [customCSS] = screen_root_useGlobalStyle('css');
   const {
     hasVariations,
     canEditCSS
@@ -16438,7 +16432,7 @@ function ScreenRoot() {
           })
         })
       })]
-    }), canEditCSS && !!customCSS && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    }), canEditCSS && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CardDivider, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.CardBody, {
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
           as: "p",
