@@ -33121,6 +33121,114 @@ function telephone_sort(valueA, valueB, direction) {
   }
 });
 
+;// ./packages/dataviews/build-module/field-types/color.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+function color_sort(valueA, valueB, direction) {
+  // Convert colors to HSL for better sorting
+  const colorA = w(valueA);
+  const colorB = w(valueB);
+  if (!colorA.isValid() && !colorB.isValid()) {
+    return 0;
+  }
+  if (!colorA.isValid()) {
+    return direction === 'asc' ? 1 : -1;
+  }
+  if (!colorB.isValid()) {
+    return direction === 'asc' ? -1 : 1;
+  }
+
+  // Sort by hue, then saturation, then lightness
+  const hslA = colorA.toHsl();
+  const hslB = colorB.toHsl();
+  if (hslA.h !== hslB.h) {
+    return direction === 'asc' ? hslA.h - hslB.h : hslB.h - hslA.h;
+  }
+  if (hslA.s !== hslB.s) {
+    return direction === 'asc' ? hslA.s - hslB.s : hslB.s - hslA.s;
+  }
+  return direction === 'asc' ? hslA.l - hslB.l : hslB.l - hslA.l;
+}
+/* harmony default export */ const field_types_color = ({
+  sort: color_sort,
+  isValid: {
+    custom: (item, field) => {
+      const value = field.getValue({
+        item
+      });
+      if (![undefined, '', null].includes(value) && !w(value).isValid()) {
+        return (0,external_wp_i18n_namespaceObject.__)('Value must be a valid color.');
+      }
+      if (field.elements) {
+        const validValues = field.elements.map(f => f.value);
+        if (!validValues.includes(value)) {
+          return (0,external_wp_i18n_namespaceObject.__)('Value must be one of the elements.');
+        }
+      }
+      return null;
+    }
+  },
+  Edit: 'color',
+  render: ({
+    item,
+    field
+  }) => {
+    if (field.elements) {
+      return renderFromElements({
+        item,
+        field
+      });
+    }
+    const value = field.getValue({
+      item
+    });
+    if (!value || !w(value).isValid()) {
+      return value;
+    }
+
+    // Render color with visual preview
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px'
+      },
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        style: {
+          width: '16px',
+          height: '16px',
+          borderRadius: '50%',
+          backgroundColor: value,
+          border: '1px solid #ddd',
+          flexShrink: 0
+        }
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        children: value
+      })]
+    });
+  },
+  enableSorting: true,
+  filterBy: {
+    defaultOperators: [constants_OPERATOR_IS_ANY, constants_OPERATOR_IS_NONE],
+    validOperators: [constants_OPERATOR_IS, constants_OPERATOR_IS_NOT]
+  }
+});
+
 ;// ./packages/dataviews/build-module/field-types/url.js
 /**
  * WordPress dependencies
@@ -33196,6 +33304,7 @@ function url_sort(valueA, valueB, direction) {
 
 
 
+
 /**
  *
  * @param {FieldType} type The field type definition to get.
@@ -33229,6 +33338,9 @@ function getFieldTypeDefinition(type) {
   }
   if ('telephone' === type) {
     return telephone;
+  }
+  if ('color' === type) {
+    return field_types_color;
   }
   if ('url' === type) {
     return url;
@@ -37351,6 +37463,129 @@ function ArrayControl({
   });
 }
 
+;// ./packages/dataviews/build-module/dataform-controls/color.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const {
+  ValidatedInputControl: color_ValidatedInputControl,
+  Picker
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+const ColorPicker = ({
+  color,
+  onColorChange
+}) => {
+  const validColor = color && w(color).isValid() ? color : '#ffffff';
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Dropdown, {
+    renderToggle: ({
+      onToggle,
+      isOpen
+    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlPrefixWrapper, {
+      variant: "icon",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("button", {
+        type: "button",
+        onClick: onToggle,
+        style: {
+          width: '24px',
+          height: '24px',
+          borderRadius: '50%',
+          backgroundColor: validColor,
+          border: '1px solid #ddd',
+          cursor: 'pointer',
+          outline: isOpen ? '2px solid #007cba' : 'none',
+          outlineOffset: '2px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 0,
+          margin: 0
+        },
+        "aria-label": "Open color picker"
+      })
+    }),
+    renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      style: {
+        padding: '16px'
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Picker, {
+        color: w(validColor),
+        onChange: onColorChange,
+        enableAlpha: true
+      })
+    })
+  });
+};
+function Color({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  const {
+    id,
+    label,
+    placeholder,
+    description
+  } = field;
+  const value = field.getValue({
+    item: data
+  }) || '';
+  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
+  const handleColorChange = (0,external_wp_element_namespaceObject.useCallback)(colorObject => {
+    onChange({
+      [id]: colorObject.toHex()
+    });
+  }, [id, onChange]);
+  const handleInputChange = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    onChange({
+      [id]: newValue || ''
+    });
+  }, [id, onChange]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_ValidatedInputControl, {
+    required: !!field.isValid?.required,
+    onValidate: newValue => {
+      const message = field.isValid?.custom?.({
+        ...data,
+        [id]: newValue
+      }, field);
+      if (message) {
+        setCustomValidity({
+          type: 'invalid',
+          message
+        });
+        return;
+      }
+      setCustomValidity(undefined);
+    },
+    customValidity: customValidity,
+    label: label,
+    placeholder: placeholder,
+    value: value,
+    help: description,
+    onChange: handleInputChange,
+    hideLabelFromVision: hideLabelFromVision,
+    type: "text",
+    prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ColorPicker, {
+      color: value,
+      onColorChange: handleColorChange
+    })
+  });
+}
+
 ;// ./packages/dataviews/build-module/dataform-controls/index.js
 /**
  * External dependencies
@@ -37373,9 +37608,11 @@ function ArrayControl({
 
 
 
+
 const FORM_CONTROLS = {
   array: ArrayControl,
   checkbox: Checkbox,
+  color: Color,
   datetime: DateTime,
   date: DateControl,
   email: Email,

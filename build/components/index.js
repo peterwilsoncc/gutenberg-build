@@ -82441,6 +82441,7 @@ const ValidatedToggleControl = (0,external_wp_element_namespaceObject.forwardRef
 
 
 
+
 const privateApis = {};
 lock(privateApis, {
   __experimentalPopoverLegacyPositionToPlacement: positionToPlacement,
@@ -82455,6 +82456,7 @@ lock(privateApis, {
   DateCalendar: DateCalendar,
   DateRangeCalendar: DateRangeCalendar,
   TZDate: date_TZDate,
+  Picker: Picker,
   ValidatedInputControl: ValidatedInputControl,
   ValidatedCheckboxControl: ValidatedCheckboxControl,
   ValidatedNumberControl: ValidatedNumberControl,
