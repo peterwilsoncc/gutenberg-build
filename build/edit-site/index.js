@@ -33069,6 +33069,53 @@ const arrayFieldType = {
 };
 /* harmony default export */ const array = (arrayFieldType);
 
+;// ./packages/dataviews/build-module/field-types/password.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+function password_sort(valueA, valueB, direction) {
+  // Passwords should not be sortable for security reasons
+  return 0;
+}
+/* harmony default export */ const field_types_password = ({
+  sort: password_sort,
+  isValid: {
+    custom: (item, field) => {
+      const value = field.getValue({
+        item
+      });
+      if (field?.elements) {
+        const validValues = field.elements.map(f => f.value);
+        if (!validValues.includes(value)) {
+          return (0,external_wp_i18n_namespaceObject.__)('Value must be one of the elements.');
+        }
+      }
+      return null;
+    }
+  },
+  Edit: 'password',
+  render: ({
+    item,
+    field
+  }) => {
+    return field.elements ? renderFromElements({
+      item,
+      field
+    }) : '••••••••';
+  },
+  enableSorting: false,
+  filterBy: false
+});
+
 ;// ./packages/dataviews/build-module/field-types/telephone.js
 /**
  * WordPress dependencies
@@ -33305,6 +33352,7 @@ function url_sort(valueA, valueB, direction) {
 
 
 
+
 /**
  *
  * @param {FieldType} type The field type definition to get.
@@ -33335,6 +33383,9 @@ function getFieldTypeDefinition(type) {
   }
   if ('array' === type) {
     return array;
+  }
+  if ('password' === type) {
+    return field_types_password;
   }
   if ('telephone' === type) {
     return telephone;
@@ -36874,7 +36925,7 @@ const atSymbol = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(e
 });
 /* harmony default export */ const at_symbol = (atSymbol);
 
-;// ./packages/dataviews/build-module/dataform-controls/utils/validated-text.js
+;// ./packages/dataviews/build-module/dataform-controls/utils/validated-input.js
 /**
  * WordPress dependencies
  */
@@ -36896,7 +36947,8 @@ function ValidatedText({
   onChange,
   hideLabelFromVision,
   type,
-  icon
+  icon,
+  suffix
 }) {
   const {
     id,
@@ -36940,6 +36992,10 @@ function ValidatedText({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
         icon: icon
       })
+    }) : undefined,
+    suffix: suffix ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlSuffixWrapper, {
+      variant: "control",
+      children: suffix
     }) : undefined,
     __next40pxDefaultSize: true
   });
@@ -37586,6 +37642,60 @@ function Color({
   });
 }
 
+;// ./packages/icons/build-module/library/unseen.js
+/**
+ * WordPress dependencies
+ */
+
+
+const unseen = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M20.7 12.7s0-.1-.1-.2c0-.2-.2-.4-.4-.6-.3-.5-.9-1.2-1.6-1.8-.7-.6-1.5-1.3-2.6-1.8l-.6 1.4c.9.4 1.6 1 2.1 1.5.6.6 1.1 1.2 1.4 1.6.1.2.3.4.3.5v.1l.7-.3.7-.3Zm-5.2-9.3-1.8 4c-.5-.1-1.1-.2-1.7-.2-3 0-5.2 1.4-6.6 2.7-.7.7-1.2 1.3-1.6 1.8-.2.3-.3.5-.4.6 0 0 0 .1-.1.2s0 0 .7.3l.7.3V13c0-.1.2-.3.3-.5.3-.4.7-1 1.4-1.6 1.2-1.2 3-2.3 5.5-2.3H13v.3c-.4 0-.8-.1-1.1-.1-1.9 0-3.5 1.6-3.5 3.5s.6 2.3 1.6 2.9l-2 4.4.9.4 7.6-16.2-.9-.4Zm-3 12.6c1.7-.2 3-1.7 3-3.5s-.2-1.4-.6-1.9L12.4 16Z"
+  })
+});
+/* harmony default export */ const library_unseen = (unseen);
+
+;// ./packages/dataviews/build-module/dataform-controls/password.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+function Password({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  const [isVisible, setIsVisible] = (0,external_wp_element_namespaceObject.useState)(false);
+  const toggleVisibility = (0,external_wp_element_namespaceObject.useCallback)(() => {
+    setIsVisible(prev => !prev);
+  }, []);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedText, {
+    data,
+    field,
+    onChange,
+    hideLabelFromVision,
+    type: isVisible ? 'text' : 'password',
+    suffix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      icon: isVisible ? library_unseen : library_seen,
+      onClick: toggleVisibility,
+      size: "small",
+      variant: "tertiary",
+      "aria-label": isVisible ? (0,external_wp_i18n_namespaceObject.__)('Hide password') : (0,external_wp_i18n_namespaceObject.__)('Show password')
+    })
+  });
+}
+
 ;// ./packages/dataviews/build-module/dataform-controls/index.js
 /**
  * External dependencies
@@ -37594,6 +37704,7 @@ function Color({
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -37619,6 +37730,7 @@ const FORM_CONTROLS = {
   telephone: Telephone,
   url: Url,
   integer: Integer,
+  password: Password,
   radio: Radio,
   select: Select,
   text: Text,
@@ -38721,21 +38833,6 @@ const arrowRight = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
   })
 });
 /* harmony default export */ const arrow_right = (arrowRight);
-
-;// ./packages/icons/build-module/library/unseen.js
-/**
- * WordPress dependencies
- */
-
-
-const unseen = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M20.7 12.7s0-.1-.1-.2c0-.2-.2-.4-.4-.6-.3-.5-.9-1.2-1.6-1.8-.7-.6-1.5-1.3-2.6-1.8l-.6 1.4c.9.4 1.6 1 2.1 1.5.6.6 1.1 1.2 1.4 1.6.1.2.3.4.3.5v.1l.7-.3.7-.3Zm-5.2-9.3-1.8 4c-.5-.1-1.1-.2-1.7-.2-3 0-5.2 1.4-6.6 2.7-.7.7-1.2 1.3-1.6 1.8-.2.3-.3.5-.4.6 0 0 0 .1-.1.2s0 0 .7.3l.7.3V13c0-.1.2-.3.3-.5.3-.4.7-1 1.4-1.6 1.2-1.2 3-2.3 5.5-2.3H13v.3c-.4 0-.8-.1-1.1-.1-1.9 0-3.5 1.6-3.5 3.5s.6 2.3 1.6 2.9l-2 4.4.9.4 7.6-16.2-.9-.4Zm-3 12.6c1.7-.2 3-1.7 3-3.5s-.2-1.4-.6-1.9L12.4 16Z"
-  })
-});
-/* harmony default export */ const library_unseen = (unseen);
 
 ;// ./packages/dataviews/build-module/dataviews-layouts/table/column-header-menu.js
 /**
