@@ -30224,22 +30224,26 @@ function PostFormatPanel() {
 
 
 
+const {
+  normalizeTextString
+} = unlock(external_wp_components_namespaceObject.privateApis);
+const {
+  RECEIVE_INTERMEDIATE_RESULTS
+} = unlock(external_wp_coreData_namespaceObject.privateApis);
+
 /**
  * Module Constants
  */
-
 const hierarchical_term_selector_DEFAULT_QUERY = {
   per_page: -1,
   orderby: 'name',
   order: 'asc',
   _fields: 'id,name,parent',
-  context: 'view'
+  context: 'view',
+  [RECEIVE_INTERMEDIATE_RESULTS]: true
 };
 const MIN_TERMS_COUNT_FOR_FILTER = 8;
 const hierarchical_term_selector_EMPTY_ARRAY = [];
-const {
-  normalizeTextString
-} = unlock(external_wp_components_namespaceObject.privateApis);
 
 /**
  * Sort Terms by Selected.
@@ -30358,7 +30362,6 @@ function HierarchicalTermSelector({
     availableTerms,
     taxonomy
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    var _post$_links, _post$_links2;
     const {
       getCurrentPost,
       getEditedPostAttribute
@@ -30371,8 +30374,8 @@ function HierarchicalTermSelector({
     const _taxonomy = getEntityRecord('root', 'taxonomy', slug);
     const post = getCurrentPost();
     return {
-      hasCreateAction: _taxonomy ? (_post$_links = post._links?.['wp:action-create-' + _taxonomy.rest_base]) !== null && _post$_links !== void 0 ? _post$_links : false : false,
-      hasAssignAction: _taxonomy ? (_post$_links2 = post._links?.['wp:action-assign-' + _taxonomy.rest_base]) !== null && _post$_links2 !== void 0 ? _post$_links2 : false : false,
+      hasCreateAction: _taxonomy ? !!post._links?.['wp:action-create-' + _taxonomy.rest_base] : false,
+      hasAssignAction: _taxonomy ? !!post._links?.['wp:action-assign-' + _taxonomy.rest_base] : false,
       terms: _taxonomy ? getEditedPostAttribute(_taxonomy.rest_base) : hierarchical_term_selector_EMPTY_ARRAY,
       loading: isResolving('getEntityRecords', ['taxonomy', slug, hierarchical_term_selector_DEFAULT_QUERY]),
       availableTerms: getEntityRecords('taxonomy', slug, hierarchical_term_selector_DEFAULT_QUERY) || hierarchical_term_selector_EMPTY_ARRAY,
@@ -30537,13 +30540,20 @@ function HierarchicalTermSelector({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Flex, {
     direction: "column",
     gap: "4",
-    children: [showFilter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SearchControl, {
+    children: [showFilter && !loading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SearchControl, {
       __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
       label: filterLabel,
       placeholder: filterLabel,
       value: filterValue,
       onChange: setFilter
+    }), loading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Flex, {
+      justify: "center",
+      style: {
+        // Match SearchControl height to prevent layout shift.
+        height: '40px'
+      },
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       className: "editor-post-taxonomies__hierarchical-terms-list",
       tabIndex: "0",
