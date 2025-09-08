@@ -52115,9 +52115,6 @@ function PostList({
 }) {
   var _postId$split, _data$map, _usePrevious;
   const [view, setView] = useView(postType);
-  const defaultViews = useDefaultViews({
-    postType
-  });
   const history = post_list_useHistory();
   const location = post_list_useLocation();
   const {
@@ -52170,7 +52167,7 @@ function PostList({
       search: view.search,
       ...filters
     };
-  }, [view, activeView, defaultViews]);
+  }, [view]);
   const {
     records,
     isResolving: isLoadingData,
