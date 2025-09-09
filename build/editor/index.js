@@ -35581,7 +35581,7 @@ function CollabSidebar() {
   }, []);
   const openCollabBoard = () => {
     setShowCommentBoard(true);
-    enableComplementaryArea('core', 'edit-post/collab-sidebar');
+    enableComplementaryArea('core', collabHistorySidebarName);
   };
   const [blocks] = (0,external_wp_coreData_namespaceObject.useEntityBlockEditor)('postType', postType, {
     id: postId
