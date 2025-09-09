@@ -39218,6 +39218,24 @@ function useIsHorizontalScrollEnd({
   return isHorizontalScrollEnd;
 }
 
+;// ./packages/dataviews/build-module/dataviews-layouts/utils/get-data-by-group.js
+/**
+ * Internal dependencies
+ */
+
+function getDataByGroup(data, groupByField) {
+  return data.reduce((groups, item) => {
+    const groupName = groupByField.getValue({
+      item
+    });
+    if (!groups.has(groupName)) {
+      groups.set(groupName, []);
+    }
+    groups.get(groupName)?.push(item);
+    return groups;
+  }, new Map());
+}
+
 ;// ./packages/dataviews/build-module/dataviews-layouts/table/index.js
 /**
  * External dependencies
@@ -39234,6 +39252,7 @@ function useIsHorizontalScrollEnd({
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -39462,21 +39481,8 @@ function ViewTable({
   const titleField = fields.find(field => field.id === view.titleField);
   const mediaField = fields.find(field => field.id === view.mediaField);
   const descriptionField = fields.find(field => field.id === view.descriptionField);
-
-  // Get group field if groupByField is specified
   const groupField = view.groupByField ? fields.find(f => f.id === view.groupByField) : null;
-
-  // Group data by groupByField if specified
-  const dataByGroup = groupField ? data.reduce((groups, item) => {
-    const groupName = groupField.getValue({
-      item
-    });
-    if (!groups.has(groupName)) {
-      groups.set(groupName, []);
-    }
-    groups.get(groupName)?.push(item);
-    return groups;
-  }, new Map()) : null;
+  const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
   const {
     showTitle = true,
     showMedia = true,
@@ -39690,10 +39696,11 @@ const GridItems = (0,external_wp_element_namespaceObject.forwardRef)(({
 
 
 
-
 const {
   Badge
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+
+
 function GridItem({
   view,
   selection,
@@ -39916,18 +39923,7 @@ function ViewGrid({
    */
   const size = '900px';
   const groupField = view.groupByField ? fields.find(f => f.id === view.groupByField) : null;
-
-  // Group data by groupByField if specified
-  const dataByGroup = groupField ? data.reduce((groups, item) => {
-    const groupName = groupField.getValue({
-      item
-    });
-    if (!groups.has(groupName)) {
-      groups.set(groupName, []);
-    }
-    groups.get(groupName)?.push(item);
-    return groups;
-  }, new Map()) : null;
+  const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
   const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [
@@ -40038,6 +40034,7 @@ function ViewGrid({
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -40378,6 +40375,50 @@ function ViewList(props) {
       })
     });
   }
+  const groupField = view.groupByField ? fields.find(field => field.id === view.groupByField) : null;
+  const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
+
+  // Render data grouped by field
+  if (hasData && groupField && dataByGroup) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
+      id: `${baseId}`,
+      render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {}),
+      className: "dataviews-view-list__group",
+      role: "grid",
+      activeId: activeCompositeId,
+      setActiveId: setActiveCompositeId,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+        spacing: 4,
+        className: dist_clsx('dataviews-view-list', className),
+        children: Array.from(dataByGroup.entries()).map(([groupName, groupItems]) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+          spacing: 2,
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h3", {
+            className: "dataviews-view-list__group-header",
+            children: (0,external_wp_i18n_namespaceObject.sprintf)(
+            // translators: 1: The label of the field e.g. "Date". 2: The value of the field, e.g.: "May 2022".
+            (0,external_wp_i18n_namespaceObject.__)('%1$s: %2$s'), groupField.label, groupName)
+          }), groupItems.map(item => {
+            const id = generateCompositeItemIdPrefix(item);
+            return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ListItem, {
+              view: view,
+              idPrefix: id,
+              actions: actions,
+              item: item,
+              isSelected: item === selectedItem,
+              onSelect: onSelect,
+              mediaField: mediaField,
+              titleField: titleField,
+              descriptionField: descriptionField,
+              otherFields: otherFields,
+              onDropdownTriggerKeyDown: onDropdownTriggerKeyDown
+            }, id);
+          })]
+        }, groupName))
+      })
+    });
+  }
+
+  // Render ungrouped data
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Composite, {
       id: baseId,
@@ -40568,10 +40609,11 @@ function DataViewsPickerFooter() {
 
 
 
-
 const {
   Badge: picker_grid_Badge
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+
+
 function picker_grid_GridItem({
   view,
   multiselect,
@@ -40771,18 +40813,7 @@ function ViewPickerGrid({
    */
   const size = '900px';
   const groupField = view.groupByField ? fields.find(f => f.id === view.groupByField) : null;
-
-  // Group data by groupByField if specified
-  const dataByGroup = groupField ? data.reduce((groups, item) => {
-    const groupName = groupField.getValue({
-      item
-    });
-    if (!groups.has(groupName)) {
-      groups.set(groupName, []);
-    }
-    groups.get(groupName)?.push(item);
-    return groups;
-  }, new Map()) : null;
+  const dataByGroup = groupField ? getDataByGroup(data, groupField) : null;
   const isInfiniteScroll = view.infiniteScrollEnabled && !dataByGroup;
   const currentPage = (_view$page = view?.page) !== null && _view$page !== void 0 ? _view$page : 1;
   const perPage = (_view$perPage = view?.perPage) !== null && _view$perPage !== void 0 ? _view$perPage : 0;
