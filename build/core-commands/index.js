@@ -51,10 +51,36 @@ const external_wp_router_namespaceObject = window["wp"]["router"];
 const external_wp_commands_namespaceObject = window["wp"]["commands"];
 ;// external ["wp","i18n"]
 const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
+;// external ["wp","primitives"]
+const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
+;// external "ReactJSXRuntime"
+const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
+;// ./packages/icons/build-module/library/external.js
+/**
+ * WordPress dependencies
+ */
+
+
+const external = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M19.5 4.5h-7V6h4.44l-5.97 5.97 1.06 1.06L18 7.06v4.44h1.5v-7Zm-13 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3H17v3a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h3V5.5h-3Z"
+  })
+});
+/* harmony default export */ const library_external = (external);
+
+;// external ["wp","coreData"]
+const external_wp_coreData_namespaceObject = window["wp"]["coreData"];
+;// external ["wp","data"]
+const external_wp_data_namespaceObject = window["wp"]["data"];
 ;// ./packages/core-commands/build-module/admin-navigation-commands.js
 /**
  * WordPress dependencies
  */
+
+
+
 
 
 
@@ -82,21 +108,43 @@ const getAdminNavigationCommands = menuCommands => function useAdminBasicNavigat
     isLoading: false
   };
 };
+const getViewSiteCommand = () => function useViewSiteCommand() {
+  const homeUrl = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    // Site index.
+    return select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.home;
+  }, []);
+  const commands = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (!homeUrl) {
+      return [];
+    }
+    return [{
+      name: 'core/view-site',
+      label: (0,external_wp_i18n_namespaceObject.__)('View site'),
+      icon: library_external,
+      callback: ({
+        close
+      }) => {
+        close();
+        window.open(homeUrl, '_blank');
+      }
+    }];
+  }, [homeUrl]);
+  return {
+    isLoading: false,
+    commands
+  };
+};
 function useAdminNavigationCommands(menuCommands) {
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/admin-navigation',
     hook: getAdminNavigationCommands(menuCommands)
   });
+  (0,external_wp_commands_namespaceObject.useCommandLoader)({
+    name: 'core/view-site',
+    hook: getViewSiteCommand()
+  });
 }
 
-;// external ["wp","data"]
-const external_wp_data_namespaceObject = window["wp"]["data"];
-;// external ["wp","coreData"]
-const external_wp_coreData_namespaceObject = window["wp"]["coreData"];
-;// external ["wp","primitives"]
-const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
-;// external "ReactJSXRuntime"
-const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
 ;// ./packages/icons/build-module/library/post.js
 /**
  * WordPress dependencies
@@ -438,7 +486,7 @@ const getNavigationCommandLoaderPerTemplate = templateType => function useNaviga
     if (orderedRecords?.length > 0 && templateType === 'wp_template_part') {
       result.push({
         name: 'core/edit-site/open-template-parts',
-        label: (0,external_wp_i18n_namespaceObject.__)('Template parts'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Go to: Template parts'),
         icon: symbol_filled,
         callback: ({
           close
@@ -486,9 +534,10 @@ const getSiteEditorBasicNavigationCommands = () => function useSiteEditorBasicNa
   const commands = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const result = [];
     if (canCreateTemplate && isBlockBasedTheme) {
+      // Go to Styles command
       result.push({
         name: 'core/edit-site/open-styles',
-        label: (0,external_wp_i18n_namespaceObject.__)('Styles'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Go to: Styles'),
         icon: library_styles,
         callback: ({
           close
@@ -505,7 +554,7 @@ const getSiteEditorBasicNavigationCommands = () => function useSiteEditorBasicNa
       });
       result.push({
         name: 'core/edit-site/open-navigation',
-        label: (0,external_wp_i18n_namespaceObject.__)('Navigation'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Go to: Navigation'),
         icon: library_navigation,
         callback: ({
           close
@@ -521,25 +570,8 @@ const getSiteEditorBasicNavigationCommands = () => function useSiteEditorBasicNa
         }
       });
       result.push({
-        name: 'core/edit-site/open-pages',
-        label: (0,external_wp_i18n_namespaceObject.__)('Pages'),
-        icon: library_page,
-        callback: ({
-          close
-        }) => {
-          if (isSiteEditor) {
-            history.navigate('/page');
-          } else {
-            document.location = (0,external_wp_url_namespaceObject.addQueryArgs)('site-editor.php', {
-              p: '/page'
-            });
-          }
-          close();
-        }
-      });
-      result.push({
         name: 'core/edit-site/open-templates',
-        label: (0,external_wp_i18n_namespaceObject.__)('Templates'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Go to: Templates'),
         icon: library_layout,
         callback: ({
           close
@@ -558,7 +590,7 @@ const getSiteEditorBasicNavigationCommands = () => function useSiteEditorBasicNa
     if (canCreatePatterns) {
       result.push({
         name: 'core/edit-site/open-patterns',
-        label: (0,external_wp_i18n_namespaceObject.__)('Patterns'),
+        label: (0,external_wp_i18n_namespaceObject.__)('Go to: Patterns'),
         icon: library_symbol,
         callback: ({
           close
@@ -573,7 +605,7 @@ const getSiteEditorBasicNavigationCommands = () => function useSiteEditorBasicNa
             }
             close();
           } else {
-            // If a user cannot access the site editor
+            // If a user cannot access the site editor.
             document.location.href = 'edit.php?post_type=wp_block';
           }
         }

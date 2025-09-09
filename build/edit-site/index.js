@@ -13619,23 +13619,6 @@ function LayoutWithGlobalStylesProvider(props) {
   });
 }
 
-;// ./packages/icons/build-module/library/styles.js
-/**
- * WordPress dependencies
- */
-
-
-const styles = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  viewBox: "0 0 24 24",
-  xmlns: "http://www.w3.org/2000/svg",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    fillRule: "evenodd",
-    clipRule: "evenodd",
-    d: "M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-1.5 0a6.5 6.5 0 0 1-6.5 6.5v-13a6.5 6.5 0 0 1 6.5 6.5Z"
-  })
-});
-/* harmony default export */ const library_styles = (styles);
-
 ;// ./packages/icons/build-module/library/help.js
 /**
  * WordPress dependencies
@@ -13711,21 +13694,6 @@ const backup = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 });
 /* harmony default export */ const library_backup = (backup);
 
-;// ./packages/icons/build-module/library/external.js
-/**
- * WordPress dependencies
- */
-
-
-const external = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M19.5 4.5h-7V6h4.44l-5.97 5.97 1.06 1.06L18 7.06v4.44h1.5v-7Zm-13 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3H17v3a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h3V5.5h-3Z"
-  })
-});
-/* harmony default export */ const library_external = (external);
-
 ;// ./packages/edit-site/build-module/hooks/commands/use-common-commands.js
 /**
  * WordPress dependencies
@@ -13752,46 +13720,6 @@ const {
   useHistory: use_common_commands_useHistory,
   useLocation: use_common_commands_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
-const getGlobalStylesOpenStylesCommands = () => function useGlobalStylesOpenStylesCommands() {
-  const {
-    openGeneralSidebar
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
-  const {
-    params
-  } = use_common_commands_useLocation();
-  const {
-    canvas = 'view'
-  } = params;
-  const history = use_common_commands_useHistory();
-  const isBlockBasedTheme = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    return select(external_wp_coreData_namespaceObject.store).getCurrentTheme().is_block_theme;
-  }, []);
-  const commands = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (!isBlockBasedTheme) {
-      return [];
-    }
-    return [{
-      name: 'core/edit-site/open-styles',
-      label: (0,external_wp_i18n_namespaceObject.__)('Open styles'),
-      callback: ({
-        close
-      }) => {
-        close();
-        if (canvas !== 'edit') {
-          history.navigate('/styles?canvas=edit', {
-            transition: 'canvas-mode-edit-transition'
-          });
-        }
-        openGeneralSidebar('edit-site/global-styles');
-      },
-      icon: library_styles
-    }];
-  }, [history, openGeneralSidebar, canvas, isBlockBasedTheme]);
-  return {
-    isLoading: false,
-    commands
-  };
-};
 const getGlobalStylesToggleWelcomeGuideCommands = () => function useGlobalStylesToggleWelcomeGuideCommands() {
   const {
     openGeneralSidebar
@@ -13895,7 +13823,7 @@ const getGlobalStylesOpenCssCommands = () => function useGlobalStylesOpenCssComm
     }
     return [{
       name: 'core/edit-site/open-styles-css',
-      label: (0,external_wp_i18n_namespaceObject.__)('Customize CSS'),
+      label: (0,external_wp_i18n_namespaceObject.__)('Open custom CSS'),
       icon: library_brush,
       callback: ({
         close
@@ -13942,8 +13870,8 @@ const getGlobalStylesOpenRevisionsCommands = () => function useGlobalStylesOpenR
       return [];
     }
     return [{
-      name: 'core/edit-site/open-global-styles-revisions',
-      label: (0,external_wp_i18n_namespaceObject.__)('Style revisions'),
+      name: 'core/edit-site/open-styles-revisions',
+      label: (0,external_wp_i18n_namespaceObject.__)('Open style revisions'),
       icon: library_backup,
       callback: ({
         close
@@ -13958,32 +13886,13 @@ const getGlobalStylesOpenRevisionsCommands = () => function useGlobalStylesOpenR
         setEditorCanvasContainerView('global-styles-revisions');
       }
     }];
-  }, [hasRevisions, history, openGeneralSidebar, setEditorCanvasContainerView, canvas]);
+  }, [history, openGeneralSidebar, setEditorCanvasContainerView, hasRevisions, canvas]);
   return {
     isLoading: false,
     commands
   };
 };
 function useCommonCommands() {
-  const homeUrl = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    // Site index.
-    return select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', '__unstableBase')?.home;
-  }, []);
-  (0,external_wp_commands_namespaceObject.useCommand)({
-    name: 'core/edit-site/view-site',
-    label: (0,external_wp_i18n_namespaceObject.__)('View site'),
-    callback: ({
-      close
-    }) => {
-      close();
-      window.open(homeUrl, '_blank');
-    },
-    icon: library_external
-  });
-  (0,external_wp_commands_namespaceObject.useCommandLoader)({
-    name: 'core/edit-site/open-styles',
-    hook: getGlobalStylesOpenStylesCommands()
-  });
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/edit-site/toggle-styles-welcome-guide',
     hook: getGlobalStylesToggleWelcomeGuideCommands()
@@ -14193,6 +14102,23 @@ function useSetCommandContext() {
   }
   useCommandContext(commandContext);
 }
+
+;// ./packages/icons/build-module/library/styles.js
+/**
+ * WordPress dependencies
+ */
+
+
+const styles = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-1.5 0a6.5 6.5 0 0 1-6.5 6.5v-13a6.5 6.5 0 0 1 6.5 6.5Z"
+  })
+});
+/* harmony default export */ const library_styles = (styles);
 
 ;// ./packages/icons/build-module/library/navigation.js
 /**
