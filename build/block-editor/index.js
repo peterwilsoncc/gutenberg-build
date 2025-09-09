@@ -10221,6 +10221,7 @@ function getDerivedBlockEditingModesForTree(state, isNavMode = false, treeClient
       syncedPatternClientIds.push(clientId);
     }
   });
+  const contentOnlyTemplateLockedClientIds = Object.keys(state.blockListSettings).filter(clientId => state.blockListSettings[clientId]?.templateLock === 'contentOnly');
   traverseBlockTree(state, treeClientId, block => {
     const {
       clientId,
@@ -10367,6 +10368,18 @@ function getDerivedBlockEditingModesForTree(state, isNavMode = false, treeClient
         derivedBlockEditingModes.set(clientId, 'disabled');
       }
     }
+
+    // `templateLock: 'contentOnly'` derived modes.
+    if (contentOnlyTemplateLockedClientIds.length) {
+      const hasContentOnlyTemplateLockedParent = !!findParentInClientIdsList(state, clientId, contentOnlyTemplateLockedClientIds);
+      if (hasContentOnlyTemplateLockedParent) {
+        if (isContentBlock(blockName)) {
+          derivedBlockEditingModes.set(clientId, 'contentOnly');
+        } else {
+          derivedBlockEditingModes.set(clientId, 'disabled');
+        }
+      }
+    }
   });
   return derivedBlockEditingModes;
 }
@@ -10487,6 +10500,49 @@ function withDerivedBlockEditingModes(reducer) {
             prevState: state,
             nextState,
             addedBlocks: action.blocks,
+            isNavMode: true
+          });
+          if (nextDerivedBlockEditingModes || nextDerivedNavModeBlockEditingModes) {
+            return {
+              ...nextState,
+              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes,
+              derivedNavModeBlockEditingModes: nextDerivedNavModeBlockEditingModes !== null && nextDerivedNavModeBlockEditingModes !== void 0 ? nextDerivedNavModeBlockEditingModes : state.derivedNavModeBlockEditingModes
+            };
+          }
+          break;
+        }
+      case 'UPDATE_BLOCK_LIST_SETTINGS':
+        {
+          // Handle the addition and removal of contentOnly template locked blocks.
+          const addedBlocks = [];
+          const removedClientIds = [];
+          const updates = typeof action.clientId === 'string' ? {
+            [action.clientId]: action.settings
+          } : action.clientId;
+          for (const clientId in updates) {
+            const isNewContentOnlyBlock = state.blockListSettings[clientId]?.templateLock !== 'contentOnly' && nextState.blockListSettings[clientId]?.templateLock === 'contentOnly';
+            const wasContentOnlyBlock = state.blockListSettings[clientId]?.templateLock === 'contentOnly' && nextState.blockListSettings[clientId]?.templateLock !== 'contentOnly';
+            if (isNewContentOnlyBlock) {
+              addedBlocks.push(nextState.blocks.tree.get(clientId));
+            } else if (wasContentOnlyBlock) {
+              removedClientIds.push(clientId);
+            }
+          }
+          if (!addedBlocks.length && !removedClientIds.length) {
+            break;
+          }
+          const nextDerivedBlockEditingModes = getDerivedBlockEditingModesUpdates({
+            prevState: state,
+            nextState,
+            addedBlocks,
+            removedClientIds,
+            isNavMode: false
+          });
+          const nextDerivedNavModeBlockEditingModes = getDerivedBlockEditingModesUpdates({
+            prevState: state,
+            nextState,
+            addedBlocks,
+            removedClientIds,
             isNavMode: true
           });
           if (nextDerivedBlockEditingModes || nextDerivedNavModeBlockEditingModes) {
@@ -11092,7 +11148,7 @@ function getEnabledClientIdsTreeUnmemoized(state, rootClientId) {
  *
  * @return {Object[]} Tree of block objects with only clientID and innerBlocks set.
  */
-const getEnabledClientIdsTree = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(getEnabledClientIdsTreeUnmemoized, state => [state.blocks.order, state.derivedBlockEditingModes, state.derivedNavModeBlockEditingModes, state.blockEditingModes, state.settings.templateLock, state.blockListSettings, select(STORE_NAME).__unstableGetEditorMode(state)]));
+const getEnabledClientIdsTree = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(getEnabledClientIdsTreeUnmemoized, state => [state.blocks.order, state.derivedBlockEditingModes, state.derivedNavModeBlockEditingModes, state.blockEditingModes, select(STORE_NAME).__unstableGetEditorMode(state)]));
 
 /**
  * Returns a list of a given block's ancestors, from top to bottom. Blocks with
@@ -14212,7 +14268,7 @@ function __unstableIsWithinBlockOverlay(state, clientId) {
  * @return {BlockEditingMode} The block editing mode. One of `'disabled'`,
  *                            `'contentOnly'`, or `'default'`.
  */
-const getBlockEditingMode = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (state, clientId = '') => {
+function getBlockEditingMode(state, clientId = '') {
   // Some selectors that call this provide `null` as the default
   // rootClientId, but the default rootClientId is actually `''`.
   if (clientId === null) {
@@ -14235,28 +14291,11 @@ const getBlockEditingMode = (0,external_wp_data_namespaceObject.createRegistrySe
   }
 
   // In normal mode, consider that an explicitly set editing mode takes over.
-  const blockEditingMode = state.blockEditingModes.get(clientId);
-  if (blockEditingMode) {
-    return blockEditingMode;
-  }
-
-  // In normal mode, top level is default mode.
-  if (clientId === '') {
-    return 'default';
-  }
-  const rootClientId = getBlockRootClientId(state, clientId);
-  const templateLock = getTemplateLock(state, rootClientId);
-  // If the parent of the block is contentOnly locked, check whether it's a content block.
-  if (templateLock === 'contentOnly') {
-    const name = getBlockName(state, clientId);
-    const {
-      hasContentRoleAttribute
-    } = unlock(select(external_wp_blocks_namespaceObject.store));
-    const isContent = hasContentRoleAttribute(name);
-    return isContent ? 'contentOnly' : 'disabled';
+  if (state.blockEditingModes.has(clientId)) {
+    return state.blockEditingModes.get(clientId);
   }
   return 'default';
-});
+}
 
 /**
  * Indicates if a block is ungroupable.
