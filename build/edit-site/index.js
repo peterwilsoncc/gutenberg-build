@@ -37409,6 +37409,69 @@ function Toggle({
   });
 }
 
+;// ./packages/dataviews/build-module/dataform-controls/textarea.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const {
+  ValidatedTextareaControl
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+function Textarea({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision
+}) {
+  const {
+    id,
+    label,
+    placeholder,
+    description
+  } = field;
+  const value = field.getValue({
+    item: data
+  });
+  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: newValue
+  }), [id, onChange]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedTextareaControl, {
+    required: !!field.isValid?.required,
+    onValidate: newValue => {
+      const message = field.isValid?.custom?.({
+        ...data,
+        [id]: newValue
+      }, field);
+      if (message) {
+        setCustomValidity({
+          type: 'invalid',
+          message
+        });
+        return;
+      }
+      setCustomValidity(undefined);
+    },
+    customValidity: customValidity,
+    label: label,
+    placeholder: placeholder,
+    value: value !== null && value !== void 0 ? value : '',
+    help: description,
+    onChange: onChangeControl,
+    __next40pxDefaultSize: true,
+    __nextHasNoMarginBottom: true,
+    hideLabelFromVision: hideLabelFromVision
+  });
+}
+
 ;// ./packages/dataviews/build-module/dataform-controls/toggle-group.js
 /**
  * WordPress dependencies
@@ -37720,6 +37783,7 @@ function Password({
 
 
 
+
 const FORM_CONTROLS = {
   array: ArrayControl,
   checkbox: Checkbox,
@@ -37735,6 +37799,7 @@ const FORM_CONTROLS = {
   select: Select,
   text: Text,
   toggle: Toggle,
+  textarea: Textarea,
   toggleGroup: ToggleGroup
 };
 function getControl(field, fieldTypeDefinition) {
