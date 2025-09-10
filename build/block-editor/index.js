@@ -23070,12 +23070,27 @@ const verse = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 
 
 
-const ICONS_MAP = {
-  post: post_list,
-  page: library_page,
-  post_tag: library_tag,
-  category: library_category,
-  attachment: library_file
+const TYPES = {
+  post: {
+    icon: post_list,
+    label: (0,external_wp_i18n_namespaceObject.__)('Post')
+  },
+  page: {
+    icon: library_page,
+    label: (0,external_wp_i18n_namespaceObject.__)('Page')
+  },
+  post_tag: {
+    icon: library_tag,
+    label: (0,external_wp_i18n_namespaceObject.__)('Tag')
+  },
+  category: {
+    icon: library_category,
+    label: (0,external_wp_i18n_namespaceObject.__)('Category')
+  },
+  attachment: {
+    icon: library_file,
+    label: (0,external_wp_i18n_namespaceObject.__)('Attachment')
+  }
 };
 function SearchItemIcon({
   isURL,
@@ -23084,8 +23099,8 @@ function SearchItemIcon({
   let icon = null;
   if (isURL) {
     icon = library_globe;
-  } else if (suggestion.type in ICONS_MAP) {
-    icon = ICONS_MAP[suggestion.type];
+  } else if (suggestion.type in TYPES) {
+    icon = TYPES[suggestion.type].icon;
     if (suggestion.type === 'page') {
       if (suggestion.isFrontPage) {
         icon = library_home;
@@ -23173,14 +23188,17 @@ const LinkControlSearchItem = ({
 };
 function getVisualTypeName(suggestion) {
   if (suggestion.isFrontPage) {
-    return 'front page';
+    return (0,external_wp_i18n_namespaceObject.__)('Front page');
   }
   if (suggestion.isBlogHome) {
-    return 'blog home';
+    return (0,external_wp_i18n_namespaceObject.__)('Blog home');
   }
 
-  // Rename 'post_tag' to 'tag'. Ideally, the API would return the localised CPT or taxonomy label.
-  return suggestion.type === 'post_tag' ? 'tag' : suggestion.type;
+  // Provide translated labels for built-in post types. Ideally, the API would return the localised CPT or taxonomy label.
+  if (suggestion.type in TYPES) {
+    return TYPES[suggestion.type].label;
+  }
+  return suggestion.type;
 }
 /* harmony default export */ const search_item = (LinkControlSearchItem);
 const __experimentalLinkControlSearchItem = props => {
