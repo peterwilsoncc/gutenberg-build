@@ -47090,6 +47090,15 @@ function InbetweenInsertionPointPopover({
       openRef.current = true;
     }
   }
+
+  // Reset the insertion point reference when the Inserter unmounts,
+  // avoids stale references when `onSelectOrClose` is not called.
+  // See: https://github.com/WordPress/gutenberg/issues/65598#issuecomment-3249229264.
+  const maybeResetOpenRef = (0,external_wp_element_namespaceObject.useCallback)(node => {
+    if (!node && openRef.current) {
+      openRef.current = false;
+    }
+  }, [openRef]);
   const lineVariants = {
     // Initial position starts from the center and invisible.
     start: {
@@ -47170,6 +47179,7 @@ function InbetweenInsertionPointPopover({
         variants: inserterVariants,
         className: dist_clsx('block-editor-block-list__insertion-point-inserter'),
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inserter, {
+          ref: maybeResetOpenRef,
           position: "bottom center",
           clientId: nextClientId,
           rootClientId: rootClientId,
