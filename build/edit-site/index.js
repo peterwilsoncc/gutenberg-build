@@ -13664,21 +13664,6 @@ const rotateLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 });
 /* harmony default export */ const rotate_left = (rotateLeft);
 
-;// ./packages/icons/build-module/library/brush.js
-/**
- * WordPress dependencies
- */
-
-
-const brush = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M4 20h8v-1.5H4V20zM18.9 3.5c-.6-.6-1.5-.6-2.1 0l-7.2 7.2c-.4-.1-.7 0-1.1.1-.5.2-1.5.7-1.9 2.2-.4 1.7-.8 2.2-1.1 2.7-.1.1-.2.3-.3.4l-.6 1.1H6c2 0 3.4-.4 4.7-1.4.8-.6 1.2-1.4 1.3-2.3 0-.3 0-.5-.1-.7L19 5.7c.5-.6.5-1.6-.1-2.2zM9.7 14.7c-.7.5-1.5.8-2.4 1 .2-.5.5-1.2.8-2.3.2-.6.4-1 .8-1.1.5-.1 1 .1 1.3.3.2.2.3.5.2.8 0 .3-.1.9-.7 1.3z"
-  })
-});
-/* harmony default export */ const library_brush = (brush);
-
 ;// ./packages/icons/build-module/library/backup.js
 /**
  * WordPress dependencies
@@ -13792,58 +13777,6 @@ const getGlobalStylesResetCommands = () => function useGlobalStylesResetCommands
     commands
   };
 };
-const getGlobalStylesOpenCssCommands = () => function useGlobalStylesOpenCssCommands() {
-  const {
-    openGeneralSidebar,
-    setEditorCanvasContainerView
-  } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
-  const {
-    params
-  } = use_common_commands_useLocation();
-  const {
-    canvas = 'view'
-  } = params;
-  const history = use_common_commands_useHistory();
-  const {
-    canEditCSS
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEntityRecord,
-      __experimentalGetCurrentGlobalStylesId
-    } = select(external_wp_coreData_namespaceObject.store);
-    const globalStylesId = __experimentalGetCurrentGlobalStylesId();
-    const globalStyles = globalStylesId ? getEntityRecord('root', 'globalStyles', globalStylesId) : undefined;
-    return {
-      canEditCSS: !!globalStyles?._links?.['wp:action-edit-css']
-    };
-  }, []);
-  const commands = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    if (!canEditCSS) {
-      return [];
-    }
-    return [{
-      name: 'core/edit-site/open-styles-css',
-      label: (0,external_wp_i18n_namespaceObject.__)('Open custom CSS'),
-      icon: library_brush,
-      callback: ({
-        close
-      }) => {
-        close();
-        if (canvas !== 'edit') {
-          history.navigate('/styles?canvas=edit', {
-            transition: 'canvas-mode-edit-transition'
-          });
-        }
-        openGeneralSidebar('edit-site/global-styles');
-        setEditorCanvasContainerView('global-styles-css');
-      }
-    }];
-  }, [history, openGeneralSidebar, setEditorCanvasContainerView, canEditCSS, canvas]);
-  return {
-    isLoading: false,
-    commands
-  };
-};
 const getGlobalStylesOpenRevisionsCommands = () => function useGlobalStylesOpenRevisionsCommands() {
   const {
     openGeneralSidebar,
@@ -13900,10 +13833,6 @@ function useCommonCommands() {
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/edit-site/reset-global-styles',
     hook: getGlobalStylesResetCommands()
-  });
-  (0,external_wp_commands_namespaceObject.useCommandLoader)({
-    name: 'core/edit-site/open-styles-css',
-    hook: getGlobalStylesOpenCssCommands()
   });
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/edit-site/open-styles-revisions',
