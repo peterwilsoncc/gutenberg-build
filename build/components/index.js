@@ -82185,6 +82185,98 @@ function UnforwardedControlWithError({
 }
 const ControlWithError = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedControlWithError);
 
+;// ./packages/components/build-module/validated-form-controls/components/input-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const UnforwardedValidatedInputControl = ({
+  required,
+  onValidate,
+  customValidity,
+  onChange,
+  markWhenOptional,
+  ...restProps
+}, forwardedRef) => {
+  const validityTargetRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const mergedRefs = (0,external_wp_compose_namespaceObject.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const valueRef = (0,external_wp_element_namespaceObject.useRef)(restProps.value);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ControlWithError, {
+    required: required,
+    markWhenOptional: markWhenOptional,
+    onValidate: () => {
+      return onValidate?.(valueRef.current);
+    },
+    customValidity: customValidity,
+    getValidityTarget: () => validityTargetRef.current,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(input_control, {
+      __next40pxDefaultSize: true,
+      ref: mergedRefs,
+      onChange: (value, ...args) => {
+        valueRef.current = value;
+        onChange?.(value, ...args);
+      },
+      ...restProps
+    })
+  });
+};
+const ValidatedInputControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedValidatedInputControl);
+
+;// ./packages/components/build-module/validated-form-controls/components/checkbox-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const UnforwardedValidatedCheckboxControl = ({
+  required,
+  onValidate,
+  customValidity,
+  onChange,
+  markWhenOptional,
+  ...restProps
+}, forwardedRef) => {
+  const validityTargetRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const mergedRefs = (0,external_wp_compose_namespaceObject.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const valueRef = (0,external_wp_element_namespaceObject.useRef)(restProps.checked);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ControlWithError, {
+    required: required,
+    markWhenOptional: markWhenOptional,
+    ref: mergedRefs,
+    onValidate: () => {
+      return onValidate?.(valueRef.current);
+    },
+    customValidity: customValidity,
+    getValidityTarget: () => validityTargetRef.current?.querySelector('input[type="checkbox"]'),
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(checkbox_control, {
+      __nextHasNoMarginBottom: true,
+      onChange: value => {
+        valueRef.current = value;
+        onChange?.(value);
+      }
+      // TODO: Upstream limitation - CheckboxControl doesn't support uncontrolled mode, visually.
+      ,
+      ...restProps
+    })
+  });
+};
+const ValidatedCheckboxControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedValidatedCheckboxControl);
+
 ;// ./packages/components/build-module/validated-form-controls/components/number-control.js
 /**
  * WordPress dependencies
@@ -82279,6 +82371,51 @@ const UnforwardedValidatedTextControl = ({
 };
 const ValidatedTextControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedValidatedTextControl);
 
+;// ./packages/components/build-module/validated-form-controls/components/textarea-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const UnforwardedValidatedTextareaControl = ({
+  required,
+  onValidate,
+  customValidity,
+  onChange,
+  markWhenOptional,
+  ...restProps
+}, forwardedRef) => {
+  const validityTargetRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const mergedRefs = (0,external_wp_compose_namespaceObject.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const valueRef = (0,external_wp_element_namespaceObject.useRef)(restProps.value);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ControlWithError, {
+    required: required,
+    markWhenOptional: markWhenOptional,
+    onValidate: () => {
+      return onValidate?.(valueRef.current);
+    },
+    customValidity: customValidity,
+    getValidityTarget: () => validityTargetRef.current,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(textarea_control, {
+      __nextHasNoMarginBottom: true,
+      ref: mergedRefs,
+      onChange: value => {
+        valueRef.current = value;
+        onChange?.(value);
+      },
+      ...restProps
+    })
+  });
+};
+const ValidatedTextareaControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedValidatedTextareaControl);
+
 ;// ./packages/components/build-module/validated-form-controls/components/toggle-control.js
 /**
  * WordPress dependencies
@@ -82349,6 +82486,7 @@ const ValidatedToggleControl = (0,external_wp_element_namespaceObject.forwardRef
 
 
 
+
 const privateApis = {};
 lock(privateApis, {
   __experimentalPopoverLegacyPositionToPlacement: positionToPlacement,
@@ -82363,8 +82501,12 @@ lock(privateApis, {
   DateCalendar: DateCalendar,
   DateRangeCalendar: DateRangeCalendar,
   TZDate: date_TZDate,
+  Picker: Picker,
+  ValidatedInputControl: ValidatedInputControl,
+  ValidatedCheckboxControl: ValidatedCheckboxControl,
   ValidatedNumberControl: ValidatedNumberControl,
   ValidatedTextControl: ValidatedTextControl,
+  ValidatedTextareaControl: ValidatedTextareaControl,
   ValidatedToggleControl: ValidatedToggleControl
 });
 

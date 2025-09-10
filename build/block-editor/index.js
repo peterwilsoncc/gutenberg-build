@@ -10221,6 +10221,7 @@ function getDerivedBlockEditingModesForTree(state, isNavMode = false, treeClient
       syncedPatternClientIds.push(clientId);
     }
   });
+  const contentOnlyTemplateLockedClientIds = Object.keys(state.blockListSettings).filter(clientId => state.blockListSettings[clientId]?.templateLock === 'contentOnly');
   traverseBlockTree(state, treeClientId, block => {
     const {
       clientId,
@@ -10367,6 +10368,18 @@ function getDerivedBlockEditingModesForTree(state, isNavMode = false, treeClient
         derivedBlockEditingModes.set(clientId, 'disabled');
       }
     }
+
+    // `templateLock: 'contentOnly'` derived modes.
+    if (contentOnlyTemplateLockedClientIds.length) {
+      const hasContentOnlyTemplateLockedParent = !!findParentInClientIdsList(state, clientId, contentOnlyTemplateLockedClientIds);
+      if (hasContentOnlyTemplateLockedParent) {
+        if (isContentBlock(blockName)) {
+          derivedBlockEditingModes.set(clientId, 'contentOnly');
+        } else {
+          derivedBlockEditingModes.set(clientId, 'disabled');
+        }
+      }
+    }
   });
   return derivedBlockEditingModes;
 }
@@ -10487,6 +10500,49 @@ function withDerivedBlockEditingModes(reducer) {
             prevState: state,
             nextState,
             addedBlocks: action.blocks,
+            isNavMode: true
+          });
+          if (nextDerivedBlockEditingModes || nextDerivedNavModeBlockEditingModes) {
+            return {
+              ...nextState,
+              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes,
+              derivedNavModeBlockEditingModes: nextDerivedNavModeBlockEditingModes !== null && nextDerivedNavModeBlockEditingModes !== void 0 ? nextDerivedNavModeBlockEditingModes : state.derivedNavModeBlockEditingModes
+            };
+          }
+          break;
+        }
+      case 'UPDATE_BLOCK_LIST_SETTINGS':
+        {
+          // Handle the addition and removal of contentOnly template locked blocks.
+          const addedBlocks = [];
+          const removedClientIds = [];
+          const updates = typeof action.clientId === 'string' ? {
+            [action.clientId]: action.settings
+          } : action.clientId;
+          for (const clientId in updates) {
+            const isNewContentOnlyBlock = state.blockListSettings[clientId]?.templateLock !== 'contentOnly' && nextState.blockListSettings[clientId]?.templateLock === 'contentOnly';
+            const wasContentOnlyBlock = state.blockListSettings[clientId]?.templateLock === 'contentOnly' && nextState.blockListSettings[clientId]?.templateLock !== 'contentOnly';
+            if (isNewContentOnlyBlock) {
+              addedBlocks.push(nextState.blocks.tree.get(clientId));
+            } else if (wasContentOnlyBlock) {
+              removedClientIds.push(clientId);
+            }
+          }
+          if (!addedBlocks.length && !removedClientIds.length) {
+            break;
+          }
+          const nextDerivedBlockEditingModes = getDerivedBlockEditingModesUpdates({
+            prevState: state,
+            nextState,
+            addedBlocks,
+            removedClientIds,
+            isNavMode: false
+          });
+          const nextDerivedNavModeBlockEditingModes = getDerivedBlockEditingModesUpdates({
+            prevState: state,
+            nextState,
+            addedBlocks,
+            removedClientIds,
             isNavMode: true
           });
           if (nextDerivedBlockEditingModes || nextDerivedNavModeBlockEditingModes) {
@@ -11092,7 +11148,7 @@ function getEnabledClientIdsTreeUnmemoized(state, rootClientId) {
  *
  * @return {Object[]} Tree of block objects with only clientID and innerBlocks set.
  */
-const getEnabledClientIdsTree = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(getEnabledClientIdsTreeUnmemoized, state => [state.blocks.order, state.derivedBlockEditingModes, state.derivedNavModeBlockEditingModes, state.blockEditingModes, state.settings.templateLock, state.blockListSettings, select(STORE_NAME).__unstableGetEditorMode(state)]));
+const getEnabledClientIdsTree = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)(getEnabledClientIdsTreeUnmemoized, state => [state.blocks.order, state.derivedBlockEditingModes, state.derivedNavModeBlockEditingModes, state.blockEditingModes, select(STORE_NAME).__unstableGetEditorMode(state)]));
 
 /**
  * Returns a list of a given block's ancestors, from top to bottom. Blocks with
@@ -14212,7 +14268,7 @@ function __unstableIsWithinBlockOverlay(state, clientId) {
  * @return {BlockEditingMode} The block editing mode. One of `'disabled'`,
  *                            `'contentOnly'`, or `'default'`.
  */
-const getBlockEditingMode = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (state, clientId = '') => {
+function getBlockEditingMode(state, clientId = '') {
   // Some selectors that call this provide `null` as the default
   // rootClientId, but the default rootClientId is actually `''`.
   if (clientId === null) {
@@ -14235,28 +14291,11 @@ const getBlockEditingMode = (0,external_wp_data_namespaceObject.createRegistrySe
   }
 
   // In normal mode, consider that an explicitly set editing mode takes over.
-  const blockEditingMode = state.blockEditingModes.get(clientId);
-  if (blockEditingMode) {
-    return blockEditingMode;
-  }
-
-  // In normal mode, top level is default mode.
-  if (clientId === '') {
-    return 'default';
-  }
-  const rootClientId = getBlockRootClientId(state, clientId);
-  const templateLock = getTemplateLock(state, rootClientId);
-  // If the parent of the block is contentOnly locked, check whether it's a content block.
-  if (templateLock === 'contentOnly') {
-    const name = getBlockName(state, clientId);
-    const {
-      hasContentRoleAttribute
-    } = unlock(select(external_wp_blocks_namespaceObject.store));
-    const isContent = hasContentRoleAttribute(name);
-    return isContent ? 'contentOnly' : 'disabled';
+  if (state.blockEditingModes.has(clientId)) {
+    return state.blockEditingModes.get(clientId);
   }
   return 'default';
-});
+}
 
 /**
  * Indicates if a block is ungroupable.
@@ -23031,12 +23070,27 @@ const verse = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(exte
 
 
 
-const ICONS_MAP = {
-  post: post_list,
-  page: library_page,
-  post_tag: library_tag,
-  category: library_category,
-  attachment: library_file
+const TYPES = {
+  post: {
+    icon: post_list,
+    label: (0,external_wp_i18n_namespaceObject.__)('Post')
+  },
+  page: {
+    icon: library_page,
+    label: (0,external_wp_i18n_namespaceObject.__)('Page')
+  },
+  post_tag: {
+    icon: library_tag,
+    label: (0,external_wp_i18n_namespaceObject.__)('Tag')
+  },
+  category: {
+    icon: library_category,
+    label: (0,external_wp_i18n_namespaceObject.__)('Category')
+  },
+  attachment: {
+    icon: library_file,
+    label: (0,external_wp_i18n_namespaceObject.__)('Attachment')
+  }
 };
 function SearchItemIcon({
   isURL,
@@ -23045,8 +23099,8 @@ function SearchItemIcon({
   let icon = null;
   if (isURL) {
     icon = library_globe;
-  } else if (suggestion.type in ICONS_MAP) {
-    icon = ICONS_MAP[suggestion.type];
+  } else if (suggestion.type in TYPES) {
+    icon = TYPES[suggestion.type].icon;
     if (suggestion.type === 'page') {
       if (suggestion.isFrontPage) {
         icon = library_home;
@@ -23134,14 +23188,17 @@ const LinkControlSearchItem = ({
 };
 function getVisualTypeName(suggestion) {
   if (suggestion.isFrontPage) {
-    return 'front page';
+    return (0,external_wp_i18n_namespaceObject.__)('Front page');
   }
   if (suggestion.isBlogHome) {
-    return 'blog home';
+    return (0,external_wp_i18n_namespaceObject.__)('Blog home');
   }
 
-  // Rename 'post_tag' to 'tag'. Ideally, the API would return the localised CPT or taxonomy label.
-  return suggestion.type === 'post_tag' ? 'tag' : suggestion.type;
+  // Provide translated labels for built-in post types. Ideally, the API would return the localised CPT or taxonomy label.
+  if (suggestion.type in TYPES) {
+    return TYPES[suggestion.type].label;
+  }
+  return suggestion.type;
 }
 /* harmony default export */ const search_item = (LinkControlSearchItem);
 const __experimentalLinkControlSearchItem = props => {
@@ -33162,7 +33219,8 @@ function usePopoverScroll(contentRef) {
     function onWheel(event) {
       const {
         deltaX,
-        deltaY
+        deltaY,
+        target
       } = event;
       const contentEl = contentRef.current;
       let scrollContainer = scrollContainerCache.get(contentEl);
@@ -33170,7 +33228,15 @@ function usePopoverScroll(contentRef) {
         scrollContainer = (0,external_wp_dom_namespaceObject.getScrollContainer)(contentEl);
         scrollContainerCache.set(contentEl, scrollContainer);
       }
-      scrollContainer.scrollBy(deltaX, deltaY);
+      // Finds a scrollable ancestor of the event’s target. It's not cached because the
+      // it may not remain scrollable due to popover position changes. The cache is also
+      // less likely to be utilized because the target may be different every event.
+      const eventScrollContainer = (0,external_wp_dom_namespaceObject.getScrollContainer)(target);
+      // Scrolls “through” the popover only if another contained scrollable area isn’t
+      // in front of it. This is to avoid scrolling both containers simultaneously.
+      if (!node.contains(eventScrollContainer)) {
+        scrollContainer.scrollBy(deltaX, deltaY);
+      }
     }
     // Tell the browser that we do not call event.preventDefault
     // See https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
@@ -54059,7 +54125,7 @@ function useInsertionPoint({
       setLastFocus(null);
     }
     const selectedBlock = getSelectedBlock();
-    if (!isAppender && selectedBlock && (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(selectedBlock)) {
+    if (!isAppender && selectedBlock && (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(selectedBlock, 'content')) {
       replaceBlocks(selectedBlock.clientId, blocks, null, shouldFocusBlock || shouldForceFocusBlock ? 0 : null, meta);
     } else {
       insertBlocks(blocks, isAppender || _rootClientId === undefined ? destinationIndex : getIndex({
@@ -56920,9 +56986,7 @@ class Inserter extends external_wp_element_namespaceObject.Component {
       }
       insertBlock(blockToInsert, getInsertionIndex(), rootClientId, selectBlockOnInsert);
       if (onSelectOrClose) {
-        onSelectOrClose({
-          clientId: blockToInsert?.clientId
-        });
+        onSelectOrClose(blockToInsert);
       }
       const message = (0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: %s: the name of the block that has been added
@@ -65497,7 +65561,7 @@ function useShowBlockTools() {
     const block = getBlock(clientId);
     const editorMode = __unstableGetEditorMode();
     const hasSelectedBlock = !!clientId && !!block;
-    const isEmptyDefaultBlock = hasSelectedBlock && (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(block) && getBlockMode(clientId) !== 'html';
+    const isEmptyDefaultBlock = hasSelectedBlock && (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(block, 'content') && getBlockMode(clientId) !== 'html';
     const _showEmptyBlockSideInserter = clientId && !isTyping() &&
     // Hide the block inserter on the navigation mode.
     // See https://github.com/WordPress/gutenberg/pull/66636#discussion_r1824728483.
@@ -66344,12 +66408,22 @@ const Appender = (0,external_wp_element_namespaceObject.forwardRef)(({
     setInsertedBlock
   } = useListViewContext();
   const instanceId = (0,external_wp_compose_namespaceObject.useInstanceId)(Appender);
-  const hideInserter = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const {
+    directInsert,
+    hideInserter
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
+      getBlockListSettings,
       getTemplateLock,
       isZoomOut
     } = unlock(select(store));
-    return !!getTemplateLock(clientId) || isZoomOut();
+    const settings = getBlockListSettings(clientId);
+    const directInsertValue = settings?.directInsert || false;
+    const hideInserterValue = !!getTemplateLock(clientId) || isZoomOut();
+    return {
+      directInsert: directInsertValue,
+      hideInserter: hideInserterValue
+    };
   }, [clientId]);
   const blockTitle = useBlockDisplayTitle({
     clientId,
@@ -66381,7 +66455,7 @@ const Appender = (0,external_wp_element_namespaceObject.forwardRef)(({
       position: "bottom right",
       isAppender: true,
       selectBlockOnInsert: false,
-      shouldDirectInsert: false,
+      shouldDirectInsert: directInsert,
       __experimentalIsQuick: true,
       ...props,
       toggleProps: {
