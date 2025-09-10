@@ -39631,9 +39631,9 @@ function ViewTable({
         'dataviews-no-results': !hasData && !isLoading
       }),
       id: tableNoticeId,
-      children: [!hasData && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-        children: isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : empty
-      }), hasData && isLoading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+      children: [!hasData && (isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
+      }) : empty), hasData && isLoading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
         className: "dataviews-loading-more",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
       })]
@@ -40004,9 +40004,9 @@ function ViewGrid({
         'dataviews-loading': isLoading,
         'dataviews-no-results': !isLoading
       }),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-        children: isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : empty
-      })
+      children: isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
+      }) : empty
     }), hasData && isLoading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
       className: "dataviews-loading-more",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
@@ -40370,9 +40370,9 @@ function ViewList(props) {
         'dataviews-loading': isLoading,
         'dataviews-no-results': !hasData && !isLoading
       }),
-      children: !hasData && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-        children: isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : empty
-      })
+      children: !hasData && (isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
+      }) : empty)
     });
   }
   const groupField = view.groupByField ? fields.find(field => field.id === view.groupByField) : null;
@@ -40916,9 +40916,9 @@ function ViewPickerGrid({
         'dataviews-loading': isLoading,
         'dataviews-no-results': !isLoading
       }),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-        children: isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {}) : empty
-      })
+      children: isLoading ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
+      }) : empty
     }), hasData && isLoading && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
       className: "dataviews-loading-more",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Spinner, {})
@@ -46928,7 +46928,9 @@ function DataViewsLayout({
     isItemClickable,
     renderItemLink,
     defaultLayouts,
-    empty = (0,external_wp_i18n_namespaceObject.__)('No results')
+    empty = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+      children: (0,external_wp_i18n_namespaceObject.__)('No results')
+    })
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const ViewComponent = VIEW_LAYOUTS.find(v => v.type === view.type && defaultLayouts[v.type])?.component;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ViewComponent, {
