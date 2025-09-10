@@ -25299,6 +25299,14 @@ function useEntityProp(kind, name, prop, _id) {
 }
 
 ;// ./packages/core-data/build-module/hooks/index.js
+/**
+ * Internal dependencies
+ */
+
+/**
+ * Utility type that adds permissions to any record type.
+ */
+
 
 
 
