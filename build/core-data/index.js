@@ -3413,14 +3413,14 @@ function getEntityConfig(state, kind, name) {
  * @return Record.
  */
 const getEntityRecord = (0,external_wp_data_namespaceObject.createSelector)((state, kind, name, key, query) => {
-  var _query$context, _getNormalizedCommaSe;
+  var _query$context;
   logEntityDeprecation(kind, name, 'getEntityRecord');
   const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
   if (!queriedState) {
     return undefined;
   }
   const context = (_query$context = query?.context) !== null && _query$context !== void 0 ? _query$context : 'default';
-  if (!query || !query._fields) {
+  if (query === undefined) {
     // If expecting a complete item, validate that completeness.
     if (!queriedState.itemIsComplete[context]?.[key]) {
       return undefined;
@@ -3428,25 +3428,25 @@ const getEntityRecord = (0,external_wp_data_namespaceObject.createSelector)((sta
     return queriedState.items[context][key];
   }
   const item = queriedState.items[context]?.[key];
-  if (!item) {
-    return item;
+  if (item && query._fields) {
+    var _getNormalizedCommaSe;
+    const filteredItem = {};
+    const fields = (_getNormalizedCommaSe = get_normalized_comma_separable(query._fields)) !== null && _getNormalizedCommaSe !== void 0 ? _getNormalizedCommaSe : [];
+    for (let f = 0; f < fields.length; f++) {
+      const field = fields[f].split('.');
+      let value = item;
+      field.forEach(fieldName => {
+        value = value?.[fieldName];
+      });
+      setNestedValue(filteredItem, field, value);
+    }
+    return filteredItem;
   }
-  const filteredItem = {};
-  const fields = (_getNormalizedCommaSe = get_normalized_comma_separable(query._fields)) !== null && _getNormalizedCommaSe !== void 0 ? _getNormalizedCommaSe : [];
-  for (let f = 0; f < fields.length; f++) {
-    const field = fields[f].split('.');
-    let value = item;
-    field.forEach(fieldName => {
-      value = value?.[fieldName];
-    });
-    setNestedValue(filteredItem, field, value);
-  }
-  return filteredItem;
+  return item;
 }, (state, kind, name, recordId, query) => {
   var _query$context2;
   const context = (_query$context2 = query?.context) !== null && _query$context2 !== void 0 ? _query$context2 : 'default';
-  const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
-  return [queriedState?.items[context]?.[recordId], queriedState?.itemIsComplete[context]?.[recordId]];
+  return [state.entities.records?.[kind]?.[name]?.queriedData?.items[context]?.[recordId], state.entities.records?.[kind]?.[name]?.queriedData?.itemIsComplete[context]?.[recordId]];
 });
 
 /**
@@ -25299,14 +25299,6 @@ function useEntityProp(kind, name, prop, _id) {
 }
 
 ;// ./packages/core-data/build-module/hooks/index.js
-/**
- * Internal dependencies
- */
-
-/**
- * Utility type that adds permissions to any record type.
- */
-
 
 
 

@@ -2184,13 +2184,12 @@ const init = () => initBlock({
 
 
 function edit_Edit({
-  attributes,
+  attributes: {
+    openByDefault
+  },
   clientId,
   setAttributes
 }) {
-  const {
-    openByDefault
-  } = attributes;
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const {
     isSelected,
@@ -2219,12 +2218,13 @@ function edit_Edit({
       });
     }
   }, [isSelected, contentBlockClientId, __unstableMarkNextChangeAsNotPersistent, updateBlockAttributes]);
-  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
-    className: dist_clsx({
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+  const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)({
+    ...blockProps,
+    className: dist_clsx(blockProps.className, {
       'is-open': openByDefault || isSelected
     })
-  });
-  const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
+  }, {
     template: [['core/accordion-header', {}], ['core/accordion-panel', {
       openByDefault
     }]],
@@ -2382,8 +2382,7 @@ const accordion_content_metadata = {
         width: true
       }
     },
-    shadow: true,
-    layout: true
+    shadow: true
   },
   attributes: {
     openByDefault: {
@@ -2858,8 +2857,7 @@ const accordion_panel_metadata = {
         fontSize: true
       }
     },
-    shadow: true,
-    layout: true
+    shadow: true
   },
   attributes: {
     allowedBlocks: {
@@ -36033,23 +36031,6 @@ const navigation = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)
 
 ;// external ["wp","a11y"]
 const external_wp_a11y_namespaceObject = window["wp"]["a11y"];
-;// ./packages/icons/build-module/library/page.js
-/**
- * WordPress dependencies
- */
-
-
-const page = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M15.5 7.5h-7V9h7V7.5Zm-7 3.5h7v1.5h-7V11Zm7 3.5h-7V16h7v-1.5Z"
-  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M17 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM7 5.5h10a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5Z"
-  })]
-});
-/* harmony default export */ const library_page = (page);
-
 ;// ./packages/icons/build-module/icon/index.js
 /**
  * WordPress dependencies
@@ -36097,11 +36078,7 @@ const close_close = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx
 
 ;// ./packages/block-library/build-module/navigation/constants.js
 const constants_DEFAULT_BLOCK = {
-  name: 'core/navigation-link',
-  attributes: {
-    kind: 'post-type',
-    type: 'page'
-  }
+  name: 'core/navigation-link'
 };
 const PRIORITIZED_INSERTER_BLOCKS = ['core/navigation-link/page', 'core/navigation-link'];
 
@@ -38026,6 +38003,7 @@ function LeafMoreMenu(props) {
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddSubmenuItem, {
           block: block,
           onClose: onClose,
+          expanded: true,
           expandedState: props.expandedState,
           expand: props.expand,
           setInsertedBlock: props.setInsertedBlock
@@ -38240,21 +38218,6 @@ const updateAttributes = (updatedValue = {}, setAttributes, blockAttributes = {}
   setAttributes(attributes);
 };
 
-;// ./packages/icons/build-module/library/plus.js
-/**
- * WordPress dependencies
- */
-
-
-const plus_plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z"
-  })
-});
-/* harmony default export */ const library_plus = (plus_plus);
-
 ;// ./packages/icons/build-module/library/chevron-right-small.js
 /**
  * WordPress dependencies
@@ -38285,274 +38248,20 @@ const chevronLeftSmall = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObjec
 });
 /* harmony default export */ const chevron_left_small = (chevronLeftSmall);
 
-;// ./packages/block-library/build-module/navigation-link/dialog-wrapper.js
+;// ./packages/icons/build-module/library/plus.js
 /**
  * WordPress dependencies
  */
 
 
-
-
-
-/**
- * Shared BackButton component for consistent navigation across LinkUI sub-components.
- *
- * @param {Object}   props           Component props.
- * @param {string}   props.className CSS class name for the button.
- * @param {Function} props.onBack    Callback when user wants to go back.
- */
-
-function BackButton({
-  className,
-  onBack
-}) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-    className: className,
-    icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right_small : chevron_left_small,
-    onClick: e => {
-      e.preventDefault();
-      onBack();
-    },
-    size: "small",
-    children: (0,external_wp_i18n_namespaceObject.__)('Back')
-  });
-}
-
-/**
- * Shared DialogWrapper component for consistent dialog structure across LinkUI sub-components.
- *
- * @param {Object}   props             Component props.
- * @param {string}   props.className   CSS class name for the dialog container.
- * @param {string}   props.title       Dialog title for accessibility.
- * @param {string}   props.description Dialog description for accessibility.
- * @param {Function} props.onBack      Callback when user wants to go back.
- * @param {Object}   props.children    Child components to render inside the dialog.
- */
-function DialogWrapper({
-  className,
-  title,
-  description,
-  onBack,
-  children
-}) {
-  const dialogTitleId = (0,external_wp_compose_namespaceObject.useInstanceId)(DialogWrapper, 'link-ui-dialog-title');
-  const dialogDescriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(DialogWrapper, 'link-ui-dialog-description');
-  const focusOnMountRef = (0,external_wp_compose_namespaceObject.useFocusOnMount)('firstElement');
-  const backButtonClassName = `${className}__back`;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
-    className: className,
-    role: "dialog",
-    "aria-labelledby": dialogTitleId,
-    "aria-describedby": dialogDescriptionId,
-    ref: focusOnMountRef,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.VisuallyHidden, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
-        id: dialogTitleId,
-        children: title
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
-        id: dialogDescriptionId,
-        children: description
-      })]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BackButton, {
-      className: backButtonClassName,
-      onBack: onBack
-    }), children]
-  });
-}
-/* harmony default export */ const dialog_wrapper = (DialogWrapper);
-
-;// ./packages/block-library/build-module/navigation-link/page-creator.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-/**
- * Component for creating new pages within the Navigation Link UI.
- *
- * @param {Object}   props                Component props.
- * @param {string}   props.postType       The post type to create.
- * @param {Function} props.onBack         Callback when user wants to go back.
- * @param {Function} props.onPageCreated  Callback when page is successfully created.
- * @param {string}   [props.initialTitle] Initial title to pre-fill the form.
- */
-
-function LinkUIPageCreator({
-  postType,
-  onBack,
-  onPageCreated,
-  initialTitle = ''
-}) {
-  const [title, setTitle] = (0,external_wp_element_namespaceObject.useState)(initialTitle);
-  const [shouldPublish, setShouldPublish] = (0,external_wp_element_namespaceObject.useState)(false);
-
-  // Check if the title is valid for submission
-  const isTitleValid = title.trim().length > 0;
-
-  // Get the last created entity record (without ID) to track creation state
-  const {
-    lastError,
-    isSaving
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => ({
-    lastError: select(external_wp_coreData_namespaceObject.store).getLastEntitySaveError('postType', postType),
-    isSaving: select(external_wp_coreData_namespaceObject.store).isSavingEntityRecord('postType', postType)
-  }), [postType]);
-  const {
-    saveEntityRecord
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  async function createPage(event) {
-    event.preventDefault();
-    if (isSaving || !isTitleValid) {
-      return;
-    }
-    try {
-      const savedRecord = await saveEntityRecord('postType', postType, {
-        title,
-        status: shouldPublish ? 'publish' : 'draft'
-      }, {
-        throwOnError: true
-      });
-      if (savedRecord) {
-        // Create the page link object from the saved record
-        const pageLink = {
-          id: savedRecord.id,
-          type: postType,
-          title: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(savedRecord.title.rendered),
-          url: savedRecord.link,
-          kind: 'post-type'
-        };
-        onPageCreated(pageLink);
-      }
-    } catch (error) {
-      // Error handling is done via the data store selectors
-    }
-  }
-  const isSubmitDisabled = isSaving || !isTitleValid;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dialog_wrapper, {
-    className: "link-ui-page-creator",
-    title: (0,external_wp_i18n_namespaceObject.__)('Create page'),
-    description: (0,external_wp_i18n_namespaceObject.__)('Create a new page to add to your Navigation.'),
-    onBack: onBack,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
-      className: "link-ui-page-creator__inner",
-      spacing: 4,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("form", {
-        onSubmit: createPage,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-          spacing: 4,
-          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-            __next40pxDefaultSize: true,
-            __nextHasNoMarginBottom: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Title'),
-            onChange: setTitle,
-            placeholder: (0,external_wp_i18n_namespaceObject.__)('No title'),
-            value: title
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-            __nextHasNoMarginBottom: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Publish immediately'),
-            help: (0,external_wp_i18n_namespaceObject.__)('If unchecked, the page will be created as a draft.'),
-            checked: shouldPublish,
-            onChange: setShouldPublish
-          }), lastError && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Notice, {
-            status: "error",
-            isDismissible: false,
-            children: lastError.message
-          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-            spacing: 2,
-            justify: "flex-end",
-            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-              __next40pxDefaultSize: true,
-              variant: "tertiary",
-              onClick: onBack,
-              disabled: isSaving,
-              accessibleWhenDisabled: true,
-              children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
-            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-              __next40pxDefaultSize: true,
-              variant: "primary",
-              type: "submit",
-              isBusy: isSaving,
-              "aria-disabled": isSubmitDisabled,
-              children: (0,external_wp_i18n_namespaceObject.__)('Create page')
-            })]
-          })]
-        })
-      })
-    })
-  });
-}
-
-;// ./packages/block-library/build-module/navigation-link/block-inserter.js
-/**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-const {
-  PrivateQuickInserter: QuickInserter
-} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
-
-/**
- * Component for inserting blocks within the Navigation Link UI.
- *
- * @param {Object}   props               Component props.
- * @param {string}   props.clientId      Client ID of the navigation link block.
- * @param {Function} props.onBack        Callback when user wants to go back.
- * @param {Function} props.onBlockInsert Callback when a block is inserted.
- */
-function LinkUIBlockInserter({
-  clientId,
-  onBack,
-  onBlockInsert
-}) {
-  const {
-    rootBlockClientId
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getBlockRootClientId
-    } = select(external_wp_blockEditor_namespaceObject.store);
-    return {
-      rootBlockClientId: getBlockRootClientId(clientId)
-    };
-  }, [clientId]);
-  if (!clientId) {
-    return null;
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dialog_wrapper, {
-    className: "link-ui-block-inserter",
-    title: (0,external_wp_i18n_namespaceObject.__)('Add block'),
-    description: (0,external_wp_i18n_namespaceObject.__)('Choose a block to add to your Navigation.'),
-    onBack: onBack,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QuickInserter, {
-      rootClientId: rootBlockClientId,
-      clientId: clientId,
-      isAppender: false,
-      prioritizePatterns: false,
-      selectBlockOnInsert: !onBlockInsert,
-      onSelect: onBlockInsert ? onBlockInsert : undefined,
-      hasSearch: false
-    })
-  });
-}
-/* harmony default export */ const block_inserter = (LinkUIBlockInserter);
+const plus_plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z"
+  })
+});
+/* harmony default export */ const library_plus = (plus_plus);
 
 ;// ./packages/block-library/build-module/navigation-link/link-ui.js
 /**
@@ -38567,11 +38276,16 @@ function LinkUIBlockInserter({
 
 
 
+
+
 /**
  * Internal dependencies
  */
 
 
+const {
+  PrivateQuickInserter: QuickInserter
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 
 /**
  * Given the Link block's type attribute, return the query params to give to
@@ -38581,7 +38295,6 @@ function LinkUIBlockInserter({
  * @param {string} kind Link block's entity of kind (post-type|taxonomy)
  * @return {{ type?: string, subtype?: string }} Search query params.
  */
-
 function getSuggestionsQuery(type, kind) {
   switch (type) {
     case 'post':
@@ -38628,6 +38341,59 @@ function getSuggestionsQuery(type, kind) {
       };
   }
 }
+function LinkUIBlockInserter({
+  clientId,
+  onBack
+}) {
+  const {
+    rootBlockClientId
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockRootClientId
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    return {
+      rootBlockClientId: getBlockRootClientId(clientId)
+    };
+  }, [clientId]);
+  const focusOnMountRef = (0,external_wp_compose_namespaceObject.useFocusOnMount)('firstElement');
+  const dialogTitleId = (0,external_wp_compose_namespaceObject.useInstanceId)(external_wp_blockEditor_namespaceObject.LinkControl, `link-ui-block-inserter__title`);
+  const dialogDescriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(external_wp_blockEditor_namespaceObject.LinkControl, `link-ui-block-inserter__description`);
+  if (!clientId) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    className: "link-ui-block-inserter",
+    role: "dialog",
+    "aria-labelledby": dialogTitleId,
+    "aria-describedby": dialogDescriptionId,
+    ref: focusOnMountRef,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.VisuallyHidden, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("h2", {
+        id: dialogTitleId,
+        children: (0,external_wp_i18n_namespaceObject.__)('Add block')
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("p", {
+        id: dialogDescriptionId,
+        children: (0,external_wp_i18n_namespaceObject.__)('Choose a block to add to your Navigation.')
+      })]
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      className: "link-ui-block-inserter__back",
+      icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_right_small : chevron_left_small,
+      onClick: e => {
+        e.preventDefault();
+        onBack();
+      },
+      size: "small",
+      children: (0,external_wp_i18n_namespaceObject.__)('Back')
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(QuickInserter, {
+      rootClientId: rootBlockClientId,
+      clientId: clientId,
+      isAppender: false,
+      prioritizePatterns: false,
+      selectBlockOnInsert: true,
+      hasSearch: false
+    })]
+  });
+}
 function UnforwardedLinkUI(props, ref) {
   const {
     label,
@@ -38638,13 +38404,41 @@ function UnforwardedLinkUI(props, ref) {
   } = props.link;
   const postType = type || 'page';
   const [addingBlock, setAddingBlock] = (0,external_wp_element_namespaceObject.useState)(false);
-  const [addingPage, setAddingPage] = (0,external_wp_element_namespaceObject.useState)(false);
   const [focusAddBlockButton, setFocusAddBlockButton] = (0,external_wp_element_namespaceObject.useState)(false);
-  const [focusAddPageButton, setFocusAddPageButton] = (0,external_wp_element_namespaceObject.useState)(false);
+  const {
+    saveEntityRecord
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
   const permissions = (0,external_wp_coreData_namespaceObject.useResourcePermissions)({
     kind: 'postType',
     name: postType
   });
+
+  // Check if we're in contentOnly mode
+  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
+  const isDefaultBlockEditingMode = blockEditingMode === 'default';
+  async function handleCreate(pageTitle) {
+    const page = await saveEntityRecord('postType', postType, {
+      title: pageTitle,
+      status: 'draft'
+    });
+    return {
+      id: page.id,
+      type: postType,
+      // Make `title` property consistent with that in `fetchLinkSuggestions` where the `rendered` title (containing HTML entities)
+      // is also being decoded. By being consistent in both locations we avoid having to branch in the rendering output code.
+      // Ideally in the future we will update both APIs to utilise the "raw" form of the title which is better suited to edit contexts.
+      // e.g.
+      // - title.raw = "Yes & No"
+      // - title.rendered = "Yes &#038; No"
+      // - decodeEntities( title.rendered ) = "Yes & No"
+      // See:
+      // - https://github.com/WordPress/gutenberg/pull/41063
+      // - https://github.com/WordPress/gutenberg/blob/a1e1fdc0e6278457e9f4fc0b31ac6d2095f5450b/packages/core-data/src/fetch/__experimental-fetch-link-suggestions.js#L212-L218
+      title: (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(page.title.rendered),
+      url: page.link,
+      kind: 'post-type'
+    };
+  }
 
   // Memoize link value to avoid overriding the LinkControl's internal state.
   // This is a temporary fix. See https://github.com/WordPress/gutenberg/issues/50976#issuecomment-1568226407.
@@ -38653,22 +38447,15 @@ function UnforwardedLinkUI(props, ref) {
     opensInNewTab,
     title: label && (0,external_wp_dom_namespaceObject.__unstableStripHTML)(label)
   }), [label, opensInNewTab, url]);
-  const handlePageCreated = pageLink => {
-    // Set the new page as the current link
-    props.onChange(pageLink);
-    // Return to main Link UI
-    setAddingPage(false);
-  };
-  const dialogTitleId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkUI, 'link-ui-link-control__title');
-  const dialogDescriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkUI, 'link-ui-link-control__description');
-  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
+  const dialogTitleId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkUI, `link-ui-link-control__title`);
+  const dialogDescriptionId = (0,external_wp_compose_namespaceObject.useInstanceId)(LinkUI, `link-ui-link-control__description`);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Popover, {
     ref: ref,
     placement: "bottom",
     onClose: props.onClose,
     anchor: props.anchor,
     shift: true,
-    children: [!addingBlock && !addingPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    children: [!addingBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       role: "dialog",
       "aria-labelledby": dialogTitleId,
       "aria-describedby": dialogDescriptionId,
@@ -38685,66 +38472,51 @@ function UnforwardedLinkUI(props, ref) {
         hasRichPreviews: true,
         value: link,
         showInitialSuggestions: true,
-        withCreateSuggestion: false,
+        withCreateSuggestion: permissions.canCreate,
+        createSuggestion: handleCreate,
+        createSuggestionButtonText: searchTerm => {
+          let format;
+          if (type === 'post') {
+            /* translators: %s: search term. */
+            format = (0,external_wp_i18n_namespaceObject.__)('Create draft post: <mark>%s</mark>');
+          } else {
+            /* translators: %s: search term. */
+            format = (0,external_wp_i18n_namespaceObject.__)('Create draft page: <mark>%s</mark>');
+          }
+          return (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.sprintf)(format, searchTerm), {
+            mark: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("mark", {})
+          });
+        },
         noDirectEntry: !!type,
         noURLSuggestion: !!type,
         suggestionsQuery: getSuggestionsQuery(type, kind),
         onChange: props.onChange,
         onRemove: props.onRemove,
         onCancel: props.onCancel,
-        renderControlBottom: () => {
-          // Don't show the tools when there is submitted link (preview state).
-          if (link?.url?.length) {
-            return null;
+        renderControlBottom: () => !link?.url?.length && isDefaultBlockEditingMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUITools, {
+          focusAddBlockButton: focusAddBlockButton,
+          setAddingBlock: () => {
+            setAddingBlock(true);
+            setFocusAddBlockButton(false);
           }
-          return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUITools, {
-            focusAddBlockButton: focusAddBlockButton,
-            focusAddPageButton: focusAddPageButton,
-            setAddingBlock: () => {
-              setAddingBlock(true);
-              setFocusAddBlockButton(false);
-            },
-            setAddingPage: () => {
-              setAddingPage(true);
-              setFocusAddPageButton(false);
-            },
-            canAddPage: permissions?.canCreate && type === 'page',
-            canAddBlock: blockEditingMode === 'default'
-          });
-        }
+        })
       })]
-    }), addingBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_inserter, {
+    }), addingBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUIBlockInserter, {
       clientId: props.clientId,
       onBack: () => {
         setAddingBlock(false);
         setFocusAddBlockButton(true);
-        setFocusAddPageButton(false);
-      },
-      onBlockInsert: props?.onBlockInsert
-    }), addingPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUIPageCreator, {
-      postType: postType,
-      onBack: () => {
-        setAddingPage(false);
-        setFocusAddPageButton(true);
-        setFocusAddBlockButton(false);
-      },
-      onPageCreated: handlePageCreated,
-      initialTitle: link?.url || ''
+      }
     })]
   });
 }
 const LinkUI = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedLinkUI);
 const LinkUITools = ({
   setAddingBlock,
-  setAddingPage,
-  focusAddBlockButton,
-  focusAddPageButton,
-  canAddPage,
-  canAddBlock
+  focusAddBlockButton
 }) => {
   const blockInserterAriaRole = 'listbox';
   const addBlockButtonRef = (0,external_wp_element_namespaceObject.useRef)();
-  const addPageButtonRef = (0,external_wp_element_namespaceObject.useRef)();
 
   // Focus the add block button when the popover is opened.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -38752,32 +38524,9 @@ const LinkUITools = ({
       addBlockButtonRef.current?.focus();
     }
   }, [focusAddBlockButton]);
-
-  // Focus the add page button when the popover is opened.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (focusAddPageButton) {
-      addPageButtonRef.current?.focus();
-    }
-  }, [focusAddPageButton]);
-
-  // Don't render anything if neither button should be shown
-  if (!canAddPage && !canAddBlock) {
-    return null;
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-    spacing: 0,
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
     className: "link-ui-tools",
-    children: [canAddPage && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      __next40pxDefaultSize: true,
-      ref: addPageButtonRef,
-      icon: library_plus,
-      onClick: e => {
-        e.preventDefault();
-        setAddingPage(true);
-      },
-      "aria-haspopup": blockInserterAriaRole,
-      children: (0,external_wp_i18n_namespaceObject.__)('Create page')
-    }), canAddBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       __next40pxDefaultSize: true,
       ref: addBlockButtonRef,
       icon: library_plus,
@@ -38787,7 +38536,7 @@ const LinkUITools = ({
       },
       "aria-haspopup": blockInserterAriaRole,
       children: (0,external_wp_i18n_namespaceObject.__)('Add block')
-    })]
+    })
   });
 };
 /* harmony default export */ const link_ui = ((/* unused pure expression or super */ null && (LinkUITools)));
@@ -38823,8 +38572,7 @@ function AdditionalBlockContent({
   setInsertedBlock
 }) {
   const {
-    updateBlockAttributes,
-    removeBlock
+    updateBlockAttributes
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const supportsLinkControls = BLOCKS_WITH_LINK_UI_SUPPORT?.includes(insertedBlock?.name);
   const blockWasJustInserted = insertedBlock?.clientId === block.clientId;
@@ -38832,57 +38580,23 @@ function AdditionalBlockContent({
   if (!showLinkControls) {
     return null;
   }
-
-  /**
-   * Cleanup function for auto-inserted Navigation Link blocks.
-   *
-   * Removes the block if it has no URL and clears the inserted block state.
-   * This ensures consistent cleanup behavior across different contexts.
-   */
-  const cleanupInsertedBlock = () => {
-    // Prevent automatic block selection when removing blocks in list view context
-    // This avoids focus stealing that would close the list view and switch to canvas
-    const shouldAutoSelectBlock = false;
-
-    // Follows the exact same pattern as Navigation Link block's onClose handler
-    // If there is no URL then remove the auto-inserted block to avoid empty blocks
-    if (!insertedBlock?.attributes?.url && insertedBlock?.clientId) {
-      // Remove the block entirely to avoid poor UX
-      // This matches the Navigation Link block's behavior
-      removeBlock(insertedBlock.clientId, shouldAutoSelectBlock);
-    }
-    setInsertedBlock(null);
-  };
   const setInsertedBlockAttributes = _insertedBlockClientId => _updatedAttributes => {
     if (!_insertedBlockClientId) {
       return;
     }
     updateBlockAttributes(_insertedBlockClientId, _updatedAttributes);
   };
-
-  // Wrapper function to clean up original block when a new block is selected
-  const handleSetInsertedBlock = newBlock => {
-    // Prevent automatic block selection when removing blocks in list view context
-    // This avoids focus stealing that would close the list view and switch to canvas
-    const shouldAutoSelectBlock = false;
-
-    // If we have an existing inserted block and a new block is being set,
-    // remove the original block to avoid duplicates
-    if (insertedBlock?.clientId && newBlock) {
-      removeBlock(insertedBlock.clientId, shouldAutoSelectBlock);
-    }
-    setInsertedBlock(newBlock);
-  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(LinkUI, {
     clientId: insertedBlock?.clientId,
     link: insertedBlock?.attributes,
-    onBlockInsert: handleSetInsertedBlock,
     onClose: () => {
-      // Use cleanup function
-      cleanupInsertedBlock();
+      setInsertedBlock(null);
     },
     onChange: updatedValue => {
       updateAttributes(updatedValue, setInsertedBlockAttributes(insertedBlock?.clientId), insertedBlock?.attributes);
+      setInsertedBlock(null);
+    },
+    onCancel: () => {
       setInsertedBlock(null);
     }
   });
@@ -39027,7 +38741,6 @@ function AccessibleMenuDescription({
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -39054,49 +38767,6 @@ function AccessibleMenuDescription({
 
 
 
-
-/**
- * Component that renders the Add page button for the Navigation block.
- *
- * @param {Object} props          Component props.
- * @param {string} props.clientId Block client ID.
- * @return {JSX.Element|null} The Add page button component or null if not applicable.
- */
-
-function NavigationAddPageButton({
-  clientId
-}) {
-  const {
-    insertBlock
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
-  const {
-    getBlockCount
-  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
-  const onAddPage = (0,external_wp_element_namespaceObject.useCallback)(() => {
-    // Get the current number of blocks to insert at the end
-    const blockCount = getBlockCount(clientId);
-
-    // Create a new navigation link block (default block)
-    const newBlock = (0,external_wp_blocks_namespaceObject.createBlock)(constants_DEFAULT_BLOCK.name, {
-      kind: constants_DEFAULT_BLOCK.attributes.kind,
-      type: constants_DEFAULT_BLOCK.attributes.type
-    });
-
-    // Insert the block at the end of the navigation
-    insertBlock(newBlock, blockCount, clientId);
-  }, [clientId, insertBlock, getBlockCount]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-        name: "add-page",
-        icon: library_page,
-        title: (0,external_wp_i18n_namespaceObject.__)('Add page'),
-        onClick: onAddPage,
-        children: (0,external_wp_i18n_namespaceObject.__)('Add page')
-      })
-    })
-  });
-}
 function ColorTools({
   textColor,
   setTextColor,
@@ -39698,9 +39368,7 @@ function Navigation({
         onSelectNavigationMenu: onSelectNavigationMenu,
         isLoading: isLoading,
         blockEditingMode: blockEditingMode
-      }), blockEditingMode === 'default' && stylingInspectorControls, blockEditingMode === 'contentOnly' && isEntityAvailable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationAddPageButton, {
-        clientId: clientId
-      }), blockEditingMode === 'default' && isEntityAvailable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      }), blockEditingMode === 'default' && stylingInspectorControls, blockEditingMode === 'default' && isEntityAvailable && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.InspectorControls, {
         group: "advanced",
         children: [hasResolvedCanUserUpdateNavigationMenu && canUserUpdateNavigationMenu && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationMenuNameControl, {}), hasResolvedCanUserDeleteNavigationMenu && canUserDeleteNavigationMenu && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationMenuDeleteControl, {
           onDelete: () => {
@@ -41137,6 +40805,23 @@ function NavigationLinkEdit({
 function navigation_link_save_save() {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InnerBlocks.Content, {});
 }
+
+;// ./packages/icons/build-module/library/page.js
+/**
+ * WordPress dependencies
+ */
+
+
+const page = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M15.5 7.5h-7V9h7V7.5Zm-7 3.5h7v1.5h-7V11Zm7 3.5h-7V16h7v-1.5Z"
+  }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M17 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM7 5.5h10a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V6a.5.5 0 0 1 .5-.5Z"
+  })]
+});
+/* harmony default export */ const library_page = (page);
 
 ;// ./packages/icons/build-module/library/tag.js
 /**
@@ -57212,11 +56897,7 @@ function SearchEdit({
     const textFieldClasses = dist_clsx('wp-block-search__input', isButtonPositionInside ? undefined : borderProps.className, typographyProps.className);
     const textFieldStyles = {
       ...(isButtonPositionInside ? {
-        borderRadius: borderProps.style?.borderRadius,
-        borderTopLeftRadius: borderProps.style?.borderTopLeftRadius,
-        borderTopRightRadius: borderProps.style?.borderTopRightRadius,
-        borderBottomLeftRadius: borderProps.style?.borderBottomLeftRadius,
-        borderBottomRightRadius: borderProps.style?.borderBottomRightRadius
+        borderRadius
       } : borderProps.style),
       ...typographyProps.style,
       textDecoration: undefined
@@ -57245,11 +56926,7 @@ function SearchEdit({
       ...colorProps.style,
       ...typographyProps.style,
       ...(isButtonPositionInside ? {
-        borderRadius: borderProps.style?.borderRadius,
-        borderTopLeftRadius: borderProps.style?.borderTopLeftRadius,
-        borderTopRightRadius: borderProps.style?.borderTopRightRadius,
-        borderBottomLeftRadius: borderProps.style?.borderBottomLeftRadius,
-        borderBottomRightRadius: borderProps.style?.borderBottomRightRadius
+        borderRadius
       } : borderProps.style)
     };
     const handleButtonClick = () => {
@@ -57418,8 +57095,7 @@ function SearchEdit({
       })
     })
   });
-  const isNonZeroBorderRadius = radius => radius !== undefined && parseInt(radius, 10) !== 0;
-  const padBorderRadius = radius => isNonZeroBorderRadius(radius) ? `calc(${radius} + ${DEFAULT_INNER_PADDING})` : undefined;
+  const padBorderRadius = radius => radius ? `calc(${radius} + ${DEFAULT_INNER_PADDING})` : undefined;
   const getWrapperStyles = () => {
     const styles = isButtonPositionInside ? borderProps.style : {
       borderRadius: borderProps.style?.borderRadius,
@@ -57428,7 +57104,8 @@ function SearchEdit({
       borderBottomLeftRadius: borderProps.style?.borderBottomLeftRadius,
       borderBottomRightRadius: borderProps.style?.borderBottomRightRadius
     };
-    if (isButtonPositionInside) {
+    const isNonZeroBorderRadius = borderRadius !== undefined && parseInt(borderRadius, 10) !== 0;
+    if (isButtonPositionInside && isNonZeroBorderRadius) {
       // We have button inside wrapper and a border radius value to apply.
       // Add default padding so we don't get "fat" corners.
       //
@@ -57438,17 +57115,17 @@ function SearchEdit({
       if (typeof borderRadius === 'object') {
         // Individual corner border radii present.
         const {
-          borderTopLeftRadius,
-          borderTopRightRadius,
-          borderBottomLeftRadius,
-          borderBottomRightRadius
-        } = borderProps.style;
+          topLeft,
+          topRight,
+          bottomLeft,
+          bottomRight
+        } = borderRadius;
         return {
           ...styles,
-          borderTopLeftRadius: padBorderRadius(borderTopLeftRadius),
-          borderTopRightRadius: padBorderRadius(borderTopRightRadius),
-          borderBottomLeftRadius: padBorderRadius(borderBottomLeftRadius),
-          borderBottomRightRadius: padBorderRadius(borderBottomRightRadius)
+          borderTopLeftRadius: padBorderRadius(topLeft),
+          borderTopRightRadius: padBorderRadius(topRight),
+          borderBottomLeftRadius: padBorderRadius(bottomLeft),
+          borderBottomRightRadius: padBorderRadius(bottomRight)
         };
       }
 

@@ -10944,19 +10944,17 @@ function getCommentAttributes(blockType, attributes) {
  */
 function serializeAttributes(attributes) {
   return JSON.stringify(attributes)
-  // Replace escaped `\` characters with the unicode escape sequence.
-  .replaceAll('\\\\', '\\u005c')
-
   // Don't break HTML comments.
-  .replaceAll('--', '\\u002d\\u002d')
+  .replace(/--/g, '\\u002d\\u002d')
 
   // Don't break non-standard-compliant tools.
-  .replaceAll('<', '\\u003c').replaceAll('>', '\\u003e').replaceAll('&', '\\u0026')
+  .replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026')
 
-  // Replace escaped quotes (`\"`) to prevent problems with wp_kses_stripsplashes.
-  // This simple replacement is safe because `\\` has already been replaced.
-  // `\"` is not a JSON string quote like `"\\"`.
-  .replaceAll('\\"', '\\u0022');
+  // Bypass server stripslashes behavior which would unescape stringify's
+  // escaping of quotation mark.
+  //
+  // See: https://developer.wordpress.org/reference/functions/wp_kses_stripslashes/
+  .replace(/\\"/g, '\\u0022');
 }
 
 /**
