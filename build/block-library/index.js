@@ -7679,7 +7679,9 @@ function CategoriesEdit({
   const {
     records: allTaxonomies,
     isResolvingTaxonomies
-  } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('root', 'taxonomy');
+  } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('root', 'taxonomy', {
+    per_page: -1
+  });
   const taxonomies = allTaxonomies?.filter(t => t.visibility.public);
   const taxonomy = taxonomies?.find(t => t.slug === taxonomySlug);
   const isHierarchicalTaxonomy = !isResolvingTaxonomies && taxonomy?.hierarchical;
