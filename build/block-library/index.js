@@ -64604,7 +64604,8 @@ const ENTRY_CLASS_NAME = 'wp-block-table-of-contents__entry';
 function TableOfContentsList({
   nestedHeadingList,
   disableLinkActivation,
-  onClick
+  onClick,
+  ordered = true
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: nestedHeadingList.map((node, index) => {
@@ -64622,12 +64623,14 @@ function TableOfContentsList({
         className: ENTRY_CLASS_NAME,
         children: content
       });
+      const NestedListTag = ordered ? 'ol' : 'ul';
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("li", {
-        children: [entry, node.children ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ol", {
+        children: [entry, node.children ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NestedListTag, {
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TableOfContentsList, {
             nestedHeadingList: node.children,
             disableLinkActivation: disableLinkActivation,
-            onClick: disableLinkActivation && 'function' === typeof onClick ? onClick : undefined
+            onClick: disableLinkActivation && 'function' === typeof onClick ? onClick : undefined,
+            ordered: ordered
           })
         }) : null]
       }, index);
@@ -64871,6 +64874,7 @@ function useObserveHeadings(clientId) {
  * @param {HeadingData[]}                props.attributes.headings               The list of data for each heading in the post.
  * @param {boolean}                      props.attributes.onlyIncludeCurrentPage Whether to only include headings from the current page (if the post is paginated).
  * @param {number|undefined}             props.attributes.maxLevel               The maximum heading level to include, or null to include all levels.
+ * @param {boolean}                      props.attributes.ordered                Whether to display as an ordered list (true) or unordered list (false).
  * @param {string}                       props.clientId                          The client id.
  * @param {(attributes: Object) => void} props.setAttributes                     The set attributes function.
  *
@@ -64881,7 +64885,8 @@ function TableOfContentsEdit({
   attributes: {
     headings = [],
     onlyIncludeCurrentPage,
-    maxLevel
+    maxLevel,
+    ordered = true
   },
   clientId,
   setAttributes
@@ -64914,18 +64919,37 @@ function TableOfContentsEdit({
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const headingTree = linearToNestedHeadingList(headings);
-  const toolbarControls = canInsertList && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+  const toolbarControls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_blockEditor_namespaceObject.BlockControls, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+        icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_list_bullets_rtl : format_list_bullets,
+        title: (0,external_wp_i18n_namespaceObject.__)('Unordered'),
+        description: (0,external_wp_i18n_namespaceObject.__)('Convert to unordered list'),
+        onClick: () => setAttributes({
+          ordered: false
+        }),
+        isActive: ordered === false
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+        icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? format_list_numbered_rtl : format_list_numbered,
+        title: (0,external_wp_i18n_namespaceObject.__)('Ordered'),
+        description: (0,external_wp_i18n_namespaceObject.__)('Convert to ordered list'),
+        onClick: () => setAttributes({
+          ordered: true
+        }),
+        isActive: ordered === true
+      })]
+    }), canInsertList && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
         onClick: () => replaceBlocks(clientId, (0,external_wp_blocks_namespaceObject.createBlock)('core/list', {
-          ordered: true,
+          ordered,
           values: (0,external_wp_element_namespaceObject.renderToString)(/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TableOfContentsList, {
-            nestedHeadingList: headingTree
+            nestedHeadingList: headingTree,
+            ordered: ordered
           }))
         })),
         children: (0,external_wp_i18n_namespaceObject.__)('Convert to static list')
       })
-    })
+    })]
   });
   const inspectorControls = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
@@ -64933,7 +64957,8 @@ function TableOfContentsEdit({
       resetAll: () => {
         setAttributes({
           onlyIncludeCurrentPage: false,
-          maxLevel: undefined
+          maxLevel: undefined,
+          ordered: true
         });
       },
       dropdownMenuProps: dropdownMenuProps,
@@ -65013,14 +65038,16 @@ function TableOfContentsEdit({
       }), inspectorControls]
     });
   }
+  const ListTag = ordered ? 'ol' : 'ul';
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("nav", {
       ...blockProps,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ol", {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ListTag, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TableOfContentsList, {
           nestedHeadingList: headingTree,
           disableLinkActivation: true,
-          onClick: showRedirectionPreventedNotice
+          onClick: showRedirectionPreventedNotice,
+          ordered: ordered
         })
       })
     }), toolbarControls, inspectorControls]
@@ -65041,17 +65068,20 @@ function TableOfContentsEdit({
 
 function table_of_contents_save_save({
   attributes: {
-    headings = []
+    headings = [],
+    ordered = true
   }
 }) {
   if (headings.length === 0) {
     return null;
   }
+  const ListTag = ordered ? 'ol' : 'ul';
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("nav", {
     ...external_wp_blockEditor_namespaceObject.useBlockProps.save(),
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("ol", {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ListTag, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TableOfContentsList, {
-        nestedHeadingList: linearToNestedHeadingList(headings)
+        nestedHeadingList: linearToNestedHeadingList(headings),
+        ordered: ordered
       })
     })
   });
@@ -65092,6 +65122,10 @@ const table_of_contents_metadata = {
     },
     maxLevel: {
       type: "number"
+    },
+    ordered: {
+      type: "boolean",
+      "default": true
     }
   },
   supports: {
