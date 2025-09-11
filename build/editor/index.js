@@ -35224,6 +35224,7 @@ const CommentBoard = ({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -35247,7 +35248,8 @@ function AddComment({
 }) {
   const {
     clientId,
-    blockCommentId
+    blockCommentId,
+    isEmptyDefaultBlock
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getSelectedBlock
@@ -35255,10 +35257,11 @@ function AddComment({
     const selectedBlock = getSelectedBlock();
     return {
       clientId: selectedBlock?.clientId,
-      blockCommentId: selectedBlock?.attributes?.blockCommentId
+      blockCommentId: selectedBlock?.attributes?.blockCommentId,
+      isEmptyDefaultBlock: selectedBlock ? (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(selectedBlock) : false
     };
   });
-  if (!showCommentBoard || !clientId || undefined !== blockCommentId) {
+  if (!showCommentBoard || !clientId || undefined !== blockCommentId || isEmptyDefaultBlock) {
     return null;
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
