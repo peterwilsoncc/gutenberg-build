@@ -49278,6 +49278,8 @@ function Items({
       getTemplateLock,
       getBlockEditingMode,
       isSectionBlock,
+      isContainerInsertableToInWriteMode,
+      getBlockName,
       isZoomOut: _isZoomOut,
       canInsertBlockType
     } = unlock(select(store));
@@ -49298,7 +49300,7 @@ function Items({
       selectedBlocks: selectedBlockClientIds,
       visibleBlocks: __unstableGetVisibleBlocks(),
       isZoomOut: _isZoomOut(),
-      shouldRenderAppender: !isSectionBlock(rootClientId) && getBlockEditingMode(rootClientId) !== 'disabled' && !getTemplateLock(rootClientId) && hasAppender && !_isZoomOut() && (hasCustomAppender || hasSelectedRoot || showRootAppender)
+      shouldRenderAppender: (!isSectionBlock(rootClientId) || isContainerInsertableToInWriteMode(getBlockName(selectedBlockClientId), rootClientId)) && getBlockEditingMode(rootClientId) !== 'disabled' && !getTemplateLock(rootClientId) && hasAppender && !_isZoomOut() && (hasCustomAppender || hasSelectedRoot || showRootAppender)
     };
   }, [rootClientId, hasAppender, hasCustomAppender]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(LayoutProvider, {

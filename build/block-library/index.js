@@ -7353,7 +7353,8 @@ const buttons_metadata = {
     },
     interactivity: {
       clientNavigation: true
-    }
+    },
+    contentRole: true
   },
   editorStyle: "wp-block-buttons-editor",
   style: "wp-block-buttons"
@@ -61652,7 +61653,8 @@ const social_links_metadata = {
         width: true,
         style: true
       }
-    }
+    },
+    contentRole: true
   },
   styles: [{
     name: "default",

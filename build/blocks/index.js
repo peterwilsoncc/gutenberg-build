@@ -8050,7 +8050,13 @@ const __experimentalGetBlockAttributesNamesByRole = (...args) => {
  * @return {boolean}    Whether the block is a content block.
  */
 function isContentBlock(name) {
-  const attributes = getBlockType(name)?.attributes;
+  const blockType = getBlockType(name);
+  const attributes = blockType?.attributes;
+  // Not all blocks have attributes but they may support contentRole instead.
+  const supportsContentRole = blockType?.supports?.contentRole;
+  if (supportsContentRole) {
+    return true;
+  }
   if (!attributes) {
     return false;
   }
