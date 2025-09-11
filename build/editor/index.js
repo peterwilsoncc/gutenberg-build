@@ -34882,8 +34882,14 @@ function getCommentIdsFromBlocks(blocks) {
 
 ;// ./packages/editor/build-module/components/collab-sidebar/comment-form.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
+
 
 
 
@@ -34912,14 +34918,18 @@ function CommentForm({
 }) {
   var _thread$content$raw;
   const [inputComment, setInputComment] = (0,external_wp_element_namespaceObject.useState)((_thread$content$raw = thread?.content?.raw) !== null && _thread$content$raw !== void 0 ? _thread$content$raw : '');
+  const inputId = (0,external_wp_compose_namespaceObject.useInstanceId)(CommentForm, 'comment-input');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextareaControl, {
-      __next40pxDefaultSize: true,
-      __nextHasNoMarginBottom: true,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
+      as: "label",
+      htmlFor: inputId,
+      children: (0,external_wp_i18n_namespaceObject.__)('Comment')
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(lib/* default */.A, {
+      id: inputId,
       value: inputComment !== null && inputComment !== void 0 ? inputComment : '',
-      onChange: setInputComment,
-      label: (0,external_wp_i18n_namespaceObject.__)('Comment'),
-      hideLabelFromVision: true
+      onChange: comment => setInputComment(comment.target.value),
+      rows: 4,
+      maxRows: 20
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       alignment: "left",
       spacing: "3",
