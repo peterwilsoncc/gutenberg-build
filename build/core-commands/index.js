@@ -84,30 +84,6 @@ const external_wp_data_namespaceObject = window["wp"]["data"];
 
 
 
-const getAdminNavigationCommands = menuCommands => function useAdminBasicNavigationCommands() {
-  const commands = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return (menuCommands !== null && menuCommands !== void 0 ? menuCommands : []).map(menuCommand => {
-      const label = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: menu label */
-      (0,external_wp_i18n_namespaceObject.__)('Go to: %s'), menuCommand.label);
-      return {
-        label,
-        searchLabel: label,
-        name: menuCommand.name,
-        url: menuCommand.url,
-        callback: ({
-          close
-        }) => {
-          document.location = menuCommand.url;
-          close();
-        }
-      };
-    });
-  }, []);
-  return {
-    commands,
-    isLoading: false
-  };
-};
 const getViewSiteCommand = () => function useViewSiteCommand() {
   const homeUrl = (0,external_wp_data_namespaceObject.useSelect)(select => {
     // Site index.
@@ -135,10 +111,24 @@ const getViewSiteCommand = () => function useViewSiteCommand() {
   };
 };
 function useAdminNavigationCommands(menuCommands) {
-  (0,external_wp_commands_namespaceObject.useCommandLoader)({
-    name: 'core/admin-navigation',
-    hook: getAdminNavigationCommands(menuCommands)
-  });
+  const commands = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return (menuCommands !== null && menuCommands !== void 0 ? menuCommands : []).map(menuCommand => {
+      const label = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: menu label */
+      (0,external_wp_i18n_namespaceObject.__)('Go to: %s'), menuCommand.label);
+      return {
+        name: menuCommand.name,
+        label,
+        searchLabel: label,
+        callback: ({
+          close
+        }) => {
+          document.location = menuCommand.url;
+          close();
+        }
+      };
+    });
+  }, [menuCommands]);
+  (0,external_wp_commands_namespaceObject.useCommands)(commands);
   (0,external_wp_commands_namespaceObject.useCommandLoader)({
     name: 'core/view-site',
     hook: getViewSiteCommand()
