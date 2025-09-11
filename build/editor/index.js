@@ -35601,7 +35601,7 @@ function CollabSidebar() {
   // Process comments to build the tree structure
   const {
     resultComments,
-    sortedThreads
+    unresolvedSortedThreads
   } = (0,external_wp_element_namespaceObject.useMemo)(() => {
     // Create a compare to store the references to all objects by id
     const compare = {};
@@ -35629,7 +35629,7 @@ function CollabSidebar() {
     if (0 === result?.length) {
       return {
         resultComments: [],
-        sortedThreads: []
+        unresolvedSortedThreads: []
       };
     }
     const updatedResult = result.map(item => ({
@@ -35638,10 +35638,12 @@ function CollabSidebar() {
     }));
     const blockCommentIds = getCommentIdsFromBlocks(blocks);
     const threadIdMap = new Map(updatedResult.map(thread => [thread.id, thread]));
-    const sortedComments = blockCommentIds.map(id => threadIdMap.get(id)).filter(thread => thread !== undefined);
+
+    // Get comments by block order, filter out undefined threads, and exclude resolved comments.
+    const unresolvedSortedComments = blockCommentIds.map(id => threadIdMap.get(id)).filter(thread => thread !== undefined && thread.status !== 'approved');
     return {
       resultComments: updatedResult,
-      sortedThreads: sortedComments
+      unresolvedSortedThreads: unresolvedSortedComments
     };
   }, [threads, blocks]);
 
@@ -35684,7 +35686,7 @@ function CollabSidebar() {
       className: "editor-collab-sidebar",
       headerClassName: "editor-collab-sidebar__header",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollabSidebarContent, {
-        comments: sortedThreads,
+        comments: unresolvedSortedThreads,
         showCommentBoard: showCommentBoard,
         setShowCommentBoard: setShowCommentBoard,
         styles: {
