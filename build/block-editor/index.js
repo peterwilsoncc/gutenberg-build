@@ -10222,6 +10222,10 @@ function getDerivedBlockEditingModesForTree(state, isNavMode = false, treeClient
     }
   });
   const contentOnlyTemplateLockedClientIds = Object.keys(state.blockListSettings).filter(clientId => state.blockListSettings[clientId]?.templateLock === 'contentOnly');
+  // Use array.from for better back compat. Older versions of the iterator returned
+  // from `keys()` didn't have the `filter` method.
+  const unsyncedPatternClientIds = !!window?.__experimentalContentOnlyPatternInsertion ? Array.from(state.blocks.attributes.keys()).filter(clientId => state.blocks.attributes.get(clientId)?.metadata?.patternName) : [];
+  const contentOnlyParents = [...contentOnlyTemplateLockedClientIds, ...unsyncedPatternClientIds];
   traverseBlockTree(state, treeClientId, block => {
     const {
       clientId,
@@ -10369,10 +10373,10 @@ function getDerivedBlockEditingModesForTree(state, isNavMode = false, treeClient
       }
     }
 
-    // `templateLock: 'contentOnly'` derived modes.
-    if (contentOnlyTemplateLockedClientIds.length) {
-      const hasContentOnlyTemplateLockedParent = !!findParentInClientIdsList(state, clientId, contentOnlyTemplateLockedClientIds);
-      if (hasContentOnlyTemplateLockedParent) {
+    // Handle `templateLock=contentOnly` blocks and unsynced patterns.
+    if (contentOnlyParents.length) {
+      const hasContentOnlyParent = !!findParentInClientIdsList(state, clientId, contentOnlyParents);
+      if (hasContentOnlyParent) {
         if (isContentBlock(blockName)) {
           derivedBlockEditingModes.set(clientId, 'contentOnly');
         } else {
@@ -10773,64 +10777,6 @@ const external_wp_blockSerializationDefaultParser_namespaceObject = window["wp"]
 ;// ./packages/block-editor/build-module/store/constants.js
 const STORE_NAME = 'core/block-editor';
 
-;// ./packages/block-editor/build-module/components/inserter/block-patterns-tab/utils.js
-/**
- * WordPress dependencies
- */
-
-
-const INSERTER_PATTERN_TYPES = {
-  user: 'user',
-  theme: 'theme',
-  directory: 'directory'
-};
-const INSERTER_SYNC_TYPES = {
-  full: 'fully',
-  unsynced: 'unsynced'
-};
-const allPatternsCategory = {
-  name: 'allPatterns',
-  label: (0,external_wp_i18n_namespaceObject._x)('All', 'patterns')
-};
-const myPatternsCategory = {
-  name: 'myPatterns',
-  label: (0,external_wp_i18n_namespaceObject.__)('My patterns')
-};
-const starterPatternsCategory = {
-  name: 'core/starter-content',
-  label: (0,external_wp_i18n_namespaceObject.__)('Starter content')
-};
-function isPatternFiltered(pattern, sourceFilter, syncFilter) {
-  const isUserPattern = pattern.name.startsWith('core/block');
-  const isDirectoryPattern = pattern.source === 'core' || pattern.source?.startsWith('pattern-directory');
-
-  // If theme source selected, filter out user created patterns and those from
-  // the core patterns directory.
-  if (sourceFilter === INSERTER_PATTERN_TYPES.theme && (isUserPattern || isDirectoryPattern)) {
-    return true;
-  }
-
-  // If the directory source is selected, filter out user created patterns
-  // and those bundled with the theme.
-  if (sourceFilter === INSERTER_PATTERN_TYPES.directory && (isUserPattern || !isDirectoryPattern)) {
-    return true;
-  }
-
-  // If user source selected, filter out theme patterns.
-  if (sourceFilter === INSERTER_PATTERN_TYPES.user && pattern.type !== INSERTER_PATTERN_TYPES.user) {
-    return true;
-  }
-
-  // Filter by sync status.
-  if (syncFilter === INSERTER_SYNC_TYPES.full && pattern.syncStatus !== '') {
-    return true;
-  }
-  if (syncFilter === INSERTER_SYNC_TYPES.unsynced && pattern.syncStatus !== 'unsynced' && isUserPattern) {
-    return true;
-  }
-  return false;
-}
-
 ;// ./packages/block-editor/build-module/utils/object.js
 /**
  * Immutably sets a value inside an object. Like `lodash#set`, but returning a
@@ -11052,7 +10998,6 @@ function getBlockSettings(state, clientId, ...paths) {
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -11313,22 +11258,6 @@ const hasAllowedPatterns = (0,external_wp_data_namespaceObject.createRegistrySel
     }) => canInsertBlockType(state, blockName, rootClientId));
   });
 }, (state, rootClientId) => [...getAllPatternsDependants(select)(state), ...getInsertBlockTypeDependants(select)(state, rootClientId)]));
-function mapUserPattern(userPattern, __experimentalUserPatternCategories = []) {
-  return {
-    name: `core/block/${userPattern.id}`,
-    id: userPattern.id,
-    type: INSERTER_PATTERN_TYPES.user,
-    title: userPattern.title.raw,
-    categories: userPattern.wp_pattern_category?.map(catId => {
-      const category = __experimentalUserPatternCategories.find(({
-        id
-      }) => id === catId);
-      return category ? category.slug : catId;
-    }),
-    content: userPattern.content.raw,
-    syncStatus: userPattern.wp_pattern_sync_status
-  };
-}
 const getPatternBySlug = (0,external_wp_data_namespaceObject.createRegistrySelector)(select => (0,external_wp_data_namespaceObject.createSelector)((state, patternName) => {
   var _state$settings$__exp, _state$settings$selec;
   // Only fetch reusable blocks if we know we need them. To do: maybe
@@ -11447,6 +11376,10 @@ const getParentSectionBlock = (state, clientId) => {
 function isSectionBlock(state, clientId) {
   const blockName = getBlockName(state, clientId);
   if (blockName === 'core/block' || getTemplateLock(state, clientId) === 'contentOnly') {
+    return true;
+  }
+  const attributes = getBlockAttributes(state, clientId);
+  if (attributes?.metadata?.patternName && !!window?.__experimentalContentOnlyPatternInsertion) {
     return true;
   }
 
@@ -11588,6 +11521,64 @@ function getInsertionPoint(state) {
   return state.insertionPoint;
 }
 
+;// ./packages/block-editor/build-module/components/inserter/block-patterns-tab/utils.js
+/**
+ * WordPress dependencies
+ */
+
+
+const INSERTER_PATTERN_TYPES = {
+  user: 'user',
+  theme: 'theme',
+  directory: 'directory'
+};
+const INSERTER_SYNC_TYPES = {
+  full: 'fully',
+  unsynced: 'unsynced'
+};
+const allPatternsCategory = {
+  name: 'allPatterns',
+  label: (0,external_wp_i18n_namespaceObject._x)('All', 'patterns')
+};
+const myPatternsCategory = {
+  name: 'myPatterns',
+  label: (0,external_wp_i18n_namespaceObject.__)('My patterns')
+};
+const starterPatternsCategory = {
+  name: 'core/starter-content',
+  label: (0,external_wp_i18n_namespaceObject.__)('Starter content')
+};
+function isPatternFiltered(pattern, sourceFilter, syncFilter) {
+  const isUserPattern = pattern.name.startsWith('core/block');
+  const isDirectoryPattern = pattern.source === 'core' || pattern.source?.startsWith('pattern-directory');
+
+  // If theme source selected, filter out user created patterns and those from
+  // the core patterns directory.
+  if (sourceFilter === INSERTER_PATTERN_TYPES.theme && (isUserPattern || isDirectoryPattern)) {
+    return true;
+  }
+
+  // If the directory source is selected, filter out user created patterns
+  // and those bundled with the theme.
+  if (sourceFilter === INSERTER_PATTERN_TYPES.directory && (isUserPattern || !isDirectoryPattern)) {
+    return true;
+  }
+
+  // If user source selected, filter out theme patterns.
+  if (sourceFilter === INSERTER_PATTERN_TYPES.user && pattern.type !== INSERTER_PATTERN_TYPES.user) {
+    return true;
+  }
+
+  // Filter by sync status.
+  if (syncFilter === INSERTER_SYNC_TYPES.full && pattern.syncStatus !== '') {
+    return true;
+  }
+  if (syncFilter === INSERTER_SYNC_TYPES.unsynced && pattern.syncStatus !== 'unsynced' && isUserPattern) {
+    return true;
+  }
+  return false;
+}
+
 ;// ./packages/block-editor/build-module/store/utils.js
 /**
  * WordPress dependencies
@@ -11602,9 +11593,26 @@ function getInsertionPoint(state) {
 
 
 
+
 const isFiltered = Symbol('isFiltered');
 const parsedPatternCache = new WeakMap();
 const grammarMapCache = new WeakMap();
+function mapUserPattern(userPattern, __experimentalUserPatternCategories = []) {
+  return {
+    name: `core/block/${userPattern.id}`,
+    id: userPattern.id,
+    type: INSERTER_PATTERN_TYPES.user,
+    title: userPattern.title?.raw,
+    categories: userPattern.wp_pattern_category?.map(catId => {
+      const category = __experimentalUserPatternCategories.find(({
+        id
+      }) => id === catId);
+      return category ? category.slug : catId;
+    }),
+    content: userPattern.content?.raw,
+    syncStatus: userPattern.wp_pattern_sync_status
+  };
+}
 function parsePattern(pattern) {
   const blocks = (0,external_wp_blocks_namespaceObject.parse)(pattern.content, {
     __unstableSkipMigrationLogs: true
@@ -13594,19 +13602,19 @@ const getInserterItems = (0,external_wp_data_namespaceObject.createRegistrySelec
       src: library_symbol,
       foreground: 'var(--wp-block-synced-color)'
     } : library_symbol;
-    const id = `core/block/${reusableBlock.id}`;
+    const userPattern = mapUserPattern(reusableBlock);
     const {
       time,
       count = 0
-    } = getInsertUsage(state, id) || {};
+    } = getInsertUsage(state, userPattern.name) || {};
     const frecency = calculateFrecency(time, count);
     return {
-      id,
+      id: userPattern.name,
       name: 'core/block',
       initialAttributes: {
         ref: reusableBlock.id
       },
-      title: reusableBlock.title?.raw,
+      title: userPattern.title,
       icon,
       category: 'reusable',
       keywords: ['reusable'],
@@ -13614,11 +13622,14 @@ const getInserterItems = (0,external_wp_data_namespaceObject.createRegistrySelec
       utility: 1,
       // Deprecated.
       frecency,
-      content: reusableBlock.content?.raw,
-      syncStatus: reusableBlock.wp_pattern_sync_status
+      content: userPattern.content,
+      get blocks() {
+        return getParsedPattern(userPattern).blocks;
+      },
+      syncStatus: userPattern.syncStatus
     };
   };
-  const syncedPatternInserterItems = canInsertBlockTypeUnmemoized(state, 'core/block', rootClientId) ? unlock(select(STORE_NAME)).getReusableBlocks().map(buildReusableBlockInserterItem) : [];
+  const patternInserterItems = canInsertBlockTypeUnmemoized(state, 'core/block', rootClientId) ? unlock(select(STORE_NAME)).getReusableBlocks().map(buildReusableBlockInserterItem) : [];
   const buildBlockTypeInserterItem = buildBlockTypeItem(state, {
     buildScope: 'inserter'
   });
@@ -13670,7 +13681,7 @@ const getInserterItems = (0,external_wp_data_namespaceObject.createRegistrySelec
     noncore: []
   });
   const sortedBlockTypes = [...coreItems, ...nonCoreItems];
-  return [...sortedBlockTypes, ...syncedPatternInserterItems];
+  return [...sortedBlockTypes, ...patternInserterItems];
 }, (state, rootClientId) => [(0,external_wp_blocks_namespaceObject.getBlockTypes)(), unlock(select(STORE_NAME)).getReusableBlocks(), state.blocks.order, state.preferences.insertUsage, ...getInsertBlockTypeDependants(select)(state, rootClientId)]));
 
 /**
@@ -59654,13 +59665,11 @@ function createBlockCompleter() {
         initialAttributes,
         innerBlocks,
         syncStatus,
-        content
+        blocks
       } = inserterItem;
       return {
         action: 'replace',
-        value: syncStatus === 'unsynced' ? (0,external_wp_blocks_namespaceObject.parse)(content, {
-          __unstableSkipMigrationLogs: true
-        }) : (0,external_wp_blocks_namespaceObject.createBlock)(name, initialAttributes, (0,external_wp_blocks_namespaceObject.createBlocksFromInnerBlocksTemplate)(innerBlocks))
+        value: syncStatus === 'unsynced' ? (blocks !== null && blocks !== void 0 ? blocks : []).map(block => (0,external_wp_blocks_namespaceObject.cloneBlock)(block)) : (0,external_wp_blocks_namespaceObject.createBlock)(name, initialAttributes, (0,external_wp_blocks_namespaceObject.createBlocksFromInnerBlocksTemplate)(innerBlocks))
       };
     }
   };
@@ -62294,6 +62303,7 @@ function pattern_transformations_menu_BlockPattern({
 
 
 
+
 function BlockSwitcherDropdownMenuContents({
   onClose,
   clientIds,
@@ -62417,15 +62427,17 @@ const BlockSwitcher = ({
     invalidBlocks,
     isReusable,
     isTemplate,
-    isDisabled
+    isDisabled,
+    isSection
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getTemplateLock,
       getBlocksByClientId,
       getBlockAttributes,
       canRemoveBlocks,
-      getBlockEditingMode
-    } = select(store);
+      getBlockEditingMode,
+      isSectionBlock
+    } = unlock(select(store));
     const {
       getBlockStyles,
       getBlockType,
@@ -62466,7 +62478,8 @@ const BlockSwitcher = ({
       isReusable: _isSingleBlockSelected && (0,external_wp_blocks_namespaceObject.isReusableBlock)(_blocks[0]),
       isTemplate: _isSingleBlockSelected && (0,external_wp_blocks_namespaceObject.isTemplatePart)(_blocks[0]),
       hasContentOnlyLocking: _hasTemplateLock,
-      isDisabled: editingMode !== 'default'
+      isDisabled: editingMode !== 'default',
+      isSection: isSectionBlock(clientIds[0])
     };
   }, [clientIds]);
   const blockTitle = useBlockDisplayTitle({
@@ -62480,7 +62493,8 @@ const BlockSwitcher = ({
   const isSingleBlock = clientIds.length === 1;
   const blockSwitcherLabel = isSingleBlock ? blockTitle : (0,external_wp_i18n_namespaceObject.__)('Multiple blocks selected');
   const blockIndicatorText = (isReusable || isTemplate) && !showIconLabels && blockTitle ? blockTitle : undefined;
-  const hideDropdown = isDisabled || !hasBlockStyles && !canRemove || hasContentOnlyLocking;
+  const hideTransformsForSections = window?.__experimentalContentOnlyPatternInsertion && isSection;
+  const hideDropdown = hideTransformsForSections || isDisabled || !hasBlockStyles && !canRemove || hasContentOnlyLocking;
   if (hideDropdown) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
@@ -65206,6 +65220,10 @@ function PrivateBlockToolbar({
     // If one or more selected blocks are locked, do not show the BlockGroupToolbar.
     const _hasTemplateLock = selectedBlockClientIds.some(id => getTemplateLock(id) === 'contentOnly');
     const _isZoomOut = isZoomOut();
+
+    // The switch style button appears more prominently with the
+    // content only pattern experiment.
+    const _showSwitchSectionStyleButton = window?.__experimentalContentOnlyPatternInsertion ? _isZoomOut || isSectionBlock(selectedBlockClientId) : _isZoomOut || isNavigationModeEnabled && editingMode === 'contentOnly' && isSectionBlock(selectedBlockClientId);
     return {
       blockClientId: selectedBlockClientId,
       blockClientIds: selectedBlockClientIds,
@@ -65221,8 +65239,7 @@ function PrivateBlockToolbar({
       showSlots: !_isZoomOut,
       showGroupButtons: !_isZoomOut,
       showLockButtons: !_isZoomOut,
-      showSwitchSectionStyleButton: _isZoomOut || isNavigationModeEnabled && editingMode === 'contentOnly' && isSectionBlock(selectedBlockClientId),
-      // Zoom out or Write Mode Section Blocks
+      showSwitchSectionStyleButton: _showSwitchSectionStyleButton,
       hasFixedToolbar: getSettings().hasFixedToolbar,
       isNavigationMode: isNavigationModeEnabled
     };
@@ -70261,7 +70278,8 @@ function __experimentalBlockVariationTransforms({
   const {
     activeBlockVariation,
     variations,
-    isContentOnly
+    isContentOnly,
+    isSection
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getActiveBlockVariation,
@@ -70270,8 +70288,9 @@ function __experimentalBlockVariationTransforms({
     const {
       getBlockName,
       getBlockAttributes,
-      getBlockEditingMode
-    } = select(store);
+      getBlockEditingMode,
+      isSectionBlock
+    } = unlock(select(store));
     const name = blockClientId && getBlockName(blockClientId);
     const {
       hasContentRoleAttribute
@@ -70280,7 +70299,8 @@ function __experimentalBlockVariationTransforms({
     return {
       activeBlockVariation: getActiveBlockVariation(name, getBlockAttributes(blockClientId)),
       variations: name && getBlockVariations(name, 'transform'),
-      isContentOnly: getBlockEditingMode(blockClientId) === 'contentOnly' && !isContentBlock
+      isContentOnly: getBlockEditingMode(blockClientId) === 'contentOnly' && !isContentBlock,
+      isSection: isSectionBlock(blockClientId)
     };
   }, [blockClientId]);
   const selectedValue = activeBlockVariation?.name;
@@ -70305,7 +70325,8 @@ function __experimentalBlockVariationTransforms({
       }) => name === variationName).attributes
     });
   };
-  if (!variations?.length || isContentOnly) {
+  const hideVariationsForSections = window?.__experimentalContentOnlyPatternInsertion && isSection;
+  if (!variations?.length || isContentOnly || hideVariationsForSections) {
     return null;
   }
   const baseClass = 'block-editor-block-variation-transforms';
