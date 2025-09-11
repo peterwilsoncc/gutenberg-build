@@ -35557,7 +35557,6 @@ function CollabSidebar() {
   const {
     postId,
     postType,
-    postStatus,
     threads
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
@@ -35574,7 +35573,6 @@ function CollabSidebar() {
     return {
       postId: _postId,
       postType: getCurrentPostType(),
-      postStatus: select(store_store).getEditedPostAttribute('status'),
       threads: data
     };
   }, []);
@@ -35660,9 +35658,6 @@ function CollabSidebar() {
         unsubscribe();
       }
     });
-  }
-  if (postStatus === 'publish') {
-    return null; // or maybe return some message indicating no threads are available.
   }
   const AddCommentComponent = blockCommentId ? comment_button_toolbar : comment_button;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
