@@ -59197,6 +59197,7 @@ const site_tagline_metadata = {
         text: true
       }
     },
+    contentRole: true,
     spacing: {
       margin: true,
       padding: true,

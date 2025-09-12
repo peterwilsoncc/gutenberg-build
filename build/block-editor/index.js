@@ -10225,7 +10225,7 @@ function getDerivedBlockEditingModesForTree(state, isNavMode = false, treeClient
   // Use array.from for better back compat. Older versions of the iterator returned
   // from `keys()` didn't have the `filter` method.
   const unsyncedPatternClientIds = !!window?.__experimentalContentOnlyPatternInsertion ? Array.from(state.blocks.attributes.keys()).filter(clientId => state.blocks.attributes.get(clientId)?.metadata?.patternName) : [];
-  const contentOnlyParents = [...contentOnlyTemplateLockedClientIds, ...unsyncedPatternClientIds];
+  const contentOnlyParents = [...contentOnlyTemplateLockedClientIds, ...unsyncedPatternClientIds, ...(window?.__experimentalContentOnlyPatternInsertion ? templatePartClientIds : [])];
   traverseBlockTree(state, treeClientId, block => {
     const {
       clientId,
@@ -11379,13 +11379,14 @@ function isSectionBlock(state, clientId) {
     return true;
   }
   const attributes = getBlockAttributes(state, clientId);
-  if (attributes?.metadata?.patternName && !!window?.__experimentalContentOnlyPatternInsertion) {
+  const isTemplatePart = blockName === 'core/template-part';
+  if ((attributes?.metadata?.patternName || isTemplatePart) && !!window?.__experimentalContentOnlyPatternInsertion) {
     return true;
   }
 
   // Template parts become sections in navigation mode.
   const _isNavigationMode = isNavigationMode(state);
-  if (_isNavigationMode && blockName === 'core/template-part') {
+  if (_isNavigationMode && isTemplatePart) {
     return true;
   }
   const sectionRootClientId = getSectionRootClientId(state);
