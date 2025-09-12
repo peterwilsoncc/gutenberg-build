@@ -559,6 +559,7 @@ __webpack_require__.d(build_module_selectors_namespaceObject, {
   getUserPatternCategories: () => (getUserPatternCategories),
   getUserQueryResults: () => (getUserQueryResults),
   hasEditsForEntityRecord: () => (hasEditsForEntityRecord),
+  hasEntityRecord: () => (hasEntityRecord),
   hasEntityRecords: () => (hasEntityRecords),
   hasFetchedAutosaves: () => (hasFetchedAutosaves),
   hasRedo: () => (hasRedo),
@@ -3465,6 +3466,54 @@ getEntityRecord.__unstableNormalizeArgs = args => {
 };
 
 /**
+ * Returns true if a record has been received for the given set of parameters, or false otherwise.
+ *
+ * Note: This action does not trigger a request for the entity record from the API
+ * if it's not available in the local state.
+ *
+ * @param state State tree
+ * @param kind  Entity kind.
+ * @param name  Entity name.
+ * @param key   Record's key.
+ * @param query Optional query.
+ *
+ * @return Whether an entity record has been received.
+ */
+function hasEntityRecord(state, kind, name, key, query) {
+  var _query$context3, _getNormalizedCommaSe2;
+  const queriedState = state.entities.records?.[kind]?.[name]?.queriedData;
+  if (!queriedState) {
+    return false;
+  }
+  const context = (_query$context3 = query?.context) !== null && _query$context3 !== void 0 ? _query$context3 : 'default';
+
+  // If expecting a complete item, validate that completeness.
+  if (!query || !query._fields) {
+    return !!queriedState.itemIsComplete[context]?.[key];
+  }
+  const item = queriedState.items[context]?.[key];
+  if (!item) {
+    return false;
+  }
+
+  // When `query._fields` is provided, check that each requested field exists,
+  // including any nested paths, on the item; return false if any part is missing.
+  const fields = (_getNormalizedCommaSe2 = get_normalized_comma_separable(query._fields)) !== null && _getNormalizedCommaSe2 !== void 0 ? _getNormalizedCommaSe2 : [];
+  for (let i = 0; i < fields.length; i++) {
+    const path = fields[i].split('.');
+    let value = item;
+    for (let p = 0; p < path.length; p++) {
+      const part = path[p];
+      if (!value || !Object.hasOwn(value, part)) {
+        return false;
+      }
+      value = value[part];
+    }
+  }
+  return true;
+}
+
+/**
  * Returns the Entity's record object by key. Doesn't trigger a resolver nor requests the entity records from the API if the entity record isn't available in the local state.
  *
  * @param state State tree
@@ -3504,8 +3553,8 @@ const getRawEntityRecord = (0,external_wp_data_namespaceObject.createSelector)((
     return accumulator;
   }, {});
 }, (state, kind, name, recordId, query) => {
-  var _query$context3;
-  const context = (_query$context3 = query?.context) !== null && _query$context3 !== void 0 ? _query$context3 : 'default';
+  var _query$context4;
+  const context = (_query$context4 = query?.context) !== null && _query$context4 !== void 0 ? _query$context4 : 'default';
   return [state.entities.config, state.entities.records?.[kind]?.[name]?.queriedData?.items[context]?.[recordId], state.entities.records?.[kind]?.[name]?.queriedData?.itemIsComplete[context]?.[recordId]];
 });
 
@@ -3777,8 +3826,8 @@ const getEditedEntityRecord = (0,external_wp_data_namespaceObject.createSelector
     ...edited
   };
 }, (state, kind, name, recordId, query) => {
-  var _query$context4;
-  const context = (_query$context4 = query?.context) !== null && _query$context4 !== void 0 ? _query$context4 : 'default';
+  var _query$context5;
+  const context = (_query$context5 = query?.context) !== null && _query$context5 !== void 0 ? _query$context5 : 'default';
   return [state.entities.config, state.entities.records?.[kind]?.[name]?.queriedData.items[context]?.[recordId], state.entities.records?.[kind]?.[name]?.queriedData.itemIsComplete[context]?.[recordId], state.entities.records?.[kind]?.[name]?.edits?.[recordId]];
 });
 
@@ -4254,13 +4303,13 @@ const getRevisions = (state, kind, name, recordKey, query) => {
  * @return Record.
  */
 const getRevision = (0,external_wp_data_namespaceObject.createSelector)((state, kind, name, recordKey, revisionKey, query) => {
-  var _query$context5;
+  var _query$context6;
   logEntityDeprecation(kind, name, 'getRevision');
   const queriedState = state.entities.records?.[kind]?.[name]?.revisions?.[recordKey];
   if (!queriedState) {
     return undefined;
   }
-  const context = (_query$context5 = query?.context) !== null && _query$context5 !== void 0 ? _query$context5 : 'default';
+  const context = (_query$context6 = query?.context) !== null && _query$context6 !== void 0 ? _query$context6 : 'default';
   if (query === undefined) {
     // If expecting a complete item, validate that completeness.
     if (!queriedState.itemIsComplete[context]?.[revisionKey]) {
@@ -4270,9 +4319,9 @@ const getRevision = (0,external_wp_data_namespaceObject.createSelector)((state, 
   }
   const item = queriedState.items[context]?.[revisionKey];
   if (item && query._fields) {
-    var _getNormalizedCommaSe2;
+    var _getNormalizedCommaSe3;
     const filteredItem = {};
-    const fields = (_getNormalizedCommaSe2 = get_normalized_comma_separable(query._fields)) !== null && _getNormalizedCommaSe2 !== void 0 ? _getNormalizedCommaSe2 : [];
+    const fields = (_getNormalizedCommaSe3 = get_normalized_comma_separable(query._fields)) !== null && _getNormalizedCommaSe3 !== void 0 ? _getNormalizedCommaSe3 : [];
     for (let f = 0; f < fields.length; f++) {
       const field = fields[f].split('.');
       let value = item;
@@ -4285,8 +4334,8 @@ const getRevision = (0,external_wp_data_namespaceObject.createSelector)((state, 
   }
   return item;
 }, (state, kind, name, recordKey, revisionKey, query) => {
-  var _query$context6;
-  const context = (_query$context6 = query?.context) !== null && _query$context6 !== void 0 ? _query$context6 : 'default';
+  var _query$context7;
+  const context = (_query$context7 = query?.context) !== null && _query$context7 !== void 0 ? _query$context7 : 'default';
   return [state.entities.records?.[kind]?.[name]?.revisions?.[recordKey]?.items?.[context]?.[revisionKey], state.entities.records?.[kind]?.[name]?.revisions?.[recordKey]?.itemIsComplete?.[context]?.[revisionKey]];
 });
 
@@ -23071,32 +23120,19 @@ const resolvers_getEntityRecord = (kind, name, key = '', query) => async ({
           _fields: [...new Set([...(get_normalized_comma_separable(query._fields) || []), entityConfig.key || DEFAULT_ENTITY_KEY])].join()
         };
       }
-
-      // Disable reason: While true that an early return could leave `path`
-      // unused, it's important that path is derived using the query prior to
-      // additional query modifications in the condition below, since those
-      // modifications are relevant to how the data is tracked in state, and not
-      // for how the request is made to the REST API.
-
-      // eslint-disable-next-line @wordpress/no-unused-vars-before-return
+      if (query !== undefined && query._fields) {
+        // The resolution cache won't consider query as reusable based on the
+        // fields, so it's tested here, prior to initiating the REST request,
+        // and without causing `getEntityRecord` resolution to occur.
+        const hasRecord = select.hasEntityRecord(kind, name, key, query);
+        if (hasRecord) {
+          return;
+        }
+      }
       const path = (0,external_wp_url_namespaceObject.addQueryArgs)(entityConfig.baseURL + (key ? '/' + key : ''), {
         ...entityConfig.baseURLParams,
         ...query
       });
-      if (query !== undefined && query._fields) {
-        query = {
-          ...query,
-          include: [key]
-        };
-
-        // The resolution cache won't consider query as reusable based on the
-        // fields, so it's tested here, prior to initiating the REST request,
-        // and without causing `getEntityRecords` resolution to occur.
-        const hasRecords = select.hasEntityRecords(kind, name, query);
-        if (hasRecords) {
-          return;
-        }
-      }
       const response = await external_wp_apiFetch_default()({
         path,
         parse: false
