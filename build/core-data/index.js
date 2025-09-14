@@ -23195,9 +23195,20 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
   const lock = await dispatch.__unstableAcquireStoreLock(STORE_NAME, ['entities', 'records', kind, name], {
     exclusive: false
   });
+
+  // Keep a copy of the original query for later use in getResolutionsArgs.
+  // The query object may be modified below (for example, when _fields is
+  // specified), but we want to use the original query when marking
+  // resolutions as finished.
+  const rawQuery = {
+    ...query
+  };
   const key = entityConfig.key || DEFAULT_ENTITY_KEY;
-  function getResolutionsArgs(records) {
-    return records.filter(record => record?.[key]).map(record => [kind, name, record[key]]);
+  function getResolutionsArgs(records, recordsQuery) {
+    const queryArgs = Object.fromEntries(Object.entries(recordsQuery).filter(([k, v]) => {
+      return ['context', '_fields'].includes(k) && !!v;
+    }));
+    return records.filter(record => record?.[key]).map(record => [kind, name, record[key], Object.keys(queryArgs).length > 0 ? queryArgs : undefined]);
   }
   try {
     if (query._fields) {
@@ -23206,7 +23217,7 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
       // the ID.
       query = {
         ...query,
-        _fields: [...new Set([...(get_normalized_comma_separable(query._fields) || []), entityConfig.key || DEFAULT_ENTITY_KEY])].join()
+        _fields: [...new Set([...(get_normalized_comma_separable(query._fields) || []), key])].join()
       };
     }
     const path = (0,external_wp_url_namespaceObject.addQueryArgs)(entityConfig.baseURL, {
@@ -23247,7 +23258,7 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
         records.push(...pageRecords);
         registry.batch(() => {
           dispatch.receiveEntityRecords(kind, name, records, query, false, undefined, meta);
-          dispatch.finishResolutions('getEntityRecord', getResolutionsArgs(pageRecords));
+          dispatch.finishResolutions('getEntityRecord', getResolutionsArgs(pageRecords, rawQuery));
         });
         page++;
       } while (page <= totalPages);
@@ -23300,14 +23311,7 @@ const resolvers_getEntityRecords = (kind, name, query = {}) => async ({
         dispatch.receiveUserPermissions(receiveUserPermissionArgs);
         dispatch.finishResolutions('canUser', canUserResolutionsArgs);
       }
-
-      // When requesting all fields, the list of results can be used to resolve
-      // the `getEntityRecord` selector in addition to `getEntityRecords`.
-      // See https://github.com/WordPress/gutenberg/pull/26575
-      // Todo https://github.com/WordPress/gutenberg/issues/26629
-      if (!query?._fields && !query.context) {
-        dispatch.finishResolutions('getEntityRecord', getResolutionsArgs(records));
-      }
+      dispatch.finishResolutions('getEntityRecord', getResolutionsArgs(records, rawQuery));
       dispatch.__unstableReleaseStoreLock(lock);
     });
   } catch (e) {
