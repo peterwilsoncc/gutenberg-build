@@ -4303,14 +4303,14 @@ const getRevisions = (state, kind, name, recordKey, query) => {
  * @return Record.
  */
 const getRevision = (0,external_wp_data_namespaceObject.createSelector)((state, kind, name, recordKey, revisionKey, query) => {
-  var _query$context6;
+  var _query$context6, _getNormalizedCommaSe3;
   logEntityDeprecation(kind, name, 'getRevision');
   const queriedState = state.entities.records?.[kind]?.[name]?.revisions?.[recordKey];
   if (!queriedState) {
     return undefined;
   }
   const context = (_query$context6 = query?.context) !== null && _query$context6 !== void 0 ? _query$context6 : 'default';
-  if (query === undefined) {
+  if (!query || !query._fields) {
     // If expecting a complete item, validate that completeness.
     if (!queriedState.itemIsComplete[context]?.[revisionKey]) {
       return undefined;
@@ -4318,25 +4318,25 @@ const getRevision = (0,external_wp_data_namespaceObject.createSelector)((state, 
     return queriedState.items[context][revisionKey];
   }
   const item = queriedState.items[context]?.[revisionKey];
-  if (item && query._fields) {
-    var _getNormalizedCommaSe3;
-    const filteredItem = {};
-    const fields = (_getNormalizedCommaSe3 = get_normalized_comma_separable(query._fields)) !== null && _getNormalizedCommaSe3 !== void 0 ? _getNormalizedCommaSe3 : [];
-    for (let f = 0; f < fields.length; f++) {
-      const field = fields[f].split('.');
-      let value = item;
-      field.forEach(fieldName => {
-        value = value?.[fieldName];
-      });
-      setNestedValue(filteredItem, field, value);
-    }
-    return filteredItem;
+  if (!item) {
+    return item;
   }
-  return item;
+  const filteredItem = {};
+  const fields = (_getNormalizedCommaSe3 = get_normalized_comma_separable(query._fields)) !== null && _getNormalizedCommaSe3 !== void 0 ? _getNormalizedCommaSe3 : [];
+  for (let f = 0; f < fields.length; f++) {
+    const field = fields[f].split('.');
+    let value = item;
+    field.forEach(fieldName => {
+      value = value?.[fieldName];
+    });
+    setNestedValue(filteredItem, field, value);
+  }
+  return filteredItem;
 }, (state, kind, name, recordKey, revisionKey, query) => {
   var _query$context7;
   const context = (_query$context7 = query?.context) !== null && _query$context7 !== void 0 ? _query$context7 : 'default';
-  return [state.entities.records?.[kind]?.[name]?.revisions?.[recordKey]?.items?.[context]?.[revisionKey], state.entities.records?.[kind]?.[name]?.revisions?.[recordKey]?.itemIsComplete?.[context]?.[revisionKey]];
+  const queriedState = state.entities.records?.[kind]?.[name]?.revisions?.[recordKey];
+  return [queriedState?.items?.[context]?.[revisionKey], queriedState?.itemIsComplete?.[context]?.[revisionKey]];
 });
 
 ;// external ["wp","privateApis"]
