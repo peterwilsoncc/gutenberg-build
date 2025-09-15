@@ -37246,6 +37246,11 @@ function Radio({
  * Internal dependencies
  */
 
+
+
+const {
+  ValidatedSelectControl
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function Select({
   data,
   field,
@@ -37255,9 +37260,11 @@ function Select({
   var _field$getValue, _field$elements;
   const {
     id,
+    type,
     label,
-    type
+    description
   } = field;
+  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
   const isMultiple = type === 'array';
   const value = (_field$getValue = field.getValue({
     item: data
@@ -37281,10 +37288,26 @@ function Select({
     label: (0,external_wp_i18n_namespaceObject.__)('Select item'),
     value: ''
   }, ...fieldElements];
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedSelectControl, {
+    required: !!field.isValid?.required,
+    onValidate: newValue => {
+      const message = field.isValid?.custom?.({
+        ...data,
+        [id]: newValue
+      }, field);
+      if (message) {
+        setCustomValidity({
+          type: 'invalid',
+          message
+        });
+        return;
+      }
+      setCustomValidity(undefined);
+    },
+    customValidity: customValidity,
     label: label,
     value: value,
-    help: field.description,
+    help: description,
     options: elements,
     onChange: onChangeControl,
     __next40pxDefaultSize: true,

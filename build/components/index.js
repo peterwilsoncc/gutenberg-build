@@ -82325,6 +82325,54 @@ const UnforwardedValidatedNumberControl = ({
 };
 const ValidatedNumberControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedValidatedNumberControl);
 
+;// ./packages/components/build-module/validated-form-controls/components/select-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+// Only support single value selection
+
+const UnforwardedValidatedSelectControl = ({
+  required,
+  onValidate,
+  customValidity,
+  onChange,
+  markWhenOptional,
+  ...restProps
+}, forwardedRef) => {
+  const validityTargetRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const mergedRefs = (0,external_wp_compose_namespaceObject.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const valueRef = (0,external_wp_element_namespaceObject.useRef)(restProps.value);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ControlWithError, {
+    required: required,
+    markWhenOptional: markWhenOptional,
+    onValidate: () => {
+      return onValidate?.(valueRef.current);
+    },
+    customValidity: customValidity,
+    getValidityTarget: () => validityTargetRef.current,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(select_control, {
+      __nextHasNoMarginBottom: true,
+      __next40pxDefaultSize: true,
+      ref: mergedRefs,
+      onChange: value => {
+        valueRef.current = value;
+        onChange?.(value);
+      },
+      ...restProps
+    })
+  });
+};
+const ValidatedSelectControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedValidatedSelectControl);
+
 ;// ./packages/components/build-module/validated-form-controls/components/text-control.js
 /**
  * WordPress dependencies
@@ -82505,6 +82553,7 @@ lock(privateApis, {
   ValidatedInputControl: ValidatedInputControl,
   ValidatedCheckboxControl: ValidatedCheckboxControl,
   ValidatedNumberControl: ValidatedNumberControl,
+  ValidatedSelectControl: ValidatedSelectControl,
   ValidatedTextControl: ValidatedTextControl,
   ValidatedTextareaControl: ValidatedTextareaControl,
   ValidatedToggleControl: ValidatedToggleControl
