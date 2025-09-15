@@ -70298,7 +70298,7 @@ function __experimentalBlockVariationTransforms({
     } = unlock(select(external_wp_blocks_namespaceObject.store));
     const isContentBlock = hasContentRoleAttribute(name);
     return {
-      activeBlockVariation: getActiveBlockVariation(name, getBlockAttributes(blockClientId)),
+      activeBlockVariation: getActiveBlockVariation(name, getBlockAttributes(blockClientId), 'transform'),
       variations: name && getBlockVariations(name, 'transform'),
       isContentOnly: getBlockEditingMode(blockClientId) === 'contentOnly' && !isContentBlock,
       isSection: isSectionBlock(blockClientId)
