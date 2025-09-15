@@ -34829,9 +34829,9 @@ function CommentAuthorInfo({
         className: "editor-collab-sidebar-panel__user-name",
         children: name !== null && name !== void 0 ? name : currentUserName
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {
-        dateTime: (0,external_wp_date_namespaceObject.dateI18n)('c', date !== null && date !== void 0 ? date : currentDate),
+        dateTime: (0,external_wp_date_namespaceObject.dateI18n)('c', date ? (0,external_wp_date_namespaceObject.getDate)(date) : currentDate),
         className: "editor-collab-sidebar-panel__user-time",
-        children: (0,external_wp_date_namespaceObject.dateI18n)(dateTimeFormat, date !== null && date !== void 0 ? date : currentDate)
+        children: (0,external_wp_date_namespaceObject.dateI18n)(dateTimeFormat, date ? (0,external_wp_date_namespaceObject.getDate)(date) : currentDate)
       })]
     })]
   });
