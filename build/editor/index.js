@@ -35207,8 +35207,7 @@ const CommentBoard = ({
       isOpen: showConfirmDialog,
       onConfirm: handleConfirmResolve,
       onCancel: handleCancel,
-      confirmButtonText: "Yes",
-      cancelButtonText: "No",
+      confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Resolve'),
       children:
       // translators: message displayed when confirming an action
       (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to mark this comment as resolved?')
@@ -35216,8 +35215,7 @@ const CommentBoard = ({
       isOpen: showConfirmDialog,
       onConfirm: handleConfirmDelete,
       onCancel: handleCancel,
-      confirmButtonText: "Yes",
-      cancelButtonText: "No",
+      confirmButtonText: (0,external_wp_i18n_namespaceObject.__)('Delete'),
       children:
       // translators: message displayed when confirming an action
       (0,external_wp_i18n_namespaceObject.__)('Are you sure you want to delete this comment?')
