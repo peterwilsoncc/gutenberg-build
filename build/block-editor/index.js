@@ -76046,9 +76046,14 @@ const ImageURLInputUI = ({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
       __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
-      label: (0,external_wp_i18n_namespaceObject.__)('Link rel'),
+      label: (0,external_wp_i18n_namespaceObject.__)('Link relation'),
       value: rel !== null && rel !== void 0 ? rel : '',
-      onChange: onSetLinkRel
+      onChange: onSetLinkRel,
+      help: (0,external_wp_element_namespaceObject.createInterpolateElement)((0,external_wp_i18n_namespaceObject.__)('The <a>Link Relation</a> attribute defines the relationship between a linked resource and the current document.'), {
+        a: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
+          href: "https://developer.mozilla.org/docs/Web/HTML/Attributes/rel"
+        })
+      })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
       __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
