@@ -82519,6 +82519,68 @@ const UnforwardedValidatedToggleControl = ({
 };
 const ValidatedToggleControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedValidatedToggleControl);
 
+;// ./packages/components/build-module/validated-form-controls/components/toggle-group-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const UnforwardedValidatedToggleGroupControl = ({
+  required,
+  onValidate,
+  customValidity,
+  onChange,
+  markWhenOptional,
+  ...restProps
+}, forwardedRef) => {
+  const validityTargetRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const valueRef = (0,external_wp_element_namespaceObject.useRef)(restProps.value);
+  const nameAttr = (0,external_wp_element_namespaceObject.useId)();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    className: "components-validated-control__wrapper-with-error-delegate",
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ControlWithError, {
+      required: required,
+      markWhenOptional: markWhenOptional,
+      onValidate: () => {
+        return onValidate?.(valueRef.current);
+      },
+      customValidity: customValidity,
+      getValidityTarget: () => validityTargetRef.current,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(toggle_group_control_component, {
+        __nextHasNoMarginBottom: true,
+        __next40pxDefaultSize: true,
+        ref: forwardedRef,
+        onChange: value => {
+          valueRef.current = value;
+          onChange?.(value);
+        },
+        ...restProps
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
+      className: "components-validated-control__error-delegate",
+      type: "radio",
+      ref: validityTargetRef,
+      required: required,
+      checked: restProps.value !== undefined,
+      tabIndex: -1
+      // A name attribute is needed for the `required` behavior to work.
+      ,
+      name: nameAttr,
+      onChange: () => {},
+      onFocus: e => {
+        e.target.previousElementSibling?.querySelector('[data-active-item="true"]')?.focus();
+      }
+    })]
+  });
+};
+const ValidatedToggleGroupControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedValidatedToggleGroupControl);
+
 ;// ./packages/components/build-module/private-apis.js
 /**
  * Internal dependencies
@@ -82556,7 +82618,8 @@ lock(privateApis, {
   ValidatedSelectControl: ValidatedSelectControl,
   ValidatedTextControl: ValidatedTextControl,
   ValidatedTextareaControl: ValidatedTextareaControl,
-  ValidatedToggleControl: ValidatedToggleControl
+  ValidatedToggleControl: ValidatedToggleControl,
+  ValidatedToggleGroupControl: ValidatedToggleGroupControl
 });
 
 ;// ./packages/components/build-module/index.js

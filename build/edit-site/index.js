@@ -37473,6 +37473,11 @@ function Textarea({
  * Internal dependencies
  */
 
+
+
+const {
+  ValidatedToggleGroupControl
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function ToggleGroup({
   data,
   field,
@@ -37482,6 +37487,7 @@ function ToggleGroup({
   const {
     id
   } = field;
+  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
   const value = field.getValue({
     item: data
   });
@@ -37490,7 +37496,23 @@ function ToggleGroup({
   }), [id, onChange]);
   if (field.elements) {
     const selectedOption = field.elements.find(el => el.value === value);
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToggleGroupControl, {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedToggleGroupControl, {
+      required: !!field.isValid?.required,
+      onValidate: newValue => {
+        const message = field.isValid?.custom?.({
+          ...data,
+          [id]: newValue
+        }, field);
+        if (message) {
+          setCustomValidity({
+            type: 'invalid',
+            message
+          });
+          return;
+        }
+        setCustomValidity(undefined);
+      },
+      customValidity: customValidity,
       __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
       isBlock: true,
