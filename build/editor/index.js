@@ -35183,26 +35183,17 @@ const CommentBoard = ({
           })
         })]
       })]
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
-      alignment: "left",
-      spacing: "3",
-      justify: "flex-start",
+    }), 'edit' === actionState ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_form, {
+      onSubmit: value => {
+        onEdit(thread.id, value);
+        setActionState(false);
+      },
+      onCancel: () => handleCancel(),
+      thread: thread,
+      submitButtonText: (0,external_wp_i18n_namespaceObject._x)('Update', 'verb')
+    }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.RawHTML, {
       className: "editor-collab-sidebar-panel__user-comment",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-        spacing: "3",
-        className: "editor-collab-sidebar-panel__comment-field",
-        children: ['edit' === actionState && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_form, {
-          onSubmit: value => {
-            onEdit(thread.id, value);
-            setActionState(false);
-          },
-          onCancel: () => handleCancel(),
-          thread: thread,
-          submitButtonText: (0,external_wp_i18n_namespaceObject._x)('Update', 'verb')
-        }), 'edit' !== actionState && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.RawHTML, {
-          children: thread?.content?.raw
-        })]
-      })
+      children: thread?.content?.rendered
     }), 'resolve' === actionState && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalConfirmDialog, {
       isOpen: showConfirmDialog,
       onConfirm: handleConfirmResolve,
