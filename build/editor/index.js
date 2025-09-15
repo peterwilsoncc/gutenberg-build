@@ -6705,165 +6705,49 @@ function Checkbox({
   });
 }
 
-;// ./node_modules/clsx/dist/clsx.mjs
-function clsx_r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=clsx_r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=clsx_r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
-;// ./packages/dataviews/build-module/dataform-controls/relative-date-control.js
+;// ./packages/dataviews/node_modules/date-fns/isDate.js
 /**
- * External dependencies
+ * @name isDate
+ * @category Common Helpers
+ * @summary Is the given value a date?
+ *
+ * @description
+ * Returns true if the given value is an instance of Date. The function works for dates transferred across iframes.
+ *
+ * @param value - The value to check
+ *
+ * @returns True if the given value is a date
+ *
+ * @example
+ * // For a valid date:
+ * const result = isDate(new Date())
+ * //=> true
+ *
+ * @example
+ * // For an invalid date:
+ * const result = isDate(new Date(NaN))
+ * //=> true
+ *
+ * @example
+ * // For some value:
+ * const result = isDate('2014-02-31')
+ * //=> false
+ *
+ * @example
+ * // For an object:
+ * const result = isDate({})
+ * //=> false
  */
-
-
-/**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-const TIME_UNITS_OPTIONS = {
-  [OPERATOR_IN_THE_PAST]: [{
-    value: 'days',
-    label: (0,external_wp_i18n_namespaceObject.__)('Days')
-  }, {
-    value: 'weeks',
-    label: (0,external_wp_i18n_namespaceObject.__)('Weeks')
-  }, {
-    value: 'months',
-    label: (0,external_wp_i18n_namespaceObject.__)('Months')
-  }, {
-    value: 'years',
-    label: (0,external_wp_i18n_namespaceObject.__)('Years')
-  }],
-  [OPERATOR_OVER]: [{
-    value: 'days',
-    label: (0,external_wp_i18n_namespaceObject.__)('Days ago')
-  }, {
-    value: 'weeks',
-    label: (0,external_wp_i18n_namespaceObject.__)('Weeks ago')
-  }, {
-    value: 'months',
-    label: (0,external_wp_i18n_namespaceObject.__)('Months ago')
-  }, {
-    value: 'years',
-    label: (0,external_wp_i18n_namespaceObject.__)('Years ago')
-  }]
-};
-function RelativeDateControl({
-  id,
-  value,
-  onChange,
-  label,
-  hideLabelFromVision,
-  options,
-  className
-}) {
-  const {
-    value: relValue = '',
-    unit = options[0].value
-  } = value;
-  const onChangeValue = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: {
-      value: Number(newValue),
-      unit
-    }
-  }), [id, onChange, unit]);
-  const onChangeUnit = (0,external_wp_element_namespaceObject.useCallback)(newUnit => onChange({
-    [id]: {
-      value: relValue,
-      unit: newUnit
-    }
-  }), [id, onChange, relValue]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
-    id: id,
-    __nextHasNoMarginBottom: true,
-    className: dist_clsx(className, 'dataviews-controls__relative-date'),
-    label: label,
-    hideLabelFromVision: hideLabelFromVision,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-      spacing: 2.5,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
-        __next40pxDefaultSize: true,
-        className: "dataviews-controls__relative-date-number",
-        spinControls: "none",
-        min: 1,
-        step: 1,
-        value: relValue,
-        onChange: onChangeValue
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-        className: "dataviews-controls__relative-date-unit",
-        __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Unit'),
-        value: unit,
-        options: options,
-        onChange: onChangeUnit,
-        hideLabelFromVision: true
-      })]
-    })
-  });
+function isDate(value) {
+  return (
+    value instanceof Date ||
+    (typeof value === "object" &&
+      Object.prototype.toString.call(value) === "[object Date]")
+  );
 }
 
-;// ./packages/dataviews/build-module/dataform-controls/datetime.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-function DateTime({
-  data,
-  field,
-  onChange,
-  hideLabelFromVision,
-  operator
-}) {
-  const {
-    id,
-    label
-  } = field;
-  const value = field.getValue({
-    item: data
-  });
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: newValue
-  }), [id, onChange]);
-  if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RelativeDateControl, {
-      id: id,
-      value: value && typeof value === 'object' ? value : {},
-      onChange: onChange,
-      label: label,
-      hideLabelFromVision: hideLabelFromVision,
-      options: TIME_UNITS_OPTIONS[operator]
-    });
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
-    className: "dataviews-controls__datetime",
-    children: [!hideLabelFromVision && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
-      as: "legend",
-      children: label
-    }), hideLabelFromVision && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
-      as: "legend",
-      children: label
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TimePicker, {
-      currentTime: typeof value === 'string' ? value : undefined,
-      onChange: onChangeControl,
-      hideLabelFromVision: true
-    })]
-  });
-}
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_isDate = ((/* unused pure expression or super */ null && (isDate)));
 
 ;// ./packages/dataviews/node_modules/date-fns/constants.js
 /**
@@ -7183,392 +7067,6 @@ function toDate(argument, context) {
 
 // Fallback for modularized imports:
 /* harmony default export */ const date_fns_toDate = ((/* unused pure expression or super */ null && (toDate)));
-
-;// ./packages/dataviews/node_modules/date-fns/addDays.js
-
-
-
-/**
- * The {@link addDays} function options.
- */
-
-/**
- * @name addDays
- * @category Day Helpers
- * @summary Add the specified number of days to the given date.
- *
- * @description
- * Add the specified number of days to the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
- *
- * @param date - The date to be changed
- * @param amount - The amount of days to be added.
- * @param options - An object with options
- *
- * @returns The new date with the days added
- *
- * @example
- * // Add 10 days to 1 September 2014:
- * const result = addDays(new Date(2014, 8, 1), 10)
- * //=> Thu Sep 11 2014 00:00:00
- */
-function addDays(date, amount, options) {
-  const _date = toDate(date, options?.in);
-  if (isNaN(amount)) return constructFrom(options?.in || date, NaN);
-
-  // If 0 days, no-op to avoid changing times in the hour before end of DST
-  if (!amount) return _date;
-
-  _date.setDate(_date.getDate() + amount);
-  return _date;
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_addDays = ((/* unused pure expression or super */ null && (addDays)));
-
-;// ./packages/dataviews/node_modules/date-fns/subDays.js
-
-
-/**
- * The {@link subDays} function options.
- */
-
-/**
- * @name subDays
- * @category Day Helpers
- * @summary Subtract the specified number of days from the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
- *
- * @param date - The date to be changed
- * @param amount - The amount of days to be subtracted.
- * @param options - An object with options
- *
- * @returns The new date with the days subtracted
- *
- * @example
- * // Subtract 10 days from 1 September 2014:
- * const result = subDays(new Date(2014, 8, 1), 10)
- * //=> Fri Aug 22 2014 00:00:00
- */
-function subDays(date, amount, options) {
-  return addDays(date, -amount, options);
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_subDays = ((/* unused pure expression or super */ null && (subDays)));
-
-;// ./packages/dataviews/node_modules/date-fns/addMonths.js
-
-
-
-/**
- * The {@link addMonths} function options.
- */
-
-/**
- * @name addMonths
- * @category Month Helpers
- * @summary Add the specified number of months to the given date.
- *
- * @description
- * Add the specified number of months to the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
- *
- * @param date - The date to be changed
- * @param amount - The amount of months to be added.
- * @param options - The options object
- *
- * @returns The new date with the months added
- *
- * @example
- * // Add 5 months to 1 September 2014:
- * const result = addMonths(new Date(2014, 8, 1), 5)
- * //=> Sun Feb 01 2015 00:00:00
- *
- * // Add one month to 30 January 2023:
- * const result = addMonths(new Date(2023, 0, 30), 1)
- * //=> Tue Feb 28 2023 00:00:00
- */
-function addMonths(date, amount, options) {
-  const _date = toDate(date, options?.in);
-  if (isNaN(amount)) return constructFrom(options?.in || date, NaN);
-  if (!amount) {
-    // If 0 months, no-op to avoid changing times in the hour before end of DST
-    return _date;
-  }
-  const dayOfMonth = _date.getDate();
-
-  // The JS Date object supports date math by accepting out-of-bounds values for
-  // month, day, etc. For example, new Date(2020, 0, 0) returns 31 Dec 2019 and
-  // new Date(2020, 13, 1) returns 1 Feb 2021.  This is *almost* the behavior we
-  // want except that dates will wrap around the end of a month, meaning that
-  // new Date(2020, 13, 31) will return 3 Mar 2021 not 28 Feb 2021 as desired. So
-  // we'll default to the end of the desired month by adding 1 to the desired
-  // month and using a date of 0 to back up one day to the end of the desired
-  // month.
-  const endOfDesiredMonth = constructFrom(options?.in || date, _date.getTime());
-  endOfDesiredMonth.setMonth(_date.getMonth() + amount + 1, 0);
-  const daysInMonth = endOfDesiredMonth.getDate();
-  if (dayOfMonth >= daysInMonth) {
-    // If we're already at the end of the month, then this is the correct date
-    // and we're done.
-    return endOfDesiredMonth;
-  } else {
-    // Otherwise, we now know that setting the original day-of-month value won't
-    // cause an overflow, so set the desired day-of-month. Note that we can't
-    // just set the date of `endOfDesiredMonth` because that object may have had
-    // its time changed in the unusual case where where a DST transition was on
-    // the last day of the month and its local time was in the hour skipped or
-    // repeated next to a DST transition.  So we use `date` instead which is
-    // guaranteed to still have the original time.
-    _date.setFullYear(
-      endOfDesiredMonth.getFullYear(),
-      endOfDesiredMonth.getMonth(),
-      dayOfMonth,
-    );
-    return _date;
-  }
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_addMonths = ((/* unused pure expression or super */ null && (addMonths)));
-
-;// ./packages/dataviews/node_modules/date-fns/subMonths.js
-
-
-/**
- * The subMonths function options.
- */
-
-/**
- * @name subMonths
- * @category Month Helpers
- * @summary Subtract the specified number of months from the given date.
- *
- * @description
- * Subtract the specified number of months from the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
- *
- * @param date - The date to be changed
- * @param amount - The amount of months to be subtracted.
- * @param options - An object with options
- *
- * @returns The new date with the months subtracted
- *
- * @example
- * // Subtract 5 months from 1 February 2015:
- * const result = subMonths(new Date(2015, 1, 1), 5)
- * //=> Mon Sep 01 2014 00:00:00
- */
-function subMonths(date, amount, options) {
-  return addMonths(date, -amount, options);
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_subMonths = ((/* unused pure expression or super */ null && (subMonths)));
-
-;// ./packages/dataviews/node_modules/date-fns/startOfMonth.js
-
-
-/**
- * The {@link startOfMonth} function options.
- */
-
-/**
- * @name startOfMonth
- * @category Month Helpers
- * @summary Return the start of a month for the given date.
- *
- * @description
- * Return the start of a month for the given date. The result will be in the local timezone.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments.
- * Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed,
- * or inferred from the arguments.
- *
- * @param date - The original date
- * @param options - An object with options
- *
- * @returns The start of a month
- *
- * @example
- * // The start of a month for 2 September 2014 11:55:00:
- * const result = startOfMonth(new Date(2014, 8, 2, 11, 55, 0))
- * //=> Mon Sep 01 2014 00:00:00
- */
-function startOfMonth(date, options) {
-  const _date = toDate(date, options?.in);
-  _date.setDate(1);
-  _date.setHours(0, 0, 0, 0);
-  return _date;
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_startOfMonth = ((/* unused pure expression or super */ null && (startOfMonth)));
-
-;// ./packages/dataviews/node_modules/date-fns/addYears.js
-
-
-/**
- * The {@link addYears} function options.
- */
-
-/**
- * @name addYears
- * @category Year Helpers
- * @summary Add the specified number of years to the given date.
- *
- * @description
- * Add the specified number of years to the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- * @typeParam ResultDate - The result `Date` type.
- *
- * @param date - The date to be changed
- * @param amount - The amount of years to be added.
- * @param options - The options
- *
- * @returns The new date with the years added
- *
- * @example
- * // Add 5 years to 1 September 2014:
- * const result = addYears(new Date(2014, 8, 1), 5)
- * //=> Sun Sep 01 2019 00:00:00
- */
-function addYears(date, amount, options) {
-  return addMonths(date, amount * 12, options);
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_addYears = ((/* unused pure expression or super */ null && (addYears)));
-
-;// ./packages/dataviews/node_modules/date-fns/subYears.js
-
-
-/**
- * The {@link subYears} function options.
- */
-
-/**
- * @name subYears
- * @category Year Helpers
- * @summary Subtract the specified number of years from the given date.
- *
- * @description
- * Subtract the specified number of years from the given date.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
- *
- * @param date - The date to be changed
- * @param amount - The amount of years to be subtracted.
- * @param options - An object with options
- *
- * @returns The new date with the years subtracted
- *
- * @example
- * // Subtract 5 years from 1 September 2014:
- * const result = subYears(new Date(2014, 8, 1), 5)
- * //=> Tue Sep 01 2009 00:00:00
- */
-function subYears(date, amount, options) {
-  return addYears(date, -amount, options);
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_subYears = ((/* unused pure expression or super */ null && (subYears)));
-
-;// ./packages/dataviews/node_modules/date-fns/startOfYear.js
-
-
-/**
- * The {@link startOfYear} function options.
- */
-
-/**
- * @name startOfYear
- * @category Year Helpers
- * @summary Return the start of a year for the given date.
- *
- * @description
- * Return the start of a year for the given date.
- * The result will be in the local timezone.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
- *
- * @param date - The original date
- * @param options - The options
- *
- * @returns The start of a year
- *
- * @example
- * // The start of a year for 2 September 2014 11:55:00:
- * const result = startOfYear(new Date(2014, 8, 2, 11, 55, 00))
- * //=> Wed Jan 01 2014 00:00:00
- */
-function startOfYear(date, options) {
-  const date_ = toDate(date, options?.in);
-  date_.setFullYear(date_.getFullYear(), 0, 1);
-  date_.setHours(0, 0, 0, 0);
-  return date_;
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_startOfYear = ((/* unused pure expression or super */ null && (startOfYear)));
-
-;// ./packages/dataviews/node_modules/date-fns/isDate.js
-/**
- * @name isDate
- * @category Common Helpers
- * @summary Is the given value a date?
- *
- * @description
- * Returns true if the given value is an instance of Date. The function works for dates transferred across iframes.
- *
- * @param value - The value to check
- *
- * @returns True if the given value is a date
- *
- * @example
- * // For a valid date:
- * const result = isDate(new Date())
- * //=> true
- *
- * @example
- * // For an invalid date:
- * const result = isDate(new Date(NaN))
- * //=> true
- *
- * @example
- * // For some value:
- * const result = isDate('2014-02-31')
- * //=> false
- *
- * @example
- * // For an object:
- * const result = isDate({})
- * //=> false
- */
-function isDate(value) {
-  return (
-    value instanceof Date ||
-    (typeof value === "object" &&
-      Object.prototype.toString.call(value) === "[object Date]")
-  );
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_isDate = ((/* unused pure expression or super */ null && (isDate)));
 
 ;// ./packages/dataviews/node_modules/date-fns/isValid.js
 
@@ -8433,6 +7931,45 @@ function differenceInCalendarDays(laterDate, earlierDate, options) {
 
 // Fallback for modularized imports:
 /* harmony default export */ const date_fns_differenceInCalendarDays = ((/* unused pure expression or super */ null && (differenceInCalendarDays)));
+
+;// ./packages/dataviews/node_modules/date-fns/startOfYear.js
+
+
+/**
+ * The {@link startOfYear} function options.
+ */
+
+/**
+ * @name startOfYear
+ * @category Year Helpers
+ * @summary Return the start of a year for the given date.
+ *
+ * @description
+ * Return the start of a year for the given date.
+ * The result will be in the local timezone.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The original date
+ * @param options - The options
+ *
+ * @returns The start of a year
+ *
+ * @example
+ * // The start of a year for 2 September 2014 11:55:00:
+ * const result = startOfYear(new Date(2014, 8, 2, 11, 55, 00))
+ * //=> Wed Jan 01 2014 00:00:00
+ */
+function startOfYear(date, options) {
+  const date_ = toDate(date, options?.in);
+  date_.setFullYear(date_.getFullYear(), 0, 1);
+  date_.setHours(0, 0, 0, 0);
+  return date_;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_startOfYear = ((/* unused pure expression or super */ null && (startOfYear)));
 
 ;// ./packages/dataviews/node_modules/date-fns/getDayOfYear.js
 
@@ -10312,6 +9849,581 @@ function cleanEscapedString(input) {
 // Fallback for modularized imports:
 /* harmony default export */ const date_fns_format = ((/* unused pure expression or super */ null && (format)));
 
+;// ./node_modules/clsx/dist/clsx.mjs
+function clsx_r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=clsx_r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=clsx_r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
+;// ./packages/dataviews/build-module/dataform-controls/relative-date-control.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const TIME_UNITS_OPTIONS = {
+  [OPERATOR_IN_THE_PAST]: [{
+    value: 'days',
+    label: (0,external_wp_i18n_namespaceObject.__)('Days')
+  }, {
+    value: 'weeks',
+    label: (0,external_wp_i18n_namespaceObject.__)('Weeks')
+  }, {
+    value: 'months',
+    label: (0,external_wp_i18n_namespaceObject.__)('Months')
+  }, {
+    value: 'years',
+    label: (0,external_wp_i18n_namespaceObject.__)('Years')
+  }],
+  [OPERATOR_OVER]: [{
+    value: 'days',
+    label: (0,external_wp_i18n_namespaceObject.__)('Days ago')
+  }, {
+    value: 'weeks',
+    label: (0,external_wp_i18n_namespaceObject.__)('Weeks ago')
+  }, {
+    value: 'months',
+    label: (0,external_wp_i18n_namespaceObject.__)('Months ago')
+  }, {
+    value: 'years',
+    label: (0,external_wp_i18n_namespaceObject.__)('Years ago')
+  }]
+};
+function RelativeDateControl({
+  id,
+  value,
+  onChange,
+  label,
+  hideLabelFromVision,
+  options,
+  className
+}) {
+  const {
+    value: relValue = '',
+    unit = options[0].value
+  } = value;
+  const onChangeValue = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: {
+      value: Number(newValue),
+      unit
+    }
+  }), [id, onChange, unit]);
+  const onChangeUnit = (0,external_wp_element_namespaceObject.useCallback)(newUnit => onChange({
+    [id]: {
+      value: relValue,
+      unit: newUnit
+    }
+  }), [id, onChange, relValue]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
+    id: id,
+    __nextHasNoMarginBottom: true,
+    className: dist_clsx(className, 'dataviews-controls__relative-date'),
+    label: label,
+    hideLabelFromVision: hideLabelFromVision,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+      spacing: 2.5,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+        __next40pxDefaultSize: true,
+        className: "dataviews-controls__relative-date-number",
+        spinControls: "none",
+        min: 1,
+        step: 1,
+        value: relValue,
+        onChange: onChangeValue
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+        className: "dataviews-controls__relative-date-unit",
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Unit'),
+        value: unit,
+        options: options,
+        onChange: onChangeUnit,
+        hideLabelFromVision: true
+      })]
+    })
+  });
+}
+
+;// ./packages/dataviews/build-module/dataform-controls/datetime.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * External dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+const {
+  DateCalendar
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+const parseDateTime = dateTimeString => {
+  if (!dateTimeString) {
+    return null;
+  }
+  const parsed = (0,external_wp_date_namespaceObject.getDate)(dateTimeString);
+  return parsed && isValid(parsed) ? parsed : null;
+};
+const formatDateTime = date => {
+  if (!date) {
+    return '';
+  }
+  if (typeof date === 'string') {
+    return date;
+  }
+  // Format as datetime-local input expects: YYYY-MM-DDTHH:mm
+  return format(date, "yyyy-MM-dd'T'HH:mm");
+};
+function CalendarDateTimeControl({
+  id,
+  value,
+  onChange,
+  label,
+  description,
+  hideLabelFromVision
+}) {
+  const [calendarMonth, setCalendarMonth] = (0,external_wp_element_namespaceObject.useState)(() => {
+    const parsedDate = parseDateTime(value);
+    return parsedDate || new Date(); // Default to current month
+  });
+  const onSelectDate = (0,external_wp_element_namespaceObject.useCallback)(newDate => {
+    if (newDate) {
+      // Preserve time if it exists in current value, otherwise use current time
+      let finalDateTime = newDate;
+      if (value) {
+        const currentDateTime = parseDateTime(value);
+        if (currentDateTime) {
+          // Preserve the time part
+          finalDateTime = new Date(newDate);
+          finalDateTime.setHours(currentDateTime.getHours());
+          finalDateTime.setMinutes(currentDateTime.getMinutes());
+        }
+      }
+      const dateTimeValue = finalDateTime.toISOString();
+      onChange({
+        [id]: dateTimeValue
+      });
+    } else {
+      onChange({
+        [id]: undefined
+      });
+    }
+  }, [id, onChange, value]);
+  const handleManualDateTimeChange = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    if (newValue) {
+      // Convert from datetime-local format to ISO string
+      const dateTime = new Date(newValue);
+      onChange({
+        [id]: dateTime.toISOString()
+      });
+
+      // Update calendar month to match
+      const parsedDate = parseDateTime(dateTime.toISOString());
+      if (parsedDate) {
+        setCalendarMonth(parsedDate);
+      }
+    } else {
+      onChange({
+        [id]: undefined
+      });
+    }
+  }, [id, onChange]);
+  const {
+    timezone: {
+      string: timezoneString
+    },
+    l10n: {
+      startOfWeek
+    }
+  } = (0,external_wp_date_namespaceObject.getSettings)();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
+    __nextHasNoMarginBottom: true,
+    id: id,
+    label: label,
+    help: description,
+    hideLabelFromVision: hideLabelFromVision,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      spacing: 4,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DateCalendar, {
+        style: {
+          width: '100%'
+        },
+        selected: value ? parseDateTime(value) || undefined : undefined,
+        onSelect: onSelectDate,
+        month: calendarMonth,
+        onMonthChange: setCalendarMonth,
+        timeZone: timezoneString || undefined,
+        weekStartsOn: startOfWeek
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
+        __next40pxDefaultSize: true,
+        type: "datetime-local",
+        label: (0,external_wp_i18n_namespaceObject.__)('Date time'),
+        hideLabelFromVision: true,
+        value: value ? formatDateTime(parseDateTime(value) || undefined) : '',
+        onChange: handleManualDateTimeChange
+      })]
+    })
+  });
+}
+function DateTime({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision,
+  operator
+}) {
+  const {
+    id,
+    label,
+    description
+  } = field;
+  const value = field.getValue({
+    item: data
+  });
+  if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RelativeDateControl, {
+      className: "dataviews-controls__datetime",
+      id: id,
+      value: value && typeof value === 'object' ? value : {},
+      onChange: onChange,
+      label: label,
+      hideLabelFromVision: hideLabelFromVision,
+      options: TIME_UNITS_OPTIONS[operator]
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CalendarDateTimeControl, {
+    id: id,
+    value: typeof value === 'string' ? value : undefined,
+    onChange: onChange,
+    label: label,
+    description: description,
+    hideLabelFromVision: hideLabelFromVision
+  });
+}
+
+;// ./packages/dataviews/node_modules/date-fns/addDays.js
+
+
+
+/**
+ * The {@link addDays} function options.
+ */
+
+/**
+ * @name addDays
+ * @category Day Helpers
+ * @summary Add the specified number of days to the given date.
+ *
+ * @description
+ * Add the specified number of days to the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of days to be added.
+ * @param options - An object with options
+ *
+ * @returns The new date with the days added
+ *
+ * @example
+ * // Add 10 days to 1 September 2014:
+ * const result = addDays(new Date(2014, 8, 1), 10)
+ * //=> Thu Sep 11 2014 00:00:00
+ */
+function addDays(date, amount, options) {
+  const _date = toDate(date, options?.in);
+  if (isNaN(amount)) return constructFrom(options?.in || date, NaN);
+
+  // If 0 days, no-op to avoid changing times in the hour before end of DST
+  if (!amount) return _date;
+
+  _date.setDate(_date.getDate() + amount);
+  return _date;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_addDays = ((/* unused pure expression or super */ null && (addDays)));
+
+;// ./packages/dataviews/node_modules/date-fns/subDays.js
+
+
+/**
+ * The {@link subDays} function options.
+ */
+
+/**
+ * @name subDays
+ * @category Day Helpers
+ * @summary Subtract the specified number of days from the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of days to be subtracted.
+ * @param options - An object with options
+ *
+ * @returns The new date with the days subtracted
+ *
+ * @example
+ * // Subtract 10 days from 1 September 2014:
+ * const result = subDays(new Date(2014, 8, 1), 10)
+ * //=> Fri Aug 22 2014 00:00:00
+ */
+function subDays(date, amount, options) {
+  return addDays(date, -amount, options);
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_subDays = ((/* unused pure expression or super */ null && (subDays)));
+
+;// ./packages/dataviews/node_modules/date-fns/addMonths.js
+
+
+
+/**
+ * The {@link addMonths} function options.
+ */
+
+/**
+ * @name addMonths
+ * @category Month Helpers
+ * @summary Add the specified number of months to the given date.
+ *
+ * @description
+ * Add the specified number of months to the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of months to be added.
+ * @param options - The options object
+ *
+ * @returns The new date with the months added
+ *
+ * @example
+ * // Add 5 months to 1 September 2014:
+ * const result = addMonths(new Date(2014, 8, 1), 5)
+ * //=> Sun Feb 01 2015 00:00:00
+ *
+ * // Add one month to 30 January 2023:
+ * const result = addMonths(new Date(2023, 0, 30), 1)
+ * //=> Tue Feb 28 2023 00:00:00
+ */
+function addMonths(date, amount, options) {
+  const _date = toDate(date, options?.in);
+  if (isNaN(amount)) return constructFrom(options?.in || date, NaN);
+  if (!amount) {
+    // If 0 months, no-op to avoid changing times in the hour before end of DST
+    return _date;
+  }
+  const dayOfMonth = _date.getDate();
+
+  // The JS Date object supports date math by accepting out-of-bounds values for
+  // month, day, etc. For example, new Date(2020, 0, 0) returns 31 Dec 2019 and
+  // new Date(2020, 13, 1) returns 1 Feb 2021.  This is *almost* the behavior we
+  // want except that dates will wrap around the end of a month, meaning that
+  // new Date(2020, 13, 31) will return 3 Mar 2021 not 28 Feb 2021 as desired. So
+  // we'll default to the end of the desired month by adding 1 to the desired
+  // month and using a date of 0 to back up one day to the end of the desired
+  // month.
+  const endOfDesiredMonth = constructFrom(options?.in || date, _date.getTime());
+  endOfDesiredMonth.setMonth(_date.getMonth() + amount + 1, 0);
+  const daysInMonth = endOfDesiredMonth.getDate();
+  if (dayOfMonth >= daysInMonth) {
+    // If we're already at the end of the month, then this is the correct date
+    // and we're done.
+    return endOfDesiredMonth;
+  } else {
+    // Otherwise, we now know that setting the original day-of-month value won't
+    // cause an overflow, so set the desired day-of-month. Note that we can't
+    // just set the date of `endOfDesiredMonth` because that object may have had
+    // its time changed in the unusual case where where a DST transition was on
+    // the last day of the month and its local time was in the hour skipped or
+    // repeated next to a DST transition.  So we use `date` instead which is
+    // guaranteed to still have the original time.
+    _date.setFullYear(
+      endOfDesiredMonth.getFullYear(),
+      endOfDesiredMonth.getMonth(),
+      dayOfMonth,
+    );
+    return _date;
+  }
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_addMonths = ((/* unused pure expression or super */ null && (addMonths)));
+
+;// ./packages/dataviews/node_modules/date-fns/subMonths.js
+
+
+/**
+ * The subMonths function options.
+ */
+
+/**
+ * @name subMonths
+ * @category Month Helpers
+ * @summary Subtract the specified number of months from the given date.
+ *
+ * @description
+ * Subtract the specified number of months from the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of months to be subtracted.
+ * @param options - An object with options
+ *
+ * @returns The new date with the months subtracted
+ *
+ * @example
+ * // Subtract 5 months from 1 February 2015:
+ * const result = subMonths(new Date(2015, 1, 1), 5)
+ * //=> Mon Sep 01 2014 00:00:00
+ */
+function subMonths(date, amount, options) {
+  return addMonths(date, -amount, options);
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_subMonths = ((/* unused pure expression or super */ null && (subMonths)));
+
+;// ./packages/dataviews/node_modules/date-fns/startOfMonth.js
+
+
+/**
+ * The {@link startOfMonth} function options.
+ */
+
+/**
+ * @name startOfMonth
+ * @category Month Helpers
+ * @summary Return the start of a month for the given date.
+ *
+ * @description
+ * Return the start of a month for the given date. The result will be in the local timezone.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments.
+ * Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed,
+ * or inferred from the arguments.
+ *
+ * @param date - The original date
+ * @param options - An object with options
+ *
+ * @returns The start of a month
+ *
+ * @example
+ * // The start of a month for 2 September 2014 11:55:00:
+ * const result = startOfMonth(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Mon Sep 01 2014 00:00:00
+ */
+function startOfMonth(date, options) {
+  const _date = toDate(date, options?.in);
+  _date.setDate(1);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_startOfMonth = ((/* unused pure expression or super */ null && (startOfMonth)));
+
+;// ./packages/dataviews/node_modules/date-fns/addYears.js
+
+
+/**
+ * The {@link addYears} function options.
+ */
+
+/**
+ * @name addYears
+ * @category Year Helpers
+ * @summary Add the specified number of years to the given date.
+ *
+ * @description
+ * Add the specified number of years to the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of years to be added.
+ * @param options - The options
+ *
+ * @returns The new date with the years added
+ *
+ * @example
+ * // Add 5 years to 1 September 2014:
+ * const result = addYears(new Date(2014, 8, 1), 5)
+ * //=> Sun Sep 01 2019 00:00:00
+ */
+function addYears(date, amount, options) {
+  return addMonths(date, amount * 12, options);
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_addYears = ((/* unused pure expression or super */ null && (addYears)));
+
+;// ./packages/dataviews/node_modules/date-fns/subYears.js
+
+
+/**
+ * The {@link subYears} function options.
+ */
+
+/**
+ * @name subYears
+ * @category Year Helpers
+ * @summary Subtract the specified number of years from the given date.
+ *
+ * @description
+ * Subtract the specified number of years from the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of years to be subtracted.
+ * @param options - An object with options
+ *
+ * @returns The new date with the years subtracted
+ *
+ * @example
+ * // Subtract 5 years from 1 September 2014:
+ * const result = subYears(new Date(2014, 8, 1), 5)
+ * //=> Tue Sep 01 2009 00:00:00
+ */
+function subYears(date, amount, options) {
+  return addYears(date, -amount, options);
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_subYears = ((/* unused pure expression or super */ null && (subYears)));
+
 ;// ./packages/dataviews/build-module/dataform-controls/date.js
 /**
  * WordPress dependencies
@@ -10334,7 +10446,7 @@ function cleanEscapedString(input) {
 
 
 const {
-  DateCalendar,
+  DateCalendar: date_DateCalendar,
   DateRangeCalendar
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 const DATE_PRESETS = [{
@@ -10499,7 +10611,7 @@ function CalendarDateControl({
         hideLabelFromVision: true,
         value: value,
         onChange: handleManualDateChange
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DateCalendar, {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(date_DateCalendar, {
         style: {
           width: '100%'
         },

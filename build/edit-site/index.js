@@ -33365,243 +33365,6 @@ function Checkbox({
   });
 }
 
-;// ./packages/dataviews/build-module/dataform-controls/relative-date-control.js
-/**
- * External dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-const TIME_UNITS_OPTIONS = {
-  [OPERATOR_IN_THE_PAST]: [{
-    value: 'days',
-    label: (0,external_wp_i18n_namespaceObject.__)('Days')
-  }, {
-    value: 'weeks',
-    label: (0,external_wp_i18n_namespaceObject.__)('Weeks')
-  }, {
-    value: 'months',
-    label: (0,external_wp_i18n_namespaceObject.__)('Months')
-  }, {
-    value: 'years',
-    label: (0,external_wp_i18n_namespaceObject.__)('Years')
-  }],
-  [OPERATOR_OVER]: [{
-    value: 'days',
-    label: (0,external_wp_i18n_namespaceObject.__)('Days ago')
-  }, {
-    value: 'weeks',
-    label: (0,external_wp_i18n_namespaceObject.__)('Weeks ago')
-  }, {
-    value: 'months',
-    label: (0,external_wp_i18n_namespaceObject.__)('Months ago')
-  }, {
-    value: 'years',
-    label: (0,external_wp_i18n_namespaceObject.__)('Years ago')
-  }]
-};
-function RelativeDateControl({
-  id,
-  value,
-  onChange,
-  label,
-  hideLabelFromVision,
-  options,
-  className
-}) {
-  const {
-    value: relValue = '',
-    unit = options[0].value
-  } = value;
-  const onChangeValue = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: {
-      value: Number(newValue),
-      unit
-    }
-  }), [id, onChange, unit]);
-  const onChangeUnit = (0,external_wp_element_namespaceObject.useCallback)(newUnit => onChange({
-    [id]: {
-      value: relValue,
-      unit: newUnit
-    }
-  }), [id, onChange, relValue]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
-    id: id,
-    __nextHasNoMarginBottom: true,
-    className: dist_clsx(className, 'dataviews-controls__relative-date'),
-    label: label,
-    hideLabelFromVision: hideLabelFromVision,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-      spacing: 2.5,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
-        __next40pxDefaultSize: true,
-        className: "dataviews-controls__relative-date-number",
-        spinControls: "none",
-        min: 1,
-        step: 1,
-        value: relValue,
-        onChange: onChangeValue
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-        className: "dataviews-controls__relative-date-unit",
-        __next40pxDefaultSize: true,
-        __nextHasNoMarginBottom: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Unit'),
-        value: unit,
-        options: options,
-        onChange: onChangeUnit,
-        hideLabelFromVision: true
-      })]
-    })
-  });
-}
-
-;// ./packages/dataviews/build-module/dataform-controls/datetime.js
-/**
- * WordPress dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-function DateTime({
-  data,
-  field,
-  onChange,
-  hideLabelFromVision,
-  operator
-}) {
-  const {
-    id,
-    label
-  } = field;
-  const value = field.getValue({
-    item: data
-  });
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: newValue
-  }), [id, onChange]);
-  if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RelativeDateControl, {
-      id: id,
-      value: value && typeof value === 'object' ? value : {},
-      onChange: onChange,
-      label: label,
-      hideLabelFromVision: hideLabelFromVision,
-      options: TIME_UNITS_OPTIONS[operator]
-    });
-  }
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("fieldset", {
-    className: "dataviews-controls__datetime",
-    children: [!hideLabelFromVision && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl.VisualLabel, {
-      as: "legend",
-      children: label
-    }), hideLabelFromVision && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
-      as: "legend",
-      children: label
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TimePicker, {
-      currentTime: typeof value === 'string' ? value : undefined,
-      onChange: onChangeControl,
-      hideLabelFromVision: true
-    })]
-  });
-}
-
-;// ./packages/dataviews/node_modules/date-fns/startOfMonth.js
-
-
-/**
- * The {@link startOfMonth} function options.
- */
-
-/**
- * @name startOfMonth
- * @category Month Helpers
- * @summary Return the start of a month for the given date.
- *
- * @description
- * Return the start of a month for the given date. The result will be in the local timezone.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments.
- * Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed,
- * or inferred from the arguments.
- *
- * @param date - The original date
- * @param options - An object with options
- *
- * @returns The start of a month
- *
- * @example
- * // The start of a month for 2 September 2014 11:55:00:
- * const result = startOfMonth(new Date(2014, 8, 2, 11, 55, 0))
- * //=> Mon Sep 01 2014 00:00:00
- */
-function startOfMonth(date, options) {
-  const _date = toDate(date, options?.in);
-  _date.setDate(1);
-  _date.setHours(0, 0, 0, 0);
-  return _date;
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_startOfMonth = ((/* unused pure expression or super */ null && (startOfMonth)));
-
-;// ./packages/dataviews/node_modules/date-fns/startOfYear.js
-
-
-/**
- * The {@link startOfYear} function options.
- */
-
-/**
- * @name startOfYear
- * @category Year Helpers
- * @summary Return the start of a year for the given date.
- *
- * @description
- * Return the start of a year for the given date.
- * The result will be in the local timezone.
- *
- * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
- * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
- *
- * @param date - The original date
- * @param options - The options
- *
- * @returns The start of a year
- *
- * @example
- * // The start of a year for 2 September 2014 11:55:00:
- * const result = startOfYear(new Date(2014, 8, 2, 11, 55, 00))
- * //=> Wed Jan 01 2014 00:00:00
- */
-function startOfYear(date, options) {
-  const date_ = toDate(date, options?.in);
-  date_.setFullYear(date_.getFullYear(), 0, 1);
-  date_.setHours(0, 0, 0, 0);
-  return date_;
-}
-
-// Fallback for modularized imports:
-/* harmony default export */ const date_fns_startOfYear = ((/* unused pure expression or super */ null && (startOfYear)));
-
 ;// ./packages/dataviews/node_modules/date-fns/isDate.js
 /**
  * @name isDate
@@ -34509,6 +34272,45 @@ function differenceInCalendarDays(laterDate, earlierDate, options) {
 
 // Fallback for modularized imports:
 /* harmony default export */ const date_fns_differenceInCalendarDays = ((/* unused pure expression or super */ null && (differenceInCalendarDays)));
+
+;// ./packages/dataviews/node_modules/date-fns/startOfYear.js
+
+
+/**
+ * The {@link startOfYear} function options.
+ */
+
+/**
+ * @name startOfYear
+ * @category Year Helpers
+ * @summary Return the start of a year for the given date.
+ *
+ * @description
+ * Return the start of a year for the given date.
+ * The result will be in the local timezone.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The original date
+ * @param options - The options
+ *
+ * @returns The start of a year
+ *
+ * @example
+ * // The start of a year for 2 September 2014 11:55:00:
+ * const result = startOfYear(new Date(2014, 8, 2, 11, 55, 00))
+ * //=> Wed Jan 01 2014 00:00:00
+ */
+function startOfYear(date, options) {
+  const date_ = toDate(date, options?.in);
+  date_.setFullYear(date_.getFullYear(), 0, 1);
+  date_.setHours(0, 0, 0, 0);
+  return date_;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_startOfYear = ((/* unused pure expression or super */ null && (startOfYear)));
 
 ;// ./packages/dataviews/node_modules/date-fns/getDayOfYear.js
 
@@ -36388,6 +36190,316 @@ function cleanEscapedString(input) {
 // Fallback for modularized imports:
 /* harmony default export */ const date_fns_format = ((/* unused pure expression or super */ null && (format)));
 
+;// ./packages/dataviews/build-module/dataform-controls/relative-date-control.js
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const TIME_UNITS_OPTIONS = {
+  [OPERATOR_IN_THE_PAST]: [{
+    value: 'days',
+    label: (0,external_wp_i18n_namespaceObject.__)('Days')
+  }, {
+    value: 'weeks',
+    label: (0,external_wp_i18n_namespaceObject.__)('Weeks')
+  }, {
+    value: 'months',
+    label: (0,external_wp_i18n_namespaceObject.__)('Months')
+  }, {
+    value: 'years',
+    label: (0,external_wp_i18n_namespaceObject.__)('Years')
+  }],
+  [OPERATOR_OVER]: [{
+    value: 'days',
+    label: (0,external_wp_i18n_namespaceObject.__)('Days ago')
+  }, {
+    value: 'weeks',
+    label: (0,external_wp_i18n_namespaceObject.__)('Weeks ago')
+  }, {
+    value: 'months',
+    label: (0,external_wp_i18n_namespaceObject.__)('Months ago')
+  }, {
+    value: 'years',
+    label: (0,external_wp_i18n_namespaceObject.__)('Years ago')
+  }]
+};
+function RelativeDateControl({
+  id,
+  value,
+  onChange,
+  label,
+  hideLabelFromVision,
+  options,
+  className
+}) {
+  const {
+    value: relValue = '',
+    unit = options[0].value
+  } = value;
+  const onChangeValue = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
+    [id]: {
+      value: Number(newValue),
+      unit
+    }
+  }), [id, onChange, unit]);
+  const onChangeUnit = (0,external_wp_element_namespaceObject.useCallback)(newUnit => onChange({
+    [id]: {
+      value: relValue,
+      unit: newUnit
+    }
+  }), [id, onChange, relValue]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
+    id: id,
+    __nextHasNoMarginBottom: true,
+    className: dist_clsx(className, 'dataviews-controls__relative-date'),
+    label: label,
+    hideLabelFromVision: hideLabelFromVision,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+      spacing: 2.5,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
+        __next40pxDefaultSize: true,
+        className: "dataviews-controls__relative-date-number",
+        spinControls: "none",
+        min: 1,
+        step: 1,
+        value: relValue,
+        onChange: onChangeValue
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
+        className: "dataviews-controls__relative-date-unit",
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Unit'),
+        value: unit,
+        options: options,
+        onChange: onChangeUnit,
+        hideLabelFromVision: true
+      })]
+    })
+  });
+}
+
+;// ./packages/dataviews/build-module/dataform-controls/datetime.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * External dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+const {
+  DateCalendar
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+const parseDateTime = dateTimeString => {
+  if (!dateTimeString) {
+    return null;
+  }
+  const parsed = (0,external_wp_date_namespaceObject.getDate)(dateTimeString);
+  return parsed && isValid(parsed) ? parsed : null;
+};
+const formatDateTime = date => {
+  if (!date) {
+    return '';
+  }
+  if (typeof date === 'string') {
+    return date;
+  }
+  // Format as datetime-local input expects: YYYY-MM-DDTHH:mm
+  return format(date, "yyyy-MM-dd'T'HH:mm");
+};
+function CalendarDateTimeControl({
+  id,
+  value,
+  onChange,
+  label,
+  description,
+  hideLabelFromVision
+}) {
+  const [calendarMonth, setCalendarMonth] = (0,external_wp_element_namespaceObject.useState)(() => {
+    const parsedDate = parseDateTime(value);
+    return parsedDate || new Date(); // Default to current month
+  });
+  const onSelectDate = (0,external_wp_element_namespaceObject.useCallback)(newDate => {
+    if (newDate) {
+      // Preserve time if it exists in current value, otherwise use current time
+      let finalDateTime = newDate;
+      if (value) {
+        const currentDateTime = parseDateTime(value);
+        if (currentDateTime) {
+          // Preserve the time part
+          finalDateTime = new Date(newDate);
+          finalDateTime.setHours(currentDateTime.getHours());
+          finalDateTime.setMinutes(currentDateTime.getMinutes());
+        }
+      }
+      const dateTimeValue = finalDateTime.toISOString();
+      onChange({
+        [id]: dateTimeValue
+      });
+    } else {
+      onChange({
+        [id]: undefined
+      });
+    }
+  }, [id, onChange, value]);
+  const handleManualDateTimeChange = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    if (newValue) {
+      // Convert from datetime-local format to ISO string
+      const dateTime = new Date(newValue);
+      onChange({
+        [id]: dateTime.toISOString()
+      });
+
+      // Update calendar month to match
+      const parsedDate = parseDateTime(dateTime.toISOString());
+      if (parsedDate) {
+        setCalendarMonth(parsedDate);
+      }
+    } else {
+      onChange({
+        [id]: undefined
+      });
+    }
+  }, [id, onChange]);
+  const {
+    timezone: {
+      string: timezoneString
+    },
+    l10n: {
+      startOfWeek
+    }
+  } = (0,external_wp_date_namespaceObject.getSettings)();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
+    __nextHasNoMarginBottom: true,
+    id: id,
+    label: label,
+    help: description,
+    hideLabelFromVision: hideLabelFromVision,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      spacing: 4,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DateCalendar, {
+        style: {
+          width: '100%'
+        },
+        selected: value ? parseDateTime(value) || undefined : undefined,
+        onSelect: onSelectDate,
+        month: calendarMonth,
+        onMonthChange: setCalendarMonth,
+        timeZone: timezoneString || undefined,
+        weekStartsOn: startOfWeek
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControl, {
+        __next40pxDefaultSize: true,
+        type: "datetime-local",
+        label: (0,external_wp_i18n_namespaceObject.__)('Date time'),
+        hideLabelFromVision: true,
+        value: value ? formatDateTime(parseDateTime(value) || undefined) : '',
+        onChange: handleManualDateTimeChange
+      })]
+    })
+  });
+}
+function DateTime({
+  data,
+  field,
+  onChange,
+  hideLabelFromVision,
+  operator
+}) {
+  const {
+    id,
+    label,
+    description
+  } = field;
+  const value = field.getValue({
+    item: data
+  });
+  if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RelativeDateControl, {
+      className: "dataviews-controls__datetime",
+      id: id,
+      value: value && typeof value === 'object' ? value : {},
+      onChange: onChange,
+      label: label,
+      hideLabelFromVision: hideLabelFromVision,
+      options: TIME_UNITS_OPTIONS[operator]
+    });
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CalendarDateTimeControl, {
+    id: id,
+    value: typeof value === 'string' ? value : undefined,
+    onChange: onChange,
+    label: label,
+    description: description,
+    hideLabelFromVision: hideLabelFromVision
+  });
+}
+
+;// ./packages/dataviews/node_modules/date-fns/startOfMonth.js
+
+
+/**
+ * The {@link startOfMonth} function options.
+ */
+
+/**
+ * @name startOfMonth
+ * @category Month Helpers
+ * @summary Return the start of a month for the given date.
+ *
+ * @description
+ * Return the start of a month for the given date. The result will be in the local timezone.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments.
+ * Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed,
+ * or inferred from the arguments.
+ *
+ * @param date - The original date
+ * @param options - An object with options
+ *
+ * @returns The start of a month
+ *
+ * @example
+ * // The start of a month for 2 September 2014 11:55:00:
+ * const result = startOfMonth(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Mon Sep 01 2014 00:00:00
+ */
+function startOfMonth(date, options) {
+  const _date = toDate(date, options?.in);
+  _date.setDate(1);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
+}
+
+// Fallback for modularized imports:
+/* harmony default export */ const date_fns_startOfMonth = ((/* unused pure expression or super */ null && (startOfMonth)));
+
 ;// ./packages/dataviews/build-module/dataform-controls/date.js
 /**
  * WordPress dependencies
@@ -36410,7 +36522,7 @@ function cleanEscapedString(input) {
 
 
 const {
-  DateCalendar,
+  DateCalendar: date_DateCalendar,
   DateRangeCalendar
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 const DATE_PRESETS = [{
@@ -36575,7 +36687,7 @@ function CalendarDateControl({
         hideLabelFromVision: true,
         value: value,
         onChange: handleManualDateChange
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DateCalendar, {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(date_DateCalendar, {
         style: {
           width: '100%'
         },
