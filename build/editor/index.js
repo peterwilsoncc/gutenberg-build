@@ -34809,7 +34809,7 @@ function CommentAuthorInfo({
     } = getSettings();
     const defaultAvatar = __experimentalDiscussionSettings?.avatarURL;
     return {
-      currentUserAvatar: (_userData$avatar_urls = userData?.avatar_urls[48]) !== null && _userData$avatar_urls !== void 0 ? _userData$avatar_urls : defaultAvatar,
+      currentUserAvatar: (_userData$avatar_urls = userData?.avatar_urls?.[48]) !== null && _userData$avatar_urls !== void 0 ? _userData$avatar_urls : defaultAvatar,
       currentUserName: userData?.name
     };
   }, []);
@@ -35649,6 +35649,11 @@ function CollabSidebar() {
     });
   }
   const AddCommentComponent = blockCommentId ? comment_button_toolbar : comment_button;
+
+  // If postId is not a valid number, do not render the comment sidebar.
+  if (!(!!postId && typeof postId === 'number')) {
+    return null;
+  }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddCommentComponent, {
       onClick: openCollabBoard
