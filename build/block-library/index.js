@@ -1838,6 +1838,9 @@ function useUploadMediaFromBlobURL(args = {}) {
     const {
       mediaUpload
     } = getSettings();
+    if (!mediaUpload) {
+      return;
+    }
     hasUploadStartedRef.current = true;
     mediaUpload({
       filesList: [file],

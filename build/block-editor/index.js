@@ -51002,7 +51002,8 @@ function useClipboardHandler() {
         }
       } else if (event.type === 'paste') {
         const {
-          __experimentalCanUserUseUnfilteredHTML: canUserUseUnfilteredHTML
+          __experimentalCanUserUseUnfilteredHTML: canUserUseUnfilteredHTML,
+          mediaUpload
         } = getSettings();
         const isInternal = event.clipboardData.getData('rich-text') === 'true';
         if (isInternal) {
@@ -51016,6 +51017,10 @@ function useClipboardHandler() {
         const isFullySelected = __unstableIsFullySelected();
         let blocks = [];
         if (files.length) {
+          if (!mediaUpload) {
+            event.preventDefault();
+            return;
+          }
           const fromTransforms = (0,external_wp_blocks_namespaceObject.getBlockTransforms)('from');
           blocks = files.reduce((accumulator, file) => {
             const transformation = (0,external_wp_blocks_namespaceObject.findTransform)(fromTransforms, transform => transform.type === 'files' && transform.isMatch([file]));
