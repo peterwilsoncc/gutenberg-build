@@ -35430,13 +35430,18 @@ const AddCommentButton = ({
 };
 /* harmony default export */ const comment_button = (AddCommentButton);
 
-;// ./packages/editor/build-module/components/collab-sidebar/comment-button-toolbar.js
+;// ./packages/editor/build-module/components/collab-sidebar/comment-indicator-toolbar.js
 /**
  * WordPress dependencies
  */
 
 
 
+
+
+/**
+ * External dependencies
+ */
 
 
 /**
@@ -35447,19 +35452,88 @@ const AddCommentButton = ({
 const {
   CommentIconToolbarSlotFill
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
-const AddCommentToolbarButton = ({
-  onClick
+const CommentAvatarIndicator = ({
+  onClick,
+  thread,
+  hasMoreComments
 }) => {
+  const threadParticipants = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (!thread) {
+      return [];
+    }
+    const participantsMap = new Map();
+    const allComments = [thread, ...thread.reply];
+
+    // Sort by date to show participants in chronological order.
+    allComments.sort((a, b) => new Date(a.date) - new Date(b.date));
+    allComments.forEach(comment => {
+      // Track thread participants (original commenter + repliers).
+      if (comment.author_name && comment.author_avatar_urls) {
+        const authorKey = `${comment.author}-${comment.author_name}`;
+        if (!participantsMap.has(authorKey)) {
+          participantsMap.set(authorKey, {
+            name: comment.author_name,
+            avatar: comment.author_avatar_urls?.['48'] || comment.author_avatar_urls?.['96'],
+            isOriginalCommenter: comment.id === thread.id,
+            date: comment.date
+          });
+        }
+      }
+    });
+    return Array.from(participantsMap.values());
+  }, [thread]);
+  const hasUnresolved = thread?.status !== 'approved';
+
+  // Check if this specific thread has more participants due to pagination.
+  // If we have pagination AND this thread + its replies equals or exceeds the API limit,
+  // then this thread likely has more participants that weren't loaded.
+  const threadHasMoreParticipants = hasMoreComments && thread?.reply && 1 + thread.reply.length >= 100;
+  if (!threadParticipants.length) {
+    return null;
+  }
+
+  // Show up to 3 avatars, with overflow indicator.
+  const maxAvatars = 3;
+  const visibleParticipants = threadParticipants.slice(0, maxAvatars);
+  const overflowCount = Math.max(0, threadParticipants.length - maxAvatars);
+
+  // If we hit the comment limit, show "100+" instead of exact overflow count.
+  const overflowText = threadHasMoreParticipants && overflowCount > 0 ? (0,external_wp_i18n_namespaceObject.__)('100+') : (0,external_wp_i18n_namespaceObject.sprintf)(
+  // translators: %s: Number of comments.
+  (0,external_wp_i18n_namespaceObject.__)('+%s'), overflowCount);
+  const overflowTitle = threadHasMoreParticipants && overflowCount > 0 ? (0,external_wp_i18n_namespaceObject.__)('100+ participants') : (0,external_wp_i18n_namespaceObject.sprintf)(
+  // translators: %s: Number of comments.
+  (0,external_wp_i18n_namespaceObject.__)('+%s more participants'), overflowCount);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentIconToolbarSlotFill.Fill, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-      accessibleWhenDisabled: true,
-      icon: library_comment,
-      label: (0,external_wp_i18n_namespaceObject._x)('Comment', 'View comment'),
-      onClick: onClick
+      className: dist_clsx('comment-avatar-indicator', {
+        'has-unresolved': hasUnresolved
+      }),
+      label: (0,external_wp_i18n_namespaceObject._x)('View comments', 'View comment thread'),
+      onClick: onClick,
+      showTooltip: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+        className: "comment-avatar-stack",
+        children: [visibleParticipants.map((participant, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+          src: participant.avatar,
+          alt: participant.name,
+          className: "comment-avatar",
+          style: {
+            zIndex: maxAvatars - index
+          }
+        }, participant.name + index)), overflowCount > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          className: "comment-avatar-overflow",
+          style: {
+            zIndex: 0
+          },
+          title: overflowTitle,
+          children: overflowText
+        })]
+      })
     })
   });
 };
-/* harmony default export */ const comment_button_toolbar = (AddCommentToolbarButton);
+/* harmony default export */ const comment_indicator_toolbar = (CommentAvatarIndicator);
 
 ;// ./packages/editor/build-module/components/collab-sidebar/index.js
 /**
@@ -35545,7 +35619,7 @@ function CollabSidebarContent({
       comment_approved: 0
     };
 
-    // Create a new object, conditionally including the parent property
+    // Create a new object, conditionally including the parent property.
     const updatedArgs = {
       ...args,
       ...(parentCommentId ? {
@@ -35661,26 +35735,28 @@ function CollabSidebar() {
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
   const {
     postId,
-    postType,
-    threads
+    postType
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getCurrentPostId,
       getCurrentPostType
     } = select(store_store);
-    const _postId = getCurrentPostId();
-    const data = !!_postId && typeof _postId === 'number' ? select(external_wp_coreData_namespaceObject.store).getEntityRecords('root', 'comment', {
-      post: _postId,
-      type: 'block_comment',
-      status: 'any',
-      per_page: 100
-    }) : null;
     return {
-      postId: _postId,
-      postType: getCurrentPostType(),
-      threads: data
+      postId: getCurrentPostId(),
+      postType: getCurrentPostType()
     };
   }, []);
+  const queryArgs = {
+    post: postId,
+    type: 'block_comment',
+    status: 'all',
+    per_page: 100
+  };
+  const {
+    records: threads,
+    totalPages
+  } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('root', 'comment', queryArgs);
+  const hasMoreComments = totalPages && totalPages > 1;
   const {
     blockCommentId
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -35701,31 +35777,31 @@ function CollabSidebar() {
     id: postId
   });
 
-  // Process comments to build the tree structure
+  // Process comments to build the tree structure.
   const {
     resultComments,
     unresolvedSortedThreads
   } = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    // Create a compare to store the references to all objects by id
+    // Create a compare to store the references to all objects by id.
     const compare = {};
     const result = [];
-    const filteredComments = (threads !== null && threads !== void 0 ? threads : []).filter(comment => comment.status !== 'trash');
+    const allComments = threads !== null && threads !== void 0 ? threads : [];
 
-    // Initialize each object with an empty `reply` array
-    filteredComments.forEach(item => {
+    // Initialize each object with an empty `reply` array.
+    allComments.forEach(item => {
       compare[item.id] = {
         ...item,
         reply: []
       };
     });
 
-    // Iterate over the data to build the tree structure
-    filteredComments.forEach(item => {
+    // Iterate over the data to build the tree structure.
+    allComments.forEach(item => {
       if (item.parent === 0) {
-        // If parent is 0, it's a root item, push it to the result array
+        // If parent is 0, it's a root item, push it to the result array.
         result.push(compare[item.id]);
       } else if (compare[item.parent]) {
-        // Otherwise, find its parent and push it to the parent's `reply` array
+        // Otherwise, find its parent and push it to the parent's `reply` array.
         compare[item.parent].reply.push(compare[item.id]);
       }
     });
@@ -35764,7 +35840,10 @@ function CollabSidebar() {
       }
     });
   }
-  const AddCommentComponent = blockCommentId ? comment_button_toolbar : comment_button;
+  const AddCommentComponent = blockCommentId ? comment_indicator_toolbar : comment_button;
+
+  // Find the current thread for the selected block.
+  const currentThread = blockCommentId ? resultComments.find(thread => thread.id === blockCommentId) : null;
 
   // If postId is not a valid number, do not render the comment sidebar.
   if (!(!!postId && typeof postId === 'number')) {
@@ -35772,7 +35851,9 @@ function CollabSidebar() {
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddCommentComponent, {
-      onClick: openCollabBoard
+      onClick: openCollabBoard,
+      thread: currentThread,
+      hasMoreComments: hasMoreComments
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PluginSidebar, {
       identifier: collabHistorySidebarName
       // translators: Comments sidebar title

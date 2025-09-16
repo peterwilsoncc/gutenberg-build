@@ -10515,6 +10515,60 @@ function withDerivedBlockEditingModes(reducer) {
           }
           break;
         }
+      case 'UPDATE_BLOCK_ATTRIBUTES':
+        {
+          // Handle unsynced patterns which indicate their contentOnly-ness via
+          // the `attributes.metadata.patternName` property.
+          // Check when this is added or removed and update blockEditingModes.
+          const addedBlocks = [];
+          const removedClientIds = [];
+          for (const clientId of action?.clientIds) {
+            const attributes = action.options?.uniqueByBlock ? action.attributes[clientId] : action.attributes;
+            if (!attributes) {
+              break;
+            }
+            if (
+            // patternName is switching from falsy to truthy, indicating
+            // this block is becoming an unsynced pattern.
+            attributes.metadata?.patternName && !state.blocks.attributes.get(clientId)?.metadata?.patternName) {
+              addedBlocks.push(nextState.blocks.tree.get(clientId));
+            } else if (
+            // patternName is switching from truthy to falsy, this block is becoming
+            // a regular block but was an unsynced pattern.
+            // Check that `metadata` is part of the included attributes, as
+            // `updateBlockAttributes` merges attributes, if it isn't present
+            // the previous `metadata` would be retained.
+            attributes.metadata && !attributes.metadata?.patternName && state.blocks.attributes.get(clientId)?.metadata?.patternName) {
+              // Include it in 'removedClientIds'.
+              removedClientIds.push(clientId);
+            }
+          }
+          if (!addedBlocks?.length && !removedClientIds?.length) {
+            break;
+          }
+          const nextDerivedBlockEditingModes = getDerivedBlockEditingModesUpdates({
+            prevState: state,
+            nextState,
+            addedBlocks,
+            removedClientIds,
+            isNavMode: false
+          });
+          const nextDerivedNavModeBlockEditingModes = getDerivedBlockEditingModesUpdates({
+            prevState: state,
+            nextState,
+            addedBlocks,
+            removedClientIds,
+            isNavMode: true
+          });
+          if (nextDerivedBlockEditingModes || nextDerivedNavModeBlockEditingModes) {
+            return {
+              ...nextState,
+              derivedBlockEditingModes: nextDerivedBlockEditingModes !== null && nextDerivedBlockEditingModes !== void 0 ? nextDerivedBlockEditingModes : state.derivedBlockEditingModes,
+              derivedNavModeBlockEditingModes: nextDerivedNavModeBlockEditingModes !== null && nextDerivedNavModeBlockEditingModes !== void 0 ? nextDerivedNavModeBlockEditingModes : state.derivedNavModeBlockEditingModes
+            };
+          }
+          break;
+        }
       case 'UPDATE_BLOCK_LIST_SETTINGS':
         {
           // Handle the addition and removal of contentOnly template locked blocks.
@@ -37657,6 +37711,7 @@ const {
  * @param {Object}        [props.blockType] Deprecated: Object containing block type data.
  * @param {string}        [props.className] Additional classes to apply to the card.
  * @param {string}        [props.name]      Custom block name to display before the title.
+ * @param {Element}       [props.children]  Children.
  * @return {Element}                        Block card component.
  */
 function BlockCard({
@@ -37665,7 +37720,8 @@ function BlockCard({
   description,
   blockType,
   className,
-  name
+  name,
+  children
 }) {
   if (blockType) {
     external_wp_deprecated_default()('`blockType` property in `BlockCard component`', {
@@ -37726,7 +37782,7 @@ function BlockCard({
       }), description && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
         className: "block-editor-block-card__description",
         children: description
-      })]
+      }), children]
     })]
   });
 }
@@ -76183,6 +76239,54 @@ function useResizeCanvas(deviceType) {
   return contentInlineStyles(deviceType);
 }
 
+;// ./packages/block-editor/build-module/components/block-inspector/edit-contents-button.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+function EditContentsButton({
+  clientId
+}) {
+  const {
+    updateBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const {
+    attributes
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return {
+      attributes: select(store).getBlockAttributes(clientId)
+    };
+  }, [clientId]);
+  if (!attributes?.metadata?.patternName) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    className: "block-editor-block-inspector-edit-contents-button",
+    __next40pxDefaultSize: true,
+    variant: "secondary",
+    onClick: () => {
+      var _attributes$metadata;
+      const {
+        patternName,
+        ...metadataWithoutPatternName
+      } = (_attributes$metadata = attributes?.metadata) !== null && _attributes$metadata !== void 0 ? _attributes$metadata : {};
+      updateBlockAttributes(clientId, {
+        ...attributes,
+        metadata: metadataWithoutPatternName
+      });
+    },
+    children: (0,external_wp_i18n_namespaceObject.__)('Edit contents')
+  });
+}
+
 ;// ./packages/block-editor/build-module/components/skip-to-selected-block/index.js
 /**
  * WordPress dependencies
@@ -76813,6 +76917,7 @@ function BlockQuickNavigationItem({
 
 
 
+
 function BlockStylesPanel({
   clientId
 }) {
@@ -76980,7 +77085,10 @@ const BlockInspectorSingleBlock = ({
     className: "block-editor-block-inspector",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_card, {
       ...blockInformation,
-      className: blockInformation.isSynced && 'is-synced'
+      className: blockInformation.isSynced && 'is-synced',
+      children: window?.__experimentalContentOnlyPatternInsertion && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditContentsButton, {
+        clientId: clientId
+      })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_variation_transforms, {
       blockClientId: clientId
     }), showTabs && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorControlsTabs, {
