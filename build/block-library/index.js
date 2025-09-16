@@ -62192,6 +62192,7 @@ const SpacerEdit = ({
       });
     }
   }, [blockStyle, flexSize, height, inheritedOrientation, isFlexLayout, layout, selfStretch, setAttributes, spacingSizes, width, __unstableMarkNextChangeAsNotPersistent]);
+  const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.View, {
       ...(0,external_wp_blockEditor_namespaceObject.useBlockProps)({
@@ -62200,7 +62201,7 @@ const SpacerEdit = ({
           'custom-sizes-disabled': disableCustomSpacingSizes
         })
       }),
-      children: resizableBoxWithOrientation(inheritedOrientation)
+      children: blockEditingMode === 'default' && resizableBoxWithOrientation(inheritedOrientation)
     }), !isFlexLayout && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SpacerControls, {
       setAttributes: setAttributes,
       height: temporaryHeight || height,
