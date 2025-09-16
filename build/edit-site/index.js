@@ -53066,6 +53066,67 @@ function FormRegularField({
   });
 }
 
+;// ./packages/dataviews/build-module/dataforms-layouts/panel/summary-button.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+function SummaryButton({
+  summaryFields,
+  data,
+  labelPosition,
+  fieldLabel,
+  disabled,
+  onClick,
+  'aria-expanded': ariaExpanded
+}) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    className: "dataforms-layouts-panel__summary-button",
+    size: "compact",
+    variant: ['none', 'top'].includes(labelPosition) ? 'link' : 'tertiary',
+    "aria-expanded": ariaExpanded,
+    "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(
+    // translators: %s: Field name.
+    (0,external_wp_i18n_namespaceObject._x)('Edit %s', 'field'), fieldLabel || ''),
+    onClick: onClick,
+    disabled: disabled,
+    accessibleWhenDisabled: true,
+    style: summaryFields.length > 1 ? {
+      minHeight: 'auto',
+      height: 'auto',
+      alignItems: 'flex-start'
+    } : undefined,
+    children: summaryFields.length > 1 ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        width: '100%',
+        gap: '2px'
+      },
+      children: summaryFields.map(summaryField => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        style: {
+          width: '100%'
+        },
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(summaryField.render, {
+          item: data,
+          field: summaryField
+        })
+      }, summaryField.id))
+    }) : summaryFields.map(summaryField => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(summaryField.render, {
+      item: data,
+      field: summaryField
+    }, summaryField.id))
+  });
+}
+/* harmony default export */ const summary_button = (SummaryButton);
+
 ;// ./packages/dataviews/build-module/dataforms-layouts/panel/dropdown.js
 /**
  * WordPress dependencies
@@ -53078,6 +53139,7 @@ function FormRegularField({
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -53107,6 +53169,7 @@ function DropdownHeader({
 }
 function PanelDropdown({
   fieldDefinition,
+  summaryFields,
   popoverAnchor,
   labelPosition = 'side',
   data,
@@ -53144,21 +53207,14 @@ function PanelDropdown({
     renderToggle: ({
       isOpen,
       onToggle
-    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      className: "dataforms-layouts-panel__field-control",
-      size: "compact",
-      variant: ['none', 'top'].includes(labelPosition) ? 'link' : 'tertiary',
-      "aria-expanded": isOpen,
-      "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(
-      // translators: %s: Field name.
-      (0,external_wp_i18n_namespaceObject._x)('Edit %s', 'field'), fieldLabel || ''),
-      onClick: onToggle,
+    }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(summary_button, {
+      summaryFields: summaryFields,
+      data: data,
+      labelPosition: labelPosition,
+      fieldLabel: fieldLabel,
       disabled: fieldDefinition.readOnly === true,
-      accessibleWhenDisabled: true,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fieldDefinition.render, {
-        item: data,
-        field: fieldDefinition
-      })
+      onClick: onToggle,
+      "aria-expanded": isOpen
     }),
     renderContent: ({
       onClose
@@ -53196,6 +53252,7 @@ function PanelDropdown({
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -53263,6 +53320,7 @@ function ModalContent({
 }
 function PanelModal({
   fieldDefinition,
+  summaryFields,
   labelPosition,
   data,
   onChange,
@@ -53279,21 +53337,14 @@ function PanelModal({
     }]
   }), [field]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      className: "dataforms-layouts-modal__field-control",
-      size: "compact",
-      variant: ['none', 'top'].includes(labelPosition) ? 'link' : 'tertiary',
-      "aria-expanded": isOpen,
-      "aria-label": (0,external_wp_i18n_namespaceObject.sprintf)(
-      // translators: %s: Field name.
-      (0,external_wp_i18n_namespaceObject._x)('Edit %s', 'field'), fieldLabel || ''),
-      onClick: () => setIsOpen(true),
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(summary_button, {
+      summaryFields: summaryFields,
+      data: data,
+      labelPosition: labelPosition,
+      fieldLabel: fieldLabel,
       disabled: fieldDefinition.readOnly === true,
-      accessibleWhenDisabled: true,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fieldDefinition.render, {
-        item: data,
-        field: fieldDefinition
-      })
+      onClick: () => setIsOpen(true),
+      "aria-expanded": isOpen
     }), isOpen && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ModalContent, {
       data: data,
       form: form,
@@ -53335,18 +53386,29 @@ function FormPanelField({
   const {
     fields
   } = (0,external_wp_element_namespaceObject.useContext)(dataform_context);
-  const fieldDefinition = fields.find(_field => {
-    // Default to the first simple child if it is a combined field.
-    if (isCombinedField(field)) {
-      const simpleChildren = field.children.filter(child => typeof child === 'string' || !isCombinedField(child));
-      if (simpleChildren.length === 0) {
-        return false;
-      }
-      const firstChildFieldId = typeof simpleChildren[0] === 'string' ? simpleChildren[0] : simpleChildren[0].id;
-      return _field.id === firstChildFieldId;
+  const getSummaryFields = () => {
+    if (!isCombinedField(field)) {
+      const fieldDef = fields.find(_field => _field.id === field.id);
+      return fieldDef ? [fieldDef] : [];
     }
-    return _field.id === field.id;
-  });
+
+    // Use summary field(s) if specified for combined fields
+    if (field.summary) {
+      const summaryIds = Array.isArray(field.summary) ? field.summary : [field.summary];
+      return summaryIds.map(summaryId => fields.find(_field => _field.id === summaryId)).filter(_field => _field !== undefined);
+    }
+
+    // Default to the first simple child
+    const simpleChildren = field.children.filter(child => typeof child === 'string' || !isCombinedField(child));
+    if (simpleChildren.length === 0) {
+      return [];
+    }
+    const firstChildFieldId = typeof simpleChildren[0] === 'string' ? simpleChildren[0] : simpleChildren[0].id;
+    const fieldDef = fields.find(_field => _field.id === firstChildFieldId);
+    return fieldDef ? [fieldDef] : [];
+  };
+  const summaryFields = getSummaryFields();
+  const fieldDefinition = summaryFields[0]; // For backward compatibility
 
   // Use internal state instead of a ref to make sure that the component
   // re-renders when the popover's anchor updates.
@@ -53364,6 +53426,7 @@ function FormPanelField({
   const renderedControl = layout.openAs === 'modal' ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(modal, {
     field: field,
     fieldDefinition: fieldDefinition,
+    summaryFields: summaryFields,
     data: data,
     onChange: onChange,
     labelPosition: labelPosition
@@ -53371,6 +53434,7 @@ function FormPanelField({
     field: field,
     popoverAnchor: popoverAnchor,
     fieldDefinition: fieldDefinition,
+    summaryFields: summaryFields,
     data: data,
     onChange: onChange,
     labelPosition: labelPosition
