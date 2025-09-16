@@ -35186,7 +35186,8 @@ function Comments({
         onCommentReopen: onCommentReopen,
         onEditComment: onEditComment,
         isFocused: focusThread === thread.id,
-        clearThreadFocus: clearThreadFocus
+        clearThreadFocus: clearThreadFocus,
+        setFocusThread: setFocusThread
       })
     }, thread.id))]
   });
@@ -35199,7 +35200,8 @@ function Thread({
   onCommentResolve,
   onCommentReopen,
   isFocused,
-  clearThreadFocus
+  clearThreadFocus,
+  setFocusThread
 }) {
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
@@ -35210,8 +35212,11 @@ function Thread({
       onDelete: onCommentDelete,
       status: thread.status
     }), 0 < thread?.reply?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [!isFocused && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+      children: [!isFocused && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        __next40pxDefaultSize: true,
+        variant: "link",
         className: "editor-collab-sidebar-panel__show-more-reply",
+        onClick: () => setFocusThread(thread.id),
         children: (0,external_wp_i18n_namespaceObject.sprintf)(
         // translators: %s: number of replies.
         (0,external_wp_i18n_namespaceObject._x)('%s more replies', 'Show replies button'), thread?.reply?.length)
