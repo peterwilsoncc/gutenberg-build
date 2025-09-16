@@ -62427,13 +62427,13 @@ function BlockSwitcherDropdownMenuContents({
     selectForMultipleBlocks(transformedBlocks);
   }
   /**
-   * The `isTemplate` check is a stopgap solution here.
+   * The `isSynced` check is a stopgap solution here.
    * Ideally, the Transforms API should handle this
    * by allowing to exclude blocks from wildcard transformations.
    */
   const isSingleBlock = blocks.length === 1;
-  const isTemplate = isSingleBlock && (0,external_wp_blocks_namespaceObject.isTemplatePart)(blocks[0]);
-  const hasPossibleBlockTransformations = !!possibleBlockTransformations.length && canRemove && !isTemplate;
+  const isSynced = isSingleBlock && ((0,external_wp_blocks_namespaceObject.isTemplatePart)(blocks[0]) || (0,external_wp_blocks_namespaceObject.isReusableBlock)(blocks[0]));
+  const hasPossibleBlockTransformations = !!possibleBlockTransformations?.length && canRemove && !isSynced;
   const hasPossibleBlockVariationTransformations = !!blockVariationTransformations?.length;
   const hasPatternTransformation = !!patterns?.length && canRemove;
   const hasBlockOrBlockVariationTransforms = hasPossibleBlockTransformations || hasPossibleBlockVariationTransformations;
