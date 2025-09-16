@@ -10838,7 +10838,7 @@ function ValidatedText({
   onChange,
   hideLabelFromVision,
   type,
-  icon,
+  prefix,
   suffix
 }) {
   const {
@@ -10878,16 +10878,8 @@ function ValidatedText({
     onChange: onChangeControl,
     hideLabelFromVision: hideLabelFromVision,
     type: type,
-    prefix: icon ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlPrefixWrapper, {
-      variant: "icon",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-        icon: icon
-      })
-    }) : undefined,
-    suffix: suffix ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlSuffixWrapper, {
-      variant: "control",
-      children: suffix
-    }) : undefined,
+    prefix: prefix,
+    suffix: suffix,
     __next40pxDefaultSize: true
   });
 }
@@ -10896,6 +10888,7 @@ function ValidatedText({
 /**
  * WordPress dependencies
  */
+
 
 
 /**
@@ -10916,7 +10909,12 @@ function Email({
     onChange,
     hideLabelFromVision,
     type: 'email',
-    icon: at_symbol
+    prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlPrefixWrapper, {
+      variant: "icon",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+        icon: at_symbol
+      })
+    })
   });
 }
 
@@ -10941,6 +10939,7 @@ const mobile = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -10959,7 +10958,12 @@ function Telephone({
     onChange,
     hideLabelFromVision,
     type: 'tel',
-    icon: library_mobile
+    prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlPrefixWrapper, {
+      variant: "icon",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+        icon: library_mobile
+      })
+    })
   });
 }
 
@@ -10984,6 +10988,7 @@ const link_link = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -11002,7 +11007,12 @@ function Url({
     onChange,
     hideLabelFromVision,
     type: 'url',
-    icon: library_link
+    prefix: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalInputControlPrefixWrapper, {
+      variant: "icon",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+        icon: library_link
+      })
+    })
   });
 }
 
@@ -11243,6 +11253,11 @@ function Select({
 
 ;// ./packages/dataviews/build-module/dataform-controls/text.js
 /**
+ * WordPress dependencies
+ */
+
+
+/**
  * Internal dependencies
  */
 
@@ -11252,13 +11267,20 @@ function Text({
   data,
   field,
   onChange,
-  hideLabelFromVision
+  hideLabelFromVision,
+  config
 }) {
+  const {
+    prefix,
+    suffix
+  } = config || {};
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedText, {
     data,
     field,
     onChange,
-    hideLabelFromVision
+    hideLabelFromVision,
+    prefix: prefix ? (0,external_wp_element_namespaceObject.createElement)(prefix) : undefined,
+    suffix: suffix ? (0,external_wp_element_namespaceObject.createElement)(suffix) : undefined
   });
 }
 
@@ -11343,8 +11365,12 @@ function Textarea({
   data,
   field,
   onChange,
-  hideLabelFromVision
+  hideLabelFromVision,
+  config
 }) {
+  const {
+    rows = 4
+  } = config || {};
   const {
     id,
     label,
@@ -11380,6 +11406,7 @@ function Textarea({
     value: value !== null && value !== void 0 ? value : '',
     help: description,
     onChange: onChangeControl,
+    rows: rows,
     __next40pxDefaultSize: true,
     __nextHasNoMarginBottom: true,
     hideLabelFromVision: hideLabelFromVision
@@ -11735,6 +11762,7 @@ function Password({
 
 
 
+
 const FORM_CONTROLS = {
   array: ArrayControl,
   checkbox: Checkbox,
@@ -11753,6 +11781,22 @@ const FORM_CONTROLS = {
   textarea: Textarea,
   toggleGroup: ToggleGroup
 };
+function isEditConfig(value) {
+  return value && typeof value === 'object' && typeof value.control === 'string';
+}
+function createConfiguredControl(config) {
+  const {
+    control,
+    ...controlConfig
+  } = config;
+  const BaseControlType = getControlByType(control);
+  return function ConfiguredControl(props) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BaseControlType, {
+      ...props,
+      config: controlConfig
+    });
+  };
+}
 function getControl(field, fieldTypeDefinition) {
   if (typeof field.Edit === 'function') {
     return field.Edit;
@@ -11760,11 +11804,17 @@ function getControl(field, fieldTypeDefinition) {
   if (typeof field.Edit === 'string') {
     return getControlByType(field.Edit);
   }
+  if (isEditConfig(field.Edit)) {
+    return createConfiguredControl(field.Edit);
+  }
   if (field.elements && field.type !== 'array') {
     return getControlByType('select');
   }
   if (typeof fieldTypeDefinition.Edit === 'string') {
     return getControlByType(fieldTypeDefinition.Edit);
+  }
+  if (isEditConfig(fieldTypeDefinition.Edit)) {
+    return createConfiguredControl(fieldTypeDefinition.Edit);
   }
   return fieldTypeDefinition.Edit;
 }
