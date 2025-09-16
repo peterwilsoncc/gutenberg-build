@@ -6633,6 +6633,9 @@ function getFieldTypeDefinition(type) {
   };
 }
 
+// EXTERNAL MODULE: ./node_modules/deepmerge/dist/cjs.js
+var cjs = __webpack_require__(66);
+var cjs_default = /*#__PURE__*/__webpack_require__.n(cjs);
 ;// external ["wp","components"]
 const external_wp_components_namespaceObject = window["wp"]["components"];
 ;// ./packages/dataviews/build-module/lock-unlock.js
@@ -6646,6 +6649,11 @@ const {
 } = (0,external_wp_privateApis_namespaceObject.__dangerousOptInToUnstableAPIsOnlyForCoreModules)('I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.', '@wordpress/dataviews');
 
 ;// ./packages/dataviews/build-module/dataform-controls/checkbox.js
+/**
+ * External dependencies
+ */
+
+
 /**
  * WordPress dependencies
  */
@@ -6668,28 +6676,37 @@ function Checkbox({
   hideLabelFromVision
 }) {
   const {
-    id,
     getValue,
+    setValue,
     label,
     description
   } = field;
   const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(() => {
+    onChange(setValue({
+      item: data,
+      value: !getValue({
+        item: data
+      })
+    }));
+  }, [data, getValue, onChange, setValue]);
+  const onValidateControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    const message = field.isValid?.custom?.(cjs_default()(data, setValue({
+      item: data,
+      value: newValue
+    })), field);
+    if (message) {
+      setCustomValidity({
+        type: 'invalid',
+        message
+      });
+      return;
+    }
+    setCustomValidity(undefined);
+  }, [data, field, setValue]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedCheckboxControl, {
     required: !!field.isValid?.required,
-    onValidate: newValue => {
-      const message = field.isValid?.custom?.({
-        ...data,
-        [id]: newValue
-      }, field);
-      if (message) {
-        setCustomValidity({
-          type: 'invalid',
-          message
-        });
-        return;
-      }
-      setCustomValidity(undefined);
-    },
+    onValidate: onValidateControl,
     customValidity: customValidity,
     hidden: hideLabelFromVision,
     label: label,
@@ -6697,11 +6714,7 @@ function Checkbox({
     checked: getValue({
       item: data
     }),
-    onChange: () => onChange({
-      [id]: !getValue({
-        item: data
-      })
-    })
+    onChange: onChangeControl
   });
 }
 
@@ -9911,17 +9924,13 @@ function RelativeDateControl({
     unit = options[0].value
   } = value;
   const onChangeValue = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: {
-      value: Number(newValue),
-      unit
-    }
-  }), [id, onChange, unit]);
+    value: Number(newValue),
+    unit
+  }), [onChange, unit]);
   const onChangeUnit = (0,external_wp_element_namespaceObject.useCallback)(newUnit => onChange({
-    [id]: {
-      value: relValue,
-      unit: newUnit
-    }
-  }), [id, onChange, relValue]);
+    value: relValue,
+    unit: newUnit
+  }), [onChange, relValue]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
     id: id,
     __nextHasNoMarginBottom: true,
@@ -10020,22 +10029,16 @@ function CalendarDateTimeControl({
         }
       }
       const dateTimeValue = finalDateTime.toISOString();
-      onChange({
-        [id]: dateTimeValue
-      });
+      onChange(dateTimeValue);
     } else {
-      onChange({
-        [id]: undefined
-      });
+      onChange(undefined);
     }
-  }, [id, onChange, value]);
+  }, [onChange, value]);
   const handleManualDateTimeChange = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
     if (newValue) {
       // Convert from datetime-local format to ISO string
       const dateTime = new Date(newValue);
-      onChange({
-        [id]: dateTime.toISOString()
-      });
+      onChange(dateTime.toISOString());
 
       // Update calendar month to match
       const parsedDate = parseDateTime(dateTime.toISOString());
@@ -10043,11 +10046,9 @@ function CalendarDateTimeControl({
         setCalendarMonth(parsedDate);
       }
     } else {
-      onChange({
-        [id]: undefined
-      });
+      onChange(undefined);
     }
-  }, [id, onChange]);
+  }, [onChange]);
   const {
     timezone: {
       string: timezoneString
@@ -10095,17 +10096,27 @@ function DateTime({
   const {
     id,
     label,
-    description
+    description,
+    getValue,
+    setValue
   } = field;
-  const value = field.getValue({
+  const value = getValue({
     item: data
   });
+  const onChangeRelativeDateControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(setValue({
+    item: data,
+    value: newValue
+  })), [data, onChange, setValue]);
+  const onChangeCalendarDateTimeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(setValue({
+    item: data,
+    value: newValue
+  })), [data, onChange, setValue]);
   if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RelativeDateControl, {
       className: "dataviews-controls__datetime",
       id: id,
       value: value && typeof value === 'object' ? value : {},
-      onChange: onChange,
+      onChange: onChangeRelativeDateControl,
       label: label,
       hideLabelFromVision: hideLabelFromVision,
       options: TIME_UNITS_OPTIONS[operator]
@@ -10114,7 +10125,7 @@ function DateTime({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CalendarDateTimeControl, {
     id: id,
     value: typeof value === 'string' ? value : undefined,
-    onChange: onChange,
+    onChange: onChangeCalendarDateTimeControl,
     label: label,
     description: description,
     hideLabelFromVision: hideLabelFromVision
@@ -10539,24 +10550,18 @@ function CalendarDateControl({
   });
   const onSelectDate = (0,external_wp_element_namespaceObject.useCallback)(newDate => {
     const dateValue = newDate ? format(newDate, 'yyyy-MM-dd') : undefined;
-    onChange({
-      [id]: dateValue
-    });
+    onChange(dateValue);
     setSelectedPresetId(null);
-  }, [id, onChange]);
+  }, [onChange]);
   const handlePresetClick = (0,external_wp_element_namespaceObject.useCallback)(preset => {
     const presetDate = preset.getValue();
     const dateValue = formatDate(presetDate);
     setCalendarMonth(presetDate);
-    onChange({
-      [id]: dateValue
-    });
+    onChange(dateValue);
     setSelectedPresetId(preset.id);
-  }, [id, onChange]);
+  }, [onChange]);
   const handleManualDateChange = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
-    onChange({
-      [id]: newValue
-    });
+    onChange(newValue);
     if (newValue) {
       const parsedDate = parseDate(newValue);
       if (parsedDate) {
@@ -10564,7 +10569,7 @@ function CalendarDateControl({
       }
     }
     setSelectedPresetId(null);
-  }, [id, onChange]);
+  }, [onChange]);
   const {
     timezone: {
       string: timezoneString
@@ -10652,16 +10657,12 @@ function CalendarDateRangeControl({
   });
   const updateDateRange = (0,external_wp_element_namespaceObject.useCallback)((fromDate, toDate) => {
     if (fromDate && toDate) {
-      onChange({
-        [id]: [formatDate(fromDate), formatDate(toDate)]
-      });
+      onChange([formatDate(fromDate), formatDate(toDate)]);
     } else if (!fromDate && !toDate) {
-      onChange({
-        [id]: undefined
-      });
+      onChange(undefined);
     }
     // Do nothing if only one date is set - wait for both
-  }, [id, onChange]);
+  }, [onChange]);
   const onSelectCalendarRange = (0,external_wp_element_namespaceObject.useCallback)(newRange => {
     updateDateRange(newRange?.from, newRange?.to);
     setSelectedPresetId(null);
@@ -10760,17 +10761,35 @@ function DateControl({
 }) {
   const {
     id,
-    label
+    label,
+    getValue,
+    setValue
   } = field;
-  const value = field.getValue({
+  const value = getValue({
     item: data
   });
+  const onChangeRelativeDateControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    onChange(setValue({
+      item: data,
+      value: newValue
+    }));
+  }, [data, onChange, setValue]);
+  const onChangeCalendarDateRangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    onChange(setValue({
+      item: data,
+      value: newValue
+    }));
+  }, [data, onChange, setValue]);
+  const onChangeCalendarDateControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(setValue({
+    item: data,
+    value: newValue
+  })), [data, onChange, setValue]);
   if (operator === OPERATOR_IN_THE_PAST || operator === OPERATOR_OVER) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(RelativeDateControl, {
       className: "dataviews-controls__date",
       id: id,
       value: value && typeof value === 'object' ? value : {},
-      onChange: onChange,
+      onChange: onChangeRelativeDateControl,
       label: label,
       hideLabelFromVision: hideLabelFromVision,
       options: TIME_UNITS_OPTIONS[operator]
@@ -10786,7 +10805,7 @@ function DateControl({
       className: "dataviews-controls__date",
       id: id,
       value: dateRangeValue,
-      onChange: onChange,
+      onChange: onChangeCalendarDateRangeControl,
       label: label,
       hideLabelFromVision: hideLabelFromVision
     });
@@ -10795,7 +10814,7 @@ function DateControl({
     className: "dataviews-controls__date",
     id: id,
     value: typeof value === 'string' ? value : undefined,
-    onChange: onChange,
+    onChange: onChangeCalendarDateControl,
     label: label,
     hideLabelFromVision: hideLabelFromVision
   });
@@ -10817,6 +10836,11 @@ const atSymbol = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(e
 /* harmony default export */ const at_symbol = (atSymbol);
 
 ;// ./packages/dataviews/build-module/dataform-controls/utils/validated-input.js
+/**
+ * External dependencies
+ */
+
+
 /**
  * WordPress dependencies
  */
@@ -10842,34 +10866,38 @@ function ValidatedText({
   suffix
 }) {
   const {
-    id,
     label,
     placeholder,
-    description
+    description,
+    getValue,
+    setValue,
+    isValid
   } = field;
-  const value = field.getValue({
+  const value = getValue({
     item: data
   });
   const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: newValue
-  }), [id, onChange]);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(setValue({
+    item: data,
+    value: newValue
+  })), [data, setValue, onChange]);
+  const onValidateControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    const message = isValid?.custom?.(cjs_default()(data, setValue({
+      item: data,
+      value: newValue
+    })), field);
+    if (message) {
+      setCustomValidity({
+        type: 'invalid',
+        message
+      });
+      return;
+    }
+    setCustomValidity(undefined);
+  }, [data, field, isValid, setValue]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedInputControl, {
-    required: !!field.isValid?.required,
-    onValidate: newValue => {
-      const message = field.isValid?.custom?.({
-        ...data,
-        [id]: newValue
-      }, field);
-      if (message) {
-        setCustomValidity({
-          type: 'invalid',
-          message
-        });
-        return;
-      }
-      setCustomValidity(undefined);
-    },
+    required: !!isValid?.required,
+    onValidate: onValidateControl,
     customValidity: customValidity,
     label: label,
     placeholder: placeholder,
@@ -11018,6 +11046,11 @@ function Url({
 
 ;// ./packages/dataviews/build-module/dataform-controls/integer.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
 
@@ -11034,18 +11067,13 @@ const {
   ValidatedNumberControl
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function BetweenControls({
-  id,
   value,
   onChange,
   hideLabelFromVision
 }) {
-  const [min = '', max = ''] = Array.isArray(value) ? value : [];
-  const onChangeMin = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: [Number(newValue), max]
-  }), [id, onChange, max]);
-  const onChangeMax = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: [min, Number(newValue)]
-  }), [id, onChange, min]);
+  const [min = '', max = ''] = value;
+  const onChangeMin = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange([Number(newValue), max]), [onChange, max]);
+  const onChangeMax = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange([min, Number(newValue)]), [onChange, min]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
     __nextHasNoMarginBottom: true,
     help: (0,external_wp_i18n_namespaceObject.__)('The max. value must be greater than the min. value.'),
@@ -11077,48 +11105,60 @@ function Integer({
   hideLabelFromVision,
   operator
 }) {
-  var _field$getValue;
+  var _getValue;
   const {
-    id,
     label,
-    description
+    description,
+    getValue,
+    setValue
   } = field;
-  const value = (_field$getValue = field.getValue({
+  const value = (_getValue = getValue({
     item: data
-  })) !== null && _field$getValue !== void 0 ? _field$getValue : '';
+  })) !== null && _getValue !== void 0 ? _getValue : '';
   const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
-    onChange({
+    onChange(setValue({
+      item: data,
       // Do not convert an empty string or undefined to a number,
       // otherwise there's a mismatch between the UI control (empty)
       // and the data relied by onChange (0).
-      [id]: ['', undefined].includes(newValue) ? undefined : Number(newValue)
-    });
-  }, [id, onChange]);
+      value: ['', undefined].includes(newValue) ? undefined : Number(newValue)
+    }));
+  }, [data, onChange, setValue]);
+  const onChangeBetweenControls = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    onChange(setValue({
+      item: data,
+      value: newValue
+    }));
+  }, [data, onChange, setValue]);
+  const onValidateControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    const message = field.isValid?.custom?.(cjs_default()(data, setValue({
+      item: data,
+      value: [undefined, '', null].includes(newValue) ? undefined : Number(newValue)
+    })), field);
+    if (message) {
+      setCustomValidity({
+        type: 'invalid',
+        message
+      });
+      return;
+    }
+    setCustomValidity(undefined);
+  }, [data, field, setValue]);
   if (operator === OPERATOR_BETWEEN) {
+    let valueBetween = ['', ''];
+    if (Array.isArray(value) && value.length === 2 && value.every(element => typeof element === 'number' || element === '')) {
+      valueBetween = value;
+    }
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BetweenControls, {
-      id: id,
-      value: value,
-      onChange: onChange,
+      value: valueBetween,
+      onChange: onChangeBetweenControls,
       hideLabelFromVision: hideLabelFromVision
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedNumberControl, {
     required: !!field.isValid?.required,
-    onValidate: newValue => {
-      const message = field.isValid?.custom?.({
-        ...data,
-        [id]: [undefined, '', null].includes(newValue) ? undefined : Number(newValue)
-      }, field);
-      if (message) {
-        setCustomValidity({
-          type: 'invalid',
-          message
-        });
-        return;
-      }
-      setCustomValidity(undefined);
-    },
+    onValidate: onValidateControl,
     customValidity: customValidity,
     label: label,
     help: description,
@@ -11147,15 +11187,17 @@ function Radio({
   hideLabelFromVision
 }) {
   const {
-    id,
-    label
+    label,
+    getValue,
+    setValue
   } = field;
-  const value = field.getValue({
+  const value = getValue({
     item: data
   });
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: newValue
-  }), [id, onChange]);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(setValue({
+    item: data,
+    value: newValue
+  })), [data, onChange, setValue]);
   if (field.elements) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
       label: label,
@@ -11169,6 +11211,11 @@ function Radio({
 }
 
 ;// ./packages/dataviews/build-module/dataform-controls/select.js
+/**
+ * External dependencies
+ */
+
+
 /**
  * WordPress dependencies
  */
@@ -11191,21 +11238,37 @@ function Select({
   onChange,
   hideLabelFromVision
 }) {
-  var _field$getValue, _field$elements;
+  var _getValue, _field$elements;
   const {
-    id,
     type,
     label,
-    description
+    description,
+    getValue,
+    setValue
   } = field;
   const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
   const isMultiple = type === 'array';
-  const value = (_field$getValue = field.getValue({
+  const value = (_getValue = getValue({
     item: data
-  })) !== null && _field$getValue !== void 0 ? _field$getValue : isMultiple ? [] : '';
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: newValue
-  }), [id, onChange]);
+  })) !== null && _getValue !== void 0 ? _getValue : isMultiple ? [] : '';
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(setValue({
+    item: data,
+    value: newValue
+  })), [data, onChange, setValue]);
+  const onValidateControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    const message = field.isValid?.custom?.(cjs_default()(data, setValue({
+      item: data,
+      value: newValue
+    })), field);
+    if (message) {
+      setCustomValidity({
+        type: 'invalid',
+        message
+      });
+      return;
+    }
+    setCustomValidity(undefined);
+  }, [data, field, setValue]);
   const fieldElements = (_field$elements = field?.elements) !== null && _field$elements !== void 0 ? _field$elements : [];
   const hasEmptyValue = fieldElements.some(({
     value: elementValue
@@ -11224,20 +11287,7 @@ function Select({
   }, ...fieldElements];
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedSelectControl, {
     required: !!field.isValid?.required,
-    onValidate: newValue => {
-      const message = field.isValid?.custom?.({
-        ...data,
-        [id]: newValue
-      }, field);
-      if (message) {
-        setCustomValidity({
-          type: 'invalid',
-          message
-        });
-        return;
-      }
-      setCustomValidity(undefined);
-    },
+    onValidate: onValidateControl,
     customValidity: customValidity,
     label: label,
     value: value,
@@ -11286,6 +11336,11 @@ function Text({
 
 ;// ./packages/dataviews/build-module/dataform-controls/toggle.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
 
@@ -11307,28 +11362,37 @@ function Toggle({
   hideLabelFromVision
 }) {
   const {
-    id,
-    getValue,
     label,
-    description
+    description,
+    getValue,
+    setValue
   } = field;
   const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(() => {
+    onChange(setValue({
+      item: data,
+      value: !getValue({
+        item: data
+      })
+    }));
+  }, [onChange, setValue, data, getValue]);
+  const onValidateControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    const message = field.isValid?.custom?.(cjs_default()(data, setValue({
+      item: data,
+      value: newValue
+    })), field);
+    if (message) {
+      setCustomValidity({
+        type: 'invalid',
+        message
+      });
+      return;
+    }
+    setCustomValidity(undefined);
+  }, [data, field, setValue]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedToggleControl, {
     required: !!field.isValid.required,
-    onValidate: newValue => {
-      const message = field.isValid?.custom?.({
-        ...data,
-        [id]: newValue
-      }, field);
-      if (message) {
-        setCustomValidity({
-          type: 'invalid',
-          message
-        });
-        return;
-      }
-      setCustomValidity(undefined);
-    },
+    onValidate: onValidateControl,
     customValidity: customValidity,
     hidden: hideLabelFromVision,
     __nextHasNoMarginBottom: true,
@@ -11337,15 +11401,16 @@ function Toggle({
     checked: getValue({
       item: data
     }),
-    onChange: () => onChange({
-      [id]: !getValue({
-        item: data
-      })
-    })
+    onChange: onChangeControl
   });
 }
 
 ;// ./packages/dataviews/build-module/dataform-controls/textarea.js
+/**
+ * External dependencies
+ */
+
+
 /**
  * WordPress dependencies
  */
@@ -11372,34 +11437,36 @@ function Textarea({
     rows = 4
   } = config || {};
   const {
-    id,
     label,
     placeholder,
-    description
+    description,
+    setValue
   } = field;
   const value = field.getValue({
     item: data
   });
   const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: newValue
-  }), [id, onChange]);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(setValue({
+    item: data,
+    value: newValue
+  })), [data, onChange, setValue]);
+  const onValidateControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    const message = field.isValid?.custom?.(cjs_default()(data, setValue({
+      item: data,
+      value: newValue
+    })), field);
+    if (message) {
+      setCustomValidity({
+        type: 'invalid',
+        message
+      });
+      return;
+    }
+    setCustomValidity(undefined);
+  }, [data, field, setValue]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedTextareaControl, {
     required: !!field.isValid?.required,
-    onValidate: newValue => {
-      const message = field.isValid?.custom?.({
-        ...data,
-        [id]: newValue
-      }, field);
-      if (message) {
-        setCustomValidity({
-          type: 'invalid',
-          message
-        });
-        return;
-      }
-      setCustomValidity(undefined);
-    },
+    onValidate: onValidateControl,
     customValidity: customValidity,
     label: label,
     placeholder: placeholder,
@@ -11414,6 +11481,11 @@ function Textarea({
 }
 
 ;// ./packages/dataviews/build-module/dataform-controls/toggle-group.js
+/**
+ * External dependencies
+ */
+
+
 /**
  * WordPress dependencies
  */
@@ -11436,33 +11508,36 @@ function ToggleGroup({
   hideLabelFromVision
 }) {
   const {
-    id
+    getValue,
+    setValue
   } = field;
   const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
-  const value = field.getValue({
+  const value = getValue({
     item: data
   });
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange({
-    [id]: newValue
-  }), [id, onChange]);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(setValue({
+    item: data,
+    value: newValue
+  })), [data, onChange, setValue]);
+  const onValidateControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    const message = field.isValid?.custom?.(cjs_default()(data, setValue({
+      item: data,
+      value: newValue
+    })), field);
+    if (message) {
+      setCustomValidity({
+        type: 'invalid',
+        message
+      });
+      return;
+    }
+    setCustomValidity(undefined);
+  }, [data, field, setValue]);
   if (field.elements) {
     const selectedOption = field.elements.find(el => el.value === value);
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedToggleGroupControl, {
       required: !!field.isValid?.required,
-      onValidate: newValue => {
-        const message = field.isValid?.custom?.({
-          ...data,
-          [id]: newValue
-        }, field);
-        if (message) {
-          setCustomValidity({
-            type: 'invalid',
-            message
-          });
-          return;
-        }
-        setCustomValidity(undefined);
-      },
+      onValidate: onValidateControl,
       customValidity: customValidity,
       __next40pxDefaultSize: true,
       __nextHasNoMarginBottom: true,
@@ -11500,12 +11575,13 @@ function ArrayControl({
 }) {
   var _elements$map;
   const {
-    id,
     label,
     placeholder,
-    elements
+    elements,
+    getValue,
+    setValue
   } = field;
-  const value = field.getValue({
+  const value = getValue({
     item: data
   });
   const findElementByValue = (0,external_wp_element_namespaceObject.useCallback)(suggestionValue => {
@@ -11529,10 +11605,11 @@ function ArrayControl({
       const tokenByLabel = findElementByLabel(token);
       return tokenByLabel?.value || token;
     });
-    onChange({
-      [id]: stringTokens
-    });
-  }, [id, onChange, findElementByLabel]);
+    onChange(setValue({
+      item: data,
+      value: stringTokens
+    }));
+  }, [onChange, setValue, data, findElementByLabel]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FormTokenField, {
     label: hideLabelFromVision ? undefined : label,
     value: arrayValue,
@@ -11549,6 +11626,7 @@ function ArrayControl({
 /**
  * External dependencies
  */
+
 
 
 /**
@@ -11618,41 +11696,44 @@ function Color({
   hideLabelFromVision
 }) {
   const {
-    id,
     label,
     placeholder,
-    description
+    description,
+    setValue
   } = field;
   const value = field.getValue({
     item: data
   }) || '';
   const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
   const handleColorChange = (0,external_wp_element_namespaceObject.useCallback)(colorObject => {
-    onChange({
-      [id]: colorObject.toHex()
-    });
-  }, [id, onChange]);
+    onChange(setValue({
+      item: data,
+      value: colorObject.toHex()
+    }));
+  }, [data, onChange, setValue]);
   const handleInputChange = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
-    onChange({
-      [id]: newValue || ''
-    });
-  }, [id, onChange]);
+    onChange(setValue({
+      item: data,
+      value: newValue || ''
+    }));
+  }, [data, onChange, setValue]);
+  const onValidateControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    const message = field.isValid?.custom?.(cjs_default()(data, setValue({
+      item: data,
+      value: newValue
+    })), field);
+    if (message) {
+      setCustomValidity({
+        type: 'invalid',
+        message
+      });
+      return;
+    }
+    setCustomValidity(undefined);
+  }, [data, field, setValue]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(color_ValidatedInputControl, {
     required: !!field.isValid?.required,
-    onValidate: newValue => {
-      const message = field.isValid?.custom?.({
-        ...data,
-        [id]: newValue
-      }, field);
-      if (message) {
-        setCustomValidity({
-          type: 'invalid',
-          message
-        });
-        return;
-      }
-      setCustomValidity(undefined);
-    },
+    onValidate: onValidateControl,
     customValidity: customValidity,
     label: label,
     placeholder: placeholder,
@@ -11850,6 +11931,19 @@ const getValueFromId = id => ({
   }
   return value;
 };
+const setValueFromId = id => ({
+  value
+}) => {
+  const path = id.split('.');
+  const result = {};
+  let current = result;
+  for (const segment of path.slice(0, -1)) {
+    current[segment] = {};
+    current = current[segment];
+  }
+  current[path.at(-1)] = value;
+  return result;
+};
 function getFilterBy(field, fieldTypeDefinition) {
   if (field.filterBy === false) {
     return false;
@@ -11917,6 +12011,7 @@ function normalizeFields(fields) {
     var _field$sort, _field$render, _field$enableHiding, _ref, _field$enableSorting, _ref2, _field$readOnly;
     const fieldTypeDefinition = getFieldTypeDefinition(field.type);
     const getValue = field.getValue || getValueFromId(field.id);
+    const setValue = field.setValue || setValueFromId(field.id);
     const sort = (_field$sort = field.sort) !== null && _field$sort !== void 0 ? _field$sort : function sort(a, b, direction) {
       return fieldTypeDefinition.sort(getValue({
         item: a
@@ -11944,6 +12039,7 @@ function normalizeFields(fields) {
       label: field.label || field.id,
       header: field.header || field.label || field.id,
       getValue,
+      setValue,
       render,
       sort,
       isValid,
@@ -12341,6 +12437,11 @@ function PanelDropdown({
 
 ;// ./packages/dataviews/build-module/dataforms-layouts/panel/modal.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
 
@@ -12364,21 +12465,15 @@ function ModalContent({
   onClose
 }) {
   const [changes, setChanges] = (0,external_wp_element_namespaceObject.useState)({});
+  const modalData = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return cjs_default()(data, changes);
+  }, [data, changes]);
   const onApply = () => {
     onChange(changes);
     onClose();
   };
-  const handleOnChange = value => {
-    setChanges(prev => ({
-      ...prev,
-      ...value
-    }));
-  };
-
-  // Merge original data with local changes for display
-  const displayData = {
-    ...data,
-    ...changes
+  const handleOnChange = newValue => {
+    setChanges(prev => cjs_default()(prev, newValue));
   };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Modal, {
     className: "dataforms-layouts-panel__modal",
@@ -12387,13 +12482,13 @@ function ModalContent({
     title: fieldLabel,
     size: "medium",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataFormLayout, {
-      data: displayData,
+      data: modalData,
       form: form,
       onChange: handleOnChange,
       children: (FieldLayout, nestedField) => {
         var _form$fields;
         return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FieldLayout, {
-          data: displayData,
+          data: modalData,
           field: nestedField,
           onChange: handleOnChange,
           hideLabelFromVision: ((_form$fields = form?.fields) !== null && _form$fields !== void 0 ? _form$fields : []).length < 2
@@ -17482,9 +17577,6 @@ const {
 } = unlock(external_wp_mediaUtils_namespaceObject.privateApis);
 /* harmony default export */ const media_sideload = (mediaSideload);
 
-// EXTERNAL MODULE: ./node_modules/deepmerge/dist/cjs.js
-var cjs = __webpack_require__(66);
-var cjs_default = /*#__PURE__*/__webpack_require__.n(cjs);
 ;// ./node_modules/is-plain-object/dist/is-plain-object.mjs
 /*!
  * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
