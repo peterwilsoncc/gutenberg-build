@@ -10,15 +10,18 @@
 
 // The following filter can be removed once the minimum required WordPress version is 6.9 or newer.
 add_filter(
-	'block_bindings_supported_attributes_core/post-date',
-	function ( $attributes ) {
-		if ( ! in_array( 'datetime', $attributes, true ) ) {
+	'block_bindings_supported_attributes',
+	function ( $attributes, $block_type ) {
+		if ( 'core/image' === $block_type && ! in_array( 'caption', $attributes, true ) ) {
+			$attributes[] = 'caption';
+		}
+		if ( 'core/post-date' === $block_type && ! in_array( 'datetime', $attributes, true ) ) {
 			$attributes[] = 'datetime';
 		}
 		return $attributes;
 	},
 	10,
-	3
+	2
 );
 
 /**

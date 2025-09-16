@@ -28886,7 +28886,7 @@ function image_Image({
     lockAltControlsMessage,
     lockTitleControls = false,
     lockTitleControlsMessage,
-    lockCaption = false
+    hideCaptionControls = false
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     if (!isSingleSelected) {
       return {};
@@ -28894,7 +28894,8 @@ function image_Image({
     const {
       url: urlBinding,
       alt: altBinding,
-      title: titleBinding
+      title: titleBinding,
+      caption: captionBinding
     } = metadata?.bindings || {};
     const hasParentPattern = !!context['pattern/overrides'];
     const urlBindingSource = (0,external_wp_blocks_namespaceObject.getBlockBindingsSource)(urlBinding?.source);
@@ -28910,10 +28911,7 @@ function image_Image({
       // Disable editing the link of the URL if the image is inside a pattern instance.
       // This is a temporary solution until we support overriding the link on the frontend.
       hasParentPattern || arePatternOverridesEnabled,
-      lockCaption:
-      // Disable editing the caption if the image is inside a pattern instance.
-      // This is a temporary solution until we support overriding the caption on the frontend.
-      hasParentPattern,
+      hideCaptionControls: !!captionBinding,
       lockAltControls: !!altBinding && !altBindingSource?.canUserEditValue?.({
         select,
         context,
@@ -29274,8 +29272,7 @@ function image_Image({
       isSelected: isSingleSelected,
       insertBlocksAfter: insertBlocksAfter,
       label: (0,external_wp_i18n_namespaceObject.__)('Image caption text'),
-      showToolbarButton: isSingleSelected && hasNonContentControls && !arePatternOverridesEnabled,
-      readOnly: lockCaption
+      showToolbarButton: isSingleSelected && (hasNonContentControls || isContentOnlyMode) && !hideCaptionControls
     })]
   });
 }
@@ -29723,7 +29720,10 @@ function image_save_save({
     id,
     linkTarget,
     sizeSlug,
-    title
+    title,
+    metadata: {
+      bindings = {}
+    } = {}
   } = attributes;
   const newRel = !rel ? undefined : rel;
   const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetBorderClassesAndStyles)(attributes);
@@ -29753,6 +29753,7 @@ function image_save_save({
     },
     title: title
   });
+  const displayCaption = !external_wp_blockEditor_namespaceObject.RichText.isEmpty(caption) || bindings.caption || bindings?.__default?.source === 'core/pattern-overrides';
   const figure = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [href ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("a", {
       className: linkClass,
@@ -29760,7 +29761,7 @@ function image_save_save({
       target: linkTarget,
       rel: newRel,
       children: image
-    }) : image, !external_wp_blockEditor_namespaceObject.RichText.isEmpty(caption) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText.Content, {
+    }) : image, displayCaption && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText.Content, {
       className: (0,external_wp_blockEditor_namespaceObject.__experimentalGetElementClassName)('caption'),
       tagName: "figcaption",
       value: caption
