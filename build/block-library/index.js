@@ -39121,7 +39121,6 @@ function NavigationAddPageButton({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
         name: "add-page",
         icon: library_page,
-        title: (0,external_wp_i18n_namespaceObject.__)('Add page'),
         onClick: onAddPage,
         children: (0,external_wp_i18n_namespaceObject.__)('Add page')
       })
