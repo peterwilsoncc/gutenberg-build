@@ -67611,33 +67611,11 @@ function TermsQueryInspectorControls({
             })
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          hasValue: () => termQuery.order !== 'asc',
-          label: (0,external_wp_i18n_namespaceObject.__)('Order'),
-          onDeselect: () => setQuery({
-            order: 'asc'
-          }),
-          isShownByDefault: true,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
-            __nextHasNoMarginBottom: true,
-            __next40pxDefaultSize: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Order'),
-            options: [{
-              label: (0,external_wp_i18n_namespaceObject.__)('Ascending'),
-              value: 'asc'
-            }, {
-              label: (0,external_wp_i18n_namespaceObject.__)('Descending'),
-              value: 'desc'
-            }],
-            value: termQuery.order,
-            onChange: order => setQuery({
-              order
-            })
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          hasValue: () => termQuery.orderBy !== 'name',
+          hasValue: () => termQuery.orderBy !== 'name' || termQuery.order !== 'asc',
           label: (0,external_wp_i18n_namespaceObject.__)('Order by'),
           onDeselect: () => setQuery({
-            orderBy: 'name'
+            orderBy: 'name',
+            order: 'asc'
           }),
           isShownByDefault: true,
           children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.SelectControl, {
@@ -67645,19 +67623,26 @@ function TermsQueryInspectorControls({
             __next40pxDefaultSize: true,
             label: (0,external_wp_i18n_namespaceObject.__)('Order by'),
             options: [{
-              label: (0,external_wp_i18n_namespaceObject.__)('Name'),
-              value: 'name'
+              label: (0,external_wp_i18n_namespaceObject.__)('Name: A → Z'),
+              value: 'name/asc'
             }, {
-              label: (0,external_wp_i18n_namespaceObject.__)('Slug'),
-              value: 'slug'
+              label: (0,external_wp_i18n_namespaceObject.__)('Name: Z → A'),
+              value: 'name/desc'
             }, {
-              label: (0,external_wp_i18n_namespaceObject.__)('Count'),
-              value: 'count'
+              label: (0,external_wp_i18n_namespaceObject.__)('Count, high to low'),
+              value: 'count/desc'
+            }, {
+              label: (0,external_wp_i18n_namespaceObject.__)('Count, low to high'),
+              value: 'count/asc'
             }],
-            value: termQuery.orderBy,
-            onChange: orderBy => setQuery({
-              orderBy
-            })
+            value: termQuery.orderBy + '/' + termQuery.order,
+            onChange: orderBy => {
+              const [newOrderBy, newOrder] = orderBy.split('/');
+              setQuery({
+                orderBy: newOrderBy,
+                order: newOrder
+              });
+            }
           })
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           hasValue: () => termQuery.parent !== 0,
