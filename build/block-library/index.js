@@ -52570,7 +52570,15 @@ function PatternSelectionModal({
 }
 function useBlockPatterns(clientId, attributes) {
   const blockNameForPatterns = useBlockNameForPatterns(clientId, attributes);
-  return usePatterns(clientId, blockNameForPatterns);
+  const allPatterns = usePatterns(clientId, blockNameForPatterns);
+  // Filter out any patterns that don't have Query as their root block
+  // so that a Query block is always replaced by another Query block.
+  const rootBlockPatterns = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return allPatterns.filter(pattern => {
+      return pattern.blocks?.[0]?.name === blockNameForPatterns;
+    });
+  }, [allPatterns, blockNameForPatterns]);
+  return rootBlockPatterns;
 }
 function PatternSelection({
   clientId,
@@ -53672,7 +53680,8 @@ const query_metadata = {
     align: ["wide", "full"],
     html: false,
     layout: true,
-    interactivity: true
+    interactivity: true,
+    contentRole: true
   },
   editorStyle: "wp-block-query-editor"
 };
