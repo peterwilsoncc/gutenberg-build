@@ -36051,7 +36051,9 @@ function CollabSidebar() {
   const {
     records: threads,
     totalPages
-  } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('root', 'comment', queryArgs);
+  } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('root', 'comment', queryArgs, {
+    enabled: !!postId && typeof postId === 'number'
+  });
   const hasMoreComments = totalPages && totalPages > 1;
   const {
     blockCommentId
