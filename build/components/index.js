@@ -82373,6 +82373,52 @@ const UnforwardedValidatedSelectControl = ({
 };
 const ValidatedSelectControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedValidatedSelectControl);
 
+;// ./packages/components/build-module/validated-form-controls/components/radio-control.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const UnforwardedValidatedRadioControl = ({
+  required,
+  onValidate,
+  customValidity,
+  onChange,
+  markWhenOptional,
+  ...restProps
+}, forwardedRef) => {
+  const validityTargetRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const mergedRefs = (0,external_wp_compose_namespaceObject.useMergeRefs)([forwardedRef, validityTargetRef]);
+  const valueRef = (0,external_wp_element_namespaceObject.useRef)(restProps.selected);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ControlWithError, {
+    required: required,
+    markWhenOptional: markWhenOptional
+    // TODO: Upstream limitation - RadioControl does not accept a ref.
+    ,
+    ref: mergedRefs,
+    onValidate: () => {
+      return onValidate?.(valueRef.current);
+    },
+    customValidity: customValidity,
+    getValidityTarget: () => validityTargetRef.current?.querySelector('input[type="radio"]'),
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(radio_control, {
+      onChange: value => {
+        valueRef.current = value;
+        onChange?.(value);
+      },
+      ...restProps
+    })
+  });
+};
+const ValidatedRadioControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedValidatedRadioControl);
+
 ;// ./packages/components/build-module/validated-form-controls/components/text-control.js
 /**
  * WordPress dependencies
@@ -82616,6 +82662,7 @@ lock(privateApis, {
   ValidatedCheckboxControl: ValidatedCheckboxControl,
   ValidatedNumberControl: ValidatedNumberControl,
   ValidatedSelectControl: ValidatedSelectControl,
+  ValidatedRadioControl: ValidatedRadioControl,
   ValidatedTextControl: ValidatedTextControl,
   ValidatedTextareaControl: ValidatedTextareaControl,
   ValidatedToggleControl: ValidatedToggleControl,

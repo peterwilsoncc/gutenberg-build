@@ -37388,6 +37388,11 @@ function Integer({
 
 ;// ./packages/dataviews/build-module/dataform-controls/radio.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
 
@@ -37397,6 +37402,11 @@ function Integer({
  * Internal dependencies
  */
 
+
+
+const {
+  ValidatedRadioControl
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function Radio({
   data,
   field,
@@ -37405,21 +37415,42 @@ function Radio({
 }) {
   const {
     label,
+    description,
+    elements,
     getValue,
     setValue
   } = field;
   const value = getValue({
     item: data
   });
+  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange(setValue({
     item: data,
     value: newValue
   })), [data, onChange, setValue]);
-  if (field.elements) {
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
+  const onValidateControl = (0,external_wp_element_namespaceObject.useCallback)(newValue => {
+    const message = field.isValid?.custom?.(cjs_default()(data, setValue({
+      item: data,
+      value: newValue
+    })), field);
+    if (message) {
+      setCustomValidity({
+        type: 'invalid',
+        message
+      });
+      return;
+    }
+    setCustomValidity(undefined);
+  }, [data, field, setValue]);
+  if (elements) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedRadioControl, {
+      required: !!field.isValid?.required,
+      onValidate: onValidateControl,
+      customValidity: customValidity,
       label: label,
+      help: description,
       onChange: onChangeControl,
-      options: field.elements,
+      options: elements,
       selected: value,
       hideLabelFromVision: hideLabelFromVision
     });
