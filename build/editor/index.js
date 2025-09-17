@@ -13290,10 +13290,11 @@ const duplicatePost = {
       if (isCreatingPage) {
         return;
       }
+      const isTemplate = item.type === 'wp_template' || item.type === 'wp_registered_template';
       const newItemObject = {
-        status: 'draft',
+        status: isTemplate ? 'publish' : 'draft',
         title: item.title,
-        slug: item.title || (0,external_wp_i18n_namespaceObject.__)('No title'),
+        slug: isTemplate ? item.slug : item.title || (0,external_wp_i18n_namespaceObject.__)('No title'),
         comment_status: item.comment_status,
         content: typeof item.content === 'string' ? item.content : item.content.raw,
         excerpt: typeof item.excerpt === 'string' ? item.excerpt : item.excerpt?.raw,
@@ -13318,7 +13319,7 @@ const duplicatePost = {
       });
       setIsCreatingPage(true);
       try {
-        const newItem = await saveEntityRecord('postType', item.type, newItemObject, {
+        const newItem = await saveEntityRecord('postType', item.type === 'wp_registered_template' ? 'wp_template' : item.type, newItemObject, {
           throwOnError: true
         });
         createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
@@ -14297,13 +14298,8 @@ const renamePost = {
       return false;
     }
     // Templates, template parts and patterns have special checks for renaming.
-    if (!['wp_template', 'wp_template_part', ...Object.values(PATTERN_TYPES)].includes(post.type)) {
+    if (!['wp_template_part', ...Object.values(PATTERN_TYPES)].includes(post.type)) {
       return post.permissions?.update;
-    }
-
-    // In the case of templates, we can only rename custom templates.
-    if (isTemplate(post)) {
-      return isTemplateRemovable(post) && post.is_custom && post.permissions?.update;
     }
     if (isTemplatePart(post)) {
       return post.source === 'custom' && !post?.has_theme_file && post.permissions?.update;
@@ -15269,7 +15265,7 @@ const trash_post_trashPost = {
   isPrimary: true,
   icon: library_trash,
   isEligible(item) {
-    if (isTemplateOrTemplatePart(item) || item.type === 'wp_block') {
+    if (item.type === 'wp_template_part' || item.type === 'wp_block') {
       return false;
     }
     return !!item.status && !['auto-draft', 'trash'].includes(item.status) && item.permissions?.delete;
@@ -21642,7 +21638,7 @@ const ExperimentalEditorProvider = with_registry_provider(({
   const defaultBlockContext = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const postContext = {};
     // If it is a template, try to inherit the post type from the name.
-    if (post.type === 'wp_template') {
+    if (post.type === 'wp_template' || post.type === 'wp_registered_template') {
       if (post.slug === 'page') {
         postContext.postType = 'page';
       } else if (post.slug === 'single') {
@@ -21980,7 +21976,7 @@ const registerPostTypeSchema = postType => async ({
   const currentTheme = await registry.resolveSelect(external_wp_coreData_namespaceObject.store).getCurrentTheme();
   const actions = [postTypeConfig.viewable ? view_post : undefined, !!postTypeConfig.supports?.revisions ? view_post_revisions : undefined,
   // @ts-ignore
-   true ? !['wp_template', 'wp_block', 'wp_template_part'].includes(postTypeConfig.slug) && canCreate && duplicate_post : 0, postTypeConfig.slug === 'wp_template_part' && canCreate && currentTheme?.is_block_theme ? duplicate_template_part : undefined, canCreate && postTypeConfig.slug === 'wp_block' ? duplicate_pattern : undefined, postTypeConfig.supports?.title ? rename_post : undefined, postTypeConfig.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, restore_post, reset_post, delete_post, trash_post, permanently_delete_post].filter(Boolean);
+   true ? !['wp_block', 'wp_template_part'].includes(postTypeConfig.slug) && canCreate && duplicate_post : 0, postTypeConfig.slug === 'wp_template_part' && canCreate && currentTheme?.is_block_theme ? duplicate_template_part : undefined, canCreate && postTypeConfig.slug === 'wp_block' ? duplicate_pattern : undefined, postTypeConfig.supports?.title ? rename_post : undefined, postTypeConfig.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, restore_post, reset_post, delete_post, trash_post, permanently_delete_post].filter(Boolean);
   const fields = [postTypeConfig.supports?.thumbnail && currentTheme?.theme_supports?.['post-thumbnails'] && featured_image, postTypeConfig.supports?.author && author, fields_status, fields_date, slug, postTypeConfig.supports?.['page-attributes'] && fields_parent, postTypeConfig.supports?.comments && comment_status, fields_template, fields_password, postTypeConfig.supports?.editor && postTypeConfig.viewable && content_preview].filter(Boolean);
   if (postTypeConfig.supports?.title) {
     let _titleField;
@@ -25610,16 +25606,31 @@ function useAllowSwitchingTemplates() {
   }, [postId, postType]);
 }
 function useTemplates(postType) {
-  return (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_template', {
-    per_page: -1,
-    post_type: postType
-  }), [postType]);
+  // To do: create a new selector to checks if templates exist at all instead
+  // of and unbound request. In the modal, the user templates should be
+  // paginated and we should not make an unbound request.
+  const {
+    staticTemplates,
+    templates
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return {
+      staticTemplates: select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_registered_template', {
+        per_page: -1,
+        post_type: postType
+      }),
+      templates: select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_template', {
+        per_page: -1,
+        post_type: postType
+      })
+    };
+  }, [postType]);
+  return (0,external_wp_element_namespaceObject.useMemo)(() => [...(staticTemplates || []), ...(templates || [])], [staticTemplates, templates]);
 }
 function useAvailableTemplates(postType) {
   const currentTemplateSlug = useCurrentTemplateSlug();
   const allowSwitchingTemplate = useAllowSwitchingTemplates();
   const templates = useTemplates(postType);
-  return (0,external_wp_element_namespaceObject.useMemo)(() => allowSwitchingTemplate && templates?.filter(template => template.is_custom && template.slug !== currentTemplateSlug && !!template.content.raw // Skip empty templates.
+  return (0,external_wp_element_namespaceObject.useMemo)(() => allowSwitchingTemplate && templates?.filter(template => (template.is_custom || template.type === 'wp_template') && template.slug !== currentTemplateSlug && !!template.content.raw // Skip empty templates.
   ), [templates, currentTemplateSlug, allowSwitchingTemplate]);
 }
 function useCurrentTemplateSlug() {
@@ -27974,11 +27985,13 @@ function PrivateExcerpt() {
     shouldBeUsedAsDescription,
     allowEditing
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _getEditedPostAttribu;
     const {
       getCurrentPostType,
       getCurrentPostId,
       getEditedPostAttribute,
-      isEditorPanelEnabled
+      isEditorPanelEnabled,
+      __experimentalGetDefaultTemplateType
     } = select(store_store);
     const postType = getCurrentPostType();
     const isTemplateOrTemplatePart = ['wp_template', 'wp_template_part'].includes(postType);
@@ -27989,11 +28002,12 @@ function PrivateExcerpt() {
     const _usedAttribute = isTemplateOrTemplatePart ? 'description' : 'excerpt';
     // We need to fetch the entity in this case to check if we'll allow editing.
     const template = isTemplateOrTemplatePart && select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', postType, getCurrentPostId());
+    const fallback = isTemplateOrTemplatePart ? __experimentalGetDefaultTemplateType(template.slug).description : undefined;
     // For post types that use excerpt as description, we do not abide
     // by the `isEnabled` panel flag in order to render them as text.
     const _shouldRender = isEditorPanelEnabled(post_excerpt_panel_PANEL_NAME) || _shouldBeUsedAsDescription;
     return {
-      excerpt: getEditedPostAttribute(_usedAttribute),
+      excerpt: (_getEditedPostAttribu = getEditedPostAttribute(_usedAttribute)) !== null && _getEditedPostAttribu !== void 0 ? _getEditedPostAttribu : fallback,
       shouldRender: _shouldRender,
       shouldBeUsedAsDescription: _shouldBeUsedAsDescription,
       // If we should render, allow editing for all post types that are not used as description.
