@@ -62490,7 +62490,7 @@ const BlockSwitcher = ({
     isReusable,
     isTemplate,
     isDisabled,
-    isSection
+    isSectionInSelection
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getTemplateLock,
@@ -62533,6 +62533,7 @@ const BlockSwitcher = ({
       // appropriate icon to communicate the non-uniformity.
       _icon = isSelectionOfSameType ? blockType.icon : library_copy;
     }
+    const _isSectionInSelection = clientIds.some(id => isSectionBlock(id));
     return {
       canRemove: canRemoveBlocks(clientIds),
       hasBlockStyles: _isSingleBlockSelected && !!getBlockStyles(firstBlockName)?.length,
@@ -62541,7 +62542,7 @@ const BlockSwitcher = ({
       isTemplate: _isSingleBlockSelected && (0,external_wp_blocks_namespaceObject.isTemplatePart)(_blocks[0]),
       hasContentOnlyLocking: _hasTemplateLock,
       isDisabled: editingMode !== 'default',
-      isSection: isSectionBlock(clientIds[0])
+      isSectionInSelection: _isSectionInSelection
     };
   }, [clientIds]);
   const blockTitle = useBlockDisplayTitle({
@@ -62555,7 +62556,7 @@ const BlockSwitcher = ({
   const isSingleBlock = clientIds.length === 1;
   const blockSwitcherLabel = isSingleBlock ? blockTitle : (0,external_wp_i18n_namespaceObject.__)('Multiple blocks selected');
   const blockIndicatorText = (isReusable || isTemplate) && !showIconLabels && blockTitle ? blockTitle : undefined;
-  const hideTransformsForSections = window?.__experimentalContentOnlyPatternInsertion && isSection;
+  const hideTransformsForSections = window?.__experimentalContentOnlyPatternInsertion && isSectionInSelection;
   const hideDropdown = hideTransformsForSections || isDisabled || !hasBlockStyles && !canRemove || hasContentOnlyLocking;
   if (hideDropdown) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
@@ -76944,10 +76945,12 @@ function BlockInspector() {
     selectedBlockName,
     selectedBlockClientId,
     blockType,
-    isSectionBlock
+    isSectionBlock,
+    isSectionBlockInSelection
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getSelectedBlockClientId,
+      getSelectedBlockClientIds,
       getSelectedBlockCount,
       getBlockName,
       getParentSectionBlock,
@@ -76957,11 +76960,14 @@ function BlockInspector() {
     const renderedBlockClientId = getParentSectionBlock(_selectedBlockClientId) || getSelectedBlockClientId();
     const _selectedBlockName = renderedBlockClientId && getBlockName(renderedBlockClientId);
     const _blockType = _selectedBlockName && (0,external_wp_blocks_namespaceObject.getBlockType)(_selectedBlockName);
+    const selectedBlockClientIds = getSelectedBlockClientIds();
+    const _isSectionBlockInSelection = selectedBlockClientIds.some(id => _isSectionBlock(id));
     return {
       count: getSelectedBlockCount(),
       selectedBlockClientId: renderedBlockClientId,
       selectedBlockName: _selectedBlockName,
       blockType: _blockType,
+      isSectionBlockInSelection: _isSectionBlockInSelection,
       isSectionBlock: _isSectionBlock(renderedBlockClientId)
     };
   }, []);
@@ -76978,7 +76984,8 @@ function BlockInspector() {
   const borderPanelLabel = useBorderPanelLabel({
     blockName: selectedBlockName
   });
-  if (count > 1 && !isSectionBlock) {
+  const hasSelectedBlocks = count > 1;
+  if (hasSelectedBlocks && !isSectionBlockInSelection) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "block-editor-block-inspector",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MultiSelectionInspector, {}), showTabs ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorControlsTabs, {
@@ -77004,6 +77011,12 @@ function BlockInspector() {
           group: "styles"
         })]
       })]
+    });
+  }
+  if (hasSelectedBlocks && isSectionBlockInSelection) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "block-editor-block-inspector",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MultiSelectionInspector, {})
     });
   }
   const isSelectedBlockUnregistered = selectedBlockName === (0,external_wp_blocks_namespaceObject.getUnregisteredTypeHandlerName)();
