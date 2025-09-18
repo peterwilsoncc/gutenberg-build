@@ -36172,6 +36172,7 @@ function CollabSidebar() {
       ,
       title: (0,external_wp_i18n_namespaceObject.__)('Comments'),
       icon: library_comment,
+      closeLabel: (0,external_wp_i18n_namespaceObject.__)('Close Comments'),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollabSidebarContent, {
         comments: resultComments,
         showCommentBoard: showCommentBoard,
