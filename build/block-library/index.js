@@ -2433,29 +2433,6 @@ const accordion_content_init = () => initBlock({
   settings: accordion_content_settings
 });
 
-;// ./packages/block-library/build-module/accordion-content/icons.js
-/**
- * WordPress dependencies
- */
-
-const plus = ({
-  width,
-  height
-}) => {
-  return (0,external_wp_element_namespaceObject.createElement)('span', {
-    style: {
-      display: 'inline-block',
-      width: width || 24,
-      height: height || 24,
-      lineHeight: `${height || 24}px`,
-      textAlign: 'center',
-      fontSize: `${(height || 24) * 0.6}px`,
-      fontWeight: 'bold',
-      color: 'currentColor'
-    }
-  }, '+');
-};
-
 ;// ./packages/block-library/build-module/accordion-header/edit.js
 /**
  * External dependencies
@@ -2468,14 +2445,7 @@ const plus = ({
 
 
 
-/**
- * Internal dependencies
- */
 
-
-const ICONS = {
-  plus: plus
-};
 function accordion_header_edit_Edit({
   attributes,
   setAttributes,
@@ -2507,8 +2477,6 @@ function accordion_header_edit_Edit({
   const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseColorProps)(attributes);
   const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
   const shadowProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetShadowClassesAndStyles)(attributes);
-  const Icon = ICONS.plus;
-  const shouldShowIcon = showIcon && Icon;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
@@ -2546,19 +2514,9 @@ function accordion_header_edit_Edit({
             title: newTitle
           }),
           placeholder: (0,external_wp_i18n_namespaceObject.__)('Accordion title')
-        }), shouldShowIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          className: dist_clsx(`accordion-content__toggle-icon`, {
-            'has-icon-plus': true
-          }),
-          style: {
-            // TO-DO: make this configurable
-            width: `1.2em`,
-            height: `1.2em`
-          },
-          children: Icon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Icon, {
-            width: "1.2em",
-            height: "1.2em"
-          })
+        }), showIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          className: "accordion-content__toggle-icon",
+          children: "+"
         })]
       })
     })]
@@ -2574,14 +2532,7 @@ function accordion_header_edit_Edit({
  * WordPress dependencies
  */
 
-/**
- * Internal dependencies
- */
 
-
-const save_ICONS = {
-  plus: plus
-};
 function accordion_header_save_save({
   attributes
 }) {
@@ -2598,7 +2549,6 @@ function accordion_header_save_save({
   const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetColorClassesAndStyles)(attributes);
   const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
   const shadowProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetShadowClassesAndStyles)(attributes);
-  const Icon = save_ICONS.plus;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
     ...blockProps,
     className: dist_clsx(blockProps.className, colorProps.className, borderProps.className, 'accordion-content__heading', {
@@ -2619,19 +2569,9 @@ function accordion_header_save_save({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText.Content, {
         tagName: "span",
         value: title
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        className: dist_clsx(`accordion-content__toggle-icon`, {
-          'has-icon-plus': showIcon
-        }),
-        style: {
-          // TO-DO: make this configurable
-          width: `1.2em`,
-          height: `1.2em`
-        },
-        children: showIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Icon, {
-          width: "1.2em",
-          height: "1.2em"
-        })
+      }), showIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        className: "accordion-content__toggle-icon",
+        children: "+"
       })]
     })
   });
@@ -38278,14 +38218,14 @@ const updateAttributes = (updatedValue = {}, setAttributes, blockAttributes = {}
  */
 
 
-const plus_plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+const plus = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 24 24",
   children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
     d: "M11 12.5V17.5H12.5V12.5H17.5V11H12.5V6H11V11H6V12.5H11Z"
   })
 });
-/* harmony default export */ const library_plus = (plus_plus);
+/* harmony default export */ const library_plus = (plus);
 
 ;// ./packages/icons/build-module/library/chevron-right-small.js
 /**
