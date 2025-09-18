@@ -35236,10 +35236,10 @@ function CommentAuthorInfo({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "editor-collab-sidebar-panel__user-name",
         children: name !== null && name !== void 0 ? name : currentUserName
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("time", {
         dateTime: (0,external_wp_date_namespaceObject.dateI18n)('c', date ? (0,external_wp_date_namespaceObject.getDate)(date) : currentDate),
         className: "editor-collab-sidebar-panel__user-time",
-        children: (0,external_wp_date_namespaceObject.dateI18n)(dateTimeFormat, date ? (0,external_wp_date_namespaceObject.getDate)(date) : currentDate)
+        children: [(0,external_wp_date_namespaceObject.dateI18n)(dateTimeFormat, date ? (0,external_wp_date_namespaceObject.getDate)(date) : currentDate), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("br", {}), (0,external_wp_date_namespaceObject.humanTimeDiff)(date ? (0,external_wp_date_namespaceObject.getDate)(date) : currentDate)]
       })]
     })]
   });
