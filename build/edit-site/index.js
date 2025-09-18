@@ -48095,7 +48095,7 @@ function FieldControl() {
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const togglableFields = [view?.titleField, view?.mediaField, view?.descriptionField].filter(Boolean);
   const visibleFieldIds = (_view$fields2 = view.fields) !== null && _view$fields2 !== void 0 ? _view$fields2 : [];
-  const hiddenFields = fields.filter(f => !visibleFieldIds.includes(f.id) && !togglableFields.includes(f.id) && f.type !== 'media');
+  const hiddenFields = fields.filter(f => !visibleFieldIds.includes(f.id) && !togglableFields.includes(f.id) && f.type !== 'media' && f.enableHiding !== false);
   const visibleFields = visibleFieldIds.map(fieldId => fields.find(f => f.id === fieldId)).filter(dataviews_view_config_isDefined);
   if (!visibleFields?.length && !hiddenFields?.length) {
     return null;
