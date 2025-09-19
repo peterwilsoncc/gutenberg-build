@@ -24891,6 +24891,16 @@ function PageAttributesCheck({
  * Internal dependencies
  */
 
+function checkSupport(supports = {}, key) {
+  // Check for top-level support keys.
+  if (supports[key] !== undefined) {
+    return !!supports[key];
+  }
+  const [topKey, subKey] = key.split('.');
+  // Try to unwrap sub-properties from the superfluous array.
+  const [subProperties] = Array.isArray(supports[topKey]) ? supports[topKey] : [];
+  return Array.isArray(subProperties) ? subProperties.includes(subKey) : !!subProperties?.[subKey];
+}
 
 /**
  * A component which renders its own children only if the current editor post
@@ -24919,7 +24929,7 @@ function PostTypeSupportCheck({
   }, []);
   let isSupported = !!postType;
   if (postType) {
-    isSupported = (Array.isArray(supportKeys) ? supportKeys : [supportKeys]).some(key => !!postType.supports[key]);
+    isSupported = (Array.isArray(supportKeys) ? supportKeys : [supportKeys]).some(key => checkSupport(postType.supports, key));
   }
   if (!isSupported) {
     return null;
