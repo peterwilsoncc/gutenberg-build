@@ -2009,33 +2009,16 @@ function Edit({
   });
 }
 
-;// ./node_modules/clsx/dist/clsx.mjs
-function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
 ;// ./packages/block-library/build-module/accordion/save.js
-/**
- * External dependencies
- */
-
 /**
  * WordPress dependencies
  */
 
 
-function save({
-  attributes
-}) {
-  const {
-    iconPosition
-  } = attributes;
+function save() {
   const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
-  const className = dist_clsx({
-    'icon-position-left': iconPosition === 'left'
-  }, blockProps.className);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    ...external_wp_blockEditor_namespaceObject.useInnerBlocksProps.save({
-      ...blockProps,
-      className
-    })
+    ...external_wp_blockEditor_namespaceObject.useInnerBlocksProps.save(blockProps)
   });
 }
 
@@ -2211,6 +2194,8 @@ const init = () => initBlock({
   settings
 });
 
+;// ./node_modules/clsx/dist/clsx.mjs
+function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else if("object"==typeof e)if(Array.isArray(e)){var o=e.length;for(t=0;t<o;t++)e[t]&&(f=r(e[t]))&&(n&&(n+=" "),n+=f)}else for(f in e)e[f]&&(n&&(n+=" "),n+=f);return n}function clsx(){for(var e,t,f=0,n="",o=arguments.length;f<o;f++)(e=arguments[f])&&(t=r(e))&&(n&&(n+=" "),n+=t);return n}/* harmony default export */ const dist_clsx = (clsx);
 ;// ./packages/block-library/build-module/accordion-content/edit.js
 /**
  * WordPress dependencies
@@ -2516,7 +2501,6 @@ function accordion_header_edit_Edit({
       ...blockProps,
       className: dist_clsx(blockProps.className, colorProps.className, borderProps.className, 'accordion-content__heading', {
         [`has-custom-font-size`]: blockProps.style.fontSize,
-        [`icon-position-left`]: iconPosition === 'left',
         [`has-text-align-${textAlign}`]: textAlign
       }),
       style: {
@@ -2529,7 +2513,10 @@ function accordion_header_edit_Edit({
         style: {
           ...spacingProps.style
         },
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
+        children: [showIcon && iconPosition === 'left' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          className: "accordion-content__toggle-icon",
+          children: "+"
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
           withoutInteractiveFormatting: true,
           disableLineBreaks: true,
           tagName: "span",
@@ -2538,7 +2525,7 @@ function accordion_header_edit_Edit({
             title: newTitle
           }),
           placeholder: (0,external_wp_i18n_namespaceObject.__)('Accordion title')
-        }), showIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        }), showIcon && iconPosition === 'right' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: "accordion-content__toggle-icon",
           children: "+"
         })]
@@ -2577,7 +2564,6 @@ function accordion_header_save_save({
     ...blockProps,
     className: dist_clsx(blockProps.className, colorProps.className, borderProps.className, 'accordion-content__heading', {
       [`has-custom-font-size`]: blockProps?.style?.fontSize,
-      [`icon-position-left`]: iconPosition === 'left',
       [`has-text-align-${textAlign}`]: textAlign
     }),
     style: {
@@ -2590,10 +2576,14 @@ function accordion_header_save_save({
       style: {
         ...spacingProps.style
       },
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText.Content, {
+      children: [showIcon && iconPosition === 'left' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        className: "accordion-content__toggle-icon",
+        children: "+"
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText.Content, {
+        className: "accordion-content__toggle-title",
         tagName: "span",
         value: title
-      }), showIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      }), showIcon && iconPosition === 'right' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "accordion-content__toggle-icon",
         children: "+"
       })]
@@ -2689,7 +2679,7 @@ const accordion_header_metadata = {
     title: {
       type: "rich-text",
       source: "rich-text",
-      selector: "span",
+      selector: ".accordion-content__toggle-title",
       role: "content"
     },
     level: {
