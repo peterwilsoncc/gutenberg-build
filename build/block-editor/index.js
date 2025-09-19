@@ -76939,9 +76939,47 @@ function BlockStylesPanel({
     })
   });
 }
+function StyleInspectorSlots({
+  blockName,
+  showAdvancedControls = true,
+  showPositionControls = true,
+  showListControls = false,
+  showBindingsControls = true
+}) {
+  const borderPanelLabel = useBorderPanelLabel({
+    blockName
+  });
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {}), showListControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
+      group: "list"
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
+      group: "color",
+      label: (0,external_wp_i18n_namespaceObject.__)('Color'),
+      className: "color-block-support-panel__inner-wrapper"
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
+      group: "background",
+      label: (0,external_wp_i18n_namespaceObject.__)('Background image')
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
+      group: "typography",
+      label: (0,external_wp_i18n_namespaceObject.__)('Typography')
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
+      group: "dimensions",
+      label: (0,external_wp_i18n_namespaceObject.__)('Dimensions')
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
+      group: "border",
+      label: borderPanelLabel
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
+      group: "styles"
+    }), showPositionControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(position_controls_panel, {}), showBindingsControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
+      group: "bindings"
+    }), showAdvancedControls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(advanced_controls_panel, {})
+    })]
+  });
+}
 function BlockInspector() {
   const {
-    count,
+    selectedBlockCount,
     selectedBlockName,
     selectedBlockClientId,
     blockType,
@@ -76957,13 +76995,13 @@ function BlockInspector() {
       isSectionBlock: _isSectionBlock
     } = unlock(select(store));
     const _selectedBlockClientId = getSelectedBlockClientId();
-    const renderedBlockClientId = getParentSectionBlock(_selectedBlockClientId) || getSelectedBlockClientId();
+    const renderedBlockClientId = getParentSectionBlock(_selectedBlockClientId) || _selectedBlockClientId;
     const _selectedBlockName = renderedBlockClientId && getBlockName(renderedBlockClientId);
     const _blockType = _selectedBlockName && (0,external_wp_blocks_namespaceObject.getBlockType)(_selectedBlockName);
     const selectedBlockClientIds = getSelectedBlockClientIds();
     const _isSectionBlockInSelection = selectedBlockClientIds.some(id => _isSectionBlock(id));
     return {
-      count: getSelectedBlockCount(),
+      selectedBlockCount: getSelectedBlockCount(),
       selectedBlockClientId: renderedBlockClientId,
       selectedBlockName: _selectedBlockName,
       blockType: _blockType,
@@ -76972,7 +77010,7 @@ function BlockInspector() {
     };
   }, []);
   const availableTabs = useInspectorControlsTabs(blockType?.name);
-  const showTabs = availableTabs?.length > 1;
+  const hasMultipleTabs = availableTabs?.length > 1;
 
   // The block inspector animation settings will be completely
   // removed in the future to create an API which allows the block
@@ -76981,35 +77019,17 @@ function BlockInspector() {
   // and its parent, and only enable it if the parent is controlling
   // its children blocks.
   const blockInspectorAnimationSettings = useBlockInspectorAnimationSettings(blockType);
-  const borderPanelLabel = useBorderPanelLabel({
-    blockName: selectedBlockName
-  });
-  const hasSelectedBlocks = count > 1;
+  const hasSelectedBlocks = selectedBlockCount > 1;
   if (hasSelectedBlocks && !isSectionBlockInSelection) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       className: "block-editor-block-inspector",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MultiSelectionInspector, {}), showTabs ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorControlsTabs, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MultiSelectionInspector, {}), hasMultipleTabs ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorControlsTabs, {
         tabs: availableTabs
-      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-          group: "color",
-          label: (0,external_wp_i18n_namespaceObject.__)('Color'),
-          className: "color-block-support-panel__inner-wrapper"
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-          group: "background",
-          label: (0,external_wp_i18n_namespaceObject.__)('Background image')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-          group: "typography",
-          label: (0,external_wp_i18n_namespaceObject.__)('Typography')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-          group: "dimensions",
-          label: (0,external_wp_i18n_namespaceObject.__)('Dimensions')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-          group: "border",
-          label: borderPanelLabel
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-          group: "styles"
-        })]
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleInspectorSlots, {
+        blockName: selectedBlockName,
+        showAdvancedControls: false,
+        showPositionControls: false,
+        showBindingsControls: false
       })]
     });
   }
@@ -77025,7 +77045,8 @@ function BlockInspector() {
    * If the selected block is of an unregistered type, avoid showing it as an actual selection
    * because we want the user to focus on the unregistered block warning, not block settings.
    */
-  if (!blockType || !selectedBlockClientId || isSelectedBlockUnregistered) {
+  const shouldShowWarning = !blockType || !selectedBlockClientId || isSelectedBlockUnregistered;
+  if (shouldShowWarning) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
       className: "block-editor-block-inspector__no-blocks",
       children: (0,external_wp_i18n_namespaceObject.__)('No block selected.')
@@ -77041,7 +77062,8 @@ function BlockInspector() {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockInspectorSingleBlock, {
       clientId: selectedBlockClientId,
       blockName: blockType.name,
-      isSectionBlock: isSectionBlock
+      isSectionBlock: isSectionBlock,
+      availableTabs: availableTabs
     })
   });
 }
@@ -77077,10 +77099,11 @@ const AnimatedContainer = ({
 const BlockInspectorSingleBlock = ({
   clientId,
   blockName,
-  isSectionBlock
+  isSectionBlock,
+  availableTabs
 }) => {
-  const availableTabs = useInspectorControlsTabs(blockName);
-  const showTabs = !isSectionBlock && availableTabs?.length > 1;
+  const hasMultipleTabs = availableTabs?.length > 1;
+  const shouldShowTabs = !isSectionBlock && hasMultipleTabs;
   const hasBlockStyles = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockStyles
@@ -77089,9 +77112,6 @@ const BlockInspectorSingleBlock = ({
     return blockStyles && blockStyles.length > 0;
   }, [blockName]);
   const blockInformation = useBlockDisplayInformation(clientId);
-  const borderPanelLabel = useBorderPanelLabel({
-    blockName
-  });
   const contentClientIds = (0,external_wp_data_namespaceObject.useSelect)(select => {
     // Avoid unnecessary subscription.
     if (!isSectionBlock) {
@@ -77104,55 +77124,33 @@ const BlockInspectorSingleBlock = ({
     } = select(store);
     return getClientIdsOfDescendants(clientId).filter(current => getBlockName(current) !== 'core/list-item' && getBlockEditingMode(current) === 'contentOnly');
   }, [isSectionBlock, clientId]);
+  const isBlockSynced = blockInformation.isSynced;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
     className: "block-editor-block-inspector",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_card, {
       ...blockInformation,
-      className: blockInformation.isSynced && 'is-synced',
+      className: isBlockSynced && 'is-synced',
       children: window?.__experimentalContentOnlyPatternInsertion && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditContentsButton, {
         clientId: clientId
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_variation_transforms, {
       blockClientId: clientId
-    }), showTabs && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorControlsTabs, {
+    }), shouldShowTabs && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorControlsTabs, {
       hasBlockStyles: hasBlockStyles,
       clientId: clientId,
       blockName: blockName,
       tabs: availableTabs
-    }), !showTabs && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    }), !shouldShowTabs && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
       children: [hasBlockStyles && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockStylesPanel, {
         clientId: clientId
-      }), contentClientIds && contentClientIds?.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
+      }), contentClientIds && contentClientIds.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.PanelBody, {
         title: (0,external_wp_i18n_namespaceObject.__)('Content'),
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockQuickNavigation, {
           clientIds: contentClientIds
         })
-      }), !isSectionBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-          group: "list"
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-          group: "color",
-          label: (0,external_wp_i18n_namespaceObject.__)('Color'),
-          className: "color-block-support-panel__inner-wrapper"
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-          group: "background",
-          label: (0,external_wp_i18n_namespaceObject.__)('Background image')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-          group: "typography",
-          label: (0,external_wp_i18n_namespaceObject.__)('Typography')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-          group: "dimensions",
-          label: (0,external_wp_i18n_namespaceObject.__)('Dimensions')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-          group: "border",
-          label: borderPanelLabel
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-          group: "styles"
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(position_controls_panel, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls.Slot, {
-          group: "bindings"
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(advanced_controls_panel, {})
-        })]
+      }), !isSectionBlock && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(StyleInspectorSlots, {
+        blockName: blockName,
+        showListControls: true
       })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SkipToSelectedBlock, {}, "back")]
   });
