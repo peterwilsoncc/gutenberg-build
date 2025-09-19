@@ -2506,7 +2506,7 @@ function accordion_header_edit_Edit({
           ...spacingProps.style
         },
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
-          allowedFormats: ['core/bold', 'core/italic', 'core/image', 'core/strikethrough'],
+          withoutInteractiveFormatting: true,
           disableLineBreaks: true,
           tagName: "span",
           value: title,
