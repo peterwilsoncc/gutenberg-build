@@ -16359,21 +16359,11 @@ const PreviewStyles = ({
 
 
 function ScreenRoot() {
-  const {
-    hasVariations,
-    canEditCSS
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const hasVariations = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getEntityRecord,
-      __experimentalGetCurrentGlobalStylesId,
       __experimentalGetCurrentThemeGlobalStylesVariations
     } = select(external_wp_coreData_namespaceObject.store);
-    const globalStylesId = __experimentalGetCurrentGlobalStylesId();
-    const globalStyles = globalStylesId ? getEntityRecord('root', 'globalStyles', globalStylesId) : undefined;
-    return {
-      hasVariations: !!__experimentalGetCurrentThemeGlobalStylesVariations()?.length,
-      canEditCSS: !!globalStyles?._links?.['wp:action-edit-css']
-    };
+    return !!__experimentalGetCurrentThemeGlobalStylesVariations()?.length;
   }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Card, {
     size: "small",
@@ -16413,7 +16403,7 @@ function ScreenRoot() {
          * the nav button inset should be looked at before reusing further.
          */,
         paddingX: "13px",
-        marginBottom: 4,
+        marginBottom: 2,
         children: (0,external_wp_i18n_namespaceObject.__)('Customize the appearance of specific blocks for the whole site.')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
@@ -16427,28 +16417,6 @@ function ScreenRoot() {
             })]
           })
         })
-      })]
-    }), canEditCSS && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CardDivider, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.CardBody, {
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
-          as: "p",
-          paddingTop: 2,
-          paddingX: "13px",
-          marginBottom: 4,
-          children: (0,external_wp_i18n_namespaceObject.__)('Add your own CSS to customize the appearance and layout of your site.')
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
-            path: "/css",
-            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-              justify: "space-between",
-              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
-                children: (0,external_wp_i18n_namespaceObject.__)('Additional CSS')
-              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(IconWithCurrentColor, {
-                icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_left : chevron_right
-              })]
-            })
-          })
-        })]
       })]
     })]
   });
@@ -27273,6 +27241,8 @@ function Page({
 
 
 
+
+
 /**
  * Internal dependencies
  */
@@ -27290,19 +27260,49 @@ const GlobalStylesPageActions = ({
   path
 }) => {
   const history = sidebar_global_styles_wrapper_useHistory();
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-    isPressed: isStyleBookOpened,
-    icon: library_seen,
-    label: (0,external_wp_i18n_namespaceObject.__)('Style Book'),
-    onClick: () => {
-      setIsStyleBookOpened(!isStyleBookOpened);
-      const updatedPath = !isStyleBookOpened ? (0,external_wp_url_namespaceObject.addQueryArgs)(path, {
-        preview: 'stylebook'
-      }) : (0,external_wp_url_namespaceObject.removeQueryArgs)(path, 'preview');
-      // Navigate to the updated path.
-      history.navigate(updatedPath);
-    },
-    size: "compact"
+  const canEditCSS = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getEntityRecord,
+      __experimentalGetCurrentGlobalStylesId
+    } = select(external_wp_coreData_namespaceObject.store);
+    const globalStylesId = __experimentalGetCurrentGlobalStylesId();
+    const globalStyles = globalStylesId ? getEntityRecord('root', 'globalStyles', globalStylesId) : undefined;
+    return !!globalStyles?._links?.['wp:action-edit-css'];
+  }, []);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+      isPressed: isStyleBookOpened,
+      icon: library_seen,
+      label: (0,external_wp_i18n_namespaceObject.__)('Style Book'),
+      onClick: () => {
+        setIsStyleBookOpened(!isStyleBookOpened);
+        const updatedPath = !isStyleBookOpened ? (0,external_wp_url_namespaceObject.addQueryArgs)(path, {
+          preview: 'stylebook'
+        }) : (0,external_wp_url_namespaceObject.removeQueryArgs)(path, 'preview');
+        // Navigate to the updated path.
+        history.navigate(updatedPath);
+      },
+      size: "compact"
+    }), canEditCSS && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
+      icon: more_vertical,
+      label: (0,external_wp_i18n_namespaceObject.__)('More'),
+      toggleProps: {
+        size: 'compact'
+      },
+      children: ({
+        onClose
+      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
+        children: canEditCSS && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+          onClick: () => {
+            onClose();
+            history.navigate((0,external_wp_url_namespaceObject.addQueryArgs)(path, {
+              section: '/css'
+            }));
+          },
+          children: (0,external_wp_i18n_namespaceObject.__)('Additional CSS')
+        })
+      })
+    })]
   });
 };
 
@@ -27951,7 +27951,6 @@ const {
   AdvancedPanel: screen_css_StylesAdvancedPanel
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function ScreenCSS() {
-  const description = (0,external_wp_i18n_namespaceObject.__)('Add your own CSS to customize the appearance and layout of your site.');
   const [style] = screen_css_useGlobalStyle('', undefined, 'user', {
     shouldDecodeEncode: false
   });
@@ -27963,9 +27962,9 @@ function ScreenCSS() {
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header, {
-      title: (0,external_wp_i18n_namespaceObject.__)('CSS'),
+      title: (0,external_wp_i18n_namespaceObject.__)('Additional CSS'),
       description: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: [description, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("br", {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
+        children: [(0,external_wp_i18n_namespaceObject.__)('You can add custom CSS to further customize the appearance and layout of your site.'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("br", {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
           href: (0,external_wp_i18n_namespaceObject.__)('https://developer.wordpress.org/advanced-administration/wordpress/css/'),
           className: "edit-site-global-styles-screen-css-help-link",
           children: (0,external_wp_i18n_namespaceObject.__)('Learn more about CSS')
