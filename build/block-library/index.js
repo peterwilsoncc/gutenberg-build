@@ -1756,10 +1756,10 @@ __webpack_require__.d(footnotes_namespaceObject, {
 
 ;// external ["wp","blocks"]
 const external_wp_blocks_namespaceObject = window["wp"]["blocks"];
-;// external ["wp","blockEditor"]
-const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
 ;// external ["wp","i18n"]
 const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
+;// external ["wp","blockEditor"]
+const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
 ;// external ["wp","components"]
 const external_wp_components_namespaceObject = window["wp"]["components"];
 ;// external ["wp","data"]
@@ -2099,6 +2099,11 @@ const external_wp_primitives_namespaceObject = window["wp"]["primitives"];
 
 ;// ./packages/block-library/build-module/accordion/index.js
 /**
+ * WordPress dependencies
+ */
+
+
+/**
  * Internal dependencies
  */
 
@@ -2177,7 +2182,25 @@ const {
 
 const settings = {
   icon: icon,
-  example: {},
+  example: {
+    innerBlocks: [{
+      name: 'core/accordion-content',
+      innerBlocks: [{
+        name: 'core/accordion-header',
+        attributes: {
+          title: (0,external_wp_i18n_namespaceObject.__)('Lorem ipsum dolor sit amet, consectetur.')
+        }
+      }]
+    }, {
+      name: 'core/accordion-content',
+      innerBlocks: [{
+        name: 'core/accordion-header',
+        attributes: {
+          title: (0,external_wp_i18n_namespaceObject.__)('Suspendisse commodo lacus, interdum et.')
+        }
+      }]
+    }]
+  },
   edit: Edit,
   save: save
 };
