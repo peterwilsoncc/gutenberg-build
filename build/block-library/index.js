@@ -1968,13 +1968,14 @@ function Edit({
             label: (0,external_wp_i18n_namespaceObject.__)('Show icon'),
             onChange: value => {
               setAttributes({
-                showIcon: value
+                showIcon: value,
+                iconPosition: value ? iconPosition : 'right'
               });
             },
             checked: showIcon,
             help: (0,external_wp_i18n_namespaceObject.__)('Display a plus icon next to the accordion header.')
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        }), showIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           label: (0,external_wp_i18n_namespaceObject.__)('Icon Position'),
           isShownByDefault: true,
           hasValue: () => iconPosition !== 'right',
