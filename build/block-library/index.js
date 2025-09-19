@@ -2689,7 +2689,8 @@ const accordion_header_metadata = {
     title: {
       type: "rich-text",
       source: "rich-text",
-      selector: "span"
+      selector: "span",
+      role: "content"
     },
     level: {
       type: "number",
