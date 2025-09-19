@@ -81542,6 +81542,7 @@ function HTMLElementControl({
 
 
 
+
 /**
  * Private @wordpress/block-editor APIs.
  */
@@ -81591,7 +81592,8 @@ lock(privateApis, {
   CommentIconSlotFill: block_comment_icon_slot,
   CommentIconToolbarSlotFill: block_comment_icon_toolbar_slot,
   mediaEditKey: mediaEditKey,
-  essentialFormatKey: essentialFormatKey
+  essentialFormatKey: essentialFormatKey,
+  useBlockElement: useBlockElement
 });
 
 ;// ./packages/block-editor/build-module/index.js

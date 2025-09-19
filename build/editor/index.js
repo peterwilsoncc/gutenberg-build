@@ -35390,6 +35390,33 @@ function CommentForm({
 
 
 
+
+const {
+  useBlockElement
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
+
+/**
+ * Finds the first block that has the specified comment ID.
+ *
+ * @param {string} commentId - The comment ID to search for.
+ * @param {Array}  blockList - The list of blocks to search through.
+ * @return {string|null} The client ID of the found block, or null if not found.
+ */
+const findBlockByCommentId = (commentId, blockList) => {
+  for (const block of blockList) {
+    if (block.attributes?.blockCommentId === commentId) {
+      return block.clientId;
+    }
+    if (block.innerBlocks) {
+      const found = findBlockByCommentId(commentId, block.innerBlocks);
+      if (found) {
+        return found;
+      }
+    }
+  }
+  return null;
+};
+
 /**
  * Renders the Comments component.
  *
@@ -35404,7 +35431,6 @@ function CommentForm({
  * @param {Function} props.setShowCommentBoard - The function to set the comment board visibility.
  * @return {React.ReactNode} The rendered Comments component.
  */
-
 function Comments({
   threads,
   onEditComment,
@@ -35416,22 +35442,34 @@ function Comments({
   setShowCommentBoard
 }) {
   const {
-    blockCommentId
+    blockCommentId,
+    blocks
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockAttributes,
-      getSelectedBlockClientId
+      getSelectedBlockClientId,
+      getBlocks
     } = select(external_wp_blockEditor_namespaceObject.store);
     const _clientId = getSelectedBlockClientId();
     return {
-      blockCommentId: _clientId ? getBlockAttributes(_clientId)?.blockCommentId : null
+      blockCommentId: _clientId ? getBlockAttributes(_clientId)?.blockCommentId : null,
+      blocks: getBlocks()
     };
   }, []);
-  const [focusThread, setFocusThread] = (0,external_wp_element_namespaceObject.useState)(showCommentBoard && blockCommentId ? blockCommentId : null);
+  const {
+    flashBlock
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const clearThreadFocus = () => {
     setFocusThread(null);
     setShowCommentBoard(false);
   };
+  const [focusThread, setFocusThread] = (0,external_wp_element_namespaceObject.useState)(showCommentBoard && blockCommentId ? blockCommentId : null);
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    // Highlight comment when block is selected.
+    if (blockCommentId && !focusThread) {
+      setFocusThread(blockCommentId);
+    }
+  }, [blockCommentId, focusThread, blocks, setFocusThread]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [
     // If there are no comments, show a message indicating no comments are available.
@@ -35443,25 +35481,20 @@ function Comments({
       children:
       // translators: message displayed when there are no comments available
       (0,external_wp_i18n_namespaceObject.__)('No comments available')
-    }), Array.isArray(threads) && threads.length > 0 && threads.map(thread => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
-      className: dist_clsx('editor-collab-sidebar-panel__thread', {
-        'editor-collab-sidebar-panel__active-thread': blockCommentId && blockCommentId === thread.id,
-        'editor-collab-sidebar-panel__focus-thread': focusThread && focusThread === thread.id
-      }),
-      id: thread.id,
-      spacing: "3",
-      onClick: () => setFocusThread(thread.id),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Thread, {
-        thread: thread,
-        onAddReply: onAddReply,
-        onCommentDelete: onCommentDelete,
-        onCommentResolve: onCommentResolve,
-        onCommentReopen: onCommentReopen,
-        onEditComment: onEditComment,
-        isFocused: focusThread === thread.id,
-        clearThreadFocus: clearThreadFocus,
-        setFocusThread: setFocusThread
-      })
+    }), Array.isArray(threads) && threads.length > 0 && threads.map(thread => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Thread, {
+      thread: thread,
+      onAddReply: onAddReply,
+      onCommentDelete: onCommentDelete,
+      onCommentResolve: onCommentResolve,
+      onCommentReopen: onCommentReopen,
+      onEditComment: onEditComment,
+      isFocused: focusThread === thread.id,
+      clearThreadFocus: clearThreadFocus,
+      setFocusThread: setFocusThread,
+      blockCommentId: blockCommentId,
+      blocks: blocks,
+      flashBlock: flashBlock,
+      setShowCommentBoard: setShowCommentBoard
     }, thread.id))]
   });
 }
@@ -35474,9 +35507,37 @@ function Thread({
   onCommentReopen,
   isFocused,
   clearThreadFocus,
-  setFocusThread
+  setFocusThread,
+  blocks,
+  flashBlock,
+  setShowCommentBoard
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+  // Find first block that has this comment ID - run at component root level.
+  const relatedBlock = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (!thread.id || !blocks) {
+      return null;
+    }
+    return findBlockByCommentId(thread.id, blocks);
+  }, [thread.id, blocks]);
+  const relatedBlockElement = useBlockElement(relatedBlock);
+  const handleCommentSelect = threadId => {
+    setShowCommentBoard(false);
+    setFocusThread(threadId);
+    if (relatedBlock && relatedBlockElement) {
+      relatedBlockElement.scrollIntoView({
+        behavior: 'instant',
+        block: 'center'
+      });
+      flashBlock(relatedBlock);
+    }
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    className: dist_clsx('editor-collab-sidebar-panel__thread', {
+      'editor-collab-sidebar-panel__focus-thread': isFocused
+    }),
+    id: thread.id,
+    spacing: "3",
+    onClick: () => handleCommentSelect(thread.id),
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
       thread: thread,
       onResolve: onCommentResolve,
