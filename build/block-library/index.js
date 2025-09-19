@@ -2156,7 +2156,8 @@ const metadata = {
   },
   allowedBlocks: ["core/accordion-content"],
   textdomain: "default",
-  style: "wp-block-accordion"
+  style: "wp-block-accordion",
+  viewScriptModule: "@wordpress/block-library/accordion/view"
 };
 
 
