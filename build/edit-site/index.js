@@ -48096,7 +48096,7 @@ function FieldControl() {
   const togglableFields = [view?.titleField, view?.mediaField, view?.descriptionField].filter(Boolean);
   const visibleFieldIds = (_view$fields2 = view.fields) !== null && _view$fields2 !== void 0 ? _view$fields2 : [];
   const hiddenFields = fields.filter(f => !visibleFieldIds.includes(f.id) && !togglableFields.includes(f.id) && f.type !== 'media' && f.enableHiding !== false);
-  const visibleFields = visibleFieldIds.map(fieldId => fields.find(f => f.id === fieldId)).filter(dataviews_view_config_isDefined);
+  let visibleFields = visibleFieldIds.map(fieldId => fields.find(f => f.id === fieldId)).filter(dataviews_view_config_isDefined);
   if (!visibleFields?.length && !hiddenFields?.length) {
     return null;
   }
@@ -48143,7 +48143,7 @@ function FieldControl() {
   }].filter(({
     field
   }) => dataviews_view_config_isDefined(field));
-  const visibleLockedFields = lockedFields.filter(({
+  let visibleLockedFields = lockedFields.filter(({
     field,
     isVisibleFlag
   }) => {
@@ -48153,6 +48153,25 @@ function FieldControl() {
       dataviews_view_config_isDefined(field) && ((_view$isVisibleFlag = view[isVisibleFlag]) !== null && _view$isVisibleFlag !== void 0 ? _view$isVisibleFlag : true)
     );
   });
+
+  // If only one locked field is visible, prevent it from being hidden.
+  if (visibleLockedFields.length === 1) {
+    visibleLockedFields = visibleLockedFields.map(locked => ({
+      ...locked,
+      field: {
+        ...locked.field,
+        enableHiding: false
+      }
+    }));
+  }
+
+  // If no locked fields are visible but there are visibleFields, lock the last visible field.
+  if (visibleLockedFields.length === 0 && visibleFields.length === 1) {
+    visibleFields = [{
+      ...visibleFields[0],
+      enableHiding: false
+    }];
+  }
   const hiddenLockedFields = lockedFields.filter(({
     field,
     isVisibleFlag
