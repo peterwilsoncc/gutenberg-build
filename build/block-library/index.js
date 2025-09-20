@@ -1861,6 +1861,20 @@ function useUploadMediaFromBlobURL(args = {}) {
     });
   }, [getSettings]);
 }
+function useDefaultAvatar() {
+  const {
+    avatarURL: defaultAvatarUrl
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getSettings
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    const {
+      __experimentalDiscussionSettings
+    } = getSettings();
+    return __experimentalDiscussionSettings;
+  });
+  return defaultAvatarUrl;
+}
 function useToolsPanelDropdownMenuProps() {
   const isMobile = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium', '<');
   return !isMobile ? {
@@ -3148,6 +3162,10 @@ const external_wp_url_namespaceObject = window["wp"]["url"];
 
 
 
+/**
+ * Internal dependencies
+ */
+
 function getAvatarSizes(sizes) {
   const minSize = sizes ? sizes[0] : 24;
   const maxSize = sizes ? sizes[sizes.length - 1] : 96;
@@ -3156,20 +3174,6 @@ function getAvatarSizes(sizes) {
     minSize,
     maxSize: maxSizeBuffer
   };
-}
-function useDefaultAvatar() {
-  const {
-    avatarURL: defaultAvatarUrl
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getSettings
-    } = select(external_wp_blockEditor_namespaceObject.store);
-    const {
-      __experimentalDiscussionSettings
-    } = getSettings();
-    return __experimentalDiscussionSettings;
-  });
-  return defaultAvatarUrl;
 }
 function useCommentAvatar({
   commentId
@@ -44431,6 +44435,7 @@ function PostAuthorEdit({
 }) {
   const isDescendentOfQueryLoop = Number.isFinite(queryId);
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  const defaultAvatar = useDefaultAvatar();
   const {
     authorDetails,
     canAssignAuthor,
@@ -44607,12 +44612,12 @@ function PostAuthorEdit({
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       ...blockProps,
-      children: [showAvatar && authorDetails?.avatar_urls && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      children: [showAvatar && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "wp-block-post-author__avatar",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
           width: avatarSize,
-          src: authorDetails.avatar_urls[avatarSize],
-          alt: authorDetails.name
+          src: authorDetails?.avatar_urls?.[avatarSize] || defaultAvatar,
+          alt: authorDetails?.name || (0,external_wp_i18n_namespaceObject.__)('Default Avatar')
         })
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
         className: "wp-block-post-author__content",
