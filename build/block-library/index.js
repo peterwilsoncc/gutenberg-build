@@ -2530,6 +2530,7 @@ function accordion_header_edit_Edit({
         },
         children: [showIcon && iconPosition === 'left' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: "accordion-content__toggle-icon",
+          "aria-hidden": "true",
           children: "+"
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
           withoutInteractiveFormatting: true,
@@ -2542,6 +2543,7 @@ function accordion_header_edit_Edit({
           placeholder: (0,external_wp_i18n_namespaceObject.__)('Accordion title')
         }), showIcon && iconPosition === 'right' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: "accordion-content__toggle-icon",
+          "aria-hidden": "true",
           children: "+"
         })]
       })
@@ -2593,6 +2595,7 @@ function accordion_header_save_save({
       },
       children: [showIcon && iconPosition === 'left' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "accordion-content__toggle-icon",
+        "aria-hidden": "true",
         children: "+"
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText.Content, {
         className: "accordion-content__toggle-title",
@@ -2600,6 +2603,7 @@ function accordion_header_save_save({
         value: title
       }), showIcon && iconPosition === 'right' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "accordion-content__toggle-icon",
+        "aria-hidden": "true",
         children: "+"
       })]
     })
