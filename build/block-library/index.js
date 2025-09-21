@@ -67656,7 +67656,6 @@ function DisplayOptions({
     }),
     isShownByDefault: true,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.RadioControl, {
-      __nextHasNoMarginBottom: true,
       label: (0,external_wp_i18n_namespaceObject.__)('Terms to show'),
       options: getOptions(displayTopLevelControl, displaySubtermsControl),
       selected: termsToShow,
@@ -67839,6 +67838,7 @@ function AdvancedControls({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -67851,6 +67851,16 @@ function AdvancedControls({
 
 
 
+const usePublicTaxonomies = () => {
+  const taxonomies = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getTaxonomies({
+    per_page: -1
+  }), []);
+  return (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return taxonomies?.filter(({
+      visibility
+    }) => visibility?.publicly_queryable) || [];
+  }, [taxonomies]);
+};
 function TermsQueryInspectorControls({
   attributes,
   setQuery,
@@ -67863,17 +67873,7 @@ function TermsQueryInspectorControls({
     termsToShow
   } = attributes;
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-  const {
-    taxonomies
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEntityRecords
-    } = select(external_wp_coreData_namespaceObject.store);
-    const allTaxonomies = getEntityRecords('root', 'taxonomy');
-    return {
-      taxonomies: allTaxonomies?.filter(t => t.visibility.public) || []
-    };
-  }, []);
+  const taxonomies = usePublicTaxonomies();
   const {
     templateSlug
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
