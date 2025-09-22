@@ -2127,7 +2127,7 @@ const metadata = {
     },
     color: {
       background: true,
-      gradient: true
+      gradients: true
     },
     __experimentalBorder: {
       color: true,
@@ -2410,7 +2410,7 @@ const accordion_content_metadata = {
   supports: {
     color: {
       background: true,
-      gradient: true
+      gradients: true
     },
     interactivity: true,
     spacing: {
@@ -2650,7 +2650,7 @@ const accordion_header_metadata = {
     anchor: true,
     color: {
       background: true,
-      gradient: true
+      gradients: true
     },
     align: false,
     interactivity: true,
@@ -2818,7 +2818,7 @@ const accordion_panel_metadata = {
   supports: {
     color: {
       background: true,
-      gradient: true
+      gradients: true
     },
     interactivity: true,
     spacing: {
