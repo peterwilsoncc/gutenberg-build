@@ -2496,11 +2496,12 @@ function accordion_header_edit_Edit({
       });
     }
   }, [iconPosition, showIcon, setAttributes]);
-  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
-  const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseBorderProps)(attributes);
-  const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalUseColorProps)(attributes);
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
+    className: dist_clsx('accordion-content__heading', {
+      [`has-text-align-${textAlign}`]: textAlign
+    })
+  });
   const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
-  const shadowProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetShadowClassesAndStyles)(attributes);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
@@ -2514,15 +2515,6 @@ function accordion_header_edit_Edit({
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
       ...blockProps,
-      className: dist_clsx(blockProps.className, colorProps.className, borderProps.className, 'accordion-content__heading', {
-        [`has-custom-font-size`]: blockProps.style.fontSize,
-        [`has-text-align-${textAlign}`]: textAlign
-      }),
-      style: {
-        ...borderProps.style,
-        ...colorProps.style,
-        ...shadowProps.style
-      },
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
         className: dist_clsx('accordion-content__toggle'),
         style: {
@@ -2572,22 +2564,14 @@ function accordion_header_save_save({
     showIcon
   } = attributes;
   const TagName = 'h' + level;
-  const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
-  const borderProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetBorderClassesAndStyles)(attributes);
-  const colorProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetColorClassesAndStyles)(attributes);
+  const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save({
+    className: dist_clsx('accordion-content__heading', {
+      [`has-text-align-${textAlign}`]: textAlign
+    })
+  });
   const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
-  const shadowProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetShadowClassesAndStyles)(attributes);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
     ...blockProps,
-    className: dist_clsx(blockProps.className, colorProps.className, borderProps.className, 'accordion-content__heading', {
-      [`has-custom-font-size`]: blockProps?.style?.fontSize,
-      [`has-text-align-${textAlign}`]: textAlign
-    }),
-    style: {
-      ...borderProps.style,
-      ...colorProps.style,
-      ...shadowProps.style
-    },
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
       className: dist_clsx('accordion-content__toggle'),
       style: {
@@ -2660,7 +2644,8 @@ const accordion_header_metadata = {
       __experimentalDefaultControls: {
         padding: true,
         margin: true
-      }
+      },
+      __experimentalSkipSerialization: true
     },
     __experimentalBorder: {
       color: true,
