@@ -67348,6 +67348,86 @@ const term_description_tag = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceO
 });
 /* harmony default export */ const term_description = (term_description_tag);
 
+;// ./packages/block-library/build-module/term-description/use-term-description.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Hook to fetch term description based on context or fallback to template parsing.
+ *
+ * This hook prioritizes context-provided termId and taxonomy, but falls back to
+ * template-based detection when no context is available.
+ *
+ * @param {string|number} termId   The term ID from context
+ * @param {string}        taxonomy The taxonomy name from context
+ */
+function useTermDescription(termId, taxonomy) {
+  const [description, setDescription, fullDescription] = (0,external_wp_coreData_namespaceObject.useEntityProp)('taxonomy', taxonomy, 'description', termId);
+
+  // Fallback approach: Parse template slug when no context is available.
+  const templateBasedData = useTemplateBasedTermData();
+  const hasContext = Boolean(termId && taxonomy);
+  return {
+    hasContext,
+    setDescription,
+    termDescription: hasContext ? fullDescription?.rendered || description || '' : templateBasedData
+  };
+}
+
+/**
+ * Fallback hook to fetch term data from template context (backward compatibility).
+ * This maintains the same logic as the original implementation for cases where
+ * no termId/taxonomy context is provided.
+ */
+function useTemplateBasedTermData() {
+  const templateSlug = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    // Access core/editor by string to avoid @wordpress/editor dependency.
+    // eslint-disable-next-line @wordpress/data-no-store-string-literals
+    const {
+      getCurrentPostId,
+      getCurrentPostType,
+      getCurrentTemplateId
+    } = select('core/editor');
+    const currentPostType = getCurrentPostType();
+    const templateId = getCurrentTemplateId() || (currentPostType === 'wp_template' ? getCurrentPostId() : null);
+    return templateId ? select(external_wp_coreData_namespaceObject.store).getEditedEntityRecord('postType', 'wp_template', templateId)?.slug : null;
+  }, []);
+  const taxonomyMatches = templateSlug?.match(/^(category|tag|taxonomy-([^-]+))$|^(((category|tag)|taxonomy-([^-]+))-(.+))$/);
+  let taxonomy;
+  let termSlug;
+  if (taxonomyMatches) {
+    // If it's for all taxonomies of a type (e.g., category, tag).
+    if (taxonomyMatches[1]) {
+      taxonomy = taxonomyMatches[2] ? taxonomyMatches[2] : taxonomyMatches[1];
+    }
+    // If it's for a specific term (e.g., category-news, tag-featured).
+    else if (taxonomyMatches[3]) {
+      taxonomy = taxonomyMatches[6] ? taxonomyMatches[6] : taxonomyMatches[4];
+      termSlug = taxonomyMatches[7];
+    }
+    taxonomy = taxonomy === 'tag' ? 'post_tag' : taxonomy;
+  }
+  return (0,external_wp_data_namespaceObject.useSelect)(select => {
+    if (!taxonomy || !termSlug) {
+      return '';
+    }
+    const {
+      getEntityRecords
+    } = select(external_wp_coreData_namespaceObject.store);
+    const termRecords = getEntityRecords('taxonomy', taxonomy, {
+      slug: termSlug,
+      per_page: 1
+    });
+    if (termRecords && termRecords[0]) {
+      return termRecords[0].description || '';
+    }
+    return '';
+  }, [taxonomy, termSlug]);
+}
+
 ;// ./packages/block-library/build-module/term-description/edit.js
 /**
  * External dependencies
@@ -67360,14 +67440,26 @@ const term_description_tag = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceO
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 function TermDescriptionEdit({
   attributes,
   setAttributes,
-  mergedStyle
+  mergedStyle,
+  context: {
+    termId,
+    taxonomy
+  }
 }) {
   const {
     textAlign
   } = attributes;
+  const {
+    termDescription
+  } = useTermDescription(termId, taxonomy);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: dist_clsx({
       [`has-text-align-${textAlign}`]: textAlign
@@ -67387,7 +67479,11 @@ function TermDescriptionEdit({
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      children: termDescription ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        dangerouslySetInnerHTML: {
+          __html: termDescription
+        }
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
         className: "wp-block-term-description__placeholder",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           children: (0,external_wp_i18n_namespaceObject.__)('Term Description')
@@ -67415,6 +67511,7 @@ const term_description_metadata = {
   category: "theme",
   description: "Display the description of categories, tags and custom taxonomies when viewing an archive.",
   textdomain: "default",
+  usesContext: ["termId", "taxonomy"],
   attributes: {
     textAlign: {
       type: "string"
