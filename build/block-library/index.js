@@ -2148,7 +2148,20 @@ const metadata = {
     },
     shadow: true,
     layout: true,
-    interactivity: true
+    interactivity: true,
+    typography: {
+      fontSize: true,
+      lineHeight: true,
+      __experimentalFontFamily: true,
+      __experimentalFontWeight: true,
+      __experimentalFontStyle: true,
+      __experimentalTextTransform: true,
+      __experimentalTextDecoration: true,
+      __experimentalLetterSpacing: true,
+      __experimentalDefaultControls: {
+        fontSize: true
+      }
+    }
   },
   attributes: {
     iconPosition: {
@@ -2430,7 +2443,20 @@ const accordion_content_metadata = {
       }
     },
     shadow: true,
-    layout: true
+    layout: true,
+    typography: {
+      fontSize: true,
+      lineHeight: true,
+      __experimentalFontFamily: true,
+      __experimentalFontWeight: true,
+      __experimentalFontStyle: true,
+      __experimentalTextTransform: true,
+      __experimentalTextDecoration: true,
+      __experimentalLetterSpacing: true,
+      __experimentalDefaultControls: {
+        fontSize: true
+      }
+    }
   },
   attributes: {
     openByDefault: {
@@ -2640,10 +2666,8 @@ const accordion_header_metadata = {
     interactivity: true,
     spacing: {
       padding: true,
-      margin: ["top", "bottom"],
       __experimentalDefaultControls: {
-        padding: true,
-        margin: true
+        padding: true
       },
       __experimentalSkipSerialization: true
     },
@@ -2808,7 +2832,6 @@ const accordion_panel_metadata = {
     interactivity: true,
     spacing: {
       padding: true,
-      margin: ["top", "bottom"],
       blockGap: true,
       __experimentalDefaultControls: {
         padding: true,
