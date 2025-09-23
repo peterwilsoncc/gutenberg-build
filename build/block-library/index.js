@@ -49098,25 +49098,52 @@ const external_wp_wordcount_namespaceObject = window["wp"]["wordcount"];
 
 
 
+
+
 /**
- * Average reading rate - based on average taken from
- * https://irisreading.com/average-reading-speed-in-various-languages/
- * (Characters/minute used for Chinese rather than words).
+ * Internal dependencies
  */
 
-const AVERAGE_READING_RATE = 189;
+
 function PostTimeToReadEdit({
   attributes,
   setAttributes,
+  clientId,
   context
 }) {
   const {
-    textAlign
+    textAlign,
+    displayAsRange,
+    averageReadingSpeed
   } = attributes;
+  const {
+    __unstableMarkNextChangeAsNotPersistent
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  const {
+    blockWasJustInserted
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      wasBlockJustInserted
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    return {
+      blockWasJustInserted: wasBlockJustInserted(clientId)
+    };
+  }, [clientId]);
+
+  // When the block is first inserted, default to displaying as a range.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (blockWasJustInserted) {
+      __unstableMarkNextChangeAsNotPersistent();
+      setAttributes({
+        displayAsRange: true
+      });
+    }
+  }, [blockWasJustInserted, __unstableMarkNextChangeAsNotPersistent, setAttributes]);
   const {
     postId,
     postType
   } = context;
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const [contentStructure] = (0,external_wp_coreData_namespaceObject.useEntityProp)('postType', postType, 'content', postId);
   const [blocks] = (0,external_wp_coreData_namespaceObject.useEntityBlockEditor)('postType', postType, {
     id: postId
@@ -49143,10 +49170,21 @@ function PostTimeToReadEdit({
      * Do not translate into your own language.
      */
     const wordCountType = (0,external_wp_i18n_namespaceObject._x)('words', 'Word count type. Do not translate!');
-    const minutesToRead = Math.max(1, Math.round((0,external_wp_wordcount_namespaceObject.count)(content || '', wordCountType) / AVERAGE_READING_RATE));
+    const totalWords = (0,external_wp_wordcount_namespaceObject.count)(content || '', wordCountType);
+    if (displayAsRange) {
+      let maxMinutes = Math.max(1, Math.round(totalWords / averageReadingSpeed * 1.2));
+      const minMinutes = Math.max(1, Math.round(totalWords / averageReadingSpeed * 0.8));
+      if (minMinutes === maxMinutes) {
+        maxMinutes = maxMinutes + 1;
+      }
+      // translators: %1$s: minimum minutes, %2$s: maximum minutes to read the post.
+      const rangeLabel = (0,external_wp_i18n_namespaceObject._x)('%1$s–%2$s minutes', 'Range of minutes to read');
+      return (0,external_wp_i18n_namespaceObject.sprintf)(rangeLabel, minMinutes, maxMinutes);
+    }
+    const minutesToRead = Math.max(1, Math.round(totalWords / averageReadingSpeed));
     return (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: the number of minutes to read the post. */
     (0,external_wp_i18n_namespaceObject._n)('%s minute', '%s minutes', minutesToRead), minutesToRead);
-  }, [contentStructure, blocks]);
+  }, [contentStructure, blocks, displayAsRange, averageReadingSpeed]);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: dist_clsx({
       [`has-text-align-${textAlign}`]: textAlign
@@ -49162,6 +49200,34 @@ function PostTimeToReadEdit({
             textAlign: nextAlign
           });
         }
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+        resetAll: () => {
+          setAttributes({
+            displayAsRange: true
+          });
+        },
+        dropdownMenuProps: dropdownMenuProps,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          isShownByDefault: true,
+          label: (0,external_wp_i18n_namespaceObject._x)('Display as range', 'Turns reading time range display on or off'),
+          hasValue: () => !displayAsRange,
+          onDeselect: () => {
+            setAttributes({
+              displayAsRange: true
+            });
+          },
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Display as range'),
+            checked: !!displayAsRange,
+            onChange: () => setAttributes({
+              displayAsRange: !displayAsRange
+            })
+          })
+        })
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
@@ -49205,6 +49271,14 @@ const post_time_to_read_metadata = {
   attributes: {
     textAlign: {
       type: "string"
+    },
+    displayAsRange: {
+      type: "boolean",
+      "default": false
+    },
+    averageReadingSpeed: {
+      type: "number",
+      "default": 189
     }
   },
   supports: {
