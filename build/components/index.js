@@ -33045,7 +33045,8 @@ function UnforwardedButton(props, ref) {
     'is-link': variant === 'link',
     'is-destructive': isDestructive,
     'has-text': !!icon && (hasChildren || text),
-    'has-icon': !!icon
+    'has-icon': !!icon,
+    'has-icon-right': iconPosition === 'right'
   });
   const trulyDisabled = disabled && !accessibleWhenDisabled;
   const Tag = href !== undefined && !disabled ? 'a' : 'button';
