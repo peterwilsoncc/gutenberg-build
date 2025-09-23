@@ -50080,6 +50080,7 @@ const post_post = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -50099,6 +50100,20 @@ const utils_getValueFromObjectPath = (object, path) => {
   });
   return value;
 };
+
+/**
+ * Helper that adds a prefix to a post slug. The slug needs to be URL-decoded first,
+ * so that we have raw Unicode characters there. The server will truncate the slug to
+ * 200 characters, respecing Unicode char boundary. On the other hand, the server
+ * doesn't detect urlencoded octet boundary and can possibly construct slugs that
+ * are not valid urlencoded strings.
+ * @param {string} prefix The prefix to add to the slug.
+ * @param {string} slug   The slug to add the prefix to.
+ * @return {string} The slug with the prefix.
+ */
+function prefixSlug(prefix, slug) {
+  return `${prefix}-${(0,external_wp_url_namespaceObject.safeDecodeURI)(slug)}`;
+}
 
 /**
  * Helper util to map records to add a `name` prop from a
@@ -50294,7 +50309,7 @@ const usePostTypeMenuItems = onClickMenuItem => {
               };
             },
             getSpecificTemplate: suggestion => {
-              const templateSlug = `${templatePrefixes[slug]}-${suggestion.slug}`;
+              const templateSlug = prefixSlug(templatePrefixes[slug], suggestion.slug);
               return {
                 title: templateSlug,
                 slug: templateSlug,
@@ -50421,7 +50436,7 @@ const useTaxonomiesMenuItems = onClickMenuItem => {
               };
             },
             getSpecificTemplate: suggestion => {
-              const templateSlug = `${templatePrefixes[slug]}-${suggestion.slug}`;
+              const templateSlug = prefixSlug(templatePrefixes[slug], suggestion.slug);
               return {
                 title: templateSlug,
                 slug: templateSlug,
@@ -50506,7 +50521,7 @@ function useAuthorMenuItem(onClickMenuItem) {
             };
           },
           getSpecificTemplate: suggestion => {
-            const templateSlug = `author-${suggestion.slug}`;
+            const templateSlug = prefixSlug('author', suggestion.slug);
             return {
               title: (0,external_wp_i18n_namespaceObject.sprintf)(
               // translators: %s: Name of the author e.g: "Admin".
@@ -50582,6 +50597,7 @@ const useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -50617,7 +50633,7 @@ function SuggestionListItem({
       lineHeight: 1.53846153846 // 20px
       ,
       className: `${baseCssClass}__info`,
-      children: suggestion.link
+      children: (0,external_wp_url_namespaceObject.safeDecodeURI)(suggestion.link)
     })]
   });
 }
