@@ -40438,7 +40438,8 @@ const navigation_metadata = {
       }
     },
     interactivity: true,
-    renaming: false
+    renaming: false,
+    contentRole: true
   },
   editorStyle: "wp-block-navigation-editor",
   style: "wp-block-navigation"
@@ -41336,7 +41337,8 @@ const navigation_link_metadata = {
   textdomain: "default",
   attributes: {
     label: {
-      type: "string"
+      type: "string",
+      role: "content"
     },
     type: {
       type: "string"
@@ -42073,7 +42075,8 @@ const navigation_submenu_metadata = {
   textdomain: "default",
   attributes: {
     label: {
-      type: "string"
+      type: "string",
+      role: "content"
     },
     type: {
       type: "string"
@@ -43174,7 +43177,8 @@ const page_list_metadata = {
         padding: false,
         margin: false
       }
-    }
+    },
+    contentRole: true
   },
   editorStyle: "wp-block-page-list-editor",
   style: "wp-block-page-list"
