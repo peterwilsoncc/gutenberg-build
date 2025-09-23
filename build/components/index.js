@@ -82627,10 +82627,69 @@ const UnforwardedValidatedToggleGroupControl = ({
 };
 const ValidatedToggleGroupControl = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedValidatedToggleGroupControl);
 
+;// ./packages/components/build-module/validated-form-controls/components/form-token-field.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const UnforwardedValidatedFormTokenField = ({
+  required,
+  onValidate,
+  customValidity,
+  onChange,
+  markWhenOptional,
+  ...restProps
+}, forwardedRef) => {
+  const validityTargetRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const valueRef = (0,external_wp_element_namespaceObject.useRef)(restProps.value);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    className: "components-validated-control__wrapper-with-error-delegate",
+    ref: forwardedRef,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ControlWithError, {
+      required: required,
+      markWhenOptional: markWhenOptional,
+      onValidate: () => {
+        return onValidate?.(valueRef.current);
+      },
+      customValidity: customValidity,
+      getValidityTarget: () => validityTargetRef.current,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FormTokenField, {
+        __next40pxDefaultSize: true,
+        __nextHasNoMarginBottom: true,
+        ...restProps,
+        onChange: (value, ...args) => {
+          valueRef.current = value;
+          onChange?.(value, ...args);
+        }
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("input", {
+      className: "components-validated-control__error-delegate",
+      type: "text",
+      ref: validityTargetRef,
+      required: required,
+      value: valueRef.current && valueRef.current.length > 0 ? 'hasvalue' : '',
+      tabIndex: -1,
+      onChange: () => {},
+      onFocus: e => {
+        e.target.previousElementSibling?.querySelector('input[type="text"]')?.focus();
+      }
+    })]
+  });
+};
+const ValidatedFormTokenField = (0,external_wp_element_namespaceObject.forwardRef)(UnforwardedValidatedFormTokenField);
+
 ;// ./packages/components/build-module/private-apis.js
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -82666,7 +82725,8 @@ lock(privateApis, {
   ValidatedTextControl: ValidatedTextControl,
   ValidatedTextareaControl: ValidatedTextareaControl,
   ValidatedToggleControl: ValidatedToggleControl,
-  ValidatedToggleGroupControl: ValidatedToggleGroupControl
+  ValidatedToggleGroupControl: ValidatedToggleGroupControl,
+  ValidatedFormTokenField: ValidatedFormTokenField
 });
 
 ;// ./packages/components/build-module/index.js

@@ -6239,12 +6239,6 @@ const arrayFieldType = {
       if (!value.every(v => typeof v === 'string')) {
         return (0,external_wp_i18n_namespaceObject.__)('Every value must be a string.');
       }
-      if (field?.elements) {
-        const validValues = field.elements.map(f => f.value);
-        if (!value.every(v => validValues.includes(v))) {
-          return (0,external_wp_i18n_namespaceObject.__)('Value must be one of the elements.');
-        }
-      }
       return null;
     }
   },
@@ -11589,8 +11583,14 @@ function ToggleGroup({
 
 ;// ./packages/dataviews/build-module/dataform-controls/array.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
+
 
 
 
@@ -11598,13 +11598,17 @@ function ToggleGroup({
  * Internal dependencies
  */
 
+
+
+const {
+  ValidatedFormTokenField
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function ArrayControl({
   data,
   field,
   onChange,
   hideLabelFromVision
 }) {
-  var _elements$map;
   const {
     label,
     placeholder,
@@ -11615,41 +11619,117 @@ function ArrayControl({
   const value = getValue({
     item: data
   });
-  const findElementByValue = (0,external_wp_element_namespaceObject.useCallback)(suggestionValue => {
-    return elements?.find(suggestion => suggestion.value === suggestionValue);
-  }, [elements]);
-  const findElementByLabel = (0,external_wp_element_namespaceObject.useCallback)(suggestionLabel => {
-    return elements?.find(suggestion => suggestion.label === suggestionLabel);
-  }, [elements]);
+  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
 
-  // Ensure value is an array
-  const arrayValue = (0,external_wp_element_namespaceObject.useMemo)(() => Array.isArray(value) ? value.map(token => {
-    const tokenLabel = findElementByValue(token)?.label;
-    return tokenLabel || token;
-  }) : [], [value, findElementByValue]);
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(tokens => {
-    // Convert TokenItem objects to strings
-    const stringTokens = tokens.map(token => {
-      if (typeof token !== 'string') {
+  // Convert stored values to element objects for the token field
+  const arrayValueAsElements = (0,external_wp_element_namespaceObject.useMemo)(() => Array.isArray(value) ? value.map(token => {
+    const element = elements?.find(suggestion => suggestion.value === token);
+    return element || {
+      value: token,
+      label: token
+    };
+  }) : [], [value, elements]);
+  const validateTokens = (0,external_wp_element_namespaceObject.useCallback)(tokens => {
+    // Extract actual values from tokens for validation
+    const tokenValues = tokens.map(token => {
+      if (typeof token === 'object' && 'value' in token) {
         return token.value;
       }
-      const tokenByLabel = findElementByLabel(token);
-      return tokenByLabel?.value || token;
+      return token;
+    });
+
+    // First, check if elements validation is required and any tokens are invalid
+    if (field.isValid?.elements && elements) {
+      const invalidTokens = tokenValues.filter(tokenValue => {
+        return !elements.some(element => element.value === tokenValue);
+      });
+      if (invalidTokens.length > 0) {
+        setCustomValidity({
+          type: 'invalid',
+          message: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: list of invalid tokens */
+          (0,external_wp_i18n_namespaceObject._n)('Please select from the available options: %s is invalid.', 'Please select from the available options: %s are invalid.', invalidTokens.length), invalidTokens.join(', '))
+        });
+        return;
+      }
+    }
+
+    // Then check custom validation if provided.
+    if (field.isValid?.custom) {
+      const result = field.isValid?.custom?.(cjs_default()(data, setValue({
+        item: data,
+        value: tokenValues
+      })), field);
+      if (result) {
+        setCustomValidity({
+          type: 'invalid',
+          message: result
+        });
+        return;
+      }
+    }
+
+    // If no validation errors, clear custom validity
+    setCustomValidity(undefined);
+  }, [elements, data, field, setValue]);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(tokens => {
+    const valueTokens = tokens.map(token => {
+      if (typeof token === 'object' && 'value' in token) {
+        return token.value;
+      }
+      // If it's a string, it's either a new suggestion value or user input
+      return token;
     });
     onChange(setValue({
       item: data,
-      value: stringTokens
+      value: valueTokens
     }));
-  }, [onChange, setValue, data, findElementByLabel]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FormTokenField, {
+  }, [onChange, setValue, data]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedFormTokenField, {
+    required: !!field.isValid?.required,
+    onValidate: validateTokens,
+    customValidity: customValidity,
     label: hideLabelFromVision ? undefined : label,
-    value: arrayValue,
+    value: arrayValueAsElements,
     onChange: onChangeControl,
     placeholder: placeholder,
-    suggestions: (_elements$map = elements?.map(suggestion => suggestion.label)) !== null && _elements$map !== void 0 ? _elements$map : [],
+    suggestions: elements?.map(element => element.value),
+    __experimentalValidateInput: token => {
+      // If elements validation is required, check if token is valid
+      if (field.isValid?.elements && elements) {
+        return elements.some(element => element.value === token || element.label === token);
+      }
+
+      // For non-elements validation, allow all tokens
+      return true;
+    },
     __experimentalExpandOnFocus: elements && elements.length > 0,
-    __next40pxDefaultSize: true,
-    __nextHasNoMarginBottom: true
+    __experimentalShowHowTo: !field.isValid?.elements,
+    displayTransform: token => {
+      // For existing tokens (element objects), display their label
+      if (typeof token === 'object' && 'label' in token) {
+        return token.label;
+      }
+      // For suggestions (value strings), find the corresponding element and show its label
+      if (typeof token === 'string' && elements) {
+        const element = elements.find(el => el.value === token);
+        return element?.label || token;
+      }
+      return token;
+    },
+    __experimentalRenderItem: ({
+      item
+    }) => {
+      // Custom rendering for suggestion items (item is a value string)
+      if (typeof item === 'string' && elements) {
+        const element = elements.find(el => el.value === item);
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          children: element?.label || item
+        });
+      }
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        children: item
+      });
+    }
   });
 }
 
@@ -14402,16 +14482,33 @@ function isItemValid(item, fields, form) {
     id
   }) => !!form.fields?.includes(id)));
   const isEmptyNullOrUndefined = value => [undefined, '', null].includes(value);
+  const isArrayOrElementsEmptyNullOrUndefined = value => {
+    return !Array.isArray(value) || value.length === 0 || value.every(element => isEmptyNullOrUndefined(element));
+  };
   return _fields.every(field => {
     const value = field.getValue({
       item
     });
     if (field.isValid.required) {
-      if (field.type === 'text' && isEmptyNullOrUndefined(value) || field.type === 'email' && isEmptyNullOrUndefined(value) || field.type === 'url' && isEmptyNullOrUndefined(value) || field.type === 'telephone' && isEmptyNullOrUndefined(value) || field.type === 'password' && isEmptyNullOrUndefined(value) || field.type === 'integer' && isEmptyNullOrUndefined(value) || field.type === undefined && isEmptyNullOrUndefined(value)) {
+      if (field.type === 'text' && isEmptyNullOrUndefined(value) || field.type === 'email' && isEmptyNullOrUndefined(value) || field.type === 'url' && isEmptyNullOrUndefined(value) || field.type === 'telephone' && isEmptyNullOrUndefined(value) || field.type === 'password' && isEmptyNullOrUndefined(value) || field.type === 'integer' && isEmptyNullOrUndefined(value) || field.type === 'array' && isArrayOrElementsEmptyNullOrUndefined(value) || field.type === undefined && isEmptyNullOrUndefined(value)) {
         return false;
       }
       if (field.type === 'boolean' && value !== true) {
         return false;
+      }
+    }
+    if (field.isValid.elements) {
+      if (field.elements) {
+        const validValues = field.elements.map(element => element.value);
+        if (field.type === 'array') {
+          // For arrays, check if all values are valid elements
+          if (Array.isArray(value)) {
+            return value.every(arrayItem => validValues.includes(arrayItem));
+          }
+          return false;
+        }
+        // For single-value fields, check if the value is a valid element
+        return validValues.includes(value);
       }
     }
     if (typeof field.isValid.custom === 'function' && field.isValid.custom(item, field) !== null) {
