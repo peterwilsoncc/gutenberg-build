@@ -49099,7 +49099,6 @@ const external_wp_wordcount_namespaceObject = window["wp"]["wordcount"];
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -49108,7 +49107,6 @@ const external_wp_wordcount_namespaceObject = window["wp"]["wordcount"];
 function PostTimeToReadEdit({
   attributes,
   setAttributes,
-  clientId,
   context
 }) {
   const {
@@ -49116,29 +49114,6 @@ function PostTimeToReadEdit({
     displayAsRange,
     averageReadingSpeed
   } = attributes;
-  const {
-    __unstableMarkNextChangeAsNotPersistent
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
-  const {
-    blockWasJustInserted
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      wasBlockJustInserted
-    } = select(external_wp_blockEditor_namespaceObject.store);
-    return {
-      blockWasJustInserted: wasBlockJustInserted(clientId)
-    };
-  }, [clientId]);
-
-  // When the block is first inserted, default to displaying as a range.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    if (blockWasJustInserted) {
-      __unstableMarkNextChangeAsNotPersistent();
-      setAttributes({
-        displayAsRange: true
-      });
-    }
-  }, [blockWasJustInserted, __unstableMarkNextChangeAsNotPersistent, setAttributes]);
   const {
     postId,
     postType
@@ -49274,7 +49249,7 @@ const post_time_to_read_metadata = {
     },
     displayAsRange: {
       type: "boolean",
-      "default": false
+      "default": true
     },
     averageReadingSpeed: {
       type: "number",
