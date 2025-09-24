@@ -35309,26 +35309,38 @@ function CommentAuthorInfo({
   date
 }) {
   const dateSettings = (0,external_wp_date_namespaceObject.getSettings)();
-  const [dateTimeFormat = dateSettings.formats.time] = (0,external_wp_coreData_namespaceObject.useEntityProp)('root', 'site', 'time_format');
   const {
     currentUserAvatar,
-    currentUserName
+    currentUserName,
+    dateFormat = dateSettings.formats.date
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _userData$avatar_urls;
-    const userData = select(external_wp_coreData_namespaceObject.store).getCurrentUser();
+    const {
+      getCurrentUser,
+      getEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
     const {
       getSettings
     } = select(external_wp_blockEditor_namespaceObject.store);
+    const userData = getCurrentUser();
     const {
       __experimentalDiscussionSettings
     } = getSettings();
     const defaultAvatar = __experimentalDiscussionSettings?.avatarURL;
+    const siteSettings = getEntityRecord('root', 'site');
     return {
       currentUserAvatar: (_userData$avatar_urls = userData?.avatar_urls?.[48]) !== null && _userData$avatar_urls !== void 0 ? _userData$avatar_urls : defaultAvatar,
-      currentUserName: userData?.name
+      currentUserName: userData?.name,
+      dateFormat: siteSettings?.date_format
     };
   }, []);
-  const currentDate = new Date();
+  const commentDate = (0,external_wp_date_namespaceObject.getDate)(date);
+  const commentDateTime = (0,external_wp_date_namespaceObject.dateI18n)('c', commentDate);
+  const shouldShowHumanTimeDiff = Math.floor((new Date() - commentDate) / (1000 * 60 * 60 * 24)) < 30;
+  const commentDateText = shouldShowHumanTimeDiff ? (0,external_wp_date_namespaceObject.humanTimeDiff)(commentDate) : (0,external_wp_date_namespaceObject.dateI18n)(dateFormat, commentDate);
+  const tooltipText = (0,external_wp_date_namespaceObject.dateI18n)(
+  // translators: Use a non-breaking space between 'g:i' and 'a' if appropriate.
+  (0,external_wp_i18n_namespaceObject._x)('F j, Y g:i\xa0a', 'Comment date full date format'), date);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
       src: avatar !== null && avatar !== void 0 ? avatar : currentUserAvatar,
@@ -35343,10 +35355,14 @@ function CommentAuthorInfo({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "editor-collab-sidebar-panel__user-name",
         children: name !== null && name !== void 0 ? name : currentUserName
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("time", {
-        dateTime: (0,external_wp_date_namespaceObject.dateI18n)('c', date ? (0,external_wp_date_namespaceObject.getDate)(date) : currentDate),
-        className: "editor-collab-sidebar-panel__user-time",
-        children: [(0,external_wp_date_namespaceObject.dateI18n)(dateTimeFormat, date ? (0,external_wp_date_namespaceObject.getDate)(date) : currentDate), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("br", {}), (0,external_wp_date_namespaceObject.humanTimeDiff)(date ? (0,external_wp_date_namespaceObject.getDate)(date) : currentDate)]
+      }), date && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
+        placement: "top",
+        text: tooltipText,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {
+          dateTime: commentDateTime,
+          className: "editor-collab-sidebar-panel__user-time",
+          children: commentDateText
+        })
       })]
     })]
   });
