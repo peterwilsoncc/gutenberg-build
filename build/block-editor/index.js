@@ -75061,7 +75061,10 @@ function RichTextWrapper({
       bindingsLabel: _bindingsLabel
     };
   }, [blockBindings, identifier, blockName, adjustedValue, clientId, blockContext]);
-  const shouldDisableEditing = readOnly || disableBoundBlock;
+  const isInsidePatternOverrides = !!blockContext?.['pattern/overrides'];
+  const hasOverrideEnabled = blockBindings?.__default?.source === 'core/pattern-overrides';
+  const shouldDisableForPattern = isInsidePatternOverrides && !hasOverrideEnabled;
+  const shouldDisableEditing = readOnly || disableBoundBlock || shouldDisableForPattern;
   const {
     getSelectionStart,
     getSelectionEnd,
