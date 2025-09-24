@@ -6239,12 +6239,6 @@ const arrayFieldType = {
       if (!value.every(v => typeof v === 'string')) {
         return (0,external_wp_i18n_namespaceObject.__)('Every value must be a string.');
       }
-      if (field?.elements) {
-        const validValues = field.elements.map(f => f.value);
-        if (!value.every(v => validValues.includes(v))) {
-          return (0,external_wp_i18n_namespaceObject.__)('Value must be one of the elements.');
-        }
-      }
       return null;
     }
   },
@@ -11589,8 +11583,14 @@ function ToggleGroup({
 
 ;// ./packages/dataviews/build-module/dataform-controls/array.js
 /**
+ * External dependencies
+ */
+
+
+/**
  * WordPress dependencies
  */
+
 
 
 
@@ -11598,13 +11598,17 @@ function ToggleGroup({
  * Internal dependencies
  */
 
+
+
+const {
+  ValidatedFormTokenField
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function ArrayControl({
   data,
   field,
   onChange,
   hideLabelFromVision
 }) {
-  var _elements$map;
   const {
     label,
     placeholder,
@@ -11615,41 +11619,117 @@ function ArrayControl({
   const value = getValue({
     item: data
   });
-  const findElementByValue = (0,external_wp_element_namespaceObject.useCallback)(suggestionValue => {
-    return elements?.find(suggestion => suggestion.value === suggestionValue);
-  }, [elements]);
-  const findElementByLabel = (0,external_wp_element_namespaceObject.useCallback)(suggestionLabel => {
-    return elements?.find(suggestion => suggestion.label === suggestionLabel);
-  }, [elements]);
+  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
 
-  // Ensure value is an array
-  const arrayValue = (0,external_wp_element_namespaceObject.useMemo)(() => Array.isArray(value) ? value.map(token => {
-    const tokenLabel = findElementByValue(token)?.label;
-    return tokenLabel || token;
-  }) : [], [value, findElementByValue]);
-  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(tokens => {
-    // Convert TokenItem objects to strings
-    const stringTokens = tokens.map(token => {
-      if (typeof token !== 'string') {
+  // Convert stored values to element objects for the token field
+  const arrayValueAsElements = (0,external_wp_element_namespaceObject.useMemo)(() => Array.isArray(value) ? value.map(token => {
+    const element = elements?.find(suggestion => suggestion.value === token);
+    return element || {
+      value: token,
+      label: token
+    };
+  }) : [], [value, elements]);
+  const validateTokens = (0,external_wp_element_namespaceObject.useCallback)(tokens => {
+    // Extract actual values from tokens for validation
+    const tokenValues = tokens.map(token => {
+      if (typeof token === 'object' && 'value' in token) {
         return token.value;
       }
-      const tokenByLabel = findElementByLabel(token);
-      return tokenByLabel?.value || token;
+      return token;
+    });
+
+    // First, check if elements validation is required and any tokens are invalid
+    if (field.isValid?.elements && elements) {
+      const invalidTokens = tokenValues.filter(tokenValue => {
+        return !elements.some(element => element.value === tokenValue);
+      });
+      if (invalidTokens.length > 0) {
+        setCustomValidity({
+          type: 'invalid',
+          message: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: list of invalid tokens */
+          (0,external_wp_i18n_namespaceObject._n)('Please select from the available options: %s is invalid.', 'Please select from the available options: %s are invalid.', invalidTokens.length), invalidTokens.join(', '))
+        });
+        return;
+      }
+    }
+
+    // Then check custom validation if provided.
+    if (field.isValid?.custom) {
+      const result = field.isValid?.custom?.(cjs_default()(data, setValue({
+        item: data,
+        value: tokenValues
+      })), field);
+      if (result) {
+        setCustomValidity({
+          type: 'invalid',
+          message: result
+        });
+        return;
+      }
+    }
+
+    // If no validation errors, clear custom validity
+    setCustomValidity(undefined);
+  }, [elements, data, field, setValue]);
+  const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(tokens => {
+    const valueTokens = tokens.map(token => {
+      if (typeof token === 'object' && 'value' in token) {
+        return token.value;
+      }
+      // If it's a string, it's either a new suggestion value or user input
+      return token;
     });
     onChange(setValue({
       item: data,
-      value: stringTokens
+      value: valueTokens
     }));
-  }, [onChange, setValue, data, findElementByLabel]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FormTokenField, {
+  }, [onChange, setValue, data]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedFormTokenField, {
+    required: !!field.isValid?.required,
+    onValidate: validateTokens,
+    customValidity: customValidity,
     label: hideLabelFromVision ? undefined : label,
-    value: arrayValue,
+    value: arrayValueAsElements,
     onChange: onChangeControl,
     placeholder: placeholder,
-    suggestions: (_elements$map = elements?.map(suggestion => suggestion.label)) !== null && _elements$map !== void 0 ? _elements$map : [],
+    suggestions: elements?.map(element => element.value),
+    __experimentalValidateInput: token => {
+      // If elements validation is required, check if token is valid
+      if (field.isValid?.elements && elements) {
+        return elements.some(element => element.value === token || element.label === token);
+      }
+
+      // For non-elements validation, allow all tokens
+      return true;
+    },
     __experimentalExpandOnFocus: elements && elements.length > 0,
-    __next40pxDefaultSize: true,
-    __nextHasNoMarginBottom: true
+    __experimentalShowHowTo: !field.isValid?.elements,
+    displayTransform: token => {
+      // For existing tokens (element objects), display their label
+      if (typeof token === 'object' && 'label' in token) {
+        return token.label;
+      }
+      // For suggestions (value strings), find the corresponding element and show its label
+      if (typeof token === 'string' && elements) {
+        const element = elements.find(el => el.value === token);
+        return element?.label || token;
+      }
+      return token;
+    },
+    __experimentalRenderItem: ({
+      item
+    }) => {
+      // Custom rendering for suggestion items (item is a value string)
+      if (typeof item === 'string' && elements) {
+        const element = elements.find(el => el.value === item);
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          children: element?.label || item
+        });
+      }
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        children: item
+      });
+    }
   });
 }
 
@@ -13290,10 +13370,11 @@ const duplicatePost = {
       if (isCreatingPage) {
         return;
       }
+      const isTemplate = item.type === 'wp_template' || item.type === 'wp_registered_template';
       const newItemObject = {
-        status: 'draft',
+        status: isTemplate ? 'publish' : 'draft',
         title: item.title,
-        slug: item.title || (0,external_wp_i18n_namespaceObject.__)('No title'),
+        slug: isTemplate ? item.slug : item.title || (0,external_wp_i18n_namespaceObject.__)('No title'),
         comment_status: item.comment_status,
         content: typeof item.content === 'string' ? item.content : item.content.raw,
         excerpt: typeof item.excerpt === 'string' ? item.excerpt : item.excerpt?.raw,
@@ -13318,7 +13399,7 @@ const duplicatePost = {
       });
       setIsCreatingPage(true);
       try {
-        const newItem = await saveEntityRecord('postType', item.type, newItemObject, {
+        const newItem = await saveEntityRecord('postType', item.type === 'wp_registered_template' ? 'wp_template' : item.type, newItemObject, {
           throwOnError: true
         });
         createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
@@ -14297,13 +14378,8 @@ const renamePost = {
       return false;
     }
     // Templates, template parts and patterns have special checks for renaming.
-    if (!['wp_template', 'wp_template_part', ...Object.values(PATTERN_TYPES)].includes(post.type)) {
+    if (!['wp_template_part', ...Object.values(PATTERN_TYPES)].includes(post.type)) {
       return post.permissions?.update;
-    }
-
-    // In the case of templates, we can only rename custom templates.
-    if (isTemplate(post)) {
-      return isTemplateRemovable(post) && post.is_custom && post.permissions?.update;
     }
     if (isTemplatePart(post)) {
       return post.source === 'custom' && !post?.has_theme_file && post.permissions?.update;
@@ -14406,16 +14482,33 @@ function isItemValid(item, fields, form) {
     id
   }) => !!form.fields?.includes(id)));
   const isEmptyNullOrUndefined = value => [undefined, '', null].includes(value);
+  const isArrayOrElementsEmptyNullOrUndefined = value => {
+    return !Array.isArray(value) || value.length === 0 || value.every(element => isEmptyNullOrUndefined(element));
+  };
   return _fields.every(field => {
     const value = field.getValue({
       item
     });
     if (field.isValid.required) {
-      if (field.type === 'text' && isEmptyNullOrUndefined(value) || field.type === 'email' && isEmptyNullOrUndefined(value) || field.type === 'url' && isEmptyNullOrUndefined(value) || field.type === 'telephone' && isEmptyNullOrUndefined(value) || field.type === 'password' && isEmptyNullOrUndefined(value) || field.type === 'integer' && isEmptyNullOrUndefined(value) || field.type === undefined && isEmptyNullOrUndefined(value)) {
+      if (field.type === 'text' && isEmptyNullOrUndefined(value) || field.type === 'email' && isEmptyNullOrUndefined(value) || field.type === 'url' && isEmptyNullOrUndefined(value) || field.type === 'telephone' && isEmptyNullOrUndefined(value) || field.type === 'password' && isEmptyNullOrUndefined(value) || field.type === 'integer' && isEmptyNullOrUndefined(value) || field.type === 'array' && isArrayOrElementsEmptyNullOrUndefined(value) || field.type === undefined && isEmptyNullOrUndefined(value)) {
         return false;
       }
       if (field.type === 'boolean' && value !== true) {
         return false;
+      }
+    }
+    if (field.isValid.elements) {
+      if (field.elements) {
+        const validValues = field.elements.map(element => element.value);
+        if (field.type === 'array') {
+          // For arrays, check if all values are valid elements
+          if (Array.isArray(value)) {
+            return value.every(arrayItem => validValues.includes(arrayItem));
+          }
+          return false;
+        }
+        // For single-value fields, check if the value is a valid element
+        return validValues.includes(value);
       }
     }
     if (typeof field.isValid.custom === 'function' && field.isValid.custom(item, field) !== null) {
@@ -15269,7 +15362,7 @@ const trash_post_trashPost = {
   isPrimary: true,
   icon: library_trash,
   isEligible(item) {
-    if (isTemplateOrTemplatePart(item) || item.type === 'wp_block') {
+    if (item.type === 'wp_template_part' || item.type === 'wp_block') {
       return false;
     }
     return !!item.status && !['auto-draft', 'trash'].includes(item.status) && item.permissions?.delete;
@@ -21642,7 +21735,7 @@ const ExperimentalEditorProvider = with_registry_provider(({
   const defaultBlockContext = (0,external_wp_element_namespaceObject.useMemo)(() => {
     const postContext = {};
     // If it is a template, try to inherit the post type from the name.
-    if (post.type === 'wp_template') {
+    if (post.type === 'wp_template' || post.type === 'wp_registered_template') {
       if (post.slug === 'page') {
         postContext.postType = 'page';
       } else if (post.slug === 'single') {
@@ -21980,7 +22073,7 @@ const registerPostTypeSchema = postType => async ({
   const currentTheme = await registry.resolveSelect(external_wp_coreData_namespaceObject.store).getCurrentTheme();
   const actions = [postTypeConfig.viewable ? view_post : undefined, !!postTypeConfig.supports?.revisions ? view_post_revisions : undefined,
   // @ts-ignore
-   true ? !['wp_template', 'wp_block', 'wp_template_part'].includes(postTypeConfig.slug) && canCreate && duplicate_post : 0, postTypeConfig.slug === 'wp_template_part' && canCreate && currentTheme?.is_block_theme ? duplicate_template_part : undefined, canCreate && postTypeConfig.slug === 'wp_block' ? duplicate_pattern : undefined, postTypeConfig.supports?.title ? rename_post : undefined, postTypeConfig.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, restore_post, reset_post, delete_post, trash_post, permanently_delete_post].filter(Boolean);
+   true ? !['wp_block', 'wp_template_part'].includes(postTypeConfig.slug) && canCreate && duplicate_post : 0, postTypeConfig.slug === 'wp_template_part' && canCreate && currentTheme?.is_block_theme ? duplicate_template_part : undefined, canCreate && postTypeConfig.slug === 'wp_block' ? duplicate_pattern : undefined, postTypeConfig.supports?.title ? rename_post : undefined, postTypeConfig.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, restore_post, reset_post, delete_post, trash_post, permanently_delete_post].filter(Boolean);
   const fields = [postTypeConfig.supports?.thumbnail && currentTheme?.theme_supports?.['post-thumbnails'] && featured_image, postTypeConfig.supports?.author && author, fields_status, fields_date, slug, postTypeConfig.supports?.['page-attributes'] && fields_parent, postTypeConfig.supports?.comments && comment_status, fields_template, fields_password, postTypeConfig.supports?.editor && postTypeConfig.viewable && content_preview].filter(Boolean);
   if (postTypeConfig.supports?.title) {
     let _titleField;
@@ -24895,6 +24988,16 @@ function PageAttributesCheck({
  * Internal dependencies
  */
 
+function checkSupport(supports = {}, key) {
+  // Check for top-level support keys.
+  if (supports[key] !== undefined) {
+    return !!supports[key];
+  }
+  const [topKey, subKey] = key.split('.');
+  // Try to unwrap sub-properties from the superfluous array.
+  const [subProperties] = Array.isArray(supports[topKey]) ? supports[topKey] : [];
+  return Array.isArray(subProperties) ? subProperties.includes(subKey) : !!subProperties?.[subKey];
+}
 
 /**
  * A component which renders its own children only if the current editor post
@@ -24923,7 +25026,7 @@ function PostTypeSupportCheck({
   }, []);
   let isSupported = !!postType;
   if (postType) {
-    isSupported = (Array.isArray(supportKeys) ? supportKeys : [supportKeys]).some(key => !!postType.supports[key]);
+    isSupported = (Array.isArray(supportKeys) ? supportKeys : [supportKeys]).some(key => checkSupport(postType.supports, key));
   }
   if (!isSupported) {
     return null;
@@ -25610,16 +25713,31 @@ function useAllowSwitchingTemplates() {
   }, [postId, postType]);
 }
 function useTemplates(postType) {
-  return (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_template', {
-    per_page: -1,
-    post_type: postType
-  }), [postType]);
+  // To do: create a new selector to checks if templates exist at all instead
+  // of and unbound request. In the modal, the user templates should be
+  // paginated and we should not make an unbound request.
+  const {
+    staticTemplates,
+    templates
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return {
+      staticTemplates: select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_registered_template', {
+        per_page: -1,
+        post_type: postType
+      }),
+      templates: select(external_wp_coreData_namespaceObject.store).getEntityRecords('postType', 'wp_template', {
+        per_page: -1,
+        post_type: postType
+      })
+    };
+  }, [postType]);
+  return (0,external_wp_element_namespaceObject.useMemo)(() => [...(staticTemplates || []), ...(templates || [])], [staticTemplates, templates]);
 }
 function useAvailableTemplates(postType) {
   const currentTemplateSlug = useCurrentTemplateSlug();
   const allowSwitchingTemplate = useAllowSwitchingTemplates();
   const templates = useTemplates(postType);
-  return (0,external_wp_element_namespaceObject.useMemo)(() => allowSwitchingTemplate && templates?.filter(template => template.is_custom && template.slug !== currentTemplateSlug && !!template.content.raw // Skip empty templates.
+  return (0,external_wp_element_namespaceObject.useMemo)(() => allowSwitchingTemplate && templates?.filter(template => (template.is_custom || template.type === 'wp_template') && template.slug !== currentTemplateSlug && !!template.content.raw // Skip empty templates.
   ), [templates, currentTemplateSlug, allowSwitchingTemplate]);
 }
 function useCurrentTemplateSlug() {
@@ -27974,11 +28092,13 @@ function PrivateExcerpt() {
     shouldBeUsedAsDescription,
     allowEditing
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    var _getEditedPostAttribu;
     const {
       getCurrentPostType,
       getCurrentPostId,
       getEditedPostAttribute,
-      isEditorPanelEnabled
+      isEditorPanelEnabled,
+      __experimentalGetDefaultTemplateType
     } = select(store_store);
     const postType = getCurrentPostType();
     const isTemplateOrTemplatePart = ['wp_template', 'wp_template_part'].includes(postType);
@@ -27989,11 +28109,12 @@ function PrivateExcerpt() {
     const _usedAttribute = isTemplateOrTemplatePart ? 'description' : 'excerpt';
     // We need to fetch the entity in this case to check if we'll allow editing.
     const template = isTemplateOrTemplatePart && select(external_wp_coreData_namespaceObject.store).getEntityRecord('postType', postType, getCurrentPostId());
+    const fallback = isTemplateOrTemplatePart ? __experimentalGetDefaultTemplateType(template.slug).description : undefined;
     // For post types that use excerpt as description, we do not abide
     // by the `isEnabled` panel flag in order to render them as text.
     const _shouldRender = isEditorPanelEnabled(post_excerpt_panel_PANEL_NAME) || _shouldBeUsedAsDescription;
     return {
-      excerpt: getEditedPostAttribute(_usedAttribute),
+      excerpt: (_getEditedPostAttribu = getEditedPostAttribute(_usedAttribute)) !== null && _getEditedPostAttribu !== void 0 ? _getEditedPostAttribu : fallback,
       shouldRender: _shouldRender,
       shouldBeUsedAsDescription: _shouldBeUsedAsDescription,
       // If we should render, allow editing for all post types that are not used as description.
@@ -35188,26 +35309,38 @@ function CommentAuthorInfo({
   date
 }) {
   const dateSettings = (0,external_wp_date_namespaceObject.getSettings)();
-  const [dateTimeFormat = dateSettings.formats.time] = (0,external_wp_coreData_namespaceObject.useEntityProp)('root', 'site', 'time_format');
   const {
     currentUserAvatar,
-    currentUserName
+    currentUserName,
+    dateFormat = dateSettings.formats.date
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _userData$avatar_urls;
-    const userData = select(external_wp_coreData_namespaceObject.store).getCurrentUser();
+    const {
+      getCurrentUser,
+      getEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
     const {
       getSettings
     } = select(external_wp_blockEditor_namespaceObject.store);
+    const userData = getCurrentUser();
     const {
       __experimentalDiscussionSettings
     } = getSettings();
     const defaultAvatar = __experimentalDiscussionSettings?.avatarURL;
+    const siteSettings = getEntityRecord('root', 'site');
     return {
       currentUserAvatar: (_userData$avatar_urls = userData?.avatar_urls?.[48]) !== null && _userData$avatar_urls !== void 0 ? _userData$avatar_urls : defaultAvatar,
-      currentUserName: userData?.name
+      currentUserName: userData?.name,
+      dateFormat: siteSettings?.date_format
     };
   }, []);
-  const currentDate = new Date();
+  const commentDate = (0,external_wp_date_namespaceObject.getDate)(date);
+  const commentDateTime = (0,external_wp_date_namespaceObject.dateI18n)('c', commentDate);
+  const shouldShowHumanTimeDiff = Math.floor((new Date() - commentDate) / (1000 * 60 * 60 * 24)) < 30;
+  const commentDateText = shouldShowHumanTimeDiff ? (0,external_wp_date_namespaceObject.humanTimeDiff)(commentDate) : (0,external_wp_date_namespaceObject.dateI18n)(dateFormat, commentDate);
+  const tooltipText = (0,external_wp_date_namespaceObject.dateI18n)(
+  // translators: Use a non-breaking space between 'g:i' and 'a' if appropriate.
+  (0,external_wp_i18n_namespaceObject._x)('F j, Y g:i\xa0a', 'Comment date full date format'), date);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
       src: avatar !== null && avatar !== void 0 ? avatar : currentUserAvatar,
@@ -35222,10 +35355,14 @@ function CommentAuthorInfo({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "editor-collab-sidebar-panel__user-name",
         children: name !== null && name !== void 0 ? name : currentUserName
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {
-        dateTime: (0,external_wp_date_namespaceObject.dateI18n)('c', date ? (0,external_wp_date_namespaceObject.getDate)(date) : currentDate),
-        className: "editor-collab-sidebar-panel__user-time",
-        children: (0,external_wp_date_namespaceObject.dateI18n)(dateTimeFormat, date ? (0,external_wp_date_namespaceObject.getDate)(date) : currentDate)
+      }), date && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
+        placement: "top",
+        text: tooltipText,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {
+          dateTime: commentDateTime,
+          className: "editor-collab-sidebar-panel__user-time",
+          children: commentDateText
+        })
       })]
     })]
   });
@@ -35241,37 +35378,6 @@ function CommentAuthorInfo({
  */
 function sanitizeCommentString(str) {
   return str.trim();
-}
-
-/**
- * Extracts comment IDs from an array of blocks.
- *
- * This function recursively traverses the blocks and their inner blocks to
- * collect all comment IDs found in the block attributes.
- *
- * @param {Array} blocks - The array of blocks to extract comment IDs from.
- * @return {Array} An array of comment IDs extracted from the blocks.
- */
-function getCommentIdsFromBlocks(blocks) {
-  // Recursive function to extract comment IDs from blocks
-  const extractCommentIds = items => {
-    return items.reduce((commentIds, block) => {
-      // Check for comment IDs in the current block's attributes
-      if (block.attributes && block.attributes.blockCommentId && !commentIds.includes(block.attributes.blockCommentId)) {
-        commentIds.push(block.attributes.blockCommentId);
-      }
-
-      // Recursively check inner blocks
-      if (block.innerBlocks && block.innerBlocks.length > 0) {
-        const innerCommentIds = extractCommentIds(block.innerBlocks);
-        commentIds.push(...innerCommentIds);
-      }
-      return commentIds;
-    }, []);
-  };
-
-  // Extract all comment IDs recursively
-  return extractCommentIds(blocks);
 }
 
 ;// ./packages/editor/build-module/components/collab-sidebar/comment-form.js
@@ -35376,6 +35482,11 @@ function CommentForm({
 
 
 
+
+const {
+  useBlockElement
+} = unlock(external_wp_blockEditor_namespaceObject.privateApis);
+
 /**
  * Renders the Comments component.
  *
@@ -35386,11 +35497,9 @@ function CommentForm({
  * @param {Function} props.onCommentDelete     - The function to delete a comment.
  * @param {Function} props.onCommentResolve    - The function to mark a comment as resolved.
  * @param {Function} props.onCommentReopen     - The function to reopen a resolved comment.
- * @param {boolean}  props.showCommentBoard    - Whether to show the comment board.
  * @param {Function} props.setShowCommentBoard - The function to set the comment board visibility.
  * @return {React.ReactNode} The rendered Comments component.
  */
-
 function Comments({
   threads,
   onEditComment,
@@ -35398,7 +35507,6 @@ function Comments({
   onCommentDelete,
   onCommentResolve,
   onCommentReopen,
-  showCommentBoard,
   setShowCommentBoard
 }) {
   const {
@@ -35408,20 +35516,15 @@ function Comments({
       getBlockAttributes,
       getSelectedBlockClientId
     } = select(external_wp_blockEditor_namespaceObject.store);
-    const _clientId = getSelectedBlockClientId();
+    const clientId = getSelectedBlockClientId();
     return {
-      blockCommentId: _clientId ? getBlockAttributes(_clientId)?.blockCommentId : null
+      blockCommentId: clientId ? getBlockAttributes(clientId)?.blockCommentId : null
     };
   }, []);
-  const [focusThread, setFocusThread] = (0,external_wp_element_namespaceObject.useState)(showCommentBoard && blockCommentId ? blockCommentId : null);
-  const clearThreadFocus = () => {
-    setFocusThread(null);
-    setShowCommentBoard(false);
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [
-    // If there are no comments, show a message indicating no comments are available.
-    (!Array.isArray(threads) || threads.length === 0) && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+  const [focusThread = blockCommentId, setFocusThread] = (0,external_wp_element_namespaceObject.useState)();
+  const hasThreads = Array.isArray(threads) && threads.length > 0;
+  if (!hasThreads) {
+    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
       alignment: "left",
       className: "editor-collab-sidebar-panel__thread",
       justify: "flex-start",
@@ -35429,27 +35532,19 @@ function Comments({
       children:
       // translators: message displayed when there are no comments available
       (0,external_wp_i18n_namespaceObject.__)('No comments available')
-    }), Array.isArray(threads) && threads.length > 0 && threads.map(thread => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
-      className: dist_clsx('editor-collab-sidebar-panel__thread', {
-        'editor-collab-sidebar-panel__active-thread': blockCommentId && blockCommentId === thread.id,
-        'editor-collab-sidebar-panel__focus-thread': focusThread && focusThread === thread.id
-      }),
-      id: thread.id,
-      spacing: "3",
-      onClick: () => setFocusThread(thread.id),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Thread, {
-        thread: thread,
-        onAddReply: onAddReply,
-        onCommentDelete: onCommentDelete,
-        onCommentResolve: onCommentResolve,
-        onCommentReopen: onCommentReopen,
-        onEditComment: onEditComment,
-        isFocused: focusThread === thread.id,
-        clearThreadFocus: clearThreadFocus,
-        setFocusThread: setFocusThread
-      })
-    }, thread.id))]
-  });
+    });
+  }
+  return threads.map(thread => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Thread, {
+    thread: thread,
+    onAddReply: onAddReply,
+    onCommentDelete: onCommentDelete,
+    onCommentResolve: onCommentResolve,
+    onCommentReopen: onCommentReopen,
+    onEditComment: onEditComment,
+    isFocused: focusThread === thread.id,
+    setFocusThread: setFocusThread,
+    setShowCommentBoard: setShowCommentBoard
+  }, thread.id));
 }
 function Thread({
   thread,
@@ -35459,10 +35554,38 @@ function Thread({
   onCommentResolve,
   onCommentReopen,
   isFocused,
-  clearThreadFocus,
-  setFocusThread
+  setFocusThread,
+  setShowCommentBoard
 }) {
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+  const {
+    flashBlock
+  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  const relatedBlockElement = useBlockElement(thread.blockClientId);
+  const handleCommentSelect = ({
+    id,
+    blockClientId
+  }) => {
+    setShowCommentBoard(false);
+    setFocusThread(id);
+    if (blockClientId && relatedBlockElement) {
+      relatedBlockElement.scrollIntoView({
+        behavior: 'instant',
+        block: 'center'
+      });
+      flashBlock(blockClientId);
+    }
+  };
+  const clearThreadFocus = () => {
+    setFocusThread(null);
+    setShowCommentBoard(false);
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    className: dist_clsx('editor-collab-sidebar-panel__thread', {
+      'editor-collab-sidebar-panel__focus-thread': isFocused
+    }),
+    id: thread.id,
+    spacing: "3",
+    onClick: () => handleCommentSelect(thread),
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
       thread: thread,
       onResolve: onCommentResolve,
@@ -35822,10 +35945,101 @@ const CommentAvatarIndicator = ({
 };
 /* harmony default export */ const comment_indicator_toolbar = (CommentAvatarIndicator);
 
+;// ./packages/editor/build-module/components/collab-sidebar/hooks.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+function useBlockComments(postId) {
+  const queryArgs = {
+    post: postId,
+    type: 'block_comment',
+    status: 'all',
+    per_page: 100
+  };
+  const {
+    records: threads,
+    totalPages
+  } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('root', 'comment', queryArgs, {
+    enabled: !!postId && typeof postId === 'number'
+  });
+  const blocksWithComments = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockAttributes,
+      getClientIdsWithDescendants
+    } = select(external_wp_blockEditor_namespaceObject.store);
+    return getClientIdsWithDescendants().reduce((results, clientId) => {
+      const commentId = getBlockAttributes(clientId)?.blockCommentId;
+      if (commentId) {
+        results[commentId] = clientId;
+      }
+      return results;
+    }, {});
+  }, []);
+
+  // Process comments to build the tree structure.
+  const {
+    resultComments,
+    unresolvedSortedThreads
+  } = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    // Create a compare to store the references to all objects by id.
+    const compare = {};
+    const result = [];
+    const allComments = threads !== null && threads !== void 0 ? threads : [];
+
+    // Initialize each object with an empty `reply` array and map blockClientId.
+    allComments.forEach(item => {
+      compare[item.id] = {
+        ...item,
+        reply: [],
+        blockClientId: item.parent === 0 ? blocksWithComments[item.id] : null
+      };
+    });
+
+    // Iterate over the data to build the tree structure.
+    allComments.forEach(item => {
+      if (item.parent === 0) {
+        // If parent is 0, it's a root item, push it to the result array.
+        result.push(compare[item.id]);
+      } else if (compare[item.parent]) {
+        // Otherwise, find its parent and push it to the parent's `reply` array.
+        compare[item.parent].reply.push(compare[item.id]);
+      }
+    });
+    if (0 === result?.length) {
+      return {
+        resultComments: [],
+        unresolvedSortedThreads: []
+      };
+    }
+    const updatedResult = result.map(item => ({
+      ...item,
+      reply: [...item.reply].reverse()
+    }));
+    const threadIdMap = new Map(updatedResult.map(thread => [String(thread.id), thread]));
+
+    // Get comments by block order, filter out undefined threads, and exclude resolved comments.
+    const unresolvedSortedComments = Object.keys(blocksWithComments).map(id => threadIdMap.get(id)).filter(thread => thread !== undefined && thread.status !== 'approved');
+    return {
+      resultComments: updatedResult,
+      unresolvedSortedThreads: unresolvedSortedComments
+    };
+  }, [threads, blocksWithComments]);
+  return {
+    resultComments,
+    unresolvedSortedThreads,
+    totalPages
+  };
+}
+
 ;// ./packages/editor/build-module/components/collab-sidebar/index.js
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -36029,32 +36243,17 @@ function CollabSidebar() {
   const {
     getActiveComplementaryArea
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
+  const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
   const {
-    postId,
-    postType
+    postId
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
-      getCurrentPostId,
-      getCurrentPostType
+      getCurrentPostId
     } = select(store_store);
     return {
-      postId: getCurrentPostId(),
-      postType: getCurrentPostType()
+      postId: getCurrentPostId()
     };
   }, []);
-  const queryArgs = {
-    post: postId,
-    type: 'block_comment',
-    status: 'all',
-    per_page: 100
-  };
-  const {
-    records: threads,
-    totalPages
-  } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('root', 'comment', queryArgs, {
-    enabled: !!postId && typeof postId === 'number'
-  });
-  const hasMoreComments = totalPages && totalPages > 1;
   const {
     blockCommentId
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
@@ -36071,58 +36270,12 @@ function CollabSidebar() {
     setShowCommentBoard(true);
     enableComplementaryArea('core', collabHistorySidebarName);
   };
-  const [blocks] = (0,external_wp_coreData_namespaceObject.useEntityBlockEditor)('postType', postType, {
-    id: postId
-  });
-
-  // Process comments to build the tree structure.
   const {
     resultComments,
-    unresolvedSortedThreads
-  } = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    // Create a compare to store the references to all objects by id.
-    const compare = {};
-    const result = [];
-    const allComments = threads !== null && threads !== void 0 ? threads : [];
-
-    // Initialize each object with an empty `reply` array.
-    allComments.forEach(item => {
-      compare[item.id] = {
-        ...item,
-        reply: []
-      };
-    });
-
-    // Iterate over the data to build the tree structure.
-    allComments.forEach(item => {
-      if (item.parent === 0) {
-        // If parent is 0, it's a root item, push it to the result array.
-        result.push(compare[item.id]);
-      } else if (compare[item.parent]) {
-        // Otherwise, find its parent and push it to the parent's `reply` array.
-        compare[item.parent].reply.push(compare[item.id]);
-      }
-    });
-    if (0 === result?.length) {
-      return {
-        resultComments: [],
-        unresolvedSortedThreads: []
-      };
-    }
-    const updatedResult = result.map(item => ({
-      ...item,
-      reply: [...item.reply].reverse()
-    }));
-    const blockCommentIds = getCommentIdsFromBlocks(blocks);
-    const threadIdMap = new Map(updatedResult.map(thread => [thread.id, thread]));
-
-    // Get comments by block order, filter out undefined threads, and exclude resolved comments.
-    const unresolvedSortedComments = blockCommentIds.map(id => threadIdMap.get(id)).filter(thread => thread !== undefined && thread.status !== 'approved');
-    return {
-      resultComments: updatedResult,
-      unresolvedSortedThreads: unresolvedSortedComments
-    };
-  }, [threads, blocks]);
+    unresolvedSortedThreads,
+    totalPages
+  } = useBlockComments(postId);
+  const hasMoreComments = totalPages && totalPages > 1;
 
   // Get the global styles to set the background color of the sidebar.
   const {
@@ -36158,12 +36311,13 @@ function CollabSidebar() {
       ,
       title: (0,external_wp_i18n_namespaceObject.__)('Comments'),
       icon: library_comment,
+      closeLabel: (0,external_wp_i18n_namespaceObject.__)('Close Comments'),
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollabSidebarContent, {
         comments: resultComments,
         showCommentBoard: showCommentBoard,
         setShowCommentBoard: setShowCommentBoard
       })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PluginSidebar, {
+    }), isLargeViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PluginSidebar, {
       isPinnable: false,
       header: false,
       identifier: collabSidebarName,
@@ -37236,6 +37390,7 @@ const ZoomOutToggle = ({
 
 
 
+
 const isBlockCommentExperimentEnabled = window?.__experimentalEnableBlockComment;
 const toolbarVariations = {
   distractionFreeDisabled: {
@@ -37382,7 +37537,10 @@ function header_Header({
       }), !customSaveButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostPublishButtonOrToggle, {
         forceIsDirty: forceIsDirty,
         setEntitiesSavedStatesCallback: setEntitiesSavedStatesCallback
-      }), isBlockCommentExperimentEnabled ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollabSidebar, {}) : undefined, customSaveButton, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MoreMenu, {})]
+      }), isBlockCommentExperimentEnabled && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_type_support_check, {
+        supportKeys: "editor.block-comments",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollabSidebar, {})
+      }), customSaveButton, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MoreMenu, {})]
     })]
   });
 }
