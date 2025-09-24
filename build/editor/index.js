@@ -36018,6 +36018,7 @@ const CommentAvatarIndicator = ({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -36211,6 +36212,7 @@ function CollabSidebar() {
   const {
     getActiveComplementaryArea
   } = (0,external_wp_data_namespaceObject.useSelect)(store);
+  const isLargeViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('medium');
   const {
     postId,
     postType
@@ -36346,7 +36348,7 @@ function CollabSidebar() {
         showCommentBoard: showCommentBoard,
         setShowCommentBoard: setShowCommentBoard
       })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PluginSidebar, {
+    }), isLargeViewport && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PluginSidebar, {
       isPinnable: false,
       header: false,
       identifier: collabSidebarName,
