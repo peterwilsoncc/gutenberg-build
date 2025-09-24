@@ -25705,7 +25705,6 @@ const group_variations_variations = [{
   },
   isDefault: true,
   scope: ['block', 'inserter', 'transform'],
-  isActive: blockAttributes => !blockAttributes.layout || !blockAttributes.layout?.type || blockAttributes.layout?.type === 'default' || blockAttributes.layout?.type === 'constrained',
   icon: library_group
 }, {
   name: 'group-row',
@@ -25718,7 +25717,7 @@ const group_variations_variations = [{
     }
   },
   scope: ['block', 'inserter', 'transform'],
-  isActive: blockAttributes => blockAttributes.layout?.type === 'flex' && (!blockAttributes.layout?.orientation || blockAttributes.layout?.orientation === 'horizontal'),
+  isActive: ['layout.type'],
   icon: library_row,
   example
 }, {
@@ -25732,7 +25731,7 @@ const group_variations_variations = [{
     }
   },
   scope: ['block', 'inserter', 'transform'],
-  isActive: blockAttributes => blockAttributes.layout?.type === 'flex' && blockAttributes.layout?.orientation === 'vertical',
+  isActive: ['layout.type', 'layout.orientation'],
   icon: library_stack,
   example
 }, {
@@ -25745,7 +25744,7 @@ const group_variations_variations = [{
     }
   },
   scope: ['block', 'inserter', 'transform'],
-  isActive: blockAttributes => blockAttributes.layout?.type === 'grid',
+  isActive: ['layout.type'],
   icon: library_grid,
   example
 }];
