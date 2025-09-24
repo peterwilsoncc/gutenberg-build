@@ -46302,9 +46302,22 @@ function PostDateEdit({
   }, [datetime]);
   const isDescendentOfQueryLoop = Number.isFinite(queryId);
   const dateSettings = (0,external_wp_date_namespaceObject.getSettings)();
-  const [siteFormat = dateSettings.formats.date] = (0,external_wp_coreData_namespaceObject.useEntityProp)('root', 'site', 'date_format');
-  const [siteTimeFormat = dateSettings.formats.time] = (0,external_wp_coreData_namespaceObject.useEntityProp)('root', 'site', 'time_format');
-  const postType = (0,external_wp_data_namespaceObject.useSelect)(select => postTypeSlug ? select(external_wp_coreData_namespaceObject.store).getPostType(postTypeSlug) : null, [postTypeSlug]);
+  const {
+    postType,
+    siteFormat = dateSettings.formats.date,
+    siteTimeFormat = dateSettings.formats.time
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getPostType,
+      getEntityRecord
+    } = select(external_wp_coreData_namespaceObject.store);
+    const siteSettings = getEntityRecord('root', 'site');
+    return {
+      siteFormat: siteSettings?.date_format,
+      siteTimeFormat: siteSettings?.time_format,
+      postType: postTypeSlug ? getPostType(postTypeSlug) : null
+    };
+  }, [postTypeSlug]);
   const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
   let postDate = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("time", {
     dateTime: (0,external_wp_date_namespaceObject.dateI18n)('c', datetime),
