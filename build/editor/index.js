@@ -35486,6 +35486,9 @@ function CommentForm({
 const {
   useBlockElement
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
+const {
+  Menu
+} = unlock(external_wp_components_namespaceObject.privateApis);
 
 /**
  * Renders the Comments component.
@@ -35664,22 +35667,26 @@ const CommentBoard = ({
     setShowConfirmDialog(false);
   };
   const actions = [onEdit && status !== 'approved' && {
+    id: 'edit',
     title: (0,external_wp_i18n_namespaceObject._x)('Edit', 'Edit comment'),
     onClick: () => {
       setActionState('edit');
     }
   }, onDelete && {
+    id: 'delete',
     title: (0,external_wp_i18n_namespaceObject._x)('Delete', 'Delete comment'),
     onClick: () => {
       setActionState('delete');
       setShowConfirmDialog(true);
     }
   }, onReopen && status === 'approved' && {
+    id: 'reopen',
     title: (0,external_wp_i18n_namespaceObject._x)('Reopen', 'Reopen comment'),
     onClick: () => {
       onReopen(thread.id);
     }
   }];
+  const canResolve = thread?.parent === 0 && onResolve;
   const moreActions = actions.filter(item => item?.onClick);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -35696,7 +35703,7 @@ const CommentBoard = ({
           alignment: "right",
           justify: "flex-end",
           spacing: "0",
-          children: [0 === thread?.parent && onResolve && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          children: [canResolve && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
             label: (0,external_wp_i18n_namespaceObject._x)('Resolve', 'Mark comment as resolved'),
             size: "small",
             icon: library_published,
@@ -35705,11 +35712,27 @@ const CommentBoard = ({
             onClick: () => {
               onResolve(thread.id);
             }
-          }), 0 < moreActions.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
-            icon: more_vertical,
-            label: (0,external_wp_i18n_namespaceObject._x)('Select an action', 'Select comment action'),
-            className: "editor-collab-sidebar-panel__comment-dropdown-menu",
-            controls: moreActions
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Menu, {
+            placement: "bottom-end",
+            children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.TriggerButton, {
+              render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+                size: "small",
+                icon: more_vertical,
+                label: (0,external_wp_i18n_namespaceObject.__)('Actions'),
+                disabled: !moreActions.length,
+                accessibleWhenDisabled: true
+              })
+            }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Popover, {
+              children: moreActions.map(action => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Item, {
+                onClick: event => {
+                  event.stopPropagation();
+                  action.onClick();
+                },
+                children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.ItemLabel, {
+                  children: action.title
+                })
+              }, action.id))
+            })]
           })]
         })
       })]
@@ -39395,7 +39418,7 @@ function usePostActions({
 
 
 const {
-  Menu,
+  Menu: post_actions_Menu,
   kebabCase
 } = unlock(external_wp_components_namespaceObject.privateApis);
 function PostActions({
@@ -39433,9 +39456,9 @@ function PostActions({
     });
   }, [allActions, itemWithPermissions]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Menu, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(post_actions_Menu, {
       placement: "bottom-end",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.TriggerButton, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_actions_Menu.TriggerButton, {
         render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
           size: "small",
           icon: more_vertical,
@@ -39444,7 +39467,7 @@ function PostActions({
           accessibleWhenDisabled: true,
           className: "editor-all-actions-button"
         })
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Popover, {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_actions_Menu.Popover, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ActionsDropdownMenuGroup, {
           actions: actions,
           items: [itemWithPermissions],
@@ -39470,9 +39493,9 @@ function DropdownMenuItemTrigger({
   items
 }) {
   const label = typeof action.label === 'string' ? action.label : action.label(items);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Item, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_actions_Menu.Item, {
     onClick: onClick,
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.ItemLabel, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_actions_Menu.ItemLabel, {
       children: label
     })
   });
@@ -39502,7 +39525,7 @@ function ActionsDropdownMenuGroup({
   setActiveModalAction
 }) {
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Group, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_actions_Menu.Group, {
     children: actions.map(action => {
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DropdownMenuItemTrigger, {
         action: action,
