@@ -65273,6 +65273,7 @@ const table_of_contents_metadata = {
     }
   },
   supports: {
+    ariaLabel: true,
     html: false,
     color: {
       text: true,
