@@ -35574,7 +35574,7 @@ function Comments({
       blockCommentId: clientId ? getBlockAttributes(clientId)?.blockCommentId : null
     };
   }, []);
-  const [focusThread, setFocusThread] = (0,external_wp_element_namespaceObject.useState)(blockCommentId !== null && blockCommentId !== void 0 ? blockCommentId : null);
+  const [focusThread = blockCommentId, setFocusThread] = (0,external_wp_element_namespaceObject.useState)();
   const hasThreads = Array.isArray(threads) && threads.length > 0;
   if (!hasThreads) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
