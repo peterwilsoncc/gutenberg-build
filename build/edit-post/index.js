@@ -2749,7 +2749,7 @@ const {
 const {
   BlockKeyboardShortcuts
 } = unlock(external_wp_blockLibrary_namespaceObject.privateApis);
-const DESIGN_POST_TYPES = ['wp_template', 'wp_template_part', 'wp_block', 'wp_navigation', 'wp_registered_template'];
+const DESIGN_POST_TYPES = ['wp_template', 'wp_template_part', 'wp_block', 'wp_navigation'];
 function useEditorStyles(...additionalStyles) {
   const {
     hasThemeStyleSupport,
@@ -2808,7 +2808,7 @@ function MetaBoxesMain({
     const {
       isMetaBoxLocationVisible
     } = select(store);
-    return [!!get('core/edit-post', 'metaBoxesMainIsOpen'), get('core/edit-post', 'metaBoxesMainOpenHeight'), isMetaBoxLocationVisible('normal') || isMetaBoxLocationVisible('advanced') || isMetaBoxLocationVisible('side')];
+    return [get('core/edit-post', 'metaBoxesMainIsOpen'), get('core/edit-post', 'metaBoxesMainOpenHeight'), isMetaBoxLocationVisible('normal') || isMetaBoxLocationVisible('advanced') || isMetaBoxLocationVisible('side')];
   }, []);
   const {
     set: setPreference
@@ -2848,32 +2848,19 @@ function MetaBoxesMain({
     }
     return () => observer.disconnect();
   }, []);
-  const resizeDataRef = (0,external_wp_element_namespaceObject.useRef)({});
   const separatorRef = (0,external_wp_element_namespaceObject.useRef)();
   const separatorHelpId = (0,external_wp_element_namespaceObject.useId)();
-
-  /**
-   * @param {number|'auto'} [candidateHeight] Height in pixels or 'auto'.
-   * @param {boolean}       isPersistent      Whether to persist the height in preferences.
-   * @param {boolean}       isInstant         Whether to update the height in the DOM.
-   */
-  const applyHeight = (candidateHeight = 'auto', isPersistent, isInstant) => {
-    if (candidateHeight === 'auto') {
-      isPersistent = false; // Just in case — “auto” should never persist.
-    } else {
-      candidateHeight = Math.min(max, Math.max(min, candidateHeight));
-    }
+  const [isUntouched, setIsUntouched] = (0,external_wp_element_namespaceObject.useState)(true);
+  const applyHeight = (candidateHeight, isPersistent, isInstant) => {
+    const nextHeight = Math.min(max, Math.max(min, candidateHeight));
     if (isPersistent) {
-      setPreference('core/edit-post', 'metaBoxesMainOpenHeight', candidateHeight);
-    }
-    // Updates aria-valuenow only when not persisting the value because otherwise
-    // it's done by the render that persisting the value causes.
-    else if (!isShort) {
-      separatorRef.current.ariaValueNow = getAriaValueNow(candidateHeight);
+      setPreference('core/edit-post', 'metaBoxesMainOpenHeight', nextHeight);
+    } else {
+      separatorRef.current.ariaValueNow = getAriaValueNow(nextHeight);
     }
     if (isInstant) {
       metaBoxesMainRef.current.updateSize({
-        height: candidateHeight,
+        height: nextHeight,
         // Oddly, when the event that triggered this was not from the mouse (e.g. keydown),
         // if `width` is left unspecified a subsequent drag gesture applies a fixed
         // width and the pane fails to widen/narrow with parent width changes from
@@ -2882,29 +2869,14 @@ function MetaBoxesMain({
       });
     }
   };
-  const getRenderValues = (0,external_wp_compose_namespaceObject.useEvent)(() => ({
-    isOpen,
-    openHeight,
-    min
-  }));
-  // Sets the height to 'auto' when not resizable (isShort) and to the
-  // preferred height when resizable.
-  (0,external_wp_element_namespaceObject.useEffect)(() => {
-    const fresh = getRenderValues();
-    // Tests for `min` having a value to skip the first render.
-    if (fresh.min !== undefined && metaBoxesMainRef.current) {
-      const usedOpenHeight = isShort ? 'auto' : fresh.openHeight;
-      const usedHeight = fresh.isOpen ? usedOpenHeight : fresh.min;
-      applyHeight(usedHeight, false, true);
-    }
-  }, [isShort]);
   if (!hasAnyVisible) {
     return;
   }
   const contents = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+    className: dist_clsx(
     // The class name 'edit-post-layout__metaboxes' is retained because some plugins use it.
-    className: "edit-post-layout__metaboxes edit-post-meta-boxes-main__liner",
-    hidden: !isOpen,
+    'edit-post-layout__metaboxes', !isLegacy && 'edit-post-meta-boxes-main__liner'),
+    hidden: !isLegacy && isShort && !isOpen,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MetaBoxes, {
       location: "normal"
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MetaBoxes, {
@@ -2915,9 +2887,14 @@ function MetaBoxesMain({
     return contents;
   }
   const isAutoHeight = openHeight === undefined;
+  let usedMax = '50%'; // Approximation before max has a value.
+  if (max !== undefined) {
+    // Halves the available max height until a user height is set.
+    usedMax = isAutoHeight && isUntouched ? max / 2 : max;
+  }
   const getAriaValueNow = height => Math.round((height - min) / (max - min) * 100);
   const usedAriaValueNow = max === undefined || isAutoHeight ? 50 : getAriaValueNow(openHeight);
-  const persistIsOpen = (to = !isOpen) => setPreference('core/edit-post', 'metaBoxesMainIsOpen', to);
+  const toggle = () => setPreference('core/edit-post', 'metaBoxesMainIsOpen', !isOpen);
 
   // TODO: Support more/all keyboard interactions from the window splitter pattern:
   // https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/
@@ -2931,137 +2908,95 @@ function MetaBoxesMain({
       const fromHeight = isAutoHeight ? pane.offsetHeight : openHeight;
       const nextHeight = delta + fromHeight;
       applyHeight(nextHeight, true, true);
-      persistIsOpen(nextHeight > min);
       event.preventDefault();
     }
   };
+  const className = 'edit-post-meta-boxes-main';
   const paneLabel = (0,external_wp_i18n_namespaceObject.__)('Meta Boxes');
-  const toggle = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
-    "aria-expanded": isOpen,
-    onClick: ({
-      detail
-    }) => {
-      const {
-        isToggleInferred
-      } = resizeDataRef.current;
-      if (isShort || !detail || isToggleInferred) {
-        persistIsOpen();
-        const usedOpenHeight = isShort ? 'auto' : openHeight;
-        const usedHeight = isOpen ? min : usedOpenHeight;
-        applyHeight(usedHeight, false, true);
-      }
-    }
-    // Prevents resizing in short viewports.
-    ,
-    ...(isShort && {
-      onMouseDown: event => event.stopPropagation(),
-      onTouchStart: event => event.stopPropagation()
-    }),
-    children: [paneLabel, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-      icon: isOpen ? chevron_up : chevron_down
-    })]
-  });
-  const separator = !isShort && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
-      text: (0,external_wp_i18n_namespaceObject.__)('Drag to resize'),
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("button", {
-        // eslint-disable-line jsx-a11y/role-supports-aria-props
-        ref: separatorRef,
-        role: "separator" // eslint-disable-line jsx-a11y/no-interactive-element-to-noninteractive-role
-        ,
-        "aria-valuenow": usedAriaValueNow,
-        "aria-label": (0,external_wp_i18n_namespaceObject.__)('Drag to resize'),
-        "aria-describedby": separatorHelpId,
-        onKeyDown: onSeparatorKeyDown
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
-      id: separatorHelpId,
-      children: (0,external_wp_i18n_namespaceObject.__)('Use up and down arrow keys to resize the meta box panel.')
-    })]
-  });
-  const paneProps = /** @type {Parameters<typeof ResizableBox>[0]} */{
-    as: NavigableRegion,
-    ref: metaBoxesMainRef,
-    className: 'edit-post-meta-boxes-main',
-    defaultSize: {
-      height: isOpen ? openHeight : 0
-    },
-    minHeight: min,
-    maxHeight: max,
-    enable: {
-      top: true
-    },
-    handleClasses: {
-      top: 'edit-post-meta-boxes-main__presenter'
-    },
-    handleComponent: {
-      top: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: [toggle, separator]
-      })
-    },
-    // Avoids hiccups while dragging over objects like iframes and ensures that
-    // the event to end the drag is captured by the target (resize handle)
-    // whether or not it’s under the pointer.
-    onPointerDown: ({
-      pointerId,
-      target
-    }) => {
-      if (separatorRef.current?.parentElement.contains(target)) {
-        target.setPointerCapture(pointerId);
-      }
-    },
-    onResizeStart: ({
-      timeStamp
-    }, direction, elementRef) => {
-      if (isAutoHeight) {
-        // Sets the starting height to avoid visual jumps in height and
-        // aria-valuenow being `NaN` for the first (few) resize events.
-        applyHeight(elementRef.offsetHeight, false, true);
-      }
-      elementRef.classList.add('is-resizing');
-      resizeDataRef.current = {
-        timeStamp,
-        maxDelta: 0
-      };
-    },
-    onResize: (event, direction, elementRef, delta) => {
-      const {
-        maxDelta
-      } = resizeDataRef.current;
-      const newDelta = Math.abs(delta.height);
-      resizeDataRef.current.maxDelta = Math.max(maxDelta, newDelta);
-      applyHeight(metaBoxesMainRef.current.state.height);
-    },
-    onResizeStop: (event, direction, elementRef) => {
-      elementRef.classList.remove('is-resizing');
-      const duration = event.timeStamp - resizeDataRef.current.timeStamp;
-      const wasSeparator = event.target === separatorRef.current;
-      const {
-        maxDelta
-      } = resizeDataRef.current;
-      const isToggleInferred = maxDelta < 1 || duration < 144 && maxDelta < 5;
-      if (isShort || !wasSeparator && isToggleInferred) {
-        resizeDataRef.current.isToggleInferred = true;
-      } else {
-        const {
-          height
-        } = metaBoxesMainRef.current.state;
-        const nextIsOpen = height > min;
-        persistIsOpen(nextIsOpen);
-        // Persists height only if still open. This is so that when closed by a drag the
-        // prior height can be restored by the toggle button instead of having to drag
-        // the pane open again. Also, if already closed, a click on the separator won’t
-        // persist the height as the minimum.
-        if (nextIsOpen) {
-          applyHeight(height, true);
+  let Pane, paneProps;
+  if (isShort) {
+    Pane = NavigableRegion;
+    paneProps = {
+      className: dist_clsx(className, 'is-toggle-only')
+    };
+  } else {
+    Pane = external_wp_components_namespaceObject.ResizableBox;
+    paneProps = /** @type {Parameters<typeof ResizableBox>[0]} */{
+      as: NavigableRegion,
+      ref: metaBoxesMainRef,
+      className: dist_clsx(className, 'is-resizable'),
+      defaultSize: {
+        height: openHeight
+      },
+      minHeight: min,
+      maxHeight: usedMax,
+      enable: {
+        top: true,
+        right: false,
+        bottom: false,
+        left: false,
+        topLeft: false,
+        topRight: false,
+        bottomRight: false,
+        bottomLeft: false
+      },
+      handleClasses: {
+        top: 'edit-post-meta-boxes-main__presenter'
+      },
+      handleComponent: {
+        top: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+          children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Tooltip, {
+            text: (0,external_wp_i18n_namespaceObject.__)('Drag to resize'),
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("button", {
+              // eslint-disable-line jsx-a11y/role-supports-aria-props
+              ref: separatorRef,
+              role: "separator" // eslint-disable-line jsx-a11y/no-interactive-element-to-noninteractive-role
+              ,
+              "aria-valuenow": usedAriaValueNow,
+              "aria-label": (0,external_wp_i18n_namespaceObject.__)('Drag to resize'),
+              "aria-describedby": separatorHelpId,
+              onKeyDown: onSeparatorKeyDown
+            })
+          }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
+            id: separatorHelpId,
+            children: (0,external_wp_i18n_namespaceObject.__)('Use up and down arrow keys to resize the meta box panel.')
+          })]
+        })
+      },
+      // Avoids hiccups while dragging over objects like iframes and ensures that
+      // the event to end the drag is captured by the target (resize handle)
+      // whether or not it’s under the pointer.
+      onPointerDown: ({
+        pointerId,
+        target
+      }) => {
+        if (separatorRef.current.parentElement.contains(target)) {
+          target.setPointerCapture(pointerId);
         }
-      }
-    }
-  };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ResizableBox, {
+      },
+      onResizeStart: (event, direction, elementRef) => {
+        if (isAutoHeight) {
+          // Sets the starting height to avoid visual jumps in height and
+          // aria-valuenow being `NaN` for the first (few) resize events.
+          applyHeight(elementRef.offsetHeight, false, true);
+          setIsUntouched(false);
+        }
+      },
+      onResize: () => applyHeight(metaBoxesMainRef.current.state.height),
+      onResizeStop: () => applyHeight(metaBoxesMainRef.current.state.height, true)
+    };
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Pane, {
     "aria-label": paneLabel,
     ...paneProps,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("meta", {
+    children: [isShort ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
+      "aria-expanded": isOpen,
+      className: "edit-post-meta-boxes-main__presenter",
+      onClick: toggle,
+      children: [paneLabel, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+        icon: isOpen ? chevron_up : chevron_down
+      })]
+    }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("meta", {
       ref: effectSizeConstraints
     }), contents]
   });
@@ -3150,12 +3085,6 @@ function Layout({
     };
   }, [currentPostType, currentPostId, isEditingTemplate, settings.supportsTemplateMode, onNavigateToPreviousEntityRecord]);
   useMetaBoxInitialization(hasActiveMetaboxes && hasResolvedMode);
-  const editableResolvedTemplateId = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    if (typeof templateId !== 'string') {
-      return templateId;
-    }
-    return unlock(select(external_wp_coreData_namespaceObject.store)).getTemplateAutoDraftId(templateId);
-  }, [templateId]);
   const [paddingAppenderRef, paddingStyle] = usePaddingAppender(enablePaddingAppender);
 
   // Set the right context for the command palette
@@ -3244,7 +3173,7 @@ function Layout({
           initialEdits: initialEdits,
           postType: currentPostType,
           postId: currentPostId,
-          templateId: editableResolvedTemplateId,
+          templateId: templateId,
           className: className,
           styles: styles,
           forceIsDirty: hasActiveMetaboxes,

@@ -16359,11 +16359,21 @@ const PreviewStyles = ({
 
 
 function ScreenRoot() {
-  const hasVariations = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const {
+    hasVariations,
+    canEditCSS
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
+      getEntityRecord,
+      __experimentalGetCurrentGlobalStylesId,
       __experimentalGetCurrentThemeGlobalStylesVariations
     } = select(external_wp_coreData_namespaceObject.store);
-    return !!__experimentalGetCurrentThemeGlobalStylesVariations()?.length;
+    const globalStylesId = __experimentalGetCurrentGlobalStylesId();
+    const globalStyles = globalStylesId ? getEntityRecord('root', 'globalStyles', globalStylesId) : undefined;
+    return {
+      hasVariations: !!__experimentalGetCurrentThemeGlobalStylesVariations()?.length,
+      canEditCSS: !!globalStyles?._links?.['wp:action-edit-css']
+    };
   }, []);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Card, {
     size: "small",
@@ -16403,7 +16413,7 @@ function ScreenRoot() {
          * the nav button inset should be looked at before reusing further.
          */,
         paddingX: "13px",
-        marginBottom: 2,
+        marginBottom: 4,
         children: (0,external_wp_i18n_namespaceObject.__)('Customize the appearance of specific blocks for the whole site.')
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
@@ -16417,6 +16427,28 @@ function ScreenRoot() {
             })]
           })
         })
+      })]
+    }), canEditCSS && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CardDivider, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.CardBody, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalSpacer, {
+          as: "p",
+          paddingTop: 2,
+          paddingX: "13px",
+          marginBottom: 4,
+          children: (0,external_wp_i18n_namespaceObject.__)('Add your own CSS to customize the appearance and layout of your site.')
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalItemGroup, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(NavigationButtonAsItem, {
+            path: "/css",
+            children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
+              justify: "space-between",
+              children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
+                children: (0,external_wp_i18n_namespaceObject.__)('Additional CSS')
+              }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(IconWithCurrentColor, {
+                icon: (0,external_wp_i18n_namespaceObject.isRTL)() ? chevron_left : chevron_right
+              })]
+            })
+          })
+        })]
       })]
     })]
   });
@@ -27241,8 +27273,6 @@ function Page({
 
 
 
-
-
 /**
  * Internal dependencies
  */
@@ -27260,49 +27290,19 @@ const GlobalStylesPageActions = ({
   path
 }) => {
   const history = sidebar_global_styles_wrapper_useHistory();
-  const canEditCSS = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getEntityRecord,
-      __experimentalGetCurrentGlobalStylesId
-    } = select(external_wp_coreData_namespaceObject.store);
-    const globalStylesId = __experimentalGetCurrentGlobalStylesId();
-    const globalStyles = globalStylesId ? getEntityRecord('root', 'globalStyles', globalStylesId) : undefined;
-    return !!globalStyles?._links?.['wp:action-edit-css'];
-  }, []);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-      isPressed: isStyleBookOpened,
-      icon: library_seen,
-      label: (0,external_wp_i18n_namespaceObject.__)('Style Book'),
-      onClick: () => {
-        setIsStyleBookOpened(!isStyleBookOpened);
-        const updatedPath = !isStyleBookOpened ? (0,external_wp_url_namespaceObject.addQueryArgs)(path, {
-          preview: 'stylebook'
-        }) : (0,external_wp_url_namespaceObject.removeQueryArgs)(path, 'preview');
-        // Navigate to the updated path.
-        history.navigate(updatedPath);
-      },
-      size: "compact"
-    }), canEditCSS && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.DropdownMenu, {
-      icon: more_vertical,
-      label: (0,external_wp_i18n_namespaceObject.__)('More'),
-      toggleProps: {
-        size: 'compact'
-      },
-      children: ({
-        onClose
-      }) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuGroup, {
-        children: canEditCSS && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
-          onClick: () => {
-            onClose();
-            history.navigate((0,external_wp_url_namespaceObject.addQueryArgs)(path, {
-              section: '/css'
-            }));
-          },
-          children: (0,external_wp_i18n_namespaceObject.__)('Additional CSS')
-        })
-      })
-    })]
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    isPressed: isStyleBookOpened,
+    icon: library_seen,
+    label: (0,external_wp_i18n_namespaceObject.__)('Style Book'),
+    onClick: () => {
+      setIsStyleBookOpened(!isStyleBookOpened);
+      const updatedPath = !isStyleBookOpened ? (0,external_wp_url_namespaceObject.addQueryArgs)(path, {
+        preview: 'stylebook'
+      }) : (0,external_wp_url_namespaceObject.removeQueryArgs)(path, 'preview');
+      // Navigate to the updated path.
+      history.navigate(updatedPath);
+    },
+    size: "compact"
   });
 };
 
@@ -27951,6 +27951,7 @@ const {
   AdvancedPanel: screen_css_StylesAdvancedPanel
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
 function ScreenCSS() {
+  const description = (0,external_wp_i18n_namespaceObject.__)('Add your own CSS to customize the appearance and layout of your site.');
   const [style] = screen_css_useGlobalStyle('', undefined, 'user', {
     shouldDecodeEncode: false
   });
@@ -27962,9 +27963,9 @@ function ScreenCSS() {
   } = unlock((0,external_wp_data_namespaceObject.useDispatch)(store));
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(header, {
-      title: (0,external_wp_i18n_namespaceObject.__)('Additional CSS'),
+      title: (0,external_wp_i18n_namespaceObject.__)('CSS'),
       description: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-        children: [(0,external_wp_i18n_namespaceObject.__)('You can add custom CSS to further customize the appearance and layout of your site.'), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("br", {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
+        children: [description, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("br", {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
           href: (0,external_wp_i18n_namespaceObject.__)('https://developer.wordpress.org/advanced-administration/wordpress/css/'),
           className: "edit-site-global-styles-screen-css-help-link",
           children: (0,external_wp_i18n_namespaceObject.__)('Learn more about CSS')
@@ -29464,9 +29465,17 @@ function useAdaptEditorToCanvas(canvas) {
 const {
   useLocation: use_resolve_edited_entity_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
-const postTypesWithoutParentTemplate = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE, NAVIGATION_POST_TYPE, PATTERN_TYPES.user, 'wp_registered_template'];
+const postTypesWithoutParentTemplate = [TEMPLATE_POST_TYPE, TEMPLATE_PART_POST_TYPE, NAVIGATION_POST_TYPE, PATTERN_TYPES.user];
 const authorizedPostTypes = ['page', 'post'];
-function getPostType(name, postId) {
+function useResolveEditedEntity() {
+  const {
+    name,
+    params = {},
+    query
+  } = use_resolve_edited_entity_useLocation();
+  const {
+    postId = query?.postId
+  } = params; // Fallback to query param for postId for list view routes.
   let postType;
   if (name === 'navigation-item') {
     postType = NAVIGATION_POST_TYPE;
@@ -29474,42 +29483,19 @@ function getPostType(name, postId) {
     postType = PATTERN_TYPES.user;
   } else if (name === 'template-part-item') {
     postType = TEMPLATE_PART_POST_TYPE;
-  } else if (name === 'templates') {
-    postType = /^\d+$/.test(postId) ? TEMPLATE_POST_TYPE : 'wp_registered_template';
-  } else if (name === 'template-item') {
+  } else if (name === 'template-item' || name === 'templates') {
     postType = TEMPLATE_POST_TYPE;
-  } else if (name === 'static-template-item') {
-    postType = 'wp_registered_template';
   } else if (name === 'page-item' || name === 'pages') {
     postType = 'page';
   } else if (name === 'post-item' || name === 'posts') {
     postType = 'post';
   }
-  return postType;
-}
-function useResolveEditedEntity() {
-  var _getPostType;
-  const {
-    name,
-    params = {},
-    query
-  } = use_resolve_edited_entity_useLocation();
-  const {
-    postId: _postId = query?.postId
-  } = params; // Fallback to query param for postId for list view routes.
-  const _postType = (_getPostType = getPostType(name, _postId)) !== null && _getPostType !== void 0 ? _getPostType : query?.postType;
   const homePage = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getHomePage
     } = unlock(select(external_wp_coreData_namespaceObject.store));
     return getHomePage();
   }, []);
-  const [postType, postId] = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    if (_postType !== 'wp_registered_template') {
-      return [_postType, _postId];
-    }
-    return [TEMPLATE_POST_TYPE, unlock(select(external_wp_coreData_namespaceObject.store)).getTemplateAutoDraftId(_postId)];
-  }, [_postType, _postId]);
 
   /**
    * This is a hook that recreates the logic to resolve a template for a given WordPress postID postTypeId
@@ -29546,12 +29532,6 @@ function useResolveEditedEntity() {
       return homePage?.postId;
     }
   }, [homePage, postId, postType]);
-  const editableResolvedTemplateId = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    if (typeof resolvedTemplateId !== 'string') {
-      return resolvedTemplateId;
-    }
-    return unlock(select(external_wp_coreData_namespaceObject.store)).getTemplateAutoDraftId(resolvedTemplateId);
-  }, [resolvedTemplateId]);
   const context = (0,external_wp_element_namespaceObject.useMemo)(() => {
     if (postTypesWithoutParentTemplate.includes(postType) && postId) {
       return {};
@@ -29582,9 +29562,9 @@ function useResolveEditedEntity() {
   }
   if (!!homePage) {
     return {
-      isReady: editableResolvedTemplateId !== undefined,
+      isReady: resolvedTemplateId !== undefined,
       postType: TEMPLATE_POST_TYPE,
-      postId: editableResolvedTemplateId,
+      postId: resolvedTemplateId,
       context
     };
   }
@@ -29603,14 +29583,7 @@ function useSyncDeprecatedEntityIntoState({
   } = (0,external_wp_data_namespaceObject.useDispatch)(store);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     if (isReady) {
-      // setEditedEntity expects a string (because the postId used to be
-      // the template slug, even for edited templates). Now the postId can
-      // be a number (either because it's an auto-draft or edited
-      // template). Passing a number could break plugins doing things like
-      // `id.includes`. It would be way more complex to keep passing the
-      // template slug, while also being incorrect, so the easiest
-      // solution is to cast the postId to a string.
-      setEditedEntity(postType, String(postId), context);
+      setEditedEntity(postType, postId, context);
     }
   }, [isReady, postType, postId, context, setEditedEntity]);
 }
@@ -29762,7 +29735,7 @@ function getNavigationPath(location, postType) {
     path,
     name
   } = location;
-  if (['pattern-item', 'template-part-item', 'page-item', 'template-item', 'static-template-item', 'post-item'].includes(name)) {
+  if (['pattern-item', 'template-part-item', 'page-item', 'template-item', 'post-item'].includes(name)) {
     return getListPathForPostType(postType);
   }
   return (0,external_wp_url_namespaceObject.addQueryArgs)(path, {
@@ -33071,6 +33044,12 @@ const arrayFieldType = {
       // Only allow strings for now. Can be extended to other types in the future.
       if (!value.every(v => typeof v === 'string')) {
         return (0,external_wp_i18n_namespaceObject.__)('Every value must be a string.');
+      }
+      if (field?.elements) {
+        const validValues = field.elements.map(f => f.value);
+        if (!value.every(v => validValues.includes(v))) {
+          return (0,external_wp_i18n_namespaceObject.__)('Value must be one of the elements.');
+        }
       }
       return null;
     }
@@ -37827,14 +37806,8 @@ function ToggleGroup({
 
 ;// ./packages/dataviews/build-module/dataform-controls/array.js
 /**
- * External dependencies
- */
-
-
-/**
  * WordPress dependencies
  */
-
 
 
 
@@ -37842,17 +37815,13 @@ function ToggleGroup({
  * Internal dependencies
  */
 
-
-
-const {
-  ValidatedFormTokenField
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
 function ArrayControl({
   data,
   field,
   onChange,
   hideLabelFromVision
 }) {
+  var _elements$map;
   const {
     label,
     placeholder,
@@ -37863,117 +37832,41 @@ function ArrayControl({
   const value = getValue({
     item: data
   });
-  const [customValidity, setCustomValidity] = (0,external_wp_element_namespaceObject.useState)(undefined);
+  const findElementByValue = (0,external_wp_element_namespaceObject.useCallback)(suggestionValue => {
+    return elements?.find(suggestion => suggestion.value === suggestionValue);
+  }, [elements]);
+  const findElementByLabel = (0,external_wp_element_namespaceObject.useCallback)(suggestionLabel => {
+    return elements?.find(suggestion => suggestion.label === suggestionLabel);
+  }, [elements]);
 
-  // Convert stored values to element objects for the token field
-  const arrayValueAsElements = (0,external_wp_element_namespaceObject.useMemo)(() => Array.isArray(value) ? value.map(token => {
-    const element = elements?.find(suggestion => suggestion.value === token);
-    return element || {
-      value: token,
-      label: token
-    };
-  }) : [], [value, elements]);
-  const validateTokens = (0,external_wp_element_namespaceObject.useCallback)(tokens => {
-    // Extract actual values from tokens for validation
-    const tokenValues = tokens.map(token => {
-      if (typeof token === 'object' && 'value' in token) {
-        return token.value;
-      }
-      return token;
-    });
-
-    // First, check if elements validation is required and any tokens are invalid
-    if (field.isValid?.elements && elements) {
-      const invalidTokens = tokenValues.filter(tokenValue => {
-        return !elements.some(element => element.value === tokenValue);
-      });
-      if (invalidTokens.length > 0) {
-        setCustomValidity({
-          type: 'invalid',
-          message: (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: list of invalid tokens */
-          (0,external_wp_i18n_namespaceObject._n)('Please select from the available options: %s is invalid.', 'Please select from the available options: %s are invalid.', invalidTokens.length), invalidTokens.join(', '))
-        });
-        return;
-      }
-    }
-
-    // Then check custom validation if provided.
-    if (field.isValid?.custom) {
-      const result = field.isValid?.custom?.(cjs_default()(data, setValue({
-        item: data,
-        value: tokenValues
-      })), field);
-      if (result) {
-        setCustomValidity({
-          type: 'invalid',
-          message: result
-        });
-        return;
-      }
-    }
-
-    // If no validation errors, clear custom validity
-    setCustomValidity(undefined);
-  }, [elements, data, field, setValue]);
+  // Ensure value is an array
+  const arrayValue = (0,external_wp_element_namespaceObject.useMemo)(() => Array.isArray(value) ? value.map(token => {
+    const tokenLabel = findElementByValue(token)?.label;
+    return tokenLabel || token;
+  }) : [], [value, findElementByValue]);
   const onChangeControl = (0,external_wp_element_namespaceObject.useCallback)(tokens => {
-    const valueTokens = tokens.map(token => {
-      if (typeof token === 'object' && 'value' in token) {
+    // Convert TokenItem objects to strings
+    const stringTokens = tokens.map(token => {
+      if (typeof token !== 'string') {
         return token.value;
       }
-      // If it's a string, it's either a new suggestion value or user input
-      return token;
+      const tokenByLabel = findElementByLabel(token);
+      return tokenByLabel?.value || token;
     });
     onChange(setValue({
       item: data,
-      value: valueTokens
+      value: stringTokens
     }));
-  }, [onChange, setValue, data]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedFormTokenField, {
-    required: !!field.isValid?.required,
-    onValidate: validateTokens,
-    customValidity: customValidity,
+  }, [onChange, setValue, data, findElementByLabel]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FormTokenField, {
     label: hideLabelFromVision ? undefined : label,
-    value: arrayValueAsElements,
+    value: arrayValue,
     onChange: onChangeControl,
     placeholder: placeholder,
-    suggestions: elements?.map(element => element.value),
-    __experimentalValidateInput: token => {
-      // If elements validation is required, check if token is valid
-      if (field.isValid?.elements && elements) {
-        return elements.some(element => element.value === token || element.label === token);
-      }
-
-      // For non-elements validation, allow all tokens
-      return true;
-    },
+    suggestions: (_elements$map = elements?.map(suggestion => suggestion.label)) !== null && _elements$map !== void 0 ? _elements$map : [],
     __experimentalExpandOnFocus: elements && elements.length > 0,
-    __experimentalShowHowTo: !field.isValid?.elements,
-    displayTransform: token => {
-      // For existing tokens (element objects), display their label
-      if (typeof token === 'object' && 'label' in token) {
-        return token.label;
-      }
-      // For suggestions (value strings), find the corresponding element and show its label
-      if (typeof token === 'string' && elements) {
-        const element = elements.find(el => el.value === token);
-        return element?.label || token;
-      }
-      return token;
-    },
-    __experimentalRenderItem: ({
-      item
-    }) => {
-      // Custom rendering for suggestion items (item is a value string)
-      if (typeof item === 'string' && elements) {
-        const element = elements.find(el => el.value === item);
-        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          children: element?.label || item
-        });
-      }
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        children: item
-      });
-    }
+    __next40pxDefaultSize: true,
+    __nextHasNoMarginBottom: true
   });
 }
 
@@ -48174,8 +48067,8 @@ function FieldControl() {
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const togglableFields = [view?.titleField, view?.mediaField, view?.descriptionField].filter(Boolean);
   const visibleFieldIds = (_view$fields2 = view.fields) !== null && _view$fields2 !== void 0 ? _view$fields2 : [];
-  const hiddenFields = fields.filter(f => !visibleFieldIds.includes(f.id) && !togglableFields.includes(f.id) && f.type !== 'media' && f.enableHiding !== false);
-  let visibleFields = visibleFieldIds.map(fieldId => fields.find(f => f.id === fieldId)).filter(dataviews_view_config_isDefined);
+  const hiddenFields = fields.filter(f => !visibleFieldIds.includes(f.id) && !togglableFields.includes(f.id) && f.type !== 'media');
+  const visibleFields = visibleFieldIds.map(fieldId => fields.find(f => f.id === fieldId)).filter(dataviews_view_config_isDefined);
   if (!visibleFields?.length && !hiddenFields?.length) {
     return null;
   }
@@ -48222,7 +48115,7 @@ function FieldControl() {
   }].filter(({
     field
   }) => dataviews_view_config_isDefined(field));
-  let visibleLockedFields = lockedFields.filter(({
+  const visibleLockedFields = lockedFields.filter(({
     field,
     isVisibleFlag
   }) => {
@@ -48232,25 +48125,6 @@ function FieldControl() {
       dataviews_view_config_isDefined(field) && ((_view$isVisibleFlag = view[isVisibleFlag]) !== null && _view$isVisibleFlag !== void 0 ? _view$isVisibleFlag : true)
     );
   });
-
-  // If only one locked field is visible, prevent it from being hidden.
-  if (visibleLockedFields.length === 1) {
-    visibleLockedFields = visibleLockedFields.map(locked => ({
-      ...locked,
-      field: {
-        ...locked.field,
-        enableHiding: false
-      }
-    }));
-  }
-
-  // If no locked fields are visible but there are visibleFields, lock the last visible field.
-  if (visibleLockedFields.length === 0 && visibleFields.length === 1) {
-    visibleFields = [{
-      ...visibleFields[0],
-      enableHiding: false
-    }];
-  }
   const hiddenLockedFields = lockedFields.filter(({
     field,
     isVisibleFlag
@@ -49160,8 +49034,6 @@ const pencil = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 
 
 
-
-
 /**
  * Internal dependencies
  */
@@ -49170,53 +49042,6 @@ const pencil = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
 const {
   useHistory: dataviews_actions_useHistory
 } = unlock(external_wp_router_namespaceObject.privateApis);
-const useSetActiveTemplateAction = () => {
-  const {
-    getEntityRecord
-  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_coreData_namespaceObject.store);
-  const {
-    editEntityRecord,
-    saveEditedEntityRecord
-  } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
-  return (0,external_wp_element_namespaceObject.useMemo)(() => ({
-    id: 'set-active-template',
-    label(items) {
-      return items.some(item => item._isActive) ? (0,external_wp_i18n_namespaceObject.__)('Deactivate') : (0,external_wp_i18n_namespaceObject.__)('Activate');
-    },
-    isPrimary: true,
-    icon: edit,
-    isEligible(item) {
-      return !(item.slug === 'index' && item.source === 'theme');
-    },
-    async callback(items) {
-      var _await$getEntityRecor;
-      const deactivate = items.some(item => item._isActive);
-      // current active templates
-      const activeTemplates = {
-        ...((_await$getEntityRecor = await getEntityRecord('root', 'site').active_templates) !== null && _await$getEntityRecor !== void 0 ? _await$getEntityRecor : {})
-      };
-      for (const item of items) {
-        if (deactivate) {
-          if (item.source === 'theme') {
-            activeTemplates[item.slug] = false;
-          } else {
-            delete activeTemplates[item.slug];
-          }
-        } else {
-          activeTemplates[item.slug] = item.id;
-        }
-      }
-      // To do: figure out why the REST API deletes the option when
-      // it's set to an empty object. That would trigger the migration
-      // function, which will make all templates in the database active.
-      activeTemplates.__preventCollapse = 0;
-      await editEntityRecord('root', 'site', undefined, {
-        active_templates: activeTemplates
-      });
-      await saveEditedEntityRecord('root', 'site');
-    }
-  }), [editEntityRecord, saveEditedEntityRecord, getEntityRecord]);
-};
 const useEditPostAction = () => {
   const history = dataviews_actions_useHistory();
   return (0,external_wp_element_namespaceObject.useMemo)(() => ({
@@ -49362,7 +49187,7 @@ function useAddedBy(postType, postId) {
             type: 'user',
             icon: comment_author_avatar,
             imageUrl: user?.avatar_urls?.[48],
-            text: authorText !== null && authorText !== void 0 ? authorText : user?.name,
+            text: authorText,
             isCustomized: false
           };
         }
@@ -49807,6 +49632,7 @@ const templatePartItemRoute = {
 
 
 
+
 const {
   useLocation: content_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
@@ -49831,12 +49657,12 @@ function TemplateDataviewItem({
 function DataviewsTemplatesSidebarContent() {
   const {
     query: {
-      activeView = 'active'
+      activeView = 'all'
     }
   } = content_useLocation();
   const {
     records
-  } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('postType', 'wp_registered_template', {
+  } = (0,external_wp_coreData_namespaceObject.useEntityRecords)('postType', TEMPLATE_POST_TYPE, {
     per_page: -1
   });
   const firstItemPerAuthorText = (0,external_wp_element_namespaceObject.useMemo)(() => {
@@ -49855,15 +49681,8 @@ function DataviewsTemplatesSidebarContent() {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItem, {
       to: "/template",
       icon: library_layout,
-      "aria-current": activeView === 'active',
-      children: (0,external_wp_i18n_namespaceObject.__)('Active templates')
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationItem, {
-      to: (0,external_wp_url_namespaceObject.addQueryArgs)('/template', {
-        activeView: 'user'
-      }),
-      icon: library_layout,
-      "aria-current": activeView === 'user',
-      children: (0,external_wp_i18n_namespaceObject.__)('Custom templates')
+      "aria-current": activeView === 'all',
+      children: (0,external_wp_i18n_namespaceObject.__)('All templates')
     }), firstItemPerAuthorText.map(template => {
       return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TemplateDataviewItem, {
         template: template,
@@ -50080,7 +49899,6 @@ const post_post = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -50100,20 +49918,6 @@ const utils_getValueFromObjectPath = (object, path) => {
   });
   return value;
 };
-
-/**
- * Helper that adds a prefix to a post slug. The slug needs to be URL-decoded first,
- * so that we have raw Unicode characters there. The server will truncate the slug to
- * 200 characters, respecing Unicode char boundary. On the other hand, the server
- * doesn't detect urlencoded octet boundary and can possibly construct slugs that
- * are not valid urlencoded strings.
- * @param {string} prefix The prefix to add to the slug.
- * @param {string} slug   The slug to add the prefix to.
- * @return {string} The slug with the prefix.
- */
-function prefixSlug(prefix, slug) {
-  return `${prefix}-${(0,external_wp_url_namespaceObject.safeDecodeURI)(slug)}`;
-}
 
 /**
  * Helper util to map records to add a `name` prop from a
@@ -50221,6 +50025,7 @@ function usePostTypeArchiveMenuItems() {
 }
 const usePostTypeMenuItems = onClickMenuItem => {
   const publicPostTypes = usePublicPostTypes();
+  const existingTemplates = useExistingTemplates();
   const defaultTemplateTypes = useDefaultTemplateTypes();
   // We need to keep track of naming conflicts. If a conflict
   // occurs, we need to add slug.
@@ -50251,6 +50056,9 @@ const usePostTypeMenuItems = onClickMenuItem => {
     return accumulator;
   }, {}), [publicPostTypes]);
   const postTypesInfo = useEntitiesInfo('postType', templatePrefixes);
+  const existingTemplateSlugs = (existingTemplates || []).map(({
+    slug
+  }) => slug);
   const menuItems = (publicPostTypes || []).reduce((accumulator, postType) => {
     const {
       slug,
@@ -50264,6 +50072,7 @@ const usePostTypeMenuItems = onClickMenuItem => {
     const defaultTemplateType = defaultTemplateTypes?.find(({
       slug: _slug
     }) => _slug === generalTemplateSlug);
+    const hasGeneralTemplate = existingTemplateSlugs?.includes(generalTemplateSlug);
     const _needsUniqueIdentifier = needsUniqueIdentifier(postType);
     let menuItemTitle = labels.template_name || (0,external_wp_i18n_namespaceObject.sprintf)(
     // translators: %s: Name of the post type e.g: "Post".
@@ -50309,7 +50118,7 @@ const usePostTypeMenuItems = onClickMenuItem => {
               };
             },
             getSpecificTemplate: suggestion => {
-              const templateSlug = prefixSlug(templatePrefixes[slug], suggestion.slug);
+              const templateSlug = `${templatePrefixes[slug]}-${suggestion.slug}`;
               return {
                 title: templateSlug,
                 slug: templateSlug,
@@ -50318,12 +50127,14 @@ const usePostTypeMenuItems = onClickMenuItem => {
             }
           },
           labels,
+          hasGeneralTemplate,
           template
         });
       };
     }
-    // We don't need to add the menu item if there are no entities.
-    if (hasEntities) {
+    // We don't need to add the menu item if there are no
+    // entities and the general template exists.
+    if (!hasGeneralTemplate || hasEntities) {
       accumulator.push(menuItem);
     }
     return accumulator;
@@ -50436,7 +50247,7 @@ const useTaxonomiesMenuItems = onClickMenuItem => {
               };
             },
             getSpecificTemplate: suggestion => {
-              const templateSlug = prefixSlug(templatePrefixes[slug], suggestion.slug);
+              const templateSlug = `${templatePrefixes[slug]}-${suggestion.slug}`;
               return {
                 title: templateSlug,
                 slug: templateSlug,
@@ -50521,11 +50332,9 @@ function useAuthorMenuItem(onClickMenuItem) {
             };
           },
           getSpecificTemplate: suggestion => {
-            const templateSlug = prefixSlug('author', suggestion.slug);
+            const templateSlug = `author-${suggestion.slug}`;
             return {
-              title: (0,external_wp_i18n_namespaceObject.sprintf)(
-              // translators: %s: Name of the author e.g: "Admin".
-              (0,external_wp_i18n_namespaceObject.__)('Author: %s'), suggestion.name),
+              title: templateSlug,
               slug: templateSlug,
               templatePrefix: 'author'
             };
@@ -50548,6 +50357,68 @@ function useAuthorMenuItem(onClickMenuItem) {
 }
 
 /**
+ * Helper hook that filters all the existing templates by the given
+ * object with the entity's slug as key and the template prefix as value.
+ *
+ * Example:
+ * `existingTemplates` is: [ { slug: 'tag-apple' }, { slug: 'page-about' }, { slug: 'tag' } ]
+ * `templatePrefixes` is: { post_tag: 'tag' }
+ * It will return: { post_tag: ['apple'] }
+ *
+ * Note: We append the `-` to the given template prefix in this function for our checks.
+ *
+ * @param {Record<string,string>} templatePrefixes An object with the entity's slug as key and the template prefix as value.
+ * @return {Record<string,string[]>} An object with the entity's slug as key and an array with the existing template slugs as value.
+ */
+const useExistingTemplateSlugs = templatePrefixes => {
+  const existingTemplates = useExistingTemplates();
+  const existingSlugs = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    return Object.entries(templatePrefixes || {}).reduce((accumulator, [slug, prefix]) => {
+      const slugsWithTemplates = (existingTemplates || []).reduce((_accumulator, existingTemplate) => {
+        const _prefix = `${prefix}-`;
+        if (existingTemplate.slug.startsWith(_prefix)) {
+          _accumulator.push(existingTemplate.slug.substring(_prefix.length));
+        }
+        return _accumulator;
+      }, []);
+      if (slugsWithTemplates.length) {
+        accumulator[slug] = slugsWithTemplates;
+      }
+      return accumulator;
+    }, {});
+  }, [templatePrefixes, existingTemplates]);
+  return existingSlugs;
+};
+
+/**
+ * Helper hook that finds the existing records with an associated template,
+ * as they need to be excluded from the template suggestions.
+ *
+ * @param {string}                entityName                The entity's name.
+ * @param {Record<string,string>} templatePrefixes          An object with the entity's slug as key and the template prefix as value.
+ * @param {Record<string,Object>} additionalQueryParameters An object with the entity's slug as key and additional query parameters as value.
+ * @return {Record<string,EntitiesInfo>} An object with the entity's slug as key and the existing records as value.
+ */
+const useTemplatesToExclude = (entityName, templatePrefixes, additionalQueryParameters = {}) => {
+  const slugsToExcludePerEntity = useExistingTemplateSlugs(templatePrefixes);
+  const recordsToExcludePerEntity = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return Object.entries(slugsToExcludePerEntity || {}).reduce((accumulator, [slug, slugsWithTemplates]) => {
+      const entitiesWithTemplates = select(external_wp_coreData_namespaceObject.store).getEntityRecords(entityName, slug, {
+        _fields: 'id',
+        context: 'view',
+        slug: slugsWithTemplates,
+        ...additionalQueryParameters[slug]
+      });
+      if (entitiesWithTemplates?.length) {
+        accumulator[slug] = entitiesWithTemplates;
+      }
+      return accumulator;
+    }, {});
+  }, [slugsToExcludePerEntity]);
+  return recordsToExcludePerEntity;
+};
+
+/**
  * Helper hook that returns information about an entity having
  * records that we can create a specific template for.
  *
@@ -50563,25 +50434,34 @@ function useAuthorMenuItem(onClickMenuItem) {
  * @return {Record<string,EntitiesInfo>} An object with the entity's slug as key and the EntitiesInfo as value.
  */
 const useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters = EMPTY_OBJECT) => {
+  const recordsToExcludePerEntity = useTemplatesToExclude(entityName, templatePrefixes, additionalQueryParameters);
   const entitiesHasRecords = (0,external_wp_data_namespaceObject.useSelect)(select => {
     return Object.keys(templatePrefixes || {}).reduce((accumulator, slug) => {
+      const existingEntitiesIds = recordsToExcludePerEntity?.[slug]?.map(({
+        id
+      }) => id) || [];
       accumulator[slug] = !!select(external_wp_coreData_namespaceObject.store).getEntityRecords(entityName, slug, {
         per_page: 1,
         _fields: 'id',
         context: 'view',
+        exclude: existingEntitiesIds,
         ...additionalQueryParameters[slug]
       })?.length;
       return accumulator;
     }, {});
-  }, [templatePrefixes, entityName, additionalQueryParameters]);
+  }, [templatePrefixes, recordsToExcludePerEntity, entityName, additionalQueryParameters]);
   const entitiesInfo = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return Object.keys(templatePrefixes || {}).reduce((accumulator, slug) => {
+      const existingEntitiesIds = recordsToExcludePerEntity?.[slug]?.map(({
+        id
+      }) => id) || [];
       accumulator[slug] = {
-        hasEntities: entitiesHasRecords[slug]
+        hasEntities: entitiesHasRecords[slug],
+        existingEntitiesIds
       };
       return accumulator;
     }, {});
-  }, [templatePrefixes, entitiesHasRecords]);
+  }, [templatePrefixes, recordsToExcludePerEntity, entitiesHasRecords]);
   return entitiesInfo;
 };
 
@@ -50589,7 +50469,6 @@ const useEntitiesInfo = (entityName, templatePrefixes, additionalQueryParameters
 /**
  * WordPress dependencies
  */
-
 
 
 
@@ -50633,7 +50512,7 @@ function SuggestionListItem({
       lineHeight: 1.53846153846 // 20px
       ,
       className: `${baseCssClass}__info`,
-      children: (0,external_wp_url_namespaceObject.safeDecodeURI)(suggestion.link)
+      children: suggestion.link
     })]
   });
 }
@@ -50714,7 +50593,7 @@ function AddCustomTemplateModalContent({
   onBack,
   containerRef
 }) {
-  const [showSearchEntities, setShowSearchEntities] = (0,external_wp_element_namespaceObject.useState)();
+  const [showSearchEntities, setShowSearchEntities] = (0,external_wp_element_namespaceObject.useState)(entityForSuggestions.hasGeneralTemplate);
 
   // Focus on the first focusable element when the modal opens.
   // We handle focus management in the parent modal, just need to focus on the first focusable element.
@@ -51670,8 +51549,12 @@ function NewTemplate() {
   });
 }
 function useMissingTemplates(setEntityForSuggestions, onClick) {
+  const existingTemplates = useExistingTemplates();
   const defaultTemplateTypes = useDefaultTemplateTypes();
-  const missingDefaultTemplates = (defaultTemplateTypes || []).filter(template => DEFAULT_TEMPLATE_SLUGS.includes(template.slug));
+  const existingTemplateSlugs = (existingTemplates || []).map(({
+    slug
+  }) => slug);
+  const missingDefaultTemplates = (defaultTemplateTypes || []).filter(template => DEFAULT_TEMPLATE_SLUGS.includes(template.slug) && !existingTemplateSlugs.includes(template.slug));
   const onClickMenuItem = _entityForSuggestions => {
     onClick?.();
     setEntityForSuggestions(_entityForSuggestions);
@@ -51732,7 +51615,6 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -51740,31 +51622,9 @@ function useMissingTemplates(setEntityForSuggestions, onClick) {
 
 
 
-
 const {
   useGlobalStyle: page_templates_fields_useGlobalStyle
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
-const {
-  Badge: fields_Badge
-} = unlock(external_wp_components_namespaceObject.privateApis);
-const {
-  useEntityRecordsWithPermissions
-} = unlock(external_wp_coreData_namespaceObject.privateApis);
-function useAllDefaultTemplateTypes() {
-  const defaultTemplateTypes = useDefaultTemplateTypes();
-  const {
-    records: staticRecords
-  } = useEntityRecordsWithPermissions('postType', 'wp_registered_template', {
-    per_page: -1
-  });
-  return [...defaultTemplateTypes, ...staticRecords?.filter(record => !record.is_custom).map(record => {
-    return {
-      slug: record.slug,
-      title: record.title.rendered,
-      description: record.description
-    };
-  })];
-}
 function fields_PreviewField({
   item
 }) {
@@ -51806,12 +51666,10 @@ const fields_previewField = {
 const descriptionField = {
   label: (0,external_wp_i18n_namespaceObject.__)('Description'),
   id: 'description',
-  render: function RenderDescription({
+  render: ({
     item
-  }) {
-    const defaultTemplateTypes = useAllDefaultTemplateTypes();
-    const defaultTemplateType = defaultTemplateTypes.find(type => type.slug === item.slug);
-    return item.description ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.description) : defaultTemplateType?.description;
+  }) => {
+    return item.description && (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.description);
   },
   enableSorting: false,
   enableGlobalSearch: true
@@ -51853,51 +51711,14 @@ const authorField = {
   id: 'author',
   getValue: ({
     item
-  }) => {
-    var _item$author_text;
-    return (_item$author_text = item.author_text) !== null && _item$author_text !== void 0 ? _item$author_text : item.author;
-  },
+  }) => item.author_text,
   render: fields_AuthorField
-};
-const activeField = {
-  label: (0,external_wp_i18n_namespaceObject.__)('Status'),
-  id: 'active',
-  getValue: ({
-    item
-  }) => item._isActive,
-  render: function Render({
-    item
-  }) {
-    const isActive = item._isActive;
-    return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(fields_Badge, {
-      intent: isActive ? 'success' : 'default',
-      children: isActive ? (0,external_wp_i18n_namespaceObject.__)('Active') : (0,external_wp_i18n_namespaceObject.__)('Inactive')
-    });
-  }
-};
-const slugField = {
-  label: (0,external_wp_i18n_namespaceObject.__)('Template Type'),
-  id: 'slug',
-  getValue: ({
-    item
-  }) => item.slug,
-  render: function Render({
-    item
-  }) {
-    const defaultTemplateTypes = useAllDefaultTemplateTypes();
-    const defaultTemplateType = defaultTemplateTypes.find(type => type.slug === item.slug);
-    return defaultTemplateType?.title ||
-    // translators: %s is the slug of a custom template.
-    (0,external_wp_i18n_namespaceObject.__)('Custom');
-  }
 };
 
 ;// ./packages/edit-site/build-module/components/page-templates/index.js
 /**
  * WordPress dependencies
  */
-
-
 
 
 
@@ -51916,6 +51737,7 @@ const slugField = {
 
 
 
+
 const {
   usePostActions: page_templates_usePostActions,
   templateTitleField
@@ -51925,8 +51747,9 @@ const {
   useLocation: page_templates_useLocation
 } = unlock(external_wp_router_namespaceObject.privateApis);
 const {
-  useEntityRecordsWithPermissions: page_templates_useEntityRecordsWithPermissions
+  useEntityRecordsWithPermissions
 } = unlock(external_wp_coreData_namespaceObject.privateApis);
+const page_templates_EMPTY_ARRAY = [];
 const page_templates_defaultLayouts = {
   [LAYOUT_TABLE]: {
     showMedia: false
@@ -51950,7 +51773,7 @@ const page_templates_DEFAULT_VIEW = {
   titleField: 'title',
   descriptionField: 'description',
   mediaField: 'preview',
-  fields: ['author', 'active', 'slug'],
+  fields: ['author'],
   filters: [],
   ...page_templates_defaultLayouts[LAYOUT_GRID]
 };
@@ -51960,7 +51783,7 @@ function PageTemplates() {
     query
   } = page_templates_useLocation();
   const {
-    activeView = 'active',
+    activeView = 'all',
     layout,
     postId
   } = query;
@@ -51970,7 +51793,7 @@ function PageTemplates() {
     return {
       ...page_templates_DEFAULT_VIEW,
       type: usedType,
-      filters: !['active', 'user'].includes(activeView) ? [{
+      filters: activeView !== 'all' ? [{
         field: 'author',
         operator: 'isAny',
         value: [activeView]
@@ -51992,95 +51815,19 @@ function PageTemplates() {
   (0,external_wp_element_namespaceObject.useEffect)(() => {
     setView(currentView => ({
       ...currentView,
-      filters: !['active', 'user'].includes(activeView) ? [{
+      filters: activeView !== 'all' ? [{
         field: 'author',
         operator: OPERATOR_IS_ANY,
         value: [activeView]
       }] : []
     }));
   }, [setView, activeView]);
-  const activeTemplatesOption = (0,external_wp_data_namespaceObject.useSelect)(select => select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', 'site')?.active_templates);
-  // Todo: this will have to be better so that we're not fetching all the
-  // records all the time. Active templates query will need to move server
-  // side.
   const {
-    records: userRecords,
-    isResolving: isLoadingUserRecords
-  } = page_templates_useEntityRecordsWithPermissions('postType', TEMPLATE_POST_TYPE, {
+    records,
+    isResolving: isLoadingData
+  } = useEntityRecordsWithPermissions('postType', TEMPLATE_POST_TYPE, {
     per_page: -1
   });
-  const {
-    records: staticRecords,
-    isResolving: isLoadingStaticData
-  } = page_templates_useEntityRecordsWithPermissions('postType', 'wp_registered_template', {
-    per_page: -1
-  });
-  const activeTemplates = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const _active = [...staticRecords].filter(record => !record.is_custom);
-    if (activeTemplatesOption) {
-      for (const activeSlug in activeTemplatesOption) {
-        const activeId = activeTemplatesOption[activeSlug];
-        if (activeId === false) {
-          // Remove the template from the array.
-          const index = _active.findIndex(template => template.slug === activeSlug);
-          if (index !== -1) {
-            _active.splice(index, 1);
-          }
-        } else {
-          // Replace the template in the array.
-          const template = userRecords.find(({
-            id
-          }) => id === activeId);
-          if (template) {
-            const index = _active.findIndex(({
-              slug
-            }) => slug === template.slug);
-            if (index !== -1) {
-              _active[index] = template;
-            } else {
-              _active.push(template);
-            }
-          }
-        }
-      }
-    }
-    return _active;
-  }, [userRecords, staticRecords, activeTemplatesOption]);
-  let _records;
-  let isLoadingData;
-  if (activeView === 'active') {
-    _records = activeTemplates;
-    isLoadingData = isLoadingUserRecords || isLoadingStaticData;
-  } else if (activeView === 'user') {
-    _records = userRecords;
-    isLoadingData = isLoadingUserRecords;
-  } else {
-    _records = staticRecords;
-    isLoadingData = isLoadingStaticData;
-  }
-  const records = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    return _records.map(record => ({
-      ...record,
-      _isActive: typeof record.id === 'string' ? activeTemplatesOption[record.slug] === record.id || activeTemplatesOption[record.slug] === undefined : Object.values(activeTemplatesOption).includes(record.id)
-    }));
-  }, [_records, activeTemplatesOption]);
-  const users = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getUser
-    } = select(external_wp_coreData_namespaceObject.store);
-    return records.reduce((acc, record) => {
-      if (record.author_text) {
-        if (!acc[record.author_text]) {
-          acc[record.author_text] = record.author_text;
-        }
-      } else if (record.author) {
-        if (!acc[record.author]) {
-          acc[record.author] = getUser(record.author);
-        }
-      }
-      return acc;
-    }, {});
-  }, [records]);
   const history = page_templates_useHistory();
   const onChangeSelection = (0,external_wp_element_namespaceObject.useCallback)(items => {
     setSelection(items);
@@ -52090,22 +51837,23 @@ function PageTemplates() {
       }));
     }
   }, [history, path, view?.type]);
-  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => {
-    const _fields = [fields_previewField, templateTitleField, descriptionField, activeField, slugField];
-    const elements = [];
-    for (const author in users) {
-      var _users$author$id, _users$author$name;
-      elements.push({
-        value: (_users$author$id = users[author]?.id) !== null && _users$author$id !== void 0 ? _users$author$id : author,
-        label: (_users$author$name = users[author]?.name) !== null && _users$author$name !== void 0 ? _users$author$name : author
-      });
+  const authors = (0,external_wp_element_namespaceObject.useMemo)(() => {
+    if (!records) {
+      return page_templates_EMPTY_ARRAY;
     }
-    _fields.push({
-      ...authorField,
-      elements
+    const authorsSet = new Set();
+    records.forEach(template => {
+      authorsSet.add(template.author_text);
     });
-    return _fields;
-  }, [users]);
+    return Array.from(authorsSet).map(author => ({
+      value: author,
+      label: author
+    }));
+  }, [records]);
+  const fields = (0,external_wp_element_namespaceObject.useMemo)(() => [fields_previewField, templateTitleField, descriptionField, {
+    ...authorField,
+    elements: authors
+  }], [authors]);
   const {
     data,
     paginationInfo
@@ -52117,8 +51865,7 @@ function PageTemplates() {
     context: 'list'
   });
   const editAction = useEditPostAction();
-  const setActiveTemplateAction = useSetActiveTemplateAction();
-  const actions = (0,external_wp_element_namespaceObject.useMemo)(() => activeView === 'user' ? [setActiveTemplateAction, editAction, ...postTypeActions] : [setActiveTemplateAction, ...postTypeActions], [postTypeActions, setActiveTemplateAction, editAction, activeView]);
+  const actions = (0,external_wp_element_namespaceObject.useMemo)(() => [editAction, ...postTypeActions], [postTypeActions, editAction]);
   const onChangeView = (0,external_wp_compose_namespaceObject.useEvent)(newView => {
     setView(newView);
     if (newView.type !== layout) {
@@ -52141,8 +51888,10 @@ function PageTemplates() {
       onChangeView: onChangeView,
       onChangeSelection: onChangeSelection,
       isItemClickable: () => true,
-      onClickItem: item => {
-        history.navigate(`/${item.type}/${item.id}?canvas=edit`);
+      onClickItem: ({
+        id
+      }) => {
+        history.navigate(`/wp_template/${id}?canvas=edit`);
       },
       selection: selection,
       defaultLayouts: page_templates_defaultLayouts
@@ -52213,37 +51962,31 @@ const templatesRoute = {
 
 
 
-const areas = {
-  sidebar({
-    siteData
-  }) {
-    const isBlockTheme = siteData.currentTheme?.is_block_theme;
-    return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenTemplatesBrowse, {
-      backPath: "/"
-    }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
-  },
-  mobile({
-    siteData
-  }) {
-    const isBlockTheme = siteData.currentTheme?.is_block_theme;
-    return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
-  },
-  preview({
-    siteData
-  }) {
-    const isBlockTheme = siteData.currentTheme?.is_block_theme;
-    return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
-  }
-};
 const templateItemRoute = {
   name: 'template-item',
   path: '/wp_template/*postId',
-  areas
-};
-const staticTemplateItemRoute = {
-  name: 'static-template-item',
-  path: '/wp_registered_template/*postId',
-  areas
+  areas: {
+    sidebar({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenTemplatesBrowse, {
+        backPath: "/"
+      }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    },
+    mobile({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    },
+    preview({
+      siteData
+    }) {
+      const isBlockTheme = siteData.currentTheme?.is_block_theme;
+      return isBlockTheme ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(EditSiteEditor, {}) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(SidebarNavigationScreenUnsupported, {});
+    }
+  }
 };
 
 ;// ./packages/icons/build-module/library/pages.js
@@ -54843,7 +54586,7 @@ const notFoundRoute = {
 
 
 
-const site_editor_routes_routes = [pageItemRoute, pagesRoute, templateItemRoute, staticTemplateItemRoute, templatesRoute, templatePartItemRoute, patternItemRoute, patternsRoute, navigationItemRoute, navigationRoute, stylesRoute, homeRoute, stylebookRoute, notFoundRoute];
+const site_editor_routes_routes = [pageItemRoute, pagesRoute, templateItemRoute, templatesRoute, templatePartItemRoute, patternItemRoute, patternsRoute, navigationItemRoute, navigationRoute, stylesRoute, homeRoute, stylebookRoute, notFoundRoute];
 function useRegisterSiteEditorRoutes() {
   const registry = (0,external_wp_data_namespaceObject.useRegistry)();
   const {

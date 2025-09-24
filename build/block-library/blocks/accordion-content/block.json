@@ -11,7 +11,7 @@
 	"supports": {
 		"color": {
 			"background": true,
-			"gradients": true
+			"gradient": true
 		},
 		"interactivity": true,
 		"spacing": {
@@ -31,20 +31,7 @@
 			}
 		},
 		"shadow": true,
-		"layout": true,
-		"typography": {
-			"fontSize": true,
-			"lineHeight": true,
-			"__experimentalFontFamily": true,
-			"__experimentalFontWeight": true,
-			"__experimentalFontStyle": true,
-			"__experimentalTextTransform": true,
-			"__experimentalTextDecoration": true,
-			"__experimentalLetterSpacing": true,
-			"__experimentalDefaultControls": {
-				"fontSize": true
-			}
-		}
+		"layout": true
 	},
 	"attributes": {
 		"openByDefault": {
@@ -52,6 +39,5 @@
 			"default": false
 		}
 	},
-	"textdomain": "default",
-	"style": "wp-block-accordion-content"
+	"textdomain": "default"
 }
