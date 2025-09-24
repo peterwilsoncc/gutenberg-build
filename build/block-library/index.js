@@ -49124,6 +49124,8 @@ function PostTimeToReadEdit({
   const {
     textAlign,
     displayAsRange,
+    showTimeToRead,
+    showWordCount,
     averageReadingSpeed
   } = attributes;
   const {
@@ -49135,7 +49137,7 @@ function PostTimeToReadEdit({
   const [blocks] = (0,external_wp_coreData_namespaceObject.useEntityBlockEditor)('postType', postType, {
     id: postId
   });
-  const minutesToReadString = (0,external_wp_element_namespaceObject.useMemo)(() => {
+  const displayString = (0,external_wp_element_namespaceObject.useMemo)(() => {
     // Replicates the logic found in getEditedPostContent().
     let content;
     if (contentStructure instanceof Function) {
@@ -49158,20 +49160,41 @@ function PostTimeToReadEdit({
      */
     const wordCountType = (0,external_wp_i18n_namespaceObject._x)('words', 'Word count type. Do not translate!');
     const totalWords = (0,external_wp_wordcount_namespaceObject.count)(content || '', wordCountType);
-    if (displayAsRange) {
-      let maxMinutes = Math.max(1, Math.round(totalWords / averageReadingSpeed * 1.2));
-      const minMinutes = Math.max(1, Math.round(totalWords / averageReadingSpeed * 0.8));
-      if (minMinutes === maxMinutes) {
-        maxMinutes = maxMinutes + 1;
+    const parts = [];
+
+    // Add "time to read" part, if enabled.
+    if (showTimeToRead) {
+      let timeString;
+      if (displayAsRange) {
+        let maxMinutes = Math.max(1, Math.round(totalWords / averageReadingSpeed * 1.2));
+        const minMinutes = Math.max(1, Math.round(totalWords / averageReadingSpeed * 0.8));
+        if (minMinutes === maxMinutes) {
+          maxMinutes = maxMinutes + 1;
+        }
+        // translators: %1$s: minimum minutes, %2$s: maximum minutes to read the post.
+        const rangeLabel = (0,external_wp_i18n_namespaceObject._x)('%1$s–%2$s minutes', 'Range of minutes to read');
+        timeString = (0,external_wp_i18n_namespaceObject.sprintf)(rangeLabel, minMinutes, maxMinutes);
+      } else {
+        const minutesToRead = Math.max(1, Math.round(totalWords / averageReadingSpeed));
+        timeString = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: the number of minutes to read the post. */
+        (0,external_wp_i18n_namespaceObject._n)('%s minute', '%s minutes', minutesToRead), minutesToRead);
       }
-      // translators: %1$s: minimum minutes, %2$s: maximum minutes to read the post.
-      const rangeLabel = (0,external_wp_i18n_namespaceObject._x)('%1$s–%2$s minutes', 'Range of minutes to read');
-      return (0,external_wp_i18n_namespaceObject.sprintf)(rangeLabel, minMinutes, maxMinutes);
+      parts.push(timeString);
     }
-    const minutesToRead = Math.max(1, Math.round(totalWords / averageReadingSpeed));
-    return (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: the number of minutes to read the post. */
-    (0,external_wp_i18n_namespaceObject._n)('%s minute', '%s minutes', minutesToRead), minutesToRead);
-  }, [contentStructure, blocks, displayAsRange, averageReadingSpeed]);
+
+    // Add "word count" part, if enabled.
+    if (showWordCount) {
+      const wordCountString = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: the number of words in the post. */
+      (0,external_wp_i18n_namespaceObject._n)('%s word', '%s words', totalWords), totalWords.toLocaleString());
+      parts.push(wordCountString);
+    }
+    if (parts.length === 1) {
+      return parts[0];
+    }
+    return parts.map((part, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
+      children: [part, index < parts.length - 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("br", {})]
+    }, index));
+  }, [contentStructure, blocks, displayAsRange, showTimeToRead, showWordCount, averageReadingSpeed]);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: dist_clsx({
       [`has-text-align-${textAlign}`]: textAlign
@@ -49189,15 +49212,33 @@ function PostTimeToReadEdit({
         }
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
         label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
         resetAll: () => {
           setAttributes({
-            displayAsRange: true
+            displayAsRange: true,
+            showTimeToRead: true,
+            showWordCount: false
           });
         },
         dropdownMenuProps: dropdownMenuProps,
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Show time to read'),
+          hasValue: () => !showTimeToRead,
+          onDeselect: () => {
+            setAttributes({
+              showTimeToRead: true
+            });
+          },
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show time to read'),
+            checked: !!showTimeToRead,
+            onChange: () => setAttributes({
+              showTimeToRead: !showTimeToRead
+            })
+          })
+        }), showTimeToRead && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           isShownByDefault: true,
           label: (0,external_wp_i18n_namespaceObject._x)('Display as range', 'Turns reading time range display on or off'),
           hasValue: () => !displayAsRange,
@@ -49214,11 +49255,27 @@ function PostTimeToReadEdit({
               displayAsRange: !displayAsRange
             })
           })
-        })
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+          label: (0,external_wp_i18n_namespaceObject.__)('Show word count'),
+          hasValue: () => !!showWordCount,
+          onDeselect: () => {
+            setAttributes({
+              showWordCount: false
+            });
+          },
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
+            __nextHasNoMarginBottom: true,
+            label: (0,external_wp_i18n_namespaceObject.__)('Show word count'),
+            checked: !!showWordCount,
+            onChange: () => setAttributes({
+              showWordCount: !showWordCount
+            })
+          })
+        })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
-      children: minutesToReadString
+      children: displayString
     })]
   });
 }
@@ -49252,7 +49309,7 @@ const post_time_to_read_metadata = {
   name: "core/post-time-to-read",
   title: "Time to Read",
   category: "theme",
-  description: "Show minutes required to finish reading the post.",
+  description: "Show minutes required to finish reading the post. Can also show a word count.",
   textdomain: "default",
   usesContext: ["postId", "postType"],
   attributes: {
@@ -49262,6 +49319,14 @@ const post_time_to_read_metadata = {
     displayAsRange: {
       type: "boolean",
       "default": true
+    },
+    showTimeToRead: {
+      type: "boolean",
+      "default": true
+    },
+    showWordCount: {
+      type: "boolean",
+      "default": false
     },
     averageReadingSpeed: {
       type: "number",
