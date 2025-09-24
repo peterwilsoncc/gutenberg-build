@@ -2556,7 +2556,8 @@ function accordion_header_edit_Edit({
           onChange: newTitle => setAttributes({
             title: newTitle
           }),
-          placeholder: (0,external_wp_i18n_namespaceObject.__)('Accordion title')
+          placeholder: (0,external_wp_i18n_namespaceObject.__)('Accordion title'),
+          className: "wp-block-accordion-header__toggle-title"
         }), showIcon && iconPosition === 'right' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
           className: "wp-block-accordion-header__toggle-icon",
           "aria-hidden": "true",
