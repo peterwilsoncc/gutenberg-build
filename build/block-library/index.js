@@ -2183,7 +2183,6 @@ const metadata = {
   },
   allowedBlocks: ["core/accordion-content"],
   textdomain: "default",
-  style: "wp-block-accordion",
   viewScriptModule: "@wordpress/block-library/accordion/view"
 };
 
@@ -2361,14 +2360,12 @@ function save_save({
   const {
     openByDefault
   } = attributes;
-  const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
-  const className = dist_clsx({
-    'is-open': openByDefault
-  }, blockProps.className);
-  const innerBlocksProps = external_wp_blockEditor_namespaceObject.useInnerBlocksProps.save({
-    ...blockProps,
-    className
+  const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save({
+    className: dist_clsx({
+      'is-open': openByDefault
+    })
   });
+  const innerBlocksProps = external_wp_blockEditor_namespaceObject.useInnerBlocksProps.save(blockProps);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ...innerBlocksProps
   });
@@ -2464,7 +2461,8 @@ const accordion_content_metadata = {
       "default": false
     }
   },
-  textdomain: "default"
+  textdomain: "default",
+  style: "wp-block-accordion-content"
 };
 
 
@@ -2542,12 +2540,12 @@ function accordion_header_edit_Edit({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
-        className: dist_clsx('accordion-content__toggle'),
+        className: dist_clsx('wp-block-accordion-header__toggle'),
         style: {
           ...spacingProps.style
         },
         children: [showIcon && iconPosition === 'left' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          className: "accordion-content__toggle-icon",
+          className: "wp-block-accordion-header__toggle-icon",
           "aria-hidden": "true",
           children: "+"
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
@@ -2560,7 +2558,7 @@ function accordion_header_edit_Edit({
           }),
           placeholder: (0,external_wp_i18n_namespaceObject.__)('Accordion title')
         }), showIcon && iconPosition === 'right' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          className: "accordion-content__toggle-icon",
+          className: "wp-block-accordion-header__toggle-icon",
           "aria-hidden": "true",
           children: "+"
         })]
@@ -2599,20 +2597,20 @@ function accordion_header_save_save({
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
     ...blockProps,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
-      className: dist_clsx('accordion-content__toggle'),
+      className: dist_clsx('wp-block-accordion-header__toggle'),
       style: {
         ...spacingProps.style
       },
       children: [showIcon && iconPosition === 'left' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        className: "accordion-content__toggle-icon",
+        className: "wp-block-accordion-header__toggle-icon",
         "aria-hidden": "true",
         children: "+"
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText.Content, {
-        className: "accordion-content__toggle-title",
+        className: "wp-block-accordion-header__toggle-title",
         tagName: "span",
         value: title
       }), showIcon && iconPosition === 'right' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-        className: "accordion-content__toggle-icon",
+        className: "wp-block-accordion-header__toggle-icon",
         "aria-hidden": "true",
         children: "+"
       })]
@@ -2707,7 +2705,7 @@ const accordion_header_metadata = {
     title: {
       type: "rich-text",
       source: "rich-text",
-      selector: ".accordion-content__toggle-title",
+      selector: ".wp-block-accordion-header__toggle-title",
       role: "content"
     },
     level: {
@@ -2884,7 +2882,8 @@ const accordion_panel_metadata = {
       "default": false
     }
   },
-  textdomain: "default"
+  textdomain: "default",
+  style: "wp-block-accordion-panel"
 };
 
 
