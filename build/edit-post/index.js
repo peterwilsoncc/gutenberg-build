@@ -2749,7 +2749,7 @@ const {
 const {
   BlockKeyboardShortcuts
 } = unlock(external_wp_blockLibrary_namespaceObject.privateApis);
-const DESIGN_POST_TYPES = ['wp_template', 'wp_template_part', 'wp_block', 'wp_navigation', 'wp_registered_template'];
+const DESIGN_POST_TYPES = ['wp_template', 'wp_template_part', 'wp_block', 'wp_navigation'];
 function useEditorStyles(...additionalStyles) {
   const {
     hasThemeStyleSupport,
@@ -3085,12 +3085,6 @@ function Layout({
     };
   }, [currentPostType, currentPostId, isEditingTemplate, settings.supportsTemplateMode, onNavigateToPreviousEntityRecord]);
   useMetaBoxInitialization(hasActiveMetaboxes && hasResolvedMode);
-  const editableResolvedTemplateId = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    if (typeof templateId !== 'string') {
-      return templateId;
-    }
-    return unlock(select(external_wp_coreData_namespaceObject.store)).getTemplateAutoDraftId(templateId);
-  }, [templateId]);
   const [paddingAppenderRef, paddingStyle] = usePaddingAppender(enablePaddingAppender);
 
   // Set the right context for the command palette
@@ -3179,7 +3173,7 @@ function Layout({
           initialEdits: initialEdits,
           postType: currentPostType,
           postId: currentPostId,
-          templateId: editableResolvedTemplateId,
+          templateId: templateId,
           className: className,
           styles: styles,
           forceIsDirty: hasActiveMetaboxes,
