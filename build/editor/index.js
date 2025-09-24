@@ -37437,6 +37437,7 @@ const ZoomOutToggle = ({
 
 
 
+
 const isBlockCommentExperimentEnabled = window?.__experimentalEnableBlockComment;
 const toolbarVariations = {
   distractionFreeDisabled: {
@@ -37583,7 +37584,10 @@ function header_Header({
       }), !customSaveButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(PostPublishButtonOrToggle, {
         forceIsDirty: forceIsDirty,
         setEntitiesSavedStatesCallback: setEntitiesSavedStatesCallback
-      }), isBlockCommentExperimentEnabled ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollabSidebar, {}) : undefined, customSaveButton, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MoreMenu, {})]
+      }), isBlockCommentExperimentEnabled && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(post_type_support_check, {
+        supportKeys: "editor.block-comments",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollabSidebar, {})
+      }), customSaveButton, /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(MoreMenu, {})]
     })]
   });
 }
