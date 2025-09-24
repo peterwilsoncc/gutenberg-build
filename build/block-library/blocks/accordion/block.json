@@ -19,7 +19,7 @@
 		},
 		"color": {
 			"background": true,
-			"gradients": true
+			"gradient": true
 		},
 		"__experimentalBorder": {
 			"color": true,
@@ -40,20 +40,7 @@
 		},
 		"shadow": true,
 		"layout": true,
-		"interactivity": true,
-		"typography": {
-			"fontSize": true,
-			"lineHeight": true,
-			"__experimentalFontFamily": true,
-			"__experimentalFontWeight": true,
-			"__experimentalFontStyle": true,
-			"__experimentalTextTransform": true,
-			"__experimentalTextDecoration": true,
-			"__experimentalLetterSpacing": true,
-			"__experimentalDefaultControls": {
-				"fontSize": true
-			}
-		}
+		"interactivity": true
 	},
 	"attributes": {
 		"iconPosition": {
@@ -75,5 +62,5 @@
 	},
 	"allowedBlocks": [ "core/accordion-content" ],
 	"textdomain": "default",
-	"viewScriptModule": "@wordpress/block-library/accordion/view"
+	"style": "wp-block-accordion"
 }

@@ -15,16 +15,17 @@
 		"anchor": true,
 		"color": {
 			"background": true,
-			"gradients": true
+			"gradient": true
 		},
 		"align": false,
 		"interactivity": true,
 		"spacing": {
 			"padding": true,
+			"margin": [ "top", "bottom" ],
 			"__experimentalDefaultControls": {
-				"padding": true
-			},
-			"__experimentalSkipSerialization": true
+				"padding": true,
+				"margin": true
+			}
 		},
 		"__experimentalBorder": {
 			"color": true,
@@ -62,8 +63,7 @@
 		"title": {
 			"type": "rich-text",
 			"source": "rich-text",
-			"selector": ".wp-block-accordion-header__toggle-title",
-			"role": "content"
+			"selector": "span"
 		},
 		"level": {
 			"type": "number",

@@ -27,8 +27,7 @@ function gutenberg_render_block_core_term_template( $attributes, $content, $bloc
 		return '';
 	}
 
-	$query         = $query_block_context['termQuery'];
-	$terms_to_show = $query_block_context['termsToShow'] ?? 'all';
+	$query = $query_block_context['termQuery'];
 
 	$query_args = array(
 		'taxonomy'   => $query['taxonomy'] ?? 'category',
@@ -40,18 +39,13 @@ function gutenberg_render_block_core_term_template( $attributes, $content, $bloc
 		'exclude'    => $query['exclude'] ?? array(),
 	);
 
-	// We set parent to 0 only if we show all terms as hierarchical or we show top-level terms.
-	if ( ( 'all' === $terms_to_show && ! empty( $query['hierarchical'] ) ) || 'top-level' === $terms_to_show ) {
+	// Handle parent.
+	if ( ! empty( $query['hierarchical'] ) && isset( $query['parent'] ) ) {
+		$query_args['parent'] = $query['parent'];
+	} elseif ( ! empty( $query['hierarchical'] ) ) {
 		$query_args['parent'] = 0;
-	} elseif ( 'subterms' === $terms_to_show ) {
-		// Check if we're in a taxonomy archive context.
-		if ( is_tax( $query_args['taxonomy'] ) ) {
-			// Get the current term ID from the queried object.
-			$current_term_id = get_queried_object_id();
-			if ( $current_term_id && $current_term_id > 0 ) {
-				$query_args['parent'] = $current_term_id;
-			}
-		}
+	} elseif ( isset( $query['parent'] ) ) {
+		$query_args['parent'] = $query['parent'];
 	}
 
 	$terms_query = new WP_Term_Query( $query_args );
