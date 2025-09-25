@@ -37905,6 +37905,11 @@ const chevronUp = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
 const POPOVER_PROPS = {
   className: 'block-editor-block-settings-menu__popover',
   placement: 'bottom-start'
@@ -37929,7 +37934,7 @@ function AddSubmenuItem({
     disabled: isDisabled,
     onClick: () => {
       const updateSelectionOnInsert = false;
-      const newLink = (0,external_wp_blocks_namespaceObject.createBlock)('core/navigation-link');
+      const newLink = (0,external_wp_blocks_namespaceObject.createBlock)(constants_DEFAULT_BLOCK.name, constants_DEFAULT_BLOCK.attributes);
       if (block.name === 'core/navigation-submenu') {
         insertBlock(newLink, block.innerBlocks.length, clientId, updateSelectionOnInsert);
       } else {
@@ -41544,10 +41549,8 @@ const ItemSubmenuIcon = () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespace
 
 
 
+
 const ALLOWED_BLOCKS = ['core/navigation-link', 'core/navigation-submenu', 'core/page-list'];
-const navigation_submenu_edit_DEFAULT_BLOCK = {
-  name: 'core/navigation-link'
-};
 
 /**
  * A React hook to determine if it's dragging within the target element.
@@ -41783,7 +41786,7 @@ function NavigationSubmenuEdit({
   const navigationChildBlockProps = getNavigationChildBlockProps(innerBlocksColors);
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(navigationChildBlockProps, {
     allowedBlocks,
-    defaultBlock: navigation_submenu_edit_DEFAULT_BLOCK,
+    defaultBlock: constants_DEFAULT_BLOCK,
     directInsert: true,
     // Ensure block toolbar is not too far removed from item
     // being edited.
