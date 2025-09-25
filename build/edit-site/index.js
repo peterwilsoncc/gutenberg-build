@@ -41158,6 +41158,9 @@ function picker_grid_GridItem({
     field: titleField
   }) : null;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Composite.Item, {
+    "aria-label": titleField ? titleField.getValue({
+      item
+    }) || (0,external_wp_i18n_namespaceObject.__)('(no title)') : undefined,
     render: ({
       children,
       ...props
@@ -41193,7 +41196,7 @@ function picker_grid_GridItem({
       disabled: false,
       "aria-hidden": true,
       tabIndex: -1
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
+    }), showTitle && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
       justify: "space-between",
       className: "dataviews-view-picker-grid__title-actions",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
