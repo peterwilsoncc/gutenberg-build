@@ -35499,8 +35499,6 @@ const {
  * @param {Function} props.onEditComment       - The function to handle comment editing.
  * @param {Function} props.onAddReply          - The function to add a reply to a comment.
  * @param {Function} props.onCommentDelete     - The function to delete a comment.
- * @param {Function} props.onCommentResolve    - The function to mark a comment as resolved.
- * @param {Function} props.onCommentReopen     - The function to reopen a resolved comment.
  * @param {Function} props.setShowCommentBoard - The function to set the comment board visibility.
  * @return {React.ReactNode} The rendered Comments component.
  */
@@ -35509,8 +35507,6 @@ function Comments({
   onEditComment,
   onAddReply,
   onCommentDelete,
-  onCommentResolve,
-  onCommentReopen,
   setShowCommentBoard
 }) {
   const {
@@ -35542,8 +35538,6 @@ function Comments({
     thread: thread,
     onAddReply: onAddReply,
     onCommentDelete: onCommentDelete,
-    onCommentResolve: onCommentResolve,
-    onCommentReopen: onCommentReopen,
     onEditComment: onEditComment,
     isFocused: focusThread === thread.id,
     setFocusThread: setFocusThread,
@@ -35555,8 +35549,6 @@ function Thread({
   onEditComment,
   onAddReply,
   onCommentDelete,
-  onCommentResolve,
-  onCommentReopen,
   isFocused,
   setFocusThread,
   setShowCommentBoard
@@ -35595,8 +35587,6 @@ function Thread({
     onClick: () => handleCommentSelect(thread),
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
       thread: thread,
-      onResolve: onCommentResolve,
-      onReopen: onCommentReopen,
       onEdit: onEditComment,
       onDelete: onCommentDelete,
       status: thread.status
@@ -35638,9 +35628,15 @@ function Thread({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_form, {
           onSubmit: inputComment => {
             if ('approved' === thread.status) {
-              onCommentReopen(thread.id);
+              onEditComment({
+                id: thread.id,
+                status: 'hold'
+              });
             }
-            onAddReply(inputComment, thread.id);
+            onAddReply({
+              content: inputComment,
+              parent: thread.id
+            });
           },
           onCancel: event => {
             event.stopPropagation(); // Prevent the parent onClick from being triggered
@@ -35656,8 +35652,6 @@ function Thread({
 }
 const CommentBoard = ({
   thread,
-  onResolve,
-  onReopen,
   onEdit,
   onDelete,
   status
@@ -35665,7 +35659,7 @@ const CommentBoard = ({
   const [actionState, setActionState] = (0,external_wp_element_namespaceObject.useState)(false);
   const [showConfirmDialog, setShowConfirmDialog] = (0,external_wp_element_namespaceObject.useState)(false);
   const handleConfirmDelete = () => {
-    onDelete(thread.id);
+    onDelete(thread);
     setActionState(false);
     setShowConfirmDialog(false);
   };
@@ -35686,14 +35680,17 @@ const CommentBoard = ({
       setActionState('delete');
       setShowConfirmDialog(true);
     }
-  }, onReopen && status === 'approved' && {
+  }, onEdit && status === 'approved' && {
     id: 'reopen',
     title: (0,external_wp_i18n_namespaceObject._x)('Reopen', 'Reopen comment'),
     onClick: () => {
-      onReopen(thread.id);
+      onEdit({
+        id: thread.id,
+        status: 'hold'
+      });
     }
   }];
-  const canResolve = thread?.parent === 0 && onResolve;
+  const canResolve = thread?.parent === 0;
   const moreActions = actions.filter(item => item?.onClick);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -35717,7 +35714,10 @@ const CommentBoard = ({
             disabled: status === 'approved',
             accessibleWhenDisabled: status === 'approved',
             onClick: () => {
-              onResolve(thread.id);
+              onEdit({
+                id: thread.id,
+                status: 'approved'
+              });
             }
           }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(Menu, {
             placement: "bottom-end",
@@ -35745,7 +35745,10 @@ const CommentBoard = ({
       })]
     }), 'edit' === actionState ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_form, {
       onSubmit: value => {
-        onEdit(thread.id, value);
+        onEdit({
+          id: thread.id,
+          content: value
+        });
         setActionState(false);
       },
       onCancel: () => handleCancel(),
@@ -35824,7 +35827,9 @@ function AddComment({
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_author_info, {})
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_form, {
       onSubmit: inputComment => {
-        onSubmit(inputComment);
+        onSubmit({
+          content: inputComment
+        });
       },
       onCancel: () => {
         setShowCommentBoard(false);
@@ -36121,19 +36126,8 @@ function CollabSidebarContent({
     deleteEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
   const {
-    getEntityRecord
-  } = (0,external_wp_data_namespaceObject.resolveSelect)(external_wp_coreData_namespaceObject.store);
-  const {
-    postId
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    const {
-      getCurrentPostId
-    } = select(store_store);
-    const _postId = getCurrentPostId();
-    return {
-      postId: _postId
-    };
-  }, []);
+    getCurrentPostId
+  } = (0,external_wp_data_namespaceObject.useSelect)(store_store);
   const {
     getSelectedBlockClientId
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
@@ -36147,27 +36141,28 @@ function CollabSidebarContent({
       isDismissible: true
     });
   };
-  const addNewComment = async (comment, parentCommentId) => {
+  const addNewComment = async ({
+    content,
+    parent
+  }) => {
     try {
       const savedRecord = await saveEntityRecord('root', 'comment', {
-        post: postId,
-        content: comment,
+        post: getCurrentPostId(),
+        content,
         comment_type: 'block_comment',
         comment_approved: 0,
-        ...(parentCommentId ? {
-          parent: parentCommentId
-        } : {})
+        parent: parent || 0
       }, {
         throwOnError: true
       });
 
       // If it's a main comment, update the block attributes with the comment id.
-      if (!parentCommentId && savedRecord?.id) {
+      if (!parent && savedRecord?.id) {
         updateBlockAttributes(getSelectedBlockClientId(), {
           blockCommentId: savedRecord.id
         });
       }
-      createNotice('snackbar', parentCommentId ? (0,external_wp_i18n_namespaceObject.__)('Reply added successfully.') : (0,external_wp_i18n_namespaceObject.__)('Comment added successfully.'), {
+      createNotice('snackbar', parent ? (0,external_wp_i18n_namespaceObject.__)('Reply added successfully.') : (0,external_wp_i18n_namespaceObject.__)('Comment added successfully.'), {
         type: 'snackbar',
         isDismissible: true
       });
@@ -36175,15 +36170,27 @@ function CollabSidebarContent({
       onError(error);
     }
   };
-  const onCommentResolve = async commentId => {
+  const onEditComment = async ({
+    id,
+    content,
+    status
+  }) => {
+    const messageType = status ? status : 'updated';
+    const messages = {
+      approved: (0,external_wp_i18n_namespaceObject.__)('Comment marked as resolved.'),
+      hold: (0,external_wp_i18n_namespaceObject.__)('Comment reopened.'),
+      updated: (0,external_wp_i18n_namespaceObject.__)('Comment updated.')
+    };
     try {
+      var _messages$messageType;
       await saveEntityRecord('root', 'comment', {
-        id: commentId,
-        status: 'approved'
+        id,
+        content,
+        status
       }, {
         throwOnError: true
       });
-      createNotice('snackbar', (0,external_wp_i18n_namespaceObject.__)('Comment marked as resolved.'), {
+      createNotice('snackbar', (_messages$messageType = messages[messageType]) !== null && _messages$messageType !== void 0 ? _messages$messageType : (0,external_wp_i18n_namespaceObject.__)('Comment updated.'), {
         type: 'snackbar',
         isDismissible: true
       });
@@ -36191,45 +36198,12 @@ function CollabSidebarContent({
       onError(error);
     }
   };
-  const onCommentReopen = async commentId => {
+  const onCommentDelete = async comment => {
     try {
-      await saveEntityRecord('root', 'comment', {
-        id: commentId,
-        status: 'hold'
-      }, {
+      await deleteEntityRecord('root', 'comment', comment.id, undefined, {
         throwOnError: true
       });
-      createNotice('snackbar', (0,external_wp_i18n_namespaceObject.__)('Comment reopened.'), {
-        type: 'snackbar',
-        isDismissible: true
-      });
-    } catch (error) {
-      onError(error);
-    }
-  };
-  const onEditComment = async (commentId, comment) => {
-    try {
-      await saveEntityRecord('root', 'comment', {
-        id: commentId,
-        content: comment
-      }, {
-        throwOnError: true
-      });
-      createNotice('snackbar', (0,external_wp_i18n_namespaceObject.__)('Comment updated.'), {
-        type: 'snackbar',
-        isDismissible: true
-      });
-    } catch (error) {
-      onError(error);
-    }
-  };
-  const onCommentDelete = async commentId => {
-    try {
-      const childComment = await getEntityRecord('root', 'comment', commentId);
-      await deleteEntityRecord('root', 'comment', commentId, undefined, {
-        throwOnError: true
-      });
-      if (childComment && !childComment.parent) {
+      if (!comment.parent) {
         updateBlockAttributes(getSelectedBlockClientId(), {
           blockCommentId: undefined
         });
@@ -36254,8 +36228,6 @@ function CollabSidebarContent({
       onEditComment: onEditComment,
       onAddReply: addNewComment,
       onCommentDelete: onCommentDelete,
-      onCommentResolve: onCommentResolve,
-      onCommentReopen: onCommentReopen,
       showCommentBoard: showCommentBoard,
       setShowCommentBoard: setShowCommentBoard
     }, getSelectedBlockClientId())]
