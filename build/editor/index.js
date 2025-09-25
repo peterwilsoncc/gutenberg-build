@@ -35932,11 +35932,11 @@ const CommentAvatarIndicator = ({
 
   // If we hit the comment limit, show "100+" instead of exact overflow count.
   const overflowText = threadHasMoreParticipants && overflowCount > 0 ? (0,external_wp_i18n_namespaceObject.__)('100+') : (0,external_wp_i18n_namespaceObject.sprintf)(
-  // translators: %s: Number of comments.
+  // translators: %s: Number of participants.
   (0,external_wp_i18n_namespaceObject.__)('+%s'), overflowCount);
   const overflowTitle = threadHasMoreParticipants && overflowCount > 0 ? (0,external_wp_i18n_namespaceObject.__)('100+ participants') : (0,external_wp_i18n_namespaceObject.sprintf)(
-  // translators: %s: Number of comments.
-  (0,external_wp_i18n_namespaceObject.__)('+%s more participants'), overflowCount);
+  // translators: %s: Number of participants.
+  (0,external_wp_i18n_namespaceObject._n)('+%s more participant', '+%s more participants', overflowCount), overflowCount);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentIconToolbarSlotFill.Fill, {
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
       className: dist_clsx('comment-avatar-indicator', {
