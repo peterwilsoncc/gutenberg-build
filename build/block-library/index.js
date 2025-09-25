@@ -2483,10 +2483,6 @@ const accordion_content_init = () => initBlock({
 
 ;// ./packages/block-library/build-module/accordion-header/edit.js
 /**
- * External dependencies
- */
-
-/**
  * WordPress dependencies
  */
 
@@ -2502,7 +2498,6 @@ function accordion_header_edit_Edit({
   const {
     level,
     title,
-    textAlign,
     levelOptions
   } = attributes;
   const {
@@ -2520,11 +2515,7 @@ function accordion_header_edit_Edit({
       });
     }
   }, [iconPosition, showIcon, setAttributes]);
-  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
-    className: dist_clsx('accordion-content__heading', {
-      [`has-text-align-${textAlign}`]: textAlign
-    })
-  });
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
   const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
@@ -2540,7 +2531,7 @@ function accordion_header_edit_Edit({
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
       ...blockProps,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
-        className: dist_clsx('wp-block-accordion-header__toggle'),
+        className: "wp-block-accordion-header__toggle",
         style: {
           ...spacingProps.style
         },
@@ -2570,10 +2561,6 @@ function accordion_header_edit_Edit({
 
 ;// ./packages/block-library/build-module/accordion-header/save.js
 /**
- * External dependencies
- */
-
-/**
  * WordPress dependencies
  */
 
@@ -2585,20 +2572,15 @@ function accordion_header_save_save({
     level,
     title,
     iconPosition,
-    textAlign,
     showIcon
   } = attributes;
   const TagName = 'h' + level;
-  const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save({
-    className: dist_clsx('accordion-content__heading', {
-      [`has-text-align-${textAlign}`]: textAlign
-    })
-  });
+  const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
   const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
     ...blockProps,
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
-      className: dist_clsx('wp-block-accordion-header__toggle'),
+      className: "wp-block-accordion-header__toggle",
       style: {
         ...spacingProps.style
       },
@@ -2683,7 +2665,6 @@ const accordion_header_metadata = {
       }
     },
     typography: {
-      textAlign: true,
       fontSize: true,
       __experimentalFontFamily: true,
       __experimentalFontWeight: true,
@@ -2715,10 +2696,6 @@ const accordion_header_metadata = {
     },
     levelOptions: {
       type: "array"
-    },
-    textAlignment: {
-      type: "string",
-      "default": "left"
     },
     iconPosition: {
       type: "string",
