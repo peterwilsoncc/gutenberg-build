@@ -35531,7 +35531,7 @@ function Comments({
       alignment: "left",
       className: "editor-collab-sidebar-panel__thread",
       justify: "flex-start",
-      spacing: "3",
+      spacing: "2",
       children:
       // translators: message displayed when there are no comments available
       (0,external_wp_i18n_namespaceObject.__)('No comments available')
@@ -35582,12 +35582,15 @@ function Thread({
     setFocusThread(null);
     setShowCommentBoard(false);
   };
+  const replies = thread?.reply;
+  const lastReply = !!replies.length ? replies[replies.length - 1] : undefined;
+  const restReplies = !!replies.length ? replies.slice(0, -1) : [];
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     className: dist_clsx('editor-collab-sidebar-panel__thread', {
       'editor-collab-sidebar-panel__focus-thread': isFocused
     }),
     id: thread.id,
-    spacing: "3",
+    spacing: "2",
     onClick: () => handleCommentSelect(thread),
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
       thread: thread,
@@ -35596,27 +35599,30 @@ function Thread({
       onEdit: onEditComment,
       onDelete: onCommentDelete,
       status: thread.status
-    }), 0 < thread?.reply?.length && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-      children: [!isFocused && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        __next40pxDefaultSize: true,
-        variant: "link",
-        className: "editor-collab-sidebar-panel__show-more-reply",
+    }), isFocused && replies.map(reply => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+      className: "editor-collab-sidebar-panel__child-thread",
+      id: reply.id,
+      spacing: "2",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
+        thread: reply,
+        onEdit: 'approved' !== thread.status ? onEditComment : undefined,
+        onDelete: 'approved' !== thread.status ? onCommentDelete : undefined
+      })
+    }, reply.id)), !isFocused && restReplies.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
+      className: "editor-collab-sidebar-panel__more-reply-separator",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        size: "compact",
+        variant: "tertiary",
+        className: "editor-collab-sidebar-panel__more-reply-button",
         onClick: () => setFocusThread(thread.id),
         children: (0,external_wp_i18n_namespaceObject.sprintf)(
         // translators: %s: number of replies.
-        (0,external_wp_i18n_namespaceObject._n)('%s more reply', '%s more replies', thread?.reply?.length), thread?.reply?.length)
-      }), isFocused && thread.reply.map(reply => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-        className: "editor-collab-sidebar-panel__child-thread",
-        id: reply.id,
-        spacing: "2",
-        children: ['approved' !== thread.status && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
-          thread: reply,
-          onEdit: onEditComment,
-          onDelete: onCommentDelete
-        }), 'approved' === thread.status && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
-          thread: reply
-        })]
-      }, reply.id))]
+        (0,external_wp_i18n_namespaceObject._n)('%s more reply', '%s more replies', restReplies.length), restReplies.length)
+      })
+    }), !isFocused && lastReply && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
+      thread: lastReply,
+      onEdit: 'approved' !== thread.status ? onEditComment : undefined,
+      onDelete: 'approved' !== thread.status ? onCommentDelete : undefined
     }), isFocused && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       className: "editor-collab-sidebar-panel__child-thread",
       spacing: "2",
