@@ -35423,6 +35423,7 @@ function CommentForm({
   var _thread$content$raw;
   const [inputComment, setInputComment] = (0,external_wp_element_namespaceObject.useState)((_thread$content$raw = thread?.content?.raw) !== null && _thread$content$raw !== void 0 ? _thread$content$raw : '');
   const inputId = (0,external_wp_compose_namespaceObject.useInstanceId)(CommentForm, 'comment-input');
+  const isDisabled = inputComment === thread?.content?.raw || !sanitizeCommentString(inputComment).length;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
       as: "label",
@@ -35447,7 +35448,7 @@ function CommentForm({
           onSubmit(inputComment);
           setInputComment('');
         },
-        disabled: 0 === sanitizeCommentString(inputComment).length,
+        disabled: isDisabled,
         text: submitButtonText
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
         __next40pxDefaultSize: true,
@@ -36214,7 +36215,7 @@ function CollabSidebarContent({
       }, {
         throwOnError: true
       });
-      createNotice('snackbar', (0,external_wp_i18n_namespaceObject.__)('Comment edited successfully.'), {
+      createNotice('snackbar', (0,external_wp_i18n_namespaceObject.__)('Comment updated.'), {
         type: 'snackbar',
         isDismissible: true
       });
