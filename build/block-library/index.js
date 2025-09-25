@@ -2742,7 +2742,8 @@ function accordion_panel_edit_Edit({
     isSelected
   } = attributes;
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
-    'aria-hidden': !isSelected && !openByDefault
+    'aria-hidden': !isSelected && !openByDefault,
+    role: 'region'
   });
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
     allowedBlocks,
@@ -2761,7 +2762,9 @@ function accordion_panel_edit_Edit({
 
 
 function accordion_panel_save_save() {
-  const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
+  const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save({
+    role: 'region'
+  });
   const innerBlocksProps = external_wp_blockEditor_namespaceObject.useInnerBlocksProps.save(blockProps);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ...innerBlocksProps
