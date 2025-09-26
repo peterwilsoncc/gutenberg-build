@@ -7068,6 +7068,9 @@ function getTransformedMetadata(metadata, newBlockName, bindingsCallback) {
   if (supports.renaming !== false) {
     transformSupportedProps.push('name');
   }
+  if (window?.__experimentalEnableBlockComment) {
+    transformSupportedProps.push('commentId');
+  }
 
   // Return early if no supported properties.
   if (!transformSupportedProps.length) {

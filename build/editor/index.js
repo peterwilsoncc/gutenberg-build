@@ -35555,17 +35555,13 @@ function Comments({
   onCommentDelete,
   setShowCommentBoard
 }) {
-  const {
-    blockCommentId
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const blockCommentId = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockAttributes,
       getSelectedBlockClientId
     } = select(external_wp_blockEditor_namespaceObject.store);
     const clientId = getSelectedBlockClientId();
-    return {
-      blockCommentId: clientId ? getBlockAttributes(clientId)?.blockCommentId : null
-    };
+    return clientId ? getBlockAttributes(clientId)?.metadata?.commentId : null;
   }, []);
   const [focusThread = blockCommentId, setFocusThread] = (0,external_wp_element_namespaceObject.useState)();
   const hasThreads = Array.isArray(threads) && threads.length > 0;
@@ -35862,7 +35858,7 @@ function AddComment({
     const selectedBlock = getSelectedBlock();
     return {
       clientId: selectedBlock?.clientId,
-      blockCommentId: selectedBlock?.attributes?.blockCommentId,
+      blockCommentId: selectedBlock?.attributes?.metadata?.commentId,
       isEmptyDefaultBlock: selectedBlock ? (0,external_wp_blocks_namespaceObject.isUnmodifiedDefaultBlock)(selectedBlock) : false
     };
   });
@@ -36063,7 +36059,7 @@ function useBlockComments(postId) {
       getClientIdsWithDescendants
     } = select(external_wp_blockEditor_namespaceObject.store);
     return getClientIdsWithDescendants().reduce((results, clientId) => {
-      const commentId = getBlockAttributes(clientId)?.blockCommentId;
+      const commentId = getBlockAttributes(clientId)?.metadata?.commentId;
       if (commentId) {
         results[commentId] = clientId;
       }
@@ -36141,7 +36137,6 @@ function useBlockComments(postId) {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -36155,20 +36150,6 @@ function useBlockComments(postId) {
 
 
 
-const modifyBlockCommentAttributes = settings => {
-  if (!settings.attributes.blockCommentId) {
-    settings.attributes = {
-      ...settings.attributes,
-      blockCommentId: {
-        type: 'number'
-      }
-    };
-  }
-  return settings;
-};
-
-// Apply the filter to all core blocks
-(0,external_wp_hooks_namespaceObject.addFilter)('blocks.registerBlockType', 'block-comment/modify-core-block-attributes', modifyBlockCommentAttributes);
 function CollabSidebarContent({
   showCommentBoard,
   setShowCommentBoard,
@@ -36183,14 +36164,22 @@ function CollabSidebarContent({
     deleteEntityRecord
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_coreData_namespaceObject.store);
   const {
-    getCurrentPostId
-  } = (0,external_wp_data_namespaceObject.useSelect)(store_store);
-  const {
-    getSelectedBlockClientId
-  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
-  const {
     updateBlockAttributes
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
+  const {
+    currentPostId,
+    getSelectedBlockClientId,
+    getBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getCurrentPostId
+    } = select(store_store);
+    return {
+      getSelectedBlockClientId: select(external_wp_blockEditor_namespaceObject.store).getSelectedBlockClientId,
+      getBlockAttributes: select(external_wp_blockEditor_namespaceObject.store).getBlockAttributes,
+      currentPostId: getCurrentPostId()
+    };
+  }, []);
   const onError = error => {
     const errorMessage = error.message && error.code !== 'unknown_error' ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(error.message) : (0,external_wp_i18n_namespaceObject.__)('An error occurred while performing an update.');
     createNotice('error', errorMessage, {
@@ -36204,7 +36193,7 @@ function CollabSidebarContent({
   }) => {
     try {
       const savedRecord = await saveEntityRecord('root', 'comment', {
-        post: getCurrentPostId(),
+        post: currentPostId,
         content,
         comment_type: 'block_comment',
         comment_approved: 0,
@@ -36215,8 +36204,12 @@ function CollabSidebarContent({
 
       // If it's a main comment, update the block attributes with the comment id.
       if (!parent && savedRecord?.id) {
+        const metadata = getBlockAttributes(getSelectedBlockClientId())?.metadata;
         updateBlockAttributes(getSelectedBlockClientId(), {
-          blockCommentId: savedRecord.id
+          metadata: {
+            ...metadata,
+            commentId: savedRecord.id
+          }
         });
       }
       createNotice('snackbar', parent ? (0,external_wp_i18n_namespaceObject.__)('Reply added successfully.') : (0,external_wp_i18n_namespaceObject.__)('Comment added successfully.'), {
@@ -36261,8 +36254,12 @@ function CollabSidebarContent({
         throwOnError: true
       });
       if (!comment.parent) {
+        const metadata = getBlockAttributes(getSelectedBlockClientId())?.metadata;
         updateBlockAttributes(getSelectedBlockClientId(), {
-          blockCommentId: undefined
+          metadata: {
+            ...metadata,
+            commentId: undefined
+          }
         });
       }
       createNotice('snackbar', (0,external_wp_i18n_namespaceObject.__)('Comment deleted successfully.'), {
@@ -36313,17 +36310,13 @@ function CollabSidebar() {
       postId: getCurrentPostId()
     };
   }, []);
-  const {
-    blockCommentId
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+  const blockCommentId = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockAttributes,
       getSelectedBlockClientId
     } = select(external_wp_blockEditor_namespaceObject.store);
     const _clientId = getSelectedBlockClientId();
-    return {
-      blockCommentId: _clientId ? getBlockAttributes(_clientId)?.blockCommentId : null
-    };
+    return _clientId ? getBlockAttributes(_clientId)?.metadata?.commentId : null;
   }, []);
   const openCollabBoard = () => {
     setShowCommentBoard(true);
