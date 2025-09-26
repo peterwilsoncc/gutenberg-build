@@ -41602,6 +41602,184 @@ const VIEW_LAYOUTS = [{
   isPicker: true
 }];
 
+;// ./packages/dataviews/build-module/components/dataviews-filters/add-filter.js
+/**
+ * External dependencies
+ */
+
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const {
+  Menu: add_filter_Menu
+} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+function AddFilterMenu({
+  filters,
+  view,
+  onChangeView,
+  setOpenedFilter,
+  triggerProps
+}) {
+  const inactiveFilters = filters.filter(filter => !filter.isVisible);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(add_filter_Menu, {
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_Menu.TriggerButton, {
+      ...triggerProps
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_Menu.Popover, {
+      children: inactiveFilters.map(filter => {
+        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_Menu.Item, {
+          onClick: () => {
+            setOpenedFilter(filter.field);
+            onChangeView({
+              ...view,
+              page: 1,
+              filters: [...(view.filters || []), {
+                field: filter.field,
+                value: undefined,
+                operator: filter.operators[0]
+              }]
+            });
+          },
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_Menu.ItemLabel, {
+            children: filter.name
+          })
+        }, filter.field);
+      })
+    })]
+  });
+}
+function AddFilter({
+  filters,
+  view,
+  onChangeView,
+  setOpenedFilter
+}, ref) {
+  if (!filters.length || filters.every(({
+    isPrimary
+  }) => isPrimary)) {
+    return null;
+  }
+  const inactiveFilters = filters.filter(filter => !filter.isVisible);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddFilterMenu, {
+    triggerProps: {
+      render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        accessibleWhenDisabled: true,
+        size: "compact",
+        className: "dataviews-filters-button",
+        variant: "tertiary",
+        disabled: !inactiveFilters.length,
+        ref: ref
+      }),
+      children: (0,external_wp_i18n_namespaceObject.__)('Add filter')
+    },
+    filters,
+    view,
+    onChangeView,
+    setOpenedFilter
+  });
+}
+/* harmony default export */ const add_filter = ((0,external_wp_element_namespaceObject.forwardRef)(AddFilter));
+
+;// ./packages/dataviews/build-module/components/dataviews-filters/toggle.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function FiltersToggle() {
+  const {
+    filters,
+    view,
+    onChangeView,
+    setOpenedFilter,
+    isShowingFilter,
+    setIsShowingFilter
+  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
+  const buttonRef = (0,external_wp_element_namespaceObject.useRef)(null);
+  const onChangeViewWithFilterVisibility = (0,external_wp_element_namespaceObject.useCallback)(_view => {
+    onChangeView(_view);
+    setIsShowingFilter(true);
+  }, [onChangeView, setIsShowingFilter]);
+  const visibleFilters = filters.filter(filter => filter.isVisible);
+  const hasVisibleFilters = !!visibleFilters.length;
+  if (filters.length === 0) {
+    return null;
+  }
+  const addFilterButtonProps = {
+    label: (0,external_wp_i18n_namespaceObject.__)('Add filter'),
+    'aria-expanded': false,
+    isPressed: false
+  };
+  const toggleFiltersButtonProps = {
+    label: (0,external_wp_i18n_namespaceObject._x)('Filter', 'verb'),
+    'aria-expanded': isShowingFilter,
+    isPressed: isShowingFilter,
+    onClick: () => {
+      if (!isShowingFilter) {
+        setOpenedFilter(null);
+      }
+      setIsShowingFilter(!isShowingFilter);
+    }
+  };
+  const buttonComponent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+    ref: buttonRef,
+    className: "dataviews-filters__visibility-toggle",
+    size: "compact",
+    icon: library_funnel,
+    ...(hasVisibleFilters ? toggleFiltersButtonProps : addFilterButtonProps)
+  });
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    className: "dataviews-filters__container-visibility-toggle",
+    children: !hasVisibleFilters ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddFilterMenu, {
+      filters: filters,
+      view: view,
+      onChangeView: onChangeViewWithFilterVisibility,
+      setOpenedFilter: setOpenedFilter,
+      triggerProps: {
+        render: buttonComponent
+      }
+    }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FilterVisibilityToggle, {
+      buttonRef: buttonRef,
+      filtersCount: view.filters?.length,
+      children: buttonComponent
+    })
+  });
+}
+function FilterVisibilityToggle({
+  buttonRef,
+  filtersCount,
+  children
+}) {
+  // Focus the `add filter` button when unmounts.
+  (0,external_wp_element_namespaceObject.useEffect)(() => () => {
+    buttonRef.current?.focus();
+  }, [buttonRef]);
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: [children, !!filtersCount && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      className: "dataviews-filters-toggle__count",
+      children: filtersCount
+    })]
+  });
+}
+/* harmony default export */ const toggle = (FiltersToggle);
+
 ;// ./node_modules/@ariakit/react-core/esm/__chunks/3YLGPPWQ.js
 "use client";
 var __defProp = Object.defineProperty;
@@ -47140,92 +47318,6 @@ function Filter({
   });
 }
 
-;// ./packages/dataviews/build-module/components/dataviews-filters/add-filter.js
-/**
- * External dependencies
- */
-
-/**
- * WordPress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-const {
-  Menu: add_filter_Menu
-} = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
-function AddFilterMenu({
-  filters,
-  view,
-  onChangeView,
-  setOpenedFilter,
-  triggerProps
-}) {
-  const inactiveFilters = filters.filter(filter => !filter.isVisible);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(add_filter_Menu, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_Menu.TriggerButton, {
-      ...triggerProps
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_Menu.Popover, {
-      children: inactiveFilters.map(filter => {
-        return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_Menu.Item, {
-          onClick: () => {
-            setOpenedFilter(filter.field);
-            onChangeView({
-              ...view,
-              page: 1,
-              filters: [...(view.filters || []), {
-                field: filter.field,
-                value: undefined,
-                operator: filter.operators[0]
-              }]
-            });
-          },
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter_Menu.ItemLabel, {
-            children: filter.name
-          })
-        }, filter.field);
-      })
-    })]
-  });
-}
-function AddFilter({
-  filters,
-  view,
-  onChangeView,
-  setOpenedFilter
-}, ref) {
-  if (!filters.length || filters.every(({
-    isPrimary
-  }) => isPrimary)) {
-    return null;
-  }
-  const inactiveFilters = filters.filter(filter => !filter.isVisible);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddFilterMenu, {
-    triggerProps: {
-      render: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        accessibleWhenDisabled: true,
-        size: "compact",
-        className: "dataviews-filters-button",
-        variant: "tertiary",
-        disabled: !inactiveFilters.length,
-        ref: ref
-      }),
-      children: (0,external_wp_i18n_namespaceObject.__)('Add filter')
-    },
-    filters,
-    view,
-    onChangeView,
-    setOpenedFilter
-  });
-}
-/* harmony default export */ const add_filter = ((0,external_wp_element_namespaceObject.forwardRef)(AddFilter));
-
 ;// ./packages/dataviews/build-module/components/dataviews-filters/reset-filters.js
 /**
  * WordPress dependencies
@@ -47262,23 +47354,15 @@ function ResetFilter({
   });
 }
 
-;// ./packages/dataviews/build-module/components/dataviews-filters/index.js
+;// ./packages/dataviews/build-module/components/dataviews-filters/use-filters.js
 /**
  * WordPress dependencies
  */
 
 
-
-
-
 /**
  * Internal dependencies
  */
-
-
-
-
-
 
 function useFilters(fields, view) {
   return (0,external_wp_element_namespaceObject.useMemo)(() => {
@@ -47325,81 +47409,24 @@ function useFilters(fields, view) {
     return filters;
   }, [fields, view]);
 }
-function FiltersToggle() {
-  const {
-    filters,
-    view,
-    onChangeView,
-    setOpenedFilter,
-    isShowingFilter,
-    setIsShowingFilter
-  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
-  const buttonRef = (0,external_wp_element_namespaceObject.useRef)(null);
-  const onChangeViewWithFilterVisibility = (0,external_wp_element_namespaceObject.useCallback)(_view => {
-    onChangeView(_view);
-    setIsShowingFilter(true);
-  }, [onChangeView, setIsShowingFilter]);
-  const visibleFilters = filters.filter(filter => filter.isVisible);
-  const hasVisibleFilters = !!visibleFilters.length;
-  if (filters.length === 0) {
-    return null;
-  }
-  const addFilterButtonProps = {
-    label: (0,external_wp_i18n_namespaceObject.__)('Add filter'),
-    'aria-expanded': false,
-    isPressed: false
-  };
-  const toggleFiltersButtonProps = {
-    label: (0,external_wp_i18n_namespaceObject._x)('Filter', 'verb'),
-    'aria-expanded': isShowingFilter,
-    isPressed: isShowingFilter,
-    onClick: () => {
-      if (!isShowingFilter) {
-        setOpenedFilter(null);
-      }
-      setIsShowingFilter(!isShowingFilter);
-    }
-  };
-  const buttonComponent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-    ref: buttonRef,
-    className: "dataviews-filters__visibility-toggle",
-    size: "compact",
-    icon: library_funnel,
-    ...(hasVisibleFilters ? toggleFiltersButtonProps : addFilterButtonProps)
-  });
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
-    className: "dataviews-filters__container-visibility-toggle",
-    children: !hasVisibleFilters ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddFilterMenu, {
-      filters: filters,
-      view: view,
-      onChangeView: onChangeViewWithFilterVisibility,
-      setOpenedFilter: setOpenedFilter,
-      triggerProps: {
-        render: buttonComponent
-      }
-    }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FilterVisibilityToggle, {
-      buttonRef: buttonRef,
-      filtersCount: view.filters?.length,
-      children: buttonComponent
-    })
-  });
-}
-function FilterVisibilityToggle({
-  buttonRef,
-  filtersCount,
-  children
-}) {
-  // Focus the `add filter` button when unmounts.
-  (0,external_wp_element_namespaceObject.useEffect)(() => () => {
-    buttonRef.current?.focus();
-  }, [buttonRef]);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [children, !!filtersCount && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-      className: "dataviews-filters-toggle__count",
-      children: filtersCount
-    })]
-  });
-}
+/* harmony default export */ const use_filters = (useFilters);
+
+;// ./packages/dataviews/build-module/components/dataviews-filters/filters.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
 function Filters({
   className
 }) {
@@ -47411,7 +47438,7 @@ function Filters({
     setOpenedFilter
   } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   const addFilterRef = (0,external_wp_element_namespaceObject.useRef)(null);
-  const filters = useFilters(fields, view);
+  const filters = use_filters(fields, view);
   const addFilter = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(add_filter, {
     filters: filters,
     view: view,
@@ -47448,7 +47475,32 @@ function Filters({
     children: filterComponents
   });
 }
-/* harmony default export */ const dataviews_filters = ((0,external_wp_element_namespaceObject.memo)(Filters));
+/* harmony default export */ const filters = ((0,external_wp_element_namespaceObject.memo)(Filters));
+
+;// ./packages/dataviews/build-module/components/dataviews-filters/filters-toggled.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function FiltersToggled(props) {
+  const {
+    isShowingFilter
+  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
+  if (!isShowingFilter) {
+    return null;
+  }
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(filters, {
+    ...props
+  });
+}
+/* harmony default export */ const filters_toggled = (FiltersToggled);
 
 ;// ./packages/dataviews/build-module/components/dataviews-layout/index.js
 /**
@@ -48452,9 +48504,6 @@ function DefaultUI({
   search = true,
   searchLabel = undefined
 }) {
-  const {
-    isShowingFilter
-  } = (0,external_wp_element_namespaceObject.useContext)(dataviews_context);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
       alignment: "top",
@@ -48467,7 +48516,7 @@ function DefaultUI({
         className: "dataviews__search",
         children: [search && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_search, {
           label: searchLabel
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(FiltersToggle, {})]
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(toggle, {})]
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
         spacing: 1,
         expanded: false,
@@ -48476,7 +48525,7 @@ function DefaultUI({
         },
         children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_view_config, {}), header]
       })]
-    }), isShowingFilter && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(dataviews_filters, {
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(filters_toggled, {
       className: "dataviews-filters__container"
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsLayout, {}), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(DataViewsFooter, {})]
   });
@@ -48533,7 +48582,7 @@ function DataViews({
   const _selection = (0,external_wp_element_namespaceObject.useMemo)(() => {
     return selection.filter(id => data.some(item => getItemId(item) === id));
   }, [selection, data, getItemId]);
-  const filters = useFilters(_fields, view);
+  const filters = use_filters(_fields, view);
   const hasPrimaryOrLockedFilters = (0,external_wp_element_namespaceObject.useMemo)(() => (filters || []).some(filter => filter.isPrimary || filter.isLocked), [filters]);
   const [isShowingFilter, setIsShowingFilter] = (0,external_wp_element_namespaceObject.useState)(hasPrimaryOrLockedFilters);
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -48618,8 +48667,9 @@ function DataViews({
 // Populate the DataViews sub components
 const DataViewsSubComponents = DataViews;
 DataViewsSubComponents.BulkActionToolbar = BulkActionsFooter;
-DataViewsSubComponents.Filters = dataviews_filters;
-DataViewsSubComponents.FiltersToggle = FiltersToggle;
+DataViewsSubComponents.Filters = filters;
+DataViewsSubComponents.FiltersToggled = filters_toggled;
+DataViewsSubComponents.FiltersToggle = toggle;
 DataViewsSubComponents.Layout = DataViewsLayout;
 DataViewsSubComponents.LayoutSwitcher = ViewTypeMenu;
 DataViewsSubComponents.Pagination = dataviews_pagination_DataViewsPagination;
