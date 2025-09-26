@@ -36085,6 +36085,7 @@ function useBlockComments(postId) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -36135,7 +36136,7 @@ function CollabSidebarContent({
     updateBlockAttributes
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const onError = error => {
-    const errorMessage = error.message && error.code !== 'unknown_error' ? error.message : (0,external_wp_i18n_namespaceObject.__)('An error occurred while performing an update.');
+    const errorMessage = error.message && error.code !== 'unknown_error' ? (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(error.message) : (0,external_wp_i18n_namespaceObject.__)('An error occurred while performing an update.');
     createNotice('error', errorMessage, {
       type: 'snackbar',
       isDismissible: true
