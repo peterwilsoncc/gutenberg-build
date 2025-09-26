@@ -2340,7 +2340,10 @@ const getGlobalAsyncEventDirective = type => {
     const itemProp = isNonDefaultDirectiveSuffix(entry) ? kebabToCamelCase(entry.suffix) : 'item';
     const result = [];
     for (const item of iterable) {
-      const itemContext = proxifyContext(proxifyState(namespace, {}), inheritedValue.client[namespace]);
+      // Shadows a previous item with the same key.
+      const itemContext = proxifyContext(proxifyState(namespace, {
+        [itemProp]: item
+      }), inheritedValue.client[namespace]);
       const mergedContext = {
         client: {
           ...inheritedValue.client,
@@ -2350,9 +2353,6 @@ const getGlobalAsyncEventDirective = type => {
           ...inheritedValue.server
         }
       };
-
-      // Set the item after proxifying the context.
-      mergedContext.client[namespace][itemProp] = item;
       const scope = {
         ...getScope(),
         context: mergedContext.client,
