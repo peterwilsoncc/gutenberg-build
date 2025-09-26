@@ -39743,13 +39743,6 @@ function BlockContextProvider({
 
 const DEFAULT_ATTRIBUTE = '__default';
 const PATTERN_OVERRIDES_SOURCE = 'core/pattern-overrides';
-const BLOCK_BINDINGS_ALLOWED_BLOCKS = {
-  'core/paragraph': ['content'],
-  'core/heading': ['content'],
-  'core/image': ['id', 'url', 'title', 'alt', 'caption'],
-  'core/button': ['url', 'text', 'linkTarget', 'rel'],
-  'core/post-date': ['datetime']
-};
 
 /**
  * Checks if the given object is empty.
@@ -39760,40 +39753,6 @@ const BLOCK_BINDINGS_ALLOWED_BLOCKS = {
  */
 function isObjectEmpty(object) {
   return !object || Object.keys(object).length === 0;
-}
-
-/**
- * Based on the given block name, checks if it is possible to bind the block.
- *
- * @param {string} blockName The name of the block.
- *
- * @return {boolean} Whether it is possible to bind the block to sources.
- */
-function canBindBlock(blockName) {
-  return blockName in BLOCK_BINDINGS_ALLOWED_BLOCKS;
-}
-
-/**
- * Based on the given block name and attribute name, checks if it is possible to bind the block attribute.
- *
- * @param {string} blockName     The name of the block.
- * @param {string} attributeName The name of attribute.
- *
- * @return {boolean} Whether it is possible to bind the block attribute.
- */
-function canBindAttribute(blockName, attributeName) {
-  return canBindBlock(blockName) && BLOCK_BINDINGS_ALLOWED_BLOCKS[blockName].includes(attributeName);
-}
-
-/**
- * Gets the bindable attributes for a given block.
- *
- * @param {string} blockName The name of the block.
- *
- * @return {string[]} The bindable attributes for the block.
- */
-function getBindableAttributes(blockName) {
-  return BLOCK_BINDINGS_ALLOWED_BLOCKS[blockName];
 }
 
 /**
@@ -39814,15 +39773,14 @@ function hasPatternOverridesDefaultBinding(bindings) {
  * - bindings passed in: `{ __default: { source: 'core/pattern-overrides' } }`
  * - bindings returned: `{ content: { source: 'core/pattern-overrides' } }`
  *
- * @param {string}                  blockName The block name (e.g. 'core/paragraph').
- * @param {?Record<string, object>} bindings  A block's bindings from the metadata attribute.
+ * @param {?Record<string, object>} bindings            A block's bindings from the metadata attribute.
+ * @param {string[]}                supportedAttributes The block's attributes which are supported by block bindings.
  *
  * @return {Object} The bindings with default replaced for pattern overrides.
  */
-function replacePatternOverridesDefaultBinding(blockName, bindings) {
+function replacePatternOverridesDefaultBinding(bindings, supportedAttributes) {
   // The `__default` binding currently only works for pattern overrides.
   if (hasPatternOverridesDefaultBinding(bindings)) {
-    const supportedAttributes = BLOCK_BINDINGS_ALLOWED_BLOCKS[blockName];
     const bindingsWithDefaults = {};
     for (const attributeName of supportedAttributes) {
       // If the block has mixed binding sources, retain any non pattern override bindings.
@@ -40007,6 +39965,7 @@ function useBlockBindingsUtils(clientId) {
 
 
 
+
 /**
  * Default value used for blocks which do not define their own context needs,
  * used to guarantee that a block's `context` prop will always be an object. It
@@ -40035,6 +39994,7 @@ const Edit = props => {
   });
 };
 const EditWithFilters = (0,external_wp_components_namespaceObject.withFilters)('editor.BlockEdit')(Edit);
+const edit_EMPTY_ARRAY = [];
 const EditWithGeneratedProps = props => {
   const {
     name,
@@ -40046,6 +40006,12 @@ const EditWithGeneratedProps = props => {
   const blockType = (0,external_wp_blocks_namespaceObject.getBlockType)(name);
   const blockContext = (0,external_wp_element_namespaceObject.useContext)(block_context);
   const registeredSources = (0,external_wp_data_namespaceObject.useSelect)(select => unlock(select(external_wp_blocks_namespaceObject.store)).getAllBlockBindingsSources(), []);
+  const bindableAttributes = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      __experimentalBlockBindingsSupportedAttributes
+    } = select(store).getSettings();
+    return __experimentalBlockBindingsSupportedAttributes?.[name] || edit_EMPTY_ARRAY;
+  }, [name]);
   const {
     blockBindings,
     context,
@@ -40062,7 +40028,7 @@ const EditWithGeneratedProps = props => {
       });
     }
     return {
-      blockBindings: replacePatternOverridesDefaultBinding(name, attributes?.metadata?.bindings),
+      blockBindings: replacePatternOverridesDefaultBinding(attributes?.metadata?.bindings, bindableAttributes),
       context: computedContext,
       hasPatternOverrides: hasPatternOverridesDefaultBinding(attributes?.metadata?.bindings)
     };
@@ -40079,7 +40045,7 @@ const EditWithGeneratedProps = props => {
         args: sourceArgs
       } = binding;
       const source = registeredSources[sourceName];
-      if (!source || !canBindAttribute(name, attributeName)) {
+      if (!source || !bindableAttributes.includes(attributeName)) {
         continue;
       }
       blockBindingsBySource.set(source, {
@@ -40120,7 +40086,7 @@ const EditWithGeneratedProps = props => {
       ...attributes,
       ...attributesFromSources
     };
-  }, [attributes, blockBindings, clientId, context, name, registeredSources]);
+  }, [attributes, bindableAttributes, blockBindings, clientId, context, name, registeredSources]);
   const setBoundAttributes = (0,external_wp_element_namespaceObject.useCallback)(nextAttributes => {
     if (!blockBindings) {
       setAttributes(nextAttributes);
@@ -40134,7 +40100,7 @@ const EditWithGeneratedProps = props => {
 
       // Loop only over the updated attributes to avoid modifying the bound ones that haven't changed.
       for (const [attributeName, newValue] of Object.entries(keptAttributes)) {
-        if (!blockBindings[attributeName] || !canBindAttribute(name, attributeName)) {
+        if (!blockBindings[attributeName] || !bindableAttributes.includes(attributeName)) {
           continue;
         }
         const binding = blockBindings[attributeName];
@@ -40175,7 +40141,7 @@ const EditWithGeneratedProps = props => {
         setAttributes(keptAttributes);
       }
     });
-  }, [blockBindings, clientId, context, hasPatternOverrides, setAttributes, registeredSources, name, registry]);
+  }, [bindableAttributes, blockBindings, clientId, context, hasPatternOverrides, setAttributes, registeredSources, name, registry]);
   if (!blockType) {
     return null;
   }
@@ -45780,7 +45746,6 @@ function useFirefoxDraggableCompatibility() {
 
 
 
-
 /**
  * This hook is used to lightly mark an element as a block element. The element
  * should be the outermost element of a block. Call this hook and pass the
@@ -45878,7 +45843,7 @@ function use_block_props_useBlockProps(props = {}, {
   }), canMove ? ffDragRef : undefined]);
   const blockEditContext = useBlockEditContext();
   const hasBlockBindings = !!blockEditContext[blockBindingsKey];
-  const bindingsStyle = hasBlockBindings && canBindBlock(name) ? {
+  const bindingsStyle = hasBlockBindings ? {
     '--wp-admin-theme-color': 'var(--wp-block-synced-color)',
     '--wp-admin-theme-color--rgb': 'var(--wp-block-synced-color--rgb)'
   } : {};
@@ -58503,7 +58468,6 @@ const BlockBindingsPanel = ({
   const {
     removeAllBlockBindings
   } = useBlockBindingsUtils();
-  const bindableAttributes = getBindableAttributes(blockName);
   const dropdownMenuProps = block_bindings_useToolsPanelDropdownMenuProps();
 
   // `useSelect` is used purposely here to ensure `getFieldsList`
@@ -58511,10 +58475,15 @@ const BlockBindingsPanel = ({
   // `source.getFieldsList` may also call a selector via `select`.
   const _fieldsList = {};
   const {
+    bindableAttributes,
     fieldsList,
     canUpdateBlockBindings
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
-    if (!bindableAttributes || bindableAttributes.length === 0) {
+    const {
+      __experimentalBlockBindingsSupportedAttributes
+    } = select(store).getSettings();
+    const _bindableAttributes = __experimentalBlockBindingsSupportedAttributes?.[blockName];
+    if (!_bindableAttributes || _bindableAttributes.length === 0) {
       return block_bindings_EMPTY_OBJECT;
     }
     const registeredSources = (0,external_wp_blocks_namespaceObject.getBlockBindingsSources)();
@@ -58543,10 +58512,11 @@ const BlockBindingsPanel = ({
       }
     });
     return {
+      bindableAttributes: _bindableAttributes,
       fieldsList: Object.values(_fieldsList).length > 0 ? _fieldsList : block_bindings_EMPTY_OBJECT,
       canUpdateBlockBindings: select(store).getSettings().canUpdateBlockBindings
     };
-  }, [blockContext, bindableAttributes]);
+  }, [blockContext]);
   // Return early if there are no bindable attributes.
   if (!bindableAttributes || bindableAttributes.length === 0) {
     return null;
@@ -58559,7 +58529,7 @@ const BlockBindingsPanel = ({
     ...bindings
   };
   Object.keys(filteredBindings).forEach(key => {
-    if (!canBindAttribute(blockName, key) || filteredBindings[key].source === 'core/pattern-overrides') {
+    if (!bindableAttributes.includes(key) && filteredBindings[key].source === 'core/pattern-overrides') {
       delete filteredBindings[key];
     }
   });
@@ -74894,7 +74864,6 @@ function withDeprecations(Component) {
 
 
 
-
 const keyboardShortcutContext = (0,external_wp_element_namespaceObject.createContext)();
 keyboardShortcutContext.displayName = 'keyboardShortcutContext';
 const inputEventContext = (0,external_wp_element_namespaceObject.createContext)();
@@ -75018,7 +74987,10 @@ function RichTextWrapper({
     bindingsLabel
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _fieldsList$relatedBi;
-    if (!blockBindings?.[identifier] || !canBindBlock(blockName)) {
+    const {
+      __experimentalBlockBindingsSupportedAttributes
+    } = select(store).getSettings();
+    if (!blockBindings?.[identifier] || !(blockName in __experimentalBlockBindingsSupportedAttributes)) {
       return {};
     }
     const relatedBinding = blockBindings[identifier];
