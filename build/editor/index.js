@@ -35281,6 +35281,48 @@ const moreVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 });
 /* harmony default export */ const more_vertical = (moreVertical);
 
+;// ./packages/editor/build-module/components/collab-sidebar/utils.js
+/**
+ * Sanitizes a comment string by removing non-printable ASCII characters.
+ *
+ * @param {string} str - The comment string to sanitize.
+ * @return {string} - The sanitized comment string.
+ */
+function sanitizeCommentString(str) {
+  return str.trim();
+}
+
+/**
+ * These colors are picked from the WordPress.org design library.
+ * @see https://www.figma.com/design/HOJTpCFfa3tR0EccUlu0CM/WordPress.org-Design-Library?node-id=1-2193&t=M6WdRvTpt0mh8n6T-1
+ */
+const AVATAR_BORDER_COLORS = ['#3858E9',
+// Blueberry
+'#9fB1FF',
+// Blueberry 2
+'#1D35B4',
+// Dark Blueberry
+'#1A1919',
+// Charcoal 0
+'#E26F56',
+// Pomegranate
+'#33F078',
+// Acid Green
+'#FFF972',
+// Lemon
+'#7A00DF' // Purple
+];
+
+/**
+ * Gets the border color for an avatar based on the user ID.
+ *
+ * @param {number} userId - The user ID.
+ * @return {string} - The border color.
+ */
+function getAvatarBorderColor(userId) {
+  return AVATAR_BORDER_COLORS[userId % AVATAR_BORDER_COLORS.length];
+}
+
 ;// ./packages/editor/build-module/components/collab-sidebar/comment-author-info.js
 /**
  * WordPress dependencies
@@ -35293,12 +35335,18 @@ const moreVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 
 
 /**
+ * Internal dependencies
+ */
+
+
+/**
  * Render author information for a comment.
  *
  * @param {Object} props        - Component properties.
  * @param {string} props.avatar - URL of the author's avatar.
  * @param {string} props.name   - Name of the author.
  * @param {string} props.date   - Date of the comment.
+ * @param {string} props.userId - User ID of the author.
  *
  * @return {React.ReactNode} The JSX element representing the author's information.
  */
@@ -35306,12 +35354,14 @@ const moreVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 function CommentAuthorInfo({
   avatar,
   name,
-  date
+  date,
+  userId
 }) {
   const dateSettings = (0,external_wp_date_namespaceObject.getSettings)();
   const {
     currentUserAvatar,
     currentUserName,
+    currentUserId,
     dateFormat = dateSettings.formats.date
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     var _userData$avatar_urls;
@@ -35331,6 +35381,7 @@ function CommentAuthorInfo({
     return {
       currentUserAvatar: (_userData$avatar_urls = userData?.avatar_urls?.[48]) !== null && _userData$avatar_urls !== void 0 ? _userData$avatar_urls : defaultAvatar,
       currentUserName: userData?.name,
+      currentUserId: userData?.id,
       dateFormat: siteSettings?.date_format
     };
   }, []);
@@ -35349,7 +35400,10 @@ function CommentAuthorInfo({
       ,
       alt: (0,external_wp_i18n_namespaceObject.__)('User avatar'),
       width: 32,
-      height: 32
+      height: 32,
+      style: {
+        borderColor: getAvatarBorderColor(userId !== null && userId !== void 0 ? userId : currentUserId)
+      }
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
       spacing: "0",
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
@@ -35368,17 +35422,6 @@ function CommentAuthorInfo({
   });
 }
 /* harmony default export */ const comment_author_info = (CommentAuthorInfo);
-
-;// ./packages/editor/build-module/components/collab-sidebar/utils.js
-/**
- * Sanitizes a comment string by removing non-printable ASCII characters.
- *
- * @param {string} str - The comment string to sanitize.
- * @return {string} - The sanitized comment string.
- */
-function sanitizeCommentString(str) {
-  return str.trim();
-}
 
 ;// ./packages/editor/build-module/components/collab-sidebar/comment-form.js
 /**
@@ -35698,7 +35741,8 @@ const CommentBoard = ({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_author_info, {
         avatar: thread?.author_avatar_urls?.[48],
         name: thread?.author_name,
-        date: thread?.date
+        date: thread?.date,
+        userId: thread?.author
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "editor-collab-sidebar-panel__comment-status",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
@@ -35892,6 +35936,7 @@ const AddCommentButton = ({
  */
 
 
+
 const {
   CommentIconToolbarSlotFill
 } = unlock(external_wp_blockEditor_namespaceObject.privateApis);
@@ -35917,6 +35962,7 @@ const CommentAvatarIndicator = ({
           participantsMap.set(authorKey, {
             name: comment.author_name,
             avatar: comment.author_avatar_urls?.['48'] || comment.author_avatar_urls?.['96'],
+            id: comment.author,
             isOriginalCommenter: comment.id === thread.id,
             date: comment.date
           });
@@ -35962,7 +36008,8 @@ const CommentAvatarIndicator = ({
           alt: participant.name,
           className: "comment-avatar",
           style: {
-            zIndex: maxAvatars - index
+            zIndex: maxAvatars - index,
+            borderColor: getAvatarBorderColor(participant.id)
           }
         }, participant.name + index)), overflowCount > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
           className: "comment-avatar-overflow",
