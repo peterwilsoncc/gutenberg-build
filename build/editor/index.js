@@ -35450,6 +35450,7 @@ function CommentAuthorInfo({
  * @param {Function} props.onCancel         - The function to call when canceling the comment update.
  * @param {Object}   props.thread           - The comment thread object.
  * @param {string}   props.submitButtonText - The text to display on the submit button.
+ * @param {string?}  props.labelText        - The label text for the comment input.
  * @return {React.ReactNode} The CommentForm component.
  */
 
@@ -35457,7 +35458,8 @@ function CommentForm({
   onSubmit,
   onCancel,
   thread,
-  submitButtonText
+  submitButtonText,
+  labelText
 }) {
   var _thread$content$raw;
   const [inputComment, setInputComment] = (0,external_wp_element_namespaceObject.useState)((_thread$content$raw = thread?.content?.raw) !== null && _thread$content$raw !== void 0 ? _thread$content$raw : '');
@@ -35469,7 +35471,7 @@ function CommentForm({
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
       as: "label",
       htmlFor: inputId,
-      children: (0,external_wp_i18n_namespaceObject.__)('Comment')
+      children: labelText !== null && labelText !== void 0 ? labelText : (0,external_wp_i18n_namespaceObject.__)('Comment')
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(lib/* default */.A, {
       id: inputId,
       value: inputComment !== null && inputComment !== void 0 ? inputComment : '',
@@ -35685,7 +35687,11 @@ function Thread({
             event.stopPropagation(); // Prevent the parent onClick from being triggered
             clearThreadFocus();
           },
-          submitButtonText: 'approved' === thread.status ? (0,external_wp_i18n_namespaceObject.__)('Reopen & Reply') : (0,external_wp_i18n_namespaceObject.__)('Reply')
+          submitButtonText: 'approved' === thread.status ? (0,external_wp_i18n_namespaceObject.__)('Reopen & Reply') : (0,external_wp_i18n_namespaceObject.__)('Reply'),
+          rows: 'approved' === thread.status ? 2 : 4,
+          labelText: (0,external_wp_i18n_namespaceObject.sprintf)(
+          // translators: %1$s: comment identifier, %2$s: author name
+          (0,external_wp_i18n_namespaceObject.__)('Reply to Comment %1$s by %2$s'), thread.id, thread?.author_name || 'Unknown')
         })
       })]
     })]
@@ -35795,7 +35801,10 @@ const CommentBoard = ({
       },
       onCancel: () => handleCancel(),
       thread: thread,
-      submitButtonText: (0,external_wp_i18n_namespaceObject._x)('Update', 'verb')
+      submitButtonText: (0,external_wp_i18n_namespaceObject._x)('Update', 'verb'),
+      labelText: (0,external_wp_i18n_namespaceObject.sprintf)(
+      // translators: %1$s: comment identifier, %2$s: author name.
+      (0,external_wp_i18n_namespaceObject.__)('Edit Comment %1$s by %2$s'), thread.id, thread?.author_name || 'Unknown')
     }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_element_namespaceObject.RawHTML, {
       className: "editor-collab-sidebar-panel__user-comment",
       children: thread?.content?.rendered
@@ -35860,6 +35869,7 @@ function AddComment({
   if (!showCommentBoard || !clientId || undefined !== blockCommentId || isEmptyDefaultBlock) {
     return null;
   }
+  const commentLabel = (0,external_wp_i18n_namespaceObject.__)('New Comment');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
     spacing: "3",
     className: "editor-collab-sidebar-panel__thread editor-collab-sidebar-panel__active-thread editor-collab-sidebar-panel__focus-thread",
@@ -35876,7 +35886,8 @@ function AddComment({
       onCancel: () => {
         setShowCommentBoard(false);
       },
-      submitButtonText: (0,external_wp_i18n_namespaceObject._x)('Comment', 'Add comment button')
+      submitButtonText: (0,external_wp_i18n_namespaceObject._x)('Comment', 'Add comment button'),
+      labelText: commentLabel
     })]
   });
 }
