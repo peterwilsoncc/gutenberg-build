@@ -49167,8 +49167,9 @@ function PostTimeToReadEdit({
 
     // Add "word count" part, if enabled.
     if (showWordCount) {
-      const wordCountString = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: the number of words in the post. */
-      (0,external_wp_i18n_namespaceObject._n)('%s word', '%s words', totalWords), totalWords.toLocaleString());
+      const wordCountString = wordCountType === 'words' ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: the number of words in the post. */
+      (0,external_wp_i18n_namespaceObject._n)('%s word', '%s words', totalWords), totalWords.toLocaleString()) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: the number of characters in the post. */
+      (0,external_wp_i18n_namespaceObject._n)('%s character', '%s characters', totalWords), totalWords.toLocaleString());
       parts.push(wordCountString);
     }
     if (parts.length === 1) {
