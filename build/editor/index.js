@@ -35407,8 +35407,6 @@ function sanitizeCommentString(str) {
  * @param {Function} props.onCancel         - The function to call when canceling the comment update.
  * @param {Object}   props.thread           - The comment thread object.
  * @param {string}   props.submitButtonText - The text to display on the submit button.
- * @param {string?}  props.placeholderText  - The placeholder text for the comment input.
- * @param {number?}  props.rows             - The number of rows for the comment input.
  * @return {React.ReactNode} The CommentForm component.
  */
 
@@ -35416,15 +35414,15 @@ function CommentForm({
   onSubmit,
   onCancel,
   thread,
-  submitButtonText,
-  placeholderText,
-  rows = 4
+  submitButtonText
 }) {
   var _thread$content$raw;
   const [inputComment, setInputComment] = (0,external_wp_element_namespaceObject.useState)((_thread$content$raw = thread?.content?.raw) !== null && _thread$content$raw !== void 0 ? _thread$content$raw : '');
   const inputId = (0,external_wp_compose_namespaceObject.useInstanceId)(CommentForm, 'comment-input');
   const isDisabled = inputComment === thread?.content?.raw || !sanitizeCommentString(inputComment).length;
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    className: "editor-collab-sidebar-panel__comment-form",
+    spacing: "4",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.VisuallyHidden, {
       as: "label",
       htmlFor: inputId,
@@ -35433,15 +35431,21 @@ function CommentForm({
       id: inputId,
       value: inputComment !== null && inputComment !== void 0 ? inputComment : '',
       onChange: comment => setInputComment(comment.target.value),
-      rows: rows,
-      maxRows: 20,
-      placeholder: placeholderText || ''
+      rows: 1,
+      maxRows: 20
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-      spacing: "3",
-      justify: "flex-start",
+      spacing: "2",
+      justify: "flex-end",
       wrap: true,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        __next40pxDefaultSize: true,
+        size: "compact",
+        variant: "tertiary",
+        onClick: onCancel,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalTruncate, {
+          children: (0,external_wp_i18n_namespaceObject.__)('Cancel')
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+        size: "compact",
         accessibleWhenDisabled: true,
         variant: "primary",
         onClick: () => {
@@ -35449,12 +35453,9 @@ function CommentForm({
           setInputComment('');
         },
         disabled: isDisabled,
-        text: submitButtonText
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        __next40pxDefaultSize: true,
-        variant: "tertiary",
-        onClick: onCancel,
-        text: (0,external_wp_i18n_namespaceObject._x)('Cancel', 'Cancel comment button')
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalTruncate, {
+          children: submitButtonText
+        })
       })]
     })]
   });
@@ -35623,8 +35624,7 @@ function Thread({
         justify: "flex-start",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_author_info, {})
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
-        spacing: "3",
-        className: "editor-collab-sidebar-panel__comment-field",
+        spacing: "2",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_form, {
           onSubmit: inputComment => {
             if ('approved' === thread.status) {
@@ -35642,9 +35642,7 @@ function Thread({
             event.stopPropagation(); // Prevent the parent onClick from being triggered
             clearThreadFocus();
           },
-          placeholderText: 'approved' === thread.status && (0,external_wp_i18n_namespaceObject.__)('Adding a comment will re-open this discussion….'),
-          submitButtonText: 'approved' === thread.status ? (0,external_wp_i18n_namespaceObject._x)('Reopen & Reply', 'Reopen comment and add reply') : (0,external_wp_i18n_namespaceObject._x)('Reply', 'Add reply comment'),
-          rows: 'approved' === thread.status ? 2 : 4
+          submitButtonText: 'approved' === thread.status ? (0,external_wp_i18n_namespaceObject.__)('Reopen & Reply') : (0,external_wp_i18n_namespaceObject.__)('Reply')
         })
       })]
     })]
