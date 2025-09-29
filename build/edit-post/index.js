@@ -223,6 +223,21 @@ const wordpress = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 });
 /* harmony default export */ const library_wordpress = (wordpress);
 
+;// ./packages/icons/build-module/library/arrow-up-left.js
+/**
+ * WordPress dependencies
+ */
+
+
+const arrowUpLeft = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M14 6H6v8h1.5V8.5L17 18l1-1-9.5-9.5H14V6Z"
+  })
+});
+/* harmony default export */ const arrow_up_left = (arrowUpLeft);
+
 ;// ./packages/edit-post/build-module/components/back-button/fullscreen-mode-close.js
 /**
  * External dependencies
@@ -241,6 +256,28 @@ const wordpress = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(
 
 
 
+const siteIconVariants = {
+  edit: {
+    clipPath: 'inset(0% round 0px)'
+  },
+  hover: {
+    clipPath: 'inset( 22% round 2px )'
+  },
+  tap: {
+    clipPath: 'inset(0% round 0px)'
+  }
+};
+const toggleHomeIconVariants = {
+  edit: {
+    opacity: 0,
+    scale: 0.2
+  },
+  hover: {
+    opacity: 1,
+    scale: 1,
+    clipPath: 'inset( 22% round 2px )'
+  }
+};
 function FullscreenModeClose({
   showTooltip,
   icon,
@@ -268,43 +305,43 @@ function FullscreenModeClose({
       postType: getPostType(_postType),
       siteIconUrl: siteData.site_icon_url
     };
-  }, []);
+  }, [initialPost?.type]);
   const disableMotion = (0,external_wp_compose_namespaceObject.useReducedMotion)();
+  const transition = {
+    duration: disableMotion ? 0 : 0.2
+  };
   if (!postType) {
     return null;
   }
-  let buttonIcon = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-    size: "36px",
-    icon: library_wordpress
-  });
-  const effect = {
-    expand: {
-      scale: 1.25,
-      transition: {
-        type: 'tween',
-        duration: '0.3'
-      }
-    }
-  };
-  if (siteIconUrl) {
-    buttonIcon = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.img, {
-      variants: !disableMotion && effect,
+
+  // Create SiteIcon equivalent structure exactly like edit-site
+  let siteIconContent;
+  if (isRequestingSiteIcon && !siteIconUrl) {
+    siteIconContent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+      className: "edit-post-fullscreen-mode-close-site-icon__image"
+    });
+  } else if (siteIconUrl) {
+    siteIconContent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("img", {
+      className: "edit-post-fullscreen-mode-close-site-icon__image",
       alt: (0,external_wp_i18n_namespaceObject.__)('Site Icon'),
-      className: "edit-post-fullscreen-mode-close_site-icon",
       src: siteIconUrl
     });
-  }
-  if (isRequestingSiteIcon) {
-    buttonIcon = null;
+  } else {
+    siteIconContent = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+      className: "edit-post-fullscreen-mode-close-site-icon__icon",
+      icon: library_wordpress,
+      size: 48
+    });
   }
 
   // Override default icon if custom icon is provided via props.
-  if (icon) {
-    buttonIcon = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
-      size: "36px",
-      icon: icon
-    });
-  }
+  const buttonIcon = icon ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+    size: "36px",
+    icon: icon
+  }) : /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+    className: "edit-post-fullscreen-mode-close-site-icon",
+    children: siteIconContent
+  });
   const classes = dist_clsx('edit-post-fullscreen-mode-close', {
     'has-icon': siteIconUrl
   });
@@ -312,16 +349,36 @@ function FullscreenModeClose({
     post_type: postType.slug
   });
   const buttonLabel = (_postType$labels$view = postType?.labels?.view_items) !== null && _postType$labels$view !== void 0 ? _postType$labels$view : (0,external_wp_i18n_namespaceObject.__)('Back');
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
-    whileHover: "expand",
-    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__unstableMotion.div, {
+    className: "edit-post-fullscreen-mode-close__view-mode-toggle",
+    animate: "edit",
+    initial: "edit",
+    whileHover: "hover",
+    whileTap: "tap",
+    transition: transition,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
       __next40pxDefaultSize: true,
       className: classes,
       href: buttonHref,
       label: buttonLabel,
       showTooltip: showTooltip,
-      children: buttonIcon
-    })
+      tooltipPosition: "middle right",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
+        variants: !disableMotion && siteIconVariants,
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          className: "edit-post-fullscreen-mode-close__view-mode-toggle-icon",
+          children: buttonIcon
+        })
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__unstableMotion.div, {
+      className: dist_clsx('edit-post-fullscreen-mode-close__back-icon', {
+        'has-site-icon': siteIconUrl
+      }),
+      variants: !disableMotion && toggleHomeIconVariants,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Icon, {
+        icon: arrow_up_left
+      })
+    })]
   });
 }
 /* harmony default export */ const fullscreen_mode_close = (FullscreenModeClose);
