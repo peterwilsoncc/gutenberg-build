@@ -35282,6 +35282,11 @@ const moreVertical = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.js
 
 ;// ./packages/editor/build-module/components/collab-sidebar/utils.js
 /**
+ * WordPress dependencies
+ */
+
+
+/**
  * Sanitizes a comment string by removing non-printable ASCII characters.
  *
  * @param {string} str - The comment string to sanitize.
@@ -35320,6 +35325,47 @@ const AVATAR_BORDER_COLORS = ['#3858E9',
  */
 function getAvatarBorderColor(userId) {
   return AVATAR_BORDER_COLORS[userId % AVATAR_BORDER_COLORS.length];
+}
+
+/**
+ * Generates a comment excerpt from text based on word count type and length.
+ *
+ * @param {string} text          - The comment text to generate excerpt from.
+ * @param {number} excerptLength - The maximum length for the commentexcerpt.
+ * @return {string} - The generated comment excerpt.
+ */
+function getCommentExcerpt(text, excerptLength = 10) {
+  if (!text) {
+    return '';
+  }
+
+  /*
+   * translators: If your word count is based on single characters (e.g. East Asian characters),
+   * enter 'characters_excluding_spaces' or 'characters_including_spaces'. Otherwise, enter 'words'.
+   * Do not translate into your own language.
+   */
+  const wordCountType = (0,external_wp_i18n_namespaceObject._x)('words', 'Word count type. Do not translate!');
+  const rawText = text.trim();
+  let trimmedExcerpt = '';
+  if (wordCountType === 'words') {
+    trimmedExcerpt = rawText.split(' ', excerptLength).join(' ');
+  } else if (wordCountType === 'characters_excluding_spaces') {
+    /*
+     * 1. Split the text at the character limit,
+     * then join the substrings back into one string.
+     * 2. Count the number of spaces in the text
+     * by comparing the lengths of the string with and without spaces.
+     * 3. Add the number to the length of the visible excerpt,
+     * so that the spaces are excluded from the word count.
+     */
+    const textWithSpaces = rawText.split('', excerptLength).join('');
+    const numberOfSpaces = textWithSpaces.length - textWithSpaces.replaceAll(' ', '').length;
+    trimmedExcerpt = rawText.split('', excerptLength + numberOfSpaces).join('');
+  } else if (wordCountType === 'characters_including_spaces') {
+    trimmedExcerpt = rawText.split('', excerptLength).join('');
+  }
+  const isTrimmed = trimmedExcerpt !== rawText;
+  return isTrimmed ? trimmedExcerpt + '…' : trimmedExcerpt;
 }
 
 ;// ./packages/editor/build-module/components/collab-sidebar/comment-author-info.js
@@ -35523,9 +35569,11 @@ function CommentForm({
 
 
 
+
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -35563,7 +35611,7 @@ function Comments({
     const clientId = getSelectedBlockClientId();
     return clientId ? getBlockAttributes(clientId)?.metadata?.commentId : null;
   }, []);
-  const [focusThread = blockCommentId, setFocusThread] = (0,external_wp_element_namespaceObject.useState)();
+  const [selectedThread = blockCommentId, setSelectedThread] = (0,external_wp_element_namespaceObject.useState)();
   const hasThreads = Array.isArray(threads) && threads.length > 0;
   if (!hasThreads) {
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
@@ -35581,8 +35629,8 @@ function Comments({
     onAddReply: onAddReply,
     onCommentDelete: onCommentDelete,
     onEditComment: onEditComment,
-    isFocused: focusThread === thread.id,
-    setFocusThread: setFocusThread,
+    isSelected: selectedThread === thread.id,
+    setSelectedThread: setSelectedThread,
     setShowCommentBoard: setShowCommentBoard
   }, thread.id));
 }
@@ -35591,10 +35639,11 @@ function Thread({
   onEditComment,
   onAddReply,
   onCommentDelete,
-  isFocused,
-  setFocusThread,
+  isSelected,
+  setSelectedThread,
   setShowCommentBoard
 }) {
+  const threadRef = (0,external_wp_element_namespaceObject.useRef)(null);
   const {
     toggleBlockHighlight
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
@@ -35611,7 +35660,7 @@ function Thread({
     blockClientId
   }) => {
     setShowCommentBoard(false);
-    setFocusThread(id);
+    setSelectedThread(id);
     if (blockClientId && relatedBlockElement) {
       relatedBlockElement.scrollIntoView({
         behavior: 'instant',
@@ -35619,89 +35668,131 @@ function Thread({
       });
     }
   };
-  const clearThreadFocus = () => {
-    setFocusThread(null);
+  const focusThread = () => {
+    threadRef.current?.focus();
+  };
+  const unselectThread = () => {
+    setSelectedThread(null);
     setShowCommentBoard(false);
   };
   const replies = thread?.reply;
   const lastReply = !!replies.length ? replies[replies.length - 1] : undefined;
   const restReplies = !!replies.length ? replies.slice(0, -1) : [];
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-    className: dist_clsx('editor-collab-sidebar-panel__thread', {
-      'editor-collab-sidebar-panel__focus-thread': isFocused
-    }),
-    id: thread.id,
-    spacing: "2",
-    onClick: () => handleCommentSelect(thread),
-    onMouseEnter: onMouseEnter,
-    onMouseLeave: onMouseLeave,
-    onFocus: onMouseEnter,
-    onBlur: onMouseLeave,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
-      thread: thread,
-      onEdit: onEditComment,
-      onDelete: onCommentDelete,
-      status: thread.status
-    }), isFocused && replies.map(reply => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
-      className: "editor-collab-sidebar-panel__child-thread",
-      id: reply.id,
+  const commentExcerpt = getCommentExcerpt((0,external_wp_dom_namespaceObject.__unstableStripHTML)(thread.content.rendered), 10);
+  const ariaLabel = (0,external_wp_i18n_namespaceObject.sprintf)(
+  // translators: %s: comment excerpt
+  (0,external_wp_i18n_namespaceObject.__)('Comment: %s'), commentExcerpt);
+  return (
+    /*#__PURE__*/
+    // Disable reason: role="listitem" does in fact support aria-expanded.
+    // eslint-disable-next-line jsx-a11y/role-supports-aria-props
+    (0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      className: dist_clsx('editor-collab-sidebar-panel__thread', {
+        'is-selected': isSelected
+      }),
+      id: `thread-${thread.id}`,
       spacing: "2",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
-        thread: reply,
+      onClick: () => handleCommentSelect(thread),
+      onMouseEnter: onMouseEnter,
+      onMouseLeave: onMouseLeave,
+      onFocus: onMouseEnter,
+      onBlur: onMouseLeave,
+      onKeyDown: event => {
+        // Expand or Collapse thread.
+        if (event.key === 'Enter' && event.currentTarget === event.target) {
+          if (isSelected) {
+            unselectThread();
+          } else {
+            handleCommentSelect(thread);
+          }
+        }
+        // Collapse thread and focus the thread.
+        if (event.key === 'Escape') {
+          unselectThread();
+          focusThread();
+        }
+      },
+      tabIndex: 0,
+      role: "listitem",
+      ref: threadRef,
+      "aria-label": ariaLabel,
+      "aria-expanded": isSelected,
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
+        thread: thread,
+        onEdit: (params = {}) => {
+          const {
+            status
+          } = params;
+          onEditComment(params);
+          if (status === 'approved') {
+            unselectThread();
+            focusThread();
+          }
+        },
+        onDelete: onCommentDelete,
+        status: thread.status
+      }), isSelected && replies.map(reply => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+        className: "editor-collab-sidebar-panel__child-thread",
+        id: reply.id,
+        spacing: "2",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
+          thread: reply,
+          onEdit: 'approved' !== thread.status ? onEditComment : undefined,
+          onDelete: 'approved' !== thread.status ? onCommentDelete : undefined
+        })
+      }, reply.id)), !isSelected && restReplies.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
+        className: "editor-collab-sidebar-panel__more-reply-separator",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          size: "compact",
+          variant: "tertiary",
+          className: "editor-collab-sidebar-panel__more-reply-button",
+          onClick: () => setSelectedThread(thread.id),
+          children: (0,external_wp_i18n_namespaceObject.sprintf)(
+          // translators: %s: number of replies.
+          (0,external_wp_i18n_namespaceObject._n)('%s more reply', '%s more replies', restReplies.length), restReplies.length)
+        })
+      }), !isSelected && lastReply && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
+        thread: lastReply,
         onEdit: 'approved' !== thread.status ? onEditComment : undefined,
         onDelete: 'approved' !== thread.status ? onCommentDelete : undefined
-      })
-    }, reply.id)), !isFocused && restReplies.length > 0 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
-      className: "editor-collab-sidebar-panel__more-reply-separator",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
-        size: "compact",
-        variant: "tertiary",
-        className: "editor-collab-sidebar-panel__more-reply-button",
-        onClick: () => setFocusThread(thread.id),
-        children: (0,external_wp_i18n_namespaceObject.sprintf)(
-        // translators: %s: number of replies.
-        (0,external_wp_i18n_namespaceObject._n)('%s more reply', '%s more replies', restReplies.length), restReplies.length)
-      })
-    }), !isFocused && lastReply && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
-      thread: lastReply,
-      onEdit: 'approved' !== thread.status ? onEditComment : undefined,
-      onDelete: 'approved' !== thread.status ? onCommentDelete : undefined
-    }), isFocused && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
-      className: "editor-collab-sidebar-panel__child-thread",
-      spacing: "2",
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
-        alignment: "left",
-        spacing: "3",
-        justify: "flex-start",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_author_info, {})
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+      }), isSelected && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+        className: "editor-collab-sidebar-panel__child-thread",
         spacing: "2",
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_form, {
-          onSubmit: inputComment => {
-            if ('approved' === thread.status) {
-              onEditComment({
-                id: thread.id,
-                status: 'hold'
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
+          alignment: "left",
+          spacing: "3",
+          justify: "flex-start",
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_author_info, {})
+        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalVStack, {
+          spacing: "2",
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(comment_form, {
+            onSubmit: inputComment => {
+              if ('approved' === thread.status) {
+                onEditComment({
+                  id: thread.id,
+                  status: 'hold'
+                });
+              }
+              onAddReply({
+                content: inputComment,
+                parent: thread.id
               });
-            }
-            onAddReply({
-              content: inputComment,
-              parent: thread.id
-            });
-          },
-          onCancel: event => {
-            event.stopPropagation(); // Prevent the parent onClick from being triggered
-            clearThreadFocus();
-          },
-          submitButtonText: 'approved' === thread.status ? (0,external_wp_i18n_namespaceObject.__)('Reopen & Reply') : (0,external_wp_i18n_namespaceObject.__)('Reply'),
-          rows: 'approved' === thread.status ? 2 : 4,
-          labelText: (0,external_wp_i18n_namespaceObject.sprintf)(
-          // translators: %1$s: comment identifier, %2$s: author name
-          (0,external_wp_i18n_namespaceObject.__)('Reply to Comment %1$s by %2$s'), thread.id, thread?.author_name || 'Unknown')
-        })
+            },
+            onCancel: event => {
+              threadRef.current?.focus();
+              event.stopPropagation(); // Prevent the parent onClick from being triggered
+              unselectThread();
+            },
+            submitButtonText: 'approved' === thread.status ? (0,external_wp_i18n_namespaceObject.__)('Reopen & Reply') : (0,external_wp_i18n_namespaceObject.__)('Reply'),
+            rows: 'approved' === thread.status ? 2 : 4,
+            labelText: (0,external_wp_i18n_namespaceObject.sprintf)(
+            // translators: %1$s: comment identifier, %2$s: author name
+            (0,external_wp_i18n_namespaceObject.__)('Reply to Comment %1$s by %2$s'), thread.id, thread?.author_name || 'Unknown')
+          })
+        })]
       })]
-    })]
-  });
+    })
+  );
 }
 const CommentBoard = ({
   thread,
@@ -35755,11 +35846,13 @@ const CommentBoard = ({
         name: thread?.author_name,
         date: thread?.date,
         userId: thread?.author
-      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.FlexItem, {
         className: "editor-collab-sidebar-panel__comment-status",
+        onClick: event => {
+          // Prevent the thread from being selected.
+          event.stopPropagation();
+        },
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalHStack, {
-          alignment: "right",
-          justify: "flex-end",
           spacing: "0",
           children: [canResolve && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
             label: (0,external_wp_i18n_namespaceObject._x)('Resolve', 'Mark comment as resolved'),
@@ -35785,10 +35878,7 @@ const CommentBoard = ({
               })
             }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Popover, {
               children: moreActions.map(action => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.Item, {
-                onClick: event => {
-                  event.stopPropagation();
-                  action.onClick();
-                },
+                onClick: () => action.onClick(),
                 children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Menu.ItemLabel, {
                   children: action.title
                 })
@@ -35877,8 +35967,10 @@ function AddComment({
   }
   const commentLabel = (0,external_wp_i18n_namespaceObject.__)('New Comment');
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+    className: "editor-collab-sidebar-panel__thread is-selected",
     spacing: "3",
-    className: "editor-collab-sidebar-panel__thread editor-collab-sidebar-panel__active-thread editor-collab-sidebar-panel__focus-thread",
+    tabIndex: 0,
+    role: "listitem",
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalHStack, {
       alignment: "left",
       spacing: "3",
@@ -36147,6 +36239,7 @@ function useBlockComments(postId) {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -36280,21 +36373,25 @@ function CollabSidebarContent({
       onError(error);
     }
   };
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "editor-collab-sidebar-panel",
     style: styles,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddComment, {
-      onSubmit: addNewComment,
-      showCommentBoard: showCommentBoard,
-      setShowCommentBoard: setShowCommentBoard
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Comments, {
-      threads: comments,
-      onEditComment: onEditComment,
-      onAddReply: addNewComment,
-      onCommentDelete: onCommentDelete,
-      showCommentBoard: showCommentBoard,
-      setShowCommentBoard: setShowCommentBoard
-    }, getSelectedBlockClientId())]
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
+      role: "list",
+      spacing: "3",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AddComment, {
+        onSubmit: addNewComment,
+        showCommentBoard: showCommentBoard,
+        setShowCommentBoard: setShowCommentBoard
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(Comments, {
+        threads: comments,
+        onEditComment: onEditComment,
+        onAddReply: addNewComment,
+        onCommentDelete: onCommentDelete,
+        showCommentBoard: showCommentBoard,
+        setShowCommentBoard: setShowCommentBoard
+      }, getSelectedBlockClientId())]
+    })
   });
 }
 
