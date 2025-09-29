@@ -49112,8 +49112,7 @@ function PostTimeToReadEdit({
   const {
     textAlign,
     displayAsRange,
-    showTimeToRead,
-    showWordCount,
+    displayMode,
     averageReadingSpeed
   } = attributes;
   const {
@@ -49151,7 +49150,7 @@ function PostTimeToReadEdit({
     const parts = [];
 
     // Add "time to read" part, if enabled.
-    if (showTimeToRead) {
+    if (displayMode === 'time') {
       let timeString;
       if (displayAsRange) {
         let maxMinutes = Math.max(1, Math.round(totalWords / averageReadingSpeed * 1.2));
@@ -49171,7 +49170,7 @@ function PostTimeToReadEdit({
     }
 
     // Add "word count" part, if enabled.
-    if (showWordCount) {
+    if (displayMode === 'words') {
       const wordCountString = wordCountType === 'words' ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: the number of words in the post. */
       (0,external_wp_i18n_namespaceObject._n)('%s word', '%s words', totalWords), totalWords.toLocaleString()) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: the number of characters in the post. */
       (0,external_wp_i18n_namespaceObject._n)('%s character', '%s characters', totalWords), totalWords.toLocaleString());
@@ -49183,7 +49182,7 @@ function PostTimeToReadEdit({
     return parts.map((part, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
       children: [part, index < parts.length - 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("br", {})]
     }, index));
-  }, [contentStructure, blocks, displayAsRange, showTimeToRead, showWordCount, averageReadingSpeed]);
+  }, [contentStructure, blocks, displayAsRange, displayMode, averageReadingSpeed]);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: dist_clsx({
       [`has-text-align-${textAlign}`]: textAlign
@@ -49200,34 +49199,16 @@ function PostTimeToReadEdit({
           });
         }
       })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+    }), displayMode === 'time' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
         label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
         resetAll: () => {
           setAttributes({
-            displayAsRange: true,
-            showTimeToRead: true,
-            showWordCount: false
+            displayAsRange: true
           });
         },
         dropdownMenuProps: dropdownMenuProps,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Show time to read'),
-          hasValue: () => !showTimeToRead,
-          onDeselect: () => {
-            setAttributes({
-              showTimeToRead: true
-            });
-          },
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-            __nextHasNoMarginBottom: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Show time to read'),
-            checked: !!showTimeToRead,
-            onChange: () => setAttributes({
-              showTimeToRead: !showTimeToRead
-            })
-          })
-        }), showTimeToRead && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
           isShownByDefault: true,
           label: (0,external_wp_i18n_namespaceObject._x)('Display as range', 'Turns reading time range display on or off'),
           hasValue: () => !displayAsRange,
@@ -49244,23 +49225,7 @@ function PostTimeToReadEdit({
               displayAsRange: !displayAsRange
             })
           })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Show word count'),
-          hasValue: () => !!showWordCount,
-          onDeselect: () => {
-            setAttributes({
-              showWordCount: false
-            });
-          },
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToggleControl, {
-            __nextHasNoMarginBottom: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Show word count'),
-            checked: !!showWordCount,
-            onChange: () => setAttributes({
-              showWordCount: !showWordCount
-            })
-          })
-        })]
+        })
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
       ...blockProps,
@@ -49286,6 +49251,40 @@ function PostTimeToReadEdit({
   })
 }));
 
+;// ./packages/block-library/build-module/post-time-to-read/variations.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+const post_time_to_read_variations_variations = [{
+  name: 'time-to-read',
+  title: (0,external_wp_i18n_namespaceObject.__)('Time to Read'),
+  description: (0,external_wp_i18n_namespaceObject.__)('Show minutes required to finish reading the post.'),
+  attributes: {
+    displayMode: 'time'
+  },
+  scope: ['inserter', 'transform'],
+  isActive: blockAttributes => blockAttributes?.displayMode === 'time',
+  icon: post_time_to_read_icon,
+  isDefault: true
+}, {
+  name: 'word-count',
+  title: (0,external_wp_i18n_namespaceObject.__)('Word Count'),
+  description: (0,external_wp_i18n_namespaceObject.__)('Show the number of words in the post.'),
+  attributes: {
+    displayMode: 'words'
+  },
+  scope: ['inserter', 'transform'],
+  isActive: blockAttributes => blockAttributes?.displayMode === 'words',
+  icon: post_time_to_read_icon
+}];
+/* harmony default export */ const post_time_to_read_variations = (post_time_to_read_variations_variations);
+
 ;// ./packages/block-library/build-module/post-time-to-read/index.js
 /**
  * Internal dependencies
@@ -49309,13 +49308,9 @@ const post_time_to_read_metadata = {
       type: "boolean",
       "default": true
     },
-    showTimeToRead: {
-      type: "boolean",
-      "default": true
-    },
-    showWordCount: {
-      type: "boolean",
-      "default": false
+    displayMode: {
+      type: "string",
+      "default": "time"
     },
     averageReadingSpeed: {
       type: "number",
@@ -49365,6 +49360,7 @@ const post_time_to_read_metadata = {
 };
 
 
+
 const {
   name: post_time_to_read_name
 } = post_time_to_read_metadata;
@@ -49372,6 +49368,7 @@ const {
 const post_time_to_read_settings = {
   icon: post_time_to_read_icon,
   edit: post_time_to_read_edit,
+  variations: post_time_to_read_variations,
   example: {}
 };
 const post_time_to_read_init = () => initBlock({
