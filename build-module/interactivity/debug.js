@@ -463,6 +463,9 @@ const createRootFragment = (parent, replaceNode) => {
     appendChild: insert,
     removeChild(c) {
       parent.removeChild(c);
+    },
+    contains(c) {
+      parent.contains(c);
     }
   };
 };
@@ -1715,6 +1718,7 @@ preact_module/* options */.fF.vnode = vnode => {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -1869,6 +1873,17 @@ const getGlobalAsyncEventDirective = type => {
     });
   };
 };
+
+/**
+ * Relates each router region with its current vDOM content. Used by the
+ * `router-region` directive.
+ *
+ * Keys are router region IDs, and values are signals with the corresponding
+ * VNode rendered inside. If the value is `null`, that means the regions should
+ * not be rendered. If the value is `undefined`, the region is already contained
+ * inside another router region and does not need to change its children.
+ */
+const routerRegions = new Map();
 /* harmony default export */ const directives = (() => {
   // data-wp-context
   directive('context', ({
@@ -2331,6 +2346,33 @@ const getGlobalAsyncEventDirective = type => {
   directive('each-child', () => null, {
     priority: 1
   });
+  directive('router-region', ({
+    directives: {
+      'router-region': routerRegion
+    }
+  }) => {
+    const entry = routerRegion.find(isDefaultDirectiveSuffix);
+    if (!entry) {
+      return;
+    }
+    const regionId = typeof entry.value === 'string' ? entry.value : entry.value.id;
+    if (!routerRegions.has(regionId)) {
+      routerRegions.set(regionId, signals_core_module_d());
+    }
+
+    // Get the content of this router region.
+    const vdom = routerRegions.get(regionId).value;
+    if (vdom && typeof vdom.type !== 'string') {
+      // The scope needs to be injected.
+      const previousScope = getScope();
+      return (0,preact_module/* cloneElement */.Ob)(vdom, {
+        previousScope
+      });
+    }
+    return vdom;
+  }, {
+    priority: 1
+  });
 });
 
 ;// ./packages/interactivity/build-module/constants.js
@@ -2532,12 +2574,13 @@ function toVdom(root) {
 
 // Keep the same root fragment for each interactive region node.
 const regionRootFragments = new WeakMap();
-const getRegionRootFragment = region => {
+const getRegionRootFragment = regions => {
+  const region = Array.isArray(regions) ? regions[0] : regions;
   if (!region.parentElement) {
     throw Error('The passed region should be an element with a parent.');
   }
   if (!regionRootFragments.has(region)) {
-    regionRootFragments.set(region, createRootFragment(region.parentElement, region));
+    regionRootFragments.set(region, createRootFragment(region.parentElement, regions));
   }
   return regionRootFragments.get(region);
 };
@@ -2609,7 +2652,8 @@ const privateApis = lock => {
       proxifyState: proxifyState,
       parseServerData: parseServerData,
       populateServerData: populateServerData,
-      batch: signals_core_module_r
+      batch: signals_core_module_r,
+      routerRegions: routerRegions
     };
   }
   throw new Error('Forbidden access.');
