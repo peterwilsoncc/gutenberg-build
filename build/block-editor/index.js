@@ -22246,6 +22246,21 @@ InspectorAdvancedControls.slotName = 'InspectorAdvancedControls';
  */
 /* harmony default export */ const inspector_controls = (InspectorControls);
 
+;// ./packages/icons/build-module/library/reset.js
+/**
+ * WordPress dependencies
+ */
+
+
+const reset_reset = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M7 11.5h10V13H7z"
+  })
+});
+/* harmony default export */ const library_reset = (reset_reset);
+
 ;// external ["wp","url"]
 const external_wp_url_namespaceObject = window["wp"]["url"];
 ;// external ["wp","dom"]
@@ -24853,6 +24868,7 @@ const MediaReplaceFlow = ({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -24871,6 +24887,24 @@ const BACKGROUND_POPOVER_PROPS = {
   className: 'block-editor-global-styles-background-panel__popover'
 };
 const background_image_control_noop = () => {};
+
+/**
+ * Focuses the toggle button.
+ * @param {Object} containerRef - ref object containing current element
+ */
+const focusToggleButton = containerRef => {
+  // Use requestAnimationFrame to ensure DOM updates are complete
+  window.requestAnimationFrame(() => {
+    const [toggleButton] = external_wp_dom_namespaceObject.focus.tabbable.find(containerRef?.current);
+    if (!toggleButton) {
+      return;
+    }
+    // Focus the toggle button and close the dropdown menu.
+    // This ensures similar behaviour as to selecting an image, where the dropdown is
+    // closed and focus is redirected to the dropdown toggle button.
+    toggleButton.focus();
+  });
+};
 
 /**
  * Get the help text for the background size control.
@@ -24985,7 +25019,9 @@ function BackgroundControlsPanel({
   url: imgUrl,
   children,
   onToggle: onToggleCallback = background_image_control_noop,
-  hasImageValue
+  hasImageValue,
+  onReset,
+  containerRef
 }) {
   if (!hasImageValue) {
     return;
@@ -25004,13 +25040,30 @@ function BackgroundControlsPanel({
         'aria-label': (0,external_wp_i18n_namespaceObject.__)('Background size, position and repeat options.'),
         isOpen
       };
-      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorImagePreviewItem, {
-        imgUrl: imgUrl,
-        filename: filename,
-        label: imgLabel,
-        toggleProps: toggleProps,
-        as: "button",
-        onToggleCallback: onToggleCallback
+      return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(InspectorImagePreviewItem, {
+          imgUrl: imgUrl,
+          filename: filename,
+          label: imgLabel,
+          toggleProps: toggleProps,
+          as: "button",
+          onToggleCallback: onToggleCallback
+        }), onReset && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.Button, {
+          __next40pxDefaultSize: true,
+          label: (0,external_wp_i18n_namespaceObject.__)('Reset'),
+          className: "block-editor-global-styles-background-panel__reset",
+          size: "small",
+          icon: library_reset,
+          onClick: () => {
+            onReset();
+            // Close the dropdown if open.
+            if (isOpen) {
+              onToggle();
+            }
+            // Focus the toggle button.
+            focusToggleButton(containerRef);
+          }
+        })]
       });
     },
     renderContent: () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalDropdownContentWrapper, {
@@ -25095,7 +25148,7 @@ function BackgroundImageControls({
     }));
     setIsUploading(false);
     // Close the dropdown and focus the toggle button.
-    closeAndFocus();
+    focusToggleButton(containerRef);
   };
 
   // Drag and drop callback, restricting image to one.
@@ -25111,19 +25164,6 @@ function BackgroundImageControls({
     });
   };
   const hasValue = hasBackgroundImageValue(style);
-  const closeAndFocus = () => {
-    // Use requestAnimationFrame to ensure DOM updates are complete
-    window.requestAnimationFrame(() => {
-      const [toggleButton] = external_wp_dom_namespaceObject.focus.tabbable.find(containerRef?.current);
-      if (!toggleButton) {
-        return;
-      }
-      // Focus the toggle button and close the dropdown menu.
-      // This ensures similar behaviour as to selecting an image, where the dropdown is
-      // closed and focus is redirected to the dropdown toggle button.
-      toggleButton.focus();
-    });
-  };
   const onRemove = () => onChange(setImmutably(style, ['background'], {
     backgroundImage: 'none'
   }));
@@ -25153,12 +25193,12 @@ function BackgroundImageControls({
       }),
       onError: onUploadError,
       onReset: () => {
-        closeAndFocus();
+        focusToggleButton(containerRef);
         onResetImage();
       },
       children: canRemove && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
         onClick: () => {
-          closeAndFocus();
+          focusToggleButton(containerRef);
           onRemove();
           onRemoveImage();
         },
@@ -25368,6 +25408,8 @@ function BackgroundImagePanel({
       url: url,
       onToggle: setIsDropDownOpen,
       hasImageValue: hasImageValue,
+      onReset: resetBackground,
+      containerRef: containerRef,
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalVStack, {
         spacing: 3,
         className: "single-column",
@@ -27023,21 +27065,6 @@ const shadow = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ext
   })
 });
 /* harmony default export */ const library_shadow = (shadow);
-
-;// ./packages/icons/build-module/library/reset.js
-/**
- * WordPress dependencies
- */
-
-
-const reset_reset = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
-  xmlns: "http://www.w3.org/2000/svg",
-  viewBox: "0 0 24 24",
-  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
-    d: "M7 11.5h10V13H7z"
-  })
-});
-/* harmony default export */ const library_reset = (reset_reset);
 
 ;// ./packages/block-editor/build-module/components/global-styles/shadow-panel-components.js
 /**
