@@ -35523,6 +35523,7 @@ function CommentForm({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -35596,9 +35597,16 @@ function Thread({
   setShowCommentBoard
 }) {
   const {
-    flashBlock
+    toggleBlockHighlight
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const relatedBlockElement = useBlockElement(thread.blockClientId);
+  const debouncedToggleBlockHighlight = (0,external_wp_compose_namespaceObject.useDebounce)(toggleBlockHighlight, 50);
+  const onMouseEnter = () => {
+    debouncedToggleBlockHighlight(thread.blockClientId, true);
+  };
+  const onMouseLeave = () => {
+    debouncedToggleBlockHighlight(thread.blockClientId, false);
+  };
   const handleCommentSelect = ({
     id,
     blockClientId
@@ -35610,7 +35618,6 @@ function Thread({
         behavior: 'instant',
         block: 'center'
       });
-      flashBlock(blockClientId);
     }
   };
   const clearThreadFocus = () => {
@@ -35627,6 +35634,10 @@ function Thread({
     id: thread.id,
     spacing: "2",
     onClick: () => handleCommentSelect(thread),
+    onMouseEnter: onMouseEnter,
+    onMouseLeave: onMouseLeave,
+    onFocus: onMouseEnter,
+    onBlur: onMouseLeave,
     children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
       thread: thread,
       onEdit: onEditComment,
