@@ -29843,7 +29843,7 @@ function EditSiteEditor({
           const _title = typeof newItem.title === 'string' ? newItem.title : newItem.title?.rendered;
           createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
           // translators: %s: Title of the created post or template, e.g: "Hello world".
-          (0,external_wp_i18n_namespaceObject.__)('"%s" successfully created.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(_title)), {
+          (0,external_wp_i18n_namespaceObject.__)('"%s" successfully created.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(_title) || (0,external_wp_i18n_namespaceObject.__)('(no title)')), {
             type: 'snackbar',
             id: 'duplicate-post-action',
             actions: [{
@@ -51616,7 +51616,7 @@ function NewTemplateModal({
       history.navigate(`/${TEMPLATE_POST_TYPE}/${newTemplate.id}?canvas=edit`);
       createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: %s: Title of the created post or template, e.g: "Hello world".
-      (0,external_wp_i18n_namespaceObject.__)('"%s" successfully created.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(newTemplate.title?.rendered || title)), {
+      (0,external_wp_i18n_namespaceObject.__)('"%s" successfully created.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(newTemplate.title?.rendered || title) || (0,external_wp_i18n_namespaceObject.__)('(no title)')), {
         type: 'snackbar'
       });
     } catch (error) {
@@ -53069,7 +53069,7 @@ function AddNewPostModal({
       onSave(newPage);
       createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
       // translators: %s: Title of the created post or template, e.g: "Hello world".
-      (0,external_wp_i18n_namespaceObject.__)('"%s" successfully created.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(newPage.title?.rendered || title)), {
+      (0,external_wp_i18n_namespaceObject.__)('"%s" successfully created.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(newPage.title?.rendered || title) || (0,external_wp_i18n_namespaceObject.__)('(no title)')), {
         type: 'snackbar'
       });
     } catch (error) {

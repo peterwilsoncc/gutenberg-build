@@ -13200,6 +13200,7 @@ function DataForm({
  */
 
 
+
 /**
  * Internal dependencies
  */
@@ -13213,17 +13214,16 @@ function isTemplatePart(post) {
 function isTemplateOrTemplatePart(p) {
   return p.type === 'wp_template' || p.type === 'wp_template_part';
 }
-function getItemTitle(item) {
+function getItemTitle(item, fallback = (0,external_wp_i18n_namespaceObject.__)('(no title)')) {
+  let title = '';
   if (typeof item.title === 'string') {
-    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title);
+    title = (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title);
+  } else if (item.title && 'rendered' in item.title) {
+    title = (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.rendered);
+  } else if (item.title && 'raw' in item.title) {
+    title = (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.raw);
   }
-  if (item.title && 'rendered' in item.title) {
-    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.rendered);
-  }
-  if (item.title && 'raw' in item.title) {
-    return (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(item.title.raw);
-  }
-  return '';
+  return title || fallback;
 }
 
 /**
@@ -13327,7 +13327,6 @@ const titleField = {
 
 
 
-
 /**
  * Internal dependencies
  */
@@ -13404,7 +13403,7 @@ const duplicatePost = {
         });
         createSuccessNotice((0,external_wp_i18n_namespaceObject.sprintf)(
         // translators: %s: Title of the created post, e.g: "Hello world".
-        (0,external_wp_i18n_namespaceObject.__)('"%s" successfully created.'), (0,external_wp_htmlEntities_namespaceObject.decodeEntities)(newItem.title?.rendered || item.title)), {
+        (0,external_wp_i18n_namespaceObject.__)('"%s" successfully created.'), getItemTitle(newItem)), {
           id: 'duplicate-post-action',
           type: 'snackbar'
         });
@@ -14392,7 +14391,7 @@ const renamePost = {
     onActionPerformed
   }) => {
     const [item] = items;
-    const [title, setTitle] = (0,external_wp_element_namespaceObject.useState)(() => getItemTitle(item));
+    const [title, setTitle] = (0,external_wp_element_namespaceObject.useState)(() => getItemTitle(item, ''));
     const {
       editEntityRecord,
       saveEditedEntityRecord
