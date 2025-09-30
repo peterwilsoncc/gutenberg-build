@@ -1756,6 +1756,11 @@ __webpack_require__.d(footnotes_namespaceObject, {
 
 ;// external ["wp","blocks"]
 const external_wp_blocks_namespaceObject = window["wp"]["blocks"];
+;// external ["wp","element"]
+const external_wp_element_namespaceObject = window["wp"]["element"];
+;// external ["wp","serverSideRender"]
+const external_wp_serverSideRender_namespaceObject = window["wp"]["serverSideRender"];
+var external_wp_serverSideRender_default = /*#__PURE__*/__webpack_require__.n(external_wp_serverSideRender_namespaceObject);
 ;// external ["wp","i18n"]
 const external_wp_i18n_namespaceObject = window["wp"]["i18n"];
 ;// external ["wp","blockEditor"]
@@ -1764,8 +1769,6 @@ const external_wp_blockEditor_namespaceObject = window["wp"]["blockEditor"];
 const external_wp_components_namespaceObject = window["wp"]["components"];
 ;// external ["wp","data"]
 const external_wp_data_namespaceObject = window["wp"]["data"];
-;// external ["wp","element"]
-const external_wp_element_namespaceObject = window["wp"]["element"];
 ;// external ["wp","blob"]
 const external_wp_blob_namespaceObject = window["wp"]["blob"];
 ;// external ["wp","coreData"]
@@ -2902,9 +2905,6 @@ const archive = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ex
 });
 /* harmony default export */ const library_archive = (archive);
 
-;// external ["wp","serverSideRender"]
-const external_wp_serverSideRender_namespaceObject = window["wp"]["serverSideRender"];
-var external_wp_serverSideRender_default = /*#__PURE__*/__webpack_require__.n(external_wp_serverSideRender_namespaceObject);
 ;// ./packages/block-library/build-module/archives/edit.js
 /**
  * WordPress dependencies
@@ -71154,6 +71154,8 @@ lock(privateApis, {
  */
 
 
+
+
 /**
  * Internal dependencies
  */
@@ -71345,6 +71347,24 @@ const registerCoreBlocks = (blocks = __experimentalGetCoreBlocks()) => {
   blocks.forEach(({
     init
   }) => init());
+
+  // Auto-register PHP-only blocks with ServerSideRender
+  if (window.__unstableAutoRegisterBlocks) {
+    window.__unstableAutoRegisterBlocks.forEach(blockName => {
+      (0,external_wp_blocks_namespaceObject.registerBlockType)(blockName, {
+        title: blockName,
+        edit: ({
+          attributes
+        }) => {
+          return (0,external_wp_element_namespaceObject.createElement)((external_wp_serverSideRender_default()), {
+            block: blockName,
+            attributes
+          });
+        },
+        save: () => null
+      });
+    });
+  }
   (0,external_wp_blocks_namespaceObject.setDefaultBlockName)(paragraph_name);
   if (window.wp && window.wp.oldEditor && blocks.some(({
     name
