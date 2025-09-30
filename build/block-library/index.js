@@ -49147,11 +49147,9 @@ function PostTimeToReadEdit({
      */
     const wordCountType = (0,external_wp_i18n_namespaceObject._x)('words', 'Word count type. Do not translate!');
     const totalWords = (0,external_wp_wordcount_namespaceObject.count)(content || '', wordCountType);
-    const parts = [];
 
     // Add "time to read" part, if enabled.
     if (displayMode === 'time') {
-      let timeString;
       if (displayAsRange) {
         let maxMinutes = Math.max(1, Math.round(totalWords / averageReadingSpeed * 1.2));
         const minMinutes = Math.max(1, Math.round(totalWords / averageReadingSpeed * 0.8));
@@ -49160,28 +49158,19 @@ function PostTimeToReadEdit({
         }
         // translators: %1$s: minimum minutes, %2$s: maximum minutes to read the post.
         const rangeLabel = (0,external_wp_i18n_namespaceObject._x)('%1$s–%2$s minutes', 'Range of minutes to read');
-        timeString = (0,external_wp_i18n_namespaceObject.sprintf)(rangeLabel, minMinutes, maxMinutes);
-      } else {
-        const minutesToRead = Math.max(1, Math.round(totalWords / averageReadingSpeed));
-        timeString = (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: the number of minutes to read the post. */
-        (0,external_wp_i18n_namespaceObject._n)('%s minute', '%s minutes', minutesToRead), minutesToRead);
+        return (0,external_wp_i18n_namespaceObject.sprintf)(rangeLabel, minMinutes, maxMinutes);
       }
-      parts.push(timeString);
+      const minutesToRead = Math.max(1, Math.round(totalWords / averageReadingSpeed));
+      return (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: the number of minutes to read the post. */
+      (0,external_wp_i18n_namespaceObject._n)('%s minute', '%s minutes', minutesToRead), minutesToRead);
     }
 
     // Add "word count" part, if enabled.
     if (displayMode === 'words') {
-      const wordCountString = wordCountType === 'words' ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: the number of words in the post. */
+      return wordCountType === 'words' ? (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: the number of words in the post. */
       (0,external_wp_i18n_namespaceObject._n)('%s word', '%s words', totalWords), totalWords.toLocaleString()) : (0,external_wp_i18n_namespaceObject.sprintf)(/* translators: %s: the number of characters in the post. */
       (0,external_wp_i18n_namespaceObject._n)('%s character', '%s characters', totalWords), totalWords.toLocaleString());
-      parts.push(wordCountString);
     }
-    if (parts.length === 1) {
-      return parts[0];
-    }
-    return parts.map((part, index) => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("span", {
-      children: [part, index < parts.length - 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("br", {})]
-    }, index));
   }, [contentStructure, blocks, displayAsRange, displayMode, averageReadingSpeed]);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: dist_clsx({
