@@ -35777,9 +35777,11 @@ function Thread({
   const lastReply = !!replies.length ? replies[replies.length - 1] : undefined;
   const restReplies = !!replies.length ? replies.slice(0, -1) : [];
   const commentExcerpt = getCommentExcerpt((0,external_wp_dom_namespaceObject.__unstableStripHTML)(thread.content.rendered), 10);
-  const ariaLabel = (0,external_wp_i18n_namespaceObject.sprintf)(
+  const ariaLabel = relatedBlockElement ? (0,external_wp_i18n_namespaceObject.sprintf)(
   // translators: %s: comment excerpt
-  (0,external_wp_i18n_namespaceObject.__)('Comment: %s'), commentExcerpt);
+  (0,external_wp_i18n_namespaceObject.__)('Comment: %s'), commentExcerpt) : (0,external_wp_i18n_namespaceObject.sprintf)(
+  // translators: %s: comment excerpt
+  (0,external_wp_i18n_namespaceObject.__)('Original block deleted. Comment: %s'), commentExcerpt);
   return (
     /*#__PURE__*/
     // Disable reason: role="listitem" does in fact support aria-expanded.
@@ -35815,7 +35817,12 @@ function Thread({
       ref: threadRef,
       "aria-label": ariaLabel,
       "aria-expanded": isSelected,
-      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
+      children: [!relatedBlockElement && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalText, {
+        as: "p",
+        weight: 500,
+        variant: "muted",
+        children: (0,external_wp_i18n_namespaceObject.__)('Original block deleted.')
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CommentBoard, {
         thread: thread,
         onEdit: (params = {}) => {
           const {
