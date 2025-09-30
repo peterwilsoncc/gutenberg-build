@@ -32753,6 +32753,72 @@ function integer_sort(a, b, direction) {
   }
 });
 
+;// ./packages/dataviews/build-module/field-types/number.js
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+function number_sort(a, b, direction) {
+  return direction === 'asc' ? a - b : b - a;
+}
+function isEmpty(value) {
+  return value === '' || value === undefined || value === null;
+}
+/* harmony default export */ const number = ({
+  sort: number_sort,
+  isValid: {
+    custom: (item, field) => {
+      const value = field.getValue({
+        item
+      });
+      if (!isEmpty(value) && !Number.isFinite(value)) {
+        return (0,external_wp_i18n_namespaceObject.__)('Value must be a number.');
+      }
+      if (field?.elements) {
+        const isMember = field.elements.some(element => element.value === Number(value));
+        if (!isMember) {
+          return (0,external_wp_i18n_namespaceObject.__)('Value must be one of the elements.');
+        }
+      }
+      return null;
+    }
+  },
+  Edit: 'number',
+  render: ({
+    item,
+    field
+  }) => {
+    const value = field.getValue({
+      item
+    });
+    if (!isEmpty(value) && field.elements) {
+      const numericValue = Number(value);
+      const match = field.elements.find(element => Number.isFinite(Number(element.value)) && Number(element.value) === numericValue);
+      if (match) {
+        return match.label;
+      }
+    }
+
+    // TODO: remove this hardcoded value when the decimal number is configurable
+    return Number(value).toFixed(2);
+  },
+  enableSorting: true,
+  filterBy: {
+    defaultOperators: [constants_OPERATOR_IS, constants_OPERATOR_IS_NOT, OPERATOR_LESS_THAN, OPERATOR_GREATER_THAN, OPERATOR_LESS_THAN_OR_EQUAL, OPERATOR_GREATER_THAN_OR_EQUAL, OPERATOR_BETWEEN],
+    validOperators: [
+    // Single-selection
+    constants_OPERATOR_IS, constants_OPERATOR_IS_NOT, OPERATOR_LESS_THAN, OPERATOR_GREATER_THAN, OPERATOR_LESS_THAN_OR_EQUAL, OPERATOR_GREATER_THAN_OR_EQUAL, OPERATOR_BETWEEN,
+    // Multiple-selection
+    constants_OPERATOR_IS_ANY, constants_OPERATOR_IS_NONE, OPERATOR_IS_ALL, OPERATOR_IS_NOT_ALL]
+  }
+});
+
 ;// ./packages/dataviews/build-module/field-types/text.js
 /**
  * WordPress dependencies
@@ -33370,6 +33436,7 @@ function url_sort(valueA, valueB, direction) {
 
 
 
+
 /**
  *
  * @param {FieldType} type The field type definition to get.
@@ -33382,6 +33449,9 @@ function getFieldTypeDefinition(type) {
   }
   if ('integer' === type) {
     return integer;
+  }
+  if ('number' === type) {
+    return number;
   }
   if ('text' === type) {
     return field_types_text;
@@ -37282,7 +37352,7 @@ function Url({
   });
 }
 
-;// ./packages/dataviews/build-module/dataform-controls/integer.js
+;// ./packages/dataviews/build-module/dataform-controls/utils/validated-number.js
 /**
  * External dependencies
  */
@@ -37304,14 +37374,22 @@ function Url({
 const {
   ValidatedNumberControl
 } = lock_unlock_unlock(external_wp_components_namespaceObject.privateApis);
+function toNumberOrEmpty(value) {
+  if (value === '' || value === undefined) {
+    return '';
+  }
+  const number = Number(value);
+  return Number.isFinite(number) ? number : '';
+}
 function BetweenControls({
   value,
   onChange,
-  hideLabelFromVision
+  hideLabelFromVision,
+  step
 }) {
   const [min = '', max = ''] = value;
-  const onChangeMin = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange([Number(newValue), max]), [onChange, max]);
-  const onChangeMax = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange([min, Number(newValue)]), [onChange, min]);
+  const onChangeMin = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange([toNumberOrEmpty(newValue), max]), [onChange, max]);
+  const onChangeMax = (0,external_wp_element_namespaceObject.useCallback)(newValue => onChange([min, toNumberOrEmpty(newValue)]), [onChange, min]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.BaseControl, {
     __nextHasNoMarginBottom: true,
     help: (0,external_wp_i18n_namespaceObject.__)('The max. value must be greater than the min. value.'),
@@ -37321,29 +37399,33 @@ function BetweenControls({
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
         label: (0,external_wp_i18n_namespaceObject.__)('Min.'),
         value: min,
-        max: max ? Number(max) - 1 : undefined,
+        max: max ? Number(max) - step : undefined,
         onChange: onChangeMin,
         __next40pxDefaultSize: true,
-        hideLabelFromVision: hideLabelFromVision
+        hideLabelFromVision: hideLabelFromVision,
+        step: step
       }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalNumberControl, {
         label: (0,external_wp_i18n_namespaceObject.__)('Max.'),
         value: max,
-        min: min ? Number(min) + 1 : undefined,
+        min: min ? Number(min) + step : undefined,
         onChange: onChangeMax,
         __next40pxDefaultSize: true,
-        hideLabelFromVision: hideLabelFromVision
+        hideLabelFromVision: hideLabelFromVision,
+        step: step
       })]
     })
   });
 }
-function Integer({
+function ValidatedNumber({
   data,
   field,
   onChange,
   hideLabelFromVision,
-  operator
+  operator,
+  decimals
 }) {
   var _getValue;
+  const step = Math.pow(10, Math.abs(decimals) * -1);
   const {
     label,
     description,
@@ -37391,7 +37473,8 @@ function Integer({
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BetweenControls, {
       value: valueBetween,
       onChange: onChangeBetweenControls,
-      hideLabelFromVision: hideLabelFromVision
+      hideLabelFromVision: hideLabelFromVision,
+      step: step
     });
   }
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedNumberControl, {
@@ -37403,7 +37486,37 @@ function Integer({
     value: value,
     onChange: onChangeControl,
     __next40pxDefaultSize: true,
-    hideLabelFromVision: hideLabelFromVision
+    hideLabelFromVision: hideLabelFromVision,
+    step: step
+  });
+}
+
+;// ./packages/dataviews/build-module/dataform-controls/integer.js
+/**
+ * Internal dependencies
+ */
+
+
+
+function integer_Number(props) {
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedNumber, {
+    ...props,
+    decimals: 0
+  });
+}
+
+;// ./packages/dataviews/build-module/dataform-controls/number.js
+/**
+ * Internal dependencies
+ */
+
+
+
+function number_Number(props) {
+  // TODO: remove this hardcoded value when the decimal number is configurable
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ValidatedNumber, {
+    ...props,
+    decimals: 2
   });
 }
 
@@ -38184,6 +38297,7 @@ function Password({
 
 
 
+
 const FORM_CONTROLS = {
   array: ArrayControl,
   checkbox: Checkbox,
@@ -38193,7 +38307,8 @@ const FORM_CONTROLS = {
   email: Email,
   telephone: Telephone,
   url: Url,
-  integer: Integer,
+  integer: integer_Number,
+  number: number_Number,
   password: Password,
   radio: Radio,
   select: Select,
@@ -41892,7 +42007,7 @@ function isLazyValue(value) {
 function isObject(arg) {
   return typeof arg === "object" && arg != null;
 }
-function isEmpty(arg) {
+function PBFD2E7P_isEmpty(arg) {
   if (Array.isArray(arg)) return !arg.length;
   if (isObject(arg)) return !Object.keys(arg).length;
   if (arg == null) return true;
