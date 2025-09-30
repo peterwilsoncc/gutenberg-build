@@ -54510,7 +54510,7 @@ const {
   usePostFields: post_edit_usePostFields,
   PostCardPanel
 } = unlock(external_wp_editor_namespaceObject.privateApis);
-const fieldsWithBulkEditSupport = ['title', 'status', 'date', 'author', 'comment_status'];
+const fieldsWithBulkEditSupport = ['title', 'status', 'date', 'author', 'discussion'];
 function PostEditForm({
   postType,
   postId
@@ -54561,7 +54561,12 @@ function PostEditForm({
       id: 'status',
       label: (0,external_wp_i18n_namespaceObject.__)('Status & Visibility'),
       children: ['status', 'password']
-    }, 'author', 'date', 'slug', 'parent', 'comment_status', {
+    }, 'author', 'date', 'slug', 'parent', {
+      id: 'discussion',
+      label: (0,external_wp_i18n_namespaceObject.__)('Discussion'),
+      children: ['comment_status', 'ping_status'],
+      summary: 'discussion'
+    }, {
       label: (0,external_wp_i18n_namespaceObject.__)('Template'),
       id: 'template',
       layout: {

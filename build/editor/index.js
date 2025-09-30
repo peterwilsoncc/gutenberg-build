@@ -16745,10 +16745,11 @@ const parentField = {
 
 const commentStatusField = {
   id: 'comment_status',
-  label: (0,external_wp_i18n_namespaceObject.__)('Discussion'),
+  label: (0,external_wp_i18n_namespaceObject.__)('Comments'),
   type: 'text',
   Edit: 'radio',
   enableSorting: false,
+  enableHiding: false,
   filterBy: false,
   elements: [{
     value: 'open',
@@ -16765,6 +16766,103 @@ const commentStatusField = {
  * Comment status field for BasePost.
  */
 /* harmony default export */ const comment_status = (commentStatusField);
+
+;// ./packages/fields/build-module/fields/ping-status/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+function PingStatusEdit({
+  data,
+  onChange
+}) {
+  var _data$ping_status;
+  const pingStatus = (_data$ping_status = data?.ping_status) !== null && _data$ping_status !== void 0 ? _data$ping_status : 'open';
+  const onTogglePingback = checked => {
+    onChange({
+      ...data,
+      ping_status: checked ? 'open' : 'closed'
+    });
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+    __nextHasNoMarginBottom: true,
+    label: (0,external_wp_i18n_namespaceObject.__)('Enable pingbacks & trackbacks'),
+    checked: pingStatus === 'open',
+    onChange: onTogglePingback,
+    help: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ExternalLink, {
+      href: (0,external_wp_i18n_namespaceObject.__)('https://wordpress.org/documentation/article/trackbacks-and-pingbacks/'),
+      children: (0,external_wp_i18n_namespaceObject.__)('Learn more about pingbacks & trackbacks')
+    })
+  });
+}
+const pingStatusField = {
+  id: 'ping_status',
+  label: (0,external_wp_i18n_namespaceObject.__)('Trackbacks & Pingbacks'),
+  type: 'text',
+  Edit: PingStatusEdit,
+  enableSorting: false,
+  enableHiding: false,
+  filterBy: false,
+  elements: [{
+    value: 'open',
+    label: (0,external_wp_i18n_namespaceObject.__)('Allow'),
+    description: (0,external_wp_i18n_namespaceObject.__)('Allow link notifications from other blogs (pingbacks and trackbacks) on new articles.')
+  }, {
+    value: 'closed',
+    label: (0,external_wp_i18n_namespaceObject.__)("Don't allow"),
+    description: (0,external_wp_i18n_namespaceObject.__)("Don't allow link notifications from other blogs (pingbacks and trackbacks) on new articles.")
+  }]
+};
+
+/**
+ * Ping status field for BasePost.
+ */
+/* harmony default export */ const ping_status = (pingStatusField);
+
+;// ./packages/fields/build-module/fields/discussion/index.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+const discussionField = {
+  id: 'discussion',
+  label: (0,external_wp_i18n_namespaceObject.__)('Discussion'),
+  type: 'text',
+  render: ({
+    item
+  }) => {
+    const commentsOpen = item.comment_status === 'open';
+    const pingsOpen = item.ping_status === 'open';
+    if (commentsOpen && pingsOpen) {
+      return (0,external_wp_i18n_namespaceObject.__)('Open');
+    }
+    if (commentsOpen && !pingsOpen) {
+      return (0,external_wp_i18n_namespaceObject.__)('Comments only');
+    }
+    if (!commentsOpen && pingsOpen) {
+      return (0,external_wp_i18n_namespaceObject.__)('Pings only');
+    }
+    return (0,external_wp_i18n_namespaceObject.__)('Closed');
+  }
+};
+
+/**
+ * Discussion field for BasePost with custom render logic.
+ */
+/* harmony default export */ const discussion = (discussionField);
 
 ;// ./packages/fields/build-module/fields/template/template-edit.js
 /**
@@ -22073,7 +22171,7 @@ const registerPostTypeSchema = postType => async ({
   const actions = [postTypeConfig.viewable ? view_post : undefined, !!postTypeConfig.supports?.revisions ? view_post_revisions : undefined,
   // @ts-ignore
    true ? !['wp_block', 'wp_template_part'].includes(postTypeConfig.slug) && canCreate && duplicate_post : 0, postTypeConfig.slug === 'wp_template_part' && canCreate && currentTheme?.is_block_theme ? duplicate_template_part : undefined, canCreate && postTypeConfig.slug === 'wp_block' ? duplicate_pattern : undefined, postTypeConfig.supports?.title ? rename_post : undefined, postTypeConfig.supports?.['page-attributes'] ? reorder_page : undefined, postTypeConfig.slug === 'wp_block' ? export_pattern : undefined, restore_post, reset_post, delete_post, trash_post, permanently_delete_post].filter(Boolean);
-  const fields = [postTypeConfig.supports?.thumbnail && currentTheme?.theme_supports?.['post-thumbnails'] && featured_image, postTypeConfig.supports?.author && author, fields_status, fields_date, slug, postTypeConfig.supports?.['page-attributes'] && fields_parent, postTypeConfig.supports?.comments && comment_status, fields_template, fields_password, postTypeConfig.supports?.editor && postTypeConfig.viewable && content_preview].filter(Boolean);
+  const fields = [postTypeConfig.supports?.thumbnail && currentTheme?.theme_supports?.['post-thumbnails'] && featured_image, postTypeConfig.supports?.author && author, fields_status, fields_date, slug, postTypeConfig.supports?.['page-attributes'] && fields_parent, postTypeConfig.supports?.comments && comment_status, postTypeConfig.supports?.trackbacks && ping_status, (postTypeConfig.supports?.comments || postTypeConfig.supports?.trackbacks) && discussion, fields_template, fields_password, postTypeConfig.supports?.editor && postTypeConfig.viewable && content_preview].filter(Boolean);
   if (postTypeConfig.supports?.title) {
     let _titleField;
     if (postType === 'page') {
