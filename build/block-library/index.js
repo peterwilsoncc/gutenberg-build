@@ -54755,7 +54755,7 @@ function QueryTitleEdit({
     postTypeLabel
   } = usePostTypeLabel(query?.postType);
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-  const TagName = `h${level}`;
+  const TagName = level === 0 ? 'p' : `h${level}`;
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
     className: dist_clsx('wp-block-query-title__placeholder', {
       [`has-text-align-${textAlign}`]: textAlign
