@@ -4617,7 +4617,8 @@ const savePost = (options = {}) => async ({
   if (!error) {
     try {
       await (0,external_wp_hooks_namespaceObject.doActionAsync)('editor.savePost', {
-        id: previousRecord.id
+        id: previousRecord.id,
+        type: previousRecord.type
       }, options);
     } catch (err) {
       error = err;
@@ -4627,6 +4628,13 @@ const savePost = (options = {}) => async ({
     type: 'REQUEST_POST_UPDATE_FINISH',
     options
   });
+  if (!options.isAutosave && previousRecord.type === 'wp_template') {
+    templateActivationNotice({
+      select,
+      dispatch,
+      registry
+    });
+  }
   if (error) {
     const args = getNotificationArgumentsForSaveFail({
       post: previousRecord,
@@ -4654,6 +4662,59 @@ const savePost = (options = {}) => async ({
     }
   }
 };
+async function templateActivationNotice({
+  select,
+  registry
+}) {
+  const editorSettings = select.getEditorSettings();
+
+  // Don't open for focused entity.
+  if (editorSettings.onNavigateToPreviousEntityRecord) {
+    return;
+  }
+  const {
+    id,
+    slug
+  } = select.getCurrentPost();
+  const site = await registry.select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', 'site');
+
+  // Already active.
+  if (site.active_templates[slug] === id) {
+    return;
+  }
+  await registry.dispatch(external_wp_notices_namespaceObject.store).createNotice('info', (0,external_wp_i18n_namespaceObject.sprintf)(
+  // translators: %s: template slug
+  (0,external_wp_i18n_namespaceObject.__)('This is a "%s" template. Do you want to activate it?'), slug), {
+    id: 'template-activate-notice',
+    actions: [{
+      label: (0,external_wp_i18n_namespaceObject.__)('Activate'),
+      onClick: async () => {
+        await registry.dispatch(external_wp_notices_namespaceObject.store).removeNotice('template-activate-notice');
+        await registry.dispatch(external_wp_notices_namespaceObject.store).createNotice('info', (0,external_wp_i18n_namespaceObject.__)('Activating template…'), {
+          id: 'template-activating-notice'
+        });
+        try {
+          const currentSite = await registry.select(external_wp_coreData_namespaceObject.store).getEntityRecord('root', 'site');
+          await registry.dispatch(external_wp_coreData_namespaceObject.store).saveEntityRecord('root', 'site', {
+            active_templates: {
+              ...currentSite.active_templates,
+              [slug]: id
+            }
+          }, {
+            throwOnError: true
+          });
+          await registry.dispatch(external_wp_notices_namespaceObject.store).removeNotice('template-activating-notice');
+          await registry.dispatch(external_wp_notices_namespaceObject.store).createSuccessNotice((0,external_wp_i18n_namespaceObject.__)('Template activated.'));
+        } catch (error) {
+          await registry.dispatch(external_wp_notices_namespaceObject.store).removeNotice('template-activating-notice');
+          await registry.dispatch(external_wp_notices_namespaceObject.store).createErrorNotice((0,external_wp_i18n_namespaceObject.__)('Template activation failed.'));
+          // Rethrow for debugging.
+          throw error;
+        }
+      }
+    }]
+  });
+}
 
 /**
  * Action for refreshing the current post.
