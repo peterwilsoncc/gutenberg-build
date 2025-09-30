@@ -76747,6 +76747,7 @@ const useIsListViewTabDisabled = blockName => {
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -76779,10 +76780,32 @@ function InspectorControlsTabs({
   // which at the time is the first tab. This check allows blocks known to
   // include the list view tab to set it as the tab selected by default.
   const initialTabName = !use_is_list_view_tab_disabled(blockName) ? TAB_LIST_VIEW.name : undefined;
+  const [selectedTabId, setSelectedTabId] = (0,external_wp_element_namespaceObject.useState)(initialTabName !== null && initialTabName !== void 0 ? initialTabName : tabs[0]?.name);
+
+  // When the active tab is not amongst the available `tabs`, it indicates
+  // the list of tabs was changed dynamically with the active one being
+  // removed. Set the active tab back to the first tab.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    // Skip this behavior if `initialTabName` is supplied. In the navigation
+    // block, the list view tab isn't present in `tabs` initially. The early
+    // return here prevents the dynamic behavior that follows from overriding
+    // `initialTabName`.
+    if (initialTabName) {
+      return;
+    }
+    if (tabs?.length && selectedTabId) {
+      const activeTab = tabs.find(tab => tab.name === selectedTabId);
+      if (!activeTab) {
+        setSelectedTabId(tabs[0].name);
+      }
+    }
+  }, [tabs, selectedTabId, initialTabName]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: "block-editor-block-inspector__tabs",
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(inspector_controls_tabs_Tabs, {
       defaultTabId: initialTabName,
+      selectedTabId: selectedTabId,
+      onSelect: setSelectedTabId,
       children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls_tabs_Tabs.TabList, {
         children: tabs.map(tab => showIconLabels ? /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(inspector_controls_tabs_Tabs.Tab, {
           tabId: tab.name,
