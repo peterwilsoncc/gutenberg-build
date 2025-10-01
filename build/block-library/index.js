@@ -1907,6 +1907,7 @@ const external_ReactJSXRuntime_namespaceObject = window["ReactJSXRuntime"];
 
 
 const ACCORDION_BLOCK_NAME = 'core/accordion-content';
+const ACCORDION_HEADER_BLOCK_NAME = 'core/accordion-header';
 const ACCORDION_BLOCK = {
   name: ACCORDION_BLOCK_NAME
 };
@@ -1914,15 +1915,22 @@ function Edit({
   attributes: {
     autoclose,
     iconPosition,
-    showIcon
+    showIcon,
+    headingLevel,
+    levelOptions
   },
   clientId,
   setAttributes,
   isSelected: isSingleSelected
 }) {
+  const registry = (0,external_wp_data_namespaceObject.useRegistry)();
+  const {
+    getBlockOrder
+  } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const {
+    updateBlockAttributes,
     insertBlock
   } = (0,external_wp_data_namespaceObject.useDispatch)(external_wp_blockEditor_namespaceObject.store);
   const blockEditingMode = (0,external_wp_blockEditor_namespaceObject.useBlockEditingMode)();
@@ -1934,16 +1942,55 @@ function Edit({
     templateInsertUpdatesSelection: true
   });
   const addAccordionContentBlock = () => {
-    const newAccordionContent = (0,external_wp_blocks_namespaceObject.createBlock)(ACCORDION_BLOCK_NAME);
+    // When adding, set the header's level to current headingLevel
+    const newAccordionContent = (0,external_wp_blocks_namespaceObject.createBlock)(ACCORDION_BLOCK_NAME, {}, [(0,external_wp_blocks_namespaceObject.createBlock)(ACCORDION_HEADER_BLOCK_NAME, {
+      level: headingLevel
+    }), (0,external_wp_blocks_namespaceObject.createBlock)('core/accordion-panel', {})]);
     insertBlock(newAccordionContent, undefined, clientId);
   };
+
+  /**
+   * Update all child Accordion Header blocks with a new heading level
+   * based on the accordion group setting.
+   * @param {number} newHeadingLevel The new heading level to set
+   */
+  const updateHeadingLevel = newHeadingLevel => {
+    const innerBlockClientIds = getBlockOrder(clientId);
+
+    // Get all accordion-header blocks from all accordion-content blocks.
+    const accordionHeaderClientIds = [];
+    innerBlockClientIds.forEach(contentClientId => {
+      const headerClientIds = getBlockOrder(contentClientId);
+      accordionHeaderClientIds.push(...headerClientIds);
+    });
+
+    // Update own and child block heading levels.
+    registry.batch(() => {
+      setAttributes({
+        headingLevel: newHeadingLevel
+      });
+      updateBlockAttributes(accordionHeaderClientIds, {
+        level: newHeadingLevel
+      });
+    });
+  };
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [isSingleSelected && !isContentOnlyMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-      group: "other",
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
-        onClick: addAccordionContentBlock,
-        children: (0,external_wp_i18n_namespaceObject.__)('Add')
-      })
+    children: [isSingleSelected && !isContentOnlyMode && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
+            value: headingLevel,
+            options: levelOptions,
+            onChange: updateHeadingLevel
+          })
+        })
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
+        group: "other",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+          onClick: addAccordionContentBlock,
+          children: (0,external_wp_i18n_namespaceObject.__)('Add')
+        })
+      })]
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
         label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
@@ -1951,7 +1998,8 @@ function Edit({
           setAttributes({
             autoclose: false,
             showIcon: true,
-            iconPosition: 'right'
+            iconPosition: 'right',
+            headingLevel: 3
           });
         },
         dropdownMenuProps: dropdownMenuProps,
@@ -2180,11 +2228,19 @@ const metadata = {
     autoclose: {
       type: "boolean",
       "default": false
+    },
+    headingLevel: {
+      type: "number",
+      "default": 3
+    },
+    levelOptions: {
+      type: "array"
     }
   },
   providesContext: {
     "core/accordion-icon-position": "iconPosition",
-    "core/accordion-show-icon": "showIcon"
+    "core/accordion-show-icon": "showIcon",
+    "core/accordion-heading-level": "headingLevel"
   },
   allowedBlocks: ["core/accordion-content"],
   textdomain: "default",
@@ -2250,7 +2306,8 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
 function edit_Edit({
   attributes,
   clientId,
-  setAttributes
+  setAttributes,
+  context
 }) {
   const {
     openByDefault
@@ -2288,8 +2345,13 @@ function edit_Edit({
       'is-open': openByDefault || isSelected
     })
   });
+
+  // Get heading level from context.
+  const headingLevel = context && context['core/accordion-heading-level'];
   const innerBlocksProps = (0,external_wp_blockEditor_namespaceObject.useInnerBlocksProps)(blockProps, {
-    template: [['core/accordion-header', {}], ['core/accordion-panel', {
+    template: [['core/accordion-header', headingLevel ? {
+      level: headingLevel
+    } : {}], ['core/accordion-panel', {
       openByDefault
     }]],
     templateLock: 'all',
@@ -2494,22 +2556,20 @@ const accordion_content_init = () => initBlock({
 
 
 
-
 function accordion_header_edit_Edit({
   attributes,
   setAttributes,
   context
 }) {
   const {
-    level,
-    title,
-    levelOptions
+    title
   } = attributes;
   const {
     'core/accordion-icon-position': iconPosition,
-    'core/accordion-show-icon': showIcon
+    'core/accordion-show-icon': showIcon,
+    'core/accordion-heading-level': headingLevel
   } = context;
-  const TagName = 'h' + level;
+  const TagName = 'h' + headingLevel;
 
   // Set icon attributes.
   (0,external_wp_element_namespaceObject.useEffect)(() => {
@@ -2522,45 +2582,33 @@ function accordion_header_edit_Edit({
   }, [iconPosition, showIcon, setAttributes]);
   const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
   const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_ReactJSXRuntime_namespaceObject.Fragment, {
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.BlockControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
-        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.HeadingLevelDropdown, {
-          value: level,
-          options: levelOptions,
-          onChange: newLevel => setAttributes({
-            level: newLevel
-          })
-        })
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
-      ...blockProps,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
-        className: "wp-block-accordion-header__toggle",
-        style: {
-          ...spacingProps.style
-        },
-        children: [showIcon && iconPosition === 'left' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          className: "wp-block-accordion-header__toggle-icon",
-          "aria-hidden": "true",
-          children: "+"
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
-          withoutInteractiveFormatting: true,
-          disableLineBreaks: true,
-          tagName: "span",
-          value: title,
-          onChange: newTitle => setAttributes({
-            title: newTitle
-          }),
-          placeholder: (0,external_wp_i18n_namespaceObject.__)('Accordion title'),
-          className: "wp-block-accordion-header__toggle-title"
-        }), showIcon && iconPosition === 'right' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
-          className: "wp-block-accordion-header__toggle-icon",
-          "aria-hidden": "true",
-          children: "+"
-        })]
-      })
-    })]
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
+    ...blockProps,
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("button", {
+      className: "wp-block-accordion-header__toggle",
+      style: {
+        ...spacingProps.style
+      },
+      children: [showIcon && iconPosition === 'left' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        className: "wp-block-accordion-header__toggle-icon",
+        "aria-hidden": "true",
+        children: "+"
+      }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.RichText, {
+        withoutInteractiveFormatting: true,
+        disableLineBreaks: true,
+        tagName: "span",
+        value: title,
+        onChange: newTitle => setAttributes({
+          title: newTitle
+        }),
+        placeholder: (0,external_wp_i18n_namespaceObject.__)('Accordion title'),
+        className: "wp-block-accordion-header__toggle-title"
+      }), showIcon && iconPosition === 'right' && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        className: "wp-block-accordion-header__toggle-icon",
+        "aria-hidden": "true",
+        children: "+"
+      })]
+    })
   });
 }
 
@@ -2579,7 +2627,7 @@ function accordion_header_save_save({
     iconPosition,
     showIcon
   } = attributes;
-  const TagName = 'h' + level;
+  const TagName = 'h' + (level || 3);
   const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
   const spacingProps = (0,external_wp_blockEditor_namespaceObject.__experimentalGetSpacingClassesAndStyles)(attributes);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(TagName, {
@@ -2641,7 +2689,7 @@ const accordion_header_metadata = {
   description: "Displays an accordion header.",
   __experimental: true,
   parent: ["core/accordion-content"],
-  usesContext: ["core/accordion-icon-position", "core/accordion-show-icon"],
+  usesContext: ["core/accordion-icon-position", "core/accordion-show-icon", "core/accordion-heading-level"],
   supports: {
     anchor: true,
     color: {
@@ -2697,11 +2745,7 @@ const accordion_header_metadata = {
       role: "content"
     },
     level: {
-      type: "number",
-      "default": 3
-    },
-    levelOptions: {
-      type: "array"
+      type: "number"
     },
     iconPosition: {
       type: "string",
