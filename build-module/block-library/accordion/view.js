@@ -39,10 +39,10 @@ const interactivity_namespaceObject = x({ ["getContext"]: () => (__WEBPACK_EXTER
     get isOpen() {
       const {
         id,
-        accordionContents
+        accordionItems
       } = (0,interactivity_namespaceObject.getContext)();
-      const accordionContent = accordionContents.find(item => item.id === id);
-      return accordionContent ? accordionContent.isOpen : false;
+      const accordionItem = accordionItems.find(item => item.id === id);
+      return accordionItem ? accordionItem.isOpen : false;
     }
   },
   actions: {
@@ -51,15 +51,15 @@ const interactivity_namespaceObject = x({ ["getContext"]: () => (__WEBPACK_EXTER
       const {
         id,
         autoclose,
-        accordionContents
+        accordionItems
       } = context;
-      const accordionContent = accordionContents.find(item => item.id === id);
+      const accordionItem = accordionItems.find(item => item.id === id);
       if (autoclose) {
-        accordionContents.forEach(item => {
-          item.isOpen = item.id === id ? !accordionContent.isOpen : false;
+        accordionItems.forEach(item => {
+          item.isOpen = item.id === id ? !accordionItem.isOpen : false;
         });
       } else {
-        accordionContent.isOpen = !accordionContent.isOpen;
+        accordionItem.isOpen = !accordionItem.isOpen;
       }
     },
     handleKeyDown: (0,interactivity_namespaceObject.withSyncEvent)(event => {
@@ -70,25 +70,25 @@ const interactivity_namespaceObject = x({ ["getContext"]: () => (__WEBPACK_EXTER
       const context = (0,interactivity_namespaceObject.getContext)();
       const {
         id,
-        accordionContents
+        accordionItems
       } = context;
-      const currentIndex = accordionContents.findIndex(item => item.id === id);
+      const currentIndex = accordionItems.findIndex(item => item.id === id);
       let nextIndex;
       switch (event.key) {
         case 'ArrowUp':
           nextIndex = Math.max(0, currentIndex - 1);
           break;
         case 'ArrowDown':
-          nextIndex = Math.min(currentIndex + 1, accordionContents.length - 1);
+          nextIndex = Math.min(currentIndex + 1, accordionItems.length - 1);
           break;
         case 'Home':
           nextIndex = 0;
           break;
         case 'End':
-          nextIndex = accordionContents.length - 1;
+          nextIndex = accordionItems.length - 1;
           break;
       }
-      const nextId = accordionContents[nextIndex].id;
+      const nextId = accordionItems[nextIndex].id;
       const nextButton = document.getElementById(nextId);
       if (nextButton) {
         nextButton.focus();
@@ -96,13 +96,13 @@ const interactivity_namespaceObject = x({ ["getContext"]: () => (__WEBPACK_EXTER
     })
   },
   callbacks: {
-    initAccordionContents: () => {
+    initAccordionItems: () => {
       const context = (0,interactivity_namespaceObject.getContext)();
       const {
         id,
         openByDefault
       } = context;
-      context.accordionContents.push({
+      context.accordionItems.push({
         id,
         isOpen: openByDefault
       });
