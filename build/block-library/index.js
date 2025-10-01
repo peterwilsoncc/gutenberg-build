@@ -36740,7 +36740,8 @@ function NavigationInnerBlocks({
   const {
     isImmediateParentOfSelectedBlock,
     selectedBlockHasChildren,
-    isSelected
+    isSelected,
+    hasSelectedDescendant
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlockCount,
@@ -36751,6 +36752,7 @@ function NavigationInnerBlocks({
     return {
       isImmediateParentOfSelectedBlock: hasSelectedInnerBlock(clientId, false),
       selectedBlockHasChildren: !!getBlockCount(selectedBlockId),
+      hasSelectedDescendant: hasSelectedInnerBlock(clientId, true),
       // This prop is already available but computing it here ensures it's
       // fresh compared to isImmediateParentOfSelectedBlock.
       isSelected: selectedBlockId === clientId
@@ -36786,7 +36788,7 @@ function NavigationInnerBlocks({
     // This should be a temporary fix, to be replaced by improvements to
     // the sibling inserter.
     // See https://github.com/WordPress/gutenberg/issues/37572.
-    renderAppender: isSelected || isImmediateParentOfSelectedBlock && !selectedBlockHasChildren ||
+    renderAppender: isSelected || isImmediateParentOfSelectedBlock && !selectedBlockHasChildren || hasSelectedDescendant ||
     // Show the appender while dragging to allow inserting element between item and the appender.
     parentOrChildHasSelection ? external_wp_blockEditor_namespaceObject.InnerBlocks.ButtonBlockAppender : false,
     placeholder: showPlaceholder ? placeholder : undefined,
