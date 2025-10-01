@@ -24617,7 +24617,7 @@ function LinkControl({
         onClick: isDisabled ? link_control_noop : handleSubmit,
         className: "block-editor-link-control__search-submit",
         "aria-disabled": isDisabled,
-        children: (0,external_wp_i18n_namespaceObject.__)('Save')
+        children: (0,external_wp_i18n_namespaceObject.__)('Apply')
       })]
     }), !isCreatingPage && renderControlBottom && renderControlBottom()]
   });
