@@ -7553,6 +7553,7 @@ __webpack_require__.d(private_selectors_namespaceObject, {
   getTemporarilyEditingFocusModeToRevert: () => (getTemporarilyEditingFocusModeToRevert),
   getZoomLevel: () => (getZoomLevel),
   hasAllowedPatterns: () => (hasAllowedPatterns),
+  isBlockHidden: () => (isBlockHidden),
   isBlockInterfaceHidden: () => (private_selectors_isBlockInterfaceHidden),
   isBlockSubtreeDisabled: () => (isBlockSubtreeDisabled),
   isContainerInsertableToInWriteMode: () => (isContainerInsertableToInWriteMode),
@@ -11571,6 +11572,23 @@ function getClosestAllowedInsertionPointForPattern(state, pattern, clientId) {
 function getInsertionPoint(state) {
   return state.insertionPoint;
 }
+
+/**
+ * Returns true if the block is hidden, or false otherwise.
+ *
+ * @param {Object} state    Global application state.
+ * @param {string} clientId Client ID of the block.
+ *
+ * @return {boolean} Whether the block is hidden.
+ */
+const isBlockHidden = (state, clientId) => {
+  const blockName = getBlockName(state, clientId);
+  if (!(0,external_wp_blocks_namespaceObject.hasBlockSupport)(state, blockName, 'blockVisibility', true)) {
+    return false;
+  }
+  const attributes = state.blocks.attributes.get(clientId);
+  return attributes?.metadata?.blockVisibility === false;
+};
 
 ;// ./packages/block-editor/build-module/components/inserter/block-patterns-tab/utils.js
 /**
@@ -45840,7 +45858,8 @@ function use_block_props_useBlockProps(props = {}, {
     isTemporarilyEditingAsBlocks,
     defaultClassName,
     isSectionBlock,
-    canMove
+    canMove,
+    isBlockHidden
   } = (0,external_wp_element_namespaceObject.useContext)(PrivateBlockContext);
 
   // translators: %s: Type of block (i.e. Text, Image etc)
@@ -45906,7 +45925,8 @@ function use_block_props_useBlockProps(props = {}, {
       'is-editing-disabled': isEditingDisabled,
       'has-editable-outline': hasEditableOutline,
       'has-negative-margin': hasNegativeMargin,
-      'is-content-locked-temporarily-editing-as-blocks': isTemporarilyEditingAsBlocks
+      'is-content-locked-temporarily-editing-as-blocks': isTemporarilyEditingAsBlocks,
+      'is-block-hidden': isBlockHidden
     }, className, props.className, wrapperProps.className, defaultClassName),
     style: {
       ...wrapperProps.style,
@@ -46422,7 +46442,8 @@ function BlockListBlockProvider(props) {
       isReusable: (0,external_wp_blocks_namespaceObject.isReusableBlock)(blockType),
       className: hasLightBlockWrapper ? attributes.className : undefined,
       defaultClassName: hasLightBlockWrapper ? (0,external_wp_blocks_namespaceObject.getBlockDefaultClassName)(blockName) : undefined,
-      blockTitle: blockType?.title
+      blockTitle: blockType?.title,
+      isBlockHidden: attributes?.metadata?.blockVisibility === false
     };
 
     // When in preview mode, we can avoid a lot of selection and
@@ -46430,6 +46451,9 @@ function BlockListBlockProvider(props) {
     if (isPreviewMode) {
       return previewContext;
     }
+    const {
+      isBlockHidden: _isBlockHidden
+    } = unlock(select(store));
     const _isSelected = isBlockSelected(clientId);
     const canRemove = canRemoveBlock(clientId);
     const canMove = canMoveBlock(clientId);
@@ -46469,7 +46493,8 @@ function BlockListBlockProvider(props) {
       hasChildSelected: isAncestorOfSelectedBlock,
       isEditingDisabled: blockEditingMode === 'disabled',
       hasEditableOutline: blockEditingMode !== 'disabled' && getBlockEditingMode(rootClientId) === 'disabled',
-      originalBlockClientId: isInvalid ? blocksWithSameName[0] : false
+      originalBlockClientId: isInvalid ? blocksWithSameName[0] : false,
+      isBlockHidden: _isBlockHidden(clientId)
     };
   }, [clientId, rootClientId]);
   const {
@@ -46508,7 +46533,8 @@ function BlockListBlockProvider(props) {
     hasEditableOutline,
     className,
     defaultClassName,
-    originalBlockClientId
+    originalBlockClientId,
+    isBlockHidden
   } = selectedProps;
 
   // Users of the editor.BlockListBlock filter used to be able to
@@ -46555,8 +46581,12 @@ function BlockListBlockProvider(props) {
     mayDisplayParentControls,
     originalBlockClientId,
     themeSupportsLayout,
-    canMove
+    canMove,
+    isBlockHidden
   };
+  if (isBlockHidden && !isSelected && !isMultiSelected && !hasChildSelected) {
+    return null;
+  }
 
   // Here we separate between the props passed to BlockListBlock and any other
   // information we selected for internal use. BlockListBlock is a filtered
@@ -48458,7 +48488,11 @@ function useBlockDropZone({
     if (isZoomOut() && sectionRootClientId !== targetRootClientId) {
       return;
     }
-    const blocks = getBlocks(targetRootClientId);
+    const blocks = getBlocks(targetRootClientId)
+    // Filter out blocks that are hidden
+    .filter(block => {
+      return !((0,external_wp_blocks_namespaceObject.hasBlockSupport)(block.name, 'blockVisibility', true) && block.attributes?.metadata?.blockVisibility === false);
+    });
 
     // The block list is empty, don't show the insertion point but still allow dropping.
     if (blocks.length === 0) {
@@ -63951,6 +63985,82 @@ function BlockRenameControl({
   });
 }
 
+;// ./packages/icons/build-module/library/seen.js
+/**
+ * WordPress dependencies
+ */
+
+
+const seen = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M3.99961 13C4.67043 13.3354 4.6703 13.3357 4.67017 13.3359L4.67298 13.3305C4.67621 13.3242 4.68184 13.3135 4.68988 13.2985C4.70595 13.2686 4.7316 13.2218 4.76695 13.1608C4.8377 13.0385 4.94692 12.8592 5.09541 12.6419C5.39312 12.2062 5.84436 11.624 6.45435 11.0431C7.67308 9.88241 9.49719 8.75 11.9996 8.75C14.502 8.75 16.3261 9.88241 17.5449 11.0431C18.1549 11.624 18.6061 12.2062 18.9038 12.6419C19.0523 12.8592 19.1615 13.0385 19.2323 13.1608C19.2676 13.2218 19.2933 13.2686 19.3093 13.2985C19.3174 13.3135 19.323 13.3242 19.3262 13.3305L19.3291 13.3359C19.3289 13.3357 19.3288 13.3354 19.9996 13C20.6704 12.6646 20.6703 12.6643 20.6701 12.664L20.6697 12.6632L20.6688 12.6614L20.6662 12.6563L20.6583 12.6408C20.6517 12.6282 20.6427 12.6108 20.631 12.5892C20.6078 12.5459 20.5744 12.4852 20.5306 12.4096C20.4432 12.2584 20.3141 12.0471 20.1423 11.7956C19.7994 11.2938 19.2819 10.626 18.5794 9.9569C17.1731 8.61759 14.9972 7.25 11.9996 7.25C9.00203 7.25 6.82614 8.61759 5.41987 9.9569C4.71736 10.626 4.19984 11.2938 3.85694 11.7956C3.68511 12.0471 3.55605 12.2584 3.4686 12.4096C3.42484 12.4852 3.39142 12.5459 3.36818 12.5892C3.35656 12.6108 3.34748 12.6282 3.34092 12.6408L3.33297 12.6563L3.33041 12.6614L3.32948 12.6632L3.32911 12.664C3.32894 12.6643 3.32879 12.6646 3.99961 13ZM11.9996 16C13.9326 16 15.4996 14.433 15.4996 12.5C15.4996 10.567 13.9326 9 11.9996 9C10.0666 9 8.49961 10.567 8.49961 12.5C8.49961 14.433 10.0666 16 11.9996 16Z"
+  })
+});
+/* harmony default export */ const library_seen = (seen);
+
+;// ./packages/icons/build-module/library/unseen.js
+/**
+ * WordPress dependencies
+ */
+
+
+const unseen = /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.SVG, {
+  viewBox: "0 0 24 24",
+  xmlns: "http://www.w3.org/2000/svg",
+  children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_primitives_namespaceObject.Path, {
+    d: "M20.7 12.7s0-.1-.1-.2c0-.2-.2-.4-.4-.6-.3-.5-.9-1.2-1.6-1.8-.7-.6-1.5-1.3-2.6-1.8l-.6 1.4c.9.4 1.6 1 2.1 1.5.6.6 1.1 1.2 1.4 1.6.1.2.3.4.3.5v.1l.7-.3.7-.3Zm-5.2-9.3-1.8 4c-.5-.1-1.1-.2-1.7-.2-3 0-5.2 1.4-6.6 2.7-.7.7-1.2 1.3-1.6 1.8-.2.3-.3.5-.4.6 0 0 0 .1-.1.2s0 0 .7.3l.7.3V13c0-.1.2-.3.3-.5.3-.4.7-1 1.4-1.6 1.2-1.2 3-2.3 5.5-2.3H13v.3c-.4 0-.8-.1-1.1-.1-1.9 0-3.5 1.6-3.5 3.5s.6 2.3 1.6 2.9l-2 4.4.9.4 7.6-16.2-.9-.4Zm-3 12.6c1.7-.2 3-1.7 3-3.5s-.2-1.4-.6-1.9L12.4 16Z"
+  })
+});
+/* harmony default export */ const library_unseen = (unseen);
+
+;// ./packages/block-editor/build-module/components/block-visibility/menu-item.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function BlockVisibilityMenuItem({
+  clientIds
+}) {
+  const {
+    updateBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+  const blocks = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    return select(store).getBlocksByClientId(clientIds);
+  }, [clientIds]);
+  const hasHiddenBlock = blocks.some(block => block.attributes.metadata?.blockVisibility === false);
+  const toggleBlockVisibility = () => {
+    const attributesByClientId = Object.fromEntries(blocks?.map(({
+      clientId,
+      attributes
+    }) => [clientId, {
+      metadata: utils_cleanEmptyObject({
+        ...attributes?.metadata,
+        blockVisibility: hasHiddenBlock ? undefined : false
+      })
+    }]));
+    updateBlockAttributes(clientIds, attributesByClientId, {
+      uniqueByBlock: true
+    });
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.MenuItem, {
+    icon: hasHiddenBlock ? library_seen : library_unseen,
+    onClick: toggleBlockVisibility,
+    children: hasHiddenBlock ? (0,external_wp_i18n_namespaceObject.__)('Show') : (0,external_wp_i18n_namespaceObject.__)('Hide')
+  });
+}
+
 ;// ./packages/block-editor/build-module/components/block-settings-menu-controls/index.js
 /**
  * WordPress dependencies
@@ -63958,9 +64068,11 @@ function BlockRenameControl({
 
 
 
+
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -63979,9 +64091,11 @@ const BlockSettingsMenuControlsSlot = ({
   const {
     selectedBlocks,
     selectedClientIds,
-    isContentOnly
+    isContentOnly,
+    canToggleSelectedBlocksVisibility
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
+      getBlocksByClientId,
       getBlockNamesByClientId,
       getSelectedBlockClientIds,
       getBlockEditingMode
@@ -63990,7 +64104,8 @@ const BlockSettingsMenuControlsSlot = ({
     return {
       selectedBlocks: getBlockNamesByClientId(ids),
       selectedClientIds: ids,
-      isContentOnly: getBlockEditingMode(ids[0]) === 'contentOnly'
+      isContentOnly: getBlockEditingMode(ids[0]) === 'contentOnly',
+      canToggleSelectedBlocksVisibility: getBlocksByClientId(ids).every(block => (0,external_wp_blocks_namespaceObject.hasBlockSupport)(block.name, 'blockVisibility', true))
     };
   }, [clientIds]);
   const {
@@ -64001,6 +64116,7 @@ const BlockSettingsMenuControlsSlot = ({
   } = useBlockRename(selectedBlocks[0]);
   const showLockButton = selectedClientIds.length === 1 && canLock && !isContentOnly;
   const showRenameButton = selectedClientIds.length === 1 && canRename && !isContentOnly;
+  const showVisibilityButton = canToggleSelectedBlocksVisibility && !isContentOnly;
 
   // Check if current selection of blocks is Groupable or Ungroupable
   // and pass this props down to ConvertToGroupButton.
@@ -64028,6 +64144,8 @@ const BlockSettingsMenuControlsSlot = ({
           clientId: selectedClientIds[0]
         }), showRenameButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockRenameControl, {
           clientId: selectedClientIds[0]
+        }), showVisibilityButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockVisibilityMenuItem, {
+          clientIds: selectedClientIds
         }), fills, selectedClientIds.length === 1 && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(ModifyContentLockMenuItem, {
           clientId: selectedClientIds[0],
           onClose: fillProps?.onClose
@@ -64491,6 +64609,88 @@ function BlockLockToolbar({
       clientId: clientId,
       onClose: toggleModal
     })]
+  });
+}
+
+;// ./packages/block-editor/build-module/components/block-visibility/toolbar.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+function BlockVisibilityToolbar({
+  clientIds
+}) {
+  const {
+    blocks,
+    canToggleBlockVisibility
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockName,
+      getBlocksByClientId
+    } = select(store);
+    const _blocks = getBlocksByClientId(clientIds);
+    return {
+      blocks: _blocks,
+      canToggleBlockVisibility: _blocks.every(({
+        clientId
+      }) => (0,external_wp_blocks_namespaceObject.hasBlockSupport)(getBlockName(clientId), 'blockVisibility', true))
+    };
+  }, [clientIds]);
+  const hasHiddenBlock = blocks.some(block => block.attributes.metadata?.blockVisibility === false);
+  const hasBlockVisibilityButtonShownRef = (0,external_wp_element_namespaceObject.useRef)(false);
+  const {
+    updateBlockAttributes
+  } = (0,external_wp_data_namespaceObject.useDispatch)(store);
+
+  // If the block visibility button has been shown, we don't want to
+  // remove it from the toolbar until the toolbar is rendered again
+  // without it. Removing it beforehand can cause focus loss issues.
+  // It needs to return focus from whence it came, and to do that,
+  // we need to leave the button in the toolbar.
+  (0,external_wp_element_namespaceObject.useEffect)(() => {
+    if (hasHiddenBlock) {
+      hasBlockVisibilityButtonShownRef.current = true;
+    }
+  }, [hasHiddenBlock]);
+  if (!hasHiddenBlock && !hasBlockVisibilityButtonShownRef.current) {
+    return null;
+  }
+  const toggleBlockVisibility = () => {
+    const attributesByClientId = Object.fromEntries(blocks?.map(({
+      clientId,
+      attributes
+    }) => [clientId, {
+      metadata: utils_cleanEmptyObject({
+        ...attributes?.metadata,
+        blockVisibility: hasHiddenBlock ? undefined : false
+      })
+    }]));
+    updateBlockAttributes(clientIds, attributesByClientId, {
+      uniqueByBlock: true
+    });
+  };
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {
+    children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarGroup, {
+      className: "block-editor-block-lock-toolbar",
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.ToolbarButton, {
+        disabled: !canToggleBlockVisibility,
+        icon: hasHiddenBlock ? library_unseen : library_seen,
+        label: hasHiddenBlock ? (0,external_wp_i18n_namespaceObject.__)('Hidden') : (0,external_wp_i18n_namespaceObject.__)('Visible'),
+        onClick: toggleBlockVisibility
+      })
+    })
   });
 }
 
@@ -65203,6 +65403,7 @@ function SwitchSectionStyle({
 
 
 
+
 /**
  * Renders the block toolbar.
  *
@@ -65238,6 +65439,7 @@ function PrivateBlockToolbar({
     showSlots,
     showGroupButtons,
     showLockButtons,
+    showBlockVisibilityButton,
     showSwitchSectionStyleButton,
     hasFixedToolbar,
     isNavigationMode
@@ -65296,6 +65498,7 @@ function PrivateBlockToolbar({
       showSlots: !_isZoomOut,
       showGroupButtons: !_isZoomOut,
       showLockButtons: !_isZoomOut,
+      showBlockVisibilityButton: !_isZoomOut,
       showSwitchSectionStyleButton: _showSwitchSectionStyleButton,
       hasFixedToolbar: getSettings().hasFixedToolbar,
       isNavigationMode: isNavigationModeEnabled
@@ -65349,6 +65552,8 @@ function PrivateBlockToolbar({
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.ToolbarGroup, {
           className: "block-editor-block-toolbar__block-controls",
           children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(block_switcher, {
+            clientIds: blockClientIds
+          }), isDefaultEditingMode && showBlockVisibilityButton && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockVisibilityToolbar, {
             clientIds: blockClientIds
           }), !isMultiToolbar && isDefaultEditingMode && showLockButtons && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(BlockLockToolbar, {
             clientId: blockClientId
@@ -66845,6 +67050,7 @@ function useListViewImages({
 
 
 
+
 /**
  * Internal dependencies
  */
@@ -66886,11 +67092,24 @@ function ListViewBlockSelectButton({
     isLocked
   } = useBlockLock(clientId);
   const {
+    canToggleBlockVisibility,
+    isBlockHidden,
     isContentOnly
-  } = (0,external_wp_data_namespaceObject.useSelect)(select => ({
-    isContentOnly: select(store).getBlockEditingMode(clientId) === 'contentOnly'
-  }), [clientId]);
+  } = (0,external_wp_data_namespaceObject.useSelect)(select => {
+    const {
+      getBlockName
+    } = select(store);
+    const {
+      isBlockHidden: _isBlockHidden
+    } = unlock(select(store));
+    return {
+      canToggleBlockVisibility: (0,external_wp_blocks_namespaceObject.hasBlockSupport)(getBlockName(clientId), 'blockVisibility', true),
+      isBlockHidden: _isBlockHidden(clientId),
+      isContentOnly: select(store).getBlockEditingMode(clientId) === 'contentOnly'
+    };
+  }, [clientId]);
   const shouldShowLockIcon = isLocked && !isContentOnly;
+  const shouldShowBlockVisibilityIcon = canToggleBlockVisibility && isBlockHidden;
   const isSticky = blockInformation?.positionType === 'sticky';
   const images = useListViewImages({
     clientId,
@@ -66967,7 +67186,12 @@ function ListViewBlockSelectButton({
             zIndex: images.length - index // Ensure the first image is on top, and subsequent images are behind.
           }
         }, image.clientId))
-      }) : null, shouldShowLockIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+      }) : null, shouldShowBlockVisibilityIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        className: "block-editor-list-view-block-select-button__block-visibility",
+        children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
+          icon: library_unseen
+        })
+      }), shouldShowLockIcon && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
         className: "block-editor-list-view-block-select-button__lock",
         children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(build_module_icon, {
           icon: lock_small
@@ -67325,17 +67549,22 @@ function ListViewBlock({
   const {
     block,
     blockName,
-    allowRightClickOverrides
+    allowRightClickOverrides,
+    isBlockHidden
   } = (0,external_wp_data_namespaceObject.useSelect)(select => {
     const {
       getBlock,
       getBlockName,
       getSettings
     } = select(store);
+    const {
+      isBlockHidden: _isBlockHidden
+    } = unlock(select(store));
     return {
       block: getBlock(clientId),
       blockName: getBlockName(clientId),
-      allowRightClickOverrides: getSettings().allowRightClickOverrides
+      allowRightClickOverrides: getSettings().allowRightClickOverrides,
+      isBlockHidden: _isBlockHidden(clientId)
     };
   }, [clientId]);
   const showBlockActions =
@@ -67613,6 +67842,7 @@ function ListViewBlock({
   }
   const blockPositionDescription = getBlockPositionDescription(position, siblingBlockCount, level);
   const blockPropertiesDescription = getBlockPropertiesDescription(blockInformation, isLocked);
+  const blockVisibilityDescription = isBlockHidden ? (0,external_wp_i18n_namespaceObject.__)('Block is hidden.') : null;
   const hasSiblings = siblingBlockCount > 0;
   const hasRenderedMovers = showBlockMovers && hasSiblings;
   const moverCellClassName = dist_clsx('block-editor-list-view-block__mover-cell', {
@@ -67697,7 +67927,7 @@ function ListViewBlock({
           ariaDescribedBy: descriptionId
         }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(AriaReferencedText, {
           id: descriptionId,
-          children: [blockPositionDescription, blockPropertiesDescription].filter(Boolean).join(' ')
+          children: [blockPositionDescription, blockPropertiesDescription, blockVisibilityDescription].filter(Boolean).join(' ')
         })]
       })
     }), hasRenderedMovers && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_ReactJSXRuntime_namespaceObject.Fragment, {

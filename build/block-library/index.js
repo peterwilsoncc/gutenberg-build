@@ -2682,7 +2682,8 @@ const accordion_header_metadata = {
         fontFamily: true
       }
     },
-    shadow: true
+    shadow: true,
+    blockVisibility: false
   },
   attributes: {
     openByDefault: {
@@ -2848,7 +2849,8 @@ const accordion_panel_metadata = {
       }
     },
     shadow: true,
-    layout: true
+    layout: true,
+    blockVisibility: false
   },
   attributes: {
     allowedBlocks: {
@@ -7069,6 +7071,10 @@ function getTransformedMetadata(metadata, newBlockName, bindingsCallback) {
   // If it support block naming (true by default), add the `name` property.
   if (supports.renaming !== false) {
     transformSupportedProps.push('name');
+  }
+  // If it supports block visibility (true by default), add the `blockVisibility` property.
+  if (supports.blockVisibility !== false) {
+    transformSupportedProps.push('blockVisibility');
   }
   if (window?.__experimentalEnableBlockComment) {
     transformSupportedProps.push('commentId');
@@ -42577,6 +42583,7 @@ const pattern_metadata = {
     html: false,
     inserter: false,
     renaming: false,
+    blockVisibility: false,
     interactivity: {
       clientNavigation: true
     }
@@ -56558,6 +56565,7 @@ const block_metadata = {
     html: false,
     inserter: false,
     renaming: false,
+    blockVisibility: false,
     interactivity: {
       clientNavigation: true
     }
@@ -67400,6 +67408,7 @@ const template_part_metadata = {
     html: false,
     reusable: false,
     renaming: false,
+    blockVisibility: false,
     interactivity: {
       clientNavigation: true
     }
