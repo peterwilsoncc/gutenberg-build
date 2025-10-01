@@ -40520,6 +40520,172 @@ const navigation_init = () => initBlock({
   settings: navigation_settings
 });
 
+;// ./packages/block-library/build-module/navigation-link/shared/controls.js
+/**
+ * WordPress dependencies
+ */
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+/**
+ * Shared Controls component for Navigation Link and Navigation Submenu blocks.
+ *
+ * This component provides the inspector controls (ToolsPanel) that are identical
+ * between both navigation blocks.
+ *
+ * @param {Object}   props                     - Component props
+ * @param {Object}   props.attributes          - Block attributes
+ * @param {Function} props.setAttributes       - Function to update block attributes
+ * @param {Function} props.setIsEditingControl - Function to set editing state (optional)
+ */
+
+function controls_Controls({
+  attributes,
+  setAttributes,
+  setIsEditingControl = () => {}
+}) {
+  const {
+    label,
+    url,
+    description,
+    rel,
+    opensInNewTab
+  } = attributes;
+  const lastURLRef = (0,external_wp_element_namespaceObject.useRef)(url);
+  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
+  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
+    label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
+    resetAll: () => {
+      setAttributes({
+        label: '',
+        url: '',
+        description: '',
+        rel: '',
+        opensInNewTab: false
+      });
+    },
+    dropdownMenuProps: dropdownMenuProps,
+    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      hasValue: () => !!label,
+      label: (0,external_wp_i18n_namespaceObject.__)('Text'),
+      onDeselect: () => setAttributes({
+        label: ''
+      }),
+      isShownByDefault: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        __nextHasNoMarginBottom: true,
+        __next40pxDefaultSize: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Text'),
+        value: label ? (0,external_wp_dom_namespaceObject.__unstableStripHTML)(label) : '',
+        onChange: labelValue => {
+          setAttributes({
+            label: labelValue
+          });
+        },
+        autoComplete: "off",
+        onFocus: () => setIsEditingControl(true),
+        onBlur: () => setIsEditingControl(false)
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      hasValue: () => !!url,
+      label: (0,external_wp_i18n_namespaceObject.__)('Link'),
+      onDeselect: () => setAttributes({
+        url: ''
+      }),
+      isShownByDefault: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        __nextHasNoMarginBottom: true,
+        __next40pxDefaultSize: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Link'),
+        value: url ? (0,external_wp_url_namespaceObject.safeDecodeURI)(url) : '',
+        onChange: urlValue => {
+          setAttributes({
+            url: encodeURI((0,external_wp_url_namespaceObject.safeDecodeURI)(urlValue))
+          });
+        },
+        autoComplete: "off",
+        type: "url",
+        onFocus: () => {
+          lastURLRef.current = url;
+          setIsEditingControl(true);
+        },
+        onBlur: () => {
+          // Defer the updateAttributes call to ensure entity connection isn't severed by accident.
+          updateAttributes({
+            url: !url ? lastURLRef.current : url
+          }, setAttributes, {
+            ...attributes,
+            url: lastURLRef.current
+          });
+          setIsEditingControl(false);
+        }
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      hasValue: () => !!opensInNewTab,
+      label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
+      onDeselect: () => setAttributes({
+        opensInNewTab: false
+      }),
+      isShownByDefault: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
+        checked: opensInNewTab,
+        onChange: value => setAttributes({
+          opensInNewTab: value
+        })
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      hasValue: () => !!description,
+      label: (0,external_wp_i18n_namespaceObject.__)('Description'),
+      onDeselect: () => setAttributes({
+        description: ''
+      }),
+      isShownByDefault: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextareaControl, {
+        __nextHasNoMarginBottom: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Description'),
+        value: description || '',
+        onChange: descriptionValue => {
+          setAttributes({
+            description: descriptionValue
+          });
+        },
+        help: (0,external_wp_i18n_namespaceObject.__)('The description will be displayed in the menu if the current theme supports it.')
+      })
+    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
+      hasValue: () => !!rel,
+      label: (0,external_wp_i18n_namespaceObject.__)('Rel attribute'),
+      onDeselect: () => setAttributes({
+        rel: ''
+      }),
+      isShownByDefault: true,
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
+        __nextHasNoMarginBottom: true,
+        __next40pxDefaultSize: true,
+        label: (0,external_wp_i18n_namespaceObject.__)('Rel attribute'),
+        value: rel || '',
+        onChange: relValue => {
+          setAttributes({
+            rel: relValue
+          });
+        },
+        autoComplete: "off",
+        help: (0,external_wp_i18n_namespaceObject.__)('The relationship of the linked URL as space-separated link types.')
+      })
+    })]
+  });
+}
+
 ;// ./packages/block-library/build-module/navigation-link/edit.js
 /**
  * External dependencies
@@ -40529,7 +40695,6 @@ const navigation_init = () => initBlock({
 /**
  * WordPress dependencies
  */
-
 
 
 
@@ -40667,143 +40832,7 @@ function getMissingText(type) {
  * packages/block-library/src/navigation-submenu/edit.js
  * Consider reusing this components for both blocks.
  */
-function edit_Controls({
-  attributes,
-  setAttributes,
-  setIsEditingControl
-}) {
-  const {
-    label,
-    url,
-    description,
-    rel,
-    opensInNewTab
-  } = attributes;
-  const lastURLRef = (0,external_wp_element_namespaceObject.useRef)(url);
-  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
-  return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
-    label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-    resetAll: () => {
-      setAttributes({
-        label: '',
-        url: '',
-        description: '',
-        rel: '',
-        opensInNewTab: false
-      });
-    },
-    dropdownMenuProps: dropdownMenuProps,
-    children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-      hasValue: () => !!label,
-      label: (0,external_wp_i18n_namespaceObject.__)('Text'),
-      onDeselect: () => setAttributes({
-        label: ''
-      }),
-      isShownByDefault: true,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Text'),
-        value: label ? (0,external_wp_dom_namespaceObject.__unstableStripHTML)(label) : '',
-        onChange: labelValue => {
-          setAttributes({
-            label: labelValue
-          });
-        },
-        autoComplete: "off",
-        onFocus: () => setIsEditingControl(true),
-        onBlur: () => setIsEditingControl(false)
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-      hasValue: () => !!url,
-      label: (0,external_wp_i18n_namespaceObject.__)('Link'),
-      onDeselect: () => setAttributes({
-        url: ''
-      }),
-      isShownByDefault: true,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Link'),
-        value: url ? (0,external_wp_url_namespaceObject.safeDecodeURI)(url) : '',
-        onChange: urlValue => {
-          setAttributes({
-            url: encodeURI((0,external_wp_url_namespaceObject.safeDecodeURI)(urlValue))
-          });
-        },
-        autoComplete: "off",
-        type: "url",
-        onFocus: () => {
-          lastURLRef.current = url;
-          setIsEditingControl(true);
-        },
-        onBlur: () => {
-          // Defer the updateAttributes call to ensure entity connection isn't severed by accident.
-          updateAttributes({
-            url: !url ? lastURLRef.current : url
-          }, setAttributes, {
-            ...attributes,
-            url: lastURLRef.current
-          });
-          setIsEditingControl(false);
-        }
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-      hasValue: () => !!opensInNewTab,
-      label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
-      onDeselect: () => setAttributes({
-        opensInNewTab: false
-      }),
-      isShownByDefault: true,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-        __nextHasNoMarginBottom: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
-        checked: opensInNewTab,
-        onChange: value => setAttributes({
-          opensInNewTab: value
-        })
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-      hasValue: () => !!description,
-      label: (0,external_wp_i18n_namespaceObject.__)('Description'),
-      onDeselect: () => setAttributes({
-        description: ''
-      }),
-      isShownByDefault: true,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextareaControl, {
-        __nextHasNoMarginBottom: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Description'),
-        value: description || '',
-        onChange: descriptionValue => {
-          setAttributes({
-            description: descriptionValue
-          });
-        },
-        help: (0,external_wp_i18n_namespaceObject.__)('The description will be displayed in the menu if the current theme supports it.')
-      })
-    }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-      hasValue: () => !!rel,
-      label: (0,external_wp_i18n_namespaceObject.__)('Rel attribute'),
-      onDeselect: () => setAttributes({
-        rel: ''
-      }),
-      isShownByDefault: true,
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-        __nextHasNoMarginBottom: true,
-        __next40pxDefaultSize: true,
-        label: (0,external_wp_i18n_namespaceObject.__)('Rel attribute'),
-        value: rel || '',
-        onChange: relValue => {
-          setAttributes({
-            rel: relValue
-          });
-        },
-        autoComplete: "off",
-        help: (0,external_wp_i18n_namespaceObject.__)('The relationship of the linked URL as space-separated link types.')
-      })
-    })]
-  });
-}
+
 function NavigationLinkEdit({
   attributes,
   isSelected,
@@ -41031,7 +41060,7 @@ function NavigationLinkEdit({
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(edit_Controls, {
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(controls_Controls, {
         attributes: attributes,
         setAttributes: setAttributes,
         setIsEditingControl: setIsEditingControl
@@ -41641,9 +41670,7 @@ function NavigationSubmenuEdit({
   const {
     label,
     url,
-    description,
-    rel,
-    opensInNewTab
+    description
   } = attributes;
   const {
     showSubmenuIcon,
@@ -41665,7 +41692,6 @@ function NavigationSubmenuEdit({
   const isDraggingWithin = edit_useIsDraggingWithin(listItemRef);
   const itemLabelPlaceholder = (0,external_wp_i18n_namespaceObject.__)('Add text…');
   const ref = (0,external_wp_element_namespaceObject.useRef)();
-  const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const {
     parentCount,
     isParentOfSelectedBlock,
@@ -41844,111 +41870,9 @@ function NavigationSubmenuEdit({
         })]
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_blockEditor_namespaceObject.InspectorControls, {
-      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.__experimentalToolsPanel, {
-        label: (0,external_wp_i18n_namespaceObject.__)('Settings'),
-        resetAll: () => {
-          setAttributes({
-            label: '',
-            url: '',
-            description: '',
-            rel: '',
-            opensInNewTab: false
-          });
-        },
-        dropdownMenuProps: dropdownMenuProps,
-        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Text'),
-          isShownByDefault: true,
-          hasValue: () => !!label,
-          onDeselect: () => setAttributes({
-            label: ''
-          }),
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-            __nextHasNoMarginBottom: true,
-            __next40pxDefaultSize: true,
-            value: label || '',
-            onChange: labelValue => {
-              setAttributes({
-                label: labelValue
-              });
-            },
-            label: (0,external_wp_i18n_namespaceObject.__)('Text'),
-            autoComplete: "off"
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Link'),
-          isShownByDefault: true,
-          hasValue: () => !!url,
-          onDeselect: () => setAttributes({
-            url: ''
-          }),
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-            __nextHasNoMarginBottom: true,
-            __next40pxDefaultSize: true,
-            value: url || '',
-            onChange: urlValue => {
-              setAttributes({
-                url: urlValue
-              });
-            },
-            label: (0,external_wp_i18n_namespaceObject.__)('Link'),
-            autoComplete: "off",
-            type: "url"
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          hasValue: () => !!opensInNewTab,
-          label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
-          onDeselect: () => setAttributes({
-            opensInNewTab: false
-          }),
-          isShownByDefault: true,
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.CheckboxControl, {
-            __nextHasNoMarginBottom: true,
-            label: (0,external_wp_i18n_namespaceObject.__)('Open in new tab'),
-            checked: opensInNewTab,
-            onChange: value => setAttributes({
-              opensInNewTab: value
-            })
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Description'),
-          isShownByDefault: true,
-          hasValue: () => !!description,
-          onDeselect: () => setAttributes({
-            description: ''
-          }),
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextareaControl, {
-            __nextHasNoMarginBottom: true,
-            value: description || '',
-            onChange: descriptionValue => {
-              setAttributes({
-                description: descriptionValue
-              });
-            },
-            label: (0,external_wp_i18n_namespaceObject.__)('Description'),
-            help: (0,external_wp_i18n_namespaceObject.__)('The description will be displayed in the menu if the current theme supports it.')
-          })
-        }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.__experimentalToolsPanelItem, {
-          label: (0,external_wp_i18n_namespaceObject.__)('Rel attribute'),
-          isShownByDefault: true,
-          hasValue: () => !!rel,
-          onDeselect: () => setAttributes({
-            rel: ''
-          }),
-          children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(external_wp_components_namespaceObject.TextControl, {
-            __nextHasNoMarginBottom: true,
-            __next40pxDefaultSize: true,
-            value: rel || '',
-            onChange: relValue => {
-              setAttributes({
-                rel: relValue
-              });
-            },
-            label: (0,external_wp_i18n_namespaceObject.__)('Rel attribute'),
-            autoComplete: "off",
-            help: (0,external_wp_i18n_namespaceObject.__)('The relationship of the linked URL as space-separated link types.')
-          })
-        })]
+      children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(controls_Controls, {
+        attributes: attributes,
+        setAttributes: setAttributes
       })
     }), /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)("div", {
       ...blockProps,
