@@ -38084,7 +38084,7 @@ function LeafMoreMenu(props) {
 
 ;// external ["wp","escapeHtml"]
 const external_wp_escapeHtml_namespaceObject = window["wp"]["escapeHtml"];
-;// ./packages/block-library/build-module/navigation-link/update-attributes.js
+;// ./packages/block-library/build-module/navigation-link/shared/update-attributes.js
 /* wp:polyfill */
 /**
  * WordPress dependencies
@@ -40755,7 +40755,6 @@ function controls_Controls({
 
 
 
-
 const navigation_link_edit_DEFAULT_BLOCK = {
   name: 'core/navigation-link'
 };
@@ -41623,7 +41622,6 @@ const ItemSubmenuIcon = () => /*#__PURE__*/(0,external_ReactJSXRuntime_namespace
 /**
  * Internal dependencies
  */
-
 
 
 
