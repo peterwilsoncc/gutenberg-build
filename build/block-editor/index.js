@@ -78496,6 +78496,8 @@ const translationMap = {
   h6: (0,external_wp_i18n_namespaceObject.__)('H6'),
   'settings.color': (0,external_wp_i18n_namespaceObject.__)('Color'),
   'settings.typography': (0,external_wp_i18n_namespaceObject.__)('Typography'),
+  'settings.shadow': (0,external_wp_i18n_namespaceObject.__)('Shadow'),
+  'settings.layout': (0,external_wp_i18n_namespaceObject.__)('Layout'),
   'styles.color': (0,external_wp_i18n_namespaceObject.__)('Colors'),
   'styles.spacing': (0,external_wp_i18n_namespaceObject.__)('Spacing'),
   'styles.background': (0,external_wp_i18n_namespaceObject.__)('Background'),
