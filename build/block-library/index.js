@@ -1927,7 +1927,9 @@ function Edit({
   const {
     getBlockOrder
   } = (0,external_wp_data_namespaceObject.useSelect)(external_wp_blockEditor_namespaceObject.store);
-  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)();
+  const blockProps = (0,external_wp_blockEditor_namespaceObject.useBlockProps)({
+    role: 'group'
+  });
   const dropdownMenuProps = useToolsPanelDropdownMenuProps();
   const {
     updateBlockAttributes,
@@ -2083,7 +2085,9 @@ function Edit({
 
 
 function save() {
-  const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save();
+  const blockProps = external_wp_blockEditor_namespaceObject.useBlockProps.save({
+    role: 'group'
+  });
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     ...external_wp_blockEditor_namespaceObject.useInnerBlocksProps.save(blockProps)
   });
@@ -2201,6 +2205,7 @@ const metadata = {
     },
     shadow: true,
     layout: true,
+    ariaLabel: true,
     interactivity: true,
     typography: {
       fontSize: true,
