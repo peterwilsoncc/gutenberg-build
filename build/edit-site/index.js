@@ -54688,7 +54688,7 @@ function PostEditForm({
         type: 'regular',
         labelPosition: 'side'
       }
-    }].filter(field => ids.length === 1 || fieldsWithBulkEditSupport.includes(field))
+    }].filter(field => ids.length === 1 || fieldsWithBulkEditSupport.includes(typeof field === 'string' ? field : field.id))
   }), [ids]);
   const onChange = edits => {
     for (const id of ids) {
