@@ -38885,10 +38885,6 @@ function VisualEditor({
   contentRef,
   className
 }) {
-  const [contentHeight, setContentHeight] = (0,external_wp_element_namespaceObject.useState)('');
-  const effectContentHeight = (0,external_wp_compose_namespaceObject.useResizeObserver)(([entry]) => {
-    setContentHeight(entry.borderBoxSize[0].blockSize);
-  });
   const isMobileViewport = (0,external_wp_compose_namespaceObject.useViewportMatch)('small', '<');
   const {
     renderingMode,
@@ -39054,7 +39050,6 @@ function VisualEditor({
 		.is-root-container.alignwide:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: var(--wp--style--global--wide-size);}
 		.is-root-container.alignfull { max-width: none; margin-left: auto; margin-right: auto;}
 		.is-root-container.alignfull:where(.is-layout-flow) > :not(.alignleft):not(.alignright) { max-width: none;}`;
-  const forceFullHeight = postType === NAVIGATION_POST_TYPE;
   const enableResizing = [NAVIGATION_POST_TYPE, TEMPLATE_PART_POST_TYPE, PATTERN_POST_TYPE].includes(postType) &&
   // Disable in previews / view mode.
   !isPreview &&
@@ -39070,7 +39065,11 @@ function VisualEditor({
       css: `:where(.block-editor-iframe__body){display:flow-root;}.is-root-container{display:flow-root;${
       // Some themes will have `min-height: 100vh` for the root container,
       // which isn't a requirement in auto resize mode.
-      enableResizing ? 'min-height:0!important;' : ''}}`
+      enableResizing ? 'min-height:0!important;' : ''}}
+				${enableResizing ? '.block-editor-iframe__html{background:#ddd;display:flex;align-items:center;justify-content:center;min-height:100vh;}.block-editor-iframe__body{width:100%;}' : ''}`
+      // The CSS above centers the body content vertically when resizing is enabled and applies a background
+      // color to the iframe HTML element to match the background color of the editor canvas.
+      // TODO: Move the #ddd somewhere else or use a variable.
     }];
   }, [styles, enableResizing]);
   const localRef = (0,external_wp_element_namespaceObject.useRef)();
@@ -39079,10 +39078,7 @@ function VisualEditor({
     isEnabled: renderingMode === 'template-locked'
   }), useSelectNearestEditableBlock({
     isEnabled: renderingMode === 'template-locked'
-  }), useZoomOutModeExit(),
-  // Avoid resize listeners when not needed, these will trigger
-  // unnecessary re-renders when animating the iframe width.
-  enableResizing ? effectContentHeight : null]);
+  }), useZoomOutModeExit()]);
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
     className: dist_clsx('editor-visual-editor',
     // this class is here for backward compatibility reasons.
@@ -39093,7 +39089,7 @@ function VisualEditor({
     }),
     children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(resizable_editor, {
       enableResizing: enableResizing,
-      height: contentHeight && !forceFullHeight ? contentHeight : '100%',
+      height: "100%",
       children: /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(BlockCanvas, {
         shouldIframe: !disableIframe,
         contentRef: contentRef,
