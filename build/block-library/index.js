@@ -2512,7 +2512,6 @@ const accordion_item_metadata = {
       }
     },
     shadow: true,
-    layout: true,
     typography: {
       fontSize: true,
       lineHeight: true,
@@ -2894,7 +2893,6 @@ const accordion_panel_metadata = {
       }
     },
     shadow: true,
-    layout: true,
     blockVisibility: false
   },
   attributes: {
