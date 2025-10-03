@@ -53628,6 +53628,26 @@ const DEFAULT_LAYOUT = {
   type: 'regular',
   labelPosition: 'top'
 };
+const normalizeCardSummaryField = sum => {
+  if (typeof sum === 'string') {
+    return [{
+      id: sum,
+      visibility: 'when-collapsed'
+    }];
+  }
+  return sum.map(item => {
+    if (typeof item === 'string') {
+      return {
+        id: item,
+        visibility: 'when-collapsed'
+      };
+    }
+    return {
+      id: item.id,
+      visibility: item.visibility
+    };
+  });
+};
 
 /**
  * Normalizes a layout configuration based on its type.
@@ -53644,11 +53664,14 @@ function normalizeLayout(layout) {
       labelPosition: (_layout$labelPosition = layout?.labelPosition) !== null && _layout$labelPosition !== void 0 ? _layout$labelPosition : 'top'
     };
   } else if (layout?.type === 'panel') {
-    var _layout$labelPosition2, _layout$openAs;
+    var _layout$summary, _layout$labelPosition2, _layout$openAs;
+    const summary = (_layout$summary = layout.summary) !== null && _layout$summary !== void 0 ? _layout$summary : [];
+    const normalizedSummary = Array.isArray(summary) ? summary : [summary];
     normalizedLayout = {
       type: 'panel',
       labelPosition: (_layout$labelPosition2 = layout?.labelPosition) !== null && _layout$labelPosition2 !== void 0 ? _layout$labelPosition2 : 'side',
-      openAs: (_layout$openAs = layout?.openAs) !== null && _layout$openAs !== void 0 ? _layout$openAs : 'dropdown'
+      openAs: (_layout$openAs = layout?.openAs) !== null && _layout$openAs !== void 0 ? _layout$openAs : 'dropdown',
+      summary: normalizedSummary
     };
   } else if (layout?.type === 'card') {
     if (layout.withHeader === false) {
@@ -53657,13 +53680,17 @@ function normalizeLayout(layout) {
       normalizedLayout = {
         type: 'card',
         withHeader: false,
-        isOpened: true
+        isOpened: true,
+        summary: []
       };
     } else {
+      var _layout$summary2;
+      const summary = (_layout$summary2 = layout.summary) !== null && _layout$summary2 !== void 0 ? _layout$summary2 : [];
       normalizedLayout = {
         type: 'card',
         withHeader: true,
-        isOpened: typeof layout.isOpened === 'boolean' ? layout.isOpened : true
+        isOpened: typeof layout.isOpened === 'boolean' ? layout.isOpened : true,
+        summary: normalizeCardSummaryField(summary)
       };
     }
   } else if (layout?.type === 'row') {
@@ -54092,6 +54119,38 @@ function PanelModal({
 }
 /* harmony default export */ const modal = (PanelModal);
 
+;// ./packages/dataviews/build-module/dataforms-layouts/get-summary-fields.js
+/**
+ * Internal dependencies
+ */
+
+/**
+ * Extracts field IDs from various summary field formats.
+ *
+ * @param summary The summary field configuration.
+ * @return Array of field IDs.
+ */
+function extractSummaryIds(summary) {
+  if (Array.isArray(summary)) {
+    return summary.map(item => typeof item === 'string' ? item : item.id);
+  }
+  return [];
+}
+
+/**
+ * Returns the summary fields for a given field.
+ * @param summaryField - The summary field configuration.
+ * @param fields       - The fields to get the summary fields from.
+ * @return The summary fields.
+ */
+const getSummaryFields = (summaryField, fields) => {
+  if (Array.isArray(summaryField) && summaryField.length > 0) {
+    const summaryIds = extractSummaryIds(summaryField);
+    return summaryIds.map(summaryId => fields.find(_field => _field.id === summaryId)).filter(_field => _field !== undefined);
+  }
+  return [];
+};
+
 ;// ./packages/dataviews/build-module/dataforms-layouts/panel/index.js
 /**
  * External dependencies
@@ -54114,6 +54173,53 @@ function PanelModal({
 
 
 
+
+const getFieldDefinition = (field, fields) => {
+  const fieldDefinition = fields.find(_field => _field.id === field.id);
+  if (!fieldDefinition) {
+    return fields.find(_field => {
+      if (isCombinedField(field)) {
+        const simpleChildren = field.children.filter(child => typeof child === 'string' || !isCombinedField(child));
+        if (simpleChildren.length === 0) {
+          return false;
+        }
+        const firstChildFieldId = typeof simpleChildren[0] === 'string' ? simpleChildren[0] : simpleChildren[0].id;
+        return _field.id === firstChildFieldId;
+      }
+      return _field.id === field.id;
+    });
+  }
+  return fieldDefinition;
+};
+
+/**
+ * Determines the field definition and summary fields for a panel layout.
+ *
+ * Summary fields are determined with the following priority:
+ * 1. Use layout.summary fields if they exist
+ * 2. Fall back to the field definition that matches the form field's id
+ * 3. If the form field id doesn't exist, pick the first child field
+ * 4. If no field definition is found, return empty summary fields
+ *
+ * @param layout - The normalized panel layout configuration
+ * @param field  - The form field to get definition for
+ * @param fields - Array of normalized field definitions
+ * @return Object containing fieldDefinition and summaryFields
+ */
+const getFieldDefinitionAndSummaryFields = (layout, field, fields) => {
+  const summaryFields = getSummaryFields(layout.summary, fields);
+  const fieldDefinition = getFieldDefinition(field, fields);
+  if (summaryFields.length === 0) {
+    return {
+      summaryFields: fieldDefinition ? [fieldDefinition] : [],
+      fieldDefinition
+    };
+  }
+  return {
+    summaryFields,
+    fieldDefinition
+  };
+};
 function FormPanelField({
   data,
   field,
@@ -54122,40 +54228,21 @@ function FormPanelField({
   const {
     fields
   } = (0,external_wp_element_namespaceObject.useContext)(dataform_context);
-  const getSummaryFields = () => {
-    if (!isCombinedField(field)) {
-      const fieldDef = fields.find(_field => _field.id === field.id);
-      return fieldDef ? [fieldDef] : [];
-    }
-
-    // Use summary field(s) if specified for combined fields
-    if (field.summary) {
-      const summaryIds = Array.isArray(field.summary) ? field.summary : [field.summary];
-      return summaryIds.map(summaryId => fields.find(_field => _field.id === summaryId)).filter(_field => _field !== undefined);
-    }
-
-    // Default to the first simple child
-    const simpleChildren = field.children.filter(child => typeof child === 'string' || !isCombinedField(child));
-    if (simpleChildren.length === 0) {
-      return [];
-    }
-    const firstChildFieldId = typeof simpleChildren[0] === 'string' ? simpleChildren[0] : simpleChildren[0].id;
-    const fieldDef = fields.find(_field => _field.id === firstChildFieldId);
-    return fieldDef ? [fieldDef] : [];
-  };
-  const summaryFields = getSummaryFields();
-  const fieldDefinition = summaryFields[0]; // For backward compatibility
-
-  // Use internal state instead of a ref to make sure that the component
-  // re-renders when the popover's anchor updates.
-  const [popoverAnchor, setPopoverAnchor] = (0,external_wp_element_namespaceObject.useState)(null);
-  if (!fieldDefinition) {
-    return null;
-  }
   const layout = normalizeLayout({
     ...field.layout,
     type: 'panel'
   });
+
+  // Use internal state instead of a ref to make sure that the component
+  // re-renders when the popover's anchor updates.
+  const [popoverAnchor, setPopoverAnchor] = (0,external_wp_element_namespaceObject.useState)(null);
+  const {
+    fieldDefinition,
+    summaryFields
+  } = getFieldDefinitionAndSummaryFields(layout, field, fields);
+  if (!fieldDefinition) {
+    return null;
+  }
   const labelPosition = layout.labelPosition;
   const labelClassName = dist_clsx('dataforms-layouts-panel__field-label', `dataforms-layouts-panel__field-label--label-position-${labelPosition}`);
   const fieldLabel = isCombinedField(field) ? field.label : fieldDefinition?.label;
@@ -54229,6 +54316,7 @@ function FormPanelField({
 
 
 
+
 function useCollapsibleCard(initialIsOpen = true) {
   const [isOpen, setIsOpen] = (0,external_wp_element_namespaceObject.useState)(initialIsOpen);
   const toggle = (0,external_wp_element_namespaceObject.useCallback)(() => {
@@ -54265,6 +54353,44 @@ function useCollapsibleCard(initialIsOpen = true) {
     CollapsibleCardHeader
   };
 }
+function isSummaryFieldVisible(summaryField, summaryConfig, isOpen) {
+  // If no summary config, dont't show any fields
+  if (!summaryConfig || Array.isArray(summaryConfig) && summaryConfig.length === 0) {
+    return false;
+  }
+
+  // Convert to array for consistent handling
+  const summaryConfigArray = Array.isArray(summaryConfig) ? summaryConfig : [summaryConfig];
+
+  // Find the config for this specific field
+  const fieldConfig = summaryConfigArray.find(config => {
+    if (typeof config === 'string') {
+      return config === summaryField.id;
+    }
+    if (typeof config === 'object' && 'id' in config) {
+      return config.id === summaryField.id;
+    }
+    return false;
+  });
+
+  // If field is not in summary config, don't show it
+  if (!fieldConfig) {
+    return false;
+  }
+
+  // If it's a string, always show it
+  if (typeof fieldConfig === 'string') {
+    return true;
+  }
+
+  // If it has visibility rules, respect them
+  if (typeof fieldConfig === 'object' && 'visibility' in fieldConfig) {
+    return fieldConfig.visibility === 'always' || fieldConfig.visibility === 'when-collapsed' && !isOpen;
+  }
+
+  // Default to always show
+  return true;
+}
 function FormCardField({
   data,
   field,
@@ -54286,13 +54412,24 @@ function FormCardField({
     isOpen,
     CollapsibleCardHeader
   } = useCollapsibleCard(layout.isOpened);
+  const summaryFields = getSummaryFields(layout.summary, fields);
+  const visibleSummaryFields = summaryFields.filter(summaryField => isSummaryFieldVisible(summaryField, layout.summary, isOpen));
   if (isCombinedField(field)) {
     const withHeader = !!field.label && layout.withHeader;
     return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Card, {
       className: "dataforms-layouts-card__field",
-      children: [withHeader && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollapsibleCardHeader, {
-        className: "dataforms-layouts-card__field-label",
-        children: field.label
+      children: [withHeader && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(CollapsibleCardHeader, {
+        className: "dataforms-layouts-card__field-header",
+        children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+          className: "dataforms-layouts-card__field-header-label",
+          children: field.label
+        }), visibleSummaryFields.length > 0 && layout.withHeader && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+          className: "dataforms-layouts-card__field-summary",
+          children: visibleSummaryFields.map(summaryField => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(summaryField.render, {
+            item: data,
+            field: summaryField
+          }, summaryField.id))
+        })]
       }), (isOpen || !withHeader) &&
       /*#__PURE__*/
       // If it doesn't have a header, keep it open.
@@ -54321,9 +54458,18 @@ function FormCardField({
   const withHeader = !!fieldDefinition.label && layout.withHeader;
   return /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(external_wp_components_namespaceObject.Card, {
     className: "dataforms-layouts-card__field",
-    children: [withHeader && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(CollapsibleCardHeader, {
-      className: "dataforms-layouts-card__field-label",
-      children: fieldDefinition.label
+    children: [withHeader && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsxs)(CollapsibleCardHeader, {
+      className: "dataforms-layouts-card__field-header",
+      children: [/*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("span", {
+        className: "dataforms-layouts-card__field-header-label",
+        children: fieldDefinition.label
+      }), visibleSummaryFields.length > 0 && layout.withHeader && /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)("div", {
+        className: "dataforms-layouts-card__field-summary",
+        children: visibleSummaryFields.map(summaryField => /*#__PURE__*/(0,external_ReactJSXRuntime_namespaceObject.jsx)(summaryField.render, {
+          item: data,
+          field: summaryField
+        }, summaryField.id))
+      })]
     }), (isOpen || !withHeader) &&
     /*#__PURE__*/
     // If it doesn't have a header, keep it open.
@@ -54679,8 +54825,7 @@ function PostEditForm({
     }, 'author', 'date', 'slug', 'parent', {
       id: 'discussion',
       label: (0,external_wp_i18n_namespaceObject.__)('Discussion'),
-      children: ['comment_status', 'ping_status'],
-      summary: 'discussion'
+      children: ['comment_status', 'ping_status']
     }, {
       label: (0,external_wp_i18n_namespaceObject.__)('Template'),
       id: 'template',
